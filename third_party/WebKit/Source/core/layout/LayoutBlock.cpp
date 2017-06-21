@@ -1638,7 +1638,7 @@ int LayoutBlock::BaselinePosition(FontBaseline baseline_type,
 
     int baseline_pos = (IsWritingModeRoot() && !IsRubyRun())
                            ? -1
-                           : InlineBlockBaseline(direction);
+                           : InlineBlockBaseline(direction).Round();
 
     if (IsDeprecatedFlexibleBox()) {
       // Historically, we did this check for all baselines. But we can't
@@ -1715,45 +1715,44 @@ int LayoutBlock::FirstLineBoxBaseline() const {
   return -1;
 }
 
-int LayoutBlock::InlineBlockBaseline(LineDirectionMode line_direction) const {
+LayoutUnit LayoutBlock::InlineBlockBaseline(
+    LineDirectionMode line_direction) const {
   DCHECK(!ChildrenInline());
   if ((!Style()->IsOverflowVisible() &&
        !ShouldIgnoreOverflowPropertyForInlineBlockBaseline()) ||
       Style()->ContainsSize()) {
     // We are not calling LayoutBox::baselinePosition here because the caller
     // should add the margin-top/margin-right, not us.
-    return (line_direction == kHorizontalLine ? Size().Height() + MarginBottom()
-                                              : Size().Width() + MarginLeft())
-        .ToInt();
+    return line_direction == kHorizontalLine ? Size().Height() + MarginBottom()
+                                             : Size().Width() + MarginLeft();
   }
 
   if (IsWritingModeRoot() && !IsRubyRun())
-    return -1;
+    return LayoutUnit(-1);
 
   bool have_normal_flow_child = false;
   for (LayoutBox* curr = LastChildBox(); curr;
        curr = curr->PreviousSiblingBox()) {
     if (!curr->IsFloatingOrOutOfFlowPositioned()) {
       have_normal_flow_child = true;
-      int result = curr->InlineBlockBaseline(line_direction);
-      if (result != -1)
-        return (curr->LogicalTop() + result)
-            .ToInt();  // Translate to our coordinate space.
+      LayoutUnit result = curr->InlineBlockBaseline(line_direction);
+      if (result != -1) {
+        // Translate to our coordinate space.
+        return curr->LogicalTop() + result;
+      }
     }
   }
   const SimpleFontData* font_data = FirstLineStyle()->GetFont().PrimaryFont();
   if (font_data && !have_normal_flow_child && HasLineIfEmpty()) {
     const FontMetrics& font_metrics = font_data->GetFontMetrics();
-    return (font_metrics.Ascent() +
-            (LineHeight(true, line_direction, kPositionOfInteriorLineBoxes) -
-             font_metrics.Height()) /
-                2 +
-            (line_direction == kHorizontalLine
-                 ? BorderTop() + PaddingTop()
-                 : BorderRight() + PaddingRight()))
-        .ToInt();
+    return font_metrics.Ascent() +
+           (LineHeight(true, line_direction, kPositionOfInteriorLineBoxes) -
+            font_metrics.Height()) /
+               2 +
+           (line_direction == kHorizontalLine ? BorderTop() + PaddingTop()
+                                              : BorderRight() + PaddingRight());
   }
-  return -1;
+  return LayoutUnit(-1);
 }
 
 const LayoutBlock* LayoutBlock::EnclosingFirstLineStyleBlock() const {

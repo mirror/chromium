@@ -169,17 +169,15 @@ float LayoutFlexibleBox::CountIntrinsicSizeForAlgorithmChange(
   return max_content_flex_fraction;
 }
 
-int LayoutFlexibleBox::SynthesizedBaselineFromContentBox(
+LayoutUnit LayoutFlexibleBox::SynthesizedBaselineFromContentBox(
     const LayoutBox& box,
     LineDirectionMode direction) {
   if (direction == kHorizontalLine) {
-    return (box.Size().Height() - box.BorderBottom() - box.PaddingBottom() -
-            box.VerticalScrollbarWidth())
-        .ToInt();
+    return box.Size().Height() - box.BorderBottom() - box.PaddingBottom() -
+           box.VerticalScrollbarWidth();
   }
-  return (box.Size().Width() - box.BorderLeft() - box.PaddingLeft() -
-          box.HorizontalScrollbarHeight())
-      .ToInt();
+  return box.Size().Width() - box.BorderLeft() - box.PaddingLeft() -
+         box.HorizontalScrollbarHeight();
 }
 
 int LayoutFlexibleBox::BaselinePosition(FontBaseline,
@@ -189,7 +187,7 @@ int LayoutFlexibleBox::BaselinePosition(FontBaseline,
   DCHECK_EQ(mode, kPositionOnContainingLine);
   int baseline = FirstLineBoxBaseline();
   if (baseline == -1)
-    baseline = SynthesizedBaselineFromContentBox(*this, direction);
+    baseline = SynthesizedBaselineFromContentBox(*this, direction).ToInt();
 
   return BeforeMarginInLineDirection(direction) + baseline;
 }
@@ -254,13 +252,14 @@ int LayoutFlexibleBox::FirstLineBoxBaseline() const {
   return (baseline + baseline_child->LogicalTop()).ToInt();
 }
 
-int LayoutFlexibleBox::InlineBlockBaseline(LineDirectionMode direction) const {
+LayoutUnit LayoutFlexibleBox::InlineBlockBaseline(
+    LineDirectionMode direction) const {
   int baseline = FirstLineBoxBaseline();
   if (baseline != -1)
-    return baseline;
+    return LayoutUnit(baseline);
 
-  int margin_ascent =
-      (direction == kHorizontalLine ? MarginTop() : MarginRight()).ToInt();
+  LayoutUnit margin_ascent =
+      direction == kHorizontalLine ? MarginTop() : MarginRight();
   return SynthesizedBaselineFromContentBox(*this, direction) + margin_ascent;
 }
 

@@ -393,7 +393,7 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
       LayoutUnit& max_preferred_logical_width) const;
 
   int FirstLineBoxBaseline() const override;
-  int InlineBlockBaseline(LineDirectionMode) const override;
+  LayoutUnit InlineBlockBaseline(LineDirectionMode) const override;
 
   // This function disables the 'overflow' check in inlineBlockBaseline.
   // For 'inline-block', CSS says that the baseline is the bottom margin edge

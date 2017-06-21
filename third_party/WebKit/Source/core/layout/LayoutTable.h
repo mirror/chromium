@@ -465,7 +465,7 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
       LineDirectionMode,
       LinePositionMode = kPositionOnContainingLine) const override;
   int FirstLineBoxBaseline() const override;
-  int InlineBlockBaseline(LineDirectionMode) const override;
+  LayoutUnit InlineBlockBaseline(LineDirectionMode) const override;
 
   ColAndColGroup SlowColElementAtAbsoluteColumn(unsigned col) const;
 
