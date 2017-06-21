@@ -61,7 +61,7 @@ public class ChildProcessConnection {
     interface ConnectionCallback {
         /**
          * Called when the connection to the service is established.
-         * @param connecion the connection object to the child process
+         * @param connection the connection object to the child process
          */
         void onConnected(ChildProcessConnection connection);
     }
@@ -145,7 +145,6 @@ public class ChildProcessConnection {
     }
 
     private final Context mContext;
-    private final ChildProcessConnection.DeathCallback mDeathCallback;
     private final ComponentName mServiceName;
 
     // Parameters passed to the child process through the service binding intent.
@@ -164,6 +163,8 @@ public class ChildProcessConnection {
             mCallback = callback;
         }
     }
+
+    private ChildProcessConnection.DeathCallback mDeathCallback;
 
     // This is set in start() and is used in onServiceConnected().
     private StartCallback mStartCallback;
@@ -306,7 +307,7 @@ public class ChildProcessConnection {
                 Log.e(TAG, "Failed to establish the service connection.");
                 // We have to notify the caller so that they can free-up associated resources.
                 // TODO(ppi): Can we hard-fail here?
-                mDeathCallback.onChildProcessDied(ChildProcessConnection.this);
+                notifyProcessDied();
             }
         } finally {
             TraceEvent.end("ChildProcessConnection.start");
@@ -354,6 +355,9 @@ public class ChildProcessConnection {
         unbind();
         mService = null;
         mConnectionParams = null;
+        // The process will die naturally, onServiceDisconnected() won't be invoked so we have to
+        // notify explicitly.
+        notifyProcessDied();
     }
 
     private void onServiceConnectedOnLauncherThread(IBinder service) {
@@ -417,13 +421,15 @@ public class ChildProcessConnection {
         mServiceDisconnected = true;
         Log.w(TAG, "onServiceDisconnected (crash or killed by oom): pid=%d", mPid);
         stop(); // We don't want to auto-restart on crash. Let the browser do that.
-        mDeathCallback.onChildProcessDied(ChildProcessConnection.this);
+
+        notifyProcessDied();
+
         // If we have a pending connection callback, we need to communicate the failure to
         // the caller.
         if (mConnectionCallback != null) {
             mConnectionCallback.onConnected(null);
+            mConnectionCallback = null;
         }
-        mConnectionCallback = null;
     }
 
     private void onSetupConnectionResult(int pid) {
@@ -595,6 +601,13 @@ public class ChildProcessConnection {
         if (!mUnbound) {
             mWaivedBoundOnly = !mInitialBinding.isBound() && !mStrongBinding.isBound()
                     && !mModerateBinding.isBound();
+        }
+    }
+
+    private void notifyProcessDied() {
+        if (mDeathCallback != null) {
+            mDeathCallback.onChildProcessDied(this);
+            mDeathCallback = null;
         }
     }
 
