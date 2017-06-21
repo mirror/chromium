@@ -63,6 +63,12 @@ class MockRendererClient : public mojom::RendererClient {
   MOCK_METHOD0(OnWaitingForDecryptionKey, void());
   MOCK_METHOD1(OnDurationChange, void(base::TimeDelta duration));
 
+  // Can't mock these because argument is move-only. If needed, add a mock
+  // function that is called by these. See
+  // https://stackoverflow.com/questions/42505119/how-to-mock-methods-return-object-with-deleted-copy-ctor
+  void OnAudioConfigChange(mojom::AudioDecoderConfigPtr config) {}
+  void OnVideoConfigChange(mojom::VideoDecoderConfigPtr config) {}
+
  private:
   DISALLOW_COPY_AND_ASSIGN(MockRendererClient);
 };
