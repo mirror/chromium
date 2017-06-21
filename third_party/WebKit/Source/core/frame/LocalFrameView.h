@@ -947,7 +947,7 @@ class CORE_EXPORT LocalFrameView final
   void UpdateCounters();
   void ForceLayoutParentViewIfNeeded();
   void PerformPreLayoutTasks();
-  void PerformLayout(bool in_subtree_layout);
+  bool PerformLayout(bool in_subtree_layout);
   void ScheduleOrPerformPostLayoutTasks();
   void PerformPostLayoutTasks();
 
