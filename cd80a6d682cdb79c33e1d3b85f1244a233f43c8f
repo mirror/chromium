@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "322c4375_4e716dbb",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-21T05:43:46Z",
+      "side": 1,
+      "message": "Sorry, was confused by the call to get...Device.",
+      "parentUuid": "40cc3715_5cde6e3c",
+      "range": {
+        "startLine": 536,
+        "startChar": 14,
+        "endLine": 536,
+        "endChar": 20
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36556d20_df1202a6",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 5
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "\u003e I don\u0027t think we should make services with standard names that don\u0027t follow the standards. https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile\u003dorg.bluetooth.service.health_thermometer.xml doesn\u0027t ever have duplicate characteristics.\n\u003e \n\u003e Here\u0027s one service that does allow for duplicate characteristics:\n\u003e https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile\u003dorg.bluetooth.service.environmental_sensing.xml\n\u003e (though, I\u0027m not sure why that logically makes sense)\n\u003e \n\u003e Or, we could use custom UUIDs for when we want multiple characteristics. \n\u003e \n\nI somewhat agree, though I wish we went all in with non-standard services i.e. only use non-standard services. Having a mix makes things confusing and results in more uuids that we have to keep around. That said, I think that refactor is a bit outside the scope of this CL.\n\n\u003e How many tests need 2 characteristics with the same UUID? Perhaps we should just add them directly in the test where needed -- which I think could help the tests be easier to understand:\n\u003e test() {\n\u003e   // add a characteristic\n\u003e   // add a characteristic\n\u003e   // getCharacteristics\n\u003e   // assert there are two with same UUID\n\u003e }\n\u003e \n\nAt least two: \n\n - getCharacteristics/characteristics-found.html\n - getCharacteristics/characteristics-found-with-uuid.html\n\n\u003e I\u0027m OK giving up on this goal if you think it\u0027s not worth it.",
       "parentUuid": "36556d20_df1202a6",
+      "range": {
+        "startLine": 550,
+        "startChar": 65,
+        "endLine": 551,
+        "endChar": 42
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2705619_53c6c5ba",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-21T05:43:46Z",
+      "side": 1,
+      "message": "\u003e \u003e How many tests need 2 characteristics with the same UUID? Perhaps we should just add them directly in the test where needed -- which I think could help the tests be easier to understand:\n\u003e \n\u003e At least two: \n\u003e \n\u003e  - getCharacteristics/characteristics-found.html\n\u003e  - getCharacteristics/characteristics-found-with-uuid.html\n\u003e \n\nI think we should just have those tests add multiple characteristics then. Doing so just in the local space of a few individual tests is less confusing, because it\u0027s clear in the test why they\u0027re being used. Having a method here that produces a weirdly shaped - but standard named thing causes indirection when reading the test, in a weird way because it\u0027s strange why a two measurement interval thing should exist.\n\nI\u0027m not a fan of lots of copy paste, but N \u003d\u003d 2 or 4 seems OK.\n\nAgain, this is not an overly strong opinion, so if you think this is cleaner. OK.",
+      "parentUuid": "41521f01_e10d1cd3",
       "range": {
         "startLine": 550,
         "startChar": 65,
