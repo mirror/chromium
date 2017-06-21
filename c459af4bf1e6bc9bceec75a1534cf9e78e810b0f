@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "437a5e3c_65835f8a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 12317,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-21T16:03:11Z",
+      "side": 1,
+      "message": "talked offline. remove is_android check below as it isn\u0027t needed.",
+      "parentUuid": "4d6757cf_5cbb9cb9",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "135ff8e8_683a823a",
         "filename": "chrome/browser/android/vr_shell/textures/ui_texture.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T14:22:29Z",
       "side": 1,
       "message": "I assume this will get cleaned up in a rebase.",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d27335_b2a75108",
+        "filename": "chrome/browser/android/vr_shell/textures/ui_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-21T16:03:11Z",
+      "side": 1,
+      "message": "dooh. removed.",
+      "parentUuid": "135ff8e8_683a823a",
       "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8c9bc1ac_78b0abdc",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-21T16:03:11Z",
+      "side": 1,
+      "message": "Now that we are testing show_toast parameter actually works. ShowAndHide seems to make more sense. I also added comment above the test.",
+      "parentUuid": "6cdb1a32_a416087e",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeb6d88e_386cf207",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "854f09c6_afcf9a80",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-21T16:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeb6d88e_386cf207",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48c0dc61_341c9f3c",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-21T14:22:29Z",
       "side": 1,
       "message": "Later, we\u0027ll need to circle back on tests that cover transient indicators, and assert that warnings disappear.  I\u0027ll add that to the bug description I made for transience.  We\u0027ll need the tests to be time-aware.",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0eca55b_de931286",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-21T16:03:11Z",
+      "side": 1,
+      "message": "leave it to you then :)",
+      "parentUuid": "48c0dc61_341c9f3c",
       "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
