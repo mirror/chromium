@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b89ec05_18dab208",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/StackLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-21T00:28:40Z",
+      "side": 1,
+      "message": "Is this not a problem for Chrome Home?\n\nOr, if it\u0027s not a problem for Chrome Home, is it possible that this is no longer needed for non-Chrome Home?",
+      "range": {
+        "startLine": 486,
+        "startChar": 56,
+        "endLine": 487,
+        "endChar": 53
+      },
+      "revId": "3def6f09943b08f1bb17ca9902b66bf7ba4cf031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34925f7_598f74b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/StackLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-21T00:28:40Z",
+      "side": 1,
+      "message": "This is forcing the animation for the new layout tab that was created to finish?",
+      "range": {
+        "startLine": 508,
+        "startChar": 8,
+        "endLine": 508,
+        "endChar": 30
+      },
+      "revId": "3def6f09943b08f1bb17ca9902b66bf7ba4cf031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8538274b_b4fda2dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/StackLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-21T00:28:40Z",
+      "side": 1,
+      "message": "It looks like the animation for non-Chrome Home is changing too? Will you please include a video of that in the bug if so.",
+      "range": {
+        "startLine": 512,
+        "startChar": 8,
+        "endLine": 512,
+        "endChar": 22
+      },
+      "revId": "3def6f09943b08f1bb17ca9902b66bf7ba4cf031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1ccb46_4af0d72d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/stack/Stack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-21T00:28:40Z",
+      "side": 1,
+      "message": "nit: put this back on a single line",
+      "range": {
+        "startLine": 533,
+        "startChar": 16,
+        "endLine": 533,
+        "endChar": 30
+      },
+      "revId": "3def6f09943b08f1bb17ca9902b66bf7ba4cf031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
