@@ -42,8 +42,10 @@ leveldb::Status ForEachWithPrefix(leveldb::DB* db,
 LevelDBDatabaseImpl::LevelDBDatabaseImpl(
     std::unique_ptr<leveldb::Env> environment,
     std::unique_ptr<leveldb::DB> db,
+    std::unique_ptr<leveldb::Cache> cache,
     base::Optional<base::trace_event::MemoryAllocatorDumpGuid> memory_dump_id)
     : environment_(std::move(environment)),
+      cache_(std::move(cache)),
       db_(std::move(db)),
       memory_dump_id_(memory_dump_id) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
@@ -298,6 +300,10 @@ bool LevelDBDatabaseImpl::OnMemoryDump(
   mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                  base::trace_event::MemoryAllocatorDump::kUnitsBytes,
                  memory_usage);
+  if (cache_)
+    mad->AddScalar("readcache",
+                   base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                   cache_->TotalCharge());
 
   const char* system_allocator_name =
       base::trace_event::MemoryDumpManager::GetInstance()
