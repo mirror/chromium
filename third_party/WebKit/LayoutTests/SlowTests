@@ -392,3 +392,13 @@ crbug.com/722825 virtual/new-remote-playback-pipeline/media/controls/video-enter
 crbug.com/719298 fast/dnd/dropEffect-for-effectAllowed.html [ Slow ]
 
 crbug.com/676572 [ Debug ] external/wpt/webstorage/storage_local_setitem_quotaexceedederr.html [ Slow ]
+
+# Slow tests when using SwiftShader 
+crbug.com/726075 [ Win ] css3/filters/effect-all-on-background-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-brightness-clamping-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-combined-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-reference-colorspace-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-reference-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-reference-subregion-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-reference-zoom-hw.html [ Slow ]
+crbug.com/726075 [ Win ] virtual/gpu/fast/canvas/OffscreenCanvas-filter-in-worker.html [ Slow ]

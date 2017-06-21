@@ -91,7 +91,7 @@ crbug.com/309675 virtual/disable-spinvalidation/compositing/gestures/gesture-tap
 # The failure in the next line is due to virtual/gpu bots using osmesa
 # Under osmesa, skia's filter quality doesn't work correctly. This test is expected to pass
 # when we swith to swiftshader.
-crbug.com/549742 [ Linux Mac Win ] virtual/gpu/fast/canvas/canvas-drawImage-video-imageSmoothingEnabled.html [ Failure ]
+crbug.com/549742 [ Linux Mac ] virtual/gpu/fast/canvas/canvas-drawImage-video-imageSmoothingEnabled.html [ Failure ]
 
 crbug.com/733428 virtual/gpu-rasterization/images/color-profile-background-image-repeat.html [ NeedsManualRebaseline ]
 crbug.com/733428 virtual/gpu-rasterization/images/color-profile-border-image.html [ NeedsManualRebaseline ]
@@ -99,9 +99,6 @@ crbug.com/733428 virtual/gpu-rasterization/images/color-profile-svg.html [ Needs
 crbug.com/733428 virtual/gpu/fast/canvas/image-object-in-canvas.html [ NeedsManualRebaseline ]
 
 crbug.com/602110 hittesting/border-hittest-with-image-fallback.html [ Failure ]
-
-# Fails consistently on WebKit Mac10.10, WebKit Mac10.11 (retina) and mac10.10_blink_rel tryserver, but not on other Mac bots.
-crbug.com/614910 [ Mac ] virtual/gpu-rasterization/images/pixel-crack-image-background-webkit-transform-scale.html [ Pass Failure ]
 
 crbug.com/671048 virtual/color_space/fast/canvas/color-space/display_linear-rgb.html [ Pass Failure Crash ]
 
@@ -1230,8 +1227,6 @@ crbug.com/443615 [ Linux Win ] external/wpt/css/css-shapes-1/shape-outside/suppo
 
 crbug.com/381684 [ Mac Win ] fonts/family-fallback-gardiner.html [ Skip ]
 crbug.com/467635 fast/dom/HTMLImageElement/image-sizes-meta-viewport.html [ Skip ]
-
-crbug.com/636239 [ Win7 ] media/video-zoom-controls.html [ Failure ]
 
 # Printing Layout broken in these tests.
 crbug.com/377696 printing/setPrinting.html [ Skip ]
@@ -2766,3 +2761,13 @@ crbug.com/733524 [ Mac ] virtual/mojo-loading/http/tests/security/contentSecurit
 
 # Rebaselining a newly-passing test fixed by v8
 crbug.com/v8/6504 fast/js/mozilla/strict/B.1.2.html [ NeedsManualRebaseline ]
+
+# Temporarily disabled ES3 related layout tests
+crbug.com/726075 [ Win ] external/wpt/offscreen-canvas/the-offscreen-canvas/offscreencanvas.getcontext.html [ Crash ]
+crbug.com/726075 [ Win ] fast/canvas/OffscreenCanvas-zero-size-readback.html [ Crash ]
+crbug.com/726075 [ Win ] fast/canvas/webgl/webgl-sharedarraybuffer.html [ Crash ]
+crbug.com/726075 [ Win ] virtual/display_list_2d_canvas/fast/canvas/OffscreenCanvas-zero-size-readback.html [ Crash ]
+crbug.com/726075 [ Win ] virtual/display_list_2d_canvas/fast/canvas/webgl/webgl-sharedarraybuffer.html [ Crash ]
+crbug.com/726075 [ Win ] virtual/gpu/fast/canvas/OffscreenCanvas-zero-size-readback.html [ Crash ]
+crbug.com/726075 [ Win ] virtual/gpu/fast/canvas/webgl/webgl-sharedarraybuffer.html [ Crash ]
+crbug.com/726075 [ Win ] vr/requestPresent_resolve_webgl2.html [ Crash ]
