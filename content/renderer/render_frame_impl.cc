@@ -5119,6 +5119,12 @@ void RenderFrameImpl::OnCommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params) {
   CHECK(IsBrowserSideNavigationEnabled());
+
+  RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+  // Can be NULL in tests.
+  if (render_thread_impl)
+    render_thread_impl->GetRendererScheduler()->OnNavigate();
+
   // This will override the url requested by the WebURLLoader, as well as
   // provide it with the response to the request.
   std::unique_ptr<StreamOverrideParameters> stream_override(
