@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "664030fe_f22b8b65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-21T16:30:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "130535d1_11f34ec0",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "f5259bdc4484610f4f48b2388300e7dc56825111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8d7e6d8_c3e403e5",
         "filename": "chrome/browser/ui/cocoa/subresource_filter/subresource_filter_bubble_controller.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f5259bdc4484610f4f48b2388300e7dc56825111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9930d6_0e99ecfd",
+        "filename": "chrome/browser/ui/cocoa/subresource_filter/subresource_filter_bubble_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-21T16:30:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8d7e6d8_c3e403e5",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 13
+      },
+      "revId": "f5259bdc4484610f4f48b2388300e7dc56825111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
