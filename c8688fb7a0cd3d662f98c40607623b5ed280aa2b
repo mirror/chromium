@@ -16,6 +16,24 @@
       "revId": "c8688fb7a0cd3d662f98c40607623b5ed280aa2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666ef7a7_529e7edf",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T23:18:45Z",
+      "side": 1,
+      "message": "Done in resource_scheduler.h",
+      "parentUuid": "d4830cc2_a93d53b3",
+      "revId": "c8688fb7a0cd3d662f98c40607623b5ed280aa2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
