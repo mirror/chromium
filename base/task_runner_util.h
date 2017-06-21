@@ -15,6 +15,29 @@
 #include "base/task_runner.h"
 
 namespace base {
+namespace internal {
+
+template <typename... UnboundArgs>
+struct AttachToTaskRunnerHelper {
+  static void Run(scoped_refptr<base::TaskRunner> task_runner,
+                  Callback<void(UnboundArgs...)> callback,
+                  UnboundArgs... args) {
+    CHECK(task_runner->PostTask(
+        FROM_HERE,
+        base::Bind(std::move(callback), std::forward<UnboundArgs>(args)...)));
+  }
+};
+
+// Specialization for no-arg Closures, avoiding callback copies.
+template <>
+struct AttachToTaskRunnerHelper<> {
+  static void Run(scoped_refptr<base::TaskRunner> task_runner,
+                  Closure closure) {
+    CHECK(task_runner->PostTask(FROM_HERE, std::move(closure)));
+  }
+};
+
+}  // namespace internal
 
 // When you have these methods
 //
@@ -60,6 +83,17 @@ bool PostTaskAndReplyWithResult(TaskRunner* task_runner,
   return PostTaskAndReplyWithResult(
       task_runner, from_here, OnceCallback<TaskReturnType()>(std::move(task)),
       OnceCallback<void(ReplyArgType)>(std::move(reply)));
+}
+
+// Wraps |callback| with thread-hopping logic so that it is executed on
+// |task_runner|.
+// KM: add more documentation if this is worth pursuing
+template <typename... UnboundArgs>
+Callback<void(UnboundArgs...)> AttachToTaskRunner(
+    scoped_refptr<base::TaskRunner> task_runner,
+    Callback<void(UnboundArgs...)> callback) {
+  return base::Bind(&internal::AttachToTaskRunnerHelper<UnboundArgs...>::Run,
+                    std::move(task_runner), std::move(callback));
 }
 
 }  // namespace base

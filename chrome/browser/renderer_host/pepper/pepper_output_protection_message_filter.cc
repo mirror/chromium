@@ -4,6 +4,7 @@
 
 #include "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h"
 
+#include "base/task_runner_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/media/output_protection_proxy.h"
 #include "content/public/browser/browser_ppapi_host.h"
@@ -97,9 +98,11 @@ int32_t PepperOutputProtectionMessageFilter::OnQueryStatus(
     ppapi::host::HostMessageContext* context) {
   ppapi::host::ReplyMessageContext reply_context =
       context->MakeReplyMessageContext();
-  proxy_->QueryStatus(
+  proxy_->QueryStatus(AttachToTaskRunner(
+      content::BrowserThread::GetTaskRunnerForThread(
+          content::BrowserThread::IO),
       base::Bind(&PepperOutputProtectionMessageFilter::OnQueryStatusComplete,
-                 weak_ptr_factory_.GetWeakPtr(), reply_context));
+                 weak_ptr_factory_.GetWeakPtr(), reply_context)));
   return PP_OK_COMPLETIONPENDING;
 }
 
@@ -110,27 +113,16 @@ int32_t PepperOutputProtectionMessageFilter::OnEnableProtection(
       context->MakeReplyMessageContext();
   proxy_->EnableProtection(
       desired_method_mask,
-      base::Bind(
-          &PepperOutputProtectionMessageFilter::OnEnableProtectionComplete,
-          weak_ptr_factory_.GetWeakPtr(), reply_context));
+      AttachToTaskRunner(
+          content::BrowserThread::GetTaskRunnerForThread(
+              content::BrowserThread::IO),
+          base::Bind(
+              &PepperOutputProtectionMessageFilter::OnEnableProtectionComplete,
+              weak_ptr_factory_.GetWeakPtr(), reply_context)));
   return PP_OK_COMPLETIONPENDING;
 }
 
-// static
 void PepperOutputProtectionMessageFilter::OnQueryStatusComplete(
-    base::WeakPtr<PepperOutputProtectionMessageFilter> filter,
-    ppapi::host::ReplyMessageContext reply_context,
-    bool success,
-    uint32_t link_mask,
-    uint32_t protection_mask) {
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::Bind(
-          &PepperOutputProtectionMessageFilter::OnQueryStatusCompleteOnIOThread,
-          filter, reply_context, success, link_mask, protection_mask));
-}
-
-void PepperOutputProtectionMessageFilter::OnQueryStatusCompleteOnIOThread(
     ppapi::host::ReplyMessageContext reply_context,
     bool success,
     uint32_t link_mask,
@@ -141,19 +133,7 @@ void PepperOutputProtectionMessageFilter::OnQueryStatusCompleteOnIOThread(
                                link_mask, protection_mask));
 }
 
-// static
 void PepperOutputProtectionMessageFilter::OnEnableProtectionComplete(
-    base::WeakPtr<PepperOutputProtectionMessageFilter> filter,
-    ppapi::host::ReplyMessageContext reply_context,
-    bool success) {
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::Bind(&PepperOutputProtectionMessageFilter::
-                     OnEnableProtectionCompleteOnIOThread,
-                 filter, reply_context, success));
-}
-
-void PepperOutputProtectionMessageFilter::OnEnableProtectionCompleteOnIOThread(
     ppapi::host::ReplyMessageContext reply_context,
     bool success) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
