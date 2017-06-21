@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73ab22f2_2605d551",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-21T14:49:36Z",
+      "side": 1,
+      "message": "Can you do this without a mutable reference?",
+      "range": {
+        "startLine": 571,
+        "startChar": 4,
+        "endLine": 571,
+        "endChar": 16
+      },
+      "revId": "f57035f32843543e545389bf0ddbb4551d07f004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d6a186_3f31bd7c",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-21T14:49:36Z",
+      "side": 1,
+      "message": "An alternative would be to return the transformed URL and then do EXPECT_EQ at the call site, which would result in a slightly nicer failure message (you would see the parameters in addition to the expected URL). OTOH, you would have to find some other way to deal with GetImageURLWithOptions() failing.\n\nAnd all of that being said, I don\u0027t see that much point in the return value of GetImageURLWithOptions() anyway: the input URL could be checked for validity by the caller (and therefore just DCHECKed in the method), and assuming it is valid, the returned URL could be DCHECKed for validity as well -- the method shouldn\u0027t invalidate a valid URL.",
+      "revId": "f57035f32843543e545389bf0ddbb4551d07f004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8972dd4e_e43a3d85",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-21T14:49:36Z",
+      "side": 1,
+      "message": "If there is no ASSERT in the inner method, you don\u0027t need EXPECT_NO_FATAL_FAILURE -- an EXPECT failure is not considered fatal, so that can\u0027t happen anyway. Also, EXPECT_NO_FATAL_FAILURE in general is not that useful -- a fatal failure will be recorded just like a non-fatal failure, so the test would be considered failed in any case. ASSERT_NO_FATAL_FAILURE OTOH lets you propagate the early return from an ASSERT upwards the call stack instead of continuing after an ASSERT failure.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 25
+      },
+      "revId": "f57035f32843543e545389bf0ddbb4551d07f004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
