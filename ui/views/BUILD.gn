@@ -1015,6 +1015,10 @@ test("views_unittests") {
     "controls/textfield/textfield_unittest.cc",
   ]
 
+  deps = [
+    "//mojo/edk/system",
+  ]
+
   if (use_aura) {
     sources += [
       # These tests currently use AuraTestBase, but then try to use views
@@ -1053,9 +1057,7 @@ test("views_unittests") {
     sources += [ "widget/desktop_widget_unittest.cc" ]
   }
 
-  deps = [
-    ":views_unittests_sources",
-  ]
+  deps += [ ":views_unittests_sources" ]
 }
 
 if (is_mac) {
@@ -1070,6 +1072,7 @@ if (is_mac) {
       ":views",
       "//base",
       "//base/test:test_support",
+      "//mojo/edk/system",
       "//skia",
       "//testing/gtest",
       "//ui/base:test_support",
