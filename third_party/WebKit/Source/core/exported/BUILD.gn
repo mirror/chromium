@@ -4,6 +4,10 @@
 import("//third_party/WebKit/Source/core/core.gni")
 
 blink_core_sources("exported") {
+  # To maintain layering, we do not allow any modules in core to depend on
+  # exported.
+  visibility = [ "//third_party/WebKit/Source/core:core" ]
+
   sources = [
     "SharedWorkerRepositoryClientImpl.cpp",
     "SharedWorkerRepositoryClientImpl.h",
