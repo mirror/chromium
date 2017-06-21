@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "ui/gfx/buffer_types.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/ozone/common/gpu/ozone_gpu_message_params.h"
 
@@ -39,6 +40,13 @@ class DrmGpuDisplayManager {
   // controller or default display controller for kNullAcceleratedWidget.
   void GetScanoutFormats(gfx::AcceleratedWidget widget,
                          std::vector<gfx::BufferFormat>* scanout_formats);
+
+  // Returns all scanout GpuMemoryBufferAttribs for a particular display
+  // controller connected to |widget|, or for for the default display
+  // controller in case |widget| == kNullAcceleratedWidget.
+  void GetScanoutFormatsWithModifiers(
+      gfx::AcceleratedWidget widget,
+      gfx::GpuMemoryBufferAttribVector* scanout_combinations);
 
   // Takes/releases the control of the DRM devices.
   bool TakeDisplayControl();

@@ -15,6 +15,8 @@
 #include "ui/ozone/platform/drm/gpu/drm_display.h"
 #include "ui/ozone/platform/drm/gpu/screen_manager.h"
 
+#define DRM_FORMAT_MOD_NONE 0
+
 namespace ui {
 
 namespace {
@@ -110,6 +112,36 @@ void DrmGpuDisplayManager::GetScanoutFormats(
           ->GetSupportedFormats();
   for (auto& fourcc : fourcc_formats)
     scanout_formats->push_back(GetBufferFormatFromFourCCFormat(fourcc));
+}
+
+void DrmGpuDisplayManager::GetScanoutFormatsWithModifiers(
+    gfx::AcceleratedWidget widget,
+    gfx::GpuMemoryBufferAttribVector* scanout_combinations) {
+  HardwareDisplayPlaneManager* plane_manager =
+      drm_device_manager_->GetDrmDevice(widget)->plane_manager();
+  const std::vector<uint32_t>& fourcc_formats =
+      plane_manager->GetSupportedFormats();
+
+  for (auto& format : fourcc_formats) {
+    const std::vector<std::unique_ptr<HardwareDisplayPlane>>& planes =
+        plane_manager->planes();
+    for (auto& plane : planes) {
+      if (plane->type() != HardwareDisplayPlane::kPrimary)
+        continue;
+
+      const std::vector<uint64_t>& drm_modifiers =
+          plane->ModifiersForFormat(format);
+      if (drm_modifiers.size() > 0) {
+        for (auto modifier : drm_modifiers) {
+          scanout_combinations->push_back(
+              gfx::GpuMemoryBufferAttrib(format, modifier));
+        }
+      } else
+        scanout_combinations->push_back(
+            gfx::GpuMemoryBufferAttrib(format, DRM_FORMAT_MOD_NONE));
+      break;
+    }
+  }
 }
 
 bool DrmGpuDisplayManager::TakeDisplayControl() {

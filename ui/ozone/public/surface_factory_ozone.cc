@@ -35,6 +35,12 @@ std::vector<gfx::BufferFormat> SurfaceFactoryOzone::GetScanoutFormats(
   return std::vector<gfx::BufferFormat>();
 }
 
+gfx::GpuMemoryBufferAttribVector
+SurfaceFactoryOzone::GetScanoutFormatsWithModifiers(
+    gfx::AcceleratedWidget widget) {
+  return gfx::GpuMemoryBufferAttribVector();
+}
+
 scoped_refptr<gfx::NativePixmap> SurfaceFactoryOzone::CreateNativePixmap(
     gfx::AcceleratedWidget widget,
     gfx::Size size,
