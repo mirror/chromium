@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42fe787d_99bce3a2",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-21T19:15:01Z",
+      "side": 1,
+      "message": "Currently there is no test for this function. Tests do exist for OneWriterSeqLock at //device/base/synchronization/one_writer_seqlock_unittest.cc\n\nThe kind of logic in this function is not extensively complicated and already exists in several places in the code base and it is not brand new code:\nhttps://cs.chromium.org/chromium/src/content/renderer/gamepad_shared_memory_reader.cc?l\u003d81-105\nhttps://cs.chromium.org/chromium/src/content/renderer/shared_memory_seqlock_reader.cc?l\u003d37-58\nAnd those don\u0027t have tests either. I do agree that generally adding tests for this logic may provide extra protection, but it seems having limited values.",
+      "parentUuid": "c4fded29_b024a592",
+      "range": {
+        "startLine": 31,
+        "startChar": 73,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a53fb829_612961be",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "70db262b_7daeb114",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-21T19:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a53fb829_612961be",
+      "range": {
+        "startLine": 35,
+        "startChar": 19,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46960b6c_950e427c",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468d4eb5_0aff351b",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-21T19:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46960b6c_950e427c",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
