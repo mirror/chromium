@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5231c12d_a2d332a5",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-21T23:45:45Z",
+      "side": 0,
+      "message": "Removed the curly braces during debugging. Will add them back in next patch review.",
+      "range": {
+        "startLine": 195,
+        "startChar": 3,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "5512d48f978312c353d8a7b72fa77b594f4470ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9ce284_f45264df",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-21T23:45:45Z",
+      "side": 0,
+      "message": "Same here. Removed new line during debugging. Will add it back in the next patch.",
+      "revId": "5512d48f978312c353d8a7b72fa77b594f4470ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

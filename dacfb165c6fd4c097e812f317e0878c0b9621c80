@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2228e63c_4d3a161d",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-21T23:45:45Z",
+      "side": 1,
+      "message": "Devlin, I wanted to verify with you that no error checking is needed here, since OpenTab() (the function that encloses this code) is opening a new tab from tab with the opener_tab_id.",
+      "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
