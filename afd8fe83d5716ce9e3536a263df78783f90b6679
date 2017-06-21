@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be478863_053c2233",
+        "filename": "extensions/browser/api/power/power_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T11:34:49Z",
+      "side": 1,
+      "message": "Although it is safe to call CancelWakeLock() when the wake_lock is inactive, I feel it is better to add the \"if(has_wake_lock_)\".",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 20
+      },
+      "revId": "afd8fe83d5716ce9e3536a263df78783f90b6679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

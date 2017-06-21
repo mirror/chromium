@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd3eb93d_54e75273",
+        "filename": "device/wake_lock/public/interfaces/wake_lock.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T11:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09c7c23e_99246644",
+      "revId": "fecc35422d65b809e178d36400bbbdb5993f0cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1be196_0a61ef8f",
         "filename": "device/wake_lock/wake_lock.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-20T14:16:16Z",
       "side": 1,
       "message": "nit: I would write:\n\nmojom::WakeLockType old_type \u003d type_;\ntype_ \u003d type;\n\nif (type_ !\u003d old_type \u0026\u0026 wake_lock)\n  SwapWakeLock();\n\nstd::move(callback).Run(true);",
+      "revId": "fecc35422d65b809e178d36400bbbdb5993f0cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d321101_f632d23f",
+        "filename": "device/wake_lock/wake_lock.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T11:34:49Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "bb1be196_0a61ef8f",
       "revId": "fecc35422d65b809e178d36400bbbdb5993f0cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aad03f12_5ced52d6",
+        "filename": "device/wake_lock/wake_lock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T11:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba59f3a8_5d33b4b9",
+      "revId": "fecc35422d65b809e178d36400bbbdb5993f0cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cec688ed_2291ba5c",
         "filename": "extensions/browser/api/power/power_api.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "fecc35422d65b809e178d36400bbbdb5993f0cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4adc8d_ea54e1db",
+        "filename": "extensions/browser/api/power/power_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T11:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cec688ed_2291ba5c",
+      "revId": "fecc35422d65b809e178d36400bbbdb5993f0cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
