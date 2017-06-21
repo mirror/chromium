@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64d75f74_d84e6049",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T15:19:24Z",
+      "side": 1,
+      "message": "Well I think it should be SuggestedContent* with two parts: NewTabPage(Header/WhatsNew) and ContentSuggestions.\nBut renaming everything would be relatively hard. For now I am keeping ContentSuggestions for everything.",
+      "parentUuid": "943cba42_3b75f61f",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "74fde0267b4fde72baff51298fc5eae41ba214f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92db7535_2d7eeeb6",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "74fde0267b4fde72baff51298fc5eae41ba214f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e0a053_e6e05179",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T15:19:24Z",
+      "side": 1,
+      "message": "I have added a todo. I don\u0027t want to implement everything in one CL.",
+      "parentUuid": "92db7535_2d7eeeb6",
+      "range": {
+        "startLine": 228,
+        "startChar": 8,
+        "endLine": 228,
+        "endChar": 35
+      },
+      "revId": "74fde0267b4fde72baff51298fc5eae41ba214f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
