@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd41db5c_bc796681",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T08:24:04Z",
+      "side": 1,
+      "message": "could you use chrome/common/safe_browsing/pe_image_reader_win.h or base/win/pe_image.h instead of making something new to sniff data out of image headers like this?",
+      "revId": "70c6860bccc96e5881a2b3cd41bd73920d6c7218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
