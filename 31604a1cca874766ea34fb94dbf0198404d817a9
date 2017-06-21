@@ -16,6 +16,24 @@
       "revId": "31604a1cca874766ea34fb94dbf0198404d817a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44683853_77f560ef",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-21T18:31:20Z",
+      "side": 1,
+      "message": "Let\u0027s just assume ProcessMemoryDump::CreateSharedMemoryOwnershipEdge always comes first. Since the client (gpu) dump providers have thread affinity and this one does not.\n\nNote: creating the edge is not the important part here. The main thing this function is doing is adding size. If this condition is wrong then we will never have size in the dumps. Other option is to move the size creation to the GetDumpName function. But, that is weird and could get complicated. Take the following cases:\n\nMulti process mode:\nTake the case of memory_guid is empty:\n1. ProcessMemoryDump::CreateSharedMemoryOwnershipEdge creates a dump with \"shared_memory/TOKEN\" and token is empty.\n2. GetAllocatorDump will always return null because no one ever created dump with \"shared_memory/ADDRESS\". We create dumps and add size.\n\nThis case is anyway broken because we don\u0027t have the guid yet. But, still works because we create dumps and add size.\n\nWhen memory_guid is non-empty:\n1. ProcessMemoryDump::CreateSharedMemoryOwnershipEdge creates a dump with \"shared_memory/TOKEN\" and token has some ID.\n2. GetAllocatorDump will always return a dump and the tracker never really creates a dump.\nThis is an issue and we can get to this once we have the right guid. As I understand that is what the TODO says here.\n\nThis is broken because we did not add size.\n\nSingle process mode:\nTake the case of memory_guid is empty:\n1. ProcessMemoryDump::CreateSharedMemoryOwnershipEdge creates a dump with \"shared_memory/TOKEN\" and token is empty.\n2. GetAllocatorDump will always return null because no one ever created dump with \"shared_memory/ADDRESS\". We create dumps and add size. Even in single process mode since the ADDRESS will be different.\n\nWhen memory_guid is non-empty:\n1. ProcessMemoryDump::CreateSharedMemoryOwnershipEdge creates a dump with \"shared_memory/TOKEN\" and token has some ID. there could be multiple segments with same token, and creating edges might go wrong slightly. So, we should make a plan for this / think about this.\n2. GetAllocatorDump will always return a dump because the previous CreateSharedMemoryOwnershipEdge created dumps already. We will never create dump here and add size.\n\nThis is broken because we did not add size and did not add edges also right.\n\n\nThe second scenario with correct guid is what we should aim to fix and let\u0027s do it when we get rid of the TODO.",
+      "parentUuid": "0ef9e66c_446ecb78",
+      "revId": "31604a1cca874766ea34fb94dbf0198404d817a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
