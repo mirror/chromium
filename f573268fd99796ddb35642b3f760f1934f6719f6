@@ -22,6 +22,30 @@
       "revId": "f573268fd99796ddb35642b3f760f1934f6719f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82d0049_15bcb6a8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/idlharness.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-21T20:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cadc86d5_7dd92270",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "f573268fd99796ddb35642b3f760f1934f6719f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
