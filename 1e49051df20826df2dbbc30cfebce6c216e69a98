@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f04df2_1bd84f61",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-21T23:27:02Z",
+      "side": 1,
+      "message": "As we discussed and wholeheartedly agreed to offline, lets rename this to forcing_layout_parent_view_ and add a comment in UpdateLayout describing why it is dangerous.",
+      "revId": "1e49051df20826df2dbbc30cfebce6c216e69a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
