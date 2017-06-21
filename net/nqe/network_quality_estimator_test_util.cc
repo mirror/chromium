@@ -190,6 +190,13 @@ base::Optional<base::TimeDelta> TestNetworkQualityEstimator::GetTransportRTT()
   return NetworkQualityEstimator::GetTransportRTT();
 }
 
+base::Optional<int32_t>
+TestNetworkQualityEstimator::GetDownstreamThroughputKbps() const {
+  if (start_time_null_downlink_throughput_kbps_)
+    return start_time_null_downlink_throughput_kbps_;
+  return NetworkQualityEstimator::GetDownstreamThroughputKbps();
+}
+
 bool TestNetworkQualityEstimator::GetRecentDownlinkThroughputKbps(
     const base::TimeTicks& start_time,
     int32_t* kbps) const {
