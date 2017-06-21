@@ -27,8 +27,6 @@ class DistillabilityServiceImpl : public mojom::DistillabilityService {
       : distillability_driver_(distillability_driver) {}
 
   ~DistillabilityServiceImpl() override {
-    if (!distillability_driver_) return;
-    distillability_driver_->SetNeedsMojoSetup();
   }
 
   void NotifyIsDistillable(bool is_distillable, bool is_last_update) override {
@@ -43,10 +41,11 @@ class DistillabilityServiceImpl : public mojom::DistillabilityService {
 DistillabilityDriver::DistillabilityDriver(
     content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
-      mojo_needs_setup_(true),
       weak_factory_(this) {
   if (!web_contents) return;
-  SetupMojoService(web_contents->GetMainFrame());
+  frame_interfaces_.AddInterface(
+      base::Bind(&DistillabilityDriver::CreateDistillabilityService,
+                 base::Unretained(this)));
 }
 
 DistillabilityDriver::~DistillabilityDriver() {
@@ -66,47 +65,21 @@ void DistillabilityDriver::SetDelegate(
   m_delegate_ = delegate;
 }
 
-void DistillabilityDriver::OnDistillability(
-    bool distillable, bool is_last) {
+void DistillabilityDriver::OnDistillability(bool distillable, bool is_last) {
   if (m_delegate_.is_null()) return;
 
   m_delegate_.Run(distillable, is_last);
 }
 
-void DistillabilityDriver::SetNeedsMojoSetup() {
-  mojo_needs_setup_ = true;
-}
-
-void DistillabilityDriver::RenderFrameHostChanged(
-    content::RenderFrameHost* old_host,
-    content::RenderFrameHost* new_host) {
-  // This method is invoked if any of the active RenderFrameHosts are swapped.
-  // Only add the mojo service to the main frame host.
-  if (!web_contents() || web_contents()->GetMainFrame() != new_host) return;
-
-  // If the RenderFrameHost changes (this will happen if the user navigates to
-  // or from a native page), the service needs to be attached to that host.
-  mojo_needs_setup_ = true;
-  SetupMojoService(new_host);
-}
-
-void DistillabilityDriver::ReadyToCommitNavigation(
-      content::NavigationHandle* navigation_handle) {
-  if (!navigation_handle->IsSameDocument())
-    SetupMojoService(navigation_handle->GetRenderFrameHost());
-}
-
-void DistillabilityDriver::SetupMojoService(
-    content::RenderFrameHost* frame_host) {
-  if (!frame_host || !frame_host->GetInterfaceRegistry()
-      || !mojo_needs_setup_) {
-    return;
+void DistillabilityDriver::BindInterfaceRequestFromFrame(
+    content::RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle* interface_pipe) {
+  if (frame_interfaces_.CanBindInterface(interface_name)) {
+    frame_interfaces_.BindInterface(source_info, interface_name,
+                                    std::move(*interface_pipe));
   }
-
-  frame_host->GetInterfaceRegistry()->AddInterface(
-      base::Bind(&DistillabilityDriver::CreateDistillabilityService,
-          weak_factory_.GetWeakPtr()));
-  mojo_needs_setup_ = false;
 }
 
 }  // namespace dom_distiller
