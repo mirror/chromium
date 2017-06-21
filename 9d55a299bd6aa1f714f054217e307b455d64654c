@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cade4f9e_bdc075f4",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "nit: elide braces",
+      "range": {
+        "startLine": 596,
+        "startChar": 79,
+        "endLine": 596,
+        "endChar": 80
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fc3f53_21b5efa8",
+        "filename": "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "What happens if this is never called? Do we have a way of timing that whole operation out?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 76
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99907f81_d2995ddd",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "maybe std::vector\u003carc::mojom::AppInfo\u003e apps{app};\n\n(or inline it in L555).",
+      "range": {
+        "startLine": 552,
+        "startChar": 4,
+        "endLine": 552,
+        "endChar": 24
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702382c4_78a4b0e8",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "Maybe log that you\u0027re skipping part of the test?",
+      "range": {
+        "startLine": 1196,
+        "startChar": 4,
+        "endLine": 1196,
+        "endChar": 10
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df0ebd7_cd41ad95",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "nit: guard-clause pattern like in L18:\n\nif (!prefs)\n  return;\nprefs-\u003eRemoveObserver(this);",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5621b2_580e489f",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "nit: DCHECK_GT(0, lock_count_);",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bf6258_5f917456",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "nit: split for symmetry with L31:\n\n--lock_count_;\nif (!lock_count_)\n  MaybeStartPai();\n\nor even better: don\u0027t bother checking |lock_count_| at all, since MaybeStartPai() exits if the lock count is non-zero anyways.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299bd0d2_e9b17595",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "do you need to save this state in case this is called when |lock_count_| is non-zero? if that is impossible, can you add DCHECKs / comments?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 40
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea744388_31bee871",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-21T17:23:57Z",
+      "side": 1,
+      "message": "nit: \":\" since you are enumerating the conditions.",
+      "range": {
+        "startLine": 17,
+        "startChar": 64,
+        "endLine": 17,
+        "endChar": 65
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
