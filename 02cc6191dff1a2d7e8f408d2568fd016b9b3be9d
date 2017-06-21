@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71cf09d2_c25c0e1b",
+        "filename": "components/metrics/net/network_metrics_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-21T14:52:35Z",
+      "side": 1,
+      "message": "Either inline this (that\u0027s usually how the API is used) or mark it as \"static constexpr\" to avoid runtime cost.",
+      "revId": "02cc6191dff1a2d7e8f408d2568fd016b9b3be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f365e988_683d8bc3",
+        "filename": "components/metrics/net/network_metrics_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-21T14:52:35Z",
+      "side": 1,
+      "message": "base:: prefix missing",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 38
+      },
+      "revId": "02cc6191dff1a2d7e8f408d2568fd016b9b3be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6809425b_b751a11d",
+        "filename": "components/metrics/net/network_metrics_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-21T14:52:35Z",
+      "side": 1,
+      "message": "You can provide an \u003d nullptr default argument to make it optional and avoid all callers passing a \"nullptr\" argument (also I might be missing it but at a glance I\u0027m not seeing any callers passing anything but nullptr to this param?)",
+      "revId": "02cc6191dff1a2d7e8f408d2568fd016b9b3be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
