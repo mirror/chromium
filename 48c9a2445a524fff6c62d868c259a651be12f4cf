@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7a72b6_2018d72b",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T20:28:12Z",
+      "side": 1,
+      "message": "nit: please pass the name as a ctor parameter so we can keep the existing window names",
+      "revId": "48c9a2445a524fff6c62d868c259a651be12f4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f934a7_8d3a16fe",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T20:28:12Z",
+      "side": 1,
+      "message": "I prefer if this was done by the ShellSurface, etc. Gives the final class more control and makes this base class less like magic. Ca we replace Attach/DetachSurface with SetRootSurface?",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 37
+      },
+      "revId": "48c9a2445a524fff6c62d868c259a651be12f4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194b18a3_e7565ed6",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T20:28:12Z",
+      "side": 1,
+      "message": "nit: s/functions/common functionality/",
+      "revId": "48c9a2445a524fff6c62d868c259a651be12f4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9eb78b_72810e6d",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T20:28:12Z",
+      "side": 1,
+      "message": "I prefer if we require the final surface class to override OnSurfaceDestroying and OnSurfaceCommit instead of adding these.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "48c9a2445a524fff6c62d868c259a651be12f4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2be59c0_d21f7ef9",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T20:28:12Z",
+      "side": 1,
+      "message": "nit: s/surface_/root_surface_/",
+      "revId": "48c9a2445a524fff6c62d868c259a651be12f4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
