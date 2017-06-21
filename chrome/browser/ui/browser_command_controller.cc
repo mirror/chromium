@@ -87,6 +87,7 @@
 using content::NavigationEntry;
 using content::NavigationController;
 using content::WebContents;
+using content::WebContentsImpl;
 
 namespace chrome {
 
@@ -262,6 +263,15 @@ void BrowserCommandController::FullscreenStateChanged() {
 
 void BrowserCommandController::PrintingStateChanged() {
   UpdatePrintingState();
+}
+
+void BrowserCommandController::SetErrorPage(bool is_error_page) {
+  UpdateErrorPageState(is_error_page);
+}
+
+void BrowserCommandController::DisplayViewInTouchbar(
+    content::WebContents* contents) {
+  window()->DisplayViewInTouchbar(contents);
 }
 
 void BrowserCommandController::LoadingStateChanged(bool is_loading,
@@ -1114,6 +1124,10 @@ void BrowserCommandController::UpdateOpenFileState(
     enabled = local_state->GetBoolean(prefs::kAllowFileSelectionDialogs);
 
   command_updater->UpdateCommandEnabled(IDC_OPEN_FILE, enabled);
+}
+
+void BrowserCommandController::UpdateErrorPageState(bool is_error_page) {
+  window()->UpdateErrorPageState(is_error_page);
 }
 
 void BrowserCommandController::UpdateReloadStopState(bool is_loading,

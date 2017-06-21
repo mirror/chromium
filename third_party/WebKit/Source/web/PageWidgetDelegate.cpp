@@ -43,6 +43,7 @@
 #include "platform/graphics/paint/CullRect.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/transforms/AffineTransform.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/platform/WebInputEvent.h"
@@ -121,6 +122,7 @@ WebInputEventResult PageWidgetDelegate::HandleInputEvent(
     const WebCoalescedInputEvent& coalesced_event,
     LocalFrame* root) {
   const WebInputEvent& event = coalesced_event.Event();
+
   if (event.GetModifiers() & WebInputEvent::kIsTouchAccessibility &&
       WebInputEvent::IsMouseEventType(event.GetType())) {
     WebMouseEvent mouse_event = TransformWebMouseEvent(

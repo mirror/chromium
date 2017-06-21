@@ -252,6 +252,35 @@ BASE_EXPORT extern NSString* const CIDetectorTypeText;
     (NSAttributedString*)attributedStringValue;
 @end
 
+typedef NS_ENUM(NSInteger, NSTouchType) {
+  NSTouchTypeDirect,    // A direct touch from a finger (on a screen)
+  NSTouchTypeIndirect,  // An indirect touch (not a screen)
+};
+
+typedef NS_OPTIONS(NSUInteger, NSTouchTypeMask) {
+  NSTouchTypeMaskDirect =
+      (1 << NSTouchTypeDirect),  // A direct touch from a finger (on a screen)
+  NSTouchTypeMaskIndirect =
+      (1 << NSTouchTypeIndirect),  // An indirect touch (not a screen)
+};
+
+@interface NSView (NSTouchBar)
+/* Defaults to NSTouchTypeDirect if linked on or after 10_12, 0 otherwise */
+@property NSTouchTypeMask allowedTouchTypes;
+@end
+
+@interface NSTouch (NSTouchBar)
+/* A touch can only be one type at a time */
+@property(readonly) NSTouchType type;
+
+/* These two methods are only valid for Direct touches. A nil view means the
+ * touch location in the root container of touch. */
+- (NSPoint)locationInView:(NSView*)view;
+- (NSPoint)previousLocationInView:(NSView*)view;
+@end
+
+const NSUInteger NSEventTypeDirectTouch = 37;
+
 #endif  // MAC_OS_X_VERSION_10_12_1
 
 // ----------------------------------------------------------------------------

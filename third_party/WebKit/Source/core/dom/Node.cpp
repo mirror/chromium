@@ -2279,6 +2279,7 @@ void Node::DispatchMouseEvent(const WebMouseEvent& native_event,
                               int detail,
                               const String& canvas_region_id,
                               Node* related_target) {
+  TRACE_EVENT0("input", "yay");
   CreateAndDispatchPointerEvent(mouse_event_type, native_event,
                                 GetDocument().domWindow());
   DispatchEvent(MouseEvent::Create(mouse_event_type, GetDocument().domWindow(),
