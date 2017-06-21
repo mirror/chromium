@@ -3169,6 +3169,15 @@ void HTMLMediaElement::RequestSeek(double time) {
 
 void HTMLMediaElement::RemoteRouteAvailabilityChanged(
     WebRemotePlaybackAvailability availability) {
+  // TODO(mlamouri): the cast overlay requires the media controls to be
+  // initialised. To avoid creating an object all the time, it will only happen
+  // when the overlay is likely to be used.
+  if (RuntimeEnabledFeatures::LazyInitializeMediaControlsEnabled() &&
+      RuntimeEnabledFeatures::MediaCastOverlayButtonEnabled() &&
+      availability == WebRemotePlaybackAvailability::kDeviceAvailable) {
+    EnsureMediaControls();
+  }
+
   if (RemotePlaybackClient() &&
       !RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled()) {
     // The new remote playback pipeline is using the Presentation API for
@@ -3710,16 +3719,20 @@ void HTMLMediaElement::UpdateControlsVisibility() {
     return;
   }
 
-  EnsureMediaControls();
-  // TODO(mlamouri): this doesn't sound needed but the following tests, on
-  // Android fails when removed:
-  // fullscreen/compositor-touch-hit-rects-fullscreen-video-controls.html
-  GetMediaControls()->Reset();
-
   bool native_controls = ShouldShowControls(RecordMetricsBehavior::kDoRecord);
+  if (!RuntimeEnabledFeatures::LazyInitializeMediaControlsEnabled() ||
+      native_controls) {
+    EnsureMediaControls();
+
+    // TODO(mlamouri): this doesn't sound needed but the following tests, on
+    // Android fails when removed:
+    // fullscreen/compositor-touch-hit-rects-fullscreen-video-controls.html
+    GetMediaControls()->Reset();
+  }
+
   if (native_controls)
     GetMediaControls()->MaybeShow();
-  else
+  else if (GetMediaControls())
     GetMediaControls()->Hide();
 
   if (web_media_player_)

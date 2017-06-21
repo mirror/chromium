@@ -557,6 +557,10 @@
       name: "LayoutNG",
     },
     {
+      name: "LazyInitializeMediaControls",
+      // This is enabled on non-Android builds at the moment.
+    },
+    {
       name: "LazyParseCSS",
       status: "experimental",
     },
