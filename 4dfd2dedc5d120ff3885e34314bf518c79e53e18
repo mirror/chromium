@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "01ee3a82_7b08d9f6",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T20:53:44Z",
+      "side": 1,
+      "message": "The second parameter of Chunk() is the number of mocked raster invalidations for changed display items. 2 is specified in line 219.",
+      "parentUuid": "0c7784ab_299614c9",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "728a2b28_afa88f54",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/RasterInvalidationTracking.h",
         "patchSetId": 10
