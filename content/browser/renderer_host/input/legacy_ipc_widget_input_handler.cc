@@ -100,13 +100,13 @@ void LegacyIPCWidgetInputHandler::SendInput(
 }
 
 void LegacyIPCWidgetInputHandler::DispatchEvent(
-    content::mojom::EventPtr event,
+    std::unique_ptr<content::InputEvent> event,
     DispatchEventCallback callback) {
   NOTREACHED();
 }
 
 void LegacyIPCWidgetInputHandler::DispatchNonBlockingEvent(
-    content::mojom::EventPtr) {
+    std::unique_ptr<content::InputEvent> event) {
   NOTREACHED();
 }
 
