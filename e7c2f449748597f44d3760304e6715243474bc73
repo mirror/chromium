@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6bd946b_62d3b773",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T17:17:14Z",
+      "side": 1,
+      "message": "Not sure if it\u0027d be complex, but for the future, maybe consider splitting common/public/private into separate mojom targets so the rules can be enforced.",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "e7c2f449748597f44d3760304e6715243474bc73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
