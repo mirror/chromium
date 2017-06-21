@@ -320,8 +320,14 @@ void WebcamPrivateSetFunction::OnSetWebcamParameters(bool success) {
 }
 
 WebcamPrivateGetFunction::WebcamPrivateGetFunction()
-    : pan_(0),
+    : min_pan_(0),
+      max_pan_(0),
+      pan_(0),
+      min_tilt_(0),
+      max_tilt_(0),
       tilt_(0),
+      min_zoom_(0),
+      max_zoom_(0),
       zoom_(0),
       get_pan_(false),
       get_tilt_(false),
@@ -343,6 +349,8 @@ bool WebcamPrivateGetFunction::RunAsync() {
     return false;
   }
 
+  webcam->GetPtzRanges(
+      base::Bind(&WebcamPrivateGetFunction::OnGetWebcamParameterRanges, this));
   webcam->GetPan(base::Bind(&WebcamPrivateGetFunction::OnGetWebcamParameters,
                             this, INQUIRY_PAN));
   webcam->GetTilt(base::Bind(&WebcamPrivateGetFunction::OnGetWebcamParameters,
@@ -351,6 +359,20 @@ bool WebcamPrivateGetFunction::RunAsync() {
                              this, INQUIRY_ZOOM));
 
   return true;
+}
+
+void WebcamPrivateGetFunction::OnGetWebcamParameterRanges(int min_pan,
+                                                          int max_pan,
+                                                          int min_tilt,
+                                                          int max_tilt,
+                                                          int min_zoom,
+                                                          int max_zoom) {
+  min_pan_ = min_pan;
+  max_pan_ = max_pan;
+  min_tilt_ = min_tilt;
+  max_tilt_ = max_tilt;
+  min_zoom_ = min_zoom;
+  max_zoom_ = max_zoom;
 }
 
 void WebcamPrivateGetFunction::OnGetWebcamParameters(InquiryType type,
@@ -380,6 +402,18 @@ void WebcamPrivateGetFunction::OnGetWebcamParameters(InquiryType type,
     }
     if (get_pan_ && get_tilt_ && get_zoom_) {
       webcam_private::WebcamConfiguration result;
+      if (min_pan_ != max_pan_) {
+        result.min_pan.reset(new double(min_pan_));
+        result.max_pan.reset(new double(max_pan_));
+      }
+      if (min_tilt_ != max_tilt_) {
+        result.min_tilt.reset(new double(min_tilt_));
+        result.max_tilt.reset(new double(max_tilt_));
+      }
+      if (min_zoom_ != max_zoom_) {
+        result.min_zoom.reset(new double(min_zoom_));
+        result.max_zoom.reset(new double(max_zoom_));
+      }
       result.pan.reset(new double(pan_));
       result.tilt.reset(new double(tilt_));
       result.zoom.reset(new double(zoom_));

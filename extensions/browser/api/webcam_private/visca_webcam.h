@@ -94,6 +94,7 @@ class ViscaWebcam : public Webcam {
   void PostOpenFailureTask(const OpenCompleteCallback& open_callback);
 
   // Webcam Overrides:
+  void GetPtzRanges(const GetPTZRangesCompleteCallback& callback) override;
   void GetPan(const GetPTZCompleteCallback& callback) override;
   void GetTilt(const GetPTZCompleteCallback& callback) override;
   void GetZoom(const GetPTZCompleteCallback& callback) override;

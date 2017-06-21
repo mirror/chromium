@@ -381,6 +381,8 @@ void ViscaWebcam::PostOpenFailureTask(
                           base::Bind(open_callback, false /* success? */));
 }
 
+void ViscaWebcam::GetPtzRanges(const GetPTZRangesCompleteCallback& callback) {}
+
 void ViscaWebcam::GetPan(const GetPTZCompleteCallback& callback) {
   Send(CHAR_VECTOR_FROM_ARRAY(kGetPanTiltCommand),
        base::Bind(&ViscaWebcam::OnInquiryCompleted,

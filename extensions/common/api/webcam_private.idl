@@ -13,12 +13,18 @@ namespace webcamPrivate {
   };
 
   dictionary WebcamConfiguration {
+    double? minPan;
+    double? maxPan;
     double? pan;
     double? panSpeed;
     PanDirection? panDirection;
+    double? minTilt;
+    double? maxTilt;
     double? tilt;
     double? tiltSpeed;
     TiltDirection? tiltDirection;
+    double? minZoom;
+    double? maxZoom;
     double? zoom;
   };
 
@@ -36,7 +42,7 @@ namespace webcamPrivate {
 
     static void get(DOMString webcamId, WebcamConfigurationCallback callback);
     static void set(DOMString webcamId, WebcamConfiguration config);
-    
+
     // Reset a webcam. Note: the value of the parameter have no effect, it's the
     // presence of the parameter that matters. E.g.: reset(webcamId, {pan: 0, 
     // tilt: 1}); will reset pan & tilt, but not zoom.
