@@ -22,6 +22,30 @@
       "revId": "3d44e995d14212007eac307abcf234878cad6938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a3a206_345bb8b0",
+        "filename": "third_party/WebKit/Source/core/css/threaded/FontObjectThreadedTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-21T19:29:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a98cd05_85490607",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "3d44e995d14212007eac307abcf234878cad6938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
