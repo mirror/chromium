@@ -16,6 +16,24 @@
       "revId": "58d288de803ecb8e6cbf4226173a391969a17279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b165cce6_5a5b6963",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKey.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T17:13:28Z",
+      "side": 1,
+      "message": "The Google C++ style guide bans rvalue references except for perfect forwarding and implementing move operations (constructor+assignment). So we strongly prefer by value for this reason.\n\nPassing by value vs \u0026\u0026 has its pros and cons.\n\nPassing by value:\n+ works for by copy or move\n+ guarantees that the function takes ownership (assuming a move-only type, which RefPtr is not): a function that takes an argument by \u0026\u0026 does not have to move it out, and ownership may remain with the caller\n- can pass by copy by accident\n\nAs one might imagine, the pros/cons for passing by rvalue reference are basically the opposite.\n- potential exponential increase in overloads if you need to add const T\u0026 and T\u0026\u0026-accepting versions.",
+      "parentUuid": "81de8ab2_99acf96e",
+      "revId": "58d288de803ecb8e6cbf4226173a391969a17279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
