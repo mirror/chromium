@@ -158,6 +158,11 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // to resource dispatch, foreground HTML parsing, etc...
   scoped_refptr<TaskQueue> NewLoadingTaskQueue(TaskQueue::QueueType queue_type);
 
+  // Returns a new loading control task queue. This queue is intended for
+  // internal messaging of loading tasks.
+  scoped_refptr<TaskQueue> NewLoadingControlTaskQueue(
+      TaskQueue::QueueType queue_type);
+
   // Returns a new timer task queue. This queue is intended for DOM Timers.
   scoped_refptr<TaskQueue> NewTimerTaskQueue(TaskQueue::QueueType queue_type);
 
