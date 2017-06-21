@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44929738_8c54a628",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-06-21T16:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ab22f2_2605d551",
+      "range": {
+        "startLine": 571,
+        "startChar": 4,
+        "endLine": 571,
+        "endChar": 16
+      },
+      "revId": "f57035f32843543e545389bf0ddbb4551d07f004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03d6a186_3f31bd7c",
         "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "855a42da_6d3e2d1b",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-06-21T16:43:00Z",
+      "side": 1,
+      "message": "That\u0027s a great point, thanks! I\u0027ve removed new_url param, added DCHECK for the validity of the input, fixed comment and all usages.",
+      "parentUuid": "03d6a186_3f31bd7c",
+      "revId": "f57035f32843543e545389bf0ddbb4551d07f004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8972dd4e_e43a3d85",
         "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-21T14:49:36Z",
       "side": 1,
       "message": "If there is no ASSERT in the inner method, you don\u0027t need EXPECT_NO_FATAL_FAILURE -- an EXPECT failure is not considered fatal, so that can\u0027t happen anyway. Also, EXPECT_NO_FATAL_FAILURE in general is not that useful -- a fatal failure will be recorded just like a non-fatal failure, so the test would be considered failed in any case. ASSERT_NO_FATAL_FAILURE OTOH lets you propagate the early return from an ASSERT upwards the call stack instead of continuing after an ASSERT failure.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 25
+      },
+      "revId": "f57035f32843543e545389bf0ddbb4551d07f004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80db3dd2_6455476d",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-06-21T16:43:00Z",
+      "side": 1,
+      "message": "Your\u0027re right, it\u0027s not useful here. I\u0027ve added EXPECT_NO_FATAL_FAILURE for the unlikely case that someone adds an assert inside TestGetImageURLWithOptions. With new GetImageURLWithOptions returning GURL there\u0027s almost no difference in amount of lines, so I\u0027ve inlined TestGetImageURLWithOptions and got rid of EXPECT_NO_FATAL_FAILURE.",
+      "parentUuid": "8972dd4e_e43a3d85",
       "range": {
         "startLine": 121,
         "startChar": 2,
