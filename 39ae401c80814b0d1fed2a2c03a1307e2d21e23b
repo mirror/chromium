@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "935b226d_7e903f49",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-21T19:12:58Z",
+      "side": 1,
+      "message": "That\u0027s a good point over which I deliberated during prepping this CL.\nIn the end, I took an approach that would be more lenient to weirdly formatted GOPs. Suppose the range current ends it\u0027s last GOP with the two following frames\u0027 presentation intervals:\nA:    [  ]\nB: [         ]\n\nFor the purposes of determining potential overlap and potential adjacency of a later-appended frame, we should use a combination of the PTS of A (since a new frame C\u0027s PTS between B and A should *not* be allowed to be seen as non-overlapping, and adjacent (since it could front-overlap A) with this range), and the duration of B (to be more lenient in coalescing gaps/reducing stalls).\n\nDo you see a simpler version which allows for this amount of lenience?",
+      "parentUuid": "da39f520_81572fb4",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "445bc001_c446b724",
         "filename": "media/filters/source_buffer_range.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-21T01:12:48Z",
       "side": 1,
       "message": "Will this method be eliminated in the later CL? I\u0027m wondering if it will be replaced by GetEndTimestamp() and GetBufferedEndTimestamp() down the road.",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 33
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c786de_c9d8dd51",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-21T19:12:58Z",
+      "side": 1,
+      "message": "Correct. That is the current plan. I\u0027ve added a TODO in patch set 2 to make this clear.",
+      "parentUuid": "445bc001_c446b724",
       "range": {
         "startLine": 219,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7ebca5fe_13cd3314",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-21T19:12:58Z",
+      "side": 1,
+      "message": "Fixed in patch set 2.",
+      "parentUuid": "5259b56f_16baadaa",
+      "range": {
+        "startLine": 259,
+        "startChar": 47,
+        "endLine": 259,
+        "endChar": 58
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3120d045_357fc21f",
         "filename": "media/filters/source_buffer_stream_unittest.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-21T01:12:48Z",
       "side": 1,
       "message": "Would add the sunny-day case, where you append a frame who\u0027s PTS \u003d last_frame_PTS + last_frame_DUR",
+      "range": {
+        "startLine": 4878,
+        "startChar": 8,
+        "endLine": 4878,
+        "endChar": 24
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d530b1ea_dff95926",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4878,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-21T19:12:58Z",
+      "side": 1,
+      "message": "Good idea. Done in patch set 2.",
+      "parentUuid": "3120d045_357fc21f",
       "range": {
         "startLine": 4878,
         "startChar": 8,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "79c9c270_a8b35f9d",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4879,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-21T19:12:58Z",
+      "side": 1,
+      "message": "Please see my full response to your SBR.h comment.",
+      "parentUuid": "32545339_051af26a",
+      "range": {
+        "startLine": 4879,
+        "startChar": 18,
+        "endLine": 4879,
+        "endChar": 20
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6be89c99_65afd951",
         "filename": "media/filters/source_buffer_stream_unittest.cc",
         "patchSetId": 1
@@ -152,6 +272,30 @@
       "writtenOn": "2017-06-21T01:12:48Z",
       "side": 1,
       "message": "Ditto on sunny case (2nd frame starting at time 20, maybe also one with frame at time [0, 10))",
+      "range": {
+        "startLine": 4921,
+        "startChar": 8,
+        "endLine": 4921,
+        "endChar": 24
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee09279_8af08181",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4921,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-21T19:12:58Z",
+      "side": 1,
+      "message": "Done in patch set 2 (both here and in VideoRangeEndTimeCases, above).",
+      "parentUuid": "6be89c99_65afd951",
       "range": {
         "startLine": 4921,
         "startChar": 8,
