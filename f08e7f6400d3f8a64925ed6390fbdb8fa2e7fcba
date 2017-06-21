@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "787068ba_37faf979",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-21T20:35:08Z",
+      "side": 1,
+      "message": "Removed this argument. Now it will be populated as part of DriverEntry.",
+      "parentUuid": "3e59b068_7f7564f2",
+      "range": {
+        "startLine": 325,
+        "startChar": 63,
+        "endLine": 325,
+        "endChar": 67
+      },
+      "revId": "f08e7f6400d3f8a64925ed6390fbdb8fa2e7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a140aeff_6e9721b1",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f08e7f6400d3f8a64925ed6390fbdb8fa2e7fcba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9f5c74_dfbcd134",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-21T20:35:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a140aeff_6e9721b1",
+      "range": {
+        "startLine": 710,
+        "startChar": 19,
+        "endLine": 710,
+        "endChar": 42
+      },
+      "revId": "f08e7f6400d3f8a64925ed6390fbdb8fa2e7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
