@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+FAIL IDBCursor.direction - undefined assert_unreached: unexpected db.abort Reached unreachable code
+FAIL IDBCursor.direction - next assert_unreached: unexpected db.abort Reached unreachable code
+FAIL IDBCursor.direction - prev assert_unreached: unexpected db.abort Reached unreachable code
+FAIL IDBCursor.direction - nextunique assert_unreached: unexpected db.abort Reached unreachable code
+FAIL IDBCursor.direction - prevunique assert_unreached: unexpected db.abort Reached unreachable code
+Harness: the test ran to completion.
+
