@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "721a70c4_8d4bbbca",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-21T13:52:48Z",
+      "side": 1,
+      "message": "I think this should be device_viewport_point.",
+      "range": {
+        "startLine": 634,
+        "startChar": 52,
+        "endLine": 634,
+        "endChar": 66
+      },
+      "revId": "e842167c61093f09f2085515518f2af5b3b83a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826abf82_739f4aaf",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-21T13:52:48Z",
+      "side": 1,
+      "message": "The current tests only verify the return value of EventListenerTypeForTouchStartOrMoveAt(). Now that you have added another parameter, it would be nice to add some more tests to verify the touch_action. For example, you could try to follow the logic of these tests, set some regions (should make some of them overlap), and hit tests on different points to verify the touch_action bit.",
+      "revId": "e842167c61093f09f2085515518f2af5b3b83a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e13b662_834844aa",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-21T13:52:48Z",
+      "side": 1,
+      "message": "+sunxd@: I had an offline discussion with hayleyferr@, and it appears that we cannot access the \"CompositorTouchAction\" runtime flag. Did we miss anything here?",
+      "range": {
+        "startLine": 1073,
+        "startChar": 4,
+        "endLine": 1073,
+        "endChar": 40
+      },
+      "revId": "e842167c61093f09f2085515518f2af5b3b83a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
