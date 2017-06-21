@@ -507,6 +507,7 @@ if (!is_android) {
       "//third_party/pyftpdlib/",
       "//third_party/pywebsocket/",
       "//third_party/tlslite/",
+      "//mojo/edk/system",
       "//third_party/zlib/google/test/data/",
       "//tools/metrics/histograms/enums.xml",
       "//ui/webui/resources/js/",
