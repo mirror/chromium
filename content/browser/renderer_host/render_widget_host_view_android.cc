@@ -1911,8 +1911,8 @@ void RenderWidgetHostViewAndroid::ResolveTapDisambiguation(
 }
 
 void RenderWidgetHostViewAndroid::MoveCaret(const gfx::Point& point) {
-  if (host_)
-    host_->MoveCaret(point);
+  if (host_ && host_->delegate())
+    host_->delegate()->MoveCaret(point);
 }
 
 void RenderWidgetHostViewAndroid::ShowContextMenuAtPoint(

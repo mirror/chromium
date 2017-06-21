@@ -24,6 +24,9 @@ class WebMouseWheelEvent : public WebMouseEvent {
     kPhaseEnded = 1 << 3,
     kPhaseCancelled = 1 << 4,
     kPhaseMayBegin = 1 << 5,
+
+    // Since this is a bit set the max possible value is (1 << 6) - 1.
+    kPhaseMax = (1 << 6) - 1,
   };
 
   float delta_x;

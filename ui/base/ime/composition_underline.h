@@ -38,6 +38,12 @@ struct CompositionUnderline {
         thick(t),
         background_color(bc) {}
 
+  bool operator<(const CompositionUnderline& rhs) const {
+    return this->start_offset != rhs.start_offset
+               ? this->start_offset < rhs.start_offset
+               : this->end_offset < rhs.end_offset;
+  }
+
   bool operator==(const CompositionUnderline& rhs) const {
     return (this->start_offset == rhs.start_offset) &&
            (this->end_offset == rhs.end_offset) && (this->color == rhs.color) &&

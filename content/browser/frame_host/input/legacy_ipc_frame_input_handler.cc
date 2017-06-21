@@ -138,6 +138,16 @@ void LegacyIPCFrameInputHandler::MoveRangeSelectionExtent(
       base::MakeUnique<InputMsg_MoveRangeSelectionExtent>(routing_id_, extent));
 }
 
+void LegacyIPCFrameInputHandler::ScrollFocusedEditableNodeIntoRect(
+    const gfx::Rect& rect) {
+  SendInput(base::MakeUnique<InputMsg_ScrollFocusedEditableNodeIntoRect>(
+      routing_id_, rect));
+}
+
+void LegacyIPCFrameInputHandler::MoveCaret(const gfx::Point& point) {
+  SendInput(base::MakeUnique<InputMsg_MoveCaret>(routing_id_, point));
+}
+
 void LegacyIPCFrameInputHandler::SendInput(
     std::unique_ptr<IPC::Message> message) {
   static_cast<LegacyInputRouterImpl*>(
