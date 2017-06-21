@@ -746,6 +746,7 @@ class CORE_EXPORT Element : public ContainerNode {
 
   ScrollOffset SavedLayerScrollOffset() const;
   void SetSavedLayerScrollOffset(const ScrollOffset&);
+  virtual ScrollOffset MaybeUpdateScrollOffsetAfterLayout(const ScrollOffset&);
 
   ElementAnimations* GetElementAnimations() const;
   ElementAnimations& EnsureElementAnimations();
