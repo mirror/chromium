@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c72078e0_c858750c",
+        "filename": "extensions/browser/api/webcam_private/webcam.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-21T23:54:10Z",
+      "side": 1,
+      "message": "Can the ranges be returned with GetPan/GetTilt/GetZoom instead of having a separate method for fetching only ranges?",
+      "revId": "ea40543e2e141b5f0bc4677a74f4065595d04e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e993a00_b9cd5e45",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-21T23:54:10Z",
+      "side": 1,
+      "message": "maybe add a dictionary Range {double min; double max;} to use for these?\n\nAlso, comment that the ranges are read only; and add a test that verifies setting these properties fails. Or even better, split WebcamConfiguration dictionary into two types:\none used for getting config and one used for setting configs.",
+      "revId": "ea40543e2e141b5f0bc4677a74f4065595d04e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
