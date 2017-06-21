@@ -50,6 +50,7 @@ class ConsoleMessageStorage;
 class InspectorTaskRunner;
 class WorkerBackingThread;
 class WorkerInspectorController;
+class WorkerInstalledScriptsManager;
 class WorkerOrWorkletGlobalScope;
 class WorkerReportingProxy;
 class WorkerThreadStartupData;
@@ -182,6 +183,12 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // Called on the worker thread.
   virtual WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<WorkerThreadStartupData>) = 0;
+
+  // Factory method for getting an InstalledScriptsManager to provide the main
+  // script to run on the worker thread.
+  virtual WorkerInstalledScriptsManager* installed_scripts_manager() {
+    return nullptr;
+  }
 
   // Returns true when this WorkerThread owns the associated
   // WorkerBackingThread exclusively. If this function returns true, the

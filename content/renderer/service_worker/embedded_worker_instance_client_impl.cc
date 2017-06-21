@@ -13,6 +13,9 @@
 #include "content/public/common/content_client.h"
 #include "content/renderer/service_worker/embedded_worker_devtools_agent.h"
 #include "content/renderer/service_worker/service_worker_context_client.h"
+#include "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h"
+#include "third_party/WebKit/public/platform/WebContentSettingsClient.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 #include "third_party/WebKit/public/web/WebEmbeddedWorker.h"
 #include "third_party/WebKit/public/web/WebEmbeddedWorkerStartData.h"
 
@@ -30,10 +33,12 @@ EmbeddedWorkerInstanceClientImpl::WorkerWrapper::~WorkerWrapper() = default;
 
 // static
 void EmbeddedWorkerInstanceClientImpl::Create(
+    scoped_refptr<base::SingleThreadTaskRunner> io_thread_runner,
     const service_manager::BindSourceInfo& source_info,
     mojom::EmbeddedWorkerInstanceClientRequest request) {
   // This won't be leaked because the lifetime will be managed internally.
-  new EmbeddedWorkerInstanceClientImpl(std::move(request));
+  new EmbeddedWorkerInstanceClientImpl(std::move(io_thread_runner),
+                                       std::move(request));
 }
 
 void EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed() {
@@ -86,8 +91,11 @@ void EmbeddedWorkerInstanceClientImpl::AddMessageToConsole(
 }
 
 EmbeddedWorkerInstanceClientImpl::EmbeddedWorkerInstanceClientImpl(
+    scoped_refptr<base::SingleThreadTaskRunner> io_thread_runner,
     mojo::InterfaceRequest<mojom::EmbeddedWorkerInstanceClient> request)
-    : binding_(this, std::move(request)), temporal_self_(this) {
+    : binding_(this, std::move(request)),
+      temporal_self_(this),
+      io_thread_runner_(std::move(io_thread_runner)) {
   binding_.set_connection_error_handler(base::Bind(
       &EmbeddedWorkerInstanceClientImpl::OnError, base::Unretained(this)));
 }
@@ -103,8 +111,12 @@ std::unique_ptr<EmbeddedWorkerInstanceClientImpl::WorkerWrapper>
 EmbeddedWorkerInstanceClientImpl::StartWorkerContext(
     const EmbeddedWorkerStartParams& params,
     std::unique_ptr<ServiceWorkerContextClient> context_client) {
+  std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> manager =
+      WebServiceWorkerInstalledScriptsManagerImpl::Create(io_thread_runner_);
+
   auto wrapper = base::MakeUnique<WorkerWrapper>(
-      blink::WebEmbeddedWorker::Create(context_client.release(), nullptr),
+      blink::WebEmbeddedWorker::Create(std::move(context_client),
+                                       std::move(manager), nullptr),
       params.worker_devtools_agent_route_id);
 
   blink::WebEmbeddedWorkerStartData start_data;
