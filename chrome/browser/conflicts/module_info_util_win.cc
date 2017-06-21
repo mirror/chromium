@@ -24,6 +24,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/win/scoped_handle.h"
+#include "chrome/common/safe_browsing/pe_image_reader_win.h"
 
 namespace {
 
@@ -218,19 +219,23 @@ void GetCatalogCertificateInfo(const base::FilePath& filename,
   certificate_info->subject = subject;
 }
 
-// Helper function to get a value at a specific offset in a buffer. Also does
-// bounds checking.
-template <typename T>
-bool GetValueAtOffset(const char* buffer,
-                      uint64_t address,
-                      const size_t buffer_size,
-                      T* result) {
-  // Bounds checking.
-  if (address + sizeof(T) >= buffer_size)
-    return false;
+// Helper function to retrieve the SizeOfImage out of |pe_image_reader|.
+uint32_t GetSizeOfImage(safe_browsing::PeImageReader& pe_image_reader) {
+  size_t optional_header_size = 0u;
+  const uint8_t* optional_header_data =
+      pe_image_reader.GetOptionalHeaderData(&optional_header_size);
 
-  memcpy(result, &buffer[address], sizeof(T));
-  return true;
+  bool is_32_bit_header = pe_image_reader.GetWordSize() ==
+                          safe_browsing::PeImageReader::WORD_SIZE_32;
+  if (is_32_bit_header) {
+    const auto* optional_header =
+        reinterpret_cast<const IMAGE_OPTIONAL_HEADER32*>(optional_header_data);
+    return optional_header->SizeOfImage;
+  } else {
+    const auto* optional_header =
+        reinterpret_cast<const IMAGE_OPTIONAL_HEADER64*>(optional_header_data);
+    return optional_header->SizeOfImage;
+  }
 }
 
 }  // namespace
@@ -317,41 +322,18 @@ bool GetModuleImageSizeAndTimeDateStamp(const base::FilePath& path,
   // the file in a well-formed dll.
   const size_t kPageSize = 4096;
 
-  char buffer[kPageSize];
-  int bytes_read = file.Read(0, buffer, kPageSize);
+  uint8_t buffer[kPageSize];
+  int bytes_read = file.Read(0, reinterpret_cast<char*>(buffer), kPageSize);
   if (bytes_read == -1)
     return false;
 
-  // Get NT header offset.
-  uint64_t nt_header_offset = offsetof(IMAGE_DOS_HEADER, e_lfanew);
-
-  LONG e_lfanew = 0;
-  if (!GetValueAtOffset(buffer, nt_header_offset, bytes_read, &e_lfanew))
+  safe_browsing::PeImageReader pe_image_reader;
+  if (!pe_image_reader.Initialize(buffer, bytes_read)) {
     return false;
+  }
 
-  // Check magic signature.
-  uint64_t nt_signature_offset =
-      e_lfanew + offsetof(IMAGE_NT_HEADERS, Signature);
+  *size_of_image = GetSizeOfImage(pe_image_reader);
+  *time_date_stamp = pe_image_reader.GetCoffFileHeader()->TimeDateStamp;
 
-  DWORD nt_signature = 0;
-  if (!GetValueAtOffset(buffer, nt_signature_offset, bytes_read, &nt_signature))
-    return false;
-
-  if (nt_signature != IMAGE_NT_SIGNATURE)
-    return false;
-
-  // Get SizeOfImage.
-  uint64_t size_of_image_offset = e_lfanew +
-                                  offsetof(IMAGE_NT_HEADERS, OptionalHeader) +
-                                  offsetof(IMAGE_OPTIONAL_HEADER, SizeOfImage);
-  if (!GetValueAtOffset(buffer, size_of_image_offset, bytes_read,
-                        size_of_image))
-    return false;
-
-  // Get TimeDateStamp.
-  uint64_t time_date_stamp_offset = e_lfanew +
-                                    offsetof(IMAGE_NT_HEADERS, FileHeader) +
-                                    offsetof(IMAGE_FILE_HEADER, TimeDateStamp);
-  return GetValueAtOffset(buffer, time_date_stamp_offset, bytes_read,
-                          time_date_stamp);
+  return true;
 }

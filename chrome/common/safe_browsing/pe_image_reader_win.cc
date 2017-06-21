@@ -52,6 +52,8 @@ class PeImageReader::OptionalHeaderImpl : public PeImageReader::OptionalHeader {
     return optional_header_->NumberOfRvaAndSizes;
   }
 
+  DWORD GetSizeOfImage() override { return optional_header_->SizeOfImage; }
+
   const IMAGE_DATA_DIRECTORY* GetDataDirectoryEntries() override {
     return &optional_header_->DataDirectory[0];
   }
@@ -130,6 +132,10 @@ const uint8_t* PeImageReader::GetExportSection(size_t* section_size) {
 
   *section_size = data_size;
   return data;
+}
+
+DWORD PeImageReader::GetSizeOfImage() {
+  return optional_header_->GetSizeOfImage();
 }
 
 size_t PeImageReader::GetNumberOfDebugEntries() {
