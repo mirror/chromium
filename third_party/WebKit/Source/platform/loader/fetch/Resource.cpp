@@ -435,8 +435,18 @@ bool Resource::PassesAccessControlCheck(
 
 bool Resource::IsEligibleForIntegrityCheck(
     SecurityOrigin* security_origin) const {
-  return security_origin->CanRequest(GetResourceRequest().Url()) ||
-         PassesAccessControlCheck(security_origin);
+  // Same origin, no CORS checks needed:
+  if (security_origin->CanRequest(GetResourceRequest().Url()))
+    return true;
+
+  // Service Worker do separate CORS checks:
+  if (GetResponse().WasFetchedViaServiceWorker()) {
+    return GetResponse().ServiceWorkerResponseType() !=
+           kWebServiceWorkerResponseTypeOpaque;
+  }
+
+  // Perform standard CORS check:
+  return PassesAccessControlCheck(security_origin);
 }
 
 void Resource::SetIntegrityDisposition(
