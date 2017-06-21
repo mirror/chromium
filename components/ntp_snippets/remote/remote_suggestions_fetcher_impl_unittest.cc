@@ -1025,4 +1025,69 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldProcessConcurrentFetches) {
   return os << "null";
 }
 
+TEST_F(RemoteSuggestionsSignedOutFetcherTest, SuggestionContentType) {
+  const std::string kJsonStr =
+      "{\"categories\" : [{"
+      "  \"id\": 2,"
+      "  \"localizedTitle\": \"Articles for Me\","
+      "  \"suggestions\" : [{"
+      "    \"ids\" : [\"http://localhost/foo2\"],"
+      "    \"title\" : \"Foo Barred from Baz\","
+      "    \"snippet\" : \"...\","
+      "    \"fullPageUrl\" : \"http://localhost/foo2\","
+      "    \"creationTime\" : \"2016-06-30T11:01:37.000Z\","
+      "    \"expirationTime\" : \"2016-07-01T11:01:37.000Z\","
+      "    \"attribution\" : \"Foo News\","
+      "    \"imageUrl\" : \"http://localhost/foo2.jpg\","
+      "    \"ampUrl\" : \"http://localhost/amp\","
+      "    \"faviconUrl\" : \"http://localhost/favicon.ico\" "
+      "  },"
+      "  {"
+      "    \"ids\" : [\"http://localhost/foo2\"],"
+      "    \"title\" : \"Foo Barred from Baz\","
+      "    \"snippet\" : \"...\","
+      "    \"fullPageUrl\" : \"http://localhost/foo2\","
+      "    \"creationTime\" : \"2016-06-30T11:01:37.000Z\","
+      "    \"expirationTime\" : \"2016-07-01T11:01:37.000Z\","
+      "    \"attribution\" : \"Foo News\","
+      "    \"imageUrl\" : \"http://localhost/foo2.jpg\","
+      "    \"ampUrl\" : \"http://localhost/amp\","
+      "    \"faviconUrl\" : \"http://localhost/favicon.ico\","
+      "    \"contentType\" : \"UNKNOWN\" "
+      "  },"
+      "  {"
+      "    \"ids\" : [\"http://localhost/foo2\"],"
+      "    \"title\" : \"Foo Barred from Baz\","
+      "    \"snippet\" : \"...\","
+      "    \"fullPageUrl\" : \"http://localhost/foo2\","
+      "    \"creationTime\" : \"2016-06-30T11:01:37.000Z\","
+      "    \"expirationTime\" : \"2016-07-01T11:01:37.000Z\","
+      "    \"attribution\" : \"Foo News\","
+      "    \"imageUrl\" : \"http://localhost/foo2.jpg\","
+      "    \"ampUrl\" : \"http://localhost/amp\","
+      "    \"faviconUrl\" : \"http://localhost/favicon.ico\", "
+      "    \"contentType\" : \"VIDEO\" "
+      "  }]"
+      "}]}";
+  SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
+                  net::URLRequestStatus::SUCCESS);
+  RemoteSuggestionsFetcher::OptionalFetchedCategories fetched_categories;
+  EXPECT_CALL(mock_callback(),
+              Run(Property(&Status::IsSuccess, true), /*fetched_categories=*/_))
+      .WillOnce(MoveArgument1PointeeTo(&fetched_categories));
+  fetcher().FetchSnippets(test_params(),
+                          ToSnippetsAvailableCallback(&mock_callback()));
+  FastForwardUntilNoTasksRemain();
+
+  ASSERT_TRUE(fetched_categories);
+  ASSERT_THAT(fetched_categories->size(), Eq(1u));
+  EXPECT_THAT(fetched_categories->front().suggestions.size(), Eq(3u));
+  EXPECT_THAT(fetched_categories->front().suggestions[0]->is_video_suggestion(),
+              Eq(false));
+  EXPECT_THAT(fetched_categories->front().suggestions[1]->is_video_suggestion(),
+              Eq(false));
+  EXPECT_THAT(fetched_categories->front().suggestions[2]->is_video_suggestion(),
+              Eq(true));
+}
+
 }  // namespace ntp_snippets

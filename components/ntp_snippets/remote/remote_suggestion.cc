@@ -87,7 +87,8 @@ RemoteSuggestion::RemoteSuggestion(const std::vector<std::string>& ids,
       score_(0),
       is_dismissed_(false),
       remote_category_id_(remote_category_id),
-      should_notify_(false) {}
+      should_notify_(false),
+      is_video_suggestion_(false) {}
 
 RemoteSuggestion::~RemoteSuggestion() = default;
 
@@ -267,6 +268,13 @@ RemoteSuggestion::CreateFromContentSuggestionsDictionary(
     }
   }
 
+  std::string content_type;
+  if (dict.GetString("contentType", &content_type)) {
+    if (content_type == "VIDEO") {
+      snippet->is_video_suggestion_ = true;
+    }
+  }
+
   return snippet;
 }
 
@@ -393,6 +401,7 @@ ContentSuggestion RemoteSuggestion::ToContentSuggestion(
         base::MakeUnique<NotificationExtra>(extra));
   }
   suggestion.set_fetch_date(fetch_date_);
+  suggestion.set_is_video_suggestion(is_video_suggestion_);
   return suggestion;
 }
 
