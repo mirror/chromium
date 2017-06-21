@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acd11ff_cca74624",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroupDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-06-21T11:11:16Z",
+      "side": 1,
+      "message": "I just realized this method is never called in Chrome Home :-/ Those metrics will soon not be logged at all unless we fix that.",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "d7425cb1bce73e4633113cda149faf4c635ce8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
