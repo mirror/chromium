@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "091a4e3e_32a2bb24",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy/connect-src-beacon-redirect-to-blocked-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-21T15:18:00Z",
+      "side": 1,
+      "message": "Can we move this test to WPT? (Or, delete it, if we already have a redirect beacon test in WPT?)",
+      "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac44bfb_ab1d4f2d",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-21T15:18:00Z",
+      "side": 1,
+      "message": "This looks like it\u0027s not going to work. :)",
+      "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db4f8da_37dc8955",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-21T15:18:00Z",
+      "side": 1,
+      "message": "Nit: Is it \"keepalive\" or \"keep alive\"? The former would end up with `GetKeepalive`, but with `keepalive_`, the latter with `GetKeepAlive` and `keep_alive_`.",
+      "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574620e5_bbc38911",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-21T15:18:00Z",
+      "side": 1,
+      "message": "Nit: Can you explain a little about what \"kept alive\" means in terms of lifetime?",
+      "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
