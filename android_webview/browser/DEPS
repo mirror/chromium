@@ -26,8 +26,10 @@ include_rules = [
   "+components/security_interstitials",
   "+components/spellcheck/browser",
   "+components/spellcheck/common",
+  "+components/tracing",
   "+components/url_formatter",
   "+components/user_prefs",
+  "+components/variations",
   "+components/visitedlink/browser",
   "+components/webdata/common",
 

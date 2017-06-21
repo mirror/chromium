@@ -7,6 +7,7 @@
 #include "android_webview/browser/aw_browser_context.h"
 #include "android_webview/browser/aw_browser_terminator.h"
 #include "android_webview/browser/aw_content_browser_client.h"
+#include "android_webview/browser/aw_metrics_service_client.h"
 #include "android_webview/browser/aw_result_codes.h"
 #include "android_webview/browser/aw_safe_browsing_config_helper.h"
 #include "android_webview/browser/deferred_gpu_command_service.h"
@@ -20,18 +21,35 @@
 #include "base/android/build_info.h"
 #include "base/android/locale_utils.h"
 #include "base/android/memory_pressure_listener_android.h"
+#include "base/base_switches.h"
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/files/file_path.h"
+#include "base/guid.h"
 #include "base/i18n/rtl.h"
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/field_trial.h"
 #include "base/path_service.h"
+#include "cc/base/switches.h"
 #include "components/crash/content/browser/crash_dump_manager_android.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/tracing/common/tracing_switches.h"
+#include "components/variations/caching_permuted_entropy_provider.h"
+#include "components/variations/client_filterable_state.h"
+#include "components/variations/field_trial_config/field_trial_util.h"
+#include "components/variations/proto/variations_seed.pb.h"
+#include "components/variations/service/variations_service.h"
+#include "components/variations/variations_associated_data.h"
+#include "components/variations/variations_http_header_provider.h"
+#include "components/variations/variations_seed_store.h"
+#include "components/variations/variations_switches.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/main_function_params.h"
 #include "content/public/common/result_codes.h"
 #include "device/geolocation/access_token_store.h"
 #include "device/geolocation/geolocation_delegate.h"
@@ -100,6 +118,89 @@ void AwBrowserMainParts::PreEarlyInitialization() {
   base::MessageLoopForUI::current()->Start();
 }
 
+std::unique_ptr<const base::FieldTrial::EntropyProvider> GetEntropyProvider() {
+  base::FilePath user_data_dir;
+  if (!PathService::Get(base::DIR_ANDROID_APP_DATA, &user_data_dir)) {
+    NOTREACHED() << "Failed to get app data directory for Android WebView";
+  }
+
+  const base::FilePath guid_file_path =
+      user_data_dir.Append(FILE_PATH_LITERAL("metrics_guid"));
+
+  std::string guid = AwMetricsServiceClient::GetOrCreateGUID(guid_file_path);
+
+  return std::unique_ptr<const base::FieldTrial::EntropyProvider>(
+      new metrics::SHA1EntropyProvider(guid));
+}
+
+void AwBrowserMainParts::SetupFieldTrials() {
+  field_trial_list_.reset(new base::FieldTrialList(GetEntropyProvider()));
+
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(variations::switches::kEnableBenchmarking) ||
+      command_line->HasSwitch(cc::switches::kEnableGpuBenchmarking)) {
+    base::FieldTrial::EnableBenchmarking();
+  }
+
+  if (command_line->HasSwitch(variations::switches::kForceFieldTrialParams)) {
+    bool result =
+        variations::AssociateParamsFromString(command_line->GetSwitchValueASCII(
+            variations::switches::kForceFieldTrialParams));
+    CHECK(result) << "Invalid --"
+                  << variations::switches::kForceFieldTrialParams
+                  << " list specified.";
+  }
+
+  // Ensure any field trials specified on the command line are initialized.
+  if (command_line->HasSwitch(switches::kForceFieldTrials)) {
+    std::set<std::string> unforceable_field_trials;
+#if defined(OFFICIAL_BUILD)
+    unforceable_field_trials.insert("SettingsEnforcement");
+#endif  // defined(OFFICIAL_BUILD)
+
+    // Create field trials without activating them, so that this behaves in
+    // a consistent manner with field trials created from the server.
+    bool result = base::FieldTrialList::CreateTrialsFromString(
+        command_line->GetSwitchValueASCII(switches::kForceFieldTrials),
+        unforceable_field_trials);
+    CHECK(result) << "Invalid --" << switches::kForceFieldTrials
+                  << " list specified.";
+  }
+
+  std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
+  variations::VariationsHttpHeaderProvider* http_header_provider =
+      variations::VariationsHttpHeaderProvider::GetInstance();
+  // Force the variation ids selected in chrome://flags and/or specified using
+  // the command-line flag.
+  std::vector<std::string> variation_ids;
+  bool result = http_header_provider->ForceVariationIds(
+      command_line->GetSwitchValueASCII(
+          variations::switches::kForceVariationIds),
+      &variation_ids);
+  CHECK(result) << "Invalid list of variation ids specified (either in --"
+                << variations::switches::kForceVariationIds
+                << " or in chrome://flags)";
+
+  feature_list->InitializeFromCommandLine(
+      command_line->GetSwitchValueASCII(switches::kEnableFeatures),
+      command_line->GetSwitchValueASCII(switches::kDisableFeatures));
+
+#if defined(FIELDTRIAL_TESTING_ENABLED)
+  if (!command_line->HasSwitch(
+          variations::switches::kDisableFieldTrialTestingConfig) &&
+      !command_line->HasSwitch(switches::kForceFieldTrials) &&
+      !command_line->HasSwitch(variations::switches::kVariationsServerURL)) {
+    variations::AssociateDefaultFieldTrialConfig(feature_list.get());
+  }
+#endif  // defined(FIELDTRIAL_TESTING_ENABLED)
+
+  // TODO: CreateTrialsFromSeed, Clank uses local_state
+  // CreateTrialsFromSeedCommon();
+
+  base::FeatureList::SetInstance(std::move(feature_list));
+}
+
 int AwBrowserMainParts::PreCreateThreads() {
   ui::SetLocalePaksStoredInApk(true);
   std::string locale = ui::ResourceBundle::InitSharedInstanceWithLocale(
@@ -149,6 +250,8 @@ int AwBrowserMainParts::PreCreateThreads() {
     breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
         base::MakeUnique<AwBrowserTerminator>());
   }
+
+  SetupFieldTrials();
 
   return content::RESULT_CODE_NORMAL_EXIT;
 }

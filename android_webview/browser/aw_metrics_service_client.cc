@@ -34,6 +34,8 @@ namespace android_webview {
 
 base::LazyInstance<AwMetricsServiceClient>::Leaky g_lazy_instance_;
 
+std::string android_webview::AwMetricsServiceClient::guid;
+
 namespace {
 
 const int kUploadIntervalMinutes = 30;
@@ -46,30 +48,6 @@ void StoreClientInfo(const metrics::ClientInfo& client_info) {}
 std::unique_ptr<metrics::ClientInfo> LoadClientInfo() {
   std::unique_ptr<metrics::ClientInfo> client_info;
   return client_info;
-}
-
-// A GUID in text form is composed of 32 hex digits and 4 hyphens.
-const size_t GUID_SIZE = 32 + 4;
-
-void GetOrCreateGUID(const base::FilePath guid_file_path, std::string* guid) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
-
-  // Try to read an existing GUID.
-  if (base::ReadFileToStringWithMaxSize(guid_file_path, guid, GUID_SIZE)) {
-    if (base::IsValidGUID(*guid))
-      return;
-    else
-      LOG(ERROR) << "Overwriting invalid GUID";
-  }
-
-  // We must write a new GUID.
-  *guid = base::GenerateGUID();
-  if (!base::WriteFile(guid_file_path, guid->c_str(), guid->size())) {
-    // If writing fails, proceed anyway with the new GUID. It won't be persisted
-    // to the next run, but we can still collect metrics with this 1-time GUID.
-    LOG(ERROR) << "Failed to write new GUID";
-  }
-  return;
 }
 
 version_info::Channel GetChannelFromPackageName() {
@@ -89,39 +67,48 @@ AwMetricsServiceClient* AwMetricsServiceClient::GetInstance() {
   return g_lazy_instance_.Pointer();
 }
 
+// A GUID in text form is composed of 32 hex digits and 4 hyphens.
+const size_t GUID_SIZE = 32 + 4;
+
+std::string AwMetricsServiceClient::GetOrCreateGUID(
+    const base::FilePath guid_file_path) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+
+  // Try to read an existing GUID.
+  if (base::ReadFileToStringWithMaxSize(guid_file_path, &guid, GUID_SIZE)) {
+    if (base::IsValidGUID(guid))
+      return guid;
+    else
+      LOG(ERROR) << "Overwriting invalid GUID";
+  }
+
+  // We must write a new GUID.
+  guid = base::GenerateGUID();
+  if (!base::WriteFile(guid_file_path, guid.c_str(), guid.size())) {
+    // If writing fails, proceed anyway with the new GUID. It won't be persisted
+    // to the next run, but we can still collect metrics with this 1-time GUID.
+    LOG(ERROR) << "Failed to write new GUID";
+  }
+
+  return guid;
+}
+
 void AwMetricsServiceClient::Initialize(
     PrefService* pref_service,
     net::URLRequestContextGetter* request_context,
     const base::FilePath guid_file_path) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
   DCHECK(pref_service_ == nullptr);  // Initialize should only happen once.
   DCHECK(request_context_ == nullptr);
   pref_service_ = pref_service;
   request_context_ = request_context;
   channel_ = GetChannelFromPackageName();
 
-  std::string* guid = new std::string;
-  // Initialization happens on the UI thread, but getting the GUID should happen
-  // on the file I/O thread. So we start to initialize, then post to get the
-  // GUID, and then pick up where we left off, back on the UI thread, in
-  // InitializeWithGUID.
-  content::BrowserThread::PostTaskAndReply(
-      content::BrowserThread::FILE, FROM_HERE,
-      base::Bind(&GetOrCreateGUID, guid_file_path, guid),
-      base::Bind(&AwMetricsServiceClient::InitializeWithGUID,
-                 base::Unretained(this), base::Owned(guid)));
-}
-
-void AwMetricsServiceClient::InitializeWithGUID(std::string* guid) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  pref_service_->SetString(metrics::prefs::kMetricsClientID, *guid);
+  pref_service_->SetString(metrics::prefs::kMetricsClientID, guid);
 
   metrics_state_manager_ = metrics::MetricsStateManager::Create(
       pref_service_, this, base::Bind(&StoreClientInfo),
       base::Bind(&LoadClientInfo));
-
   metrics_service_.reset(new ::metrics::MetricsService(
       metrics_state_manager_.get(), this, pref_service_));
 
