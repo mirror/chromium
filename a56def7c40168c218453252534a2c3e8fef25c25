@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb4ce9bf_5c576c71",
+        "filename": "device/wake_lock/public/interfaces/wake_lock.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:23:21Z",
+      "side": 1,
+      "message": "nit: \"inactive\" or \"non-active\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 61,
+        "endLine": 55,
+        "endChar": 70
+      },
+      "revId": "a56def7c40168c218453252534a2c3e8fef25c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f9d0d4_ba953f8b",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:23:21Z",
+      "side": 1,
+      "message": "i still find these method names non-obvious, and i wouldn\u0027t know how to use them without reading the .cc file. can you add individual comments and also rename them to make this clearer?\n\nsome questions i have while looking at this:\n- \"Get\" methods are usually getters. if this creates something instead, consider naming it \"Create\" and documenting which member(s) are created.\n- what\u0027s the difference between Get and Request? which do i need to call first?\n- after i call Cancel, do i need to call either Get and/or Request?",
+      "revId": "a56def7c40168c218453252534a2c3e8fef25c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a00559_1adca1c2",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:23:21Z",
+      "side": 1,
+      "message": "continuing previous discussion about this: how about calling this wake_lock_active_ instead? that\u0027s closer to what it actually tracks, right? i\u0027d recommend adding a comment documenting its meaning, too.",
+      "revId": "a56def7c40168c218453252534a2c3e8fef25c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
