@@ -66,6 +66,9 @@ class InterceptNavigationDelegate : public base::SupportsUserData::Data {
   // carried over.
   void UpdateLastUserGestureCarryoverTimestamp();
 
+  // Called when a navigation cycle is finished.
+  void NavigationFinished();
+
  private:
   JavaObjectWeakGlobalRef weak_jdelegate_;
   base::TimeTicks last_user_gesture_carryover_timestamp_;

@@ -557,6 +557,9 @@ public class AwContents implements SmartClipProvider {
             }
             return ignoreNavigation;
         }
+
+        @Override
+        public void navigationFinished() {}
     }
 
     //--------------------------------------------------------------------------------------------

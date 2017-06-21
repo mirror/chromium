@@ -12,13 +12,33 @@ using content::BrowserThread;
 
 namespace navigation_interception {
 
+namespace {
+
+void RunFinishCallback(content::WebContents* web_contents,
+                       FinishCallback finish_callback) {
+  finish_callback.Run(web_contents);
+}
+
+}  // namespace
+
 InterceptNavigationThrottle::InterceptNavigationThrottle(
     content::NavigationHandle* navigation_handle,
-    CheckCallback should_ignore_callback)
+    CheckCallback should_ignore_callback,
+    FinishCallback finish_callback)
     : content::NavigationThrottle(navigation_handle),
-      should_ignore_callback_(should_ignore_callback) {}
+      should_ignore_callback_(should_ignore_callback),
+      finish_callback_(finish_callback),
+      web_contents_(navigation_handle->GetWebContents()) {}
 
-InterceptNavigationThrottle::~InterceptNavigationThrottle() {}
+InterceptNavigationThrottle::~InterceptNavigationThrottle() {
+  // Invoke finish callback by posting a task onto UI thread. This ensures
+  // this destruction procedure can be completed before callback gets executed
+  // in order to isolate the procedure from potential changes to be made in
+  // the callback.
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(&RunFinishCallback, web_contents_, finish_callback_));
+}
 
 content::NavigationThrottle::ThrottleCheckResult
 InterceptNavigationThrottle::WillStartRequest() {

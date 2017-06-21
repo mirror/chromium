@@ -82,6 +82,9 @@ public class InterceptNavigationDelegateTest {
             mNavParamHistory.add(navigationParams);
             return super.shouldIgnoreNavigation(navigationParams);
         }
+
+        @Override
+        public void navigationFinished() {}
     }
 
     class TestExternalNavigationHandler extends ExternalNavigationHandler {

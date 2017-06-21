@@ -67,6 +67,16 @@ void UpdateUserGestureCarryoverInfoOnUIThread(int render_process_id,
   }
 }
 
+void NavigationFinishedOnUIThread(WebContents* source) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(source);
+
+  InterceptNavigationDelegate* intercept_navigation_delegate =
+      InterceptNavigationDelegate::Get(source);
+  if (intercept_navigation_delegate)
+    intercept_navigation_delegate->NavigationFinished();
+}
+
 }  // namespace
 
 // static
@@ -89,7 +99,8 @@ std::unique_ptr<content::NavigationThrottle>
 InterceptNavigationDelegate::CreateThrottleFor(
     content::NavigationHandle* handle) {
   return base::MakeUnique<InterceptNavigationThrottle>(
-      handle, base::Bind(&CheckIfShouldIgnoreNavigationOnUIThread));
+      handle, base::Bind(&CheckIfShouldIgnoreNavigationOnUIThread),
+      base::Bind(&NavigationFinishedOnUIThread));
 }
 
 // static
@@ -143,6 +154,13 @@ bool InterceptNavigationDelegate::ShouldIgnoreNavigation(
 
 void InterceptNavigationDelegate::UpdateLastUserGestureCarryoverTimestamp() {
   last_user_gesture_carryover_timestamp_ = base::TimeTicks::Now();
+}
+
+void InterceptNavigationDelegate::NavigationFinished() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> jdelegate = weak_jdelegate_.get(env);
+  if (!jdelegate.is_null())
+    Java_InterceptNavigationDelegate_navigationFinished(env, jdelegate);
 }
 
 }  // namespace navigation_interception
