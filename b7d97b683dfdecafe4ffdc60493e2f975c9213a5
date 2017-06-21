@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2b9f459b_0dabbb6b",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:24:14Z",
+      "side": 1,
+      "message": "I think a different name makes sense since there should be only one of these per page load - maybe PageDomainInfo?",
+      "parentUuid": "682b16a0_2be4d3b3",
+      "revId": "b7d97b683dfdecafe4ffdc60493e2f975c9213a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af6efb4a_79d82e95",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 7
