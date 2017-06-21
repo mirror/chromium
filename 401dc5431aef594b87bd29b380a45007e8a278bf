@@ -140,6 +140,30 @@
       "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9692465a_850b5025",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-21T15:44:54Z",
+      "side": 1,
+      "message": "I can\u0027t see an obvious way of getting the executionContextId given a V8::Local\u003cV8::Context\u003e from within content/renderer.\n\nAnyway the context for what I\u0027m trying to do do here is this patch:  https://chromium-review.googlesource.com/c/543160/\n\nOne thing that might work is changing MainThreadDebugger::ContextCreated() to store the world id within the AuxData.  This would be more awkard to use (since you need to listen to Renderer.executionContextCreated events and filter for the one you care about) but since the contents of the AuxData is not defined in the protocol perhaps the concerns go away?  WDYT?",
+      "parentUuid": "b08b3bdf_7c281e9c",
+      "range": {
+        "startLine": 544,
+        "startChar": 32,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
