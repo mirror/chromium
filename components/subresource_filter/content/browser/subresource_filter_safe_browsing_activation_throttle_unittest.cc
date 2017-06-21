@@ -192,7 +192,16 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
 
   void TearDown() override {
     client_.reset();
+
+    // RunUntilIdle() must be called multiple times to flush any outstanding
+    // cross-thread interactions.
     RunUntilIdle();
+    RunUntilIdle();
+
+    // RunUntilIdle() called once more, to delete the database on the IO thread.
+    fake_safe_browsing_database_ = nullptr;
+    RunUntilIdle();
+
     content::RenderViewHostTestHarness::TearDown();
   }
 
@@ -315,8 +324,8 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
   void UsePassThroughThrottle() { fake_safe_browsing_database_ = nullptr; }
 
   void RunUntilIdle() {
-    test_io_task_runner_->RunUntilIdle();
     base::RunLoop().RunUntilIdle();
+    test_io_task_runner_->RunUntilIdle();
   }
 
   content::NavigationSimulator* navigation_simulator() {
