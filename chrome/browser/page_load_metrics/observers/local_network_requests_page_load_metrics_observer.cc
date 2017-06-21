@@ -122,9 +122,10 @@ LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
     return STOP_OBSERVING;
   }
 
-  // net::IsLocalhost assumes (and doesn't verify) that any IPv6 address passed
-  // to it does not have square brackets around it, but HostPortPair retains the
-  // brackets, so we need to separately check for IPv6 localhost here.
+  // |IsLocalhost| assumes (and doesn't verify) that any IPv6 address passed
+  // to it does not have square brackets around it, but |HostPortPair::host|
+  // retains the brackets, so we need to separately check for IPv6 localhost
+  // here.
   if (net::IsLocalhost(address.host()) ||
       page_ip_address_ == net::IPAddress::IPv6Localhost()) {
     page_load_type_ = DOMAIN_TYPE_LOCALHOST;
