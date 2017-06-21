@@ -16,6 +16,24 @@
       "revId": "d9c713f5980bda7a00570e2266049836103878db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de73b91_76020c97",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-06-21T23:51:59Z",
+      "side": 1,
+      "message": "I think then my question would what is the porpuse of LazyProfileInfos, would it be easier to query for the desired profile instead of querying for all supported?  Then the query can be done late and in reality this function will only call VaInitialize which would make more sense.\n\nConverting VaapiWrapper a singleton will required to be called on LazyProfileInfos and I am not sure that is possible in the current form.",
+      "parentUuid": "dd048999_a2c84787",
+      "revId": "d9c713f5980bda7a00570e2266049836103878db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
