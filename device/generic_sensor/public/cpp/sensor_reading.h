@@ -109,6 +109,11 @@ struct DEVICE_GENERIC_SENSOR_PUBLIC_EXPORT SensorReadingSharedBuffer {
 
   // Gets the shared reading buffer offset for the given sensor type.
   static uint64_t GetOffset(mojom::SensorType type);
+
+  bool GetReading(SensorReading* result) const;
+
+ private:
+  bool TryReadFromBuffer(SensorReading* result) const;
 };
 
 }  // namespace device
