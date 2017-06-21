@@ -56,6 +56,30 @@
       "revId": "148518fb1f381f06bc96d6c78e74490d7d24eeb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dafdac2_823eebb4",
+        "filename": "gpu/command_buffer/service/program_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-21T23:52:35Z",
+      "side": 1,
+      "message": "Looked into this a bit, and afaict, everything in chrome code is working as expected. The context got lost, everything in the context group gets destroyed, and recreated, and shaders has to be compiled again, and driver misbehaves then and crashes.\n\nI double checked that a real new eglContext is created, and not just a virtual context reusing the same lost eglContext. Although I\u0027m not sure if this is actually guarantees or just a coincidence..\n\nSimply skipping the loop doesn\u0027t help because it just crashes in HandleUseProgram later. So I don\u0027t know. If 0 really is an illegal value, maybe it\u0027s easier to crash with a release CHECK instead, and check how many things hit the check.",
+      "parentUuid": "3a84b359_a57bd4f9",
+      "range": {
+        "startLine": 880,
+        "startChar": 4,
+        "endLine": 880,
+        "endChar": 8
+      },
+      "revId": "148518fb1f381f06bc96d6c78e74490d7d24eeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
