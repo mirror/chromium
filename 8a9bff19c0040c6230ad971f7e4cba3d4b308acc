@@ -1,0 +1,368 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f1ec18c_c2cd6702",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "please add a doc comment explaining why Unretained is safe here.",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256bffb5_e90c3e6c",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "static constexpr const wchar_t* kMicrosoftImeGuids[] \u003d {",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6baa011e_f7f2259e",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "nit: add a DCHECK that asserts that kMicrosoftImeGuids is sorted",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745df8f2_4b3b0096",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "nit: dll -\u003e dll_path or server_dll_path or something\nand GetInprocServerDll -\u003e GetInprocServerDllPath",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c165198_61f9ed11",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "is there a need to do this with N posted tasks rather than 1 using PostTaskWithTraitsAndReplyWithResult on line 67?",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 15
+      },
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f86d289_8d113a0e",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "// static",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7f5fcc_87ad686c",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "nit: we treat base::FilePath like a value type, so return the path directly on success or an empty path on error.",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bda5ddb_982d83df",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "if you need to read from both areas in the registry, can you do this in a loop rather than duplicating code?\n  static const REGASM kWowFlags[] \u003d {\n#if _WIN64\n      KEY_WOW64_64KEY, KEY_WOW64_32KEY\n#else\n      KEY_WOW64_32KEY, KEY_WOW64_64KEY\n#endif\n  };\n  for (auto wow_flag : kWowFlags) {\n    base::win::RegKey registry_key;\n    ....\n  }",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5635ee60_620977a1",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "KEY_QUERY_VALUE",
+      "range": {
+        "startLine": 127,
+        "startChar": 24,
+        "endLine": 127,
+        "endChar": 32
+      },
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140b4c56_119d14d9",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "i\u0027m not sure that this is useful as-is. today, GetModuleImageSizeAndTimeDateStamp can only parse the headers out of a 64-bit dll from 64-bit Chrome, and out of a 32-bit dll from 32-bit Chrome (note: it would magically handle cross-bitness parsing if it used chrome/common/safe_browsing/pe_image_reader_win.h). consequently, i wouldn\u0027t expect GetModuleImageSizeAndTimeDateStamp to ever return true for a dll that was in the other-bitness registry location.\n\naside from that, if they\u0027re always in-proc server dlls, they must match the bitness of Chrome. do you care about 32-bit dlls if the user is running 64-bit Chrome?",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcf695f_68eb2618",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "KEY_QUERY_VALUE",
+      "range": {
+        "startLine": 139,
+        "startChar": 24,
+        "endLine": 139,
+        "endChar": 32
+      },
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8228354_7c87c68b",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "is there such a thing as an out-of-proc IME, or are they all necessarily implemented as in-proc servers?",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569b6770_f788a3b5",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "it looks like this can be simplified by making the public interface a single function at namespace scope:\n\nvoid EnumerateInputMethodEditors(const OnImeEnumeratedCallback\u0026 callback);\n\nand make it the caller\u0027s responsibility to bind |callback| to something via a WeakPtr as needed.\n\nnote that what you have now results in an instance of this class outliving its one-shot purpose -- the owner of it has no way to know that it has finished its enumeration and can be deleted.",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940b6dff_d2f2290e",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "nit: group the static methods together since they work together as a team (here and in .cc file).",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b563d1b_54c02ceb",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "nit: protected:",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418e5c48_a5d5ce13",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "nit: omit blank line",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ffe69a_f15980fc",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "nit: since the proper operation of this function is a pre-req for the tests that use it, i think it\u0027s better style for it to return void, use ASSERT_* within its body, and for callers to use ASSERT_NO_FATAL_FAILURE() when calling it.",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4051a9b7_3117769a",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "static constexpr",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a795c6aa_4c9f2e9c",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "nit: doc comment, please",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866e95a1_9fb43fa2",
+        "filename": "chrome/browser/conflicts/module_info_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T09:00:06Z",
+      "side": 1,
+      "message": "realizing that i suggested this, i\u0027m now going to suggest:\n  enum LoadedModuleType : uint32_t {\n    kTypeLoadedModule \u003d 1 \u003c\u003c 0,\n    ...\nsince, as thakis pointed out to me, this avoids the need for storage for the values. in contrast to \"enum class\", it also avoids the need for casts.",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
