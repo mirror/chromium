@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4a7a1c_633fa49d",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-06-21T17:25:38Z",
+      "side": 1,
+      "message": "This changes |pipeline_metadata_|, can you please notify the observer too? i.e.:\nif (observer_)\n  observer_-\u003eOnMetadataChanged(pipeline_metadata_);",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84200f55_9278c5b6",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-06-21T17:25:38Z",
+      "side": 1,
+      "message": "ditto: notify the |observer_|.",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea61b609_59fd1153",
+        "filename": "media/remoting/rpc.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-06-21T17:25:38Z",
+      "side": 1,
+      "message": "The remoting receiver gets notified from sender through RPC messages when audio/video config changes. We may not need add RPC messages to send this back again. When config changes, DemuxerStreamAdapter sends the RPC message to receiver at here: https://cs.chromium.org/chromium/src/media/remoting/demuxer_stream_adapter.cc?rcl\u003d84dc05fd513e3c4e7aa64f5dba954f8d0a641939\u0026l\u003d382\nOne possible way is to add a callback to notify the CourierRenderer and the |client_| when config changes. WDYT?",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
