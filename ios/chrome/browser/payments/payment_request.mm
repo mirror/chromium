@@ -12,6 +12,7 @@
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/region_data_loader_impl.h"
+#include "components/payments/core/address_normalizer_impl.h"
 #include "components/payments/core/currency_formatter.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "ios/chrome/browser/application_context.h"
@@ -80,6 +81,66 @@ PaymentRequest::PaymentRequest(
 
 PaymentRequest::~PaymentRequest() {}
 
+autofill::PersonalDataManager* PaymentRequest::GetPersonalDataManager() const {
+  return personal_data_manager_;
+}
+
+const std::string& PaymentRequest::GetApplicationLocale() const {
+  return GetApplicationContext()->GetApplicationLocale();
+}
+
+bool PaymentRequest::IsIncognito() const {
+  NOTREACHED() << "Implementation is never used";
+  return false;
+}
+
+bool PaymentRequest::IsSslCertificateValid() {
+  NOTREACHED() << "Implementation is never used";
+  return false;
+}
+
+const GURL& PaymentRequest::GetLastCommittedURL() const {
+  NOTREACHED() << "Implementation is never used";
+  return GURL::EmptyGURL();
+}
+
+void PaymentRequest::DoFullCardRequest(
+    const autofill::CreditCard& credit_card,
+    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
+        result_delegate) {
+  [payment_request_delegate_ openFullCardRequestUI];
+}
+
+payments::AddressNormalizer* PaymentRequest::GetAddressNormalizer() {
+  return new payments::AddressNormalizerImpl(
+      GetAddressInputSource(
+          personal_data_manager_->GetURLRequestContextGetter()),
+      GetAddressInputStorage());
+}
+
+autofill::RegionDataLoader* PaymentRequest::GetRegionDataLoader() {
+  return new autofill::RegionDataLoaderImpl(
+      GetAddressInputSource(
+          personal_data_manager_->GetURLRequestContextGetter())
+          .release(),
+      GetAddressInputStorage().release(),
+      GetApplicationContext()->GetApplicationLocale());
+}
+
+ukm::UkmRecorder* PaymentRequest::GetUkmRecorder() {
+  return GetApplicationContext()->GetUkmRecorder();
+}
+
+std::string PaymentRequest::GetAuthenticatedEmail() const {
+  NOTREACHED() << "Implementation is never used";
+  return std::string();
+}
+
+PrefService* PaymentRequest::GetPrefService() {
+  NOTREACHED() << "Implementation is never used";
+  return nullptr;
+}
+
 void PaymentRequest::UpdatePaymentDetails(const web::PaymentDetails& details) {
   web_payment_request_.details = details;
   PopulateAvailableShippingOptions();
@@ -115,15 +176,6 @@ payments::CurrencyFormatter* PaymentRequest::GetOrCreateCurrencyFormatter() {
         GetApplicationContext()->GetApplicationLocale()));
   }
   return currency_formatter_.get();
-}
-
-autofill::RegionDataLoader* PaymentRequest::GetRegionDataLoader() {
-  return new autofill::RegionDataLoaderImpl(
-      GetAddressInputSource(
-          personal_data_manager_->GetURLRequestContextGetter())
-          .release(),
-      GetAddressInputStorage().release(),
-      GetApplicationContext()->GetApplicationLocale());
 }
 
 autofill::AutofillProfile* PaymentRequest::AddAutofillProfile(

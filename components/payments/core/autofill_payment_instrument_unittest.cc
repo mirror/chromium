@@ -88,7 +88,7 @@ class FakePaymentRequestDelegate : public PaymentRequestDelegate {
 
   void ShowErrorMessage() override {}
 
-  autofill::PersonalDataManager* GetPersonalDataManager() override {
+  autofill::PersonalDataManager* GetPersonalDataManager() const override {
     return nullptr;
   }
 

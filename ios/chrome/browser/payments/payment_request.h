@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "components/payments/core/payment_options_provider.h"
+#include "components/payments/core/payment_request_base_delegate.h"
 #include "components/payments/core/payments_profile_comparator.h"
 #include "ios/web/public/payments/payment_request.h"
 
@@ -23,24 +24,50 @@ class RegionDataLoader;
 }  // namespace autofill
 
 namespace payments {
+class AddressNormalizer;
 class CurrencyFormatter;
 }  // namespace payments
+
+@protocol PaymentRequestUIDelegate<NSObject>
+
+- (void)openFullCardRequestUI;
+
+@end
 
 // Has a copy of web::PaymentRequest as provided by the page invoking the
 // PaymentRequest API. Also caches credit cards and addresses provided by the
 // |personal_data_manager| and manages shared resources and user selections for
 // the current PaymentRequest flow. It must be initialized with a non-null
 // instance of |personal_data_manager| that outlives this class.
-class PaymentRequest : public payments::PaymentOptionsProvider {
+class PaymentRequest : public payments::PaymentOptionsProvider,
+                       public payments::PaymentRequestBaseDelegate {
  public:
   // |personal_data_manager| should not be null and should outlive this object.
   PaymentRequest(const web::PaymentRequest& web_payment_request,
                  autofill::PersonalDataManager* personal_data_manager);
   ~PaymentRequest() override;
 
-  autofill::PersonalDataManager* GetPersonalDataManager() const {
-    return personal_data_manager_;
+  // Sets the UI delegate for the PaymentRequest flow.
+  void set_payment_request_ui_delegate(
+      id<PaymentRequestUIDelegate> payment_request_delegate) {
+    payment_request_delegate_ = payment_request_delegate;
   }
+
+  // PaymentRequestBaseDelegate:
+  autofill::PersonalDataManager* GetPersonalDataManager() const override;
+  const std::string& GetApplicationLocale() const override;
+  bool IsIncognito() const override;
+  bool IsSslCertificateValid() override;
+  const GURL& GetLastCommittedURL() const override;
+  void DoFullCardRequest(
+      const autofill::CreditCard& credit_card,
+      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
+          result_delegate) override;
+  payments::AddressNormalizer* GetAddressNormalizer() override;
+  autofill::RegionDataLoader* GetRegionDataLoader() override;
+  ukm::UkmRecorder* GetUkmRecorder() override;
+  std::string GetAuthenticatedEmail() const override;
+  PrefService* GetPrefService() override;
 
   // Returns the web::PaymentRequest that was used to build this PaymentRequest.
   const web::PaymentRequest& web_payment_request() const {
@@ -68,9 +95,6 @@ class PaymentRequest : public payments::PaymentOptionsProvider {
   // Note: Having multiple currencies per PaymentRequest flow is not supported;
   // hence the CurrencyFormatter is cached here.
   payments::CurrencyFormatter* GetOrCreateCurrencyFormatter();
-
-  // Returns the autofill::RegionDataLoader instance for this PaymentRequest.
-  virtual autofill::RegionDataLoader* GetRegionDataLoader();
 
   // Adds |profile| to the list of cached profiles, updates the list of
   // available shipping and contact profiles, and returns a reference to the
@@ -193,6 +217,10 @@ class PaymentRequest : public payments::PaymentOptionsProvider {
   // The web::PaymentRequest object as provided by the page invoking the Payment
   // Request API, owned by this object.
   web::PaymentRequest web_payment_request_;
+
+  // The PaymentRequestUIDelegate as provided by the UI object that originally
+  // created this PaymentRequest object.
+  __weak id<PaymentRequestUIDelegate> payment_request_delegate_;
 
   // Never null and outlives this object.
   autofill::PersonalDataManager* personal_data_manager_;
