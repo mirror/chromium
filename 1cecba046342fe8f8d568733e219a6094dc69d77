@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e32165c3_545b7e2f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-21T20:18:19Z",
+      "side": 1,
+      "message": "I checked and it turns out export_first_exportable_commit isn\u0027t used anywhere. However, after we start blocking CLs on upstream Travis status, we might be able to return to merging PRs in sequential order, so we\u0027d return to using this method.\n\nEither way, removing an unused method isn\u0027t within the scope of this CL, so you can ignore everything in this comment.",
+      "revId": "1cecba046342fe8f8d568733e219a6094dc69d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cb5b31_ec87e8da",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_mock.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-21T20:18:19Z",
+      "side": 1,
+      "message": "🐡",
+      "revId": "1cecba046342fe8f8d568733e219a6094dc69d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
