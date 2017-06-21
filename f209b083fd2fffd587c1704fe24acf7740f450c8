@@ -16,6 +16,24 @@
       "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e868dc_477047e0",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-21T15:41:14Z",
+      "side": 1,
+      "message": "This change would be much bigger, because such change might no longer work for milestone changes different than M57-\u003eM61.\n\nWe can of course rethink how we do upgrades and apply that to all scenarios. Remember that there has been more changes to the DB than just that. (And there is likely more to come.)",
+      "parentUuid": "fe2d37c9_8c36c4a0",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
