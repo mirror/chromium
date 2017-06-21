@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "618c9bd5_cf7aaddf",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-21T14:13:54Z",
+      "side": 1,
+      "message": "Done(both).",
+      "parentUuid": "e750caec_aba1f17a",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "595e889e_f4decdb1",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca3d3dd_fd36aa1e",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-21T14:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "595e889e_f4decdb1",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5175aa7d_cd0a7971",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-21T14:13:54Z",
+      "side": 1,
+      "message": "No, I couldn\u0027t think of a way round this. As I said in our discussion on the bug did briefly think about doing this by combining rules, but could not see a way of doing so cleanly. This possibly needs more work in future.\n\nAs you say, none of the tests do this at present.\n\nI have added a warning about this to the class Javadoc.",
+      "parentUuid": "94323dca_d7e62aae",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377f7908_eb1cde1c",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3800ed00_ad31c6f0",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-21T14:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "377f7908_eb1cde1c",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "28ef6c56_23ce969d",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-21T14:13:54Z",
+      "side": 1,
+      "message": "I am not quite sure what you are saying here; but I have modified the recursion to pass the current flag set through the recursive call, so that the parent can remove flags added by the rules. Is this what you were looking at? Please comment again if this isn\u0027t the issue.",
+      "parentUuid": "3282ae1f_c2fc92ff",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "802b8219_5d07b65c",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/BottomSheetTestRule.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-20T22:06:21Z",
       "side": 1,
       "message": "This is statically importing from itself...? I didn\u0027t realize this worked.",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1121a708_4f3f9fd8",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/BottomSheetTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-21T14:13:54Z",
+      "side": 1,
+      "message": "Yes - Originally done automatically by Android Studio, and surprised me too slightly, but makes sense (the use is outside the class definition so the import is needed) and seems to work.\n\nI have now added static imports for the other flags, since this removes the need to import complete classes and makes the code slightly cleaner.",
+      "parentUuid": "802b8219_5d07b65c",
       "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
