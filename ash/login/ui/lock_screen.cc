@@ -5,17 +5,28 @@
 #include "ash/login/ui/lock_screen.h"
 
 #include "ash/login/ui/lock_contents_view.h"
+#include "ash/login/ui/lock_debug_view.h"
 #include "ash/login/ui/lock_window.h"
 #include "ash/login/ui/login_data_source.h"
 #include "ash/public/interfaces/session_controller.mojom.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "chromeos/chromeos_switches.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 
 namespace ash {
 namespace {
+
+views::View* BuildContentsView(LoginDataSource* data_source) {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kShowLoginDevOverlay)) {
+    return new LockDebugView(data_source);
+  }
+  return new LockContentsView(data_source);
+}
 
 // Global lock screen instance. There can only ever be on lock screen at a
 // time.
@@ -39,7 +50,7 @@ void LockScreen::Show() {
   instance_ = new LockScreen();
 
   auto data_source = base::MakeUnique<LoginDataSource>();
-  auto* contents = new LockContentsView(data_source.get());
+  auto* contents = BuildContentsView(data_source.get());
 
   // TODO(jdufault|crbug.com/731191): Call NotifyUsers via
   // LockScreenController::LoadUsers once it uses a mojom specific type.
