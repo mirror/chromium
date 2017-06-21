@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82e4a5b2_702fe678",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-21T08:55:24Z",
+      "side": 1,
+      "message": "I don\u0027t think having two testing configs for the same feature works. My understanding is that the trybots run with all of the entries in this file active; we don\u0027t have the resources to run all combinations or alternatives.",
+      "revId": "65e0f82ac5e230325f16b7eaec58c9637e11eee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
