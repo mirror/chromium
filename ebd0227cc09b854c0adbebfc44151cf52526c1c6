@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86bdd6e4_b453f396",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-21T21:35:30Z",
+      "side": 1,
+      "message": "Just to be consistent with BoxClipper. Also the inner border radius clip is already snapped in ComputedStyle::GetRoundedInnerBorderFor(), if we delay snapping until PAC/PC2CL we face the dilemma not knowing whether the clip node is pre-snapped or post-snapped.\n\nI agree delayed snapping may have some advantages, but overall the code today treat snapping as a layout-internal concept...",
+      "parentUuid": "855ff4b3_577c5725",
+      "revId": "ebd0227cc09b854c0adbebfc44151cf52526c1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ab3c994_08252659",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3d5c2ddb_841791a1",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-21T21:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ab3c994_08252659",
+      "revId": "ebd0227cc09b854c0adbebfc44151cf52526c1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2a67b45_2cb6416d",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-21T01:18:11Z",
       "side": 1,
       "message": "Why is this the correct thing to do for such cases?",
+      "revId": "ebd0227cc09b854c0adbebfc44151cf52526c1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f03fcb_553c5030",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-21T21:35:30Z",
+      "side": 1,
+      "message": "Means \"some clips on the stack shall not apply to the next chunk, thus exiting some clips first\". To be safe I should add a DCHECK to verify we are exiting a clip, not an effect. Actually one layout test generated a malformed property tree that could trigger an infinite loop here. (which I\u0027ll file a bug for myself.)",
+      "parentUuid": "d2a67b45_2cb6416d",
       "revId": "ebd0227cc09b854c0adbebfc44151cf52526c1c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
