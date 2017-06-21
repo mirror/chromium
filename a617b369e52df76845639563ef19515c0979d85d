@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "486e17aa_87f5d026",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-21T16:29:05Z",
+      "side": 1,
+      "message": "Added comment explaining why we need needs_reload \u003d false. We do reload the tab when focus changes (ActiveTabChanged, OnBrowserSetLastActive).",
+      "parentUuid": "9b639006_3d67e504",
+      "revId": "a617b369e52df76845639563ef19515c0979d85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f53e96a4_a623e267",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "a617b369e52df76845639563ef19515c0979d85d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b33ca65_0fcfda9e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-21T16:29:05Z",
+      "side": 1,
+      "message": "|needs_reload| is false for a discarded WebContents. See explanation above.",
+      "parentUuid": "f53e96a4_a623e267",
+      "range": {
+        "startLine": 822,
+        "startChar": 4,
+        "endLine": 822,
+        "endChar": 32
+      },
+      "revId": "a617b369e52df76845639563ef19515c0979d85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

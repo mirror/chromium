@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e37c6f87_67e2c03e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-21T16:29:05Z",
+      "side": 1,
+      "message": "With my CL, a discarded tab is always reloaded by ReloadWebContentsIfDiscarded() when it becomes the selected tab in the active window.\n\nIf I used |needs_reload| \u003d true when the discarded tab is not selected, it would get reloaded twice when selected (ReloadWebContentsIfDiscarded() and WebContentsImpl::WasShown()).",
+      "parentUuid": "6a148fb5_2fb890f9",
+      "range": {
+        "startLine": 753,
+        "startChar": 50,
+        "endLine": 753,
+        "endChar": 62
+      },
+      "revId": "2ecddaa088c7f0c735a48975bd538183d789f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5ba4d2_33055d2a",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "2ecddaa088c7f0c735a48975bd538183d789f31a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31931411_5cbbd23f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-21T16:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d5ba4d2_33055d2a",
+      "range": {
+        "startLine": 831,
+        "startChar": 7,
+        "endLine": 831,
+        "endChar": 37
+      },
+      "revId": "2ecddaa088c7f0c735a48975bd538183d789f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
