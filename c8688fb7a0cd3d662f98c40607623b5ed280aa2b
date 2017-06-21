@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4830cc2_a93d53b3",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-21T22:55:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure where the best place to expand BDP is (probably first place you use it in the header), but do something like \"the BDP (bandwith delay product)\" in a comment.",
+      "revId": "c8688fb7a0cd3d662f98c40607623b5ed280aa2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

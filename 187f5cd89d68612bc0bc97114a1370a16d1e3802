@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d0aad6f_63bb83bf",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-21T22:55:25Z",
+      "side": 1,
+      "message": "Does BDPRangeRequestCounts\u0026 work here instead of BDPRangeRequestCounts*. It\u0027s easier to look at map code that is reference instead of pointer.",
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d910385_48512e10",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 9
@@ -283,6 +300,91 @@
       "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1461b2_a586f689",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-21T22:55:25Z",
+      "side": 1,
+      "message": "comment what BDP is short for.",
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402917cd_60378c74",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-21T22:55:25Z",
+      "side": 1,
+      "message": "nit: Can you consider using lightweight structs (e.g. something like struct BDPRangeCount { BDPRange(int64_t lower, int64_t upper, size_t count) : lower(lower), upper(upper), count(count) {} const int64_t lower_bdp_threshold; const int64_t upper_bdp_threshold; size_t count; })\n\nAlternatively you could leave BDPRange as a pair and include that in the struct above as it would be clear what first and second mean when talked about a variable named bdp_range.\n\nIt\u0027s pretty hard to read param.first.first and know what it means so far from the code. param.lower_bdp_threshold is much clearer.",
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e33d30_4b5c214e",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-21T22:55:25Z",
+      "side": 1,
+      "message": "s/for for/for/",
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c21a09_406778c3",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-21T22:55:25Z",
+      "side": 1,
+      "message": "nit: the two \"if\"s in this comment make it hard to parse; I\u0027m not sure what it is saying.",
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05476642_893ff9ea",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-21T22:55:25Z",
+      "side": 1,
+      "message": "this variable name confuses me. It seems like it could be max_delayabled_requests_by_bdp_ranges_.",
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
