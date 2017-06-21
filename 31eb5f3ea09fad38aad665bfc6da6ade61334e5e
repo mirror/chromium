@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "1715660f_d0315765",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-21T22:09:47Z",
+      "side": 1,
+      "message": "Thanks for the clarification. xxxDataSource implies it provides data and I thought it is the data model of MVC. \n\nLet\u0027s give it a better name. LoginEventSource is better. But login event reads like events during login. But it is actually about the login screen data. How about LoginDataNotifier or LoginDataDispatcher?",
+      "parentUuid": "448948cd_046056d4",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3dc64ba_a781454d",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -119,6 +137,30 @@
       "side": 1,
       "message": "Done; I believe push_back with rvalue does not copy though.",
       "parentUuid": "e3dc64ba_a781454d",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa960aba_9cfa46be",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-21T22:09:47Z",
+      "side": 1,
+      "message": "You are right. And new code is probably worse than push_back version.\n\nLet\u0027s either restore to push_back or change it to this:\n\n   users_.emplace_back(UserState{user-\u003eaccount_id});\n\u003d\u003e users_.emplace_back(user-\u003eaccount_id);",
+      "parentUuid": "4da09a6e_36f57ba5",
       "range": {
         "startLine": 98,
         "startChar": 11,
