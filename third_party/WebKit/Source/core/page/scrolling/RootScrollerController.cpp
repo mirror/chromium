@@ -98,8 +98,11 @@ void RootScrollerController::DidResizeFrameView() {
   // its parent's frame rect. We can't rely on layout to kick it to update its
   // geometry so we do so explicitly here.
   if (EffectiveRootScroller().IsFrameOwnerElement()) {
-    UpdateIFrameGeometryAndLayoutSize(
-        *ToHTMLFrameOwnerElement(&EffectiveRootScroller()));
+    HTMLFrameOwnerElement* frame_owner =
+        ToHTMLFrameOwnerElement(&EffectiveRootScroller());
+    EmbeddedContentView* view = frame_owner->OwnedEmbeddedContentView();
+    DCHECK(view && view->IsLocalFrameView());
+    UpdateFrameViewGeometryAndLayoutSize(*ToLocalFrameView(view));
   }
 }
 
@@ -172,7 +175,7 @@ void RootScrollerController::ApplyRootScrollerProperties(Node& node) const {
       DCHECK(frame_view || !is_root_scroller);
       if (frame_view) {
         frame_view->SetLayoutSizeFixedToFrameSize(!is_root_scroller);
-        UpdateIFrameGeometryAndLayoutSize(*frame_owner);
+        UpdateFrameViewGeometryAndLayoutSize(*frame_view);
       }
     } else {
       // TODO(bokan): Make work with OOPIF. crbug.com/642378.
@@ -180,20 +183,14 @@ void RootScrollerController::ApplyRootScrollerProperties(Node& node) const {
   }
 }
 
-void RootScrollerController::UpdateIFrameGeometryAndLayoutSize(
-    HTMLFrameOwnerElement& frame_owner) const {
-  LayoutEmbeddedContent* part = frame_owner.GetLayoutEmbeddedContent();
-  if (!part)
-    return;
+void RootScrollerController::UpdateFrameViewGeometryAndLayoutSize(
+    LocalFrameView& view) const {
+  view.UpdateGeometry();
 
-  part->UpdateGeometry();
+  DCHECK(document_->GetFrame() && document_->GetFrame()->View());
 
-  if (!document_->GetFrame() || !document_->GetFrame()->View())
-    return;
-
-  LocalFrameView* frame_view = document_->GetFrame()->View();
-  if (part->ChildFrameView() && (&EffectiveRootScroller() == &frame_owner))
-    part->ChildFrameView()->SetLayoutSize(frame_view->GetLayoutSize());
+  if (&EffectiveRootScroller() == view.GetFrame().DeprecatedLocalOwner())
+    view.SetLayoutSize(document_->GetFrame()->View()->GetLayoutSize());
 }
 
 PaintLayer* RootScrollerController::RootScrollerPaintLayer() const {

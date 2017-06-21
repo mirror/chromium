@@ -121,7 +121,6 @@ class CORE_EXPORT LocalFrameView final
 
   void Invalidate() { InvalidateRect(IntRect(0, 0, Width(), Height())); }
   void InvalidateRect(const IntRect&);
-  LayoutEmbeddedContent* OwnerLayoutObject() const override;
   void SetFrameRect(const IntRect&) override;
   const IntRect& FrameRect() const override { return frame_rect_; }
   int X() const { return frame_rect_.X(); }
@@ -182,6 +181,7 @@ class CORE_EXPORT LocalFrameView final
   void SetNeedsLayout();
 
   void SetNeedsUpdateGeometries() { needs_update_geometries_ = true; }
+  void UpdateGeometry() override;
 
   // Methods for getting/setting the size Blink should use to layout the
   // contents.
@@ -281,8 +281,6 @@ class CORE_EXPORT LocalFrameView final
   void SetSafeToPropagateScrollToParent(bool is_safe) {
     safe_to_propagate_scroll_to_parent_ = is_safe;
   }
-
-  void UpdateGeometries();
 
   void AddPartToUpdate(LayoutEmbeddedObject&);
 
@@ -968,6 +966,7 @@ class CORE_EXPORT LocalFrameView final
   void DidChangeGlobalRootScroller() override;
 
   void UpdateGeometriesIfNeeded();
+  void UpdateGeometries();
 
   bool WasViewportResized();
   void SendResizeEventIfNeeded();
