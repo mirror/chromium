@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d898a5_20127917",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-21T09:15:09Z",
+      "side": 1,
+      "message": "Because the \"internal\" namespace is not very used in password_manager component, perhaps you could extend the comment on line 19 to say what is the restriction on usage of the internal items (e.g., component-only, .cc and tests only, etc.).",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b435aba3_e20dd7ef",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-21T09:15:09Z",
+      "side": 1,
+      "message": "\"const\" is unnecessary given the \"constexpr\". (Also below.)",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83068a03_8f8cb114",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-21T09:15:09Z",
+      "side": 1,
+      "message": "nit: To match what we do for the other namespace, please add a blank line above this line.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244fee9f_6c6082c1",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-21T09:15:09Z",
+      "side": 1,
+      "message": "#include \u003cstdint.h\u003e for int64_t?",
+      "range": {
+        "startLine": 195,
+        "startChar": 48,
+        "endLine": 195,
+        "endChar": 55
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ef85c6_f1d37ef2",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-21T09:15:09Z",
+      "side": 1,
+      "message": "No const needed if constexpr present.\n\n(\"A constexpr specifier used in an object declaration implies const.\" http://en.cppreference.com/w/cpp/language/constexpr)",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a99fe0_4f1c54c4",
+        "filename": "components/password_manager/core/browser/password_manager_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-21T09:15:09Z",
+      "side": 1,
+      "message": "You will also need to implement this in ios/chrome/browser\u0027s IOSChromePasswordManagerClient, if only to provide a null-returning stub. (Also below.)",
+      "range": {
+        "startLine": 220,
+        "startChar": 45,
+        "endLine": 220,
+        "endChar": 48
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
