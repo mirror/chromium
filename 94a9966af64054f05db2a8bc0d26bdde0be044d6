@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "02efbb35_fdca8989",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-21T08:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0088c9c2_aeaa99bc",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1e8acc3_7e2bde91",
         "filename": "components/drive/service/drive_api_service.cc",
         "patchSetId": 5
@@ -113,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "c52a3054_d1eccaf6",
+        "filename": "components/drive/service/drive_service_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-21T08:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e27d122_85528206",
+      "range": {
+        "startLine": 320,
+        "startChar": 53,
+        "endLine": 320,
+        "endChar": 59
+      },
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e13badcf_3a1856e9",
         "filename": "components/drive/service/drive_service_interface.h",
         "patchSetId": 5
@@ -136,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "49156406_b643dcce",
+        "filename": "components/drive/service/drive_service_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-21T08:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e13badcf_3a1856e9",
+      "range": {
+        "startLine": 322,
+        "startChar": 34,
+        "endLine": 322,
+        "endChar": 51
+      },
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d132f9_75c7ea79",
         "filename": "components/drive/service/drive_service_interface.h",
         "patchSetId": 5
@@ -150,6 +216,24 @@
       "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1071048_1d9346e1",
+        "filename": "components/drive/service/drive_service_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-21T08:11:09Z",
+      "side": 1,
+      "message": "Since the API can return the largest_change_id of user\u0027s changelist, I revised the comment instead of changing the function name.",
+      "parentUuid": "97d132f9_75c7ea79",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
