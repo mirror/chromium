@@ -16,6 +16,24 @@
       "revId": "0455ba3755997f2e23bdad81cfc1f4467d74c4f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c202df14_07af6ebd",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T14:18:39Z",
+      "side": 1,
+      "message": "Yes, -viewWillTransitionToSize:withTransitionCoordinator: is here to handle the rotation. -wasShown is only called the first time this view is shown.\nIf you are on a iPhone SE or iPad in split view, rotations might change the number of items displayed.",
+      "parentUuid": "5a78bbcf_662c42af",
+      "revId": "0455ba3755997f2e23bdad81cfc1f4467d74c4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
