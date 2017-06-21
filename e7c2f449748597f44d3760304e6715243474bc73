@@ -22,6 +22,30 @@
       "revId": "e7c2f449748597f44d3760304e6715243474bc73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908e4e3f_4c396436",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T18:44:07Z",
+      "side": 1,
+      "message": "Ah interesting. I had some offline discussion with rockot@ about this, but I (mis)understood that there was no way to practically isolate this (i.e. prevent people to use the internal messages).\nFrom reading your comment it seems there is  a way though? Or are you thinking just to the equivalent of \"namespace internal\" + \"hope that people will be reasonable?\"",
+      "parentUuid": "c6bd946b_62d3b773",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "e7c2f449748597f44d3760304e6715243474bc73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
