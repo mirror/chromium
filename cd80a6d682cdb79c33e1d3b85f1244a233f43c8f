@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2711e650_ac6d25e1",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/get-same-object.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-21T00:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fbff9c9_bf4b62de",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e2ac923_a1cecaf9",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7aa90100_62947b8c",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-21T00:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e2ac923_a1cecaf9",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 26
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a358198d_8b97443b",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-20T06:20:57Z",
       "side": 1,
       "message": "Returns a device, not just an object.",
+      "range": {
+        "startLine": 536,
+        "startChar": 14,
+        "endLine": 536,
+        "endChar": 20
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cc3715_5cde6e3c",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-21T00:12:45Z",
+      "side": 1,
+      "message": "Not sure what you mean here, this method does return a plain object i.e. {service, fake_service}",
+      "parentUuid": "a358198d_8b97443b",
       "range": {
         "startLine": 536,
         "startChar": 14,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "41521f01_e10d1cd3",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-21T00:12:45Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think we should make services with standard names that don\u0027t follow the standards. https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile\u003dorg.bluetooth.service.health_thermometer.xml doesn\u0027t ever have duplicate characteristics.\n\u003e \n\u003e Here\u0027s one service that does allow for duplicate characteristics:\n\u003e https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile\u003dorg.bluetooth.service.environmental_sensing.xml\n\u003e (though, I\u0027m not sure why that logically makes sense)\n\u003e \n\u003e Or, we could use custom UUIDs for when we want multiple characteristics. \n\u003e \n\nI somewhat agree, though I wish we went all in with non-standard services i.e. only use non-standard services. Having a mix makes things confusing and results in more uuids that we have to keep around. That said, I think that refactor is a bit outside the scope of this CL.\n\n\u003e How many tests need 2 characteristics with the same UUID? Perhaps we should just add them directly in the test where needed -- which I think could help the tests be easier to understand:\n\u003e test() {\n\u003e   // add a characteristic\n\u003e   // add a characteristic\n\u003e   // getCharacteristics\n\u003e   // assert there are two with same UUID\n\u003e }\n\u003e \n\nAt least two: \n\n - getCharacteristics/characteristics-found.html\n - getCharacteristics/characteristics-found-with-uuid.html\n\n\u003e I\u0027m OK giving up on this goal if you think it\u0027s not worth it.",
+      "parentUuid": "36556d20_df1202a6",
+      "range": {
+        "startLine": 550,
+        "startChar": 65,
+        "endLine": 551,
+        "endChar": 42
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3959166_880f7540",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b4eac5_552e223a",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-21T00:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3959166_880f7540",
+      "range": {
+        "startLine": 680,
+        "startChar": 3,
+        "endLine": 680,
+        "endChar": 11
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
