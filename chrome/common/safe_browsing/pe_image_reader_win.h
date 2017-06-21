@@ -57,6 +57,8 @@ class PeImageReader {
   // or NULL if the section is not present.
   const uint8_t* GetExportSection(size_t* section_size);
 
+  DWORD GetSizeOfImage();
+
   size_t GetNumberOfDebugEntries();
   const IMAGE_DEBUG_DIRECTORY* GetDebugEntry(size_t index,
                                              const uint8_t** raw_data,
@@ -93,6 +95,8 @@ class PeImageReader {
 
     // Returns the number of entries in the data directory.
     virtual DWORD GetDataDirectorySize() = 0;
+
+    virtual DWORD GetSizeOfImage() = 0;
 
     // Returns a pointer to the first data directory entry.
     virtual const IMAGE_DATA_DIRECTORY* GetDataDirectoryEntries() = 0;
