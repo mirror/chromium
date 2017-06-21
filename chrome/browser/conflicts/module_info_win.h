@@ -84,6 +84,8 @@ struct ModuleInfoData {
   static constexpr uint32_t kTypeLoadedModule = 1 << 0;
   // These modules are registered as a shell extension.
   static constexpr uint32_t kTypeShellExtension = 1 << 1;
+  // These modules are registered as an Input Method Editor.
+  static constexpr uint32_t kTypeIme = 1 << 2;
 
   ModuleInfoData();
   ~ModuleInfoData();

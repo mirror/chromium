@@ -35,6 +35,7 @@
 #include "base/win/windows_version.h"
 #include "base/win/wrapped_window_proc.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/conflicts/ime_enumerator_win.h"
 #include "chrome/browser/conflicts/module_database_win.h"
 #include "chrome/browser/conflicts/module_event_sink_impl_win.h"
 #include "chrome/browser/conflicts/shell_extension_enumerator_win.h"
@@ -208,10 +209,12 @@ void OnModuleEvent(uint32_t process_id,
 }
 
 // Helper function for initializing the module database subsystem. Populates
-// the provided |module_watcher| and |shell_extension_enumerator|.
+// the provided |module_watcher|, |shell_extension_enumerator| and
+// |ime_enumerator|.
 void SetupModuleDatabase(
     std::unique_ptr<ModuleWatcher>* module_watcher,
-    std::unique_ptr<ShellExtensionEnumerator>* shell_extension_enumerator_) {
+    std::unique_ptr<ShellExtensionEnumerator>* shell_extension_enumerator,
+    std::unique_ptr<ImeEnumerator>* ime_enumerator) {
   uint64_t creation_time = 0;
   ModuleEventSinkImpl::GetProcessCreationTime(::GetCurrentProcess(),
                                               &creation_time);
@@ -229,9 +232,11 @@ void SetupModuleDatabase(
                                     content::PROCESS_TYPE_BROWSER);
   *module_watcher = ModuleWatcher::Create(
       base::Bind(&OnModuleEvent, process_id, creation_time));
-  *shell_extension_enumerator_ = base::MakeUnique<ShellExtensionEnumerator>(
+  *shell_extension_enumerator = base::MakeUnique<ShellExtensionEnumerator>(
       base::Bind(&ModuleDatabase::OnShellExtensionEnumerated,
                  base::Unretained(module_database)));
+  *ime_enumerator = base::MakeUnique<ImeEnumerator>(base::Bind(
+      &ModuleDatabase::OnImeEnumerated, base::Unretained(module_database)));
 }
 
 }  // namespace
@@ -362,8 +367,10 @@ void ChromeBrowserMainPartsWin::PostProfileInit() {
   // Create the module database and hook up the in-process module watcher. This
   // needs to be done before any child processes are initialized as the
   // ModuleDatabase is an endpoint for IPC from child processes.
-  if (base::FeatureList::IsEnabled(features::kModuleDatabase))
-    SetupModuleDatabase(&module_watcher_, &shell_extension_enumerator_);
+  if (base::FeatureList::IsEnabled(features::kModuleDatabase)) {
+    SetupModuleDatabase(&module_watcher_, &shell_extension_enumerator_,
+                        &ime_enumerator_);
+  }
 }
 
 void ChromeBrowserMainPartsWin::PostBrowserStart() {

@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "chrome/browser/chrome_browser_main.h"
 
+class ImeEnumerator;
 class ModuleWatcher;
 class ShellExtensionEnumerator;
 
@@ -78,6 +79,9 @@ class ChromeBrowserMainPartsWin : public ChromeBrowserMainParts {
   // Enumerates registered shell extensions and forwards them to the
   // ModuleDatabase.
   std::unique_ptr<ShellExtensionEnumerator> shell_extension_enumerator_;
+
+  // Enumerates registered IMEs and forwards them to the ModuleDatabase.
+  std::unique_ptr<ImeEnumerator> ime_enumerator_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainPartsWin);
 };
