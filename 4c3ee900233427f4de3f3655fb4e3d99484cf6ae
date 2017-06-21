@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "22c116ca_f04b1936",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-21T14:26:23Z",
+      "side": 1,
+      "message": "Okay. I would prefer to document that the Browser used for this coordinator is expected to be the non-incognito (is that just \"cognito\"?) one, and DCHECK to that effect. Then all of the derivative coordinators/view controllers will have the correct browser state.\n\nThen, in the implementation of any incognito coordinators that can start this coordinator, those calling coordinators must ensure that the correct browser/browserState is used.",
+      "parentUuid": "8af34dca_b7e10e3d",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 68
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07013d5d_402950dd",
         "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
         "patchSetId": 2
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "eed87314_5f4110e0",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-21T14:26:23Z",
+      "side": 1,
+      "message": "Can we keep a stack of coordinators as view controllers are pushed/popped onto the nav stack?",
+      "parentUuid": "bd05c2a2_193dd2fe",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 30
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14c3e415_abd5877e",
         "filename": "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.mm",
         "patchSetId": 2
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "The issue is that we don\u0027t get this one via the parent view controller (the one that got the non-OTR browser state), but via the Browser object that can have the OTR browser state.\n\nI think one solution could be to push down the non-OTR requirement in the view controllers themselves (code which will be moved in coordinators tomorrow). We would then pass them whatever browser state we have here and they figure it out.",
       "parentUuid": "14c3e415_abd5877e",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dca181b_7389864b",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-21T14:26:23Z",
+      "side": 1,
+      "message": "See my comments in the other class where I remarked on this. I\u0027m probably missing something.",
+      "parentUuid": "bf488f72_bb4b204f",
       "range": {
         "startLine": 28,
         "startChar": 33,
