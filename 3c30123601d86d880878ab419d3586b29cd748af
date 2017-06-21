@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1c40d20_6612dc2b",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-21T17:29:57Z",
+      "side": 1,
+      "message": "Hmm I think you should go through the .mojom interface [1]\nbecause all geolocation will be servificied anytime soon\nand then you won\u0027t have access to this singleton.\n\n[1] https://cs.chromium.org/chromium/src/device/geolocation/public/interfaces/geolocation.mojom?q\u003dgeolocation.mojom\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d59",
+      "revId": "3c30123601d86d880878ab419d3586b29cd748af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
