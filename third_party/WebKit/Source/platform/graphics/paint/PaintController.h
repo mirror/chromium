@@ -198,7 +198,7 @@ class PLATFORM_EXPORT PaintController {
   }
 #endif
 
-  void SetTracksRasterInvalidations(bool value);
+  void SetTracksRasterInvalidations(bool);
   void SetupRasterUnderInvalidationChecking();
 
   bool LastDisplayItemIsSubsequenceEnd() const;
