@@ -85,6 +85,24 @@
       "revId": "b9b3a7839426a9e943ff139c82c584fb6258c8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30950a3_6cc55744",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/svg/use-setAttribute-crash-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T23:13:41Z",
+      "side": 0,
+      "message": "This is a problem causing raster-under-invalidation. This is because the is_just_created flag of the client of the chunk is cleared eariler than we match chunk during compositing update, causing a chunk matched to a previous  chunk with a different client at the same address.\n\nFixed in the latest patch.",
+      "parentUuid": "e3a5ccfb_059eb9c7",
+      "revId": "b9b3a7839426a9e943ff139c82c584fb6258c8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
