@@ -107,6 +107,8 @@ class RemoteSuggestion {
   bool should_notify() const { return should_notify_; }
   base::Time notification_deadline() const { return notification_deadline_; }
 
+  bool is_video_suggestion() const { return is_video_suggestion_; }
+
   bool is_dismissed() const { return is_dismissed_; }
   void set_dismissed(bool dismissed) { is_dismissed_ = dismissed; }
 
@@ -147,6 +149,8 @@ class RemoteSuggestion {
 
   bool should_notify_;
   base::Time notification_deadline_;
+
+  bool is_video_suggestion_;
 
   // The time when the remote suggestion was fetched from the server.
   base::Time fetch_date_;
