@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88e564ab_a3d61403",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:03:39Z",
+      "side": 1,
+      "message": "i think you can probably forward-declare ShutdownReason in headers since it\u0027s an enum class, right?",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2d9ee4_5d48256b",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:03:39Z",
+      "side": 1,
+      "message": "nit: maybe LOGIN_SHUT_DOWN_BUTTON? i think we call it the login screen more often than we call it the signin screen (but maybe i\u0027m wrong), and we also use \"Shut down\" (the verb) instead of \"Shutdown\" (the noun) on both the login/lock screen button and the system tray tooltip.\n\nthis can also probably be from either the login screen or the lock screen; i think we use mostly the same code for both. do we want to distinguish between the two?",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4fe017_c39371c2",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:03:39Z",
+      "side": 1,
+      "message": "nit: TRAY_SHUT_DOWN, or maybe TRAY_SHUT_DOWN_BUTTON (see below)?",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1ffbb7_2daf94da",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:03:39Z",
+      "side": 1,
+      "message": "you probably also need an entry for the \"Update to restart\" button in the system tray. looking at the code, i think it\u0027s ash/system/update/tray_update.cc, and it goes through Shell::Get()-\u003esystem_tray_controller()-\u003eRequestRestartForUpdate().",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6b3965_46ff56ac",
+        "filename": "ash/wm/lock_state_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:03:39Z",
+      "side": 1,
+      "message": "nit that isn\u0027t your fault and probably shouldn\u0027t be part of this change: this arg should\u0027ve been named \"shut_down_after_lock\" :-/",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32f4460_55e7f476",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:03:39Z",
+      "side": 1,
+      "message": "it seems weird to be attaching a shutdown reason to a lock request. is StartLockAnimationAndLockImmediately also called through another path that can shut down later without getting a chance to send a reason then?\n\nalso, should this be POWER_BUTTON instead of UNKNOWN?",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e81a70_28469caa",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:03:39Z",
+      "side": 1,
+      "message": "same comment as above",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bc8667_3e3bca31",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T22:03:39Z",
+      "side": 1,
+      "message": "same comment as above",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
