@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2e1f666_081aaa3c",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-21T21:34:38Z",
+      "side": 1,
+      "message": "worst case as many frames as the user has open... either way this code path should only be hit in exceptional circumstances (more commonly the OnGotMetaData path will be taken), and there it definitely isn\u0027t possible to reserve() the right amount ahead of time, so I\u0027d rather just keep it simple and not worry about the slight performance impact of not reserving.",
+      "parentUuid": "7deeda89_38fc5938",
+      "revId": "812531255c18a498b1e6da3c09e6c03c8f8f3942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10a31720_b64f5407",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "970497b9_406d0435",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-21T21:34:38Z",
+      "side": 1,
+      "message": "You mean base::ContainsKey()? I don\u0027t believe base::ContainsValue (which calls std::find) is optimized for std::set at all (it\u0027s certainly not required by the c++ spec).\n\nAnd to avoid that kind of confusion by using innocently named wrappers that are actually expensive under the hood I prefer to just write out the one-liner obviously-correct code.",
+      "parentUuid": "10a31720_b64f5407",
+      "revId": "812531255c18a498b1e6da3c09e6c03c8f8f3942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1e7e1a9_a727deb2",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "812531255c18a498b1e6da3c09e6c03c8f8f3942",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06f9496_fd8b0c5d",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-21T21:34:38Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t like duplicate code either, but I think in this case the duplicate code is simple enough (and different enough due to the extra origins check here) that it\u0027s probably better to just keep the duplication.",
+      "parentUuid": "c1e7e1a9_a727deb2",
+      "revId": "812531255c18a498b1e6da3c09e6c03c8f8f3942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
