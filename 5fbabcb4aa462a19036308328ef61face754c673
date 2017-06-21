@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2043a0ab_5d22c879",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-21T18:04:30Z",
+      "side": 1,
+      "message": "This can be written as a single line with one fewer new levels of indentation:\n\n.then(mockSensor \u003d\u003e new Promise((resolve, reject) \u003d\u003e {\n  ...\n}))",
+      "range": {
+        "startLine": 293,
+        "startChar": 8,
+        "endLine": 294,
+        "endChar": 51
+      },
+      "revId": "5fbabcb4aa462a19036308328ef61face754c673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f508e3c_76619842",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-21T18:04:30Z",
+      "side": 1,
+      "message": "The condition may be more readable the other way around:\n\nif (page_visible \u0026\u0026 main_frame_focused)\n  Resume();\nelse\n  Suspend();",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 3
+      },
+      "revId": "5fbabcb4aa462a19036308328ef61face754c673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
