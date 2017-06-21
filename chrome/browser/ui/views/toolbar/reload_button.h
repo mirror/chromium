@@ -20,7 +20,8 @@ class CommandUpdater;
 // The reload button in the toolbar, which changes to a stop button when a page
 // load is in progress. Trickiness comes from the desire to have the 'stop'
 // button not change back to 'reload' if the user's mouse is hovering over it
-// (to prevent mis-clicks).
+// (to prevent mis-clicks), and a postpone switching to the 'stop' state until
+// a load has taken a longish amount of time.
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -76,9 +77,12 @@ class ReloadButton : public ToolbarButton,
 
   void OnDoubleClickTimer();
   void OnStopToReloadTimer();
+  void OnLongLoadTimer();
 
   base::OneShotTimer double_click_timer_;
-  base::OneShotTimer stop_to_reload_timer_;
+
+  // Timer to delay switching between reload and stop states.
+  base::OneShotTimer mode_switch_timer_;
 
   // This may be NULL when testing.
   CommandUpdater* command_updater_;
@@ -92,7 +96,7 @@ class ReloadButton : public ToolbarButton,
   // The delay times for the timers.  These are members so that tests can modify
   // them.
   base::TimeDelta double_click_timer_delay_;
-  base::TimeDelta stop_to_reload_timer_delay_;
+  base::TimeDelta mode_switch_timer_delay_;
 
   // Indicates if reload menu is enabled.
   bool menu_enabled_;
