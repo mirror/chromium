@@ -69,6 +69,24 @@
       "revId": "abee51d64177f66f4439e9e9dbf9a99809e852d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f77ed6_f9f02a04",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T07:13:54Z",
+      "side": 1,
+      "message": "I discussed with @mkwst whether or not to have an explicit kSameOrigin status and came to the conclusion that having it explicitly would probably help to unify/reduce the scattered same origin checks. If you don\u0027t object, I would therefore re-introduce the explicit kSameOrigin status.",
+      "parentUuid": "f8292ed4_2919c5aa",
+      "revId": "abee51d64177f66f4439e9e9dbf9a99809e852d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
