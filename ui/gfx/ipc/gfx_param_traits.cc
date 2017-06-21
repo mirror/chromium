@@ -126,6 +126,43 @@ void ParamTraits<gfx::SelectionBound>::Log(const param_type& p,
   l->append(")");
 }
 
+void ParamTraits<gfx::GpuMemoryBufferAttrib>::GetSize(
+    base::PickleSizer* s,
+    const gfx::GpuMemoryBufferAttrib& r) {
+  GetParamSize(s, r.format);
+  GetParamSize(s, r.modifier);
+}
+
+void ParamTraits<gfx::GpuMemoryBufferAttrib>::Write(
+    base::Pickle* m,
+    const gfx::GpuMemoryBufferAttrib& r) {
+  WriteParam(m, r.format);
+  WriteParam(m, r.modifier);
+}
+
+bool ParamTraits<gfx::GpuMemoryBufferAttrib>::Read(const base::Pickle* m,
+                                                   base::PickleIterator* iter,
+                                                   param_type* r) {
+  int format;
+  uint64_t modifier;
+
+  if (!ReadParam(m, iter, &format) || !ReadParam(m, iter, &modifier))
+    return false;
+
+  r->format = format;
+  r->modifier = modifier;
+  return true;
+}
+
+void ParamTraits<gfx::GpuMemoryBufferAttrib>::Log(const param_type& p,
+                                                  std::string* l) {
+  l->append("gfx::GpuMemoryBufferAttrib(");
+  LogParam(p.format, l);
+  l->append(", ");
+  LogParam(p.modifier, l);
+  l->append(")");
+}
+
 }  // namespace IPC
 
 // Generate param traits size methods.
