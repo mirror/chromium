@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afee7f60_6d7fde86",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-21T13:19:50Z",
+      "side": 1,
+      "message": "Ooh, good spot, yes we should remove the preference here if it\u0027s null, to be consistent with setUpListPreference.\n\nDone.",
+      "parentUuid": "1c595699_1c011c79",
+      "range": {
+        "startLine": 364,
+        "startChar": 16,
+        "endLine": 364,
+        "endChar": 22
+      },
+      "revId": "ce69b135dfba7b47fd37ea162d214cb0b685bf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "028d0224_20b4f650",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-21T12:54:33Z",
       "side": 1,
       "message": "Which values are you seeing from native?",
+      "range": {
+        "startLine": 372,
+        "startChar": 48,
+        "endLine": 372,
+        "endChar": 50
+      },
+      "revId": "ce69b135dfba7b47fd37ea162d214cb0b685bf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b29e1b6_a7977286",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-21T13:19:50Z",
+      "side": 1,
+      "message": "I\u0027m only seeing Allow or Block, but I\u0027d be a little concerned about removing this, since it will nullpointer on the gteResources.getString call on line 378 if the value is ever anything else..",
+      "parentUuid": "028d0224_20b4f650",
       "range": {
         "startLine": 372,
         "startChar": 48,
