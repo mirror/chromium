@@ -51,6 +51,10 @@ OfflineEventLogger* PrefetchServiceImpl::GetLogger() {
   return &logger_;
 }
 
+PrefetchService::DownloadDelegate* PrefetchServiceImpl::GetDownloadDelegate() {
+  return prefetch_downloader_ ? prefetch_downloader_.get() : nullptr;
+}
+
 void PrefetchServiceImpl::Shutdown() {
   suggested_articles_observer_.reset();
 }

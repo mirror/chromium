@@ -21,6 +21,7 @@
 #include "chrome/browser/android/offline_pages/offline_page_model_factory.h"
 #include "chrome/browser/android/offline_pages/prefetch/prefetch_background_task.h"
 #include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
+#include "chrome/browser/download/download_service_factory.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/channel_info.h"
@@ -29,7 +30,9 @@
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_request.h"
 #include "components/offline_pages/core/prefetch/get_operation_request.h"
+#include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
+#include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "content/public/browser/web_ui.h"
 #include "net/base/network_change_notifier.h"
 
@@ -113,6 +116,8 @@ std::string GetStringRenderPageInfoList(
   str += "\n]";
   return str;
 }
+
+void DownloadCompleted(const std::string& download_id, bool success) {}
 
 }  // namespace
 
@@ -348,6 +353,33 @@ void OfflineInternalsUIMessageHandler::HandleGetOperation(
           weak_ptr_factory_.GetWeakPtr(), callback_id)));
 }
 
+void OfflineInternalsUIMessageHandler::HandleDownloadArchive(
+    const base::ListValue* args) {
+  AllowJavascript();
+  std::string callback_id;
+  CHECK(args->GetString(0, &callback_id));
+
+  std::string name;
+  CHECK(args->GetString(1, &name));
+  base::TrimWhitespaceASCII(name, base::TRIM_ALL, &name);
+
+  if (prefetch_service_) {
+    offline_pages::PrefetchServiceImpl* prefetch_service_impl =
+        static_cast<offline_pages::PrefetchServiceImpl*>(prefetch_service_);
+    if (!prefetch_service_impl->prefetch_downloader()) {
+      prefetch_service_impl->set_prefetch_downloader(
+          base::MakeUnique<offline_pages::PrefetchDownloader>(
+              DownloadServiceFactory::GetForBrowserContext(
+                  Profile::FromWebUI(web_ui())),
+              chrome::GetChannel(), base::Bind(&DownloadCompleted)));
+    }
+    prefetch_service_impl->prefetch_downloader()->StartDownload(
+        // TODO(jianli): Remove the uppercase after the download service fixes
+        // this issue.
+        base::ToUpperASCII(base::GenerateGUID()), name);
+  }
+}
+
 void OfflineInternalsUIMessageHandler::HandlePrefetchRequestCallback(
     std::string callback_id,
     offline_pages::PrefetchRequestStatus status,
@@ -509,6 +541,10 @@ void OfflineInternalsUIMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getOperation",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGetOperation,
+                 weak_ptr_factory_.GetWeakPtr()));
+  web_ui()->RegisterMessageCallback(
+      "downloadArchive",
+      base::Bind(&OfflineInternalsUIMessageHandler::HandleDownloadArchive,
                  weak_ptr_factory_.GetWeakPtr()));
 
   // Get the offline page model associated with this web ui.

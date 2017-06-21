@@ -335,6 +335,10 @@ cr.define('offlineInternals', function() {
       browserProxy.getOperation($('operation-name').value)
           .then(setPrefetchResult);
     };
+    $('download-archive').onclick = function() {
+      browserProxy.downloadArchive($('download-name').value)
+          .then(setPrefetchResult);
+    };
     if (!incognito)
       refreshAll();
   }
