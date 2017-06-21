@@ -85,6 +85,9 @@ class ConfiguratorImpl {
   // True if signing of update checks is enabled.
   bool EnabledCupSigning() const;
 
+  // Returns the key hash corresponding to a CRX trusted by ActionRun.
+  std::vector<uint8_t> GetRunActionKeyHash() const;
+
  private:
   net::URLRequestContextGetter* url_request_getter_;
   std::string extra_info_;
