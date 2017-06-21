@@ -43,6 +43,7 @@
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_manager.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
@@ -277,16 +278,13 @@ class DownloadExtensionTest : public ExtensionApiTest {
         ui::PAGE_TRANSITION_LINK);
     EventRouter::Get(current_browser()->profile())
         ->AddEventListener(downloads::OnCreated::kEventName,
-                           tab->GetRenderProcessHost(),
-                           GetExtensionId());
+                           tab->GetMainFrame()->GetProcess(), GetExtensionId());
     EventRouter::Get(current_browser()->profile())
         ->AddEventListener(downloads::OnChanged::kEventName,
-                           tab->GetRenderProcessHost(),
-                           GetExtensionId());
+                           tab->GetMainFrame()->GetProcess(), GetExtensionId());
     EventRouter::Get(current_browser()->profile())
         ->AddEventListener(downloads::OnErased::kEventName,
-                           tab->GetRenderProcessHost(),
-                           GetExtensionId());
+                           tab->GetMainFrame()->GetProcess(), GetExtensionId());
   }
 
   content::RenderProcessHost* AddFilenameDeterminer() {
@@ -298,9 +296,8 @@ class DownloadExtensionTest : public ExtensionApiTest {
         ui::PAGE_TRANSITION_LINK);
     EventRouter::Get(current_browser()->profile())
         ->AddEventListener(downloads::OnDeterminingFilename::kEventName,
-                           tab->GetRenderProcessHost(),
-                           GetExtensionId());
-    return tab->GetRenderProcessHost();
+                           tab->GetMainFrame()->GetProcess(), GetExtensionId());
+    return tab->GetMainFrame()->GetProcess();
   }
 
   void RemoveFilenameDeterminer(content::RenderProcessHost* host) {

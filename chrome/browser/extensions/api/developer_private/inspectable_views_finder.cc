@@ -193,7 +193,8 @@ void InspectableViewsFinder::GetAppWindowViewsForExtension(
     if (url.is_empty())
       url = window->initial_url();
 
-    content::RenderProcessHost* process = web_contents->GetRenderProcessHost();
+    content::RenderProcessHost* process =
+        web_contents->GetMainFrame()->GetProcess();
     result->push_back(ConstructView(
         url, process->GetID(), web_contents->GetMainFrame()->GetRoutingID(),
         false, false, GetViewType(web_contents)));

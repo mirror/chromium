@@ -27,7 +27,7 @@ bool ChromeWebViewInternalContextMenusCreateFunction::RunAsync() {
       Profile::FromBrowserContext(browser_context())->IsOffTheRecord(),
       MenuItem::ExtensionKey(
           extension_id(),
-          GetSenderWebContents()->GetRenderProcessHost()->GetID(),
+          GetSenderWebContents()->GetMainFrame()->GetProcess()->GetID(),
           params->instance_id));
 
   if (params->create_properties.id.get()) {
@@ -61,7 +61,7 @@ bool ChromeWebViewInternalContextMenusUpdateFunction::RunAsync() {
       profile->IsOffTheRecord(),
       MenuItem::ExtensionKey(
           extension_id(),
-          GetSenderWebContents()->GetRenderProcessHost()->GetID(),
+          GetSenderWebContents()->GetMainFrame()->GetProcess()->GetID(),
           params->instance_id));
 
   if (params->id.as_string)
@@ -89,7 +89,7 @@ bool ChromeWebViewInternalContextMenusRemoveFunction::RunAsync() {
       Profile::FromBrowserContext(browser_context())->IsOffTheRecord(),
       MenuItem::ExtensionKey(
           extension_id(),
-          GetSenderWebContents()->GetRenderProcessHost()->GetID(),
+          GetSenderWebContents()->GetMainFrame()->GetProcess()->GetID(),
           params->instance_id));
 
   if (params->menu_item_id.as_string) {
@@ -125,7 +125,7 @@ bool ChromeWebViewInternalContextMenusRemoveAllFunction::RunAsync() {
       MenuManager::Get(Profile::FromBrowserContext(browser_context()));
   menu_manager->RemoveAllContextItems(MenuItem::ExtensionKey(
       extension_id(),
-      GetSenderWebContents()->GetRenderProcessHost()->GetID(),
+      GetSenderWebContents()->GetMainFrame()->GetProcess()->GetID(),
       params->instance_id));
 
   SendResponse(true);

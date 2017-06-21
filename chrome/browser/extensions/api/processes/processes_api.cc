@@ -20,6 +20,7 @@
 #include "chrome/common/extensions/api/processes.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/child_process_data.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/child_process_host.h"
@@ -459,7 +460,7 @@ ExtensionFunction::ResponseAction ProcessesGetProcessIdForTabFunction::Run() {
                             base::IntToString(tab_id)));
   }
 
-  const int process_id = contents->GetRenderProcessHost()->GetID();
+  const int process_id = contents->GetMainFrame()->GetProcess()->GetID();
   return RespondNow(ArgumentList(
       api::processes::GetProcessIdForTab::Results::Create(process_id)));
 }

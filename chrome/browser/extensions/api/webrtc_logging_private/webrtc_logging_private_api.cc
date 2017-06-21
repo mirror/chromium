@@ -92,7 +92,7 @@ content::RenderProcessHost* WebrtcLoggingPrivateFunction::RphFromRequest(
         expected_origin.spec().c_str(), security_origin.c_str());
     return nullptr;
   }
-  return contents->GetRenderProcessHost();
+  return contents->GetMainFrame()->GetProcess();
 }
 
 scoped_refptr<WebRtcLoggingHandlerHost>
