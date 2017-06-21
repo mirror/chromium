@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "96941050_dfcebeb0",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/FaceDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-21T01:02:07Z",
+      "side": 1,
+      "message": "Remove explicit.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "c055b2c3ce283364758b6abf3023a8b520257009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "174e601b_7468c88a",
         "filename": "third_party/WebKit/Source/modules/shapedetection/TextDetector.h",
         "patchSetId": 2
