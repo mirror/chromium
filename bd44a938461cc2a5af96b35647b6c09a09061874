@@ -452,6 +452,24 @@
     },
     {
       "key": {
+        "uuid": "3367fa28_3561e08c",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-21T03:37:55Z",
+      "side": 1,
+      "message": "I can\u0027t use mojo::StrongBinding here since the CameraHalDispatcher bindings I have here all points to the same impl. instance. I\u0027ve changed to use mojo::BindingSet instead.",
+      "parentUuid": "fddb43b5_428207c1",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bf12ce2_fc423b10",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
