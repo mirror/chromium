@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f36b0895_d27f1fc3",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1ec18c_c2cd6702",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "256bffb5_e90c3e6c",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7d57be22_f53d3244",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "256bffb5_e90c3e6c",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6baa011e_f7f2259e",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1386d243_4e471f20",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6baa011e_f7f2259e",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "3cb5b153_49821729",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "745df8f2_4b3b0096",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c165198_61f9ed11",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
         "patchSetId": 1
@@ -87,6 +165,30 @@
       "writtenOn": "2017-06-21T09:00:06Z",
       "side": 1,
       "message": "is there a need to do this with N posted tasks rather than 1 using PostTaskWithTraitsAndReplyWithResult on line 67?",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 15
+      },
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8d73de_50779e59",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "My rationale was just to make sure tasks posted to the UI thread are as small as possible, and that they come immediately as they get enumerated, so that it works great with the idle timer on the ModuleDatabase.",
+      "parentUuid": "7c165198_61f9ed11",
       "range": {
         "startLine": 102,
         "startChar": 4,
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "28ce4e4c_12b71d50",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f86d289_8d113a0e",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc7f5fcc_87ad686c",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
         "patchSetId": 1
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "ab6ab702_a5c79f87",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc7f5fcc_87ad686c",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bda5ddb_982d83df",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
         "patchSetId": 1
@@ -147,6 +285,24 @@
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7394c09_8afa8aa0",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bda5ddb_982d83df",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "ed1ee5f9_41444bf3",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5635ee60_620977a1",
+      "range": {
+        "startLine": 127,
+        "startChar": 24,
+        "endLine": 127,
+        "endChar": 32
+      },
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "140b4c56_119d14d9",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
         "patchSetId": 1
@@ -184,6 +364,24 @@
       "writtenOn": "2017-06-21T09:00:06Z",
       "side": 1,
       "message": "i\u0027m not sure that this is useful as-is. today, GetModuleImageSizeAndTimeDateStamp can only parse the headers out of a 64-bit dll from 64-bit Chrome, and out of a 32-bit dll from 32-bit Chrome (note: it would magically handle cross-bitness parsing if it used chrome/common/safe_browsing/pe_image_reader_win.h). consequently, i wouldn\u0027t expect GetModuleImageSizeAndTimeDateStamp to ever return true for a dll that was in the other-bitness registry location.\n\naside from that, if they\u0027re always in-proc server dlls, they must match the bitness of Chrome. do you care about 32-bit dlls if the user is running 64-bit Chrome?",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b91cb79_14d0b7c5",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Right, this should probably be only checking the matching bitness dll. The reason I\u0027m doing both here is because we were told by someone from MS to do it like so. I\u0027ve asked for clarification and I\u0027m leaving this unresolved until I hear back from them.",
+      "parentUuid": "140b4c56_119d14d9",
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -213,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "0de111e0_1489ea3e",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dcf695f_68eb2618",
+      "range": {
+        "startLine": 139,
+        "startChar": 24,
+        "endLine": 139,
+        "endChar": 32
+      },
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8228354_7c87c68b",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
         "patchSetId": 1
@@ -224,6 +446,24 @@
       "writtenOn": "2017-06-21T09:00:06Z",
       "side": 1,
       "message": "is there such a thing as an out-of-proc IME, or are they all necessarily implemented as in-proc servers?",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9f71bf_21805336",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Great question. As far as I can tell, they are always in-proc, but I\u0027m leaving this unresolved while I look into it.",
+      "parentUuid": "d8228354_7c87c68b",
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -247,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "93458696_477e2c19",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "569b6770_f788a3b5",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "940b6dff_d2f2290e",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
         "patchSetId": 1
@@ -261,6 +519,24 @@
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2720c9_957c43c2",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "940b6dff_d2f2290e",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +557,24 @@
     },
     {
       "key": {
+        "uuid": "5a789f4a_eb05b975",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b563d1b_54c02ceb",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "418e5c48_a5d5ce13",
         "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
         "patchSetId": 1
@@ -295,6 +589,24 @@
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167a4b16_abd068a8",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "418e5c48_a5d5ce13",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -315,6 +627,24 @@
     },
     {
       "key": {
+        "uuid": "4e68fdc9_149764e1",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ffe69a_f15980fc",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4051a9b7_3117769a",
         "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
         "patchSetId": 1
@@ -329,6 +659,24 @@
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21fa372_2bba1f2a",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4051a9b7_3117769a",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +697,24 @@
     },
     {
       "key": {
+        "uuid": "48562dc2_be4efde7",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a795c6aa_4c9f2e9c",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "866e95a1_9fb43fa2",
         "filename": "chrome/browser/conflicts/module_info_win.h",
         "patchSetId": 1
@@ -363,6 +729,24 @@
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9a65ef_7ff3cc8c",
+        "filename": "chrome/browser/conflicts/module_info_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-21T23:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "866e95a1_9fb43fa2",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
