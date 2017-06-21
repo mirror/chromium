@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09d83efd_20d2f4ba",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/application-panel/storage-view-reports-quota-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-21T20:09:02Z",
+      "side": 1,
+      "message": "It was coming from storage_handler.cc, moved to Resources.ClearStorageView instead. Thanks for pointing that out, I updated the terms to match the UI.",
+      "parentUuid": "d19d9420_748de9f2",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c8523e5_697f568b",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c07d2ca_76496282",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4605,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-21T20:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c8523e5_697f568b",
+      "range": {
+        "startLine": 4605,
+        "startChar": 54,
+        "endLine": 4605,
+        "endChar": 60
+      },
+      "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3f7211fe_e0b6847c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-21T20:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4028e9cc_28ad4cd9",
+      "range": {
+        "startLine": 39,
+        "startChar": 46,
+        "endLine": 39,
+        "endChar": 82
+      },
+      "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4965cdc_25369b2e",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73abf96f_124a9989",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-21T20:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4965cdc_25369b2e",
+      "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "0f25fbb1_835560ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-21T20:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac05d06_2cb674e7",
+      "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e388846_1b309630",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 2
@@ -119,6 +227,24 @@
       "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0f76d9_2b4543ef",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-21T20:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e388846_1b309630",
+      "revId": "6f97cddc093aef9340b02c842cb26d5b949f632e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
