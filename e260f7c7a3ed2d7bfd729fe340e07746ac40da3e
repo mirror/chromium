@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4fded29_b024a592",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-21T16:25:43Z",
+      "side": 1,
+      "message": "do we have / need any tests for this?",
+      "range": {
+        "startLine": 31,
+        "startChar": 73,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53fb829_612961be",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-21T16:25:43Z",
+      "side": 1,
+      "message": "nit: maybe add a comment to explain when this can happen and what happens to the buffer/result in that case.",
+      "range": {
+        "startLine": 35,
+        "startChar": 19,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46960b6c_950e427c",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-21T16:25:43Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be placed before the check for seq_lock.ReadRetry(version)?",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
