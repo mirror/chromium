@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5e98632_3bf3e339",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T20:25:45Z",
+      "side": 1,
+      "message": "Is this runner guaranteed to run actually on the same thread every time or can it jump threads? (while maintaining sequential behavior)? Just curious.",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60906d09_c8b39bde",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T20:25:45Z",
+      "side": 1,
+      "message": "Do we need \"OR IGNORE\" here? Why? If it happens when we try to insert a record with the same primary key, then we do want statement.Run() to fail and rollback the whole transaction (with UMA).",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1afbfc_603b6ff0",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T20:25:45Z",
+      "side": 1,
+      "message": "Will this fail the whole current transaction automatically?\nIf so and we don\u0027t really need the per-item result, we may simplify to just \"statement.Run();\"\nIf it does not fail transaction automatically, we need to do Transaction.Rollback() in the main Sync function if any of these helpers error out...",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906581d4_17fc7ea2",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T20:25:45Z",
+      "side": 1,
+      "message": "If we don\u0027t really need per-url ItemActionStatus, we might simplify and not collect the status.\nPerhaps UMA at this point (something like \"OfflinePagesPrefetch.DroppedSimilarUrlCount\" which would tell us how many Urls we don\u0027t insert because they are duplicates). Or maybe not even that.",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ee1f48_643047f0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T20:25:45Z",
+      "side": 1,
+      "message": "Please add prefetch_store_ to this CHECK. It should include all subobjects to ensure correct usage of the Taco...",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe919643_329e5e30",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T20:25:45Z",
+      "side": 1,
+      "message": "In case of initialization failure, this seem to retry the initialization with every Execute call. Also, if the initialization persistently fail (say, until device is restarted), the pending_commands_ grows unbounded.\nPerhaps the better solution would be to fail the command? Not sure how to invoke the result_callback though, because of the custom result type.",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60caff80_1f731159",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T20:25:45Z",
+      "side": 1,
+      "message": "Would it be better to test initialization_status_ here?",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
