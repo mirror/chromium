@@ -68,6 +68,17 @@ class TestObserver;
 class ResourcePrefetcherManager;
 class LoadingStatsCollector;
 
+struct PreconnectPrediction {
+  PreconnectPrediction();
+  PreconnectPrediction(const PreconnectPrediction& other);
+  ~PreconnectPrediction();
+
+  bool is_redirected;
+  std::string host;
+  std::vector<GURL> preconnect_urls;
+  std::vector<GURL> preresolve_urls;
+};
+
 // Contains logic for learning what can be prefetched and for kicking off
 // speculative prefetching.
 // - The class is a profile keyed service owned by the profile.
@@ -253,6 +264,9 @@ class ResourcePrefetchPredictor
   virtual bool GetPrefetchData(const GURL& main_frame_url,
                                Prediction* prediction) const;
 
+  virtual bool PredictPreconnectOrigins(const GURL& url,
+                                        PreconnectPrediction* prediction) const;
+
  private:
   // 'LoadingPredictorObserver' calls the below functions to inform the
   // predictor of main frame and resource requests. Should only be called if the
@@ -312,6 +326,8 @@ class ResourcePrefetchPredictor
   FRIEND_TEST_ALL_PREFIXES(ResourcePrefetchPredictorTest, PopulateFromManifest);
   FRIEND_TEST_ALL_PREFIXES(ResourcePrefetchPredictorTest, GetRedirectEndpoint);
   FRIEND_TEST_ALL_PREFIXES(ResourcePrefetchPredictorTest, GetPrefetchData);
+  FRIEND_TEST_ALL_PREFIXES(ResourcePrefetchPredictorTest,
+                           TestPredictPreconnectOrigins);
   FRIEND_TEST_ALL_PREFIXES(ResourcePrefetchPredictorTest,
                            TestPrecisionRecallHistograms);
   FRIEND_TEST_ALL_PREFIXES(ResourcePrefetchPredictorTest,

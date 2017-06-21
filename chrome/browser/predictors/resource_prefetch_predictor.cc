@@ -181,6 +181,11 @@ bool ManifestCompare::operator()(const precache::PrecacheManifest& lhs,
 
 }  // namespace internal
 
+PreconnectPrediction::PreconnectPrediction() = default;
+PreconnectPrediction::PreconnectPrediction(
+    const PreconnectPrediction& prediction) = default;
+PreconnectPrediction::~PreconnectPrediction() = default;
+
 ////////////////////////////////////////////////////////////////////////////////
 // ResourcePrefetchPredictor static functions.
 
@@ -713,6 +718,39 @@ bool ResourcePrefetchPredictor::GetPrefetchData(
     }
   }
   return false;
+}
+
+bool ResourcePrefetchPredictor::PredictPreconnectOrigins(
+    const GURL& url,
+    PreconnectPrediction* prediction) const {
+  DCHECK(prediction);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (initialization_state_ != INITIALIZED)
+    return false;
+
+  std::string host = url.host();
+  std::string redirect_endpoint;
+  if (!GetRedirectEndpoint(host, *host_redirect_data_, &redirect_endpoint))
+    return false;
+
+  OriginData data;
+  if (!origin_data_->TryGetData(redirect_endpoint, &data))
+    return false;
+
+  prediction->host = redirect_endpoint;
+  prediction->is_redirected = (host != redirect_endpoint);
+  for (const OriginStat& origin : data.origins()) {
+    float confidence = static_cast<float>(origin.number_of_hits()) /
+                       (origin.number_of_hits() + origin.number_of_misses());
+    if (confidence > 0.75) {
+      prediction->preconnect_urls.emplace_back(origin.origin());
+    } else if (confidence > 0.2) {
+      prediction->preresolve_urls.emplace_back(origin.origin());
+    }
+  }
+
+  return !prediction->preconnect_urls.empty() ||
+         !prediction->preresolve_urls.empty();
 }
 
 bool ResourcePrefetchPredictor::PopulatePrefetcherRequest(
