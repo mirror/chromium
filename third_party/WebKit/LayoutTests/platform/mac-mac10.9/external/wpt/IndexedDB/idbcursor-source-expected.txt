@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+FAIL IDBCursor.source - IDBObjectStore assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor.source - IDBIndex assert_unreached: open should succeed Reached unreachable code
+Harness: the test ran to completion.
+
