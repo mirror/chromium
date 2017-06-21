@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "93d42e79_2cbda4f4",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ba42a7d_3b3b2793",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6bbdfeb_da698d1c",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 8

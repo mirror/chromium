@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c077fcc_a2a1fc7a",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4917ab5d_00cf5fbe",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c8467fe_530083b0",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9912a454_7942aeea",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c8467fe_530083b0",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "87e51afa_7c5f5923",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d994fb8c_82b089fe",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6ebd9ec_2855a141",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9d3d24e4_f2437f04",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6ebd9ec_2855a141",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf265151_8f1a3777",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-21T21:07:32Z",
       "side": 1,
       "message": "let\u0027s move the definitions of these methods to the cc files.",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf6c6d2_47a6e482",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "These are also needed in the context of the unit tests. How do you suggest I handle that, since I can\u0027t import the .cc file in the unit tests?",
+      "parentUuid": "cf265151_8f1a3777",
       "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d85f43cf_46d7d912",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "ee560c06_b1eafa76",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a284631_0849a007",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 9
@@ -115,6 +223,24 @@
       "writtenOn": "2017-06-21T21:07:32Z",
       "side": 1,
       "message": "these too should live in the .cc if they are only needed in the context of the implementation.",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cdcc73d_fd34d8bf",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "Same, they\u0027re needed in the unit tests as well.",
+      "parentUuid": "3a284631_0849a007",
       "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c7e7382c_399a4da1",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f0e4ef9_e58ca01b",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26975f9b_df7f625f",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 9
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-21T21:07:32Z",
       "side": 1,
       "message": "looks like you can remove these commented out includes",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f889424_1bb81263",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T21:51:02Z",
+      "side": 1,
+      "message": "This is actually the problem I sent you a separate e-mail about -- these includes are required for the test to compile, but they cause checkdeps violations during presubmit. The error message I get during presubmit isn\u0027t very descriptive, so I\u0027m not sure why including these files is disallowed.",
+      "parentUuid": "26975f9b_df7f625f",
       "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
