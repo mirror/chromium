@@ -91,6 +91,16 @@ bool ContainsValue(const Collection& collection, const Value& value) {
          std::end(collection);
 }
 
+template <typename T, typename Value>
+bool ContainsValue(const std::set<T>& set, const Value& value) {
+  static_assert(!std::is_same<T, T>::value, "Use ContainsKey for sets");
+}
+
+template <typename T, typename Value>
+bool ContainsValue(const std::unordered_set<T>& set, const Value& value) {
+  static_assert(!std::is_same<T, T>::value, "Use ContainsKey for sets");
+}
+
 // Returns true if the container is sorted.
 template <typename Container>
 bool STLIsSorted(const Container& cont) {

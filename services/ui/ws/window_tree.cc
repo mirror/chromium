@@ -304,7 +304,7 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
     return nullptr;
   }
 
-  if (base::ContainsValue(roots_, window)) {
+  if (base::ContainsKey(roots_, window)) {
     DVLOG(1) << "SetDisplayRoot called with existing root";
     return nullptr;
   }
