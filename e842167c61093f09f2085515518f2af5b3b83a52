@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3ace55cf_0b105f00",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-06-21T18:51:13Z",
+      "side": 1,
+      "message": "How about naming it \"GetWhilteListedTouchAction\"? It might be confusing to people without the context as it looks like \"we only allow most restricted actions\".",
+      "revId": "e842167c61093f09f2085515518f2af5b3b83a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "721a70c4_8d4bbbca",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 2
@@ -53,6 +70,30 @@
       "writtenOn": "2017-06-21T13:52:48Z",
       "side": 1,
       "message": "+sunxd@: I had an offline discussion with hayleyferr@, and it appears that we cannot access the \"CompositorTouchAction\" runtime flag. Did we miss anything here?",
+      "range": {
+        "startLine": 1073,
+        "startChar": 4,
+        "endLine": 1073,
+        "endChar": 40
+      },
+      "revId": "e842167c61093f09f2085515518f2af5b3b83a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af6d740_b5e2e205",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-06-21T18:51:13Z",
+      "side": 1,
+      "message": "We probably need a global flag. But I think it\u0027s fine to force it to be None right now.",
+      "parentUuid": "3e13b662_834844aa",
       "range": {
         "startLine": 1073,
         "startChar": 4,
