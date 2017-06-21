@@ -86,9 +86,11 @@
 #include <linux-dmabuf-unstable-v1-server-protocol.h>
 #include <wayland-drm-server-protocol.h>
 #if defined(OS_CHROMEOS)
+#include "ui/aura/env.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.h"
+#include "ui/ozone/platform/drm/common/drm_util.h"
 #endif
 #endif
 
@@ -778,8 +780,14 @@ void bind_linux_dmabuf(wl_client* client,
   wl_resource_set_implementation(resource, &linux_dmabuf_implementation, data,
                                  nullptr);
 
-  for (const auto& supported_format : dmabuf_supported_formats)
-    zwp_linux_dmabuf_v1_send_format(resource, supported_format.dmabuf_format);
+  gfx::GpuMemoryBufferAttribVector attrs =
+      aura::Env::GetInstance()
+          ->context_factory()
+          ->SharedMainThreadContextProvider()
+          ->ContextCapabilities()
+          .image_gmb_attribs;
+  for (const auto attrib : attrs)
+    zwp_linux_dmabuf_v1_send_format(resource, attrib.format);
 }
 
 #endif

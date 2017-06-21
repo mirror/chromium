@@ -269,6 +269,9 @@ bool ClientBase::Init(const InitParams& params) {
       return false;
     }
 
+    zwp_linux_dmabuf_v1_add_listener(globals_.linux_dmabuf.get(),
+                                     &params.dmabuf_listener, &globals_);
+
     device_.reset(gbm_create_device(drm_fd_.get()));
     if (!device_) {
       LOG(ERROR) << "Can't create gbm device";
