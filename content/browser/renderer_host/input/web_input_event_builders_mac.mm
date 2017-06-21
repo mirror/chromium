@@ -247,6 +247,63 @@ blink::WebKeyboardEvent WebKeyboardEventBuilder::Build(NSEvent* event) {
   return result;
 }
 
+// WebTouchEvent --------------------------------------------------------------
+
+blink::WebMouseEvent WebMouseEventBuilder::BuildMouseEventFromTouchEvent(
+    NSEvent* theEvent,
+    NSView* view,
+    blink::WebInputEvent::Type webInputEvent,
+    blink::WebInputEvent::Modifiers webInputEventModifier) {
+  blink::WebMouseEvent::Button button = blink::WebMouseEvent::Button::kLeft;
+  blink::WebInputEvent::Type event_type = webInputEvent;
+  int click_count = 1;
+
+  int modifiers = 0;
+  modifiers |= webInputEventModifier;
+  blink::WebMouseEvent event(event_type, modifiers, [theEvent timestamp]);
+  event.click_count = click_count;
+  event.button = button;
+
+  event.pointer_type = blink::WebPointerProperties::PointerType::kMouse;
+  event.id = [theEvent deviceID];
+
+  NSPoint touchbar_location =
+      [view convertPoint:[theEvent locationInWindow] fromView:nil];
+  if (touchbar_location.x > 0) {
+  }
+  NSPoint touchbar_location2 =
+      [view convertPoint:[theEvent locationInWindow] toView:nil];
+  if (touchbar_location2.x > 0) {
+  }
+  NSPoint touchbar_location3 = theEvent.locationInWindow;
+  if (touchbar_location3.x > 0) {
+  }
+
+  NSPoint event_location = [theEvent locationInWindow];
+  NSPoint screen_local = [view convertPoint:event_location fromView:view];
+  NSScreen* primary_screen =
+      ([[NSScreen screens] count] > 0) ? [[NSScreen screens] firstObject] : nil;
+  // Flip y conditionally.
+  event.SetPositionInScreen(
+      screen_local.x, primary_screen
+                          ? [primary_screen frame].size.height - screen_local.y
+                          : screen_local.y);
+  // event.SetPositionInScreen(45,15);
+
+  NSPoint content_local =
+      [view convertPoint:[theEvent locationInWindow] fromView:nil];
+  // Flip y.
+  // event.SetPositionInWidget(45,12);
+
+  event.SetPositionInWidget(content_local.x,
+                            [view frame].size.height - content_local.y);
+
+  event.movement_x = [theEvent deltaX];
+  event.movement_y = [theEvent deltaY];
+
+  return event;
+}
+
 // WebMouseEvent --------------------------------------------------------------
 
 blink::WebMouseEvent WebMouseEventBuilder::Build(
