@@ -214,8 +214,9 @@ void WebFrameSchedulerImpl::WillNavigateBackForwardSoon() {
   parent_web_view_scheduler_->WillNavigateBackForwardSoon(this);
 }
 
-void WebFrameSchedulerImpl::DidStartProvisionalLoad() {
+void WebFrameSchedulerImpl::DidStartProvisionalLoad(bool is_main_frame) {
   parent_web_view_scheduler_->DidBeginProvisionalLoad(this);
+  renderer_scheduler_->DidStartProvisionalLoad(is_main_frame);
 }
 
 void WebFrameSchedulerImpl::DidFailProvisionalLoad() {
