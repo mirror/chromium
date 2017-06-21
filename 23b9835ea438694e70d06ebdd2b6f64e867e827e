@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da42d883_0af4c019",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-21T23:54:13Z",
+      "side": 1,
+      "message": "This feels incorrect to me?  It\u0027s not the temporary physical path now right?  There is no temporary physical path on complete IIUC?",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 67
+      },
+      "revId": "23b9835ea438694e70d06ebdd2b6f64e867e827e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71cd10de_69f35ec1",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-21T23:54:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be two different things?  I felt like temporary_physical_file_path \u003d the path used before the download finishes and entry-\u003etarget_file_path is the real deal.",
+      "range": {
+        "startLine": 702,
+        "startChar": 4,
+        "endLine": 702,
+        "endChar": 73
+      },
+      "revId": "23b9835ea438694e70d06ebdd2b6f64e867e827e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
