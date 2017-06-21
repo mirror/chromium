@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "71610a48_bd51af5a",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-21T23:07:42Z",
+      "side": 1,
+      "message": "LeakExpecations contains fast/dom/inert/inert-node-is-uneditable.html.\nSo probably this is an existing leak?",
+      "parentUuid": "03c09b8e_0e5b55d3",
+      "revId": "70943f7fdf40c70e1babb3d4b707bf2e08ffe8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40a8005c_a98ee5bc",
         "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
         "patchSetId": 11

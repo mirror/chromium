@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aaa1749_c0e0933a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-21T23:07:42Z",
+      "side": 1,
+      "message": "I expect ResourceBuffer() is very frequently null after NotifyFinished(), even the resource is loaded successfully, especially when the ScriptResource was already on MemoryCache.\nIs ResourceBuffer() actually non-null in the specific scenarios you are looking at?",
+      "range": {
+        "startLine": 365,
+        "startChar": 48,
+        "endLine": 366,
+        "endChar": 23
+      },
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
