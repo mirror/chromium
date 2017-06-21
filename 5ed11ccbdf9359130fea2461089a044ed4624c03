@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "6313a6b3_12107472",
+        "filename": "cc/paint/paint_op_buffer_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-06-21T08:10:06Z",
+      "side": 1,
+      "message": "Is the save/restore balancing necessary here, especially since you\u0027re not iterating through custom indices. A PaintRecord is nice about balancing its saves (see https://cs.chromium.org/chromium/src/cc/paint/paint_recorder.cc?type\u003dcs\u0026l\u003d29) so if you\u0027re going to iterate through the complete buffer, manually restoring shouldn\u0027t be required.\n\nInstead of adding the Frame stack to store all this state, may be an internal recursive function that takes a PaintOpBuffer iterator and reads the ctm from the state_canvas_ would suffice? Only the top level function needs to do the save/restore balancing manually.",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bed6a62_9d0d2121",
+        "filename": "cc/paint/paint_op_buffer_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-06-21T08:10:06Z",
+      "side": 1,
+      "message": "There is logic that would force not solid for draw ops in save/restore blocks with these clips in the analysis canvas, does that not need to be replicated here?",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "447ec95a_c4885a0f",
         "filename": "cc/paint/paint_op_buffer_analyzer.h",
         "patchSetId": 2
@@ -13,6 +47,24 @@
       "writtenOn": "2017-06-16T21:36:30Z",
       "side": 1,
       "message": "I added this so that maybe we can reuse this in the discardable image gathering as well. We can certainly update it to meet the needs.\n\nIf we\u0027re not going to use it for anything other than solid color analysis, then I can merge this with the solid color analyzer and devirtualize it.",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d872e6_929a66c5",
+        "filename": "cc/paint/paint_op_buffer_analyzer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-06-21T08:10:06Z",
+      "side": 1,
+      "message": "I don\u0027t think there will be much to share with discardable analysis and this. Discardable doesn\u0027t need aborting or random indices which this does. And there we can selectively skip complete paint records if they have no images.\n\nI\u0027d suggest just merging this with the solid color analyzer.",
+      "parentUuid": "447ec95a_c4885a0f",
       "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
