@@ -375,6 +375,10 @@ component("headless") {
       "lib/headless_content_main_delegate.h",
       "lib/renderer/headless_content_renderer_client.cc",
       "lib/renderer/headless_content_renderer_client.h",
+      "lib/renderer/headless_render_frame_controller_impl.cc",
+      "lib/renderer/headless_render_frame_controller_impl.h",
+      "lib/renderer/headless_tab_socket_bindings.cc",
+      "lib/renderer/headless_tab_socket_bindings.h",
     ]
 
     deps += [
@@ -429,6 +433,10 @@ if (!is_component_build) {
       "lib/headless_content_main_delegate.h",
       "lib/renderer/headless_content_renderer_client.cc",
       "lib/renderer/headless_content_renderer_client.h",
+      "lib/renderer/headless_render_frame_controller_impl.cc",
+      "lib/renderer/headless_render_frame_controller_impl.h",
+      "lib/renderer/headless_tab_socket_bindings.cc",
+      "lib/renderer/headless_tab_socket_bindings.h",
     ]
 
     deps = [
