@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ecde5eb_b12fad66",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-21T22:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04313bab_726d1ebe",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "c055b2c3ce283364758b6abf3023a8b520257009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96941050_dfcebeb0",
         "filename": "third_party/WebKit/Source/modules/shapedetection/FaceDetector.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c1d2eb46_8390f32e",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/FaceDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-21T22:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96941050_dfcebeb0",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "c055b2c3ce283364758b6abf3023a8b520257009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "174e601b_7468c88a",
         "filename": "third_party/WebKit/Source/modules/shapedetection/TextDetector.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "c055b2c3ce283364758b6abf3023a8b520257009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0593a04d_d0604efc",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/TextDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-21T22:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "174e601b_7468c88a",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "c055b2c3ce283364758b6abf3023a8b520257009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
