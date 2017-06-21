@@ -4,11 +4,23 @@
 
 #include "core/dom/Node.h"
 
+#include "bindings/core/v8/V8BindingForCore.h"
+#include "core/dom/shadow/ShadowRootInit.h"
 #include "core/editing/EditingTestBase.h"
 
 namespace blink {
 
-class NodeTest : public EditingTestBase {};
+class NodeTest : public EditingTestBase {
+ protected:
+  ShadowRoot* AttachShadowTo(Element* element) {
+    NonThrowableExceptionState no_exceptions;
+    ShadowRootInit shadow_root_init;
+    shadow_root_init.setMode("open");
+    return element->attachShadow(
+        ToScriptStateForMainWorld(GetDocument().GetFrame()), shadow_root_init,
+        ASSERT_NO_EXCEPTION);
+  }
+};
 
 TEST_F(NodeTest, canStartSelection) {
   const char* body_content =
@@ -52,6 +64,184 @@ TEST_F(NodeTest, customElementState) {
   EXPECT_EQ(CustomElementState::kCustom, div->GetCustomElementState());
   EXPECT_TRUE(div->IsDefined());
   EXPECT_EQ(Node::kV0NotCustomElement, div->GetV0CustomElementState());
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_TextRoot) {
+  SetBodyContent("Text");
+  Node* root = GetDocument().body()->firstChild();
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(root->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_InlineRoot) {
+  SetBodyContent("<span id=root>Text <span></span></span>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(root->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_BlockRoot) {
+  SetBodyContent("<div id=root>Text <span></span></div>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(root->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_FloatRoot) {
+  SetBodyContent("<div id=root style='float:left'><span></span></div>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_FALSE(context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_AbsoluteRoot) {
+  SetBodyContent("<div id=root style='position:absolute'><span></span></div>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_FALSE(context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_Text) {
+  SetBodyContent("<div id=root style='display:contents'>Text</div>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(root->firstChild()->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_Inline) {
+  SetBodyContent("<div id=root style='display:contents'><span></span></div>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(root->firstChild()->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_Block) {
+  SetBodyContent("<div id=root style='display:contents'><div></div></div>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(root->firstChild()->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_Float) {
+  SetBodyContent(
+      "<style>"
+      "  #root { display:contents }"
+      "  .float { float:left }"
+      "</style>"
+      "<div id=root><div class=float></div></div>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_FALSE(context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_AbsolutePositioned) {
+  SetBodyContent(
+      "<style>"
+      "  #root { display:contents }"
+      "  .abs { position:absolute }"
+      "</style>"
+      "<div id=root><div class=abs></div></div>");
+  Element* root = GetDocument().getElementById("root");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_FALSE(context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_SkipAbsolute) {
+  SetBodyContent(
+      "<style>"
+      "  #root { display:contents }"
+      "  .abs { position:absolute }"
+      "</style>"
+      "<div id=root>"
+      "<div class=abs></div><span id=inline></span><div class=abs></div>"
+      "</div>");
+  Element* root = GetDocument().getElementById("root");
+  Element* span = GetDocument().getElementById("inline");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(span->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_SkipFloats) {
+  SetBodyContent(
+      "<style>"
+      "  #root { display:contents }"
+      "  .float { float:left }"
+      "</style>"
+      "<div id=root>"
+      "<div class=float></div>"
+      "<span id=inline></span>"
+      "<div class=float></div>"
+      "</div>");
+  Element* root = GetDocument().getElementById("root");
+  Element* span = GetDocument().getElementById("inline");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(span->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_InsideDisplayContents) {
+  SetBodyContent(
+      "<style>"
+      "  #root, .contents { display:contents }"
+      "  .float { float:left }"
+      "</style>"
+      "<div id=root>"
+      "<span></span><div class=contents><span id=inline></span></div>"
+      "</div>");
+  Element* root = GetDocument().getElementById("root");
+  Element* span = GetDocument().getElementById("inline");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(span->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_Slotted) {
+  SetBodyContent("<div id=host><span id=inline></span></div>");
+  ShadowRoot* shadow_root =
+      AttachShadowTo(GetDocument().getElementById("host"));
+  shadow_root->setInnerHTML(
+      "<div id=root style='display:contents'><span></span><slot></slot></div>");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  Element* root = shadow_root->getElementById("root");
+  Element* span = GetDocument().getElementById("inline");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(span->GetLayoutObject(), context.previous_in_flow);
+}
+
+TEST_F(NodeTest, AttachContext_PreviousInFlow_V0Content) {
+  SetBodyContent("<div id=host><span id=inline></span></div>");
+  ShadowRoot* shadow_root = CreateShadowRootForElementWithIDAndSetInnerHTML(
+      GetDocument(), "host",
+      "<div id=root style='display:contents'><span></span><content /></div>");
+  Element* root = shadow_root->getElementById("root");
+  Element* span = GetDocument().getElementById("inline");
+  Node::AttachContext context;
+  root->ReattachLayoutTree(context);
+  EXPECT_TRUE(context.previous_in_flow);
+  EXPECT_EQ(span->GetLayoutObject(), context.previous_in_flow);
 }
 
 }  // namespace blink
