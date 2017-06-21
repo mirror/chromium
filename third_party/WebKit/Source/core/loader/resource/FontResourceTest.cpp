@@ -81,7 +81,7 @@ TEST_F(FontResourceTest,
   EXPECT_TRUE(resource3->IsCacheValidator());
   EXPECT_TRUE(resource3->StillNeedsLoad());
 
-  // startLoad() can be called from any initiator. Here, call it from the
+  // StartLoad() can be called from any initiator. Here, call it from the
   // latter.
   fetcher->StartLoad(resource3);
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();

@@ -31,6 +31,7 @@
 
 #include <memory>
 #include "platform/PlatformExport.h"
+#include "platform/loader/fetch/ResourceLoadScheduler.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/Forward.h"
@@ -48,17 +49,16 @@ class ResourceFetcher;
 // needs to load the specified resource. A ResourceLoader creates a
 // WebURLLoader and loads the resource using it. Any per-load logic should be
 // implemented in this class basically.
-class PLATFORM_EXPORT ResourceLoader final
-    : public GarbageCollectedFinalized<ResourceLoader>,
-      protected WebURLLoaderClient {
+class PLATFORM_EXPORT ResourceLoader final : public ResourceLoadSchedulerClient,
+                                             protected WebURLLoaderClient {
   USING_PRE_FINALIZER(ResourceLoader, Dispose);
 
  public:
   static ResourceLoader* Create(ResourceFetcher*, Resource*);
   ~ResourceLoader() override;
-  DECLARE_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-  void Start(const ResourceRequest&);
+  void Start();
 
   void Cancel();
 
@@ -111,9 +111,14 @@ class PLATFORM_EXPORT ResourceLoader final
 
   void DidFinishLoadingFirstPartInMultipart();
 
+  // ResourceLoadSchedulerClient.
+  void OnRequestGranted() override;
+
  private:
   // Assumes ResourceFetcher and Resource are non-null.
   ResourceLoader(ResourceFetcher*, Resource*);
+
+  void Issue(const ResourceRequest&);
 
   // This method is currently only used for service worker fallback request and
   // cache-aware loading, other users should be careful not to break
