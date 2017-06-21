@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98230a01_7378cfc9",
+        "filename": "components/search_engines/template_url_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T01:14:54Z",
+      "side": 1,
+      "message": "Nit: While here: I happened to notice this says \"optional\" but the schema doesn\u0027t actually mark it as optional.  Maybe it\u0027s not optional?",
+      "revId": "b80bb45ef39f422d7f2ae750971e4ebcf3b7b4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ad2df2_f2379042",
+        "filename": "components/search_engines/template_url_data_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T01:14:54Z",
+      "side": 1,
+      "message": "Nit: Seems like this should go last, based on the order in the MakeUnique call below.",
+      "revId": "b80bb45ef39f422d7f2ae750971e4ebcf3b7b4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
