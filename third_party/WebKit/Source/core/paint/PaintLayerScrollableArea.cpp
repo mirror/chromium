@@ -886,6 +886,13 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
       SetHasVerticalScrollbar(false);
   }
 
+  Node* node = Box().GetNode();
+  if (node && node->IsElementNode()) {
+    scroll_offset_ = ToElement(node)->MaybeUpdateScrollOffsetAfterLayout(
+        scroll_offset_, ClientSize());
+    // TODO(tkent): Scrollbar thumb position isn't updated.
+  }
+
   ClampScrollOffsetAfterOverflowChange();
 
   if (!scrollbars_are_frozen) {

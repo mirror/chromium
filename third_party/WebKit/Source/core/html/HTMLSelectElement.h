@@ -267,7 +267,9 @@ class CORE_EXPORT HTMLSelectElement final
                                                   SkipDirection) const;
   HTMLOptionElement* EventTargetOption(const Event&);
   AutoscrollController* GetAutoscrollController() const;
-  void ScrollToOptionTask();
+  ScrollOffset MaybeUpdateScrollOffsetAfterLayout(
+      const ScrollOffset&,
+      const LayoutSize& visible_size) override;
 
   bool AreAuthorShadowsAllowed() const override { return false; }
   void FinishParsingChildren() override;
