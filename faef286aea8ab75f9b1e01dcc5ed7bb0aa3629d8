@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "70a195c0_d7615947",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:54:39Z",
+      "side": 1,
+      "message": "Actually, do you understand what is happening here? https://cs.chromium.org/chromium/src/ash/wm/power_button_controller.cc?l\u003d119\n\nIt looks like it is supposed to lock and then (if you keep holding the power button?) shut down, but I\u0027m having trouble reproducing on an actual device.",
+      "parentUuid": "68aeb1b7_700ea780",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e81a70_28469caa",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 1
