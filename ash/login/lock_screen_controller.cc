@@ -23,7 +23,7 @@ void LockScreenController::SetClient(mojom::LockScreenClientPtr client) {
 }
 
 void LockScreenController::ShowLockScreen(ShowLockScreenCallback on_shown) {
-  ::ash::ShowLockScreen();
+  ash::LockScreen::Show();
   std::move(on_shown).Run(true);
 }
 
@@ -61,7 +61,7 @@ void LockScreenController::LoadUsers(std::unique_ptr<base::ListValue> users,
 
 void LockScreenController::SetPinEnabledForUser(const AccountId& account_id,
                                                 bool is_enabled) {
-  NOTIMPLEMENTED();
+  ash::LockScreen::Get()->SetPinEnabledForUser(account_id, is_enabled);
 }
 
 void LockScreenController::AuthenticateUser(
