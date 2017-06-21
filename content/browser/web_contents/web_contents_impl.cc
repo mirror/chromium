@@ -2745,6 +2745,16 @@ BrowserAccessibilityManager*
   return rfh ? rfh->GetOrCreateBrowserAccessibilityManager() : nullptr;
 }
 
+void WebContentsImpl::ExecuteEditCommand(
+    const std::string& command,
+    const base::Optional<base::string16>& value) {
+  RenderFrameHost* focused_frame = GetFocusedFrame();
+  if (!focused_frame)
+    return;
+
+  focused_frame->GetFrameInputHandler()->ExecuteEditCommand(command, value);
+}
+
 void WebContentsImpl::MoveRangeSelectionExtent(const gfx::Point& extent) {
   RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
@@ -2760,6 +2770,14 @@ void WebContentsImpl::SelectRange(const gfx::Point& base,
     return;
 
   focused_frame->GetFrameInputHandler()->SelectRange(base, extent);
+}
+
+void WebContentsImpl::MoveCaret(const gfx::Point& extent) {
+  RenderFrameHost* focused_frame = GetFocusedFrame();
+  if (!focused_frame)
+    return;
+
+  focused_frame->GetFrameInputHandler()->MoveCaret(extent);
 }
 
 void WebContentsImpl::AdjustSelectionByCharacterOffset(int start_adjust,

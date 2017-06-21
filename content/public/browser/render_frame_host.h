@@ -10,7 +10,6 @@
 #include "base/callback_forward.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
-#include "content/common/input/input_handler.mojom.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/file_chooser_params.h"
 #include "ipc/ipc_listener.h"
@@ -43,6 +42,11 @@ struct AXActionData;
 }
 
 namespace content {
+
+namespace mojom {
+class FrameInputHandler;
+}
+
 class AssociatedInterfaceProvider;
 class RenderProcessHost;
 class RenderViewHost;
