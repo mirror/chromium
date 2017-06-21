@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "86f319ab_da0bbe1a",
+        "filename": "ash/ime/ime_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-21T00:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "798e25f5_714e5c1d",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "4bbe7b70ad52da299f047d0806dd9717af6a9abb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a761e01_f0856981",
         "filename": "ash/system/ime/tray_ime_chromeos_unittest.cc",
         "patchSetId": 3
@@ -80,6 +104,30 @@
       "revId": "4bbe7b70ad52da299f047d0806dd9717af6a9abb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc0bc2c_a4bb9937",
+        "filename": "ash/system/ime/tray_ime_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-21T00:39:21Z",
+      "side": 1,
+      "message": "Good to know. Done.",
+      "parentUuid": "0a761e01_f0856981",
+      "range": {
+        "startLine": 88,
+        "startChar": 28,
+        "endLine": 88,
+        "endChar": 42
+      },
+      "revId": "4bbe7b70ad52da299f047d0806dd9717af6a9abb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
