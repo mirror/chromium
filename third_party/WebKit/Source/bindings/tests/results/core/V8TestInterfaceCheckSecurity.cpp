@@ -71,7 +71,7 @@ namespace TestInterfaceCheckSecurityV8Internal {
 static void readonlyLongAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   V8SetReturnValueInt(info, impl->readonlyLongAttribute());
 }
@@ -79,7 +79,7 @@ static void readonlyLongAttributeAttributeGetter(const v8::FunctionCallbackInfo<
 static void longAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   V8SetReturnValueInt(info, impl->longAttribute());
 }
@@ -91,7 +91,7 @@ static void longAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8:
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   ExceptionState exceptionState(isolate, ExceptionState::kSetterContext, "TestInterfaceCheckSecurity", "longAttribute");
 
@@ -106,7 +106,7 @@ static void longAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8:
 static void doNotCheckSecurityLongAttributeAttributeGetter(const v8::PropertyCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   V8SetReturnValueInt(info, impl->doNotCheckSecurityLongAttribute());
 }
@@ -118,7 +118,7 @@ static void doNotCheckSecurityLongAttributeAttributeSetter(v8::Local<v8::Value> 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   ExceptionState exceptionState(isolate, ExceptionState::kSetterContext, "TestInterfaceCheckSecurity", "doNotCheckSecurityLongAttribute");
 
@@ -133,7 +133,7 @@ static void doNotCheckSecurityLongAttributeAttributeSetter(v8::Local<v8::Value> 
 static void doNotCheckSecurityReadonlyLongAttributeAttributeGetter(const v8::PropertyCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   V8SetReturnValueInt(info, impl->doNotCheckSecurityReadonlyLongAttribute());
 }
@@ -141,7 +141,7 @@ static void doNotCheckSecurityReadonlyLongAttributeAttributeGetter(const v8::Pro
 static void doNotCheckSecurityOnSetterLongAttributeAttributeGetter(const v8::PropertyCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   V8SetReturnValueInt(info, impl->doNotCheckSecurityOnSetterLongAttribute());
 }
@@ -153,7 +153,7 @@ static void doNotCheckSecurityOnSetterLongAttributeAttributeSetter(v8::Local<v8:
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   ExceptionState exceptionState(isolate, ExceptionState::kSetterContext, "TestInterfaceCheckSecurity", "doNotCheckSecurityOnSetterLongAttribute");
 
@@ -168,19 +168,19 @@ static void doNotCheckSecurityOnSetterLongAttributeAttributeSetter(v8::Local<v8:
 static void doNotCheckSecurityReplaceableReadonlyLongAttributeAttributeGetter(const v8::PropertyCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
 
   V8SetReturnValueInt(info, impl->doNotCheckSecurityReplaceableReadonlyLongAttribute());
 }
 
 static void voidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
 
   impl->voidMethod();
 }
 
 static void doNotCheckSecurityVoidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
 
   impl->doNotCheckSecurityVoidMethod();
 }
@@ -196,7 +196,7 @@ static void doNotCheckSecurityVoidMethodOriginSafeMethodGetter(const v8::Propert
   // Return the function by default, unless the user script has overwritten it.
   V8SetReturnValue(info, methodTemplate->GetFunction(info.GetIsolate()->GetCurrentContext()).ToLocalChecked());
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
   if (!BindingSecurity::ShouldAllowAccessTo(CurrentDOMWindow(info.GetIsolate()), impl, BindingSecurity::ErrorReportOption::kDoNotReport)) {
     return;
   }
@@ -212,7 +212,7 @@ static void doNotCheckSecurityVoidMethodOriginSafeMethodGetter(const v8::Propert
 }
 
 static void doNotCheckSecurityPerWorldBindingsVoidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
 
   impl->doNotCheckSecurityPerWorldBindingsVoidMethod();
 }
@@ -228,7 +228,7 @@ static void doNotCheckSecurityPerWorldBindingsVoidMethodOriginSafeMethodGetter(c
   // Return the function by default, unless the user script has overwritten it.
   V8SetReturnValue(info, methodTemplate->GetFunction(info.GetIsolate()->GetCurrentContext()).ToLocalChecked());
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
   if (!BindingSecurity::ShouldAllowAccessTo(CurrentDOMWindow(info.GetIsolate()), impl, BindingSecurity::ErrorReportOption::kDoNotReport)) {
     return;
   }
@@ -244,7 +244,7 @@ static void doNotCheckSecurityPerWorldBindingsVoidMethodOriginSafeMethodGetter(c
 }
 
 static void doNotCheckSecurityPerWorldBindingsVoidMethodMethodForMainWorld(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
 
   impl->doNotCheckSecurityPerWorldBindingsVoidMethod();
 }
@@ -260,7 +260,7 @@ static void doNotCheckSecurityPerWorldBindingsVoidMethodOriginSafeMethodGetterFo
   // Return the function by default, unless the user script has overwritten it.
   V8SetReturnValue(info, methodTemplate->GetFunction(info.GetIsolate()->GetCurrentContext()).ToLocalChecked());
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
   if (!BindingSecurity::ShouldAllowAccessTo(CurrentDOMWindow(info.GetIsolate()), impl, BindingSecurity::ErrorReportOption::kDoNotReport)) {
     return;
   }
@@ -276,7 +276,7 @@ static void doNotCheckSecurityPerWorldBindingsVoidMethodOriginSafeMethodGetterFo
 }
 
 static void doNotCheckSecurityUnforgeableVoidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
 
   impl->doNotCheckSecurityUnforgeableVoidMethod();
 }
@@ -292,7 +292,7 @@ static void doNotCheckSecurityUnforgeableVoidMethodOriginSafeMethodGetter(const 
   // Return the function by default, unless the user script has overwritten it.
   V8SetReturnValue(info, methodTemplate->GetFunction(info.GetIsolate()->GetCurrentContext()).ToLocalChecked());
 
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(info.Holder());
   if (!BindingSecurity::ShouldAllowAccessTo(CurrentDOMWindow(info.GetIsolate()), impl, BindingSecurity::ErrorReportOption::kDoNotReport)) {
     return;
   }
@@ -313,7 +313,7 @@ static void TestInterfaceCheckSecurityOriginSafeMethodSetter(v8::Local<v8::Name>
   v8::Local<v8::Object> holder = V8TestInterfaceCheckSecurity::findInstanceInPrototypeChain(info.Holder(), info.GetIsolate());
   if (holder.IsEmpty())
     return;
-  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(holder);
+  TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
   v8::String::Utf8Value methodName(name);
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kSetterContext, "TestInterfaceCheckSecurity", *methodName);
   if (!BindingSecurity::ShouldAllowAccessTo(CurrentDOMWindow(info.GetIsolate()), impl, exceptionState)) {
@@ -574,12 +574,12 @@ v8::Local<v8::Object> V8TestInterfaceCheckSecurity::findInstanceInPrototypeChain
   return V8PerIsolateData::From(isolate)->FindInstanceInPrototypeChain(&wrapperTypeInfo, v8Value);
 }
 
-TestInterfaceCheckSecurity* V8TestInterfaceCheckSecurity::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
-  return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+TestInterfaceCheckSecurity* V8TestInterfaceCheckSecurity::ToImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
+  return hasInstance(value, isolate) ? ToImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
 }
 
 TestInterfaceCheckSecurity* NativeValueTraits<TestInterfaceCheckSecurity>::NativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
-  TestInterfaceCheckSecurity* nativeValue = V8TestInterfaceCheckSecurity::toImplWithTypeCheck(isolate, value);
+  TestInterfaceCheckSecurity* nativeValue = V8TestInterfaceCheckSecurity::ToImplWithTypeCheck(isolate, value);
   if (!nativeValue) {
     exceptionState.ThrowTypeError(ExceptionMessages::FailedToConvertJSValue(
         "TestInterfaceCheckSecurity"));

@@ -69,7 +69,7 @@ namespace TestExceptionV8Internal {
 static void readonlyUnsignedShortAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestException* impl = V8TestException::toImpl(holder);
+  TestException* impl = V8TestException::ToImpl(holder);
 
   V8SetReturnValueUnsigned(info, impl->readonlyUnsignedShortAttribute());
 }
@@ -77,13 +77,13 @@ static void readonlyUnsignedShortAttributeAttributeGetter(const v8::FunctionCall
 static void readonlyStringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestException* impl = V8TestException::toImpl(holder);
+  TestException* impl = V8TestException::ToImpl(holder);
 
   V8SetReturnValueString(info, impl->readonlyStringAttribute(), info.GetIsolate());
 }
 
 static void toStringMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestException* impl = V8TestException::toImpl(info.Holder());
+  TestException* impl = V8TestException::ToImpl(info.Holder());
 
   V8SetReturnValueString(info, impl->toString(), info.GetIsolate());
 }
@@ -179,12 +179,12 @@ v8::Local<v8::Object> V8TestException::findInstanceInPrototypeChain(v8::Local<v8
   return V8PerIsolateData::From(isolate)->FindInstanceInPrototypeChain(&wrapperTypeInfo, v8Value);
 }
 
-TestException* V8TestException::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
-  return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+TestException* V8TestException::ToImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
+  return hasInstance(value, isolate) ? ToImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
 }
 
 TestException* NativeValueTraits<TestException>::NativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
-  TestException* nativeValue = V8TestException::toImplWithTypeCheck(isolate, value);
+  TestException* nativeValue = V8TestException::ToImplWithTypeCheck(isolate, value);
   if (!nativeValue) {
     exceptionState.ThrowTypeError(ExceptionMessages::FailedToConvertJSValue(
         "TestException"));
