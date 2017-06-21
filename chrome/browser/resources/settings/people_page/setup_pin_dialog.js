@@ -101,6 +101,7 @@ Polymer({
   attached: function() {
     this.resetState_();
     this.$.dialog.showModal();
+    this.$.pinKeyboard.focus();
   },
 
   close: function() {
