@@ -435,6 +435,24 @@
     },
     {
       "key": {
+        "uuid": "6a5a1214_53f9c576",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-06-21T03:51:30Z",
+      "side": 1,
+      "message": "Sounds good. Please mention for this auto re-connect behavior in .h or .mojom.",
+      "parentUuid": "dc5630ce_031797bc",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fddb43b5_428207c1",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
