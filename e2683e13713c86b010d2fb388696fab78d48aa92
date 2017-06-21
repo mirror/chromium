@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6076b358_31febd5b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-21T07:14:43Z",
+      "side": 1,
+      "message": "If we change the separator to \"\\r\\n\", then extra empty lines will be added to output. And we cannot remove SPLIT_WANT_ALL because there might be empty lines that are meaningful to us in annotation outputs.\nReplaced it with a base::RemoveChars command. Do you suggest another approach?",
+      "parentUuid": "3b17e1f4_643b01a1",
+      "revId": "e2683e13713c86b010d2fb388696fab78d48aa92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a69eb016_8950fd95",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d4a1e9e1_6edb3556",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-21T07:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a69eb016_8950fd95",
+      "revId": "e2683e13713c86b010d2fb388696fab78d48aa92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af84acab_0ae59a96",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "e2683e13713c86b010d2fb388696fab78d48aa92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e5f05e_b2f99f26",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-21T07:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af84acab_0ae59a96",
+      "revId": "e2683e13713c86b010d2fb388696fab78d48aa92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "e2683e13713c86b010d2fb388696fab78d48aa92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8316663_b88ee59d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-21T07:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf5cb0ca_c8ea95e9",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 17
+      },
+      "revId": "e2683e13713c86b010d2fb388696fab78d48aa92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
