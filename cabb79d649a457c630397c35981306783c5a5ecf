@@ -16,6 +16,24 @@
       "revId": "cabb79d649a457c630397c35981306783c5a5ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d48d3d6_0c921dc3",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T16:35:53Z",
+      "side": 1,
+      "message": "Yup I agree. Trimming in the upcoming patchset.",
+      "parentUuid": "5a6d1d57_52de6e08",
+      "revId": "cabb79d649a457c630397c35981306783c5a5ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
