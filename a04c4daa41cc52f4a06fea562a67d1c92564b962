@@ -106,6 +106,24 @@
       "revId": "a04c4daa41cc52f4a06fea562a67d1c92564b962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf4381a_d820871b",
+        "filename": "content/public/test/test_browser_thread_bundle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-21T18:01:44Z",
+      "side": 1,
+      "message": "From https://cs.chromium.org/search/?q\u003dfile:chrome/browser/media/router/mojo/+TestBrowserThreadBundle\u0026type\u003dcs I don\u0027t see why their TestBrowserThreadBundles wouldn\u0027t call CreateThread (i.e. they don\u0027t specify DONT_CREATE_THREADS)?",
+      "parentUuid": "fc9a8fdc_9d12709c",
+      "revId": "a04c4daa41cc52f4a06fea562a67d1c92564b962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
