@@ -16,6 +16,52 @@
       "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b173295a_e39863c4",
+        "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-21T03:52:44Z",
+      "side": 1,
+      "message": "IIUC, this timer should never fire, since the web page closing is supposed to end the MediaStreamTracks, which will call check() via the onended handler. So, perhaps this can be simplified as just a 10-second watchdog that calls chrome.test.fail():\n\n  const timeoutId \u003d window.setTimeout(chrome.test.fail, 10000);",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1584906e_58bd6672",
+        "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-21T03:52:44Z",
+      "side": 1,
+      "message": "I think you meant \"check\" and not \"check()\" here (i.e., you want the reference to the function, not the result of calling the function).",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
