@@ -27077,6 +27077,289 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Records events related to local discovery notifications.</summary>
 </histogram>
 
+<histogram
+    name="LocalNetworkRequests.PrivatePage.DifferentSubnetRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to local resources on a
+    different subnet.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.DifferentSubnetRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to local resources on a
+    different subnet.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PrivatePage.Localhost.DbRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to localhost on a database
+    server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.Localhost.DbRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to localhost on a
+    database server port.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PrivatePage.Localhost.DevRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to localhost on a
+    development server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.Localhost.DevRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to localhost on a
+    development server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.Localhost.OtherRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to localhost on any port
+    not otherwise monitored by the other local network request metrics.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.Localhost.OtherRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to localhost on any
+    port not otherwise monitored by the other local network request metrics.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.Localhost.PrinterRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to localhost on a printer
+    server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.Localhost.PrinterRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to localhost on a
+    printer server port.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PrivatePage.Localhost.WebRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to localhost on a web
+    server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.Localhost.WebRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to localhost on a web
+    server port.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PrivatePage.PublicRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to public resources.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PrivatePage.PublicRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to public resources.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PrivatePage.SameSubnetRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to local resources on the
+    same subnet.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PrivatePage.SameSubnetRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to local resources on
+    the same subnet.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PublicPage.Localhost.DbRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a public page to localhost on a database
+    server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PublicPage.Localhost.DbRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a public page to localhost on a
+    database server port.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PublicPage.Localhost.DevRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a public page to localhost on a
+    development server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PublicPage.Localhost.DevRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a public page to localhost on a
+    development server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PublicPage.Localhost.OtherRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a public page to localhost on any port not
+    otherwise monitored by the other local network request metrics.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PublicPage.Localhost.OtherRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a public page to localhost on any port
+    not otherwise monitored by the other local network request metrics.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PublicPage.Localhost.PrinterRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a public page to localhost on a printer
+    server port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PublicPage.Localhost.PrinterRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a public page to localhost on a
+    printer server port.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PublicPage.Localhost.WebRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a public page to localhost on a web server
+    port.
+  </summary>
+</histogram>
+
+<histogram
+    name="LocalNetworkRequests.PublicPage.Localhost.WebRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a public page to localhost on a web
+    server port.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PublicPage.PrivateRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a public page to private resources.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PublicPage.PrivateRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a public page to private resources.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PublicPage.RouterRequests.Failed"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a public page to resources likely to be
+    routers.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PublicPage.RouterRequests.Successful"
+    units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a public page to resources likely to
+    be routers.
+  </summary>
+</histogram>
+
 <histogram name="LocalStorage.BrowserLocalStorageCachePurgedInKB" units="KB">
   <owner>ssid@chromium.org</owner>
   <summary>
