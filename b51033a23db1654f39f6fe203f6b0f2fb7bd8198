@@ -34,6 +34,24 @@
       "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24fd400_971c69e7",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-21T17:55:06Z",
+      "side": 1,
+      "message": "That\u0027s unfortunate. Can we include the window in PointerWatcherAdapter callback, in that case?",
+      "parentUuid": "39905047_afeb79c2",
+      "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
