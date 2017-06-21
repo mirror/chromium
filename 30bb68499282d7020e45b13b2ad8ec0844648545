@@ -16,6 +16,24 @@
       "revId": "30bb68499282d7020e45b13b2ad8ec0844648545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff3b530_a695205b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T19:10:28Z",
+      "side": 0,
+      "message": "Yes. The new code doesn\u0027t invalidate raster if the whole layer is new (which doesn\u0027t have valid raster initially).",
+      "parentUuid": "df27b3c2_1601fc68",
+      "revId": "30bb68499282d7020e45b13b2ad8ec0844648545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

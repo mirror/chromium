@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1580d550_ef0ce9b6",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T19:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "302c2d04_72648ccf",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c80b10c_810bed54",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ca46b524_1cf830f0",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T19:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c80b10c_810bed54",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef5f6d57_a90496d0",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-21T01:01:35Z",
       "side": 1,
       "message": "Should there be an invalidation for chunk 1 like this one?",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b956e3_7cad70cf",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T19:10:28Z",
+      "side": 1,
+      "message": "Added comments:\n  // Invalidated new chunk 1\u0027s old (as chunks[2]) and new (as new_chunks[1])\n  // bounds.\nabove line 156, and\n  // Invalidated new chunk 2\u0027s new bounds. Didn\u0027t invalidate old bounds because\n  // it\u0027s the same as the new bounds.\nabove line 160.",
+      "parentUuid": "ef5f6d57_a90496d0",
       "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5db1598f_306439e3",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T19:10:28Z",
+      "side": 1,
+      "message": "Added comment at the first occurrence:\n\n  // The first chunk should always match because otherwise we won\u0027t reuse the\n  // ContentLayerClientImpl (which is according to the first chunk\u0027s id).\n  // For matched chunk, we issue rastar invalidations if any found by\n  // PaintController.",
+      "parentUuid": "be0fb6a6_b977cb14",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "728a2b28_afa88f54",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/RasterInvalidationTracking.h",
         "patchSetId": 10
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-21T01:01:35Z",
       "side": 1,
       "message": "Delete the code similar to this in GraphicsLayer.cpp, and call this\nmethod instead.",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d79b28_ecd7a54c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/RasterInvalidationTracking.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T19:10:28Z",
+      "side": 1,
+      "message": "The logic in GraphicsLayer is a bit different about invalidation_region_since_last_paint because of https://chromium-review.googlesource.com/529525, so I\u0027d like to keep GraphicsLayer as-is.",
+      "parentUuid": "728a2b28_afa88f54",
       "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
