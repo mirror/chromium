@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28550cbf_a7ee452d",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-21T05:04:51Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "36a1df0cff67ff37e5bd8db2523a2d5a51283931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4d1d83_7745426f",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-21T05:04:51Z",
+      "side": 1,
+      "message": "Oops I don\u0027t think this is equivalent (current color is set to different value).",
+      "revId": "36a1df0cff67ff37e5bd8db2523a2d5a51283931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
