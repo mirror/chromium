@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7f80916_3b409e8c",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T05:34:58Z",
+      "side": 1,
+      "message": "Oh! RepeatingClosure can be implicitly cast to base::OnceClosure, so yes run_loop.QuitClosure() is good to use.\nDone.",
+      "parentUuid": "ede78981_e639e664",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 1
+      },
+      "revId": "c3290a70f3fdf306012fe602de4449a40f5dad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46d40e64_a690f428",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "c3290a70f3fdf306012fe602de4449a40f5dad64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4103ee12_fd766a60",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T05:34:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46d40e64_a690f428",
+      "range": {
+        "startLine": 201,
+        "startChar": 5,
+        "endLine": 201,
+        "endChar": 24
+      },
+      "revId": "c3290a70f3fdf306012fe602de4449a40f5dad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
