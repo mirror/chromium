@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a91bdb5b_b8270d02",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-21T22:02:52Z",
+      "side": 1,
+      "message": "IIUC, the block cache size is accounted for in the previous version.\nhttps://chromium.googlesource.com/external/leveldb.git/+/a53934a3ae1244679f812d998a4f16f2c7f309a6/db/db_impl.cc#1431\n\nAm I missing something?",
+      "revId": "007254c81049c42fd769eb18e8a0b6e2aafda082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
