@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd376d6c_d33e261e",
+        "filename": "content/browser/frame_host/interstitial_page_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "This is a mojoification. I\u0027ve moved the ExecuteEditCommand to be sent to the RenderView to be sent to the RenderFrame instead.",
+      "parentUuid": "5a884095_87db4124",
+      "range": {
+        "startLine": 445,
+        "startChar": 0,
+        "endLine": 456,
+        "endChar": 0
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ec4aa35_b313a760",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-21T18:29:21Z",
       "side": 1,
       "message": "I\u0027d suggest DCHECK for this rather than CHECK, as this doesn\u0027t seem like something that should be a fatal error. Unless it\u0027s temporary to collect crash data?",
+      "range": {
+        "startLine": 758,
+        "startChar": 2,
+        "endLine": 758,
+        "endChar": 7
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b26d87_5a15a614",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "It is to temporarily collect crash data. In case I missed some spot where InputMsg is being sent instead of using a mojo interface. I think I\u0027ve got them all though so I should be able to demote to a DCHECK after a few days.",
+      "parentUuid": "2ec4aa35_b313a760",
       "range": {
         "startLine": 758,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a229ddc1_2202c669",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a601767_3cc03327",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4144b2aa_935dcc96",
         "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "96e4d4ed_2bc3225b",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4144b2aa_935dcc96",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03ee2322_6c1bb262",
         "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-21T18:29:21Z",
       "side": 1,
       "message": "Unrelated to this CL, but is WebCompositionUnderline basically equivalent to ui::CompositionUnderline? I\u0027m curious, because we want to use more base types in Blink; maybe there should be some more ui types like gfx / this as well.",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825eeb4b_ed61557c",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "Yup it is identical :-)",
+      "parentUuid": "03ee2322_6c1bb262",
       "range": {
         "startLine": 61,
         "startChar": 2,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0061f304_0a73bf64",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5ae8f976_fa6d8af8",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 23
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0de3220_8162c8b6",
         "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.h",
         "patchSetId": 6
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "85d4b30a_f80735e9",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0de3220_8162c8b6",
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "132f1c96_b82474b1",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 6
@@ -168,6 +330,30 @@
       "writtenOn": "2017-06-21T18:29:21Z",
       "side": 1,
       "message": "I feel like it might have been nicer to go through the widget here: it avoids the need for callers to manually look up the focused frame. WDYT?",
+      "range": {
+        "startLine": 203,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 7
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158bc2ef_375b971c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "The RenderViewImpl looked up the focused frame and then called a frame API. I was trying to have a FrameInputHandler \u003c--\u003eWebFrame API.",
+      "parentUuid": "132f1c96_b82474b1",
       "range": {
         "startLine": 203,
         "startChar": 6,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "04b9529c_e9c52a59",
+        "filename": "content/renderer/input/frame_input_handler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "I think James was working on this area... I\u0027ll add him to the review.",
+      "parentUuid": "e0755340_6ef708d2",
+      "range": {
+        "startLine": 368,
+        "startChar": 6,
+        "endLine": 368,
+        "endChar": 17
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a377fac1_39048033",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
@@ -214,6 +424,30 @@
       "writtenOn": "2017-06-21T18:29:21Z",
       "side": 1,
       "message": "Can we move ScrollFocusedEditableNodeIntoRect\u0027s implementation into RenderFrameImpl?",
+      "range": {
+        "startLine": 1917,
+        "startChar": 2,
+        "endLine": 1917,
+        "endChar": 56
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0aa0470_fcd19b6a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "There is one variable that is used and adjusted https://cs.chromium.org/chromium/src/content/renderer/render_view_impl.h?type\u003dcs\u0026l\u003d748 that is used in a few methods in RenderViewImpl. Removing it might require some surgery. WDYT?",
+      "parentUuid": "a377fac1_39048033",
       "range": {
         "startLine": 1917,
         "startChar": 2,
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "0ffc7f0d_17365de8",
+        "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "No it is a place enum.. not an enum class.",
+      "parentUuid": "2963dd96_3135ce16",
+      "range": {
+        "startLine": 267,
+        "startChar": 4,
+        "endLine": 267,
+        "endChar": 21
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b39af71_b66f0666",
         "filename": "third_party/WebKit/public/platform/WebMouseWheelEvent.h",
         "patchSetId": 6
@@ -260,6 +518,30 @@
       "writtenOn": "2017-06-21T18:29:21Z",
       "side": 1,
       "message": "For Mojo, the general best practice is to define consts for bitfield flags and just pass a uint16/uint32/uint64, rather than trying to enforce any sort of validation. Does that sound reasonable to you?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dcd1f8_b3bee844",
+        "filename": "third_party/WebKit/public/platform/WebMouseWheelEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "Yup. I\u0027ve changed the mojo data type to be a uint8. I\u0027ll cast it in the struct_traits for now until we can correct this enum into a set of const fields. There seems to be a bunch of places that pass WebMouseWheelEvent::Phase around.",
+      "parentUuid": "2b39af71_b66f0666",
       "range": {
         "startLine": 28,
         "startChar": 0,
@@ -292,6 +574,30 @@
       "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18dbfbeb_3702be27",
+        "filename": "ui/base/ime/composition_underline.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-21T20:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c7ece23_372ce882",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
