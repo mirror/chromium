@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "b06121b6_5a3f1cc1",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:44:36Z",
+      "side": 1,
+      "message": "Power.ShutdownReason\u0027s metric owner is...derat.",
+      "parentUuid": "4c96a717_294e06c6",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc6b3965_46ff56ac",
         "filename": "ash/wm/lock_state_controller.h",
         "patchSetId": 1
