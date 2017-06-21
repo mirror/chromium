@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00cb95bc_10a2a193",
+        "filename": "chrome/browser/ui/browser_content_setting_bubble_model_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-21T22:37:26Z",
+      "side": 1,
+      "message": "Done, but added a DCHECK for defensiveness.",
+      "parentUuid": "3cd30b20_9a458d77",
+      "revId": "6228864dd219f31a858f1f05d5d79ed27ba82a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d735fb_9ad42cf0",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6228864dd219f31a858f1f05d5d79ed27ba82a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ddd8ede_bac93d3c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-21T22:37:26Z",
+      "side": 1,
+      "message": "It is null in a bunch of test contexts, but none of them touch this method AFAICT, so I\u0027ve moved it to a DCHECK.",
+      "parentUuid": "98d735fb_9ad42cf0",
+      "revId": "6228864dd219f31a858f1f05d5d79ed27ba82a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
