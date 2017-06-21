@@ -425,8 +425,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // The last scroll offset of the view.
   gfx::Vector2dF last_scroll_offset_;
 
-  float prev_top_shown_pix_;
-  float prev_bottom_shown_pix_;
+  float prev_top_content_offset_pix_;
+  float prev_bottom_content_offset_pix_;
 
   cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink_ =
       nullptr;

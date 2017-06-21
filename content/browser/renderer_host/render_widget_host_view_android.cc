@@ -463,8 +463,8 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
       synchronous_compositor_client_(nullptr),
       frame_evictor_(new viz::FrameEvictor(this)),
       observing_root_window_(false),
-      prev_top_shown_pix_(0.f),
-      prev_bottom_shown_pix_(0.f),
+      prev_top_content_offset_pix_(0.f),
+      prev_bottom_content_offset_pix_(0.f),
       mouse_wheel_phase_handler_(widget_host, this),
       weak_ptr_factory_(this) {
   // Set the layer which will hold the content layer for this view. The content
@@ -1426,13 +1426,15 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
   float dip_scale = view_.GetDipScale();
-  float top_controls_pix = frame_metadata.top_controls_height * dip_scale;
-  float top_shown_pix =
-      top_controls_pix * frame_metadata.top_controls_shown_ratio;
+  float top_controls_height_pix =
+      frame_metadata.top_controls_height * dip_scale;
+  float top_content_offset = frame_metadata.top_controls_height *
+                             frame_metadata.top_controls_shown_ratio;
+  float top_content_offset_pix = top_content_offset * dip_scale;
 
   if (ime_adapter_android_)
     ime_adapter_android_->UpdateFrameInfo(frame_metadata.selection.start,
-                                          dip_scale, top_shown_pix);
+                                          dip_scale, top_content_offset_pix);
 
   auto* wcax = GetWebContentsAccessibilityAndroid();
   if (wcax)
@@ -1460,25 +1462,30 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   UpdateBackgroundColor(is_transparent ? SK_ColorTRANSPARENT
                                        : frame_metadata.root_background_color);
 
-  view_.set_content_offset(gfx::Vector2dF(0.0f,
-      frame_metadata.top_controls_height *
-          frame_metadata.top_controls_shown_ratio));
+  view_.set_content_offset(top_content_offset);
+  view_.set_viewport_size(frame_metadata.scrollable_viewport_size);
 
-  bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
+  bool top_changed =
+      !FloatEquals(top_content_offset_pix, prev_top_content_offset_pix_);
   if (top_changed) {
-    float translate = top_shown_pix - top_controls_pix;
-    view_.OnTopControlsChanged(translate, top_shown_pix);
-    prev_top_shown_pix_ = top_shown_pix;
+    float top_controls_offset_pix =
+        top_content_offset_pix - top_controls_height_pix;
+    view_.OnTopControlsChanged(top_controls_offset_pix, top_content_offset_pix);
+    prev_top_content_offset_pix_ = top_content_offset_pix;
   }
 
-  float bottom_controls_pix = frame_metadata.bottom_controls_height * dip_scale;
-  float bottom_shown_pix =
-      bottom_controls_pix * frame_metadata.bottom_controls_shown_ratio;
-  bool bottom_changed = !FloatEquals(bottom_shown_pix, prev_bottom_shown_pix_);
+  float bottom_controls_height_pix =
+      frame_metadata.bottom_controls_height * dip_scale;
+  float bottom_content_offset_pix =
+      bottom_controls_height_pix * frame_metadata.bottom_controls_shown_ratio;
+  bool bottom_changed =
+      !FloatEquals(bottom_content_offset_pix, prev_bottom_content_offset_pix_);
   if (bottom_changed) {
-    float translate = bottom_controls_pix - bottom_shown_pix;
-    view_.OnBottomControlsChanged(translate, bottom_shown_pix);
-    prev_bottom_shown_pix_ = bottom_shown_pix;
+    float bottom_controls_offset_pix =
+        bottom_controls_height_pix - bottom_content_offset_pix;
+    view_.OnBottomControlsChanged(bottom_controls_offset_pix,
+                                  bottom_content_offset_pix);
+    prev_bottom_content_offset_pix_ = bottom_content_offset_pix;
   }
 
   // All offsets and sizes are in CSS pixels.
@@ -1487,9 +1494,8 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
       gfx::Vector2dF(frame_metadata.min_page_scale_factor,
                      frame_metadata.max_page_scale_factor),
       frame_metadata.root_layer_size, frame_metadata.scrollable_viewport_size,
-      frame_metadata.top_controls_height *
-          frame_metadata.top_controls_shown_ratio,
-      top_shown_pix, top_changed, is_mobile_optimized);
+      top_content_offset, top_content_offset_pix, top_changed,
+      is_mobile_optimized);
 }
 
 void RenderWidgetHostViewAndroid::ShowInternal() {

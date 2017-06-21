@@ -393,8 +393,8 @@ void ContentViewCoreImpl::UpdateFrameInfo(
     const gfx::Vector2dF& page_scale_factor_limits,
     const gfx::SizeF& content_size,
     const gfx::SizeF& viewport_size,
-    const float content_offset,
-    const float top_shown_pix,
+    const float top_content_offset,
+    const float top_content_offset_pix,
     bool top_changed,
     bool is_mobile_optimized_hint) {
   JNIEnv* env = AttachCurrentThread();
@@ -402,7 +402,8 @@ void ContentViewCoreImpl::UpdateFrameInfo(
   if (obj.is_null() || !GetWindowAndroid())
     return;
 
-  GetViewAndroid()->set_content_offset(gfx::Vector2dF(0.0f, content_offset));
+  GetViewAndroid()->set_content_offset(top_content_offset);
+  GetViewAndroid()->set_viewport_size(viewport_size);
 
   page_scale_ = page_scale_factor;
 
@@ -410,7 +411,7 @@ void ContentViewCoreImpl::UpdateFrameInfo(
       env, obj, scroll_offset.x(), scroll_offset.y(), page_scale_factor,
       page_scale_factor_limits.x(), page_scale_factor_limits.y(),
       content_size.width(), content_size.height(), viewport_size.width(),
-      viewport_size.height(), top_shown_pix, top_changed,
+      viewport_size.height(), top_content_offset_pix, top_changed,
       is_mobile_optimized_hint);
 }
 

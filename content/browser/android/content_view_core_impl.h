@@ -243,8 +243,8 @@ class ContentViewCoreImpl : public ContentViewCore,
                        const gfx::Vector2dF& page_scale_factor_limits,
                        const gfx::SizeF& content_size,
                        const gfx::SizeF& viewport_size,
-                       const float content_offset,
-                       const float top_shown_pix,
+                       const float top_content_offset,
+                       const float top_content_ofset_pix,
                        bool top_changed,
                        bool is_mobile_optimized_hint);
 
