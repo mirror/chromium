@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81de8ab2_99acf96e",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKey.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-21T14:56:02Z",
+      "side": 1,
+      "message": "Taking advantage of this to learn: I thought we replace PassRefPtr\u003cT\u003e with RefPtr\u003cT\u003e\u0026\u0026. I see this CL uses RefPtr\u003cT\u003e. I can imagine that the state of compiler optimizations is always changing and whatnot... is there an up to date guide about what to use?\n\nAsking because I recently used RefPtr\u003cIDBValue\u003e\u0026\u0026 in a couple of places.",
+      "revId": "58d288de803ecb8e6cbf4226173a391969a17279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
