@@ -37,6 +37,20 @@ class PepperOutputProtectionMessageFilter
                                       PP_Instance instance);
 
  private:
+  // These functions handle the result of calls to |proxy_| on the UI thread.
+  // As this object is owned on the IO thread, execution must trampoline back to
+  // the IO thread before an IPC reply can be sent.
+  static void OnQueryStatusComplete(
+      base::WeakPtr<PepperOutputProtectionMessageFilter> filter,
+      ppapi::host::ReplyMessageContext reply_context,
+      bool success,
+      uint32_t link_mask,
+      uint32_t protection_mask);
+  static void OnEnableProtectionComplete(
+      base::WeakPtr<PepperOutputProtectionMessageFilter> filter,
+      ppapi::host::ReplyMessageContext reply_context,
+      bool success);
+
   // ppapi::host::ResourceMessageFilter overrides.
   scoped_refptr<base::TaskRunner> OverrideTaskRunnerForMessage(
       const IPC::Message& msg) override;
@@ -46,16 +60,18 @@ class PepperOutputProtectionMessageFilter
 
   ~PepperOutputProtectionMessageFilter() override;
 
+  // Called on the UI thread.
   int32_t OnQueryStatus(ppapi::host::HostMessageContext* context);
   int32_t OnEnableProtection(ppapi::host::HostMessageContext* context,
                              uint32_t desired_method_mask);
 
-  void OnQueryStatusComplete(ppapi::host::ReplyMessageContext reply_context,
-                             bool success,
-                             uint32_t link_mask,
-                             uint32_t protection_mask);
-
-  void OnEnableProtectionComplete(
+  // Sends IPC replies for operations. Called on the IO thread.
+  void OnQueryStatusCompleteOnIOThread(
+      ppapi::host::ReplyMessageContext reply_context,
+      bool success,
+      uint32_t link_mask,
+      uint32_t protection_mask);
+  void OnEnableProtectionCompleteOnIOThread(
       ppapi::host::ReplyMessageContext reply_context,
       bool success);
 
@@ -63,6 +79,7 @@ class PepperOutputProtectionMessageFilter
                   content::BrowserThread::DeleteOnUIThread>
       proxy_;
 
+  // Allows for safe UI->IO thread transitions.
   base::WeakPtrFactory<PepperOutputProtectionMessageFilter> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PepperOutputProtectionMessageFilter);
