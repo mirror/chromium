@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a69d0009_c45c8ea2",
+        "filename": "cc/paint/paint_op_buffer_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-21T16:51:13Z",
+      "side": 1,
+      "message": "I kind of want to avoid doing recursion since I find it easier to see what state is actually important to save frame to frame.\n\nAs for the restore count... I don\u0027t know if it really hurts (especially if we end up having indices in the sub-pobs, but that\u0027s a weak argument). Why the argument against it?",
+      "parentUuid": "6313a6b3_12107472",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bed6a62_9d0d2121",
         "filename": "cc/paint/paint_op_buffer_analyzer.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T08:10:06Z",
       "side": 1,
       "message": "There is logic that would force not solid for draw ops in save/restore blocks with these clips in the analysis canvas, does that not need to be replicated here?",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298cef28_09588936",
+        "filename": "cc/paint/paint_op_buffer_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-21T16:51:13Z",
+      "side": 1,
+      "message": "Yeah it does it because we optimize the clip by taking the bounds. I decided that it\u0027s probably unnecessary, so the check for \"is clip a rect\" will fail in the analyzer, but in the AnalysisCanvas it would have passed, hence the need to force things. Do you think that\u0027s acceptable?",
+      "parentUuid": "1bed6a62_9d0d2121",
       "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "I don\u0027t think there will be much to share with discardable analysis and this. Discardable doesn\u0027t need aborting or random indices which this does. And there we can selectively skip complete paint records if they have no images.\n\nI\u0027d suggest just merging this with the solid color analyzer.",
       "parentUuid": "447ec95a_c4885a0f",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d16267_d0ca5b5f",
+        "filename": "cc/paint/paint_op_buffer_analyzer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-21T16:51:13Z",
+      "side": 1,
+      "message": "Ok. I\u0027ve \"merged\" it by eliminating virtuals, but I kept the class as separate. I want to be able to reuse the iteration here for dumping the paint op buffer to a trace as well. This should have very little overhead over proper merging this. WDYT?",
+      "parentUuid": "50d872e6_929a66c5",
       "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
