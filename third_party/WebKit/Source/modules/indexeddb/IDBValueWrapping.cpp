@@ -75,6 +75,10 @@ IDBValueWrapper::IDBValueWrapper(
 #endif  // DCHECK_IS_ON()
 }
 
+// Explicit desctructor in the .cpp file, to gain access to the BlobDataHandle
+// definition.
+IDBValueWrapper::~IDBValueWrapper() {}
+
 void IDBValueWrapper::Clone(ScriptState* script_state, ScriptValue* clone) {
 #if DCHECK_IS_ON()
   DCHECK(!had_exception_) << __FUNCTION__
@@ -252,5 +256,13 @@ bool IDBValueUnwrapper::ReadVarint(unsigned& value) {
   } while (has_another_byte);
   return true;
 }
+
+#if DCHECK_IS_ON()
+void IDBValueUnwrapper::FullReset() {
+  blob_handle_.Clear();
+  current_ = nullptr;
+  end_ = nullptr;
+}
+#endif  // DCHECK_IS_ON()
 
 }  // namespace blink
