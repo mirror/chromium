@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e40425_2534c06b",
+        "filename": "ui/ozone/common/gl_ozone_egl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-21T15:08:35Z",
+      "side": 1,
+      "message": "Are you sure you want to do this? Because we set EGLGLES2 for swiftshader in other impls [1, 2].\n\n[1] https://cs.chromium.org/chromium/src/ui/gl/init/gl_initializer_win.cc?l\u003d144\n[2] https://cs.chromium.org/chromium/src/ui/gl/init/gl_initializer_x11.cc?l\u003d132",
+      "revId": "95026ecac9233d0ec5be4c186540083d37bb71fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
