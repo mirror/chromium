@@ -113,7 +113,7 @@ public class HistoryUtils {
                 instrumentation, new Callable<String>() {
                     @Override
                     public String call() throws Exception {
-                        return webContents.getUrl();
+                        return webContents.getVisibleUrl();
                     }
                 });
     }
