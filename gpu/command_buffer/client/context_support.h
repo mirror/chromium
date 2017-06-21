@@ -78,6 +78,15 @@ class ContextSupport {
   virtual void AddLatencyInfo(
       const std::vector<ui::LatencyInfo>& latency_info) = 0;
 
+  // Allows locking a GPU discardable texture from any thread. Any successful
+  // call to ThreadsafeBeginLockDiscardable must be paired with a later call
+  // to CompleteLockDiscardableOnContextThread.
+  virtual bool ThreadsafeBeginLockDiscardable(uint32_t texture_id) = 0;
+
+  // Must be called on the context's thread, only following a successful call
+  // to ThreadsafeBeginLockDiscardable.
+  virtual void CompleteLockDiscardableOnContextThread(uint32_t texture_id) = 0;
+
  protected:
   ContextSupport() {}
   virtual ~ContextSupport() {}

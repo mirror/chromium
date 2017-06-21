@@ -6091,6 +6091,17 @@ void GLES2Implementation::AddLatencyInfo(
   gpu_control_->AddLatencyInfo(latency_info);
 }
 
+bool GLES2Implementation::ThreadsafeBeginLockDiscardable(uint32_t texture_id) {
+  ClientDiscardableManager* manager = share_group()->discardable_manager();
+  return manager->TextureIsValid(texture_id) &&
+         manager->LockTexture(texture_id);
+}
+
+void GLES2Implementation::CompleteLockDiscardableOnContextThread(
+    uint32_t texture_id) {
+  helper_->LockDiscardableTextureCHROMIUM(texture_id);
+}
+
 void GLES2Implementation::SetLostContextCallback(
     const base::Closure& callback) {
   lost_context_callback_ = callback;
