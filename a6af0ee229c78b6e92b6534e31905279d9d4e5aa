@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf96f40c_618b182b",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1784,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-21T08:47:28Z",
+      "side": 1,
+      "message": "This wording is confusing. How about...\n\n|start_callbacks_| can be non-empty if a start worker request arrived while the worker was stopping. The worker must be restarted to fulfill the request.",
+      "revId": "a6af0ee229c78b6e92b6534e31905279d9d4e5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
