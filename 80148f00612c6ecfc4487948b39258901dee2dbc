@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a965fcbf_eac1ee7d",
+        "filename": "extensions/browser/extension_function.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-21T19:13:51Z",
+      "side": 1,
+      "message": "maybe s/completed/destroyed?",
+      "revId": "80148f00612c6ecfc4487948b39258901dee2dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d50b30_f0886435",
+        "filename": "extensions/browser/extension_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-21T19:13:51Z",
+      "side": 1,
+      "message": "This isn\u0027t quite true, right?  Because if we don\u0027t test the Run() aspect, the state is NotRun, which won\u0027t DCHECK.",
+      "revId": "80148f00612c6ecfc4487948b39258901dee2dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22b18be_3e0cf80a",
+        "filename": "extensions/browser/extension_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-21T19:13:51Z",
+      "side": 1,
+      "message": "How can it be in Responded without ever entering Running?",
+      "revId": "80148f00612c6ecfc4487948b39258901dee2dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851ff4e6_946380e2",
+        "filename": "extensions/browser/extension_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-21T19:13:51Z",
+      "side": 1,
+      "message": "Probably not worth duplicating a comment.  I\u0027d say either\na) Differentiate these slightly, e.g. on the enum\n// The possible states for an extension function.\nand here\n// The current state of the function.\n\nor b), just remove this comment.",
+      "revId": "80148f00612c6ecfc4487948b39258901dee2dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d58368_31143616",
+        "filename": "extensions/browser/extension_function_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-21T19:13:51Z",
+      "side": 1,
+      "message": "What\u0027s the motivation for this change?  It seemed a little cleaner to me when we didn\u0027t have to expose is_from_service_worker() on the function object.",
+      "revId": "80148f00612c6ecfc4487948b39258901dee2dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

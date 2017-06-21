@@ -22,6 +22,30 @@
       "revId": "1cac2c95e296d64808035ef87e1c755665b527fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97bb751_9ce11c09",
+        "filename": "extensions/browser/extension_function.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-21T19:13:51Z",
+      "side": 1,
+      "message": "Yeah, I agree that this is a bit awkward.  Can you add a TODO(devlin) to make it less so?",
+      "parentUuid": "18c3822d_f3b9f070",
+      "range": {
+        "startLine": 502,
+        "startChar": 6,
+        "endLine": 502,
+        "endChar": 30
+      },
+      "revId": "1cac2c95e296d64808035ef87e1c755665b527fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
