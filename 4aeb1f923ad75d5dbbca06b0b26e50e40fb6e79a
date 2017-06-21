@@ -22,6 +22,30 @@
       "revId": "4aeb1f923ad75d5dbbca06b0b26e50e40fb6e79a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38fb49e8_a2c0a8b4",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/descriptor-get-same-object.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-21T06:47:42Z",
+      "side": 1,
+      "message": "Good catch. The test was actually broken. It was supposed to call the three variations in a single test for each function i.e.:\n\n// getDescriptor/gen-descriptor-get-same-object.html\n  getDescriptor(...),\n  getDescriptor(...),\n  getDescriptor(...),\n\n// getDescriptors/gen-descriptor-get-same-object.html\n  getDescriptors(...),\n  getDescriptors(...),\n  getDescriptors(...),\n\nFixed test.",
+      "parentUuid": "684a6e17_6ec18a7a",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 26
+      },
+      "revId": "4aeb1f923ad75d5dbbca06b0b26e50e40fb6e79a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
