@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "net/base/net_export.h"
+#include "net/nqe/network_quality_estimator.h"
 
 namespace net {
 
