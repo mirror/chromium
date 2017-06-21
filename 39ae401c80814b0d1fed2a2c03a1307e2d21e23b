@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "da39f520_81572fb4",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T01:36:29Z",
+      "side": 1,
+      "message": "What if instead of caching end timestamps, we simply hold a pointer to the buffer that has the highest PTS. This pointer still needs to be updated in the places you\u0027re currently updating cached timestamps, but it has the really nice bonus of returning the correct answer for trimmed durations and we can delete this method",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "445bc001_c446b724",
         "filename": "media/filters/source_buffer_range.h",
         "patchSetId": 1
@@ -82,6 +105,30 @@
       "writtenOn": "2017-06-21T01:12:48Z",
       "side": 1,
       "message": "I think you have two options for end time in these cases. \n1) make end time be the highest observed end time (this is what you\u0027ve done)\n2) make end time be the last frame pts+dur \n\nCan you explain what you prefer about option 1? Option 2 would seem to be much simpler to implement (no need to cache things, no need to update cache on splice)\n\nFWIW, I don\u0027t think option 2 is any more or less \"accurate\" from a playback POV. I think video frame durations are never really used in rendering - so the second frame here will show at time 15 and we won\u0027t go back to showing the first frame after the second frame\u0027s duration ends. Of course, if the second frame is the last frame we probably don\u0027t attempt to show it for its reported duration either...",
+      "range": {
+        "startLine": 4879,
+        "startChar": 18,
+        "endLine": 4879,
+        "endChar": 20
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32545339_051af26a",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4879,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T01:36:29Z",
+      "side": 1,
+      "message": "I need to revise my statement about \"simpler\" - I was forgetting that the last buffer doesn\u0027t necessarily have the highest PTS. But what if I rephrase to:\n\n2) let frame X be the frame in the last gop with highest PTS. Make end timestamp \u003d X.pts + X.duration, even if some other frame with an *earlier* pts but longer duration would otherwise create a later end timestamp.\n\nSo you still need logic that combs through the last gop to find the highest pts buffer. Buuuut, I do think taking option 2 is simpler when it comes to things like splicing. See my comment about splicing in SBR.h",
+      "parentUuid": "f087486a_98732a19",
       "range": {
         "startLine": 4879,
         "startChar": 18,
