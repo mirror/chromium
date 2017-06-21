@@ -121,6 +121,9 @@ public class OverlayPanelContent {
             return !mContentDelegate.shouldInterceptNavigation(mExternalNavHandler,
                     navigationParams);
         }
+
+        @Override
+        public void navigationFinished() {}
     }
 
     // ============================================================================================

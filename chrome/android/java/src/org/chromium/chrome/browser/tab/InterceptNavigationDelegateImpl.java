@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.tab;
 
-import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
@@ -36,6 +35,7 @@ public class InterceptNavigationDelegateImpl implements InterceptNavigationDeleg
     private final AuthenticatorNavigationInterceptor mAuthenticatorHelper;
     private ExternalNavigationHandler.OverrideUrlLoadingResult mLastOverrideUrlLoadingResult =
             ExternalNavigationHandler.OverrideUrlLoadingResult.NO_OVERRIDE;
+    private boolean mCloseTab = false;
 
     /**
      * Whether forward history should be cleared after navigation is committed.
@@ -148,6 +148,11 @@ public class InterceptNavigationDelegateImpl implements InterceptNavigationDeleg
         }
     }
 
+    @Override
+    public void navigationFinished() {
+        if (mCloseTab) mTab.getTabModelSelector().closeTab(mTab);
+    }
+
     /**
      * Returns ExternalNavigationParams.Builder to generate ExternalNavigationParams for
      * ExternalNavigationHandler#shouldOverrideUrlLoading().
@@ -248,14 +253,7 @@ public class InterceptNavigationDelegateImpl implements InterceptNavigationDeleg
                 // crbug.com/487938.
                 mTab.getActivity().moveTaskToBack(false);
             }
-            // Defer closing a tab (and the associated WebContents) till the navigation
-            // request and the throttle finishes the job with it.
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mTab.getTabModelSelector().closeTab(mTab);
-                }
-            });
+            mCloseTab = true;
         } else if (mTab.getTabRedirectHandler().isOnNavigation()) {
             int lastCommittedEntryIndexBeforeNavigation = mTab.getTabRedirectHandler()
                     .getLastCommittedEntryIndexBeforeStartingNavigation();

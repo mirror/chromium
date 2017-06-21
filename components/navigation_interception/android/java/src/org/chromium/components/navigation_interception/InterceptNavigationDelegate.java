@@ -6,6 +6,9 @@ package org.chromium.components.navigation_interception;
 
 import org.chromium.base.annotations.CalledByNative;
 
+/**
+ * Interface used by embedder to control, or get notified of event from the ongoing navigation.
+ */
 public interface InterceptNavigationDelegate {
 
     /**
@@ -18,4 +21,10 @@ public interface InterceptNavigationDelegate {
      */
     @CalledByNative
     boolean shouldIgnoreNavigation(NavigationParams navigationParams);
+
+    /**
+     * Notifies that a navigation operation is finished, by either committed or canceled.
+     */
+    @CalledByNative
+    void navigationFinished();
 }

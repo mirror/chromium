@@ -29,8 +29,11 @@ class InterceptNavigationThrottle : public content::NavigationThrottle {
                               const NavigationParams& /* navigation_params */)>
       CheckCallback;
 
+  typedef base::Callback<void(content::WebContents*)> FinishCallback;
+
   InterceptNavigationThrottle(content::NavigationHandle* navigation_handle,
-                              CheckCallback should_ignore_callback);
+                              CheckCallback should_ignore_callback,
+                              FinishCallback finish_callback);
   ~InterceptNavigationThrottle() override;
 
   // content::NavigationThrottle implementation:
@@ -42,6 +45,8 @@ class InterceptNavigationThrottle : public content::NavigationThrottle {
   ThrottleCheckResult CheckIfShouldIgnoreNavigation(bool is_redirect);
 
   CheckCallback should_ignore_callback_;
+  FinishCallback finish_callback_;
+  content::WebContents* const web_contents_;
 
   DISALLOW_COPY_AND_ASSIGN(InterceptNavigationThrottle);
 };
