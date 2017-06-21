@@ -15,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "components/drive/service/drive_service_interface.h"
+#include "device/wake_lock/public/interfaces/wake_lock_provider.mojom.h"
 #include "google_apis/drive/drive_api_error_codes.h"
 
 class GURL;
@@ -122,7 +123,9 @@ class DriveUploaderInterface {
 class DriveUploader : public DriveUploaderInterface {
  public:
   DriveUploader(DriveServiceInterface* drive_service,
-                const scoped_refptr<base::TaskRunner>& blocking_task_runner);
+                const scoped_refptr<base::TaskRunner>& blocking_task_runner,
+                device::mojom::WakeLockProviderPtr wake_lock_provider);
+
   ~DriveUploader() override;
 
   // DriveUploaderInterface overrides.
@@ -232,6 +235,8 @@ class DriveUploader : public DriveUploaderInterface {
 
   scoped_refptr<base::TaskRunner> blocking_task_runner_;
   scoped_refptr<RefCountedBatchRequest> current_batch_request_;
+
+  device::mojom::WakeLockProviderPtr wake_lock_provider_;
 
   // Note: This should remain the last member so it'll be destroyed and
   // invalidate its weak pointers before any other members are destroyed.
