@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66164e22_29421ab8",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/multi-layout-one-frame-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-21T21:28:54Z",
+      "side": 0,
+      "message": "This was the \"uncacheable chunk\", which is no longer uncacheable with https://chromium-review.googlesource.com/c/540661. It\u0027s not invalidated because it didn\u0027t actually change.\n\nWill move such changes into https://chromium-review.googlesource.com/c/540661.",
+      "parentUuid": "6c0f42a5_9b12c040",
+      "revId": "b9b3a7839426a9e943ff139c82c584fb6258c8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e587d54_ca8649e9",
         "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/svg/circle-move-invalidation-expected.txt",
         "patchSetId": 14
