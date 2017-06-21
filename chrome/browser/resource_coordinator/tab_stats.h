@@ -34,9 +34,13 @@ struct TabStats {
   bool is_media = false;
   bool is_pinned = false;
   bool is_in_visible_window = false;
-  bool is_selected = false;  // Selected in the currently active browser window.
+  // Whether the tab is in an active window.
+  bool is_in_active_window = false;
+  // The tab is selected in its window.
+  bool is_selected = false;
   bool is_discarded = false;
-  bool has_form_entry = false;  // User has entered text in a form.
+  // User has entered text in a form.
+  bool has_form_entry = false;
   int discard_count = 0;
   base::TimeTicks last_active;
   base::TimeTicks last_hidden;

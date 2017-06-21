@@ -9,7 +9,6 @@
 
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include "base/callback.h"
@@ -24,6 +23,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
+#include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/browser_tab_strip_tracker.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "ui/gfx/geometry/rect.h"
@@ -63,7 +63,8 @@ class TabManagerDelegate;
 // Note that the browser tests are only active for platforms that use
 // TabManager (CrOS only for now) and need to be adjusted accordingly if
 // support for new platforms is added.
-class TabManager : public TabStripModelObserver {
+class TabManager : public TabStripModelObserver,
+                   public chrome::BrowserListObserver {
  public:
   // Needs to be public for DEFINE_WEB_CONTENTS_USER_DATA_KEY.
   class WebContentsData;
@@ -91,7 +92,7 @@ class TabManager : public TabStripModelObserver {
   // Goes through a list of checks to see if a tab is allowed to be discarded by
   // the automatic tab discarding mechanism. Note that this is not used when
   // discarding a particular tab from about:discards.
-  bool CanDiscardTab(int64_t target_web_contents_id) const;
+  bool CanDiscardTab(const TabStats& tab_stats) const;
 
   // Discards a tab to free the memory occupied by its renderer. The tab still
   // exists in the tab-strip; clicking on it will reload it.
@@ -178,6 +179,7 @@ class TabManager : public TabStripModelObserver {
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, FastShutdownSingleTabProcess);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            GetUnsortedTabStatsIsInVisibleWindow);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, DiscardTabWithNonVisibleTabs);
 
   // Information about a Browser.
   struct BrowserInfo {
@@ -297,6 +299,9 @@ class TabManager : public TabStripModelObserver {
                      int index,
                      bool foreground) override;
 
+  // BrowserListObserver overrides.
+  void OnBrowserSetLastActive(Browser* browser) override;
+
   // Returns true if the tab is currently playing audio or has played audio
   // recently, or if the tab is currently accessing the camera, microphone or
   // mirroring the display.
@@ -316,6 +321,11 @@ class TabManager : public TabStripModelObserver {
 
   // Returns true if tabs can be discarded only once.
   bool CanOnlyDiscardOnce() const;
+
+  // Returns true if the |web_contents| is WebContents for the currently
+  // selected tab in an active Browser.
+  bool WebContentsIsSelectedInActiveBrowser(
+      content::WebContents* contents) const;
 
   // Returns a list of BrowserInfo sorted in z-order from top to bottom. The
   // list is constructed from either |test_browser_info_list_| or BrowserList.
