@@ -15,8 +15,6 @@
 #include "components/ukm/public/ukm_recorder.h"
 #include "net/base/ip_address.h"
 
-using SuccessFailCounts = std::pair<uint32_t, uint32_t>;
-
 namespace {
 
 // The domain type of the IP address of the loaded page. We use these to
@@ -53,7 +51,7 @@ enum PortType {
 namespace internal {
 
 // UKM event names
-const char kUkmPageLoadEventName[] = "PageDomain";
+const char kUkmPageDomainEventName[] = "PageDomain";
 const char kUkmLocalNetworkRequestsEventName[] = "LocalNetworkRequests";
 
 // UKM metric names
@@ -63,7 +61,7 @@ const char kUkmPortTypeName[] = "PortType";
 const char kUkmSuccessfulCountName[] = "Count.Successful";
 const char kUkmFailedCountName[] = "Count.Failed";
 
-// UMA public page histogram names
+// Definitions of the methods to initialize the histogram names maps.
 static const std::map<DomainType,
                       std::map<ResourceType, std::map<bool, std::string>>>&
 GetNonlocalhostHistogramNames() {
@@ -195,6 +193,8 @@ static const std::map<DomainType,
 // TODO(uthakore): Add description.
 class LocalNetworkRequestsPageLoadMetricsObserver
     : public page_load_metrics::PageLoadMetricsObserver {
+using SuccessFailCounts = std::pair<uint32_t, uint32_t>;
+
  public:
   LocalNetworkRequestsPageLoadMetricsObserver();
   ~LocalNetworkRequestsPageLoadMetricsObserver() override;
@@ -211,11 +211,6 @@ class LocalNetworkRequestsPageLoadMetricsObserver
                   const page_load_metrics::PageLoadExtraInfo& info) override;
 
  private:
-  // Stores all requisite information for each resource request that is made by
-  // the page.
-  void ProcessLoadedResource(
-      const page_load_metrics::ExtraRequestCompleteInfo& extra_request_info);
-
   // Clears all local resource request counts. Only used if we decide to log
   // metrics but the observer may stay in scope and capture additional resource
   // requests.

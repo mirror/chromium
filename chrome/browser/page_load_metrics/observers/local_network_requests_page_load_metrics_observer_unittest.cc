@@ -206,7 +206,7 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
     auto* entry = GetUkmEntriesForSourceID(source->id())[0];
     EXPECT_EQ(entry->source_id, source->id());
     EXPECT_EQ(entry->event_hash,
-              base::HashMetricName(internal::kUkmPageLoadEventName));
+              base::HashMetricName(internal::kUkmPageDomainEventName));
     EXPECT_FALSE(entry->metrics.empty());
     ExpectMetric(internal::kUkmDomainTypeName, static_cast<int>(domain_type),
                  entry);

@@ -52,13 +52,13 @@ bool IsLikelyRouterIP(net::IPAddress ip_address) {
 // Returns true if a valid, nonempty IP address was extracted.
 bool GetIPAndPort(
     const page_load_metrics::ExtraRequestCompleteInfo& extra_request_info,
-    net::IPAddress& resource_ip,
-    int& resource_port) {
+    net::IPAddress* resource_ip,
+    int* resource_port) {
   // If the request was successful, then the IP address should be in
   // |extra_request_info|.
   bool ip_exists = net::ParseURLHostnameToAddress(
-      extra_request_info.host_port_pair.host(), &resource_ip);
-  resource_port = extra_request_info.host_port_pair.port();
+      extra_request_info.host_port_pair.host(), resource_ip);
+  *resource_port = extra_request_info.host_port_pair.port();
 
   // If the request failed, it's possible we didn't receive the IP address,
   // possibly because domain resolution failed. As a backup, try getting the IP
@@ -67,18 +67,17 @@ bool GetIPAndPort(
   // is what we care about.
   if (!ip_exists && extra_request_info.url.is_valid()) {
     if (net::IsLocalhost(extra_request_info.url.HostNoBrackets())) {
-      resource_ip = net::IPAddress::IPv4Localhost();
+      *resource_ip = net::IPAddress::IPv4Localhost();
       ip_exists = true;
-    }
-    else {
+    } else {
       ip_exists = net::ParseURLHostnameToAddress(extra_request_info.url.host(),
-                                                 &resource_ip);
+                                                 resource_ip);
     }
-    resource_port = extra_request_info.url.EffectiveIntPort();
+    *resource_port = extra_request_info.url.EffectiveIntPort();
   }
 
-  if (net::IsLocalhost(resource_ip.ToString())) {
-    resource_ip = net::IPAddress::IPv4Localhost();
+  if (net::IsLocalhost(resource_ip->ToString())) {
+    *resource_ip = net::IPAddress::IPv4Localhost();
     ip_exists = true;
   }
 
@@ -123,6 +122,9 @@ LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
     return STOP_OBSERVING;
   }
 
+  // net::IsLocalhost assumes (and doesn't verify) that any IPv6 address passed
+  // to it does not have square brackets around it, but HostPortPair retains the
+  // brackets, so we need to separately check for IPv6 localhost here.
   if (net::IsLocalhost(address.host()) ||
       page_ip_address_ == net::IPAddress::IPv6Localhost()) {
     page_load_type_ = DOMAIN_TYPE_LOCALHOST;
@@ -152,8 +154,8 @@ LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
 
   // If the load was localhost, we don't track it because it isn't meaningful
   // for our purposes.
-  return (page_load_type_ == DOMAIN_TYPE_LOCALHOST ? STOP_OBSERVING
-                                                   : CONTINUE_OBSERVING);
+  return (page_load_type_ == DOMAIN_TYPE_LOCALHOST) ? STOP_OBSERVING
+                                                    : CONTINUE_OBSERVING;
 }
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
@@ -178,7 +180,7 @@ void LocalNetworkRequestsPageLoadMetricsObserver::OnLoadedResource(
 
   // We can't track anything if we don't have an IP address for the resource.
   // We also don't want to track any requests to the page's IP address itself.
-  if (!GetIPAndPort(extra_request_info, resource_ip, resource_port) ||
+  if (!GetIPAndPort(extra_request_info, &resource_ip, &resource_port) ||
       resource_ip.IsZero() || resource_ip == page_ip_address_) {
     return;
   }
@@ -554,8 +556,8 @@ void LocalNetworkRequestsPageLoadMetricsObserver::RecordUkmDomainType(
     return;
   }
 
-  std::unique_ptr<ukm::UkmEntryBuilder> builder =
-      ukm_recorder->GetEntryBuilder(source_id, internal::kUkmPageLoadEventName);
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
+      source_id, internal::kUkmPageDomainEventName);
   builder->AddMetric(internal::kUkmDomainTypeName,
                      static_cast<int>(page_load_type_));
 }
