@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dda1cec_f5725fc9",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-06-21T13:35:47Z",
+      "side": 1,
+      "message": "If I\u0027m reading this correctly, we\u0027ll clear out last_text_node_ if the display: contents element only contains display: none children. I don\u0027t see why that would be correct intuitively, am I missing something?",
+      "revId": "a160e32c68bd5f86685f8e2c76af75d90828d05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
