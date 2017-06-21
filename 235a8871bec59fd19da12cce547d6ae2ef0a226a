@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81f4f06b_1552aab5",
+        "filename": "ash/system/user/user_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-21T21:10:44Z",
+      "side": 1,
+      "message": "This might not need login_status anymore, see below.",
+      "revId": "235a8871bec59fd19da12cce547d6ae2ef0a226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6b4688_3b5480a9",
+        "filename": "ash/system/user/user_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-21T21:10:44Z",
+      "side": 1,
+      "message": "nit: put 0 in a named constant",
+      "revId": "235a8871bec59fd19da12cce547d6ae2ef0a226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ab0218_70b4eec2",
+        "filename": "ash/system/user/user_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-21T21:10:44Z",
+      "side": 1,
+      "message": "This method doesn\u0027t seem to use login_status anymore. Please remove it.",
+      "revId": "235a8871bec59fd19da12cce547d6ae2ef0a226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
