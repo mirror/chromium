@@ -484,6 +484,11 @@ TestLauncherDelegate::~TestLauncherDelegate() {}
 
 TestLauncher::TestLauncher(TestLauncherDelegate* launcher_delegate,
                            size_t parallel_jobs)
+    : TestLauncher(launcher_delegate, parallel_jobs, true) {}
+
+TestLauncher::TestLauncher(TestLauncherDelegate* launcher_delegate,
+                           size_t parallel_jobs,
+                           bool overridable_job_number)
     : launcher_delegate_(launcher_delegate),
       total_shards_(1),
       shard_index_(0),
@@ -501,7 +506,8 @@ TestLauncher::TestLauncher(TestLauncherDelegate* launcher_delegate,
                       TimeDelta::FromSeconds(kOutputTimeoutSeconds),
                       this,
                       &TestLauncher::OnOutputTimeout),
-      parallel_jobs_(parallel_jobs) {}
+      parallel_jobs_(parallel_jobs),
+      overridable_job_number_(overridable_job_number) {}
 
 TestLauncher::~TestLauncher() {}
 
@@ -803,7 +809,8 @@ bool TestLauncher::Init() {
   if (command_line->HasSwitch(switches::kTestLauncherForceRunBrokenTests))
     force_run_broken_tests_ = true;
 
-  if (command_line->HasSwitch(switches::kTestLauncherJobs)) {
+  if (overridable_job_number_ &&
+      command_line->HasSwitch(switches::kTestLauncherJobs)) {
     size_t jobs = 0U;
     if (!StringToSizeT(command_line->GetSwitchValueASCII(
                          switches::kTestLauncherJobs), &jobs) ||
