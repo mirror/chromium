@@ -2,23 +2,28 @@
 <script src="../../../resources/testharness.js"></script>
 <script src="../../../resources/testharnessreport.js"></script>
 <script src="../../../resources/bluetooth/bluetooth-helpers.js"></script>
+<script src="../../../resources/bluetooth/web-bluetooth-test.js"></script>
+<script src="../../../resources/mojo-helpers.js"></script>
 <script>
 'use strict';
 promise_test(() => {
-  return setBluetoothFakeAdapter('HeartRateAdapter')
-    .then(() => requestDeviceWithKeyDown({
-      filters: [{services: ['heart_rate']}]}))
-    .then(device => device.gatt.connect())
-    .then(gattServer => gattServer.getPrimaryService('heart_rate'))
-    .then(service => service.getCharacteristics())
+  return getTwoMeasurementIntervalCharacteristicsService()
+    .then(({service}) => service.getCharacteristics())
     .then(characteristics => {
-      assert_equals(characteristics.length, 3);
-      assert_equals(characteristics[0].uuid,
-                    BluetoothUUID.getCharacteristic('heart_rate_measurement'));
-      assert_equals(characteristics[1].uuid,
-                    BluetoothUUID.getCharacteristic('body_sensor_location'));
-      assert_equals(characteristics[2].uuid,
-                    BluetoothUUID.getCharacteristic('body_sensor_location'));
+      // Expect four characteristic instances.
+      assert_equals(characteristics.length, 4);
+
+      let uuid_set = new Set(characteristics.map(c => c.uuid));
+      // Two of the expected characteristics are 'measurement_interval',
+      // so only 3 unique UUIDs.
+      assert_equals(uuid_set.size, 3);
+
+      assert_true(uuid_set.has(BluetoothUUID.getCharacteristic(
+        'temperature_measurement')));
+      assert_true(uuid_set.has(BluetoothUUID.getCharacteristic(
+        'temperature_type')));
+      assert_true(uuid_set.has(BluetoothUUID.getCharacteristic(
+        'measurement_interval')));
     });
 }, 'Find all characteristics in a service.');
 </script>
