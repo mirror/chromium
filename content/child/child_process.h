@@ -89,6 +89,11 @@ class CONTENT_EXPORT ChildProcess {
 
   static void WaitForDebugger(const std::string& label);
 
+ protected:
+  bool initialized_task_scheduler() const {
+    return initialized_task_scheduler_;
+  }
+
  private:
   int ref_count_;
 

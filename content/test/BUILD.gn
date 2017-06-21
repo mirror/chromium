@@ -151,6 +151,8 @@ static_library("test_support") {
     "appcache_test_helper.h",
     "blink_test_environment.cc",
     "blink_test_environment.h",
+    "child_process_for_testing.cc",
+    "child_process_for_testing.h",
     "content_browser_sanity_checker.cc",
     "content_browser_sanity_checker.h",
     "content_test_suite.cc",
