@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "90e03ee6_74a10c8f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-21T01:23:16Z",
+      "side": 1,
+      "message": "What\u0027s with the \u0027[x]\u0027?",
+      "range": {
+        "startLine": 344,
+        "startChar": 36,
+        "endLine": 344,
+        "endChar": 37
+      },
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40074d6_56e7d38c",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-21T01:23:16Z",
+      "side": 1,
+      "message": "fix wrapping.",
+      "range": {
+        "startLine": 81,
+        "startChar": 38,
+        "endLine": 81,
+        "endChar": 40
+      },
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f88c3f8a_cba81755",
         "filename": "chrome/browser/ui/views/toolbar/reload_button.cc",
         "patchSetId": 5
@@ -13,6 +59,46 @@
       "writtenOn": "2017-06-20T23:22:24Z",
       "side": 1,
       "message": "copied a lot of code here because otherwise the conditionals got really complicated, plus when we remove this flag (enabling it by default or abandoning it), it should be easier to just delete a large block of code than try to untangle the conditionals again.",
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d18f4f_388533e7",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-21T01:23:16Z",
+      "side": 1,
+      "message": "It\u0027s probably worth documenting the behavior you are adding here.",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d25117c_ecbe4d5c",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-21T01:23:16Z",
+      "side": 1,
+      "message": "It\u0027s not obvious what mode_switch means, please document it. Same goes for long_load.",
       "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
