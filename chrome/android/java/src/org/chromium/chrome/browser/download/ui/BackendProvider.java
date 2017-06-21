@@ -7,11 +7,10 @@ package org.chromium.chrome.browser.download.ui;
 import android.content.ComponentName;
 import android.support.annotation.Nullable;
 
-import org.chromium.chrome.browser.download.DownloadItem;
 import org.chromium.chrome.browser.download.DownloadManagerService;
 import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
-import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadItem;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate;
+import org.chromium.components.offline_items_collection.OfflineItem;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public interface BackendProvider {
         void getAllDownloads(boolean isOffTheRecord);
 
         /** See {@link DownloadManagerService#broadcastDownloadAction}. */
-        void broadcastDownloadAction(DownloadItem downloadItem, String action);
+        void broadcastDownloadAction(OfflineItem offlineItem, String action);
 
         /** See {@link DownloadManagerService#checkForExternallyRemovedDownloads}. */
         void checkForExternallyRemovedDownloads(boolean isOffTheRecord);
@@ -56,7 +55,7 @@ public interface BackendProvider {
         void removeObserver(OfflinePageDownloadBridge.Observer observer);
 
         /** See {@link OfflinePageDownloadBridge#getAllItems}. */
-        List<OfflinePageDownloadItem> getAllItems();
+        List<OfflineItem> getAllItems();
 
         /** See {@link OfflinePageDownloadBridge#openItem}. */
         void openItem(String guid, @Nullable ComponentName componentName);

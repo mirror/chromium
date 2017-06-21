@@ -37,6 +37,7 @@ import org.chromium.components.feature_engagement_tracker.EventConstants;
 import org.chromium.components.feature_engagement_tracker.FeatureEngagementTracker;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.LegacyHelpers;
+import org.chromium.components.offline_items_collection.OfflineItem;
 import org.chromium.net.ConnectionType;
 import org.chromium.net.NetworkChangeNotifierAutoDetect;
 import org.chromium.net.RegistrationPolicyAlwaysRegister;
@@ -1355,10 +1356,10 @@ public class DownloadManagerService
      * for a particular item.
      */
     @Override
-    public void broadcastDownloadAction(DownloadItem downloadItem, String action) {
+    public void broadcastDownloadAction(OfflineItem offlineItem, String action) {
         Intent intent = DownloadNotificationService.buildActionIntent(mContext, action,
-                LegacyHelpers.buildLegacyContentId(false, downloadItem.getId()),
-                downloadItem.getDownloadInfo().isOffTheRecord());
+                LegacyHelpers.buildLegacyContentId(false, offlineItem.id.id),
+                offlineItem.isOffTheRecord);
         mContext.sendBroadcast(intent);
     }
 
@@ -1383,22 +1384,27 @@ public class DownloadManagerService
 
     @CalledByNative
     private void onAllDownloadsRetrieved(final List<DownloadItem> list, boolean isOffTheRecord) {
+        List<OfflineItem> offlineItems = new ArrayList<>();
+        for (DownloadItem downloadItem : list) {
+            offlineItems.add(DownloadUtils.createOfflineItem(downloadItem));
+        }
+
         for (DownloadHistoryAdapter adapter : mHistoryAdapters) {
-            adapter.onAllDownloadsRetrieved(list, isOffTheRecord);
+            adapter.onAllDownloadsRetrieved(offlineItems, isOffTheRecord);
         }
     }
 
     @CalledByNative
     private void onDownloadItemCreated(DownloadItem item) {
         for (DownloadHistoryAdapter adapter : mHistoryAdapters) {
-            adapter.onDownloadItemCreated(item);
+            adapter.onDownloadItemCreated(DownloadUtils.createOfflineItem(item));
         }
     }
 
     @CalledByNative
     private void onDownloadItemUpdated(DownloadItem item) {
         for (DownloadHistoryAdapter adapter : mHistoryAdapters) {
-            adapter.onDownloadItemUpdated(item);
+            adapter.onDownloadItemUpdated(DownloadUtils.createOfflineItem(item));
         }
     }
 

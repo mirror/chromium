@@ -46,6 +46,7 @@ import org.chromium.chrome.browser.offlinepages.DownloadUiActionFlags;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
+import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadItem;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
@@ -54,8 +55,13 @@ import org.chromium.chrome.browser.util.ConversionUtils;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.feature_engagement_tracker.EventConstants;
 import org.chromium.components.feature_engagement_tracker.FeatureEngagementTracker;
+import org.chromium.components.offline_items_collection.ContentId;
+import org.chromium.components.offline_items_collection.LegacyHelpers;
+import org.chromium.components.offline_items_collection.OfflineItem;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
+import org.chromium.components.offline_items_collection.OfflineItemFilter;
 import org.chromium.components.offline_items_collection.OfflineItemProgressUnit;
+import org.chromium.components.offline_items_collection.OfflineItemState;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content_public.browser.DownloadState;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -91,6 +97,9 @@ public class DownloadUtils {
     private static final String DEFAULT_MIME_TYPE = "*/*";
     private static final String MIME_TYPE_DELIMITER = "/";
     private static final String MIME_TYPE_VIDEO = "video";
+    private static final String MIMETYPE_AUDIO = "audio";
+    private static final String MIMETYPE_IMAGE = "image";
+    private static final String MIMETYPE_DOCUMENT = "text";
 
     private static final String EXTRA_IS_OFF_THE_RECORD =
             "org.chromium.chrome.browser.download.IS_OFF_THE_RECORD";
@@ -322,7 +331,7 @@ public class DownloadUtils {
         for (int i = 0; i < items.size(); i++) {
             DownloadHistoryItemWrapper wrappedItem  = items.get(i);
 
-            if (wrappedItem instanceof DownloadHistoryItemWrapper.OfflinePageItemWrapper) {
+            if (wrappedItem.isOfflinePage()) {
                 if (offlinePagesString.length() != 0) {
                     offlinePagesString.append("\n");
                 }
@@ -551,6 +560,114 @@ public class DownloadUtils {
         }
     }
 
+    /** Identifies the type of file represented by the given MIME type string. */
+    private static int getOfflineItemFilter(DownloadInfo downloadInfo) {
+        String mimeType = downloadInfo.getMimeType();
+        if (TextUtils.isEmpty(mimeType)) return OfflineItemFilter.FILTER_OTHER;
+
+        String[] pieces = mimeType.toLowerCase(Locale.getDefault()).split("/");
+        if (pieces.length != 2) return OfflineItemFilter.FILTER_OTHER;
+
+        if (downloadInfo.isOfflinePage()) {
+            return OfflineItemFilter.FILTER_PAGE;
+        } else if (MIME_TYPE_VIDEO.equals(pieces[0])) {
+            return OfflineItemFilter.FILTER_VIDEO;
+        } else if (MIMETYPE_AUDIO.equals(pieces[0])) {
+            return OfflineItemFilter.FILTER_AUDIO;
+        } else if (MIMETYPE_IMAGE.equals(pieces[0])) {
+            return OfflineItemFilter.FILTER_IMAGE;
+        } else if (MIMETYPE_DOCUMENT.equals(pieces[0])) {
+            return OfflineItemFilter.FILTER_DOCUMENT;
+        } else {
+            return OfflineItemFilter.FILTER_OTHER;
+        }
+    }
+
+    public static OfflineItem createOfflineItem(DownloadItem downloadItem) {
+        OfflineItem offlineItem = new OfflineItem();
+        offlineItem.id = new ContentId(LegacyHelpers.LEGACY_DOWNLOAD_NAMESPACE,
+                downloadItem.getDownloadInfo().getDownloadGuid());
+        offlineItem.title = downloadItem.getDownloadInfo().getFileName();
+        offlineItem.description = downloadItem.getDownloadInfo().getDescription();
+        offlineItem.isTransient = downloadItem.getDownloadInfo().getIsTransient();
+        offlineItem.lastAccessedTimeMs = downloadItem.getDownloadInfo().getLastAccessTime();
+        offlineItem.isOpenable = downloadItem.getDownloadInfo().getIsOpenable();
+        offlineItem.pageUrl = downloadItem.getDownloadInfo().getUrl();
+        offlineItem.originalUrl = downloadItem.getDownloadInfo().getOriginalUrl();
+        offlineItem.isOffTheRecord = downloadItem.getDownloadInfo().isOffTheRecord();
+        offlineItem.isResumable = downloadItem.getDownloadInfo().isResumable();
+        offlineItem.receivedBytes = downloadItem.getDownloadInfo().getBytesReceived();
+        offlineItem.creationTimeMs = downloadItem.getStartTime();
+        offlineItem.timeRemainingMs = downloadItem.getDownloadInfo().getTimeRemainingInMillis();
+        offlineItem.progress = downloadItem.getDownloadInfo().getProgress();
+        offlineItem.filePath = downloadItem.getDownloadInfo().getFilePath();
+        offlineItem.mimeType = downloadItem.getDownloadInfo().getMimeType();
+
+        int state;
+        switch (downloadItem.getDownloadInfo().state()) {
+            case DownloadState.IN_PROGRESS:
+                state = OfflineItemState.IN_PROGRESS;
+                break;
+            case DownloadState.COMPLETE:
+                state = OfflineItemState.COMPLETE;
+                break;
+            case DownloadState.CANCELLED:
+                state = OfflineItemState.CANCELLED;
+                break;
+            case DownloadState.INTERRUPTED:
+                state = OfflineItemState.INTERRUPTED;
+                break;
+            default:
+                state = OfflineItemState.IN_PROGRESS;
+                break;
+        }
+
+        if (downloadItem.getDownloadInfo().isPaused()) state = OfflineItemState.PAUSED;
+
+        offlineItem.state = state;
+        offlineItem.filter = getOfflineItemFilter(downloadItem.getDownloadInfo());
+        return offlineItem;
+    }
+
+    public static OfflineItem createOfflineItem(OfflinePageDownloadItem offlinePageDownloadItem) {
+        OfflineItem offlineItem = new OfflineItem();
+        offlineItem.id = new ContentId(
+                LegacyHelpers.LEGACY_OFFLINE_PAGE_NAMESPACE, offlinePageDownloadItem.getGuid());
+        offlineItem.filter = OfflineItemFilter.FILTER_PAGE;
+        offlineItem.title = offlinePageDownloadItem.getTitle();
+        offlineItem.pageUrl = offlinePageDownloadItem.getUrl();
+        offlineItem.filePath = offlinePageDownloadItem.getTargetPath();
+        offlineItem.creationTimeMs = offlinePageDownloadItem.getStartTimeMs();
+        offlineItem.totalSizeBytes = offlinePageDownloadItem.getTotalBytes();
+        offlineItem.isSuggested = offlinePageDownloadItem.isSuggested();
+        offlineItem.mimeType = "text/html";
+
+        int state;
+        switch (offlinePageDownloadItem.getDownloadState()) {
+            case org.chromium.components.offlinepages.downloads.DownloadState.PENDING:
+                state = OfflineItemState.PENDING;
+                break;
+            case org.chromium.components.offlinepages.downloads.DownloadState.IN_PROGRESS:
+                state = OfflineItemState.IN_PROGRESS;
+                break;
+            case org.chromium.components.offlinepages.downloads.DownloadState.PAUSED:
+                state = OfflineItemState.PAUSED;
+                break;
+            case org.chromium.components.offlinepages.downloads.DownloadState.COMPLETE:
+                state = OfflineItemState.COMPLETE;
+                break;
+            default:
+                state = OfflineItemState.COMPLETE;
+        }
+
+        offlineItem.state = state;
+        offlineItem.progress = state == OfflineItemState.COMPLETE
+                ? new Progress(100, 100L, OfflineItemProgressUnit.PERCENTAGE)
+                : Progress.createIndeterminateProgress();
+
+        return offlineItem;
+    }
+
     private static void recordShareHistograms(int count, int filterType) {
         RecordHistogram.recordEnumeratedHistogram("Android.DownloadManager.Share.FileTypes",
                 filterType, DownloadFilter.FILTER_BOUNDARY);
@@ -677,25 +794,48 @@ public class DownloadUtils {
     }
 
     /**
+     * Determine what String to show for a given offline page in download home.
+     * @param item The offline item representing the offline page.
+     * @return String representing the current status.
+     */
+    public static String getOfflinePageStatusString(OfflineItem item) {
+        Context context = ContextUtils.getApplicationContext();
+        switch (item.state) {
+            case OfflineItemState.COMPLETE:
+                return context.getString(R.string.download_notification_completed);
+            case OfflineItemState.PENDING:
+                return context.getString(R.string.download_notification_pending);
+            case OfflineItemState.PAUSED:
+                return context.getString(R.string.download_notification_paused);
+            case OfflineItemState.FAILED:
+            case OfflineItemState.IN_PROGRESS:
+            default:
+        }
+
+        long bytesReceived = item.receivedBytes;
+        if (bytesReceived == 0) {
+            return context.getString(R.string.download_started);
+        } else {
+            return DownloadUtils.getStringForDownloadedBytes(context, bytesReceived);
+        }
+    }
+
+    /**
      * Determine what String to show for a given download in download home.
-     * @param item Download to check the status of.
+     * @param item The offline item representing the download.
      * @return String representing the current download status.
      */
-    public static String getStatusString(DownloadItem item) {
+    public static String getDownloadStatusString(OfflineItem item) {
         Context context = ContextUtils.getApplicationContext();
-        DownloadInfo info = item.getDownloadInfo();
-        Progress progress = info.getProgress();
 
-        int state = info.state();
-        if (state == DownloadState.COMPLETE) {
+        if (item.state == OfflineItemState.COMPLETE) {
             return context.getString(R.string.download_notification_completed);
         }
 
         DownloadSharedPreferenceHelper helper = DownloadSharedPreferenceHelper.getInstance();
-        DownloadSharedPreferenceEntry entry =
-                helper.getDownloadSharedPreferenceEntry(item.getContentId());
-        boolean isDownloadPending =
-                entry != null && state == DownloadState.INTERRUPTED && entry.isAutoResumable;
+        DownloadSharedPreferenceEntry entry = helper.getDownloadSharedPreferenceEntry(item.id);
+        boolean isDownloadPending = entry != null && item.state == OfflineItemState.INTERRUPTED
+                && entry.isAutoResumable;
 
         if (isDownloadPending) {
             return context.getString(R.string.download_notification_pending);
@@ -703,44 +843,32 @@ public class DownloadUtils {
             return context.getString(R.string.download_notification_paused);
         }
 
-        if (info.getBytesReceived() == 0
-                || (!item.isIndeterminate() && info.getTimeRemainingInMillis() < 0)) {
+        if (item.receivedBytes == 0
+                || (!item.progress.isIndeterminate() && item.timeRemainingMs < 0)) {
             // We lack enough information about the download to display a useful string.
             return context.getString(R.string.download_started);
-        } else if (item.isIndeterminate()) {
+        } else if (item.progress.isIndeterminate()) {
             // Count up the bytes.
-            long bytes = info.getBytesReceived();
+            long bytes = item.receivedBytes;
             return DownloadUtils.getStringForDownloadedBytes(context, bytes);
         } else {
             // Count down the time or number of files.
-            return getTimeOrFilesLeftString(context, progress, info.getTimeRemainingInMillis());
+            return getTimeOrFilesLeftString(context, item.progress, item.timeRemainingMs);
         }
     }
 
-    /**
-     * Query the Download backends about whether a download is paused.
-     *
-     * The Java-side contains more information about the status of a download than is persisted
-     * by the native backend, so it is queried first.
-     *
-     * @param item Download to check the status of.
-     * @return Whether the download is paused or not.
-     */
-    public static boolean isDownloadPaused(DownloadItem item) {
+    public static boolean isDownloadPaused(OfflineItem item) {
         DownloadSharedPreferenceHelper helper = DownloadSharedPreferenceHelper.getInstance();
-        DownloadSharedPreferenceEntry entry =
-                helper.getDownloadSharedPreferenceEntry(item.getContentId());
+        DownloadSharedPreferenceEntry entry = helper.getDownloadSharedPreferenceEntry(item.id);
 
         if (entry != null) {
             // The Java downloads backend knows more about the download than the native backend.
             return !entry.isAutoResumable;
         } else {
+            // TODO(shaktisahu): Figure out the right logic for this.
             // Only the native downloads backend knows about the download.
-            if (item.getDownloadInfo().state() == DownloadState.IN_PROGRESS) {
-                return item.getDownloadInfo().isPaused();
-            } else {
-                return item.getDownloadInfo().state() == DownloadState.INTERRUPTED;
-            }
+            return item.state == OfflineItemState.PAUSED
+                    || item.state == OfflineItemState.INTERRUPTED;
         }
     }
 
