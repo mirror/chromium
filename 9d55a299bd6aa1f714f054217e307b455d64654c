@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b57d8458_9c629e5b",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cade4f9e_bdc075f4",
+      "range": {
+        "startLine": 596,
+        "startChar": 79,
+        "endLine": 596,
+        "endChar": 80
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7fc3f53_21b5efa8",
         "filename": "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-21T17:23:57Z",
       "side": 1,
       "message": "What happens if this is never called? Do we have a way of timing that whole operation out?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 76
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e1e616_bdb61a17",
+        "filename": "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "That means PAI won\u0027t be started. Timing is quite unwanted because this is UI operation and user may stay here for quite a long time. ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete is called once Voice app is closed. Non-starting this app is also serious error that breaks OOBE flow.",
+      "parentUuid": "c7fc3f53_21b5efa8",
       "range": {
         "startLine": 84,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed853f6d_584252fe",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99907f81_d2995ddd",
+      "range": {
+        "startLine": 552,
+        "startChar": 4,
+        "endLine": 552,
+        "endChar": 24
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702382c4_78a4b0e8",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-21T17:23:57Z",
       "side": 1,
       "message": "Maybe log that you\u0027re skipping part of the test?",
+      "range": {
+        "startLine": 1196,
+        "startChar": 4,
+        "endLine": 1196,
+        "endChar": 10
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec29c3c_d5951b86",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "This is a test, may be comment is better?",
+      "parentUuid": "702382c4_78a4b0e8",
       "range": {
         "startLine": 1196,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d193879e_0d032769",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3df0ebd7_cd41ad95",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e5621b2_580e489f",
         "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6270620c_f0ddf82b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e5621b2_580e489f",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c6713997_4b6abe4f",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47bf6258_5f917456",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "299bd0d2_e9b17595",
         "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2017-06-21T17:23:57Z",
       "side": 1,
       "message": "do you need to save this state in case this is called when |lock_count_| is non-zero? if that is impossible, can you add DCHECKs / comments?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 40
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0c3d75_0a50afbb",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "Actually not required.\nwe have std::unique_ptr\u003cArcAppListPrefs::AppInfo\u003e app_info \u003d prefs-\u003eGetApp(kPlayStoreAppId) above",
+      "parentUuid": "299bd0d2_e9b17595",
       "range": {
         "startLine": 57,
         "startChar": 6,
@@ -206,6 +398,30 @@
       "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9deb9c8b_2a6abcbc",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-21T19:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea744388_31bee871",
+      "range": {
+        "startLine": 17,
+        "startChar": 64,
+        "endLine": 17,
+        "endChar": 65
+      },
+      "revId": "9d55a299bd6aa1f714f054217e307b455d64654c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
