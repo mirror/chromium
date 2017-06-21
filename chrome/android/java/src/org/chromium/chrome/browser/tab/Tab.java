@@ -1312,7 +1312,7 @@ public class Tab
             });
 
             if (!creatingWebContents && webContents.isLoadingToDifferentDocument()) {
-                didStartPageLoad(webContents.getUrl(), false);
+                didStartPageLoad(webContents.getVisibleUrl(), false);
             }
 
             getAppBannerManager().setIsEnabledForTab(mDelegateFactory.canShowAppBanners(this));
@@ -1894,7 +1894,7 @@ public class Tab
      */
     @CalledByNative
     public String getUrl() {
-        String url = getWebContents() != null ? getWebContents().getUrl() : "";
+        String url = getWebContents() != null ? getWebContents().getVisibleUrl() : "";
 
         // If we have a ContentView, or a NativePage, or the url is not empty, we have a WebContents
         // so cache the WebContent's url. If not use the cached version.
