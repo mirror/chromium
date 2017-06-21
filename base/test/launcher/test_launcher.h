@@ -102,6 +102,14 @@ class TestLauncher {
   // Constructor. |parallel_jobs| is the limit of simultaneous parallel test
   // jobs.
   TestLauncher(TestLauncherDelegate* launcher_delegate, size_t parallel_jobs);
+
+  // Constructor. |parallel_jobs| is the limit of simultaneous parallel test
+  // jobs, |overridable_job_number| determines whether or not parallel_jobs
+  // maybe be overridden (eg from the command line).
+  TestLauncher(TestLauncherDelegate* launcher_delegate,
+               size_t parallel_jobs,
+               bool overridable_job_number);
+
   ~TestLauncher();
 
   // Runs the launcher. Must be called at most once.
@@ -235,6 +243,10 @@ class TestLauncher {
 
   // Number of jobs to run in parallel.
   size_t parallel_jobs_;
+
+  // True if the number of jobs to run in parallel can be overridden
+  // (eg via command line).
+  bool overridable_job_number_;
 
   // Worker pool used to launch processes in parallel (|worker_thread_| is used
   // instead if |parallel_jobs == 1|).
