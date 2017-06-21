@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb2f03cd_f4af96d5",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-21T19:48:21Z",
+      "side": 1,
+      "message": "This is skipped if opt_selectionStart is 0, same for opt_selectionEnd. Is this intentional?",
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4f5a6f_ad98ba29",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-21T19:48:21Z",
+      "side": 1,
+      "message": "!Event",
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a791a219_fcc317ed",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-21T19:48:21Z",
+      "side": 1,
+      "message": "Who is using this return value? Is it necessary?",
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa843c09_68fdd50b",
         "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
         "patchSetId": 2
@@ -13,6 +64,30 @@
       "writtenOn": "2017-06-21T18:32:42Z",
       "side": 1,
       "message": "dpapad@ - I know autofocus is preferred but we want to focus the input without bringing up the VK, so we need to wrap the focus call in a setTimeout.",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04743b55_28e8a8fc",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-21T19:48:21Z",
+      "side": 1,
+      "message": "Thanks for the explanation attempt, but I still don\u0027t fully understand. Why is calling focus() within setTimeout() does not bring up the VK, but using autofocus does? The explanation to this should be in the code as a comment I think, otherwise this is very subtle (or point to an existing comment elsewhere).\n\nattached() is calling  pin-keyboard\u0027s focus() within a setTimeout(), and pin-keyboard\u0027s focus() also calls setTimeout() internally IIUC. Why is each one of those setTimeout() calls necessary. In general setTimeout(, 0) is a suspicious pattern and should only be used when it is very clear why it is necessary (usually that is to force something to happen in a different message loop turn). My concerns are also reinforced by the fact that there are no tests being updated/added in this CL.",
+      "parentUuid": "aa843c09_68fdd50b",
       "range": {
         "startLine": 106,
         "startChar": 11,
