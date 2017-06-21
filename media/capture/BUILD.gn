@@ -192,6 +192,7 @@ component("capture_lib") {
       "video/chromeos/camera_device_context.cc",
       "video/chromeos/camera_device_delegate.cc",
       "video/chromeos/camera_hal_delegate.cc",
+      "video/chromeos/camera_hal_dispatcher_impl.cc",
       "video/chromeos/camera_metadata_utils.cc",
       "video/chromeos/display_rotation_observer.cc",
       "video/chromeos/pixel_format_utils.cc",
