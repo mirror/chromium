@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_CONTENT_SUGGESTIONS_GCM_APP_HANDLER_H_
-#define COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_CONTENT_SUGGESTIONS_GCM_APP_HANDLER_H_
+#ifndef COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_BREAKING_NEWS_GCM_APP_HANDLER_H_
+#define COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_BREAKING_NEWS_GCM_APP_HANDLER_H_
 
 #include "base/memory/weak_ptr.h"
 #include "components/gcm_driver/gcm_app_handler.h"
 #include "components/gcm_driver/instance_id/instance_id.h"
+#include "components/ntp_snippets/breaking_news/breaking_news_listener.h"
 #include "components/ntp_snippets/breaking_news/subscription_manager.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -24,10 +25,11 @@ class InstanceIDDriver;
 
 namespace ntp_snippets {
 
-// Handler for pushed GCM content suggestions. It retrieves a subscription token
+// Handler for pushed GCM breaking news. It retrieves a subscription token
 // from the GCM server and registers/unregisters itself with the GCM service to
-// be called upon received push content suggestions.
-class ContentSuggestionsGCMAppHandler : public gcm::GCMAppHandler {
+// be called upon received push breaking news.
+class BreakingNewsGCMAppHandler : public BreakingNewsListener,
+                                  public gcm::GCMAppHandler {
  public:
   // Callbacks for JSON parsing to allow injecting platform-dependent code.
   using SuccessCallback =
@@ -41,7 +43,7 @@ class ContentSuggestionsGCMAppHandler : public gcm::GCMAppHandler {
   using OnNewContentCallback =
       base::Callback<void(std::unique_ptr<base::Value> content)>;
 
-  ContentSuggestionsGCMAppHandler(
+  BreakingNewsGCMAppHandler(
       gcm::GCMDriver* gcm_driver,
       instance_id::InstanceIDDriver* instance_id_driver,
       PrefService* pref_service_,
@@ -49,16 +51,11 @@ class ContentSuggestionsGCMAppHandler : public gcm::GCMAppHandler {
       const ParseJSONCallback& parse_json_callback);
 
   // If still listening, calls StopListening()
-  ~ContentSuggestionsGCMAppHandler() override;
+  ~BreakingNewsGCMAppHandler() override;
 
-  // Subscribe to the GCM service if necessary and start listening for pushed
-  // content suggestions. Must not be called if already listening.
-  void StartListening(OnNewContentCallback on_new_content_callback);
-
-  // Remove the handler, and stop listening for incoming GCM messages. Any
-  // further pushed content suggestions will be ignored. Must be called while
-  // listening.
-  void StopListening();
+  // BreakingNewsListener overrides.
+  void StartListening(OnNewContentCallback on_new_content_callback) override;
+  void StopListening() override;
 
   // GCMAppHandler overrides.
   void ShutdownHandler() override;
@@ -100,10 +97,10 @@ class ContentSuggestionsGCMAppHandler : public gcm::GCMAppHandler {
   // the content provider.
   OnNewContentCallback on_new_content_callback_;
 
-  base::WeakPtrFactory<ContentSuggestionsGCMAppHandler> weak_factory_;
+  base::WeakPtrFactory<BreakingNewsGCMAppHandler> weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(ContentSuggestionsGCMAppHandler);
+  DISALLOW_COPY_AND_ASSIGN(BreakingNewsGCMAppHandler);
 };
 }  // namespace ntp_snippets
 
-#endif  // COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_CONTENT_SUGGESTIONS_GCM_APP_HANDLER_H_
+#endif  // COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_BREAKING_NEWS_GCM_APP_HANDLER_H_
