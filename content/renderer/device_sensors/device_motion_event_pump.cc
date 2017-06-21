@@ -12,38 +12,6 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceMotionListener.h"
 
-namespace {
-
-constexpr int kMaxReadAttemptsCount = 10;
-
-// TODO(juncai): Extracting mojo::ScopedSharedBufferMapping reading
-// functionality into a helper class.
-// http://crbug.com/727788
-bool TryReadFromBuffer(const device::SensorReadingSharedBuffer* buffer,
-                       device::SensorReading* result) {
-  const device::OneWriterSeqLock& seqlock = buffer->seqlock.value();
-  auto version = seqlock.ReadBegin();
-  auto reading_data = buffer->reading;
-  if (seqlock.ReadRetry(version))
-    return false;
-  *result = reading_data;
-  return true;
-}
-
-// Updates sensor reading from shared buffer.
-bool UpdateSensorReading(const device::SensorReadingSharedBuffer* buffer,
-                         device::SensorReading* result) {
-  int read_attempts = 0;
-  while (!TryReadFromBuffer(buffer, result)) {
-    if (++read_attempts == kMaxReadAttemptsCount)
-      return false;
-  }
-
-  return true;
-}
-
-}  // namespace
-
 namespace content {
 
 DeviceMotionEventPump::DeviceMotionEventPump(RenderThread* thread)
@@ -226,10 +194,9 @@ bool DeviceMotionEventPump::SensorEntry::SensorReadingCouldBeRead() {
   if (!sensor)
     return false;
 
-  const device::SensorReadingSharedBuffer* buffer =
-      static_cast<const device::SensorReadingSharedBuffer*>(
-          shared_buffer.get());
-  if (!UpdateSensorReading(buffer, &reading)) {
+  const auto* buffer = static_cast<const device::SensorReadingSharedBuffer*>(
+      shared_buffer.get());
+  if (!buffer->GetReading(&reading)) {
     HandleSensorError();
     return false;
   }
