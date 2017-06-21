@@ -333,6 +333,7 @@ class ContentSettingSubresourceFilterBubbleModel
   void OnManageCheckboxChecked(bool is_checked) override;
   ContentSettingSubresourceFilterBubbleModel* AsSubresourceFilterBubbleModel()
       override;
+  void OnCustomLinkClicked() override;
   void OnDoneClicked() override;
 
   bool is_checked_ = false;

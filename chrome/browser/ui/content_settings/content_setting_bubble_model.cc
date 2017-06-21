@@ -47,6 +47,7 @@
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/subresource_filter/core/browser/subresource_filter_constants.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/url_formatter/elide_url.h"
 #include "content/public/browser/notification_service.h"
@@ -1235,6 +1236,10 @@ ContentSettingSubresourceFilterBubbleModel::
   SetMessage();
   SetManageText();
   set_done_button_text(l10n_util::GetStringUTF16(IDS_OK));
+  // Use a custom link instead of the builtin learn more link because it has a
+  // layout that works better with the rest of the bubble UI.
+  set_custom_link(l10n_util::GetStringUTF16(IDS_LEARN_MORE));
+  set_custom_link_enabled(true);
   ChromeSubresourceFilterClient::LogAction(kActionDetailsShown);
 }
 
@@ -1265,6 +1270,12 @@ void ContentSettingSubresourceFilterBubbleModel::OnManageCheckboxChecked(
   set_done_button_text(
       l10n_util::GetStringUTF16(is_checked ? IDS_APP_MENU_RELOAD : IDS_OK));
   is_checked_ = is_checked;
+}
+
+void ContentSettingSubresourceFilterBubbleModel::OnCustomLinkClicked() {
+  DCHECK(delegate());
+  ChromeSubresourceFilterClient::LogAction(kActionClickedLearnMore);
+  delegate()->ShowLearnMorePage(CONTENT_SETTINGS_TYPE_ADS);
 }
 
 void ContentSettingSubresourceFilterBubbleModel::OnDoneClicked() {
