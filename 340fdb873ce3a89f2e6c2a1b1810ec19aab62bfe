@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "d6d84cc4_e9127b34",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-21T20:31:55Z",
+      "side": 1,
+      "message": "Could you remove the const here rather than introduce it in the PaymentRequestBaseDelegate and subsequently a lot of other files?",
+      "range": {
+        "startLine": 51,
+        "startChar": 58,
+        "endLine": 51,
+        "endChar": 63
+      },
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685077fb_9ee1ea5e",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-21T20:31:55Z",
+      "side": 1,
+      "message": "According to the comments for this method in PaymentRequestDelegate, this method, \"Returns a pointer to the address normalizer to use for the duration of this Payment Request\". You shouldn\u0027t return a raw pointer hoping that its consumer will own it. Something similar to what ChromePaymentRequestDelegate does is preferable. Instead I would change AddressNormalizationManager to receive a raw pointer which it won\u0027t own and expects to live beyond it\u0027s own lifetime.",
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce98cb5_34094a18",
         "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.h",
         "patchSetId": 6
@@ -36,6 +76,23 @@
       "writtenOn": "2017-06-21T20:24:13Z",
       "side": 1,
       "message": "This language is CC specific. Make more generic?",
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2508f461_6dcc2111",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-21T20:31:55Z",
+      "side": 1,
+      "message": "Could you pass self to the constructor?",
       "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
