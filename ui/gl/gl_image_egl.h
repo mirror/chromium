@@ -5,8 +5,10 @@
 #ifndef UI_GL_GL_IMAGE_EGL_H_
 #define UI_GL_GL_IMAGE_EGL_H_
 
+#include <vector>
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
+#include "ui/gfx/buffer_types.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_export.h"
 #include "ui/gl/gl_image.h"
@@ -18,6 +20,7 @@ class GL_EXPORT GLImageEGL : public GLImage {
   explicit GLImageEGL(const gfx::Size& size);
 
   bool Initialize(EGLenum target, EGLClientBuffer buffer, const EGLint* attrs);
+  static gfx::GpuMemoryBufferAttribVector GetDmaBufFormatsWithModifiers();
 
   // Overridden from GLImage:
   gfx::Size GetSize() override;

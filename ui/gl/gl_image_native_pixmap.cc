@@ -22,6 +22,7 @@
 #define DRM_FORMAT_XBGR8888 FOURCC('X', 'B', '2', '4')
 #define DRM_FORMAT_YVU420 FOURCC('Y', 'V', '1', '2')
 #define DRM_FORMAT_NV12 FOURCC('N', 'V', '1', '2')
+#define DRM_FORMAT_UYVY FOURCC('U', 'Y', 'V', 'Y')
 
 namespace gl {
 namespace {
@@ -194,6 +195,16 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
 
   pixmap_ = pixmap;
   return true;
+}
+
+gfx::GpuMemoryBufferAttribVector
+GLImageNativePixmap::QueryDmaBufFormatsAndModifiers() {
+  bool has_dma_buf_import_modifier = gl::GLSurfaceEGL::HasEGLExtension(
+      "EGL_EXT_image_dma_buf_import_modifiers");
+  if (!has_dma_buf_import_modifier)
+    return gfx::GpuMemoryBufferAttribVector();
+
+  return GLImageEGL::GetDmaBufFormatsWithModifiers();
 }
 
 unsigned GLImageNativePixmap::GetInternalFormat() {

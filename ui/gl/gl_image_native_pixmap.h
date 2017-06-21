@@ -21,6 +21,8 @@ class GL_EXPORT GLImageNativePixmap : public gl::GLImageEGL {
 
   bool Initialize(gfx::NativePixmap* pixmap, gfx::BufferFormat format);
 
+  static gfx::GpuMemoryBufferAttribVector QueryDmaBufFormatsAndModifiers();
+
   // Overridden from GLImage:
   unsigned GetInternalFormat() override;
   bool CopyTexImage(unsigned target) override;
