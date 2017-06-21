@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fae6c9c_c16d7084",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-21T21:11:30Z",
+      "side": 1,
+      "message": "switch these to make it alphabetical? And fix in the other files as well",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e605b9c1_5ea411f9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 89726,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-21T21:11:30Z",
+      "side": 1,
+      "message": "tiny nit: trailing whitespace",
+      "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
