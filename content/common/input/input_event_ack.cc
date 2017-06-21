@@ -14,12 +14,14 @@ InputEventAck::InputEventAck(
     InputEventAckState state,
     const ui::LatencyInfo& latency,
     std::unique_ptr<ui::DidOverscrollParams> overscroll,
+    std::unique_ptr<cc::TouchAction> touch_action,
     uint32_t unique_touch_event_id)
     : source(source),
       type(type),
       state(state),
       latency(latency),
       overscroll(std::move(overscroll)),
+      touch_action(std::move(touch_action)),
       unique_touch_event_id(unique_touch_event_id) {}
 
 InputEventAck::InputEventAck(InputEventAckSource source,
@@ -31,6 +33,7 @@ InputEventAck::InputEventAck(InputEventAckSource source,
                     type,
                     state,
                     latency,
+                    nullptr,
                     nullptr,
                     unique_touch_event_id) {}
 
