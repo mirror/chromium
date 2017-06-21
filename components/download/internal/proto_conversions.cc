@@ -253,6 +253,7 @@ Entry ProtoConversions::EntryFromProto(const protodb::Entry& proto) {
   entry.create_time = base::Time::FromInternalValue(proto.create_time());
   entry.completion_time =
       base::Time::FromInternalValue(proto.completion_time());
+  entry.num_retries = proto.num_retries();
 
   return entry;
 }
@@ -269,6 +270,7 @@ protodb::Entry ProtoConversions::EntryToProto(const Entry& entry) {
   proto.set_target_file_path(entry.target_file_path.AsUTF8Unsafe());
   proto.set_create_time(entry.create_time.ToInternalValue());
   proto.set_completion_time(entry.completion_time.ToInternalValue());
+  proto.set_num_retries(entry.num_retries);
 
   return proto;
 }

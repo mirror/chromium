@@ -120,6 +120,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
     auto driver = base::MakeUnique<test::TestDownloadDriver>();
     auto store = base::MakeUnique<test::TestStore>();
     config_ = base::MakeUnique<Configuration>();
+    config_->max_retry_count = 2;
     config_->file_keep_alive_time = base::TimeDelta::FromMinutes(10);
     config_->file_cleanup_window = base::TimeDelta::FromMinutes(5);
 
@@ -648,6 +649,7 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadFailed) {
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(2);
   EXPECT_CALL(*scheduler_, Reschedule(_)).Times(2);
 
+  config_->max_retry_count = 1;
   controller_->Initialize();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
@@ -796,6 +798,7 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
   EXPECT_CALL(*client_,
               OnDownloadFailed(entry3.guid, Client::FailureReason::NETWORK))
       .Times(1);
+  driver_->NotifyDownloadFailed(dentry3, 1);
   driver_->NotifyDownloadFailed(dentry3, 1);
 
   task_runner_->RunUntilIdle();
