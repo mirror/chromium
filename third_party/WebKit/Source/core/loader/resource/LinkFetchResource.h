@@ -21,13 +21,13 @@ class LinkFetchResource final : public Resource {
   ~LinkFetchResource() override;
 
  private:
-  class LinkResourceFactory : public NonTextResourceFactory {
+  class LinkResourceFactory : public ResourceFactory {
    public:
-    explicit LinkResourceFactory(Resource::Type type)
-        : NonTextResourceFactory(type) {}
+    explicit LinkResourceFactory(Resource::Type type) : ResourceFactory(type) {}
 
     Resource* Create(const ResourceRequest& request,
-                     const ResourceLoaderOptions& options) const override {
+                     const ResourceLoaderOptions& options,
+                     const String& charset) const override {
       return new LinkFetchResource(request, GetType(), options);
     }
   };
