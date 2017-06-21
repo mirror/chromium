@@ -93,6 +93,30 @@
       "revId": "ce69b135dfba7b47fd37ea162d214cb0b685bf21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3984345e_5832fb4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-21T13:37:54Z",
+      "side": 1,
+      "message": "So... there\u0027s that. But there\u0027s also a concern that, in this scenario, we\u0027re masking a problem in getSiteSummary or even this UI. And the fact that we\u0027re showing the user a UI saying something is blocked, when it perhaps isn\u0027t. As I recall, the rest of this class doesn\u0027t worry about arbitrary values appearing from native, it feels a bit weird to have this code do so.",
+      "parentUuid": "6b29e1b6_a7977286",
+      "range": {
+        "startLine": 372,
+        "startChar": 48,
+        "endLine": 372,
+        "endChar": 50
+      },
+      "revId": "ce69b135dfba7b47fd37ea162d214cb0b685bf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
