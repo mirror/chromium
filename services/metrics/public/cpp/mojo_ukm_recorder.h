@@ -5,8 +5,9 @@
 #ifndef COMPONENTS_UKM_PUBLIC_MOJO_UKM_RECORDER_H_
 #define COMPONENTS_UKM_PUBLIC_MOJO_UKM_RECORDER_H_
 
-#include "components/ukm/public/interfaces/ukm_interface.mojom.h"
-#include "components/ukm/public/ukm_recorder.h"
+#include "services/metrics/public/cpp/ukm_export.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
+#include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 
 namespace ukm {
 
@@ -24,7 +25,7 @@ namespace ukm {
  *      recorder.GetEntryBuilder(coordination_unit_id, "MyEvent");
  *  builder->AddMetric("MyMetric", metric_value);
  */
-class MojoUkmRecorder : public UkmRecorder {
+class UKM_EXPORT MojoUkmRecorder : public UkmRecorder {
  public:
   MojoUkmRecorder(mojom::UkmRecorderInterfacePtr interface);
   ~MojoUkmRecorder() override;

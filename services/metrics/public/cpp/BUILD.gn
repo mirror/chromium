@@ -4,7 +4,7 @@
 
 import("//mojo/public/tools/bindings/mojom.gni")
 
-component("public") {
+component("metrics_cpp") {
   sources = [
     "mojo_ukm_recorder.cc",
     "mojo_ukm_recorder.h",
@@ -19,7 +19,7 @@ component("public") {
 
   public_deps = [
     "//base",
-    "//components/ukm/public/interfaces",
+    "//services/metrics/public/interfaces",
     "//url",
   ]
 
