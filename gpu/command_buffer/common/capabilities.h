@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "gpu/gpu_export.h"
+#include "ui/gfx/buffer_types.h"
 
 // From gl2.h. We want to avoid including gl headers because client-side and
 // service-side headers conflict.
@@ -179,6 +180,9 @@ struct GPU_EXPORT Capabilities {
 
   int major_version = 2;
   int minor_version = 0;
+
+  gfx::GpuMemoryBufferAttribVector image_gmb_attribs =
+      gfx::GpuMemoryBufferAttribVector();
 };
 
 }  // namespace gpu
