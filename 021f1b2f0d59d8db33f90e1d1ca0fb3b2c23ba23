@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d93e8d6c_9d0041ef",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-21T15:19:36Z",
+      "side": 0,
+      "message": "Not sure how important this is but looks like this marker will be lost. Could you update OnMount to use this lable for login timer marker accordingly? We can either add a public_mount bool to AuthAttemptState or check AuthAttemptState.user_context.GetUserType() \u003d\u003d USER_TYPE_KIOSK_APP (| USER_TYPE_ARC_KIOSK_APP).",
+      "range": {
+        "startLine": 413,
+        "startChar": 17,
+        "endLine": 413,
+        "endChar": 44
+      },
+      "revId": "021f1b2f0d59d8db33f90e1d1ca0fb3b2c23ba23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
