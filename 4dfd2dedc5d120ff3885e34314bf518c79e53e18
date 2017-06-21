@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0c7784ab_299614c9",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T20:04:26Z",
+      "side": 1,
+      "message": "Why is it two invalidations? Why not 0 or 1?",
+      "parentUuid": "5db1598f_306439e3",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "728a2b28_afa88f54",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/RasterInvalidationTracking.h",
         "patchSetId": 10

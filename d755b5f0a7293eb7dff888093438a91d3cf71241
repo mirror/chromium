@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0c1645a_80475535",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T20:04:26Z",
+      "side": 1,
+      "message": "nit: raster",
+      "revId": "d755b5f0a7293eb7dff888093438a91d3cf71241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
