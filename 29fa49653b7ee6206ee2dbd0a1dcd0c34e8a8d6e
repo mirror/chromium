@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c3db89e_d41f785d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-21T14:19:32Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t say \"tiles impressed on the surface\", because that\u0027s not quite what it\u0027ll mean. Maybe \"tiles available on the surface\" or something?",
+      "range": {
+        "startLine": 94,
+        "startChar": 65,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "29fa49653b7ee6206ee2dbd0a1dcd0c34e8a8d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9786a8ec_3ff72d34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-21T14:19:32Z",
+      "side": 1,
+      "message": "s/type/tileType/ (or the other way around below)",
+      "revId": "29fa49653b7ee6206ee2dbd0a1dcd0c34e8a8d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f7af1b_e605c30c",
+        "filename": "components/ntp_tiles/metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-21T14:19:32Z",
+      "side": 1,
+      "message": "I\u0027d remove the TileImpression struct now. It was useful to group multiple of them into a vector, but since they\u0027re now passed individually anyway, I don\u0027t see the point. WDYT?",
+      "revId": "29fa49653b7ee6206ee2dbd0a1dcd0c34e8a8d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e661e502_15a94d4c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 44783,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-21T14:19:32Z",
+      "side": 1,
+      "message": "s/to total counts/the total count/ ?\n\ns/impressions/tile impressions/",
+      "revId": "29fa49653b7ee6206ee2dbd0a1dcd0c34e8a8d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
