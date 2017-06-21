@@ -405,6 +405,8 @@ class CONTENT_EXPORT WebRtcAudioDeviceImpl
   // It is only accessed by the audio render thread.
   std::vector<int16_t> render_buffer_;
 
+  FILE* fid;
+
   DISALLOW_COPY_AND_ASSIGN(WebRtcAudioDeviceImpl);
 };
 
