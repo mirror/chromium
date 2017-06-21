@@ -11,8 +11,10 @@ namespace blink {
 
 class CSSTextIndentInterpolationType : public CSSInterpolationType {
  public:
-  CSSTextIndentInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+  CSSTextIndentInterpolationType(
+      PropertyHandle property,
+      const PropertyRegistration* registration = nullptr)
+      : CSSInterpolationType(property, registration) {
     DCHECK_EQ(CssProperty(), CSSPropertyTextIndent);
   }
 

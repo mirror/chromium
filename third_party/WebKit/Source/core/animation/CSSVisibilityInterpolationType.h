@@ -12,8 +12,10 @@ namespace blink {
 
 class CSSVisibilityInterpolationType : public CSSInterpolationType {
  public:
-  CSSVisibilityInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+  CSSVisibilityInterpolationType(
+      PropertyHandle property,
+      const PropertyRegistration* registration = nullptr)
+      : CSSInterpolationType(property, registration) {
     DCHECK_EQ(CssProperty(), CSSPropertyVisibility);
   }
 

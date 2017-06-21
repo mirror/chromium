@@ -12,8 +12,10 @@ namespace blink {
 
 class CSSFontWeightInterpolationType : public CSSInterpolationType {
  public:
-  CSSFontWeightInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+  CSSFontWeightInterpolationType(
+      PropertyHandle property,
+      const PropertyRegistration* registration = nullptr)
+      : CSSInterpolationType(property, registration) {
     DCHECK_EQ(CssProperty(), CSSPropertyFontWeight);
   }
 
