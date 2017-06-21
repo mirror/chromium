@@ -11,9 +11,9 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/time/time.h"
-#include "content/child/child_process.h"
 #include "content/renderer/media/mock_media_stream_registry.h"
 #include "content/renderer/media_recorder/media_recorder_handler.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/audio/simple_sources.h"
 #include "media/base/audio_bus.h"
 #include "media/base/video_frame.h"
@@ -133,10 +133,11 @@ class MediaRecorderHandlerTest : public TestWithParam<MediaRecorderTestParams>,
     return bus;
   }
 
-  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
-  // and Sources in |registry_| into believing they are on the right threads.
+  // A ChildProcessForTesting and a MessageLoopForUI are both needed to fool the
+  // Tracks and Sources in |registry_| into believing they are on the right
+  // threads.
   const base::test::ScopedTaskEnvironment scoped_task_environment_;
-  const ChildProcess child_process_;
+  const ChildProcessForTesting child_process_;
   MockMediaStreamRegistry registry_;
 
   // The Class under test. Needs to be scoped_ptr to force its destruction.

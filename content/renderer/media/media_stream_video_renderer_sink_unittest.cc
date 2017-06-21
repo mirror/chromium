@@ -9,13 +9,14 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
-#include "content/child/child_process.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/mock_media_stream_registry.h"
 #include "content/renderer/media/mock_media_stream_video_source.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/base/video_frame.h"
 #include "media/renderers/gpu_video_accelerator_factories.h"
 #include "media/renderers/mock_gpu_memory_buffer_video_frame_pool.h"
@@ -39,8 +40,7 @@ ACTION_P(RunClosure, closure) {
 class MediaStreamVideoRendererSinkTest : public testing::Test {
  public:
   MediaStreamVideoRendererSinkTest()
-      : child_process_(new ChildProcess()),
-        mock_source_(new MockMediaStreamVideoSource(false)) {
+      : mock_source_(new MockMediaStreamVideoSource(false)) {
     blink_source_.Initialize(blink::WebString::FromASCII("dummy_source_id"),
                              blink::WebMediaStreamSource::kTypeVideo,
                              blink::WebString::FromASCII("dummy_source_name"),
@@ -109,10 +109,12 @@ class MediaStreamVideoRendererSinkTest : public testing::Test {
   scoped_refptr<MediaStreamVideoRendererSink> media_stream_video_renderer_sink_;
 
  protected:
-  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
-  // and Sources in |registry_| into believing they are on the right threads.
+  // A ChildProcessForTesting and a MessageLoopForUI are both needed to fool the
+  // Tracks and Sources in |registry_| into believing they are on the right
+  // threads.
   base::MessageLoopForUI message_loop_;
-  const std::unique_ptr<ChildProcess> child_process_;
+  const std::unique_ptr<ChildProcessForTesting> child_process_ =
+      base::MakeUnique<ChildProcessForTesting>();
 
   blink::WebMediaStreamTrack blink_track_;
 

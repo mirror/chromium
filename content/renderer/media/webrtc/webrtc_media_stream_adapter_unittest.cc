@@ -10,7 +10,6 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/child/child_process.h"
 #include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/media_stream_video_source.h"
 #include "content/renderer/media/media_stream_video_track.h"
@@ -20,6 +19,7 @@
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
 #include "content/renderer/media/webrtc/processed_local_audio_source.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h"
+#include "content/test/child_process_for_testing.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
@@ -35,7 +35,6 @@ namespace content {
 class WebRtcMediaStreamAdapterTest : public ::testing::Test {
  public:
   void SetUp() override {
-    child_process_.reset(new ChildProcess());
     dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
     track_adapter_map_ =
         new WebRtcMediaStreamTrackAdapterMap(dependency_factory_.get());
@@ -121,7 +120,7 @@ class WebRtcMediaStreamAdapterTest : public ::testing::Test {
                                    const blink::WebString& result_name) {}
 
   base::MessageLoop message_loop_;
-  std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
   std::unique_ptr<MockPeerConnectionDependencyFactory> dependency_factory_;
   scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map_;
   std::unique_ptr<WebRtcMediaStreamAdapter> adapter_;

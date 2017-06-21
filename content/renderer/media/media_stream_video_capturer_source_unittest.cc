@@ -14,12 +14,12 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
-#include "content/child/child_process.h"
 #include "content/public/common/content_features.h"
 #include "content/public/renderer/media_stream_video_sink.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/mock_constraint_factory.h"
 #include "content/renderer/media/video_track_adapter.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/base/bind_to_current_loop.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -107,7 +107,6 @@ class MediaStreamVideoCapturerSourceTest : public testing::Test {
   MediaStreamVideoCapturerSourceTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
-        child_process_(new ChildProcess()),
         source_(nullptr),
         delegate_(nullptr),
         source_stopped_(false) {
@@ -182,10 +181,10 @@ class MediaStreamVideoCapturerSourceTest : public testing::Test {
                             MediaStreamRequestResult result,
                             const blink::WebString& result_name) {}
 
-  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
-  // and Sources below into believing they are on the right threads.
+  // A ChildProcessForTesting and a MessageLoopForUI are both needed to fool the
+  // Tracks and Sources below into believing they are on the right threads.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
 
   blink::WebMediaStreamSource webkit_source_;
   MediaStreamVideoCapturerSource* source_;  // owned by |webkit_source_|.
@@ -276,7 +275,7 @@ TEST_F(MediaStreamVideoCapturerSourceTest, CaptureTimeAndMetadataPlumbing) {
   const scoped_refptr<media::VideoFrame> frame =
       media::VideoFrame::CreateBlackFrame(gfx::Size(2, 2));
   frame->metadata()->SetDouble(media::VideoFrameMetadata::FRAME_RATE, 30.0);
-  child_process_->io_task_runner()->PostTask(
+  child_process_.io_task_runner()->PostTask(
       FROM_HERE, base::Bind(deliver_frame_cb, frame, reference_capture_time));
   run_loop.Run();
   fake_sink.DisconnectFromTrack();
@@ -292,7 +291,6 @@ class MediaStreamVideoCapturerSourceOldConstraintsTest : public testing::Test {
   MediaStreamVideoCapturerSourceOldConstraintsTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
-        child_process_(new ChildProcess()),
         source_(nullptr),
         delegate_(nullptr),
         source_stopped_(false) {
@@ -370,10 +368,10 @@ class MediaStreamVideoCapturerSourceOldConstraintsTest : public testing::Test {
                             MediaStreamRequestResult result,
                             const blink::WebString& result_name) {}
 
-  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
-  // and Sources below into believing they are on the right threads.
+  // A ChildProcessForTesting and a MessageLoopForUI are both needed to fool the
+  // Tracks and Sources below into believing they are on the right threads.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
 
   blink::WebMediaStreamSource webkit_source_;
   MediaStreamVideoCapturerSource* source_;  // owned by |webkit_source_|.
@@ -611,7 +609,7 @@ TEST_F(MediaStreamVideoCapturerSourceOldConstraintsTest,
   const scoped_refptr<media::VideoFrame> frame =
       media::VideoFrame::CreateBlackFrame(gfx::Size(2, 2));
   frame->metadata()->SetDouble(media::VideoFrameMetadata::FRAME_RATE, 30.0);
-  child_process_->io_task_runner()->PostTask(
+  child_process_.io_task_runner()->PostTask(
       FROM_HERE, base::Bind(deliver_frame_cb, frame, reference_capture_time));
   run_loop.Run();
   fake_sink.DisconnectFromTrack();

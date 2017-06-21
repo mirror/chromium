@@ -5,7 +5,6 @@
 #include <string>
 
 #include "base/run_loop.h"
-#include "content/child/child_process.h"
 #include "content/public/test/mock_render_thread.h"
 #include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/media_stream_video_track.h"
@@ -14,6 +13,7 @@
 #include "content/renderer/media/pepper_to_video_track_adapter.h"
 #include "content/renderer/pepper/pepper_plugin_instance_impl.h"
 #include "content/renderer/pepper/ppb_image_data_impl.h"
+#include "content/test/child_process_for_testing.h"
 #include "content/test/ppapi_unittest.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -45,9 +45,10 @@ class PepperToVideoTrackAdapterTest : public PpapiUnittest {
   }
 
  protected:
-  // A ChildProcess and a MessageLoop are both needed to fool the Tracks and
-  // Sources inside |registry_| into believing they are on the right threads.
-  const ChildProcess child_process_;
+  // A ChildProcessForTesting and a MessageLoop are both needed to fool the
+  // Tracks and Sources inside |registry_| into believing they are on the right
+  // threads.
+  const ChildProcessForTesting child_process_;
   const MockRenderThread render_thread_;
   std::unique_ptr<MockMediaStreamRegistry> registry_;
 };

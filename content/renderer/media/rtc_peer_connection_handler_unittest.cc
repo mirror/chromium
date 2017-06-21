@@ -20,7 +20,6 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
-#include "content/child/child_process.h"
 #include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/media_stream_audio_source.h"
 #include "content/renderer/media/media_stream_audio_track.h"
@@ -36,6 +35,7 @@
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
 #include "content/renderer/media/webrtc/processed_local_audio_source.h"
 #include "content/renderer/media/webrtc/rtc_stats.h"
+#include "content/test/child_process_for_testing.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebMediaConstraints.h"
@@ -254,9 +254,7 @@ class RTCPeerConnectionHandlerUnderTest : public RTCPeerConnectionHandler {
 
 class RTCPeerConnectionHandlerTest : public ::testing::Test {
  public:
-  RTCPeerConnectionHandlerTest() : mock_peer_connection_(NULL) {
-    child_process_.reset(new ChildProcess());
-  }
+  RTCPeerConnectionHandlerTest() = default;
 
   void SetUp() override {
     mock_client_.reset(new NiceMock<MockWebRTCPeerConnectionHandlerClient>());
@@ -438,7 +436,7 @@ class RTCPeerConnectionHandlerTest : public ::testing::Test {
 
  public:
   base::MessageLoop message_loop_;
-  std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
   std::unique_ptr<MockWebRTCPeerConnectionHandlerClient> mock_client_;
   std::unique_ptr<MockPeerConnectionDependencyFactory> mock_dependency_factory_;
   std::unique_ptr<NiceMock<MockPeerConnectionTracker>> mock_tracker_;
@@ -446,7 +444,7 @@ class RTCPeerConnectionHandlerTest : public ::testing::Test {
   MockAudioDeviceFactory mock_audio_device_factory_;
 
   // Weak reference to the mocked native peer connection implementation.
-  MockPeerConnectionImpl* mock_peer_connection_;
+  MockPeerConnectionImpl* mock_peer_connection_ = nullptr;
 };
 
 TEST_F(RTCPeerConnectionHandlerTest, Destruct) {

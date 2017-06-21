@@ -12,11 +12,11 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/child/child_process.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/mock_media_stream_video_sink.h"
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
 #include "content/renderer/media/webrtc/track_observer.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/base/video_frame.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/web/WebHeap.h"
@@ -43,7 +43,6 @@ class MediaStreamRemoteVideoSourceTest
   MediaStreamRemoteVideoSourceTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
-        child_process_(new ChildProcess()),
         mock_factory_(new MockPeerConnectionDependencyFactory()),
         webrtc_video_track_(MockWebRtcVideoTrack::Create("test")),
         remote_source_(nullptr),
@@ -144,7 +143,7 @@ class MediaStreamRemoteVideoSourceTest
   }
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
   std::unique_ptr<MockPeerConnectionDependencyFactory> mock_factory_;
   scoped_refptr<webrtc::VideoTrackInterface> webrtc_video_track_;
   // |remote_source_| is owned by |webkit_source_|.

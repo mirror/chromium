@@ -11,11 +11,11 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "content/child/child_process.h"
 #include "content/common/media/media_stream_options.h"
 #include "content/common/video_capture.mojom.h"
 #include "content/renderer/media/video_capture_impl.h"
 #include "content/renderer/media/video_capture_impl_manager.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/base/bind_to_current_loop.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -205,7 +205,7 @@ class VideoCaptureImplManagerTest : public ::testing::Test,
   }
 
   const base::MessageLoop message_loop_;
-  ChildProcess child_process_;
+  ChildProcessForTesting child_process_;
   base::RunLoop cleanup_run_loop_;
   std::unique_ptr<MockVideoCaptureImplManager> manager_;
 

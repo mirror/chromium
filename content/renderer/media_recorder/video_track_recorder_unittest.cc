@@ -16,9 +16,9 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
-#include "content/child/child_process.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/mock_media_stream_video_source.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/base/video_frame.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -129,10 +129,10 @@ class VideoTrackRecorderTest
     return video_track_recorder_->encoder_.get() != nullptr;
   }
 
-  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
-  // and Sources below into believing they are on the right threads.
+  // A ChildProcessForTesting and a MessageLoopForUI are both needed to fool the
+  // Tracks and Sources below into believing they are on the right threads.
   const base::MessageLoopForUI message_loop_;
-  const ChildProcess child_process_;
+  const ChildProcessForTesting child_process_;
 
   // All members are non-const due to the series of initialize() calls needed.
   // |mock_source_| is owned by |blink_source_|, |track_| by |blink_track_|.

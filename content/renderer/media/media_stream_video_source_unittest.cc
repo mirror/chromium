@@ -12,7 +12,6 @@
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
-#include "content/child/child_process.h"
 #include "content/public/common/content_features.h"
 #include "content/renderer/media/media_stream_video_source.h"
 #include "content/renderer/media/media_stream_video_track.h"
@@ -20,6 +19,7 @@
 #include "content/renderer/media/mock_media_stream_video_sink.h"
 #include "content/renderer/media/mock_media_stream_video_source.h"
 #include "content/renderer/media/video_track_adapter.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/base/limits.h"
 #include "media/base/video_frame.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -40,7 +40,6 @@ class MediaStreamVideoSourceTest : public ::testing::Test {
   MediaStreamVideoSourceTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
-        child_process_(new ChildProcess()),
         number_of_successful_constraints_applied_(0),
         number_of_failed_constraints_applied_(0),
         result_(MEDIA_DEVICE_OK),
@@ -259,7 +258,7 @@ class MediaStreamVideoSourceTest : public ::testing::Test {
     }
   }
   const base::test::ScopedTaskEnvironment scoped_task_environment_;
-  const std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
   blink::WebMediaStreamTrack track_to_release_;
   int number_of_successful_constraints_applied_;
   int number_of_failed_constraints_applied_;
@@ -423,7 +422,6 @@ class MediaStreamVideoSourceOldConstraintsTest : public ::testing::Test {
   MediaStreamVideoSourceOldConstraintsTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
-        child_process_(new ChildProcess()),
         number_of_successful_constraints_applied_(0),
         number_of_failed_constraints_applied_(0),
         result_(MEDIA_DEVICE_OK),
@@ -626,7 +624,7 @@ class MediaStreamVideoSourceOldConstraintsTest : public ::testing::Test {
     }
   }
   const base::test::ScopedTaskEnvironment scoped_task_environment_;
-  const std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
   blink::WebMediaStreamTrack track_to_release_;
   int number_of_successful_constraints_applied_;
   int number_of_failed_constraints_applied_;

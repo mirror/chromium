@@ -12,12 +12,12 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_checker_impl.h"
-#include "content/child/child_process.h"
 #include "content/public/common/content_features.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/mock_media_stream_video_sink.h"
 #include "content/renderer/media/mock_media_stream_video_source.h"
 #include "content/renderer/media/video_track_adapter.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/base/video_frame.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/web/WebHeap.h"
@@ -35,10 +35,7 @@ ACTION_P(RunClosure, closure) {
 
 class MediaStreamVideoTrackTest : public ::testing::Test {
  public:
-  MediaStreamVideoTrackTest()
-      : child_process_(new ChildProcess()),
-        mock_source_(nullptr),
-        source_started_(false) {
+  MediaStreamVideoTrackTest() : mock_source_(nullptr), source_started_(false) {
     scoped_feature_list_.InitAndDisableFeature(
         features::kMediaStreamOldVideoConstraints);
   }
@@ -64,10 +61,6 @@ class MediaStreamVideoTrackTest : public ::testing::Test {
   }
 
  protected:
-  base::MessageLoop* io_message_loop() const {
-    return child_process_->io_message_loop();
-  }
-
   void InitializeSource() {
     blink_source_.Reset();
     mock_source_ = IsOldVideoConstraints()
@@ -134,7 +127,7 @@ class MediaStreamVideoTrackTest : public ::testing::Test {
 
  private:
   const base::MessageLoopForUI message_loop_;
-  const std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
   blink::WebMediaStreamSource blink_source_;
   // |mock_source_| is owned by |webkit_source_|.
   MockMediaStreamVideoSource* mock_source_;
@@ -352,9 +345,7 @@ TEST_F(MediaStreamVideoTrackTest, GetSettingsStopped) {
 class MediaStreamVideoTrackOldConstraintsTest : public ::testing::Test {
  public:
   MediaStreamVideoTrackOldConstraintsTest()
-      : child_process_(new ChildProcess()),
-        mock_source_(nullptr),
-        source_started_(false) {
+      : mock_source_(nullptr), source_started_(false) {
     scoped_feature_list_.InitAndEnableFeature(
         features::kMediaStreamOldVideoConstraints);
   }
@@ -380,10 +371,6 @@ class MediaStreamVideoTrackOldConstraintsTest : public ::testing::Test {
   }
 
  protected:
-  base::MessageLoop* io_message_loop() const {
-    return child_process_->io_message_loop();
-  }
-
   void InitializeSource() {
     blink_source_.Reset();
     mock_source_ = IsOldVideoConstraints()
@@ -435,7 +422,7 @@ class MediaStreamVideoTrackOldConstraintsTest : public ::testing::Test {
 
  private:
   const base::MessageLoopForUI message_loop_;
-  const std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
   blink::WebMediaStreamSource blink_source_;
   // |mock_source_| is owned by |webkit_source_|.
   MockMediaStreamVideoSource* mock_source_;

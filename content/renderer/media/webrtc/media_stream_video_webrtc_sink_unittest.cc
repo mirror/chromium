@@ -6,12 +6,12 @@
 
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
-#include "content/child/child_process.h"
 #include "content/public/common/content_features.h"
 #include "content/renderer/media/mock_constraint_factory.h"
 #include "content/renderer/media/mock_media_stream_registry.h"
 #include "content/renderer/media/video_track_adapter.h"
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
+#include "content/test/child_process_for_testing.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -63,10 +63,11 @@ class MediaStreamVideoWebRtcSinkTest : public ::testing::Test {
 
  private:
   MockMediaStreamRegistry registry_;
-  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
-  // and Sources in |registry_| into believing they are on the right threads.
+  // A ChildProcessForTesting and a MessageLoopForUI are both needed to fool the
+  // Tracks and Sources in |registry_| into believing they are on the right
+  // threads.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  const ChildProcess child_process_;
+  const ChildProcessForTesting child_process_;
   base::test::ScopedFeatureList scoped_feature_list_;
 };
 
