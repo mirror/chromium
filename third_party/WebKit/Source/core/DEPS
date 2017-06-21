@@ -15,4 +15,7 @@ include_rules = [
     "+third_party/skia/include",
     "+ui/gfx/geometry",
     "-web",
+    # We do not want any new dependencies into core/exported until we resolve
+    # controller layer.
+    "!core/exported",
 ]
