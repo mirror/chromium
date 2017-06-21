@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9480877_1d254d7d",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-21T22:07:27Z",
+      "side": 1,
+      "message": "This was unintentional but *should* work anyways since focus() would make selection start and end 0 anyways. Done.",
+      "parentUuid": "eb2f03cd_f4af96d5",
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d4f5a6f_ad98ba29",
         "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1958d509_2175c75b",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-21T22:07:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d4f5a6f_ad98ba29",
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a791a219_fcc317ed",
         "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc5a0e8_b642b3f2",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-21T22:07:27Z",
+      "side": 1,
+      "message": "Not necessary. Done.",
+      "parentUuid": "a791a219_fcc317ed",
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,30 @@
       "side": 1,
       "message": "Thanks for the explanation attempt, but I still don\u0027t fully understand. Why is calling focus() within setTimeout() does not bring up the VK, but using autofocus does? The explanation to this should be in the code as a comment I think, otherwise this is very subtle (or point to an existing comment elsewhere).\n\nattached() is calling  pin-keyboard\u0027s focus() within a setTimeout(), and pin-keyboard\u0027s focus() also calls setTimeout() internally IIUC. Why is each one of those setTimeout() calls necessary. In general setTimeout(, 0) is a suspicious pattern and should only be used when it is very clear why it is necessary (usually that is to force something to happen in a different message loop turn). My concerns are also reinforced by the fact that there are no tests being updated/added in this CL.",
       "parentUuid": "aa843c09_68fdd50b",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87e6a99_456ed135",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-21T22:07:27Z",
+      "side": 1,
+      "message": "There are cases where we want to focus an input, but not bring up the keyboard. This case is handled by calling focus() within a setTimeout (this.async does not work AFAICT). This regressed and did not work but has been fixed in crbug.com/642513. \n\nBut I don\u0027t need the setTimeout here since theres a setTimeout() internally in focus(). I\u0027m not quite sure how to test the VK in settings.",
+      "parentUuid": "04743b55_28e8a8fc",
       "range": {
         "startLine": 106,
         "startChar": 11,
