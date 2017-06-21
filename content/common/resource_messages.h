@@ -366,6 +366,8 @@ IPC_MESSAGE_CONTROL2(ResourceMsg_RequestComplete,
                      int /* request_id */,
                      content::ResourceRequestCompletionStatus)
 
+IPC_MESSAGE_CONTROL1(ResourceMsg_Noop, int /* request_id */)
+
 // Resource messages sent from the renderer to the browser.
 
 // Makes a resource request via the browser.
