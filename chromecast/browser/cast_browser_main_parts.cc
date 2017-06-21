@@ -218,10 +218,10 @@ struct DefaultCommandLineSwitch {
 
 DefaultCommandLineSwitch g_default_switches[] = {
 #if defined(OS_ANDROID)
-#if !BUILDFLAG(IS_CAST_AUDIO_ONLY)
+#if !BUILDFLAG(IS_ANDROID_THINGS)
     // Disables Chromecast-specific WiFi-related features on ATV for now.
     {switches::kNoWifi, ""},
-#endif  // !BUILDFLAG(IS_CAST_AUDIO_ONLY)
+#endif  // !BUILDFLAG(IS_ANDROID_THINGS)
     // TODO(714676): this should probably set the no restrictions autoplay
     // policy instead.
     {switches::kIgnoreAutoplayRestrictionsForTests, ""},
