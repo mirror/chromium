@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d6757cf_5cbb9cb9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 12317,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T14:22:29Z",
+      "side": 1,
+      "message": "Why is this changing?  These strings aren\u0027t exclusive to VR, right?  It looks like only the new string should be in a new VR-specific section.",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135ff8e8_683a823a",
+        "filename": "chrome/browser/android/vr_shell/textures/ui_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T14:22:29Z",
+      "side": 1,
+      "message": "I assume this will get cleaned up in a rebase.",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdb1a32_a416087e",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T14:22:29Z",
+      "side": 1,
+      "message": "optional nit: Generally, I think test names are supposed to clearly indicate what is expected.  This one could be \"WebVrShowsToastWhenStartingPresentation\" maybe.",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb6d88e_386cf207",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T14:22:29Z",
+      "side": 1,
+      "message": "Add one extra case for in-web-vr, but toast disabled?",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c0dc61_341c9f3c",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T14:22:29Z",
+      "side": 1,
+      "message": "Later, we\u0027ll need to circle back on tests that cover transient indicators, and assert that warnings disappear.  I\u0027ll add that to the bug description I made for transience.  We\u0027ll need the tests to be time-aware.",
+      "revId": "c459af4bf1e6bc9bceec75a1534cf9e78e810b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
