@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9750875c_dbaf81cb",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T09:07:09Z",
+      "side": 1,
+      "message": "Nit: pass this by const ref (same below)",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 117,
+        "endChar": 27
+      },
+      "revId": "5d390a4dd821524921314111a78dbe9555ea912c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
