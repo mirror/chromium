@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecefb186_52a10e2e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T19:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1fee7fa_daae26d0",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f2998f9_87a07b76",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 14
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "0b192de8_8d65fad7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T19:33:24Z",
+      "side": 1,
+      "message": "No. Done.",
+      "parentUuid": "9d76345d_f5904808",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7febc51_9ef07ab6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 14
@@ -67,6 +103,24 @@
       "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a785b021_7fb1a31b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T19:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7febc51_9ef07ab6",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "8dc49066_8d9d39f0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T19:33:24Z",
+      "side": 1,
+      "message": "I refactored the function to return the CORSStatus rather than to set it directly in the resource, so the comment now no longer adds information and thus I removed it.",
+      "parentUuid": "af98e04b_a8256e2f",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5da8d6c1_157a0b80",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
         "patchSetId": 14
@@ -101,6 +173,24 @@
       "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c0119a_9e96fc8a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T19:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da8d6c1_157a0b80",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
