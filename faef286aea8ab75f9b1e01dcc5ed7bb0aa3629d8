@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b002ed81_55825574",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:26:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88e564ab_a3d61403",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f2d9ee4_5d48256b",
         "filename": "ash/shutdown_reason.h",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-21T22:03:39Z",
       "side": 1,
       "message": "nit: maybe LOGIN_SHUT_DOWN_BUTTON? i think we call it the login screen more often than we call it the signin screen (but maybe i\u0027m wrong), and we also use \"Shut down\" (the verb) instead of \"Shutdown\" (the noun) on both the login/lock screen button and the system tray tooltip.\n\nthis can also probably be from either the login screen or the lock screen; i think we use mostly the same code for both. do we want to distinguish between the two?",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6fe776_f2a49808",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:26:48Z",
+      "side": 1,
+      "message": "re: signin vs login: see the last file in this change: login/signin_screen_handler.cc\n\nSo...both?",
+      "parentUuid": "5f2d9ee4_5d48256b",
       "range": {
         "startLine": 13,
         "startChar": 2,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ed865948_43e865a0",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:26:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d4fe017_c39371c2",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1ffbb7_2daf94da",
         "filename": "ash/shutdown_reason.h",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2017-06-21T22:03:39Z",
       "side": 1,
       "message": "you probably also need an entry for the \"Update to restart\" button in the system tray. looking at the code, i think it\u0027s ash/system/update/tray_update.cc, and it goes through Shell::Get()-\u003esystem_tray_controller()-\u003eRequestRestartForUpdate().",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c96a717_294e06c6",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:26:48Z",
+      "side": 1,
+      "message": "That restart path doesn\u0027t pass through here. I just traced it to platform2/power_manager and found another ShutdownReason: https://cs.corp.google.com/chromeos_public/src/platform2/power_manager/common/power_constants.h?rcl\u003d7a87834574153f6563c922f38527641eb3daf3f5\u0026l\u003d284\n\nWould it make more sense to expand the \"Power.ShutdownReason\" UMA enum defined in power_manager?",
+      "parentUuid": "4e1ffbb7_2daf94da",
       "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "dc9672ff_cff1e40a",
+        "filename": "ash/wm/lock_state_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:26:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fc6b3965_46ff56ac",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c32f4460_55e7f476",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 1
@@ -116,6 +224,24 @@
       "writtenOn": "2017-06-21T22:03:39Z",
       "side": 1,
       "message": "it seems weird to be attaching a shutdown reason to a lock request. is StartLockAnimationAndLockImmediately also called through another path that can shut down later without getting a chance to send a reason then?\n\nalso, should this be POWER_BUTTON instead of UNKNOWN?",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68aeb1b7_700ea780",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:26:48Z",
+      "side": 1,
+      "message": "StartLockAnimationAndLockImmediately shuts down (eventually) if passed true, but not false. I agree it is awkward. Maybe would be better to split that boolean functionality into 2 methods anyway.",
+      "parentUuid": "c32f4460_55e7f476",
       "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -153,6 +279,24 @@
       "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c78e9f_7b0230d3",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-21T22:26:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3bc8667_3e3bca31",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
