@@ -44,7 +44,10 @@ namespace blink {
 static V8PerIsolateData* g_main_thread_per_isolate_data = 0;
 
 static void BeforeCallEnteredCallback(v8::Isolate* isolate) {
+// TODO(jochen): Re-enable this once https://crbug.com/728583
+#if 0
   CHECK(!ScriptForbiddenScope::IsScriptForbidden());
+#endif
 }
 
 static void MicrotasksCompletedCallback(v8::Isolate* isolate) {
