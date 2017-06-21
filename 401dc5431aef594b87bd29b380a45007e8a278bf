@@ -188,6 +188,30 @@
       "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b7fcf5_09b208a0",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-21T17:55:49Z",
+      "side": 1,
+      "message": "Oh, I missed that method existing already! Nice one. I still think it\u0027s good to return the context id from this method. I also see no harm with exposing worldId in auxData - it\u0027s intended for such purposes specific to embedder.",
+      "parentUuid": "407bf239_08e28b44",
+      "range": {
+        "startLine": 544,
+        "startChar": 32,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
