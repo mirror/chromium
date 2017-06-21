@@ -975,15 +975,6 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
   if (request.DownloadToFile() || request.UseStreamOnResponse())
     return false;
 
-  // Never reuse opaque responses from a service worker for requests that are
-  // not no-cors. https://crbug.com/625575
-  if (existing_resource->GetResponse().WasFetchedViaServiceWorker() &&
-      existing_resource->GetResponse().ServiceWorkerResponseType() ==
-          kWebServiceWorkerResponseTypeOpaque &&
-      request.GetFetchRequestMode() != WebURLRequest::kFetchRequestModeNoCORS) {
-    return false;
-  }
-
   if (!is_static_data && !existing_resource->CanReuse(params))
     return false;
 
