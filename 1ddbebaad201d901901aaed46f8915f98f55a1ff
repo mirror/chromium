@@ -70,6 +70,30 @@
       "revId": "1ddbebaad201d901901aaed46f8915f98f55a1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0454ed53_4c4ecfe9",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-21T16:27:51Z",
+      "side": 1,
+      "message": "ha! I see, it\u0027s because all the three tabs we open have the same URL and the same content, so [ChromeEarlGrey waitForWebViewContainingText:kURL1FirstWord]; doesn\u0027t really help at all as it always succeeds no matter which tab we\u0027re in.\n\nHow about?\n\n  for (NSUInteger i \u003d 0; i \u003c numberOfTabs; i++) {\n    chrome_test_util::OpenNewTab();\n    [ChromeEarlGrey loadURL:url1];\n    [ChromeEarlGrey waitForWebViewContainingText:kURL1FirstWord];\n    chrome_test_util::AssertMainTabCount(i + 1);\n  }\n\nAnd remove the chrome_test_util::AssertMainTabCount(numberOfTabs);\n\nI think this way it\u0027s clearer that we\u0027re waiting for the tab to be opened instead of other UI parts. Let me know how you think of it.\n\nIn either cause, could you please add a short comment explaining why [ChromeEarlGrey waitForWebViewContainingText:kURL1FirstWord]; alone doesn\u0027t work?",
+      "parentUuid": "97edbc5e_fb94a3da",
+      "range": {
+        "startLine": 233,
+        "startChar": 15,
+        "endLine": 233,
+        "endChar": 56
+      },
+      "revId": "1ddbebaad201d901901aaed46f8915f98f55a1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
