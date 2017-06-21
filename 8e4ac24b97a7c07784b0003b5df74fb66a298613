@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a71e2006_d70b81ad",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-21T10:00:36Z",
+      "side": 1,
+      "message": "After an offline chat with Balázs, we agreed that the current state of only resetting the SourceID on main frame navigation is better. For events with fragment-navigation it keeps the connection, and we can distinguish steps of such events by other means.",
+      "parentUuid": "3467f542_44c332d9",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ac6b374_91a4f497",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.h",
         "patchSetId": 6
