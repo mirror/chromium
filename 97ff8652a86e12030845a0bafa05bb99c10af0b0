@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d28fdce4_d401c49f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4053,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-21T23:45:39Z",
+      "side": 1,
+      "message": "Do we control this file?  How often does it change?  Enums that are written to logs can effectively never change (with the exception of appends).\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms\nIf this enum changes periodically (order or whatnot), you\u0027ll want a translation layer from it to UMA rather than emitting the source enum directly.",
+      "range": {
+        "startLine": 4053,
+        "startChar": 13,
+        "endLine": 4053,
+        "endChar": 28
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d1b9784_448bc406",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -42,6 +65,75 @@
         "startChar": 24,
         "endLine": 4055,
         "endChar": 46
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55fc2bbb_f5d7db1d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25573,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-21T23:45:39Z",
+      "side": 1,
+      "message": "Add to comment the answer:\nNever decreased / cleared?\nOr cleared under what conditions?  Only on factory reset?",
+      "range": {
+        "startLine": 25573,
+        "startChar": 44,
+        "endLine": 25573,
+        "endChar": 53
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aef9a59_29dda4d0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25575,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-21T23:45:39Z",
+      "side": 1,
+      "message": "side comment: I\u0027m surprised you don\u0027t record this during the record itself, only on reboot after a recovery.\nditto below",
+      "range": {
+        "startLine": 25575,
+        "startChar": 24,
+        "endLine": 25575,
+        "endChar": 30
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd862cf_c96be533",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25575,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-21T23:45:39Z",
+      "side": 1,
+      "message": "Only reporter after a successful recovery?\nditto below",
+      "range": {
+        "startLine": 25575,
+        "startChar": 31,
+        "endLine": 25575,
+        "endChar": 36
       },
       "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
