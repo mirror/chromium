@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ef7d68b_337c085d",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-21T17:12:41Z",
+      "side": 1,
+      "message": "nit: please use // style comment. s/Send/Sends/ (third person present form for function/class docs) please.",
+      "revId": "548c38fb19b29325ea510d330286b2146ea60fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725a4b41_c6b9cbe4",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-21T17:12:41Z",
+      "side": 1,
+      "message": "nit: Please elide for one-line if stmt for ARC code. (Please see also ARC++ coding style doc).",
+      "revId": "548c38fb19b29325ea510d330286b2146ea60fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
