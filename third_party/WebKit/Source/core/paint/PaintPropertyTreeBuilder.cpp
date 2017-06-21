@@ -791,9 +791,6 @@ void PaintPropertyTreeBuilder::UpdateOverflowClip(
   if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
     if (NeedsOverflowClip(object)) {
       const LayoutBox& box = ToLayoutBox(object);
-      LayoutRect clip_rect;
-      clip_rect =
-          LayoutRect(box.OverflowClipRect(context.current.paint_offset));
 
       const auto* current_clip = context.current.clip;
       if (box.StyleRef().HasBorderRadius()) {
@@ -806,9 +803,10 @@ void PaintPropertyTreeBuilder::UpdateOverflowClip(
         force_subtree_update |= properties.ClearInnerBorderRadiusClip();
       }
 
-      force_subtree_update |=
-          properties.UpdateOverflowClip(current_clip, context.current.transform,
-                                        FloatRoundedRect(FloatRect(clip_rect)));
+      LayoutRect clip_rect = box.OverflowClipRect(context.current.paint_offset);
+      force_subtree_update |= properties.UpdateOverflowClip(
+          current_clip, context.current.transform,
+          FloatRoundedRect(PixelSnappedIntRect(clip_rect)));
     } else {
       force_subtree_update |= properties.ClearInnerBorderRadiusClip();
       force_subtree_update |= properties.ClearOverflowClip();

@@ -19,211 +19,212 @@ namespace blink {
 
 namespace {
 
-// Applies the clips between |localState| and |ancestorState| into a single
-// combined cc::FloatClipDisplayItem on |ccList|.
-static void ApplyClipsBetweenStates(const PropertyTreeState& local_state,
-                                    const PropertyTreeState& ancestor_state,
-                                    cc::DisplayItemList& cc_list,
-                                    Vector<int>& needed_restores) {
-  DCHECK(local_state.Transform() == ancestor_state.Transform());
-#if DCHECK_IS_ON()
-  const TransformPaintPropertyNode* transform_node =
-      local_state.Clip()->LocalTransformSpace();
-  if (transform_node != ancestor_state.Transform()) {
-    const TransformationMatrix& local_to_ancestor_matrix =
-        GeometryMapper::SourceToDestinationProjection(
-            transform_node, ancestor_state.Transform());
-    // Clips are only in descendant spaces that are transformed by one
-    // or more scrolls.
-    DCHECK(local_to_ancestor_matrix.IsIdentityOrTranslation());
-  }
-#endif
-
-  const FloatClipRect& combined_clip =
-      GeometryMapper::LocalToAncestorClipRect(local_state, ancestor_state);
-  bool antialias = false;
-
-  {
-    cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-    buffer->push<cc::SaveOp>();
-    buffer->push<cc::ClipRectOp>(combined_clip.Rect(), SkClipOp::kIntersect,
-                                 antialias);
-    cc_list.EndPaintOfPairedBegin();
-  }
-  needed_restores.push_back(1);
-}
-
-static void RecordPairedBeginDisplayItems(
-    const Vector<PropertyTreeState>& paired_states,
-    const PropertyTreeState& pending_layer_state,
-    cc::DisplayItemList& cc_list,
-    Vector<int>& needed_restores) {
-  PropertyTreeState mapped_clip_destination_space = pending_layer_state;
-  PropertyTreeState clip_space = pending_layer_state;
-  bool has_clip = false;
-
-  for (Vector<PropertyTreeState>::const_reverse_iterator paired_state =
-           paired_states.rbegin();
-       paired_state != paired_states.rend(); ++paired_state) {
-    switch (paired_state->GetInnermostNode()) {
-      case PropertyTreeState::kTransform: {
-        if (has_clip) {
-          ApplyClipsBetweenStates(clip_space, mapped_clip_destination_space,
-                                  cc_list, needed_restores);
-          has_clip = false;
-        }
-        mapped_clip_destination_space = *paired_state;
-        clip_space = *paired_state;
-
-        TransformationMatrix matrix = paired_state->Transform()->Matrix();
-        matrix.ApplyTransformOrigin(paired_state->Transform()->Origin());
-
-        SkMatrix skmatrix =
-            static_cast<SkMatrix>(TransformationMatrix::ToSkMatrix44(matrix));
-        {
-          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-          buffer->push<cc::SaveOp>();
-          buffer->push<cc::ConcatOp>(skmatrix);
-          cc_list.EndPaintOfPairedBegin();
-        }
-        needed_restores.push_back(1);
-        break;
-      }
-      case PropertyTreeState::kClip: {
-        // Clips are handled in |applyClips| when ending the iterator, or
-        // transitioning between transform spaces. Here we store off the
-        // PropertyTreeState of the first found clip, under the transform of
-        // pairedState->transform(). All subsequent clips before applying the
-        // transform will be applied in applyClips.
-        clip_space = *paired_state;
-        has_clip = true;
-#if DCHECK_IS_ON()
-        if (paired_state->Clip()->LocalTransformSpace() !=
-            paired_state->Transform()) {
-          const TransformationMatrix& local_transform_matrix =
-              paired_state->Effect()->LocalTransformSpace()->Matrix();
-          // Clips are only in descendant spaces that are transformed by scroll.
-          DCHECK(local_transform_matrix.IsIdentityOrTranslation());
-        }
-#endif
-        break;
-      }
-      case PropertyTreeState::kEffect: {
-        // TODO(chrishtr): skip effect and/or compositing display items if
-        // not necessary.
-
-        FloatRect clip_rect =
-            paired_state->Effect()->OutputClip()->ClipRect().Rect();
-        // TODO(chrishtr): specify origin of the filter.
-        FloatPoint filter_origin;
-        if (paired_state->Effect()->LocalTransformSpace() !=
-            paired_state->Transform()) {
-          const TransformPaintPropertyNode* transform_node =
-              paired_state->Effect()->LocalTransformSpace();
-          const TransformationMatrix& local_to_ancestor_matrix =
-              GeometryMapper::SourceToDestinationProjection(
-                  transform_node, paired_state->Transform());
-          // Effects are only in descendant spaces that are transformed by one
-          // or more scrolls.
-          DCHECK(local_to_ancestor_matrix.IsIdentityOrTranslation());
-
-          clip_rect = local_to_ancestor_matrix.MapRect(clip_rect);
-          filter_origin = local_to_ancestor_matrix.MapPoint(filter_origin);
-        }
-
-        {
-          cc::PaintFlags flags;
-          flags.setBlendMode(paired_state->Effect()->BlendMode());
-          // TODO(ajuma): This should really be rounding instead of flooring the
-          // alpha value, but that breaks slimming paint reftests.
-          flags.setAlpha(static_cast<uint8_t>(
-              gfx::ToFlooredInt(255 * paired_state->Effect()->Opacity())));
-          flags.setColorFilter(
-              GraphicsContext::WebCoreColorFilterToSkiaColorFilter(
-                  paired_state->Effect()->GetColorFilter()));
-
-          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-          // TODO(chrishtr): compute bounds as necessary.
-          buffer->push<cc::SaveLayerOp>(nullptr, &flags);
-          cc_list.EndPaintOfPairedBegin();
-        }
-        needed_restores.push_back(1);
-
-        {
-          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-
-          buffer->push<cc::SaveOp>();
-          buffer->push<cc::TranslateOp>(filter_origin.X(), filter_origin.Y());
-
-          cc::PaintFlags flags;
-          flags.setImageFilter(cc::RenderSurfaceFilters::BuildImageFilter(
-              paired_state->Effect()->Filter().AsCcFilterOperations(),
-              gfx::SizeF(clip_rect.Width(), clip_rect.Height())));
-
-          SkRect layer_bounds = clip_rect;
-          layer_bounds.offset(-filter_origin.X(), -filter_origin.Y());
-          buffer->push<cc::SaveLayerOp>(&layer_bounds, &flags);
-          buffer->push<cc::TranslateOp>(-filter_origin.X(), -filter_origin.Y());
-
-          cc_list.EndPaintOfPairedBegin();
-        }
-        // The SaveOp+SaveLayerOp above are grouped such that they share a
-        // visual rect, so group the two restores in the same way so we don't
-        // have a mismatch in the number of EndPaintOfPairedBegin() vs
-        // EndPaintOfPairedEnd().
-        needed_restores.push_back(2);
-        break;
-      }
-      case PropertyTreeState::kNone:
-        break;
-    }
-  }
-
-  if (has_clip) {
-    ApplyClipsBetweenStates(clip_space, mapped_clip_destination_space, cc_list,
-                            needed_restores);
-  }
-}
-
-static void RecordPairedEndDisplayItems(const Vector<int>& needed_restores,
-                                        cc::DisplayItemList& cc_list) {
-  // TODO(danakj): This loop could use base::Reversed once it's allowed here.
-  for (auto it = needed_restores.rbegin(); it != needed_restores.rend(); ++it) {
-    cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-    int num_restores = *it;
-    for (int i = 0; i < num_restores; ++i)
-      buffer->push<cc::RestoreOp>();
-    cc_list.EndPaintOfPairedEnd();
-  }
-}
-
 constexpr gfx::Rect g_large_rect(-200000, -200000, 400000, 400000);
-static void AppendDisplayItemToCcDisplayItemList(
-    const DisplayItem& display_item,
-    cc::DisplayItemList& cc_list) {
+void AppendDisplayItemToCcDisplayItemList(const DisplayItem& display_item,
+                                          cc::DisplayItemList& list) {
   DCHECK(DisplayItem::IsDrawingType(display_item.GetType()));
-  if (DisplayItem::IsDrawingType(display_item.GetType())) {
-    const auto& drawing_display_item =
-        static_cast<const DrawingDisplayItem&>(display_item);
-    sk_sp<const cc::PaintOpBuffer> record =
-        drawing_display_item.GetPaintRecord();
-    if (!record)
-      return;
-    // In theory we would pass the bounds of the record, previously done as:
-    // gfx::Rect bounds = gfx::SkIRectToRect(record->cullRect().roundOut());
-    // or use the visual rect directly. However, clip content layers attempt
-    // to raster in a different space than that of the visual rects. We'll be
-    // reworking visual rects further for SPv2, so for now we just pass a
-    // visual rect large enough to make sure items raster.
-    {
-      cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-      buffer->push<cc::DrawRecordOp>(std::move(record));
-      cc_list.EndPaintOfUnpaired(g_large_rect);
-    }
-  }
+
+  sk_sp<const PaintRecord> record =
+      static_cast<const DrawingDisplayItem&>(display_item).GetPaintRecord();
+  if (!record)
+    return;
+  // In theory we would pass the bounds of the record, previously done as:
+  // gfx::Rect bounds = gfx::SkIRectToRect(record->cullRect().roundOut());
+  // or use the visual rect directly. However, clip content layers attempt
+  // to raster in a different space than that of the visual rects. We'll be
+  // reworking visual rects further for SPv2, so for now we just pass a
+  // visual rect large enough to make sure items raster.
+  cc::PaintOpBuffer* buffer = list.StartPaint();
+  buffer->push<cc::DrawRecordOp>(std::move(record));
+  list.EndPaintOfUnpaired(g_large_rect);
+}
+
+void AppendRestore(cc::DisplayItemList& list, size_t n) {
+  cc::PaintOpBuffer* buffer = list.StartPaint();
+  while (n--)
+    buffer->push<cc::RestoreOp>();
+  list.EndPaintOfPairedEnd();
 }
 
 }  // unnamed namespace
+
+void PaintChunksToCcLayer::ConvertInternal(
+    const Vector<const PaintChunk*>& paint_chunks,
+    const PropertyTreeState& layer_state,
+    const DisplayItemList& display_items,
+    cc::DisplayItemList& cc_list) {
+  const TransformPaintPropertyNode* current_transform = layer_state.Transform();
+  const ClipPaintPropertyNode* current_clip = layer_state.Clip();
+  const EffectPaintPropertyNode* current_effect = layer_state.Effect();
+
+  struct ClipEntry {
+    const TransformPaintPropertyNode* transform;
+    const ClipPaintPropertyNode* clip;
+  };
+  Vector<ClipEntry> clip_stack;
+  auto SwitchToClip = [&](const ClipPaintPropertyNode* target_clip) {
+    if (target_clip == current_clip)
+      return;
+    const ClipPaintPropertyNode* lca_clip =
+        GeometryMapper::LowestCommonAncestor(target_clip, current_clip);
+    while (current_clip != lca_clip) {
+      DCHECK(clip_stack.size())
+          << "Error: Chunk has a clip that escaped its effect's clip.";
+      if (!clip_stack.size())
+        break;
+      ClipEntry& previous_state = clip_stack.back();
+      current_transform = previous_state.transform;
+      current_clip = previous_state.clip;
+      clip_stack.pop_back();
+      AppendRestore(cc_list, 1);
+    }
+
+    Vector<const ClipPaintPropertyNode*, 1u> pending_clips;
+    for (const ClipPaintPropertyNode* clip = target_clip; clip != current_clip;
+         clip = clip->Parent())
+      pending_clips.push_back(clip);
+
+    for (size_t i = pending_clips.size(); i--;) {
+      const ClipPaintPropertyNode* sub_clip = pending_clips[i];
+      DCHECK_EQ(current_clip, sub_clip->Parent());
+
+      clip_stack.emplace_back(ClipEntry{current_transform, current_clip});
+      cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+
+      buffer->push<cc::SaveOp>();
+      const TransformPaintPropertyNode* target_transform =
+          sub_clip->LocalTransformSpace();
+      if (current_transform != target_transform) {
+        buffer->push<cc::ConcatOp>(
+            static_cast<SkMatrix>(TransformationMatrix::ToSkMatrix44(
+                GeometryMapper::SourceToDestinationProjection(
+                    target_transform, current_transform))));
+        current_transform = target_transform;
+      }
+      buffer->push<cc::ClipRectOp>(
+          static_cast<SkRect>(sub_clip->ClipRect().Rect()),
+          SkClipOp::kIntersect, false);
+      buffer->push<cc::ClipRRectOp>(static_cast<SkRRect>(sub_clip->ClipRect()),
+                                    SkClipOp::kIntersect, true);
+
+      cc_list.EndPaintOfPairedBegin();
+      current_clip = sub_clip;
+    }
+  };
+
+  struct EffectEntry {
+    const TransformPaintPropertyNode* transform;
+    const ClipPaintPropertyNode* clip;
+    const EffectPaintPropertyNode* effect;
+    Vector<ClipEntry> clip_stack;
+  };
+  Vector<EffectEntry> effect_stack;
+  auto SwitchToEffect = [&](const EffectPaintPropertyNode* target_effect) {
+    if (target_effect == current_effect)
+      return;
+    const EffectPaintPropertyNode* lca_effect =
+        GeometryMapper::LowestCommonAncestor(target_effect, current_effect);
+    while (current_effect != lca_effect) {
+      DCHECK(effect_stack.size()) << "Error: Chunk layerized into a layer with "
+                                     "an effect that's too deep.";
+      if (!effect_stack.size())
+        break;
+
+      EffectEntry& previous_state = effect_stack.back();
+      current_transform = previous_state.transform;
+      current_clip = previous_state.clip;
+      current_effect = previous_state.effect;
+      for (size_t i = clip_stack.size(); i--;)
+        AppendRestore(cc_list, 1);
+      clip_stack.swap(previous_state.clip_stack);
+      effect_stack.pop_back();
+      AppendRestore(cc_list, 2);
+    }
+
+    Vector<const EffectPaintPropertyNode*, 1u> pending_effects;
+    for (const EffectPaintPropertyNode* effect = target_effect;
+         effect != current_effect; effect = effect->Parent())
+      pending_effects.push_back(effect);
+
+    for (size_t i = pending_effects.size(); i--;) {
+      const EffectPaintPropertyNode* sub_effect = pending_effects[i];
+      DCHECK_EQ(current_effect, sub_effect->Parent());
+      SwitchToClip(sub_effect->OutputClip());
+
+      effect_stack
+          .emplace_back(
+              EffectEntry{current_transform, current_clip, current_effect, {}})
+          .clip_stack.swap(clip_stack);
+      cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+
+      cc::PaintFlags flags;
+      flags.setBlendMode(sub_effect->BlendMode());
+      // TODO(ajuma): This should really be rounding instead of flooring the
+      // alpha value, but that breaks slimming paint reftests.
+      flags.setAlpha(
+          static_cast<uint8_t>(gfx::ToFlooredInt(255 * sub_effect->Opacity())));
+      flags.setColorFilter(GraphicsContext::WebCoreColorFilterToSkiaColorFilter(
+          sub_effect->GetColorFilter()));
+      buffer->push<cc::SaveLayerOp>(nullptr, &flags);
+
+      const TransformPaintPropertyNode* target_transform =
+          sub_effect->LocalTransformSpace();
+      if (current_transform != target_transform) {
+        buffer->push<cc::ConcatOp>(
+            static_cast<SkMatrix>(TransformationMatrix::ToSkMatrix44(
+                GeometryMapper::SourceToDestinationProjection(
+                    target_transform, current_transform))));
+        current_transform = target_transform;
+      }
+
+      // TODO(chrishtr): specify origin of the filter.
+      FloatPoint filter_origin;
+      buffer->push<cc::TranslateOp>(filter_origin.X(), filter_origin.Y());
+
+      // The size parameter is only used to computed the origin of zoom
+      // operation, which we never generate.
+      gfx::SizeF empty;
+      cc::PaintFlags filter_flags;
+      filter_flags.setImageFilter(cc::RenderSurfaceFilters::BuildImageFilter(
+          sub_effect->Filter().AsCcFilterOperations(), empty));
+      buffer->push<cc::SaveLayerOp>(nullptr, &filter_flags);
+      buffer->push<cc::TranslateOp>(-filter_origin.X(), -filter_origin.Y());
+
+      cc_list.EndPaintOfPairedBegin();
+      current_effect = sub_effect;
+    }
+  };
+
+  for (auto chunk_it = paint_chunks.begin(); chunk_it != paint_chunks.end();
+       chunk_it++) {
+    const PaintChunk& chunk = **chunk_it;
+    const PropertyTreeState& chunk_state = chunk.properties.property_tree_state;
+    SwitchToEffect(chunk_state.Effect());
+    SwitchToClip(chunk_state.Clip());
+    bool transformed = chunk_state.Transform() != current_transform;
+    if (transformed) {
+      cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+      buffer->push<cc::SaveOp>();
+      buffer->push<cc::ConcatOp>(
+          static_cast<SkMatrix>(TransformationMatrix::ToSkMatrix44(
+              GeometryMapper::SourceToDestinationProjection(
+                  chunk_state.Transform(), current_transform))));
+      cc_list.EndPaintOfPairedBegin();
+    }
+    for (const auto& item : display_items.ItemsInPaintChunk(chunk))
+      AppendDisplayItemToCcDisplayItemList(item, cc_list);
+    if (transformed)
+      AppendRestore(cc_list, 1);
+  }
+
+  for (size_t i = clip_stack.size(); i--;)
+    AppendRestore(cc_list, 1);
+  for (size_t i = effect_stack.size(); i--;) {
+    AppendRestore(cc_list, 2);
+    for (size_t j = effect_stack[i].clip_stack.size(); j--;)
+      AppendRestore(cc_list, 1);
+  }
+}
 
 scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
     const Vector<const PaintChunk*>& paint_chunks,
@@ -241,36 +242,10 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
     cc_list->EndPaintOfPairedBegin();
   }
 
-  for (const auto* paint_chunk : paint_chunks) {
-    const PropertyTreeState* state =
-        &paint_chunk->properties.property_tree_state;
-    PropertyTreeStateIterator iterator(*state);
-    Vector<PropertyTreeState> paired_states;
-    for (; state && *state != layer_state; state = iterator.Next()) {
-      if (state->GetInnermostNode() != PropertyTreeState::kNone)
-        paired_states.push_back(*state);
-    }
+  ConvertInternal(paint_chunks, layer_state, display_items, *cc_list);
 
-    // TODO(chrishtr): we can avoid some extra paired display items if
-    // multiple PaintChunks share them. We can also collapse clips between
-    // transforms into single clips in the same way that PaintLayerClipper does.
-    Vector<int> needed_restores;
-
-    RecordPairedBeginDisplayItems(paired_states, layer_state, *cc_list,
-                                  needed_restores);
-
-    for (const auto& display_item :
-         display_items.ItemsInPaintChunk(*paint_chunk))
-      AppendDisplayItemToCcDisplayItemList(display_item, *cc_list);
-
-    RecordPairedEndDisplayItems(needed_restores, *cc_list);
-  }
-
-  if (need_translate) {
-    cc::PaintOpBuffer* buffer = cc_list->StartPaint();
-    buffer->push<cc::RestoreOp>();
-    cc_list->EndPaintOfPairedEnd();
-  }
+  if (need_translate)
+    AppendRestore(*cc_list, 1);
 
   if (under_invalidation_checking_params) {
     auto& params = *under_invalidation_checking_params;

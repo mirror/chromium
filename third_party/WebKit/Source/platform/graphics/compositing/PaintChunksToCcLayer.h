@@ -47,6 +47,12 @@ class PLATFORM_EXPORT PaintChunksToCcLayer {
       const gfx::Vector2dF& layer_offset,
       const DisplayItemList&,
       RasterUnderInvalidationCheckingParams* = nullptr);
+
+ private:
+  static void ConvertInternal(const Vector<const PaintChunk*>&,
+                              const PropertyTreeState& layer_state,
+                              const DisplayItemList&,
+                              cc::DisplayItemList&);
 };
 
 }  // namespace blink
