@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a171f50c_b370c74a",
+        "filename": "content/renderer/media/media_stream_video_renderer_sink_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-21T14:57:05Z",
+      "side": 1,
+      "message": "An std::unique_ptr is required so that a const method (RunIOUntilIdle) can call non-const method child_process_-\u003eio_task_runner().",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 23
+      },
+      "revId": "b044bfdb2d4dbff77db1679158ab7a1419ff9246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
