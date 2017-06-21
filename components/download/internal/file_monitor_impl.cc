@@ -10,6 +10,7 @@
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
+#include "base/task_runner_util.h"
 #include "base/threading/thread_restrictions.h"
 
 namespace download {
@@ -24,6 +25,14 @@ FileMonitorImpl::FileMonitorImpl(
       weak_factory_(this) {}
 
 FileMonitorImpl::~FileMonitorImpl() = default;
+
+void FileMonitorImpl::Initialize(const InitCallback& callback) {
+  base::PostTaskAndReplyWithResult(
+      file_thread_task_runner_.get(), FROM_HERE,
+      base::Bind(&FileMonitorImpl::InitializeOnFileThread,
+                 base::Unretained(this)),
+      callback);
+}
 
 void FileMonitorImpl::DeleteUnknownFiles(
     const Model::EntryList& known_entries,
@@ -68,6 +77,15 @@ void FileMonitorImpl::DeleteFiles(
       FROM_HERE,
       base::Bind(&FileMonitorImpl::DeleteFilesOnFileThread,
                  weak_factory_.GetWeakPtr(), files_to_remove, reason));
+}
+
+bool FileMonitorImpl::InitializeOnFileThread() {
+  bool success = base::PathExists(download_file_dir_);
+  if (!success) {
+    base::File::Error error;
+    success = base::CreateDirectoryAndGetError(download_file_dir_, &error);
+  }
+  return success;
 }
 
 void FileMonitorImpl::DeleteUnknownFilesOnFileThread(
