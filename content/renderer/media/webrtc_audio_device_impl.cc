@@ -29,7 +29,8 @@ WebRtcAudioDeviceImpl::WebRtcAudioDeviceImpl()
       output_delay_ms_(0),
       initialized_(false),
       playing_(false),
-      recording_(false) {
+      recording_(false),
+      fid_(fopen("/tmp/audio_data.pcm", "w+")) {
   DVLOG(1) << "WebRtcAudioDeviceImpl::WebRtcAudioDeviceImpl()";
   // This object can be constructed on either the signaling thread or the main
   // thread, so we need to detach these thread checkers here and have them
@@ -45,6 +46,7 @@ WebRtcAudioDeviceImpl::~WebRtcAudioDeviceImpl() {
   DVLOG(1) << "WebRtcAudioDeviceImpl::~WebRtcAudioDeviceImpl()";
   DCHECK(main_thread_checker_.CalledOnValidThread());
   DCHECK(!initialized_) << "Terminate must have been called.";
+  fclose(fid_);
 }
 
 int32_t WebRtcAudioDeviceImpl::AddRef() const {
@@ -108,11 +110,17 @@ void WebRtcAudioDeviceImpl::RenderData(media::AudioBus* audio_bus,
     *current_time = base::TimeDelta::FromMilliseconds(elapsed_time_ms);
   }
 
+  fwrite(audio_data, sizeof(int16_t), frames_per_10_ms * audio_bus->channels(),
+         fid_);
+
   // De-interleave each channel and convert to 32-bit floating-point
   // with nominal range -1.0 -> +1.0 to match the callback format.
   audio_bus->FromInterleaved(&render_buffer_[0],
                              audio_bus->frames(),
                              bytes_per_sample);
+
+  printf("************ Are frames zero: %d (%p)\n", audio_bus->AreFramesZero(),
+         this);
 
   // Pass the render data to the playout sinks.
   base::AutoLock auto_lock(lock_);
