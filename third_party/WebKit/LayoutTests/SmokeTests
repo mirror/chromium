@@ -1,6 +1,6 @@
 accessibility/aria-labelledby-on-input.html
 accessibility/aria-link-supports-press.html
-accessibility/insert-adjacent-html-causes-crash.xhtml
+accessibility/insert-adjacent-html-causes-crash.xhtml [ Skip ]
 animations/animation-shorthand-overriding.html
 animations/empty-keyframes.html
 animations/interpolation/border-image-slice-interpolation-stability.html
