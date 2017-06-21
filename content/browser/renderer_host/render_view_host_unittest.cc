@@ -79,7 +79,7 @@ TEST_F(RenderViewHostTest, FilterAbout) {
 // Create a full screen popup RenderWidgetHost and View.
 TEST_F(RenderViewHostTest, CreateFullscreenWidget) {
   int32_t routing_id = process()->GetNextRoutingID();
-  test_rvh()->CreateNewFullscreenWidget(routing_id);
+  test_rvh()->CreateNewFullscreenWidget(routing_id, nullptr);
 }
 
 // Ensure we do not grant bindings to a process shared with unprivileged views.
