@@ -31,6 +31,7 @@
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
+#include "third_party/WebKit/public/platform/WebMediaPlayerClient.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
@@ -212,9 +213,12 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
 
   base::WeakPtr<media::MediaObserver> media_observer;
 
-  auto factory_selector =
-      CreateRendererFactorySelector(media_log.get(), use_media_player_renderer,
-                                    GetDecoderFactory(), &media_observer);
+  blink::WebRemotePlaybackClient* remote_playback_client = nullptr;
+  if (base::FeatureList::IsEnabled(media::kNewRemotePlaybackPipeline))
+    remote_playback_client = client->RemotePlaybackClient();
+  auto factory_selector = CreateRendererFactorySelector(
+      media_log.get(), use_media_player_renderer, GetDecoderFactory(),
+      remote_playback_client, &media_observer);
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
   DCHECK(media_observer);
@@ -271,6 +275,7 @@ MediaFactory::CreateRendererFactorySelector(
     media::MediaLog* media_log,
     bool use_media_player,
     media::DecoderFactory* decoder_factory,
+    blink::WebRemotePlaybackClient* remote_playback_client,
     base::WeakPtr<media::MediaObserver>* out_media_observer) {
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   // Render thread may not exist in tests, returning nullptr if it does not.
@@ -348,6 +353,7 @@ MediaFactory::CreateRendererFactorySelector(
   std::unique_ptr<RemotingController> remoting_controller(
       new RemotingController(new media::remoting::SharedSession(
           std::move(remoting_source_request), std::move(remoter))));
+  remoting_controller->SetRemotePlaybackClient(remote_playback_client);
   *out_media_observer = remoting_controller->GetWeakPtr();
 
   auto courier_factory =
