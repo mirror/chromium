@@ -93,6 +93,12 @@ const char kSpeculativePrefetchDescription[] =
     R"*("Learning" means that only the database construction is enabled, )*"
     R"*("Prefetching" that learning and prefetching are enabled.)*";
 
+const char kSpeculativeServiceWorkerStartName[] =
+    "Speculative Service Worker Startup";
+
+const char kSpeculativeServiceWorkerStartDescription[] =
+    "Speculative Service Worker Startup";
+
 const char kOffMainThreadFetchName[] = "Off-main-thread fetch for Web Workers";
 
 const char kOffMainThreadFetchDescription[] =
