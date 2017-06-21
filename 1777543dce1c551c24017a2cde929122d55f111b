@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abc25b5a_1ce14d64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T09:02:52Z",
+      "side": 1,
+      "message": "Nit: struct",
+      "range": {
+        "startLine": 15,
+        "startChar": 30,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "1777543dce1c551c24017a2cde929122d55f111b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f859e2_0a5adc2a",
+        "filename": "services/identity/public/cpp/account_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T09:02:52Z",
+      "side": 1,
+      "message": "I\u0027m assuming there\u0027s a reason the mojo struct can\u0027t be consumed directly.",
+      "revId": "1777543dce1c551c24017a2cde929122d55f111b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c966f8_80e07285",
+        "filename": "services/identity/public/cpp/account_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T09:02:52Z",
+      "side": 1,
+      "message": "Nit: remove this unused include.",
+      "revId": "1777543dce1c551c24017a2cde929122d55f111b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192a3d28_6112a1fd",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T09:02:52Z",
+      "side": 1,
+      "message": "It kind of feels like these things should just be bundled together in a result struct, removing the need for the disclaimer. *shrug*",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 20,
+        "endChar": 56
+      },
+      "revId": "1777543dce1c551c24017a2cde929122d55f111b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
