@@ -43,6 +43,7 @@ class CC_EXPORT PictureLayer : public Layer {
   sk_sp<SkPicture> GetPicture() const override;
 
   bool IsSuitableForGpuRasterization() const override;
+  bool RequiresCrispEdges() const override;
 
   void RunMicroBenchmark(MicroBenchmark* benchmark) override;
 

@@ -1283,6 +1283,10 @@ bool Layer::IsSuitableForGpuRasterization() const {
   return true;
 }
 
+bool Layer::RequiresCrispEdges() const {
+  return false;
+}
+
 std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
 Layer::TakeDebugInfo() {
   if (inputs_.client)

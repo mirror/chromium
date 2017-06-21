@@ -310,6 +310,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   virtual bool Update();
   virtual void SetLayerMaskType(Layer::LayerMaskType type) {}
   virtual bool IsSuitableForGpuRasterization() const;
+  virtual bool RequiresCrispEdges() const;
 
   virtual std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
   TakeDebugInfo();
