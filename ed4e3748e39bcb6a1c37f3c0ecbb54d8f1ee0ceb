@@ -22,6 +22,30 @@
       "revId": "ed4e3748e39bcb6a1c37f3c0ecbb54d8f1ee0ceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8404e4_738d0437",
+        "filename": "components/download/internal/file_monitor_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-21T00:18:19Z",
+      "side": 1,
+      "message": "Actually, I tried weak pointer first. But apparently PostTaskAndReplyWithResult doesn\u0027t work with weak pointers for the first task.",
+      "parentUuid": "cf8a0cc4_e1725efa",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "ed4e3748e39bcb6a1c37f3c0ecbb54d8f1ee0ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
