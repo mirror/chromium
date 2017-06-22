@@ -51,11 +51,9 @@ class AXListBoxOption final : public AXLayoutObject {
   bool IsAXListBoxOption() const override { return true; }
   AccessibilityRole DetermineAccessibilityRole() final;
   bool IsSelected() const override;
-  bool IsEnabled() const override;
+  AXControlMode ControlMode() const override;
   bool IsSelectedOptionActive() const override;
   void SetSelected(bool) override;
-  bool CanSetSelectedAttribute() const override;
-  bool CanSetFocusAttribute() const override;
 
   String TextAlternative(bool recursive,
                          bool in_aria_labelled_by_traversal,
