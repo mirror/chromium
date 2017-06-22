@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c822c3c8_5c0465d6",
+        "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-22T10:01:07Z",
+      "side": 1,
+      "message": "Do you actually need an empty id?",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b098d4c_4b160e1b",
+        "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-22T10:01:07Z",
+      "side": 1,
+      "message": "Small cleanup while you\u0027re here: If the previous block ends with a return statement, you don\u0027t need the `else`.",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 10
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb9adab_aa9577bb",
+        "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-22T10:01:07Z",
+      "side": 1,
+      "message": "I realize that this is just copying an existing (really old) pattern, but \"Dictionary\" is really not the right annotation here -- to my knowledge there is no Dictionary class defined in Web UI. Ideally this would be a definition of the actual structural type that |database| has (see https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler), but in a pinch even {Object} (or {Array}?) would be better than pretending this is a type that doesn\u0027t actually exist.",
+      "range": {
+        "startLine": 108,
+        "startChar": 10,
+        "endLine": 108,
+        "endChar": 22
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0f451d_5a549095",
+        "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-22T10:01:07Z",
+      "side": 1,
+      "message": "Can you use the new hotness that is for...of iteration (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) here?",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 42
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09db57fd_7df37af2",
+        "filename": "chrome/browser/ui/webui/predictors/predictors_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-22T10:01:07Z",
+      "side": 1,
+      "message": "Mini-nit: URL in all-caps.",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
