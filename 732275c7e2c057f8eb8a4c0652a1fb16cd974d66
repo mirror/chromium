@@ -69,6 +69,24 @@
       "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699ab284_850c0ca5",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-22T23:21:11Z",
+      "side": 1,
+      "message": "No code outside of media should require any other DEP than \"//media\". Can you upload the CL so I can see the issues?",
+      "parentUuid": "298ec8d4_2b189f7c",
+      "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
