@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1484191_2f56be8a",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-22T16:26:08Z",
+      "side": 1,
+      "message": "Confirmed with you that is not needed.",
+      "parentUuid": "adc659f5_01d87bd7",
+      "range": {
+        "startLine": 210,
+        "startChar": 14,
+        "endLine": 210,
+        "endChar": 18
+      },
+      "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f0952f5_7f908bcf",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733a3587_d326dba1",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-22T16:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0952f5_7f908bcf",
+      "range": {
+        "startLine": 220,
+        "startChar": 30,
+        "endLine": 220,
+        "endChar": 44
+      },
+      "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c3e228ac_51ac1250",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-22T16:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b35115c_e9b12df2",
+      "range": {
+        "startLine": 249,
+        "startChar": 34,
+        "endLine": 249,
+        "endChar": 35
+      },
+      "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea1434ea_1c04640d",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 3
@@ -82,6 +154,24 @@
       "writtenOn": "2017-06-20T19:42:47Z",
       "side": 1,
       "message": "nit: VLOG(1) or remove ?",
+      "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b75902d_c05284c2",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-22T16:26:08Z",
+      "side": 1,
+      "message": "Opps, debug message, thanks for catching",
+      "parentUuid": "ea1434ea_1c04640d",
       "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
