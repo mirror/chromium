@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e79cf97b_3fbd33c6",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-22T19:34:17Z",
+      "side": 1,
+      "message": "Is there any possible badness that could result from something other than the camera HAL calling RegisterServer, before the HAL does? I think it only means that the clients wouldn\u0027t have a working camera, but I wonder if you have any thoughts on that.",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d93b5b_15ec248e",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-22T19:34:17Z",
+      "side": 1,
+      "message": "CameraHalServer and CameraHalClient haven\u0027t been implemented yet, correct? Please ensure that they have mojo security review even if no mojom files change.",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
