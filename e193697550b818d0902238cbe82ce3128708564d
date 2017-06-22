@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93fbb383_44157d8c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "You have a lot of state caching here in slightly different formats and I think it could be systematized into a private class:\n\nclass AutocompleteState {\n  String mUserText;\n  String mAutocompleteText;\n  int mSelectionStart, mSelectionEnd;\n\n  boolean isWholeTextSelected();\n  boolean isCursorAtEndOfText();\n}\n\nAutocompleteState mCurrentState;\nAutocompleteState mSetAutocompleteState;\nAutocompleteState mPreviouslyNotifiedState;\nAutocompleteState mPreBatchEditState;",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b4b5dc_00e77e19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "mIsPastedText and mLastEditWasDelete seem to be basically the same thing.  Maybe we could merge them into mLastEditWasTyping and suppress autocomplete if it\u0027s false?",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d18ff3_3077ccf9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "I think these should be put in the base class as all of them are in overridden methods (and this causes clutter around super.endBatchEdit calls in particular).  Or even better, find a way to avoid this by mocking InputMethodManager.",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ea7e4c_05cbaec5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "Instead of this assertion, please call super.beginBatchEdit()/super.endBatchEdit() around this code, and remove those calls from removeAutocomplete().",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70af0fdb_c05482d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "If you want to call the \"Changed\" method regardless of whether it changed or not, that indicates the name is wrong.  Maybe we have a method called \"refreshAutocompleteDisplay\" instead which is called from notifyAutocompleteTextStateChanged() (and for example, there is no need to set mPreviouslyNotifiedText and mPreviouslyWholeTextSelected in refreshAutocompleteDisplay()).",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b35f1dd_3af405e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "The textDeleted is used to suppress autocomplete, but I don\u0027t like how this decentralizes the suppression policy, particularly as the delegate calls back anyway to know about suppression.  Please remove the textDeleted argument from the delegate (may be appropriate to do this in a separate dependent patch).",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8114cd3b_9ef20bd8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "I think the Spannable is best thought of as part of the \"View\" in MVC style factoring, so we should not use it for model-impacting decisions like this -- we should just write to it to reflect the model but generally not read it.  Please use AutocompleteState.mAutocompleteText for purposes like this.",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15e7989_3aaaa180",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "This is only used in sendAccessibilityEventUnchecked() and its meaning isn\u0027t very clear, can this be removed and covered by batch edit or something?",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ad7f0a_6e781376",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "I don\u0027t think we should have !isComposing() condition, seems too flaky and complicated.",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54ffd1e_151080fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "A more futureproof and purpose-oriented way of naming what this is scanning for might be something like \"isPhysicalKeyboardOneToOneTypable\"?",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736529da_d1e0bd60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "\"To start with, we are only activating this for English language and URLs\nto avoid potential bad interactions with more complex IMEs.\nTODO(changwan): also scan for other traditionally non-IME charsets like Latin1 and Cyrillic\"",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f801a2_3b1ebb87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "This assertion is covered by an early-return 4 lines above, so I don\u0027t think it adds any value; please delete it.",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df84998f_e8c8e117",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "Seems worth splitting off into private method \"restoreBackspacedText\"",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cf6b50_e0d55a35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "These two debug logs seem intended to bound the action, so they\u0027d be clearer as \"restoreBackspacedText START: \" + diff, \"restoreBackspaceText END\"",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78c8622_7b120118",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "Please move this nesting counter into the base class with a protected getter to avoid these manual adjustments.",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df6feb9_f0f059ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-22T00:12:09Z",
+      "side": 1,
+      "message": "It\u0027s weird to put this carefully between \"mBatchEditNestCount \u003d 0\" and \"endBatchEdit\" and that\u0027s incompatible with my other proposal, so just do notifyAutocompleteTextStateChangedNoCheck() here instead.",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
