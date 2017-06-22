@@ -164,7 +164,7 @@ var testReadFile = function(fileSystemId, filePath, openRequestId,
   it('should read the whole file', function(done) {
     var offset = 0;
     var length = Math.floor(expectedBuffer.length / 2);
-    var left_length;
+    var leftLength;
     var promise = tests_helper.createReadFilePromise(
         fileSystemId, readRequestId, openRequestId, offset, length);
 
@@ -179,13 +179,13 @@ var testReadFile = function(fileSystemId, filePath, openRequestId,
 
       // Get the last chunk of data.
       offset += length;
-      left_length = expectedBuffer.length - receivedBuffer.length;
+      leftLength = expectedBuffer.length - receivedBuffer.length;
       return tests_helper.createReadFilePromise(
-          fileSystemId, readRequestId, openRequestId, offset, left_length);
+          fileSystemId, readRequestId, openRequestId, offset, leftLength);
     }).then(function(receivedBuffer) {
-      expect(receivedBuffer.length).to.equal(left_length);
+      expect(receivedBuffer.length).to.equal(leftLength);
       expect(receivedBuffer).to.deep.equal(
-          expectedBuffer.subarray(offset, offset + left_length));
+          expectedBuffer.subarray(offset, offset + leftLength));
       done();
     }).catch(test_utils.forceFailure);
   });
