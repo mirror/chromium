@@ -61,6 +61,10 @@ class RTree {
   // construct this rtree.
   std::vector<T> Search(const gfx::Rect& query) const;
 
+  template <typename Transform>
+  std::vector<T> Search(const gfx::Rect& query,
+                        const Transform& transform) const;
+
   // Returns the total bounds of all items in this rtree.
   gfx::Rect GetBounds() const;
 
@@ -81,13 +85,12 @@ class RTree {
     // valid index pointing to an element in the vector that was used to build
     // this rtree. When the level is not 0, it's an internal node and it has a
     // valid subtree pointer.
-    union {
-      Node<U>* subtree;
-      U payload;
-    };
+    Node<U>* subtree;
+    U payload;
+
     gfx::Rect bounds;
 
-    Branch() {}
+    Branch() = default;
     Branch(U payload, const gfx::Rect& bounds)
         : payload(std::move(payload)), bounds(bounds) {}
   };
@@ -101,8 +104,10 @@ class RTree {
     explicit Node(uint16_t level) : level(level) {}
   };
 
+  template <typename Transform>
   void SearchRecursive(Node<T>* root,
                        const gfx::Rect& query,
+                       const Transform& transform,
                        std::vector<T>* results) const;
 
   // Consumes the input array.
@@ -273,22 +278,31 @@ auto RTree<T>::BuildRecursive(std::vector<Branch<T>>* branches, int level)
 
 template <typename T>
 std::vector<T> RTree<T>::Search(const gfx::Rect& query) const {
+  return Search(query, [](const T& t) -> const T& { return t; });
+}
+
+template <typename T>
+template <typename Transform>
+std::vector<T> RTree<T>::Search(const gfx::Rect& query,
+                                const Transform& transform) const {
   std::vector<T> results;
   if (num_data_elements_ > 0 && query.Intersects(root_.bounds))
-    SearchRecursive(root_.subtree, query, &results);
+    SearchRecursive(root_.subtree, query, transform, &results);
   return results;
 }
 
 template <typename T>
+template <typename Transform>
 void RTree<T>::SearchRecursive(Node<T>* node,
                                const gfx::Rect& query,
+                               const Transform& transform,
                                std::vector<T>* results) const {
   for (uint16_t i = 0; i < node->num_children; ++i) {
     if (query.Intersects(node->children[i].bounds)) {
       if (node->level == 0)
-        results->push_back(node->children[i].payload);
+        results->push_back(transform(node->children[i].payload));
       else
-        SearchRecursive(node->children[i].subtree, query, results);
+        SearchRecursive(node->children[i].subtree, query, transform, results);
     }
   }
 }
