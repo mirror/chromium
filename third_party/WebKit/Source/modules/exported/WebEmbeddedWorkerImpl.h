@@ -89,7 +89,7 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   void LoadShadowPage();
 
   // WebFrameClient overrides.
-  void FrameDetached(WebLocalFrame*, DetachType) override;
+  void FrameDetached(DetachType) override;
   void DidFinishDocumentLoad() override;
 
   // WebDevToolsAgentClient overrides.
