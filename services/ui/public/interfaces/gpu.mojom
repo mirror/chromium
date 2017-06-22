@@ -4,6 +4,7 @@
 
 module ui.mojom;
 
+import "media/gpu/mojo/jpeg_decoder.mojom";
 import "gpu/ipc/common/gpu_info.mojom";
 import "gpu/ipc/common/sync_token.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
@@ -28,4 +29,6 @@ interface Gpu {
   // Tells the GPU process to destroy GPU memory buffer.
   DestroyGpuMemoryBuffer(gfx.mojom.GpuMemoryBufferId id,
                          gpu.mojom.SyncToken sync_token);
+
+  CreateJpegDecoder(media.mojom.GpuJpegDecodeAccelerator& request);
 };

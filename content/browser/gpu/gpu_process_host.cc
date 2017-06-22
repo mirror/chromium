@@ -753,6 +753,11 @@ void GpuProcessHost::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
   gpu_service_ptr_->DestroyGpuMemoryBuffer(id, client_id, sync_token);
 }
 
+void GpuProcessHost::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  gpu_main_ptr_->CreateJpegDecoder(std::move(request));
+}
+
 #if defined(OS_ANDROID)
 void GpuProcessHost::SendDestroyingVideoSurface(int surface_id,
                                                 const base::Closure& done_cb) {

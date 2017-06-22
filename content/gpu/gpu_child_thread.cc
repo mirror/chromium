@@ -208,6 +208,7 @@ void GpuChildThread::Init(const base::Time& process_start_time) {
   registry->AddInterface(base::Bind(&GpuChildThread::BindServiceFactoryRequest,
                                     weak_factory_.GetWeakPtr()),
                          base::ThreadTaskRunnerHandle::Get());
+
   if (GetContentClient()->gpu())  // NULL in tests.
     GetContentClient()->gpu()->Initialize(this, registry.get());
 
@@ -301,6 +302,11 @@ void GpuChildThread::CreateFrameSinkManager(
     cc::mojom::FrameSinkManagerRequest request,
     cc::mojom::FrameSinkManagerClientPtr client) {
   NOTREACHED();
+}
+
+void GpuChildThread::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  // TODO(c.padhi): Implement this, see http://crbug.com/699255.
 }
 
 void GpuChildThread::BindServiceFactoryRequest(
