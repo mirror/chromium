@@ -56,6 +56,8 @@ class PeImageReader::OptionalHeaderImpl : public PeImageReader::OptionalHeader {
     return &optional_header_->DataDirectory[0];
   }
 
+  DWORD GetSizeOfImage() { return optional_header_->SizeOfImage; }
+
  private:
   const OPTIONAL_HEADER_TYPE* optional_header_;
   DISALLOW_COPY_AND_ASSIGN(OptionalHeaderImpl);
@@ -189,6 +191,11 @@ bool PeImageReader::EnumCertificates(EnumCertificatesCallback callback,
     data += padded_length;
   }
   return true;
+}
+
+// Returns the SizeOfImage value of the optional header.
+DWORD PeImageReader::GetSizeOfImage() {
+  return optional_header_->GetSizeOfImage();
 }
 
 void PeImageReader::Clear() {
