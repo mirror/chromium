@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ef7b3983_a40a285d",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-22T23:40:47Z",
+      "side": 1,
+      "message": "Yes. Re: HANDLE because HWND, there was some discussion about it from https://codereview.chromium.org/2122303002#msg18 onwards.\n\nI used the solution that wfh@ suggested therein, \"you should be using base::win::HandleToUint32|Uint32ToHandle here and using a 32-bit mojo type\" ... with reinterpret_cast/static_cast where needed.",
+      "parentUuid": "5da0bbbc_260dc084",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "9630064c287297ea4430f91ccd86aa0e8ffefe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a02fad8_44bada53",
         "filename": "chrome/common/shell_handler_win.mojom",
         "patchSetId": 5
@@ -92,6 +116,30 @@
       "revId": "9630064c287297ea4430f91ccd86aa0e8ffefe0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8b5064_952decce",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-22T23:40:47Z",
+      "side": 1,
+      "message": "\u003e This should be a String16.\n\nNicely spotted.  Indeed it was string16 in messages .h file and should be on the mojo interface too.  Done.",
+      "parentUuid": "5a02fad8_44bada53",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "9630064c287297ea4430f91ccd86aa0e8ffefe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
