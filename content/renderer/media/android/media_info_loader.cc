@@ -63,19 +63,20 @@ void MediaInfoLoader::Start(blink::WebFrame* frame) {
   std::unique_ptr<WebAssociatedURLLoader> loader;
   if (test_loader_) {
     loader = std::move(test_loader_);
+    request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeSameOrigin);
   } else {
     WebAssociatedURLLoaderOptions options;
     if (cors_mode_ == blink::WebMediaPlayer::kCORSModeUnspecified) {
+      request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeNoCORS);
       request.SetFetchCredentialsMode(
           WebURLRequest::kFetchCredentialsModeInclude);
-      options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
       allow_stored_credentials_ = true;
     } else {
       options.expose_all_response_headers = true;
       // The author header set is empty, no preflight should go ahead.
       options.preflight_policy =
           WebAssociatedURLLoaderOptions::kPreventPreflight;
-      options.fetch_request_mode = WebURLRequest::kFetchRequestModeCORS;
+      request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeCORS);
       if (cors_mode_ == blink::WebMediaPlayer::kCORSModeUseCredentials) {
         request.SetFetchCredentialsMode(
             WebURLRequest::kFetchCredentialsModeInclude);
