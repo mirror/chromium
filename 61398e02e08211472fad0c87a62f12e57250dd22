@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "44ea2ce1_8d1291c3",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T04:29:31Z",
+      "side": 1,
+      "message": "Who could set the state_ to kErrored after this change?",
+      "revId": "61398e02e08211472fad0c87a62f12e57250dd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2982172a_a31bdffb",
         "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
         "patchSetId": 3
