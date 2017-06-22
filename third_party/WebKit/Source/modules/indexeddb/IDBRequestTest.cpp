@@ -36,6 +36,7 @@
 #include "modules/indexeddb/IDBDatabase.h"
 #include "modules/indexeddb/IDBDatabaseCallbacks.h"
 #include "modules/indexeddb/IDBKey.h"
+#include "modules/indexeddb/IDBKeyPath.h"
 #include "modules/indexeddb/IDBOpenDBRequest.h"
 #include "modules/indexeddb/IDBTransaction.h"
 #include "modules/indexeddb/IDBValue.h"
@@ -109,10 +110,12 @@ RefPtr<IDBValue> CreateIDBValue(v8::Isolate* isolate,
   wrapper.ExtractBlobDataHandles(blob_data_handles.get());
   Vector<WebBlobInfo>& blob_infos = wrapper.WrappedBlobInfo();
   RefPtr<SharedBuffer> wrapped_marker_buffer = wrapper.ExtractWireBytes();
+  IDBKey* key = IDBKey::CreateNumber(42.0);
+  IDBKeyPath key_path(String("primaryKey"));
 
-  RefPtr<IDBValue> idb_value =
-      IDBValue::Create(wrapped_marker_buffer, std::move(blob_data_handles),
-                       WTF::MakeUnique<Vector<WebBlobInfo>>(blob_infos));
+  RefPtr<IDBValue> idb_value = IDBValue::Create(
+      wrapped_marker_buffer, std::move(blob_data_handles),
+      WTF::MakeUnique<Vector<WebBlobInfo>>(blob_infos), key, key_path);
 
   DCHECK_EQ(create_wrapped_value,
             IDBValueUnwrapper::IsWrapped(idb_value.Get()));
