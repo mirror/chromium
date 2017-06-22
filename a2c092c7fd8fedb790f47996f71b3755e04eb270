@@ -22,6 +22,30 @@
       "revId": "a2c092c7fd8fedb790f47996f71b3755e04eb270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df698a80_965426e3",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-22T20:35:44Z",
+      "side": 0,
+      "message": "Updated those instances based on context of use.",
+      "parentUuid": "d77eb828_58d9f88b",
+      "range": {
+        "startLine": 245,
+        "startChar": 11,
+        "endLine": 245,
+        "endChar": 17
+      },
+      "revId": "a2c092c7fd8fedb790f47996f71b3755e04eb270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

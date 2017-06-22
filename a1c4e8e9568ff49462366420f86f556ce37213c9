@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "84296539_21dc7dfb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-22T20:35:44Z",
+      "side": 1,
+      "message": "I believe that is correct. Updated to be the last committed URL.",
+      "parentUuid": "f5a9e17c_02cb5750",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62f0f40f_068e1349",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Agreed. Looks like we can directly return getVisibleUrl(). We might want to rephrase the comment a bit, since \"loaded\" URL sounds like last committed URL. \"loading or loaded\" might be more accurate.",
       "parentUuid": "62f0f40f_068e1349",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e5cb3b_9f4ffd5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-22T20:35:44Z",
+      "side": 1,
+      "message": "Updated this call to use getLastCommittedUrl since the pending entry handles the other case. I\u0027d rather not clean up this code in this patch. I\u0027d like this to be as mechanical as possible.",
+      "parentUuid": "db9614fb_8fc2b90b",
       "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "73e5149d_9568dd43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-22T20:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9ee42d_24237530",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "270b2f76_a3be189b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 4
@@ -121,6 +175,24 @@
       "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31a6a79_814aadc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-22T20:35:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "270b2f76_a3be189b",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "43cccbe4_c3b9adb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1893,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-22T20:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63ddd6ed_0c826c68",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98feda27_2e6e9965",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabCreatorManager.java",
         "patchSetId": 4
@@ -158,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "d710c2c9_a9bb3e70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-22T20:35:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98feda27_2e6e9965",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f57e05_100e1145",
         "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/HistoryUtils.java",
         "patchSetId": 4
@@ -169,6 +277,24 @@
       "writtenOn": "2017-06-22T02:13:11Z",
       "side": 1,
       "message": "If we use getVisibleUrl, then this comment is wrong and the comment above is ambiguous.  Should we be using getLastCommittedUrl() below instead?  Either way we should clarify the comments.",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e24dfc_1521c898",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/HistoryUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-22T20:35:44Z",
+      "side": 1,
+      "message": "Looking at how it is used, getLastCommittedUrl makes sense. Also updated the comments.",
+      "parentUuid": "b0f57e05_100e1145",
       "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
