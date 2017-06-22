@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c6665b3_b7a46aca",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/opaque-response-being-preloaded-xhr.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T22:03:38Z",
+      "side": 1,
+      "message": "Perhaps using a different URL from the URL used in opaque-response-preloaded-xhr.html is more robust.",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "89c283061d7a76b284a6be94d0ca0e9071c0a9df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
