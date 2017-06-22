@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e3010aa_3471ae1d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T09:33:18Z",
+      "side": 1,
+      "message": "Does |*scheduler_| work?",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbfdfc9_589e721f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T09:33:18Z",
+      "side": 1,
+      "message": "DCHECK_EQ\n\nI think Request can be called twice for Restart cases.",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676ffaa4_72bf4b11",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T09:33:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff19eea7_0bb406b3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T09:33:18Z",
+      "side": 1,
+      "message": "Why virtual?",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd88cc7_aa4a03ee",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T09:33:18Z",
+      "side": 1,
+      "message": "I think it\u0027s good to run |fetcher_-\u003eScheduler().Release(this)| outside of CHECK as we might change this CHECK to DCHECK.",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96237b0_83bafcb4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T09:33:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
