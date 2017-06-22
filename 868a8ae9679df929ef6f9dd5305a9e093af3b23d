@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ff1bb9a_a15e73f5",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-22T16:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9def1f1f_040631f5",
+      "revId": "868a8ae9679df929ef6f9dd5305a9e093af3b23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdb2ae83_f14c6a4f",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7302b871_ca92aa30",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-22T16:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdb2ae83_f14c6a4f",
+      "revId": "868a8ae9679df929ef6f9dd5305a9e093af3b23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd69b727_dbcad67d",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "868a8ae9679df929ef6f9dd5305a9e093af3b23d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de39fe9_19a0b4de",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-22T16:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd69b727_dbcad67d",
+      "revId": "868a8ae9679df929ef6f9dd5305a9e093af3b23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
