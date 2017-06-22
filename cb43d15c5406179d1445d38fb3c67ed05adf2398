@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a18c2a4_60fb0723",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be impacting the lifetime of the download service, why not just let them change their behavior as they desire?",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4a3150_3b812d29",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "You can just say:\nDownloadServiceFactory::GetForBrowserContext(context);\n\nthen you won\u0027t need ALLOW_UNUSED_LOCAL.",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111f4482_3886f53a",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "Let\u0027s add internals and OfflineEventLogger code in a subsequent patch. As it is, you can start a download but don\u0027t see any feedback that it happens (unless I\u0027m mistaken).",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ae78b5_90152090",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "This still returns a promise.",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0516fc5c_0a4431b5",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "Please make a bug or asana task for the todos",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cde80c1_65793507",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "why Unretained? The lifetime of this class and DownloadService are currently unrelated.",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62e3762_7bcf2519",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "We are going to need a TestPrefetchDownloader at some point, to test the dispatcher, so why don\u0027t we make PrefetchDownloader an interface now (and move this to PrefetchDownloaderImpl)?",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8823f5b_2f137d2f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "I\u0027m concerned that there may be cases where the download service is never set.  It seems that the PrefetchDownloader should be able to ask for a DownloadService if necessary.\n\nAlso, is it in the DownloadService contract that you can\u0027t start downloading until it\u0027s ready?",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4be035_73bb1255",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "How do we guarantee the lifetime of |download_service_|?",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49782c4_85551f68",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "+dtrainor@chromium.org\n\nIs a test double DownloadService something your team might provide, or should we roll our own as here?",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf86318_1ffec6d5",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "The PrefetchService should set the service on its dependent objects.",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca8472a_081c9533",
+        "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "nit: Why don\u0027t we just remove \"Get\" from these function names?  If you prefer, we could s/Get/Make/",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebcd6e5_a99bbdee",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "prefetch_downloader_-\u003eSetPrefetchService(this);",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

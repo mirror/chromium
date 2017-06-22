@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8431c960_dcc5a639",
+        "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T18:17:59Z",
+      "side": 1,
+      "message": "They may be tested transitively, but there is no downside to having explicit simple tests for these functions, right?",
+      "parentUuid": "55529abb_6772c4b3",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e5fb5b2_d4737d68",
         "filename": "components/offline_pages/core/prefetch/prefetch_service.h",
         "patchSetId": 6
