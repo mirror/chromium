@@ -287,7 +287,7 @@ TEST_F(SubresourceFilterContentSettingsManagerTest,
        NoExperimentalUI_NoWebsiteSetting) {
   GURL url("https://example.test/");
 
-  // Do no explicitly allow the experimental UI.
+  // Do not explicitly allow the experimental UI.
   scoped_feature_toggle().ResetSubresourceFilterState(
       base::FeatureList::OVERRIDE_ENABLE_FEATURE);
   settings_manager()->OnDidShowUI(url);
@@ -298,6 +298,22 @@ TEST_F(SubresourceFilterContentSettingsManagerTest,
       "SubresourceFilterExperimentalUI" /* additional_features */);
   settings_manager()->OnDidShowUI(url);
   EXPECT_TRUE(settings_manager()->GetSiteMetadata(url));
+}
+
+TEST_F(SubresourceFilterContentSettingsManagerTest,
+       ManualSettingsChange_ResetsSmartUI) {
+  GURL url("https://example.test/");
+  EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url));
+  settings_manager()->OnDidShowUI(url);
+
+  EXPECT_TRUE(!settings_manager()->should_use_smart_ui() ||
+              !settings_manager()->ShouldShowUIForSite(url));
+
+  // Manual settings change should reset the smart UI.
+  GetSettingsMap()->SetContentSettingDefaultScope(
+      url, GURL(), CONTENT_SETTINGS_TYPE_ADS, std::string(),
+      CONTENT_SETTING_BLOCK);
+  EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url));
 }
 
 TEST_F(SubresourceFilterContentSettingsManagerHistoryTest,
