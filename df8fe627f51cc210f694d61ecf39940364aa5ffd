@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d3c0771_40b1be9f",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T21:44:48Z",
+      "side": 1,
+      "message": "I moved this for grouping purposes; it\u0027s confusing to have fields and methods mixed together.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 60
+      },
+      "revId": "df8fe627f51cc210f694d61ecf39940364aa5ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
