@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4eb49b2f_315ba5bd",
+        "filename": "third_party/WebKit/Source/core/loader/resource/FontResourceTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T07:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ffeaf8_d6193fa6",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d408981_d06e8b25",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "4771dff25276587108eedb2ed83a177877277281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6ba71a_f8e1ef3b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T07:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d408981_d06e8b25",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
