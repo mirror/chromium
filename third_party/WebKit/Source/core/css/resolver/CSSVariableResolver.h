@@ -18,7 +18,6 @@ class CSSParserTokenRange;
 class CSSPendingSubstitutionValue;
 class CSSVariableData;
 class CSSVariableReferenceValue;
-class PropertyRegistration;
 class PropertyRegistry;
 class StyleResolverState;
 class StyleInheritedVariables;
@@ -30,9 +29,9 @@ class CSSVariableResolver {
  public:
   CSSVariableResolver(const StyleResolverState&);
 
-  const CSSValue* ResolveRegisteredCustomPropertyAnimationKeyframe(
-      const PropertyRegistration&,
-      const CSSCustomPropertyDeclaration& keyframe);
+  RefPtr<CSSVariableData> ResolveCustomPropertyAnimationKeyframe(
+      const CSSCustomPropertyDeclaration& keyframe,
+      bool& cycle_detected);
 
   void ResolveVariableDefinitions();
 
@@ -86,7 +85,8 @@ class CSSVariableResolver {
   CSSVariableData* ValueForCustomProperty(AtomicString name);
   // Resolves the CSSVariableData from a custom property declaration.
   PassRefPtr<CSSVariableData> ResolveCustomProperty(AtomicString name,
-                                                    const CSSVariableData&);
+                                                    const CSSVariableData&,
+                                                    bool& cycle_detected);
 
   const StyleResolverState& state_;
   StyleInheritedVariables* inherited_variables_;

@@ -66,8 +66,9 @@ CSSVariableData* CSSVariableResolver::ValueForCustomProperty(
   if (!variable_data->NeedsVariableResolution())
     return variable_data;
 
+  bool dummy_cycle_detected;
   RefPtr<CSSVariableData> new_variable_data =
-      ResolveCustomProperty(name, *variable_data);
+      ResolveCustomProperty(name, *variable_data, dummy_cycle_detected);
   if (!registration) {
     inherited_variables_->SetVariable(name, new_variable_data);
     return new_variable_data.Get();
@@ -93,7 +94,8 @@ CSSVariableData* CSSVariableResolver::ValueForCustomProperty(
 
 PassRefPtr<CSSVariableData> CSSVariableResolver::ResolveCustomProperty(
     AtomicString name,
-    const CSSVariableData& variable_data) {
+    const CSSVariableData& variable_data,
+    bool& cycle_detected) {
   DCHECK(variable_data.NeedsVariableResolution());
 
   bool disallow_animation_tainted = false;
@@ -110,8 +112,10 @@ PassRefPtr<CSSVariableData> CSSVariableResolver::ResolveCustomProperty(
 
   if (!success || !cycle_start_points_.IsEmpty()) {
     cycle_start_points_.erase(name);
+    cycle_detected = true;
     return nullptr;
   }
+  cycle_detected = false;
   return CSSVariableData::CreateResolved(tokens, std::move(backing_strings),
                                          is_animation_tainted);
 }
@@ -299,29 +303,24 @@ const CSSValue* CSSVariableResolver::ResolvePendingSubstitutions(
   return CSSUnsetValue::Create();
 }
 
-const CSSValue*
-CSSVariableResolver::ResolveRegisteredCustomPropertyAnimationKeyframe(
-    const PropertyRegistration& registration,
-    const CSSCustomPropertyDeclaration& keyframe) {
+RefPtr<CSSVariableData>
+CSSVariableResolver::ResolveCustomPropertyAnimationKeyframe(
+    const CSSCustomPropertyDeclaration& keyframe,
+    bool& cycle_detected) {
   DCHECK(keyframe.Value());
   const AtomicString& name = keyframe.GetName();
-  DCHECK_EQ(registry_->Registration(name), &registration);
-
   if (variables_seen_.Contains(name)) {
     cycle_start_points_.insert(name);
+    cycle_detected = true;
     return nullptr;
   }
 
   if (!keyframe.Value()->NeedsVariableResolution()) {
-    return keyframe.Value()->ParseForSyntax(registration.Syntax());
+    cycle_detected = false;
+    return keyframe.Value();
   }
 
-  RefPtr<CSSVariableData> resolved_tokens =
-      ResolveCustomProperty(name, *keyframe.Value());
-  if (!resolved_tokens) {
-    return nullptr;
-  }
-  return resolved_tokens->ParseForSyntax(registration.Syntax());
+  return ResolveCustomProperty(name, *keyframe.Value(), cycle_detected);
 }
 
 void CSSVariableResolver::ResolveVariableDefinitions() {
