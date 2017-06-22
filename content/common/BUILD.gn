@@ -604,6 +604,7 @@ mojom("mojo_bindings") {
     "associated_interfaces.mojom",
     "child.mojom",
     "child_memory_coordinator.mojom",
+    "child_process_crasher.mojom",
     "field_trial_recorder.mojom",
     "frame.mojom",
     "frame_sink_provider.mojom",

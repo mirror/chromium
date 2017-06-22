@@ -264,6 +264,10 @@ namespace {
 
 const RenderProcessHostFactory* g_render_process_host_factory_ = nullptr;
 const char kSiteProcessMapKeyName[] = "content_site_process_map";
+constexpr base::TimeDelta kVoluntaryTerminationTimeoutMin =
+    base::TimeDelta::FromSeconds(3);
+constexpr base::TimeDelta kVoluntaryTerminationTimeoutMax =
+    base::TimeDelta::FromSeconds(5);
 
 #if defined(OS_ANDROID)
 // This matches Android's ChildProcessConnection state before OnProcessLaunched.
@@ -311,6 +315,13 @@ void GetContexts(
   *resource_context_out = resource_context;
   *request_context_out =
       GetRequestContext(request_context, media_request_context, resource_type);
+}
+
+// Returns a TimeDelta value between min and max randomly.
+base::TimeDelta RandomTimeDeltaInRange(base::TimeDelta min,
+                                       base::TimeDelta max) {
+  DCHECK_LT(min, max);
+  return min + base::RandDouble() * (max - min);
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -1268,6 +1279,7 @@ void RenderProcessHostImpl::InitializeChannelProxy() {
   // surprising behavior.
   channel_->GetRemoteAssociatedInterface(&remote_route_provider_);
   channel_->GetRemoteAssociatedInterface(&renderer_interface_);
+  content::BindInterface(this, MakeRequest(&crasher_interface_));
 
   // We start the Channel in a paused state. It will be briefly unpaused again
   // in Init() if applicable, before process launch is initiated.
@@ -2417,6 +2429,21 @@ bool RenderProcessHostImpl::FastShutdownIfPossible() {
   return true;
 }
 
+void RenderProcessHostImpl::TerminateHungRenderProcess() {
+  // Request the renderer to crash itself before terminating it forcibly.
+  crasher_interface_->Crash(CollectCrashKeysForHungRenderer());
+
+  // Randomize the delay for the forcible termination to avoid terminating
+  // multiple hung renderers at the same time.
+  base::TimeDelta delay = RandomTimeDeltaInRange(
+      kVoluntaryTerminationTimeoutMin, kVoluntaryTerminationTimeoutMax);
+  termination_request_start_time_ = base::TimeTicks::Now();
+  termination_timer_.Start(
+      FROM_HERE, delay,
+      base::Bind(&RenderProcessHostImpl::OnHungRendererTerminationTimedOut,
+                 base::Unretained(this)));
+}
+
 bool RenderProcessHostImpl::Send(IPC::Message* msg) {
   TRACE_EVENT0("renderer_host", "RenderProcessHostImpl::Send");
 
@@ -3248,6 +3275,18 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   if (delayed_cleanup_needed_)
     Cleanup();
 
+  // Running |termination_timer_| indicates that a crash request is sent to the
+  // renderer and the browser has not yet terminated it forcibly.
+  if (termination_timer_.IsRunning()) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "HungRenderer.TimeToHungRendererTermination",
+        base::TimeTicks::Now() - termination_request_start_time_,
+        base::TimeDelta::FromMilliseconds(1), kVoluntaryTerminationTimeoutMax,
+        50);
+    termination_timer_.Stop();
+    ReportTerminationStatus(TerminationStatus::kTerminatedItself);
+  }
+
   // If RenderProcessHostImpl is reused, the next renderer will send a new
   // request for FrameSinkProvider so make sure frame_sink_provider_ is ready
   // for that.
@@ -3639,6 +3678,27 @@ void RenderProcessHostImpl::OnMojoError(int render_process_id,
   base::debug::ScopedCrashKey error_key_value("mojo-message-error", error);
   bad_message::ReceivedBadMessage(render_process_id,
                                   bad_message::RPH_MOJO_PROCESS_ERROR);
+}
+
+mojom::CrashKeysPtr RenderProcessHostImpl::CollectCrashKeysForHungRenderer() {
+  mojom::CrashKeysPtr crash_keys = mojom::CrashKeys::New();
+
+  int64_t total = base::SysInfo::AmountOfPhysicalMemory();
+  int64_t available = base::SysInfo::AmountOfAvailablePhysicalMemory();
+  crash_keys->free_memory_ratio = available * 100 / total;
+  crash_keys->free_memory_bytes = available;
+
+  return crash_keys;
+}
+
+void RenderProcessHostImpl::ReportTerminationStatus(TerminationStatus status) {
+  UMA_HISTOGRAM_ENUMERATION("HungRenderer.TerminationStatus", status,
+                            TerminationStatus::kMaxValue);
+}
+
+void RenderProcessHostImpl::OnHungRendererTerminationTimedOut() {
+  ReportTerminationStatus(TerminationStatus::kTerminatedForcibly);
+  Shutdown(RESULT_CODE_HUNG, false);
 }
 
 }  // namespace content

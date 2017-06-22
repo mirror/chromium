@@ -19161,6 +19161,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="15" label="NONE"/>
 </enum>
 
+<enum name="HungRendererTerminationStatus">
+  <int value="0" label="TerminatedItself"/>
+  <int value="1" label="TerminatedForcibly"/>
+</enum>
+
 <enum name="ICCProfileAnalyzeResult">
   <int value="0"
       label="Extracted primary matrix and numerical transfer function"/>

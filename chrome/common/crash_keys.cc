@@ -135,6 +135,8 @@ size_t RegisterChromeCrashKeys() {
     {"ppapi_path", kMediumSize},
     {"subresource_url", kLargeSize},
     {"total-discardable-memory-allocated", kSmallSize},
+    {"free-memory-ratio-in-percent", kSmallSize},
+    {"free-memory-bytes", kSmallSize},
 #if defined(OS_WIN)
     {kHungRendererOutstandingAckCount, kSmallSize},
     {kHungRendererOutstandingEventType, kSmallSize},

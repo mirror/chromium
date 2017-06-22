@@ -1,0 +1,23 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+// A set of crash keys that is reported as a part of crash report.
+struct CrashKeys {
+  // The ratio of free memory size over total memory in percent.
+  int32 free_memory_ratio;
+
+  // The raw amount of free memory in bytes.
+  int64 free_memory_bytes;
+};
+
+// Provides a way to terminate a child process whose main thread is hung. The
+// implementation of this interface should stay on IO thread, so that the hung
+// main thread doesn't affect its request handling.
+interface ChildProcessCrasher {
+  // Sets crash keys from given |crash_keys|, and crashes the child process
+  // immediately.
+  Crash(CrashKeys crash_keys);
+};

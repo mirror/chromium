@@ -18,6 +18,10 @@ include_rules = [
 ]
 
 specific_include_rules = {
+  '.*_[a-z]*browsertest.*': [
+    "+content/public/browser",
+    "+content/shell",
+  ],
   "child_thread_impl_browsertest\.*": [
     "+components/discardable_memory/service",
   ],
