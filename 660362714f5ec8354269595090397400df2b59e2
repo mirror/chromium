@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cfd32d9_429df3f7",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-22T15:26:00Z",
+      "side": 1,
+      "message": "Not introduced by this CL, but I am curious why do we have sk_sp\u003cSkImage\u003e here, can we not directly give |image| to the drawImage()?",
+      "range": {
+        "startLine": 349,
+        "startChar": 38,
+        "endLine": 349,
+        "endChar": 59
+      },
+      "revId": "660362714f5ec8354269595090397400df2b59e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81049e9e_9123a135",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-22T15:26:00Z",
+      "side": 1,
+      "message": "I don\u0027t think we need the Get() here.",
+      "range": {
+        "startLine": 745,
+        "startChar": 54,
+        "endLine": 745,
+        "endChar": 60
+      },
+      "revId": "660362714f5ec8354269595090397400df2b59e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
