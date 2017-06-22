@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0dae7579_4b110309",
+        "filename": "gpu/ipc/service/gpu_channel_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-22T02:35:34Z",
+      "side": 1,
+      "message": "Um this is now needed for the test. Else i have to use runloop.",
+      "parentUuid": "96eb8faa_ae6b95f2",
+      "range": {
+        "startLine": 255,
+        "startChar": 21,
+        "endLine": 255,
+        "endChar": 43
+      },
+      "revId": "79366bf815ca02e78ff72c9d6d5795af4ec849bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b950fd38_9ca6ea52",
         "filename": "gpu/ipc/service/gpu_channel_manager.cc",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Hopefully this won\u0027t limit the effectiveness of this workaround too much. I had been hoping that we could start to send back the information through the system that the forthcoming WebGL context loss event was expected, rather than accidental. However, this\u0027ll be a larger change and may happen anyway due to other work in http://crbug.com/681341, so avoiding lost context notifications for WebGL seems like a good start.",
       "parentUuid": "71c9580a_764f80f5",
+      "range": {
+        "startLine": 266,
+        "startChar": 19,
+        "endLine": 266,
+        "endChar": 40
+      },
+      "revId": "79366bf815ca02e78ff72c9d6d5795af4ec849bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e40c84_f8a5bea0",
+        "filename": "gpu/ipc/service/gpu_channel_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-22T02:35:34Z",
+      "side": 1,
+      "message": "sounds good. Let\u0027s revisit this logic once we have the changes you are making.\nI think most of the websites I have seen do not use WebGL.",
+      "parentUuid": "611e98ee_1b4bebbf",
       "range": {
         "startLine": 266,
         "startChar": 19,
