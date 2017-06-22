@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc6e9ad9_6ea8b0ae",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "Would we want to tune this via Finch?",
+      "revId": "281cf6f34a35acc285dce972873832f0d2b5af31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

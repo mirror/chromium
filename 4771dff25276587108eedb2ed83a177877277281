@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ffeaf8_d6193fa6",
+        "filename": "third_party/WebKit/Source/core/loader/resource/FontResourceTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "nit: could we split patches for these unrelated changes?",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d408981_d06e8b25",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98a358d_3d95d3f9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "nit: could we have DCHECK to check Resource-\u003eResourceRequest() and request are always equal just to make sure?",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33913119_e5ced1c6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "Maybe... g_outstanding_limit_for_testing? (Should we have a lightweight test for this?)",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544275da_ccf582d8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "This itself doesn\u0027t need finalization? Maybe make this GCMixin and make the derived class GCFinalized if necessary",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a044f0_aa2ff9a1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "nit: an -\u003e a\n\nI feel the current comment is a bit too abstract as a code comment?  It\u0027d be probably more helpful to plainly write down what it does and how the contracts between the Client and Scheduler are, i.e. \u0027Receives resource requests as ResourceLoadSchedulerClient instances and calls OnRequestGranted() on them to dispatch them possibly with additional throttling/scheduling. This also keeps track of in-flight requests that are granted but are not released (by Release()) yet.\u0027",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1129099d_ddb5228f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "Hm, is this what the caller needs to know about?",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f39d2b_39e48b03",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "\u0027running process\u0027 felt a bit confusing... [bikeshedding] We\u0027re introducing handful of terminologies around this class, i.e. \u0027request\u0027 \u0027client\u0027 \u0027process\u0027 / \u0027run\u0027 \u0027grant\u0027 \u0027wakeup\u0027 \u0027issue\u0027, could we maybe reduce the # of terms a bit?  E.g.:\n\nRequest(client)\nMaybeRun()\nRun(client)\n - client-\u003eRun()",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d63d876_0e744db3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "nit: Wakeup -\u003e WakeUp",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01b82bd_af7368f2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "Why do we use WeakMember here? (Ditto below)",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a559bb_bdb2e07b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "I\u0027m feeling the budgeting part does not really need to hold a client but can maybe use a simple counter possibly with a helper scoped class (that releases the budget in dtor), but what\u0027s your thought?",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffd3ce3_528c530c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "Asynchronous -\u003e Synchronous?",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc039cf_2041de6e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "Should we rather check UseStreamOnResponse()?  (yhirano@- thoughts?)",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30269bc9_4bd3dbe4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "(Intuitively it feels a bit weird a scheduler client doesn\u0027t directly access the scheduler)",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25573d4e_8811ff11",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T06:15:22Z",
+      "side": 1,
+      "message": "What does \u0027a proper event handling\u0027 mean here?",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
