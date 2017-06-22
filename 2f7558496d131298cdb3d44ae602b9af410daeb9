@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48042f15_fb927fbe",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-06-22T00:39:16Z",
+      "side": 1,
+      "message": "nit: cache RenderProcessHost* in a local variable?",
+      "revId": "2f7558496d131298cdb3d44ae602b9af410daeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
