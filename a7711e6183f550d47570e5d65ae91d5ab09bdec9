@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a555d1_35eef306",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptPromisePropertyBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-22T11:44:01Z",
+      "side": 1,
+      "message": "This Set is not intended to run a setter overridden by author script. Maybe should we use CreateDataProperty?\n\nThen Context::Scope won\u0027t be needed...?",
+      "revId": "a7711e6183f550d47570e5d65ae91d5ab09bdec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
