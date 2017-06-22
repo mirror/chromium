@@ -81,6 +81,9 @@ void WorkerOrWorkletGlobalScope::Dispose() {
   DCHECK(script_controller_);
   script_controller_->Dispose();
   script_controller_.Clear();
+
+  if (fetch_context_)
+    fetch_context_->Dispose();
 }
 
 DEFINE_TRACE(WorkerOrWorkletGlobalScope) {

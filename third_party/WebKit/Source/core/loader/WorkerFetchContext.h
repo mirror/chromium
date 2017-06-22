@@ -33,6 +33,8 @@ class WorkerFetchContext final : public BaseFetchContext {
   static WorkerFetchContext* Create(WorkerOrWorkletGlobalScope&);
   virtual ~WorkerFetchContext();
 
+  void Dispose();
+
   ResourceFetcher* GetResourceFetcher();
   KURL FirstPartyForCookies() const;
   RefPtr<WebTaskRunner> GetTaskRunner() { return loading_task_runner_; }

@@ -84,6 +84,13 @@ WorkerFetchContext::WorkerFetchContext(
       loading_task_runner_->ToSingleThreadTaskRunner());
 }
 
+void WorkerFetchContext::Dispose() {
+  // Due to absence of FrameLoader and DocumentLoader, finalize ResourceFetcher
+  // in the WorkerFetchContext that owns it.
+  if (resource_fetcher_)
+    resource_fetcher_->StopFetching();
+}
+
 ResourceFetcher* WorkerFetchContext::GetResourceFetcher() {
   if (resource_fetcher_)
     return resource_fetcher_;
