@@ -1027,6 +1027,10 @@ bool ChromeContentBrowserClient::IsBrowserStartupComplete() {
   return AfterStartupTaskUtils::IsBrowserStartupComplete();
 }
 
+void ChromeContentBrowserClient::SetBrowserStartupIsCompleteForTesting() {
+  AfterStartupTaskUtils::SetBrowserStartupIsCompleteForTesting();
+}
+
 std::string ChromeContentBrowserClient::GetStoragePartitionIdForSite(
     content::BrowserContext* browser_context,
     const GURL& site) {

@@ -12,7 +12,6 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "chrome/browser/after_startup_task_utils.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/profiles/profile.h"
@@ -58,7 +57,6 @@ class SubresourceFilterTest : public ChromeRenderViewHostTestHarness {
   // ChromeRenderViewHostTestHarness:
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
-    AfterStartupTaskUtils::SetBrowserStartupIsCompleteForTesting();
 
     // Ensure correct features.
     scoped_feature_toggle_.ResetSubresourceFilterState(
