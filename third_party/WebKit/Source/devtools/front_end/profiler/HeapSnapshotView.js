@@ -1470,7 +1470,7 @@ Profiler.HeapProfileHeader = class extends Profiler.ProfileHeader {
      * @param {boolean} accepted
      * @this {Profiler.HeapProfileHeader}
      */
-    function onOpen(accepted) {
+    async function onOpen(accepted) {
       if (!accepted)
         return;
 
@@ -1478,8 +1478,11 @@ Profiler.HeapProfileHeader = class extends Profiler.ProfileHeader {
         Common.console.error('Failed to open temp file with heap snapshot');
         fileOutputStream.close();
       } else if (this._tempFile) {
-        var delegate = new Profiler.SaveSnapshotOutputStreamDelegate(this);
-        this._tempFile.copyToOutputStream(fileOutputStream, delegate);
+        this._updateSaveProgress(0, 1);
+        var error = await this._tempFile.copyToOutputStream(fileOutputStream, this._onChunkTransferred.bind(this));
+        if (error)
+          Common.console.error('Failed to read heap snapshot from temp file: ' + error.message);
+        this._didCompleteSnapshotTransfer();
       } else {
         this._onTempFileReady = onOpen.bind(this, accepted);
         this._updateSaveProgress(0, 1);
@@ -1487,8 +1490,16 @@ Profiler.HeapProfileHeader = class extends Profiler.ProfileHeader {
     }
   }
 
+  _onChunkTransferred() {
+    this._updateSaveProgress(this._tempFile.loadedSize(), this._tempFile.fileSize());
+  }
+
+  /**
+   * @param {number} value
+   * @param {number} total
+   */
   _updateSaveProgress(value, total) {
-    var percentValue = ((total ? (value / total) : 0) * 100).toFixed(0);
+    var percentValue = ((total && value / total) * 100).toFixed(0);
     this.updateStatus(Common.UIString('Saving\u2026 %d%%', percentValue));
   }
 
@@ -1496,119 +1507,36 @@ Profiler.HeapProfileHeader = class extends Profiler.ProfileHeader {
    * @override
    * @param {!File} file
    */
-  loadFromFile(file) {
+  async loadFromFile(file) {
     this.updateStatus(Common.UIString('Loading\u2026'), true);
     this._setupWorker();
-    var delegate = new Profiler.HeapSnapshotLoadFromFileDelegate(this);
-    var fileReader = this._createFileReader(file, delegate);
-    fileReader.start(/** @type {!Common.OutputStream} */ (this._receiver));
+    var reader = this._createFileReader(file);
+    var success = await reader.start(/** @type {!Common.OutputStream} */ (this._receiver));
+    if (success)
+      return;
+    var subtitle;
+    var error = reader.error();
+    switch (error.code) {
+      case error.NOT_FOUND_ERR:
+        subtitle = Common.UIString(`'%s' not found.`, reader.fileName());
+        break;
+      case error.NOT_READABLE_ERR:
+        subtitle = Common.UIString(`'%s' is not readable`, reader.fileName());
+        break;
+      case error.ABORT_ERR:
+        return;
+      default:
+        subtitle = Common.UIString(`'%s' error %d`, reader.fileName(), error.code);
+    }
+    this.updateStatus(subtitle);
   }
 
   /**
    * @param {!File} file
-   * @param {!Profiler.HeapSnapshotLoadFromFileDelegate} delegate
    * @return {!Bindings.ChunkedFileReader}
    */
-  _createFileReader(file, delegate) {
-    return new Bindings.ChunkedFileReader(file, 10000000, delegate);
-  }
-};
-
-/**
- * @implements {Bindings.OutputStreamDelegate}
- * @unrestricted
- */
-Profiler.HeapSnapshotLoadFromFileDelegate = class {
-  /**
-   * @param {!Profiler.HeapProfileHeader} snapshotHeader
-   */
-  constructor(snapshotHeader) {
-    this._snapshotHeader = snapshotHeader;
-  }
-
-  /**
-   * @override
-   */
-  onTransferStarted() {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   */
-  onChunkTransferred(reader) {
-  }
-
-  /**
-   * @override
-   */
-  onTransferFinished() {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   * @param {!Event} e
-   */
-  onError(reader, e) {
-    var subtitle;
-    switch (e.target.error.code) {
-      case e.target.error.NOT_FOUND_ERR:
-        subtitle = Common.UIString('\'%s\' not found.', reader.fileName());
-        break;
-      case e.target.error.NOT_READABLE_ERR:
-        subtitle = Common.UIString('\'%s\' is not readable', reader.fileName());
-        break;
-      case e.target.error.ABORT_ERR:
-        return;
-      default:
-        subtitle = Common.UIString('\'%s\' error %d', reader.fileName(), e.target.error.code);
-    }
-    this._snapshotHeader.updateStatus(subtitle);
-  }
-};
-
-/**
- * @implements {Bindings.OutputStreamDelegate}
- */
-Profiler.SaveSnapshotOutputStreamDelegate = class {
-  /**
-   * @param {!Profiler.HeapProfileHeader} profileHeader
-   */
-  constructor(profileHeader) {
-    this._profileHeader = profileHeader;
-  }
-
-  /**
-   * @override
-   */
-  onTransferStarted() {
-    this._profileHeader._updateSaveProgress(0, 1);
-  }
-
-  /**
-   * @override
-   */
-  onTransferFinished() {
-    this._profileHeader._didCompleteSnapshotTransfer();
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   */
-  onChunkTransferred(reader) {
-    this._profileHeader._updateSaveProgress(reader.loadedSize(), reader.fileSize());
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   * @param {!Event} event
-   */
-  onError(reader, event) {
-    Common.console.error('Failed to read heap snapshot from temp file: ' + /** @type {!ErrorEvent} */ (event).message);
-    this.onTransferFinished();
+  _createFileReader(file) {
+    return new Bindings.ChunkedFileReader(file, 10000000);
   }
 };
 

@@ -144,23 +144,28 @@ Bindings.TempFile = class {
 
   /**
    * @param {!Common.OutputStream} outputStream
-   * @param {!Bindings.OutputStreamDelegate} delegate
+   * @param {function()=} progress
+   * @return {!Promise<?FileError>}
    */
-  copyToOutputStream(outputStream, delegate) {
-    /**
-     * @param {!File} file
-     */
-    function didGetFile(file) {
-      var reader = new Bindings.ChunkedFileReader(file, 10 * 1000 * 1000, delegate);
-      reader.start(outputStream);
-    }
+  copyToOutputStream(outputStream, progress) {
+    return new Promise(resolve => {
+      this._fileEntry.file(didGetFile, didFailToGetFile);
 
-    function didFailToGetFile(error) {
-      Common.console.error('Failed to load temp file: ' + error.message);
-      outputStream.close();
-    }
+      /**
+       * @param {!File} file
+       */
+      async function didGetFile(file) {
+        var reader = new Bindings.ChunkedFileReader(file, 10 * 1000 * 1000, progress);
+        var success = await reader.start(outputStream);
+        resolve(success ? null : reader.error());
+      }
 
-    this._fileEntry.file(didGetFile, didFailToGetFile);
+      function didFailToGetFile(error) {
+        Common.console.error('Failed to load temp file: ' + error.message);
+        outputStream.close();
+        resolve(error);
+      }
+    });
   }
 
   remove() {
@@ -233,12 +238,12 @@ Bindings.DeferredTempFile = class {
 
   /**
    * @param {!Common.OutputStream} outputStream
-   * @param {!Bindings.OutputStreamDelegate} delegate
+   * @param {function()=} progress
+   * @return {!Promise<?ErrorEvent>}
    */
-  async copyToOutputStream(outputStream, delegate) {
+  async copyToOutputStream(outputStream, progress) {
     await this._writeFinishedPromise;
-    if (this._tempFile)
-      this._tempFile.copyToOutputStream(outputStream, delegate);
+    return this._tempFile ? await this._tempFile.copyToOutputStream(outputStream, progress) : null;
   }
 
   async remove() {
@@ -358,11 +363,10 @@ Bindings.TempFileBackingStorage = class {
 
   /**
    * @param {!Common.OutputStream} outputStream
-   * @param {!Bindings.OutputStreamDelegate} delegate
+   * @return {!Promise<?ErrorEvent>}
    */
-  writeToStream(outputStream, delegate) {
-    if (this._file)
-      this._file.copyToOutputStream(outputStream, delegate);
+  writeToStream(outputStream) {
+    return this._file ? this._file.copyToOutputStream(outputStream) : Promise.resolve(null);
   }
 };
 
