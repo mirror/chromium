@@ -415,7 +415,6 @@ void SubscribeForGCMPushUpdates(PrefService* pref_service,
   auto provider = base::MakeUnique<BreakingNewsSuggestionsProvider>(
       service, std::move(handler), base::MakeUnique<base::DefaultClock>(),
       base::MakeUnique<RemoteSuggestionsDatabase>(database_dir, task_runner));
-  provider->Start();
   service->RegisterProvider(std::move(provider));
 }
 
@@ -524,8 +523,7 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
   RegisterPrefetchingObserver(service, profile);
 #endif
 
-  if (base::FeatureList::IsEnabled(
-          ntp_snippets::kContentSuggestionsPushFeature)) {
+  if (base::FeatureList::IsEnabled(ntp_snippets::kBreakingNewsPushFeature)) {
     SubscribeForGCMPushUpdates(pref_service, service, profile);
   }
   return service;
