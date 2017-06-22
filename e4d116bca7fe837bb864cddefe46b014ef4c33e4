@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e489f74c_90dc0c07",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-22T03:35:47Z",
+      "side": 1,
+      "message": "We will need a more robust way to do these operations in the future. Adding a new property requires figuring out all the relevant places to write code.",
+      "revId": "e4d116bca7fe837bb864cddefe46b014ef4c33e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
