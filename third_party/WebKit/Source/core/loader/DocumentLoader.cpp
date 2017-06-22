@@ -294,7 +294,7 @@ void DocumentLoader::UpdateForSameDocumentNavigation(
   KURL old_url = request_.Url();
   original_request_.SetURL(new_url);
   request_.SetURL(new_url);
-  SetReplacesCurrentHistoryItem(type != kFrameLoadTypeStandard);
+  SetReplacesCurrentHistoryItem(type == kFrameLoadTypeReplaceCurrentItem);
   if (same_document_navigation_source == kSameDocumentNavigationHistoryApi) {
     request_.SetHTTPMethod(HTTPNames::GET);
     request_.SetHTTPBody(nullptr);
