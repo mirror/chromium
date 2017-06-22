@@ -454,6 +454,9 @@ static void ThreadSafeObserverHarness(int num_threads,
     RunLoop().RunUntilIdle();
   }
 
+  volatile int* x = (int*)34;
+  *x = 4;
+
   for (int index = 0; index < num_threads; index++) {
     threaded_observer[index]->Quit();
     PlatformThread::Join(threads[index]);

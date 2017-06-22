@@ -240,18 +240,26 @@ def main():
   if args.dry_run:
     print 'Run:', qemu_command
   else:
-    qemu_popen = subprocess.Popen(qemu_command, stdout=subprocess.PIPE)
+    qemu_popen = subprocess.Popen(qemu_command, bufsize=1,
+                                  stdout=subprocess.PIPE)
+    output = subprocess.Popen(['/work/fuchsia/magenta/scripts/symbolize',
+        os.path.basename(args.test_name),
+        #'--build-dir=' + os.path.join(SDK_ROOT, 'kernel', 'debug'),
+        '--build-dir=' + args.output_directory
+        ],
+        bufsize=1, stdin=qemu_popen.stdout, stdout=subprocess.PIPE)
     success = False
     # TODO(scottmg): Pipe through magenta/scripts/symbolize too, once that's
     # available in the SDK.
     while True:
-      line = qemu_popen.stdout.readline()
+      line = output.stdout.readline()
       if not line:
         break
       if 'SUCCESS: all tests passed.' in line:
         success = True
       print line,
     qemu_popen.wait()
+    output.wait()
     return 0 if success else 1
 
   return 0
