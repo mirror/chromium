@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6a42e8b_20e19ff7",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-06-22T09:05:30Z",
+      "side": 1,
+      "message": "remove blank line.",
+      "revId": "865a9e5cf15cff8b06173457baead756ae496cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
