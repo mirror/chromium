@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ad29dd6_b5e39779",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-22T10:51:42Z",
+      "side": 1,
+      "message": "typo: navigated",
+      "range": {
+        "startLine": 70,
+        "startChar": 47,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "a8e58dc67dd49c8b48bbea1ff5698efd1cac756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbaa205_538f2f4f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-22T10:51:42Z",
+      "side": 1,
+      "message": "typo: Chrome",
+      "range": {
+        "startLine": 72,
+        "startChar": 24,
+        "endLine": 72,
+        "endChar": 30
+      },
+      "revId": "a8e58dc67dd49c8b48bbea1ff5698efd1cac756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43661c33_06098934",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-22T10:51:42Z",
+      "side": 1,
+      "message": "If the content is arbitrary data, I don\u0027t think it makes sense to have an enumeration here (since the enumeration can\u0027t be complete).\n\nWhat I would suggest is instead focusing on ways data can be transmitted rather than their meaning. E.g. saying that \"Arbitrary data can be encoded in the URL, referrer, HTTP headers etc.\" WDYT?",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "a8e58dc67dd49c8b48bbea1ff5698efd1cac756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
