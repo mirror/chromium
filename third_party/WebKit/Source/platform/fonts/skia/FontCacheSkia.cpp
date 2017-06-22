@@ -39,6 +39,7 @@
 #include "platform/fonts/FontCache.h"
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/FontFaceCreationParams.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/wtf/Assertions.h"
@@ -97,7 +98,7 @@ AtomicString FontCache::GetFamilyNameForCharacter(
           LayoutLocale::LocaleForHan(content_locale))
     bcp47_locales[locale_count++] = han_locale->LocaleForHanForSkFontMgr();
   bcp47_locales[locale_count++] =
-      LayoutLocale::GetDefault().LocaleForSkFontMgr();
+      FontGlobalContext::GetDefaultLayoutLocale().LocaleForSkFontMgr();
   if (content_locale)
     bcp47_locales[locale_count++] = content_locale->LocaleForSkFontMgr();
   if (fallback_priority == FontFallbackPriority::kEmojiEmoji)

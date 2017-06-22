@@ -25,6 +25,7 @@
 
 #include "platform/Language.h"
 
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 
@@ -38,22 +39,21 @@ static String CanonicalizeLanguageIdentifier(const String& language_code) {
 }
 
 static const AtomicString& PlatformLanguage() {
-  DEFINE_STATIC_LOCAL(AtomicString, computed_default_language, ());
-  if (computed_default_language.IsEmpty()) {
-    computed_default_language = AtomicString(
-        CanonicalizeLanguageIdentifier(Platform::Current()->DefaultLocale()));
-    DCHECK(!computed_default_language.IsEmpty());
-  }
-  return computed_default_language;
-}
+  const AtomicString& language = FontGlobalContext::GetPlatformLanguage();
+  if (!language.IsEmpty())
+    return language;
 
-static Vector<AtomicString>& PreferredLanguagesOverride() {
-  DEFINE_STATIC_LOCAL(Vector<AtomicString>, override, ());
-  return override;
+  const AtomicString created = AtomicString(
+      CanonicalizeLanguageIdentifier(Platform::Current()->DefaultLocale()));
+  DCHECK(!created.IsEmpty());
+  FontGlobalContext::SetPlatformLanguage(created);
+
+  return FontGlobalContext::GetPlatformLanguage();
 }
 
 void OverrideUserPreferredLanguages(const Vector<AtomicString>& override) {
-  Vector<AtomicString>& canonicalized = PreferredLanguagesOverride();
+  Vector<AtomicString>& canonicalized =
+      FontGlobalContext::GetPreferredLanguagesOverride();
   canonicalized.resize(0);
   canonicalized.ReserveCapacity(override.size());
   for (const auto& lang : override)
@@ -61,14 +61,16 @@ void OverrideUserPreferredLanguages(const Vector<AtomicString>& override) {
 }
 
 AtomicString DefaultLanguage() {
-  Vector<AtomicString>& override = PreferredLanguagesOverride();
+  Vector<AtomicString>& override =
+      FontGlobalContext::GetPreferredLanguagesOverride();
   if (!override.IsEmpty())
     return override[0];
   return PlatformLanguage();
 }
 
 Vector<AtomicString> UserPreferredLanguages() {
-  Vector<AtomicString>& override = PreferredLanguagesOverride();
+  Vector<AtomicString>& override =
+      FontGlobalContext::GetPreferredLanguagesOverride();
   if (!override.IsEmpty())
     return override;
 
