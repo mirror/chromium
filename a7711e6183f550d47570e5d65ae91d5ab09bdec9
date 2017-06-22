@@ -34,6 +34,24 @@
       "revId": "a7711e6183f550d47570e5d65ae91d5ab09bdec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b05ec8_dd9efdce",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptPromisePropertyBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-22T11:51:23Z",
+      "side": 1,
+      "message": "Hmm.\n\nI noticed that ClearWrappers() can be called in ScriptPromisePropertyBase\u0027s destructor which runs during Oilpan\u0027s GC. It\u0027s dangerous to run a script during a GC...\n\nThis CL LGTM but would you add a TODO(haraken) to stop calling ClearWrappers in the destructor?",
+      "parentUuid": "05fcd9fc_921b520b",
+      "revId": "a7711e6183f550d47570e5d65ae91d5ab09bdec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
