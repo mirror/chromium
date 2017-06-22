@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0442fce_dc456ba7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-22T01:56:06Z",
+      "side": 1,
+      "message": "Added a comment in the header.\n\nDiscussed in the thread of Dominic\u0027s comment below. (tl;dr: my measurement hasn\u0027t demonstrated a further win)",
+      "parentUuid": "fd31043a_c48ab1cc",
+      "revId": "3cdd868c80d84548eee8327d75477d574b0a236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1341ac0_25449142",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yeah, I was wondering how big TRACE_EVENT_ etc. was going to be.\n\nSince I\u0027m guessing many pages use JavaScript you could initialize that static when the platform starts up and then you\u0027d just be inlining one branch which would be good.\n\nI\u0027m fine if this happens later--we should look at profiles, maybe ToExecutionContext is more useful to work on next. What are the profiles you are looking at telling you?",
       "parentUuid": "30825cc9_b4afae47",
+      "revId": "3cdd868c80d84548eee8327d75477d574b0a236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f621a091_f3d9105d",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-22T01:56:06Z",
+      "side": 1,
+      "message": "\u003e Since I\u0027m guessing many pages use JavaScript\n\nI think that\u0027s a pretty safe guess. ;)\n\nIt\u0027s possible, but there\u0027s a non-zero complexity there and I\u0027d want to know that it\u0027s useful. Static locals are pretty lightweight (once it\u0027s been initialized once, it\u0027s just an atomic load of a byte and a jump past the initialization code), whereas it gets mucky when some of these things start getting an explicit hook in the renderer startup process.\n\n(And besides, this is very close to what TRACE_EVENT0 does to be fast; it just does the atomic operations manually to save one load and allow parallel initialization in cases where things are extremely hot. We can do something similar here to get as far as that on the off chance it matters. If even the branch you refer to matters, we might then wish to consider whether it matters for all trace events.)\n\nI haven\u0027t looked at a total profile of this again yet, so I don\u0027t have news there. We can cycle back if this turns out not to be good enough. This seems like a simple and straightforward step with a measurable outcome for now.",
+      "parentUuid": "df940283_00bf64d0",
       "revId": "3cdd868c80d84548eee8327d75477d574b0a236d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
