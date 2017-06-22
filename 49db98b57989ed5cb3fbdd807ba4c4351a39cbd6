@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3195a5d_17b37e3c",
+        "filename": "tools/idl_parser/idl_lexer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-22T07:21:16Z",
+      "side": 1,
+      "message": "Done. IIUC we\u0027ve been using \u0027WebIDL\u0027 but \u0027Web IDL\u0027 matches the spec.",
+      "parentUuid": "e91bf70d_9d8edbad",
+      "range": {
+        "startLine": 6,
+        "startChar": 13,
+        "endLine": 6,
+        "endChar": 14
+      },
+      "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "911427b5_ce31459d",
         "filename": "tools/idl_parser/idl_lexer.py",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ee7501_bfb32c82",
+        "filename": "tools/idl_parser/idl_lexer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-22T07:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "911427b5_ce31459d",
+      "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9bb9c444_9363684f",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-22T07:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "273db824_f3a86e16",
+      "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c1e13f1_7794c9c8",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-06-22T06:30:16Z",
       "side": 1,
       "message": "Not related to this change, but I feel names \"WebIDLParser\" and \"IDLparser\" are inconsistent.",
+      "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83568ba1_85a6db15",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-22T07:21:16Z",
+      "side": 1,
+      "message": "Yeah, this is a test class so it should be IDLParserTest or something.",
+      "parentUuid": "1c1e13f1_7794c9c8",
       "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
