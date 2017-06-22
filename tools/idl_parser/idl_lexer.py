@@ -3,7 +3,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-""" Lexer for PPAPI IDL
+""" Lexer for WebIDL
 
 The lexer uses the PLY library to build a tokenizer which understands both
 WebIDL and Pepper tokens.
