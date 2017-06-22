@@ -236,6 +236,10 @@ class TestLauncher {
   // Number of jobs to run in parallel.
   size_t parallel_jobs_;
 
+  // True if the number of jobs to run in parallel can be overridden
+  // (eg via command line).
+  bool overridable_job_number_;
+
   // Worker pool used to launch processes in parallel (|worker_thread_| is used
   // instead if |parallel_jobs == 1|).
   std::unique_ptr<SequencedWorkerPoolOwner> worker_pool_owner_;
@@ -243,6 +247,9 @@ class TestLauncher {
 
   DISALLOW_COPY_AND_ASSIGN(TestLauncher);
 };
+
+// Return the number of parallel jobs to use.
+size_t NumParallelJobs();
 
 // Extract part from |full_output| that applies to |result|.
 std::string GetTestOutputSnippet(const TestResult& result,
