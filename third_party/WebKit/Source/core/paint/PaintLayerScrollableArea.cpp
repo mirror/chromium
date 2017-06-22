@@ -886,6 +886,20 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
       SetHasVerticalScrollbar(false);
   }
 
+  Node* node = Box().GetNode();
+  if (node && node->IsElementNode()) {
+    ScrollOffset new_offset =
+        ToElement(node)->MaybeUpdateScrollOffsetAfterLayout(scroll_offset_,
+                                                            ClientSize());
+    if (new_offset != scroll_offset_) {
+      scroll_offset_ = new_offset;
+      if (Scrollbar* horizontal_scrollbar = HorizontalScrollbar())
+        horizontal_scrollbar->OffsetDidChange();
+      if (Scrollbar* vertical_scrollbar = VerticalScrollbar())
+        vertical_scrollbar->OffsetDidChange();
+    }
+  }
+
   ClampScrollOffsetAfterOverflowChange();
 
   if (!scrollbars_are_frozen) {
