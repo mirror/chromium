@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 
 import java.lang.ref.WeakReference;
@@ -61,6 +62,13 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         mNativeThumbnailProvider = nativeInit();
     }
 
+    @VisibleForTesting
+    ThumbnailProviderImpl(long nativeThumbnailProvider) {
+        mNativeThumbnailProvider = nativeThumbnailProvider;
+        mHandler = new Handler(Looper.getMainLooper());
+        mRequestQueue = new ArrayDeque<>();
+    }
+
     @Override
     public void destroy() {
         ThreadUtils.assertOnUiThread();
@@ -98,7 +106,8 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         });
     }
 
-    private Bitmap getBitmapFromCache(String filepath, int bitmapSizePx) {
+    @VisibleForTesting
+    Bitmap getBitmapFromCache(String filepath, int bitmapSizePx) {
         Pair<Bitmap, Integer> cachedBitmapPair =
                 getBitmapCache().get(Pair.create(filepath, bitmapSizePx));
         if (cachedBitmapPair == null) return null;
@@ -113,8 +122,13 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         if (!isInitialized() || mCurrentRequest != null || mRequestQueue.isEmpty()) return;
 
         mCurrentRequest = mRequestQueue.poll();
-        String currentFilePath = mCurrentRequest.getFilePath();
 
+        retrieveThumbnail();
+    }
+
+    @VisibleForTesting
+    void retrieveThumbnail() {
+        String currentFilePath = mCurrentRequest.getFilePath();
         Bitmap cachedBitmap = getBitmapFromCache(currentFilePath, mCurrentRequest.getIconSize());
         if (cachedBitmap == null) {
             // Asynchronously process the file to make a thumbnail.
@@ -127,10 +141,17 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     }
 
     @CalledByNative
-    private void onThumbnailRetrieved(String filePath, @Nullable Bitmap bitmap) {
+    @VisibleForTesting
+    void onThumbnailRetrieved(String filePath, @Nullable Bitmap bitmap) {
         if (bitmap != null) {
-            assert mCurrentRequest.getIconSize() == bitmap.getHeight();
-            getBitmapCache().put(Pair.create(filePath, bitmap.getHeight()),
+            // The bitmap returned here is retrieved from the native side. The image decoder there
+            // crops the image (if it is too big) so that one of its sides is smaller than or
+            // equal to the required size. We check here that the returned image satisfies this
+            // criteria.
+            int minDimension = Math.min(bitmap.getWidth(), bitmap.getHeight());
+            assert mCurrentRequest.getIconSize() >= minDimension;
+
+            getBitmapCache().put(Pair.create(filePath, minDimension),
                     Pair.create(bitmap, bitmap.getByteCount()));
             mCurrentRequest.onThumbnailRetrieved(filePath, bitmap);
         }
