@@ -13,13 +13,11 @@ namespace viz {
 
 class GpuCompositorFrameSinkDelegate {
  public:
-  // We must avoid destroying a GpuCompositorFrameSink until both the display
-  // compositor host and the client drop their connection to avoid getting into
-  // a state where surfaces references are inconsistent.
-  virtual void OnClientConnectionLost(const cc::FrameSinkId& frame_sink_id,
-                                      bool destroy_compositor_frame_sink) = 0;
-  virtual void OnPrivateConnectionLost(const cc::FrameSinkId& frame_sink_id,
-                                       bool destroy_compositor_frame_sink) = 0;
+  // When the client connection is lost the host process will be informed.
+  virtual void OnClientConnectionLost(const cc::FrameSinkId& frame_sink_id) = 0;
+  // When the private connection is lost CompositorFrameSink will be destroyed.
+  virtual void OnPrivateConnectionLost(
+      const cc::FrameSinkId& frame_sink_id) = 0;
 
  protected:
   virtual ~GpuCompositorFrameSinkDelegate() {}

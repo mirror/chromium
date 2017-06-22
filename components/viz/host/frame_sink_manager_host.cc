@@ -92,6 +92,11 @@ void FrameSinkManagerHost::OnSurfaceCreated(
     observer.OnSurfaceCreated(surface_info);
 }
 
+void FrameSinkManagerHost::OnClientConnectionClosed(
+    const cc::FrameSinkId& frame_sink_id) {
+  // TODO(kylechar): Notify the correct observer here.
+}
+
 FrameSinkManagerHost::FrameSinkData::FrameSinkData() = default;
 
 FrameSinkManagerHost::FrameSinkData::FrameSinkData(FrameSinkData&& other) =
