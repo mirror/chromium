@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b559a3_c47a011f",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T20:26:08Z",
+      "side": 1,
+      "message": "So I have bad news.\n\nDue to how Mojo works, serializers are called twice during serialization. So it\u0027s not great to create an object here.\n\nThe recommended way to do this is to take advantage of SetUpContext/TearDownContext and save all temporary state there; then this can return a reference to what was persisted earlier. See https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/struct_traits.h?rcl\u003d5635903361c17ac4337f9f09f163ca4030ad9c45\u0026l\u003d106.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "5f8a26898f7490259f51d66d81ce03988a354318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93ee2f0_0655acdc",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T20:26:08Z",
+      "side": 1,
+      "message": "I\u0027m basically assuming this method is correct. It might be helpful to break it down into some helper methods.",
+      "range": {
+        "startLine": 238,
+        "startChar": 71,
+        "endLine": 238,
+        "endChar": 75
+      },
+      "revId": "5f8a26898f7490259f51d66d81ce03988a354318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55012804_d35ddbe8",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T20:26:08Z",
+      "side": 1,
+      "message": "No need to reset on failure.",
+      "range": {
+        "startLine": 512,
+        "startChar": 4,
+        "endLine": 512,
+        "endChar": 24
+      },
+      "revId": "5f8a26898f7490259f51d66d81ce03988a354318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
