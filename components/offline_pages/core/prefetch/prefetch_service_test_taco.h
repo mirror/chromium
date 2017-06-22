@@ -12,6 +12,7 @@
 namespace offline_pages {
 class OfflineMetricsCollector;
 class PrefetchDispatcher;
+class PrefetchDownloader;
 class PrefetchGCMHandler;
 class PrefetchService;
 class SuggestedArticlesObserver;
@@ -41,6 +42,8 @@ class PrefetchServiceTestTaco {
   void SetPrefetchGCMHandler(std::unique_ptr<PrefetchGCMHandler> gcm_handler);
   void SetSuggestedArticlesObserver(
       std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer);
+  void SetPrefetchDownloader(
+      std::unique_ptr<PrefetchDownloader> prefetch_downloader);
 
   // Creates and caches an instance of PrefetchService, using default or
   // overridden test dependencies.
@@ -48,7 +51,7 @@ class PrefetchServiceTestTaco {
 
   // Once CreatePrefetchService() is called, this accessor method starts
   // returning the PrefetchService.
-  PrefetchService* prefetch_service() {
+  PrefetchService* prefetch_service() const {
     CHECK(prefetch_service_);
     return prefetch_service_.get();
   }
@@ -62,6 +65,7 @@ class PrefetchServiceTestTaco {
   std::unique_ptr<PrefetchDispatcher> dispatcher_;
   std::unique_ptr<PrefetchGCMHandler> gcm_handler_;
   std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer_;
+  std::unique_ptr<PrefetchDownloader> prefetch_downloader_;
 
   std::unique_ptr<PrefetchService> prefetch_service_;
 };

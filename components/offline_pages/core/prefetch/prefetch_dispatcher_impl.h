@@ -32,6 +32,10 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher {
   void StopBackgroundTask() override;
   void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) override;
+  void DownloadSucceeded(const std::string& download_id,
+                         const base::FilePath& file_path,
+                         uint64_t file_size) override;
+  void DownloadFailed(const std::string& download_id) override;
   void RequestFinishBackgroundTaskForTest() override;
 
  private:

@@ -14,6 +14,10 @@
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 
+namespace base {
+class FilePath;
+}  // namespace base
+
 namespace offline_pages {
 class PrefetchService;
 
@@ -73,6 +77,14 @@ class PrefetchDispatcher {
   // operation name.
   virtual void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) = 0;
+
+  // Called when the archive is downloaded successfully.
+  virtual void DownloadSucceeded(const std::string& download_id,
+                                 const base::FilePath& file_path,
+                                 uint64_t file_size) = 0;
+
+  // Called when the archive fails to download.
+  virtual void DownloadFailed(const std::string& download_id) = 0;
 
   // Used by the test to signal the completion of the background task.
   virtual void RequestFinishBackgroundTaskForTest() = 0;

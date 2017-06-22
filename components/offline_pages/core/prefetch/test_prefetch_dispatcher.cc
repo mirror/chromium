@@ -9,6 +9,9 @@
 
 namespace offline_pages {
 
+TestPrefetchDispatcher::DownloadResult::DownloadResult() = default;
+TestPrefetchDispatcher::DownloadResult::~DownloadResult() = default;
+
 TestPrefetchDispatcher::TestPrefetchDispatcher() = default;
 TestPrefetchDispatcher::~TestPrefetchDispatcher() = default;
 
@@ -42,6 +45,24 @@ void TestPrefetchDispatcher::SetService(PrefetchService* service) {}
 void TestPrefetchDispatcher::GCMOperationCompletedMessageReceived(
     const std::string& operation_name) {
   operation_list.push_back(operation_name);
+}
+
+void TestPrefetchDispatcher::DownloadSucceeded(const std::string& download_id,
+                                               const base::FilePath& file_path,
+                                               uint64_t file_size) {
+  DownloadResult result;
+  result.download_id = download_id;
+  result.success = true;
+  result.file_path = file_path;
+  result.file_size = file_size;
+  completed_downloads_.push_back(result);
+}
+
+void TestPrefetchDispatcher::DownloadFailed(const std::string& download_id) {
+  DownloadResult result;
+  result.download_id = download_id;
+  result.success = false;
+  completed_downloads_.push_back(result);
 }
 
 void TestPrefetchDispatcher::RequestFinishBackgroundTaskForTest() {}

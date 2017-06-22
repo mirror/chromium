@@ -98,4 +98,14 @@ void PrefetchDispatcherImpl::GCMOperationCompletedMessageReceived(
   NOTIMPLEMENTED();
 }
 
+void PrefetchDispatcherImpl::DownloadSucceeded(const std::string& download_id,
+                                               const base::FilePath& file_path,
+                                               uint64_t file_size) {
+  NOTIMPLEMENTED();
+}
+
+void PrefetchDispatcherImpl::DownloadFailed(const std::string& download_id) {
+  NOTIMPLEMENTED();
+}
+
 }  // namespace offline_pages
