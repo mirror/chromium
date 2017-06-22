@@ -256,7 +256,7 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
 
   base::Optional<net::SSLInfo> ssl_info;
   if (options_ & mojom::kURLLoadOptionSendSSLInfo)
-    ssl_info = url_request_->ssl_info();
+    ssl_info.emplace(url_request_->ssl_info());
   mojom::DownloadedTempFilePtr downloaded_file_ptr;
   url_loader_client_->OnReceiveResponse(response->head, ssl_info,
                                         std::move(downloaded_file_ptr));

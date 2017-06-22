@@ -87,7 +87,7 @@ class DataReductionProxyData : public base::SupportsUserData::Data {
   // An identifier that is guaranteed to be unique to each page load during a
   // data saver session. Only present on main frame requests.
   const base::Optional<uint64_t>& page_id() const { return page_id_; }
-  void set_page_id(uint64_t page_id) { page_id_ = page_id; }
+  void set_page_id(uint64_t page_id) { page_id_.emplace(page_id); }
 
   // Removes |this| from |request|.
   static void ClearData(net::URLRequest* request);

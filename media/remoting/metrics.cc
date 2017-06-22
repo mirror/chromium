@@ -53,7 +53,7 @@ SessionMetricsRecorder::~SessionMetricsRecorder() = default;
 
 void SessionMetricsRecorder::WillStartSession(StartTrigger trigger) {
   DCHECK(!start_trigger_);
-  start_trigger_ = trigger;
+  start_trigger_.emplace(trigger);
   start_time_ = base::TimeTicks::Now();
 }
 

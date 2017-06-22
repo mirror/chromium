@@ -67,7 +67,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothGattDescriptorClient
   // Callbacks used to report the result of asynchronous methods.
   typedef base::Callback<void(const std::string& error_name,
                               const std::string& error_message)> ErrorCallback;
-  typedef base::Callback<void(const std::vector<uint8_t>& value)> ValueCallback;
+  typedef base::Callback<void(std::vector<uint8_t> value)> ValueCallback;
 
   ~BluetoothGattDescriptorClient() override;
 

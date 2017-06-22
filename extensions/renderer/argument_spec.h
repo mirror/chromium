@@ -71,7 +71,7 @@ class ArgumentSpec {
   void set_name(base::StringPiece name) { name_ = name.as_string(); }
   void set_optional(bool optional) { optional_ = optional; }
   void set_ref(base::StringPiece ref) { ref_ = ref.as_string(); }
-  void set_minimum(int minimum) { minimum_ = minimum; }
+  void set_minimum(int minimum) { minimum_.emplace(minimum); }
   void set_properties(PropertiesMap properties) {
     properties_ = std::move(properties);
   }

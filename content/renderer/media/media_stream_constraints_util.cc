@@ -295,7 +295,7 @@ VideoTrackAdapterSettings SelectVideoTrackAdapterSettings(
 
   base::Optional<gfx::Size> expected_native_size;
   if (expect_source_native_size)
-    expected_native_size = source_format.frame_size;
+    expected_native_size.emplace(source_format.frame_size);
 
   return VideoTrackAdapterSettings(
       track_max_width, track_max_height, track_min_aspect_ratio,

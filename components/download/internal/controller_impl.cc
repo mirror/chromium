@@ -277,7 +277,7 @@ void ControllerImpl::HandleTaskFinished(DownloadTaskType task_type,
 
 void ControllerImpl::OnDriverReady(bool success) {
   DCHECK(!startup_status_.driver_ok.has_value());
-  startup_status_.driver_ok = success;
+  startup_status_.driver_ok = std::move(success);
   AttemptToFinalizeSetup();
 }
 
@@ -355,13 +355,13 @@ void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {
 
 void ControllerImpl::OnFileMonitorReady(bool success) {
   DCHECK(!startup_status_.file_monitor_ok.has_value());
-  startup_status_.file_monitor_ok = success;
+  startup_status_.file_monitor_ok.emplace(success);
   AttemptToFinalizeSetup();
 }
 
 void ControllerImpl::OnModelReady(bool success) {
   DCHECK(!startup_status_.model_ok.has_value());
-  startup_status_.model_ok = success;
+  startup_status_.model_ok.emplace(success);
   AttemptToFinalizeSetup();
 }
 
@@ -497,7 +497,7 @@ void ControllerImpl::ResolveInitialRequestStates() {
     base::Optional<DriverEntry::State> driver_state;
     if (driver_entry.has_value()) {
       DCHECK_NE(DriverEntry::State::UNKNOWN, driver_entry->state);
-      driver_state = driver_entry->state;
+      driver_state.emplace(driver_entry->state);
     }
 
     // Determine what the new Entry::State should be based on the two original

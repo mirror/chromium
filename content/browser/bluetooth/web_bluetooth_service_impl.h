@@ -179,7 +179,7 @@ class CONTENT_EXPORT WebBluetoothServiceImpl
   // Callbacks for BluetoothRemoteGattCharacteristic::ReadRemoteCharacteristic.
   void OnCharacteristicReadValueSuccess(
       RemoteCharacteristicReadValueCallback callback,
-      const std::vector<uint8_t>& value);
+      std::vector<uint8_t> value);
   void OnCharacteristicReadValueFailed(
       RemoteCharacteristicReadValueCallback callback,
       device::BluetoothRemoteGattService::GattErrorCode error_code);
@@ -207,7 +207,7 @@ class CONTENT_EXPORT WebBluetoothServiceImpl
 
   // Callbacks for BluetoothRemoteGattDescriptor::ReadRemoteDescriptor.
   void OnDescriptorReadValueSuccess(RemoteDescriptorReadValueCallback callback,
-                                    const std::vector<uint8_t>& value);
+                                    std::vector<uint8_t> value);
   void OnDescriptorReadValueFailed(
       RemoteDescriptorReadValueCallback callback,
       device::BluetoothRemoteGattService::GattErrorCode error_code);

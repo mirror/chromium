@@ -65,11 +65,11 @@ class ExecuteCodeFunction : public AsyncExtensionFunction {
   void set_host_id(const HostID& host_id) { host_id_ = host_id; }
 
   InitResult set_init_result(InitResult init_result) {
-    init_result_ = init_result;
+    init_result_.emplace(init_result);
     return init_result_.value();
   }
   InitResult set_init_result_error(const std::string& error) {
-    init_error_ = error;
+    init_error_.emplace(error);
     return set_init_result(FAILURE);
   }
 

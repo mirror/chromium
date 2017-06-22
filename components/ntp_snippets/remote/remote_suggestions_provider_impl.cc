@@ -480,11 +480,13 @@ void RemoteSuggestionsProviderImpl::Fetch(
       },
       base::Unretained(remote_suggestions_scheduler_), callback);
 
-  RequestParams params = BuildFetchParams(category);
+  base::Optional<Category> opt_category;
+  opt_category.emplace(category);
+  RequestParams params = BuildFetchParams(opt_category);
   params.excluded_ids.insert(known_suggestion_ids.begin(),
                              known_suggestion_ids.end());
   params.interactive_request = true;
-  params.exclusive_category = category;
+  params.exclusive_category.emplace(category);
 
   suggestions_fetcher_->FetchSnippets(
       params,
@@ -1296,8 +1298,8 @@ void RemoteSuggestionsProviderImpl::RestoreCategoriesFromPrefs() {
                     << kCategoryContentId << "': " << entry;
       continue;
     }
-    base::string16 title;
-    if (!dict->GetString(kCategoryContentTitle, &title)) {
+    base::Optional<base::string16> title = base::string16();
+    if (!dict->GetString(kCategoryContentTitle, &*title)) {
       DLOG(WARNING) << "Invalid category pref value, missing '"
                     << kCategoryContentTitle << "': " << entry;
       continue;
@@ -1324,7 +1326,7 @@ void RemoteSuggestionsProviderImpl::RestoreCategoriesFromPrefs() {
     CategoryInfo info =
         category == articles_category_
             ? BuildArticleCategoryInfo(title)
-            : BuildRemoteCategoryInfo(title, allow_fetching_more_results);
+            : BuildRemoteCategoryInfo(*title, allow_fetching_more_results);
     CategoryContent* content = UpdateCategoryInfo(category, info);
     content->included_in_last_server_response =
         included_in_last_server_response;

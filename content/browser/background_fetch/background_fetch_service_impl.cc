@@ -155,11 +155,11 @@ void BackgroundFetchServiceImpl::GetRegistration(
 
   // Compile the BackgroundFetchRegistration object that will be given to the
   // developer, representing the data associated with the |controller|.
-  BackgroundFetchRegistration registration;
-  registration.tag = controller->registration_id().tag();
-  registration.icons = controller->options().icons;
-  registration.title = controller->options().title;
-  registration.total_download_size = controller->options().total_download_size;
+  base::Optional<BackgroundFetchRegistration> registration = BackgroundFetchRegistration();
+  registration->tag = controller->registration_id().tag();
+  registration->icons = controller->options().icons;
+  registration->title = controller->options().title;
+  registration->total_download_size = controller->options().total_download_size;
 
   std::move(callback).Run(blink::mojom::BackgroundFetchError::NONE,
                           registration);

@@ -176,7 +176,7 @@ void ContentFaviconDriver::DidUpdateFaviconURL(
   if (!entry)
     return;
 
-  favicon_urls_ = candidates;
+  favicon_urls_.emplace(candidates);
 
   OnUpdateCandidates(entry->GetURL(),
                      FaviconURLsFromContentFaviconURLs(candidates),

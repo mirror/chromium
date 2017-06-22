@@ -46,7 +46,9 @@ void ManifestManager::OnRequestManifestComplete(
     const GURL& url,
     const Manifest& manifest,
     const ManifestDebugInfo& debug_info) {
-  std::move(callback).Run(url, manifest);
+  base::Optional<Manifest> opt_manifest;
+  opt_manifest.emplace(manifest);
+  std::move(callback).Run(url, std::move(opt_manifest));
 }
 
 void ManifestManager::GetManifest(GetManifestCallback callback) {

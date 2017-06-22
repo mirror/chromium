@@ -153,7 +153,7 @@ void PaymentResponseHelper::GeneratePaymentResponse() {
     payment_response->shipping_address =
         GetMojomPaymentAddressFromAutofillProfile(shipping_address_,
                                                   app_locale_);
-    payment_response->shipping_option = spec_->selected_shipping_option()->id;
+    payment_response->shipping_option.emplace(spec_->selected_shipping_option()->id);
   }
 
   // Contact Details section.

@@ -45,7 +45,7 @@ class UsbDeviceHandle : public base::RefCountedThreadSafe<UsbDeviceHandle> {
       void(UsbTransferStatus, scoped_refptr<net::IOBuffer>, size_t)>;
   using IsochronousTransferCallback =
       base::Callback<void(scoped_refptr<net::IOBuffer>,
-                          const std::vector<IsochronousPacket>& packets)>;
+                          std::vector<IsochronousPacket> packets)>;
 
   virtual scoped_refptr<UsbDevice> GetDevice() const = 0;
 

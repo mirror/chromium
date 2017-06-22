@@ -136,7 +136,9 @@ class WebSocketStreamRequestImpl : public WebSocketStreamRequest {
     headers.AddHeadersFromString(additional_headers);
 
     url_request_->SetExtraRequestHeaders(headers);
-    url_request_->set_initiator(origin);
+    base::Optional<url::Origin> opt_origin;
+    opt_origin.emplace(origin);
+    url_request_->set_initiator(std::move(opt_origin));
     url_request_->set_first_party_for_cookies(first_party_for_cookies);
 
     url_request_->SetUserData(

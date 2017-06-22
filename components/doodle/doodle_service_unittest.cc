@@ -225,12 +225,12 @@ TEST_F(DoodleServiceTest, FetchesConfigOnRefresh) {
   EXPECT_THAT(fetcher()->num_pending_callbacks(), Eq(1u));
 
   // Serve it (with an arbitrary config).
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
 
   // The config should be available.
-  EXPECT_THAT(service()->config(), Eq(config));
+  EXPECT_THAT(service()->config(), Eq(*config));
 
   // Request a refresh again.
   service()->Refresh();
@@ -238,13 +238,14 @@ TEST_F(DoodleServiceTest, FetchesConfigOnRefresh) {
   EXPECT_THAT(fetcher()->num_pending_callbacks(), Eq(1u));
 
   // Serve it with a different config.
-  DoodleConfig other_config = CreateConfig(DoodleType::SLIDESHOW);
+  base::Optional<DoodleConfig> other_config =
+      CreateConfig(DoodleType::SLIDESHOW);
   DCHECK(config != other_config);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), other_config);
 
   // The config should have been updated.
-  EXPECT_THAT(service()->config(), Eq(other_config));
+  EXPECT_THAT(service()->config(), Eq(*other_config));
 }
 
 TEST_F(DoodleServiceTest, CoalescesRefreshCalls) {
@@ -260,16 +261,16 @@ TEST_F(DoodleServiceTest, CoalescesRefreshCalls) {
 TEST_F(DoodleServiceTest, PersistsConfig) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
-  config.large_image.url = GURL("https://doodle.com/doodle.jpg");
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
+  config->large_image.url = GURL("https://doodle.com/doodle.jpg");
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Re-create the service. It should have persisted the config, and load it
   // again automatically.
   RecreateServiceWithZeroRefreshInterval();
-  EXPECT_THAT(service()->config(), Eq(config));
+  EXPECT_THAT(service()->config(), Eq(*config));
 }
 
 TEST_F(DoodleServiceTest, FetchesOnCreationIfEmpty) {
@@ -282,10 +283,10 @@ TEST_F(DoodleServiceTest, FetchesOnCreationIfEmpty) {
 TEST_F(DoodleServiceTest, DoesNotFetchOnCreationWithCachedConfig) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   RecreateServiceWithZeroRefreshInterval();
 
@@ -296,11 +297,11 @@ TEST_F(DoodleServiceTest, DoesNotFetchOnCreationWithCachedConfig) {
 TEST_F(DoodleServiceTest, PersistsExpiryDate) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
-  config.large_image.url = GURL("https://doodle.com/doodle.jpg");
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
+  config->large_image.url = GURL("https://doodle.com/doodle.jpg");
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Destroy the service, and let some time pass.
   DestroyService();
@@ -312,7 +313,7 @@ TEST_F(DoodleServiceTest, PersistsExpiryDate) {
 
   // Re-create the service. The persisted config should have been loaded again.
   RecreateServiceWithZeroRefreshInterval();
-  EXPECT_THAT(service()->config(), Eq(config));
+  EXPECT_THAT(service()->config(), Eq(*config));
 
   // Its time-to-live should have been updated.
   EXPECT_THAT(task_runner()->GetPendingTaskCount(), Eq(1u));
@@ -323,11 +324,11 @@ TEST_F(DoodleServiceTest, PersistsExpiryDate) {
 TEST_F(DoodleServiceTest, PersistedConfigExpires) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
-  config.large_image.url = GURL("https://doodle.com/doodle.jpg");
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
+  config->large_image.url = GURL("https://doodle.com/doodle.jpg");
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Destroy the service, and let enough time pass so that the config expires.
   DestroyService();
@@ -345,11 +346,11 @@ TEST_F(DoodleServiceTest, RespectsMinRefreshInterval) {
 
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
-  config.large_image.url = GURL("https://doodle.com/doodle.jpg");
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
+  config->large_image.url = GURL("https://doodle.com/doodle.jpg");
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Let some time pass (less than the refresh interval).
   task_runner()->FastForwardBy(base::TimeDelta::FromMinutes(10));
@@ -378,8 +379,8 @@ TEST_F(DoodleServiceTest, CallsObserverOnConfigReceived) {
   ASSERT_THAT(fetcher()->num_pending_callbacks(), Eq(1u));
 
   // Serve it (with an arbitrary config). The observer should get notified.
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
-  EXPECT_CALL(observer, OnDoodleConfigUpdated(Eq(config)));
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
+  EXPECT_CALL(observer, OnDoodleConfigUpdated(Eq(*config)));
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
 
@@ -390,10 +391,10 @@ TEST_F(DoodleServiceTest, CallsObserverOnConfigReceived) {
 TEST_F(DoodleServiceTest, CallsObserverOnConfigRemoved) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Register an observer and request a refresh.
   StrictMock<MockDoodleObserver> observer;
@@ -414,10 +415,10 @@ TEST_F(DoodleServiceTest, CallsObserverOnConfigRemoved) {
 TEST_F(DoodleServiceTest, CallsObserverOnConfigUpdated) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Register an observer and request a refresh.
   StrictMock<MockDoodleObserver> observer;
@@ -427,9 +428,10 @@ TEST_F(DoodleServiceTest, CallsObserverOnConfigUpdated) {
 
   // Serve the request with a different doodle config. The observer should get
   // notified.
-  DoodleConfig other_config = CreateConfig(DoodleType::SLIDESHOW);
-  DCHECK(config != other_config);
-  EXPECT_CALL(observer, OnDoodleConfigUpdated(Eq(other_config)));
+  base::Optional<DoodleConfig> other_config =
+      CreateConfig(DoodleType::SLIDESHOW);
+  DCHECK(*config != *other_config);
+  EXPECT_CALL(observer, OnDoodleConfigUpdated(Eq(*other_config)));
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), other_config);
 
@@ -440,10 +442,10 @@ TEST_F(DoodleServiceTest, CallsObserverOnConfigUpdated) {
 TEST_F(DoodleServiceTest, CallsObserverIfConfigRevalidatedByNetworkRequest) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Let some time pass (more than the refresh interval).
   task_runner()->FastForwardBy(base::TimeDelta::FromMinutes(16));
@@ -457,8 +459,9 @@ TEST_F(DoodleServiceTest, CallsObserverIfConfigRevalidatedByNetworkRequest) {
 
   // Serve the request with an equivalent doodle config. The observer should
   // get notified about a (non-cached) revalidation.
-  DoodleConfig equivalent_config = CreateConfig(DoodleType::SIMPLE);
-  DCHECK(config == equivalent_config);
+  base::Optional<DoodleConfig> equivalent_config =
+      CreateConfig(DoodleType::SIMPLE);
+  DCHECK(*config == *equivalent_config);
   fetcher()->ServeAllCallbacks(
       DoodleState::AVAILABLE, base::TimeDelta::FromHours(1), equivalent_config);
 
@@ -472,10 +475,10 @@ TEST_F(DoodleServiceTest, CallsObserverIfConfigRevalidatedByCache) {
 
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Register an observer and request a refresh within refresh intervall.
   StrictMock<MockDoodleObserver> observer;
@@ -491,10 +494,10 @@ TEST_F(DoodleServiceTest, CallsObserverIfConfigRevalidatedByCache) {
 TEST_F(DoodleServiceTest, CallsObserverWhenConfigExpires) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Make sure the task arrived at the timer's task runner.
   EXPECT_THAT(task_runner()->GetPendingTaskCount(), Eq(1u));
@@ -524,7 +527,7 @@ TEST_F(DoodleServiceTest, DisregardsAlreadyExpiredConfigs) {
 
   // Load an already-expired config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   EXPECT_CALL(observer, OnDoodleConfigRevalidated(Eq(/*from_cache=*/false)));
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromSeconds(0), config);
@@ -532,7 +535,7 @@ TEST_F(DoodleServiceTest, DisregardsAlreadyExpiredConfigs) {
 
   // Load a doodle config as usual. Nothing to see here.
   service()->Refresh();
-  EXPECT_CALL(observer, OnDoodleConfigUpdated(Eq(config)));
+  EXPECT_CALL(observer, OnDoodleConfigUpdated(Eq(*config)));
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
   ASSERT_THAT(service()->config(), Eq(config));
@@ -550,10 +553,10 @@ TEST_F(DoodleServiceTest, DisregardsAlreadyExpiredConfigs) {
 TEST_F(DoodleServiceTest, ClampsTimeToLive) {
   // Load a config with an excessive time-to-live.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromDays(100), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // The time-to-live should have been clamped to a reasonable maximum.
   ASSERT_THAT(task_runner()->GetPendingTaskCount(), Eq(1u));
@@ -567,10 +570,10 @@ TEST_F(DoodleServiceTest, RecordsMetricsForSuccessfulDownload) {
   // Load a doodle config as usual, but let it take some time.
   service()->Refresh();
   task_runner()->FastForwardBy(base::TimeDelta::FromSeconds(5));
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Metrics should have been recorded.
   histograms.ExpectUniqueSample("Doodle.ConfigDownloadOutcome",
@@ -624,10 +627,10 @@ TEST_F(DoodleServiceTest, RecordsMetricsForEarlyRefreshRequest) {
 
   // Load a doodle config as usual.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   base::HistogramTester histograms;
 
@@ -658,16 +661,16 @@ TEST_F(DoodleServiceTest, DoesNotRecordMetricsAtStartup) {
 TEST_F(DoodleServiceTest, DoesNotRecordMetricsAtStartupWithConfig) {
   // Load a doodle config as usual.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   // Recreating the service should not emit any histogram samples, even though
   // a config gets loaded.
   base::HistogramTester histograms;
   RecreateServiceWithZeroRefreshInterval();
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
   histograms.ExpectTotalCount("Doodle.ConfigDownloadOutcome", 0);
   histograms.ExpectTotalCount("Doodle.ConfigDownloadTime", 0);
 }
@@ -675,10 +678,10 @@ TEST_F(DoodleServiceTest, DoesNotRecordMetricsAtStartupWithConfig) {
 TEST_F(DoodleServiceTest, DoesNotRecordMetricsWhenConfigExpires) {
   // Load some doodle config.
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   base::HistogramTester histograms;
 
@@ -702,15 +705,15 @@ TEST_F(DoodleServiceTest, GetImageWithEmptyConfigReturnsImmediately) {
 
 TEST_F(DoodleServiceTest, GetImageFetchesLargeImage) {
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   base::MockCallback<DoodleService::ImageCallback> callback;
   service()->GetImage(callback.Get());
 
-  EXPECT_EQ(config.large_image.url, image_fetcher()->pending_url());
+  EXPECT_EQ(config->large_image.url, image_fetcher()->pending_url());
 
   EXPECT_CALL(callback, Run(Not(IsEmptyImage())));
   gfx::Image image = gfx::test::CreateImage(1, 1);
@@ -720,19 +723,19 @@ TEST_F(DoodleServiceTest, GetImageFetchesLargeImage) {
 
 TEST_F(DoodleServiceTest, GetImageFetchesCTAImage) {
   service()->Refresh();
-  DoodleConfig config = CreateConfig(DoodleType::SIMPLE);
+  base::Optional<DoodleConfig> config = CreateConfig(DoodleType::SIMPLE);
   // Set a CTA image, which should take precedence over the regular image.
-  config.large_cta_image = DoodleImage(GURL("https://doodle.com/cta.jpg"));
+  config->large_cta_image = DoodleImage(GURL("https://doodle.com/cta.jpg"));
   fetcher()->ServeAllCallbacks(DoodleState::AVAILABLE,
                                base::TimeDelta::FromHours(1), config);
-  ASSERT_THAT(service()->config(), Eq(config));
+  ASSERT_THAT(service()->config(), Eq(*config));
 
   base::MockCallback<DoodleService::ImageCallback> callback;
   service()->GetImage(callback.Get());
 
   // If the doodle has a CTA image, that should loaded instead of the regular
   // large image.
-  EXPECT_EQ(config.large_cta_image->url, image_fetcher()->pending_url());
+  EXPECT_EQ(config->large_cta_image->url, image_fetcher()->pending_url());
 
   EXPECT_CALL(callback, Run(Not(IsEmptyImage())));
   gfx::Image image = gfx::test::CreateImage(1, 1);

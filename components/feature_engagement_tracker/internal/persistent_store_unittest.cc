@@ -58,7 +58,7 @@ class PersistentStoreTest : public ::testing::Test {
   }
 
   void LoadCallback(bool success, std::unique_ptr<std::vector<Event>> events) {
-    load_successful_ = success;
+    load_successful_ = std::move(success);
     load_results_ = std::move(events);
   }
 

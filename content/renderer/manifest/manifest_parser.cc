@@ -361,7 +361,7 @@ base::Optional<Manifest::ShareTarget> ManifestParser::ParseShareTarget(
   if (share_target.url_template.is_null()) {
     return base::nullopt;
   }
-  return base::Optional<Manifest::ShareTarget>(share_target);
+  return std::move(share_target);
 }
 
 base::NullableString16 ManifestParser::ParseRelatedApplicationPlatform(

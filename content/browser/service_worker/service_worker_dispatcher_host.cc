@@ -912,13 +912,13 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
     case SERVICE_WORKER_PROVIDER_FOR_CONTROLLER: {
       // Clamp timeout to the sending worker's remaining timeout, to prevent
       // postMessage from keeping workers alive forever.
-      base::TimeDelta timeout =
+      base::Optional<base::TimeDelta> timeout =
           sender_provider_host->running_hosted_version()->remaining_timeout();
       RunSoon(base::Bind(
           &ServiceWorkerDispatcherHost::DispatchExtendableMessageEventInternal<
               ServiceWorkerObjectInfo>,
           this, worker, message, source_origin, sent_message_ports,
-          base::make_optional(timeout), callback,
+          timeout, callback,
           sender_provider_host->GetOrCreateServiceWorkerHandle(
               sender_provider_host->running_hosted_version())));
       break;

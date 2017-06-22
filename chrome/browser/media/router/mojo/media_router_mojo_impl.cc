@@ -196,7 +196,7 @@ void MediaRouterMojoImpl::OnSinksReceived(
     sinks.push_back(internal_sink.sink());
 
   auto* sinks_query = it->second.get();
-  sinks_query->cached_sink_list = sinks;
+  sinks_query->cached_sink_list = std::move(sinks);
   sinks_query->origins = origins;
 
   if (sinks_query->observers.might_have_observers()) {
@@ -226,7 +226,7 @@ void MediaRouterMojoImpl::OnRoutesUpdated(
   }
 
   auto* routes_query = it->second.get();
-  routes_query->cached_route_list = routes;
+  routes_query->cached_route_list.emplace(routes);
   routes_query->joinable_route_ids = joinable_route_ids;
 
   if (routes_query->observers.might_have_observers()) {

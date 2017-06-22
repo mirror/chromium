@@ -133,8 +133,6 @@ class Optional {
       Init(std::move(other.value()));
   }
 
-  constexpr Optional(const T& value) : storage_(value) {}
-
   // TODO(alshabalin): Can't use 'constexpr' with std::move until C++14.
   Optional(T&& value) : storage_(std::move(value)) {}
 

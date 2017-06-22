@@ -218,11 +218,9 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
   // This is not currently handled here.
   bool is_form_submission = !!request_body;
 
-  base::Optional<url::Origin> initiator =
-      frame_tree_node->IsMainFrame()
-          ? base::Optional<url::Origin>()
-          : base::Optional<url::Origin>(
-                frame_tree_node->frame_tree()->root()->current_origin());
+  base::Optional<url::Origin> initiator;
+  if (!frame_tree_node->IsMainFrame())
+    initiator.emplace(frame_tree_node->frame_tree()->root()->current_origin());
 
   // While the navigation was started via the LoadURL path it may have come from
   // the renderer in the first place as part of OpenURL.

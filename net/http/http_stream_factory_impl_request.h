@@ -65,7 +65,7 @@ class HttpStreamFactoryImpl::Request : public HttpStreamRequest {
   // supported for this SpdySessionKey, since we may need to wait for NPN to
   // complete before knowing if SPDY is available.
   void SetSpdySessionKey(const SpdySessionKey& spdy_session_key) {
-    spdy_session_key_ = spdy_session_key;
+    spdy_session_key_.emplace(spdy_session_key);
   }
   bool HasSpdySessionKey() const { return spdy_session_key_.has_value(); }
   const SpdySessionKey& GetSpdySessionKey() const {

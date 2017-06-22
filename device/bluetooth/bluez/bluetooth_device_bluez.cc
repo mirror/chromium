@@ -331,10 +331,10 @@ base::Optional<std::string> BluetoothDeviceBlueZ::GetName() const {
           object_path_);
   DCHECK(properties);
 
+  base::Optional<std::string> opt;
   if (properties->name.is_valid())
-    return properties->name.value();
-  else
-    return base::nullopt;
+    opt.emplace(properties->name.value());
+  return opt;
 }
 
 bool BluetoothDeviceBlueZ::IsPaired() const {
@@ -702,7 +702,7 @@ void BluetoothDeviceBlueZ::UpdateAdvertisingDataFlags() {
   // Supplement to Bluetooth Core Specification Version 6 page 13 said that
   // "The Flags field may be zero or more octets long." However, only the first
   // byte of that is needed because there is only 5 bits of data defined there.
-  advertising_data_flags_ = properties->advertising_data_flags.value()[0];
+  advertising_data_flags_.emplace(properties->advertising_data_flags.value()[0]);
 }
 
 BluetoothPairingBlueZ* BluetoothDeviceBlueZ::BeginPairing(

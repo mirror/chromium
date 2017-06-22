@@ -232,12 +232,13 @@ LayoutUnit LayoutGrid::ComputeTrackBasedLogicalHeight() const {
 void LayoutGrid::ComputeTrackSizesForDefiniteSize(
     GridTrackSizingDirection direction,
     LayoutUnit available_space) {
+  WTF::Optional<LayoutUnit> opt_available_space = std::move(available_space);
   LayoutUnit free_space =
-      available_space - GuttersSize(grid_, direction, 0,
-                                    grid_.NumTracks(direction),
-                                    available_space);
+      *opt_available_space - GuttersSize(grid_, direction, 0,
+                                         grid_.NumTracks(direction),
+                                         opt_available_space);
   track_sizing_algorithm_.Setup(direction, NumTracks(direction, grid_),
-                                available_space, free_space);
+                                *opt_available_space, free_space);
   track_sizing_algorithm_.Run();
 
 #if DCHECK_IS_ON()

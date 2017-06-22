@@ -133,10 +133,10 @@ void ReportIsochronousTransferError(
     packets[i].status = status;
   }
   if (callback_task_runner->RunsTasksInCurrentSequence()) {
-    callback.Run(nullptr, packets);
+    callback.Run(nullptr, std::move(packets));
   } else {
-    callback_task_runner->PostTask(FROM_HERE,
-                                   base::Bind(callback, nullptr, packets));
+    callback_task_runner->PostTask(
+        FROM_HERE, base::Bind(callback, nullptr, base::Passed(&packets)));
   }
 }
 
@@ -530,7 +530,7 @@ void UsbDeviceHandleImpl::Transfer::TransferComplete(UsbTransferStatus status,
       packets[i].transferred_length = 0;
       packets[i].status = status;
     }
-    closure = base::Bind(iso_callback_, buffer_, packets);
+    closure = base::Bind(iso_callback_, buffer_, base::Passed(&packets));
   } else {
     closure = base::Bind(callback_, status, buffer_, bytes_transferred);
   }
@@ -549,9 +549,10 @@ void UsbDeviceHandleImpl::Transfer::IsochronousTransferComplete() {
         ConvertTransferStatus(platform_transfer_->iso_packet_desc[i].status);
   }
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(&UsbDeviceHandleImpl::TransferComplete,
-                            device_handle_, base::Unretained(this),
-                            base::Bind(iso_callback_, buffer_, packets)));
+      FROM_HERE,
+      base::Bind(&UsbDeviceHandleImpl::TransferComplete, device_handle_,
+                 base::Unretained(this),
+                 base::Bind(iso_callback_, buffer_, base::Passed(&packets))));
 }
 
 scoped_refptr<UsbDevice> UsbDeviceHandleImpl::GetDevice() const {
