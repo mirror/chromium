@@ -34,6 +34,24 @@
       "revId": "abfcb1b11521597250bf805e6ccd99c43b78cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e2efdb_1e361f41",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 12327,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-22T20:45:01Z",
+      "side": 1,
+      "message": "Yeah, Java is tricky. We use the same resources in Java, but we access them via R.string.video_call_notification_text_2. I didn\u0027t actually know that until yesterday.",
+      "parentUuid": "9ce991af_691e9ed9",
+      "revId": "abfcb1b11521597250bf805e6ccd99c43b78cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
