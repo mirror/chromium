@@ -5,6 +5,7 @@
 #ifndef CONTENT_COMMON_SERVICE_WORKER_EMBEDDED_WORKER_START_PARAMS_H_
 #define CONTENT_COMMON_SERVICE_WORKER_EMBEDDED_WORKER_START_PARAMS_H_
 
+#include "base/time/time.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/embedded_worker_settings.h"
 #include "url/gurl.h"
@@ -23,6 +24,7 @@ struct CONTENT_EXPORT EmbeddedWorkerStartParams {
   bool wait_for_debugger;
   bool is_installed;
   EmbeddedWorkerSettings settings;
+  base::TimeTicks start_worker_sent_time;
 };
 
 }  // namespace content

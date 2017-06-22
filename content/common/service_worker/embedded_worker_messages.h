@@ -38,6 +38,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::EmbeddedWorkerStartParams)
   IPC_STRUCT_TRAITS_MEMBER(wait_for_debugger)
   IPC_STRUCT_TRAITS_MEMBER(is_installed)
   IPC_STRUCT_TRAITS_MEMBER(settings)
+  IPC_STRUCT_TRAITS_MEMBER(start_worker_sent_time)
 IPC_STRUCT_TRAITS_END()
 
 // Renderer -> Browser message to count an API use. |feature| must be one of the

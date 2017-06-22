@@ -757,10 +757,12 @@ void RenderThreadImpl::Init(
   }
 #endif
 
+  LOG(ERROR) << "Render thread impl init";
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(base::Bind(&CreateFrameFactory),
                          base::ThreadTaskRunnerHandle::Get());
-  registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create),
+  registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create,
+                                    base::TimeTicks::Now()),
                          base::ThreadTaskRunnerHandle::Get());
   GetServiceManagerConnection()->AddConnectionFilter(
       base::MakeUnique<SimpleConnectionFilter>(std::move(registry)));

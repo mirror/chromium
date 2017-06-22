@@ -13,6 +13,7 @@
 #include "base/time/time.h"
 #include "content/browser/service_worker/service_worker_context_request_handler.h"
 #include "content/browser/service_worker/service_worker_database.h"
+#include "content/common/service_worker/embedded_worker.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
 #include "ui/base/page_transition_types.h"
@@ -317,6 +318,10 @@ class ServiceWorkerMetrics {
                                       StartSituation start_situation);
   static void RecordTimeToEvaluateScript(base::TimeDelta duration,
                                          StartSituation start_situation);
+  CONTENT_EXPORT static void RecordEmbeddedWorkerStartTiming(
+      mojom::EmbeddedWorkerStartTimingPtr start_timing,
+      base::TimeTicks start_worker_sent_time,
+      StartSituation start_situation);
 
   static const char* LoadSourceToString(LoadSource source);
   static StartSituation GetStartSituation(bool is_browser_startup_complete,
