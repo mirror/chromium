@@ -33,14 +33,12 @@ void MojoDemuxerStreamImpl::Initialize(const InitializeCallback& callback) {
   DVLOG(2) << __func__;
 
   // Prepare the initial config.
-  mojom::AudioDecoderConfigPtr audio_config;
-  mojom::VideoDecoderConfigPtr video_config;
+  AudioDecoderConfig audio_config;
+  VideoDecoderConfig video_config;
   if (stream_->type() == Type::AUDIO) {
-    audio_config =
-        mojom::AudioDecoderConfig::From(stream_->audio_decoder_config());
+    audio_config = stream_->audio_decoder_config();
   } else if (stream_->type() == Type::VIDEO) {
-    video_config =
-        mojom::VideoDecoderConfig::From(stream_->video_decoder_config());
+    video_config = stream_->video_decoder_config();
   } else {
     NOTREACHED() << "Unsupported stream type: " << stream_->type();
     return;
@@ -67,19 +65,17 @@ void MojoDemuxerStreamImpl::OnBufferReady(
     const ReadCallback& callback,
     Status status,
     const scoped_refptr<media::DecoderBuffer>& buffer) {
-  mojom::AudioDecoderConfigPtr audio_config;
-  mojom::VideoDecoderConfigPtr video_config;
+  AudioDecoderConfig audio_config;
+  VideoDecoderConfig video_config;
 
   if (status == Status::kConfigChanged) {
     DVLOG(2) << __func__ << ": ConfigChange!";
     // Send the config change so our client can read it once it parses the
     // Status obtained via Run() below.
     if (stream_->type() == Type::AUDIO) {
-      audio_config =
-          mojom::AudioDecoderConfig::From(stream_->audio_decoder_config());
+      audio_config = stream_->audio_decoder_config();
     } else if (stream_->type() == Type::VIDEO) {
-      video_config =
-          mojom::VideoDecoderConfig::From(stream_->video_decoder_config());
+      video_config = stream_->video_decoder_config();
     } else {
       NOTREACHED() << "Unsupported config change encountered for type: "
                    << stream_->type();
