@@ -249,7 +249,13 @@ def _create_groups(properties):
 
 def _create_diff_groups_map(diff_function_inputs, root_group):
     diff_functions_map = {}
+
     for entry in diff_function_inputs:
+        # error handling
+        field_names = entry['fields_to_diff'] + _list_field_dependencies(entry['methods_to_diff'] + entry['predicates_to_test'])
+        for name in field_names:
+            assert name in [field.property_name for field in root_group.all_fields], \
+                ("The field '" + name + "' isn't a defined field on ComputedStyle")
         diff_functions_map[entry['name']] = _create_diff_groups(entry['fields_to_diff'],
                                                                 entry['methods_to_diff'], entry['predicates_to_test'], root_group)
     return diff_functions_map
