@@ -69,6 +69,24 @@
       "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243ef4a8_fdf5cbf3",
+        "filename": "build/cipd_wrapper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-22T23:53:13Z",
+      "side": 1,
+      "message": "That was what I thought.\n\nw/ us syncing deps before running hooks, I\u0027m wondering about the viability of using //third_party/depot_tools/cipd{,.bat}",
+      "parentUuid": "277a8087_e4f0f0e5",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
