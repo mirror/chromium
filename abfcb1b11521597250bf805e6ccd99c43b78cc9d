@@ -16,6 +16,24 @@
       "revId": "abfcb1b11521597250bf805e6ccd99c43b78cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce991af_691e9ed9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 12327,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-22T14:24:53Z",
+      "side": 1,
+      "message": "Interesting. I searched the IDS_* name in the code base and they only appears in vr_shell folder. So I assumed they are only used by VR. But it looks like these IDS also included in Android\u0027s R string and used a different name.\nI will fix it in reland and will try the failing bot before submit.",
+      "parentUuid": "347e2a70_dc13c21c",
+      "revId": "abfcb1b11521597250bf805e6ccd99c43b78cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
