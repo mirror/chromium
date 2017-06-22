@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ce6f725_5f293c9e",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-22T10:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c8af05_590819eb",
+      "range": {
+        "startLine": 23,
+        "startChar": 77,
+        "endLine": 23,
+        "endChar": 78
+      },
+      "revId": "16a52b6abec381f20d777d9d076699033d600b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc3361ec_31add680",
         "filename": "components/ntp_snippets/pref_names.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-22T06:34:19Z",
       "side": 1,
       "message": "FYI, once you launch your feature, you generally won\u0027t be able simply rename pref keys. You will have to transfer the data from the old storage and clear it. However, now it is fine, because this storage was created only on developers\u0027 devices.",
+      "range": {
+        "startLine": 85,
+        "startChar": 21,
+        "endLine": 85,
+        "endChar": 52
+      },
+      "revId": "16a52b6abec381f20d777d9d076699033d600b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "076b44bc_b56252ab",
+        "filename": "components/ntp_snippets/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-22T10:07:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc3361ec_31add680",
       "range": {
         "startLine": 85,
         "startChar": 21,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "52fb0c6b_28a087f1",
+        "filename": "components/ntp_snippets/pref_names.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-22T10:07:52Z",
+      "side": 1,
+      "message": "Changed per our off-review discussion.",
+      "parentUuid": "ca6765f3_1f03535a",
+      "range": {
+        "startLine": 93,
+        "startChar": 32,
+        "endLine": 93,
+        "endChar": 33
+      },
+      "revId": "16a52b6abec381f20d777d9d076699033d600b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51a90149_4769829c",
         "filename": "components/ntp_snippets/pref_names.h",
         "patchSetId": 3
@@ -129,6 +201,30 @@
       "writtenOn": "2017-06-22T09:35:25Z",
       "side": 1,
       "message": "Done",
+      "parentUuid": "51a90149_4769829c",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "16a52b6abec381f20d777d9d076699033d600b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50a03571_e0c311e8",
+        "filename": "components/ntp_snippets/pref_names.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-22T10:07:52Z",
+      "side": 1,
+      "message": "Changed per our off-review discussion.",
       "parentUuid": "51a90149_4769829c",
       "range": {
         "startLine": 101,
