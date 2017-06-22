@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2753caeb_83106f3e",
+        "filename": "device/bluetooth/test/fake_remote_gatt_characteristic.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T03:35:39Z",
+      "side": 1,
+      "message": "One thing I am curious about: why is it important to respond async? From the perspective of the mojo caller on the other side, there\u0027s no difference, right?\n\n(It feels like the code could be simpler if we didn\u0027t have to indirect through a posted task)",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 76
+      },
+      "revId": "b68df722e6f10dd182334b3bbd7d5c9bdecdbce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
