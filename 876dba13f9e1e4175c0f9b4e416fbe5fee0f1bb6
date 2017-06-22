@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "29b21234_cf49962a",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-22T15:39:54Z",
+      "side": 1,
+      "message": "Ah, I see. Fixed.",
+      "parentUuid": "ba4820b4_4ee0842d",
+      "range": {
+        "startLine": 86,
+        "startChar": 54,
+        "endLine": 86,
+        "endChar": 77
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44c66446_39016967",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 1

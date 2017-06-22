@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44e5dc93_854d6ee4",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-22T15:39:54Z",
+      "side": 1,
+      "message": "Huh, good catch :). This is something left behind from a previous fix. ApplyColorSpaceConversion() was originally receiving a SkImage* parameter as input, for which the conversion was needed. It is not needed now. Fixed.",
+      "parentUuid": "1cfd32d9_429df3f7",
+      "range": {
+        "startLine": 349,
+        "startChar": 38,
+        "endLine": 349,
+        "endChar": 59
+      },
+      "revId": "660362714f5ec8354269595090397400df2b59e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81049e9e_9123a135",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "660362714f5ec8354269595090397400df2b59e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a92297_7bcbb620",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-22T15:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81049e9e_9123a135",
+      "range": {
+        "startLine": 745,
+        "startChar": 54,
+        "endLine": 745,
+        "endChar": 60
+      },
+      "revId": "660362714f5ec8354269595090397400df2b59e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
