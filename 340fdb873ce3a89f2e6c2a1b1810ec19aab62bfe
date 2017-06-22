@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac313e6f_e9fbfe37",
+        "filename": "components/payments/core/test_payment_request_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T19:07:13Z",
+      "side": 1,
+      "message": "Nope, removed! Thanks for catching that",
+      "parentUuid": "62bc524f_dfc0ac37",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6d84cc4_e9127b34",
         "filename": "ios/chrome/browser/payments/payment_request.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "62237be7_4e963dbf",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T19:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6d84cc4_e9127b34",
+      "range": {
+        "startLine": 51,
+        "startChar": 58,
+        "endLine": 51,
+        "endChar": 63
+      },
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "685077fb_9ee1ea5e",
         "filename": "ios/chrome/browser/payments/payment_request.mm",
         "patchSetId": 6
@@ -59,6 +107,24 @@
       "writtenOn": "2017-06-21T20:31:55Z",
       "side": 1,
       "message": "According to the comments for this method in PaymentRequestDelegate, this method, \"Returns a pointer to the address normalizer to use for the duration of this Payment Request\". You shouldn\u0027t return a raw pointer hoping that its consumer will own it. Something similar to what ChromePaymentRequestDelegate does is preferable. Instead I would change AddressNormalizationManager to receive a raw pointer which it won\u0027t own and expects to live beyond it\u0027s own lifetime.",
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7025bc26_f9995caa",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T19:07:13Z",
+      "side": 1,
+      "message": "Makes sense--fixed!",
+      "parentUuid": "685077fb_9ee1ea5e",
       "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "ebd4bc68_3e9edfc4",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T19:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce98cb5_34094a18",
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2508f461_6dcc2111",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 6
@@ -96,6 +180,24 @@
       "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530c6982_700c9cff",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T19:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2508f461_6dcc2111",
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
