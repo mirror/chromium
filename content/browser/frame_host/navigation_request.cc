@@ -187,6 +187,10 @@ void AddAdditionalRequestHeaders(net::HttpRequestHeaders* headers,
   headers->SetHeader(net::HttpRequestHeaders::kOrigin, origin.Serialize());
 }
 
+void DeleteNavigationRequest(base::Callback<void()> delete_callback) {
+  delete_callback.Run();
+}
+
 }  // namespace
 
 // static
@@ -989,6 +993,24 @@ NavigationRequest::CheckContentSecurityPolicyFrameSrc(bool is_redirect) {
   }
 
   return CONTENT_SECURITY_POLICY_CHECK_FAILED;
+}
+
+void NavigationRequest::DeleteLater() {
+  if (navigation_handle_)
+    navigation_handle_->RemoveExpectedNavigationToSite();
+
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::Bind(&NavigationRequest::RunDeleteCallback,
+                                     weak_factory_.GetWeakPtr()));
+}
+
+void NavigationRequest::RunDeleteCallback() {
+  DeleteNavigationRequest(
+      base::Bind(&NavigationRequest::Delete, weak_factory_.GetWeakPtr()));
+}
+
+void NavigationRequest::Delete() {
+  delete this;
 }
 
 }  // namespace content

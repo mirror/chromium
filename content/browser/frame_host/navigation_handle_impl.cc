@@ -121,6 +121,7 @@ NavigationHandleImpl::NavigationHandleImpl(
       should_check_main_world_csp_(should_check_main_world_csp),
       is_form_submission_(is_form_submission),
       expected_render_process_host_id_(ChildProcessHost::kInvalidUniqueID),
+      removed_expected_navigation_(false),
       weak_factory_(this) {
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationHandle", this,
                            "frame_tree_node",
@@ -177,7 +178,7 @@ NavigationHandleImpl::NavigationHandleImpl(
   }
 }
 
-NavigationHandleImpl::~NavigationHandleImpl() {
+void NavigationHandleImpl::RemoveExpectedNavigationToSite() {
   // Inform the RenderProcessHost to no longer expect a navigation.
   if (expected_render_process_host_id_ != ChildProcessHost::kInvalidUniqueID) {
     RenderProcessHost* process =
@@ -187,7 +188,13 @@ NavigationHandleImpl::~NavigationHandleImpl() {
           frame_tree_node_->navigator()->GetController()->GetBrowserContext(),
           process, site_url_);
     }
+    removed_expected_navigation_ = true;
   }
+}
+
+NavigationHandleImpl::~NavigationHandleImpl() {
+  if (!removed_expected_navigation_)
+    RemoveExpectedNavigationToSite();
 
   // Transfer requests that have not matched up with another navigation request
   // from the renderer need to be cleaned up. These are marked as protected in
