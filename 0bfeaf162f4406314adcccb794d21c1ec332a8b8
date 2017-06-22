@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5351b9de_ac79b52d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/IncognitoTabModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-22T22:31:36Z",
+      "side": 1,
+      "message": "Re-worked this co call mDelegateModel.setIsPendingTabAdd() as discussed offline.",
+      "parentUuid": "ee6b3555_a531c5dd",
+      "range": {
+        "startLine": 161,
+        "startChar": 34,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "0bfeaf162f4406314adcccb794d21c1ec332a8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d46c030_d1630bf2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
         "patchSetId": 2

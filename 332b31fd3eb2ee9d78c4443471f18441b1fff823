@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e3921c2_8030b330",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-22T22:31:36Z",
+      "side": 1,
+      "message": "I found a bug in this patch during my more robust manual testing that resulted in odd state or crashes if NTP UI wasn\u0027t hidden before hiding the overview.",
+      "range": {
+        "startLine": 1055,
+        "startChar": 16,
+        "endLine": 1055,
+        "endChar": 84
+      },
+      "revId": "332b31fd3eb2ee9d78c4443471f18441b1fff823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09930770_a5b338ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-22T22:31:36Z",
+      "side": 1,
+      "message": "Avoiding switching back to the incognito model when it\u0027s not valid to do so.",
+      "range": {
+        "startLine": 174,
+        "startChar": 63,
+        "endLine": 174,
+        "endChar": 71
+      },
+      "revId": "332b31fd3eb2ee9d78c4443471f18441b1fff823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
