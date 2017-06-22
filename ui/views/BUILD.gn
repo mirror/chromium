@@ -1090,6 +1090,7 @@ test("views_unittests") {
 
   deps = [
     ":views_unittests_sources",
+    "//mojo/edk/system",
   ]
 }
 
@@ -1105,6 +1106,7 @@ if (is_mac) {
       ":views",
       "//base",
       "//base/test:test_support",
+      "//mojo/edk/system",
       "//skia",
       "//testing/gtest",
       "//ui/base:test_support",
