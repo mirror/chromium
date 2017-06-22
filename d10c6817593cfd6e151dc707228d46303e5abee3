@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6afd102_a0b3e8f0",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-22T16:00:45Z",
+      "side": 1,
+      "message": "nit: here and other files, update header guard",
+      "revId": "d10c6817593cfd6e151dc707228d46303e5abee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8ac372_e447dd47",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-22T16:00:45Z",
+      "side": 1,
+      "message": "nit: this should be METRICS_EXPORT",
+      "revId": "d10c6817593cfd6e151dc707228d46303e5abee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f6b5e6_814fbce3",
+        "filename": "services/metrics/public/cpp/ukm_export.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-22T16:00:45Z",
+      "side": 1,
+      "message": "nit: update",
+      "revId": "d10c6817593cfd6e151dc707228d46303e5abee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
