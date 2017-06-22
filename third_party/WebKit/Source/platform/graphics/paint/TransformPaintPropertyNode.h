@@ -10,11 +10,9 @@
 #include "platform/graphics/CompositingReasons.h"
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/graphics/paint/GeometryMapperTransformCache.h"
+#include "platform/graphics/paint/PaintPropertyNode.h"
 #include "platform/graphics/paint/ScrollPaintPropertyNode.h"
 #include "platform/transforms/TransformationMatrix.h"
-#include "platform/wtf/PassRefPtr.h"
-#include "platform/wtf/RefCounted.h"
-#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
 
 #include <iosfwd>
@@ -30,7 +28,7 @@ namespace blink {
 // The transform tree is rooted at a node with no parent. This root node should
 // not be modified.
 class PLATFORM_EXPORT TransformPaintPropertyNode
-    : public RefCounted<TransformPaintPropertyNode> {
+    : public PaintPropertyNode<TransformPaintPropertyNode> {
  public:
   // This node is really a sentinel, and does not represent a real transform
   // space.
@@ -85,9 +83,16 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
       unsigned rendering_context_id = 0,
       CompositingReasons direct_compositing_reasons = kCompositingReasonNone,
       CompositorElementId compositor_element_id = CompositorElementId()) {
-    DCHECK(!IsRoot());
-    DCHECK(parent != this);
-    parent_ = std::move(parent);
+    PaintPropertyNode::Update(std::move(parent));
+
+    if (matrix == matrix_ && origin == origin_ &&
+        flattens_inherited_transform == flattens_inherited_transform_ &&
+        rendering_context_id == rendering_context_id_ &&
+        direct_compositing_reasons == direct_compositing_reasons_ &&
+        compositor_element_id == compositor_element_id_)
+      return;
+
+    SetChanged();
     matrix_ = matrix;
     origin_ = origin;
     flattens_inherited_transform_ = flattens_inherited_transform;
@@ -123,11 +128,6 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
 
   const TransformationMatrix& Matrix() const { return matrix_; }
   const FloatPoint3D& Origin() const { return origin_; }
-
-  // Parent transform that this transform is relative to, or nullptr if this
-  // is the root transform.
-  const TransformPaintPropertyNode* Parent() const { return parent_.Get(); }
-  bool IsRoot() const { return !parent_; }
 
   // True if this transform is for the scroll offset translation.
   bool IsScrollTranslation() const { return !!scroll_; }
@@ -169,7 +169,7 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
   // a transform node before it has been updated, to later detect changes.
   PassRefPtr<TransformPaintPropertyNode> Clone() const {
     return AdoptRef(new TransformPaintPropertyNode(
-        parent_, matrix_, origin_, flattens_inherited_transform_,
+        Parent(), matrix_, origin_, flattens_inherited_transform_,
         rendering_context_id_, direct_compositing_reasons_,
         compositor_element_id_, scroll_ ? scroll_->Clone() : nullptr));
   }
@@ -179,7 +179,7 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
   bool operator==(const TransformPaintPropertyNode& o) const {
     if (scroll_ && o.scroll_ && !(*scroll_ == *o.scroll_))
       return false;
-    return parent_ == o.parent_ && matrix_ == o.matrix_ &&
+    return Parent() == o.Parent() && matrix_ == o.matrix_ &&
            origin_ == o.origin_ &&
            flattens_inherited_transform_ == o.flattens_inherited_transform_ &&
            rendering_context_id_ == o.rendering_context_id_ &&
@@ -203,7 +203,7 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
       CompositingReasons direct_compositing_reasons,
       CompositorElementId compositor_element_id,
       PassRefPtr<ScrollPaintPropertyNode> scroll = nullptr)
-      : parent_(std::move(parent)),
+      : PaintPropertyNode(std::move(parent)),
         matrix_(matrix),
         origin_(origin),
         flattens_inherited_transform_(flattens_inherited_transform),
@@ -227,7 +227,6 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
     return *geometry_mapper_transform_cache_.get();
   }
 
-  RefPtr<const TransformPaintPropertyNode> parent_;
   TransformationMatrix matrix_;
   FloatPoint3D origin_;
   bool flattens_inherited_transform_;
