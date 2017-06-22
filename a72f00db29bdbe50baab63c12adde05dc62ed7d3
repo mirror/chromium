@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6ad201b_d8a07c14",
+        "filename": "chrome/browser/profiles/profile.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-22T20:53:18Z",
+      "side": 1,
+      "message": "Added a TODO to do this in a follow-up CL",
+      "parentUuid": "55cfe319_78494ae0",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a33f333a_d8ca340b",
         "filename": "chrome/browser/safe_browsing/ui_manager_unittest.cc",
         "patchSetId": 5
@@ -104,6 +122,24 @@
       "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8565e75_bdabf0b5",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-22T20:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c8aa35_60573151",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

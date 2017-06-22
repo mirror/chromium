@@ -94,6 +94,30 @@
       "revId": "ac8c5baf1b926eb5121d5c1833d8a8755a325e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2829e839_0489d151",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-22T20:53:18Z",
+      "side": 0,
+      "message": "As discussed offline, passing SBErroDisplayOptions instead of PrefService into TriggerManager functions. Tim/Jialiu, PTAL.",
+      "parentUuid": "6060de02_0617743a",
+      "range": {
+        "startLine": 126,
+        "startChar": 56,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "ac8c5baf1b926eb5121d5c1833d8a8755a325e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
