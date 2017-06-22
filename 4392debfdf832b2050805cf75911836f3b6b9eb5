@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efac6585_5dc68471",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-22T21:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "962a5cfe_b3c625ea",
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb9312b8_c3816f3c",
         "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c6a93c8d_eee4d26f",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-22T21:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb9312b8_c3816f3c",
+      "range": {
+        "startLine": 56,
+        "startChar": 44,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffa97a16_cc3e7364",
         "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-22T21:43:24Z",
       "side": 1,
       "message": "no longer OnFileThread! ;-)",
+      "range": {
+        "startLine": 117,
+        "startChar": 40,
+        "endLine": 117,
+        "endChar": 52
+      },
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3d58b4_9edef4c6",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-22T21:58:32Z",
+      "side": 1,
+      "message": "Renamed to BeginUpdateCheckInBackground",
+      "parentUuid": "ffa97a16_cc3e7364",
       "range": {
         "startLine": 117,
         "startChar": 40,
@@ -85,6 +151,30 @@
       "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae88829c_39d2d0ae",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-22T21:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "254db102_23ca1483",
+      "range": {
+        "startLine": 121,
+        "startChar": 25,
+        "endLine": 121,
+        "endChar": 63
+      },
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +215,48 @@
       "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3585112d_c989a26a",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-22T21:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4953b901_91f8cc0d",
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b37ba9b2_2fb9ec03",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-22T21:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac4a4548_9ea77866",
+      "range": {
+        "startLine": 122,
+        "startChar": 44,
+        "endLine": 122,
+        "endChar": 54
+      },
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
