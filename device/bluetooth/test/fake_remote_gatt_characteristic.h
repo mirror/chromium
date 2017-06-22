@@ -37,6 +37,16 @@ class FakeRemoteGattCharacteristic
   void SetNextReadResponse(uint16_t gatt_code,
                            const base::Optional<std::vector<uint8_t>>& value);
 
+  // If |gatt_code| is mojom::kGATTSuccess the next write with response request
+  // will call its success callback. Otherwise it will call its error callback.
+  void SetNextWriteResponse(uint16_t gatt_code);
+
+  // Returns the last sucessfully written value to the characteristic. Returns
+  // nullopt if no value has been written yet.
+  base::Optional<std::vector<uint8_t>> last_written_value() {
+    return last_written_value_;
+  }
+
   // device::BluetoothGattCharacteristic overrides:
   std::string GetIdentifier() const override;
   device::BluetoothUUID GetUUID() const override;
@@ -70,12 +80,18 @@ class FakeRemoteGattCharacteristic
  private:
   void DispatchReadResponse(const ValueCallback& callback,
                             const ErrorCallback& error_callback);
+  void DispatchWriteResponse(const base::Closure& callback,
+                             const ErrorCallback& error_callback,
+                             const std::vector<uint8_t>& value);
 
   const std::string characteristic_id_;
   const device::BluetoothUUID characteristic_uuid_;
   Properties properties_;
   device::BluetoothRemoteGattService* service_;
   std::vector<uint8_t> value_;
+
+  // Last successfully written value to the characteristic.
+  base::Optional<std::vector<uint8_t>> last_written_value_;
 
   struct ReadResponse {
     ReadResponse(uint16_t gatt_code,
@@ -91,6 +107,10 @@ class FakeRemoteGattCharacteristic
   // Used to decide which callback should be called when
   // ReadRemoteCharacteristic is called.
   base::Optional<ReadResponse> next_read_response_;
+
+  // Used to decide which callback should be called when
+  // WriteRemoteCharacteristic is called.
+  base::Optional<uint16_t> next_write_response_;
 
   base::WeakPtrFactory<FakeRemoteGattCharacteristic> weak_ptr_factory_;
 };
