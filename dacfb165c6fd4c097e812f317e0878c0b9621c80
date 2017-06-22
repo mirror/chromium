@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32d71029_b106436b",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-22T01:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "218b6719_70373a30",
+      "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2228e63c_4d3a161d",
         "filename": "chrome/browser/extensions/extension_tab_util.cc",
         "patchSetId": 1
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "81263ac3_70dc406f",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-22T01:16:19Z",
+      "side": 1,
+      "message": "Ok, sounds good. I\u0027ll do a follow up in separate CL.",
+      "parentUuid": "d2eda2f1_8362a486",
+      "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "899827ed_431d45b7",
         "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
         "patchSetId": 1
@@ -68,6 +104,24 @@
       "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8d3b9e_9dc9727d",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-22T01:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "899827ed_431d45b7",
+      "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
