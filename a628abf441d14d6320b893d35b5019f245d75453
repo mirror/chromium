@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83191421_5a1f45ff",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-22T01:04:07Z",
+      "side": 1,
+      "message": "Can you change to the inverse - has_bindings_ ? It\u0027s a little confusing to reason about booleans that are a negation of something.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 32
+      },
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cbceb3_d89b59bc",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-22T01:04:07Z",
+      "side": 1,
+      "message": "just to confirm - we\u0027ll keep around the wrappers on low end devices now until someone creates a new local storage wrapper?",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7053a3b1_f202bcbb",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-22T01:04:07Z",
+      "side": 1,
+      "message": "when has_binding(), then you can switch these around so you still don\u0027t negate.\n\nif (has_bindings()) {\n  ++it;\n} else\n...",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725adbd0_85b3eba6",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-22T01:04:07Z",
+      "side": 1,
+      "message": "you can probably remove braces here, if you want to match your style above.",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37843efa_c366fcbf",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-22T01:04:07Z",
+      "side": 1,
+      "message": "nit: no saving the function pointer :( I guess you could do the macro again if you do the purge reason as an enum and then switch it here. You\u0027re choice, I prefer the switch version.",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c450445_a894c191",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-22T01:04:07Z",
+      "side": 1,
+      "message": "Double counting?",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
