@@ -22,6 +22,30 @@
       "revId": "2ba71d12ac3867960039f699102da3454698e8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d064674_1dae281c",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OpenTypeTypes.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-06-22T16:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c550a6e1_af6671c6",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "2ba71d12ac3867960039f699102da3454698e8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
