@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "428db8dd_c5fe93eb",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "// Returns the path to the in-proc server DLL for |guid|, or an empty path if none is found.\n\nor something like that.",
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141b6b2a_381a9f54",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "constexpr all the things!",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 61,
+        "endChar": 14
+      },
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7872cfdd_652f1370",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "wdyt of taking |callback| by value (as per https://chromium.googlesource.com/chromium/src/+/7c65a26c058cf485c61809dfa70f8cc9d92d5560/docs/callback.md#Memory-Management-And-Passing) and std::moving it into the post, then also taking it by value in EnumerateImesOnBlockingSequence? i think this will avoid some copying/refbumping.",
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21413115_93229cdc",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "nit: move these up above the fn so that they\u0027re in the same order as the .h.",
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae4dfbb_dc98269e",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "nit: omit blank line",
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7abe811_e7c0e95e",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "// A format string for generating paths to COM class in-proc server keys under HKEY_CLASSES_ROOT.\n\nor something like that",
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80e0535_7b17f3f4",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "please update comment stating that it must be called with ASSERT_NO_FATAL_FAILURE.",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 40
+      },
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2d5c8e_ef126375",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "rather than this, how about adding PeImageReader::GetSizeOfImage() that calls through a new virtual method in OptionalHeader to automagically use the proper header type? see, for example, how PeImageReader::GetDataDirectoryEntryAt works.",
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7806ff00_cf5980da",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "is it a good idea to use 4k of stack for this? how about putting this on the heap?",
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5438d35_f5ce6d60",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T09:02:12Z",
+      "side": 1,
+      "message": "nit: omit braces",
+      "range": {
+        "startLine": 331,
+        "startChar": 55,
+        "endLine": 331,
+        "endChar": 56
+      },
+      "revId": "f210d1f22ed493c63328cdac472b7d26274a295a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
