@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fbdb2c3_9a9ca6ff",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T11:41:26Z",
+      "side": 1,
+      "message": "If the field is present there are only two valid values: VIDEO and UNKNOWN anything else would be invalid.\n\nSo this is a very weak protection against adding a new value to the enum on the server but not on the client.",
+      "parentUuid": "fdc1ca2c_fb4d2df2",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 280,
+        "endChar": 38
+      },
+      "revId": "6485b2ec5c7741ee7a0df2fa08f79bf6a332724e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce2a1f78_28a46406",
         "filename": "components/ntp_snippets/remote/remote_suggestion_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6485b2ec5c7741ee7a0df2fa08f79bf6a332724e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad7c62d_1f87f41a",
+        "filename": "components/ntp_snippets/remote/remote_suggestion_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T11:41:26Z",
+      "side": 1,
+      "message": "I agree. I will use content_suggestion instead of suggestions to be clear that this is a ContentSuggestion and not a RemoteSuggestion.\n\n\nUsing sugg would have been consistent with the reset of the code in this file. \nLet me create a separate CL for renaming all sugg to content_suggestion in this file.",
+      "parentUuid": "ce2a1f78_28a46406",
+      "range": {
+        "startLine": 575,
+        "startChar": 20,
+        "endLine": 575,
+        "endChar": 24
+      },
+      "revId": "6485b2ec5c7741ee7a0df2fa08f79bf6a332724e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

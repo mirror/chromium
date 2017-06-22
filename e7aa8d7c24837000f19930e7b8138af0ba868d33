@@ -283,6 +283,30 @@
       "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87c151db_2ab1f33a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T11:41:26Z",
+      "side": 1,
+      "message": "sorry I didn\u0027t notice the checkbox on the right side. This is my first CL in gerrit.",
+      "parentUuid": "b2e76fcb_2a39112f",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1042,
+        "endChar": 50
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
