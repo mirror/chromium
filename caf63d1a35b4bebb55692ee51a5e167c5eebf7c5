@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "28d855af_5a7d6c5d",
+        "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-06-22T21:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02567f01_ac604cc2",
+      "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dec3edd_f19b5093",
         "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
         "patchSetId": 6
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "dc09567f_b2ea8f43",
+        "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-06-22T21:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dec3edd_f19b5093",
+      "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b09c4129_1e68c32b",
         "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
         "patchSetId": 6
@@ -83,6 +119,30 @@
       "writtenOn": "2017-06-20T18:05:09Z",
       "side": 1,
       "message": "As indicated when Ella added a similar flag I don\u0027t think this should be called kFakeMouseMove. But indicate it is synthetic (and not necessarily related to mouse move)",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 18
+      },
+      "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4adb68_71b17773",
+        "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-06-22T21:07:19Z",
+      "side": 1,
+      "message": "I will rebase if she lands her patch first.",
+      "parentUuid": "b09c4129_1e68c32b",
       "range": {
         "startLine": 238,
         "startChar": 4,
