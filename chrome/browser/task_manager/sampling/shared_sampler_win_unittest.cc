@@ -32,15 +32,9 @@ class SharedSamplerTest : public testing::Test {
   SharedSamplerTest()
       : blocking_pool_runner_(GetBlockingPoolRunner()),
         shared_sampler_(new SharedSampler(blocking_pool_runner_)) {
-    shared_sampler_->RegisterCallbacks(
+    shared_sampler_->RegisterCallback(
         base::GetCurrentProcId(),
-        base::Bind(&SharedSamplerTest::OnIdleWakeupsRefreshDone,
-                   base::Unretained(this)),
-        base::Bind(&SharedSamplerTest::OnPhysicalMemoryUsageRefreshDone,
-                   base::Unretained(this)),
-        base::Bind(&SharedSamplerTest::OnStartTimeRefreshDone,
-                   base::Unretained(this)),
-        base::Bind(&SharedSamplerTest::OnCpuTimeRefreshDone,
+        base::Bind(&SharedSamplerTest::OnSamplerRefreshDone,
                    base::Unretained(this)));
   }
 
@@ -81,24 +75,23 @@ class SharedSamplerTest : public testing::Test {
       quit_closure_.Run();
   }
 
-  void OnPhysicalMemoryUsageRefreshDone(int64_t physical_bytes) {
-    physical_bytes_ = physical_bytes;
-    OnRefreshTypeFinished(REFRESH_TYPE_PHYSICAL_MEMORY);
-  }
-
-  void OnIdleWakeupsRefreshDone(int idle_wakeups_per_second) {
-    idle_wakeups_per_second_ = idle_wakeups_per_second;
-    OnRefreshTypeFinished(REFRESH_TYPE_IDLE_WAKEUPS);
-  }
-
-  void OnStartTimeRefreshDone(base::Time start_time) {
-    start_time_ = start_time;
-    OnRefreshTypeFinished(REFRESH_TYPE_START_TIME);
-  }
-
-  void OnCpuTimeRefreshDone(base::TimeDelta cpu_time) {
-    cpu_time_ = cpu_time;
-    OnRefreshTypeFinished(REFRESH_TYPE_CPU_TIME);
+  void OnSamplerRefreshDone(SharedSampler::Results results) {
+    if (results.physical_bytes) {
+      physical_bytes_ = *results.physical_bytes;
+      OnRefreshTypeFinished(REFRESH_TYPE_PHYSICAL_MEMORY);
+    }
+    if (results.idle_wakeups_per_second) {
+      idle_wakeups_per_second_ = *results.idle_wakeups_per_second;
+      OnRefreshTypeFinished(REFRESH_TYPE_IDLE_WAKEUPS);
+    }
+    if (results.start_time) {
+      start_time_ = *results.start_time;
+      OnRefreshTypeFinished(REFRESH_TYPE_START_TIME);
+    }
+    if (results.cpu_time) {
+      cpu_time_ = *results.cpu_time;
+      OnRefreshTypeFinished(REFRESH_TYPE_CPU_TIME);
+    }
   }
 
   int64_t expected_refresh_type_ = 0;
