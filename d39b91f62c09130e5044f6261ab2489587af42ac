@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fa786a5_3bdbccea",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-22T19:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274de0ee_fa158985",
+      "revId": "d39b91f62c09130e5044f6261ab2489587af42ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f107b675_fa2233ad",
         "filename": "components/payments/content/utility/payment_manifest_parser.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "d39b91f62c09130e5044f6261ab2489587af42ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99748895_b43aba46",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-22T19:32:30Z",
+      "side": 1,
+      "message": "\u003e Are we sure this is the only place to return true?\n\nYep.\n\n\u003e The nesting in this function is getting kind of hairy. Maybe break it into smaller helper functions? That might make it easier to read.\n\nDone.",
+      "parentUuid": "f107b675_fa2233ad",
+      "revId": "d39b91f62c09130e5044f6261ab2489587af42ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
