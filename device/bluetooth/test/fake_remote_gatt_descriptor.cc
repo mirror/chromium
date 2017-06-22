@@ -12,9 +12,14 @@ FakeRemoteGattDescriptor::FakeRemoteGattDescriptor(
     device::BluetoothRemoteGattCharacteristic* characteristic)
     : descriptor_id_(descriptor_id),
       descriptor_uuid_(descriptor_uuid),
-      characteristic_(characteristic) {}
+      characteristic_(characteristic),
+      weak_ptr_factory_(this) {}
 
 FakeRemoteGattDescriptor::~FakeRemoteGattDescriptor() {}
+
+void FakeRemoteGattDescriptor::SetNextReadResponse(
+    uint16_t code,
+    const base::Optional<std::vector<uint8_t>>& value) {}
 
 std::string FakeRemoteGattDescriptor::GetIdentifier() const {
   return descriptor_id_;

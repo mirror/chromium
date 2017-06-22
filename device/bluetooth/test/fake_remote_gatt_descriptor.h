@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "device/bluetooth/bluetooth_remote_gatt_characteristic.h"
 #include "device/bluetooth/bluetooth_remote_gatt_descriptor.h"
 #include "device/bluetooth/bluetooth_uuid.h"
@@ -23,6 +25,9 @@ class FakeRemoteGattDescriptor : public device::BluetoothRemoteGattDescriptor {
       const device::BluetoothUUID& descriptor_uuid,
       device::BluetoothRemoteGattCharacteristic* characteristic);
   ~FakeRemoteGattDescriptor() override;
+
+  void SetNextReadResponse(uint16_t code,
+                           const base::Optional<std::vector<uint8_t>>& value);
 
   // device::BluetoothGattDescriptor overrides:
   std::string GetIdentifier() const override;
@@ -44,6 +49,8 @@ class FakeRemoteGattDescriptor : public device::BluetoothRemoteGattDescriptor {
   const device::BluetoothUUID descriptor_uuid_;
   device::BluetoothRemoteGattCharacteristic* characteristic_;
   std::vector<uint8_t> value_;
+
+  base::WeakPtrFactory<FakeRemoteGattDescriptor> weak_ptr_factory_;
 };
 
 }  // namespace bluetooth
