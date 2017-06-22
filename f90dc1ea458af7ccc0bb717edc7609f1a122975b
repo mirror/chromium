@@ -22,6 +22,30 @@
       "revId": "f90dc1ea458af7ccc0bb717edc7609f1a122975b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245bc2fc_026a3d78",
+        "filename": "docs/speed/perf_regression_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T07:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfb2092a_3afce24d",
+      "range": {
+        "startLine": 143,
+        "startChar": 68,
+        "endLine": 143,
+        "endChar": 77
+      },
+      "revId": "f90dc1ea458af7ccc0bb717edc7609f1a122975b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
