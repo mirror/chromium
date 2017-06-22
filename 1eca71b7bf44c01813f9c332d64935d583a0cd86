@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d60d608_ee4bf288",
+        "filename": "base/test/launcher/test_launcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-06-22T12:53:54Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer not to have two different ctors (for simplicity - one obvious way to do it). That might not sound like a big deal, but with various options people try to add sometimes, drawing the line at exactly one seems to help.\n\nActually I\u0027d like to suggest a different approach, which would extract kTestLauncherJobs flag processing to a helper (can be a function like GetTestOutputSnippet below). Then TestLauncher would just use |parallel_jobs| value directly. Looks like there are only ~3 callers that may need to be updated, and ones that want to force 1 would pass 1 without calling the helper.\n\nHow does that sound? I\u0027d be technically fine with approach in this patch (not asking for rework for relatively minor issues), except for the ctor nit. Since the callers would need to be updated for that anyway, I thought the approach I suggested above would be a noticeably better and cleaner API.",
+      "revId": "1eca71b7bf44c01813f9c332d64935d583a0cd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
