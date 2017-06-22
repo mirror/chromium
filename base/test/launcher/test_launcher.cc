@@ -803,22 +803,6 @@ bool TestLauncher::Init() {
   if (command_line->HasSwitch(switches::kTestLauncherForceRunBrokenTests))
     force_run_broken_tests_ = true;
 
-  if (command_line->HasSwitch(switches::kTestLauncherJobs)) {
-    size_t jobs = 0U;
-    if (!StringToSizeT(command_line->GetSwitchValueASCII(
-                         switches::kTestLauncherJobs), &jobs) ||
-        !jobs) {
-      LOG(ERROR) << "Invalid value for " << switches::kTestLauncherJobs;
-      return false;
-    }
-
-    parallel_jobs_ = jobs;
-  } else if (command_line->HasSwitch(kGTestFilterFlag) && !BotModeEnabled()) {
-    // Do not run jobs in parallel by default if we are running a subset of
-    // the tests and if bot mode is off.
-    parallel_jobs_ = 1U;
-  }
-
   fprintf(stdout, "Using %" PRIuS " parallel jobs.\n", parallel_jobs_);
   fflush(stdout);
   if (parallel_jobs_ > 1U) {
@@ -1197,6 +1181,29 @@ scoped_refptr<TaskRunner> TestLauncher::GetTaskRunner() {
     return worker_pool_owner_->pool();
   DCHECK(worker_thread_->IsRunning());
   return worker_thread_->task_runner();
+}
+
+size_t NumParallelJobs() {
+  CommandLine* command_line = CommandLine::ForCurrentProcess();
+  CommandLine::SwitchMap switches = command_line->GetSwitches();
+
+  size_t jobs = 1U;
+
+  if (command_line->HasSwitch(kGTestFilterFlag) && !BotModeEnabled()) {
+    // Do not run jobs in parallel by default if we are running a subset of
+    // the tests and if bot mode is off.
+    return 1U;
+  } else if (command_line->HasSwitch(switches::kTestLauncherJobs)) {
+    if (!StringToSizeT(
+            command_line->GetSwitchValueASCII(switches::kTestLauncherJobs),
+            &jobs) ||
+        !jobs) {
+      LOG(ERROR) << "Invalid value for " << switches::kTestLauncherJobs;
+      return 1U;
+    }
+  }
+
+  return jobs;
 }
 
 std::string GetTestOutputSnippet(const TestResult& result,
