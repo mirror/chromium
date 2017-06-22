@@ -16,6 +16,24 @@
       "revId": "f425ec0248d3f221ff216f2372c320b3147cd99e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3436360_175fc561",
+        "filename": "mojo/public/cpp/bindings/associated_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-22T17:07:25Z",
+      "side": 1,
+      "message": "I have chatted with Ken. And it seems reasonable to change the behavior to:\n\n- get rid of the |task_runner| param of Bind().\n- Bind() will use the current sequenced task runner. (You could post a task to the desired task runner to do it if you are not on it.)\n- An unbound [Associated](InterfacePtr|Binding) could be used from any sequence (but *not* thread-safe). A bound [Associated](InterfacePtr|Binding) must be used from the same sequence where Bind() is called.\n\nWDYT?",
+      "parentUuid": "b4eb1e1f_88d3625c",
+      "revId": "f425ec0248d3f221ff216f2372c320b3147cd99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
