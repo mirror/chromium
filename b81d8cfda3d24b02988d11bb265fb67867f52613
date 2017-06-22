@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b161d0_b826606c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-direction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-22T21:41:27Z",
+      "side": 1,
+      "message": "When I run this locally in chrome stable (59) I see the same difference that the mac trybot got. (The \u0027a\u0027 is shifted ~1 pixel to the right in -ref.html) Do you see that locally?",
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3940cae3_430745e4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-22T21:41:27Z",
+      "side": 1,
+      "message": "This changes text direction only. Was this supposed to be in the -ref file? Perhaps to fix the spacing of the characters inside the cells?",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acde43d8_08c601e3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-22T21:41:27Z",
+      "side": 1,
+      "message": "Is this superfluous? (isn\u0027t ltr the default?) Or is it testing something I\u0027m not seeing?",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e773b6_155e3643",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-22T21:41:27Z",
+      "side": 1,
+      "message": "So this changes the order of the columns AND text direction?",
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b0ac24_75ff341b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-22T21:41:27Z",
+      "side": 1,
+      "message": "But this only changes text direction, but that doesn\u0027t change anything in this case, because there\u0027s only 1 character in each cell?",
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8c71cf_14009d19",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-group-direction-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-22T21:41:27Z",
+      "side": 1,
+      "message": "Did you intend for this to be \u003ctbody\u003e in this table and the below? (off the top of my head I forgot if multiple thead s are \"allowed\")",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
