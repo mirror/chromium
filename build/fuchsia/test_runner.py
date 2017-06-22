@@ -6,11 +6,11 @@
 
 """Packages a user.bootfs for a Fuchsia QEMU image, pulling in the runtime
 dependencies of a test binary, and then uses QEMU from the Fuchsia SDK to run
-it. Does not yet implement running on real hardware, or symbolization of
-crashes."""
+it. Does not yet implement running on real hardware."""
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -240,16 +240,23 @@ def main():
   if args.dry_run:
     print 'Run:', qemu_command
   else:
+    full_prefix = "^(|\[\d+\.\d+\] \d+\.\d+> )"
+    bt_with_offset_re = re.compile(full_prefix +
+        "bt#(\d+): pc 0x[0-9a-f]+ sp (0x[0-9a-f]+) \((\S+),(0x[0-9a-f]+)\)$")
     qemu_popen = subprocess.Popen(qemu_command, stdout=subprocess.PIPE)
     success = False
-    # TODO(scottmg): Pipe through magenta/scripts/symbolize too, once that's
-    # available in the SDK.
     while True:
       line = qemu_popen.stdout.readline()
       if not line:
         break
       if 'SUCCESS: all tests passed.' in line:
         success = True
+      m = bt_with_offset_re.match(line.strip())
+      if m:
+        print 'MATCH', line,
+        output = subprocess.check_output(
+            ['addr2line', '-Cipf', '--exe=' + args.test_name, m.group(5)])
+        print output
       print line,
     qemu_popen.wait()
     return 0 if success else 1
