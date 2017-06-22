@@ -104,6 +104,9 @@ class CONTENT_EXPORT WebContentsDelegate {
   // commit.  Defaults to true.
   virtual bool ShouldTransferNavigation(bool is_main_frame_navigation);
 
+  // Error Page.
+  virtual void SetErrorPage(WebContents* source, bool is_error_page) {}
+
   // Called to inform the delegate that the WebContents's navigation state
   // changed. The |changed_flags| indicates the parts of the navigation state
   // that have been updated.
@@ -114,6 +117,7 @@ class CONTENT_EXPORT WebContentsDelegate {
   // security state changed and that security UI should be updated.
   virtual void VisibleSecurityStateChanged(WebContents* source) {}
 
+  virtual void DisplayViewInTouchbar(WebContents* contents) {}
   // Creates a new tab with the already-created WebContents 'new_contents'.
   // The window for the added contents should be reparented correctly when this
   // method returns.  If |disposition| is NEW_POPUP, |initial_rect| should hold
