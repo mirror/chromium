@@ -52,6 +52,24 @@
       "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63297c29_4f5a27cb",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-22T11:47:09Z",
+      "side": 1,
+      "message": "We cannot include the target aura::Window in PointerWatcherAdapter callback because the definition of the callback is in ui/views that isn\u0027t allowed to depend on ui/aura. Do you have any suggestions?",
+      "parentUuid": "d24fd400_971c69e7",
+      "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
