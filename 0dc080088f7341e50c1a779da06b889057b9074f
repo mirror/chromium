@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bae26d0_22e2f9ca",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-22T19:32:20Z",
+      "side": 1,
+      "message": "This doesn\u0027t have to be done only for Android but causes lots of tests to fail because they finish without the deferred NavigationTest instances having a chance to be destroyed, therefore sanity checker detects it https://cs.chromium.org/chromium/src/content/test/web_contents_observer_sanity_checker.cc?l\u003d289 This won\u0027t be a problem in reality.",
+      "revId": "0dc080088f7341e50c1a779da06b889057b9074f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
