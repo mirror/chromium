@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "da774f47_61aeb7c2",
+        "filename": "storage/browser/blob/blob_registry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T21:04:41Z",
+      "side": 1,
+      "message": "(just marking as resolved)",
+      "parentUuid": "dd2b2123_99b1455a",
+      "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4932046a_b0475ff9",
         "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
         "patchSetId": 6
@@ -87,6 +105,24 @@
       "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c035ed0d_f12ec168",
+        "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T21:04:41Z",
+      "side": 1,
+      "message": "Not sure if this behavior (of closing the blob pipe) is quite the best behavior either. If we don\u0027t want to bad-message crash tabs because of this, I guess we\u0027ll also need to add code to Register to gently fail when passed a closed blob pipe (which might make sense anyway, at least it\u0027ll have to be able to deal with closed blob pipes somehow, the question would just be if they should be BadMessage\u0027d or not...). And of course code in blink itself needs to be able to deal with closed blob pipes.",
+      "parentUuid": "fbd2c0a7_f49f4767",
+      "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
