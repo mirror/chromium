@@ -167,6 +167,18 @@ android_resources("ui_java_resources") {
   ]
 }
 
+# This is created explicitly for remoting_apk to avoid including
+# unused JNI functions.
+android_library("ui_utils_java") {
+  java_files = [
+    "java/src/org/chromium/ui/PhotoPickerListener.java",
+    "java/src/org/chromium/ui/UiUtils.java",
+  ]
+  deps = [
+    "//base:base_java",
+  ]
+}
+
 android_library("ui_java") {
   java_files = [
     "java/src/org/chromium/ui/DropdownAdapter.java",
