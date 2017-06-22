@@ -1533,14 +1533,10 @@ int AXPlatformNodeWin::MSAAState() {
     msaa_state |= STATE_SYSTEM_OFFSCREEN;
   if (state & (1 << ui::AX_STATE_PROTECTED))
     msaa_state |= STATE_SYSTEM_PROTECTED;
-  if (state & (1 << ui::AX_STATE_READ_ONLY))
-    msaa_state |= STATE_SYSTEM_READONLY;
   if (state & (1 << ui::AX_STATE_SELECTABLE))
     msaa_state |= STATE_SYSTEM_SELECTABLE;
   if (state & (1 << ui::AX_STATE_SELECTED))
     msaa_state |= STATE_SYSTEM_SELECTED;
-  if (state & (1 << ui::AX_STATE_DISABLED))
-    msaa_state |= STATE_SYSTEM_UNAVAILABLE;
 
   // Checked state
   const auto checked_state = static_cast<ui::AXCheckedState>(
@@ -1556,6 +1552,21 @@ int AXPlatformNodeWin::MSAAState() {
       break;
     default:
       break;
+  }
+
+  const auto control_mode =
+      static_cast<ui::AXControlMode>(GetIntAttribute(ui::AX_ATTR_CONTROL_MODE));
+  if (control_mode) {
+    switch (control_mode) {
+      case ui::AX_CONTROL_MODE_DISABLED:
+        msaa_state |= STATE_SYSTEM_UNAVAILABLE;
+        break;
+      case ui::AX_CONTROL_MODE_READ_ONLY:
+        msaa_state |= STATE_SYSTEM_READONLY;
+        break;
+      default:
+        break;
+    }
   }
 
   gfx::NativeViewAccessible focus = delegate_->GetFocus();
