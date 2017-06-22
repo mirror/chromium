@@ -653,30 +653,13 @@ Emulation.DeviceModeModel = class extends Common.Object {
     if (overlayModel)
       overlayModel.setShowViewportSizeOnResize(false);
 
+    var offset = fullSize ? {x: 0, y: 0} : {x: Math.floor(metrics.viewportX), y: Math.floor(metrics.viewportY)};
     var pageSize = fullSize ? new UI.Size(metrics.contentWidth, metrics.contentHeight) : this._emulatedPageSize;
-    var promises = [];
-    promises.push(this._emulationModel.setVisibleSize(Math.floor(pageSize.width), Math.floor(pageSize.height)));
-    if (fullSize) {
-      promises.push(this._emulationModel.forceViewport({x: 0, y: 0, scale: 1}));
-    } else {
-      promises.push(this._emulationModel.forceViewport(
-          {x: Math.floor(metrics.viewportX), y: Math.floor(metrics.viewportY), scale: metrics.viewportScale}));
-    }
-    promises.push(this._emulationModel.emulateDevice({
-      width: 0,
-      height: 0,
-      deviceScaleFactor: this._appliedDeviceScaleFactor,
-      mobile: this._isMobile(),
-      fitWindow: false,
-      scale: 1,
-    }));
-    await Promise.all(promises);
-
-    var screenshot = await screenCaptureModel.captureScreenshot('png', 100);
+    var viewport = {x: offset.x, y: offset.y, width: Math.floor(pageSize.width), height: Math.floor(pageSize.height)};
+    var screenshot = await screenCaptureModel.captureScreenshot('png', 100, viewport);
     this._emulationModel.setVisibleSize(
         Math.floor(this._emulatedPageSize.width * this._scale),
         Math.floor(this._emulatedPageSize.height * this._scale));
-    this._emulationModel.forceViewport(null);
     this._calculateAndEmulate(false);
     return screenshot;
   }

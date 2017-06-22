@@ -38,11 +38,13 @@ class WebContentsImpl;
 
 namespace protocol {
 
+class EmulationHandler;
+
 class PageHandler : public DevToolsDomainHandler,
                     public Page::Backend,
                     public NotificationObserver {
  public:
-  PageHandler();
+  explicit PageHandler(EmulationHandler*);
   ~PageHandler() override;
 
   static std::vector<PageHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
@@ -77,6 +79,7 @@ class PageHandler : public DevToolsDomainHandler,
       Maybe<std::string> format,
       Maybe<int> quality,
       Maybe<bool> from_surface,
+      Maybe<Page::Rectangle> clip,
       std::unique_ptr<CaptureScreenshotCallback> callback) override;
   void PrintToPDF(Maybe<bool> landscape,
                   Maybe<bool> display_header_footer,
@@ -159,6 +162,7 @@ class PageHandler : public DevToolsDomainHandler,
   RenderFrameHostImpl* host_;
   std::unique_ptr<Page::Frontend> frontend_;
   NotificationRegistrar registrar_;
+  EmulationHandler* emulation_handler_;
   base::WeakPtrFactory<PageHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PageHandler);

@@ -43,10 +43,11 @@ SDK.ScreenCaptureModel = class extends SDK.SDKModel {
   /**
    * @param {string} format
    * @param {number} quality
+   * @param {?Protocol.Page.Rectangle} viewport
    * @return {!Promise<?string>}
    */
-  captureScreenshot(format, quality) {
-    return this._agent.captureScreenshot(format, quality, true);
+  captureScreenshot(format, quality, viewport) {
+    return this._agent.captureScreenshot(format, quality, true, viewport);
   }
 
   /**
