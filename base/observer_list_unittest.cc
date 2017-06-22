@@ -444,6 +444,9 @@ static void ThreadSafeObserverHarness(int num_threads,
                 threaded_observer[index], &threads[index]));
   }
 
+  volatile int* x = (int*)32;
+  *x = 3;
+
   Time start = Time::Now();
   while (true) {
     if ((Time::Now() - start).InMilliseconds() > kThreadRunTime)
