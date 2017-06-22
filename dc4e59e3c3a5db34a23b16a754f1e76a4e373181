@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2c131ad_bb0c9969",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e8e4cb5_2b7c7df2",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "687c1e78_f5f0da00",
         "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c0e3c7_85ce27a9",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T20:53:44Z",
+      "side": 1,
+      "message": "Yeah, the problem is that there isn\u0027t much the renderer side here can (or should) do with unexpected mojo errors. Logging an UMA metric probably makes sense (but I think I\u0027ll add that later), but that\u0027s pretty much it. Either the error happened before transport was complete, in which case \"delete this\" will close the data pipe, and the browser will notice that it didn\u0027t receive all bytes and thus mark the blob as broken, or transport was complete, in which case yeah it sucks that we got an unexpected error, but the important part (transporting all data) did finish...",
+      "parentUuid": "687c1e78_f5f0da00",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3fa748ad_7551d9dc",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T20:53:44Z",
+      "side": 1,
+      "message": "Ack, yeah, I expect this code will need to do the same... Just didn\u0027t want to add the extra plumbing needed for that to this CL (as I don\u0027t think AddRefProcess like functionality is exposed to blink yet).",
+      "parentUuid": "fd69930a_ac7a9496",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dcb1f8e_be22a67d",
         "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1488f1be_f5383e96",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T20:53:44Z",
+      "side": 1,
+      "message": "Wouldn\u0027t do anything. RequestAsReplyCallback is generated as base::OnceCallback\u003cvoid(const WTF::Vector\u003cuint8_t\u003e\u0026)\u003e;\n\nAlso since currently this is always cross-process the one copy to move from result to the serialized message is pretty much unavoidable. Would be nice if we could avoid the copies from data_ to result though, but even that seems probably not worth it since this should only be used for small amounts of data anyway. Larger data will be transferred as either DataPipe (with one copy from data_ to the shared memory segment, and one copy from the shared memory segment into the browser side DataElement::buf_) or files.",
+      "parentUuid": "5dcb1f8e_be22a67d",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19c8b093_9ddc654c",
         "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ff9e0d_de6d4742",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T20:53:44Z",
+      "side": 1,
+      "message": "Yeah, easiest to implement would probably be to have the bytes provider stuff on its own base::LazySequencedTaskRunner, with appropriate task traits to let it do file IO etc, but that would introduce some amount of overhead for the datapipe and direct reply cases that could be avoided if the provider lived on the IPC thread. I don\u0027t think the single thread hop from IPC thread to \"file\" task runner is going to be measurable overhead either though, so not sure it will be worth the complication to try to be cleverer and use the IPC thread.\n\nBut I\u0027m not actually sure what the best blink way is to schedule stuff like this, and if using base TaskScheduler stuff directly is a good idea, so I\u0027ll defer this to a future CL (there are plenty of layout tests that will catch this missing bit, so it\u0027s not like we can accidentally ship without having addressed the TODO).",
+      "parentUuid": "19c8b093_9ddc654c",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
