@@ -186,7 +186,7 @@ template("mac_toolchain") {
     }
 
     if (_save_unstripped_output) {
-      _unstripped_output = "{{root_out_dir}}/{{target_output_name}}{{output_extension}}.unstripped"
+      _unstripped_output = "{{output_dir}}/{{target_output_name}}{{output_extension}}.unstripped"
     }
 
     tool("cc") {
