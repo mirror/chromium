@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20cce5e8_a10efae4",
+        "filename": "content/browser/renderer_host/pepper/pepper_external_file_ref_backend.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-22T00:54:46Z",
+      "side": 1,
+      "message": "Do you know whether this will result in a potential behavioral change if we skip the tasks on shutdown? Or did this happen previously?",
+      "revId": "c12d3ec9baf0450da5a4d9ba6c5dffbfdfc23ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
