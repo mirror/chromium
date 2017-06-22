@@ -221,6 +221,8 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 // Takes ownership of |browser|.
 - (id)initWithBrowser:(Browser*)browser;
 
+- (Browser*)browser;
+
 // Call to make the browser go away from other places in the cross-platform
 // code.
 - (void)destroyBrowser;
@@ -284,6 +286,10 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 // changed, or a new browser window or tab is created. |canShowBubble| denotes
 // whether it would be appropriate to show a zoom bubble or not.
 - (void)zoomChangedForActiveTab:(BOOL)canShowBubble;
+
+- (void)displayViewInTouchbar:(NSView*)view;
+// Error page.
+- (void)setIsErrorPage:(BOOL)isErrorPage;
 
 // Called to tell the selected tab to update its loading state.
 // |force| is set if the update is due to changing tabs, as opposed to

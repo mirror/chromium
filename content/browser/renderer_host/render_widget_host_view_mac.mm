@@ -1768,7 +1768,12 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r {
   self = [super initWithFrame:NSZeroRect];
   if (self) {
-    self.acceptsTouchEvents = YES;
+    if ([self respondsToSelector:@selector(setAllowedTouchTypes:)]) {
+      self.allowedTouchTypes = NSTouchTypeMaskDirect | NSTouchTypeMaskIndirect;
+    } else {
+      self.acceptsTouchEvents = YES;
+    }
+
     editCommand_helper_.reset(new RenderWidgetHostViewMacEditCommandHelper);
     editCommand_helper_->AddEditingSelectorsToClass([self class]);
 
@@ -1829,6 +1834,45 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
                            consumed:(BOOL)consumed {
   [responderDelegate_ rendererHandledGestureScrollEvent:event
                                                consumed:consumed];
+}
+
+- (void)touchesBeganWithEvent:(NSEvent*)theEvent {
+  NSEventType type = [theEvent type];
+
+  if (type == NSEventTypeDirectTouch) {
+    // Synthesize Mouse Event.
+    blink::WebMouseEvent mouseDownEvent =
+        WebMouseEventBuilder::BuildMouseEventFromTouchEvent(
+            theEvent, self, blink::WebInputEvent::kMouseDown,
+            blink::WebInputEvent::kLeftButtonDown);
+    blink::WebMouseEvent mouseUpEvent =
+        WebMouseEventBuilder::BuildMouseEventFromTouchEvent(
+            theEvent, self, blink::WebInputEvent::kMouseUp,
+            blink::WebInputEvent::kNoModifiers);
+
+    ui::LatencyInfo latency_info(ui::SourceEventType::OTHER);
+    latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+
+    if (renderWidgetHostView_->ShouldRouteEvent(mouseDownEvent)) {
+      renderWidgetHostView_->render_widget_host_->delegate()
+          ->GetInputEventRouter()
+          ->RouteMouseEvent(renderWidgetHostView_.get(), &mouseDownEvent,
+                            latency_info);
+    } else {
+      renderWidgetHostView_->ProcessMouseEvent(mouseDownEvent, latency_info);
+    }
+
+    if (renderWidgetHostView_->ShouldRouteEvent(mouseUpEvent)) {
+      renderWidgetHostView_->render_widget_host_->delegate()
+          ->GetInputEventRouter()
+          ->RouteMouseEvent(renderWidgetHostView_.get(), &mouseUpEvent,
+                            latency_info);
+    } else {
+      renderWidgetHostView_->ProcessMouseEvent(mouseUpEvent, latency_info);
+    }
+
+    [responderDelegate_ touchesBeganWithEvent:theEvent];
+  }
 }
 
 - (BOOL)respondsToSelector:(SEL)selector {
@@ -2398,10 +2442,6 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
 - (void)touchesMovedWithEvent:(NSEvent*)event {
   [responderDelegate_ touchesMovedWithEvent:event];
-}
-
-- (void)touchesBeganWithEvent:(NSEvent*)event {
-  [responderDelegate_ touchesBeganWithEvent:event];
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent*)event {
