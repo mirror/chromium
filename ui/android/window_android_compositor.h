@@ -32,6 +32,7 @@ class UI_ANDROID_EXPORT WindowAndroidCompositor {
   virtual cc::FrameSinkId GetFrameSinkId() = 0;
   virtual void AddChildFrameSink(const cc::FrameSinkId& frame_sink_id) = 0;
   virtual void RemoveChildFrameSink(const cc::FrameSinkId& frame_sink_id) = 0;
+  virtual gfx::Size GetLocationOnScreen() = 0;
 };
 
 }  // namespace ui

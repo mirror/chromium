@@ -8,6 +8,7 @@
 #include "gpu/ipc/common/gpu_surface_tracker.h"
 #include "jni/DialogOverlayImpl_jni.h"
 #include "ui/android/window_android.h"
+#include "ui/android/window_android_compositor.h"
 
 using base::android::AttachCurrentThread;
 using base::android::JavaParamRef;
@@ -65,6 +66,23 @@ void DialogOverlayImpl::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   UnregisterForTokensIfNeeded();
   // We delete soon since this might be part of an onDismissed callback.
   BrowserThread::DeleteSoon(BrowserThread::UI, FROM_HERE, this);
+}
+
+void DialogOverlayImpl::GetCompositorOffset(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj,
+    const base::android::JavaParamRef<jintArray>& coords) {
+  gfx::Size offset;
+  if (cvc_) {
+    if (ui::WindowAndroid* window = cvc_->GetWindowAndroid()) {
+      if (ui::WindowAndroidCompositor* compositor = window->GetCompositor()) {
+        offset = compositor->GetLocationOnScreen();
+      }
+    }
+  }
+
+  jint ints[2] = {offset.width(), offset.height()};
+  env->SetIntArrayRegion(coords.obj(), 0, 2, ints);
 }
 
 void DialogOverlayImpl::UnregisterForTokensIfNeeded() {
