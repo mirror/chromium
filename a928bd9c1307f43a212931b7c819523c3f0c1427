@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a81277_c6464458",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-22T15:09:59Z",
+      "side": 1,
+      "message": "So this ended up being a wee bit ugly since we have to fake both the identity and the ProcessId via separate mechanisms...",
+      "revId": "a928bd9c1307f43a212931b7c819523c3f0c1427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1deb445_b60a87f7",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-22T15:09:59Z",
+      "side": 1,
+      "message": "Witness my mastery of gmock matchers! XD\nSeriously though, I think I will probably update this...",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 75
+      },
+      "revId": "a928bd9c1307f43a212931b7c819523c3f0c1427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
