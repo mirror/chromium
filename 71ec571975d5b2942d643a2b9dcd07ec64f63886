@@ -93,6 +93,30 @@
       "revId": "71ec571975d5b2942d643a2b9dcd07ec64f63886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035c0059_e6f115e9",
+        "filename": "base/trace_event/heap_profiler_allocation_register_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1156379
+      },
+      "writtenOn": "2017-06-22T22:50:09Z",
+      "side": 1,
+      "message": "mx_handle_close() and mx_vmar_destroy() have different functions here.  Any live VMAR has a reference held by the address space, so closing all handles will not get rid of it.  mx_vmar_destroy() is a request to transition the VMAR to its dead state (i.e. stop impacting the address space mappings).  As you responded, vmar_unmap as used will handle the destroy for you",
+      "parentUuid": "77181df4_3cade273",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "71ec571975d5b2942d643a2b9dcd07ec64f63886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
