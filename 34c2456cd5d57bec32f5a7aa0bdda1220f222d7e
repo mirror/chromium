@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c06dc39_b983b12b",
+        "filename": "chrome/browser/google/google_update_settings_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-22T15:48:03Z",
+      "side": 1,
+      "message": "The latency on BACKGROUND tasks is still order milliseconds, it\u0027s merely about getting out of the way while the critical path is being flushed.\n\nBut yeah agreed given the PostTaskAndReply.",
+      "parentUuid": "9a38a63d_66ad2f03",
+      "range": {
+        "startLine": 26,
+        "startChar": 45,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "34c2456cd5d57bec32f5a7aa0bdda1220f222d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ff33cad_877339ba",
         "filename": "chrome/browser/ui/views/session_crashed_bubble_view.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "34c2456cd5d57bec32f5a7aa0bdda1220f222d7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64d6eec_78061239",
+        "filename": "chrome/browser/ui/views/session_crashed_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-22T15:48:03Z",
+      "side": 1,
+      "message": "Yeah I hesitated on this too, we don\u0027t currently support multiple priorities on the same sequence and I figured it was nice to alleviate startup a bit more from disk operations, given this and your other comment though I\u0027ll flip it to USER_VISIBLE for now and we can assess if it\u0027s ever a real problem in profiling (likely not).",
+      "parentUuid": "4ff33cad_877339ba",
+      "range": {
+        "startLine": 125,
+        "startChar": 46,
+        "endLine": 125,
+        "endChar": 57
+      },
+      "revId": "34c2456cd5d57bec32f5a7aa0bdda1220f222d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
