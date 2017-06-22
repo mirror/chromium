@@ -7,6 +7,7 @@
 #include <set>
 #include <vector>
 
+#include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/driver_entry.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -58,7 +59,10 @@ DriverEntry DownloadDriverImpl::CreateDriverEntry(
 
 DownloadDriverImpl::DownloadDriverImpl(content::DownloadManager* manager,
                                        const base::FilePath& dir)
-    : download_manager_(manager), file_dir_(dir), client_(nullptr) {
+    : download_manager_(manager),
+      file_dir_(dir),
+      client_(nullptr),
+      weak_ptr_factory_(this) {
   DCHECK(download_manager_);
 }
 
@@ -122,6 +126,14 @@ void DownloadDriverImpl::Start(
 }
 
 void DownloadDriverImpl::Remove(const std::string& guid) {
+  // DownloadItem::Remove will cause the item object removed from memory, post
+  // the remove task to avoid the object being accessed in the same call stack.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&DownloadDriverImpl::DoRemoveDownload,
+                            weak_ptr_factory_.GetWeakPtr(), guid));
+}
+
+void DownloadDriverImpl::DoRemoveDownload(const std::string& guid) {
   if (!download_manager_)
     return;
   content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
