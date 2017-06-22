@@ -34,6 +34,24 @@
       "revId": "b4d88bc4fe393de28b8fb16a71322786168d91c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbd295c_70dbf833",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-22T18:49:31Z",
+      "side": 1,
+      "message": "Yeah agreed, I went with the latter.",
+      "parentUuid": "0d379b20_16b3f377",
+      "revId": "b4d88bc4fe393de28b8fb16a71322786168d91c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
