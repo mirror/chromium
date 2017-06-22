@@ -8,7 +8,7 @@
 
 namespace blink {
 
-CSSPerspective* CSSPerspective::Create(const CSSNumericValue* length,
+CSSPerspective* CSSPerspective::Create(CSSNumericValue* length,
                                        ExceptionState& exception_state) {
   if (length->ContainsPercent()) {
     exception_state.ThrowTypeError(
