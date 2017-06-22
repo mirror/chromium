@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e23e962_92ae774a",
+        "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-06-22T16:52:09Z",
+      "side": 1,
+      "message": "nit: Remove empty lines.",
+      "range": {
+        "startLine": 129,
+        "startChar": 42,
+        "endLine": 129,
+        "endChar": 43
+      },
+      "revId": "f5309a996b4649d80f41016bd19274893ffd42f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e73af5f_090bf823",
+        "filename": "ui/ozone/demo/surfaceless_gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-06-22T16:52:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure if you want to do this in a follow-up, but for completeness, this should decide if the next call should be made.",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 18
+      },
+      "revId": "f5309a996b4649d80f41016bd19274893ffd42f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
