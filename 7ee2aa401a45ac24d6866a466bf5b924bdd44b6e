@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be800b8_2549d876",
+        "filename": "base/observer_list_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-22T18:58:50Z",
+      "side": 1,
+      "message": "nittiest of nits: If you do `threads(num_threads)` here (or resize() instead of reserve()), then you can do PlatformThread::Create(0, ..., \u0026threads[index]) in the loop.",
+      "range": {
+        "startLine": 444,
+        "startChar": 46,
+        "endLine": 444,
+        "endChar": 48
+      },
+      "revId": "7ee2aa401a45ac24d6866a466bf5b924bdd44b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
