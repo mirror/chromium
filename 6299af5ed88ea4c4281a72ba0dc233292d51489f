@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddd8773b_5e93afb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-22T15:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cc1647b_e6455253",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "6299af5ed88ea4c4281a72ba0dc233292d51489f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a93fdc1_00886351",
         "filename": "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6299af5ed88ea4c4281a72ba0dc233292d51489f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3f2bbf_8faff36f",
+        "filename": "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-22T15:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a93fdc1_00886351",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 7
+      },
+      "revId": "6299af5ed88ea4c4281a72ba0dc233292d51489f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "31618333_670428f0",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-22T15:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ccda69a_8885a6e2",
+      "range": {
+        "startLine": 72,
+        "startChar": 10,
+        "endLine": 72,
+        "endChar": 13
+      },
+      "revId": "6299af5ed88ea4c4281a72ba0dc233292d51489f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f46987f2_2d0c3c7f",
         "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-22T03:32:09Z",
       "side": 1,
       "message": "I don\u0027t quite understand -- won\u0027t this always trivially be true? I guess maybe it means that the app info might not be ready?",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "6299af5ed88ea4c4281a72ba0dc233292d51489f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556ab9fb_6a01de20",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-22T15:44:32Z",
+      "side": 1,
+      "message": "Yes, we need to wait until the Play Store app is ready and this is moment we need to start PAI flow. However there is optional Voice Interaction flow that runs before Play Store app is ready. In this case we have to wait until it completely finished and start PAI at this event.\n\nThat is why I wait here for 2 event met (in case Voice Interaction) the Play Store  app is ready and Voice Interaction is done. In case no Voice Interaction flow, we can start PAI flow right after the Play Store app is ready.",
+      "parentUuid": "f46987f2_2d0c3c7f",
       "range": {
         "startLine": 21,
         "startChar": 2,
