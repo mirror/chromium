@@ -49,6 +49,7 @@
 #include "core/page/ContextMenuController.h"
 #include "core/page/DragController.h"
 #include "core/page/FocusController.h"
+#include "core/page/PluginsChangedObserver.h"
 #include "core/page/PointerLockController.h"
 #include "core/page/ScopedPageSuspender.h"
 #include "core/page/ValidationMessageClient.h"
@@ -568,6 +569,10 @@ void Page::SettingsChanged(SettingsDelegate::ChangeType change_type) {
           HTMLMediaElement::OnMediaControlsEnabledChange(doc);
       }
       break;
+    case SettingsDelegate::kPluginsChange: {
+      for (PluginsChangedObserver* observer : plugins_changed_observers_)
+        observer->PluginsChanged();
+    } break;
   }
 }
 
@@ -639,6 +644,7 @@ DEFINE_TRACE(Page) {
   visitor->Trace(plugin_data_);
   visitor->Trace(validation_message_client_);
   visitor->Trace(use_counter_);
+  visitor->Trace(plugins_changed_observers_);
   Supplementable<Page>::Trace(visitor);
   PageVisibilityNotifier::Trace(visitor);
 }
@@ -676,6 +682,10 @@ void Page::WillBeDestroyed() {
   main_frame_ = nullptr;
 
   PageVisibilityNotifier::NotifyContextDestroyed();
+}
+
+void Page::RegisterPluginsChangedObserver(PluginsChangedObserver* observer) {
+  plugins_changed_observers_.insert(observer);
 }
 
 Page::PageClients::PageClients()
