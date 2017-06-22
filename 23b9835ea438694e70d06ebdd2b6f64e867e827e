@@ -69,6 +69,30 @@
       "revId": "23b9835ea438694e70d06ebdd2b6f64e867e827e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73965d00_b456539b",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-22T02:24:44Z",
+      "side": 1,
+      "message": "I renamed temporary_physical_file_path to current_file_path which will contain GetFullPath() while the download is in progress. After completion, the driver will set it to GetTargetFilePath().",
+      "parentUuid": "15c0d979_2ff0c3d1",
+      "range": {
+        "startLine": 702,
+        "startChar": 4,
+        "endLine": 702,
+        "endChar": 73
+      },
+      "revId": "23b9835ea438694e70d06ebdd2b6f64e867e827e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
