@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccf5669e_8f89274d",
+        "filename": "content/browser/devtools/devtools_http_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-22T17:24:34Z",
+      "side": 1,
+      "message": "If thread failed to start, it will be deleted right here on UI thread. Is that ok?",
+      "revId": "be2ebd1bff7c99bf224c6319a9c8e1438f4825ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80147517_1a0a9e20",
+        "filename": "content/browser/devtools/devtools_http_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-22T17:24:34Z",
+      "side": 1,
+      "message": "Just thread-\u003etask_runner() ?",
+      "revId": "be2ebd1bff7c99bf224c6319a9c8e1438f4825ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
