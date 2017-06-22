@@ -31,6 +31,7 @@
 #ifndef WebPepperSocket_h
 #define WebPepperSocket_h
 
+#include <memory>
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebPrivatePtr.h"
 #include "public/platform/WebString.h"
@@ -65,8 +66,9 @@ class WebPepperSocket {
 
   enum BinaryType { kBinaryTypeBlob = 0, kBinaryTypeArrayBuffer = 1 };
 
-  BLINK_EXPORT static WebPepperSocket* Create(const WebDocument&,
-                                              WebPepperSocketClient*);
+  BLINK_EXPORT static std::unique_ptr<WebPepperSocket> Create(
+      const WebDocument&,
+      WebPepperSocketClient*);
   virtual ~WebPepperSocket() {}
 
   // These functions come from binaryType attribute of the WebSocket API

@@ -38,13 +38,23 @@
 #include "modules/websockets/DocumentWebSocketChannel.h"
 #include "modules/websockets/WebPepperSocketChannelClientProxy.h"
 #include "modules/websockets/WebSocketChannel.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURL.h"
 #include "public/web/WebArrayBuffer.h"
 #include "public/web/WebDocument.h"
+#include "public/web/WebPepperSocket.h"
 
 namespace blink {
+
+std::unique_ptr<WebPepperSocket> WebPepperSocket::Create(
+    const WebDocument& document,
+    WebPepperSocketClient* client) {
+  DCHECK(client);
+
+  return WTF::MakeUnique<WebPepperSocketImpl>(document, client);
+}
 
 WebPepperSocketImpl::WebPepperSocketImpl(const WebDocument& document,
                                          WebPepperSocketClient* client)
@@ -57,6 +67,7 @@ WebPepperSocketImpl::WebPepperSocketImpl(const WebDocument& document,
   Document* core_document = document;
   private_ = DocumentWebSocketChannel::Create(
       core_document, channel_proxy_.Get(), SourceLocation::Capture());
+  DCHECK(private_);
 }
 
 WebPepperSocketImpl::~WebPepperSocketImpl() {

@@ -52,8 +52,7 @@ class WebPepperSocketImpl final : public WebPepperSocket {
   WebPepperSocketImpl(const WebDocument&, WebPepperSocketClient*);
   ~WebPepperSocketImpl() override;
 
-  bool IsNull() const { return !private_; }
-
+  // WebPepperSocket implementation.
   BinaryType GetBinaryType() const override;
   bool SetBinaryType(BinaryType) override;
   void Connect(const WebURL&, const WebString& protocol) override;
