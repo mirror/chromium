@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
+.parent {
+  --ident: parent;
+}
+.target {
+  --ident: underlying;
+}
+</style>
+<body>
+<script src="../interpolation/resources/interpolation-test.js"></script>
+<script>
+CSS.registerProperty({
+  name: '--ident',
+  syntax: 'parent | underlying | initial-value | value | a | b',
+  initialValue: "initial-value",
+});
+
+assertNoInterpolation({
+  property: '--ident',
+  from: neutralKeyframe,
+  to: "value",
+});
+
+assertNoInterpolation({
+  property: '--ident',
+  from: 'initial',
+  to: "value",
+});
+
+assertNoInterpolation({
+  property: '--ident',
+  from: 'inherit',
+  to: "value",
+});
+
+assertNoInterpolation({
+  property: '--ident',
+  from: 'unset',
+  to: "value",
+});
+
+assertNoInterpolation({
+  property: '--ident',
+  from: "a",
+  to: "b",
+});
+</script>
+</body>
