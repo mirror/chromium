@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0d2ce1e_eea63dad",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-22T14:28:17Z",
+      "side": 1,
+      "message": "Nit: please add a comment describing why this is necessary - it seems non-obvious to me.",
+      "range": {
+        "startLine": 2217,
+        "startChar": 4,
+        "endLine": 2217,
+        "endChar": 17
+      },
+      "revId": "207cc29ee816775fa9f585c569ad20ac62092817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
