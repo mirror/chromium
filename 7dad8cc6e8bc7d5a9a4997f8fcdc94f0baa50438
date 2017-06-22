@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3b18e9e_be6dc1df",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-22T06:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ddac73_86302e42",
+      "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "151d80b0_e318808d",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T04:32:40Z",
       "side": 1,
       "message": "perhaps DCHECK that the interpolations isn\u0027t empty before calling .front on it",
+      "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757cc1e4_67c503b8",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-22T06:31:15Z",
+      "side": 1,
+      "message": "front() will do that check anyway.",
+      "parentUuid": "151d80b0_e318808d",
       "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0868b0a6_599b4463",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-22T06:31:15Z",
+      "side": 1,
+      "message": "Made it static, yay!",
+      "parentUuid": "c3b60b3f_9efe97f3",
+      "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb0bef97_07804c71",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolverState.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290de2d6_54a32e16",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolverState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-22T06:31:15Z",
+      "side": 1,
+      "message": "It could be a local variable but it would be very cumbersome to plumb it all the way through to CSSVariableResolver::ResolveVariableReference(). The StyleResolverState object is generally how StyleResolver code gets around this issue.",
+      "parentUuid": "eb0bef97_07804c71",
+      "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
