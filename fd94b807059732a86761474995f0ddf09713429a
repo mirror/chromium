@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8a246c2_26e62b6d",
+        "filename": "chrome/browser/media/webrtc/fake_desktop_media_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-22T01:03:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b8d0e4c_25e864da",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "fd94b807059732a86761474995f0ddf09713429a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e3d027d_873a290c",
         "filename": "chrome/browser/media/webrtc/fake_desktop_media_list.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d9341fb8_5a7ce09f",
+        "filename": "chrome/browser/media/webrtc/fake_desktop_media_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-22T01:03:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e3d027d_873a290c",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "fd94b807059732a86761474995f0ddf09713429a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "848717d7_78a39e86",
         "filename": "chrome/browser/ui/cocoa/media_picker/desktop_media_picker_cocoa.h",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-21T00:54:10Z",
       "side": 1,
       "message": "was a by-value arg intentional here? We\u0027ve historically passed std::vector by const-ref. sizeof(vector) isn\u0027t tiny -- probably 24 bytes. So it\u0027s unlikely to fit in registers. (and if the contents are 3 unique_ptr that\u0027s only 24 bytes, so you don\u0027t save much by making it movable into the data member).",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 39
+      },
+      "revId": "fd94b807059732a86761474995f0ddf09713429a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77335823_2ec3a9e4",
+        "filename": "chrome/browser/ui/cocoa/media_picker/desktop_media_picker_cocoa.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-22T01:03:03Z",
+      "side": 1,
+      "message": "Yes, const-reference is not what we want here because we need to take ownership.",
+      "parentUuid": "848717d7_78a39e86",
       "range": {
         "startLine": 27,
         "startChar": 29,
@@ -91,6 +163,30 @@
       "revId": "fd94b807059732a86761474995f0ddf09713429a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04fac4f0_104fe079",
+        "filename": "chrome/browser/ui/cocoa/media_picker/desktop_media_picker_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-22T01:03:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9b8f3a8_ed6c5e27",
+      "range": {
+        "startLine": 533,
+        "startChar": 24,
+        "endLine": 533,
+        "endChar": 41
+      },
+      "revId": "fd94b807059732a86761474995f0ddf09713429a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
