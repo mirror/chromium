@@ -26,6 +26,8 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
+import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.ntp.ChromeHomeNewTabPageBase;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
@@ -50,6 +52,7 @@ import java.util.concurrent.TimeoutException;
 public class BottomSheetNewTabControllerTest {
     private FadingBackgroundView mFadingBackgroundView;
     private TestTabModelObserver mTabModelObserver;
+    private TestOverviewModeObserver mOverviewModeObserver;
     private BottomSheet mBottomSheet;
     private ChromeTabbedActivity mActivity;
 
@@ -60,6 +63,16 @@ public class BottomSheetNewTabControllerTest {
         @Override
         public void didCloseTab(int tabId, boolean incognito) {
             mDidCloseTabCallbackHelper.notifyCalled();
+        }
+    }
+
+    /** An observer to determine when overview mode has finished hiding. */
+    private static class TestOverviewModeObserver extends EmptyOverviewModeObserver {
+        private final CallbackHelper mOverviewHiddenCallbackHelper = new CallbackHelper();
+
+        @Override
+        public void onOverviewModeFinishedHiding() {
+            mOverviewHiddenCallbackHelper.notifyCalled();
         }
     }
 
@@ -76,6 +89,9 @@ public class BottomSheetNewTabControllerTest {
         mActivity.getTabModelSelector().getModel(true).addObserver(mTabModelObserver);
         mFadingBackgroundView = mActivity.getFadingBackgroundView();
         mBottomSheetTestRule.setSheetState(BottomSheet.SHEET_STATE_PEEK, false);
+        mOverviewModeObserver = new TestOverviewModeObserver();
+        ((LayoutManagerChrome) mActivity.getLayoutManager())
+                .addOverviewModeObserver(mOverviewModeObserver);
     }
 
     @Test
@@ -179,9 +195,11 @@ public class BottomSheetNewTabControllerTest {
         // Create a new tab.
         createNewBlankTab(false);
         loadChromeHomeNewTab();
+        int callCount = mOverviewModeObserver.mOverviewHiddenCallbackHelper.getCallCount();
 
         // Close the new tab.
         closeNewTab();
+        mOverviewModeObserver.mOverviewHiddenCallbackHelper.waitForCallback(callCount, 1);
         assertEquals(1, mActivity.getTabModelSelector().getTotalTabCount());
         assertFalse("Overview mode should not be showing",
                 mActivity.getLayoutManager().overviewVisible());
@@ -194,9 +212,11 @@ public class BottomSheetNewTabControllerTest {
         // Create new incognito NTP.
         createNewBlankTab(true);
         loadChromeHomeNewTab();
+        int callCount = mOverviewModeObserver.mOverviewHiddenCallbackHelper.getCallCount();
 
         // Close the new tab.
         closeNewTab();
+        mOverviewModeObserver.mOverviewHiddenCallbackHelper.waitForCallback(callCount, 1);
         assertEquals(1, mActivity.getTabModelSelector().getTotalTabCount());
         assertFalse("Overview mode should not be showing",
                 mActivity.getLayoutManager().overviewVisible());
