@@ -16,6 +16,24 @@
       "revId": "29568cb375f07bf67df5139b5b3400749975c051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d762e6_c001a84f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T07:13:25Z",
+      "side": 1,
+      "message": "oops... big bug :/",
+      "parentUuid": "0f2c9676_c51dc563",
+      "revId": "29568cb375f07bf67df5139b5b3400749975c051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
