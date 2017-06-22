@@ -68,6 +68,30 @@
       "revId": "a8e58dc67dd49c8b48bbea1ff5698efd1cac756a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cad3e15_e8eea4f0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-22T15:35:54Z",
+      "side": 1,
+      "message": "Sure.  Maybe  \"Arbitrary site-controlled data can be included in the URL, HTTP headers, and request body.  Requests may include cookies and site-specific credentials.\"",
+      "parentUuid": "43661c33_06098934",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "a8e58dc67dd49c8b48bbea1ff5698efd1cac756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
