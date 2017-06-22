@@ -119,6 +119,7 @@ class CONTENT_EXPORT CompositorImpl
   cc::FrameSinkId GetFrameSinkId() override;
   void AddChildFrameSink(const cc::FrameSinkId& frame_sink_id) override;
   void RemoveChildFrameSink(const cc::FrameSinkId& frame_sink_id) override;
+  gfx::Size GetLocationOnScreen() override;
 
   void SetVisible(bool visible);
   void CreateLayerTreeHost();

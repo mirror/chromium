@@ -404,6 +404,12 @@ public class CompositorView
         }
     }
 
+    @Override
+    @CalledByNative
+    public void getLocationOnScreen(int[] coords) {
+        super.getLocationOnScreen(coords);
+    }
+
     // Implemented in native
     private native long nativeInit(boolean lowMemDevice, long nativeWindowAndroid,
             LayerTitleCache layerTitleCache, TabContentManager tabContentManager);

@@ -86,6 +86,8 @@ class CompositorView : public content::CompositorClient,
   void UpdateLayerTreeHost() override;
   void DidSwapFrame(int pending_frames) override;
   void DidSwapBuffers() override;
+  gfx::Size GetLocationOnScreen() override;
+
   ui::UIResourceProvider* GetUIResourceProvider();
 
  private:
@@ -111,6 +113,9 @@ class CompositorView : public content::CompositorClient,
   int content_width_;
   int content_height_;
   bool overlay_video_mode_;
+
+  // int[2] for GetLocationOnScreen().
+  base::android::ScopedJavaGlobalRef<jintArray> location_java_array_;
 
   base::WeakPtrFactory<CompositorView> weak_factory_;
 
