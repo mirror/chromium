@@ -32,6 +32,10 @@
         justify-content: center;
       }
 
+      #problemDiv[invisible] {
+        visibility: hidden;
+      }
+
       #problemMessage {
         font-size: 10px;
       }
@@ -49,7 +53,7 @@
               autofocus>
             <!-- Warning/error; only shown if title is hidden. -->
             <div id="problemDiv" class$="[[problemClass_]]"
-                hidden$="[[!problemMessage_]]" problem>
+                invisible$="[[!problemMessage_]]" problem>
               <iron-icon icon="settings:error-outline"></iron-icon>
               <span id="problemMessage">[[problemMessage_]]</span>
             </div>
