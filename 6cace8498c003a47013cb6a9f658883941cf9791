@@ -16,6 +16,24 @@
       "revId": "6cace8498c003a47013cb6a9f658883941cf9791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a55cf66_6514c62f",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/svg/resource-client-removal-expected.txt",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-22T00:13:10Z",
+      "side": 0,
+      "message": "These are duplicated raster invalidations previously produced by no-change compositing updates in the following process executed multiple times during a repaint test:\n In LocalFrameView:\n  if (root_layer-\u003eNeedsRepaint())\n    PaintTree();\n  paint_artifact_compositor_-\u003eUpdate(...);\n\nFor now, in each document cycle, we paint only if the root layer is marked needing repaint, but update compositing unconditionally. Previously the no-change compositing update re-issues raster invalidations recorded in matched chunks, causing these duplicated items. The latest patch also fixes this issue by resetting raster invalidations in chunks at the end of compositing update. See https://chromium-review.googlesource.com/c/538602/16/third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp#320 (new line 320).\n\nWe can avoid no-change compositing update in a later change. (I\u0027m not sure if  the composited_element_ids output of PaintArtifactCompositor::Update() is also needed by UpdateAnimations() on no-change updates.)",
+      "parentUuid": "277e994e_fd26ab74",
+      "revId": "6cace8498c003a47013cb6a9f658883941cf9791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
