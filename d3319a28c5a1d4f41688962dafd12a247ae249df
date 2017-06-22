@@ -34,6 +34,24 @@
       "revId": "d3319a28c5a1d4f41688962dafd12a247ae249df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0ea081_32aa78b2",
+        "filename": "base/observer_list_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-22T18:04:34Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t even know that was an extension! I\u0027ll make them constant.",
+      "parentUuid": "4178d6b1_ce2d2ac1",
+      "revId": "d3319a28c5a1d4f41688962dafd12a247ae249df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
