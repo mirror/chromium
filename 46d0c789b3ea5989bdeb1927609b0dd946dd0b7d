@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c2d161f_3d990d66",
+        "filename": "media/filters/source_buffer_range.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-22T18:48:18Z",
+      "side": 1,
+      "message": "This could be a CHECK. IIUC using the iterator when this condition fails could cause OOB crashes",
+      "range": {
+        "startLine": 718,
+        "startChar": 2,
+        "endLine": 718,
+        "endChar": 11
+      },
+      "revId": "46d0c789b3ea5989bdeb1927609b0dd946dd0b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8de2eda_da3a5ec9",
+        "filename": "media/filters/source_buffer_range.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-22T18:48:18Z",
+      "side": 1,
+      "message": "also CHECK(highest_frame_)",
+      "range": {
+        "startLine": 737,
+        "startChar": 0,
+        "endLine": 737,
+        "endChar": 27
+      },
+      "revId": "46d0c789b3ea5989bdeb1927609b0dd946dd0b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
