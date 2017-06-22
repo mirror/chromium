@@ -454,6 +454,10 @@ int ClipPathOp::CountSlowPaths() const {
   return antialias && !path.isConvex() ? 1 : 0;
 }
 
+bool ClipPathOp::HasNonAAPaths() const {
+  return !antialias;
+}
+
 int DrawLineOp::CountSlowPaths() const {
   if (const SkPathEffect* effect = flags.getPathEffect()) {
     SkPathEffect::DashInfo info;
@@ -466,6 +470,10 @@ int DrawLineOp::CountSlowPaths() const {
     }
   }
   return 0;
+}
+
+bool DrawLineOp::HasNonAAPaths() const {
+  return !flags.isAntiAlias();
 }
 
 int DrawPathOp::CountSlowPaths() const {
@@ -489,8 +497,16 @@ int DrawPathOp::CountSlowPaths() const {
   }
 }
 
+bool DrawPathOp::HasNonAAPaths() const {
+  return !flags.isAntiAlias();
+}
+
 int DrawRecordOp::CountSlowPaths() const {
   return record->numSlowPaths();
+}
+
+bool DrawRecordOp::HasNonAAPaths() const {
+  return record->HasNonAAPaths();
 }
 
 AnnotateOp::AnnotateOp(PaintCanvas::AnnotationType annotation_type,

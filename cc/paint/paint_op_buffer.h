@@ -93,6 +93,9 @@ struct CC_PAINT_EXPORT PaintOp {
   int CountSlowPaths() const { return 0; }
   int CountSlowPathsFromFlags() const { return 0; }
 
+  bool HasNonAAPaths() const { return false; }
+  bool HasNonAAPathsFromFlags() const { return false; }
+
   bool HasDiscardableImages() const { return false; }
   bool HasDiscardableImagesFromFlags() const { return false; }
 
@@ -111,6 +114,9 @@ struct CC_PAINT_EXPORT PaintOpWithFlags : PaintOp {
   explicit PaintOpWithFlags(const PaintFlags& flags) : flags(flags) {}
 
   int CountSlowPathsFromFlags() const { return flags.getPathEffect() ? 1 : 0; }
+  bool HasNonAAPathsFromFlags() const {
+    return flags.getPathEffect() && !flags.isAntiAlias();
+  }
   bool HasDiscardableImagesFromFlags() const {
     if (!IsDrawOp())
       return false;
@@ -254,6 +260,7 @@ struct CC_PAINT_EXPORT ClipPathOp final : PaintOp {
                      SkCanvas* canvas,
                      const SkMatrix& original_ctm);
   int CountSlowPaths() const;
+  bool HasNonAAPaths() const;
 
   ThreadsafePath path;
   SkClipOp op;
@@ -476,6 +483,7 @@ struct CC_PAINT_EXPORT DrawLineOp final : PaintOpWithFlags {
                               const SkMatrix& original_ctm);
 
   int CountSlowPaths() const;
+  bool HasNonAAPaths() const;
 
   SkScalar x0;
   SkScalar y0;
@@ -518,6 +526,7 @@ struct CC_PAINT_EXPORT DrawPathOp final : PaintOpWithFlags {
                               SkCanvas* canvas,
                               const SkMatrix& original_ctm);
   int CountSlowPaths() const;
+  bool HasNonAAPaths() const;
 
   ThreadsafePath path;
 };
@@ -555,6 +564,7 @@ struct CC_PAINT_EXPORT DrawRecordOp final : PaintOp {
   size_t AdditionalBytesUsed() const;
   bool HasDiscardableImages() const;
   int CountSlowPaths() const;
+  bool HasNonAAPaths() const;
 
   sk_sp<const PaintRecord> record;
 };
@@ -781,6 +791,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     return sizeof(*this) + reserved_ + subrecord_bytes_used_;
   }
   int numSlowPaths() const { return num_slow_paths_; }
+  bool HasNonAAPaths() const { return has_non_aa_paths_; }
   bool HasDiscardableImages() const { return has_discardable_images_; }
 
   // Resize the PaintOpBuffer to exactly fit the current amount of used space.
@@ -943,6 +954,9 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     num_slow_paths_ += op->CountSlowPathsFromFlags();
     num_slow_paths_ += op->CountSlowPaths();
 
+    has_non_aa_paths_ |= op->HasNonAAPaths();
+    has_non_aa_paths_ |= op->HasNonAAPathsFromFlags();
+
     has_discardable_images_ |= op->HasDiscardableImages();
     has_discardable_images_ |= op->HasDiscardableImagesFromFlags();
 
@@ -956,6 +970,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 
   // Record paths for veto-to-msaa for gpu raster.
   int num_slow_paths_ = 0;
+  bool has_non_aa_paths_ = false;
   // Record additional bytes used by referenced sub-records and display lists.
   size_t subrecord_bytes_used_ = 0;
   bool has_discardable_images_ = false;
