@@ -117,6 +117,7 @@ component("gpu") {
     "//content/renderer:*",
     "//media/gpu/ipc/*",
     ":*",
+    "//remoting/codec:encoder",
   ]
 
   if (is_mac) {
