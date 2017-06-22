@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "188295bc_2622022a",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleMapTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-22T00:53:56Z",
+      "side": 1,
+      "message": "Is it ok not to test the call count like RegisterModuleScript?",
+      "revId": "61398e02e08211472fad0c87a62f12e57250dd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2982172a_a31bdffb",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-22T00:53:56Z",
+      "side": 1,
+      "message": "s/be also be/also be/",
+      "range": {
+        "startLine": 121,
+        "startChar": 63,
+        "endLine": 121,
+        "endChar": 73
+      },
+      "revId": "61398e02e08211472fad0c87a62f12e57250dd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eccfc468_f15335ad",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-22T00:53:56Z",
+      "side": 1,
+      "message": "s/Notify/Notifies/",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "61398e02e08211472fad0c87a62f12e57250dd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea0f453_4aca2edf",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-22T00:53:56Z",
+      "side": 1,
+      "message": "Can you add a blank line after this line?",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "61398e02e08211472fad0c87a62f12e57250dd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
