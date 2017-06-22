@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59b8331d_c1c74a7f",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T14:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dcf0c76_a39920da",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d496e94a_31d87efa",
         "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5661f11f_19020ea9",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T14:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d496e94a_31d87efa",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e6e1c7a4_23a887da",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T14:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076ba563_b22a2f8d",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "244d16a8_758c76f5",
         "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_coordinator.mm",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed01ee7_14026f6f",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T14:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "244d16a8_758c76f5",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc3294a5_7f485407",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T14:38:46Z",
+      "side": 0,
+      "message": "Hi Sylvain thanks for the comments--there are other parts of the iOS Payment Request code besides these changed files that are very similar to this (wrapping \"using X\" in an anonymous namespace). I would like to keep this as is at least for this CL in order to remain consistent with these other files.",
+      "parentUuid": "9fb6bb60_fe925b5f",
+      "revId": "97b537bf1aba5ca6e106920faa65f140dd80df32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afd92611_4102d698",
         "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "97b537bf1aba5ca6e106920faa65f140dd80df32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e46a69c_0ad43f36",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-22T14:38:46Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "afd92611_4102d698",
+      "revId": "97b537bf1aba5ca6e106920faa65f140dd80df32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
