@@ -208,7 +208,7 @@ void ConvertEncryptionSchemeToProto(const EncryptionScheme& encryption_scheme,
                                     pb::EncryptionScheme* message) {
   DCHECK(message);
   message->set_mode(
-      ToProtoEncryptionSchemeCipherMode(encryption_scheme.mode()).value());
+      ToProtoEncryptionSchemeCipherMode(encryption_scheme.mode()));
   message->set_encrypt_blocks(encryption_scheme.pattern().encrypt_blocks());
   message->set_skip_blocks(encryption_scheme.pattern().skip_blocks());
 }
@@ -216,7 +216,7 @@ void ConvertEncryptionSchemeToProto(const EncryptionScheme& encryption_scheme,
 EncryptionScheme ConvertProtoToEncryptionScheme(
     const pb::EncryptionScheme& message) {
   return EncryptionScheme(
-      ToMediaEncryptionSchemeCipherMode(message.mode()).value(),
+      ToMediaEncryptionSchemeCipherMode(message.mode()),
       EncryptionScheme::Pattern(message.encrypt_blocks(),
                                 message.skip_blocks()));
 }
@@ -227,13 +227,13 @@ void ConvertAudioDecoderConfigToProto(const AudioDecoderConfig& audio_config,
   DCHECK(audio_message);
 
   audio_message->set_codec(
-      ToProtoAudioDecoderConfigCodec(audio_config.codec()).value());
+      ToProtoAudioDecoderConfigCodec(audio_config.codec()));
   audio_message->set_sample_format(
       ToProtoAudioDecoderConfigSampleFormat(audio_config.sample_format())
-          .value());
+          );
   audio_message->set_channel_layout(
       ToProtoAudioDecoderConfigChannelLayout(audio_config.channel_layout())
-          .value());
+          );
   audio_message->set_samples_per_second(audio_config.samples_per_second());
   audio_message->set_seek_preroll_usec(
       audio_config.seek_preroll().InMicroseconds());
@@ -257,9 +257,9 @@ bool ConvertProtoToAudioDecoderConfig(
     AudioDecoderConfig* audio_config) {
   DCHECK(audio_config);
   audio_config->Initialize(
-      ToMediaAudioCodec(audio_message.codec()).value(),
-      ToMediaSampleFormat(audio_message.sample_format()).value(),
-      ToMediaChannelLayout(audio_message.channel_layout()).value(),
+      ToMediaAudioCodec(audio_message.codec()),
+      ToMediaSampleFormat(audio_message.sample_format()),
+      ToMediaChannelLayout(audio_message.channel_layout()),
       audio_message.samples_per_second(),
       std::vector<uint8_t>(audio_message.extra_data().begin(),
                            audio_message.extra_data().end()),
@@ -275,13 +275,13 @@ void ConvertVideoDecoderConfigToProto(const VideoDecoderConfig& video_config,
   DCHECK(video_message);
 
   video_message->set_codec(
-      ToProtoVideoDecoderConfigCodec(video_config.codec()).value());
+      ToProtoVideoDecoderConfigCodec(video_config.codec()));
   video_message->set_profile(
-      ToProtoVideoDecoderConfigProfile(video_config.profile()).value());
+      ToProtoVideoDecoderConfigProfile(video_config.profile()));
   video_message->set_format(
-      ToProtoVideoDecoderConfigFormat(video_config.format()).value());
+      ToProtoVideoDecoderConfigFormat(video_config.format()));
   video_message->set_color_space(
-      ToProtoVideoDecoderConfigColorSpace(video_config.color_space()).value());
+      ToProtoVideoDecoderConfigColorSpace(video_config.color_space()));
 
   pb::Size* coded_size_message = video_message->mutable_coded_size();
   coded_size_message->set_width(video_config.coded_size().width());
@@ -316,10 +316,10 @@ bool ConvertProtoToVideoDecoderConfig(
   DCHECK(video_config);
   EncryptionScheme encryption_scheme;
   video_config->Initialize(
-      ToMediaVideoCodec(video_message.codec()).value(),
-      ToMediaVideoCodecProfile(video_message.profile()).value(),
-      ToMediaVideoPixelFormat(video_message.format()).value(),
-      ToMediaColorSpace(video_message.color_space()).value(),
+      ToMediaVideoCodec(video_message.codec()),
+      ToMediaVideoCodecProfile(video_message.profile()),
+      ToMediaVideoPixelFormat(video_message.format()),
+      ToMediaColorSpace(video_message.color_space()),
       gfx::Size(video_message.coded_size().width(),
                 video_message.coded_size().height()),
       gfx::Rect(video_message.visible_rect().x(),
@@ -354,7 +354,7 @@ void ConvertCdmKeyInfoToProto(
   for (auto& info : keys_information) {
     pb::CdmKeyInformation* key = key_change_message->add_key_information();
     key->set_key_id(info->key_id.data(), info->key_id.size());
-    key->set_status(ToProtoCdmKeyInformation(info->status).value());
+    key->set_status(ToProtoCdmKeyInformation(info->status));
     key->set_system_code(info->system_code);
   }
 }
@@ -370,7 +370,7 @@ void ConvertProtoToCdmKeyInfo(
 
     std::unique_ptr<CdmKeyInformation> key(new CdmKeyInformation(
         key_info_msg.key_id(),
-        ToMediaCdmKeyInformationKeyStatus(key_info_msg.status()).value(),
+        ToMediaCdmKeyInformationKeyStatus(key_info_msg.status()),
         key_info_msg.system_code()));
     key_information->push_back(std::move(key));
   }
@@ -381,7 +381,7 @@ void ConvertCdmPromiseToProto(const CdmPromiseResult& result,
   promise_message->set_success(result.success());
   if (!result.success()) {
     promise_message->set_exception(
-        ToProtoCdmException(result.exception()).value());
+        ToProtoCdmException(result.exception()));
     promise_message->set_system_code(result.system_code());
     promise_message->set_error_message(result.error_message());
   }
@@ -416,7 +416,7 @@ bool ConvertProtoToCdmPromise(const pb::CdmPromise& promise_message,
   uint32_t system_code = 0;
   std::string error_message;
 
-  exception = ToCdmPromiseException(promise_message.exception()).value();
+  exception = ToCdmPromiseException(promise_message.exception());
   system_code = promise_message.system_code();
   error_message = promise_message.error_message();
   *result = CdmPromiseResult(exception, system_code, error_message);

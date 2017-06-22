@@ -49,14 +49,14 @@ class AvailabilityModelImplTest : public testing::Test {
         base::MakeUnique<AvailabilityModelImpl>(std::move(store_loader));
   }
 
-  void OnInitialized(bool success) { success_ = success; }
+  void OnInitialized(bool success) { success_.emplace(success); }
 
   void StoreLoader(
       bool success,
       std::unique_ptr<std::map<std::string, uint32_t>> store_content,
       AvailabilityStore::OnLoadedCallback callback,
       uint32_t current_day) {
-    current_day_ = current_day;
+    current_day_ = std::move(current_day);
     std::move(callback).Run(success, std::move(store_content));
   }
 

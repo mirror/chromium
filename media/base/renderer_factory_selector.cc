@@ -22,7 +22,7 @@ void RendererFactorySelector::AddFactory(
 
 void RendererFactorySelector::SetBaseFactoryType(FactoryType type) {
   DCHECK(factories_[type]);
-  base_factory_type_ = type;
+  base_factory_type_.emplace(type);
 }
 
 RendererFactory* RendererFactorySelector::GetCurrentFactory() {

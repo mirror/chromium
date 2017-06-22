@@ -65,7 +65,7 @@ class AvailabilityStoreTest : public testing::Test {
   void LoadCallback(
       bool success,
       std::unique_ptr<std::map<std::string, uint32_t>> availabilities) {
-    load_successful_ = success;
+    load_successful_ = std::move(success);
     load_results_ = std::move(availabilities);
   }
 

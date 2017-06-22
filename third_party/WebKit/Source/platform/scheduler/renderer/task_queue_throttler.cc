@@ -265,7 +265,7 @@ void TaskQueueThrottler::MaybeSchedulePumpThrottledTasks(
     return;
   }
 
-  pending_pump_throttled_tasks_runtime_ = runtime;
+  pending_pump_throttled_tasks_runtime_ = std::move(runtime);
 
   pump_throttled_tasks_closure_.Cancel();
 

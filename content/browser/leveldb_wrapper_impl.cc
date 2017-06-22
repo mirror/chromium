@@ -453,7 +453,7 @@ void LevelDBWrapperImpl::CommitChanges() {
       item->type = leveldb::mojom::BatchOperationType::DELETE_KEY;
     } else {
       item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
-      item->value = it->second;
+      item->value.emplace(it->second);
       data_size += it->second.size();
     }
     operations.push_back(std::move(item));

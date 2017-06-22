@@ -239,7 +239,9 @@ void AppCacheURLLoaderJob::SendResponseInfo() {
       is_range_request() ? range_response_info_->headers->GetContentLength()
                          : info_->response_data_size();
 
-  client_info_->OnReceiveResponse(response_head, http_info->ssl_info,
+  base::Optional<net::SSLInfo> ssl_info;
+  ssl_info.emplace(http_info->ssl_info);
+  client_info_->OnReceiveResponse(response_head, ssl_info,
                                   mojom::DownloadedTempFilePtr());
 
   client_info_->OnStartLoadingResponseBody(

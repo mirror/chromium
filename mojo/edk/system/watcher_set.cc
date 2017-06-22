@@ -17,7 +17,7 @@ void WatcherSet::NotifyState(const HandleSignalsState& state) {
   // Avoid notifying watchers if they have already seen this state.
   if (last_known_state_.has_value() && state.equals(last_known_state_.value()))
     return;
-  last_known_state_ = state;
+  last_known_state_.emplace(state);
   for (const auto& entry : watchers_)
     entry.first->NotifyHandleState(owner_, state);
 }

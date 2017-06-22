@@ -48,7 +48,8 @@ void OnTransferIn(const mojom::UsbDevice::GenericTransferInCallback& callback,
     std::copy(buffer->data(), buffer->data() + buffer_size, data.begin());
   }
 
-  callback.Run(mojo::ConvertTo<mojom::UsbTransferStatus>(status), data);
+  callback.Run(mojo::ConvertTo<mojom::UsbTransferStatus>(status),
+               std::move(data));
 }
 
 void OnTransferOut(const mojom::UsbDevice::GenericTransferOutCallback& callback,
@@ -75,7 +76,7 @@ std::vector<mojom::UsbIsochronousPacketPtr> BuildIsochronousPacketArray(
 void OnIsochronousTransferIn(
     const mojom::UsbDevice::IsochronousTransferInCallback& callback,
     scoped_refptr<net::IOBuffer> buffer,
-    const std::vector<UsbDeviceHandle::IsochronousPacket>& packets) {
+    std::vector<UsbDeviceHandle::IsochronousPacket> packets) {
   std::vector<uint8_t> data;
   if (buffer) {
     // TODO(rockot/reillyg): We should change UsbDeviceHandle to use a
@@ -90,17 +91,17 @@ void OnIsochronousTransferIn(
     data.resize(buffer_size);
     std::copy(buffer->data(), buffer->data() + buffer_size, data.begin());
   }
-  callback.Run(
-      data,
-      mojo::ConvertTo<std::vector<mojom::UsbIsochronousPacketPtr>>(packets));
+  callback.Run(std::move(data),
+               mojo::ConvertTo<std::vector<mojom::UsbIsochronousPacketPtr>>(
+                   std::move(packets)));
 }
 
 void OnIsochronousTransferOut(
     const mojom::UsbDevice::IsochronousTransferOutCallback& callback,
     scoped_refptr<net::IOBuffer> buffer,
-    const std::vector<UsbDeviceHandle::IsochronousPacket>& packets) {
-  callback.Run(
-      mojo::ConvertTo<std::vector<mojom::UsbIsochronousPacketPtr>>(packets));
+    std::vector<UsbDeviceHandle::IsochronousPacket> packets) {
+  callback.Run(mojo::ConvertTo<std::vector<mojom::UsbIsochronousPacketPtr>>(
+      std::move(packets)));
 }
 
 }  // namespace

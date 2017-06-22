@@ -90,14 +90,14 @@ FrameConnectedBluetoothDevices::CloseConnectionToDeviceWithAddress(
   if (device_address_iter == device_address_to_id_map_.end()) {
     return base::nullopt;
   }
-  WebBluetoothDeviceId device_id = device_address_iter->second;
-  auto device_id_iter = device_id_to_connection_map_.find(device_id);
+  base::Optional<WebBluetoothDeviceId> device_id = device_address_iter->second;
+  auto device_id_iter = device_id_to_connection_map_.find(*device_id);
   CHECK(device_id_iter != device_id_to_connection_map_.end());
   device_id_iter->second->server_client->GATTServerDisconnected();
   CHECK(device_address_to_id_map_.erase(device_address));
-  device_id_to_connection_map_.erase(device_id);
+  device_id_to_connection_map_.erase(*device_id);
   DecrementDevicesConnectedCount();
-  return base::make_optional(device_id);
+  return device_id;
 }
 
 void FrameConnectedBluetoothDevices::IncrementDevicesConnectedCount() {

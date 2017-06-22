@@ -117,7 +117,7 @@ AsyncDocumentSubresourceFilter::~AsyncDocumentSubresourceFilter() {
 void AsyncDocumentSubresourceFilter::OnActivateStateCalculated(
     base::Callback<void(ActivationState)> activation_state_callback,
     ActivationState activation_state) {
-  activation_state_ = activation_state;
+  activation_state_.emplace(activation_state);
   activation_state_callback.Run(activation_state);
 }
 

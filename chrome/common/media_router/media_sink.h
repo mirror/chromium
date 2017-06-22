@@ -49,13 +49,13 @@ class MediaSink {
   const std::string& name() const { return name_; }
 
   void set_description(const std::string& description) {
-    description_ = description;
+    description_.emplace(description);
   }
   const base::Optional<std::string>& description() const {
     return description_;
   }
 
-  void set_domain(const std::string& domain) { domain_ = domain; }
+  void set_domain(const std::string& domain) { domain_.emplace(domain); }
   const base::Optional<std::string>& domain() const { return domain_; }
 
   void set_icon_type(IconType icon_type) { icon_type_ = icon_type; }

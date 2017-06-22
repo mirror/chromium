@@ -419,13 +419,13 @@ void BluetoothDevice::UpdateAdvertisementData(int8_t rssi,
                                               const int8_t* tx_power) {
   UpdateTimestamp();
 
-  inquiry_rssi_ = rssi;
+  inquiry_rssi_.emplace(rssi);
 
   device_uuids_.ReplaceAdvertisedUUIDs(std::move(advertised_uuids));
   service_data_ = std::move(service_data);
 
   if (tx_power != nullptr) {
-    inquiry_tx_power_ = *tx_power;
+    inquiry_tx_power_.emplace(*tx_power);
   } else {
     inquiry_tx_power_ = base::nullopt;
   }

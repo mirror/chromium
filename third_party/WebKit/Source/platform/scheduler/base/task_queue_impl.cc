@@ -429,7 +429,9 @@ base::Optional<base::TimeTicks> TaskQueueImpl::GetNextScheduledWakeUp() {
   if (main_thread_only().delayed_incoming_queue.empty() || !IsQueueEnabled())
     return base::nullopt;
 
-  return main_thread_only().delayed_incoming_queue.top().delayed_run_time;
+  base::Optional<base::TimeTicks> opt;
+  opt.emplace(main_thread_only().delayed_incoming_queue.top().delayed_run_time);
+  return opt;
 }
 
 base::Optional<TaskQueueImpl::DelayedWakeUp>

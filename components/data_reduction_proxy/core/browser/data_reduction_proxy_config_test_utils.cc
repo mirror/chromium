@@ -139,7 +139,7 @@ void TestDataReductionProxyConfig::SetWasDataReductionProxyNotUsed() {
 
 void TestDataReductionProxyConfig::SetWasDataReductionProxyUsedProxyIndex(
     int proxy_index) {
-  proxy_index_ = proxy_index;
+  proxy_index_.emplace(proxy_index);
 }
 
 void TestDataReductionProxyConfig::ResetWasDataReductionProxyUsed() {

@@ -73,8 +73,10 @@ static void RecordRequestDeviceFilters(
     for (const BluetoothUUID& service : filter->services.value()) {
       // TODO(ortuno): Use a macro to histogram strings.
       // http://crbug.com/520284
+      base::Optional<BluetoothUUID> opt;
+      opt.emplace(service);
       UMA_HISTOGRAM_SPARSE_SLOWLY(
-          "Bluetooth.Web.RequestDevice.Filters.Services", HashUUID(service));
+          "Bluetooth.Web.RequestDevice.Filters.Services", HashUUID(opt));
     }
   }
 }
@@ -86,9 +88,10 @@ static void RecordRequestDeviceOptionalServices(
   for (const BluetoothUUID& service : optional_services) {
     // TODO(ortuno): Use a macro to histogram strings.
     // http://crbug.com/520284
+    base::Optional<BluetoothUUID> opt;
+    opt.emplace(service);
     UMA_HISTOGRAM_SPARSE_SLOWLY(
-        "Bluetooth.Web.RequestDevice.OptionalServices.Services",
-        HashUUID(service));
+        "Bluetooth.Web.RequestDevice.OptionalServices.Services", HashUUID(opt));
   }
 }
 

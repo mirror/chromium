@@ -84,7 +84,7 @@ void WakeUpBudgetPool::OnQueueNextWakeUpChanged(
 }
 
 void WakeUpBudgetPool::OnWakeUp(base::TimeTicks now) {
-  last_wake_up_ = now;
+  last_wake_up_.emplace(now);
 }
 
 void WakeUpBudgetPool::AsValueInto(base::trace_event::TracedValue* state,

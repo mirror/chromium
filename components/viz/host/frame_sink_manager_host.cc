@@ -63,7 +63,7 @@ void FrameSinkManagerHost::RegisterFrameSinkHierarchy(
   // Register and store the parent.
   frame_sink_manager_ptr_->RegisterFrameSinkHierarchy(parent_frame_sink_id,
                                                       child_frame_sink_id);
-  frame_sink_data_map_[child_frame_sink_id].parent = parent_frame_sink_id;
+  frame_sink_data_map_[child_frame_sink_id].parent.emplace(parent_frame_sink_id);
 }
 
 void FrameSinkManagerHost::UnregisterFrameSinkHierarchy(

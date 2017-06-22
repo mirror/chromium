@@ -84,7 +84,7 @@ VideoColorSpace VideoDecoderConfig::color_space_info() const {
 }
 
 void VideoDecoderConfig::set_hdr_metadata(const HDRMetadata& hdr_metadata) {
-  hdr_metadata_ = hdr_metadata;
+  hdr_metadata_.emplace(hdr_metadata);
 }
 
 base::Optional<HDRMetadata> VideoDecoderConfig::hdr_metadata() const {

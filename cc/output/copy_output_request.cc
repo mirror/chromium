@@ -68,7 +68,7 @@ void CopyOutputRequest::SetTextureMailbox(
     const TextureMailbox& texture_mailbox) {
   DCHECK(!force_bitmap_result_);
   DCHECK(texture_mailbox.IsTexture());
-  texture_mailbox_ = texture_mailbox;
+  texture_mailbox_.emplace(texture_mailbox);
 }
 
 }  // namespace cc

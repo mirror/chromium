@@ -984,10 +984,11 @@ void WebBluetoothServiceImpl::OnCreateGATTConnectionFailed(
 
 void WebBluetoothServiceImpl::OnCharacteristicReadValueSuccess(
     RemoteCharacteristicReadValueCallback callback,
-    const std::vector<uint8_t>& value) {
+    std::vector<uint8_t> value) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   RecordCharacteristicReadValueOutcome(UMAGATTOperationOutcome::SUCCESS);
-  std::move(callback).Run(blink::mojom::WebBluetoothResult::SUCCESS, value);
+  std::move(callback).Run(blink::mojom::WebBluetoothResult::SUCCESS,
+                          std::move(value));
 }
 
 void WebBluetoothServiceImpl::OnCharacteristicReadValueFailed(
@@ -1051,10 +1052,11 @@ void WebBluetoothServiceImpl::OnStopNotifySessionComplete(
 
 void WebBluetoothServiceImpl::OnDescriptorReadValueSuccess(
     RemoteDescriptorReadValueCallback callback,
-    const std::vector<uint8_t>& value) {
+    std::vector<uint8_t> value) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   RecordDescriptorReadValueOutcome(UMAGATTOperationOutcome::SUCCESS);
-  std::move(callback).Run(blink::mojom::WebBluetoothResult::SUCCESS, value);
+  std::move(callback).Run(blink::mojom::WebBluetoothResult::SUCCESS,
+                          std::move(value));
 }
 
 void WebBluetoothServiceImpl::OnDescriptorReadValueFailed(

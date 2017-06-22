@@ -245,7 +245,9 @@ void PresentationServiceImpl::OnStartPresentationSucceeded(
     return;
 
   CHECK(pending_start_presentation_cb_.get());
-  pending_start_presentation_cb_->Run(presentation_info, base::nullopt);
+  base::Optional<PresentationInfo> opt_presentation_info;
+  opt_presentation_info.emplace(presentation_info);
+  pending_start_presentation_cb_->Run(opt_presentation_info, base::nullopt);
   ListenForConnectionStateChange(presentation_info);
   pending_start_presentation_cb_.reset();
   start_presentation_request_id_ = kInvalidRequestId;
@@ -258,7 +260,9 @@ void PresentationServiceImpl::OnStartPresentationError(
     return;
 
   CHECK(pending_start_presentation_cb_.get());
-  pending_start_presentation_cb_->Run(base::nullopt, error);
+  base::Optional<PresentationError> opt_error;
+  opt_error.emplace(error);
+  pending_start_presentation_cb_->Run(base::nullopt, opt_error);
   pending_start_presentation_cb_.reset();
   start_presentation_request_id_ = kInvalidRequestId;
 }
@@ -266,8 +270,10 @@ void PresentationServiceImpl::OnStartPresentationError(
 void PresentationServiceImpl::OnReconnectPresentationSucceeded(
     int request_id,
     const PresentationInfo& presentation_info) {
+  base::Optional<PresentationInfo> opt_presentation_info;
+  opt_presentation_info.emplace(presentation_info);
   if (RunAndEraseReconnectPresentationMojoCallback(
-          request_id, presentation_info, base::nullopt)) {
+          request_id, opt_presentation_info, base::nullopt)) {
     ListenForConnectionStateChange(presentation_info);
   }
 }
@@ -275,8 +281,10 @@ void PresentationServiceImpl::OnReconnectPresentationSucceeded(
 void PresentationServiceImpl::OnReconnectPresentationError(
     int request_id,
     const PresentationError& error) {
+  base::Optional<PresentationError> opt_error;
+  opt_error.emplace(error);
   RunAndEraseReconnectPresentationMojoCallback(request_id, base::nullopt,
-                                               error);
+                                               opt_error);
 }
 
 bool PresentationServiceImpl::RunAndEraseReconnectPresentationMojoCallback(

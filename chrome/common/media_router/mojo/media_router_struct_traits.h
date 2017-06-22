@@ -217,8 +217,10 @@ struct StructTraits<media_router::mojom::IssueDataView,
 
   static base::Optional<std::string> route_id(
       const media_router::IssueInfo& issue) {
-    return issue.route_id.empty() ? base::Optional<std::string>()
-                                  : base::make_optional(issue.route_id);
+    base::Optional<std::string> opt;
+    if (!issue.route_id.empty())
+      opt.emplace(issue.route_id);
+    return opt;
   }
 
   static media_router::IssueInfo::Severity severity(
@@ -236,8 +238,10 @@ struct StructTraits<media_router::mojom::IssueDataView,
 
   static base::Optional<std::string> message(
       const media_router::IssueInfo& issue) {
-    return issue.message.empty() ? base::Optional<std::string>()
-                                 : base::make_optional(issue.message);
+    base::Optional<std::string> opt;
+    if (!issue.message.empty())
+      opt.emplace(issue.message);
+    return opt;
   }
 
   static media_router::IssueInfo::Action default_action(
@@ -247,7 +251,9 @@ struct StructTraits<media_router::mojom::IssueDataView,
 
   static base::Optional<std::vector<media_router::IssueInfo::Action>>
   secondary_actions(const media_router::IssueInfo& issue) {
-    return issue.secondary_actions;
+    base::Optional<std::vector<media_router::IssueInfo::Action>> opt;
+    opt.emplace(issue.secondary_actions);
+    return opt;
   }
 
   static int32_t help_page_id(const media_router::IssueInfo& issue) {
@@ -380,9 +386,10 @@ struct StructTraits<media_router::mojom::MediaRouteDataView,
 
   static base::Optional<std::string> custom_controller_path(
       const media_router::MediaRoute& route) {
-    return route.custom_controller_path().empty()
-               ? base::Optional<std::string>()
-               : base::make_optional(route.custom_controller_path());
+    base::Optional<std::string> opt;
+    if (!route.custom_controller_path().empty())
+      opt.emplace(route.custom_controller_path());
+    return opt;
   }
 
   static bool supports_media_route_controller(

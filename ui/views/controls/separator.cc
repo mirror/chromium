@@ -21,7 +21,7 @@ Separator::Separator() {}
 Separator::~Separator() {}
 
 void Separator::SetColor(SkColor color) {
-  overridden_color_ = color;
+  overridden_color_.emplace(color);
   SchedulePaint();
 }
 

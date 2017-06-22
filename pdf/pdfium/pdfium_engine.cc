@@ -2851,7 +2851,7 @@ void PDFiumEngine::ScrollToPage(int page) {
   if (!PageIndexInBounds(page))
     return;
 
-  in_flight_visible_page_ = page;
+  in_flight_visible_page_.emplace(page);
   client_->ScrollToPage(page);
 }
 

@@ -432,7 +432,7 @@ void View::SetPreferredSize(const gfx::Size& size) {
   if (preferred_size_ && *preferred_size_ == size)
     return;
 
-  preferred_size_ = size;
+  preferred_size_.emplace(size);
   PreferredSizeChanged();
 }
 

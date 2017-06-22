@@ -69,7 +69,7 @@ struct HashTraits<base::Optional<std::vector<T>>, false> {
     if (!value)
       return HashCombine(seed, 0);
 
-    return Hash(seed, *value);
+    return HashTraits<std::vector<T>, false>::Hash(seed, *value);
   }
 };
 

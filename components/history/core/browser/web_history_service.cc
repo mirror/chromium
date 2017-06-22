@@ -225,7 +225,7 @@ class RequestImpl : public WebHistoryService::Request,
 
   void SetPostDataAndType(const std::string& post_data,
                           const std::string& mime_type) override {
-    post_data_ = post_data;
+    post_data_.emplace(post_data);
     post_data_mime_type_ = mime_type;
   }
 

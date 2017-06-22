@@ -1339,7 +1339,7 @@ base::Optional<PasswordForm> PasswordFormManager::UpdatePendingAndGetOldKey(
     // Username has changed. We set this selected username as the real
     // username. Given that |username_value| is part of the Sync and
     // PasswordStore primary key, the old primary key must be supplied.
-    old_primary_key = pending_credentials_;
+    old_primary_key.emplace(pending_credentials_);
     pending_credentials_.username_value = selected_username_;
     // TODO(crbug.com/188908) This branch currently never executes (bound to
     // the other usernames experiment). Updating related credentials would be
@@ -1356,7 +1356,7 @@ base::Optional<PasswordForm> PasswordFormManager::UpdatePendingAndGetOldKey(
     // sign-up/change password form is used.  Given that |password_element| and
     // |username_element| are part of Sync and PasswordStore primary key, the
     // old primary key must be used if the new names shal be saved.
-    old_primary_key = pending_credentials_;
+    old_primary_key.emplace(pending_credentials_);
     pending_credentials_.password_element = observed_form_.password_element;
     pending_credentials_.username_element = observed_form_.username_element;
     pending_credentials_.submit_element = observed_form_.submit_element;

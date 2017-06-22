@@ -110,7 +110,7 @@ void NetworkStateNotifier::SetNetworkQuality(WebEffectiveConnectionType type,
     state_.downlink_throughput_mbps = base::nullopt;
 
     if (http_rtt.InMilliseconds() >= 0)
-      state_.http_rtt = http_rtt;
+      state_.http_rtt.emplace(http_rtt);
 
     if (transport_rtt.InMilliseconds() >= 0)
       state_.transport_rtt = transport_rtt;
@@ -178,7 +178,7 @@ void NetworkStateNotifier::SetNetworkQualityInfoOverride(
     override_.http_rtt = base::TimeDelta::FromMilliseconds(transport_rtt_msec);
     override_.downlink_throughput_mbps = base::nullopt;
     if (downlink_throughput_mbps >= 0)
-      override_.downlink_throughput_mbps = downlink_throughput_mbps;
+      override_.downlink_throughput_mbps.emplace(downlink_throughput_mbps);
   }
 }
 

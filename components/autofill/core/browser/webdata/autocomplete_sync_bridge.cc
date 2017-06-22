@@ -229,9 +229,9 @@ class SyncDifferenceTracker {
     if (!InitializeIfNeeded()) {
       return false;
     }
-    auto iter = unique_to_local_.find(AutofillEntry(key, Time(), Time()));
+    const auto iter = unique_to_local_.find(AutofillEntry(key, Time(), Time()));
     if (iter != unique_to_local_.end()) {
-      *entry = *iter;
+      entry->emplace(*iter);
     }
     return true;
   }

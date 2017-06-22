@@ -24,7 +24,7 @@ class NeverAvailabilityModelTest : public ::testing::Test {
  public:
   NeverAvailabilityModelTest() = default;
 
-  void OnInitializedCallback(bool success) { success_ = success; }
+  void OnInitializedCallback(bool success) { success_.emplace(success); }
 
  protected:
   NeverAvailabilityModel availability_model_;

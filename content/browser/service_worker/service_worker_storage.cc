@@ -415,7 +415,7 @@ void ServiceWorkerStorage::StoreRegistration(
   data.foreign_fetch_scopes = version->foreign_fetch_scopes();
   data.foreign_fetch_origins = version->foreign_fetch_origins();
   if (version->origin_trial_tokens())
-    data.origin_trial_tokens = *version->origin_trial_tokens();
+    data.origin_trial_tokens.emplace(*version->origin_trial_tokens());
   data.navigation_preload_state = registration->navigation_preload_state();
   data.used_features = version->used_features();
 

@@ -37,11 +37,11 @@ bool AvailabilityModelImpl::IsReady() const {
 
 base::Optional<uint32_t> AvailabilityModelImpl::GetAvailability(
     const base::Feature& feature) const {
+  base::Optional<uint32_t> opt;
   auto search = feature_availabilities_.find(feature.name);
-  if (search == feature_availabilities_.end())
-    return base::nullopt;
-
-  return search->second;
+  if (search != feature_availabilities_.end())
+    opt.emplace(search->second);
+  return opt;
 }
 
 void AvailabilityModelImpl::OnStoreLoadComplete(

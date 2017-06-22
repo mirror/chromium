@@ -409,7 +409,7 @@ class MostVisitedSitesTest : public ::testing::TestWithParam<bool> {
                                &SuggestionsService::ResponseCallbackList::Add));
     EXPECT_CALL(mock_suggestions_service_, GetSuggestionsDataFromCache())
         .Times(AnyNumber())
-        .WillRepeatedly(Return(SuggestionsProfile()));  // Empty cache.
+        .WillRepeatedly(Return(base::make_optional(SuggestionsProfile())));  // Empty cache.
     EXPECT_CALL(mock_suggestions_service_, FetchSuggestionsData())
         .Times(AnyNumber())
         .WillRepeatedly(Return(true));
@@ -667,7 +667,7 @@ TEST_P(MostVisitedSitesTest, ShouldHandleTopSitesCacheHit) {
       .WillOnce(Invoke(&suggestions_service_callbacks_,
                        &SuggestionsService::ResponseCallbackList::Add));
   EXPECT_CALL(mock_suggestions_service_, GetSuggestionsDataFromCache())
-      .WillOnce(Return(SuggestionsProfile()));  // Empty cache.
+      .WillOnce(Return(base::make_optional(SuggestionsProfile())));  // Empty cache.
   if (IsPopularSitesEnabledViaVariations()) {
     EXPECT_CALL(
         mock_observer_,
@@ -720,11 +720,11 @@ class MostVisitedSitesWithCacheHitTest : public MostVisitedSitesTest {
         .WillOnce(Invoke(&suggestions_service_callbacks_,
                          &SuggestionsService::ResponseCallbackList::Add));
     EXPECT_CALL(mock_suggestions_service_, GetSuggestionsDataFromCache())
-        .WillOnce(Return(MakeProfile({
+        .WillOnce(Return(base::make_optional(MakeProfile({
             MakeSuggestion("Site 1", "http://site1/"),
             MakeSuggestion("Site 2", "http://site2/"),
             MakeSuggestion("Site 3", "http://site3/"),
-        })));
+                }))));
     if (IsPopularSitesEnabledViaVariations()) {
       EXPECT_CALL(mock_observer_,
                   OnMostVisitedURLsAvailable(ElementsAre(
@@ -864,7 +864,7 @@ class MostVisitedSitesWithEmptyCacheTest : public MostVisitedSitesTest {
         .WillOnce(Invoke(&suggestions_service_callbacks_,
                          &SuggestionsService::ResponseCallbackList::Add));
     EXPECT_CALL(mock_suggestions_service_, GetSuggestionsDataFromCache())
-        .WillOnce(Return(SuggestionsProfile()));  // Empty cache.
+        .WillOnce(Return(base::make_optional(SuggestionsProfile())));  // Empty cache.
     EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
         .WillOnce(Invoke(&top_sites_callbacks_, &TopSitesCallbackList::Add));
     EXPECT_CALL(mock_suggestions_service_, FetchSuggestionsData())

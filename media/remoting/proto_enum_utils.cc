@@ -11,7 +11,7 @@ namespace remoting {
   case OriginType::x:        \
     return OtherType::x
 
-base::Optional<EncryptionScheme::CipherMode> ToMediaEncryptionSchemeCipherMode(
+EncryptionScheme::CipherMode ToMediaEncryptionSchemeCipherMode(
     pb::EncryptionScheme::CipherMode value) {
   using OriginType = pb::EncryptionScheme;
   using OtherType = EncryptionScheme;
@@ -20,11 +20,12 @@ base::Optional<EncryptionScheme::CipherMode> ToMediaEncryptionSchemeCipherMode(
     CASE_RETURN_OTHER(CIPHER_MODE_AES_CTR);
     CASE_RETURN_OTHER(CIPHER_MODE_AES_CBC);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::CIPHER_MODE_UNENCRYPTED;
 }
 
-base::Optional<pb::EncryptionScheme::CipherMode>
-ToProtoEncryptionSchemeCipherMode(EncryptionScheme::CipherMode value) {
+pb::EncryptionScheme::CipherMode ToProtoEncryptionSchemeCipherMode(
+    EncryptionScheme::CipherMode value) {
   using OriginType = EncryptionScheme;
   using OtherType = pb::EncryptionScheme;
   switch (value) {
@@ -32,11 +33,11 @@ ToProtoEncryptionSchemeCipherMode(EncryptionScheme::CipherMode value) {
     CASE_RETURN_OTHER(CIPHER_MODE_AES_CTR);
     CASE_RETURN_OTHER(CIPHER_MODE_AES_CBC);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::CIPHER_MODE_UNENCRYPTED;
 }
 
-base::Optional<AudioCodec> ToMediaAudioCodec(
-    pb::AudioDecoderConfig::Codec value) {
+AudioCodec ToMediaAudioCodec(pb::AudioDecoderConfig::Codec value) {
   using OriginType = pb::AudioDecoderConfig;
   using OtherType = AudioCodec;
   switch (value) {
@@ -58,11 +59,11 @@ base::Optional<AudioCodec> ToMediaAudioCodec(
     CASE_RETURN_OTHER(kCodecALAC);
     CASE_RETURN_OTHER(kCodecAC3);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::kUnknownAudioCodec;
 }
 
-base::Optional<pb::AudioDecoderConfig::Codec> ToProtoAudioDecoderConfigCodec(
-    AudioCodec value) {
+pb::AudioDecoderConfig::Codec ToProtoAudioDecoderConfigCodec(AudioCodec value) {
   using OriginType = AudioCodec;
   using OtherType = pb::AudioDecoderConfig;
   switch (value) {
@@ -84,11 +85,11 @@ base::Optional<pb::AudioDecoderConfig::Codec> ToProtoAudioDecoderConfigCodec(
     CASE_RETURN_OTHER(kCodecALAC);
     CASE_RETURN_OTHER(kCodecAC3);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::kUnknownAudioCodec;
 }
 
-base::Optional<SampleFormat> ToMediaSampleFormat(
-    pb::AudioDecoderConfig::SampleFormat value) {
+SampleFormat ToMediaSampleFormat(pb::AudioDecoderConfig::SampleFormat value) {
   using OriginType = pb::AudioDecoderConfig;
   using OtherType = SampleFormat;
   switch (value) {
@@ -104,11 +105,12 @@ base::Optional<SampleFormat> ToMediaSampleFormat(
     CASE_RETURN_OTHER(kSampleFormatAc3);
     CASE_RETURN_OTHER(kSampleFormatEac3);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::kUnknownSampleFormat;
 }
 
-base::Optional<pb::AudioDecoderConfig::SampleFormat>
-ToProtoAudioDecoderConfigSampleFormat(SampleFormat value) {
+pb::AudioDecoderConfig::SampleFormat ToProtoAudioDecoderConfigSampleFormat(
+    SampleFormat value) {
   using OriginType = SampleFormat;
   using OtherType = pb::AudioDecoderConfig;
   switch (value) {
@@ -124,10 +126,11 @@ ToProtoAudioDecoderConfigSampleFormat(SampleFormat value) {
     CASE_RETURN_OTHER(kSampleFormatAc3);
     CASE_RETURN_OTHER(kSampleFormatEac3);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::kUnknownSampleFormat;
 }
 
-base::Optional<ChannelLayout> ToMediaChannelLayout(
+ChannelLayout ToMediaChannelLayout(
     pb::AudioDecoderConfig::ChannelLayout value) {
   using OriginType = pb::AudioDecoderConfig;
   using OtherType = ChannelLayout;
@@ -165,11 +168,12 @@ base::Optional<ChannelLayout> ToMediaChannelLayout(
     CASE_RETURN_OTHER(CHANNEL_LAYOUT_STEREO_AND_KEYBOARD_MIC);
     CASE_RETURN_OTHER(CHANNEL_LAYOUT_4_1_QUAD_SIDE);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::CHANNEL_LAYOUT_NONE;
 }
 
-base::Optional<pb::AudioDecoderConfig::ChannelLayout>
-ToProtoAudioDecoderConfigChannelLayout(ChannelLayout value) {
+pb::AudioDecoderConfig::ChannelLayout ToProtoAudioDecoderConfigChannelLayout(
+    ChannelLayout value) {
   using OriginType = ChannelLayout;
   using OtherType = pb::AudioDecoderConfig;
   switch (value) {
@@ -206,11 +210,11 @@ ToProtoAudioDecoderConfigChannelLayout(ChannelLayout value) {
     CASE_RETURN_OTHER(CHANNEL_LAYOUT_STEREO_AND_KEYBOARD_MIC);
     CASE_RETURN_OTHER(CHANNEL_LAYOUT_4_1_QUAD_SIDE);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::CHANNEL_LAYOUT_NONE;
 }
 
-base::Optional<VideoCodec> ToMediaVideoCodec(
-    pb::VideoDecoderConfig::Codec value) {
+VideoCodec ToMediaVideoCodec(pb::VideoDecoderConfig::Codec value) {
   using OriginType = pb::VideoDecoderConfig;
   using OtherType = VideoCodec;
   switch (value) {
@@ -225,11 +229,11 @@ base::Optional<VideoCodec> ToMediaVideoCodec(
     CASE_RETURN_OTHER(kCodecHEVC);
     CASE_RETURN_OTHER(kCodecDolbyVision);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::kUnknownVideoCodec;
 }
 
-base::Optional<pb::VideoDecoderConfig::Codec> ToProtoVideoDecoderConfigCodec(
-    VideoCodec value) {
+pb::VideoDecoderConfig::Codec ToProtoVideoDecoderConfigCodec(VideoCodec value) {
   using OriginType = VideoCodec;
   using OtherType = pb::VideoDecoderConfig;
   switch (value) {
@@ -244,10 +248,11 @@ base::Optional<pb::VideoDecoderConfig::Codec> ToProtoVideoDecoderConfigCodec(
     CASE_RETURN_OTHER(kCodecHEVC);
     CASE_RETURN_OTHER(kCodecDolbyVision);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::kUnknownVideoCodec;
 }
 
-base::Optional<VideoCodecProfile> ToMediaVideoCodecProfile(
+VideoCodecProfile ToMediaVideoCodecProfile(
     pb::VideoDecoderConfig::Profile value) {
   using OriginType = pb::VideoDecoderConfig;
   using OtherType = VideoCodecProfile;
@@ -277,11 +282,12 @@ base::Optional<VideoCodecProfile> ToMediaVideoCodecProfile(
     CASE_RETURN_OTHER(DOLBYVISION_PROFILE5);
     CASE_RETURN_OTHER(DOLBYVISION_PROFILE7);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::VIDEO_CODEC_PROFILE_UNKNOWN;
 }
 
-base::Optional<pb::VideoDecoderConfig::Profile>
-ToProtoVideoDecoderConfigProfile(VideoCodecProfile value) {
+pb::VideoDecoderConfig::Profile ToProtoVideoDecoderConfigProfile(
+    VideoCodecProfile value) {
   using OriginType = VideoCodecProfile;
   using OtherType = pb::VideoDecoderConfig;
   switch (value) {
@@ -310,11 +316,11 @@ ToProtoVideoDecoderConfigProfile(VideoCodecProfile value) {
     CASE_RETURN_OTHER(DOLBYVISION_PROFILE5);
     CASE_RETURN_OTHER(DOLBYVISION_PROFILE7);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::VIDEO_CODEC_PROFILE_UNKNOWN;
 }
 
-base::Optional<VideoPixelFormat> ToMediaVideoPixelFormat(
-    pb::VideoDecoderConfig::Format value) {
+VideoPixelFormat ToMediaVideoPixelFormat(pb::VideoDecoderConfig::Format value) {
   using OriginType = pb::VideoDecoderConfig;
   using OtherType = VideoPixelFormat;
   switch (value) {
@@ -347,10 +353,11 @@ base::Optional<VideoPixelFormat> ToMediaVideoPixelFormat(
     CASE_RETURN_OTHER(PIXEL_FORMAT_Y16);
     CASE_RETURN_OTHER(PIXEL_FORMAT_I422);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::PIXEL_FORMAT_UNKNOWN;
 }
 
-base::Optional<pb::VideoDecoderConfig::Format> ToProtoVideoDecoderConfigFormat(
+pb::VideoDecoderConfig::Format ToProtoVideoDecoderConfigFormat(
     VideoPixelFormat value) {
   using OriginType = VideoPixelFormat;
   using OtherType = pb::VideoDecoderConfig;
@@ -384,11 +391,11 @@ base::Optional<pb::VideoDecoderConfig::Format> ToProtoVideoDecoderConfigFormat(
     CASE_RETURN_OTHER(PIXEL_FORMAT_Y16);
     CASE_RETURN_OTHER(PIXEL_FORMAT_I422);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::PIXEL_FORMAT_UNKNOWN;
 }
 
-base::Optional<ColorSpace> ToMediaColorSpace(
-    pb::VideoDecoderConfig::ColorSpace value) {
+ColorSpace ToMediaColorSpace(pb::VideoDecoderConfig::ColorSpace value) {
   using OriginType = pb::VideoDecoderConfig;
   using OtherType = ColorSpace;
   switch (value) {
@@ -397,11 +404,12 @@ base::Optional<ColorSpace> ToMediaColorSpace(
     CASE_RETURN_OTHER(COLOR_SPACE_HD_REC709);
     CASE_RETURN_OTHER(COLOR_SPACE_SD_REC601);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::COLOR_SPACE_UNSPECIFIED;
 }
 
-base::Optional<pb::VideoDecoderConfig::ColorSpace>
-ToProtoVideoDecoderConfigColorSpace(ColorSpace value) {
+pb::VideoDecoderConfig::ColorSpace ToProtoVideoDecoderConfigColorSpace(
+    ColorSpace value) {
   using OriginType = ColorSpace;
   using OtherType = pb::VideoDecoderConfig;
   switch (value) {
@@ -410,10 +418,11 @@ ToProtoVideoDecoderConfigColorSpace(ColorSpace value) {
     CASE_RETURN_OTHER(COLOR_SPACE_HD_REC709);
     CASE_RETURN_OTHER(COLOR_SPACE_SD_REC601);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::COLOR_SPACE_UNSPECIFIED;
 }
 
-base::Optional<BufferingState> ToMediaBufferingState(
+BufferingState ToMediaBufferingState(
     pb::RendererClientOnBufferingStateChange::State value) {
   using OriginType = pb::RendererClientOnBufferingStateChange;
   using OtherType = BufferingState;
@@ -421,21 +430,23 @@ base::Optional<BufferingState> ToMediaBufferingState(
     CASE_RETURN_OTHER(BUFFERING_HAVE_NOTHING);
     CASE_RETURN_OTHER(BUFFERING_HAVE_ENOUGH);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::BUFFERING_HAVE_NOTHING;
 }
 
-base::Optional<pb::RendererClientOnBufferingStateChange::State>
-ToProtoMediaBufferingState(BufferingState value) {
+pb::RendererClientOnBufferingStateChange::State ToProtoMediaBufferingState(
+    BufferingState value) {
   using OriginType = BufferingState;
   using OtherType = pb::RendererClientOnBufferingStateChange;
   switch (value) {
     CASE_RETURN_OTHER(BUFFERING_HAVE_NOTHING);
     CASE_RETURN_OTHER(BUFFERING_HAVE_ENOUGH);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::BUFFERING_HAVE_NOTHING;
 }
 
-base::Optional<CdmKeyInformation::KeyStatus> ToMediaCdmKeyInformationKeyStatus(
+CdmKeyInformation::KeyStatus ToMediaCdmKeyInformationKeyStatus(
     pb::CdmKeyInformation::KeyStatus value) {
   using OriginType = pb::CdmKeyInformation;
   using OtherType = CdmKeyInformation;
@@ -448,10 +459,11 @@ base::Optional<CdmKeyInformation::KeyStatus> ToMediaCdmKeyInformationKeyStatus(
     CASE_RETURN_OTHER(KEY_STATUS_PENDING);
     CASE_RETURN_OTHER(RELEASED);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::USABLE;
 }
 
-base::Optional<pb::CdmKeyInformation::KeyStatus> ToProtoCdmKeyInformation(
+pb::CdmKeyInformation::KeyStatus ToProtoCdmKeyInformation(
     CdmKeyInformation::KeyStatus value) {
   using OriginType = CdmKeyInformation;
   using OtherType = pb::CdmKeyInformation;
@@ -464,11 +476,11 @@ base::Optional<pb::CdmKeyInformation::KeyStatus> ToProtoCdmKeyInformation(
     CASE_RETURN_OTHER(KEY_STATUS_PENDING);
     CASE_RETURN_OTHER(RELEASED);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::USABLE;
 }
 
-base::Optional<CdmPromise::Exception> ToCdmPromiseException(
-    pb::CdmException value) {
+CdmPromise::Exception ToCdmPromiseException(pb::CdmException value) {
   using OriginType = pb::CdmException;
   using OtherType = CdmPromise;
   switch (value) {
@@ -480,11 +492,11 @@ base::Optional<CdmPromise::Exception> ToCdmPromiseException(
     CASE_RETURN_OTHER(CLIENT_ERROR);
     CASE_RETURN_OTHER(OUTPUT_ERROR);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::NOT_SUPPORTED_ERROR;
 }
 
-base::Optional<pb::CdmException> ToProtoCdmException(
-    CdmPromise::Exception value) {
+pb::CdmException ToProtoCdmException(CdmPromise::Exception value) {
   using OriginType = CdmPromise;
   using OtherType = pb::CdmException;
   switch (value) {
@@ -496,10 +508,11 @@ base::Optional<pb::CdmException> ToProtoCdmException(
     CASE_RETURN_OTHER(CLIENT_ERROR);
     CASE_RETURN_OTHER(OUTPUT_ERROR);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::NOT_SUPPORTED_ERROR;
 }
 
-base::Optional<CdmMessageType> ToMediaCdmMessageType(pb::CdmMessageType value) {
+CdmMessageType ToMediaCdmMessageType(pb::CdmMessageType value) {
   using OriginType = pb::CdmMessageType;
   using OtherType = CdmMessageType;
   switch (value) {
@@ -507,10 +520,11 @@ base::Optional<CdmMessageType> ToMediaCdmMessageType(pb::CdmMessageType value) {
     CASE_RETURN_OTHER(LICENSE_RENEWAL);
     CASE_RETURN_OTHER(LICENSE_RELEASE);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::LICENSE_REQUEST;
 }
 
-base::Optional<pb::CdmMessageType> ToProtoCdmMessageType(CdmMessageType value) {
+pb::CdmMessageType ToProtoCdmMessageType(CdmMessageType value) {
   using OriginType = CdmMessageType;
   using OtherType = pb::CdmMessageType;
   switch (value) {
@@ -518,10 +532,11 @@ base::Optional<pb::CdmMessageType> ToProtoCdmMessageType(CdmMessageType value) {
     CASE_RETURN_OTHER(LICENSE_RENEWAL);
     CASE_RETURN_OTHER(LICENSE_RELEASE);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::LICENSE_REQUEST;
 }
 
-base::Optional<CdmSessionType> ToCdmSessionType(pb::CdmSessionType value) {
+CdmSessionType ToCdmSessionType(pb::CdmSessionType value) {
   using OriginType = pb::CdmSessionType;
   using OtherType = CdmSessionType;
   switch (value) {
@@ -529,10 +544,11 @@ base::Optional<CdmSessionType> ToCdmSessionType(pb::CdmSessionType value) {
     CASE_RETURN_OTHER(PERSISTENT_LICENSE_SESSION);
     CASE_RETURN_OTHER(PERSISTENT_RELEASE_MESSAGE_SESSION);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::TEMPORARY_SESSION;
 }
 
-base::Optional<pb::CdmSessionType> ToProtoCdmSessionType(CdmSessionType value) {
+pb::CdmSessionType ToProtoCdmSessionType(CdmSessionType value) {
   using OriginType = CdmSessionType;
   using OtherType = pb::CdmSessionType;
   switch (value) {
@@ -540,10 +556,11 @@ base::Optional<pb::CdmSessionType> ToProtoCdmSessionType(CdmSessionType value) {
     CASE_RETURN_OTHER(PERSISTENT_LICENSE_SESSION);
     CASE_RETURN_OTHER(PERSISTENT_RELEASE_MESSAGE_SESSION);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::TEMPORARY_SESSION;
 }
 
-base::Optional<EmeInitDataType> ToMediaEmeInitDataType(
+EmeInitDataType ToMediaEmeInitDataType(
     pb::CdmCreateSessionAndGenerateRequest::EmeInitDataType value) {
   using OriginType = pb::CdmCreateSessionAndGenerateRequest;
   using OtherType = EmeInitDataType;
@@ -553,10 +570,11 @@ base::Optional<EmeInitDataType> ToMediaEmeInitDataType(
     CASE_RETURN_OTHER(CENC);
     CASE_RETURN_OTHER(KEYIDS);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::UNKNOWN;
 }
 
-base::Optional<pb::CdmCreateSessionAndGenerateRequest::EmeInitDataType>
+pb::CdmCreateSessionAndGenerateRequest::EmeInitDataType
 ToProtoMediaEmeInitDataType(EmeInitDataType value) {
   using OriginType = EmeInitDataType;
   using OtherType = pb::CdmCreateSessionAndGenerateRequest;
@@ -566,10 +584,11 @@ ToProtoMediaEmeInitDataType(EmeInitDataType value) {
     CASE_RETURN_OTHER(CENC);
     CASE_RETURN_OTHER(KEYIDS);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::UNKNOWN;
 }
 
-base::Optional<DemuxerStream::Status> ToDemuxerStreamStatus(
+DemuxerStream::Status ToDemuxerStreamStatus(
     pb::DemuxerStreamReadUntilCallback::Status value) {
   using OriginType = pb::DemuxerStreamReadUntilCallback;
   using OtherType = DemuxerStream;
@@ -578,11 +597,12 @@ base::Optional<DemuxerStream::Status> ToDemuxerStreamStatus(
     CASE_RETURN_OTHER(kAborted);
     CASE_RETURN_OTHER(kConfigChanged);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::kOk;
 }
 
-base::Optional<pb::DemuxerStreamReadUntilCallback::Status>
-ToProtoDemuxerStreamStatus(DemuxerStream::Status value) {
+pb::DemuxerStreamReadUntilCallback::Status ToProtoDemuxerStreamStatus(
+    DemuxerStream::Status value) {
   using OriginType = DemuxerStream;
   using OtherType = pb::DemuxerStreamReadUntilCallback;
   switch (value) {
@@ -590,7 +610,8 @@ ToProtoDemuxerStreamStatus(DemuxerStream::Status value) {
     CASE_RETURN_OTHER(kAborted);
     CASE_RETURN_OTHER(kConfigChanged);
   }
-  return base::nullopt;  // Not a 'default' to ensure compile-time checks.
+  // Not a 'default' to ensure compile-time checks.
+  return OtherType::kOk;
 }
 
 }  // namespace remoting

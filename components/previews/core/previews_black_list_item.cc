@@ -48,7 +48,7 @@ void PreviewsBlackListItem::AddPreviewNavigation(bool opt_out,
 
   if (opt_out && (!most_recent_opt_out_time_ ||
                   entry_time > most_recent_opt_out_time_.value())) {
-    most_recent_opt_out_time_ = entry_time;
+    most_recent_opt_out_time_.emplace(entry_time);
   }
   total_opt_out_ += opt_out ? 1 : 0;
 

@@ -247,7 +247,7 @@ TEST_F(ImageDataFetcherTest, FetchImageData_CancelFetchIfImageExceedsMaxSize) {
   // deletion.
   fetcher_factory_.set_remove_fetcher_on_delete(true);
 
-  const int64_t kMaxDownloadBytes = 1024 * 1024;
+  const base::Optional<int64_t> kMaxDownloadBytes = 1024 * 1024;
   image_data_fetcher_.SetImageDownloadLimit(kMaxDownloadBytes);
   image_data_fetcher_.FetchImageData(
       GURL(kImageURL),
@@ -296,13 +296,13 @@ TEST_F(ImageDataFetcherTest, FetchImageData_CancelFetchIfImageExceedsMaxSize) {
   ASSERT_NE(nullptr, fetcher_factory_.GetFetcherByID(0));
 
   test_url_fetcher->delegate()->OnURLFetchDownloadProgress(
-      test_url_fetcher, kMaxDownloadBytes,  // Still not exeeding the limit.
+      test_url_fetcher, *kMaxDownloadBytes,  // Still not exeeding the limit.
       /*total=*/-1, /*current_network_bytes=*/0);
   // ... and running ...
   ASSERT_NE(nullptr, fetcher_factory_.GetFetcherByID(0));
 
   test_url_fetcher->delegate()->OnURLFetchDownloadProgress(
-      test_url_fetcher, kMaxDownloadBytes + 1,  // Limits are exceeded.
+      test_url_fetcher, *kMaxDownloadBytes + 1,  // Limits are exceeded.
       /*total=*/-1, /*current_network_bytes=*/0);
   // ... and be canceled.
   EXPECT_EQ(nullptr, fetcher_factory_.GetFetcherByID(0));

@@ -42,7 +42,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattCharacteristic
  public:
   // The ValueCallback is used to return the value of a remote characteristic
   // upon a read request.
-  typedef base::Callback<void(const std::vector<uint8_t>&)> ValueCallback;
+  typedef base::Callback<void(std::vector<uint8_t>)> ValueCallback;
 
   // The NotifySessionCallback is used to return sessions after they have
   // been successfully started.
