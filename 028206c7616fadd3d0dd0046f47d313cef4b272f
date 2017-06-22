@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43fa0dfe_c665864d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-22T16:22:51Z",
+      "side": 1,
+      "message": "please update all switch statements like the one before",
+      "revId": "028206c7616fadd3d0dd0046f47d313cef4b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641ec4fc_89895a4c",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8ArrayBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-22T16:22:51Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "028206c7616fadd3d0dd0046f47d313cef4b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1b1661_3b2b33f1",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-22T16:22:51Z",
+      "side": 1,
+      "message": "private should go after public",
+      "revId": "028206c7616fadd3d0dd0046f47d313cef4b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d12325e_e18fa43c",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-22T16:22:51Z",
+      "side": 1,
+      "message": "wtf uses WTF_MAKE_NONCOPYABLE",
+      "revId": "028206c7616fadd3d0dd0046f47d313cef4b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
