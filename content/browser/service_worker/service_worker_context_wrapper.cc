@@ -24,6 +24,7 @@
 #include "content/browser/service_worker/service_worker_process_manager.h"
 #include "content/browser/service_worker/service_worker_quota_client.h"
 #include "content/browser/service_worker/service_worker_version.h"
+#include "content/browser/site_instance_impl.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_utils.h"
@@ -855,16 +856,30 @@ void ServiceWorkerContextWrapper::DidDeleteAndStartOver(
 
 void ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHint(
     const GURL& document_url,
+    SiteInstance* candidate_site_instance,
     const StartServiceWorkerForNavigationHintCallback& callback) {
   TRACE_EVENT1("ServiceWorker", "StartServiceWorkerForNavigationHint",
                "document_url", document_url.spec());
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  SiteInstanceImpl* site_instance_impl =
+      static_cast<SiteInstanceImpl*>(candidate_site_instance);
+  if (site_instance_impl && !site_instance_impl->HasSite())
+    process_manager()->RegisterCandidateSiteInstance(site_instance_impl);
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::Bind(
           &ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHintOnIO,
-          this, document_url, callback));
+          this, document_url,
+          base::Bind(&ServiceWorkerContextWrapper::
+                         FinishStartServiceWorkerForNavigationHint,
+                     this, callback)));
+}
+
+bool ServiceWorkerContextWrapper::IsRegisteredAsCandidateSiteInstance(
+    SiteInstance* site_instance) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  return process_manager()->candidate_site_instance() == site_instance;
 }
 
 void ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHintOnIO(
@@ -874,10 +889,7 @@ void ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHintOnIO(
                "document_url", document_url.spec());
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(callback,
-                   StartServiceWorkerForNavigationHintResult::FAILED));
+    callback.Run(StartServiceWorkerForNavigationHintResult::FAILED);
     return;
   }
   context_core_->storage()->FindRegistrationForDocument(
@@ -896,34 +908,23 @@ void ServiceWorkerContextWrapper::DidFindRegistrationForNavigationHint(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!registration) {
     DCHECK_NE(status, SERVICE_WORKER_OK);
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(callback, StartServiceWorkerForNavigationHintResult::
-                                 NO_SERVICE_WORKER_REGISTRATION));
+    callback.Run(StartServiceWorkerForNavigationHintResult::
+                     NO_SERVICE_WORKER_REGISTRATION);
     return;
   }
   if (!registration->active_version()) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(callback, StartServiceWorkerForNavigationHintResult::
-                                 NO_ACTIVE_SERVICE_WORKER_VERSION));
+    callback.Run(StartServiceWorkerForNavigationHintResult::
+                     NO_ACTIVE_SERVICE_WORKER_VERSION);
     return;
   }
   if (registration->active_version()->fetch_handler_existence() ==
       ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(
-            callback,
-            StartServiceWorkerForNavigationHintResult::NO_FETCH_HANDLER));
+    callback.Run(StartServiceWorkerForNavigationHintResult::NO_FETCH_HANDLER);
     return;
   }
   if (registration->active_version()->running_status() ==
       EmbeddedWorkerStatus::RUNNING) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(callback,
-                   StartServiceWorkerForNavigationHintResult::ALREADY_RUNNING));
+    callback.Run(StartServiceWorkerForNavigationHintResult::ALREADY_RUNNING);
     return;
   }
 
@@ -941,13 +942,24 @@ void ServiceWorkerContextWrapper::DidStartServiceWorkerForNavigationHint(
   TRACE_EVENT2("ServiceWorker", "DidStartServiceWorkerForNavigationHint", "url",
                pattern.spec(), "code", ServiceWorkerStatusToString(code));
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  callback.Run(code == SERVICE_WORKER_OK
+                   ? StartServiceWorkerForNavigationHintResult::STARTED
+                   : StartServiceWorkerForNavigationHintResult::FAILED);
+}
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(callback,
-                 code == SERVICE_WORKER_OK
-                     ? StartServiceWorkerForNavigationHintResult::STARTED
-                     : StartServiceWorkerForNavigationHintResult::FAILED));
+void ServiceWorkerContextWrapper::FinishStartServiceWorkerForNavigationHint(
+    const StartServiceWorkerForNavigationHintCallback& callback,
+    StartServiceWorkerForNavigationHintResult result) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&ServiceWorkerContextWrapper::
+                       FinishStartServiceWorkerForNavigationHint,
+                   this, callback, result));
+    return;
+  }
+  process_manager()->UnregisterCandidateSiteInstance();
+  callback.Run(result);
 }
 
 void ServiceWorkerContextWrapper::BindWorkerFetchContext(
