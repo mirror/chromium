@@ -71,12 +71,12 @@ void WorkerScriptLoader::LoadSynchronously(
   execution_context_ = &execution_context;
 
   ResourceRequest request(CreateResourceRequest(creation_address_space));
+  request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeNoCORS);
   request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeInclude);
 
   SECURITY_DCHECK(execution_context.IsWorkerGlobalScope());
 
   ThreadableLoaderOptions options;
-  options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
   // FIXME: Should we add EnforceScriptSrcDirective here?
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
@@ -103,10 +103,10 @@ void WorkerScriptLoader::LoadAsynchronously(
   execution_context_ = &execution_context;
 
   ResourceRequest request(CreateResourceRequest(creation_address_space));
+  request.SetFetchRequestMode(fetch_request_mode);
   request.SetFetchCredentialsMode(fetch_credentials_mode);
 
   ThreadableLoaderOptions options;
-  options.fetch_request_mode = fetch_request_mode;
 
   ResourceLoaderOptions resource_loader_options;
 
