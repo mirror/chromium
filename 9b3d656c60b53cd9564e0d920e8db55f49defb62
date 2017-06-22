@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0053597a_4a172ed0",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T16:55:48Z",
+      "side": 1,
+      "message": "please add a comment documenting how this is used. i\u0027d also recommend renaming it to something like SetPowerPolicyQuitClosure (technically it\u0027d be SetSetPowerPolicyQuitClosure, but that\u0027s really awkward :-/)",
+      "revId": "9b3d656c60b53cd9564e0d920e8db55f49defb62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afee4a5b_c4f753cc",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T16:55:48Z",
+      "side": 1,
+      "message": "something like power_policy_quit_closure_ would be better. please also add a comment like:\n\n  // If non-empty, called by SetPowerPolicy().",
+      "revId": "9b3d656c60b53cd9564e0d920e8db55f49defb62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520ba5f8_f18c8ebf",
+        "filename": "extensions/browser/api/power/power_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T16:55:48Z",
+      "side": 1,
+      "message": "nit: please move this down below the other methods so the orders in the .cc and .h files match",
+      "revId": "9b3d656c60b53cd9564e0d920e8db55f49defb62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
