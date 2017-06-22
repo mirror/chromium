@@ -145,7 +145,18 @@ class TestResultWriter(object):
         """
         fs = self._filesystem
         output_filename = fs.join(self._root_output_dir, self._test_name)
-        return fs.splitext(output_filename)[0] + modifier
+        base, extension = fs.splitext(output_filename)
+
+        # Below is an affordance for WPT test files that become multiple tests using different URL params,
+        # for example   - html/syntax/parsing/html5lib_adoption01.html
+        # becoming      1 html/syntax/parsing/html5lib_adoption01.html?run_type=write
+        # and           2 html/syntax/parsing/html5lib_adoption01.html?run_type=uri
+        # This is necessary for the LUCI test results merge step. Otherwise it will fail when
+        # attempting to merge files with the same name but different contents.
+        if '?' in extension:
+            return output_filename + modifier
+
+        return base + modifier
 
     def _write_file(self, path, contents):
         if contents is not None:
