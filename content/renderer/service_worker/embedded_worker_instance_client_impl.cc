@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/child/scoped_child_process_reference.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
@@ -30,10 +31,13 @@ EmbeddedWorkerInstanceClientImpl::WorkerWrapper::~WorkerWrapper() = default;
 
 // static
 void EmbeddedWorkerInstanceClientImpl::Create(
+    base::TimeTicks webkit_initialized_time,
     const service_manager::BindSourceInfo& source_info,
     mojom::EmbeddedWorkerInstanceClientRequest request) {
   // This won't be leaked because the lifetime will be managed internally.
-  new EmbeddedWorkerInstanceClientImpl(std::move(request));
+  EmbeddedWorkerInstanceClientImpl* client =
+      new EmbeddedWorkerInstanceClientImpl(std::move(request));
+  client->webkit_initialized_time_ = webkit_initialized_time;
 }
 
 void EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed() {
@@ -54,12 +58,14 @@ void EmbeddedWorkerInstanceClientImpl::StartWorker(
   TRACE_EVENT0("ServiceWorker",
                "EmbeddedWorkerInstanceClientImpl::StartWorker");
 
-  wrapper_ = StartWorkerContext(
-      params, base::MakeUnique<ServiceWorkerContextClient>(
-                  params.embedded_worker_id, params.service_worker_version_id,
-                  params.scope, params.script_url,
-                  std::move(dispatcher_request), std::move(instance_host),
-                  std::move(provider_info), std::move(temporal_self_)));
+  auto client = base::MakeUnique<ServiceWorkerContextClient>(
+      params.embedded_worker_id, params.service_worker_version_id, params.scope,
+      params.script_url, std::move(dispatcher_request),
+      std::move(instance_host), std::move(provider_info),
+      std::move(temporal_self_));
+  client->set_blink_initialized_time(webkit_initialized_time_);
+  client->set_start_worker_received_time(base::TimeTicks::Now());
+  wrapper_ = StartWorkerContext(params, std::move(client));
 }
 
 void EmbeddedWorkerInstanceClientImpl::StopWorker() {
@@ -96,7 +102,7 @@ EmbeddedWorkerInstanceClientImpl::EmbeddedWorkerInstanceClientImpl(
 EmbeddedWorkerInstanceClientImpl::~EmbeddedWorkerInstanceClientImpl() {}
 
 void EmbeddedWorkerInstanceClientImpl::OnError() {
-  // Removes myself if it's owned by myself.
+  // Remove myself if it's owned by myself.
   temporal_self_.reset();
 }
 
