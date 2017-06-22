@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_PROFILING_MEMLOG_RECEIVER_PIPE_SERVER_WIN_H_
-#define CHROME_PROFILING_MEMLOG_RECEIVER_PIPE_SERVER_WIN_H_
+#ifndef CHROME_PROFILING_MEMLOG_RECEIVER_PIPE_SERVER_POSIX_H_
+#define CHROME_PROFILING_MEMLOG_RECEIVER_PIPE_SERVER_POSIX_H_
 
 #include <memory>
 
@@ -12,7 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_pump_win.h"
 #include "base/strings/string16.h"
-#include "chrome/profiling/memlog_receiver_pipe_win.h"
+#include "chrome/profiling/memlog_receiver_pipe_posix.h"
 
 namespace base {
 class TaskRunner;
@@ -45,25 +45,13 @@ class MemlogReceiverPipeServer
   void Start();
 
  private:
-  base::string16 GetPipeName() const;
-
-  HANDLE CreatePipeInstance(bool first_instance) const;
-
-  // Called on the IO thread.
-  void ScheduleNewConnection(bool first_instance);
-
-  void OnIOCompleted(size_t bytes_transfered, DWORD error);
-
   scoped_refptr<base::TaskRunner> io_runner_;
   base::string16 pipe_id_;
   NewConnectionCallback on_new_connection_;
-
-  // Current connection we're waiting on creation for.
-  std::unique_ptr<MemlogReceiverPipe::CompletionThunk> current_;
 
   DISALLOW_COPY_AND_ASSIGN(MemlogReceiverPipeServer);
 };
 
 }  // namespace profiling
 
-#endif  // CHROME_PROFILING_MEMLOG_RECEIVER_PIPE_SERVER_WIN_H_
+#endif  // CHROME_PROFILING_MEMLOG_RECEIVER_PIPE_SERVER_POSIX_H_
