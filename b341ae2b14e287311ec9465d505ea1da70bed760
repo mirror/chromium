@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4c63138_c4613c18",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T15:24:24Z",
+      "side": 1,
+      "message": "Looks like there\u0027s a bit of duplicate code here between the tests.  We could clean this up by inverting the order of getConfig and runTests:\n\nchrome.test.getConfig((config) \u003d\u003e {\n  var getUrl \u003d function(url) {\n    return \u0027http://localhost:\u0027 + config.testServer.port + \u0027/\u0027 + url;\n  };\n\n  chrome.test.runTests([\n    function testSetOpenerOutsideOfWindow() {\n       ...\n    },\n    ...\n  ]);\n});\n\nThat way, we don\u0027t have to duplicate the getConfig() calls and getUrl() definition.\n\nWe could clean it up even a bit more by reducing the indentation and doing:\n\nvar port;\nfunction getUrl() {\n  return ... + port + ...;\n}\n\nfunction testSetOpenerOutsideOfWindow() {\n  ...\n}\n\nfunction testSetOpenerToSelf() {\n\n}\n\nchrome.test.getConfig((config) \u003d\u003e {\n  port \u003d config.testServer.port;\n\n  chrome.test.runTests([testSetOpenerOutsideOfWindow, testSetOpenerToSelf]);\n});",
+      "revId": "b341ae2b14e287311ec9465d505ea1da70bed760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe15e108_9ac00760",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T15:24:24Z",
+      "side": 1,
+      "message": "nit: \"an opener of tab of itself\" sounds a bit strange - maybe just \"an opener of itself\" or similar?",
+      "revId": "b341ae2b14e287311ec9465d505ea1da70bed760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
