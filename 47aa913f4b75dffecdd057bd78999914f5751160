@@ -22,6 +22,30 @@
       "revId": "47aa913f4b75dffecdd057bd78999914f5751160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33555b64_dffb38e8",
+        "filename": "ios/web/navigation/legacy_navigation_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-06-22T22:19:37Z",
+      "side": 1,
+      "message": "I added checked_cast to try to maintain consistency with other methods in this class, which mostly use int.",
+      "parentUuid": "2410ad9a_53b3e8a4",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "47aa913f4b75dffecdd057bd78999914f5751160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
