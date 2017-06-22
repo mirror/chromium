@@ -70,16 +70,25 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
     } else {
       dump_name = GetDumpNameForTracing(memory_guid);
     }
-    // Discard duplicates that might be seen in single-process mode.
-    // TODO(hajimehoshi): This logic depends on the old fact that dumps were not
-    // created nowhere but SharedMemoryTracker::OnMemoryDump. Now this is not
-    // true since ProcessMemoryDump::CreateSharedMemoryOwnershipEdge creates
-    // dumps, and the logic needs to be fixed. See the discussion at
-    // https://chromium-review.googlesource.com/c/535378.
-    if (pmd->GetAllocatorDump(dump_name))
-      continue;
+    // The dump might already be created at 1) ProcessMemoryDump::
+    // CreateSharedMemoryOwnershipEdge without setting its size or 2) single
+    // process mode.
+    //
+    // In 1) case, the dump is created but doesn't have its size. Let's add the
+    // size here. In 2) case, the size doesn't need to be added but it is not
+    // harmful to override the size scalar with the same size.
+    //
+    // In both cases, if and only if the dump already exists, an edge between
+    // the dump and its global dump exists. Otherwise, an edge needs to be
+    // created as importance-overridable. The importance value will be
+    // overridden by ProcessMemoryDump later.
+    bool need_edge = false;
     trace_event::MemoryAllocatorDump* local_dump =
-        pmd->CreateAllocatorDump(dump_name);
+        pmd->GetAllocatorDump(dump_name);
+    if (!local_dump) {
+      local_dump = pmd->CreateAllocatorDump(dump_name);
+      need_edge = true;
+    }
     // TODO(hajimehoshi): The size is not resident size but virtual size so far.
     // Fix this to record resident size.
     local_dump->AddScalar(trace_event::MemoryAllocatorDump::kNameSize,
@@ -91,8 +100,10 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
                            trace_event::MemoryAllocatorDump::kUnitsBytes, size);
 
     // The edges will be overriden by the clients with correct importance.
-    pmd->AddOverridableOwnershipEdge(local_dump->guid(), global_dump->guid(),
-                                     0 /* importance */);
+    if (need_edge) {
+      pmd->AddOverridableOwnershipEdge(local_dump->guid(), global_dump->guid(),
+                                       0 /* importance */);
+    }
   }
   return true;
 }

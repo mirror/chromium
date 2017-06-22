@@ -434,6 +434,8 @@ void ProcessMemoryDump::CreateSharedMemoryOwnershipEdgeInternal(
     // GetOrCreaetGlobalDump() in PMD since we need to change the behavior of
     // the created global dump.
     // Create an edge that overrides the edge created by SharedMemoryTracker.
+    // TODO(ssid, hajimehoshi): This can fail in single process mode since the
+    // dump with the same name and the edge might already exist.
     AddOwnershipEdge(local_shm_guid, global_shm_guid, importance);
   } else {
     // This is the old model where the clients create global dumps for
