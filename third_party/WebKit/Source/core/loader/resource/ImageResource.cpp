@@ -589,15 +589,13 @@ bool ImageResource::IsAccessAllowed(
     SecurityOrigin* security_origin,
     ImageResourceInfo::DoesCurrentFrameHaveSingleSecurityOrigin
         does_current_frame_has_single_security_origin) const {
-  if (GetResponse().WasFetchedViaServiceWorker()) {
-    return GetResponse().ServiceWorkerResponseType() !=
-           kWebServiceWorkerResponseTypeOpaque;
-  }
   if (does_current_frame_has_single_security_origin !=
       ImageResourceInfo::kHasSingleSecurityOrigin)
     return false;
-  if (PassesAccessControlCheck(security_origin))
+
+  if (IsSameOriginOrCORSSuccessful())
     return true;
+
   return !security_origin->TaintsCanvas(GetResponse().Url());
 }
 
