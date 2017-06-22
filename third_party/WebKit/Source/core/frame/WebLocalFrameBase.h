@@ -78,6 +78,10 @@ class WebLocalFrameBase : public GarbageCollectedFinalized<WebLocalFrameBase>,
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 
+#if DCHECK_IS_ON()
+  virtual void AssertWasClosed() = 0;
+#endif
+
  protected:
   explicit WebLocalFrameBase(WebTreeScopeType scope) : WebLocalFrame(scope) {}
 };

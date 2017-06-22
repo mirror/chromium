@@ -354,6 +354,8 @@ void LocalFrameClientImpl::Detached(FrameDetachType type) {
 
   client->FrameDetached(web_frame_,
                         static_cast<WebFrameClient::DetachType>(type));
+  DCHECK_EQ(nullptr, web_frame_->FrameWidget());
+  web_frame_->AssertWasClosed();
 
   if (type == FrameDetachType::kRemove)
     web_frame_->DetachFromParent();
