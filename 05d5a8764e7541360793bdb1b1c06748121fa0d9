@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cf8b450_a5b31a4a",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-22T19:14:05Z",
+      "side": 1,
+      "message": "Super late to this CL (just followed a link from the bug) but I\u0027d suggest just catching Exception in most/all of these places, really. If there\u0027s one set of undocumented exceptions coming out of these APIs there will probably be others, and you have a sensible fallback behaviour implemented, so just catching Exception instead of being specific doesn\u0027t seem like it has a downside :)",
+      "range": {
+        "startLine": 222,
+        "startChar": 17,
+        "endLine": 222,
+        "endChar": 37
+      },
+      "revId": "05d5a8764e7541360793bdb1b1c06748121fa0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
