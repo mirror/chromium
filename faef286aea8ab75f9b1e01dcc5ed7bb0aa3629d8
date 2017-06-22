@@ -463,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "f99711d5_43e172ea",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-22T16:54:27Z",
+      "side": 1,
+      "message": "But there isn\u0027t any \"lock animation\" that I can see when I try to trigger this path (and I\u0027m pretty sure I\u0027m triggering this path?). What is the difference between this and the StartShutdownAnimation immediately below?",
+      "parentUuid": "e2b15fc2_1542306b",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e81a70_28469caa",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 1
