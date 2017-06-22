@@ -137,9 +137,18 @@ base::DictionaryValue* ExtensionTabUtil::OpenTab(
   Profile* profile = chrome_details.GetProfile();
   // windowId defaults to "current" window.
   int window_id = extension_misc::kCurrentWindowId;
-  if (params.window_id.get())
+  if (params.window_id.get()) {
     window_id = *params.window_id;
-
+    // If both the windowId and openerTabId are set, the windowId must set to
+    // the window id of the tab opener.
+    if (params.opener_tab_id.get()) {
+      if (window_id != extension_misc::kCurrentWindowId) {
+        if (error)
+          *error = "Tab opener must be in the same window as the updated tab.";
+        return NULL;
+      }
+    }
+  }
   Browser* browser = GetBrowserFromWindowID(chrome_details, window_id, error);
   if (!browser) {
     if (!params.create_browser_if_needed) {
@@ -260,8 +269,6 @@ base::DictionaryValue* ExtensionTabUtil::OpenTab(
   if (opener) {
     // Only set the opener if the opener tab is in the same tab strip as the
     // new tab.
-    // TODO(devlin): We should be a) catching this sooner and b) alerting that
-    // this failed by reporting an error.
     if (tab_strip->GetIndexOfWebContents(opener) != TabStripModel::kNoTab)
       tab_strip->SetOpenerOfWebContentsAt(new_index, opener);
   }
