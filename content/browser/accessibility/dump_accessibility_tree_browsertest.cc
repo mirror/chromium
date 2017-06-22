@@ -201,7 +201,7 @@ void DumpAccessibilityTreeTest::AddDefaultFilters(
   // TODO(aleventhal) multiline
   AddFilter(filters, "multiselectable");
   AddFilter(filters, "protected");
-  // TODO(aleventhal) Add readonly support back after control mode refactor
+  AddFilter(filters, "readonly");
   AddFilter(filters, "required");
   AddFilter(filters, "select*");
   AddFilter(filters, "visited");
