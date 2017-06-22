@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6adc6b5f_bd602cb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/IncognitoTabModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-22T00:07:47Z",
+      "side": 1,
+      "message": "Why is this needed?  mDelegateModel is a TabModelImpl which has the same functionality.  Are we calling this when mDelegateModel is the EmptyTabModel?  If the latter, that seems like a bug to me.",
+      "range": {
+        "startLine": 161,
+        "startChar": 34,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "0bfeaf162f4406314adcccb794d21c1ec332a8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
