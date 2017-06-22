@@ -544,9 +544,6 @@ ObjectPaintInvalidatorWithContext::ComputePaintInvalidationReason() {
   if (object_.ShouldDoFullPaintInvalidation())
     return object_.FullPaintInvalidationReason();
 
-  if (context_.old_visual_rect.IsEmpty() && object_.VisualRect().IsEmpty())
-    return PaintInvalidationReason::kNone;
-
   if (background_obscuration_changed)
     return PaintInvalidationReason::kBackground;
 

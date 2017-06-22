@@ -60,7 +60,8 @@ static bool UpdateContentClip(
     LocalFrameView& frame_view,
     PassRefPtr<const ClipPaintPropertyNode> parent,
     PassRefPtr<const TransformPaintPropertyNode> local_transform_space,
-    const FloatRoundedRect& clip_rect) {
+    const FloatRoundedRect& clip_rect,
+    bool& clip_changed) {
   DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
   if (auto* existing_content_clip = frame_view.ContentClip()) {
     existing_content_clip->Update(std::move(parent),
@@ -69,6 +70,7 @@ static bool UpdateContentClip(
   }
   frame_view.SetContentClip(ClipPaintPropertyNode::Create(
       std::move(parent), std::move(local_transform_space), clip_rect));
+  clip_changed = true;
   return true;
 }
 
@@ -159,9 +161,9 @@ void PaintPropertyTreeBuilder::UpdateProperties(
 
     FloatRoundedRect content_clip(
         IntRect(IntPoint(), frame_view.VisibleContentSize()));
-    full_context.force_subtree_update |=
-        UpdateContentClip(frame_view, context.current.clip,
-                          frame_view.PreTranslation(), content_clip);
+    full_context.force_subtree_update |= UpdateContentClip(
+        frame_view, context.current.clip, frame_view.PreTranslation(),
+        content_clip, full_context.clip_changed);
 
     ScrollOffset scroll_offset = frame_view.GetScrollOffset();
     if (frame_view.IsScrollable() || !scroll_offset.IsZero()) {
@@ -540,14 +542,15 @@ void PaintPropertyTreeBuilder::UpdateEffect(
     const LayoutObject& object,
     ObjectPaintProperties& properties,
     PaintPropertyTreeBuilderFragmentContext& context,
-    bool& force_subtree_update) {
+    bool& force_subtree_update,
+    bool& clip_changed) {
   const ComputedStyle& style = object.StyleRef();
 
   // TODO(trchen): Can't omit effect node if we have 3D children.
   if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
     const ClipPaintPropertyNode* output_clip =
         context.input_clip_of_current_effect;
-
+    bool local_clip_changed = false;
     if (NeedsEffect(object)) {
 
       // We may begin to composite our subtree prior to an animation starts,
@@ -564,7 +567,7 @@ void PaintPropertyTreeBuilder::UpdateEffect(
       bool has_mask = ComputeMaskParameters(
           mask_clip, mask_color_filter, object, context.current.paint_offset);
       if (has_mask) {
-        force_subtree_update |= properties.UpdateMaskClip(
+        local_clip_changed |= properties.UpdateMaskClip(
             context.current.clip, context.current.transform,
             FloatRoundedRect(mask_clip));
         output_clip = properties.MaskClip();
@@ -610,8 +613,10 @@ void PaintPropertyTreeBuilder::UpdateEffect(
       auto* properties = object.GetMutableForPainting().PaintProperties();
       force_subtree_update |= properties->ClearEffect();
       force_subtree_update |= properties->ClearMask();
-      force_subtree_update |= properties->ClearMaskClip();
+      local_clip_changed |= properties->ClearMaskClip();
     }
+    force_subtree_update |= local_clip_changed;
+    clip_changed |= local_clip_changed;
   }
 
   if (properties.Effect()) {
@@ -707,8 +712,10 @@ void PaintPropertyTreeBuilder::UpdateCssClip(
     const LayoutObject& object,
     ObjectPaintProperties& properties,
     PaintPropertyTreeBuilderFragmentContext& context,
-    bool& force_subtree_update) {
+    bool& force_subtree_update,
+    bool& clip_changed) {
   if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
+    bool local_clip_changed = false;
     if (NeedsCssClip(object)) {
       // Create clip node for descendants that are not fixed position.
       // We don't have to setup context.absolutePosition.clip here because this
@@ -717,12 +724,14 @@ void PaintPropertyTreeBuilder::UpdateCssClip(
       DCHECK(object.CanContainAbsolutePositionObjects());
       LayoutRect clip_rect =
           ToLayoutBox(object).ClipRect(context.current.paint_offset);
-      force_subtree_update |= properties.UpdateCssClip(
+      local_clip_changed |= properties.UpdateCssClip(
           context.current.clip, context.current.transform,
           FloatRoundedRect(FloatRect(clip_rect)));
     } else {
-      force_subtree_update |= properties.ClearCssClip();
+      local_clip_changed |= properties.ClearCssClip();
     }
+    force_subtree_update |= local_clip_changed;
+    clip_changed |= local_clip_changed;
   }
 
   if (properties.CssClip())
@@ -787,8 +796,10 @@ void PaintPropertyTreeBuilder::UpdateOverflowClip(
     const LayoutObject& object,
     ObjectPaintProperties& properties,
     PaintPropertyTreeBuilderFragmentContext& context,
-    bool& force_subtree_update) {
+    bool& force_subtree_update,
+    bool& clip_changed) {
   if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
+    bool local_clip_changed = false;
     if (NeedsOverflowClip(object)) {
       const LayoutBox& box = ToLayoutBox(object);
       LayoutRect clip_rect;
@@ -799,21 +810,30 @@ void PaintPropertyTreeBuilder::UpdateOverflowClip(
       if (box.StyleRef().HasBorderRadius()) {
         auto inner_border = box.StyleRef().GetRoundedInnerBorderFor(
             LayoutRect(context.current.paint_offset, box.Size()));
-        force_subtree_update |= properties.UpdateInnerBorderRadiusClip(
+        local_clip_changed |= properties.UpdateInnerBorderRadiusClip(
             context.current.clip, context.current.transform, inner_border);
         current_clip = properties.InnerBorderRadiusClip();
       } else {
-        force_subtree_update |= properties.ClearInnerBorderRadiusClip();
+        local_clip_changed |= properties.ClearInnerBorderRadiusClip();
       }
 
-      force_subtree_update |=
+      FloatRoundedRect clipping_rect((FloatRect(clip_rect)));
+      if (properties.OverflowClip() &&
+          clipping_rect != properties.OverflowClip()->ClipRect()) {
+        LOG(ERROR) << "changed";
+        local_clip_changed = true;
+      }
+
+      local_clip_changed |=
           properties.UpdateOverflowClip(current_clip, context.current.transform,
                                         FloatRoundedRect(FloatRect(clip_rect)));
     } else {
-      force_subtree_update |= properties.ClearInnerBorderRadiusClip();
-      force_subtree_update |= properties.ClearOverflowClip();
-      return;
+      local_clip_changed |= properties.ClearInnerBorderRadiusClip();
+      local_clip_changed |= properties.ClearOverflowClip();
     }
+    force_subtree_update |= local_clip_changed;
+    LOG(ERROR) << "force:" << force_subtree_update;
+    clip_changed |= local_clip_changed;
   }
 
   if (properties.OverflowClip())
@@ -1218,10 +1238,11 @@ void PaintPropertyTreeBuilder::UpdatePropertiesForSelf(
     UpdateTransform(object, *properties, context,
                     full_context.force_subtree_update);
     UpdateCssClip(object, *properties, context,
-                  full_context.force_subtree_update);
+                  full_context.force_subtree_update, full_context.clip_changed);
     if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       UpdateEffect(object, *properties, context,
-                   full_context.force_subtree_update);
+                   full_context.force_subtree_update,
+                   full_context.clip_changed);
       UpdateFilter(object, *properties, context,
                    full_context.force_subtree_update);
     }
@@ -1254,7 +1275,7 @@ void PaintPropertyTreeBuilder::UpdatePropertiesForChildren(
       ObjectPaintProperties* properties =
           object.GetMutableForPainting().PaintProperties();
       UpdateOverflowClip(object, *properties, fragment_context,
-                         context.force_subtree_update);
+                         context.force_subtree_update, context.clip_changed);
       UpdatePerspective(object, *properties, fragment_context,
                         context.force_subtree_update);
       UpdateSvgLocalToBorderBoxTransform(object, *properties, fragment_context,

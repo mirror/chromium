@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <script src="../../resources/run-after-layout-and-paint.js"></script>
 <script>
+testRunner.waitUntilDone();
 onload = function() {
   runAfterLayoutAndPaint(function() {
+    console.log('style change');
     container.style.width = '200px';
-  }, true);
+    setTimeout(function() {
+      testRunner.notifyDone();
+    });
+  }, false);
 };
 </script>
 Tests repaint of subsequences when a non-stacking-context ancestor's clip changes.
@@ -12,7 +17,7 @@ Passes if the text is clipped at the yellow background.
 <div id="container" style="overflow: hidden; background-color: yellow">
   <div style="display: inline-block;">
     <div style="width: 500px">
-      <div style="z-index: 2; position: relative">
+      <div id=stacking style="z-index: 2; position: relative">
         <span style="display: inline-block; visibility: hidden; opacity: .6; width: 10px"></span>
         Should be clipped: ABCDEFGHIJKLMNOPQRSTUVWXYZ
       </div>
