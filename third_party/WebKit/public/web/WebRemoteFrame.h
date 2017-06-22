@@ -21,12 +21,15 @@ class WebFrameClient;
 class WebLayer;
 class WebRemoteFrameClient;
 class WebString;
+class WebView;
 
 class WebRemoteFrame : public WebFrame {
  public:
   BLINK_EXPORT static WebRemoteFrame* Create(WebTreeScopeType,
-                                             WebRemoteFrameClient*,
-                                             WebFrame* opener = nullptr);
+                                             WebRemoteFrameClient*);
+
+  BLINK_EXPORT static WebRemoteFrame*
+  CreateMainFrame(WebView*, WebRemoteFrameClient*, WebFrame* opener = nullptr);
 
   // Functions for the embedder replicate the frame tree between processes.
   // TODO(dcheng): The embedder currently does not replicate local frames in
