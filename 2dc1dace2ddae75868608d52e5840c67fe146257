@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e45bdf69_8edf7226",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T18:27:28Z",
+      "side": 1,
+      "message": "nit: no reason to change this?",
+      "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60195d20_1f745c08",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T18:27:28Z",
+      "side": 1,
+      "message": "nit: now that this is only used in one place, we can revert these changes",
+      "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db303ab4_56fac344",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T18:27:28Z",
+      "side": 1,
+      "message": "Let\u0027s move this comment above testSetOpenerOutsideOfWindow, and add a similar one above testSetOpenerToSelf (including the linked bug).",
+      "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
