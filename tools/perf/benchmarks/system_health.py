@@ -14,6 +14,12 @@ from telemetry.timeline import chrome_trace_config
 from telemetry.web_perf import timeline_based_measurement
 import page_sets
 
+from telemetry.internal.actions import action_runner
+import logging
+action_runner._DUMP_WAIT_TIME = 5
+logging.warning(
+    'Patched action_runner._DUMP_WAIT_TIME to %d.',
+    action_runner._DUMP_WAIT_TIME)
 
 # See tr.v.Numeric.getSummarizedScalarNumericsWithNames()
 # https://github.com/catapult-project/catapult/blob/master/tracing/tracing/value/numeric.html#L323
