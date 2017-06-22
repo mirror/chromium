@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4fb6746c_1238806e",
+        "filename": "extensions/browser/api/webcam_private/v4l2_webcam.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T23:28:05Z",
+      "side": 1,
+      "message": "d\u0027oh\n\nstill, it might be good to do this as part of GetWebcamParameter (since the same is done for all queries)",
+      "parentUuid": "e9fc1094_1c9a9fe0",
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b70834a0_a5c503e1",
         "filename": "extensions/browser/api/webcam_private/visca_webcam.cc",
         "patchSetId": 3
