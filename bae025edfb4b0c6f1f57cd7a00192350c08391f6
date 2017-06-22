@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f744b487_40b1158b",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-22T00:06:15Z",
+      "side": 1,
+      "message": "I think we need to do all of this in UpdateDriverState(entry).  On startup we have to consider that a retry if we start there as well.\n\nThere are two kinds of things we have to watch out for here:\n\n1. The kinds of failures we can\u0027t recover from (certain kinds of interrupts we just drop... disk, etc.).\n- If we are in one of those states, we should just hard fail here.\n\n2. The kinds of failures we can retry on (network, etc.).\n- If we aren\u0027t in one of those states, we should call UpdateDriverState() or something to see if we can restart the download.  Then just call ActivateMoreDownloads() in case UpdateDriverState() hard-failed the download due to retry limits.",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "bae025edfb4b0c6f1f57cd7a00192350c08391f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1b7996_5dcb81da",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-22T00:06:15Z",
+      "side": 1,
+      "message": "Should we decrement the attempt count if our state is INTERRUPTED or not started?  If our attempt count goes to 0 we just fail?  wdyt?",
+      "range": {
+        "startLine": 647,
+        "startChar": 4,
+        "endLine": 652,
+        "endChar": 5
+      },
+      "revId": "bae025edfb4b0c6f1f57cd7a00192350c08391f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d038efb9_bed70b4a",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-22T00:06:15Z",
+      "side": 1,
+      "message": "uint32_t attempt_count?\n\nMight make more sense.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 18
+      },
+      "revId": "bae025edfb4b0c6f1f57cd7a00192350c08391f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
