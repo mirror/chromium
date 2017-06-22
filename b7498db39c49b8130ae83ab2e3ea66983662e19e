@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "174a0b01_fb5dccaf",
+        "filename": "content/public/test/test_browser_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-22T18:14:01Z",
+      "side": 1,
+      "message": "I thought we found all BrowserThreads initialized COM a la BrowserProcessSubThread.\n\nhttps://cs.chromium.org/chromium/src/content/browser/browser_process_sub_thread.cc?rcl\u003dd54a92e6ed393729e51d49004d44698d7fce570c\u0026l\u003d37\n\nEven the IO thread gets COM.",
+      "parentUuid": "915a9dca_8f388f32",
+      "revId": "b7498db39c49b8130ae83ab2e3ea66983662e19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8eddc86_79b3b102",
         "filename": "content/public/test/test_browser_thread_bundle.cc",
         "patchSetId": 5
@@ -62,6 +80,54 @@
       "revId": "b7498db39c49b8130ae83ab2e3ea66983662e19e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121c6cf1_ef7c463f",
+        "filename": "content/public/test/test_browser_thread_bundle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-22T18:14:01Z",
+      "side": 1,
+      "message": "Reordered and done.",
+      "parentUuid": "d78e29d8_7eb6da37",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 59
+      },
+      "revId": "b7498db39c49b8130ae83ab2e3ea66983662e19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "182223a9_563e2981",
+        "filename": "content/public/test/test_browser_thread_bundle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-22T18:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8eddc86_79b3b102",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 102,
+        "endChar": 31
+      },
+      "revId": "b7498db39c49b8130ae83ab2e3ea66983662e19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
