@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8610564a_e45c3dc5",
+        "filename": "content/browser/renderer_host/render_view_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T21:11:17Z",
+      "side": 1,
+      "message": "The Mojo IDL expresses that this can never be null, yet we pass a null pointer here. Today, it seems like we don\u0027t need to try to handle that case specially, but I expect that we\u0027ll hit problems later on if tests violate these assumptions.\n\n(Specifically, Mojo itself will validate a non-null interface pointer is passed here, and the RenderViewHost implementation should be able to assume this, but tests violate that)",
+      "range": {
+        "startLine": 82,
+        "startChar": 52,
+        "endLine": 82,
+        "endChar": 59
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82027d2f_3fd65b8e",
+        "filename": "content/browser/renderer_host/render_widget_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T21:11:17Z",
+      "side": 1,
+      "message": "Nit: std::move() instead of base::Passed() should work for BindOnce.",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f821cbdd_feb80925",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T21:11:17Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 299,
+        "startChar": 53,
+        "endLine": 299,
+        "endChar": 60
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cbc970_f6f0cfb9",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T21:11:17Z",
+      "side": 1,
+      "message": "Nit: I think this can be bound in the initializer list as well.",
+      "range": {
+        "startLine": 393,
+        "startChar": 2,
+        "endLine": 393,
+        "endChar": 50
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
