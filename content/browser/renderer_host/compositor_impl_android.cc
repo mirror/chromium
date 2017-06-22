@@ -900,6 +900,10 @@ void CompositorImpl::RemoveChildFrameSink(
                                                     frame_sink_id);
 }
 
+gfx::Size CompositorImpl::GetLocationOnScreen() {
+  return client_->GetLocationOnScreen();
+}
+
 bool CompositorImpl::HavePendingReadbacks() {
   return !readback_layer_tree_->children().empty();
 }
