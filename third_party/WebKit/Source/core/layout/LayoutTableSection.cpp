@@ -767,6 +767,12 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
   }
 }
 
+bool LayoutTableSection::RowHasVisibilityCollapse(unsigned row) const {
+  return ((grid_[row].row &&
+           grid_[row].row->Style()->Visibility() == EVisibility::kCollapse) ||
+          Style()->Visibility() == EVisibility::kCollapse);
+}
+
 // Find out the baseline of the cell
 // If the cell's baseline is more than the row's baseline then the cell's
 // baseline become the row's baseline and if the row's baseline goes out of the
@@ -849,6 +855,11 @@ int LayoutTableSection::CalcRowLogicalHeight() {
       row_pos_[r + 1] = std::max(row_pos_[r], 0);
     }
 
+    if (RowHasVisibilityCollapse(r)) {
+      // If the row or row group is collapsed, ignore row height.
+      row_pos_[r + 1] = std::max(row_pos_[r + 1], row_pos_[r]);
+      continue;
+    }
     for (auto& grid_cell : grid_[r].grid_cells) {
       if (grid_cell.InColSpan())
         continue;
@@ -863,10 +874,10 @@ int LayoutTableSection::CalcRowLogicalHeight() {
              CrossesPageBoundary(
                  LayoutUnit(row_pos_[r]),
                  LayoutUnit(cell->LogicalHeightForRowSizing())))) {
-          // Entering or extending a range of unstretchable rows. We enter this
-          // mode when a cell in a row crosses a fragmentainer boundary, and
-          // we'll stay in this mode until we get to a row where we're past all
-          // rowspanned cells that we encountered while in this mode.
+          // Entering or extending a range of unstretchable rows. We enter
+          // this mode when a cell in a row crosses a fragmentainer boundary,
+          // and we'll stay in this mode until we get to a row where we're
+          // past all rowspanned cells that we encountered while in this mode.
           DCHECK(state.IsPaginated());
           unsigned row_index_below_cell = r + cell->RowSpan();
           index_of_first_stretchable_row =
