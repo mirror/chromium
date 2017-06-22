@@ -16,6 +16,24 @@
       "revId": "ccc15cfa30d02b30e15344f8a51d7784cb11f434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1bc24a_26a58350",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-22T16:01:19Z",
+      "side": 1,
+      "message": "That should be fine for now. I copied cc_unittests because I figure most of it will be here eventually, but it\u0027s not necessary yet.\n\nAll windowed_test_launcher does beyond console_test_launcher is start Xvfb. I\u0027m sure something in cc unittests initializes something to do with either GL or input which ends up making Xlib calls and crashes without Xvfb.",
+      "parentUuid": "082454f8_10151014",
+      "revId": "ccc15cfa30d02b30e15344f8a51d7784cb11f434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
