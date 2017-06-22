@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a70c26_6b19af6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-22T18:41:33Z",
+      "side": 1,
+      "message": "Note that I\u0027m skipping closing the bottom sheet since it will immediately re-open. This resulted in some test changes as well.",
+      "range": {
+        "startLine": 1093,
+        "startChar": 32,
+        "endLine": 1093,
+        "endChar": 40
+      },
+      "revId": "d4b294d19d2b73e5302655878236467faa91aa38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
