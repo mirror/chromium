@@ -160,8 +160,8 @@ public class PrintingControllerTest {
             String preamble = new String(b);
             Assert.assertEquals(PDF_PREAMBLE, preamble);
         } finally {
-            if (in != null) in.close();
             callFinishOnUiThread(printingController);
+            if (in != null) in.close();
             // Close the descriptor, if not closed already.
             fileDescriptor.close();
             TestFileUtil.deleteFile(tempFile.getAbsolutePath());
