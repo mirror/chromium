@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c44e280_90dbd28d",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-22T21:27:47Z",
+      "side": 1,
+      "message": "nit: This seems to be unused.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "d9a1e19ee6dfbe8b53c75145ede7c51599a4c0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1fdfd9_20e77861",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-22T21:27:47Z",
+      "side": 1,
+      "message": "nit: This seems to be recorded from multiple places.  Could you please add a small wrapper function for recording this?",
+      "range": {
+        "startLine": 391,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 68
+      },
+      "revId": "d9a1e19ee6dfbe8b53c75145ede7c51599a4c0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dda50c6_24d2c3f6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 27212,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-22T21:27:47Z",
+      "side": 1,
+      "message": "nit: s/cache recorded/cache. Recorded",
+      "range": {
+        "startLine": 27212,
+        "startChar": 4,
+        "endLine": 27212,
+        "endChar": 18
+      },
+      "revId": "d9a1e19ee6dfbe8b53c75145ede7c51599a4c0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
