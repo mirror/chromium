@@ -124,6 +124,24 @@
       "revId": "a04c4daa41cc52f4a06fea562a67d1c92564b962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5951650f_1f9edaf9",
+        "filename": "content/public/test/test_browser_thread_bundle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-22T00:55:39Z",
+      "side": 1,
+      "message": "Added a comment as to why this is necessary. Turns out Init() as part of the constructor calls CreateThreads(), but we never actually call Start() on the UI thread as it\u0027s already started.",
+      "parentUuid": "ecf4381a_d820871b",
+      "revId": "a04c4daa41cc52f4a06fea562a67d1c92564b962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
