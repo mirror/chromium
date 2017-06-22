@@ -22,13 +22,28 @@ class HEADLESS_EXPORT HeadlessTabSocket {
 
     // The |message| may be potentially sent by untrusted web content so it
     // should be validated carefully.
-    virtual void OnMessageFromTab(const std::string& message) = 0;
+    virtual void OnMessageFromContext(const std::string& message,
+                                      int v8_execution_context_id) = 0;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(Listener);
   };
 
-  virtual void SendMessageToTab(const std::string& message) = 0;
+  // Installs a headless tab socket bindings in the specified execution context.
+  // If the bindings are successfully installed then the |callback| is run with
+  // |success| = true, otherwise with |success| = false.
+  // TODO(alexclarke): In theory we shouldn't have to specify
+  // |devtools_frame_id|, maybe it's OK to send the IPC to all renderers.
+  // Alternatively replace |devtools_frame_id| once there is a solution for
+  // stable frame IDs. See http://crbug.com/715541
+  virtual void InstallHeadlessTabSocketBindings(
+      std::string devtools_frame_id,
+      int v8_execution_context_id,
+      base::Callback<void(bool success)> callback) = 0;
+
+  // Note this will fail unless the bindings have been installed.
+  virtual void SendMessageToContext(const std::string& message,
+                                    int v8_execution_context_id) = 0;
 
   virtual void SetListener(Listener* listener) = 0;
 
