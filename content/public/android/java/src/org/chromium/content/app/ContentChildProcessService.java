@@ -4,6 +4,8 @@
 
 package org.chromium.content.app;
 
+import org.chromium.base.process_launcher.ChildProcessService;
+
 /** Implementation of ChildProcessService that uses the content specific delegate. */
 public class ContentChildProcessService extends ChildProcessService {
     public ContentChildProcessService() {
