@@ -22,6 +22,30 @@
       "revId": "554fae97dba56620438d1ad85ec918090710276c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f18d66d_f5c0d518",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-22T08:19:40Z",
+      "side": 1,
+      "message": "No, it wasn\u0027t null in any real web page.\n\nI encountered this case in the test suite, for a series of tests about the \u0027subresource integrity\u0027 feature. Those seemed to test various failure modes of sri.",
+      "parentUuid": "3aaa1749_c0e0933a",
+      "range": {
+        "startLine": 365,
+        "startChar": 48,
+        "endLine": 366,
+        "endChar": 23
+      },
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
