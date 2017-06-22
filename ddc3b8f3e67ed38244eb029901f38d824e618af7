@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ba04ecc_aa5fc439",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AdsBlockedInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-22T02:36:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e00e50a_b68808c8",
+      "revId": "ddc3b8f3e67ed38244eb029901f38d824e618af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f2868a_04f5a47a",
         "filename": "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T17:07:13Z",
       "side": 1,
       "message": "If you want to avoid the dual state tracking, could you just call through to native only if the infobar is already expanded on the java side?",
+      "revId": "ddc3b8f3e67ed38244eb029901f38d824e618af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d749ebf_17e44dfd",
+        "filename": "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-22T02:36:08Z",
+      "side": 1,
+      "message": "Hm I am tempted, but then we would need to call into native to log the expand state (kActionDetailsShown). For now I think I prefer to keep as is.",
+      "parentUuid": "d2f2868a_04f5a47a",
       "revId": "ddc3b8f3e67ed38244eb029901f38d824e618af7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
