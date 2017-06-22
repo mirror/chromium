@@ -45,6 +45,30 @@
       "revId": "23b9835ea438694e70d06ebdd2b6f64e867e827e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c0d979_2ff0c3d1",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-22T01:11:48Z",
+      "side": 1,
+      "message": "I think the temporary_physical_file_path here is also used to carry the final path, which caused confusion.\n\nShall we eventually set entry-\u003etarget_file_path to DownloadItem::GetTargetFilePath? Since content/download can potentially modify the name. \n\nBriefly browser through the code, not sure, but an example could be: if the download is considered dangerous, the file name won\u0027t be the forced path(Files/[guid]).",
+      "parentUuid": "71cd10de_69f35ec1",
+      "range": {
+        "startLine": 702,
+        "startChar": 4,
+        "endLine": 702,
+        "endChar": 73
+      },
+      "revId": "23b9835ea438694e70d06ebdd2b6f64e867e827e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
