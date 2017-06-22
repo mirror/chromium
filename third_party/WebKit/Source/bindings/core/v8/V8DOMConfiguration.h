@@ -75,8 +75,7 @@ class CORE_EXPORT V8DOMConfiguration final {
   typedef v8::Local<v8::Private> (*CachedPropertyKey)(v8::Isolate*);
 
   // AttributeConfiguration translates into calls to SetNativeDataProperty() on
-  // either the instance or the prototype ObjectTemplate, based on
-  // |propertyLocationConfiguration|.
+  // either of instance or prototype Object(Template).
   struct AttributeConfiguration {
     AttributeConfiguration& operator=(const AttributeConfiguration&) = delete;
     DISALLOW_NEW();
@@ -102,20 +101,20 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::Local<v8::ObjectTemplate> prototype_template,
       const AttributeConfiguration*,
       size_t attribute_count);
-
-  static void InstallAttributes(v8::Isolate*,
-                                const DOMWrapperWorld&,
-                                v8::Local<v8::Object> instance,
-                                v8::Local<v8::Object> prototype,
-                                const AttributeConfiguration*,
-                                size_t attribute_count);
-
   static void InstallAttribute(v8::Isolate*,
                                const DOMWrapperWorld&,
                                v8::Local<v8::ObjectTemplate> instance_template,
                                v8::Local<v8::ObjectTemplate> prototype_template,
                                const AttributeConfiguration&);
 
+  // If you pass an empty handle for instance or prototype Object, the
+  // translations on the object are ignored.
+  static void InstallAttributes(v8::Isolate*,
+                                const DOMWrapperWorld&,
+                                v8::Local<v8::Object> instance,
+                                v8::Local<v8::Object> prototype,
+                                const AttributeConfiguration*,
+                                size_t attribute_count);
   static void InstallAttribute(v8::Isolate*,
                                const DOMWrapperWorld&,
                                v8::Local<v8::Object> instance,
@@ -137,7 +136,7 @@ class CORE_EXPORT V8DOMConfiguration final {
       size_t attribute_count);
 
   // AccessorConfiguration translates into calls to SetAccessorProperty()
-  // on prototype ObjectTemplate.
+  // on appropriate Object(Template).
   struct AccessorConfiguration {
     AccessorConfiguration& operator=(const AccessorConfiguration&) = delete;
     DISALLOW_NEW();
@@ -166,16 +165,6 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::Local<v8::Signature>,
       const AccessorConfiguration*,
       size_t accessor_count);
-
-  static void InstallAccessors(v8::Isolate*,
-                               const DOMWrapperWorld&,
-                               v8::Local<v8::Object> instance,
-                               v8::Local<v8::Object> prototype,
-                               v8::Local<v8::Function> interface,
-                               v8::Local<v8::Signature>,
-                               const AccessorConfiguration*,
-                               size_t accessor_count);
-
   static void InstallAccessor(
       v8::Isolate*,
       const DOMWrapperWorld&,
@@ -185,6 +174,16 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::Local<v8::Signature>,
       const AccessorConfiguration&);
 
+  // If you pass an empty handle for an Object, the translations on the object
+  // are ignored.
+  static void InstallAccessors(v8::Isolate*,
+                               const DOMWrapperWorld&,
+                               v8::Local<v8::Object> instance,
+                               v8::Local<v8::Object> prototype,
+                               v8::Local<v8::Function> interface,
+                               v8::Local<v8::Signature>,
+                               const AccessorConfiguration*,
+                               size_t accessor_count);
   static void InstallAccessor(v8::Isolate*,
                               const DOMWrapperWorld&,
                               v8::Local<v8::Object> instance,
@@ -228,7 +227,6 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::Local<v8::ObjectTemplate> prototype_template,
       const ConstantConfiguration*,
       size_t constant_count);
-
   static void InstallConstant(
       v8::Isolate*,
       v8::Local<v8::FunctionTemplate> interface_template,
@@ -303,7 +301,6 @@ class CORE_EXPORT V8DOMConfiguration final {
                              v8::Local<v8::Signature>,
                              const MethodConfiguration*,
                              size_t method_count);
-
   static void InstallMethod(v8::Isolate*,
                             const DOMWrapperWorld&,
                             v8::Local<v8::ObjectTemplate> instance_template,
@@ -311,7 +308,14 @@ class CORE_EXPORT V8DOMConfiguration final {
                             v8::Local<v8::FunctionTemplate> interface_template,
                             v8::Local<v8::Signature>,
                             const MethodConfiguration&);
+  static void InstallMethod(v8::Isolate*,
+                            const DOMWrapperWorld&,
+                            v8::Local<v8::ObjectTemplate>,
+                            v8::Local<v8::Signature>,
+                            const SymbolKeyedMethodConfiguration&);
 
+  // If you pass an empty handle for an Object or a Function, the translations
+  // on the object or the function are ignored.
   static void InstallMethod(v8::Isolate*,
                             const DOMWrapperWorld&,
                             v8::Local<v8::Object> instance,
@@ -319,12 +323,6 @@ class CORE_EXPORT V8DOMConfiguration final {
                             v8::Local<v8::Function> interface,
                             v8::Local<v8::Signature>,
                             const MethodConfiguration&);
-
-  static void InstallMethod(v8::Isolate*,
-                            const DOMWrapperWorld&,
-                            v8::Local<v8::ObjectTemplate>,
-                            v8::Local<v8::Signature>,
-                            const SymbolKeyedMethodConfiguration&);
 
   static void InitializeDOMInterfaceTemplate(
       v8::Isolate*,
