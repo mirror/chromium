@@ -64,5 +64,10 @@ void GpuClient::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                                                      sync_token);
 }
 
+void GpuClient::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  NOTIMPLEMENTED();
+}
+
 }  // namespace ws
 }  // namespace ui

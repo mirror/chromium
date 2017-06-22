@@ -303,6 +303,11 @@ void GpuChildThread::CreateFrameSinkManager(
   NOTREACHED();
 }
 
+void GpuChildThread::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  // TODO(c.padhi): Implement this, see http://crbug.com/699255.
+}
+
 void GpuChildThread::BindServiceFactoryRequest(
     const service_manager::BindSourceInfo& source_info,
     service_manager::mojom::ServiceFactoryRequest request) {

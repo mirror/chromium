@@ -30,6 +30,7 @@
 #include "gpu/ipc/common/surface_handle.h"
 #include "ipc/ipc_sender.h"
 #include "ipc/message_filter.h"
+#include "media/gpu/mojo/jpeg_decoder.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/gpu/interfaces/gpu_host.mojom.h"
 #include "services/ui/gpu/interfaces/gpu_main.mojom.h"
@@ -145,6 +146,8 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               int client_id,
                               const gpu::SyncToken& sync_token);
+
+  void CreateJpegDecoder(media::mojom::GpuJpegDecodeAcceleratorRequest request);
 
 #if defined(OS_ANDROID)
   // Tells the GPU process that the given surface is being destroyed so that it
