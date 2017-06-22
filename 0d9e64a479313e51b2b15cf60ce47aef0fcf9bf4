@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1a78223_8d47f220",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-22T04:32:40Z",
+      "side": 0,
+      "message": "yay!",
+      "revId": "0d9e64a479313e51b2b15cf60ce47aef0fcf9bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

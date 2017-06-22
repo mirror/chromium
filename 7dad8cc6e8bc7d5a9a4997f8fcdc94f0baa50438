@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ddac73_86302e42",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-22T04:32:40Z",
+      "side": 1,
+      "message": "I find the mutually exclusive check for animation and transition here a bit confusing. Perhaps it would be useful to add a comment here explaining. Unless i\u0027m a big n00b and it\u0027s obvious",
+      "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151d80b0_e318808d",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-22T04:32:40Z",
+      "side": 1,
+      "message": "perhaps DCHECK that the interpolations isn\u0027t empty before calling .front on it",
+      "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b60b3f_9efe97f3",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-22T04:32:40Z",
+      "side": 1,
+      "message": "why not static?",
+      "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0bef97_07804c71",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolverState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-22T04:32:40Z",
+      "side": 1,
+      "message": "why does this need to be a member? seems to me it can be local to StyleResolver::ApplyAnimatedCustomProperties",
+      "revId": "7dad8cc6e8bc7d5a9a4997f8fcdc94f0baa50438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
