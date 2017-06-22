@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0dfa0fe_d6bfe464",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-22T17:15:12Z",
+      "side": 1,
+      "message": "+dtrainor@\nI have a question. Since we are registering all the clients in our factory before creating DownloadService, does that mean they have to be instantiated before this?",
+      "revId": "91b92410cdbc5b5ee6729c692e82b65b45c74264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
