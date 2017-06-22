@@ -22,6 +22,30 @@
       "revId": "29dd7a6270a09dd78a4fac479d569156cbad6a0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad235be_5f741189",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-22T14:51:52Z",
+      "side": 1,
+      "message": "I looked briefly and I couldn\u0027t find such a mechanism either. Retrying the draw seems like a reasonable compromise to me.",
+      "parentUuid": "f8549b19_6d78ebe4",
+      "range": {
+        "startLine": 815,
+        "startChar": 4,
+        "endLine": 837,
+        "endChar": 12
+      },
+      "revId": "29dd7a6270a09dd78a4fac479d569156cbad6a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
