@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f849fa3_d0c728c9",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-22T12:59:49Z",
+      "side": 1,
+      "message": "Similar situation as in the previous CL. If authentication is done via cookies, then this is a duplication; and cookies are already mentioned below.\n\nSo if the download folks really confirmed to you that there is no additional information they bundle to this request (which is my understanding, because this should really be just a simple resource fetch), I would really say \"None\".",
+      "range": {
+        "startLine": 2222,
+        "startChar": 17,
+        "endLine": 2222,
+        "endChar": 65
+      },
+      "revId": "7f9f585c4502d425e08179d28a27a22a758f2709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
