@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f77daa1e_31705025",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done\n\nThis is how offline page model factory was upgraded from the old code.\n\nIt does not guarantee a single thread execution, per comment here:\nhttps://cs.chromium.org/chromium/src/base/single_thread_task_runner.h?l\u003d25\n\nPer our discussion, we are going with sequenced here, but will experiment with single threaded on the other databases, to see if that affects the error counts.",
+      "parentUuid": "f561854a_f4338284",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60906d09_c8b39bde",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 8
@@ -77,6 +95,48 @@
     },
     {
       "key": {
+        "uuid": "81dc12ba_42cc0277",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba108182_96c03b9a",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d3afdda_e33a9832",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done.\nDropping \"OR IGNORE\"",
+      "parentUuid": "60906d09_c8b39bde",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af1afbfc_603b6ff0",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 8
@@ -91,6 +151,24 @@
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afc0410_a75f457d",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done.\n\nUpdated the calling code to roll back if insert fails.",
+      "parentUuid": "af1afbfc_603b6ff0",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "0c758fbb_efa97674",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c88bcc48_58174356",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f75aa51_04bc0c28",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 8
@@ -125,6 +221,24 @@
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4c08f0_52fff747",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f75aa51_04bc0c28",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "ba343551_ea48a336",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e70821bc_d68a4865",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5868678_2eeb7efc",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 8
@@ -159,6 +291,24 @@
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473d8c2e_f41eb50d",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5868678_2eeb7efc",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +335,30 @@
     },
     {
       "key": {
+        "uuid": "db72cfe2_6a140b6f",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done. Went with a map\u003curl, pair\u003cid, status\u003e\u003e because of how we use it in the 2 loops below.",
+      "parentUuid": "c843e260_b1401baf",
+      "range": {
+        "startLine": 102,
+        "startChar": 39,
+        "endLine": 102,
+        "endChar": 49
+      },
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "906581d4_17fc7ea2",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 8
@@ -199,6 +373,24 @@
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa680b5_24d982e8",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "906581d4_17fc7ea2",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "98d27902_ae788ac1",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cd46f4a_2962eff7",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29ee1f48_643047f0",
         "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.cc",
         "patchSetId": 8
@@ -233,6 +443,24 @@
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674cd5e0_277c4f48",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ee1f48_643047f0",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +481,24 @@
     },
     {
       "key": {
+        "uuid": "a0dfb44f_72e9cd4a",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "From a code review shess@ gave to bburns@",
+      "parentUuid": "ff9006f0_9b87130c",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "589c13f2_004b911a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 8
@@ -267,6 +513,24 @@
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ba6dd0_1c7c2f85",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done. Great hint.",
+      "parentUuid": "589c13f2_004b911a",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -287,6 +551,24 @@
     },
     {
       "key": {
+        "uuid": "447717f7_ee17ee13",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2f7aabd_3e62dc4d",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5385adac_f6d4f8e9",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 8
@@ -301,6 +583,24 @@
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e8bef6_34200388",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5385adac_f6d4f8e9",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -321,6 +621,24 @@
     },
     {
       "key": {
+        "uuid": "a9a281ee_3a696c33",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done.\n\nI think I fixed it properly, but we can go over through that logic together to double check.",
+      "parentUuid": "fe919643_329e5e30",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60caff80_1f731159",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 8
@@ -335,6 +653,24 @@
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f520c54_cf536f6a",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-22T22:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60caff80_1f731159",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
