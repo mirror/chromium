@@ -379,6 +379,8 @@ InterpolationTypes CSSInterpolationTypesMap::CreateInterpolationTypesForSyntax(
             property, &registration));
         break;
       case CSSSyntaxType::kInteger:
+        result.push_back(WTF::MakeUnique<CSSNumberInterpolationType>(
+            property, &registration, true));
       case CSSSyntaxType::kTransformFunction:
         // TODO(alancutter): Support smooth interpolation of these types.
         break;
