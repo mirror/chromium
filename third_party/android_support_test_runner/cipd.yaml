@@ -1,0 +1,11 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# cipd create --pkg-def cipd.yaml -tag version:2.1
+package: chromium/third_party/accessibility-test-framework
+description: accessibility-test-framework Java library
+data:
+  - file: lib/exposed-instrumentation-api-publish-0.5-no-dep.jar
+  - file: lib/rules-0.5.aar
+  - file: lib/runner-0.5-release-no-dep.jar
