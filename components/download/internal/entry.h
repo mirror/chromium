@@ -45,6 +45,8 @@ struct Entry {
 
   bool operator==(const Entry& other) const;
 
+  void DebugString() const;
+
   // The feature that is requesting this download.
   DownloadClient client = DownloadClient::INVALID;
 

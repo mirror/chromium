@@ -90,7 +90,14 @@ void ModelImpl::OnInitializedFinished(
   }
 
   for (const auto& entry : *entries) {
+    LOG(ERROR) << "@@@ Model entry, guid = " << entry.guid << " , state = " << static_cast<int>(entry.state);
     entries_.emplace(entry.guid, base::MakeUnique<Entry>(entry));
+
+/*
+    Entry entry_cp = entry;
+    entry_cp.state = Entry::State::AVAILABLE;
+    Update(entry_cp);
+*/
   }
 
   client_->OnModelReady(true);
@@ -101,6 +108,7 @@ void ModelImpl::OnAddFinished(DownloadClient client,
                               bool success) {
   stats::LogModelOperationResult(stats::ModelAction::ADD, success);
 
+  LOG(ERROR) << "@@@ OnAddFinished " << success;
   // Don't notify the Client if the entry was already removed.
   auto it = entries_.find(guid);
   if (it == entries_.end())

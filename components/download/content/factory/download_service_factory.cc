@@ -33,6 +33,7 @@ DownloadService* CreateDownloadService(
   auto config = Configuration::CreateFromFinch();
 
   auto files_storage_dir = storage_dir.Append(kFilesStorageDir);
+  LOG(ERROR) << "@@@ files_storage_dir = " << files_storage_dir.value();
   auto driver =
       base::MakeUnique<DownloadDriverImpl>(download_manager, files_storage_dir);
 

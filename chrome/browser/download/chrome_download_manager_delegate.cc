@@ -60,6 +60,8 @@
 #include "ppapi/features/features.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#include "chrome/browser/download/download_service_factory.h"
+
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/download/chrome_duplicate_download_infobar_delegate.h"
 #include "chrome/browser/android/download/download_controller.h"
@@ -218,7 +220,10 @@ ChromeDownloadManagerDelegate::ChromeDownloadManagerDelegate(Profile* profile)
           base::CreateSequencedTaskRunnerWithTraits(
               {base::MayBlock(), base::TaskPriority::BACKGROUND,
                base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  // download::DownloadService* download_service =
+  DownloadServiceFactory::GetInstance()->GetForBrowserContext(profile);
+}
 
 ChromeDownloadManagerDelegate::~ChromeDownloadManagerDelegate() {
   // If a DownloadManager was set for this, Shutdown() must be called.

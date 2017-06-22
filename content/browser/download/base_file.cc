@@ -48,6 +48,8 @@ DownloadInterruptReason BaseFile::Initialize(
     bool is_sparse_file) {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(!detached_);
+  LOG(ERROR) << "@@@ BaseFile::Initialize, path = " << full_path.value();
+  LOG(ERROR) << "@@@ BaseFile::Initialize, default_directory = " << default_directory.value();
 
   if (full_path.empty()) {
     base::FilePath initial_directory(default_directory);
@@ -58,9 +60,13 @@ DownloadInterruptReason BaseFile::Initialize(
     }
     // |initial_directory| can still be empty if ContentBrowserClient returned
     // an empty path for the downloads directory.
+    LOG(ERROR) << "@@@ BaseFile::Initialize, initial_directory = " << initial_directory.value();
+
     if ((initial_directory.empty() ||
          !base::CreateTemporaryFileInDir(initial_directory, &temp_file)) &&
         !base::CreateTemporaryFile(&temp_file)) {
+      LOG(ERROR) << "@@@ BaseFile::Initialize initial_directory error";
+
       return LogInterruptReason("Unable to create", 0,
                                 DOWNLOAD_INTERRUPT_REASON_FILE_FAILED);
     }
@@ -359,6 +365,8 @@ void BaseFile::ClearFile() {
 DownloadInterruptReason BaseFile::LogNetError(
     const char* operation,
     net::Error error) {
+  LOG(ERROR) << "@@@ BaseFile::LogNetError, operation = " << operation << " , error" << static_cast<int>(error);
+
   net_log_.AddEvent(net::NetLogEventType::DOWNLOAD_FILE_ERROR,
                     base::Bind(&FileErrorNetLogCallback, operation, error));
   return ConvertNetErrorToInterruptReason(error, DOWNLOAD_INTERRUPT_FROM_DISK);
@@ -368,7 +376,11 @@ DownloadInterruptReason BaseFile::LogSystemError(
     const char* operation,
     logging::SystemErrorCode os_error) {
   // There's no direct conversion from a system error to an interrupt reason.
+  LOG(ERROR) << "@@@ BaseFile::LogSystemError, operation = " << operation;
+
+  LOG(ERROR) << "@@@ BaseFile::LogSystemError, logging::SystemErrorCode = " << os_error;
   base::File::Error file_error = base::File::OSErrorToFileError(os_error);
+  LOG(ERROR) << "@@@ BaseFile::LogSystemError, file_error = " << file_error;
   return LogInterruptReason(
       operation, os_error,
       ConvertFileErrorToInterruptReason(file_error));
@@ -378,7 +390,7 @@ DownloadInterruptReason BaseFile::LogInterruptReason(
     const char* operation,
     int os_error,
     DownloadInterruptReason reason) {
-  DVLOG(1) << __func__ << "() operation:" << operation
+  LOG(ERROR) << __func__ << "() operation:" << operation
            << " os_error:" << os_error
            << " reason:" << DownloadInterruptReasonToString(reason);
   net_log_.AddEvent(

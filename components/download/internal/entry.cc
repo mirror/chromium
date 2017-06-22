@@ -35,4 +35,9 @@ bool Entry::operator==(const Entry& other) const {
          completion_time == other.completion_time;
 }
 
+void Entry::DebugString() const {
+  LOG(ERROR) << "@@@ entry! guid = " << guid  << " , state = " << static_cast<int>(state);
+}
+
+
 }  // namespace download

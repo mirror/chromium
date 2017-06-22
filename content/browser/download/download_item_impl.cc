@@ -1255,7 +1255,7 @@ void DownloadItemImpl::DestinationCompleted(
   // callbacks.
   DCHECK(state_ == TARGET_PENDING_INTERNAL || state_ == IN_PROGRESS_INTERNAL);
   DVLOG(20) << __func__ << "() download=" << DebugString(true);
-
+  LOG(ERROR) << "@@@ DestinationCompleted" << DebugString(true);
   OnAllDataSaved(total_bytes, std::move(secure_hash));
   MaybeCompleteDownload();
 }
@@ -1302,6 +1302,7 @@ void DownloadItemImpl::Start(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!download_file_.get());
   DVLOG(20) << __func__ << "() this=" << DebugString(true);
+  LOG(ERROR) << "@@@ DownloadItemImpl::Start, " << DebugString(true);
   RecordDownloadCount(START_COUNT);
 
   download_file_ = std::move(file);
@@ -1387,7 +1388,7 @@ void DownloadItemImpl::Start(
   }
 
   TransitionTo(TARGET_PENDING_INTERNAL);
-
+  LOG(ERROR) << "@@@ Will job start, " << DebugString(true);
   job_->Start(download_file_.get(),
               base::Bind(&DownloadItemImpl::OnDownloadFileInitialized,
                          weak_ptr_factory_.GetWeakPtr()),
@@ -1401,7 +1402,7 @@ void DownloadItemImpl::OnDownloadFileInitialized(
          state_ == INTERRUPTED_TARGET_PENDING_INTERNAL)
       << "Unexpected state: " << DebugDownloadStateString(state_);
 
-  DVLOG(20) << __func__
+  LOG(ERROR) << __func__
             << "() result:" << DownloadInterruptReasonToString(result);
   if (result != DOWNLOAD_INTERRUPT_REASON_NONE) {
     ReleaseDownloadFile(true);

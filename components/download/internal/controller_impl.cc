@@ -141,10 +141,11 @@ void ControllerImpl::PauseDownload(const std::string& guid) {
   DCHECK(startup_status_.Ok());
 
   auto* entry = model_->Get(guid);
-
+  LOG(ERROR) << "@@@ ControllerImpl::PauseDownload!";
   if (!entry || entry->state == Entry::State::PAUSED ||
       entry->state == Entry::State::COMPLETE ||
       entry->state == Entry::State::NEW) {
+    LOG(ERROR) << "@@@ ControllerImpl::PauseDownload has bailed out!!!";
     return;
   }
 
@@ -284,6 +285,7 @@ void ControllerImpl::OnDriverReady(bool success) {
 void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {
   if (initializing_internals_)
     return;
+  LOG(ERROR) << "@@@ ControllerImpl::OnDownloadCreated";
 
   Entry* entry = model_->Get(download.guid);
 
@@ -306,6 +308,8 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download, int reason) {
   if (initializing_internals_)
     return;
 
+  LOG(ERROR) << "@@@ ControllerImpl::OnDownloadFailed";
+
   Entry* entry = model_->Get(download.guid);
   if (!entry) {
     HandleExternalDownload(download.guid, false);
@@ -325,7 +329,7 @@ void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download,
                                          const base::FilePath& path) {
   if (initializing_internals_)
     return;
-
+  LOG(ERROR) << "@@@ ControllerImpl::OnDownloadSucceeded";
   Entry* entry = model_->Get(download.guid);
   if (!entry) {
     HandleExternalDownload(download.guid, false);
@@ -338,7 +342,7 @@ void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download,
 void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {
   if (initializing_internals_)
     return;
-
+  LOG(ERROR) << "@@@ ControllerImpl::OnDownloadUpdated";
   Entry* entry = model_->Get(download.guid);
   if (!entry) {
     HandleExternalDownload(download.guid, !download.paused);
@@ -427,6 +431,7 @@ void ControllerImpl::AttemptToFinalizeSetup() {
     ProcessScheduledTasks();
     return;
   }
+  initializing_internals_ = false;
 
   device_status_listener_->Start(this);
   PollActiveDriverDownloads();
@@ -434,8 +439,6 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   CleanupUnknownFiles();
   ResolveInitialRequestStates();
   NotifyClientsOfStartup();
-
-  initializing_internals_ = false;
 
   UpdateDriverStates();
   ProcessScheduledTasks();
@@ -634,11 +637,16 @@ void ControllerImpl::UpdateDriverState(const Entry& entry) {
 
   if (pause_driver) {
     if (driver_entry.has_value())
+      LOG(ERROR) << "ControllerImpl::UpdateDriverState, Try pause.";
       driver_->Pause(entry.guid);
   } else {
     if (driver_entry.has_value()) {
+      LOG(ERROR) << "ControllerImpl::UpdateDriverState, Try resume.";
+
       driver_->Resume(entry.guid);
     } else {
+      LOG(ERROR) << "ControllerImpl::UpdateDriverState, Try start.";
+
       driver_->Start(entry.request_params, entry.guid,
                      NO_TRAFFIC_ANNOTATION_YET);
     }
@@ -783,6 +791,7 @@ void ControllerImpl::KillTimedOutDownloads() {
 }
 
 void ControllerImpl::ActivateMoreDownloads() {
+  LOG(ERROR) << "@@@ ActivateMoreDownloads, initializing_internals_= " << initializing_internals_;
   if (initializing_internals_)
     return;
 
@@ -794,15 +803,23 @@ void ControllerImpl::ActivateMoreDownloads() {
   uint32_t active_count = entries_states[Entry::State::ACTIVE];
   if (config_->max_concurrent_downloads <= paused_count + active_count ||
       config_->max_running_downloads <= active_count) {
+    LOG(ERROR) << "@@@ ActivateMoreDownloads, throttled!, paused_count = " << paused_count << " , active_count = " <<  active_count;
     return;
   }
 
+  // TODO(xingliu): Check the configuration to throttle downloads.
+
+  const DeviceStatus&  status = device_status_listener_->CurrentDeviceStatus();
+  LOG(ERROR) << "@@@ DeviceStatus net: "<< static_cast<int>(status.network_status) <<  ", battery = " << static_cast<int>(status.battery_status);
   Entry* next = scheduler_->Next(
       model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
+  LOG(ERROR) << "@@@ ActivateMoreDownloads, next = " << (next? next->guid: "nullptr");
 
   while (next) {
     DCHECK_EQ(Entry::State::AVAILABLE, next->state);
     TransitTo(next, Entry::State::ACTIVE, model_.get());
+    LOG(ERROR) << "@@@ activate next ";
+    next->DebugString();
     UpdateDriverState(*next);
     next = scheduler_->Next(model_->PeekEntries(),
                             device_status_listener_->CurrentDeviceStatus());
@@ -812,6 +829,7 @@ void ControllerImpl::ActivateMoreDownloads() {
 
 void ControllerImpl::HandleExternalDownload(const std::string& guid,
                                             bool active) {
+  LOG(ERROR) << "ControllerImpl::HandleExternalDownloadS guid" << guid;
   if (active) {
     externally_active_downloads_.insert(guid);
   } else {

@@ -16,7 +16,7 @@ namespace download {
 namespace {
 
 // Default value for max concurrent downloads configuration.
-const uint32_t kDefaultMaxConcurrentDownloads = 4;
+const uint32_t kDefaultMaxConcurrentDownloads = 1;
 
 // Default value for maximum running downloads of the download service.
 const uint32_t kDefaultMaxRunningDownloads = 2;

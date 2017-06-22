@@ -7,11 +7,16 @@
 #include <set>
 #include <vector>
 
+#include "base/strings/string_util.h"
 #include "components/download/internal/driver_entry.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_url_parameters.h"
 #include "content/public/browser/storage_partition.h"
 #include "net/http/http_response_headers.h"
+
+
+#include "base/debug/stack_trace.h"
+
 
 namespace download {
 
@@ -118,10 +123,12 @@ void DownloadDriverImpl::Start(
   download_url_params->set_method(request_params.method);
   download_url_params->set_file_path(file_dir_.AppendASCII(guid));
 
+  LOG(ERROR) << "@@@ Will download_manager_->DownloadUrl";
   download_manager_->DownloadUrl(std::move(download_url_params));
 }
 
 void DownloadDriverImpl::Remove(const std::string& guid) {
+  LOG(ERROR) << "@@@ Remove , guid = " << guid;
   if (!download_manager_)
     return;
   content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
@@ -151,6 +158,13 @@ void DownloadDriverImpl::Resume(const std::string& guid) {
 base::Optional<DriverEntry> DownloadDriverImpl::Find(const std::string& guid) {
   if (!download_manager_)
     return base::nullopt;
+
+  LOG(ERROR) << "@@@ DownloadDriverImpl::Find, guid = " << guid;
+/*
+  base::debug::StackTrace st;
+  st.Print();
+*/
+
   content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
   if (item)
     return CreateDriverEntry(item);
@@ -176,7 +190,7 @@ std::set<std::string> DownloadDriverImpl::GetActiveDownloads() {
 
 void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
   DCHECK(client_);
-
+  LOG(ERROR) << "@@@ DownloadDriverImpl::OnDownloadUpdated";
   using DownloadState = content::DownloadItem::DownloadState;
   DownloadState state = item->GetState();
   content::DownloadInterruptReason reason = item->GetLastReason();
@@ -198,6 +212,7 @@ void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
 
 void DownloadDriverImpl::OnDownloadCreated(content::DownloadManager* manager,
                                            content::DownloadItem* item) {
+  LOG(ERROR) << "@@@ DownloadDriverImpl::OnDownloadCreated";
   // Listens to all downloads.
   item->AddObserver(this);
   DCHECK(client_);

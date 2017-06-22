@@ -153,6 +153,7 @@ void DownloadFileImpl::Initialize(
   if (result != DOWNLOAD_INTERRUPT_REASON_NONE) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::Bind(initialize_callback, result));
+    LOG(ERROR) << "@@@ DownloadFileImpl::Initialize error";
     return;
   }
 
