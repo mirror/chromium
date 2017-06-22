@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "962a5cfe_b3c625ea",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T21:43:24Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9312b8_c3816f3c",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T21:43:24Z",
+      "side": 1,
+      "message": "this should be USER_VISIBLE since chrome://help is waiting to present the results of this to the user.",
+      "range": {
+        "startLine": 56,
+        "startChar": 44,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa97a16_cc3e7364",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T21:43:24Z",
+      "side": 1,
+      "message": "no longer OnFileThread! ;-)",
+      "range": {
+        "startLine": 117,
+        "startChar": 40,
+        "endLine": 117,
+        "endChar": 52
+      },
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254db102_23ca1483",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T21:43:24Z",
+      "side": 1,
+      "message": "BeginUpdateCheck needs a thread that can use COM, so use CreateCOMSTATaskRunnerWithTraits here.",
+      "range": {
+        "startLine": 121,
+        "startChar": 25,
+        "endLine": 121,
+        "endChar": 63
+      },
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4953b901_91f8cc0d",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T21:43:24Z",
+      "side": 1,
+      "message": "i think it\u0027s okay for this task runner to use base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN as well. if there happens to be an update in progress during shutdown, there\u0027s no need for Chrome to wait around for it.",
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac4a4548_9ea77866",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-22T21:43:24Z",
+      "side": 1,
+      "message": "USER_VISIBLE since chrome://help is waiting on the results.",
+      "range": {
+        "startLine": 122,
+        "startChar": 44,
+        "endLine": 122,
+        "endChar": 54
+      },
+      "revId": "4392debfdf832b2050805cf75911836f3b6b9eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
