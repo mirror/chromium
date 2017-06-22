@@ -16,6 +16,24 @@
       "revId": "1b7d85c9528eef195918568d9a453d0f4c33b75e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f760a7_1a89158e",
+        "filename": "ui/keyboard/content/keyboard_ui_content.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-22T00:12:48Z",
+      "side": 1,
+      "message": "You\u0027re right. I removed the check.",
+      "parentUuid": "e8e5c8ba_3f78e64f",
+      "revId": "1b7d85c9528eef195918568d9a453d0f4c33b75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
