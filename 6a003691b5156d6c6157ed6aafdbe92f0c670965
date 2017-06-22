@@ -70,6 +70,30 @@
       "revId": "6a003691b5156d6c6157ed6aafdbe92f0c670965",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871d453d_cd59258a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-22T14:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ccfa594_bd797056",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "6a003691b5156d6c6157ed6aafdbe92f0c670965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
