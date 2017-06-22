@@ -910,14 +910,11 @@ void FileSystem::GetMetadata(
 
   int64_t* largest_changestamp = new int64_t(0);
   base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
-      FROM_HERE,
+      blocking_task_runner_.get(), FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetLargestChangestamp,
-                 base::Unretained(resource_metadata_),
+                 base::Unretained(resource_metadata_), std::string(),
                  largest_changestamp),
-      base::Bind(&OnGetLargestChangestamp,
-                 metadata,
-                 callback,
+      base::Bind(&OnGetLargestChangestamp, metadata, callback,
                  base::Owned(largest_changestamp)));
 }
 
