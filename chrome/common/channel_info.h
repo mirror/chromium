@@ -41,6 +41,10 @@ version_info::Channel GetChannel();
 void SetChannel(const std::string& channel);
 #endif
 
+#if defined(OS_POSIX)
+std::string GetChannelSuffixForDataDir();
+#endif
+
 }  // namespace chrome
 
 #endif  // CHROME_COMMON_CHANNEL_INFO_H_
