@@ -22,6 +22,30 @@
       "revId": "05b4ae146bde8761f7fe7de95adf1c2565e8a7ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b470686_6f53ce1e",
+        "filename": "components/search_provider_logos/google_logo_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-22T10:04:04Z",
+      "side": 0,
+      "message": "Passing a const reference to a unique_ptr is... strange, to say the least (I guess you could use it to express that you get a pointer that is definitely owned by someone else, but a raw (possibly const) pointer is a lot more common for that; see also https://www.chromium.org/developers/smart-pointer-guidelines#TOC-What-are-the-calling-conventions-involving-different-kinds-of-pointers-), but in this particular instance this method is called via a Callback, and the response is base::Passed into the callback, so the Callback _object_ owns the response, and it is destroyed with the Callback. At that point, we might as well pass the response to the bound method, so it can destroy the string if necessary (as the static logo callback does).",
+      "parentUuid": "a944d696_3805ce71",
+      "range": {
+        "startLine": 26,
+        "startChar": 40,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "05b4ae146bde8761f7fe7de95adf1c2565e8a7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
