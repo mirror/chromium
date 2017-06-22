@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7be33d4_5df57fcf",
+        "filename": "device/wake_lock/public/interfaces/wake_lock.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-22T07:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb4ce9bf_5c576c71",
+      "range": {
+        "startLine": 55,
+        "startChar": 61,
+        "endLine": 55,
+        "endChar": 70
+      },
+      "revId": "a56def7c40168c218453252534a2c3e8fef25c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45f9d0d4_ba953f8b",
         "filename": "extensions/browser/api/power/power_api.h",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "353d0439_6d057552",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-22T07:27:09Z",
+      "side": 1,
+      "message": "Yes, I changed the word \"Request\" to \"Activate\" that maybe make this clearer. And the individual comments (especially on GetWakeLock) are added too.\n\n1) Yes we can say the GetWakeLock() is a getter of |wake_lock_|, while the |wake_lock_| needs a first-time initialize(also a lazy init) so I feel it is the good to place them in GetWakeLock(). Note that the init only creates the mojo connection, but the real remote wake lock instance is not created yet. And the \"is_wake_lock_active_\" is false at this time.\n\n2) GetWakeLock() means gets a \"mojo interfacePtr\"(if the mojo interfacePtr is not initialized, then we init it: bind it, create mojo connection..). Now the GetWakeLock() is only used inside Activate() and Cancel() when performing mojo call.\n\nSo I think now it is much clearer:\nPowerAPI has 2 functions to operates wake lock: PowerAPI::ActivateWakeLock() and PowerAPI::CancelWakeLock(), inside which the PowerAPI::GetWakeLock() is used to get a mojo interfacePtr. With that mojo interfacePtr, it performs the mojo call like \"mojom::RequestWakeLock()\", \"mojom::CancelWakeLock()\" and \"mojom::ChangeType()\".",
+      "parentUuid": "45f9d0d4_ba953f8b",
+      "revId": "a56def7c40168c218453252534a2c3e8fef25c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9a00559_1adca1c2",
         "filename": "extensions/browser/api/power/power_api.h",
         "patchSetId": 7
@@ -53,6 +95,24 @@
       "writtenOn": "2017-06-21T22:23:21Z",
       "side": 1,
       "message": "continuing previous discussion about this: how about calling this wake_lock_active_ instead? that\u0027s closer to what it actually tracks, right? i\u0027d recommend adding a comment documenting its meaning, too.",
+      "revId": "a56def7c40168c218453252534a2c3e8fef25c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827db30f_099ba66c",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-22T07:27:09Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "a9a00559_1adca1c2",
       "revId": "a56def7c40168c218453252534a2c3e8fef25c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
