@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43b66d45_78d7b6b9",
+        "filename": "net/cert/nss_cert_database_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-06-22T19:55:24Z",
+      "side": 1,
+      "message": "Can you add a comment explaining what this is testing and how it accomplishes that?",
+      "revId": "f02d7d09b458960e6067b141c03a3940226a58ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24e14cd_30c08788",
+        "filename": "net/cert/nss_cert_database_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-06-22T19:55:24Z",
+      "side": 1,
+      "message": "This is somewhat different from the original test. Does it matter for this test\u0027s intent?",
+      "revId": "f02d7d09b458960e6067b141c03a3940226a58ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
