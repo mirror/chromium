@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a64e04aa_8af5a2cb",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-22T05:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06858290_df913137",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 58
+      },
+      "revId": "548c38fb19b29325ea510d330286b2146ea60fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ef7d68b_337c085d",
         "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
         "patchSetId": 11
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7c3be1a3_9a519a6f",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-22T05:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ef7d68b_337c085d",
+      "revId": "548c38fb19b29325ea510d330286b2146ea60fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "725a4b41_c6b9cbe4",
         "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
         "patchSetId": 11
@@ -56,6 +98,24 @@
       "revId": "548c38fb19b29325ea510d330286b2146ea60fff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40594a0e_2f4a4955",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-22T05:29:41Z",
+      "side": 1,
+      "message": "Done. Removed the curly braces. However, git cl format split them into two statements so I will leave it as it is.\n\nThis is interesting, though. Couldn\u0027t this be dangerous? It seems like something that could easily lead to typos like:\nif (...)\n  doX;\n  doY;",
+      "parentUuid": "725a4b41_c6b9cbe4",
+      "revId": "548c38fb19b29325ea510d330286b2146ea60fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
