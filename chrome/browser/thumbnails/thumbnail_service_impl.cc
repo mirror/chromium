@@ -9,7 +9,6 @@
 #include "base/time/time.h"
 #include "chrome/browser/history/history_utils.h"
 #include "chrome/browser/history/top_sites_factory.h"
-#include "chrome/browser/thumbnails/content_based_thumbnailing_algorithm.h"
 #include "chrome/browser/thumbnails/simple_thumbnail_crop.h"
 #include "chrome/browser/thumbnails/thumbnailing_context.h"
 #include "chrome/common/chrome_switches.h"
@@ -28,15 +27,6 @@ namespace {
 const int kThumbnailWidth = 154;
 const int kThumbnailHeight = 96;
 
-// True if thumbnail retargeting feature is enabled (Finch/flags).
-bool IsThumbnailRetargetingEnabled() {
-  if (!search::IsInstantExtendedAPIEnabled())
-    return false;
-
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kEnableThumbnailRetargeting);
-}
-
 void AddForcedURLOnUIThread(scoped_refptr<history::TopSites> top_sites,
                             const GURL& url) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -50,9 +40,7 @@ void AddForcedURLOnUIThread(scoped_refptr<history::TopSites> top_sites,
 namespace thumbnails {
 
 ThumbnailServiceImpl::ThumbnailServiceImpl(Profile* profile)
-    : top_sites_(TopSitesFactory::GetForProfile(profile)),
-      use_thumbnail_retargeting_(IsThumbnailRetargetingEnabled()) {
-}
+    : top_sites_(TopSitesFactory::GetForProfile(profile)) {}
 
 ThumbnailServiceImpl::~ThumbnailServiceImpl() {
 }
@@ -89,10 +77,7 @@ void ThumbnailServiceImpl::AddForcedURL(const GURL& url) {
 
 ThumbnailingAlgorithm* ThumbnailServiceImpl::GetThumbnailingAlgorithm()
     const {
-  const gfx::Size thumbnail_size(kThumbnailWidth, kThumbnailHeight);
-  if (use_thumbnail_retargeting_)
-    return new ContentBasedThumbnailingAlgorithm(thumbnail_size);
-  return new SimpleThumbnailCrop(thumbnail_size);
+  return new SimpleThumbnailCrop(gfx::Size(kThumbnailWidth, kThumbnailHeight));
 }
 
 bool ThumbnailServiceImpl::ShouldAcquirePageThumbnail(const GURL& url) {
