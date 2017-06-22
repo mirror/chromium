@@ -104,11 +104,11 @@ class MockClientProcess : public mojom::ClientProcess {
 TEST_F(CoordinatorImplTest, NoClients) {
   base::RunLoop run_loop;
   base::trace_event::MemoryDumpRequestArgs args = {
-      1234, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
   RequestGlobalMemoryDump(args, run_loop.QuitClosure());
   run_loop.Run();
-  EXPECT_EQ(1234U, dump_response_args_.dump_guid);
+  EXPECT_NE(0U, dump_response_args_.dump_guid);
   EXPECT_TRUE(dump_response_args_.success);
 }
 
@@ -119,13 +119,13 @@ TEST_F(CoordinatorImplTest, SeveralClients) {
   MockClientProcess client_process_1(this, 1);
   MockClientProcess client_process_2(this, 1);
   base::trace_event::MemoryDumpRequestArgs args = {
-      2345, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
   RequestGlobalMemoryDump(args, run_loop.QuitClosure());
 
   run_loop.Run();
 
-  EXPECT_EQ(2345U, dump_response_args_.dump_guid);
+  EXPECT_NE(0U, dump_response_args_.dump_guid);
   EXPECT_TRUE(dump_response_args_.success);
 }
 
@@ -137,7 +137,7 @@ TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
   MockClientProcess client_process_1(this, 1);
   auto client_process_2 = base::MakeUnique<MockClientProcess>(this, 0);
   base::trace_event::MemoryDumpRequestArgs args = {
-      3456, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
       base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
   RequestGlobalMemoryDump(args, run_loop.QuitClosure());
 
@@ -151,7 +151,7 @@ TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
 
   run_loop.Run();
 
-  EXPECT_EQ(3456U, dump_response_args_.dump_guid);
+  EXPECT_NE(0U, dump_response_args_.dump_guid);
   EXPECT_FALSE(dump_response_args_.success);
 }
 }  // namespace memory_instrumentation
