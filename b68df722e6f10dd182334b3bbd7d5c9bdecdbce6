@@ -70,6 +70,30 @@
       "revId": "b68df722e6f10dd182334b3bbd7d5c9bdecdbce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "424cf42c_e5477f20",
+        "filename": "device/bluetooth/test/fake_remote_gatt_characteristic.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T07:38:27Z",
+      "side": 1,
+      "message": "I see, so there are currently non-Mojo users of this interface. Thanks for the clarification.",
+      "parentUuid": "cb5cc92d_d0935884",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 76
+      },
+      "revId": "b68df722e6f10dd182334b3bbd7d5c9bdecdbce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
