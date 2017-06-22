@@ -229,7 +229,10 @@ void V8TestInterfaceNamedConstructorConstructor::NamedConstructorAttributeGetter
   V8SetReturnValue(info, namedConstructor);
 }
 
-static void installV8TestInterfaceNamedConstructorTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestInterfaceNamedConstructorTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterfaceNamedConstructor::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestInterfaceNamedConstructor::internalFieldCount);
 
@@ -240,7 +243,7 @@ static void installV8TestInterfaceNamedConstructorTemplate(v8::Isolate* isolate,
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   V8DOMConfiguration::InstallLazyDataAttributes(isolate, world, instanceTemplate, prototypeTemplate, V8TestInterfaceNamedConstructorLazyDataAttributes, WTF_ARRAY_LENGTH(V8TestInterfaceNamedConstructorLazyDataAttributes));
 }
 

@@ -429,7 +429,10 @@ static const V8DOMConfiguration::MethodConfiguration V8TestInterfaceMethods[] = 
     {"unionWithTypedefMethod", V8TestInterfacePartial::unionWithTypedefMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
 };
 
-void V8TestInterfacePartial::installV8TestInterfaceTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+void V8TestInterfacePartial::installV8TestInterfaceTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8TestInterface::installV8TestInterfaceTemplate(isolate, world, interfaceTemplate);
 
@@ -440,7 +443,7 @@ void V8TestInterfacePartial::installV8TestInterfaceTemplate(v8::Isolate* isolate
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   const V8DOMConfiguration::ConstantConfiguration V8TestInterfaceConstants[] = {
       {"PARTIAL3_UNSIGNED_SHORT", 0, 0, V8DOMConfiguration::kConstantTypeUnsignedShort},
   };
@@ -505,8 +508,9 @@ void V8TestInterfacePartial::preparePrototypeAndInterfaceObject(v8::Local<v8::Co
 
 void V8TestInterfacePartial::initialize() {
   // Should be invoked from ModulesInitializer.
-  V8TestInterface::updateWrapperTypeInfo(
+  V8TestInterface::UpdateWrapperTypeInfo(
       &V8TestInterfacePartial::installV8TestInterfaceTemplate,
+      nullptr,
       nullptr,
       V8TestInterfacePartial::preparePrototypeAndInterfaceObject);
   V8TestInterface::registerVoidMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::voidMethodPartialOverloadMethod);

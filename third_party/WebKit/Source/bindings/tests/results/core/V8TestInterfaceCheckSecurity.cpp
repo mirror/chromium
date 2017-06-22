@@ -519,7 +519,10 @@ static const V8DOMConfiguration::MethodConfiguration V8TestInterfaceCheckSecurit
     {"voidMethod", V8TestInterfaceCheckSecurity::voidMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnInstance, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kCheckAccess, V8DOMConfiguration::kAllWorlds},
 };
 
-static void installV8TestInterfaceCheckSecurityTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestInterfaceCheckSecurityTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterfaceCheckSecurity::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestInterfaceCheckSecurity::internalFieldCount);
 
@@ -536,7 +539,7 @@ static void installV8TestInterfaceCheckSecurityTemplate(v8::Isolate* isolate, co
   // Global objects are Immutable Prototype Exotic Objects
   instanceTemplate->SetImmutableProto();
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   V8DOMConfiguration::InstallAttributes(isolate, world, instanceTemplate, prototypeTemplate, V8TestInterfaceCheckSecurityAttributes, WTF_ARRAY_LENGTH(V8TestInterfaceCheckSecurityAttributes));
   V8DOMConfiguration::InstallAccessors(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestInterfaceCheckSecurityAccessors, WTF_ARRAY_LENGTH(V8TestInterfaceCheckSecurityAccessors));
   V8DOMConfiguration::InstallMethods(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestInterfaceCheckSecurityMethods, WTF_ARRAY_LENGTH(V8TestInterfaceCheckSecurityMethods));

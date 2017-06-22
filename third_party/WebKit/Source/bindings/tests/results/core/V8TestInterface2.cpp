@@ -621,7 +621,10 @@ void V8TestInterface2::constructorCallback(const v8::FunctionCallbackInfo<v8::Va
   TestInterface2V8Internal::constructor(info);
 }
 
-void V8TestInterface2::installV8TestInterface2Template(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+void V8TestInterface2::installV8TestInterface2Template(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterface2::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestInterface2::internalFieldCount);
   interfaceTemplate->SetCallHandler(V8TestInterface2::constructorCallback);
@@ -634,7 +637,7 @@ void V8TestInterface2::installV8TestInterface2Template(v8::Isolate* isolate, con
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   if (RuntimeEnabledFeatures::FeatureNameEnabled()) {
     const V8DOMConfiguration::ConstantConfiguration constantConstValue1Configuration = {"CONST_VALUE_1", 1, 0, V8DOMConfiguration::kConstantTypeUnsignedShort};
     V8DOMConfiguration::InstallConstant(isolate, interfaceTemplate, prototypeTemplate, constantConstValue1Configuration);
@@ -685,17 +688,16 @@ TestInterface2* NativeValueTraits<TestInterface2>::NativeValue(v8::Isolate* isol
 InstallTemplateFunction V8TestInterface2::installV8TestInterface2TemplateFunction =
     &V8TestInterface2::installV8TestInterface2Template;
 
-void V8TestInterface2::updateWrapperTypeInfo(
-    InstallTemplateFunction installTemplateFunction,
-    InstallRuntimeEnabledFunction installRuntimeEnabledFunction,
-    PreparePrototypeAndInterfaceObjectFunction preparePrototypeAndInterfaceObjectFunction) {
-  ALLOW_UNUSED_LOCAL(installRuntimeEnabledFunction);
-
+void V8TestInterface2::UpdateWrapperTypeInfo(
+    InstallTemplateFunction install_template_function,
+    InstallRuntimeEnabledFunction install_runtime_enabled_function,
+    InstallRuntimeEnabledOnTemplateFunction install_runtime_enabled_on_template_function,
+    PreparePrototypeAndInterfaceObjectFunction prepare_prototype_and_interface_object_function) {
   V8TestInterface2::installV8TestInterface2TemplateFunction =
-      installTemplateFunction;
-  if (preparePrototypeAndInterfaceObjectFunction) {
+      install_template_function;
+  if (prepare_prototype_and_interface_object_function) {
     V8TestInterface2::wrapperTypeInfo.prepare_prototype_and_interface_object_function =
-        preparePrototypeAndInterfaceObjectFunction;
+        prepare_prototype_and_interface_object_function;
   }
 }
 

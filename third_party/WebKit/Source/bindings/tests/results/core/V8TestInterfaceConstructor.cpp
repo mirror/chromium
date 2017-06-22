@@ -436,7 +436,10 @@ void V8TestInterfaceConstructor::constructorCallback(const v8::FunctionCallbackI
   TestInterfaceConstructorV8Internal::constructor(info);
 }
 
-static void installV8TestInterfaceConstructorTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestInterfaceConstructorTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterfaceConstructor::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestInterfaceConstructor::internalFieldCount);
   interfaceTemplate->SetCallHandler(V8TestInterfaceConstructor::constructorCallback);
@@ -449,7 +452,7 @@ static void installV8TestInterfaceConstructorTemplate(v8::Isolate* isolate, cons
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
 }
 
 v8::Local<v8::FunctionTemplate> V8TestInterfaceConstructor::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {

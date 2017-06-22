@@ -2996,7 +2996,10 @@ static const V8DOMConfiguration::MethodConfiguration V8TestInterfaceMethods[] = 
     {"toString", V8TestInterface::toStringMethodCallback, 0, static_cast<v8::PropertyAttribute>(v8::DontEnum), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
 };
 
-void V8TestInterface::installV8TestInterfaceTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+void V8TestInterface::installV8TestInterfaceTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterface::wrapperTypeInfo.interface_name, V8TestInterfaceEmpty::domTemplate(isolate, world), V8TestInterface::internalFieldCount);
 
@@ -3007,7 +3010,7 @@ void V8TestInterface::installV8TestInterfaceTemplate(v8::Isolate* isolate, const
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   const V8DOMConfiguration::ConstantConfiguration V8TestInterfaceConstants[] = {
       {"UNSIGNED_LONG", 0, 0, V8DOMConfiguration::kConstantTypeUnsignedLong},
       {"CONST_JAVASCRIPT", 1, 0, V8DOMConfiguration::kConstantTypeShort},
@@ -3475,17 +3478,16 @@ void V8TestInterface::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> 
 InstallTemplateFunction V8TestInterface::installV8TestInterfaceTemplateFunction =
     &V8TestInterface::installV8TestInterfaceTemplate;
 
-void V8TestInterface::updateWrapperTypeInfo(
-    InstallTemplateFunction installTemplateFunction,
-    InstallRuntimeEnabledFunction installRuntimeEnabledFunction,
-    PreparePrototypeAndInterfaceObjectFunction preparePrototypeAndInterfaceObjectFunction) {
-  ALLOW_UNUSED_LOCAL(installRuntimeEnabledFunction);
-
+void V8TestInterface::UpdateWrapperTypeInfo(
+    InstallTemplateFunction install_template_function,
+    InstallRuntimeEnabledFunction install_runtime_enabled_function,
+    InstallRuntimeEnabledOnTemplateFunction install_runtime_enabled_on_template_function,
+    PreparePrototypeAndInterfaceObjectFunction prepare_prototype_and_interface_object_function) {
   V8TestInterface::installV8TestInterfaceTemplateFunction =
-      installTemplateFunction;
-  if (preparePrototypeAndInterfaceObjectFunction) {
+      install_template_function;
+  if (prepare_prototype_and_interface_object_function) {
     V8TestInterface::wrapperTypeInfo.prepare_prototype_and_interface_object_function =
-        preparePrototypeAndInterfaceObjectFunction;
+        prepare_prototype_and_interface_object_function;
   }
 }
 

@@ -278,7 +278,10 @@ static const V8DOMConfiguration::MethodConfiguration V8TestInterfaceOriginTrialE
     {"voidMethodPartialOverload", V8TestInterfaceOriginTrialEnabled::voidMethodPartialOverloadMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
 };
 
-static void installV8TestInterfaceOriginTrialEnabledTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestInterfaceOriginTrialEnabledTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterfaceOriginTrialEnabled::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestInterfaceOriginTrialEnabled::internalFieldCount);
 
@@ -289,7 +292,7 @@ static void installV8TestInterfaceOriginTrialEnabledTemplate(v8::Isolate* isolat
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   const V8DOMConfiguration::ConstantConfiguration V8TestInterfaceOriginTrialEnabledConstants[] = {
       {"UNSIGNED_LONG", 0, 0, V8DOMConfiguration::kConstantTypeUnsignedLong},
       {"CONST_JAVASCRIPT", 1, 0, V8DOMConfiguration::kConstantTypeShort},

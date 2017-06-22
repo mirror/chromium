@@ -145,7 +145,10 @@ void V8TestException::constructorCallback(const v8::FunctionCallbackInfo<v8::Val
   TestExceptionV8Internal::constructor(info);
 }
 
-static void installV8TestExceptionTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestExceptionTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestException::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestException::internalFieldCount);
   interfaceTemplate->SetCallHandler(V8TestException::constructorCallback);
@@ -158,7 +161,7 @@ static void installV8TestExceptionTemplate(v8::Isolate* isolate, const DOMWrappe
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   const V8DOMConfiguration::ConstantConfiguration V8TestExceptionConstants[] = {
       {"UNSIGNED_SHORT_CONSTANT", 1, 0, V8DOMConfiguration::kConstantTypeUnsignedShort},
   };

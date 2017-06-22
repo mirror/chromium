@@ -131,7 +131,11 @@ class {{v8_class}} {
   {% endif %}
 
   {% if has_partial_interface %}
-  {{exported}}static void updateWrapperTypeInfo(InstallTemplateFunction, InstallRuntimeEnabledFunction, PreparePrototypeAndInterfaceObjectFunction);
+  {{exported}}static void UpdateWrapperTypeInfo(
+      InstallTemplateFunction,
+      InstallRuntimeEnabledFunction,
+      InstallRuntimeEnabledOnTemplateFunction,
+      PreparePrototypeAndInterfaceObjectFunction);
   {{exported}}static void install{{v8_class}}Template(v8::Isolate*, const DOMWrapperWorld&, v8::Local<v8::FunctionTemplate> interfaceTemplate);
   {% for method in methods if method.overloads and method.overloads.has_partial_overloads %}
   {{exported}}static void register{{method.name | blink_capitalize}}MethodForPartialInterface(void (*)(const v8::FunctionCallbackInfo<v8::Value>&));
@@ -249,15 +253,20 @@ class {{v8_class}} {
   {% endif %}
 
   {% if needs_runtime_enabled_installer %}
-  {{exported}}static void installRuntimeEnabledFeatures(
-      v8::Isolate* isolate,
+  {{exported}}static void InstallRuntimeEnabledFeatures(
+      v8::Isolate*,
       const DOMWrapperWorld& world,
       v8::Local<v8::Object> instance,
       v8::Local<v8::Object> prototype,
       v8::Local<v8::Function> interface);
+  {{exported}}static void InstallRuntimeEnabledFeaturesOnTemplate(
+      v8::Isolate*,
+      const DOMWrapperWorld&,
+      v8::Local<v8::FunctionTemplate> interface_template);
 
   {% if has_partial_interface %}
-  static InstallRuntimeEnabledFunction install{{v8_class}}RuntimeEnabledFunction;
+  static InstallRuntimeEnabledFunction install_{{v8_class}}_runtime_enabled_function;
+  static InstallRuntimeEnabledOnTemplateFunction install_{{v8_class}}_runtime_enabled_on_template_function;
   {% endif %}
   {% endif %}
 

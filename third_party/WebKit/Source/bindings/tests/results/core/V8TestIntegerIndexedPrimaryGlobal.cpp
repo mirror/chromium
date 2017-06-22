@@ -185,7 +185,10 @@ static const V8DOMConfiguration::MethodConfiguration V8TestIntegerIndexedPrimary
     {"voidMethodDocument", V8TestIntegerIndexedPrimaryGlobal::voidMethodDocumentMethodCallback, 1, v8::None, V8DOMConfiguration::kOnInstance, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
 };
 
-static void installV8TestIntegerIndexedPrimaryGlobalTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestIntegerIndexedPrimaryGlobalTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestIntegerIndexedPrimaryGlobal::wrapperTypeInfo.interface_name, V8TestIntegerIndexedPrimaryGlobal::domTemplateForNamedPropertiesObject(isolate, world), V8TestIntegerIndexedPrimaryGlobal::internalFieldCount);
 
@@ -202,7 +205,7 @@ static void installV8TestIntegerIndexedPrimaryGlobalTemplate(v8::Isolate* isolat
   // Global objects are Immutable Prototype Exotic Objects
   instanceTemplate->SetImmutableProto();
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   V8DOMConfiguration::InstallAccessors(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestIntegerIndexedPrimaryGlobalAccessors, WTF_ARRAY_LENGTH(V8TestIntegerIndexedPrimaryGlobalAccessors));
   V8DOMConfiguration::InstallMethods(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestIntegerIndexedPrimaryGlobalMethods, WTF_ARRAY_LENGTH(V8TestIntegerIndexedPrimaryGlobalMethods));
 

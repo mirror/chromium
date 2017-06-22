@@ -855,7 +855,10 @@ static const V8DOMConfiguration::MethodConfiguration V8TestInterface5Methods[] =
     {"toString", V8TestInterface5::toStringMethodCallback, 0, static_cast<v8::PropertyAttribute>(v8::DontEnum), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
 };
 
-static void installV8TestInterface5Template(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestInterface5Template(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterface5::wrapperTypeInfo.interface_name, V8TestInterfaceEmpty::domTemplate(isolate, world), V8TestInterface5::internalFieldCount);
 
@@ -870,7 +873,7 @@ static void installV8TestInterface5Template(v8::Isolate* isolate, const DOMWrapp
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   const V8DOMConfiguration::ConstantConfiguration V8TestInterface5Constants[] = {
       {"UNSIGNED_LONG", 0, 0, V8DOMConfiguration::kConstantTypeUnsignedLong},
       {"CONST_JAVASCRIPT", 1, 0, V8DOMConfiguration::kConstantTypeShort},

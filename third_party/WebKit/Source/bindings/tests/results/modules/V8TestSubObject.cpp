@@ -145,7 +145,10 @@ static const V8DOMConfiguration::AccessorConfiguration V8TestSubObjectAccessors[
     { "unforgeableLongAttribute", V8TestSubObject::unforgeableLongAttributeAttributeGetterCallback, V8TestSubObject::unforgeableLongAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::DontDelete), V8DOMConfiguration::kOnInstance, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
 };
 
-static void installV8TestSubObjectTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestSubObjectTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestSubObject::wrapperTypeInfo.interface_name, V8TestObject::domTemplate(isolate, world), V8TestSubObject::internalFieldCount);
 
@@ -156,7 +159,7 @@ static void installV8TestSubObjectTemplate(v8::Isolate* isolate, const DOMWrappe
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   V8DOMConfiguration::InstallAccessors(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestSubObjectAccessors, WTF_ARRAY_LENGTH(V8TestSubObjectAccessors));
 }
 

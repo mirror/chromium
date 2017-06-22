@@ -101,7 +101,10 @@ void V8TestSpecialOperationsNotEnumerable::indexedPropertyGetterCallback(uint32_
   TestSpecialOperationsNotEnumerableV8Internal::indexedPropertyGetter(index, info);
 }
 
-static void installV8TestSpecialOperationsNotEnumerableTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestSpecialOperationsNotEnumerableTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestSpecialOperationsNotEnumerable::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestSpecialOperationsNotEnumerable::internalFieldCount);
 
@@ -112,7 +115,7 @@ static void installV8TestSpecialOperationsNotEnumerableTemplate(v8::Isolate* iso
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
 
   // Indexed properties
   v8::IndexedPropertyHandlerConfiguration indexedPropertyHandlerConfig(V8TestSpecialOperationsNotEnumerable::indexedPropertyGetterCallback, nullptr, nullptr, nullptr, nullptr, v8::Local<v8::Value>(), v8::PropertyHandlerFlags::kNone);

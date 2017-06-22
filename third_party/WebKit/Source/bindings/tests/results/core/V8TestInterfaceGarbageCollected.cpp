@@ -384,7 +384,10 @@ void V8TestInterfaceGarbageCollected::constructorCallback(const v8::FunctionCall
   TestInterfaceGarbageCollectedV8Internal::constructor(info);
 }
 
-static void installV8TestInterfaceGarbageCollectedTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestInterfaceGarbageCollectedTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterfaceGarbageCollected::wrapperTypeInfo.interface_name, V8EventTarget::domTemplate(isolate, world), V8TestInterfaceGarbageCollected::internalFieldCount);
   interfaceTemplate->SetCallHandler(V8TestInterfaceGarbageCollected::constructorCallback);
@@ -397,7 +400,7 @@ static void installV8TestInterfaceGarbageCollectedTemplate(v8::Isolate* isolate,
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
   V8DOMConfiguration::InstallAccessors(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestInterfaceGarbageCollectedAccessors, WTF_ARRAY_LENGTH(V8TestInterfaceGarbageCollectedAccessors));
   V8DOMConfiguration::InstallMethods(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestInterfaceGarbageCollectedMethods, WTF_ARRAY_LENGTH(V8TestInterfaceGarbageCollectedMethods));
 
