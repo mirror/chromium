@@ -16,6 +16,24 @@
       "revId": "ec5461805c925aadaa693bb9e76a6ba20127178b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348f42c8_d02059c3",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T17:09:32Z",
+      "side": 1,
+      "message": "Sounds like a good idea. I\u0027ll try that once your patch has landed.",
+      "parentUuid": "1678eaff_856c5831",
+      "revId": "ec5461805c925aadaa693bb9e76a6ba20127178b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
