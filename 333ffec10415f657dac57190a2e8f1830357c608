@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dfc84598_0dae9250",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0dac2b_809cedb7",
+      "range": {
+        "startLine": 59,
+        "startChar": 57,
+        "endLine": 59,
+        "endChar": 63
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29cd69a_33b49e7f",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 15
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "A client is a tab. This is consistent with the terminology used elsewhere in the code.",
       "parentUuid": "b29cd69a_33b49e7f",
+      "range": {
+        "startLine": 432,
+        "startChar": 8,
+        "endLine": 432,
+        "endChar": 41
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f71bd2c0_84455d1e",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "994f1bc9_14265665",
       "range": {
         "startLine": 432,
         "startChar": 8,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "c59a470d_bc795ce2",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f044a87_12c04fc4",
+      "range": {
+        "startLine": 120,
+        "startChar": 9,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08f1a12e_3e7a912f",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 15
@@ -225,6 +297,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "08f1a12e_3e7a912f",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 21
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11691f28_53eb714d",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372e1259_8909e0ad",
       "range": {
         "startLine": 130,
         "startChar": 15,
@@ -296,6 +392,30 @@
       "side": 1,
       "message": "I think it\u0027s the wording that bothers me. How can an experiment be a boolean constant?",
       "parentUuid": "81f752e7_ee395916",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670ec6fd_8bf70eb7",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:53:15Z",
+      "side": 1,
+      "message": "Its a string constant which holds the experiment name.",
+      "parentUuid": "0928a509_483fa52f",
       "range": {
         "startLine": 141,
         "startChar": 17,
@@ -423,6 +543,30 @@
       "revId": "333ffec10415f657dac57190a2e8f1830357c608",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad777d1e_fb4393f8",
+        "filename": "net/nqe/network_quality_estimator_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:53:15Z",
+      "side": 1,
+      "message": "using stdint.h. cstdint is used in chromium, but it would require using std::int32_t everywhere.",
+      "parentUuid": "9face899_9a9894e3",
+      "range": {
+        "startLine": 164,
+        "startChar": 17,
+        "endLine": 164,
+        "endChar": 24
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
