@@ -14,6 +14,19 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
  * Exposes methods to report suggestions related events, for UMA or Fetch scheduling purposes.
  */
 public class SuggestionsEventReporterBridge implements SuggestionsEventReporter {
+    private static SuggestionsEventReporter sSuggestionsEventReporter;
+
+    private SuggestionsEventReporterBridge() {}
+
+    public static SuggestionsEventReporter create() {
+        if (sSuggestionsEventReporter != null) return sSuggestionsEventReporter;
+        return new SuggestionsEventReporterBridge();
+    }
+
+    public static void setEventReporterForTests(SuggestionsEventReporter eventReporter) {
+        sSuggestionsEventReporter = eventReporter;
+    }
+
     @Override
     public void onSurfaceOpened() {
         nativeOnSurfaceOpened();

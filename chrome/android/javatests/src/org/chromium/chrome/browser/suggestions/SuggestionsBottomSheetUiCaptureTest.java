@@ -24,8 +24,9 @@ import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.ScreenShooter;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
+import org.chromium.chrome.test.BottomSheetTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
-import org.chromium.chrome.test.SuggestionsBottomSheetTestRule;
+import org.chromium.chrome.test.UiCaptureSuggestionsRule;
 
 /**
  * Tests for the appearance of Article Snippets.
@@ -34,21 +35,23 @@ import org.chromium.chrome.test.SuggestionsBottomSheetTestRule;
 @Restriction(RESTRICTION_TYPE_PHONE) // ChromeHome is only enabled on phones
 public class SuggestionsBottomSheetUiCaptureTest {
     @Rule
-    public SuggestionsBottomSheetTestRule mSuggestionsTestRule =
-            new SuggestionsBottomSheetTestRule();
+    public BottomSheetTestRule mBottomSheetTestRule = new BottomSheetTestRule();
 
     @Rule
     public ScreenShooter mScreenShooter = new ScreenShooter();
+
+    @Rule
+    public UiCaptureSuggestionsRule mSuggestionsRule = new UiCaptureSuggestionsRule();
 
     private static final int MAX_WINDOW_UPDATE_TIME_MS = 1000;
 
     @Before
     public void setup() throws InterruptedException {
-        mSuggestionsTestRule.startMainActivityOnBlankPage();
+        mBottomSheetTestRule.startMainActivityOnBlankPage();
     }
 
     private void setSheetState(final int position) {
-        mSuggestionsTestRule.setSheetState(position, false);
+        mBottomSheetTestRule.setSheetState(position, false);
         waitForWindowUpdates();
     }
 

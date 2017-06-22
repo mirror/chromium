@@ -81,7 +81,7 @@ public class TileGroupTest {
         TileGroupDelegateImpl.setMostVisitedSitesForTests(mMostVisitedSites);
 
         FakeSuggestionsSource mSource = new FakeSuggestionsSource();
-        NewTabPage.setSuggestionsSourceForTests(mSource);
+        SuggestionsUiDelegateImpl.setSuggestionsSourceForTests(mSource);
 
         mActivityTestRule.startMainActivityWithURL(UrlConstants.NTP_URL);
         Tab mTab = mActivityTestRule.getActivity().getActivityTab();
@@ -96,7 +96,7 @@ public class TileGroupTest {
     @After
     public void tearDown() throws Exception {
         TileGroupDelegateImpl.setMostVisitedSitesForTests(null);
-        NewTabPage.setSuggestionsSourceForTests(null);
+        SuggestionsUiDelegateImpl.setSuggestionsSourceForTests(null);
         mTestServer.stopAndDestroyServer();
 
     }

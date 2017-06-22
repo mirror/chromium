@@ -43,8 +43,6 @@ import java.util.Locale;
  * Provides content to be displayed inside of the Home tab of bottom sheet.
  */
 public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetContent {
-    private static SuggestionsSource sSuggestionsSourceForTesting;
-    private static SuggestionsEventReporter sEventReporterForTesting;
 
     private final View mView;
     private final FadingShadowView mShadowView;
@@ -205,37 +203,15 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 });
     }
 
-    public static void setSuggestionsSourceForTesting(SuggestionsSource suggestionsSource) {
-        sSuggestionsSourceForTesting = suggestionsSource;
-    }
-
-    public static void setEventReporterForTesting(SuggestionsEventReporter eventReporter) {
-        sEventReporterForTesting = eventReporter;
-    }
-
     private static SuggestionsUiDelegateImpl createSuggestionsDelegate(Profile profile,
             SuggestionsNavigationDelegate navigationDelegate, NativePageHost host,
             DiscardableReferencePool referencePool) {
-        SnippetsBridge snippetsBridge = null;
-        SuggestionsSource suggestionsSource;
-        SuggestionsEventReporter eventReporter;
-
-        if (sSuggestionsSourceForTesting == null) {
-            snippetsBridge = new SnippetsBridge(profile);
-            suggestionsSource = snippetsBridge;
-        } else {
-            suggestionsSource = sSuggestionsSourceForTesting;
-        }
-
-        if (sEventReporterForTesting == null) {
-            eventReporter = new SuggestionsEventReporterBridge();
-        } else {
-            eventReporter = sEventReporterForTesting;
-        }
-
+        SnippetsBridge snippetsBridge = new SnippetsBridge(profile);
+        SuggestionsSource suggestionsSource = snippetsBridge;
+        SuggestionsEventReporter eventReporter = SuggestionsEventReporterBridge.create();
         SuggestionsUiDelegateImpl delegate = new SuggestionsUiDelegateImpl(
                 suggestionsSource, eventReporter, navigationDelegate, profile, host, referencePool);
-        if (snippetsBridge != null) delegate.addDestructionObserver(snippetsBridge);
+        delegate.addDestructionObserver(snippetsBridge);
 
         return delegate;
     }

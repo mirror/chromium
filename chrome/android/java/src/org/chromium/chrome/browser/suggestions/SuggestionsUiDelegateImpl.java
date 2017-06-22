@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.suggestions;
 import android.support.annotation.Nullable;
 
 import org.chromium.base.DiscardableReferencePool;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
 import org.chromium.chrome.browser.download.ui.ThumbnailProviderImpl;
@@ -25,6 +26,7 @@ import java.util.List;
  * {@link SuggestionsUiDelegate} implementation.
  */
 public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
+    private static SuggestionsSource sSuggestionsSourceForTests;
     private final List<DestructionObserver> mDestructionObservers = new ArrayList<>();
     private final SuggestionsSource mSuggestionsSource;
     private final SuggestionsRanker mSuggestionsRanker;
@@ -85,6 +87,7 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
 
     @Override
     public SuggestionsSource getSuggestionsSource() {
+        if (sSuggestionsSourceForTests != null) return sSuggestionsSourceForTests;
         return mSuggestionsSource;
     }
 
@@ -160,5 +163,20 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
         assert !mIsDestroyed;
         if (mLargeIconBridge == null) mLargeIconBridge = new LargeIconBridge(mProfile);
         return mLargeIconBridge;
+    }
+
+    @VisibleForTesting
+    public static void setSuggestionsSourceForTests(SuggestionsSource suggestionsSource) {
+        sSuggestionsSourceForTests = suggestionsSource;
+    }
+
+    @VisibleForTesting
+    public void setLargeIconBridge(LargeIconBridge bridge) {
+        mLargeIconBridge = bridge;
+    }
+
+    @VisibleForTesting
+    public void setFaviconHelper(FaviconHelper helper) {
+        mFaviconHelper = helper;
     }
 }

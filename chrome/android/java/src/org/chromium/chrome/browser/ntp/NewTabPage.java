@@ -76,8 +76,6 @@ public class NewTabPage
     // Key for the scroll position data that may be stored in a navigation entry.
     private static final String NAVIGATION_ENTRY_SCROLL_POSITION_KEY = "NewTabPageScrollPosition";
 
-    private static SuggestionsSource sSuggestionsSourceForTests;
-
     private final Tab mTab;
     private final TabModelSelector mTabModelSelector;
 
@@ -170,11 +168,6 @@ public class NewTabPage
         return ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME);
     }
 
-    @VisibleForTesting
-    public static void setSuggestionsSourceForTests(SuggestionsSource suggestionsSource) {
-        sSuggestionsSourceForTests = suggestionsSource;
-    }
-
     private class NewTabPageManagerImpl
             extends SuggestionsUiDelegateImpl implements NewTabPageManager {
         public NewTabPageManagerImpl(SuggestionsSource suggestionsSource,
@@ -235,12 +228,6 @@ public class NewTabPage
                     mFakeboxDelegate.requestUrlFocusFromFakebox(pastedText);
                 }
             }
-        }
-
-        @Override
-        public SuggestionsSource getSuggestionsSource() {
-            if (sSuggestionsSourceForTests != null) return sSuggestionsSourceForTests;
-            return mSnippetsBridge;
         }
 
         @Override
@@ -319,7 +306,8 @@ public class NewTabPage
         Profile profile = mTab.getProfile();
 
         mSnippetsBridge = new SnippetsBridge(profile);
-        SuggestionsEventReporter eventReporter = new SuggestionsEventReporterBridge();
+
+        SuggestionsEventReporter eventReporter = SuggestionsEventReporterBridge.create();
 
         SuggestionsNavigationDelegateImpl navigationDelegate =
                 new SuggestionsNavigationDelegateImpl(

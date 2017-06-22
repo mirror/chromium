@@ -37,6 +37,7 @@ import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
 import org.chromium.chrome.browser.suggestions.FakeMostVisitedSites;
+import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegateImpl;
 import org.chromium.chrome.browser.suggestions.TileGroupDelegateImpl;
 import org.chromium.chrome.browser.suggestions.TileSource;
 import org.chromium.chrome.browser.tab.Tab;
@@ -109,7 +110,7 @@ public class NewTabPageRecyclerViewTest {
                         ContentSuggestionsAdditionalAction.FETCH, /*showIfEmpty=*/true,
                         "noSuggestionsMessage"));
         mSource.setStatusForCategory(TEST_CATEGORY, CategoryStatus.INITIALIZING);
-        NewTabPage.setSuggestionsSourceForTests(mSource);
+        SuggestionsUiDelegateImpl.setSuggestionsSourceForTests(mSource);
 
         mActivityTestRule.startMainActivityWithURL(UrlConstants.NTP_URL);
         mTab = mActivityTestRule.getActivity().getActivityTab();
@@ -122,7 +123,7 @@ public class NewTabPageRecyclerViewTest {
     @After
     public void tearDown() throws Exception {
         TileGroupDelegateImpl.setMostVisitedSitesForTests(null);
-        NewTabPage.setSuggestionsSourceForTests(null);
+        SuggestionsUiDelegateImpl.setSuggestionsSourceForTests(null);
         mTestServer.stopAndDestroyServer();
 
     }
