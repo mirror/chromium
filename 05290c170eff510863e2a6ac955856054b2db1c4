@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac6e3bbd_c29bf750",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/md_pin_keyboard.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-22T00:45:21Z",
+      "side": 1,
+      "message": "Is this equivalent to the shorter snippet below?\n\nthis.selectionStart_ \u003d opt_selectionStart || 0;\nthis.selectionEnd_ \u003d opt_selectionEnd || 0;",
+      "revId": "05290c170eff510863e2a6ac955856054b2db1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
