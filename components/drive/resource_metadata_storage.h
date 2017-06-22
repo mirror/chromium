@@ -102,10 +102,10 @@ class ResourceMetadataStorage {
   // Collects cache info from trashed resource map DB.
   void RecoverCacheInfoFromTrashedResourceMap(RecoveredCacheInfoMap* out_info);
 
-  // Sets the largest changestamp.
+  // Sets the largest changestamp of the user's changelist.
   FileError SetLargestChangestamp(int64_t largest_changestamp);
 
-  // Gets the largest changestamp.
+  // Gets the largest changestamp of the user's changelist.
   FileError GetLargestChangestamp(int64_t* largest_changestamp);
 
   // Puts the entry to this storage.

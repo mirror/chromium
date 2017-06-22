@@ -56,11 +56,17 @@ class ResourceMetadata {
   // Resets this object.
   FileError Reset();
 
-  // Returns the largest changestamp.
-  FileError GetLargestChangestamp(int64_t* out_value);
+  // Returns the largest changestamp of a Team Drive specified by
+  // |team_drive_id|, or that of the user's changelist if |team_drive_id| is
+  // an empty string.
+  FileError GetLargestChangestamp(const std::string& team_drive_id,
+                                  int64_t* out_value);
 
-  // Sets the largest changestamp.
-  FileError SetLargestChangestamp(int64_t value);
+  // Sets the largest changestamp of a Team Drive specified by
+  // |team_drive_id|, or that of the user's changelist if |team_drive_id| is
+  // an empty string.
+  FileError SetLargestChangestamp(const std::string& team_drive_id,
+                                  int64_t value);
 
   // Adds |entry| to the metadata tree based on its parent_local_id.
   FileError AddEntry(const ResourceEntry& entry, std::string* out_id);
@@ -134,6 +140,10 @@ class ResourceMetadata {
 
   // Removes the entry and its descendants.
   FileError RemoveEntryRecursively(const std::string& id);
+
+  // Finds an entry (a file or a directory) by the resource ID in Google Drive.
+  FileError GetResourceEntryByDriveId(const std::string& drive_id,
+                                      ResourceEntry* out_entry);
 
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner_;
 

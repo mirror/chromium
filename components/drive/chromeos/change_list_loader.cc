@@ -420,14 +420,12 @@ void ChangeListLoader::Load(const FileOperationCallback& callback) {
   // Check the current status of local metadata, and start loading if needed.
   int64_t* local_changestamp = new int64_t(0);
   base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
-      FROM_HERE,
+      blocking_task_runner_.get(), FROM_HERE,
       base::Bind(&ResourceMetadata::GetLargestChangestamp,
-                 base::Unretained(resource_metadata_),
+                 base::Unretained(resource_metadata_), std::string(),
                  local_changestamp),
       base::Bind(&ChangeListLoader::LoadAfterGetLargestChangestamp,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 is_initial_load,
+                 weak_ptr_factory_.GetWeakPtr(), is_initial_load,
                  base::Owned(local_changestamp)));
 }
 

@@ -251,8 +251,8 @@ class FileSystemTest : public testing::Test {
         param == USE_SERVER_TIMESTAMP
             ? fake_drive_service_->about_resource().largest_change_id()
             : 1;
-    ASSERT_EQ(FILE_ERROR_OK,
-              resource_metadata->SetLargestChangestamp(changestamp));
+    ASSERT_EQ(FILE_ERROR_OK, resource_metadata->SetLargestChangestamp(
+                                 std::string(), changestamp));
 
     // drive/root
     ResourceEntry root;
