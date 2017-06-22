@@ -58,6 +58,10 @@ class UiSceneManager {
   void OnExitPromptPrimaryButtonClickedForTesting();
 
  private:
+  enum ConfigureToastReason {
+    WEB_VR = 0,
+    FULLSCREEN,
+  };
   void CreateScreenDimmer();
   void CreateSecurityWarnings();
   void CreateSystemIndicators();
@@ -73,7 +77,7 @@ class UiSceneManager {
   void ConfigureSecurityWarnings();
   void ConfigureTransientUrlBar();
   void ConfigureIndicators();
-  void ConfigurePresentationToast();
+  void ConfigurePresentationToast(ConfigureToastReason reason);
   void UpdateBackgroundColor();
   void CloseExitPrompt();
   void OnSecurityWarningTimer();

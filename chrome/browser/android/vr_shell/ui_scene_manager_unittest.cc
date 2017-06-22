@@ -158,6 +158,34 @@ TEST_F(UiSceneManagerTest, WebVrToastShowAndHide) {
   EXPECT_FALSE(IsVisible(kPresentationToast));
 }
 
+TEST_F(UiSceneManagerTest, ToastVisibilityControledByFullscreen) {
+  MakeManager(kNotInCct, kNotInWebVr);
+  EXPECT_FALSE(IsVisible(kPresentationToast));
+
+  // Button should be visible in fullscreen and hidden when leaving fullscreen.
+  manager_->SetFullscreen(true);
+  EXPECT_TRUE(IsVisible(kPresentationToast));
+  manager_->SetFullscreen(false);
+  EXPECT_FALSE(IsVisible(kPresentationToast));
+}
+
+// Tests toast visibility set by whoever(WebVr or Fullscreen) try to set it.
+TEST_F(UiSceneManagerTest, ToastVisibilityInterop) {
+  MakeManager(kNotInCct, kNotInWebVr);
+
+  manager_->SetFullscreen(true);
+  EXPECT_TRUE(IsVisible(kPresentationToast));
+
+  manager_->SetWebVrMode(true, false, false);
+  EXPECT_FALSE(IsVisible(kPresentationToast));
+
+  manager_->SetWebVrMode(true, false, true);
+  EXPECT_TRUE(IsVisible(kPresentationToast));
+
+  manager_->SetFullscreen(false);
+  EXPECT_FALSE(IsVisible(kPresentationToast));
+}
+
 TEST_F(UiSceneManagerTest, CloseButtonVisibleInCctFullscreen) {
   // Button should be visible in cct.
   MakeManager(kInCct, kNotInWebVr);
@@ -267,7 +295,8 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
 
 TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   std::set<UiElementDebugId> visible_in_fullscreen = {
-      kContentQuad, kCloseButton, kBackplane, kCeiling, kFloor};
+      kContentQuad, kCloseButton, kBackplane,
+      kCeiling,     kFloor,       kPresentationToast};
 
   MakeManager(kNotInCct, kNotInWebVr);
 
