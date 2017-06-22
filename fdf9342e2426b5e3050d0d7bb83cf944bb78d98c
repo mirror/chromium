@@ -223,6 +223,30 @@
       "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4b894d_b73110c9",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-22T03:04:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure the details, but in the bug there is a jsbin that shows focus() not popping the VK and setTimeout(focus()) not popping the VK. The desired behaviour for settings and lock is to have focus transferred to the input element without bringing up the VK (since we already have the numpad). I don\u0027t think there is much relation to the timing; it\u0027s just the VK team decided the way to throw focus around without popping up the VK is to set focus in a timeout (as far as I know). According to tbuckley@ and oshima@ (in the bug) this was desired behaviour, then broke, then got fixed in the above CL. Hope that makes sense.",
+      "parentUuid": "1b44959a_40750d13",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
