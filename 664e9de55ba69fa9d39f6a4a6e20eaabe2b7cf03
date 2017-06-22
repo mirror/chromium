@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d055a76_4796241c",
+        "filename": "ash/utility/screenshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-22T17:21:25Z",
+      "side": 1,
+      "message": "It would be nice not to create a WindowTargeter directly and instead use the targeter of the Window. But generally we use the default window targeter and getting the default targeter is buried and I don\u0027t think accessible without a cast to ui::EventProcessor, e.g.:\n\nstatic_cast\u003cui::EventProcessor*\u003e(static_cast\u003cui::EventSource*\u003e(window-\u003eGetHost())-\u003eGetEventSink())-\u003eGetDefaultEventTargeter();\n\nIt\u0027s the cast from EventSink to EventProcessor that is evil.",
+      "revId": "664e9de55ba69fa9d39f6a4a6e20eaabe2b7cf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feadf4ce_850eb2b7",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-22T17:21:25Z",
+      "side": 1,
+      "message": "The changes here are purely reordering to get the declaration/definitions in line.",
+      "range": {
+        "startLine": 22,
+        "startChar": 14,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "664e9de55ba69fa9d39f6a4a6e20eaabe2b7cf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
