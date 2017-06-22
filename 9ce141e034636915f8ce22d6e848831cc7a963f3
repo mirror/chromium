@@ -22,6 +22,30 @@
       "revId": "9ce141e034636915f8ce22d6e848831cc7a963f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd6e1ce_d735b719",
+        "filename": "content/public/test/test_browser_thread.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-22T21:17:48Z",
+      "side": 0,
+      "message": "Seems pretty safe since the Dry CQ run succeeds. It seemed weird that we did not have proper nesting between Init and CleanUp, so I went ahead and applied that.",
+      "parentUuid": "59c3d8b6_f3d6de0a",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "9ce141e034636915f8ce22d6e848831cc7a963f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
