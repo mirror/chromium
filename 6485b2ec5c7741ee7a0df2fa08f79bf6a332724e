@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc1ca2c_fb4d2df2",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T11:10:50Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. Why does it have to be equal to \"UNKNOWN\"?",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 280,
+        "endChar": 38
+      },
+      "revId": "6485b2ec5c7741ee7a0df2fa08f79bf6a332724e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2a1f78_28a46406",
+        "filename": "components/ntp_snippets/remote/remote_suggestion_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T11:10:50Z",
+      "side": 1,
+      "message": "suggestion?\n\n(not your doing, but I would replace it in entire file. This \"sugg\" looks strange and has few benefits).",
+      "range": {
+        "startLine": 575,
+        "startChar": 20,
+        "endLine": 575,
+        "endChar": 24
+      },
+      "revId": "6485b2ec5c7741ee7a0df2fa08f79bf6a332724e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

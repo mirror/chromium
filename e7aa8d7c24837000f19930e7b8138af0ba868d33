@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b7aa1eaf_b30fcfe5",
+        "filename": "components/ntp_snippets/content_suggestion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T11:10:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9156ea64_6c228ce9",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 28
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea315d50_18619fc2",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c07953_c28b34b9",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T11:10:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "20290d11_48e7284e",
+      "range": {
+        "startLine": 282,
+        "startChar": 52,
+        "endLine": 282,
+        "endChar": 67
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "2c569f12_401c0762",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T11:10:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "56bb2d49_39cd6481",
+      "range": {
+        "startLine": 1028,
+        "startChar": 46,
+        "endLine": 1028,
+        "endChar": 67
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "549cbbed_d2a43397",
         "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
         "patchSetId": 2
@@ -187,6 +259,30 @@
       "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e76fcb_2a39112f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T11:10:50Z",
+      "side": 1,
+      "message": "FYI, you can mark comments as resolved :) then I won\u0027t need to ACK every one of them.",
+      "parentUuid": "34c09a98_7861ff1a",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1042,
+        "endChar": 50
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
