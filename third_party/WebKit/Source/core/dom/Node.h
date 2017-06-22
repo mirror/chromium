@@ -72,7 +72,6 @@ template <typename NodeType>
 class StaticNodeTypeList;
 using StaticNodeList = StaticNodeTypeList<Node>;
 class StyleChangeReasonForTracing;
-class Text;
 class WebMouseEvent;
 class WebPluginContainerBase;
 
@@ -941,8 +940,6 @@ class CORE_EXPORT Node : public EventTarget {
   void RemovedEventListener(const AtomicString& event_type,
                             const RegisteredEventListener&) override;
   DispatchEventResult DispatchEventInternal(Event*) override;
-
-  static void ReattachWhitespaceSiblingsIfNeeded(Text* start);
 
   bool HasRareData() const { return GetFlag(kHasRareDataFlag); }
 
