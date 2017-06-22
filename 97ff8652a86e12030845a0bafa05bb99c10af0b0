@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8c3501f4_83e6b5d4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25573,
+      "author": {
+        "id": 1163331
+      },
+      "writtenOn": "2017-06-22T16:28:48Z",
+      "side": 1,
+      "message": "It also clears when switching to dev mod.",
+      "parentUuid": "58ad7ecc_7cc3fa19",
+      "range": {
+        "startLine": 25573,
+        "startChar": 44,
+        "endLine": 25573,
+        "endChar": 53
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7aef9a59_29dda4d0",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
