@@ -1319,7 +1319,7 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
   // else.
   [self updateIconsForContents:contents atIndex:modelIndex];
 
-  [delegate_ onTabInsertedInForeground:inForeground];
+  [delegate_ onTabInsertedInForeground:inForeground withContents:contents];
 }
 
 // Called before |contents| is deactivated.
