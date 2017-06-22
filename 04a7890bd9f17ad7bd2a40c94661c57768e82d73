@@ -117,6 +117,30 @@
       "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "621a2b17_d234d216",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T20:14:42Z",
+      "side": 1,
+      "message": "Yes, BytesProvider is for the renderer (or whoever it is that is creating a blob, which in the future could also be the browser itself) to provide bytes to the browser. So BytesProvider is implemented in the renderer, and lets the browser request bytes.",
+      "parentUuid": "f3cfc263_60b794b6",
+      "range": {
+        "startLine": 314,
+        "startChar": 12,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
