@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc2f5225_ae9b53c4",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000097
+      },
+      "writtenOn": "2017-06-22T20:14:54Z",
+      "side": 1,
+      "message": "You can use composition here instead of inheritance, i.e:\ndictionary WebcamConfigurationWithRanges {\n  WebcamConfiguration configuration;\n  ...\n};",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
