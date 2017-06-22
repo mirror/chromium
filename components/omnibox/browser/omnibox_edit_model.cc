@@ -5,6 +5,7 @@
 #include "components/omnibox/browser/omnibox_edit_model.h"
 
 #include <algorithm>
+#include <iostream>
 #include <string>
 #include <utility>
 
@@ -375,8 +376,12 @@ void OmniboxEditModel::Revert() {
   // First home the cursor, so view of text is scrolled to left, then correct
   // it. |SetCaretPos()| doesn't scroll the text, so doing that first wouldn't
   // accomplish anything.
+  bool had_focus = has_focus();
+  std::cout << "start " << start << " length " << permanent_text_.length()
+    << " focus " << had_focus << "\n";
   view_->SetWindowTextAndCaretPos(permanent_text_, 0, false, true);
-  view_->SetCaretPos(std::min(permanent_text_.length(), start));
+//  view_->SetCaretPos(std::min(permanent_text_.length(), start));
+  view_->SetCaretPos(had_focus ? permanent_text_.length() : 0);
   client_->OnRevert();
 }
 
