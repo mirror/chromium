@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "119fa4b4_50c95b9c",
+        "filename": "third_party/libvpx/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-06-22T01:26:40Z",
+      "side": 1,
+      "message": "do you want this exclusively for x86[_64]? maybe add current_cpu \u003d\u003d \"x64\" (or x32?) if you don\u0027t want it for all the arm builds too",
+      "revId": "128b6afdaad8c106c59cf73d42d134a30bd3120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
