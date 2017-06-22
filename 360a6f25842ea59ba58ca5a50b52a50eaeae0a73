@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60a2fbc5_5e21b82c",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-22T00:52:08Z",
+      "side": 1,
+      "message": "nit: For error messages, my preference is to add a sentence about how to fix the error e.g. \"Please check that there\u0027s an entry for \u003cname\u003e in CSSProperties.json5 or ComputedStyleExtraFields.json5\".",
+      "revId": "360a6f25842ea59ba58ca5a50b52a50eaeae0a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
