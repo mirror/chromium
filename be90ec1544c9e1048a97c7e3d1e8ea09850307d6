@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca48179_2e368d5d",
+        "filename": "components/offline_pages/core/background/save_page_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T20:10:38Z",
+      "side": 1,
+      "message": "nit: use a delegated constructor to reduce copypasta",
+      "revId": "be90ec1544c9e1048a97c7e3d1e8ea09850307d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
