@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1843a57a_817aae19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-06-22T13:59:59Z",
+      "side": 1,
+      "message": "It\u0027s ok to make this a public boolean and omit the getter. We do that for the simplest fields in this class, which is more like a struct.",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "e96f51c0247fcc12cc365e100669bb917f3a5e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e9123c3_bb5369ff",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 10
