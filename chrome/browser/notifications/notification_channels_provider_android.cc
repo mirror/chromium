@@ -229,8 +229,6 @@ void NotificationChannelsProviderAndroid::CreateChannelIfRequired(
         origin_string,
         new_channel_status == NotificationChannelStatus::ENABLED);
   } else {
-    // TODO(awdf): Maybe remove this DCHECK - channel status could change any
-    // time so this may be vulnerable to a race condition.
     DCHECK(old_channel_status == new_channel_status);
   }
 }
