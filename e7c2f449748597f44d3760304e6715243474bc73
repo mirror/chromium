@@ -46,6 +46,30 @@
       "revId": "e7c2f449748597f44d3760304e6715243474bc73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a680847_f2991e40",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T09:02:04Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a way to get strong isolation. But I think organizing things togetherby file might make it easier for readers to figure what is public and what is private, rather than relying on inline comments.",
+      "parentUuid": "908e4e3f_4c396436",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "e7c2f449748597f44d3760304e6715243474bc73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
