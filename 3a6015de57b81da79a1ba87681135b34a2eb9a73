@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d9198a_6dad8d4c",
+        "filename": "net/log/crash_resistant_net_log_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-06-22T14:03:42Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3a6015de57b81da79a1ba87681135b34a2eb9a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715ac500_13bdce46",
+        "filename": "net/log/crash_resistant_net_log_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-06-22T14:03:42Z",
+      "side": 1,
+      "message": "s/2013/2017/",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3a6015de57b81da79a1ba87681135b34a2eb9a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
