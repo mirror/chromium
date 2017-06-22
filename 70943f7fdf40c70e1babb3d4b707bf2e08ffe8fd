@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "b6e75a41_0f185c7d",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-22T09:46:46Z",
+      "side": 1,
+      "message": "Hm. So, this leak reproduces nicely; but it also reproduces if I disable the work stealing, or on master without my patch being in it. So I\u0027m back to pleading \u0027not guilty\u0027.\n\nI think this is an instance of this bug: crbug.com/726218",
+      "parentUuid": "fcec6f9f_c6fc914c",
+      "revId": "70943f7fdf40c70e1babb3d4b707bf2e08ffe8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40a8005c_a98ee5bc",
         "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
         "patchSetId": 11
