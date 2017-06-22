@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7d370a3_6ae6d9b7",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationEnvironment.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-22T06:25:17Z",
+      "side": 1,
+      "message": "Interesting! I like this style, we should do this more often.",
+      "revId": "e74f0201a598db38d9c8e2682e9cd7c73b9b72e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d11a2e9_faa6e541",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-22T06:25:17Z",
+      "side": 1,
+      "message": "Is it okay to call ApplyAnimatedCustomProperty if the property is not pending?",
+      "revId": "e74f0201a598db38d9c8e2682e9cd7c73b9b72e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
