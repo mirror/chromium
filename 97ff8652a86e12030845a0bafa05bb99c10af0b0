@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "02ad34a6_a0c15c6d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4053,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-22T19:12:04Z",
+      "side": 1,
+      "message": "Thanks for the explanation.",
+      "parentUuid": "3105f508_72ce4e3a",
+      "range": {
+        "startLine": 4053,
+        "startChar": 13,
+        "endLine": 4053,
+        "endChar": 28
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d1b9784_448bc406",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "3d6d1556_18cbf908",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25573,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-22T19:12:04Z",
+      "side": 1,
+      "message": "So you want to add:\nCleared only when switching to dev mode or on factory reset.",
+      "parentUuid": "8c3501f4_83e6b5d4",
+      "range": {
+        "startLine": 25573,
+        "startChar": 44,
+        "endLine": 25573,
+        "endChar": 53
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7aef9a59_29dda4d0",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -258,6 +306,54 @@
       "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ecbcaa_be372588",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25575,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-22T19:12:04Z",
+      "side": 1,
+      "message": "Please then add the word successful to the description.\nditto below",
+      "parentUuid": "4bea4f9f_e400e750",
+      "range": {
+        "startLine": 25575,
+        "startChar": 31,
+        "endLine": 25575,
+        "endChar": 36
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43aac5eb_f8621726",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25575,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-22T19:12:04Z",
+      "side": 1,
+      "message": "Oh, okay, that makes sense.",
+      "parentUuid": "dc368d9e_4ae61f3e",
+      "range": {
+        "startLine": 25575,
+        "startChar": 24,
+        "endLine": 25575,
+        "endChar": 30
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
