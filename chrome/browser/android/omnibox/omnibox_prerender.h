@@ -9,9 +9,12 @@
 
 #include "base/android/jni_weak_ref.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "content/public/browser/service_worker_context.h"
 
 class Profile;
+class GURL;
 struct AutocompleteMatch;
 
 namespace content {
@@ -63,7 +66,16 @@ class OmniboxPrerender {
   void DoPrerender(const AutocompleteMatch& match,
                    Profile* profile,
                    content::WebContents* web_contents);
+  void StartServiceWorkerForURL(Profile* profile,
+                                const GURL& url,
+                                content::WebContents* web_contents);
+  void OnServiceWorkerCallback(
+      content::StartServiceWorkerForNavigationHintResult);
+
+  bool is_starting_service_worker_ = false;
+
   JavaObjectWeakGlobalRef weak_java_omnibox_;
+  base::WeakPtrFactory<OmniboxPrerender> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(OmniboxPrerender);
 };

@@ -163,6 +163,9 @@ const base::Feature kMojoBlobs("MojoBlobs", base::FEATURE_DISABLED_BY_DEFAULT);
 const base::Feature kMojoInputMessages("MojoInputMessages",
                                        base::FEATURE_DISABLED_BY_DEFAULT);
 
+const base::Feature kSpeculativeServiceWorkerStart{
+    "SpeculativeServiceWorkerStart", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Experimental resource fetch optimizations for workers. See crbug.com/443374
 const base::Feature kOffMainThreadFetch{"OffMainThreadFetch",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
