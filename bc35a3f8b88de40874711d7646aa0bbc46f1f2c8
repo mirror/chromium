@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ef3466_1258bec4",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "so this wont trace this function, but also seems to not trace anythign inside this function. is this intended? Did you ever figure out root cause of issue with the md5sum(?) function with tracing.",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74532bb7_c712355b",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f602466_58642856",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "Add documentation :P",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced2fafe_e3c25404",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "nit: I think* (unsure tbh) that this docstring should by under __init__",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734e6bbd_8025891f",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "I like this. Very nice and clean imo",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebbe252_1a4e6329",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "you probably want to avoid calling re.compile every time traceFunction is called.\n\nHave the compilation done in _generateTraceFunction but outside traceFunction.",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c20953_66fe904a",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "so, I doubt there are too many modules, and this function gets run __a lot__. And the number of modules is not too many.\n\nI wonder if it would speed things up to create a dict included[\u0027name\u0027] \u003d True|False.\nCheck the dict at beginning of the function, if there is no exact match in it, then do thru all of this.",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b99f05e_ac0bb59f",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "nit: _generate_trace_function()",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc3096e_6bb66391",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "I think the style is |co_varnames|,  |some_var_in_code|\n\nalso nit: s/co_varnames,/co_varnames",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527276cb_1dab4ae6",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "I think style is for functions that arent part of a class..\n\ndef no_tracing()\n\ndef start_instrumenting()\n\ndef stop_instrumenting()",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebed1885_7f2dc3fd",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "nit: add docstring",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031a1f5a_73451f5b",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-22T22:35:19Z",
+      "side": 1,
+      "message": "should this be inside try?",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
