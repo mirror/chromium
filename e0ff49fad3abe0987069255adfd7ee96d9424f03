@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e582e601_77bcc165",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T16:32:09Z",
+      "side": 1,
+      "message": "This is the case we discussed yesterday with the pending RenderFrameHost.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996f5efd_074d3003",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T16:32:09Z",
+      "side": 1,
+      "message": "Maybe I\u0027ll try this in a future patch. I put the new parameters at the end, since callers outside content/renderer generally don\u0027t actually care about them...",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 15
+      },
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

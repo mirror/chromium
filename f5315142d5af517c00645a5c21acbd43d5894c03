@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1726375f_4908cd11",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T16:32:09Z",
+      "side": 1,
+      "message": "We can\u0027t pass WebString in FrameReplicationState either. Meh. We could add another parameter, but it\u0027d look weird...",
+      "range": {
+        "startLine": 997,
+        "startChar": 0,
+        "endLine": 998,
+        "endChar": 21
+      },
+      "revId": "f5315142d5af517c00645a5c21acbd43d5894c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

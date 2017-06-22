@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da7af2d_58bd83f1",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T16:32:09Z",
+      "side": 0,
+      "message": "I changed this to be an argument to CreateMainFrame(), so Blink uniformly sets this during frame creation now. This gets rid of the need to coordinate between CreateWindow.cpp and here.",
+      "range": {
+        "startLine": 652,
+        "startChar": 0,
+        "endLine": 659,
+        "endChar": 3
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb356dd_88a0218b",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T16:32:09Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 678,
+        "startChar": 0,
+        "endLine": 685,
+        "endChar": 0
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7aacd4_384bef2b",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T16:32:09Z",
+      "side": 0,
+      "message": "Blink won\u0027t plumb up _blank anymore. Things like _BLANK probably had minor issues: Blink does a case-insensitive compare, while content didn\u0027t...\n\nI /think/ this shouldn\u0027t be web-visible, as we force an empty unique name for the main frame anyway... and Blink internally treats _blank fairly consistently.",
+      "range": {
+        "startLine": 1379,
+        "startChar": 2,
+        "endLine": 1379,
+        "endChar": 29
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9957e707_248acce6",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T16:32:09Z",
+      "side": 0,
+      "message": "This argument isn\u0027t interesting for callers of WebRemoteFrame::Create(): this is creating a frame to be swapped in (rather than replicated) and will always take the opener from the frame being replaced.",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
