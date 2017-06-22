@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4d3f462_e34c0ed9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-22T17:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad26a05_eae11b4c",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d302ed06_5256ceaa",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 3
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a77c3f57_81ca30ef",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-22T17:17:10Z",
+      "side": 1,
+      "message": "Thanks Morten and Stefan! Yes, I have changed the code to bail earlier for collapsed rows, but I found row spans are being affected incorrectly so I\u0027m working on that now. Also, David and I are working on the intent to implement :)",
+      "parentUuid": "08444582_90c318a8",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0024a11c_2959d52e",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 3
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7fcf61c1_27a82c4d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-22T17:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0024a11c_2959d52e",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "414cfc59_a6d09259",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
         "patchSetId": 3
@@ -85,6 +139,24 @@
       "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02310603_11c85b96",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-22T17:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "414cfc59_a6d09259",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
