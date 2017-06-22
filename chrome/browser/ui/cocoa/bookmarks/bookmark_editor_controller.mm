@@ -88,6 +88,11 @@ using bookmarks::BookmarkNode;
   [[self window] endEditingFor:urlField_];
   [[self window] endEditingFor:nameTextField_];
 
+  // Change the behavior to prevent the field editors from receiving further
+  // Tab/Return key cues.
+  [nameFieldEditor_ setFieldEditor:NO];
+  [urlFieldEditor_ setFieldEditor:NO];
+
   [super windowWillClose:notification];
 }
 
