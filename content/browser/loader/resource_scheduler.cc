@@ -17,7 +17,9 @@
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/optional.h"
 #include "base/stl_util.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/supports_user_data.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
@@ -28,6 +30,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_server_properties.h"
+#include "net/nqe/network_quality_estimator.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "url/scheme_host_port.h"
@@ -52,6 +55,13 @@ const base::Feature kNetworkSchedulerYielding{
     "NetworkSchedulerYielding", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kMaxRequestsBeforeYieldingParam[] = "MaxRequestsBeforeYieldingParam";
 const int kMaxRequestsBeforeYieldingDefault = 5;
+
+// When the effective connection type is detected to be lower than or equal to
+// the parameter provided in the experiment configuration and greater than
+// |EFFECTIVE_CONNECTION_TYPE_OFFLINE|, this feature will override the value of
+// the maximum number of delayable requests allowed in flight.
+const base::Feature kMaxDelayableRequestsNetworkOverride{
+    "MaxDelayableRequestsNetworkOverride", base::FEATURE_DISABLED_BY_DEFAULT};
 
 enum StartMode {
   START_SYNC,
@@ -385,9 +395,14 @@ void ResourceScheduler::RequestQueue::Insert(
 // Each client represents a tab.
 class ResourceScheduler::Client {
  public:
-  Client(bool priority_requests_delayable,
-         bool yielding_scheduler_enabled,
-         int max_requests_before_yielding)
+  Client(
+      bool priority_requests_delayable,
+      bool yielding_scheduler_enabled,
+      int max_requests_before_yielding,
+      bool max_delayable_requests_network_override,
+      const BDPRangeRequestCounts* const max_delayable_requests_by_bdp_ranges,
+      const net::EffectiveConnectionType
+          max_delayable_requests_network_override_max_ect)
       : is_loaded_(false),
         has_html_body_(false),
         using_spdy_proxy_(false),
@@ -399,13 +414,55 @@ class ResourceScheduler::Client {
         did_scheduler_yield_(false),
         yielding_scheduler_enabled_(yielding_scheduler_enabled),
         max_requests_before_yielding_(max_requests_before_yielding),
+        max_delayable_requests_network_override_(
+            max_delayable_requests_network_override),
+        max_delayable_requests_by_bdp_ranges_(
+            max_delayable_requests_by_bdp_ranges),
+        max_delayable_requests_network_override_max_ect_(
+            max_delayable_requests_network_override_max_ect),
         weak_ptr_factory_(this) {}
 
   ~Client() {}
 
+  size_t ComputeMaxDelayableRequestsNetworkOverride(
+      const net::URLRequest* url_request) const {
+    // Based on the observed BDP, the maximum delayable requests allowed
+    // in-flight must be chosen based on the experiment parameters.
+    size_t max_delayable_requests_per_client =
+        kMaxNumDelayableRequestsPerClient;
+
+    // Calculate the bandwidth delay product from the thoughput and RTT
+    // estimates.
+    const net::NetworkQualityEstimator* network_quality_estimator =
+        url_request->context()->network_quality_estimator();
+
+    if (network_quality_estimator &&
+        network_quality_estimator->GetEffectiveConnectionType() <=
+            max_delayable_requests_network_override_max_ect_ &&
+        network_quality_estimator->GetEffectiveConnectionType() >
+            net::EFFECTIVE_CONNECTION_TYPE_OFFLINE) {
+      base::Optional<base::TimeDelta> rtt =
+          network_quality_estimator->GetTransportRTT();
+      base::Optional<int32_t> downstream_throughput =
+          network_quality_estimator->GetDownstreamThroughputKbps();
+
+      if (rtt.has_value() && downstream_throughput.has_value()) {
+        // BDP values are in bits.
+        max_delayable_requests_per_client = GetNumberOfDelayableRequestsForBDP(
+            rtt.value().InMilliseconds() * downstream_throughput.value());
+      }
+    }
+    return max_delayable_requests_per_client;
+  }
+
   void ScheduleRequest(net::URLRequest* url_request,
                        ScheduledResourceRequest* request) {
     SetRequestAttributes(request, DetermineRequestAttributes(request));
+    if (max_delayable_requests_network_override_ &&
+        !max_delayable_requests_overridden_count_.has_value()) {
+      max_delayable_requests_overridden_count_ =
+          ComputeMaxDelayableRequestsNetworkOverride(url_request);
+    }
     ShouldStartReqResult should_start = ShouldStartRequest(request);
     if (should_start == START_REQUEST) {
       // New requests can be started synchronously without issue.
@@ -465,6 +522,7 @@ class ResourceScheduler::Client {
   void OnNavigate() {
     has_html_body_ = false;
     is_loaded_ = false;
+    max_delayable_requests_overridden_count_.reset();
   }
 
   void OnWillInsertBody() {
@@ -678,6 +736,16 @@ class ResourceScheduler::Client {
     return false;
   }
 
+  int GetNumberOfDelayableRequestsForBDP(int64_t bdp) const {
+    for (auto& range : *max_delayable_requests_by_bdp_ranges_) {
+      if (range.bdp_lower_bound_bits <= bdp &&
+          range.bdp_upper_bound_bits >= bdp) {
+        return range.request_count;
+      }
+    }
+    return kMaxNumDelayableRequestsPerClient;
+  }
+
   void StartRequest(ScheduledResourceRequest* request,
                     StartMode start_mode,
                     RequestStartTrigger trigger) {
@@ -773,8 +841,19 @@ class ResourceScheduler::Client {
     if (!RequestAttributesAreSet(request->attributes(), kAttributeDelayable))
       return ShouldStartOrYieldRequest();
 
-    if (in_flight_delayable_count_ >= kMaxNumDelayableRequestsPerClient)
-      return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
+    // Delayable requests.
+    if (max_delayable_requests_network_override_) {
+      DCHECK(max_delayable_requests_overridden_count_.has_value());
+      if (in_flight_delayable_count_ >=
+          max_delayable_requests_overridden_count_.value_or(
+              kMaxNumDelayableRequestsPerClient))
+        return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
+    } else {
+      // Limit the maximum number of delayable requests allowed per client to
+      // |kMaxNumDelayableRequestsPerClient|.
+      if (in_flight_delayable_count_ >= kMaxNumDelayableRequestsPerClient)
+        return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
+    }
 
     if (ShouldKeepSearching(host_port_pair)) {
       // There may be other requests for other hosts that may be allowed,
@@ -930,6 +1009,23 @@ class ResourceScheduler::Client {
   // The number of requests that can start before yielding.
   int max_requests_before_yielding_;
 
+  // Whether or not the maximum number of delayable requests should be
+  // overridden for the specified BDP ranges.
+  const bool max_delayable_requests_network_override_;
+
+  // A vector of BDP ranges and the number of delayable requests in-flight for
+  // each range.
+  const BDPRangeRequestCounts* const max_delayable_requests_by_bdp_ranges_;
+
+  // The set of effective connection types for which the experiment should be
+  // run.
+  const net::EffectiveConnectionType
+      max_delayable_requests_network_override_max_ect_;
+
+  // The cached value of the maximum number of delayable requests in flight.
+  // This gets reset every time an |OnNavigate| event is triggerred.
+  base::Optional<size_t> max_delayable_requests_overridden_count_;
+
   base::WeakPtrFactory<ResourceScheduler::Client> weak_ptr_factory_;
 };
 
@@ -941,7 +1037,13 @@ ResourceScheduler::ResourceScheduler()
       max_requests_before_yielding_(base::GetFieldTrialParamByFeatureAsInt(
           kNetworkSchedulerYielding,
           kMaxRequestsBeforeYieldingParam,
-          kMaxRequestsBeforeYieldingDefault)) {}
+          kMaxRequestsBeforeYieldingDefault)),
+      max_delayable_requests_network_override_(
+          base::FeatureList::IsEnabled(kMaxDelayableRequestsNetworkOverride)),
+      max_delayable_requests_by_bdp_ranges_(
+          GetMaxDelayableRequestsExperimentConfig()),
+      max_delayable_requests_network_override_max_ect_(
+          GetMaxDelayableRequestsExperimentMaxECT()) {}
 
 ResourceScheduler::~ResourceScheduler() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -999,9 +1101,11 @@ void ResourceScheduler::OnClientCreated(int child_id,
   ClientId client_id = MakeClientId(child_id, route_id);
   DCHECK(!base::ContainsKey(client_map_, client_id));
 
-  Client* client =
-      new Client(priority_requests_delayable_, yielding_scheduler_enabled_,
-                 max_requests_before_yielding_);
+  Client* client = new Client(
+      priority_requests_delayable_, yielding_scheduler_enabled_,
+      max_requests_before_yielding_, max_delayable_requests_network_override_,
+      &max_delayable_requests_by_bdp_ranges_,
+      max_delayable_requests_network_override_max_ect_);
   client_map_[client_id] = client;
 }
 
@@ -1148,6 +1252,83 @@ void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
 ResourceScheduler::ClientId ResourceScheduler::MakeClientId(
     int child_id, int route_id) {
   return (static_cast<ResourceScheduler::ClientId>(child_id) << 32) | route_id;
+}
+
+// Reads experiment parameters and creates a vector with pairs of BDP range and
+// the number of delayable requests. It looks for configuration parameters with
+// sequential numeric suffixes, and stops looking after the first failure to
+// find an experimetal parameter. The BDP values are specified in Bits. Sample
+// configuration is given below:
+// "BDPLowerBoundBits1" = "100000";
+// "BDPUpperBoundBits1" = "150000";
+// "MaxDelayableRequests1" = "2"
+// "BDPLowerBoundBits2" = "150000";
+// "BDPUpperBoundBits2" = "200000";
+// "MaxDelayableRequests2" = "4"
+ResourceScheduler::BDPRangeRequestCounts
+ResourceScheduler::GetMaxDelayableRequestsExperimentConfig() const {
+  static const char kBDPLowerBoundBase[] = "BDPLowerBoundBits";
+  static const char kBDPUpperBoundBase[] = "BDPUpperBoundBits";
+  static const char kMaxDelayableRequestsBase[] = "MaxDelayableRequests";
+
+  BDPRangeRequestCounts result;
+  int config_param_index = 1;
+
+  if (!base::FeatureList::IsEnabled(kMaxDelayableRequestsNetworkOverride)) {
+    return result;
+  }
+
+  while (true) {
+    int64_t lower_bound_value, upper_bound_value;
+    size_t max_delayable_requests;
+
+    if (!base::StringToInt64(
+            base::GetFieldTrialParamValueByFeature(
+                kMaxDelayableRequestsNetworkOverride,
+                kBDPLowerBoundBase + base::IntToString(config_param_index)),
+            &lower_bound_value)) {
+      return result;
+    }
+    if (!base::StringToInt64(
+            base::GetFieldTrialParamValueByFeature(
+                kMaxDelayableRequestsNetworkOverride,
+                kBDPUpperBoundBase + base::IntToString(config_param_index)),
+            &upper_bound_value)) {
+      return result;
+    }
+    if (!base::StringToSizeT(base::GetFieldTrialParamValueByFeature(
+                                 kMaxDelayableRequestsNetworkOverride,
+                                 kMaxDelayableRequestsBase +
+                                     base::IntToString(config_param_index)),
+                             &max_delayable_requests)) {
+      return result;
+    }
+
+    result.push_back(BDPRangeRequestCountEntry(
+        {lower_bound_value, upper_bound_value, max_delayable_requests}));
+    config_param_index++;
+  }
+}
+
+// Reads the experiment parameters to determine the maximum effective connection
+// type for which the experiment should be run.
+net::EffectiveConnectionType
+ResourceScheduler::GetMaxDelayableRequestsExperimentMaxECT() const {
+  static const char kMaxConnectionType[] = "MaxEffectiveConnectionType";
+
+  if (!base::FeatureList::IsEnabled(kMaxDelayableRequestsNetworkOverride)) {
+    return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
+  }
+
+  net::EffectiveConnectionType ect;
+  if (!net::GetEffectiveConnectionTypeForName(
+          base::GetFieldTrialParamValueByFeature(
+              kMaxDelayableRequestsNetworkOverride, kMaxConnectionType),
+          &ect)) {
+    return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
+  }
+
+  return ect;
 }
 
 }  // namespace content
