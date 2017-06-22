@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb2f738b_64516ae5",
+        "filename": "media/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-22T17:26:13Z",
+      "side": 1,
+      "message": "Does this include \"remoting\"? Maybe we should add an entry for \"remoting\"?",
+      "revId": "06bb0ae221f01532cfb44bb12fe57a134e73b913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf08505_8ac2ac7a",
+        "filename": "media/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-22T17:26:13Z",
+      "side": 1,
+      "message": "\"Playback\" is a bit ambiguous. How about \"HTML media elements and extensions\" and add a links to:\n\nhttps://www.w3.org/TR/2011/WD-html5-20110113/video.html\nMSE spec\nEME spec",
+      "revId": "06bb0ae221f01532cfb44bb12fe57a134e73b913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6451dd33_612f4d4c",
+        "filename": "media/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-22T17:26:13Z",
+      "side": 1,
+      "message": "We should add a \"mojo\" entry. But feel free to just add a placeholder with a TODO for me. Or I can add it in a later CL.",
+      "revId": "06bb0ae221f01532cfb44bb12fe57a134e73b913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
