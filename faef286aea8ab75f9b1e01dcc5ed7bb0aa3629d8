@@ -180,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "5c435f1e_2e98e9d9",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T17:14:14Z",
+      "side": 1,
+      "message": "okay, LOGIN_SHUT_DOWN_BUTTON seems okay to me.",
+      "parentUuid": "c72e2ad9_f3d0e095",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d4fe017_c39371c2",
         "filename": "ash/shutdown_reason.h",
         "patchSetId": 1
@@ -535,6 +559,24 @@
       "side": 1,
       "message": "Ah, that explains it. I do think it will be less confusing if there is a separate method for the StartLockAnimation(true) behavior rather than using that boolean; maybe `StartLockThenShutdownAnimation`.",
       "parentUuid": "c629e045_d467b713",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8b65a1_e6922469",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T17:14:14Z",
+      "side": 1,
+      "message": "sure, sounds fine to me. another option would be adding an enum describing the desired behavior and passing that instead of a bool.",
+      "parentUuid": "7720644a_d1449c1b",
       "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
