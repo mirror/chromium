@@ -29,14 +29,14 @@ class CORE_EXPORT CSSMatrixComponent final : public CSSTransformComponent {
   }
 
   // Getters and setters for attributes defined in the IDL.
-  DOMMatrix* matrix() const { return matrix_; }
+  DOMMatrix* matrix() { return matrix_.Get(); }
   void setMatrix(DOMMatrix* matrix) { matrix_ = matrix; }
 
   // Internal methods - from CSSTransformComponent.
   TransformComponentType GetType() const override {
     return is2d_ ? kMatrixType : kMatrix3DType;
   }
-  DOMMatrix* AsMatrix() const override { return matrix(); }
+  const DOMMatrix* AsMatrix() const override { return matrix_.Get(); }
   CSSFunctionValue* ToCSSValue() const override;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {

@@ -18,18 +18,18 @@ CSSFunctionValue* CSSMatrixComponent::ToCSSValue() const {
       CSSFunctionValue::Create(is2d_ ? CSSValueMatrix : CSSValueMatrix3d);
 
   if (is2d_) {
-    double values[6] = {matrix()->a(), matrix()->b(), matrix()->c(),
-                        matrix()->d(), matrix()->e(), matrix()->f()};
+    double values[6] = {matrix_->a(), matrix_->b(), matrix_->c(),
+                        matrix_->d(), matrix_->e(), matrix_->f()};
     for (double value : values) {
       result->Append(*CSSPrimitiveValue::Create(
           value, CSSPrimitiveValue::UnitType::kNumber));
     }
   } else {
     double values[16] = {
-        matrix()->m11(), matrix()->m12(), matrix()->m13(), matrix()->m14(),
-        matrix()->m21(), matrix()->m22(), matrix()->m23(), matrix()->m24(),
-        matrix()->m31(), matrix()->m32(), matrix()->m33(), matrix()->m34(),
-        matrix()->m41(), matrix()->m42(), matrix()->m43(), matrix()->m44()};
+        matrix_->m11(), matrix_->m12(), matrix_->m13(), matrix_->m14(),
+        matrix_->m21(), matrix_->m22(), matrix_->m23(), matrix_->m24(),
+        matrix_->m31(), matrix_->m32(), matrix_->m33(), matrix_->m34(),
+        matrix_->m41(), matrix_->m42(), matrix_->m43(), matrix_->m44()};
     for (double value : values) {
       result->Append(*CSSPrimitiveValue::Create(
           value, CSSPrimitiveValue::UnitType::kNumber));
