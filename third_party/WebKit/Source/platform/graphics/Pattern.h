@@ -73,12 +73,10 @@ class PLATFORM_EXPORT Pattern : public RefCounted<Pattern> {
 
  protected:
   virtual std::unique_ptr<PaintShader> CreateShader(const SkMatrix&) = 0;
-  virtual bool IsLocalMatrixChanged(const SkMatrix&) const;
 
   RepeatMode repeat_mode_;
 
   Pattern(RepeatMode);
-  mutable std::unique_ptr<PaintShader> cached_shader_;
 };
 
 }  // namespace blink

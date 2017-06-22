@@ -21,7 +21,6 @@ class PLATFORM_EXPORT ImagePattern final : public Pattern {
 
  protected:
   std::unique_ptr<PaintShader> CreateShader(const SkMatrix&) override;
-  bool IsLocalMatrixChanged(const SkMatrix&) const override;
 
  private:
   ImagePattern(PassRefPtr<Image>, RepeatMode);

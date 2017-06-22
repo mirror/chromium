@@ -124,8 +124,6 @@ class PLATFORM_EXPORT Gradient : public RefCounted<Gradient> {
 
   Vector<ColorStop, 2> stops_;
   bool stops_sorted_;
-
-  mutable std::unique_ptr<PaintShader> cached_shader_;
 };
 
 }  // namespace blink
