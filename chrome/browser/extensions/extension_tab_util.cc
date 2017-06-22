@@ -164,7 +164,6 @@ base::DictionaryValue* ExtensionTabUtil::OpenTab(
   WebContents* opener = NULL;
   if (params.opener_tab_id.get()) {
     int opener_id = *params.opener_tab_id;
-
     if (!ExtensionTabUtil::GetTabById(opener_id, profile,
                                       function->include_incognito(), NULL, NULL,
                                       &opener, NULL)) {
