@@ -17,9 +17,7 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "components/ukm/test_ukm_recorder.h"
 #include "components/ukm/ukm_source.h"
-//#include "content/common/frame_messages.h"
-//#include "content/common/navigation_gesture.h"
-//#include "content/test/test_render_frame_host.h"
+#include "content/public/test/navigation_simulator.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/ip_address.h"
 #include "ui/base/page_transition_types.h"
@@ -100,28 +98,12 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
   void SimulateNavigateAndCommit(const internal::PageAddressInfo& page) {
     GURL url(page.url);
     net::HostPortPair socket_address(page.host_ip, page.port);
-    content::TestRenderFrameHost* rfh_tester =
-        static_cast<content::TestRenderFrameHost*>(
-            content::RenderFrameHostTester::For(main_rfh()));
 
-    rfh_tester->SimulateNavigationStart(url);
-
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.url = url;
-    params.origin = url::Origin(url);
-    params.transition = ui::PAGE_TRANSITION_LINK;
-    params.should_update_history = false;
-    params.did_create_new_entry = false;
-    params.gesture = content::NavigationGesture::NavigationGestureUser;
-    params.contents_mime_type = "text/html";
-    params.method = "GET";
-    params.http_status_code = 200;
-    params.socket_address = socket_address;
-    params.original_request_url = url;
-    params.page_state = content::PageState::CreateFromURL(url);
-
-    rfh_tester->SendNavigateWithParams(&params);
+    navigation_simulator_ =
+        content::NavigationSimulator::CreateRendererInitiated(url, main_rfh());
+    navigation_simulator_->Start();
+    navigation_simulator_->SetSocketAddress(socket_address);
+    navigation_simulator_->Commit();
   }
 
   void SimulateLoadedSuccessfulResource(
@@ -291,6 +273,7 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
 
  private:
   ukm::TestUkmRecorder test_ukm_recorder_;
+  std::unique_ptr<content::NavigationSimulator> navigation_simulator_;
 };
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, NoMetrics) {
@@ -879,11 +862,11 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, PrivatePageSubnet172) {
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, PrivatePageFailedLoad) {
   GURL url(internal::kPrivatePage.url);
-  content::TestRenderFrameHost* rfh_tester =
-      static_cast<content::TestRenderFrameHost*>(
-          content::RenderFrameHostTester::For(main_rfh()));
-  rfh_tester->SimulateNavigationStart(url);
-  rfh_tester->SimulateNavigationError(url, -20);
+  auto navigation_simulator =
+      content::NavigationSimulator::CreateRendererInitiated(url, main_rfh());
+  navigation_simulator->Start();
+  navigation_simulator->Fail(-20);
+  navigation_simulator->CommitErrorPage();
 
   // Nothing should have been generated.
   EXPECT_EQ(0ul, ukm_source_count());
