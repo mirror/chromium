@@ -54,6 +54,7 @@
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeProxy.h"
+#include "modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h"
 #include "modules/serviceworkers/ServiceWorkerThread.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -83,10 +84,13 @@ namespace blink {
 template class MODULES_EXPORT WorkerClientsInitializer<WebEmbeddedWorkerImpl>;
 
 WebEmbeddedWorker* WebEmbeddedWorker::Create(
-    WebServiceWorkerContextClient* client,
-    WebContentSettingsClient* content_settings_client) {
-  return new WebEmbeddedWorkerImpl(WTF::WrapUnique(client),
-                                   WTF::WrapUnique(content_settings_client));
+    std::unique_ptr<WebServiceWorkerContextClient> client,
+    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
+    std::unique_ptr<WebContentSettingsClient> content_settings_client) {
+  return new WebEmbeddedWorkerImpl(std::move(client),
+                                   std::move(installed_scripts_manager),
+                                   std::move(content_settings_client));
 }
 
 static HashSet<WebEmbeddedWorkerImpl*>& RunningWorkerInstances() {
@@ -96,8 +100,13 @@ static HashSet<WebEmbeddedWorkerImpl*>& RunningWorkerInstances() {
 
 WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
     std::unique_ptr<WebServiceWorkerContextClient> client,
+    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
     std::unique_ptr<WebContentSettingsClient> content_settings_client)
     : worker_context_client_(std::move(client)),
+      installed_scripts_manager_(
+          WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>(
+              std::move(installed_scripts_manager))),
       content_settings_client_(std::move(content_settings_client)),
       worker_inspector_proxy_(WorkerInspectorProxy::Create()),
       web_view_(nullptr),
@@ -329,6 +338,12 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
   loading_shadow_page_ = false;
   main_frame_->DataSource()->SetServiceWorkerNetworkProvider(
       worker_context_client_->CreateServiceWorkerNetworkProvider());
+
+  if (installed_scripts_manager_) {
+    StartWorkerThread();
+    return;
+  }
+
   main_script_loader_ = WorkerScriptLoader::Create();
   main_script_loader_->SetRequestContext(
       WebURLRequest::kRequestContextServiceWorker);
@@ -430,42 +445,66 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
                                       std::move(web_worker_fetch_context));
   }
 
-  // We need to set the CSP to both the shadow page's document and the
-  // ServiceWorkerGlobalScope.
-  document->InitContentSecurityPolicy(
-      main_script_loader_->ReleaseContentSecurityPolicy());
-  if (!main_script_loader_->GetReferrerPolicy().IsNull()) {
-    document->ParseAndSetReferrerPolicy(
-        main_script_loader_->GetReferrerPolicy());
+  std::unique_ptr<WorkerThreadStartupData> startup_data;
+
+  // |main_script_loader_| isn't created if script streaming is used.
+  if (main_script_loader_) {
+    LOG(ERROR) << __PRETTY_FUNCTION__ << " main_script_loader";
+    // We need to set the CSP to both the shadow page's document and the
+    // ServiceWorkerGlobalScope.
+    document->InitContentSecurityPolicy(
+        main_script_loader_->ReleaseContentSecurityPolicy());
+    if (!main_script_loader_->GetReferrerPolicy().IsNull()) {
+      document->ParseAndSetReferrerPolicy(
+          main_script_loader_->GetReferrerPolicy());
+    }
+
+    KURL script_url = main_script_loader_->Url();
+    WorkerThreadStartMode start_mode =
+        worker_inspector_proxy_->WorkerStartMode(document);
+    std::unique_ptr<WorkerSettings> worker_settings =
+        WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
+
+    WorkerV8Settings worker_v8_settings = WorkerV8Settings::Default();
+    worker_v8_settings.v8_cache_options_ =
+        static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options);
+
+    startup_data = WorkerThreadStartupData::Create(
+        script_url, worker_start_data_.user_agent,
+        main_script_loader_->SourceText(),
+        main_script_loader_->ReleaseCachedMetadata(), start_mode,
+        document->GetContentSecurityPolicy()->Headers().get(),
+        main_script_loader_->GetReferrerPolicy(), starter_origin,
+        worker_clients, main_script_loader_->ResponseAddressSpace(),
+        main_script_loader_->OriginTrialTokens(), std::move(worker_settings),
+        worker_v8_settings);
+
+    main_script_loader_.Clear();
+  } else {
+    // main_script_loader_->GetReferrerPolicy()
+    // main_script_loader_->ResponseAddressSpace()
+    // main_script_loader_->
+    WorkerThreadStartMode start_mode =
+        worker_inspector_proxy_->WorkerStartMode(document);
+    std::unique_ptr<WorkerSettings> worker_settings =
+        WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
+    WorkerV8Settings worker_v8_settings = WorkerV8Settings::Default();
+    worker_v8_settings.v8_cache_options_ =
+        static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options);
+
+    LOG(ERROR) << __PRETTY_FUNCTION__ << " no main_script_loader";
+    startup_data = WorkerThreadStartupData::Create(
+        worker_start_data_.script_url, worker_start_data_.user_agent, "",
+        nullptr, start_mode, nullptr, "", starter_origin, worker_clients,
+        blink::WebAddressSpace::kWebAddressSpaceLocal, nullptr,
+        std::move(worker_settings), worker_v8_settings);
   }
-
-  KURL script_url = main_script_loader_->Url();
-  WorkerThreadStartMode start_mode =
-      worker_inspector_proxy_->WorkerStartMode(document);
-  std::unique_ptr<WorkerSettings> worker_settings =
-      WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
-
-  WorkerV8Settings worker_v8_settings = WorkerV8Settings::Default();
-  worker_v8_settings.v8_cache_options_ =
-      static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options);
-
-  std::unique_ptr<WorkerThreadStartupData> startup_data =
-      WorkerThreadStartupData::Create(
-          script_url, worker_start_data_.user_agent,
-          main_script_loader_->SourceText(),
-          main_script_loader_->ReleaseCachedMetadata(), start_mode,
-          document->GetContentSecurityPolicy()->Headers().get(),
-          main_script_loader_->GetReferrerPolicy(), starter_origin,
-          worker_clients, main_script_loader_->ResponseAddressSpace(),
-          main_script_loader_->OriginTrialTokens(), std::move(worker_settings),
-          worker_v8_settings);
-
-  main_script_loader_.Clear();
 
   worker_global_scope_proxy_ =
       ServiceWorkerGlobalScopeProxy::Create(*this, *worker_context_client_);
   worker_thread_ = WTF::MakeUnique<ServiceWorkerThread>(
-      ThreadableLoadingContext::Create(*document), *worker_global_scope_proxy_);
+      ThreadableLoadingContext::Create(*document), *worker_global_scope_proxy_,
+      std::move(installed_scripts_manager_));
 
   // We have a dummy document here for loading but it doesn't really represent
   // the document/frame of associated document(s) for this worker. Here we
@@ -475,7 +514,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
                         ParentFrameTaskRunners::Create(nullptr));
 
   worker_inspector_proxy_->WorkerThreadCreated(document, worker_thread_.get(),
-                                               script_url);
+                                               worker_start_data_.script_url);
 }
 
 }  // namespace blink

@@ -443,6 +443,7 @@ EmbeddedWorkerInstance::~EmbeddedWorkerInstance() {
 void EmbeddedWorkerInstance::Start(
     std::unique_ptr<EmbeddedWorkerStartParams> params,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+    mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
     const StatusCallback& callback) {
   restart_count_++;
   if (!context_) {
@@ -472,6 +473,7 @@ void EmbeddedWorkerInstance::Start(
       base::Bind(&CallDetach, base::Unretained(this)));
 
   pending_dispatcher_request_ = std::move(dispatcher_request);
+  pending_installed_scripts_info_ = std::move(installed_scripts_info);
 
   inflight_start_task_.reset(
       new StartTask(this, params->script_url, std::move(request)));
@@ -596,6 +598,7 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
 
   DCHECK(pending_dispatcher_request_.is_pending());
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
+                       std::move(pending_installed_scripts_info_),
                        std::move(host_ptr_info));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   OnStartWorkerMessageSent();

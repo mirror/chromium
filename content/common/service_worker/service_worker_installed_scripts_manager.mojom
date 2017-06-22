@@ -1,0 +1,22 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "url/mojo/url.mojom";
+
+// From the browser to the renderer.
+struct ServiceWorkerInstalledScriptsInfo {
+  ServiceWorkerInstalledScriptsManager& manager_request;
+  array<url.mojom.Url> installed_urls;
+};
+
+interface ServiceWorkerInstalledScriptsManager {
+  TransferInstalledScript(url.mojom.Url script_url,
+                          string encoding,
+                          uint32 body_size,
+                          handle<data_pipe_consumer> body,
+                          uint32 meta_data_size,
+                          handle<data_pipe_consumer> meta_data);
+};
