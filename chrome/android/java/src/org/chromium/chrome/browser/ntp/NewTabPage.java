@@ -40,8 +40,8 @@ import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrlServiceObserver;
+import org.chromium.chrome.browser.suggestions.SuggestionsDependencyFactory;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporter;
-import org.chromium.chrome.browser.suggestions.SuggestionsEventReporterBridge;
 import org.chromium.chrome.browser.suggestions.SuggestionsMetrics;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegateImpl;
@@ -320,8 +320,9 @@ public class NewTabPage
         mTabModelSelector = tabModelSelector;
         Profile profile = mTab.getProfile();
 
-        mSnippetsBridge = new SnippetsBridge(profile);
-        SuggestionsEventReporter eventReporter = new SuggestionsEventReporterBridge();
+        SuggestionsDependencyFactory depsFactory = SuggestionsDependencyFactory.getInstance();
+        mSnippetsBridge = (SnippetsBridge) depsFactory.createSuggestionSource(profile); // TODO: get rid of direct usage of snippets bridge
+        SuggestionsEventReporter eventReporter = depsFactory.createEventReporter();
 
         SuggestionsNavigationDelegateImpl navigationDelegate =
                 new SuggestionsNavigationDelegateImpl(

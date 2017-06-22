@@ -1,0 +1,40 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+package org.chromium.chrome.browser.suggestions;
+
+import org.chromium.base.ThreadUtils;
+import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
+import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
+import org.chromium.chrome.browser.profiles.Profile;
+
+public class SuggestionsDependencyFactory {
+    private static SuggestionsDependencyFactory sInstance;
+
+    public static SuggestionsDependencyFactory getInstance() {
+        ThreadUtils.assertOnUiThread();
+        if (sInstance == null) sInstance = new SuggestionsDependencyFactory();
+        return sInstance;
+    }
+
+    @VisibleForTesting
+    public static void setInstanceForTesting(SuggestionsDependencyFactory testInstance) {
+        if (sInstance != null) throw new IllegalStateException("A real instance already exists.");
+        sInstance = testInstance;
+    }
+
+
+    public SuggestionsSource createSuggestionSource(Profile profile) {
+        return new SnippetsBridge(profile);
+    }
+
+    public SuggestionsEventReporter createEventReporter() {
+        return new SuggestionsEventReporterBridge();
+    }
+
+    public MostVisitedSites createMostVisitedSites(Profile profile) {
+        return new MostVisitedSitesBridge(profile);
+    }
+}
