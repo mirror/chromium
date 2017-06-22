@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f6afd7_6b2e3a4f",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-22T23:40:55Z",
+      "side": 1,
+      "message": "I\u0027m wondering if there\u0027s a better way to handle this than a bunch of mostly identical hooks.",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f7fdc5_f9e97a42",
+        "filename": "build/cipd_wrapper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-22T23:40:55Z",
+      "side": 1,
+      "message": "Where is cipd coming from?",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
