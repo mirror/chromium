@@ -3980,6 +3980,12 @@ void Element::SetSavedLayerScrollOffset(const ScrollOffset& size) {
   EnsureElementRareData().SetSavedLayerScrollOffset(size);
 }
 
+ScrollOffset Element::MaybeUpdateScrollOffsetAfterLayout(
+    const ScrollOffset& offset,
+    const LayoutSize&) {
+  return offset;
+}
+
 Attr* Element::AttrIfExists(const QualifiedName& name) {
   if (AttrNodeList* attr_node_list = this->GetAttrNodeList()) {
     for (const auto& attr : *attr_node_list) {
