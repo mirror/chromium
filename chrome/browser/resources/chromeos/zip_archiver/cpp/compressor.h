@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPRESSOR_H_
-#define COMPRESSOR_H_
+#ifndef CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSOR_H_
+#define CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSOR_H_
 
 #include <ctime>
 #include <pthread.h>
@@ -89,4 +89,4 @@ class Compressor {
   CompressorStream* compressor_stream_;
 };
 
-#endif  /// COMPRESSOR_H_
+#endif  // CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSOR_H_

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef VOLUME_H_
-#define VOLUME_H_
+#ifndef CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_H_
+#define CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_H_
 
 #include <pthread.h>
 
@@ -188,4 +188,4 @@ class Volume {
   std::map<int, std::string> index_to_pathname_;
 };
 
-#endif  /// VOLUME_H_
+#endif  // CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_H_

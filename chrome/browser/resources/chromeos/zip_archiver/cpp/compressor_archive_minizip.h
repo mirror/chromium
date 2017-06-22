@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPRESSOR_ARCHIVE_MINIZIP_H_
-#define COMPRESSOR_ARCHIVE_MINIZIP_H_
+#ifndef CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSOR_ARCHIVE_MINIZIP_H_
+#define CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSOR_ARCHIVE_MINIZIP_H_
 
 #include <string>
 
@@ -90,4 +90,4 @@ class CompressorArchiveMinizip : public CompressorArchive {
   int64_t length_;
 };
 
-#endif  // COMPRESSOR_ARCHIVE_MINIZIP_H_
+#endif  // CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSOR_ARCHIVE_MINIZIP_H_

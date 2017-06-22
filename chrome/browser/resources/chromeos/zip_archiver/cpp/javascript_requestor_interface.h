@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef JAVASCRIPT_REQUESTOR_INTERFACE_H_
-#define JAVASCRIPT_REQUESTOR_INTERFACE_H_
+#ifndef CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_JAVASCRIPT_REQUESTOR_INTERFACE_H_
+#define CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_JAVASCRIPT_REQUESTOR_INTERFACE_H_
 
 #include <string>
 
@@ -23,4 +23,4 @@ class JavaScriptRequestorInterface {
   virtual void RequestPassphrase(const std::string& request_id) = 0;
 };
 
-#endif  // JAVASCRIPT_REQUESTOR_INTERFACE_H_
+#endif  // CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_JAVASCRIPT_REQUESTOR_INTERFACE_H_

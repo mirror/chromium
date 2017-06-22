@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef VOLUME_READER_H_
-#define VOLUME_READER_H_
+#ifndef CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_READER_H_
+#define CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_READER_H_
 
 #include <string>
 
@@ -39,4 +39,4 @@ class VolumeReader {
   virtual int64_t archive_size() = 0;
 };
 
-#endif  // VOLUME_READER_H_
+#endif  // CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_READER_H_

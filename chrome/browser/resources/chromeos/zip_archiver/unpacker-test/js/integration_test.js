@@ -20,7 +20,7 @@ var unloadExtension = function() {
 };
 
 // We need at least two zip files for all the tests to run correctly.
-var zip_list = [
+var zipList = [
   {
     name: 'small_zip.zip',
     afterOnLaunchTests: function() {
@@ -55,7 +55,7 @@ var zip_list = [
 ];
 
 // Init helper.
-var initPromise = tests_helper.init(zip_list);
+var initPromise = tests_helper.init(zipList);
 
 describe('The unpacker', function() {
   var mountProcessCounterBefore;
@@ -294,7 +294,7 @@ describe('The unpacker', function() {
   describe('that unmounts all the volumes', function() {
     beforeEach(function(done) {
       // The number of mounted volumes.
-      var volumeListSize = zip_list.length;
+      var volumeListSize = zipList.length;
       tests_helper.volumesInformation.forEach(function(volumeInformation) {
         var fileSystemId = volumeInformation.fileSystemId;
         tests_helper.initChromeApis();
