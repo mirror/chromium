@@ -51,8 +51,11 @@ class MockPaymentsProfileComparator
 class MockTestPaymentRequest : public TestPaymentRequest {
  public:
   MockTestPaymentRequest(web::PaymentRequest web_payment_request,
-                         autofill::PersonalDataManager* personal_data_manager)
-      : TestPaymentRequest(web_payment_request, personal_data_manager) {}
+                         autofill::PersonalDataManager* personal_data_manager,
+                         id<PaymentRequestUIDelegate> payment_request_delegate)
+      : TestPaymentRequest(web_payment_request,
+                           personal_data_manager,
+                           payment_request_delegate) {}
   MOCK_METHOD1(AddAutofillProfile,
                autofill::AutofillProfile*(const autofill::AutofillProfile&));
 };
@@ -105,7 +108,7 @@ class PaymentRequestAddressEditCoordinatorTest : public PlatformTest {
     personal_data_manager_.SetTestingPrefService(pref_service_.get());
     payment_request_ = base::MakeUnique<MockTestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
 
     profile_comparator_ = base::MakeUnique<MockPaymentsProfileComparator>(
         GetApplicationContext()->GetApplicationLocale(),
@@ -122,6 +125,7 @@ class PaymentRequestAddressEditCoordinatorTest : public PlatformTest {
 
   std::unique_ptr<PrefService> pref_service_;
   MockTestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   autofill::TestRegionDataLoader test_region_data_loader_;
   std::unique_ptr<MockPaymentsProfileComparator> profile_comparator_;
   std::unique_ptr<MockTestPaymentRequest> payment_request_;

@@ -22,13 +22,21 @@ class PaymentRequest;
 class PaymentShippingOption;
 }  // namespace web
 
+// PaymentRequestUIDelegate for use in tests
+@interface TestPaymentRequestUIDelegate : NSObject<PaymentRequestUIDelegate>
+
+@end
+
 // PaymentRequest for use in tests.
 class TestPaymentRequest : public PaymentRequest {
  public:
   // |personal_data_manager| should not be null and should outlive this object.
   TestPaymentRequest(const web::PaymentRequest& web_payment_request,
-                     autofill::PersonalDataManager* personal_data_manager)
-      : PaymentRequest(web_payment_request, personal_data_manager) {}
+                     autofill::PersonalDataManager* personal_data_manager,
+                     id<PaymentRequestUIDelegate> payment_request_delegate)
+      : PaymentRequest(web_payment_request,
+                       personal_data_manager,
+                       payment_request_delegate) {}
 
   ~TestPaymentRequest() override {}
 

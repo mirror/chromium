@@ -13,6 +13,15 @@
 #error "This file requires ARC support."
 #endif
 
+@implementation TestPaymentRequestUIDelegate
+
+- (void)openFullCardRequestUI {
+  // TODO: In the follow-up CL openFullCardRequestUI will be changed.
+  // This test function will also be implemented when that happens.
+}
+
+@end
+
 void TestPaymentRequest::ClearShippingProfiles() {
   shipping_profiles_.clear();
 }
