@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "46f36aec_6a21840e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Since what ResourceRequest() returns is another copied instance and ResourceRequest does not provide the \"\u003d\u003d\" operator, it isn\u0027t easy, IIUC. But copy constructors use C++ default implementation. Does this mean all we have to for comparison is memcmp?",
+      "parentUuid": "c98a358d_3d95d3f9",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33913119_e5ced1c6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 11
@@ -123,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "235ee983_1c99c69b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Now it\u0027s a pure virtual class.",
+      "parentUuid": "544275da_ccf582d8",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14a044f0_aa2ff9a1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 11
@@ -137,6 +173,24 @@
       "revId": "4771dff25276587108eedb2ed83a177877277281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20eee296_8a2d2a2a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14a044f0_aa2ff9a1",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "1c9a27af_3db6ae5f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "The reason why I decided that this option should be specified by caller side, is that caller side has the reason why the request should not be throttled. Scheduler does not need to know caller side specific reasons, e.g. fetch could keep on holding the credit, caller expects synchronous request is handled synchronously.",
+      "parentUuid": "1129099d_ddb5228f",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f39d2b_39e48b03",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 11
@@ -171,6 +243,24 @@
       "revId": "4771dff25276587108eedb2ed83a177877277281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0831e929_513774d3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04f39d2b_39e48b03",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "835bec13_33ce0318",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "changed to be MaybeRun()",
+      "parentUuid": "2d63d876_0e744db3",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c01b82bd_af7368f2",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 11
@@ -205,6 +313,24 @@
       "revId": "4771dff25276587108eedb2ed83a177877277281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc160c5_666ea3d9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "changed to use RequestId.",
+      "parentUuid": "c01b82bd_af7368f2",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "9ab25205_c5aa09cf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "d5a559bb_bdb2e07b",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fffd3ce3_528c530c",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 11
@@ -242,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "ddf1387e_07eb1c45",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fffd3ce3_528c530c",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc039cf_2041de6e",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 11
@@ -253,6 +415,24 @@
       "writtenOn": "2017-06-22T06:15:22Z",
       "side": 1,
       "message": "Should we rather check UseStreamOnResponse()?  (yhirano@- thoughts?)",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425785ef_c3ad80f6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "\"UseStreamOnRequest() can be used to check if the request comes from the Fetch API, but it won\u0027t be true in the future\" was what yhirano@ said.\n\nBut our known problem for this workaround might happen on the case of UseStreamOnResponse() rather than Fetch API?",
+      "parentUuid": "0dc039cf_2041de6e",
       "revId": "4771dff25276587108eedb2ed83a177877277281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -276,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "72501c0b_28fce120",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30269bc9_4bd3dbe4",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25573d4e_8811ff11",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 11
@@ -287,6 +485,47 @@
       "writtenOn": "2017-06-22T06:15:22Z",
       "side": 1,
       "message": "What does \u0027a proper event handling\u0027 mean here?",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ffb4ef_48c4e0b9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25573d4e_8811ff11",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d14c646c_9adc6de2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "BTW, why this comment is here rather than WebURLLoaderClient.h?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 43
+      },
       "revId": "4771dff25276587108eedb2ed83a177877277281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

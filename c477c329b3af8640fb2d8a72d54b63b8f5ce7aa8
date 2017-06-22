@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96ff96eb_25c4c180",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Now I removed this method, and passed it to the ResourceLoader\u0027s ctor as Kinuko suggested.",
+      "parentUuid": "9e3010aa_3471ae1d",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fbfdfc9_589e721f",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T09:33:18Z",
       "side": 1,
       "message": "DCHECK_EQ\n\nI think Request can be called twice for Restart cases.",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c50f2fb_3339e98d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Restart() does not make another request, but just continues running without releasing the first grant.\n\nAnyway, these checks are removed in the new patch set because now the request is managed by RequestId.",
+      "parentUuid": "5fbfdfc9_589e721f",
       "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d0299291_a7ac3f8e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "676ffaa4_72bf4b11",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff19eea7_0bb406b3",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38de1bfd_bcfc75b0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Sorry, should not be. this may be a wrong copy \u0026 paste from ResourceLoader.h.",
+      "parentUuid": "ff19eea7_0bb406b3",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "00074b04_b4e88ace",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "This line is not there any more in the new patch set, but I adopt this comment for similar code. See ResourceLoader::Release() in the new patch set.",
+      "parentUuid": "bfd88cc7_aa4a03ee",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e96237b0_83bafcb4",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df269dbb_3d8ac634",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-22T12:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e96237b0_83bafcb4",
+      "revId": "c477c329b3af8640fb2d8a72d54b63b8f5ce7aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
