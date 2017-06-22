@@ -473,7 +473,7 @@
     // crbug.com/489206 tracks the experiment.
     {
       name: "inertVisualViewport",
-      initial: false,
+      initial: true,
     },
 
     // The rubber-band overscroll effect is implemented in Blink and is being moved
