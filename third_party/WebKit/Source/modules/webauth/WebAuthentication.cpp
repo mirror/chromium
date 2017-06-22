@@ -12,11 +12,12 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "modules/webauth/RelyingPartyAccount.h"
 #include "modules/webauth/ScopedCredential.h"
 #include "modules/webauth/ScopedCredentialOptions.h"
 #include "modules/webauth/ScopedCredentialParameters.h"
-#include "public/platform/InterfaceProvider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace {
 const char kNoAuthenticatorError[] = "Authenticator unavailable.";
@@ -119,7 +120,7 @@ namespace blink {
 
 WebAuthentication::WebAuthentication(LocalFrame& frame)
     : ContextLifecycleObserver(frame.GetDocument()) {
-  frame.GetInterfaceProvider()->GetInterface(
+  frame.Client()->GetInterfaceProvider()->GetInterface(
       mojo::MakeRequest(&authenticator_));
   authenticator_.set_connection_error_handler(ConvertToBaseCallback(
       WTF::Bind(&WebAuthentication::OnAuthenticatorConnectionError,

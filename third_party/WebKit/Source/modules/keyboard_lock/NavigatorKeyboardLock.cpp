@@ -7,11 +7,12 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "platform/bindings/V8Binding.h"
 #include "platform/heap/Persistent.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
-#include "public/platform/InterfaceProvider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -82,7 +83,8 @@ bool NavigatorKeyboardLock::EnsureServiceConnected() {
     if (!frame) {
       return false;
     }
-    frame->GetInterfaceProvider()->GetInterface(mojo::MakeRequest(&service_));
+    frame->Client()->GetInterfaceProvider()->GetInterface(
+        mojo::MakeRequest(&service_));
   }
 
   DCHECK(service_);

@@ -242,7 +242,6 @@ class WEB_EXPORT WebLocalFrameImpl final
   // WebLocalFrame methods:
   WebLocalFrameImpl* CreateLocalChild(WebTreeScopeType,
                                       WebFrameClient*,
-                                      blink::InterfaceProvider*,
                                       blink::InterfaceRegistry*) override;
   void SetAutofillClient(WebAutofillClient*) override;
   WebAutofillClient* AutofillClient() override;
@@ -335,11 +334,9 @@ class WEB_EXPORT WebLocalFrameImpl final
 
   static WebLocalFrameImpl* Create(WebTreeScopeType,
                                    WebFrameClient*,
-                                   blink::InterfaceProvider*,
                                    blink::InterfaceRegistry*,
                                    WebFrame* opener);
   static WebLocalFrameImpl* CreateProvisional(WebFrameClient*,
-                                              blink::InterfaceProvider*,
                                               blink::InterfaceRegistry*,
                                               WebRemoteFrame*,
                                               WebSandboxFlags);
@@ -446,11 +443,9 @@ class WEB_EXPORT WebLocalFrameImpl final
 
   WebLocalFrameImpl(WebTreeScopeType,
                     WebFrameClient*,
-                    blink::InterfaceProvider*,
                     blink::InterfaceRegistry*);
   WebLocalFrameImpl(WebRemoteFrame*,
                     WebFrameClient*,
-                    blink::InterfaceProvider*,
                     blink::InterfaceRegistry*);
 
   // Inherited from WebFrame, but intentionally hidden: it never makes sense
@@ -506,7 +501,6 @@ class WEB_EXPORT WebLocalFrameImpl final
   float input_events_scale_factor_for_emulation_;
 
   // Borrowed pointers to Mojo objects.
-  blink::InterfaceProvider* interface_provider_;
   blink::InterfaceRegistry* interface_registry_;
 
   WebDevToolsFrontendImpl* web_dev_tools_frontend_;
