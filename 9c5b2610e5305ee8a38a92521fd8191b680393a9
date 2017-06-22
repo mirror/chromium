@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabd9583_b1f15a5b",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-22T11:21:41Z",
+      "side": 1,
+      "message": "We should be passing the pending navigation entry to NavigationRequest::CreateRendererInitiated, not the last committed one.",
+      "revId": "9c5b2610e5305ee8a38a92521fd8191b680393a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
