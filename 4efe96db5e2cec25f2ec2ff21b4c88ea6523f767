@@ -45,6 +45,30 @@
       "revId": "4efe96db5e2cec25f2ec2ff21b4c88ea6523f767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2dc787_d8968aea",
+        "filename": "base/trace_event/heap_profiler_allocation_register_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-22T22:54:45Z",
+      "side": 1,
+      "message": "Aha! Thanks. I misread that is if SPECIFIC isn\u0027t specified it would ignore offset, but then I assumed it\u0027d be at a 0 offset. No unmap errors now with CAN_MAP_SPECIFIC and SPECIFIC readded.",
+      "parentUuid": "0d381908_bab63f07",
+      "range": {
+        "startLine": 52,
+        "startChar": 64,
+        "endLine": 52,
+        "endChar": 65
+      },
+      "revId": "4efe96db5e2cec25f2ec2ff21b4c88ea6523f767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
