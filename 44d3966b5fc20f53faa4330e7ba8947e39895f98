@@ -22,6 +22,30 @@
       "revId": "44d3966b5fc20f53faa4330e7ba8947e39895f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5a376f_18f8adeb",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-22T19:32:56Z",
+      "side": 0,
+      "message": "1. It becomes really difficult to run changes against just the viz specific tests when they are lumped together with everything else in component_unittests. We\u0027d have to adopt some common prefix name, which as far as I know, isn\u0027t done in other test targets.\n2. Most of cc will move under the viz umbrella so viz_unittests will (eventually) replace cc_unittests.\n3. The viz_unittests TestSuite will require custom initialization (similar to cc_unittests now) that isn\u0027t appropriate for components_unittests TestSuite.\n\nObviously viz_unittests is still pretty small now but that should change quickly.",
+      "parentUuid": "a1558ec0_9ef8cdaf",
+      "range": {
+        "startLine": 228,
+        "startChar": 9,
+        "endLine": 228,
+        "endChar": 30
+      },
+      "revId": "44d3966b5fc20f53faa4330e7ba8947e39895f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
