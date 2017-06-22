@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f3f3512_28bbadfd",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-22T16:05:18Z",
+      "side": 1,
+      "message": "It\u0027s subtle. ClearSiteMetadata removes the dictionary, whereas here we are replacing the metadata with an empty dictionary.\n\nTo add more context (which I have added to the comment), other places in Chrome read this dictionary for existence as a heuristic to determine if the site had our UI shown to it. This heuristic is used to alter the behavior of Page Info / OIB / Site Details.",
+      "parentUuid": "9ad23a56_3a4a44ab",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 17
+      },
+      "revId": "28a7395be8c24024cafed0195a77686f854c2166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd4a3d91_f3c2e39f",
         "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager_unittest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-22T15:42:22Z",
       "side": 1,
       "message": "It looks like this test is primarily interesting when should_use_smart_ui() is false, in which case ShouldShowUIForSite() has to go true-\u003efalse-\u003etrue.\n\nShould we set up a scoped command line enabling the smart ui to avoid this \"nondeterministic\" EXPECT_TRUE?",
+      "range": {
+        "startLine": 309,
+        "startChar": 2,
+        "endLine": 309,
+        "endChar": 13
+      },
+      "revId": "28a7395be8c24024cafed0195a77686f854c2166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97138e4f_b806873f",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-22T16:05:18Z",
+      "side": 1,
+      "message": "Yes, great idea. This is a problem with a few tests in this suite. Done.",
+      "parentUuid": "dd4a3d91_f3c2e39f",
       "range": {
         "startLine": 309,
         "startChar": 2,
