@@ -130,8 +130,8 @@ void SetUpEntries(ResourceMetadata* resource_metadata) {
   ASSERT_EQ(FILE_ERROR_OK, resource_metadata->AddEntry(
       CreateFileEntry("file10", local_id_dir3), &local_id));
 
-  ASSERT_EQ(FILE_ERROR_OK,
-            resource_metadata->SetLargestChangestamp(kTestChangestamp));
+  ASSERT_EQ(FILE_ERROR_OK, resource_metadata->SetLargestChangestamp(
+                               std::string(), kTestChangestamp));
 }
 
 }  // namespace
@@ -173,12 +173,20 @@ class ResourceMetadataTest : public testing::Test {
 
 TEST_F(ResourceMetadataTest, LargestChangestamp) {
   const int64_t kChangestamp = 123456;
-  EXPECT_EQ(FILE_ERROR_OK,
-            resource_metadata_->SetLargestChangestamp(kChangestamp));
+  const int64_t kChangestamp2 = 234567;
+  const std::string& team_drive_id = "theTeamDriveId";
+  EXPECT_EQ(FILE_ERROR_OK, resource_metadata_->SetLargestChangestamp(
+                               std::string(), kChangestamp));
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK,
-            resource_metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK, resource_metadata_->GetLargestChangestamp(
+                               std::string(), &changestamp));
   EXPECT_EQ(kChangestamp, changestamp);
+
+  EXPECT_EQ(FILE_ERROR_OK, resource_metadata_->SetLargestChangestamp(
+                               team_drive_id, kChangestamp2));
+  EXPECT_EQ(FILE_ERROR_OK, resource_metadata_->GetLargestChangestamp(
+                               std::string(), &changestamp));
+  EXPECT_EQ(kChangestamp2, changestamp);
 }
 
 TEST_F(ResourceMetadataTest, GetResourceEntryByPath) {
@@ -676,8 +684,8 @@ TEST_F(ResourceMetadataTest, Reset) {
 
   // change stamp should be reset.
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK,
-            resource_metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK, resource_metadata_->GetLargestChangestamp(
+                               std::string(), &changestamp));
   EXPECT_EQ(0, changestamp);
 
   // root should continue to exist.
