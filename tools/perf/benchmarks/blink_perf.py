@@ -308,6 +308,10 @@ class BlinkPerfCanvas(_BlinkPerfBenchmark):
       def SetExpectations(self):
         self.PermanentlyDisableBenchmark(
             [story.expectations.ANDROID_SVELTE], 'crbug.com/593973')
+        self.DisableStory(
+            'getImageDataColorManaged.html',
+            [story.expectations.ALL_WIN],
+            'crbug.com/736098')
     return StoryExpectations()
 
   def SetExtraBrowserOptions(self, options):
