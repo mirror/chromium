@@ -214,8 +214,6 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
             mOnWriteCallback.onWriteFailed(mErrorMessage);
             resetCallbacks();
         }
-        closeFileDescriptor(mFileDescriptor);
-        mFileDescriptor = -1;
     }
 
     @Override
@@ -291,9 +289,7 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
                 // the state isn't PRINTING_STATE_READY, so we enter here and make this call (no
                 // extra). If we complete the PDF generation successfully from onLayout or onWrite,
                 // we already make the state PRINTING_STATE_READY and call askUserForSettingsReply
-                // inside pdfWritingDone, thus not entering here.  Also, if we get an extra
-                // AskUserForSettings call, it's handled inside {@link
-                // PrintingContext#pageCountEstimationDone}.
+                // inside pdfWritingDone, thus not entering here.
                 mPrintingContext.askUserForSettingsReply(false);
             }
             mPrintingContext.updatePrintingContextMap(mFileDescriptor, true);
