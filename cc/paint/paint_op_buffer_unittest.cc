@@ -490,6 +490,108 @@ TEST(PaintOpBufferTest, SlowPaths) {
   EXPECT_EQ(4, buffer2->numSlowPaths());
 }
 
+TEST(PaintOpBufferTest, NonAAPaths) {
+  // DrawLineOp simple
+  {
+    auto buffer = sk_make_sp<PaintOpBuffer>();
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    // Line with AA
+    PaintFlags line_effect;
+    line_effect.setAntiAlias(true);
+    buffer->push<DrawLineOp>(1.f, 2.f, 3.f, 4.f, line_effect);
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    // Line without AA
+    PaintFlags line_effect_no_aa;
+    line_effect_no_aa.setAntiAlias(false);
+    buffer->push<DrawLineOp>(1.f, 2.f, 3.f, 4.f, line_effect_no_aa);
+    EXPECT_TRUE(buffer->HasNonAAPaths());
+  }
+
+  // DrawLineOp with path
+  {
+    auto buffer = sk_make_sp<PaintOpBuffer>();
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    SkScalar intervals[] = {1.f, 1.f};
+
+    // Line with AA
+    PaintFlags line_flags_aa;
+    line_flags_aa.setAntiAlias(true);
+    line_flags_aa.setStrokeWidth(1.f);
+    line_flags_aa.setStyle(PaintFlags::kStroke_Style);
+    line_flags_aa.setStrokeCap(PaintFlags::kRound_Cap);
+    line_flags_aa.setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
+    buffer->push<DrawLineOp>(1.f, 2.f, 3.f, 4.f, line_flags_aa);
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    // Line without AA
+    PaintFlags line_flags_no_aa;
+    line_flags_no_aa.setAntiAlias(false);
+    line_flags_no_aa.setStrokeWidth(1.f);
+    line_flags_no_aa.setStyle(PaintFlags::kStroke_Style);
+    line_flags_no_aa.setStrokeCap(PaintFlags::kRound_Cap);
+    line_flags_no_aa.setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
+    buffer->push<DrawLineOp>(1.f, 2.f, 3.f, 4.f, line_flags_no_aa);
+    EXPECT_TRUE(buffer->HasNonAAPaths());
+  }
+
+  // DrawPathOp
+  {
+    auto buffer = sk_make_sp<PaintOpBuffer>();
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    SkPath path;
+    path.addCircle(2, 2, 5);
+
+    // Path with AA
+    PaintFlags path_flags_aa;
+    path_flags_aa.setAntiAlias(true);
+    buffer->push<DrawPathOp>(path, path_flags_aa);
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    // Path without AA
+    PaintFlags path_flags_no_aa;
+    path_flags_no_aa.setAntiAlias(false);
+    buffer->push<DrawPathOp>(path, path_flags_no_aa);
+    EXPECT_TRUE(buffer->HasNonAAPaths());
+  }
+
+  // ClipPathOp
+  {
+    auto buffer = sk_make_sp<PaintOpBuffer>();
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    SkPath path;
+    path.addCircle(2, 2, 5);
+
+    // Clip with AA
+    buffer->push<ClipPathOp>(path, SkClipOp::kIntersect, true /* antialias */);
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    // Clip without AA
+    buffer->push<ClipPathOp>(path, SkClipOp::kIntersect, false /* antialias */);
+    EXPECT_TRUE(buffer->HasNonAAPaths());
+  }
+
+  // Drawing a record with non-aa paths into another propogates the value.
+  {
+    auto buffer = sk_make_sp<PaintOpBuffer>();
+    EXPECT_FALSE(buffer->HasNonAAPaths());
+
+    auto sub_buffer = sk_make_sp<PaintOpBuffer>();
+    SkPath path;
+    path.addCircle(2, 2, 5);
+    sub_buffer->push<ClipPathOp>(path, SkClipOp::kIntersect,
+                                 false /* antialias */);
+    EXPECT_TRUE(sub_buffer->HasNonAAPaths());
+
+    buffer->push<DrawRecordOp>(sub_buffer);
+    EXPECT_TRUE(buffer->HasNonAAPaths());
+  }
+}
+
 TEST(PaintOpBufferTest, ContiguousIndices) {
   PaintOpBuffer buffer;
   MockCanvas canvas;
