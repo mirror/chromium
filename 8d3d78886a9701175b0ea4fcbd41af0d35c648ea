@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78074cba_7dc2bd82",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-22T18:17:09Z",
+      "side": 1,
+      "message": "No longer used?",
+      "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dce11c9_5b5b7ad0",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-22T18:17:09Z",
+      "side": 1,
+      "message": "No longer used?",
+      "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9b874e_20ca2e5b",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-22T18:17:09Z",
+      "side": 1,
+      "message": "No longer used?",
+      "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5de1bf_a906f979",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-22T18:17:09Z",
+      "side": 1,
+      "message": "For another CL: return unique_ptr?",
+      "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
