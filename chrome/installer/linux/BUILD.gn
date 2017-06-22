@@ -86,9 +86,9 @@ copy("common_packaging_files") {
   }
 
   if (current_cpu == "x86") {
-    sources += [ "//build/linux/bin/eu-strip" ]
+    sources += [ "//third_party/eu-strip/bin/x86/eu-strip" ]
   } else if (current_cpu == "x64") {
-    sources += [ "/usr/bin/eu-strip" ]
+    sources += [ "//third_party/eu-strip/bin/x86_64/eu-strip" ]
   }
 
   outputs = [
