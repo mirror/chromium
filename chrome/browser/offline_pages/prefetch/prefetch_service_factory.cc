@@ -7,14 +7,20 @@
 #include <memory>
 #include <utility>
 
+#include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
+#include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_constants.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
+#include "components/offline_pages/core/prefetch/store/prefetch_store_sql.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "content/public/browser/browser_context.h"
 
@@ -38,19 +44,28 @@ PrefetchService* PrefetchServiceFactory::GetForBrowserContext(
 
 KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
+  auto offline_metrics_collector =
+      base::MakeUnique<OfflineMetricsCollectorImpl>();
   auto prefetch_dispatcher = base::MakeUnique<PrefetchDispatcherImpl>();
   auto prefetch_gcm_app_handler = base::MakeUnique<PrefetchGCMAppHandler>(
       base::MakeUnique<PrefetchInstanceIDProxy>(kPrefetchingOfflinePagesAppId,
                                                 context));
-  auto offline_metrics_collector =
-      base::MakeUnique<OfflineMetricsCollectorImpl>();
+
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner =
+      base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()});
+  Profile* profile = Profile::FromBrowserContext(context);
+  base::FilePath store_path =
+      profile->GetPath().Append(chrome::kOfflinePagePrefetchStoreDirname);
+  auto prefetch_store =
+      base::MakeUnique<PrefetchStoreSQL>(background_task_runner, store_path);
+
   auto suggested_articles_observer =
       base::MakeUnique<SuggestedArticlesObserver>();
 
-  return new PrefetchServiceImpl(std::move(offline_metrics_collector),
-                                 std::move(prefetch_dispatcher),
-                                 std::move(prefetch_gcm_app_handler),
-                                 std::move(suggested_articles_observer));
+  return new PrefetchServiceImpl(
+      std::move(offline_metrics_collector), std::move(prefetch_dispatcher),
+      std::move(prefetch_gcm_app_handler), std::move(prefetch_store),
+      std::move(suggested_articles_observer));
 }
 
 }  // namespace offline_pages
