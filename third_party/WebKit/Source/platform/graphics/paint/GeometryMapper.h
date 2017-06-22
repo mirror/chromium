@@ -152,11 +152,6 @@ class PLATFORM_EXPORT GeometryMapper {
       const PropertyTreeState& source_state,
       const PropertyTreeState& destination_state);
 
-  // Returns the lowest common ancestor in the paint property tree.
-  template <typename NodeType>
-  static PLATFORM_EXPORT const NodeType* LowestCommonAncestor(const NodeType*,
-                                                              const NodeType*);
-
   static void ClearCache();
 
  private:
