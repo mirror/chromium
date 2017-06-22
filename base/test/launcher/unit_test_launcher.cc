@@ -455,24 +455,17 @@ int LaunchUnitTests(int argc,
                     char** argv,
                     const RunTestSuiteCallback& run_test_suite) {
   CommandLine::Init(argc, argv);
-  return LaunchUnitTestsInternal(
-      run_test_suite,
-      SysInfo::NumberOfProcessors(),
-      kDefaultTestBatchLimit,
-      true,
-      Bind(&InitGoogleTestChar, &argc, argv));
+  return LaunchUnitTestsInternal(run_test_suite, NumParallelJobs(),
+                                 kDefaultTestBatchLimit, true,
+                                 Bind(&InitGoogleTestChar, &argc, argv));
 }
 
 int LaunchUnitTestsSerially(int argc,
                             char** argv,
                             const RunTestSuiteCallback& run_test_suite) {
   CommandLine::Init(argc, argv);
-  return LaunchUnitTestsInternal(
-      run_test_suite,
-      1,
-      kDefaultTestBatchLimit,
-      true,
-      Bind(&InitGoogleTestChar, &argc, argv));
+  return LaunchUnitTestsInternal(run_test_suite, 1, kDefaultTestBatchLimit,
+                                 true, Bind(&InitGoogleTestChar, &argc, argv));
 }
 
 int LaunchUnitTestsWithOptions(
@@ -483,12 +476,9 @@ int LaunchUnitTestsWithOptions(
     bool use_job_objects,
     const RunTestSuiteCallback& run_test_suite) {
   CommandLine::Init(argc, argv);
-  return LaunchUnitTestsInternal(
-      run_test_suite,
-      default_jobs,
-      default_batch_limit,
-      use_job_objects,
-      Bind(&InitGoogleTestChar, &argc, argv));
+  return LaunchUnitTestsInternal(run_test_suite, default_jobs,
+                                 default_batch_limit, use_job_objects,
+                                 Bind(&InitGoogleTestChar, &argc, argv));
 }
 
 #if defined(OS_WIN)
@@ -498,12 +488,9 @@ int LaunchUnitTests(int argc,
                     const RunTestSuiteCallback& run_test_suite) {
   // Windows CommandLine::Init ignores argv anyway.
   CommandLine::Init(argc, NULL);
-  return LaunchUnitTestsInternal(
-      run_test_suite,
-      SysInfo::NumberOfProcessors(),
-      kDefaultTestBatchLimit,
-      use_job_objects,
-      Bind(&InitGoogleTestWChar, &argc, argv));
+  return LaunchUnitTestsInternal(run_test_suite, NumParallelJobs(),
+                                 kDefaultTestBatchLimit, use_job_objects,
+                                 Bind(&InitGoogleTestWChar, &argc, argv));
 }
 #endif  // defined(OS_WIN)
 
