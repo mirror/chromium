@@ -6,6 +6,7 @@
 
 import argparse
 import collections
+from datetime import datetime
 import errno
 import os
 import plistlib
@@ -280,10 +281,17 @@ class TestRunner(object):
         stderr=subprocess.STDOUT,
     )
 
+    last_time_has_output = datetime.now()
     while True:
       line = proc.stdout.readline()
       if not line:
+        print "encountered an empty line"
+        time_now = datetime.now()
+        time_delta = time_now - last_time_has_output
+        if (time_delta.total_seconds() > 60):
+          self.screenshot_desktop()
         break
+      last_time_has_output = date.now()
       line = line.rstrip()
       parser.ProcessLine(line)
       print line
