@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a07ec05_994cba69",
+        "filename": "headless/lib/browser/headless_tab_socket_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T17:05:23Z",
+      "side": 1,
+      "message": "This is awkwardly phrased, I\u0027ve re-written it.",
+      "parentUuid": "cad6e08f_36fc49c0",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "c0c9a5353d95cda23d31bdcf74ff70bb7f140261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94f3c7e2_ac8f1daf",
         "filename": "headless/lib/browser/headless_web_contents_impl.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-22T14:01:58Z",
       "side": 1,
       "message": "nit: check for tab_sockets_allowed_",
+      "range": {
+        "startLine": 370,
+        "startChar": 41,
+        "endLine": 370,
+        "endChar": 42
+      },
+      "revId": "c0c9a5353d95cda23d31bdcf74ff70bb7f140261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e77092_82469a68",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T17:05:23Z",
+      "side": 1,
+      "message": "If we move it to HeadlessTabSocketImpl then we don\u0027t need to check since it\u0027s not possible to have a tab socket unless they were allowed in the config.",
+      "parentUuid": "94f3c7e2_ac8f1daf",
       "range": {
         "startLine": 370,
         "startChar": 41,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "864bb34a_1471d0f8",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T17:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ff5ec92_603ab7a7",
+      "range": {
+        "startLine": 372,
+        "startChar": 2,
+        "endLine": 372,
+        "endChar": 29
+      },
+      "revId": "c0c9a5353d95cda23d31bdcf74ff70bb7f140261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c134e625_7c0f7d07",
         "filename": "headless/lib/browser/headless_web_contents_impl.h",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "27b3af31_edff0044",
+        "filename": "headless/lib/browser/headless_web_contents_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T17:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c134e625_7c0f7d07",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 53
+      },
+      "revId": "c0c9a5353d95cda23d31bdcf74ff70bb7f140261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13e0ba8c_6540207a",
         "filename": "headless/lib/headless_web_contents_browsertest.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-22T14:01:58Z",
       "side": 1,
       "message": "nit: Why this, what\u0027s different on WIN? (I see it was there before, but without comment.)",
+      "range": {
+        "startLine": 550,
+        "startChar": 7,
+        "endLine": 550,
+        "endChar": 13
+      },
+      "revId": "c0c9a5353d95cda23d31bdcf74ff70bb7f140261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54803658_097999fe",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T17:05:23Z",
+      "side": 1,
+      "message": "Its to do with the FAIL macro implementation.  MSVC doesn\u0027t like it before the finish.  Looking into this  deeper it\u0027s because it returns.  Perhaps it\u0027s right...",
+      "parentUuid": "13e0ba8c_6540207a",
       "range": {
         "startLine": 550,
         "startChar": 7,
@@ -137,6 +257,30 @@
       "revId": "c0c9a5353d95cda23d31bdcf74ff70bb7f140261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6246da40_1e8e61ee",
+        "filename": "headless/test/headless_browser_test.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T17:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12b300f_95913803",
+      "range": {
+        "startLine": 128,
+        "startChar": 16,
+        "endLine": 128,
+        "endChar": 22
+      },
+      "revId": "c0c9a5353d95cda23d31bdcf74ff70bb7f140261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
