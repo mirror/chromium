@@ -12,6 +12,7 @@
 
 #include "base/android/build_info.h"
 #include "base/android/jni_android.h"
+#include "base/android/jni_array.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/id_map.h"
@@ -84,6 +85,7 @@ CompositorView::CompositorView(JNIEnv* env,
       content_width_(0),
       content_height_(0),
       overlay_video_mode_(false),
+      location_java_array_(env, env->NewIntArray(2)),
       weak_factory_(this) {
   content::BrowserChildProcessObserver::Add(this);
   obj_.Reset(env, obj);
@@ -130,6 +132,17 @@ void CompositorView::DidSwapFrame(int pending_frames) {
 void CompositorView::DidSwapBuffers() {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_CompositorView_didSwapBuffers(env, obj_);
+}
+
+gfx::Size CompositorView::GetLocationOnScreen() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  Java_CompositorView_getLocationOnScreen(env, obj_,
+                                          location_java_array_.obj());
+
+  jint coords[2] = {0, 0};
+  env->GetIntArrayRegion(location_java_array_.obj(), 0, 2, coords);
+  return gfx::Size(coords[0], coords[1]);
 }
 
 ui::UIResourceProvider* CompositorView::GetUIResourceProvider() {

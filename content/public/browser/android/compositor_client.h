@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "content/common/content_export.h"
+#include "ui/gfx/geometry/size.h"
 
 namespace content {
 
@@ -22,6 +23,9 @@ class CONTENT_EXPORT CompositorClient {
 
   // This is called on all swap buffers, regardless of cause.
   virtual void DidSwapBuffers() {}
+
+  // Return the location of the compositor on the screen.
+  virtual gfx::Size GetLocationOnScreen();
 
  protected:
   CompositorClient() {}
