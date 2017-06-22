@@ -33,7 +33,7 @@ class DownloadCommands {
 
   // |download_item| must outlive DownloadCommands.
   explicit DownloadCommands(content::DownloadItem* download_item);
-  virtual ~DownloadCommands() {}
+  virtual ~DownloadCommands();
 
   gfx::Image GetCommandIcon(Command command);
 
@@ -59,6 +59,8 @@ class DownloadCommands {
   void CopyFileAsImageToClipboard() const;
 
   content::DownloadItem* const download_item_;
+
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 };
 
 #endif  // CHROME_BROWSER_DOWNLOAD_DOWNLOAD_COMMANDS_H_
