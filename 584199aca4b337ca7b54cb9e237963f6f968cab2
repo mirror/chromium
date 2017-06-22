@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26957e3b_28e3fd92",
+        "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-22T13:02:19Z",
+      "side": 1,
+      "message": "I don\u0027t think so.\nRemoved.",
+      "parentUuid": "c822c3c8_5c0465d6",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b098d4c_4b160e1b",
         "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.js",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0f7a12_64359c3d",
+        "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-22T13:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b098d4c_4b160e1b",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 10
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3a3a4124_aa49857e",
+        "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-22T13:02:19Z",
+      "side": 1,
+      "message": "Renamed to Object. \nDone",
+      "parentUuid": "fdb9adab_aa9577bb",
+      "range": {
+        "startLine": 108,
+        "startChar": 10,
+        "endLine": 108,
+        "endChar": 22
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa0f451d_5a549095",
         "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.js",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ddf8cfd8_e3382d8a",
+        "filename": "chrome/browser/resources/predictors/resource_prefetch_predictor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-22T13:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0f451d_5a549095",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 42
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09db57fd_7df37af2",
         "filename": "chrome/browser/ui/webui/predictors/predictors_handler.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da4f06a_22374758",
+        "filename": "chrome/browser/ui/webui/predictors/predictors_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-22T13:02:19Z",
+      "side": 1,
+      "message": "\"URL\" lang:c++ case:yes 11,839 occurrences\n\"Url\" lang:c++ case:yes 3,936 occurrences\nWe use both spellings though \"URL\" is more correct.\nDone",
+      "parentUuid": "09db57fd_7df37af2",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "584199aca4b337ca7b54cb9e237963f6f968cab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
