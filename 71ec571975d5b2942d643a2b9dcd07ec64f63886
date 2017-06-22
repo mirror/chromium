@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "137fb9cc_76669558",
+        "filename": "base/trace_event/heap_profiler_allocation_register_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-22T21:34:09Z",
+      "side": 1,
+      "message": "why SPECIFIC?",
+      "range": {
+        "startLine": 50,
+        "startChar": 45,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "71ec571975d5b2942d643a2b9dcd07ec64f63886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665f7a64_915c5f4c",
+        "filename": "base/trace_event/heap_profiler_allocation_register_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-22T21:34:09Z",
+      "side": 1,
+      "message": "Do you need to vmar_destroy() too after this?\n\nOh, no, you mx_handle_close() vmar above, nvm.",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "71ec571975d5b2942d643a2b9dcd07ec64f63886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
