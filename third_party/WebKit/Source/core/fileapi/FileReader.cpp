@@ -69,7 +69,8 @@ static const double kProgressNotificationIntervalMS = 50;
 
 class FileReader::ThrottlingController final
     : public GarbageCollected<FileReader::ThrottlingController>,
-      public Supplement<ExecutionContext> {
+      public Supplement<ExecutionContext>,
+      public ContextLifecycleObserver {
   USING_GARBAGE_COLLECTED_MIXIN(FileReader::ThrottlingController);
 
  public:
@@ -117,15 +118,22 @@ class FileReader::ThrottlingController final
     probe::AsyncTaskCanceled(context, reader);
   }
 
+  void ContextDestroyed(ExecutionContext* context) override {
+    pending_readers_.clear();
+    running_readers_.clear();
+  }
+
   DEFINE_INLINE_TRACE() {
     visitor->Trace(pending_readers_);
     visitor->Trace(running_readers_);
     Supplement<ExecutionContext>::Trace(visitor);
+    ContextLifecycleObserver::Trace(visitor);
   }
 
  private:
   explicit ThrottlingController(ExecutionContext& context)
       : Supplement<ExecutionContext>(context),
+        ContextLifecycleObserver(&context),
         max_running_readers_(kMaxOutstandingRequestsPerThread) {}
 
   void PushReader(FileReader* reader) {
@@ -210,11 +218,6 @@ void FileReader::ContextDestroyed(ExecutionContext* destroyed_context) {
   if (loading_state_ == kLoadingStateAborted)
     return;
 
-  if (HasPendingActivity()) {
-    ThrottlingController::FinishReader(
-        destroyed_context, this,
-        ThrottlingController::RemoveReader(destroyed_context, this));
-  }
   Terminate();
 }
 
