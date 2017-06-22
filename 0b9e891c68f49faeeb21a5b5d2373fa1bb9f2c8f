@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4995952_82adb0f9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-fetch.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-22T10:32:01Z",
+      "side": 1,
+      "message": "Without this, with_iframe() will fail because document.body is null.",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "0b9e891c68f49faeeb21a5b5d2373fa1bb9f2c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85ee273_618f94e1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-fetch.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-22T10:32:01Z",
+      "side": 1,
+      "message": "This resource will be fetched by \u0027resources/blank.html\u0027, so the relative path should be just \u0027simple.txt\u0027.",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "0b9e891c68f49faeeb21a5b5d2373fa1bb9f2c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
