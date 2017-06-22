@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "218b6719_70373a30",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T00:01:37Z",
+      "side": 1,
+      "message": "nit: this sounds a little awkward to me (what\u0027s the opened tab?).  Maybe: \"Cannot set a tab\u0027s opener to itself.\"?  WDYT?",
+      "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2228e63c_4d3a161d",
         "filename": "chrome/browser/extensions/extension_tab_util.cc",
         "patchSetId": 1
@@ -13,6 +30,41 @@
       "writtenOn": "2017-06-21T23:45:45Z",
       "side": 1,
       "message": "Devlin, I wanted to verify with you that no error checking is needed here, since OpenTab() (the function that encloses this code) is opening a new tab from tab with the opener_tab_id.",
+      "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2eda2f1_8362a486",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T00:01:37Z",
+      "side": 1,
+      "message": "Good question!\n\nSo, we don\u0027t need to worry about the tab opener being set to *itself* because this is opening a new tab (and so its id doesn\u0027t exist yet).  However, we would need to check that the opener is set to a tab inside the browser we use.  We currently don\u0027t crash, but don\u0027t do a good job checking and returning an error.  There\u0027s a TODO about this on line 262.\n\nFor this CL, I think it\u0027s fine to leave this out, since it\u0027s a little orthogonal and doesn\u0027t risk crashing.  But it could be a nice followup.",
+      "parentUuid": "2228e63c_4d3a161d",
+      "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899827ed_431d45b7",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T00:01:37Z",
+      "side": 1,
+      "message": "Subtle: The test ends here, when we call chrome.test.succeed().  If this is reached before the call to chrome.tabs.update() below finishes (which could happen racily), we won\u0027t actually be testing the behavior.\n\nFor something like this, it\u0027s nice to split it up into multiple tests within the JS.  There are a lot of examples throughout the codebase, but it looks like this:\n\nchrome.test.runTests([\n  function test1() {\n    // do stuff\n    chrome.test.succeed();\n  },\n  function test2() {\n    // do stuff\n    chrome.test.succeed();\n  },\n]);\n\nIn this case, test2() will only be called once test1() has finished and called chrome.test.succeed().\n\nI\u0027d suggest doing something like that here, with two different tests, testSetOpenerOutsideOfWindow() and testSetOpenerToSelf().",
       "revId": "dacfb165c6fd4c097e812f317e0878c0b9621c80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
