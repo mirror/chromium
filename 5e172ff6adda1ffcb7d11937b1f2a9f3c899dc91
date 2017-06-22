@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1abb5080_3cc8f716",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-22T23:16:57Z",
+      "side": 1,
+      "message": "Can you give an example for the under-invalidation? Does this apply to SPv2 as don\u0027t clip visual rects for SPv2?",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab585d4_f2b4f871",
+        "filename": "third_party/WebKit/Source/platform/geometry/FloatRoundedRect.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-22T23:16:57Z",
+      "side": 1,
+      "message": "return !(a \u003d\u003d b);",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
