@@ -22,6 +22,30 @@
       "revId": "b68df722e6f10dd182334b3bbd7d5c9bdecdbce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ceb98c3_2f1ced49",
+        "filename": "device/bluetooth/test/fake_remote_gatt_characteristic.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-22T04:08:46Z",
+      "side": 1,
+      "message": "In general the Bluetooth interface never runs its callbacks synchronously. (There are some instances in which we do but those are bugs). This is to make behavior consistent i.e. we don\u0027t want functions to sometimes run its callbacks synchronously and sometimes asynchronously.\n\nSince this Test API aims to fake the Bluetooth interface\u0027s behavior we also always run the callbacks asynchronously.",
+      "parentUuid": "2753caeb_83106f3e",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 76
+      },
+      "revId": "b68df722e6f10dd182334b3bbd7d5c9bdecdbce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
