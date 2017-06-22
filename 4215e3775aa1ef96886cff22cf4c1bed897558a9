@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a706854a_ebe22468",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegate.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T18:05:17Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "4215e3775aa1ef96886cff22cf4c1bed897558a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

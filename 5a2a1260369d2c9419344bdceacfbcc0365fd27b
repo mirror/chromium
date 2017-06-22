@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f94ab516_099a52e4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T18:05:17Z",
+      "side": 0,
+      "message": "This thumbnail provider is still used in the current test code (lines 227 and 237). replace these calls to use the one from MockThumbnailProvider#getThumbnail instead? Not sure how this does not break the tests",
+      "revId": "5a2a1260369d2c9419344bdceacfbcc0365fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

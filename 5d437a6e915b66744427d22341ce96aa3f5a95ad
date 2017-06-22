@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd39bc69_44539d03",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/NewTabPageRecyclerViewTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T18:05:17Z",
+      "side": 1,
+      "message": "???",
+      "range": {
+        "startLine": 188,
+        "startChar": 18,
+        "endLine": 188,
+        "endChar": 22
+      },
+      "revId": "5d437a6e915b66744427d22341ce96aa3f5a95ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6093517c_f0679b62",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/ImageFetcherTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T18:05:17Z",
+      "side": 1,
+      "message": "you don\u0027t need this here. It only enable the feature in tests, the offline pages or carousel features don\u0027t seem to affect this one.",
+      "revId": "5d437a6e915b66744427d22341ce96aa3f5a95ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead80cbb_067ddf3d",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/ImageFetcherTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T18:05:17Z",
+      "side": 1,
+      "message": "If ARTICLES is not specifically needed, use a `private static final TEST_CATEGORY \u003d 42` instead here",
+      "range": {
+        "startLine": 88,
+        "startChar": 86,
+        "endLine": 88,
+        "endChar": 95
+      },
+      "revId": "5d437a6e915b66744427d22341ce96aa3f5a95ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a1dd60_28953f53",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/ImageFetcherTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T18:05:17Z",
+      "side": 1,
+      "message": "any(Profile.class), same for the rest of the file",
+      "range": {
+        "startLine": 93,
+        "startChar": 34,
+        "endLine": 93,
+        "endChar": 37
+      },
+      "revId": "5d437a6e915b66744427d22341ce96aa3f5a95ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfc387c_a8098d27",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/ImageFetcherTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T18:05:17Z",
+      "side": 1,
+      "message": "feel free to use import static for the utility function, it makes tests more readable in that case.\n\nAlso feel free to add `createDummySuggestion(category)` in the class when you need a single one.",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 43
+      },
+      "revId": "5d437a6e915b66744427d22341ce96aa3f5a95ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
