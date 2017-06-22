@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e91bf70d_9d8edbad",
+        "filename": "tools/idl_parser/idl_lexer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-22T06:30:16Z",
+      "side": 1,
+      "message": "Web IDL\n(insert a space)",
+      "range": {
+        "startLine": 6,
+        "startChar": 13,
+        "endLine": 6,
+        "endChar": 14
+      },
+      "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911427b5_ce31459d",
+        "filename": "tools/idl_parser/idl_lexer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-22T06:30:16Z",
+      "side": 1,
+      "message": "can we remove the description about Pepper, too?",
+      "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273db824_f3a86e16",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-22T06:30:16Z",
+      "side": 1,
+      "message": "Web IDL",
+      "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1e13f1_7794c9c8",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-22T06:30:16Z",
+      "side": 1,
+      "message": "Not related to this change, but I feel names \"WebIDLParser\" and \"IDLparser\" are inconsistent.",
+      "revId": "49db98b57989ed5cb3fbdd807ba4c4351a39cbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
