@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b5a8cc2_f60c44c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUrlResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "917e6ca6_38b141d9",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9655696b_a421d33e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUrlResolver.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c49b81_633dd092",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUrlResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9655696b_a421d33e",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "40b58d16_b578f6a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad80bf1a_292e7500",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e59a201_62dbf241",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fd2cd1_de4b3a9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "I think with the current way of checking the URL in RendererController, source \u003d null can not really happen (unless it the string gets corrupted during IPC or something)",
+      "parentUuid": "5e59a201_62dbf241",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8d5ee570_99c436c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab7d2a7a_e79405f2",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "845b4666_ec08ab13",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-19T18:49:45Z",
       "side": 1,
       "message": "Do you need to clean up the DiscoveryCallback below even when this is null?",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec866ad_cd7ab3d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "It should never be set if mAndroidMediaRouter is null now.",
+      "parentUuid": "845b4666_ec08ab13",
       "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "39e7bca3_5b0df770",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "Yes, the idea is that ChromeMediaRouter doesn\u0027t know about concrete XxxMediaSource types each MRP does.",
+      "parentUuid": "941353c7_a31904aa",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45c05e63_5e946fb8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48906bf1_a06f652c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c05e63_5e946fb8",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "40531d4c_ca617b94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "Not sure what the benefits are? Strings are probably easier to store and compare.",
+      "parentUuid": "426b8682_070c8c0f",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "766cba17_583952f2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf918e88_5d241858",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-22T23:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "766cba17_583952f2",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
