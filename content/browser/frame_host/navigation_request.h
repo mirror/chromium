@@ -174,6 +174,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
 
   int nav_entry_id() const { return nav_entry_id_; }
 
+  void DeleteLater();
+
  private:
   // This enum describes the result of a Content Security Policy (CSP) check for
   // the request.
@@ -228,6 +230,9 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   //   configured to upgrade insecure requests.
   ContentSecurityPolicyCheckResult CheckContentSecurityPolicyFrameSrc(
       bool is_redirect);
+
+  void RunDeleteCallback();
+  void Delete();
 
   FrameTreeNode* frame_tree_node_;
 

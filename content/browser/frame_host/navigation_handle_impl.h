@@ -243,6 +243,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     return resource_request_body_;
   }
 
+  void RemoveExpectedNavigationToSite();
+
   // PlzNavigate
   void InitServiceWorkerHandle(
       ServiceWorkerContextWrapper* service_worker_context);
@@ -579,6 +581,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // Used to inform a RenderProcessHost that we expect this navigation to commit
   // in it.
   int expected_render_process_host_id_;
+
+  bool removed_expected_navigation_;
 
   base::WeakPtrFactory<NavigationHandleImpl> weak_factory_;
 

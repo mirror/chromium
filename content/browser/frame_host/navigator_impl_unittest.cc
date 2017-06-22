@@ -55,6 +55,7 @@ class NavigatorTestWithBrowserSideNavigation
   }
 
   void TearDown() override {
+    base::RunLoop().RunUntilIdle();
     RenderViewHostImplTestHarness::TearDown();
   }
 
@@ -378,6 +379,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation, BeginNavigation) {
   } else {
     EXPECT_FALSE(GetSpeculativeRenderFrameHost(subframe_node));
   }
+  main_test_rfh()->frame_tree_node()->DeleteNavigationRequestForTesting();
 }
 
 // PlzNavigate: Test that committing an HTTP 204 or HTTP 205 response cancels
@@ -568,6 +570,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   ASSERT_TRUE(request2);
   EXPECT_EQ(kUrl2, request2->common_params().url);
   EXPECT_TRUE(request2->browser_initiated());
+  base::RunLoop().RunUntilIdle();
 
   // Confirm that the first loader got destroyed.
   EXPECT_FALSE(loader1);
@@ -633,6 +636,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   EXPECT_EQ(kUrl2, request2->common_params().url);
   EXPECT_FALSE(request2->browser_initiated());
   EXPECT_TRUE(request2->begin_params().has_user_gesture);
+  base::RunLoop().RunUntilIdle();
 
   // Confirm that the first loader got destroyed.
   EXPECT_FALSE(loader1);
@@ -811,6 +815,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   } else {
     EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
   }
+  base::RunLoop().RunUntilIdle();
 
   // Confirm that the first loader got destroyed.
   EXPECT_FALSE(loader1);
@@ -1014,6 +1019,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation, DataUrls) {
   EXPECT_TRUE(main_rfh->is_loading());
   EXPECT_TRUE(node->navigation_request());
   EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
+  node->DeleteNavigationRequestForTesting();
 }
 
 // Tests several cases for converting SiteInstanceDescriptors into

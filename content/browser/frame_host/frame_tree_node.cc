@@ -435,7 +435,7 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
   bool was_renderer_initiated = !navigation_request_->browser_initiated();
   NavigationRequest::AssociatedSiteInstanceType site_instance_type =
       navigation_request_->associated_site_instance_type();
-  navigation_request_.reset();
+  navigation_request_.release()->DeleteLater();
 
   if (keep_state)
     return;
@@ -571,6 +571,11 @@ void FrameTreeNode::BeforeUnloadCanceled() {
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
   render_manager_.OnSetHasReceivedUserGesture();
   replication_state_.has_received_user_gesture = true;
+}
+
+void FrameTreeNode::DeleteNavigationRequestForTesting() {
+  if (navigation_request_)
+    navigation_request_.reset();
 }
 
 FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {
