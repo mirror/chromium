@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa0dac2b_809cedb7",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac4d3af_7e9ea160",
+      "range": {
+        "startLine": 59,
+        "startChar": 57,
+        "endLine": 59,
+        "endChar": 63
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29cd69a_33b49e7f",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "994f1bc9_14265665",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:39:38Z",
+      "side": 1,
+      "message": "A client is a tab. This is consistent with the terminology used elsewhere in the code.",
+      "parentUuid": "b29cd69a_33b49e7f",
+      "range": {
+        "startLine": 432,
+        "startChar": 8,
+        "endLine": 432,
+        "endChar": 41
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb2d84d_84e489ee",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-22T14:06:34Z",
       "side": 1,
       "message": "Do you think our RTT and throughput estimates are good enough to get an accurate BDP?",
+      "range": {
+        "startLine": 434,
+        "startChar": 21,
+        "endLine": 434,
+        "endChar": 44
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7393b8a1_626fa6c5",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:39:38Z",
+      "side": 1,
+      "message": "I am not sure about this. tbansal@ would have to weigh in here.",
+      "parentUuid": "fbb2d84d_84e489ee",
       "range": {
         "startLine": 434,
         "startChar": 21,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4f044a87_12c04fc4",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd05acde_6a79285e",
+      "range": {
+        "startLine": 120,
+        "startChar": 9,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08f1a12e_3e7a912f",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 15
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "372e1259_8909e0ad",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08f1a12e_3e7a912f",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 21
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2a3da65_fe785c00",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 15
@@ -128,6 +248,30 @@
       "writtenOn": "2017-06-22T14:06:34Z",
       "side": 1,
       "message": "What is the experiment \"kMaxDelayableRequestsNetworkOverride? This wording is confusing.",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f752e7_ee395916",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:39:38Z",
+      "side": 1,
+      "message": "Not sure what you mean here. Should I change the name of the variable or the comment wording?",
+      "parentUuid": "f2a3da65_fe785c00",
       "range": {
         "startLine": 141,
         "startChar": 17,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "df100662_57d5b490",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:39:38Z",
+      "side": 1,
+      "message": "max_delayable_requests_override_enabled_ ?",
+      "parentUuid": "652e681c_c7d1d44e",
+      "range": {
+        "startLine": 165,
+        "startChar": 13,
+        "endLine": 165,
+        "endChar": 53
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc4adb90_d06a604c",
         "filename": "net/nqe/network_quality_estimator_test_util.h",
         "patchSetId": 15
@@ -174,6 +342,30 @@
       "writtenOn": "2017-06-22T14:06:34Z",
       "side": 1,
       "message": "#include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 164,
+        "startChar": 17,
+        "endLine": 164,
+        "endChar": 24
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce39f447_188076cb",
+        "filename": "net/nqe/network_quality_estimator_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-22T16:39:38Z",
+      "side": 1,
+      "message": "#include \u003ccstdint\u003e or #include \u003cstdint.h\u003e ?",
+      "parentUuid": "bc4adb90_d06a604c",
       "range": {
         "startLine": 164,
         "startChar": 17,
