@@ -22,6 +22,30 @@
       "revId": "9916958a7816264ce02989c25018fd12bff21f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1733fa2c_09af10d4",
+        "filename": "device/geolocation/public/interfaces/geoposition.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-22T15:28:37Z",
+      "side": 1,
+      "message": "It will outlive us for sure :)",
+      "parentUuid": "8b070f43_e2ed6310",
+      "range": {
+        "startLine": 8,
+        "startChar": 16,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "9916958a7816264ce02989c25018fd12bff21f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
