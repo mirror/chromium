@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dcf0c76_a39920da",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-22T12:19:13Z",
+      "side": 1,
+      "message": "nit: This DCHECK is not necessary since \"complete\" is a required property of PaymentsIsSelectable protocol.",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d496e94a_31d87efa",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-22T12:19:13Z",
+      "side": 1,
+      "message": "nit: this class is not a Mock (https://www.martinfowler.com/articles/mocksArentStubs.html). It is a test double, but I think it is a fake (real implementation taking shortcut) instead of a mock (object configured with expectations and verifying the expectations are fullfilled).\n\nI would just call it FakePaymentsProfileComparator.",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076ba563_b22a2f8d",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-22T12:19:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244d16a8_758c76f5",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-22T12:19:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d28eef3_e8f7300f",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_mediator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-22T12:19:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9fba9de1d149dfc0c7e7fe81de899f551462106b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb6bb60_fe925b5f",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-22T12:19:13Z",
+      "side": 0,
+      "message": "nit: I think this anonymous namespace should be removed and instead code changed to:\n\nusing payment_request_util::GetAddressNotificationLabelFromAutofillProfile;\nusing payment_request_util::GetBillingAddressLabelFromAutofillProfile;\n...",
+      "revId": "97b537bf1aba5ca6e106920faa65f140dd80df32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd92611_4102d698",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-22T12:19:13Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "97b537bf1aba5ca6e106920faa65f140dd80df32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
