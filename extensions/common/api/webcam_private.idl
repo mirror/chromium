@@ -22,9 +22,29 @@ namespace webcamPrivate {
     double? zoom;
   };
 
+  dictionary Range { double min; double max; };
+
+  // Separate type for getter that includes ranges. Should be inherited but
+  // dictionary Foo : Bar {}; does not seem to be supported in this file.
+  dictionary WebcamConfigurationWithRanges {
+    // "Inherited" from WebcamConfiguration.
+    double? pan;
+    double? panSpeed;
+    PanDirection? panDirection;
+    double? tilt;
+    double? tiltSpeed;
+    TiltDirection? tiltDirection;
+    double? zoom;
+
+    // Supported range of pan, tilt and zoom values.
+    Range? panRange;
+    Range? tiltRange;
+    Range? zoomRange;
+  };
+
   callback WebcamIdCallback = void(DOMString webcamId);
   callback WebcamConfigurationCallback =
-      void(WebcamConfiguration configuration);
+      void(WebcamConfigurationWithRanges configuration);
 
   interface Functions {
     // Open a serial port that controls a webcam.
@@ -36,7 +56,7 @@ namespace webcamPrivate {
 
     static void get(DOMString webcamId, WebcamConfigurationCallback callback);
     static void set(DOMString webcamId, WebcamConfiguration config);
-    
+
     // Reset a webcam. Note: the value of the parameter have no effect, it's the
     // presence of the parameter that matters. E.g.: reset(webcamId, {pan: 0, 
     // tilt: 1}); will reset pan & tilt, but not zoom.
