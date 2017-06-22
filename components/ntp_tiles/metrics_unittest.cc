@@ -22,19 +22,31 @@ namespace {
 using testing::ElementsAre;
 using testing::IsEmpty;
 
-TEST(RecordPageImpressionTest, ShouldRecordUmaForIcons) {
+TEST(RecordPageImpressionTest, ShouldRecordNumberOfTiles) {
   base::HistogramTester histogram_tester;
-  RecordPageImpression({{TileSource::TOP_SITES, ICON_REAL, GURL()},
-                        {TileSource::TOP_SITES, ICON_REAL, GURL()},
-                        {TileSource::TOP_SITES, ICON_REAL, GURL()},
-                        {TileSource::TOP_SITES, ICON_COLOR, GURL()},
-                        {TileSource::TOP_SITES, ICON_COLOR, GURL()},
-                        {TileSource::SUGGESTIONS_SERVICE, ICON_REAL, GURL()},
-                        {TileSource::SUGGESTIONS_SERVICE, ICON_DEFAULT, GURL()},
-                        {TileSource::POPULAR, ICON_COLOR, GURL()}},
-                       /*rappor_service=*/nullptr);
+  RecordPageImpression(5);
   EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.NumberOfTiles"),
-              ElementsAre(base::Bucket(/*min=*/8, /*count=*/1)));
+              ElementsAre(base::Bucket(/*min=*/5, /*count=*/1)));
+}
+
+TEST(RecordTileImpressionTest, ShouldRecordUmaForIcons) {
+  base::HistogramTester histogram_tester;
+
+  std::vector<std::pair<TileSource, TileVisualType>> kTestTiles{
+      {TileSource::TOP_SITES, ICON_REAL},
+      {TileSource::TOP_SITES, ICON_REAL},
+      {TileSource::TOP_SITES, ICON_REAL},
+      {TileSource::TOP_SITES, ICON_COLOR},
+      {TileSource::TOP_SITES, ICON_COLOR},
+      {TileSource::SUGGESTIONS_SERVICE, ICON_REAL},
+      {TileSource::SUGGESTIONS_SERVICE, ICON_DEFAULT},
+      {TileSource::POPULAR, ICON_COLOR}};
+  int index = 0;
+  for (const auto& tile : kTestTiles) {
+    RecordTileImpression(index++, tile.first, tile.second, GURL(),
+                         /*rappor_service=*/nullptr);
+  }
+
   EXPECT_THAT(
       histogram_tester.GetAllSamples("NewTabPage.SuggestionsImpression"),
       ElementsAre(base::Bucket(/*min=*/0, /*count=*/1),
@@ -88,14 +100,19 @@ TEST(RecordPageImpressionTest, ShouldRecordUmaForIcons) {
               ElementsAre(base::Bucket(/*min=*/6, /*count=*/1)));
 }
 
-TEST(RecordPageImpressionTest, ShouldRecordUmaForThumbnails) {
+TEST(RecordTileImpressionTest, ShouldRecordUmaForThumbnails) {
   base::HistogramTester histogram_tester;
-  RecordPageImpression({{TileSource::TOP_SITES, THUMBNAIL_FAILED, GURL()},
-                        {TileSource::SUGGESTIONS_SERVICE, THUMBNAIL, GURL()},
-                        {TileSource::POPULAR, THUMBNAIL, GURL()}},
-                       /*rappor_service=*/nullptr);
-  EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.NumberOfTiles"),
-              ElementsAre(base::Bucket(/*min=*/3, /*count=*/1)));
+
+  std::vector<std::pair<TileSource, TileVisualType>> kTestTiles{
+      {TileSource::TOP_SITES, THUMBNAIL_FAILED},
+      {TileSource::SUGGESTIONS_SERVICE, THUMBNAIL},
+      {TileSource::POPULAR, THUMBNAIL}};
+  int index = 0;
+  for (const auto& tile : kTestTiles) {
+    RecordTileImpression(index++, tile.first, tile.second, GURL(),
+                         /*rappor_service=*/nullptr);
+  }
+
   EXPECT_THAT(
       histogram_tester.GetAllSamples("NewTabPage.SuggestionsImpression"),
       ElementsAre(base::Bucket(/*min=*/0, /*count=*/1),
@@ -216,14 +233,15 @@ TEST(RecordTileClickTest, ShouldNotRecordUnknownTileType) {
       IsEmpty());
 }
 
-TEST(RecordPageImpressionTest, ShouldRecordRappor) {
+TEST(RecordTileImpressionTest, ShouldRecordRappor) {
   rappor::TestRapporServiceImpl rappor_service;
 
-  RecordPageImpression(
-      {{TileSource::TOP_SITES, ICON_REAL, GURL("http://www.site1.com/")},
-       {TileSource::TOP_SITES, ICON_COLOR, GURL("http://www.site2.com/")},
-       {TileSource::TOP_SITES, ICON_DEFAULT, GURL("http://www.site3.com/")}},
-      &rappor_service);
+  RecordTileImpression(0, TileSource::TOP_SITES, ICON_REAL,
+                       GURL("http://www.site1.com/"), &rappor_service);
+  RecordTileImpression(1, TileSource::TOP_SITES, ICON_COLOR,
+                       GURL("http://www.site2.com/"), &rappor_service);
+  RecordTileImpression(2, TileSource::TOP_SITES, ICON_DEFAULT,
+                       GURL("http://www.site3.com/"), &rappor_service);
 
   EXPECT_EQ(3, rappor_service.GetReportsCount());
 
@@ -255,13 +273,13 @@ TEST(RecordPageImpressionTest, ShouldRecordRappor) {
   }
 }
 
-TEST(RecordPageImpressionTest, ShouldNotRecordRapporForUnknownTileType) {
+TEST(RecordTileImpressionTest, ShouldNotRecordRapporForUnknownTileType) {
   rappor::TestRapporServiceImpl rappor_service;
 
-  RecordPageImpression(
-      {{TileSource::TOP_SITES, ICON_REAL, GURL("http://www.s1.com/")},
-       {TileSource::TOP_SITES, UNKNOWN_TILE_TYPE, GURL("http://www.s2.com/")}},
-      &rappor_service);
+  RecordTileImpression(0, TileSource::TOP_SITES, ICON_REAL,
+                       GURL("http://www.s1.com/"), &rappor_service);
+  RecordTileImpression(1, TileSource::TOP_SITES, UNKNOWN_TILE_TYPE,
+                       GURL("http://www.s2.com/"), &rappor_service);
 
   // Unknown tile type shouldn't get reported.
   EXPECT_EQ(1, rappor_service.GetReportsCount());
