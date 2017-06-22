@@ -29,6 +29,10 @@ class WebRemoteFrameBase : public GarbageCollectedFinalized<WebRemoteFrameBase>,
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 
+#if DCHECK_IS_ON()
+  virtual void AssertWasClosed() = 0;
+#endif
+
  protected:
   explicit WebRemoteFrameBase(WebTreeScopeType scope) : WebRemoteFrame(scope) {}
 };

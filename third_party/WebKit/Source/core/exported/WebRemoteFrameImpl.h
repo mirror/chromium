@@ -99,6 +99,10 @@ class CORE_EXPORT WebRemoteFrameImpl final
 
   DECLARE_TRACE();
 
+#if DCHECK_IS_ON()
+  void AssertWasClosed() override { DCHECK(!self_keep_alive_); }
+#endif
+
  private:
   WebRemoteFrameImpl(WebTreeScopeType, WebRemoteFrameClient*);
 
