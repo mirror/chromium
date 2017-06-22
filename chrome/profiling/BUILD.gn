@@ -18,8 +18,12 @@ if (enable_oop_heap_profiling) {
       "memlog_connection_manager.h",
       "memlog_receiver.h",
       "memlog_receiver_pipe_server.h",
+      "memlog_receiver_pipe_server_posix.cc",
+      "memlog_receiver_pipe_server_posix.h",
       "memlog_receiver_pipe_server_win.cc",
       "memlog_receiver_pipe_server_win.h",
+      "memlog_receiver_pipe_posix.cc",
+      "memlog_receiver_pipe_posix.h",
       "memlog_receiver_pipe_win.cc",
       "memlog_receiver_pipe_win.h",
       "memlog_stream_parser.cc",
@@ -36,6 +40,10 @@ if (enable_oop_heap_profiling) {
       "//chrome/common",
       "//mojo/edk/system",
     ]
+  }
+
+  source_set("browser_tests") {
+    "profiling_browsertest.cc",
   }
 } else {
   # Dummy target so this can be unconditionally depended on and header checking
