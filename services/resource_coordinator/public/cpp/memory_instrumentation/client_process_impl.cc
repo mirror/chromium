@@ -123,6 +123,10 @@ void ClientProcessImpl::RequestGlobalMemoryDump(
   coordinator_->RequestGlobalMemoryDump(args, callback_proxy);
 }
 
+void ClientProcessImpl::RequestOSMemoryDump(
+    const std::vector<base::ProcessId>& ids,
+    const RequestOSMemoryDumpCallback& callback) {}
+
 void ClientProcessImpl::MemoryDumpCallbackProxy(
     const base::trace_event::GlobalMemoryDumpCallback& callback,
     uint64_t dump_guid,

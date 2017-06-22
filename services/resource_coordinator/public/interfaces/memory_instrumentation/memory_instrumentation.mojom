@@ -110,6 +110,9 @@ interface ClientProcess {
   // returned in case of success.
   RequestProcessMemoryDump(RequestArgs args) =>
       (uint64 dump_guid, bool success, RawProcessMemoryDump? process_memory_dump);
+
+  RequestOSMemoryDump(array<mojo.common.mojom.ProcessId> ids) =>
+      (bool success, map<mojo.common.mojom.ProcessId, RawOSMemDump> dumps);
 };
 
 // The memory-infra service implements this interface. There is one instance for

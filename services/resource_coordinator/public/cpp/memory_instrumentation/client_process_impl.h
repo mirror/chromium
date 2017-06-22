@@ -68,6 +68,11 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
       bool success,
       const base::Optional<base::trace_event::MemoryDumpCallbackResult>&);
 
+  // mojom::ClientProcess implementation. The Coordinator calls this.
+  void RequestOSMemoryDump(
+      const std::vector<base::ProcessId>& ids,
+      const RequestOSMemoryDumpCallback& callback) override;
+
   // A proxy callback for updating |pending_memory_dump_guid_|.
   void MemoryDumpCallbackProxy(
       const base::trace_event::GlobalMemoryDumpCallback& callback,
