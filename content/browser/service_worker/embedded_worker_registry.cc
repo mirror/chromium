@@ -95,6 +95,7 @@ void EmbeddedWorkerRegistry::OnDevToolsAttached(int embedded_worker_id) {
 }
 
 void EmbeddedWorkerRegistry::RemoveProcess(int process_id) {
+  LOG(ERROR) << "EmbeddedWorkerRegistry::RemoveProcess";
   std::map<int, std::set<int> >::iterator found =
       worker_process_map_.find(process_id);
   if (found != worker_process_map_.end()) {

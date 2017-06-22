@@ -82,6 +82,7 @@ void SetupOnUI(
     const base::Callback<
         void(std::unique_ptr<EmbeddedWorkerInstance::DevToolsProxy>,
              bool wait_for_debugger)>& callback) {
+  LOG(ERROR) << "SetupOnUI";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   std::unique_ptr<EmbeddedWorkerInstance::DevToolsProxy> devtools_proxy;
   int worker_devtools_agent_route_id = MSG_ROUTING_NONE;
@@ -324,6 +325,7 @@ class EmbeddedWorkerInstance::StartTask {
                           int process_id,
                           bool is_new_process,
                           const EmbeddedWorkerSettings& settings) {
+    LOG(ERROR) << "OnProcessAllocated";
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
     if (status != SERVICE_WORKER_OK) {
@@ -371,14 +373,15 @@ class EmbeddedWorkerInstance::StartTask {
     const int64_t service_worker_version_id = params->service_worker_version_id;
     const GURL& scope = params->scope;
     GURL script_url(params->script_url);
-    BrowserThread::PostTask(
+    BrowserThread::PostDelayedTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&SetupOnUI, process_id, instance_->context_.get(),
                    instance_->context_, service_worker_version_id, script_url,
                    scope, is_installed_, base::Passed(&request_),
                    base::Bind(&StartTask::OnSetupOnUICompleted,
                               weak_factory_.GetWeakPtr(), base::Passed(&params),
-                              is_new_process)));
+                              is_new_process)),
+        base::TimeDelta::FromMillisecondsD(10));
   }
 
   void OnSetupOnUICompleted(
@@ -386,6 +389,7 @@ class EmbeddedWorkerInstance::StartTask {
       bool is_new_process,
       std::unique_ptr<EmbeddedWorkerInstance::DevToolsProxy> devtools_proxy,
       bool wait_for_debugger) {
+    LOG(ERROR) << "OnSetupOnUICompleted";
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     params->worker_devtools_agent_route_id = devtools_proxy->agent_route_id();
     params->wait_for_debugger = wait_for_debugger;

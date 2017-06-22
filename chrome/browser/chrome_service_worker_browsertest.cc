@@ -700,4 +700,31 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerNavigationHintTest, NoFetchHandler) {
       false);
 }
 
+IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerNavigationHintTest,
+                       FailedDueToRendererCrash) {
+  WriteFile(FILE_PATH_LITERAL("sw.js"), "self.onfetch = function(e) {};");
+  WriteFile(FILE_PATH_LITERAL("test.html"), kInstallAndWaitForActivatedPage);
+  InitializeServer();
+  NavigateToPageAndWaitForReadyTitle("/test.html");
+  GetServiceWorkerContext()->StopAllServiceWorkersForOrigin(
+      embedded_test_server()->base_url());
+
+  base::RunLoop run_loop;
+  GetServiceWorkerContext()->StartServiceWorkerForNavigationHint(
+      embedded_test_server()->GetURL("/scope/"),
+      base::Bind(&ExpectResultAndRun<
+                     content::StartServiceWorkerForNavigationHintResult>,
+                 content::StartServiceWorkerForNavigationHintResult::FAILED,
+                 run_loop.QuitClosure()));
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome:crash"));
+  run_loop.Run();
+
+  histogram_tester_.ExpectBucketCount(
+      "ServiceWorker.StartWorker.Purpose",
+      27 /* ServiceWorkerMetrics::EventType::NAVIGATION_HINT  */, 1);
+  histogram_tester_.ExpectBucketCount(
+      "ServiceWorker.StartWorker.StatusByPurpose_NAVIGATION_HINT",
+      3 /* SERVICE_WORKER_ERROR_START_WORKER_FAILED  */, 1);
+}
+
 }  // namespace
