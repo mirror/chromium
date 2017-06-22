@@ -42,6 +42,11 @@ static std::atomic<int32_t> s_allocPageErrorCode{ERROR_SUCCESS};
 #error Unknown OS
 #endif  // defined(OS_POSIX)
 
+#if defined(OS_FUCHSIA)
+#include <magenta/process.h>
+#include <magenta/syscalls.h>
+#endif  // defined(OS_FUCHSIA)
+
 namespace base {
 
 // This internal function wraps the OS-specific page allocation call:
@@ -63,7 +68,15 @@ static void* SystemAllocPages(
 #else
   int access_flag = page_accessibility == PageAccessible
                         ? (PROT_READ | PROT_WRITE)
-                        : PROT_NONE;
+                        :
+#if defined(OS_FUCHSIA)
+                        // TODO(fuchsia): NONE is not currently supported, see
+                        // SetSystemPagesInaccessible().
+                        PROT_READ;
+#else
+                        PROT_NONE
+#endif
+  ;
   ret = mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (ret == MAP_FAILED) {
     s_allocPageErrorCode = errno;
@@ -195,7 +208,13 @@ void FreePages(void* address, size_t length) {
 
 void SetSystemPagesInaccessible(void* address, size_t length) {
   DCHECK(!(length & kSystemPageOffsetMask));
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+  // TODO(fuchsia): Protecting to "no access" is not currently supported. For
+  // guard pages, not-writable is mostly sufficient. Upstream bug at MG-546.
+  PCHECK(mx_vmar_protect(mx_vmar_root_self(),
+                         reinterpret_cast<uintptr_t>(address), length,
+                         MX_VM_FLAG_PERM_READ) == MX_OK);
+#elif defined(OS_POSIX)
   int ret = mprotect(address, length, PROT_NONE);
   CHECK(!ret);
 #else
@@ -206,7 +225,11 @@ void SetSystemPagesInaccessible(void* address, size_t length) {
 
 bool SetSystemPagesAccessible(void* address, size_t length) {
   DCHECK(!(length & kSystemPageOffsetMask));
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+  return mx_vmar_protect(mx_vmar_root_self(),
+                         reinterpret_cast<uintptr_t>(address), length,
+                         MX_VM_FLAG_PERM_READ | MX_VM_FLAG_PERM_WRITE) == MX_OK;
+#elif defined(OS_POSIX)
   return !mprotect(address, length, PROT_READ | PROT_WRITE);
 #else
   return !!VirtualAlloc(address, length, MEM_COMMIT, PAGE_READWRITE);

@@ -52,10 +52,10 @@ enum PageAccessibilityConfiguration {
 BASE_EXPORT void* AllocPages(void* address,
                              size_t len,
                              size_t align,
-                             PageAccessibilityConfiguration);
+                             PageAccessibilityConfiguration page_accessibility);
 
 // Free one or more pages.
-// addr and len must match a previous call to allocPages().
+// addr and len must match a previous call to AllocPages().
 BASE_EXPORT void FreePages(void* address, size_t length);
 
 // Mark one or more system pages as being inaccessible.
@@ -75,7 +75,7 @@ BASE_EXPORT WARN_UNUSED_RESULT bool SetSystemPagesAccessible(void* address,
 
 // Decommit one or more system pages. Decommitted means that the physical memory
 // is released to the system, but the virtual address space remains reserved.
-// System pages are re-committed by calling recommitSystemPages(). Touching
+// System pages are re-committed by calling RecommitSystemPages(). Touching
 // a decommitted page _may_ fault.
 // Clients should not make any assumptions about the contents of decommitted
 // system pages, before or after they write to the page. The only guarantee
