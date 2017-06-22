@@ -6,6 +6,7 @@
 
 #include "base/memory/weak_ptr.h"
 #include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/win/win_util.h"
 #include "base/win/windows_version.h"
@@ -51,12 +52,11 @@ void VersionUpdaterWin::OnUpdateCheckComplete(
   if (new_version.empty()) {
     // Google Update says that no new version is available. Check to see if a
     // restart is needed for a previously-applied update to take effect.
-    if (base::PostTaskAndReplyWithResult(
-            content::BrowserThread::GetBlockingPool(),
-            FROM_HERE,
-            base::Bind(&upgrade_util::IsUpdatePendingRestart),
-            base::Bind(&VersionUpdaterWin::OnPendingRestartCheck,
-                       weak_factory_.GetWeakPtr()))) {
+    if (base::PostTaskWithTraitsAndReplyWithResult(
+            FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
+            base::BindOnce(&upgrade_util::IsUpdatePendingRestart),
+            base::BindOnce(&VersionUpdaterWin::OnPendingRestartCheck,
+                           weak_factory_.GetWeakPtr()))) {
       // Early exit since callback_ will be Run in OnPendingRestartCheck.
       return;
     }
@@ -118,8 +118,8 @@ void VersionUpdaterWin::BeginUpdateCheckOnFileThread(
     bool install_update_if_possible) {
   // Disconnect from any previous attempts to avoid redundant callbacks.
   weak_factory_.InvalidateWeakPtrs();
-  BeginUpdateCheck(content::BrowserThread::GetTaskRunnerForThread(
-                       content::BrowserThread::FILE),
+  BeginUpdateCheck(base::CreateSingleThreadTaskRunnerWithTraits(
+                       (base::TaskPriority::BACKGROUND, base::MayBlock())),
                    g_browser_process->GetApplicationLocale(),
                    install_update_if_possible, owner_widget_,
                    weak_factory_.GetWeakPtr());
