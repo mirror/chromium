@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7c31d494_b077b5af",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-22T14:01:36Z",
+      "side": 1,
+      "message": "UKM isn\u0027t really intended to be used without URLs, otherwise you should be sending the data as UMA data. When is the later iteration going to occur? If it\u0027s pretty short term and you want to submit like this that it could be ok.\n\nHave you also filled in the  doc template linked from go/ukm-logs? See the section called \u0027Collecting data with UKM\u0027.",
+      "parentUuid": "8bfd6ca1_dcea934d",
+      "revId": "9d2ad67fe7b6c0e012c7b58c13e5aabc86e27068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7755590_09ebb525",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
         "patchSetId": 4
