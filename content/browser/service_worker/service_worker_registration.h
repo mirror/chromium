@@ -127,6 +127,8 @@ class CONTENT_EXPORT ServiceWorkerRegistration
   // initiated immediately.
   void ActivateWaitingVersionWhenReady();
 
+  void ActivateIfReady();
+
   // Takes over control of provider hosts which are currently not controlled or
   // controlled by other registrations.
   void ClaimClients();
@@ -156,6 +158,10 @@ class CONTENT_EXPORT ServiceWorkerRegistration
 
   void EnableNavigationPreload(bool enable);
   void SetNavigationPreloadHeader(const std::string& value);
+
+  // Used to allow tests to change time for testing.
+  void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
+  std::unique_ptr<base::RepeatingTimer> activation_timer_;
 
  protected:
   ~ServiceWorkerRegistration() override;
@@ -194,6 +200,7 @@ class CONTENT_EXPORT ServiceWorkerRegistration
                          scoped_refptr<ServiceWorkerVersion> version,
                          ServiceWorkerStatusCode status);
 
+
   const GURL pattern_;
   const int64_t registration_id_;
   bool is_deleted_;
@@ -213,6 +220,10 @@ class CONTENT_EXPORT ServiceWorkerRegistration
   std::vector<base::Closure> registration_finished_callbacks_;
   base::WeakPtr<ServiceWorkerContextCore> context_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  std::unique_ptr<base::TickClock> tick_clock_;
+
+  base::WeakPtrFactory<ServiceWorkerRegistration> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerRegistration);
 };

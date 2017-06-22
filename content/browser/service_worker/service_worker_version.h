@@ -166,6 +166,14 @@ class CONTENT_EXPORT ServiceWorkerVersion
     foreign_fetch_origins_ = origins;
   }
 
+  base::TimeDelta TimeSinceNoControllees() const {
+    return GetTickDuration(no_controllees_time_);
+  }
+
+  base::TimeDelta TimeSinceSkipWaiting() const {
+    return GetTickDuration(skip_waiting_time_);
+  }
+
   // Meaningful only if this version is active.
   const NavigationPreloadState& navigation_preload_state() const {
     DCHECK(status_ == ACTIVATING || status_ == ACTIVATED) << status_;
@@ -441,6 +449,8 @@ class CONTENT_EXPORT ServiceWorkerVersion
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerActivationTest, SkipWaiting);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerActivationTest,
                            SkipWaitingWithInflightRequest);
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerActivationTest,
+                           LameDuckTime_SkipWaiting);
 
   class PingController;
 
@@ -764,6 +774,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
   bool in_dtor_ = false;
 
   std::vector<int> pending_skip_waiting_requests_;
+  base::TimeTicks skip_waiting_time_;
+  base::TimeTicks no_controllees_time_;
+
   std::unique_ptr<net::HttpResponseInfo> main_script_http_info_;
 
   std::unique_ptr<TrialTokenValidator::FeatureToTokensMap> origin_trial_tokens_;

@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/default_tick_clock.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
@@ -20,6 +21,14 @@
 namespace content {
 
 namespace {
+
+// If an outgoing active worker has no controllees or the waiting worker called
+// skipWaiting(), it is given |kMaxLameDuckTime| time to finish its requests
+// before it is removed. If the waiting worker called skipWaiting() more than
+// this time ago, or the outgoing worker has had no controllees for a continuous
+// period of time exceeding this time, the outgoing worker will be removed even
+// if it has ongoing requests.
+constexpr base::TimeDelta kMaxLameDuckTime = base::TimeDelta::FromMinutes(5);
 
 ServiceWorkerVersionInfo GetVersionInfo(ServiceWorkerVersion* version) {
   if (!version)
@@ -41,7 +50,9 @@ ServiceWorkerRegistration::ServiceWorkerRegistration(
       should_activate_when_ready_(false),
       resources_total_size_bytes_(0),
       context_(context),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      tick_clock_(base::WrapUnique(new base::DefaultTickClock())),
+      weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_NE(kInvalidServiceWorkerRegistrationId, registration_id);
   DCHECK(context_);
@@ -185,8 +196,32 @@ void ServiceWorkerRegistration::UnsetVersionInternal(
 void ServiceWorkerRegistration::ActivateWaitingVersionWhenReady() {
   DCHECK(waiting_version());
   should_activate_when_ready_ = true;
-  if (IsReadyToActivate())
+  if (IsReadyToActivate()) {
     ActivateWaitingVersion(false /* delay */);
+    return;
+  }
+
+  if (!activation_timer_) {
+    activation_timer_ = base::MakeUnique<base::RepeatingTimer>(tick_clock_.get());
+  }
+  if (!activation_timer_->IsRunning()) {
+    LOG(ERROR) << "Start timer";
+    activation_timer_->Start(
+        FROM_HERE, kMaxLameDuckTime,
+        base::Bind(&ServiceWorkerRegistration::ActivateIfReady, weak_factory_.GetWeakPtr()));
+  }
+}
+
+void ServiceWorkerRegistration::ActivateIfReady() {
+  LOG(ERROR) << "ActivateIfReady";
+  if (!should_activate_when_ready_) {
+    activation_timer_->Stop();
+    return;
+  }
+
+  if (IsReadyToActivate()) {
+    ActivateWaitingVersion(false /* delay */);
+  }
 }
 
 void ServiceWorkerRegistration::ClaimClients() {
@@ -270,11 +305,16 @@ bool ServiceWorkerRegistration::IsReadyToActivate() const {
     return false;
 
   DCHECK(waiting_version());
+  const ServiceWorkerVersion* waiting = waiting_version();
   const ServiceWorkerVersion* active = active_version();
   if (!active)
     return true;
   if (!active->HasWork() &&
-      (!active->HasControllee() || waiting_version()->skip_waiting())) {
+      (!active->HasControllee() || waiting->skip_waiting())) {
+    return true;
+  }
+  if (waiting->TimeSinceSkipWaiting() > kMaxLameDuckTime ||
+      active->TimeSinceNoControllees() > kMaxLameDuckTime) {
     return true;
   }
   return false;
@@ -285,6 +325,9 @@ void ServiceWorkerRegistration::ActivateWaitingVersion(bool delay) {
   DCHECK(context_);
   DCHECK(IsReadyToActivate());
   should_activate_when_ready_ = false;
+  if (activation_timer_) {
+    activation_timer_->Stop();
+  }
   scoped_refptr<ServiceWorkerVersion> activating_version = waiting_version();
   scoped_refptr<ServiceWorkerVersion> exiting_version = active_version();
 
@@ -403,6 +446,10 @@ void ServiceWorkerRegistration::SetNavigationPreloadHeader(
   navigation_preload_state_.header = header;
   if (active_version_)
     active_version_->SetNavigationPreloadState(navigation_preload_state_);
+}
+
+void ServiceWorkerRegistration::SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock) {
+  tick_clock_ = std::move(tick_clock);
 }
 
 void ServiceWorkerRegistration::RegisterRegistrationFinishedCallback(
