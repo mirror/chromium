@@ -16,6 +16,24 @@
       "revId": "d3319a28c5a1d4f41688962dafd12a247ae249df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4178d6b1_ce2d2ac1",
+        "filename": "base/observer_list_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-22T17:59:38Z",
+      "side": 1,
+      "message": "Oh, is that bad? I can put it back to the const + max() that was there before if that\u0027s better.",
+      "parentUuid": "8db22c6c_87c9a12c",
+      "revId": "d3319a28c5a1d4f41688962dafd12a247ae249df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
