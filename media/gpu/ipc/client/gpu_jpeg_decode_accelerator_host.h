@@ -10,63 +10,52 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
+#include "media/gpu/mojo/jpeg_decoder.mojom.h"
 #include "media/video/jpeg_decode_accelerator.h"
 
 namespace base {
 class SingleThreadTaskRunner;
 }
 
-namespace gpu {
-class GpuChannelHost;
-}
-
-namespace IPC {
-class Listener;
-class Message;
-}
-
 namespace media {
 
 // TODO(c.padhi): Move GpuJpegDecodeAcceleratorHost to media/gpu/mojo, see
 // http://crbug.com/699255.
-// This class is used to talk to JpegDecodeAccelerator in the GPU process
-// through IPC messages.
+// A JpegDecodeAccelerator, for use in the browser process, that proxies to a
+// mojom::GpuJpegDecodeAccelerator. Created on the owner's thread, otherwise
+// operating and deleted on the IO thread.
 class GpuJpegDecodeAcceleratorHost : public JpegDecodeAccelerator {
  public:
   GpuJpegDecodeAcceleratorHost(
-      scoped_refptr<gpu::GpuChannelHost> channel,
-      int32_t route_id,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+      mojom::GpuJpegDecodeAcceleratorPtr jpeg_decoder);
   ~GpuJpegDecodeAcceleratorHost() override;
 
   // JpegDecodeAccelerator implementation.
-  // |client| is called on the IO thread, but is never called into after the
-  // GpuJpegDecodeAcceleratorHost is destroyed.
-  bool Initialize(JpegDecodeAccelerator::Client* client) override;
+  bool Initialize(Client* client) override;
+  void InitializeDecoder(Client* client, InitCB init_cb) override;
   void Decode(const BitstreamBuffer& bitstream_buffer,
               const scoped_refptr<VideoFrame>& video_frame) override;
   bool IsSupported() override;
 
-  base::WeakPtr<IPC::Listener> GetReceiver();
-
  private:
-  class Receiver;
+  void OnInitializeDone(InitCB init_cb,
+                        JpegDecodeAccelerator::Client* client,
+                        bool success);
+  void OnDecodeAck(int32_t bitstream_buffer_id, mojom::Error error);
+  void OnLostConnectionToJpegDecoder();
 
-  void Send(IPC::Message* message);
-
-  scoped_refptr<gpu::GpuChannelHost> channel_;
-
-  // Route ID for the associated decoder in the GPU process.
-  int32_t decoder_route_id_;
-
-  // GPU IO task runner.
+  // Browser IO task runner.
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
-  std::unique_ptr<Receiver> receiver_;
+  Client* client_ = nullptr;
 
-  SEQUENCE_CHECKER(sequence_checker_);
+  // Used to safely pass the GpuJpegDecodeAcceleratorPtr from one thread
+  // to another. It is set in the constructor and consumed in
+  // InitializeDecoder().
+  mojom::GpuJpegDecodeAcceleratorPtrInfo jpeg_decoder_info_;
+
+  mojom::GpuJpegDecodeAcceleratorPtr jpeg_decoder_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuJpegDecodeAcceleratorHost);
 };

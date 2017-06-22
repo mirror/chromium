@@ -13,19 +13,12 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
-#include "base/single_thread_task_runner.h"
-#include "base/threading/thread.h"
 #include "content/common/content_export.h"
 #include "gpu/config/gpu_info.h"
 #include "media/capture/video/video_capture_jpeg_decoder.h"
-#include "media/video/jpeg_decode_accelerator.h"
-
-namespace gpu {
-class GpuChannelHost;
-}
+#include "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.h"
 
 namespace content {
 
@@ -38,10 +31,9 @@ namespace content {
 // the IO thread.
 class CONTENT_EXPORT VideoCaptureGpuJpegDecoder
     : public media::VideoCaptureJpegDecoder,
-      public media::JpegDecodeAccelerator::Client,
-      public base::SupportsWeakPtr<VideoCaptureGpuJpegDecoder> {
+      public media::JpegDecodeAccelerator::Client {
  public:
-  // |decode_done_cb| is called on the IO thread when decode succeed. This can
+  // |decode_done_cb| is called on the IO thread when decode succeeds. This can
   // be on any thread. |decode_done_cb| is never called after
   // VideoCaptureGpuJpegDecoder is destroyed.
   VideoCaptureGpuJpegDecoder(
@@ -76,26 +68,14 @@ class CONTENT_EXPORT VideoCaptureGpuJpegDecoder
       base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this,
       const gpu::GPUInfo& gpu_info);
 
-  // Initialization helper, to establish GPU channel.
-  static void EstablishGpuChannelOnUIThread(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this);
-
-  static void GpuChannelEstablishedOnUIThread(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this,
-      scoped_refptr<gpu::GpuChannelHost> established_channel_host);
-
-  void FinishInitialization(
-      scoped_refptr<gpu::GpuChannelHost> gpu_channel_host);
+  void FinishInitialization(const gpu::GPUInfo& gpu_info);
+  void OnInitializationDone(bool success);
 
   // Returns true if the decoding of last frame is not finished yet.
   bool IsDecoding_Locked() const;
 
   // Records |decoder_status_| to histogram.
   void RecordInitDecodeUMA_Locked();
-
-  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host_;
 
   // The underlying JPEG decode accelerator.
   std::unique_ptr<media::JpegDecodeAccelerator> decoder_;
@@ -125,6 +105,8 @@ class CONTENT_EXPORT VideoCaptureGpuJpegDecoder
   STATUS decoder_status_;
 
   SEQUENCE_CHECKER(sequence_checker_);
+
+  base::WeakPtrFactory<VideoCaptureGpuJpegDecoder> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureGpuJpegDecoder);
 };
