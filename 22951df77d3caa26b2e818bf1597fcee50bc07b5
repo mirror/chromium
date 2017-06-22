@@ -16,6 +16,24 @@
       "revId": "22951df77d3caa26b2e818bf1597fcee50bc07b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfbd461_90196950",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1211259
+      },
+      "writtenOn": "2017-06-22T19:55:12Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "9c656128_2a880bfc",
+      "revId": "22951df77d3caa26b2e818bf1597fcee50bc07b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
