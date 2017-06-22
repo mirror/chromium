@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "848f9acb_f7490441",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-22T21:34:41Z",
+      "side": 1,
+      "message": "nit: Did you want \"LoadType\" in this name, as for the others?",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "d01e88c5d729684aa87550ba4eb811100740c7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a005c4b_b1eca293",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -22,6 +45,30 @@
       "revId": "d01e88c5d729684aa87550ba4eb811100740c7cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a194ef0_42727046",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 93118,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-22T21:34:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a005c4b_b1eca293",
+      "range": {
+        "startLine": 93118,
+        "startChar": 12,
+        "endLine": 93118,
+        "endChar": 20
+      },
+      "revId": "d01e88c5d729684aa87550ba4eb811100740c7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
