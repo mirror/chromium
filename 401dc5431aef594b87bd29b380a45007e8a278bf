@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9aebeae_dfeeb9c7",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/page/createIsolatedWorld-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T14:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa14157_905bdc54",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 26
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2be55730_5d51e3bf",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-20T18:10:37Z",
       "side": 1,
       "message": "What does \"D\" mean in this method name?",
+      "range": {
+        "startLine": 929,
+        "startChar": 35,
+        "endLine": 929,
+        "endChar": 67
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95be315_e8af0291",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T14:06:20Z",
+      "side": 1,
+      "message": "This was a typo, now removed.",
+      "parentUuid": "2be55730_5d51e3bf",
       "range": {
         "startLine": 929,
         "startChar": 35,
@@ -203,6 +251,30 @@
       "side": 1,
       "message": "Oh, I missed that method existing already! Nice one. I still think it\u0027s good to return the context id from this method. I also see no harm with exposing worldId in auxData - it\u0027s intended for such purposes specific to embedder.",
       "parentUuid": "407bf239_08e28b44",
+      "range": {
+        "startLine": 544,
+        "startChar": 32,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b1c2ae_3d5ca269",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-22T14:06:20Z",
+      "side": 1,
+      "message": "I\u0027ve changed this to now return the execution context id.",
+      "parentUuid": "a7b7fcf5_09b208a0",
       "range": {
         "startLine": 544,
         "startChar": 32,
