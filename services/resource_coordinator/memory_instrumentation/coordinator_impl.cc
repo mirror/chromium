@@ -125,7 +125,7 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
                 << base::trace_event::MemoryDumpLevelOfDetailToString(
                        args.level_of_detail)
                 << ") is already in the queue";
-        callback.Run(args.dump_guid, false /* success */,
+        callback.Run(false /* success */, args.dump_guid,
                      nullptr /* global_memory_dump */);
         return;
       }
@@ -162,8 +162,9 @@ void CoordinatorImpl::UnregisterClientProcess(
   if (pending_clients_for_current_dump_.count(client_process)) {
     DCHECK(!queued_memory_dump_requests_.empty());
     OnProcessMemoryDumpResponse(
-        client_process, queued_memory_dump_requests_.front().args.dump_guid,
-        false /* success */, nullptr /* process_memory_dump */);
+        client_process, false /* success */,
+        queued_memory_dump_requests_.front().args.dump_guid,
+        nullptr /* process_memory_dump */);
   }
   size_t num_deleted = clients_.erase(client_process);
   DCHECK(num_deleted == 1);
@@ -199,8 +200,8 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
 
 void CoordinatorImpl::OnProcessMemoryDumpResponse(
     mojom::ClientProcess* client_process,
-    uint64_t dump_guid,
     bool success,
+    uint64_t dump_guid,
     mojom::RawProcessMemoryDumpPtr process_memory_dump) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto it = pending_clients_for_current_dump_.find(client_process);
@@ -305,7 +306,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
 
   const auto& callback = request.callback;
   const bool global_success = failed_memory_dump_count_ == 0;
-  callback.Run(request.args.dump_guid, global_success, std::move(global_dump));
+  callback.Run(global_success, request.args.dump_guid, std::move(global_dump));
   queued_memory_dump_requests_.pop_front();
 
   char guid_str[20];
