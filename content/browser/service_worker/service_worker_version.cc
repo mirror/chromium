@@ -32,6 +32,7 @@
 #include "content/browser/service_worker/service_worker_client_utils.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
+#include "content/browser/service_worker/service_worker_installed_scripts_sender.h"
 #include "content/browser/service_worker/service_worker_metrics.h"
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/common/origin_trials/trial_token_validator.h"
@@ -1472,8 +1473,14 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   params->is_installed = IsInstalled(status_);
   params->pause_after_download = pause_after_download_;
 
+  DCHECK(!installed_scripts_sender_);
+  installed_scripts_sender_ =
+      base::MakeUnique<ServiceWorkerInstalledScriptsSender>();
+  auto installed_scritps_info = installed_scripts_sender_->CreateAndBind();
+
   embedded_worker_->Start(
       std::move(params), mojo::MakeRequest(&event_dispatcher_),
+      std::move(installed_scritps_info),
       base::Bind(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                  weak_factory_.GetWeakPtr()));
   event_dispatcher_.set_connection_error_handler(base::Bind(
