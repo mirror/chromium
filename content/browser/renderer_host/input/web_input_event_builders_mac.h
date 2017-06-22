@@ -23,6 +23,12 @@ class CONTENT_EXPORT WebKeyboardEventBuilder {
 
 class CONTENT_EXPORT WebMouseEventBuilder {
  public:
+  static blink::WebMouseEvent BuildMouseEventFromTouchEvent(
+      NSEvent* theEvent,
+      NSView* view,
+      blink::WebInputEvent::Type webInputEvent,
+      blink::WebInputEvent::Modifiers webInputEventModifier);
+
   static blink::WebMouseEvent Build(
       NSEvent* event,
       NSView* view,
