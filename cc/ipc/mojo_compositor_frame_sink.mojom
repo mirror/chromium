@@ -57,9 +57,11 @@ interface MojoCompositorFrameSinkClient {
   ReclaimResources(ReturnedResourceArray resources);
 };
 
-// MojoCompositorFrameSinkPrivate is used by the display compositor host to
-// perform privilieged operations on a CompositorFrameSink such as
-// CopyOutputRequests.
+// MojoCompositorFrameSinkPrivate is a connection between viz and the host
+// process. The lifetime of the corresponding CompositorFrameSink connection is
+// controlled by this interface, as it will be closed when this is closed. This
+// interace also allows the host process to perform privilieged operations on a
+// CompositorFrameSink such as CopyOutputRequests.
 interface MojoCompositorFrameSinkPrivate {
   // Claims this FrameSinkId will embed |surface_id| so it should own the
   // temporary reference to |surface_id|.

@@ -79,11 +79,13 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
     // CompositorFrameSink connection between the client and viz.
     cc::mojom::MojoCompositorFrameSinkPrivatePtr private_interface;
 
+   private:
     DISALLOW_COPY_AND_ASSIGN(FrameSinkData);
   };
 
   // cc::mojom::FrameSinkManagerClient:
   void OnSurfaceCreated(const cc::SurfaceInfo& surface_info) override;
+  void OnClientConnectionClosed(const cc::FrameSinkId& frame_sink_id) override;
 
   // Mojo connection to the FrameSinkManager.
   cc::mojom::FrameSinkManagerPtr frame_sink_manager_ptr_;
