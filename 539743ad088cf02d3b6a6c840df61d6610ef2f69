@@ -224,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "4df5a12c_0f91769d",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T21:34:19Z",
+      "side": 1,
+      "message": "I changed the network model to track network requests and provide a way to cancel them (by destroying them).",
+      "parentUuid": "1b3f1d15_3b600f5a",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24306079_384f571b",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
         "patchSetId": 2

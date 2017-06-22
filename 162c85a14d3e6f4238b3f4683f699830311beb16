@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f787029_0efde9a1",
+        "filename": "components/offline_pages/core/prefetch/get_operation_task.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b3c2804_925bbd54",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7a26b43_3dde47d8",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
         "patchSetId": 12
@@ -39,6 +63,24 @@
       "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83e4630_4d0b6e3c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a26b43_3dde47d8",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "909bffee_da3441ab",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f93d92c_4c6ed8d0",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97565e8_0f595892",
         "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
         "patchSetId": 12
@@ -73,6 +133,24 @@
       "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9166207_d51a8c12",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f97565e8_0f595892",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "7671a996_f4a2f518",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94c8bd17_7f7e7e30",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1795915f_6b9d0498",
         "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
         "patchSetId": 12
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "e092ab82_d4551d6e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T21:34:19Z",
+      "side": 1,
+      "message": "FindGetOperationRequestByName is used in tests, but Cancel is not used.  Removed the Cancel methods.",
+      "parentUuid": "1795915f_6b9d0498",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c0daab2_c927779c",
         "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.cc",
         "patchSetId": 12
@@ -124,6 +238,24 @@
       "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f431c690_bd4bf917",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-22T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c0daab2_c927779c",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
