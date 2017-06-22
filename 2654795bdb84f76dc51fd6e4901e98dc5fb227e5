@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3187f7ce_f2b2feaf",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-22T07:07:58Z",
+      "side": 1,
+      "message": "yeah, let\u0027s rename this to a better name using this opportunity. given that this is only controlling whether we include the CORS headers in the response for testing, I think we should name this to imply that, e.g.\n\nenum CORSHeaders { kNoCORSHeaders, kWithCORSHeaders }",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7164bb61_65b16c95",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-22T07:07:58Z",
+      "side": 1,
+      "message": "Can we move the stuffs specific to SubresourceIntegrityOriginTest to it?",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b70de25_f71a966e",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-22T07:07:58Z",
+      "side": 1,
+      "message": "I\u0027d rename this argument to allow_origin_url using this opportunity.",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0e1646_3aeb021f",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-22T07:07:58Z",
+      "side": 1,
+      "message": "I\u0027d name this argument to allow_origin_url.",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f682b10_f43d2550",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-22T07:07:58Z",
+      "side": 1,
+      "message": "I\u0027d rename this to e.g. is_cross_origin using this opportunity. Whether the Access-Control-Allow-Origin header value is secure origin or not doesn\u0027t really matter.",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee261a5_775ef7c2",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-22T07:07:58Z",
+      "side": 1,
+      "message": "given you parameterized the tests, you can now test the failing cases for all the expected-to-success cases easily for more test coverage though I also think it\u0027s fine to have a few cases for that (before this patch, we had only 1 failing expectation which was in CheckSubresourceIntegrityInInsecureOrigin).",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
