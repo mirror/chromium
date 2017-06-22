@@ -88,8 +88,16 @@ void AndroidVideoSurfaceChooserImpl::Choose() {
   // In player element fullscreen, we want to use overlays if we can.
   if (current_state_.is_fullscreen)
     new_overlay_state = kUsingOverlay;
+  // TODO(liberato): else if it's "full screen enough" for <div> cases.
 
-  // TODO(liberato): add other checks for things like "safe for overlay".
+  // If the compositor won't promote, then don't.
+  if (!current_state_.is_compositor_promotable)
+    new_overlay_state = kUsingSurfaceTexture;
+
+  // TODO(liberato): except for L1, we should limit to "actually in fullscreen",
+  // which should be handled by the overlay system.  something like an
+  // "if_power_efficient" flag.  with the status bar visible, it tends to drop
+  // out of mdp mode.
 
   // If we need a secure surface, then we must choose an overlay.  The only way
   // we won't is if we don't have a factory.
