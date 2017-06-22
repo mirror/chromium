@@ -299,15 +299,35 @@ VariationsService::VariationsService(
 VariationsService::~VariationsService() {
 }
 
+bool CreateTrialsFromSeedCommon(
+    VariationsSeed* seed,
+    base::FeatureList* feature_list,
+    std::unique_ptr<const base::FieldTrial::EntropyProvider>*
+        low_entropy_provider,
+    PrefService* local_state,
+    UIStringOverrider* ui_string_overrider,
+    std::unique_ptr<ClientFilterableState>* client_state);
+
 bool VariationsService::CreateTrialsFromSeed(base::FeatureList* feature_list) {
   DCHECK(thread_checker_.CalledOnValidThread());
   CHECK(!create_trials_from_seed_called_);
 
   create_trials_from_seed_called_ = true;
 
+  std::unique_ptr<const base::FieldTrial::EntropyProvider> low_entropy_provider(
+      CreateLowEntropyProvider());
+
+  const base::Version current_version(version_info::GetVersionNumber());
+  std::unique_ptr<ClientFilterableState> client_state =
+      GetClientFilterableStateForVersion(current_version);
+
   VariationsSeed seed;
   if (!LoadSeed(&seed))
     return false;
+
+  bool result = CreateTrialsFromSeedCommon(
+      &seed, feature_list, &low_entropy_provider, local_state_,
+      &ui_string_overrider_, &client_state);
 
   const int64_t last_fetch_time_internal =
       local_state_->GetInt64(prefs::kVariationsLastFetchTime);
@@ -321,32 +341,13 @@ bool VariationsService::CreateTrialsFromSeed(base::FeatureList* feature_list) {
   } else {
     // Reject the seed if it is more than 30 days old.
     const base::TimeDelta seed_age = base::Time::Now() - last_fetch_time;
-    if (seed_age.InDays() > kMaxVariationsSeedAgeDays) {
+    if (seed_age.InDays() > kMaxVariationsSeedAgeDays)
       RecordCreateTrialsSeedExpiry(VARIATIONS_SEED_EXPIRY_EXPIRED);
-      return false;
-    }
-    RecordCreateTrialsSeedExpiry(VARIATIONS_SEED_EXPIRY_NOT_EXPIRED);
+    else
+      RecordCreateTrialsSeedExpiry(VARIATIONS_SEED_EXPIRY_NOT_EXPIRED);
   }
 
-  const base::Version current_version(version_info::GetVersionNumber());
-  if (!current_version.IsValid())
-    return false;
-
-  std::unique_ptr<ClientFilterableState> client_state =
-      GetClientFilterableStateForVersion(current_version);
   UMA_HISTOGRAM_SPARSE_SLOWLY("Variations.UserChannel", client_state->channel);
-
-  std::unique_ptr<const base::FieldTrial::EntropyProvider> low_entropy_provider(
-      CreateLowEntropyProvider());
-  // Note that passing |&ui_string_overrider_| via base::Unretained below is
-  // safe because the callback is executed synchronously. It is not possible
-  // to pass UIStringOverrider itself to VariationSeedProcessor as variations
-  // components should not depends on //ui/base.
-  VariationsSeedProcessor().CreateTrialsFromSeed(
-      seed, *client_state,
-      base::Bind(&UIStringOverrider::OverrideUIString,
-                 base::Unretained(&ui_string_overrider_)),
-      low_entropy_provider.get(), feature_list);
 
   const base::Time now = base::Time::Now();
 
@@ -359,7 +360,7 @@ bool VariationsService::CreateTrialsFromSeed(base::FeatureList* feature_list) {
         1, base::TimeDelta::FromDays(30).InMinutes(), 50);
   }
 
-  return true;
+  return result;
 }
 
 void VariationsService::PerformPreMainMessageLoopStartup() {
@@ -938,6 +939,42 @@ std::string VariationsService::GetLatestCountry() const {
   return !override_country.empty()
              ? override_country
              : local_state_->GetString(prefs::kVariationsCountry);
+}
+
+bool CreateTrialsFromSeedCommon(
+    VariationsSeed* seed,
+    base::FeatureList* feature_list,
+    std::unique_ptr<const base::FieldTrial::EntropyProvider>*
+        low_entropy_provider,
+    PrefService* local_state,
+    UIStringOverrider* ui_string_overrider,
+    std::unique_ptr<ClientFilterableState>* client_state) {
+  const int64_t last_fetch_time_interval =
+      local_state->GetInt64(prefs::kVariationsLastFetchTime);
+  const base::Time last_fetch_time =
+      base::Time::FromInternalValue(last_fetch_time_interval);
+
+  if (!last_fetch_time.is_null()) {
+    const base::TimeDelta seed_age = base::Time::Now() - last_fetch_time;
+    if (seed_age.InDays() > kMaxVariationsSeedAgeDays) {
+      LOG(WARNING) << "kmilka    seed is expired";
+      return false;
+    }
+  }
+
+  const base::Version current_version(version_info::GetVersionNumber());
+  if (!current_version.IsValid()) {
+    LOG(WARNING) << "kmilka    current version is no valid";
+    return false;
+  }
+
+  VariationsSeedProcessor().CreateTrialsFromSeed(
+      *seed, **client_state,
+      base::Bind(&UIStringOverrider::OverrideUIString,
+                 base::Unretained(ui_string_overrider)),
+      low_entropy_provider->get(), feature_list);
+
+  return true;
 }
 
 }  // namespace variations
