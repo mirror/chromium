@@ -46,22 +46,21 @@ void GeometryMapper::SourceToDestinationVisualRectInternal(
     return;
 
   // Otherwise first map to the lowest common ancestor, then map to destination.
-  const TransformPaintPropertyNode* lca_transform = LowestCommonAncestor(
-      source_state.Transform(), destination_state.Transform());
-  DCHECK(lca_transform);
+  const auto& lca_transform = LowestCommonAncestor(
+      *source_state.Transform(), *destination_state.Transform());
 
   // Assume that the clip of destinationState is an ancestor of the clip of
   // sourceState and is under the space of lcaTransform. Otherwise
   // localToAncestorVisualRect() will fail.
   PropertyTreeState lca_state = destination_state;
-  lca_state.SetTransform(lca_transform);
+  lca_state.SetTransform(&lca_transform);
 
   LocalToAncestorVisualRectInternal(source_state, lca_state, mapping_rect,
                                     success);
   if (!success)
     return;
 
-  AncestorToLocalRect(lca_transform, destination_state.Transform(),
+  AncestorToLocalRect(&lca_transform, destination_state.Transform(),
                       mapping_rect.Rect());
 }
 
@@ -77,12 +76,11 @@ void GeometryMapper::SourceToDestinationRect(
     return;
 
   // Otherwise first map to the least common ancestor, then map to destination.
-  const TransformPaintPropertyNode* lca_transform =
-      LowestCommonAncestor(source_transform_node, destination_transform_node);
-  DCHECK(lca_transform);
+  const auto& lca_transform =
+      LowestCommonAncestor(*source_transform_node, *destination_transform_node);
 
-  LocalToAncestorRect(source_transform_node, lca_transform, mapping_rect);
-  AncestorToLocalRect(lca_transform, destination_transform_node, mapping_rect);
+  LocalToAncestorRect(source_transform_node, &lca_transform, mapping_rect);
+  AncestorToLocalRect(&lca_transform, destination_transform_node, mapping_rect);
 }
 
 void GeometryMapper::LocalToAncestorVisualRect(
@@ -251,15 +249,14 @@ const FloatClipRect& GeometryMapper::SourceToDestinationClipRectInternal(
 
   // Otherwise first map to the lowest common ancestor, then map to
   // destination.
-  const TransformPaintPropertyNode* lca_transform = LowestCommonAncestor(
-      source_state.Transform(), destination_state.Transform());
-  DCHECK(lca_transform);
+  const auto& lca_transform = LowestCommonAncestor(
+      *source_state.Transform(), *destination_state.Transform());
 
   // Assume that the clip of destinationState is an ancestor of the clip of
   // sourceState and is under the space of lcaTransform. Otherwise
   // localToAncestorClipRectInternal() will fail.
   PropertyTreeState lca_state = destination_state;
-  lca_state.SetTransform(lca_transform);
+  lca_state.SetTransform(&lca_transform);
 
   const FloatClipRect& result2 = LocalToAncestorClipRectInternal(
       source_state.Clip(), lca_state.Clip(), lca_state.Transform(), success);
@@ -277,7 +274,7 @@ const FloatClipRect& GeometryMapper::SourceToDestinationClipRectInternal(
   }
   if (!result2.IsInfinite()) {
     FloatRect rect = result2.Rect();
-    AncestorToLocalRect(lca_transform, destination_state.Transform(), rect);
+    AncestorToLocalRect(&lca_transform, destination_state.Transform(), rect);
     FloatClipRect& temp = TempRect();
     temp.SetRect(rect);
     if (result2.HasRadius())
@@ -419,62 +416,5 @@ void GeometryMapper::ClearCache() {
   GeometryMapperTransformCache::ClearCache();
   GeometryMapperClipCache::ClearCache();
 }
-
-namespace {
-
-template <typename NodeType>
-unsigned NodeDepth(const NodeType* node) {
-  unsigned depth = 0;
-  while (node) {
-    depth++;
-    node = node->Parent();
-  }
-  return depth;
-}
-
-}  // namespace
-
-template <typename NodeType>
-const NodeType* GeometryMapper::LowestCommonAncestor(const NodeType* a,
-                                                     const NodeType* b) {
-  // Measure both depths.
-  unsigned depth_a = NodeDepth(a);
-  unsigned depth_b = NodeDepth(b);
-
-  // Make it so depthA >= depthB.
-  if (depth_a < depth_b) {
-    std::swap(a, b);
-    std::swap(depth_a, depth_b);
-  }
-
-  // Make it so depthA == depthB.
-  while (depth_a > depth_b) {
-    a = a->Parent();
-    depth_a--;
-  }
-
-  // Walk up until we find the ancestor.
-  while (a != b) {
-    a = a->Parent();
-    b = b->Parent();
-  }
-  return a;
-}
-
-// Explicitly instantiate the template for all supported types. This allows
-// placing the template implementation in this .cpp file. See
-// http://stackoverflow.com/a/488989 for more.
-template const EffectPaintPropertyNode* GeometryMapper::LowestCommonAncestor(
-    const EffectPaintPropertyNode*,
-    const EffectPaintPropertyNode*);
-template const TransformPaintPropertyNode* GeometryMapper::LowestCommonAncestor(
-    const TransformPaintPropertyNode*,
-    const TransformPaintPropertyNode*);
-template const ClipPaintPropertyNode* GeometryMapper::LowestCommonAncestor(
-    const ClipPaintPropertyNode*,
-    const ClipPaintPropertyNode*);
-template const ScrollPaintPropertyNode* GeometryMapper::LowestCommonAncestor(
-    const ScrollPaintPropertyNode*,
-    const ScrollPaintPropertyNode*);
 
 }  // namespace blink
