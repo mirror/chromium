@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "583fc198_4cde7b2c",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-22T07:54:35Z",
+      "side": 1,
+      "message": "I\u0027ve moved the initialization of |camera_module_| to ipc thread to make it clear that the access to camera_module_ is serialized. We don\u0027t need a lock with the original flow because initialization and access of |camera_module_| are guarded by the |camera_module_set_| waitable event.",
+      "parentUuid": "73d3abdd_74b1b67b",
+      "revId": "c4234ac30d798f012c74d043b2b1406527cbdf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b18f3997_dc6d69b6",
         "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T07:07:32Z",
       "side": 1,
       "message": "I\u0027m confused. Is \"IPC thread\" \u003d\u003d \"module thread\"?\nHandleMojoConnectionErrorOnModuleThread and ResetMojoInterfaceOnIpcThread both check ipc_task_runner_.",
+      "revId": "c4234ac30d798f012c74d043b2b1406527cbdf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243bac8c_dda642e5",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-22T07:54:35Z",
+      "side": 1,
+      "message": "Yes they are the same. I forget to change the function name during rebase. I should\u0027ve s/OnModuleThread/OnIpcThread/g.",
+      "parentUuid": "b18f3997_dc6d69b6",
       "revId": "c4234ac30d798f012c74d043b2b1406527cbdf7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "c4234ac30d798f012c74d043b2b1406527cbdf7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0ce77e_d1f068e6",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-22T07:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "056d7921_9225d2db",
+      "revId": "c4234ac30d798f012c74d043b2b1406527cbdf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
