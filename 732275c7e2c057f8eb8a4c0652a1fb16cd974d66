@@ -51,6 +51,24 @@
       "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298ec8d4_2b189f7c",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-22T21:52:29Z",
+      "side": 1,
+      "message": "I moved this Part as source_set in the //media/base/BUILD.gn\nBut it creating more problems.\n//media/filters, //media:unit_tests and //crome all require new source_set dependency in component build but non-component build is fine with only dependency set in //media/filter.\n\nI do not know why all needs it saperate dependencies otherwise linking error comes in media_unittests and chrome linking.\n\nShould I proceed with it?",
+      "parentUuid": "fe6bc7de_411ca8c7",
+      "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
