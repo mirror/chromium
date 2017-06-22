@@ -22,6 +22,30 @@
       "revId": "6a003691b5156d6c6157ed6aafdbe92f0c670965",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21146da7_635f48fd",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T12:27:16Z",
+      "side": 1,
+      "message": "I did not know this, but making the class final seems to resolve the issue.\nAlso I do not see how this is different from the callbacks above.",
+      "parentUuid": "c50431d9_d34ed694",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "6a003691b5156d6c6157ed6aafdbe92f0c670965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
