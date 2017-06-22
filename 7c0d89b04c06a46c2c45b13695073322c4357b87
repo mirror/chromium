@@ -81,6 +81,24 @@
       "revId": "7c0d89b04c06a46c2c45b13695073322c4357b87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aedecc7f_b44089a6",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-22T12:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8f78682_fe0be995",
+      "revId": "7c0d89b04c06a46c2c45b13695073322c4357b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
