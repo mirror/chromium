@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebe8d576_b3ef7736",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-22T12:38:22Z",
+      "side": 1,
+      "message": "I think this comment will be out of data after this CL?",
+      "range": {
+        "startLine": 246,
+        "startChar": 38,
+        "endLine": 246,
+        "endChar": 51
+      },
+      "revId": "17f911095448660a5f7ccec5ba8c49154cadfb02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
