@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a11ac5c5_38a673a7",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-22T00:17:23Z",
+      "side": 1,
+      "message": "Per http://crbug.com/722546 .",
+      "range": {
+        "startLine": 1419,
+        "startChar": 3,
+        "endLine": 1419,
+        "endChar": 21
+      },
+      "revId": "a71b9e575be175e02bc6b33d8ef88a8fd79efbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
