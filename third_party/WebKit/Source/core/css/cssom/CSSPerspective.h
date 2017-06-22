@@ -29,15 +29,12 @@ class CORE_EXPORT CSSPerspective : public CSSTransformComponent {
   static CSSPerspective* FromCSSValue(const CSSFunctionValue&);
 
   // Getters and setters for attributes defined in the IDL.
-  // Bindings require a non const return value.
-  CSSNumericValue* length() const {
-    return const_cast<CSSNumericValue*>(length_.Get());
-  }
+  CSSNumericValue* length() { return length_.Get(); }
 
   // Internal methods - from CSSTransformComponent.
   TransformComponentType GetType() const override { return kPerspectiveType; }
   // TODO: Implement AsMatrix for CSSPerspective.
-  DOMMatrix* AsMatrix() const override { return nullptr; }
+  const DOMMatrix* AsMatrix() const override { return nullptr; }
   CSSFunctionValue* ToCSSValue() const override;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
@@ -46,9 +43,9 @@ class CORE_EXPORT CSSPerspective : public CSSTransformComponent {
   }
 
  private:
-  CSSPerspective(const CSSNumericValue* length) : length_(length) {}
+  CSSPerspective(CSSNumericValue* length) : length_(length) {}
 
-  Member<const CSSNumericValue> length_;
+  Member<CSSNumericValue> length_;
 };
 
 }  // namespace blink

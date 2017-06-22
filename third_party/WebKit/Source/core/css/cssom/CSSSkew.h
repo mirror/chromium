@@ -36,7 +36,7 @@ class CORE_EXPORT CSSSkew final : public CSSTransformComponent {
   void setAy(CSSNumericValue*, ExceptionState&);
 
   // Internal methods - from CSSTransformComponent.
-  DOMMatrix* AsMatrix() const override;
+  const DOMMatrix* AsMatrix() const override;
   TransformComponentType GetType() const override { return kSkewType; }
   CSSFunctionValue* ToCSSValue() const override;
 

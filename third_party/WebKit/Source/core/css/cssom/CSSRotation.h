@@ -42,11 +42,7 @@ class CORE_EXPORT CSSRotation final : public CSSTransformComponent {
   static CSSRotation* FromCSSValue(const CSSFunctionValue&);
 
   // Getters and setters for attributes defined in the IDL.
-  // Bindings requires returning non-const pointers. This is safe because
-  // CSSNumericValues are immutable.
-  CSSNumericValue* angle() const {
-    return const_cast<CSSNumericValue*>(angle_.Get());
-  }
+  CSSNumericValue* angle() { return angle_.Get(); }
   double x() const { return x_; }
   double y() const { return y_; }
   double z() const { return z_; }
@@ -55,7 +51,7 @@ class CORE_EXPORT CSSRotation final : public CSSTransformComponent {
   TransformComponentType GetType() const override {
     return is2d_ ? kRotationType : kRotation3DType;
   }
-  DOMMatrix* AsMatrix() const override {
+  const DOMMatrix* AsMatrix() const override {
     return nullptr;
     // TODO(meade): Implement.
     // return is2d_
@@ -73,13 +69,13 @@ class CORE_EXPORT CSSRotation final : public CSSTransformComponent {
   }
 
  private:
-  CSSRotation(const CSSNumericValue* angle)
+  CSSRotation(CSSNumericValue* angle)
       : angle_(angle), x_(0), y_(0), z_(1), is2d_(true) {}
 
-  CSSRotation(double x, double y, double z, const CSSNumericValue* angle)
+  CSSRotation(double x, double y, double z, CSSNumericValue* angle)
       : angle_(angle), x_(x), y_(y), z_(z), is2d_(false) {}
 
-  Member<const CSSNumericValue> angle_;
+  Member<CSSNumericValue> angle_;
   double x_;
   double y_;
   double z_;

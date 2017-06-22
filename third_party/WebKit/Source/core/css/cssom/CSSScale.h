@@ -41,7 +41,7 @@ class CORE_EXPORT CSSScale final : public CSSTransformComponent {
   TransformComponentType GetType() const override {
     return is2d_ ? kScaleType : kScale3DType;
   }
-  DOMMatrix* AsMatrix() const override {
+  const DOMMatrix* AsMatrix() const override {
     DOMMatrix* result = DOMMatrix::Create();
     return result->scaleSelf(x_, y_, z_);
   }
