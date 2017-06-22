@@ -77,7 +77,8 @@ void NGOutOfFlowLayoutPart::Run() {
       NGStaticPosition static_position =
           out_of_flow_candidate_positions[position_index++];
 
-      if (IsContainingBlockForAbsoluteDescendant(container_style_,
+      if (!container_builder_->IsAnonymousLineBoxWrapper() &&
+          IsContainingBlockForAbsoluteDescendant(container_style_,
                                                  descendant.Style())) {
         NGLogicalOffset offset;
         RefPtr<NGLayoutResult> result =
