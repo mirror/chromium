@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d7b51ee_d02e1ee3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-22T17:17:28Z",
+      "side": 1,
+      "message": "Let\u0027s call it Other here and in protocol.",
+      "range": {
+        "startLine": 260,
+        "startChar": 32,
+        "endLine": 260,
+        "endChar": 39
+      },
+      "revId": "5958f0ef40bf29133abfe9754192af11bc59ce3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
