@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73d3abdd_74b1b67b",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-06-22T07:07:32Z",
+      "side": 1,
+      "message": "What thread is this method be called on?\nMy question is, is it necessary to protect |camera_module_| by a lock?",
+      "revId": "c4234ac30d798f012c74d043b2b1406527cbdf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18f3997_dc6d69b6",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-06-22T07:07:32Z",
+      "side": 1,
+      "message": "I\u0027m confused. Is \"IPC thread\" \u003d\u003d \"module thread\"?\nHandleMojoConnectionErrorOnModuleThread and ResetMojoInterfaceOnIpcThread both check ipc_task_runner_.",
+      "revId": "c4234ac30d798f012c74d043b2b1406527cbdf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056d7921_9225d2db",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-06-22T07:07:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t camera_module_set_.Reset() be called?",
+      "revId": "c4234ac30d798f012c74d043b2b1406527cbdf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
