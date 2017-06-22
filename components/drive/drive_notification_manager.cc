@@ -23,6 +23,7 @@ const int kSlowPollingIntervalInSecs = 300;
 
 // The sync invalidation object ID for Google Drive.
 const char kDriveInvalidationObjectId[] = "CHANGELOG";
+const char kTeamDriveInvalidationObjectIdPrefix[] = "TD:";
 
 }  // namespace
 
@@ -35,7 +36,10 @@ DriveNotificationManager::DriveNotificationManager(
       polling_timer_(true /* retain_user_task */, false /* is_repeating */),
       weak_ptr_factory_(this) {
   DCHECK(invalidation_service_);
-  RegisterDriveNotifications();
+  RegisterDriveNotifications("");
+
+  // TODO: remove this hack. Implement function to register / unregister
+  RegisterDriveNotifications("0ABBBtSw3c851Uk9PVA");
   RestartPollingTimer();
 }
 
@@ -65,6 +69,15 @@ void DriveNotificationManager::OnInvalidatorStateChange(
     observer.OnPushNotificationEnabled(push_notification_enabled_);
 }
 
+std::string GetTeamDriveNameFromObjectId(const std::string& object_id) {
+  if (object_id == std::string(kDriveInvalidationObjectId))
+    return std::string();
+  else if (object_id.find(kTeamDriveInvalidationObjectIdPrefix) == 0)
+    return object_id.substr(strlen(kTeamDriveInvalidationObjectIdPrefix));
+  LOG(ERROR) << "Unexpected type of object ID: \"" << object_id << "\"";
+  return std::string();
+}
+
 void DriveNotificationManager::OnIncomingInvalidation(
     const syncer::ObjectIdInvalidationMap& invalidation_map) {
   DVLOG(2) << "XMPP Drive Notification Received";
@@ -79,7 +92,12 @@ void DriveNotificationManager::OnIncomingInvalidation(
   // to not bother saving invalidations across restarts for us.
   // See crbug.com/320878.
   invalidation_map.AcknowledgeAll();
-  NotifyObserversToUpdate(NOTIFICATION_XMPP);
+  for (std::set<invalidation::ObjectId>::iterator i = ids.begin();
+       i != ids.end(); i++) {
+    invalidation::ObjectId element = *i;
+    NotifyObserversToUpdate(NOTIFICATION_XMPP,
+                            GetTeamDriveNameFromObjectId(element.name()));
+  }
 }
 
 std::string DriveNotificationManager::GetOwnerName() const { return "Drive"; }
@@ -99,19 +117,20 @@ void DriveNotificationManager::RestartPollingTimer() {
                              kSlowPollingIntervalInSecs :
                              kFastPollingIntervalInSecs);
   polling_timer_.Stop();
+  // TODO: poll team drives change as well.
   polling_timer_.Start(
-      FROM_HERE,
-      base::TimeDelta::FromSeconds(interval_secs),
+      FROM_HERE, base::TimeDelta::FromSeconds(interval_secs),
       base::Bind(&DriveNotificationManager::NotifyObserversToUpdate,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 NOTIFICATION_POLLING));
+                 weak_ptr_factory_.GetWeakPtr(), NOTIFICATION_POLLING,
+                 std::string()));
 }
 
 void DriveNotificationManager::NotifyObserversToUpdate(
-    NotificationSource source) {
+    NotificationSource source,
+    const std::string& team_drive_id) {
   DVLOG(1) << "Notifying observers: " << NotificationSourceToString(source);
   for (auto& observer : observers_)
-    observer.OnNotificationReceived();
+    observer.OnNotificationReceived(team_drive_id);
   if (!observers_notified_) {
     UMA_HISTOGRAM_BOOLEAN("Drive.PushNotificationInitiallyEnabled",
                           push_notification_enabled_);
@@ -124,18 +143,22 @@ void DriveNotificationManager::NotifyObserversToUpdate(
   RestartPollingTimer();
 }
 
-void DriveNotificationManager::RegisterDriveNotifications() {
+void DriveNotificationManager::RegisterDriveNotifications(
+    const std::string& team_drive_id) {
   DCHECK(!push_notification_enabled_);
 
   if (!invalidation_service_)
     return;
 
-  invalidation_service_->RegisterInvalidationHandler(this);
-  syncer::ObjectIdSet ids;
-  ids.insert(invalidation::ObjectId(
+  if (!push_notification_registered_)
+    invalidation_service_->RegisterInvalidationHandler(this);
+  registered_object_ids_.insert(invalidation::ObjectId(
       ipc::invalidation::ObjectSource::COSMO_CHANGELOG,
-      kDriveInvalidationObjectId));
-  CHECK(invalidation_service_->UpdateRegisteredInvalidationIds(this, ids));
+      team_drive_id.empty()
+          ? kDriveInvalidationObjectId
+          : kTeamDriveInvalidationObjectIdPrefix + team_drive_id));
+  CHECK(invalidation_service_->UpdateRegisteredInvalidationIds(
+      this, registered_object_ids_));
   push_notification_registered_ = true;
   OnInvalidatorStateChange(invalidation_service_->GetInvalidatorState());
 

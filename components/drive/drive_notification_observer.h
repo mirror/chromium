@@ -12,7 +12,9 @@ namespace drive {
 class DriveNotificationObserver {
  public:
   // Called when a notification from Google Drive is received.
-  virtual void OnNotificationReceived() = 0;
+  // |team_drive_id| is empty if the notification is for the user's changelist
+  // or the Team Drive ID if the notification is for a Team Drive changelist.
+  virtual void OnNotificationReceived(const std::string& team_drive_id) = 0;
 
   // Called when XMPP-based push notification is enabled or disabled.
   virtual void OnPushNotificationEnabled(bool enabled) {}

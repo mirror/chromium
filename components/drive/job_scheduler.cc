@@ -354,20 +354,19 @@ void JobScheduler::Search(const std::string& search_query,
 }
 
 void JobScheduler::GetChangeList(
+    const std::string& team_drive_id,
     int64_t start_changestamp,
     const google_apis::ChangeListCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!callback.is_null());
 
   JobEntry* new_job = CreateNewJob(TYPE_GET_CHANGE_LIST);
-  new_job->task = base::Bind(
-      &DriveServiceInterface::GetChangeList,
-      base::Unretained(drive_service_),
-      start_changestamp,
-      base::Bind(&JobScheduler::OnGetChangeListJobDone,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 new_job->job_info.job_id,
-                 callback));
+  new_job->task = base::Bind(&DriveServiceInterface::GetChangeList,
+                             base::Unretained(drive_service_), team_drive_id,
+                             start_changestamp,
+                             base::Bind(&JobScheduler::OnGetChangeListJobDone,
+                                        weak_ptr_factory_.GetWeakPtr(),
+                                        new_job->job_info.job_id, callback));
   new_job->abort_callback = CreateErrorRunCallback(callback);
   StartJob(new_job);
 }

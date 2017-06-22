@@ -168,6 +168,7 @@ class FakeDriveService : public DriveServiceInterface {
       const std::string& directory_resource_id,
       const google_apis::FileListCallback& callback) override;
   google_apis::CancelCallback GetChangeList(
+      const std::string& team_drive_id,
       int64_t start_changestamp,
       const google_apis::ChangeListCallback& callback) override;
   google_apis::CancelCallback GetRemainingChangeList(
@@ -377,7 +378,8 @@ class FakeDriveService : public DriveServiceInterface {
   // is between |start_offset| (inclusive) and |start_offset| + |max_results|
   // (exclusive).
   // Increments *load_counter by 1 before it returns successfully.
-  void GetChangeListInternal(int64_t start_changestamp,
+  void GetChangeListInternal(const std::string& team_drive_id,
+                             int64_t start_changestamp,
                              const std::string& search_query,
                              const std::string& directory_resource_id,
                              int start_offset,

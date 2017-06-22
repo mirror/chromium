@@ -42,7 +42,7 @@ class DriveServiceBridgeImpl : public DriveServiceBridge,
   void OnReadyToSendRequests() override;
 
   // drive::DriveNotificationObserver:
-  void OnNotificationReceived() override;
+  void OnNotificationReceived(const std::string& team_drive_id) override;
   void OnPushNotificationEnabled(bool enabled) override;
 
  private:
@@ -107,7 +107,8 @@ void DriveServiceBridgeImpl::OnReadyToSendRequests() {
   drive_app_registry_->Update();
 }
 
-void DriveServiceBridgeImpl::OnNotificationReceived() {
+void DriveServiceBridgeImpl::OnNotificationReceived(
+    const std::string& team_drive_id) {
   if (drive_service_->CanSendRequest())
     drive_app_registry_->Update();
 }

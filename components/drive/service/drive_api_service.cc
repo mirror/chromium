@@ -433,6 +433,7 @@ CancelCallback DriveAPIService::SearchByTitle(
 }
 
 CancelCallback DriveAPIService::GetChangeList(
+    const std::string& team_drive_id,
     int64_t start_changestamp,
     const ChangeListCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -442,6 +443,8 @@ CancelCallback DriveAPIService::GetChangeList(
       base::MakeUnique<ChangesListRequest>(sender_.get(), url_generator_,
                                            callback);
   request->set_max_results(kMaxNumFilesResourcePerRequest);
+  if (!team_drive_id.empty())
+    request->set_team_drive_id(team_drive_id);
   request->set_start_change_id(start_changestamp);
   request->set_fields(kChangeListFields);
   return sender_->StartRequestWithAuthRetry(std::move(request));

@@ -60,7 +60,11 @@ FileError CheckLocalState(ResourceMetadata* resource_metadata,
     return error;
 
   // Get the local changestamp.
-  return resource_metadata->GetLargestChangestamp(local_changestamp);
+  // TODO: Find the target entry's ancestor (either root/ or team_drives/*/)
+  // and pass it as team_drive_id. Currently it assumes it's root/ so that
+  // it won't work correctly for directories under Team Drive. crbug/716989
+  return resource_metadata->GetLargestChangestamp(std::string(),
+                                                  local_changestamp);
 }
 
 FileError UpdateChangestamp(ResourceMetadata* resource_metadata,

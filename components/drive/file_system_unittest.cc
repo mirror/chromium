@@ -251,8 +251,8 @@ class FileSystemTest : public testing::Test {
         param == USE_SERVER_TIMESTAMP
             ? fake_drive_service_->about_resource().largest_change_id()
             : 1;
-    ASSERT_EQ(FILE_ERROR_OK,
-              resource_metadata->SetLargestChangestamp(changestamp));
+    ASSERT_EQ(FILE_ERROR_OK, resource_metadata->SetLargestChangestamp(
+                                 std::string(), changestamp));
 
     // drive/root
     ResourceEntry root;
@@ -734,7 +734,7 @@ TEST_F(FileSystemTest, LoadFileSystemFromUpToDateCache) {
   // To test it, call CheckForUpdates and verify it does try to check updates.
   const int about_resource_load_count_before =
       fake_drive_service_->about_resource_load_count();
-  file_system_->CheckForUpdates();
+  file_system_->CheckForUpdates(std::string());
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_LT(about_resource_load_count_before,
             fake_drive_service_->about_resource_load_count());
@@ -775,7 +775,7 @@ TEST_F(FileSystemTest, LoadFileSystemFromCacheWhileOffline) {
   // updates, which will cause directory changes.
   fake_drive_service_->set_offline(false);
 
-  file_system_->CheckForUpdates();
+  file_system_->CheckForUpdates(std::string());
 
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_EQ(1, fake_drive_service_->about_resource_load_count());
@@ -888,7 +888,7 @@ TEST_F(FileSystemTest, ReadDirectoryAfterUpdateWhileLoading) {
   }
 
   // Notify the update to the file system.
-  file_system_->CheckForUpdates();
+  file_system_->CheckForUpdates(std::string());
 
   // Read the directory once again. Although the full feed fetching is not yet
   // finished, the "fast fetch" of the directory works and the refreshed content

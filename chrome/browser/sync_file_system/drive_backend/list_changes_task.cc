@@ -51,7 +51,7 @@ void ListChangesTask::RunPreflight(std::unique_ptr<SyncTaskToken> token) {
 
 void ListChangesTask::StartListing(std::unique_ptr<SyncTaskToken> token) {
   drive_service()->GetChangeList(
-      metadata_database()->GetLargestFetchedChangeID() + 1,
+      std::string(), metadata_database()->GetLargestFetchedChangeID() + 1,
       base::Bind(&ListChangesTask::DidListChanges,
                  weak_ptr_factory_.GetWeakPtr(), base::Passed(&token)));
 }

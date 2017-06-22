@@ -411,11 +411,12 @@ void FileSystem::ResetComponents() {
       blocking_task_runner_.get(), delegate, resource_metadata_));
 }
 
-void FileSystem::CheckForUpdates() {
+void FileSystem::CheckForUpdates(const std::string& team_drive_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DVLOG(1) << "CheckForUpdates";
+  DVLOG(1) << "CheckForUpdates" << team_drive_id;
 
   change_list_loader_->CheckForUpdates(
+      team_drive_id,
       base::Bind(&FileSystem::OnUpdateChecked, weak_ptr_factory_.GetWeakPtr()));
 }
 
@@ -909,15 +910,13 @@ void FileSystem::GetMetadata(
   metadata.last_update_check_error = last_update_check_error_;
 
   int64_t* largest_changestamp = new int64_t(0);
+  std::string team_drive_id;
   base::PostTaskAndReplyWithResult(
-      blocking_task_runner_.get(),
-      FROM_HERE,
+      blocking_task_runner_.get(), FROM_HERE,
       base::Bind(&internal::ResourceMetadata::GetLargestChangestamp,
-                 base::Unretained(resource_metadata_),
+                 base::Unretained(resource_metadata_), team_drive_id,
                  largest_changestamp),
-      base::Bind(&OnGetLargestChangestamp,
-                 metadata,
-                 callback,
+      base::Bind(&OnGetLargestChangestamp, metadata, callback,
                  base::Owned(largest_changestamp)));
 }
 

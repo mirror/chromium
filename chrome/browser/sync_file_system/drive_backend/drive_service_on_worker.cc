@@ -98,6 +98,7 @@ google_apis::CancelCallback DriveServiceOnWorker::GetAboutResource(
 }
 
 google_apis::CancelCallback DriveServiceOnWorker::GetChangeList(
+    const std::string& team_drive_id,
     int64_t start_changestamp,
     const google_apis::ChangeListCallback& callback) {
   DCHECK(sequence_checker_.CalledOnValidSequence());

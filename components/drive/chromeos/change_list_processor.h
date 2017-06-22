@@ -121,6 +121,7 @@ class ChangeListProcessor {
   //
   // Must be run on the same task runner as |resource_metadata_| uses.
   FileError Apply(std::unique_ptr<google_apis::AboutResource> about_resource,
+                  const std::string& team_drive_id,
                   std::vector<std::unique_ptr<ChangeList>> change_lists,
                   bool is_delta_update);
 

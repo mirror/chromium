@@ -134,6 +134,7 @@ ChangeListProcessor::~ChangeListProcessor() {
 
 FileError ChangeListProcessor::Apply(
     std::unique_ptr<google_apis::AboutResource> about_resource,
+    const std::string& team_drive_id,
     std::vector<std::unique_ptr<ChangeList>> change_lists,
     bool is_delta_update) {
   DCHECK(about_resource);
@@ -192,7 +193,8 @@ FileError ChangeListProcessor::Apply(
   }
 
   // Update changestamp.
-  error = resource_metadata_->SetLargestChangestamp(largest_changestamp);
+  error = resource_metadata_->SetLargestChangestamp(team_drive_id,
+                                                    largest_changestamp);
   if (error != FILE_ERROR_OK) {
     DLOG(ERROR) << "SetLargestChangeStamp failed: " << FileErrorToString(error);
     return error;

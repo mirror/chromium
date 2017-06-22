@@ -102,7 +102,7 @@ class DriveIntegrationService : public KeyedService,
   void RemoveObserver(DriveIntegrationServiceObserver* observer);
 
   // DriveNotificationObserver implementation.
-  void OnNotificationReceived() override;
+  void OnNotificationReceived(const std::string& team_drive_id) override;
   void OnPushNotificationEnabled(bool enabled) override;
 
   EventLogger* event_logger() { return logger_.get(); }

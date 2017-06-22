@@ -130,7 +130,7 @@ class SyncEngine : public RemoteFileSyncService,
                         const SyncStatusCallback& callback) override;
 
   // drive::DriveNotificationObserver overrides.
-  void OnNotificationReceived() override;
+  void OnNotificationReceived(const std::string& team_drive_id) override;
   void OnPushNotificationEnabled(bool enabled) override;
 
   // drive::DriveServiceObserver overrides.

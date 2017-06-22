@@ -90,7 +90,7 @@ TEST_F(RemovePerformerTest, RemoveShared) {
                                                        &gdata_entry));
   content::RunAllBlockingPoolTasksUntilIdle();
   ASSERT_EQ(google_apis::HTTP_CREATED, gdata_error);
-  CheckForUpdates();
+  CheckForUpdates(std::string());
 
   // Remove it. Locally, the file should be moved to drive/other.
   ResourceEntry entry;

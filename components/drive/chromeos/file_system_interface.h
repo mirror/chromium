@@ -188,7 +188,7 @@ class FileSystemInterface {
   virtual void RemoveObserver(FileSystemObserver* observer) = 0;
 
   // Checks for updates on the server.
-  virtual void CheckForUpdates() = 0;
+  virtual void CheckForUpdates(const std::string& team_drive_id) = 0;
 
   // Initiates transfer of |local_src_file_path| to |remote_dest_file_path|.
   // |local_src_file_path| must be a file from the local file system.

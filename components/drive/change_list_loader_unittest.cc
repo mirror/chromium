@@ -239,7 +239,8 @@ TEST_F(ChangeListLoaderTest, Load) {
 
   EXPECT_FALSE(change_list_loader_->IsRefreshing());
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_LT(0, changestamp);
   EXPECT_EQ(0, drive_service_->team_drive_list_load_count());
   EXPECT_EQ(1, drive_service_->file_list_load_count());
@@ -283,7 +284,8 @@ TEST_F(ChangeListLoaderTest, LoadWithTeamDriveEnabled) {
 
   EXPECT_FALSE(change_list_loader_->IsRefreshing());
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_LT(0, changestamp);
   EXPECT_EQ(1, drive_service_->team_drive_list_load_count());
   EXPECT_EQ(1, drive_service_->file_list_load_count());
@@ -347,7 +349,8 @@ TEST_F(ChangeListLoaderTest, Load_LocalMetadataAvailable) {
 
   // Update should be checked by Load().
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(drive_service_->about_resource().largest_change_id(), changestamp);
   EXPECT_EQ(1, drive_service_->change_list_load_count());
   EXPECT_EQ(1, observer.load_from_server_complete_count());
@@ -365,14 +368,15 @@ TEST_F(ChangeListLoaderTest, CheckForUpdates) {
   // CheckForUpdates() results in no-op before load.
   FileError check_for_updates_error = FILE_ERROR_FAILED;
   change_list_loader_->CheckForUpdates(
-      google_apis::test_util::CreateCopyResultCallback(
-          &check_for_updates_error));
+      std::string(), google_apis::test_util::CreateCopyResultCallback(
+                         &check_for_updates_error));
   EXPECT_FALSE(change_list_loader_->IsRefreshing());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(FILE_ERROR_FAILED,
             check_for_updates_error);  // Callback was not run.
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(0, changestamp);
   EXPECT_EQ(0, drive_service_->file_list_load_count());
   EXPECT_EQ(0, drive_service_->about_resource_load_count());
@@ -385,28 +389,30 @@ TEST_F(ChangeListLoaderTest, CheckForUpdates) {
 
   // CheckForUpdates() while loading.
   change_list_loader_->CheckForUpdates(
-      google_apis::test_util::CreateCopyResultCallback(
-          &check_for_updates_error));
+      std::string(), google_apis::test_util::CreateCopyResultCallback(
+                         &check_for_updates_error));
 
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(change_list_loader_->IsRefreshing());
   EXPECT_EQ(FILE_ERROR_OK, load_error);
   EXPECT_EQ(FILE_ERROR_OK, check_for_updates_error);
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_LT(0, changestamp);
   EXPECT_EQ(1, drive_service_->file_list_load_count());
 
   int64_t previous_changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK,
-            metadata_->GetLargestChangestamp(&previous_changestamp));
+  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(
+                               std::string(), &previous_changestamp));
   // CheckForUpdates() results in no update.
   change_list_loader_->CheckForUpdates(
-      google_apis::test_util::CreateCopyResultCallback(
-          &check_for_updates_error));
+      std::string(), google_apis::test_util::CreateCopyResultCallback(
+                         &check_for_updates_error));
   EXPECT_TRUE(change_list_loader_->IsRefreshing());
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(change_list_loader_->IsRefreshing());
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(previous_changestamp, changestamp);
 
   // Add a file to the service.
@@ -417,12 +423,13 @@ TEST_F(ChangeListLoaderTest, CheckForUpdates) {
   // CheckForUpdates() results in update.
   TestChangeListLoaderObserver observer(change_list_loader_.get());
   change_list_loader_->CheckForUpdates(
-      google_apis::test_util::CreateCopyResultCallback(
-          &check_for_updates_error));
+      std::string(), google_apis::test_util::CreateCopyResultCallback(
+                         &check_for_updates_error));
   EXPECT_TRUE(change_list_loader_->IsRefreshing());
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(change_list_loader_->IsRefreshing());
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_LT(previous_changestamp, changestamp);
   EXPECT_EQ(1, observer.load_from_server_complete_count());
   EXPECT_TRUE(
@@ -455,8 +462,8 @@ TEST_F(ChangeListLoaderTest, Lock) {
   TestChangeListLoaderObserver observer(change_list_loader_.get());
   FileError check_for_updates_error = FILE_ERROR_FAILED;
   change_list_loader_->CheckForUpdates(
-      google_apis::test_util::CreateCopyResultCallback(
-          &check_for_updates_error));
+      std::string(), google_apis::test_util::CreateCopyResultCallback(
+                         &check_for_updates_error));
   base::RunLoop().RunUntilIdle();
 
   // Update is pending due to the lock.

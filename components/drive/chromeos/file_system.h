@@ -82,7 +82,7 @@ class FileSystem : public FileSystemInterface,
   // FileSystemInterface overrides.
   void AddObserver(FileSystemObserver* observer) override;
   void RemoveObserver(FileSystemObserver* observer) override;
-  void CheckForUpdates() override;
+  void CheckForUpdates(const std::string& team_drive_id) override;
   void Search(const std::string& search_query,
               const GURL& next_link,
               const SearchCallback& callback) override;

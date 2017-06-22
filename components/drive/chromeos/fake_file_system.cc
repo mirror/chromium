@@ -46,7 +46,7 @@ void FakeFileSystem::RemoveObserver(FileSystemObserver* observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void FakeFileSystem::CheckForUpdates() {
+void FakeFileSystem::CheckForUpdates(const std::string& team_drive_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 

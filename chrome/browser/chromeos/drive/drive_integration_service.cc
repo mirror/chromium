@@ -392,8 +392,9 @@ void DriveIntegrationService::RemoveObserver(
   observers_.RemoveObserver(observer);
 }
 
-void DriveIntegrationService::OnNotificationReceived() {
-  file_system_->CheckForUpdates();
+void DriveIntegrationService::OnNotificationReceived(
+    const std::string& team_drive_id) {
+  file_system_->CheckForUpdates(team_drive_id);
   drive_app_registry_->Update();
 }
 

@@ -628,8 +628,11 @@ void SyncEngine::ApplyLocalChange(const FileChange& local_change,
                      local_path, local_metadata, url, relayed_callback));
 }
 
-void SyncEngine::OnNotificationReceived() {
+void SyncEngine::OnNotificationReceived(const std::string& team_drive_id) {
   if (!sync_worker_)
+    return;
+  // Changes to a Team Drive does not affect the sync file system.
+  if (!team_drive_id.empty())
     return;
 
   worker_task_runner_->PostTask(

@@ -176,10 +176,10 @@ std::string OperationTestBase::GetLocalId(const base::FilePath& path) {
   return local_id;
 }
 
-FileError OperationTestBase::CheckForUpdates() {
+FileError OperationTestBase::CheckForUpdates(const std::string& team_drive_id) {
   FileError error = FILE_ERROR_FAILED;
   change_list_loader_->CheckForUpdates(
-      google_apis::test_util::CreateCopyResultCallback(&error));
+      team_drive_id, google_apis::test_util::CreateCopyResultCallback(&error));
   content::RunAllBlockingPoolTasksUntilIdle();
   return error;
 }

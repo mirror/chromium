@@ -137,8 +137,8 @@ class ChangeListProcessorTest : public testing::Test {
     about_resource->set_root_folder_id(kRootId);
 
     ChangeListProcessor processor(metadata_.get(), nullptr);
-    return processor.Apply(std::move(about_resource), std::move(changes),
-                           false /* is_delta_update */);
+    return processor.Apply(std::move(about_resource), std::string(),
+                           std::move(changes), false /* is_delta_update */);
   }
 
   // Applies the |changes| to |metadata_| as a delta update. Delta changelists
@@ -152,8 +152,8 @@ class ChangeListProcessorTest : public testing::Test {
 
     ChangeListProcessor processor(metadata_.get(), nullptr);
     FileError error =
-        processor.Apply(std::move(about_resource), std::move(changes),
-                        true /* is_delta_update */);
+        processor.Apply(std::move(about_resource), std::string(),
+                        std::move(changes), true /* is_delta_update */);
     *changed_files = processor.changed_files();
     return error;
   }
@@ -221,7 +221,8 @@ TEST_F(ChangeListProcessorTest, ApplyFullResourceList) {
   }
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(kBaseResourceListChangestamp, changestamp);
 }
 
@@ -253,7 +254,8 @@ TEST_F(ChangeListProcessorTest, DeltaFileAddedInNewDirectory) {
             ApplyChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16730, changestamp);
   EXPECT_TRUE(GetResourceEntry("drive/root/New Directory"));
   EXPECT_TRUE(GetResourceEntry(
@@ -288,7 +290,8 @@ TEST_F(ChangeListProcessorTest, DeltaDirMovedFromRootToDirectory) {
             ApplyChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16809, changestamp);
   EXPECT_FALSE(GetResourceEntry("drive/root/Directory 1"));
   EXPECT_TRUE(GetResourceEntry(
@@ -324,7 +327,8 @@ TEST_F(ChangeListProcessorTest, DeltaFileMovedFromDirectoryToRoot) {
             ApplyChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16815, changestamp);
   EXPECT_FALSE(GetResourceEntry(
       "drive/root/Directory 1/SubDirectory File 1.txt"));
@@ -362,7 +366,8 @@ TEST_F(ChangeListProcessorTest, DeltaFileRenamedInDirectory) {
       "drive/root/Directory 1/New SubDirectory File 1.txt")));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16767, changestamp);
   EXPECT_FALSE(GetResourceEntry(
       "drive/root/Directory 1/SubDirectory File 1.txt"));
@@ -396,7 +401,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddAndDeleteFileInRoot) {
             ApplyChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16683, changestamp);
   EXPECT_TRUE(GetResourceEntry("drive/root/Added file.txt"));
   EXPECT_EQ(1U, changed_files.size());
@@ -415,7 +421,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddAndDeleteFileInRoot) {
   // Apply.
   EXPECT_EQ(FILE_ERROR_OK,
             ApplyChangeList(std::move(change_lists), &changed_files));
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16687, changestamp);
   EXPECT_FALSE(GetResourceEntry("drive/root/Added file.txt"));
   EXPECT_EQ(1U, changed_files.size());
@@ -444,7 +451,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddAndDeleteFileFromExistingDirectory) {
   EXPECT_EQ(FILE_ERROR_OK,
             ApplyChangeList(std::move(change_lists), &changed_files));
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16730, changestamp);
   EXPECT_TRUE(GetResourceEntry("drive/root/Directory 1/Added file.txt"));
 
@@ -465,7 +473,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddAndDeleteFileFromExistingDirectory) {
   // Apply.
   EXPECT_EQ(FILE_ERROR_OK,
             ApplyChangeList(std::move(change_lists), &changed_files));
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16770, changestamp);
   EXPECT_FALSE(GetResourceEntry("drive/root/Directory 1/Added file.txt"));
 
@@ -507,7 +516,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddFileToNewButDeletedDirectory) {
             ApplyChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16730, changestamp);
   EXPECT_FALSE(GetResourceEntry("drive/root/New Directory/new_pdf_file.pdf"));
 
@@ -686,7 +696,8 @@ TEST_F(ChangeListProcessorTest, DeltaTeamDriveChange) {
             ApplyChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(kBaseResourceListChangestamp + 1, changestamp);
 
   ResourceEntry entry;
