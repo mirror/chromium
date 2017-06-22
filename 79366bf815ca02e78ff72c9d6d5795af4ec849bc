@@ -69,6 +69,30 @@
       "revId": "79366bf815ca02e78ff72c9d6d5795af4ec849bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611e98ee_1b4bebbf",
+        "filename": "gpu/ipc/service/gpu_channel_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-22T00:23:18Z",
+      "side": 1,
+      "message": "Hopefully this won\u0027t limit the effectiveness of this workaround too much. I had been hoping that we could start to send back the information through the system that the forthcoming WebGL context loss event was expected, rather than accidental. However, this\u0027ll be a larger change and may happen anyway due to other work in http://crbug.com/681341, so avoiding lost context notifications for WebGL seems like a good start.",
+      "parentUuid": "71c9580a_764f80f5",
+      "range": {
+        "startLine": 266,
+        "startChar": 19,
+        "endLine": 266,
+        "endChar": 40
+      },
+      "revId": "79366bf815ca02e78ff72c9d6d5795af4ec849bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
