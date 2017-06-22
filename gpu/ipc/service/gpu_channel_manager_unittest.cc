@@ -6,17 +6,27 @@
 #include <stdint.h>
 
 #include "gpu/command_buffer/service/gl_utils.h"
+#include "gpu/ipc/common/gpu_messages.h"
 #include "gpu/ipc/service/gpu_channel.h"
 #include "gpu/ipc/service/gpu_channel_manager.h"
 #include "gpu/ipc/service/gpu_channel_test_common.h"
 
 namespace gpu {
+namespace {
+
+#if defined(OS_WIN)
+const SurfaceHandle kFakeSurfaceHandle = reinterpret_cast<SurfaceHandle>(1);
+#else
+const SurfaceHandle kFakeSurfaceHandle = 1;
+#endif
 
 class GpuChannelManagerTest : public GpuChannelTestCommon {
  public:
   GpuChannelManagerTest() : GpuChannelTestCommon() {}
   ~GpuChannelManagerTest() override {}
 };
+
+}  // namespace
 
 TEST_F(GpuChannelManagerTest, EstablishChannel) {
   int32_t kClientId = 1;
@@ -28,5 +38,64 @@ TEST_F(GpuChannelManagerTest, EstablishChannel) {
   EXPECT_TRUE(channel);
   EXPECT_EQ(channel_manager()->LookupChannel(kClientId), channel);
 }
+
+#if defined(OS_ANDROID)
+TEST_F(GpuChannelManagerTest, OnApplicationStateChange) {
+  ASSERT_TRUE(channel_manager());
+  int32_t kClientId = 1;
+  GpuChannel* channel = CreateChannel(kClientId, true);
+  EXPECT_TRUE(channel);
+
+  int32_t kRouteId = 1;
+  SurfaceHandle surface_handle = kFakeSurfaceHandle;
+  GPUCreateCommandBufferConfig init_params;
+  init_params.surface_handle = surface_handle;
+  init_params.share_group_id = MSG_ROUTING_NONE;
+  init_params.stream_id = 0;
+  init_params.stream_priority = SchedulingPriority::kNormal;
+  init_params.attribs = gles2::ContextCreationAttribHelper();
+  init_params.attribs.context_type = gles2::CONTEXT_TYPE_OPENGLES2;
+  init_params.active_url = GURL();
+  bool result = false;
+  gpu::Capabilities capabilities;
+  HandleMessage(channel, new GpuChannelMsg_CreateCommandBuffer(
+                             init_params, kRouteId, GetSharedHandle(), &result,
+                             &capabilities));
+  EXPECT_TRUE(result);
+
+  GpuCommandBufferStub* stub = channel->LookupCommandBuffer(kRouteId);
+  EXPECT_TRUE(stub);
+
+  channel_manager()->set_low_end_mode_for_testing(false);
+  channel_manager()->OnApplicationStateChange(
+      base::android::APPLICATION_STATE_HAS_STOPPED_ACTIVITIES);
+  stub = channel->LookupCommandBuffer(kRouteId);
+  EXPECT_TRUE(stub);
+
+  channel_manager()->set_low_end_mode_for_testing(true);
+  channel_manager()->OnApplicationStateChange(
+      base::android::APPLICATION_STATE_HAS_STOPPED_ACTIVITIES);
+  stub = channel->LookupCommandBuffer(kRouteId);
+  EXPECT_FALSE(stub);
+
+  channel = CreateChannel(kClientId, true);
+  EXPECT_TRUE(channel);
+  int32_t kRouteId1 = 2;
+  init_params.attribs.context_type = gles2::CONTEXT_TYPE_WEBGL2;
+  HandleMessage(channel, new GpuChannelMsg_CreateCommandBuffer(
+                             init_params, kRouteId1, GetSharedHandle(), &result,
+                             &capabilities));
+  EXPECT_TRUE(result);
+
+  stub = channel->LookupCommandBuffer(kRouteId1);
+  EXPECT_TRUE(stub);
+
+  channel_manager()->set_low_end_mode_for_testing(true);
+  channel_manager()->OnApplicationStateChange(
+      base::android::APPLICATION_STATE_HAS_STOPPED_ACTIVITIES);
+  stub = channel->LookupCommandBuffer(kRouteId1);
+  EXPECT_TRUE(stub);
+}
+#endif
 
 }  // namespace gpu
