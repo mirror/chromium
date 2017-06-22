@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "0928a509_483fa52f",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T16:45:59Z",
+      "side": 1,
+      "message": "I think it\u0027s the wording that bothers me. How can an experiment be a boolean constant?",
+      "parentUuid": "81f752e7_ee395916",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "652e681c_c7d1d44e",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 15
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "#include \u003ccstdint\u003e or #include \u003cstdint.h\u003e ?",
       "parentUuid": "bc4adb90_d06a604c",
+      "range": {
+        "startLine": 164,
+        "startChar": 17,
+        "endLine": 164,
+        "endChar": 24
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9face899_9a9894e3",
+        "filename": "net/nqe/network_quality_estimator_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T16:45:59Z",
+      "side": 1,
+      "message": "The latter. Is cstdint used in chromium?",
+      "parentUuid": "ce39f447_188076cb",
       "range": {
         "startLine": 164,
         "startChar": 17,
