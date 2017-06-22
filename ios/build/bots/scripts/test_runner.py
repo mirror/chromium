@@ -6,6 +6,7 @@
 
 import argparse
 import collections
+from datetime import datetime
 import errno
 import os
 import plistlib
@@ -280,17 +281,28 @@ class TestRunner(object):
         stderr=subprocess.STDOUT,
     )
 
+    print 'starts reading lines.'
     while True:
+      print 'reading lines.'
       line = proc.stdout.readline()
       if not line:
+        print "encountered an empty line"
+        time_now = datetime.now()
+        time_delta = time_now - last_time_has_output
+        if (time_delta.total_seconds() > 60):
+          print 'timed out over 60 seconds.'
         break
+      last_time_has_output = datetime.now()
       line = line.rstrip()
       parser.ProcessLine(line)
       print line
       sys.stdout.flush()
 
+    print 'the reading lines while loop has ended, about to wait for subprocess.'
     proc.wait()
     sys.stdout.flush()
+
+    print 'has finished waiting for the subprocess'
 
     for test in parser.FailedTests(include_flaky=True):
       # Test cases are named as <test group>.<test case>. If the test case
