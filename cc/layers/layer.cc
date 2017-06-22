@@ -54,8 +54,6 @@ Layer::Inputs::Inputs(int layer_id)
       sorting_context_id(0),
       use_parent_backface_visibility(false),
       background_color(0),
-      scroll_clip_layer_id(INVALID_ID),
-      scrollable(false),
       user_scrollable_horizontal(true),
       user_scrollable_vertical(true),
       main_thread_scrolling_reasons(
@@ -92,7 +90,6 @@ Layer::Layer()
       force_render_surface_for_testing_(false),
       subtree_property_changed_(false),
       may_contain_video_(false),
-      is_scroll_clip_layer_(false),
       needs_show_scrollbars_(false),
       has_transform_node_(false),
       has_scroll_node_(false),
@@ -304,9 +301,6 @@ void Layer::SetBounds(const gfx::Size& size) {
       node->bounds = inputs_.bounds;
     }
   }
-
-  if (is_scroll_clip_layer_)
-    layer_tree_host_->property_trees()->scroll_tree.set_needs_update(true);
 
   SetNeedsCommit();
 }
@@ -817,30 +811,26 @@ void Layer::UpdateScrollOffset(const gfx::ScrollOffset& scroll_offset) {
   property_trees.transform_tree.set_needs_update(true);
 }
 
-void Layer::SetScrollClipLayerId(int clip_layer_id) {
+void Layer::SetScrollContainerBounds(const gfx::Size& bounds) {
   DCHECK(IsPropertyChangeAllowed());
-  if (inputs_.scroll_clip_layer_id == clip_layer_id)
+  if (inputs_.scroll_container_bounds == bounds)
     return;
-  inputs_.scroll_clip_layer_id = clip_layer_id;
 
-  SetPropertyTreesNeedRebuild();
+  bool was_scrollable = scrollable();
+  inputs_.scroll_container_bounds = bounds;
 
-  bool scrollable = clip_layer_id != Layer::INVALID_ID;
-  SetScrollable(scrollable);
-
-  SetNeedsCommit();
-}
-
-Layer* Layer::scroll_clip_layer() const {
-  DCHECK(layer_tree_host_);
-  return layer_tree_host_->LayerById(inputs_.scroll_clip_layer_id);
-}
-
-void Layer::SetScrollable(bool scrollable) {
-  DCHECK(IsPropertyChangeAllowed());
-  if (inputs_.scrollable == scrollable)
+  if (!layer_tree_host_)
     return;
-  inputs_.scrollable = scrollable;
+
+  // TODO(pdr): Update SetBounds() to work like this since the bounds are no
+  // longer set from the scroll clip layer.
+  auto* scroll_node =
+      layer_tree_host_->property_trees()->scroll_tree.Node(scroll_tree_index_);
+  if (was_scrollable && scrollable() && scroll_node)
+    scroll_node->scroll_clip_layer_bounds = inputs_.scroll_container_bounds;
+  else
+    SetPropertyTreesNeedRebuild();
+
   SetNeedsCommit();
 }
 
@@ -1182,8 +1172,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   layer->SetUseParentBackfaceVisibility(inputs_.use_parent_backface_visibility);
   layer->SetShouldCheckBackfaceVisibility(should_check_backface_visibility_);
 
-  layer->SetScrollClipLayer(inputs_.scroll_clip_layer_id);
-  layer->SetScrollable(inputs_.scrollable);
+  layer->SetScrollContainerBounds(inputs_.scroll_container_bounds);
   layer->SetMutableProperties(inputs_.mutable_properties);
 
   // The property trees must be safe to access because they will be used below
