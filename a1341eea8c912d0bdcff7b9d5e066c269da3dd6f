@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dad26a05_eae11b4c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-22T07:44:22Z",
+      "side": 1,
+      "message": "Please move the comment to the header file.",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d302ed06_5256ceaa",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 3
@@ -13,6 +30,58 @@
       "writtenOn": "2017-06-21T23:01:27Z",
       "side": 1,
       "message": "Instead of this, can you include the HasVisibilityCollapse logic in LayoutTableCell::LogicalHeightForRowSizing?",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08444582_90c318a8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-22T07:44:22Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure, but I think the callers need to be aware of visibility:collapse, and that LogicalHeightForRowSizing() shouldn\u0027t need to deal with it.\n\nAnyway, in this particular case, why not just bail earlier if the row is collapsed? Like, somewhere at the beginning of the \"for (unsigned r \u003d ...\" body?",
+      "parentUuid": "d302ed06_5256ceaa",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0024a11c_2959d52e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-22T07:44:22Z",
+      "side": 1,
+      "message": "So, if we bail (continue) earlier in the loop body, we won\u0027t need this either.",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414cfc59_a6d09259",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-22T07:44:22Z",
+      "side": 1,
+      "message": "Name it RowHasVisibilityCollapse() instead? And I think it could be a const method?",
       "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
