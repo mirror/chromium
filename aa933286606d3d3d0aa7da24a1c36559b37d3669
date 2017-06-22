@@ -16,6 +16,24 @@
       "revId": "aa933286606d3d3d0aa7da24a1c36559b37d3669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705db131_7d2680d8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-22T01:14:00Z",
+      "side": 1,
+      "message": "This is not a callback. It\u0027s a resolve, which has zero immediate action.",
+      "parentUuid": "76c75dda_2729d695",
+      "revId": "aa933286606d3d3d0aa7da24a1c36559b37d3669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
