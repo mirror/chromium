@@ -1523,6 +1523,10 @@ void Browser::VisibleSecurityStateChanged(WebContents* source) {
   helper->VisibleSecurityStateChanged();
 }
 
+void Browser::DisplayViewInTouchbar(content::WebContents* contents) {
+  command_controller_->DisplayViewInTouchbar(contents);
+}
+
 void Browser::AddNewContents(WebContents* source,
                              WebContents* new_contents,
                              WindowOpenDisposition disposition,
@@ -1537,6 +1541,10 @@ void Browser::ActivateContents(WebContents* contents) {
   tab_strip_model_->ActivateTabAt(
       tab_strip_model_->GetIndexOfWebContents(contents), false);
   window_->Activate();
+}
+
+void Browser::SetErrorPage(WebContents* source, bool is_error_page) {
+  command_controller_->SetErrorPage(is_error_page);
 }
 
 void Browser::LoadingStateChanged(WebContents* source,

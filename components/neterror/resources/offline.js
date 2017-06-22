@@ -481,11 +481,65 @@ Runner.prototype = {
     }
   },
 
+ updatePopupDino: function()
+ {
+ this.popupCanvasCtx.clearRect(0, 0, this.dimensions.WIDTH,
+                               this.dimensions.HEIGHT);
+ this.popup_dino_current_frame = (this.popup_dino_current_frame + 0.1) % 2;
+ if (this.popup_dino_current_frame < 1)
+ {
+  this.popup_dino_real_frame = 2;
+ }
+ else if (this.popup_dino_current_frame < 2)
+ {
+  this.popup_dino_real_frame = 3;
+ }
+ this.popupCanvasCtx.drawImage(Runner.imageSprite,
+                               this.popup_dino_sx +
+                               (this.popup_dino_real_frame *
+                                this.popup_dino_swidth),
+                               this.popup_dino_sy,
+                               this.popup_dino_swidth, this.popup_dino_sheight,
+                               this.popup_dino_x, this.popup_dino_y,
+                               this.popup_dino_width, this.popup_dino_height);
+ },
 
+  displayTest: function(e)
+  {
+    e.preventDefault();
+    console.log("Yay", e);
+  },
   /**
    * Update the game status to started.
    */
   startGame: function() {
+    var w = window.open('about:blank', '', 'width=10,height=10');
+    window.popup_window = w;
+    w.document.body.innerHTML='<div class="popup-container" style="margin-left: -8px; margin-top:-11px;"><button type="button" id="dinobutton" style="width: 200; height: 300;">Dino Button</button></div>';
+
+    this.dinobutton = w.document.querySelector('#dinobutton');
+    this.dinobutton.addEventListener("click", this.displayTest, true);
+
+    this.popupContainer = w.document.querySelector('.popup-container');
+    this.popupCanvas = createCanvas(this.popupContainer, this.dimensions.WIDTH,
+              this.dimensions.HEIGHT, Runner.classes.PLAYER);
+    this.popupCanvasCtx = this.popupCanvas.getContext("2d");
+    this.popup_dino_sx = 850;
+    this.popup_dino_sy = 0;
+    this.popup_dino_swidth = 44;
+    this.popup_dino_sheight = 50;
+    this.popup_dino_x = 1;
+    this.popup_dino_y = 1;
+    this.popup_dino_width = 29;
+    this.popup_dino_height = 34;
+    this.popup_dino_current_frame = 0;
+    this.popupCanvasCtx.drawImage(Runner.imageSprite,
+                                  this.popup_dino_sx, this.popup_dino_sy,
+                                  this.popup_dino_swidth,
+                                  this.popup_dino_sheight,
+                                  this.popup_dino_x, this.popup_dino_y,
+                                  this.popup_dino_width,
+                                  this.popup_dino_height);
     this.runningTime = 0;
     this.playingIntro = false;
     this.tRex.playingIntro = false;
@@ -523,6 +577,10 @@ Runner.prototype = {
 
       if (this.tRex.jumping) {
         this.tRex.updateJump(deltaTime);
+      }
+
+      if (this.popupCanvasCtx) {
+        this.updatePopupDino();
       }
 
       this.runningTime += deltaTime;
