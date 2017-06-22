@@ -23,12 +23,6 @@ ImagePattern::ImagePattern(PassRefPtr<Image> image, RepeatMode repeat_mode)
   previous_local_matrix_.setIdentity();
 }
 
-bool ImagePattern::IsLocalMatrixChanged(const SkMatrix& local_matrix) const {
-  if (IsRepeatXY())
-    return Pattern::IsLocalMatrixChanged(local_matrix);
-  return local_matrix != previous_local_matrix_;
-}
-
 std::unique_ptr<PaintShader> ImagePattern::CreateShader(
     const SkMatrix& local_matrix) {
   if (!tile_image_) {
