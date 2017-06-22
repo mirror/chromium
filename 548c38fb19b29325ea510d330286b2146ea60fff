@@ -116,6 +116,24 @@
       "revId": "548c38fb19b29325ea510d330286b2146ea60fff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b78ed481_1deddb52",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-22T15:03:48Z",
+      "side": 1,
+      "message": "# Sorry, I just meant eliding braces. typo...\n\nYes it\u0027s one face, and I agreed with your point.\nActually, for my personal code, I use braces regardless of the number of stmts.\nThough, AFAIK, in cros code style, braces are not used for one-line-ish if-stmt body, so I think it\u0027s better to be consistent.",
+      "parentUuid": "40594a0e_2f4a4955",
+      "revId": "548c38fb19b29325ea510d330286b2146ea60fff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
