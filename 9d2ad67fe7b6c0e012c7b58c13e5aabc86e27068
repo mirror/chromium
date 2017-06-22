@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "21191148_dfc7012c",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-06-22T21:17:39Z",
+      "side": 1,
+      "message": "The next iteration is in the next few weeks, so yes, it\u0027s pretty short term.\n\nWe need to see how the data looks etc. first, which is why we\u0027re pushing it out in such a staged fashion. I\u0027ve filled out the doc template linked from go/ukm-logs and notified the appropriate teams; please let me know what else needs to happen so we can get this CL landed ASAP. Thank you!",
+      "parentUuid": "7c31d494_b077b5af",
+      "revId": "9d2ad67fe7b6c0e012c7b58c13e5aabc86e27068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7755590_09ebb525",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
         "patchSetId": 4
