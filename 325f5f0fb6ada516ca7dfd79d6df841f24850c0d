@@ -70,6 +70,30 @@
       "revId": "325f5f0fb6ada516ca7dfd79d6df841f24850c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2634f55_13c02393",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1106289
+      },
+      "writtenOn": "2017-06-22T03:13:59Z",
+      "side": 1,
+      "message": "That shouldn\u0027t be necessary. SwiftShader only kicks in when either explicitly specifying the --use-gl\u003dswiftshader launch flag, or when the GPU is blacklisted for WebGL. The latter should never be the case for any Chrome OS device.",
+      "parentUuid": "453fbf92_0811b57e",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "325f5f0fb6ada516ca7dfd79d6df841f24850c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
