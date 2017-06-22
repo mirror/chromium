@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a266f8c_6630e128",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T19:04:35Z",
+      "side": 1,
+      "message": "use only one main constructor: replace this one with `this(nativeInit())`",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43543f5_386cd790",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T19:04:35Z",
+      "side": 1,
+      "message": "I think there is a better approach that makes exposes less internal code and avoids replacing internal code. How about that:\n\nSpy and replace only 2 methods:\n- isInitialised (so that you don\u0027t even need to replace the constructor)\n- nativeRetrieveThumbnail (so you can pretent to also be the native code. use doAnswer to replace the implementation, e.g. https://cs.chromium.org/chromium/src/chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGroupTest.java?q\u003ddoAnswer\u0026l\u003d386)\n\nThen just make a real request and go through all the code. You can return the bitmap you want in the callback from nativeRetrieveThumbnail.",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 22
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be8e2f3_9116d179",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T19:04:35Z",
+      "side": 1,
+      "message": "nit: use values relative to THUMBNAIL_SIZE_PX (e.g. by saying THUMBNAIL_SIZE_PX + 100) to make sure this does not break when the size changes and to allow figuring out the relationship between the values without having the check the value of thumbnail size somewhere else in the file.\n\nAlso, if needed, another way of creating bitmaps if by mocking them. The current way is probably easier though.",
+      "range": {
+        "startLine": 63,
+        "startChar": 44,
+        "endLine": 63,
+        "endChar": 47
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6e12a7_9daa3c2a",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-22T19:04:35Z",
+      "side": 1,
+      "message": "verify the callback is called, see CallbackHelper.",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 47
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
