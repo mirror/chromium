@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7105fac9_79ce660e",
+        "filename": "media/filters/source_buffer_range.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-22T19:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c2d161f_3d990d66",
+      "range": {
+        "startLine": 718,
+        "startChar": 2,
+        "endLine": 718,
+        "endChar": 11
+      },
+      "revId": "46d0c789b3ea5989bdeb1927609b0dd946dd0b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8de2eda_da3a5ec9",
         "filename": "media/filters/source_buffer_range.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-22T18:48:18Z",
       "side": 1,
       "message": "also CHECK(highest_frame_)",
+      "range": {
+        "startLine": 737,
+        "startChar": 0,
+        "endLine": 737,
+        "endChar": 27
+      },
+      "revId": "46d0c789b3ea5989bdeb1927609b0dd946dd0b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c68990_75b4a96b",
+        "filename": "media/filters/source_buffer_range.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-22T19:58:52Z",
+      "side": 1,
+      "message": "per chat, a nullptr deref on the next line would crash, so CHECK isn\u0027t needed for this case.",
+      "parentUuid": "c8de2eda_da3a5ec9",
       "range": {
         "startLine": 737,
         "startChar": 0,
