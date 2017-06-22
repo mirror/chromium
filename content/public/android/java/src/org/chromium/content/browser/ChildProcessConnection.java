@@ -61,7 +61,7 @@ public class ChildProcessConnection {
     interface ConnectionCallback {
         /**
          * Called when the connection to the service is established.
-         * @param connecion the connection object to the child process
+         * @param connection the connection object to the child process
          */
         void onConnected(ChildProcessConnection connection);
     }
