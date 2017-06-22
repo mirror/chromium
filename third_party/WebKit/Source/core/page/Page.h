@@ -64,6 +64,7 @@ class OverscrollController;
 struct PageScaleConstraints;
 class PageScaleConstraintsSet;
 class PluginData;
+class PluginsChangedObserver;
 class PointerLockController;
 class ScopedPageSuspender;
 class ScrollingCoordinator;
@@ -290,6 +291,8 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   void WillBeDestroyed();
 
+  void RegisterPluginsChangedObserver(PluginsChangedObserver*);
+
  private:
   friend class ScopedPageSuspender;
 
@@ -369,6 +372,8 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 #endif
 
   int subframe_count_;
+
+  HeapHashSet<WeakMember<PluginsChangedObserver>> plugins_changed_observers_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Page>;
