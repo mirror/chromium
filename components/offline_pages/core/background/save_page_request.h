@@ -28,6 +28,12 @@ class SavePageRequest {
                   const ClientId& client_id,
                   const base::Time& creation_time,
                   const bool user_requested);
+  SavePageRequest(int64_t request_id,
+                  const GURL& url,
+                  const ClientId& client_id,
+                  const base::Time& creation_time,
+                  const bool user_requested,
+                  const std::string& request_origin);
   SavePageRequest(const SavePageRequest& other);
   ~SavePageRequest();
 
@@ -84,6 +90,11 @@ class SavePageRequest {
     original_url_ = original_url;
   }
 
+  const std::string& request_origin() const { return request_origin_; }
+  void set_request_origin(const std::string& request_origin) {
+    request_origin_ = request_origin;
+  }
+
  private:
   // ID of this request.
   int64_t request_id_;
@@ -117,6 +128,10 @@ class SavePageRequest {
 
   // The original URL of the page to be offlined. Empty if no redirect occurs.
   GURL original_url_;
+
+  // The app package origin of this save page request. Empty if cannot be
+  // determined or Chrome.
+  std::string request_origin_;
 };
 
 }  // namespace offline_pages
