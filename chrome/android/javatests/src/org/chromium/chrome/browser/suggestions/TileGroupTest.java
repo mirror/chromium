@@ -72,9 +72,7 @@ public class TileGroupTest {
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
 
-        mSiteSuggestionUrls = new String[] {mTestServer.getURL(FAKE_MOST_VISITED_URLS[0]),
-                mTestServer.getURL(FAKE_MOST_VISITED_URLS[1]),
-                mTestServer.getURL(FAKE_MOST_VISITED_URLS[2])};
+        mSiteSuggestionUrls = mTestServer.getURLs(FAKE_MOST_VISITED_URLS);
 
         mMostVisitedSites = new FakeMostVisitedSites();
         mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls);
