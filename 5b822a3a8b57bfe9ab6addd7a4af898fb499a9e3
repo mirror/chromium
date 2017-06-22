@@ -16,6 +16,24 @@
       "revId": "5b822a3a8b57bfe9ab6addd7a4af898fb499a9e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f368ea70_455ad0e8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-06-22T14:43:10Z",
+      "side": 1,
+      "message": "Why do you suspect this might be problematic?\n\nThe API is designed to handle chunked data, and that\u0027s how it gets passed to the client under normal circumstances.  This particular path only gets invoked when a client is added late, after some data has been received already.  Since clients must be able to handle segment data for normal flow, it makes no difference if for late binding they get all the data at once or sequentially.",
+      "parentUuid": "c0e7d38e_0469511e",
+      "revId": "5b822a3a8b57bfe9ab6addd7a4af898fb499a9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
