@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8cbacb_1ec65836",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/select/listbox-not-force-layout.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-22T13:00:53Z",
+      "side": 1,
+      "message": "oops, I\u0027ll remove this line.",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
