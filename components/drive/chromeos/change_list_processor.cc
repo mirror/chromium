@@ -192,7 +192,8 @@ FileError ChangeListProcessor::Apply(
   }
 
   // Update changestamp.
-  error = resource_metadata_->SetLargestChangestamp(largest_changestamp);
+  error = resource_metadata_->SetLargestChangestamp(std::string(),
+                                                    largest_changestamp);
   if (error != FILE_ERROR_OK) {
     DLOG(ERROR) << "SetLargestChangeStamp failed: " << FileErrorToString(error);
     return error;

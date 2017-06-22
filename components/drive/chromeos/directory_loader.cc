@@ -60,7 +60,8 @@ FileError CheckLocalState(ResourceMetadata* resource_metadata,
     return error;
 
   // Get the local changestamp.
-  return resource_metadata->GetLargestChangestamp(local_changestamp);
+  return resource_metadata->GetLargestChangestamp(std::string(),
+                                                  local_changestamp);
 }
 
 FileError UpdateChangestamp(ResourceMetadata* resource_metadata,
