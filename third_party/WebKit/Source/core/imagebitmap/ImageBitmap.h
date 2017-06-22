@@ -13,6 +13,7 @@
 #include "core/imagebitmap/ImageBitmapSource.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/geometry/IntRect.h"
+#include "platform/graphics/ColorBehavior.h"
 #include "platform/graphics/Image.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/StaticBitmapImage.h"
@@ -40,6 +41,31 @@ enum ColorSpaceInfoUpdate {
   kUpdateColorSpaceInformation,
   kDontUpdateColorSpaceInformation,
 };
+enum RejectPromiseErrorType {
+  kInvalidStatePromiseError,
+  kNullPromiseError,
+};
+struct ParsedOptions {
+  bool flip_y = false;
+  bool premultiply_alpha = true;
+  bool should_scale_input = false;
+  unsigned resize_width = 0;
+  unsigned resize_height = 0;
+  IntRect crop_rect;
+  SkFilterQuality resize_quality = kLow_SkFilterQuality;
+  CanvasColorParams color_params;
+  bool color_canvas_extensions_enabled = false;
+};
+struct CropImageInfo {
+  Image* image;
+  ParsedOptions parsed_options;
+  AlphaDisposition image_format;
+  ColorBehavior color_behavior = ColorBehavior::TransformToGlobalTarget();
+  bool origin_clean;
+  bool source_lazy_decoded;
+  bool premultiply_alpha_reverted;
+  RejectPromiseErrorType error_type;
+};
 
 class CORE_EXPORT ImageBitmap final
     : public GarbageCollectedFinalized<ImageBitmap>,
@@ -49,29 +75,39 @@ class CORE_EXPORT ImageBitmap final
   DEFINE_WRAPPERTYPEINFO();
 
  public:
+  // The ScriptPromiseResolver is default to be nullptr, for the callsites
+  // such as unit tests. In the case when it is null, we don't need to resolve
+  // the promise, instead return the ImageBitmap directly.
   static ImageBitmap* Create(ImageElementBase*,
                              Optional<IntRect>,
                              Document*,
+                             ScriptPromiseResolver* = nullptr,
                              const ImageBitmapOptions& = ImageBitmapOptions());
   static ImageBitmap* Create(HTMLVideoElement*,
                              Optional<IntRect>,
                              Document*,
+                             ScriptPromiseResolver* = nullptr,
                              const ImageBitmapOptions& = ImageBitmapOptions());
   static ImageBitmap* Create(HTMLCanvasElement*,
                              Optional<IntRect>,
+                             ScriptPromiseResolver* = nullptr,
                              const ImageBitmapOptions& = ImageBitmapOptions());
   static ImageBitmap* Create(OffscreenCanvas*,
                              Optional<IntRect>,
+                             ScriptPromiseResolver* = nullptr,
                              const ImageBitmapOptions& = ImageBitmapOptions());
   static ImageBitmap* Create(ImageData*,
                              Optional<IntRect>,
+                             ScriptPromiseResolver* = nullptr,
                              const ImageBitmapOptions& = ImageBitmapOptions());
   static ImageBitmap* Create(ImageBitmap*,
                              Optional<IntRect>,
+                             ScriptPromiseResolver* = nullptr,
                              const ImageBitmapOptions& = ImageBitmapOptions());
   static ImageBitmap* Create(PassRefPtr<StaticBitmapImage>);
   static ImageBitmap* Create(PassRefPtr<StaticBitmapImage>,
                              Optional<IntRect>,
+                             ScriptPromiseResolver* = nullptr,
                              const ImageBitmapOptions& = ImageBitmapOptions());
   // This function is called by structured-cloning an ImageBitmap.
   // isImageBitmapPremultiplied indicates whether the original ImageBitmap is
@@ -142,24 +178,68 @@ class CORE_EXPORT ImageBitmap final
   ImageBitmap(ImageElementBase*,
               Optional<IntRect>,
               Document*,
+              ScriptPromiseResolver*,
               const ImageBitmapOptions&);
   ImageBitmap(HTMLVideoElement*,
               Optional<IntRect>,
               Document*,
+              ScriptPromiseResolver*,
               const ImageBitmapOptions&);
-  ImageBitmap(HTMLCanvasElement*, Optional<IntRect>, const ImageBitmapOptions&);
-  ImageBitmap(OffscreenCanvas*, Optional<IntRect>, const ImageBitmapOptions&);
-  ImageBitmap(ImageData*, Optional<IntRect>, const ImageBitmapOptions&);
-  ImageBitmap(ImageBitmap*, Optional<IntRect>, const ImageBitmapOptions&);
+  ImageBitmap(HTMLCanvasElement*,
+              Optional<IntRect>,
+              ScriptPromiseResolver*,
+              const ImageBitmapOptions&);
+  ImageBitmap(OffscreenCanvas*,
+              Optional<IntRect>,
+              ScriptPromiseResolver*,
+              const ImageBitmapOptions&);
+  ImageBitmap(ImageData*,
+              Optional<IntRect>,
+              ScriptPromiseResolver*,
+              const ImageBitmapOptions&);
+  ImageBitmap(ImageBitmap*,
+              Optional<IntRect>,
+              ScriptPromiseResolver*,
+              const ImageBitmapOptions&);
   ImageBitmap(PassRefPtr<StaticBitmapImage>);
   ImageBitmap(RefPtr<StaticBitmapImage>,
               Optional<IntRect>,
+              ScriptPromiseResolver*,
               const ImageBitmapOptions&);
   ImageBitmap(const void* pixel_data,
               uint32_t width,
               uint32_t height,
               bool is_image_bitmap_premultiplied,
               bool is_image_bitmap_origin_clean);
+
+  void CropImageAndApplyColorSpaceConversion(ScriptPromiseResolver*,
+                                             Image*,
+                                             ParsedOptions&,
+                                             AlphaDisposition,
+                                             bool is_origin_clean,
+                                             bool is_lazy_decoded,
+                                             bool is_premultiply_alpha_reverted,
+                                             RejectPromiseErrorType,
+                                             ColorBehavior);
+  void DecodeImageOnBackground(RefPtr<WebTaskRunner>,
+                               std::unique_ptr<CropImageInfo>,
+                               ScriptPromiseResolver*,
+                               sk_sp<SkImage>);
+  void PostProcessImage(RefPtr<WebTaskRunner>,
+                        sk_sp<SkImage>,
+                        ParsedOptions&,
+                        bool origin_clean,
+                        bool source_lazy_decoded,
+                        bool premultiply_alpha_reverted,
+                        ScriptPromiseResolver*,
+                        RejectPromiseErrorType);
+  void ManuallyTriggerDecoding(ParsedOptions&, sk_sp<SkImage>&);
+  void ManuallyRevertAlpha(ParsedOptions&, sk_sp<SkImage>&);
+  void ResolvePromiseOnOriginalThread(ScriptPromiseResolver*,
+                                      RejectPromiseErrorType,
+                                      sk_sp<SkImage>,
+                                      bool origin_clean,
+                                      bool premultiply_alpha);
 
   RefPtr<StaticBitmapImage> image_;
   bool is_neutered_ = false;

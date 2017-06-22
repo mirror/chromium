@@ -1344,9 +1344,15 @@ ScriptPromise HTMLCanvasElement::CreateImageBitmap(
     return ScriptPromise();
   if (!ImageBitmap::IsResizeOptionValid(options, exception_state))
     return ScriptPromise();
-  return ImageBitmapSource::FulfillImageBitmap(
-      script_state,
-      IsPaintable() ? ImageBitmap::Create(this, crop_rect, options) : nullptr);
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  if (IsPaintable()) {
+    ImageBitmap::Create(this, crop_rect, resolver, options);
+  } else {
+    resolver->Reject(
+        ScriptValue(script_state, v8::Null(script_state->GetIsolate())));
+  }
+  return promise;
 }
 
 void HTMLCanvasElement::SetPlaceholderFrame(

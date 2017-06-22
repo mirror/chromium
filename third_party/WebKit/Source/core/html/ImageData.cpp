@@ -426,8 +426,10 @@ ScriptPromise ImageData::CreateImageBitmap(ScriptState* script_state,
   }
   if (!ImageBitmap::IsResizeOptionValid(options, exception_state))
     return ScriptPromise();
-  return ImageBitmapSource::FulfillImageBitmap(
-      script_state, ImageBitmap::Create(this, crop_rect, options));
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  ImageBitmap::Create(this, crop_rect, resolver, options);
+  return promise;
 }
 
 v8::Local<v8::Object> ImageData::AssociateWithWrapper(
