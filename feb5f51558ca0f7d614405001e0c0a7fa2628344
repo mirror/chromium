@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "01761b90_cc6712f4",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "This is fixed in patch 6.",
+      "parentUuid": "c1244786_94a49179",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f10175e_e824658b",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
         "patchSetId": 5
@@ -69,6 +93,30 @@
       "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b68b48_99be4776",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f10175e_e824658b",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 69
+      },
+      "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "7ec2461f_d35e9064",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0913f51f_f2fb693e",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d5a50dc_a89a949b",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
         "patchSetId": 5
@@ -115,6 +187,30 @@
       "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b1125e_d3302c0f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d5a50dc_a89a949b",
+      "range": {
+        "startLine": 63,
+        "startChar": 25,
+        "endLine": 63,
+        "endChar": 49
+      },
+      "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "28db7efd_5b53f086",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01d08c16_b6270b36",
+      "range": {
+        "startLine": 44,
+        "startChar": 42,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a51151e9_2368a4c1",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
         "patchSetId": 5
@@ -152,6 +272,30 @@
       "writtenOn": "2017-06-21T01:08:00Z",
       "side": 1,
       "message": "We can discuss batching this into the service if that makes it easier/in the future.  If other clients end up having to do the same thing we should dedupe.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84bcd446_226360ac",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "This happens when the client can start earlier than the service, unless the client builds the logic to wait until it is ready.\n\nWe may consider making PrefetchService initialization logic to wait until DownloadService gets ready before trying to do anything. Add a comment for this probability.",
+      "parentUuid": "a51151e9_2368a4c1",
       "range": {
         "startLine": 51,
         "startChar": 2,

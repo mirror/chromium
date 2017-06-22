@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b6665c9_54d94009",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "We no longer return.",
+      "parentUuid": "775c1717_e197cc37",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9095625f_aba02d6b",
         "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T18:30:15Z",
       "side": 1,
       "message": "Please unit test this file.",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55529abb_6772c4b3",
+        "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "The functionalities are tested in other unit tests.",
+      "parentUuid": "9095625f_aba02d6b",
       "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a795a8b_55f4f0ce",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "This is not longer needed. We now access PrefetchDownloader directly in the download client to simplify the logic.",
+      "parentUuid": "8e5fb5b2_d4737d68",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e202fca6_3e276e11",
         "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.h",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8378d197_235dfd8a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "Removed. This is not longer needed.",
+      "parentUuid": "e202fca6_3e276e11",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fba4c46_afad0f73",
         "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.h",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-21T18:30:15Z",
       "side": 1,
       "message": "This should be set in the constructor.  If you need further initialization later, follow the pattern of SuggestedArticlesObserver which actually does nothing until it gets the ContentSuggestionsService*",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2401372c_c477b40b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-22T01:12:41Z",
+      "side": 1,
+      "message": "Removed. Now we create and own PrefetchDownloader directly.",
+      "parentUuid": "2fba4c46_afad0f73",
       "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
