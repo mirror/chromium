@@ -339,13 +339,14 @@ class LayerTreeHostImplTest : public testing::Test,
 
     std::unique_ptr<LayerImpl> inner_clip =
         LayerImpl::Create(layer_tree_impl, kInnerViewportClipLayerId);
-    inner_clip->SetBounds(
-        gfx::Size(content_size.width() / 2, content_size.height() / 2));
+    gfx::Size viewport_scroll_bounds =
+        gfx::Size(content_size.width() / 2, content_size.height() / 2);
+    inner_clip->SetBounds(viewport_scroll_bounds);
 
     std::unique_ptr<LayerImpl> page_scale =
         LayerImpl::Create(layer_tree_impl, kPageScaleLayerId);
 
-    inner_scroll->SetScrollClipLayer(inner_clip->id());
+    inner_scroll->SetScrollContainerBounds(viewport_scroll_bounds);
     inner_scroll->SetElementId(
         LayerIdToElementIdForTesting(inner_scroll->id()));
     inner_scroll->SetBounds(content_size);
@@ -359,7 +360,7 @@ class LayerTreeHostImplTest : public testing::Test,
 
     std::unique_ptr<LayerImpl> outer_scroll =
         LayerImpl::Create(layer_tree_impl, kOuterViewportScrollLayerId);
-    outer_scroll->SetScrollClipLayer(outer_clip->id());
+    outer_scroll->SetScrollContainerBounds(content_size);
     outer_scroll->SetElementId(
         LayerIdToElementIdForTesting(outer_scroll->id()));
     outer_scroll->layer_tree_impl()
@@ -420,7 +421,7 @@ class LayerTreeHostImplTest : public testing::Test,
 
     std::unique_ptr<LayerImpl> scroll = LayerImpl::Create(layer_tree_impl, 3);
     scroll->SetBounds(scroll_content_size);
-    scroll->SetScrollClipLayer(clip->id());
+    scroll->SetScrollContainerBounds(content_size);
     scroll->SetElementId(LayerIdToElementIdForTesting(scroll->id()));
     scroll->SetDrawsContent(true);
 
@@ -496,6 +497,8 @@ class LayerTreeHostImplTest : public testing::Test,
                                    ->children.back();
     content_layer->SetBounds(content_size);
     host_impl_->OuterViewportScrollLayer()->SetBounds(content_size);
+    host_impl_->OuterViewportScrollLayer()->SetScrollContainerBounds(
+        viewport_size);
 
     LayerImpl* outer_clip =
         host_impl_->OuterViewportScrollLayer()->test_properties()->parent;
@@ -507,6 +510,8 @@ class LayerTreeHostImplTest : public testing::Test,
                                       ->parent;
     inner_clip_layer->SetBounds(viewport_size);
     host_impl_->InnerViewportScrollLayer()->SetBounds(viewport_size);
+    host_impl_->InnerViewportScrollLayer()->SetScrollContainerBounds(
+        viewport_size);
 
     host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
@@ -523,11 +528,13 @@ class LayerTreeHostImplTest : public testing::Test,
     DCHECK(id != clip_layer->id());
     std::unique_ptr<LayerImpl> layer =
         LayerImpl::Create(host_impl_->active_tree(), id);
-    layer->SetScrollClipLayer(clip_layer->id());
     layer->SetElementId(LayerIdToElementIdForTesting(layer->id()));
     layer->SetDrawsContent(true);
     layer->SetBounds(size);
-    clip_layer->SetBounds(gfx::Size(size.width() / 2, size.height() / 2));
+    gfx::Size scroll_container_bounds =
+        gfx::Size(size.width() / 2, size.height() / 2);
+    layer->SetScrollContainerBounds(scroll_container_bounds);
+    clip_layer->SetBounds(scroll_container_bounds);
     return layer;
   }
 
@@ -817,7 +824,7 @@ TEST_F(LayerTreeHostImplTest, ScrollDeltaRepeatedScrolls) {
   root_clip->SetBounds(gfx::Size(10, 10));
   root_clip->test_properties()->AddChild(std::move(root_owned));
   root->SetBounds(gfx::Size(110, 110));
-  root->SetScrollClipLayer(root_clip->id());
+  root->SetScrollContainerBounds(root_clip->bounds());
   root->SetElementId(LayerIdToElementIdForTesting(root->id()));
   root->layer_tree_impl()
       ->property_trees()
@@ -862,7 +869,7 @@ TEST_F(LayerTreeHostImplTest, ScrollerSizeOfCCScrollingHistogramRecordingTest) {
 
   child_clip->SetBounds(gfx::Size(100, 100));
 
-  child->SetScrollClipLayer(child_clip->id());
+  child->SetScrollContainerBounds(gfx::Size(100, 100));
   child->SetElementId(LayerIdToElementIdForTesting(child->id()));
   child->SetBounds(gfx::Size(100, 400));
   child->SetPosition(gfx::PointF());
@@ -1202,7 +1209,7 @@ TEST_F(LayerTreeHostImplTest, ScrolledOverlappingDrawnScrollbarLayer) {
 
   std::unique_ptr<LayerImpl> scroll = LayerImpl::Create(layer_tree_impl, 3);
   scroll->SetBounds(scroll_content_size);
-  scroll->SetScrollClipLayer(clip->id());
+  scroll->SetScrollContainerBounds(content_size);
   scroll->SetElementId(LayerIdToElementIdForTesting(scroll->id()));
   scroll->SetDrawsContent(true);
 
@@ -1446,8 +1453,7 @@ TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   ASSERT_EQ(1u, scroll_layer->test_properties()->children.size());
   LayerImpl* overflow = scroll_layer->test_properties()->children[0];
   overflow->SetBounds(overflow_size);
-  overflow->SetScrollClipLayer(
-      scroll_layer->test_properties()->parent->test_properties()->parent->id());
+  overflow->SetScrollContainerBounds(gfx::Size(100, 100));
   overflow->SetElementId(LayerIdToElementIdForTesting(overflow->id()));
   overflow->layer_tree_impl()
       ->property_trees()
@@ -1763,7 +1769,7 @@ TEST_F(LayerTreeHostImplTest, ImplPinchZoom) {
   DrawFrame();
 
   EXPECT_EQ(scroll_layer, host_impl_->InnerViewportScrollLayer());
-  LayerImpl* container_layer = scroll_layer->scroll_clip_layer();
+  LayerImpl* container_layer = host_impl_->InnerViewportContainerLayer();
   EXPECT_EQ(gfx::Size(50, 50), container_layer->bounds());
 
   float min_page_scale = 1.f, max_page_scale = 4.f;
@@ -2790,7 +2796,7 @@ TEST_F(LayerTreeHostImplTest, MaxScrollOffsetAffectedByViewportBoundsDelta) {
   DrawFrame();
 
   LayerImpl* inner_scroll = host_impl_->InnerViewportScrollLayer();
-  LayerImpl* inner_container = inner_scroll->scroll_clip_layer();
+  LayerImpl* inner_container = host_impl_->InnerViewportContainerLayer();
   DCHECK(inner_scroll);
   DCHECK(inner_container);
   EXPECT_EQ(gfx::ScrollOffset(50, 50), inner_scroll->MaxScrollOffset());
@@ -3237,8 +3243,14 @@ TEST_F(LayerTreeHostImplTest, ScrollbarInnerLargerThanOuter) {
   CreateScrollAndContentsLayers(host_impl_->active_tree(), content_size);
   host_impl_->active_tree()->InnerViewportContainerLayer()->SetBounds(
       inner_viewport_size);
+  host_impl_->active_tree()
+      ->InnerViewportScrollLayer()
+      ->SetScrollContainerBounds(inner_viewport_size);
   host_impl_->active_tree()->OuterViewportContainerLayer()->SetBounds(
       outer_viewport_size);
+  host_impl_->active_tree()
+      ->OuterViewportScrollLayer()
+      ->SetScrollContainerBounds(outer_viewport_size);
   LayerImpl* root_scroll =
       host_impl_->active_tree()->OuterViewportScrollLayer();
   std::unique_ptr<SolidColorScrollbarLayerImpl> horiz_scrollbar =
@@ -3336,7 +3348,7 @@ TEST_F(LayerTreeHostImplTest, ScrollbarRegistration) {
   animation_task_ = base::Closure();
 
   // Check scrollbar registration on a sublayer.
-  child->SetScrollClipLayer(child_clip->id());
+  child->SetScrollContainerBounds(viewport_size);
   child->SetElementId(LayerIdToElementIdForTesting(child->id()));
   ElementId child_scroll_element_id = child->element_id();
   child_clip->test_properties()->AddChild(std::move(child));
@@ -4228,7 +4240,6 @@ TEST_F(LayerTreeHostImplTest,
 TEST_F(LayerTreeHostImplTest, ScrollRootIgnored) {
   std::unique_ptr<LayerImpl> root =
       LayerImpl::Create(host_impl_->active_tree(), 1);
-  root->SetScrollClipLayer(Layer::INVALID_ID);
   root->test_properties()->force_render_surface = true;
   host_impl_->active_tree()->SetRootLayerForTesting(std::move(root));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
@@ -4324,7 +4335,7 @@ class LayerTreeHostImplBrowserControlsTest : public LayerTreeHostImplTest {
     std::unique_ptr<LayerImpl> outer_clip = LayerImpl::Create(tree_impl, 5);
 
     root_clip->SetBounds(inner_viewport_size);
-    root->SetScrollClipLayer(root_clip->id());
+    root->SetScrollContainerBounds(inner_viewport_size);
     root->SetElementId(LayerIdToElementIdForTesting(root->id()));
     root->SetBounds(outer_viewport_size);
     root->SetPosition(gfx::PointF());
@@ -4332,7 +4343,7 @@ class LayerTreeHostImplBrowserControlsTest : public LayerTreeHostImplTest {
     root_clip->test_properties()->force_render_surface = true;
     root->test_properties()->is_container_for_fixed_position_layers = true;
     outer_clip->SetBounds(outer_viewport_size);
-    outer_scroll->SetScrollClipLayer(outer_clip->id());
+    outer_scroll->SetScrollContainerBounds(outer_viewport_size);
     outer_scroll->SetElementId(
         LayerIdToElementIdForTesting(outer_scroll->id()));
     outer_scroll->SetBounds(scroll_layer_size);
@@ -4784,7 +4795,7 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
       LayerImpl::Create(host_impl_->active_tree(), id + 3);
 
   child_clip->SetBounds(sub_content_layer_size);
-  child->SetScrollClipLayer(child_clip->id());
+  child->SetScrollContainerBounds(sub_content_layer_size);
   child->SetElementId(LayerIdToElementIdForTesting(child->id()));
   child->SetBounds(sub_content_size);
   child->SetPosition(gfx::PointF());
@@ -5328,19 +5339,19 @@ TEST_F(LayerTreeHostImplTest, ScrollNonCompositedRoot) {
   content_layer->SetPosition(gfx::PointF());
   content_layer->SetBounds(contents_size);
 
-  LayerImpl* scroll_clip_layer =
+  LayerImpl* scroll_container_layer =
       CreateBasicVirtualViewportLayers(surface_size, surface_size);
 
   std::unique_ptr<LayerImpl> scroll_layer =
       LayerImpl::Create(host_impl_->active_tree(), 12);
-  scroll_layer->SetScrollClipLayer(scroll_clip_layer->id());
+  scroll_layer->SetScrollContainerBounds(surface_size);
   scroll_layer->SetElementId(LayerIdToElementIdForTesting(scroll_layer->id()));
   scroll_layer->SetBounds(contents_size);
   scroll_layer->SetPosition(gfx::PointF());
   scroll_layer->test_properties()->AddChild(std::move(content_layer));
-  scroll_clip_layer->test_properties()->AddChild(std::move(scroll_layer));
+  scroll_container_layer->test_properties()->AddChild(std::move(scroll_layer));
 
-  scroll_clip_layer->test_properties()->force_render_surface = true;
+  scroll_container_layer->test_properties()->force_render_surface = true;
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   host_impl_->SetViewportSize(surface_size);
@@ -5448,7 +5459,6 @@ TEST_F(LayerTreeHostImplTest, ScrollBlockedByContentLayer) {
       CreateScrollableLayer(1, surface_size, clip_layer.get());
   content_layer->set_main_thread_scrolling_reasons(
       MainThreadScrollingReason::kHasBackgroundAttachmentFixedObjects);
-  content_layer->SetScrollClipLayer(Layer::INVALID_ID);
 
   // Note: we can use the same clip layer for both since both calls to
   // CreateScrollableLayer() use the same surface size.
@@ -5480,23 +5490,18 @@ TEST_F(LayerTreeHostImplTest, ScrollRootAndChangePageScaleOnMainThread) {
   SetupScrollAndContentsLayers(viewport_size);
 
   // Setup the layers so that the outer viewport is scrollable.
-  host_impl_->active_tree()
-      ->InnerViewportScrollLayer()
-      ->test_properties()
-      ->parent->SetBounds(viewport_size);
-  host_impl_->active_tree()->OuterViewportScrollLayer()->SetBounds(
-      gfx::Size(40, 40));
+  host_impl_->InnerViewportScrollLayer()->test_properties()->parent->SetBounds(
+      viewport_size);
+  host_impl_->OuterViewportScrollLayer()->SetBounds(gfx::Size(40, 40));
   host_impl_->active_tree()->PushPageScaleFromMainThread(1.f, 1.f, 2.f);
   DrawFrame();
 
-  LayerImpl* root_scroll =
-      host_impl_->active_tree()->OuterViewportScrollLayer();
-  LayerImpl* inner_scroll =
-      host_impl_->active_tree()->InnerViewportScrollLayer();
-  EXPECT_EQ(viewport_size, root_scroll->scroll_clip_layer()->bounds());
+  LayerImpl* root_container = host_impl_->OuterViewportContainerLayer();
+  EXPECT_EQ(viewport_size, root_container->bounds());
 
   gfx::Vector2d scroll_delta(0, 10);
   gfx::Vector2d expected_scroll_delta = scroll_delta;
+  LayerImpl* root_scroll = host_impl_->OuterViewportScrollLayer();
   gfx::ScrollOffset expected_max_scroll = root_scroll->MaxScrollOffset();
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -5511,6 +5516,7 @@ TEST_F(LayerTreeHostImplTest, ScrollRootAndChangePageScaleOnMainThread) {
 
   std::unique_ptr<ScrollAndScaleSet> scroll_info =
       host_impl_->ProcessScrollDeltas();
+  LayerImpl* inner_scroll = host_impl_->InnerViewportScrollLayer();
   EXPECT_TRUE(ScrollInfoContains(*scroll_info.get(), inner_scroll->element_id(),
                                  expected_scroll_delta));
 
@@ -5529,25 +5535,20 @@ TEST_F(LayerTreeHostImplTest, ScrollRootAndChangePageScaleOnImplThread) {
   SetupScrollAndContentsLayers(viewport_size);
 
   // Setup the layers so that the outer viewport is scrollable.
-  host_impl_->active_tree()
-      ->InnerViewportScrollLayer()
-      ->test_properties()
-      ->parent->SetBounds(viewport_size);
-  host_impl_->active_tree()->OuterViewportScrollLayer()->SetBounds(
-      gfx::Size(40, 40));
+  host_impl_->InnerViewportScrollLayer()->test_properties()->parent->SetBounds(
+      viewport_size);
+  host_impl_->OuterViewportScrollLayer()->SetBounds(gfx::Size(40, 40));
   host_impl_->active_tree()->PushPageScaleFromMainThread(1.f, 1.f, 2.f);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
 
-  LayerImpl* root_scroll =
-      host_impl_->active_tree()->OuterViewportScrollLayer();
-  LayerImpl* inner_scroll =
-      host_impl_->active_tree()->InnerViewportScrollLayer();
-  EXPECT_EQ(viewport_size, root_scroll->scroll_clip_layer()->bounds());
+  LayerImpl* root_container = host_impl_->OuterViewportContainerLayer();
+  EXPECT_EQ(viewport_size, root_container->bounds());
 
   gfx::Vector2d scroll_delta(0, 10);
   gfx::Vector2d expected_scroll_delta = scroll_delta;
+  LayerImpl* root_scroll = host_impl_->OuterViewportScrollLayer();
   gfx::ScrollOffset expected_max_scroll = root_scroll->MaxScrollOffset();
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -5570,6 +5571,7 @@ TEST_F(LayerTreeHostImplTest, ScrollRootAndChangePageScaleOnImplThread) {
   // The scroll delta is not scaled because the main thread did not scale.
   std::unique_ptr<ScrollAndScaleSet> scroll_info =
       host_impl_->ProcessScrollDeltas();
+  LayerImpl* inner_scroll = host_impl_->InnerViewportScrollLayer();
   EXPECT_TRUE(ScrollInfoContains(*scroll_info.get(), inner_scroll->element_id(),
                                  expected_scroll_delta));
 
@@ -6014,6 +6016,7 @@ TEST_F(LayerTreeHostImplTest, ScrollEventBubbling) {
       kViewportScrollLayerId, content_size, root_scroll.get());
   child->test_properties()->is_container_for_fixed_position_layers = true;
   root_scroll->SetBounds(content_size);
+  child->SetScrollContainerBounds(content_size);
 
   ElementId root_scroll_id = root_scroll->element_id();
   root_scroll->test_properties()->AddChild(std::move(child));
@@ -6206,8 +6209,10 @@ TEST_F(LayerTreeHostImplTest, ScrollNonAxisAlignedRotatedLayer) {
   clip_layer->test_properties()->transform = rotate_transform;
 
   // Only allow vertical scrolling.
-  clip_layer->SetBounds(
-      gfx::Size(child->bounds().width(), child->bounds().height() / 2));
+  gfx::Size scroll_container_bounds =
+      gfx::Size(child->bounds().width(), child->bounds().height() / 2);
+  clip_layer->SetBounds(scroll_container_bounds);
+  child->SetScrollContainerBounds(scroll_container_bounds);
   // The rotation depends on the layer's transform origin, and the child layer
   // is a different size than the clip, so make sure the clip layer's origin
   // lines up over the child.
@@ -6215,6 +6220,7 @@ TEST_F(LayerTreeHostImplTest, ScrollNonAxisAlignedRotatedLayer) {
       clip_layer->bounds().width() * 0.5f, clip_layer->bounds().height(), 0.f);
   LayerImpl* child_ptr = child.get();
   clip_layer->test_properties()->AddChild(std::move(child));
+  // TODO(pdr): Shouldn't clip_layer be scroll_layer's parent?
   scroll_layer->test_properties()->AddChild(std::move(clip_layer));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
@@ -6409,8 +6415,12 @@ TEST_F(LayerTreeHostImplTest, ScrollViewportRounding) {
   int height = 20;
   int scale = 3;
   SetupScrollAndContentsLayers(gfx::Size(width, height));
+  gfx::Size container_bounds = gfx::Size(width * scale - 1, height * scale);
   host_impl_->active_tree()->InnerViewportContainerLayer()->SetBounds(
-      gfx::Size(width * scale - 1, height * scale));
+      container_bounds);
+  host_impl_->active_tree()
+      ->InnerViewportScrollLayer()
+      ->SetScrollContainerBounds(container_bounds);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   host_impl_->active_tree()->SetDeviceScaleFactor(scale);
@@ -6429,6 +6439,7 @@ TEST_F(LayerTreeHostImplTest, RootLayerScrollOffsetDelegation) {
   LayerImpl* clip_layer =
       scroll_layer->test_properties()->parent->test_properties()->parent;
   clip_layer->SetBounds(gfx::Size(10, 20));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(10, 20));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   host_impl_->BindToClient(&scroll_watcher, false);
@@ -6541,6 +6552,7 @@ TEST_F(LayerTreeHostImplTest,
   LayerImpl* clip_layer =
       scroll_layer->test_properties()->parent->test_properties()->parent;
   clip_layer->SetBounds(gfx::Size(10, 20));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(10, 20));
   scroll_layer->SetDrawsContent(true);
 
   // Draw first frame to clear any pending draws and check scroll.
@@ -6843,6 +6855,7 @@ TEST_F(LayerTreeHostImplTest, OverscrollAlways) {
       scroll_layer->test_properties()->parent->test_properties()->parent;
 
   clip_layer->SetBounds(gfx::Size(50, 50));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(50, 50));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   host_impl_->SetViewportSize(gfx::Size(50, 50));
@@ -7006,7 +7019,7 @@ TEST_F(LayerTreeHostImplTest, ScrollFromOuterViewportSibling) {
 
     std::unique_ptr<LayerImpl> scroll = LayerImpl::Create(layer_tree_impl, 11);
     scroll->SetBounds(gfx::Size(400, 400));
-    scroll->SetScrollClipLayer(clip->id());
+    scroll->SetScrollContainerBounds(viewport_size);
     scroll->SetElementId(LayerIdToElementIdForTesting(scroll->id()));
     scroll->SetDrawsContent(true);
 
@@ -7097,7 +7110,7 @@ TEST_F(LayerTreeHostImplTest, ScrollChainingWithReplacedOuterViewport) {
 
     std::unique_ptr<LayerImpl> scroll = LayerImpl::Create(layer_tree_impl, 11);
     scroll->SetBounds(gfx::Size(400, 400));
-    scroll->SetScrollClipLayer(clip->id());
+    scroll->SetScrollContainerBounds(content_size);
     scroll->SetElementId(LayerIdToElementIdForTesting(scroll->id()));
     scroll->SetDrawsContent(true);
 
@@ -7108,7 +7121,7 @@ TEST_F(LayerTreeHostImplTest, ScrollChainingWithReplacedOuterViewport) {
 
     std::unique_ptr<LayerImpl> scroll2 = LayerImpl::Create(layer_tree_impl, 13);
     scroll2->SetBounds(gfx::Size(500, 500));
-    scroll2->SetScrollClipLayer(clip2->id());
+    scroll2->SetScrollContainerBounds(gfx::Size(300, 300));
     scroll2->SetElementId(LayerIdToElementIdForTesting(scroll2->id()));
     scroll2->SetDrawsContent(true);
 
@@ -7232,7 +7245,7 @@ TEST_F(LayerTreeHostImplTest, RootScrollerScrollNonDescendant) {
 
     std::unique_ptr<LayerImpl> scroll = LayerImpl::Create(layer_tree_impl, 11);
     scroll->SetBounds(gfx::Size(1200, 1200));
-    scroll->SetScrollClipLayer(clip->id());
+    scroll->SetScrollContainerBounds(content_size);
     scroll->SetElementId(LayerIdToElementIdForTesting(scroll->id()));
     scroll->SetDrawsContent(true);
 
@@ -7248,7 +7261,7 @@ TEST_F(LayerTreeHostImplTest, RootScrollerScrollNonDescendant) {
 
     std::unique_ptr<LayerImpl> scroll2 = LayerImpl::Create(layer_tree_impl, 15);
     scroll2->SetBounds(gfx::Size(1200, 1200));
-    scroll2->SetScrollClipLayer(clip2->id());
+    scroll2->SetScrollContainerBounds(gfx::Size(600, 600));
     scroll2->SetElementId(LayerIdToElementIdForTesting(scroll2->id()));
     scroll2->SetDrawsContent(true);
 
@@ -8466,7 +8479,7 @@ TEST_F(LayerTreeHostImplTest, FarAwayQuadsDontNeedAA) {
   root->SetBounds(root_size);
 
   gfx::ScrollOffset scroll_offset(100000, 0);
-  scrolling_layer->SetScrollClipLayer(root->id());
+  scrolling_layer->SetScrollContainerBounds(content_layer_bounds);
   scrolling_layer->SetElementId(
       LayerIdToElementIdForTesting(scrolling_layer->id()));
   host_impl_->pending_tree()->BuildPropertyTreesForTesting();
@@ -9959,7 +9972,7 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
 
     std::unique_ptr<LayerImpl> scroll = LayerImpl::Create(layer_tree_impl, 11);
     scroll->SetBounds(scroll_content_size);
-    scroll->SetScrollClipLayer(clip->id());
+    scroll->SetScrollContainerBounds(root_layer_size);
     scroll->SetElementId(LayerIdToElementIdForTesting(scroll->id()));
     scroll->SetDrawsContent(true);
 
@@ -10027,7 +10040,7 @@ class LayerTreeHostImplVirtualViewportTest : public LayerTreeHostImplTest {
     std::unique_ptr<LayerImpl> page_scale =
         LayerImpl::Create(layer_tree_impl, kPageScaleLayerId);
 
-    inner_scroll->SetScrollClipLayer(inner_clip->id());
+    inner_scroll->SetScrollContainerBounds(inner_viewport);
     inner_scroll->SetElementId(
         LayerIdToElementIdForTesting(inner_scroll->id()));
     inner_scroll->SetBounds(outer_viewport);
@@ -10041,7 +10054,7 @@ class LayerTreeHostImplVirtualViewportTest : public LayerTreeHostImplTest {
 
     std::unique_ptr<LayerImpl> outer_scroll =
         LayerImpl::Create(layer_tree_impl, kOuterViewportScrollLayerId);
-    outer_scroll->SetScrollClipLayer(outer_clip->id());
+    outer_scroll->SetScrollContainerBounds(outer_viewport);
     outer_scroll->SetElementId(
         LayerIdToElementIdForTesting(outer_scroll->id()));
     outer_scroll->layer_tree_impl()
@@ -12330,7 +12343,7 @@ void LayerTreeHostImplTest::SetupMouseMoveAtTestScrollbarStates(
   child->SetPosition(gfx::PointF(50, 50));
   child->SetBounds(child_layer_size);
   child->SetDrawsContent(true);
-  child->SetScrollClipLayer(child_clip_id);
+  child->SetScrollContainerBounds(gfx::Size(100, 100));
   child->SetElementId(LayerIdToElementIdForTesting(child->id()));
   ElementId child_element_id = child->element_id();
 

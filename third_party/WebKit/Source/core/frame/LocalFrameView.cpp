@@ -1637,6 +1637,16 @@ void LocalFrameView::ViewportSizeChanged(bool width_changed,
       RuntimeEnabledFeatures::RootLayerScrollingEnabled();
 
   if (LayoutView* layout_view = this->GetLayoutView()) {
+    if (layout_view->UsesCompositing()) {
+      if (root_layer_scrolling_enabled) {
+        layout_view->Layer()->SetNeedsCompositingInputsUpdate();
+        if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
+          SetNeedsPaintPropertyUpdate();
+      } else {
+        layout_view->Compositor()->FrameViewDidChangeSize();
+      }
+    }
+
     // If this is the main frame, we might have got here by hiding/showing the
     // top controls.  In that case, layout won't be triggered, so we need to
     // clamp the scroll offset here.
@@ -1647,16 +1657,6 @@ void LocalFrameView::ViewportSizeChanged(bool width_changed,
             ->ClampScrollOffsetAfterOverflowChange();
       } else {
         AdjustScrollOffsetFromUpdateScrollbars();
-      }
-    }
-
-    if (layout_view->UsesCompositing()) {
-      if (root_layer_scrolling_enabled) {
-        layout_view->Layer()->SetNeedsCompositingInputsUpdate();
-        if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
-          SetNeedsPaintPropertyUpdate();
-      } else {
-        layout_view->Compositor()->FrameViewDidChangeSize();
       }
     }
   }

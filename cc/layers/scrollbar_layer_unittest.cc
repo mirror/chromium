@@ -297,9 +297,9 @@ TEST_F(ScrollbarLayerTest, ScrollOffsetSynchronization) {
 
   // Choose bounds to give max_scroll_offset = (30, 50).
   layer_tree_root->SetBounds(gfx::Size(70, 150));
-  scroll_layer->SetScrollClipLayerId(layer_tree_root->id());
   scroll_layer->SetScrollOffset(gfx::ScrollOffset(10, 20));
   scroll_layer->SetBounds(gfx::Size(100, 200));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(70, 150));
   content_layer->SetBounds(gfx::Size(100, 200));
 
   layer_tree_host_->SetRootLayer(layer_tree_root);
@@ -322,6 +322,7 @@ TEST_F(ScrollbarLayerTest, ScrollOffsetSynchronization) {
                     cc_scrollbar_layer->clip_layer_length());
 
   layer_tree_root->SetBounds(gfx::Size(700, 1500));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(700, 1500));
   scroll_layer->SetBounds(gfx::Size(1000, 2000));
   scroll_layer->SetScrollOffset(gfx::ScrollOffset(100, 200));
   content_layer->SetBounds(gfx::Size(1000, 2000));
@@ -362,7 +363,6 @@ TEST_F(ScrollbarLayerTest, UpdatePropertiesOfScrollBarWhenThumbRemoved) {
   scoped_refptr<FakePaintedScrollbarLayer> scrollbar_layer =
       FakePaintedScrollbarLayer::Create(false, true, root_layer->element_id());
 
-  root_layer->SetScrollClipLayerId(root_clip_layer->id());
   // Give the root-clip a size that will result in MaxScrollOffset = (80, 0).
   root_clip_layer->SetBounds(gfx::Size(20, 50));
   root_layer->SetBounds(gfx::Size(100, 50));
@@ -403,9 +403,9 @@ TEST_F(ScrollbarLayerTest, ThumbRect) {
       FakePaintedScrollbarLayer::Create(false, true, root_layer->element_id());
 
   root_layer->SetElementId(LayerIdToElementIdForTesting(root_layer->id()));
-  root_layer->SetScrollClipLayerId(root_clip_layer->id());
   // Give the root-clip a size that will result in MaxScrollOffset = (80, 0).
   root_clip_layer->SetBounds(gfx::Size(20, 50));
+  root_layer->SetScrollContainerBounds(gfx::Size(20, 50));
   root_layer->SetBounds(gfx::Size(100, 50));
   content_layer->SetBounds(gfx::Size(100, 50));
 
@@ -481,7 +481,6 @@ TEST_F(ScrollbarLayerTest, ThumbRectForOverlayLeftSideVerticalScrollbar) {
   scoped_refptr<FakePaintedScrollbarLayer> scrollbar_layer =
       FakePaintedScrollbarLayer::Create(false, true, VERTICAL, true, true,
                                         root_layer->element_id());
-  root_layer->SetScrollClipLayerId(root_clip_layer->id());
   root_clip_layer->SetBounds(gfx::Size(50, 20));
   root_layer->SetBounds(gfx::Size(50, 100));
 
@@ -542,9 +541,6 @@ TEST_F(ScrollbarLayerTest, SolidColorDrawQuads) {
   scrollbar_layer_impl->SetClipLayerLength(200 / 3.f);
   scrollbar_layer_impl->SetScrollLayerLength(100 + 200 / 3.f);
 
-  DCHECK(layer_tree_host_->active_tree()->ScrollbarGeometriesNeedUpdate());
-  layer_tree_host_->active_tree()->UpdateScrollbarGeometries();
-
   // Thickness should be overridden to 3.
   {
     std::unique_ptr<RenderPass> render_pass = RenderPass::Create();
@@ -598,7 +594,6 @@ TEST_F(ScrollbarLayerTest, LayerDrivenSolidColorDrawQuads) {
   scoped_refptr<Layer> layer_tree_root = Layer::Create();
   scoped_refptr<Layer> scroll_layer = Layer::Create();
   scroll_layer->SetElementId(LayerIdToElementIdForTesting(scroll_layer->id()));
-  scroll_layer->SetScrollClipLayerId(layer_tree_root->id());
   scoped_refptr<Layer> child1 = Layer::Create();
   scoped_refptr<Layer> child2;
   const bool kIsLeftSideVerticalScrollbar = false;
@@ -612,6 +607,7 @@ TEST_F(ScrollbarLayerTest, LayerDrivenSolidColorDrawQuads) {
 
   // Choose layer bounds to give max_scroll_offset = (8, 8).
   layer_tree_root->SetBounds(gfx::Size(2, 2));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(2, 2));
   scroll_layer->SetBounds(gfx::Size(10, 10));
 
   layer_tree_host_->UpdateLayers();
@@ -653,7 +649,6 @@ TEST_F(ScrollbarLayerTest, ScrollbarLayerOpacity) {
 
   scoped_refptr<Layer> layer_tree_root = Layer::Create();
   scoped_refptr<Layer> scroll_layer = Layer::Create();
-  scroll_layer->SetScrollClipLayerId(layer_tree_root->id());
   scroll_layer->SetElementId(ElementId(200));
   scoped_refptr<Layer> child1 = Layer::Create();
   scoped_refptr<SolidColorScrollbarLayer> scrollbar_layer;
@@ -732,7 +727,6 @@ TEST_F(ScrollbarLayerTest, ScrollbarLayerPushProperties) {
   scoped_refptr<Layer> layer_tree_root = Layer::Create();
   scoped_refptr<Layer> scroll_layer = Layer::Create();
   scroll_layer->SetElementId(LayerIdToElementIdForTesting(scroll_layer->id()));
-  scroll_layer->SetScrollClipLayerId(layer_tree_root->id());
   scoped_refptr<Layer> child1 = Layer::Create();
   scoped_refptr<Layer> scrollbar_layer;
   const bool kIsLeftSideVerticalScrollbar = false;
@@ -746,6 +740,7 @@ TEST_F(ScrollbarLayerTest, ScrollbarLayerPushProperties) {
 
   layer_tree_root->SetBounds(gfx::Size(2, 2));
   scroll_layer->SetBounds(gfx::Size(10, 10));
+  scroll_layer->SetScrollContainerBounds(layer_tree_root->bounds());
   layer_tree_host_->UpdateLayers();
   LayerTreeHostImpl* host_impl = layer_tree_host_->host_impl();
   host_impl->CreatePendingTree();
@@ -774,8 +769,6 @@ TEST_F(ScrollbarLayerTest, SubPixelCanScrollOrientation) {
 
   LayerImpl* clip_layer = impl.AddChildToRoot<LayerImpl>();
   LayerImpl* scroll_layer = impl.AddChild<LayerImpl>(clip_layer);
-
-  scroll_layer->SetScrollClipLayer(clip_layer->id());
   scroll_layer->SetElementId(LayerIdToElementIdForTesting(scroll_layer->id()));
 
   const int kTrackStart = 0;
@@ -790,6 +783,7 @@ TEST_F(ScrollbarLayerTest, SubPixelCanScrollOrientation) {
 
   scrollbar_layer->SetScrollElementId(scroll_layer->element_id());
   clip_layer->SetBounds(gfx::Size(980, 980));
+  scroll_layer->SetScrollContainerBounds(clip_layer->bounds());
   scroll_layer->SetBounds(gfx::Size(980, 980));
 
   impl.host_impl()->active_tree()->BuildPropertyTreesForTesting();
@@ -835,32 +829,41 @@ TEST_F(ScrollbarLayerTest, LayerChangesAffectingScrollbarGeometries) {
           scroll_layer, HORIZONTAL, kThumbThickness, kTrackStart,
           kIsLeftSideVerticalScrollbar, kIsOverlayScrollbar);
   scrollbar_layer->SetScrollElementId(scroll_layer->element_id());
-  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  EXPECT_TRUE(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
   impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
 
-  scroll_layer->SetScrollClipLayer(clip_layer->id());
-  scroll_layer->SetScrollable();
-  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  scroll_layer->SetBounds(gfx::Size(900, 900));
+  // If the scroll layer is not scrollable, the bounds do not affect scrollbar
+  // geometries.
+  EXPECT_FALSE(
+      impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+
+  scroll_layer->SetScrollContainerBounds(gfx::Size(900, 900));
+  EXPECT_TRUE(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
   impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
 
   clip_layer->SetBounds(gfx::Size(900, 900));
-  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
-  impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
+  // The clip layer for scrolling is managed independently of the scroll
+  // container bounds so changing the clip does not require an update.
+  EXPECT_FALSE(
+      impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
 
   scroll_layer->SetBounds(gfx::Size(980, 980));
-  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  // Changes to the bounds should also require an update.
+  EXPECT_TRUE(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
   impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
 
   clip_layer->SetViewportBoundsDelta(gfx::Vector2dF(1, 2));
-  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  EXPECT_TRUE(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
   impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
 
   // Not changing the current value should not require an update.
-  scroll_layer->SetScrollClipLayer(clip_layer->id());
+  scroll_layer->SetScrollContainerBounds(gfx::Size(900, 900));
   clip_layer->SetBounds(gfx::Size(900, 900));
   scroll_layer->SetBounds(gfx::Size(980, 980));
   clip_layer->SetViewportBoundsDelta(gfx::Vector2dF(1, 2));
-  DCHECK(!impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
+  EXPECT_TRUE(
+      !impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
 }
 
 class ScrollbarLayerSolidColorThumbTest : public testing::Test {
@@ -909,8 +912,6 @@ TEST_F(ScrollbarLayerSolidColorThumbTest, SolidColorThumbLength) {
   horizontal_scrollbar_layer_->SetClipLayerLength(5.f);
   horizontal_scrollbar_layer_->SetScrollLayerLength(15.f);
   horizontal_scrollbar_layer_->SetBounds(gfx::Size(100, 3));
-  DCHECK(host_impl_->active_tree()->ScrollbarGeometriesNeedUpdate());
-  host_impl_->active_tree()->UpdateScrollbarGeometries();
   EXPECT_EQ(33, horizontal_scrollbar_layer_->ComputeThumbQuadRect().width());
 
   // The thumb's length should never be less than its thickness.
@@ -922,9 +923,6 @@ TEST_F(ScrollbarLayerSolidColorThumbTest, SolidColorThumbLength) {
 
 TEST_F(ScrollbarLayerSolidColorThumbTest, SolidColorThumbPosition) {
   horizontal_scrollbar_layer_->SetBounds(gfx::Size(100, 3));
-  DCHECK(host_impl_->active_tree()->ScrollbarGeometriesNeedUpdate());
-  host_impl_->active_tree()->UpdateScrollbarGeometries();
-
   horizontal_scrollbar_layer_->SetCurrentPos(0.f);
   horizontal_scrollbar_layer_->SetClipLayerLength(12.f);
   horizontal_scrollbar_layer_->SetScrollLayerLength(112.f);
@@ -952,9 +950,6 @@ TEST_F(ScrollbarLayerSolidColorThumbTest, SolidColorThumbVerticalAdjust) {
   }
   layers[0]->SetBounds(gfx::Size(100, 3));
   layers[1]->SetBounds(gfx::Size(3, 100));
-
-  DCHECK(host_impl_->active_tree()->ScrollbarGeometriesNeedUpdate());
-  host_impl_->active_tree()->UpdateScrollbarGeometries();
 
   EXPECT_EQ(gfx::Rect(20, 0, 20, 3),
             horizontal_scrollbar_layer_->ComputeThumbQuadRect());
@@ -1004,7 +999,7 @@ class ScrollbarLayerTestResourceCreationAndRelease : public ScrollbarLayerTest {
 
     scrollbar_layer->SetIsDrawable(true);
     scrollbar_layer->SetBounds(gfx::Size(100, 100));
-    layer_tree_root->SetScrollClipLayerId(root_clip_layer->id());
+    layer_tree_root->SetScrollContainerBounds(gfx::Size(100, 200));
     layer_tree_root->SetScrollOffset(gfx::ScrollOffset(10, 20));
     layer_tree_root->SetBounds(gfx::Size(100, 200));
     content_layer->SetBounds(gfx::Size(100, 200));
