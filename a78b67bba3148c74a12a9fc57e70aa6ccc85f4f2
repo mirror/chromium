@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7c675e2_7462ff94",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-06-22T23:47:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the overall plan is, but I would strongly consider calling a single wrapper which combines all of the .ensure files into a single mega-ensure-file. This would let us effectively parallelize the cipd client down the road a bit.",
+      "parentUuid": "23f6afd7_6b2e3a4f",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9f7fdc5_f9e97a42",
         "filename": "build/cipd_wrapper.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T23:40:55Z",
       "side": 1,
       "message": "Where is cipd coming from?",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277a8087_e4f0f0e5",
+        "filename": "build/cipd_wrapper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-06-22T23:47:53Z",
+      "side": 1,
+      "message": "It\u0027s in your friendly neighborhood depot_tools (and/or provided on the bots via remote_run.py and/or buildbucket\u0027s swarming task definitions).\n\nThat said, you\u0027ll want to call `cipd.bat` on windows (because of reasons :()",
+      "parentUuid": "b9f7fdc5_f9e97a42",
       "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
