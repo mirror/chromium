@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e0c0024_8b777e52",
+        "filename": "components/leveldb/reporting_cache_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-22T15:33:37Z",
+      "side": 1,
+      "message": "I\u0027m not super-familiar with UMA implementation... this isn\u0027t going to report a sample per invocation, right?",
+      "revId": "d5628f941b3a7f045426953c867e37e644d5b903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed66ef2e_2560ec42",
+        "filename": "components/leveldb/reporting_cache_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-22T15:33:37Z",
+      "side": 1,
+      "message": "Can you add a brief commenting stating the class\u0027 purpose? It seems to be a leveldb::Cache proxy that tracks cache performance (hit rate now, perhaps we add size later) for UMA purposes. (I\u0027m sympathetic to using Wrapper instead of Proxy, as \"proxy\" tends to have a specific meaning in a browser.)",
+      "revId": "d5628f941b3a7f045426953c867e37e644d5b903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc0edc9_52a10ea6",
+        "filename": "components/leveldb/reporting_cache_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-22T15:33:37Z",
+      "side": 1,
+      "message": "I\u0027ve seen that the blink convention is to simply state the class whose interface is implemented, without an additional \"implementation\". Example: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/indexeddb/IDBRequest.h\n\nIs this the Chromium pattern? Honest question, I\u0027ve spent most of my time in Blink code.",
+      "revId": "d5628f941b3a7f045426953c867e37e644d5b903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
