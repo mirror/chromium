@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "458b0bdb_2205773e",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-22T08:12:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "224330b5_b2286f72",
+      "revId": "48561923915b71542dcc9afe21db7f3ed37010ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ff72329_9db38620",
         "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T08:01:46Z",
       "side": 1,
       "message": "Now, this is identical to ResetMojoInterfaceOnIpcThread().",
+      "revId": "48561923915b71542dcc9afe21db7f3ed37010ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a72ede_7328f6e3",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-22T08:12:20Z",
+      "side": 1,
+      "message": "Ah, right. I\u0027ve removed this function and use ResetMojoInterfaceOnIpcThread as the connection error handler.",
+      "parentUuid": "5ff72329_9db38620",
       "revId": "48561923915b71542dcc9afe21db7f3ed37010ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
