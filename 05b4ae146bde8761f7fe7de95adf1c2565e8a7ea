@@ -46,6 +46,30 @@
       "revId": "05b4ae146bde8761f7fe7de95adf1c2565e8a7ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90aaa13f_3df0d677",
+        "filename": "components/search_provider_logos/google_logo_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-22T10:08:32Z",
+      "side": 0,
+      "message": "It\u0027s possible this had historic reasons: Callbacks and move-only types didn\u0027t always work very well together. (I fully agree that const ref to unique_ptr doesn\u0027t make much sense.)",
+      "parentUuid": "6b470686_6f53ce1e",
+      "range": {
+        "startLine": 26,
+        "startChar": 40,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "05b4ae146bde8761f7fe7de95adf1c2565e8a7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
