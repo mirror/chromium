@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac4d3af_7e9ea160",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T14:06:34Z",
+      "side": 1,
+      "message": "inclusive or exclusive?",
+      "range": {
+        "startLine": 59,
+        "startChar": 57,
+        "endLine": 59,
+        "endChar": 63
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29cd69a_33b49e7f",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T14:06:34Z",
+      "side": 1,
+      "message": "What is a client?",
+      "range": {
+        "startLine": 432,
+        "startChar": 8,
+        "endLine": 432,
+        "endChar": 41
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb2d84d_84e489ee",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T14:06:34Z",
+      "side": 1,
+      "message": "Do you think our RTT and throughput estimates are good enough to get an accurate BDP?",
+      "range": {
+        "startLine": 434,
+        "startChar": 21,
+        "endLine": 434,
+        "endChar": 44
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd05acde_6a79285e",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T14:06:34Z",
+      "side": 1,
+      "message": "Can you come up with a name that is self explanatory? At the very least, please add a comment explaining what this struct means.",
+      "range": {
+        "startLine": 120,
+        "startChar": 9,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f1a12e_3e7a912f",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T14:06:34Z",
+      "side": 1,
+      "message": "#include \u003cvector\u003e",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 21
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a3da65_fe785c00",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T14:06:34Z",
+      "side": 1,
+      "message": "What is the experiment \"kMaxDelayableRequestsNetworkOverride? This wording is confusing.",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652e681c_c7d1d44e",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T14:06:34Z",
+      "side": 1,
+      "message": "Can you come up with a better name? E.g., override_max_delayable_network_requests_?",
+      "range": {
+        "startLine": 165,
+        "startChar": 13,
+        "endLine": 165,
+        "endChar": 53
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4adb90_d06a604c",
+        "filename": "net/nqe/network_quality_estimator_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-22T14:06:34Z",
+      "side": 1,
+      "message": "#include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 164,
+        "startChar": 17,
+        "endLine": 164,
+        "endChar": 24
+      },
+      "revId": "333ffec10415f657dac57190a2e8f1830357c608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
