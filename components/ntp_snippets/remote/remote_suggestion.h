@@ -33,6 +33,8 @@ class RemoteSuggestion {
 
   ~RemoteSuggestion();
 
+  enum ContentType { UNKNOWN, VIDEO };
+
   // Creates a RemoteSuggestion from a dictionary, as returned by Chrome Reader.
   // Returns a null pointer if the dictionary doesn't correspond to a valid
   // suggestion. The keys in the dictionary are expected to be the same as the
@@ -107,6 +109,8 @@ class RemoteSuggestion {
   bool should_notify() const { return should_notify_; }
   base::Time notification_deadline() const { return notification_deadline_; }
 
+  ContentType content_type() const { return content_type_; }
+
   bool is_dismissed() const { return is_dismissed_; }
   void set_dismissed(bool dismissed) { is_dismissed_ = dismissed; }
 
@@ -147,6 +151,8 @@ class RemoteSuggestion {
 
   bool should_notify_;
   base::Time notification_deadline_;
+
+  ContentType content_type_;
 
   // The time when the remote suggestion was fetched from the server.
   base::Time fetch_date_;
