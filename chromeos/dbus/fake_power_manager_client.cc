@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/callback.h"
 #include "base/location.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -93,6 +94,9 @@ void FakePowerManagerClient::SetPolicy(
     const power_manager::PowerManagementPolicy& policy) {
   policy_ = policy;
   ++num_set_policy_calls_;
+
+  if (quit_closure_)
+    std::move(quit_closure_).Run();
 }
 
 void FakePowerManagerClient::SetIsProjecting(bool is_projecting) {
