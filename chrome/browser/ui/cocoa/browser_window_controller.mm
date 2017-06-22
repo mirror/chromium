@@ -1085,8 +1085,11 @@ bool IsTabDetachingInFullscreenEnabled() {
       manager->DisplayPendingRequests();
   }
 
-  if ([self isInAnyFullscreenMode])
-    [[self fullscreenToolbarController] revealToolbarForTabStripChanges];
+  if ([self isInAnyFullscreenMode]) {
+    [[self fullscreenToolbarController]
+        revealToolbarForTabStripContent:newContents
+                           inForeground:YES];
+  }
 }
 
 - (void)zoomChangedForActiveTab:(BOOL)canShowBubble {
@@ -1525,9 +1528,12 @@ bool IsTabDetachingInFullscreenEnabled() {
   [infoBarContainerController_ tabDetachedWithContents:contents];
 }
 
-- (void)onTabInsertedInForeground:(BOOL)inForeground {
+- (void)onTabInsertedInForeground:(BOOL)inForeground
+                     withContents:(content::WebContents*)contents {
   if ([self isInAnyFullscreenMode] && !inForeground)
-    [[self fullscreenToolbarController] revealToolbarForTabStripChanges];
+    [[self fullscreenToolbarController]
+        revealToolbarForTabStripContent:contents
+                           inForeground:inForeground];
 
   if (inForeground) {
     AppToolbarButton* appMenuButton =
