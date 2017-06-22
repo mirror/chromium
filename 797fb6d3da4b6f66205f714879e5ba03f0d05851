@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9fc1094_1c9a9fe0",
+        "filename": "extensions/browser/api/webcam_private/v4l2_webcam.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T21:33:29Z",
+      "side": 1,
+      "message": "VIDIOC_G_CTRL !\u003d VIDIOC_QUERYCTRL. And they\u0027re different structs. Almost. :(",
+      "parentUuid": "9d04ab66_4a19a988",
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b70834a0_a5c503e1",
         "filename": "extensions/browser/api/webcam_private/visca_webcam.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643c6164_eeae27a1",
+        "filename": "extensions/browser/api/webcam_private/visca_webcam.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T21:33:29Z",
+      "side": 1,
+      "message": "0 -\u003e 0 makes an empty range, so we don\u0027t set it (and false -\u003e abort anyway). -1 actually looks like a more normal value, since ptz values are pretty much things like -36000 to +36000. 0 is closer to origin.\n\nDone w/ adding comments.",
+      "parentUuid": "b70834a0_a5c503e1",
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9ad11d3f_eb3edcb5",
+        "filename": "extensions/browser/api/webcam_private/webcam.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T21:33:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a582076f_0f1c8993",
+      "range": {
+        "startLine": 34,
+        "startChar": 59,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aab673e_496ac9ea",
         "filename": "extensions/browser/api/webcam_private/webcam_private_api_chromeos.cc",
         "patchSetId": 3
@@ -70,6 +130,30 @@
       "writtenOn": "2017-06-22T20:49:59Z",
       "side": 1,
       "message": "would it be better to test min_pan_ !\u003d 0 \u0026\u0026 max_pan !\u003d 0 (depends on whether min \u003d\u003d max could ever hold in non-error cases)",
+      "range": {
+        "startLine": 397,
+        "startChar": 10,
+        "endLine": 397,
+        "endChar": 30
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c79c5c_f115f353",
+        "filename": "extensions/browser/api/webcam_private/webcam_private_api_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T21:33:29Z",
+      "side": 1,
+      "message": "No, the test is for a non-empty range, 0 does not mean unset. This \"could\" be from 0 to 2400 technically.",
+      "parentUuid": "2aab673e_496ac9ea",
       "range": {
         "startLine": 397,
         "startChar": 10,
@@ -96,6 +180,24 @@
       "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be4f1c2_a1c16278",
+        "filename": "extensions/browser/api/webcam_private/webcam_private_api_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T21:33:29Z",
+      "side": 1,
+      "message": "No, (since it\u0027s now a non-optional), using makeunique above.",
+      "parentUuid": "444f8139_19c35281",
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "f73b98b6_e08f5509",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T21:33:29Z",
+      "side": 1,
+      "message": "Ignored. :)",
+      "parentUuid": "fdd3715b_daebb55d",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b757b6f5_02baf0a8",
         "filename": "extensions/common/api/webcam_private.idl",
         "patchSetId": 3
@@ -169,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "458b9ec6_870bf286",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T21:33:29Z",
+      "side": 1,
+      "message": "Done! I thought they might\u0027ve been supported by VISCA. Thanks for looking into it.",
+      "parentUuid": "b757b6f5_02baf0a8",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "938822db_d4347b65",
         "filename": "extensions/common/api/webcam_private.idl",
         "patchSetId": 3
@@ -189,6 +339,30 @@
       "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f49012_eaf08358",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T21:33:29Z",
+      "side": 1,
+      "message": "Assuming you mean the trailing space. Done.",
+      "parentUuid": "938822db_d4347b65",
+      "range": {
+        "startLine": 61,
+        "startChar": 77,
+        "endLine": 61,
+        "endChar": 78
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
