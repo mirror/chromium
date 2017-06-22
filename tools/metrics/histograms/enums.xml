@@ -22233,6 +22233,7 @@ from previous Chrome versions.
   <int value="-1327676774" label="disable-accelerated-mjpeg-decode"/>
   <int value="-1322882747" label="disable-datasaver-prompt"/>
   <int value="-1319688939" label="ignore-gpu-blacklist"/>
+  <int value="-1312191889" label="SpeculativeServiceWorkerStart:disabled"/>
   <int value="-1310737697" label="MaterialDesignSettings:enabled"/>
   <int value="-1302904242" label="enable-navigation-tracing"/>
   <int value="-1289678848" label="SystemDownloadManager:enabled"/>
@@ -22662,6 +22663,7 @@ from previous Chrome versions.
   <int value="304901781" label="NewUsbBackend:enabled"/>
   <int value="313303258" label="WebPaymentsModifiers:disabled"/>
   <int value="316182183" label="MediaDocumentDownloadButton:disabled"/>
+  <int value="318442917" label="SpeculativeServiceWorkerStart:enabled"/>
   <int value="323605372" label="ui-disable-compositor-animation-timelines"/>
   <int value="324522065" label="app-menu-icon"/>
   <int value="324631366" label="enable-drive-search-in-app-launcher"/>

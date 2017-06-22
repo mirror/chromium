@@ -154,6 +154,22 @@ bool ServiceWorkerProcessManager::PatternHasProcessToRun(
   return !it->second.empty();
 }
 
+void ServiceWorkerProcessManager::RegisterCandidateSiteInstance(
+    SiteInstanceImpl* candidate_site_instance) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(!candidate_site_instance->HasSite());
+  candidate_site_instance_ = candidate_site_instance;
+}
+
+void ServiceWorkerProcessManager::UnregisterCandidateSiteInstance() {
+  candidate_site_instance_ = nullptr;
+}
+
+SiteInstance* ServiceWorkerProcessManager::candidate_site_instance() const {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  return candidate_site_instance_.get();
+}
+
 void ServiceWorkerProcessManager::AllocateWorkerProcess(
     int embedded_worker_id,
     const GURL& pattern,
@@ -216,14 +232,30 @@ void ServiceWorkerProcessManager::AllocateWorkerProcess(
     }
   }
 
-  // ServiceWorkerProcessManager does not know of any renderer processes that
-  // are available for |pattern|. Create a SiteInstance and ask for a renderer
-  // process. Attempt to reuse an existing process if possible.
-  // TODO(clamy): Update the process reuse mechanism above following the
-  // implementation of
-  // SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE.
-  scoped_refptr<SiteInstanceImpl> site_instance =
-      SiteInstanceImpl::CreateForURL(browser_context_, script_url);
+  scoped_refptr<SiteInstanceImpl> site_instance;
+  if (candidate_site_instance_) {
+    if (!candidate_site_instance_->HasSite()) {
+      // Take the candidate site instance which was set when
+      // StartServiceWorkerForNavigationHint() is called from the OmniBox to use
+      // the Android NTP's renderer process for the Service Worker.
+      site_instance = candidate_site_instance_;
+      // Set the site URL so that the site instance will not be used for
+      // navigations to other site.
+      site_instance->SetSite(script_url);
+    }
+    candidate_site_instance_ = nullptr;
+  }
+
+  if (!site_instance) {
+    // ServiceWorkerProcessManager does not know of any renderer processes that
+    // are available for |pattern|. Create a SiteInstance and ask for a renderer
+    // process. Attempt to reuse an existing process if possible.
+    // TODO(clamy): Update the process reuse mechanism above following the
+    // implementation of
+    // SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE.
+    site_instance =
+        SiteInstanceImpl::CreateForURL(browser_context_, script_url);
+  }
   site_instance->set_is_for_service_worker(true);
   DCHECK(site_instance->process_reuse_policy() ==
              SiteInstanceImpl::ProcessReusePolicy::DEFAULT ||

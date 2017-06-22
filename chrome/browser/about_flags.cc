@@ -2849,6 +2849,11 @@ const FeatureEntry kFeatureEntries[] = {
          kSpeculativeResourcePrefetchingFeatureVariations,
          "SpeculativeResourcePrefetchingValidation")},
 
+    {"enable-seculative-service-worker-start",
+     flag_descriptions::kSpeculativeServiceWorkerStartName,
+     flag_descriptions::kSpeculativeServiceWorkerStartDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kSpeculativeServiceWorkerStart)},
+
     {"enable-off-main-thread-fetch", flag_descriptions::kOffMainThreadFetchName,
      flag_descriptions::kOffMainThreadFetchDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kOffMainThreadFetch)},
