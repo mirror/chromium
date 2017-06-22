@@ -172,9 +172,9 @@ template("mac_toolchain") {
 
     # If dSYMs are enabled, this flag will be added to the link tools.
     if (_enable_dsyms) {
-      dsym_switch = " -Wcrl,dsym,{{root_out_dir}} "
+      dsym_switch = " -Wcrl,dsym,{{output_dir}} "
       dsym_output_dir =
-          "{{root_out_dir}}/{{target_output_name}}{{output_extension}}.dSYM"
+          "{{output_dir}}/{{target_output_name}}{{output_extension}}.dSYM"
       dsym_output = [
         "$dsym_output_dir/",
         "$dsym_output_dir/Contents/Info.plist",
@@ -186,7 +186,7 @@ template("mac_toolchain") {
     }
 
     if (_save_unstripped_output) {
-      _unstripped_output = "{{root_out_dir}}/{{target_output_name}}{{output_extension}}.unstripped"
+      _unstripped_output = "{{output_dir}}/{{target_output_name}}{{output_extension}}.unstripped"
     }
 
     tool("cc") {
