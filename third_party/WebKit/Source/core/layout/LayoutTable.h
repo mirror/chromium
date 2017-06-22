@@ -29,7 +29,6 @@
 #include <memory>
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
-#include "core/layout/CollapsedBorderValue.h"
 #include "core/layout/LayoutBlock.h"
 #include "platform/wtf/Vector.h"
 

@@ -17,13 +17,15 @@
 namespace blink {
 
 PaintInvalidationReason TableCellPaintInvalidator::InvalidatePaint() {
-  // The cell's containing row and section paint backgrounds behind the cell.
-  // If the cell's geometry changed, invalidate the background display items.
+  // The cell's containing row and section paint backgrounds behind the cell,
+  // and the row paints collapsed borders. If the cell's geometry changed,
+  // invalidate the display items painting backgrounds and/or collapsed borders.
   if (context_.old_location != context_.new_location ||
       cell_.Size() != cell_.PreviousSize()) {
     const auto& row = *cell_.Row();
     if (row.GetPaintInvalidationReason() == PaintInvalidationReason::kNone &&
-        row.StyleRef().HasBackground()) {
+        (row.StyleRef().HasBackground() ||
+         row.Table()->HasCollapsedBorders())) {
       if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
         context_.parent_context->painting_layer->SetNeedsRepaint();
       else
