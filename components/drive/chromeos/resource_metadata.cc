@@ -231,18 +231,36 @@ void ResourceMetadata::DestroyOnBlockingPool() {
   delete this;
 }
 
-FileError ResourceMetadata::GetLargestChangestamp(int64_t* out_value) {
+FileError ResourceMetadata::GetLargestChangestamp(
+    const std::string& team_drive_id,
+    int64_t* out_value) {
   DCHECK(blocking_task_runner_->RunsTasksOnCurrentThread());
-  return storage_->GetLargestChangestamp(out_value);
+  if (team_drive_id.empty())
+    return storage_->GetLargestChangestamp(out_value);
+  ResourceEntry entry;
+  FileError error = GetResourceEntryByDriveId(team_drive_id, &entry);
+  if (error != FILE_ERROR_OK)
+    return error;
+  *out_value = entry.directory_specific_info().changestamp();
+  return FILE_ERROR_OK;
 }
 
-FileError ResourceMetadata::SetLargestChangestamp(int64_t value) {
+FileError ResourceMetadata::SetLargestChangestamp(
+    const std::string& team_drive_id,
+    int64_t value) {
   DCHECK(blocking_task_runner_->RunsTasksOnCurrentThread());
 
   if (!EnoughDiskSpaceIsAvailableForDBOperation(storage_->directory_path()))
     return FILE_ERROR_NO_LOCAL_SPACE;
 
-  return storage_->SetLargestChangestamp(value);
+  if (team_drive_id.empty())
+    return storage_->SetLargestChangestamp(value);
+  ResourceEntry entry;
+  FileError error = GetResourceEntryByDriveId(team_drive_id, &entry);
+  if (error != FILE_ERROR_OK)
+    return error;
+  entry.mutable_directory_specific_info()->set_changestamp(value);
+  return RefreshEntry(entry);
 }
 
 FileError ResourceMetadata::AddEntry(const ResourceEntry& entry,
@@ -625,6 +643,16 @@ FileError ResourceMetadata::RemoveEntryRecursively(const std::string& id) {
     return error;
 
   return storage_->RemoveEntry(id);
+}
+
+FileError ResourceMetadata::GetResourceEntryByDriveId(
+    const std::string& drive_id,
+    ResourceEntry* out_entry) {
+  std::string local_id;
+  FileError error = GetIdByResourceId(drive_id, &local_id);
+  if (error != FILE_ERROR_OK)
+    return error;
+  return storage_->GetEntry(local_id, out_entry);
 }
 
 }  // namespace internal
