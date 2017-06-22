@@ -87,6 +87,11 @@ class HarfBuzzScopedPtr {
   DestroyFunction destroy_;
 };
 
+void HarfBuzzShaper::InitHarfBuzz() {
+  // FontPlatformData platform_data;
+  // HarfBuzzFace::Create(&platform_data, 0);
+}
+
 HarfBuzzShaper::HarfBuzzShaper(const UChar* text, unsigned length)
     : text_(text), text_length_(length) {}
 

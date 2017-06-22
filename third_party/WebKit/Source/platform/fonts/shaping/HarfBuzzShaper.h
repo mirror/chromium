@@ -69,6 +69,8 @@ class PLATFORM_EXPORT HarfBuzzShaper final {
 
   ~HarfBuzzShaper() {}
 
+  static void InitHarfBuzz();
+
  private:
   struct RangeData;
 
