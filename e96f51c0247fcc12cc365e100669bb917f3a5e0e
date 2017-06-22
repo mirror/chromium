@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb1820b7_d5c4ff16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T15:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1843a57a_817aae19",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "e96f51c0247fcc12cc365e100669bb917f3a5e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e9123c3_bb5369ff",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 10
@@ -68,6 +92,54 @@
       "revId": "e96f51c0247fcc12cc365e100669bb917f3a5e0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62af822_dc0bbb15",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T15:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e9123c3_bb5369ff",
+      "range": {
+        "startLine": 272,
+        "startChar": 33,
+        "endLine": 272,
+        "endChar": 46
+      },
+      "revId": "e96f51c0247fcc12cc365e100669bb917f3a5e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bc773b9_e0591393",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T15:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24110978_e8921944",
+      "range": {
+        "startLine": 272,
+        "startChar": 51,
+        "endLine": 272,
+        "endChar": 60
+      },
+      "revId": "e96f51c0247fcc12cc365e100669bb917f3a5e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
