@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493afac4_2766537c",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-22T20:15:36Z",
+      "side": 1,
+      "message": "Please add a comment explaining why we need to do this here.",
+      "revId": "f456f01d473694368865e2eaf1abaf98745d7aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
