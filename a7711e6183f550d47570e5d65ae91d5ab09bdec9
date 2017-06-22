@@ -52,6 +52,24 @@
       "revId": "a7711e6183f550d47570e5d65ae91d5ab09bdec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e23b39_89950bc5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptPromisePropertyBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-22T11:53:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38b05ec8_dd9efdce",
+      "revId": "a7711e6183f550d47570e5d65ae91d5ab09bdec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
