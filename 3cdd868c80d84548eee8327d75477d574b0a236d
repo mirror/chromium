@@ -51,6 +51,24 @@
       "revId": "3cdd868c80d84548eee8327d75477d574b0a236d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df940283_00bf64d0",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-22T01:20:22Z",
+      "side": 1,
+      "message": "Yeah, I was wondering how big TRACE_EVENT_ etc. was going to be.\n\nSince I\u0027m guessing many pages use JavaScript you could initialize that static when the platform starts up and then you\u0027d just be inlining one branch which would be good.\n\nI\u0027m fine if this happens later--we should look at profiles, maybe ToExecutionContext is more useful to work on next. What are the profiles you are looking at telling you?",
+      "parentUuid": "30825cc9_b4afae47",
+      "revId": "3cdd868c80d84548eee8327d75477d574b0a236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
