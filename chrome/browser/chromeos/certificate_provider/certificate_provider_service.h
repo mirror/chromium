@@ -152,6 +152,24 @@ class CertificateProviderService : public KeyedService {
   // corresponding notification of the ExtensionRegistry is triggered.
   void OnExtensionUnloaded(const std::string& extension_id);
 
+  // Requests the extension which provided the certificate identified by
+  // |public_key| to sign |digest| with the corresponding private key. |hash|
+  // was used to create |digest|. |callback| will be run with the reply of the
+  // extension or an error.
+  void RequestSignatureByPublicKey(
+      const std::string& public_key,
+      const std::string& digest,
+      net::SSLPrivateKey::Hash hash,
+      const net::SSLPrivateKey::SignCallback& callback);
+
+  // Looks up the certificate identified by |public_key|. If any extension is
+  // currently providing such a certificate, fills *|supported_hashes| with the
+  // hash algorithms supported for that certificate and returns true.
+  // If no extension is currently providing such a certificate, returns false.
+  bool GetSupportedHashesByPublicKey(
+      const std::string& public_key,
+      std::vector<net::SSLPrivateKey::Hash>* supported_hashes);
+
   PinDialogManager* pin_dialog_manager() { return &pin_dialog_manager_; }
 
  private:

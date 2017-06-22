@@ -388,6 +388,44 @@ void CertificateProviderService::OnExtensionUnloaded(
   pin_dialog_manager_.ExtensionUnloaded(extension_id);
 }
 
+void CertificateProviderService::RequestSignatureByPublicKey(
+    const std::string& public_key,
+    const std::string& digest,
+    net::SSLPrivateKey::Hash hash,
+    const net::SSLPrivateKey::SignCallback& callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  bool is_currently_provided = false;
+  CertificateInfo info;
+  std::string extension_id;
+  certificate_map_.LookUpCertificateByPublicKey(
+      public_key, &is_currently_provided, &info, &extension_id);
+  if (!is_currently_provided) {
+    LOG(ERROR) << "no certificate with the specified public key was found";
+    callback.Run(net::ERR_FAILED, std::vector<uint8_t>());
+    return;
+  }
+
+  RequestSignatureFromExtension(extension_id, info.certificate, hash, digest,
+                                callback);
+}
+
+bool CertificateProviderService::GetSupportedHashesByPublicKey(
+    const std::string& public_key,
+    std::vector<net::SSLPrivateKey::Hash>* supported_hashes) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  bool is_currently_provided = false;
+  CertificateInfo info;
+  std::string extension_id;
+  certificate_map_.LookUpCertificateByPublicKey(
+      public_key, &is_currently_provided, &info, &extension_id);
+  if (!is_currently_provided) {
+    LOG(ERROR) << "no certificate with the specified public key was found";
+    return false;
+  }
+  *supported_hashes = info.supported_hashes;
+  return false;
+}
+
 void CertificateProviderService::GetCertificatesFromExtensions(
     const base::Callback<void(net::ClientCertIdentityList)>& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());

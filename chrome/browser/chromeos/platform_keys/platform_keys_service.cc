@@ -4,6 +4,8 @@
 
 #include "chrome/browser/chromeos/platform_keys/platform_keys_service.h"
 
+#include <pk11pub.h>
+#include <sechash.h>
 #include <stddef.h>
 
 #include <utility>
@@ -11,13 +13,17 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h"
+#include "chrome/browser/chromeos/certificate_provider/certificate_provider_service_factory.h"
 #include "chrome/browser/chromeos/platform_keys/platform_keys.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/state_store.h"
+#include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
 
 using content::BrowserThread;
@@ -29,6 +35,39 @@ namespace {
 const char kErrorKeyNotAllowedForSigning[] =
     "This key is not allowed for signing. Either it was used for signing "
     "before or it was not correctly generated.";
+
+// Maps hash algorithms for certificate_provider. The "none" algorithm is
+// explicitly not supported. If the passed |plaftorm_keys_hash_algorithm| can be
+// used with certificate_provider, sets *|net_hash| and *|net_alg| and returns
+// true. Otherwise, returns false.
+bool MapHashAlgorithmForCertificateProvider(
+    platform_keys::HashAlgorithm platform_keys_hash_algorithm,
+    net::SSLPrivateKey::Hash* net_hash,
+    SECOidTag* net_alg) {
+  switch (platform_keys_hash_algorithm) {
+    case chromeos::platform_keys::HASH_ALGORITHM_NONE:
+      return false;
+    case chromeos::platform_keys::HASH_ALGORITHM_SHA1:
+      *net_hash = net::SSLPrivateKey::Hash::SHA1;
+      *net_alg = SEC_OID_SHA1;
+      return true;
+    case chromeos::platform_keys::HASH_ALGORITHM_SHA256:
+      *net_hash = net::SSLPrivateKey::Hash::SHA256;
+      *net_alg = SEC_OID_SHA256;
+      return true;
+    case chromeos::platform_keys::HASH_ALGORITHM_SHA384:
+      *net_hash = net::SSLPrivateKey::Hash::SHA384;
+      *net_alg = SEC_OID_SHA384;
+      return true;
+    case chromeos::platform_keys::HASH_ALGORITHM_SHA512:
+      *net_hash = net::SSLPrivateKey::Hash::SHA512;
+      *net_alg = SEC_OID_SHA512;
+      return true;
+    default:
+      NOTREACHED();
+      return false;
+  }
+}
 
 }  // namespace
 
@@ -260,7 +299,56 @@ class PlatformKeysService::SignTask : public Task {
   }
 
   void DidSign(const std::string& signature, const std::string& error_message) {
+    if (error_message == chromeos::platform_keys::kErrorKeyNotFound) {
+      // try to sign using cert provider.
+      TrySignUsingCertificateProvider();
+      return;
+    }
+
     callback_.Run(signature, error_message);
+    DoStep();
+  }
+
+  void TrySignUsingCertificateProvider() {
+    net::SSLPrivateKey::Hash hash = net::SSLPrivateKey::Hash::SHA1;
+    SECOidTag alg = SEC_OID_SHA1;
+    if (!MapHashAlgorithmForCertificateProvider(hash_algorithm_, &hash, &alg)) {
+      callback_.Run(std::string(), platform_keys::kErrorHashNotSupported);
+      return;
+    }
+
+    chromeos::CertificateProviderService* service =
+        chromeos::CertificateProviderServiceFactory::GetForBrowserContext(
+            service_->browser_context_);
+    DCHECK(service);
+
+    std::string digest;
+    // passing length + 1 because WriteInto expects the length to include the
+    // zero terminator.
+    unsigned char* out = reinterpret_cast<unsigned char*>(
+        base::WriteInto(&digest, HASH_ResultLenByOidTag(alg) + 1));
+    PK11_HashBuf(alg, out,
+                 reinterpret_cast<const unsigned char*>(data_.c_str()),
+                 data_.size());
+
+    service->RequestSignatureByPublicKey(
+        public_key_, digest, hash,
+        base::Bind(&SignTask::DidCertificateProviderSign,
+                   weak_factory_.GetWeakPtr()));
+  }
+
+  void DidCertificateProviderSign(net::Error error,
+                                  const std::vector<uint8_t>& signature) {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+    std::string signature_data(signature.begin(), signature.end());
+
+    if (error == net::Error::OK) {
+      callback_.Run(signature_data, "");
+    } else {
+      callback_.Run(signature_data, net::ErrorToString(error));
+    }
+
     DoStep();
   }
 
@@ -541,6 +629,119 @@ class PlatformKeysService::SelectTask : public Task {
   DISALLOW_COPY_AND_ASSIGN(SelectTask);
 };
 
+class PlatformKeysService::CertificateSupportsHashTask : public Task {
+ public:
+  enum class Step {
+    CHECK_HASH_SUPPORTED,
+    DONE,
+  };
+
+  // This Task will query the certificate identified by |public_key| on
+  // |token_id| (or on all tokens if |token_id| is empty) for the hashes it
+  // supports. Platform certificates always take precedence over certificates
+  // provided by CertificateProviderService.
+  CertificateSupportsHashTask(const std::string& token_id,
+                              const std::string& public_key,
+                              platform_keys::HashAlgorithm hash_algorithm,
+                              const CertificateSupportsHashCallback& callback,
+                              PlatformKeysService* service)
+      : token_id_(token_id),
+        public_key_(public_key),
+        hash_algorithm_(hash_algorithm),
+        callback_(callback),
+        service_(service),
+        weak_factory_(this) {}
+
+  ~CertificateSupportsHashTask() override {}
+
+  void Start() override {
+    CHECK(next_step_ == Step::CHECK_HASH_SUPPORTED);
+    DoStep();
+  }
+
+  bool IsDone() override { return next_step_ == Step::DONE; }
+
+ private:
+  void DoStep() {
+    switch (next_step_) {
+      case Step::CHECK_HASH_SUPPORTED: {
+        next_step_ = Step::DONE;
+        StartLookupPlatformClientCertificate();
+        return;
+      }
+      case Step::DONE:
+        service_->TaskFinished(this);
+        // |this| might be invalid now.
+        return;
+    }
+  }
+
+  // Triggers a lookup of the client in platform certificates.
+  void StartLookupPlatformClientCertificate() {
+    platform_keys::LookupClientCertificate(
+        token_id_, public_key_,
+        base::Bind(&CertificateSupportsHashTask::OnLookupClientCertificate,
+                   weak_factory_.GetWeakPtr()),
+        service_->browser_context_);
+  }
+
+  void OnLookupClientCertificate(
+      bool platform_certificate_found,
+      std::vector<platform_keys::HashAlgorithm> supported_hashes) {
+    if (platform_certificate_found) {
+      // Report if the found certificate supports the requested hash algorithm.
+      bool hash_supported =
+          base::ContainsValue(supported_hashes, hash_algorithm_);
+      callback_.Run(hash_supported, std::string() /* error_message */);
+      DoStep();
+    } else {
+      // No platform certificate has been found for the given |public_key_|.
+      // Check if there is such a certificate in the certificate_provider
+      // service.
+      CheckCertificateProvider();
+    }
+  }
+
+  void CheckCertificateProvider() {
+    net::SSLPrivateKey::Hash hash = net::SSLPrivateKey::Hash::SHA1;
+    SECOidTag alg = SEC_OID_SHA1;
+    if (!MapHashAlgorithmForCertificateProvider(hash_algorithm_, &hash, &alg)) {
+      // certificate_provider does not support hashes which can't be converted
+      // using MapHashAlgorithmForCertificateProvider.
+      callback_.Run(false, std::string() /* error_message */);
+      DoStep();
+      return;
+    }
+
+    chromeos::CertificateProviderService* service =
+        chromeos::CertificateProviderServiceFactory::GetForBrowserContext(
+            service_->browser_context_);
+    DCHECK(service);
+
+    std::vector<net::SSLPrivateKey::Hash> supported_hashes;
+    if (service->GetSupportedHashesByPublicKey(public_key_,
+                                               &supported_hashes)) {
+      callback_.Run(false, platform_keys::kErrorKeyNotFound);
+      DoStep();
+      return;
+    }
+    bool hash_supported = base::ContainsValue(supported_hashes, hash);
+    callback_.Run(hash_supported, std::string() /* error_message */);
+    DoStep();
+  }
+
+  Step next_step_ = Step::CHECK_HASH_SUPPORTED;
+
+  const std::string token_id_;
+  const std::string public_key_;
+  const platform_keys::HashAlgorithm hash_algorithm_;
+  const CertificateSupportsHashCallback callback_;
+  PlatformKeysService* const service_;
+  base::WeakPtrFactory<CertificateSupportsHashTask> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(CertificateSupportsHashTask);
+};
+
 PlatformKeysService::SelectDelegate::SelectDelegate() {
 }
 
@@ -617,6 +818,16 @@ void PlatformKeysService::SelectClientCertificates(
   StartOrQueueTask(base::MakeUnique<SelectTask>(
       request, std::move(client_certificates), interactive, extension_id,
       callback, web_contents, &key_permissions_, this));
+}
+
+void PlatformKeysService::CertificateSupportsHash(
+    const std::string& token_id,
+    const std::string& public_key,
+    platform_keys::HashAlgorithm hash_algorithm,
+    const CertificateSupportsHashCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  StartOrQueueTask(base::MakeUnique<CertificateSupportsHashTask>(
+      token_id, public_key, hash_algorithm, callback, this));
 }
 
 void PlatformKeysService::StartOrQueueTask(std::unique_ptr<Task> task) {
