@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef3a2e6_310e0d26",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderOptions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T21:59:41Z",
+      "side": 1,
+      "message": "We also have to take deep copy of integrity_metadata (because it contains String).\nCurrently integrity_metadata is set only by ScriptLoader or preloading (i.e. on main thread?) and thus probably this issue is not exposed?",
+      "range": {
+        "startLine": 176,
+        "startChar": 27,
+        "endLine": 176,
+        "endChar": 53
+      },
+      "revId": "0f8f62988071408268130d0d7e5f254e730c16e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
