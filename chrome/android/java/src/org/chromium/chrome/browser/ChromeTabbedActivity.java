@@ -1090,20 +1090,22 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                             : TabOpenType.OPEN_NEW_TAB;
                 }
 
-                // Either a new tab is opening, a tab is being clobbered, or a tab is being
-                // brought to the front. In all scenarios, the bottom sheet should be closed.
-                // If a new tab is being created from a launcher shortcut, close the panel without
-                // animation because the panel will be re-opened immediately. If a tab is being
-                // brought to the front, this indicates the user is coming back to Chrome through
-                // external means (e.g. homescreen shortcut, media notification) and animating the
-                // sheet closing is extraneous.
-                boolean animateSheetClose = !fromLauncherShortcut
-                        && (tabOpenType == TabOpenType.CLOBBER_CURRENT_TAB
-                                   || tabOpenType == TabOpenType.OPEN_NEW_TAB
-                                   || tabOpenType == TabOpenType.OPEN_NEW_INCOGNITO_TAB);
-                getBottomSheet().getBottomSheetMetrics().setSheetCloseReason(
-                        BottomSheetMetrics.CLOSED_BY_NAVIGATION);
-                getBottomSheet().setSheetState(BottomSheet.SHEET_STATE_PEEK, animateSheetClose);
+                if (!NewTabPage.isNTPUrl(url)) {
+                    // Either a url is being loaded in a new tab, a tab is being clobbered, or a tab
+                    // is being brought to the front. In all scenarios, the bottom sheet should be
+                    // closed. If a new tab is being created from a launcher shortcut, close the
+                    // panel without animation because the panel will be re-opened immediately. If
+                    // a tab is being brought to the front, this indicates the user is coming back
+                    // to Chrome through external means (e.g. homescreen shortcut, media
+                    // notification) and animating the sheet closing is extraneous.
+                    boolean animateSheetClose = !fromLauncherShortcut
+                            && (tabOpenType == TabOpenType.CLOBBER_CURRENT_TAB
+                                       || tabOpenType == TabOpenType.OPEN_NEW_TAB
+                                       || tabOpenType == TabOpenType.OPEN_NEW_INCOGNITO_TAB);
+                    getBottomSheet().getBottomSheetMetrics().setSheetCloseReason(
+                            BottomSheetMetrics.CLOSED_BY_NAVIGATION);
+                    getBottomSheet().setSheetState(BottomSheet.SHEET_STATE_PEEK, animateSheetClose);
+                }
             }
 
             // We send this intent so that we can enter WebVr presentation mode if needed. This

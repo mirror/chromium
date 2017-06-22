@@ -252,6 +252,7 @@ public class IncognitoTabModel implements TabModel {
         } else {
             destroyIncognitoIfNecessary();
         }
+        for (TabModelObserver obs : mObservers) obs.pendingTabAdd(isPendingTabAdd);
     }
 
     @Override
