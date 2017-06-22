@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2556f6a5_58c80246",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T18:08:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83191421_5a1f45ff",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 32
+      },
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4cbceb3_d89b59bc",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "a628abf441d14d6320b893d35b5019f245d75453",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117a4ca7_87fd00e6",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T18:08:12Z",
+      "side": 1,
+      "message": "Yes, keeping them around should help for things like closing and immediately re-opening a tab, or maybe even same-origin navigation (where the old connection is likely to be closed before the new page gets a change to try to use localStorage).",
+      "parentUuid": "a4cbceb3_d89b59bc",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c3f3fd6e_9d2a2738",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T18:08:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7053a3b1_f202bcbb",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "725adbd0_85b3eba6",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "a628abf441d14d6320b893d35b5019f245d75453",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84766c0_4135c3d7",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T18:08:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "725adbd0_85b3eba6",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "4d7bf60d_b5e26477",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T18:08:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37843efa_c366fcbf",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c450445_a894c191",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "a628abf441d14d6320b893d35b5019f245d75453",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33dad6f6_d86508fd",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-22T18:08:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c450445_a894c191",
+      "revId": "a628abf441d14d6320b893d35b5019f245d75453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
