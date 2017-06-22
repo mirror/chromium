@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30dafcfc_b8e5bccc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-22T20:13:08Z",
+      "side": 1,
+      "message": "When all windows are closing this may be called rapidly in succession, say when exiting. It seems worth ensuring you don\u0027t trigger a bunch of loads in that case.",
+      "range": {
+        "startLine": 853,
+        "startChar": 18,
+        "endLine": 853,
+        "endChar": 34
+      },
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936033d2_d0324aa9",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-22T20:13:08Z",
+      "side": 1,
+      "message": "This name is mildly confusing. How about IsActiveWebContentsInActiveBrowser? But then your description and the implementation don\u0027t match up. The current implementation is really \u0027is active web contents in any browser\u0027?",
+      "range": {
+        "startLine": 327,
+        "startChar": 10,
+        "endLine": 327,
+        "endChar": 21
+      },
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3232771_daebc479",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-22T20:13:08Z",
+      "side": 1,
+      "message": "There may be multiple selected tabs, but only one active. In other words, please use active here rather than selected to better align with TabStripModel naming.",
+      "range": {
+        "startLine": 479,
+        "startChar": 15,
+        "endLine": 479,
+        "endChar": 27
+      },
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
