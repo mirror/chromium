@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ec197ab_3af93c09",
+        "filename": "extensions/browser/api/webcam_private/webcam.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T18:19:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c72078e0_c858750c",
+      "revId": "ea40543e2e141b5f0bc4677a74f4065595d04e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e993a00_b9cd5e45",
         "filename": "extensions/common/api/webcam_private.idl",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "ea40543e2e141b5f0bc4677a74f4065595d04e92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca0096e_40341efe",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-22T18:19:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e993a00_b9cd5e45",
+      "revId": "ea40543e2e141b5f0bc4677a74f4065595d04e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
