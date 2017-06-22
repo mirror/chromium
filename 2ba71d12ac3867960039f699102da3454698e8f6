@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c550a6e1_af6671c6",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OpenTypeTypes.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-06-22T16:44:13Z",
+      "side": 1,
+      "message": "Not used anymore.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "2ba71d12ac3867960039f699102da3454698e8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
