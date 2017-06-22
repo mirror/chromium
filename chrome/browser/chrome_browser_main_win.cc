@@ -35,6 +35,7 @@
 #include "base/win/windows_version.h"
 #include "base/win/wrapped_window_proc.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/conflicts/enumerate_input_method_editors_win.h"
 #include "chrome/browser/conflicts/module_database_win.h"
 #include "chrome/browser/conflicts/module_event_sink_impl_win.h"
 #include "chrome/browser/conflicts/shell_extension_enumerator_win.h"
@@ -211,7 +212,7 @@ void OnModuleEvent(uint32_t process_id,
 // the provided |module_watcher| and |shell_extension_enumerator|.
 void SetupModuleDatabase(
     std::unique_ptr<ModuleWatcher>* module_watcher,
-    std::unique_ptr<ShellExtensionEnumerator>* shell_extension_enumerator_) {
+    std::unique_ptr<ShellExtensionEnumerator>* shell_extension_enumerator) {
   uint64_t creation_time = 0;
   ModuleEventSinkImpl::GetProcessCreationTime(::GetCurrentProcess(),
                                               &creation_time);
@@ -228,13 +229,16 @@ void SetupModuleDatabase(
   module_database->OnProcessStarted(process_id, creation_time,
                                     content::PROCESS_TYPE_BROWSER);
   *module_watcher = ModuleWatcher::Create(
-      base::Bind(&OnModuleEvent, process_id, creation_time));
-  *shell_extension_enumerator_ = base::MakeUnique<ShellExtensionEnumerator>(
-      base::Bind(&ModuleDatabase::OnShellExtensionEnumerated,
-                 base::Unretained(module_database)));
-}
+      base::BindRepeating(&OnModuleEvent, process_id, creation_time));
 
-}  // namespace
+  // Enumerate shell extensions and input method editors. It is safe to use
+  // base::Unretained() here because the ModuleDatabase is never freed.
+  *shell_extension_enumerator = base::MakeUnique<ShellExtensionEnumerator>(
+      base::BindRepeating(&ModuleDatabase::OnShellExtensionEnumerated,
+                          base::Unretained(module_database)));
+  EnumerateInputMethodEditors(base::BindRepeating(
+      &ModuleDatabase::OnImeEnumerated, base::Unretained(module_database)));
+}
 
 void ShowCloseBrowserFirstMessageBox() {
   int message_id = IDS_UNINSTALL_CLOSE_APP;
@@ -247,6 +251,8 @@ void ShowCloseBrowserFirstMessageBox() {
                                 l10n_util::GetStringUTF16(IDS_PRODUCT_NAME),
                                 l10n_util::GetStringUTF16(message_id));
 }
+
+}  // namespace
 
 int DoUninstallTasks(bool chrome_still_running) {
   // We want to show a warning to user (and exit) if Chrome is already running
