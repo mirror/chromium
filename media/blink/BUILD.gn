@@ -43,6 +43,8 @@ component("blink") {
     "video_frame_compositor.h",
     "watch_time_reporter.cc",
     "watch_time_reporter.h",
+    "watch_time_sub_reporter.cc",
+    "watch_time_sub_reporter.h",
     "webaudiosourceprovider_impl.cc",
     "webaudiosourceprovider_impl.h",
     "webcontentdecryptionmodule_impl.cc",

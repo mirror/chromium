@@ -19,6 +19,8 @@
 
 namespace media {
 
+class WatchTimeSubReporter;
+
 // Class for monitoring and reporting watch time in response to various state
 // changes during the playback of media. We record metrics for audio only
 // playbacks as well as audio+video playbacks of sufficient size.
@@ -132,9 +134,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
     reporting_interval_ = base::TimeDelta();
   }
 
-  void set_is_on_battery_power_for_testing(bool on_battery_power) {
-    is_on_battery_power_ = on_battery_power;
-  }
+  void set_is_on_battery_power_for_testing(bool on_battery_power);
 
   void OnPowerStateChangeForTesting(bool on_battery_power) {
     OnPowerStateChange(on_battery_power);
@@ -142,6 +142,9 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
 
  private:
   friend class WatchTimeReporterTest;
+
+  // WatchTimeSubReporter allows reporting of some category.
+  friend class WatchTimeSubReporter;
 
   // Internal constructor for marking background status.
   WatchTimeReporter(bool has_audio,
@@ -166,7 +169,9 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   enum class FinalizeTime { IMMEDIATELY, ON_NEXT_UPDATE };
   void MaybeFinalizeWatchTime(FinalizeTime finalize_time);
   void UpdateWatchTime();
-  void OnDisplayTypeChanged(blink::WebMediaPlayer::DisplayType display_type);
+
+  void OnDisplayTypeChangedForTesting(
+      blink::WebMediaPlayer::DisplayType display_type);
 
   // Initialized during construction.
   const bool has_audio_;
@@ -187,46 +192,30 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   base::RepeatingTimer reporting_timer_;
 
   // Updated by the OnXXX() methods above.
-  bool is_on_battery_power_ = false;
   bool is_playing_ = false;
   bool is_visible_ = true;
-  bool has_native_controls_ = false;
   double volume_ = 1.0;
   int underflow_count_ = 0;
   std::vector<base::TimeDelta> pending_underflow_events_;
-  blink::WebMediaPlayer::DisplayType display_type_ =
-      blink::WebMediaPlayer::DisplayType::kInline;
-  blink::WebMediaPlayer::DisplayType display_type_for_recording_ =
-      blink::WebMediaPlayer::DisplayType::kInline;
 
   // The last media timestamp seen by UpdateWatchTime().
   base::TimeDelta last_media_timestamp_ = kNoTimestamp;
-  base::TimeDelta last_media_power_timestamp_ = kNoTimestamp;
-  base::TimeDelta last_media_controls_timestamp_ = kNoTimestamp;
-  base::TimeDelta last_media_display_type_timestamp_ = kNoTimestamp;
 
   // The starting and ending timestamps used for reporting watch time.
   base::TimeDelta start_timestamp_;
   base::TimeDelta end_timestamp_ = kNoTimestamp;
 
-  // Similar to the above but tracks watch time relative to whether or not
-  // battery or AC power is being used.
-  base::TimeDelta start_timestamp_for_power_;
-  base::TimeDelta end_timestamp_for_power_ = kNoTimestamp;
-
-  // Similar to the above but tracks watch time relative to whether or not
-  // native controls are being used.
-  base::TimeDelta start_timestamp_for_controls_;
-  base::TimeDelta end_timestamp_for_controls_ = kNoTimestamp;
-
-  // Similar to the above but tracks watch time relative to whether the display
-  // type is inline, fullscreen or picture-in-picture.
-  base::TimeDelta start_timestamp_for_display_type_;
-  base::TimeDelta end_timestamp_for_display_type_ = kNoTimestamp;
-
   // Special case reporter for handling background video watch time. Configured
   // as an audio only WatchTimeReporter with |is_background_| set to true.
   std::unique_ptr<WatchTimeReporter> background_reporter_;
+
+  enum class SubReporter {
+    kControls,
+    kPower,
+    kDisplay,
+  };
+  // TODO: flat_map?
+  std::map<SubReporter, std::unique_ptr<WatchTimeSubReporter>> sub_reporters_;
 
   DISALLOW_COPY_AND_ASSIGN(WatchTimeReporter);
 };
