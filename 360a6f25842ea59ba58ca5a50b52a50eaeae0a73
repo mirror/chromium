@@ -16,6 +16,24 @@
       "revId": "360a6f25842ea59ba58ca5a50b52a50eaeae0a73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac0d8e8_fe9ff7e2",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-06-22T01:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60a2fbc5_5e21b82c",
+      "revId": "360a6f25842ea59ba58ca5a50b52a50eaeae0a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
