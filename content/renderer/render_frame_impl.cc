@@ -982,18 +982,24 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
     bool hidden,
     const ScreenInfo& screen_info,
     CompositorDependencies* compositor_deps,
-    blink::WebFrame* opener) {
+    blink::WebFrame* opener,
+    const FrameReplicationState& replicated_state) {
   // A main frame RenderFrame must have a RenderWidget.
   DCHECK_NE(MSG_ROUTING_NONE, widget_routing_id);
 
   RenderFrameImpl* render_frame =
       RenderFrameImpl::Create(render_view, routing_id);
   render_frame->InitializeBlameContext(nullptr);
-  WebLocalFrame* web_frame = WebLocalFrame::Create(
-      blink::WebTreeScopeType::kDocument, render_frame,
+  // TODO(dcheng): Is it OK to do pass sandbox flags even if
+  // was_created_by_renderer in RenderViewImpl is true?
+  WebLocalFrame* web_frame = WebLocalFrame::CreateMainFrame(
+      render_view->webview(), render_frame,
       render_frame->blink_interface_provider_.get(),
-      render_frame->blink_interface_registry_.get(), opener);
-  render_view->webview()->SetMainFrame(web_frame);
+      render_frame->blink_interface_registry_.get(), opener,
+      replicated_state.sandbox_flags);
+  if (!replicated_state.name.empty()) {
+    web_frame->SetName(blink::WebString::FromUTF8(replicated_state.name));
+  }
   render_frame->render_widget_ = RenderWidget::CreateForFrame(
       widget_routing_id, hidden, screen_info, compositor_deps, web_frame);
   // TODO(avi): This DCHECK is to track cleanup for https://crbug.com/545684
