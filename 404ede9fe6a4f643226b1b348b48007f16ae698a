@@ -16,6 +16,24 @@
       "revId": "404ede9fe6a4f643226b1b348b48007f16ae698a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7399313f_83a86906",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-22T01:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22b8e896_3bfe8faa",
+      "revId": "404ede9fe6a4f643226b1b348b48007f16ae698a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

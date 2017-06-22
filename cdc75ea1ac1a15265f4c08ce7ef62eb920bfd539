@@ -16,6 +16,24 @@
       "revId": "cdc75ea1ac1a15265f4c08ce7ef62eb920bfd539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b93bf9_211745cd",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-22T01:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d728b51_26b851ab",
+      "revId": "cdc75ea1ac1a15265f4c08ce7ef62eb920bfd539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

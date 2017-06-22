@@ -453,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "01ff0a78_64d0ed56",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-22T01:43:39Z",
+      "side": 1,
+      "message": "Added some comments about this mechanism in the CameraHalDispatcherImpl class docstring in camera_hal_dispatcher.h.",
+      "parentUuid": "6a5a1214_53f9c576",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fddb43b5_428207c1",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
