@@ -11,8 +11,10 @@ namespace blink {
 
 class CSSFontSizeInterpolationType : public CSSInterpolationType {
  public:
-  CSSFontSizeInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+  CSSFontSizeInterpolationType(
+      PropertyHandle property,
+      const PropertyRegistration* registration = nullptr)
+      : CSSInterpolationType(property, registration) {
     DCHECK_EQ(CssProperty(), CSSPropertyFontSize);
   }
 

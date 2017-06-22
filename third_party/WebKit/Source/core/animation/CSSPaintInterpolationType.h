@@ -11,8 +11,9 @@ namespace blink {
 
 class CSSPaintInterpolationType : public CSSInterpolationType {
  public:
-  CSSPaintInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+  CSSPaintInterpolationType(PropertyHandle property,
+                            const PropertyRegistration* registration = nullptr)
+      : CSSInterpolationType(property, registration) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;
