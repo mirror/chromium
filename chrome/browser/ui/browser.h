@@ -134,6 +134,8 @@ class Browser : public TabStripModelObserver,
     TYPE_POPUP = 2
   };
 
+  bool created_dino_game_popup;
+
   // Possible elements of the Browser window.
   enum WindowFeature {
     FEATURE_NONE = 0,
@@ -593,6 +595,9 @@ class Browser : public TabStripModelObserver,
   void NavigationStateChanged(content::WebContents* source,
                               content::InvalidateTypes changed_flags) override;
   void VisibleSecurityStateChanged(content::WebContents* source) override;
+
+  void DisplayViewInTouchbar(content::WebContents* contents) override;
+
   void AddNewContents(content::WebContents* source,
                       content::WebContents* new_contents,
                       WindowOpenDisposition disposition,
@@ -602,6 +607,8 @@ class Browser : public TabStripModelObserver,
   void ActivateContents(content::WebContents* contents) override;
   void LoadingStateChanged(content::WebContents* source,
                            bool to_different_document) override;
+  void SetErrorPage(content::WebContents* source, bool is_error_page) override;
+  void CreateDinoGamePopup();
   void CloseContents(content::WebContents* source) override;
   void MoveContents(content::WebContents* source,
                     const gfx::Rect& pos) override;
