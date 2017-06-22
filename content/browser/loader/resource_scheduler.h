@@ -11,6 +11,7 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -18,6 +19,7 @@
 #include "content/common/content_export.h"
 #include "net/base/priority_queue.h"
 #include "net/base/request_priority.h"
+#include "net/nqe/effective_connection_type.h"
 
 namespace net {
 class URLRequest;
@@ -116,11 +118,20 @@ class CONTENT_EXPORT ResourceScheduler {
     bool operator()(const ScheduledResourceRequest* a,
                     const ScheduledResourceRequest* b) const;
   };
+  // A struct that encapsulates a bandwidth delay product range and the
+  // maximum number of delayable requests for that range for the experiment
+  // "MaxDelayableRequestsNetworkOverride".
+  struct BDPRangeRequestCountEntry {
+    int64_t bdp_lower_bound_bits;
+    int64_t bdp_upper_bound_bits;
+    size_t request_count;
+  };
   class Client;
 
   typedef int64_t ClientId;
   typedef std::map<ClientId, Client*> ClientMap;
   typedef std::set<ScheduledResourceRequest*> RequestSet;
+  typedef std::vector<BDPRangeRequestCountEntry> BDPRangeRequestCounts;
 
   // Called when a ScheduledResourceRequest is destroyed.
   void RemoveRequest(ScheduledResourceRequest* request);
@@ -130,6 +141,14 @@ class CONTENT_EXPORT ResourceScheduler {
 
   // Returns the client for the given |child_id| and |route_id| combo.
   Client* GetClient(int child_id, int route_id);
+
+  // Returns the experimental config for the experiment
+  // |kMaxDelayableRequestsNetworkOverride|.
+  BDPRangeRequestCounts GetMaxDelayableRequestsExperimentConfig() const;
+
+  // Returns the effective connection types for which the experiment
+  // |kMaxDelayableRequestsNetworkOverride| should be run.
+  net::EffectiveConnectionType GetMaxDelayableRequestsExperimentMaxECT() const;
 
   ClientMap client_map_;
   RequestSet unowned_requests_;
@@ -142,6 +161,15 @@ class CONTENT_EXPORT ResourceScheduler {
   // start resource requests.
   bool yielding_scheduler_enabled_;
   int max_requests_before_yielding_;
+
+  // True if the experiment "MaxDelayableRequestsNetworkOverride" is enabled. In
+  // this experiment, the number of delayable requests simultaneously in flight
+  // is throttled based on the bandwidth delay product (BDP) information
+  // obtained from the network quality estimator module.
+  const bool max_delayable_requests_override_enabled_;
+  const BDPRangeRequestCounts max_delayable_requests_by_bdp_ranges_;
+  const net::EffectiveConnectionType
+      max_delayable_requests_network_override_max_ect_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
