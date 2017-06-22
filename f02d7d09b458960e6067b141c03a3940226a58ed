@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71467bfe_bf9046e2",
+        "filename": "net/cert/nss_cert_database_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-06-22T20:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43b66d45_78d7b6b9",
+      "revId": "f02d7d09b458960e6067b141c03a3940226a58ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d24e14cd_30c08788",
         "filename": "net/cert/nss_cert_database_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T19:55:24Z",
       "side": 1,
       "message": "This is somewhat different from the original test. Does it matter for this test\u0027s intent?",
+      "revId": "f02d7d09b458960e6067b141c03a3940226a58ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671ec0e6_20e91f78",
+        "filename": "net/cert/nss_cert_database_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-06-22T20:10:30Z",
+      "side": 1,
+      "message": "Don\u0027t think so. I\u0027m not sure the verification in the original test really showed anything useful. (The verification would have succeeded even if the certs weren\u0027t imported.)\n\nThe thinking may have been to have the test show that it could get the imported intermediate from the DB when verifying, but since NSS will match temp certs as well it\u0027s would have to make sure there is nothing still holding a handle to the temp intermediate cert (and that NSS didn\u0027t decide to have some internal cache anyway). Seemed like too hard to do in a reliable way.",
+      "parentUuid": "d24e14cd_30c08788",
       "revId": "f02d7d09b458960e6067b141c03a3940226a58ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
