@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81bfee1e_bbd7c672",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T22:48:45Z",
+      "side": 0,
+      "message": "Sorry, I noticed that removing this statement disables script streaming if the runtime flag is not enabled (because TryStream() doesn\u0027t initiate streaming if the runtime flag is not enabled).\n\nAlternatives are:\n1. Keep StartStreamingIfPossible() call here and remove TryStream() call.\n2. Call StartStreamingIfPossible() here if the runtime flag is not enabled.\n\nI also considered\n3. Make TryStream() to start streaming even if the runtime flag is not enabled.\nbut 1. or 2. are easier to confirm that the behavior is not changed when the runtime flag is not enabled.",
+      "range": {
+        "startLine": 615,
+        "startChar": 4,
+        "endLine": 615,
+        "endChar": 45
+      },
+      "revId": "ea249e9e231ed4f779efed1dc730825213526d48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

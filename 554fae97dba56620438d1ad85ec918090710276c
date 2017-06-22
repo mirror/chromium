@@ -46,6 +46,133 @@
       "revId": "554fae97dba56620438d1ad85ec918090710276c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e81050_991f7c2c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T22:48:45Z",
+      "side": 1,
+      "message": "Er, probably this is because we don\u0027t initiate streaming for already compiled/cached scripts and thus this code path is executed before any scripts corresponding to the ScriptResource are executed.\n\nOne one hand, this adds the assumption of \"ResourceBuffer() is non-null before first call to SourceText()\", that I\u0027d like to avoid (because the timing of \"first call to SourceText()\" is not well controlled and prone to error).\nOn the other hand, I don\u0027t have a clear solution for this, and null ResourceBuffer() here doesn\u0027t affect correctness/security issues (only affects performance), and thus the current patch set might be good at least for a short-term solution and for experiments.\n(I\u0027ll talk offline with kouhei@ about this and related issues)",
+      "parentUuid": "1f18d66d_f5c0d518",
+      "range": {
+        "startLine": 365,
+        "startChar": 48,
+        "endLine": 366,
+        "endChar": 23
+      },
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937d5031_d26208ca",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T22:48:45Z",
+      "side": 1,
+      "message": "kWaitingForResource",
+      "range": {
+        "startLine": 298,
+        "startChar": 6,
+        "endLine": 298,
+        "endChar": 25
+      },
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac90c39_8b1b87d7",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T22:48:45Z",
+      "side": 1,
+      "message": "Could you remove these two methods from ScriptLoader, and instead add\nPendingScript* ScriptLoader::GetPendingScriptIfScriptIsAsync()\nand make ScriptRunner use it?\n\nBecause, ScriptLoader::pending_script_ is null in some cases and thus these functions don\u0027t work always. For example, pending_script_ is always null when it is controlled by HTMLParserScriptRunner.\nAlso, it\u0027s better to limit accessing PendingScript from ScriptRunner (or somewhere outside ScriptLoader), so I\u0027d like to make the name of the PendingScript* getter alarming.",
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f758c81_47e010b6",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T22:48:45Z",
+      "side": 1,
+      "message": "Calling erase() before Execute() is safer.",
+      "range": {
+        "startLine": 243,
+        "startChar": 6,
+        "endLine": 243,
+        "endChar": 49
+      },
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e90927b_68db38f4",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T22:48:45Z",
+      "side": 1,
+      "message": "Could you add a DCHECK() that confirms |script_loader| is contained in |async_scripts_to_execute_soon_| or |pending_async_scripts_|?\n(Just for a sanity check for that we can use kAsync below)",
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79802c0c_092e615a",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-22T22:48:45Z",
+      "side": 1,
+      "message": "Currently no one uses this return value.",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 6
+      },
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
