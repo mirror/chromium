@@ -80,6 +80,30 @@
       "revId": "148518fb1f381f06bc96d6c78e74490d7d24eeb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da81cb54_d15ecab8",
+        "filename": "gpu/command_buffer/service/program_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-22T01:13:27Z",
+      "side": 1,
+      "message": "This hack is not a good workaround. The context\u0027s state is broken and all bets are off regarding correctness after this point. The program\u0027s state should be marked invalid.\n\nCan you please try changing UpdateUniforms() to return a bool, returning false in this case, and then changing Program::Update to return early in that case? The problem is probably that Program::valid_ is getting set to true. If it were still false then the next call to DoUseProgram would generate an INVALID_OPERATION, not crash.",
+      "parentUuid": "7dafdac2_823eebb4",
+      "range": {
+        "startLine": 880,
+        "startChar": 4,
+        "endLine": 880,
+        "endChar": 8
+      },
+      "revId": "148518fb1f381f06bc96d6c78e74490d7d24eeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
