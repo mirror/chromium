@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "468bf062_9b1cfb0c",
+        "filename": "chrome/browser/prerender/prerender_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-22T15:02:50Z",
+      "side": 1,
+      "message": "This pattern is becoming pretty common. Maybe we ought to add something like\n\n  bool TryBindInterface(BindSourceInfo, string, ScopedMessagePipeHandle*);",
+      "revId": "698a09a4b98dc1345e80eeee1cbbe18efe916d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bdebcb_66969251",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-22T15:02:50Z",
+      "side": 1,
+      "message": "Maybe \"OnInterfaceRequestedFromFrame\" (or ...ForFrame) would be a more appropriate name for an observer.",
+      "revId": "698a09a4b98dc1345e80eeee1cbbe18efe916d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0348d57_ac06907c",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-22T15:02:50Z",
+      "side": 1,
+      "message": "I believe we must already have sufficient context via the RFH (and presumably via whatever context we end up having for worker threads) in order to derive the source renderer instance info if necessary -- and it\u0027s probably never or very rarely necessary in practice anyway. So I think propagating BindSourceInfo here is redundant and unfortuante, if not for the fact that impls currently want to use BinderRegistry and BinderRegistry::BindInterface needs a BindSourceInfo.\n\nPerhaps the right API for BinderRegistry then is not the classic-BinderRegistry-plus-\u003cArgs...\u003e that we have now, but just BinderRegistryWithContext\u003cContextType\u003e. Then the original BinderRegistry becomes an alias for BinderRegistryWithContext\u003cconst BindSourceInfo\u0026\u003e, and WCO-owned registries can use BinderRegistryWithContext\u003cRFH*\u003e and thus have a BindInterface sig that looks like (RFH*, name, pipe). This would simplify the template goop and avoid what will probably be redundant BindSourceInfo context in many other cases.\n\nIf a consumer does someday want to use something-and-BindSourceInfo for context, they can of course always construct a context type which composes the two things (e.g. std::pair\u003cBindSourceInfo, RenderFrameHost*\u003e).",
+      "revId": "698a09a4b98dc1345e80eeee1cbbe18efe916d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
