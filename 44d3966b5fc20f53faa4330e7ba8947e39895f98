@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1558ec0_9ef8cdaf",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-22T19:17:13Z",
+      "side": 0,
+      "message": "How come you want a separate target for the viz related tests rather than placing them in components_unittests. From talking with others in the past they said it was desirable to have all component related tests in a single test target (we have followed this pattern in the services directory too).",
+      "range": {
+        "startLine": 228,
+        "startChar": 9,
+        "endLine": 228,
+        "endChar": 30
+      },
+      "revId": "44d3966b5fc20f53faa4330e7ba8947e39895f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
