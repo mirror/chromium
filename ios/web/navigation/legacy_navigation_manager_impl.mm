@@ -456,7 +456,7 @@ LegacyNavigationManagerImpl::GetLastCommittedNonAppSpecificItem() const {
   return nullptr;
 }
 
-size_t LegacyNavigationManagerImpl::GetPreviousItemIndex() const {
+int LegacyNavigationManagerImpl::GetPreviousItemIndex() const {
   return [session_controller_ previousItemIndex];
 }
 
