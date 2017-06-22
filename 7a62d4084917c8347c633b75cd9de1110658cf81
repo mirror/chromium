@@ -16,6 +16,24 @@
       "revId": "7a62d4084917c8347c633b75cd9de1110658cf81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a92907_a422cb60",
+        "filename": "testing/android/docs/junit4.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-22T15:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c8b5d2c_cc7ca297",
+      "revId": "7a62d4084917c8347c633b75cd9de1110658cf81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
