@@ -247,6 +247,30 @@
       "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97df90e4_c1c81397",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-22T17:58:35Z",
+      "side": 1,
+      "message": "\u003e According to tbuckley@ and oshima@ (in the bug) this was desired behaviour, then broke, then got fixed in the above CL.\n\nI don\u0027t doubt that the behavior was desired, it\u0027s the implementation that gives a semantic meaning on the usage of setTimeout() that concerns me.",
+      "parentUuid": "5a4b894d_b73110c9",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
