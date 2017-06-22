@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc2a0d62_7ccfb3ea",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-22T01:24:58Z",
+      "side": 1,
+      "message": "Ahh, that makes a lot more sense. Fixed!",
+      "parentUuid": "a03943fd_d8f3c975",
+      "revId": "d422e74093cdd0f5b90972aef32ade9ac2967a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c5bb2f2_c5fa696b",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b273dc9f_1a161080",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-22T01:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c5bb2f2_c5fa696b",
+      "revId": "d422e74093cdd0f5b90972aef32ade9ac2967a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64b5a72e_e35f7d74",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "d422e74093cdd0f5b90972aef32ade9ac2967a41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3471e9cb_d3bddc5b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-22T01:24:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64b5a72e_e35f7d74",
+      "revId": "d422e74093cdd0f5b90972aef32ade9ac2967a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
