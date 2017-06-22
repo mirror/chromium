@@ -16,6 +16,24 @@
       "revId": "c12d3ec9baf0450da5a4d9ba6c5dffbfdfc23ea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ebd540_0e162d40",
+        "filename": "content/browser/renderer_host/pepper/pepper_external_file_ref_backend.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-06-22T14:44:59Z",
+      "side": 1,
+      "message": "We should block shutdown. Done.",
+      "parentUuid": "20cce5e8_a10efae4",
+      "revId": "c12d3ec9baf0450da5a4d9ba6c5dffbfdfc23ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
