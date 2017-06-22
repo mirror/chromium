@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 /**
  * @implements {Common.OutputStream}
- * @implements {Bindings.OutputStreamDelegate}
  * @unrestricted
  */
 Timeline.TimelineLoader = class {
@@ -36,10 +35,13 @@ Timeline.TimelineLoader = class {
    */
   static loadFromFile(file, client) {
     var loader = new Timeline.TimelineLoader(client);
-    var fileReader = Timeline.TimelineLoader._createFileReader(file, loader);
+    var fileReader = Timeline.TimelineLoader._createFileReader(file);
     loader._canceledCallback = fileReader.cancel.bind(fileReader);
     loader._totalSize = file.size;
-    fileReader.start(loader);
+    fileReader.start(loader).then(success => {
+      if (!success)
+        loader.onError(fileReader);
+    });
     return loader;
   }
 
@@ -56,11 +58,10 @@ Timeline.TimelineLoader = class {
 
   /**
    * @param {!File} file
-   * @param {!Bindings.OutputStreamDelegate} delegate
    * @return {!Bindings.ChunkedReader}
    */
-  static _createFileReader(file, delegate) {
-    return new Bindings.ChunkedFileReader(file, Timeline.TimelineLoader.TransferChunkLengthBytes, delegate);
+  static _createFileReader(file) {
+    return new Bindings.ChunkedFileReader(file, Timeline.TimelineLoader.TransferChunkLengthBytes);
   }
 
   cancel() {
@@ -200,31 +201,10 @@ Timeline.TimelineLoader = class {
   }
 
   /**
-   * @override
-   */
-  onTransferStarted() {
-  }
-
-  /**
-   * @override
    * @param {!Bindings.ChunkedReader} reader
    */
-  onChunkTransferred(reader) {
-  }
-
-  /**
-   * @override
-   */
-  onTransferFinished() {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   * @param {!Event} event
-   */
-  onError(reader, event) {
-    switch (event.target.error.name) {
+  onError(reader) {
+    switch (reader.error().name) {
       case 'NotFoundError':
         this._reportErrorAndCancelLoading(Common.UIString('File "%s" not found.', reader.fileName()));
         break;
@@ -288,40 +268,4 @@ Timeline.TimelineLoader.State = {
   ReadingEvents: Symbol('ReadingEvents'),
   SkippingTail: Symbol('SkippingTail'),
   LoadingCPUProfileFormat: Symbol('LoadingCPUProfileFormat')
-};
-
-/**
- * @implements {Bindings.OutputStreamDelegate}
- * @unrestricted
- */
-Timeline.TracingTimelineSaver = class {
-  /**
-   * @override
-   */
-  onTransferStarted() {
-  }
-
-  /**
-   * @override
-   */
-  onTransferFinished() {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   */
-  onChunkTransferred(reader) {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   * @param {!Event} event
-   */
-  onError(reader, event) {
-    var error = event.target.error;
-    Common.console.error(
-        Common.UIString('Failed to save timeline: %s (%s, %s)', error.message, error.name, error.code));
-  }
 };
