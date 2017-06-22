@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4eb1e1f_88d3625c",
+        "filename": "mojo/public/cpp/bindings/associated_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-22T15:36:34Z",
+      "side": 1,
+      "message": "I have a question: when is it useful to have multiple task runners for the same sequence?\nBecause the strict order guarantee of a sequence, we cannot really reorder the tasks from multiple task runners for scheduling purpose, right?\n\nIf my understanding above is correct, then Bind()ing to another task runner for the same sequence is not very useful. On the other hand, if we allow Bind()ing to a task runner of a different sequence, we will need to be careful that we are not racing.\n\nWDYT?",
+      "revId": "f425ec0248d3f221ff216f2372c320b3147cd99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
