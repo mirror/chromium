@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9156ea64_6c228ce9",
+        "filename": "components/ntp_snippets/content_suggestion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T10:07:51Z",
+      "side": 1,
+      "message": "There are no plans to add more content_types yet.\n\nTherefor I opted for a single accessor. But you are right. If we ever add an additional content type, then this should be changed into an enum. \n\nSo far I would keep it simple at this level.",
+      "parentUuid": "34acef57_1b079f77",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 28
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea315d50_18619fc2",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-21T14:46:22Z",
       "side": 1,
       "message": "No videos here?",
+      "range": {
+        "startLine": 282,
+        "startChar": 52,
+        "endLine": 282,
+        "endChar": 67
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20290d11_48e7284e",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T10:07:51Z",
+      "side": 1,
+      "message": "uups sorry. Fixed. I also changed the right test now to test this.",
+      "parentUuid": "ea315d50_18619fc2",
       "range": {
         "startLine": 282,
         "startChar": 52,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "56bb2d49_39cd6481",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T10:07:51Z",
+      "side": 1,
+      "message": "Done but in the right place.",
+      "parentUuid": "259a40bc_80f0e10e",
+      "range": {
+        "startLine": 1028,
+        "startChar": 46,
+        "endLine": 1028,
+        "endChar": 67
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "549cbbed_d2a43397",
         "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-21T14:46:22Z",
       "side": 1,
       "message": "Are all of these really mandatory?",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1042,
+        "endChar": 50
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c09a98_7861ff1a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-22T10:07:51Z",
+      "side": 1,
+      "message": "obsoltete",
+      "parentUuid": "549cbbed_d2a43397",
       "range": {
         "startLine": 1034,
         "startChar": 0,
