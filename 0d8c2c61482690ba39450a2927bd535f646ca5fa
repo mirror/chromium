@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee5f624_51cad429",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-22T09:48:00Z",
+      "side": 1,
+      "message": "This is not a user-facing trigger. At what conditions does Chrome decide to do this?",
+      "range": {
+        "startLine": 222,
+        "startChar": 13,
+        "endLine": 222,
+        "endChar": 50
+      },
+      "revId": "0d8c2c61482690ba39450a2927bd535f646ca5fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4184d195_ac84ea67",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-22T09:48:00Z",
+      "side": 1,
+      "message": "What form of authentication? Do you mean HTTP auth in the URL, or something else?",
+      "range": {
+        "startLine": 224,
+        "startChar": 30,
+        "endLine": 224,
+        "endChar": 44
+      },
+      "revId": "0d8c2c61482690ba39450a2927bd535f646ca5fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
