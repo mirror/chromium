@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e5deda_390702ee",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-22T08:02:04Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s worth all this just to add a #if around part of this function.\n\nIf the whole function could be #if\u0027d out on non-CrOS platforms, I\u0027d say do it, but #ifing out just a piece of it is not worth it.\n\nIf you really need this to not run on non-CrOS, you could just do\n\nhistory::WebHistoryService* web_history \u003d null;\n#if defined(OS_CHROMEOS)\nweb_history \u003d GetWebHistory();\n#endif\n\nAnd leave the rest of the function as normal.\n\nI don\u0027t think this whole explanation is worth having either. Suffices to just say this code is only needed on Chrome OS but there is a call in here from non-CrOS.",
+      "revId": "b592c267912358e20710d2224cb64421b5d104ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
