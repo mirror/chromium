@@ -65,7 +65,7 @@ class SubresourceFilterContentSettingsManager
   // Time before showing the UI again on a domain.
   // TODO(csharrison): Consider setting this via a finch param.
   static constexpr base::TimeDelta kDelayBeforeShowingInfobarAgain =
-      base::TimeDelta::FromMinutes(30);
+      base::TimeDelta::FromHours(24);
 
  private:
   // content_settings::Observer:
