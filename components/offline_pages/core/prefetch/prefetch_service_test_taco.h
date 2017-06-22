@@ -8,12 +8,19 @@
 #include <memory>
 
 #include "base/logging.h"
+#include "base/memory/ref_counted.h"
+#include "base/threading/thread_task_runner_handle.h"
+
+namespace base {
+class TestSimpleTaskRunner;
+}
 
 namespace offline_pages {
 class OfflineMetricsCollector;
 class PrefetchDispatcher;
 class PrefetchGCMHandler;
 class PrefetchService;
+class PrefetchNetworkRequestFactory;
 class SuggestedArticlesObserver;
 
 // The taco class acts as a wrapper around the prefetch service making
@@ -21,13 +28,6 @@ class SuggestedArticlesObserver;
 // This class is like a taco shell, and the filling is the prefetch service.
 // The default dependencies may be replaced by the test author to provide
 // custom versions that have test-specific hooks.
-//
-// Default types of objects held by the test service:
-// * TestOfflineMetricsCollector
-// * PrefetchDispatcherImpl
-// * TestPrefetchGCMHandler
-// * |nullptr| SuggestedArticlesObserver, since this is default just a lifetime
-//   arrangement.
 class PrefetchServiceTestTaco {
  public:
   PrefetchServiceTestTaco();
@@ -35,10 +35,19 @@ class PrefetchServiceTestTaco {
 
   // These methods must be called before CreatePrefetchService() is invoked.
   // If called after they will CHECK().
+  //
+  // Default type: TestOfflineMetricsCollector.
   void SetOfflineMetricsCollector(
       std::unique_ptr<OfflineMetricsCollector> metrics_collector);
+  // Default type: TestPrefetchDispatcher.
   void SetPrefetchDispatcher(std::unique_ptr<PrefetchDispatcher> dispatcher);
+  // Default type: TestPrefetchGCMHandler.
   void SetPrefetchGCMHandler(std::unique_ptr<PrefetchGCMHandler> gcm_handler);
+  // Default type: TestNetworkRequestFactory.
+  void SetPrefetchNetworkRequestFactory(
+      std::unique_ptr<PrefetchNetworkRequestFactory> network_request_factory);
+  // Defaults to SuggestedArticlesObserver.  Initializes the testing suggestions
+  // by default, so no ContentSuggestionsService is required..
   void SetSuggestedArticlesObserver(
       std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer);
 
@@ -57,10 +66,15 @@ class PrefetchServiceTestTaco {
   // Leaves the taco empty, not usable.
   std::unique_ptr<PrefetchService> CreateAndReturnPrefetchService();
 
+  scoped_refptr<base::TestSimpleTaskRunner> task_runner;
+
  private:
+  base::ThreadTaskRunnerHandle task_runner_handle_;
+
   std::unique_ptr<OfflineMetricsCollector> metrics_collector_;
   std::unique_ptr<PrefetchDispatcher> dispatcher_;
   std::unique_ptr<PrefetchGCMHandler> gcm_handler_;
+  std::unique_ptr<PrefetchNetworkRequestFactory> network_request_factory_;
   std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer_;
 
   std::unique_ptr<PrefetchService> prefetch_service_;
