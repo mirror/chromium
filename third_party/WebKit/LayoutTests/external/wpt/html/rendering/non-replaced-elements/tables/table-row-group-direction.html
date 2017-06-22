@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<link rel="match" href="table-row-group-direction-ref.html">
+<title>Table row-group direction</title>
+
+<style>
+  table {
+    border-collapse: collapse;
+  }
+
+  td {
+    border: 2px solid black;
+  }
+
+  td.special {
+    border-left: 5px solid green;
+    border-right: 5px solid blue;
+  }
+</style>
+
+<table>
+  <thead style="direction: ltr">
+    <tr>
+      <td>a</td>
+      <td class="special">b</td>
+    </tr>
+  </thead>
+  <tbody style="direction: rtl">
+    <tr>
+      <td>a</td>
+      <td class="special">b</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<table style="direction: rtl">
+  <thead style="direction: ltr">
+    <tr>
+      <td>a</td>
+      <td class="special">b</td>
+    </tr>
+  </thead>
+  <tbody style="direction: rtl">
+    <tr>
+      <td>a</td>
+      <td class="special">b</td>
+    </tr>
+  </tbody>
+</table>
