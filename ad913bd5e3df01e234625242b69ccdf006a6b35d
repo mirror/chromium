@@ -2,6 +2,176 @@
   "comments": [
     {
       "key": {
+        "uuid": "01b64daa_fdde1f69",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "Why is this delegation class needed? Couldn\u0027t CameraHalDelegate directly inherit CameraClientObserver?",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12c56a7_1f6f7165",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "Hopefully, this and the other invocations of Wait() are not called on the |ipc_task_runner_|, which would lead to deadlocks. I assume the external context guarantees that this does not happen. Would it be worth adding something like DCHECK(!ipc_task_runner_-\u003eBelongsToCurrentThread())?",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04301ab8_215aa47a",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "nit: To avoid confusion with \"set\" as in \"a set of elements\", we may consider naming this |camera_module_has_been_set_\".",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8718eec_de466c06",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "Do we have/need/want test coverage of these edge cases?",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9522055_1b766271",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "Do we have test coverage for cases where this error handler gets triggered?",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6cd4020_a8a3521a",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "Do we have test coverage for cases where this error handler gets triggered?",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb7127d_bbc660bf",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "nit: Some of this documentation seems to be redundant with the one in the .mojom file. I recommend moving the documentation to the most abstract level where it makes sense, in this case the .mojom file. \n\nThe second paragraph contains very useful information about what the purpose of the CameraHalDispatcher instance is in the design. Since this is not specific to this concrete implementation, I feel it really belongs to the .mojom file rather than here.\n\nIn the class-level description of CameraHalDispatcherImpl, I would only provide information that is specific to the implementation. If there is nothing special about the implementation that requires explanation (which is a good thing), I would be comfortable with leaving this empty, or if you prefer, add a note that documentation can be found in the .mojom file.",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6763eb_dc261308",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "As a reader, I am surprised that there is a need for something called a \"service loop\". If the responsibility of CameraHalDispatcherImpl is to wait for incoming server and client registrations via the CameraHalDispatcher public API, and to establish connections and, when needed re-establish connections, all these seem to be triggered by invocations of the public API. As a result, I don\u0027t see what a continuously running loop would be needed for. \n\nMaybe an explanation of this would be a candidate for an implementation-specific detail worth mentioning in the class-level description.\n\n(After reading the implementation, I believe the answer is that the loop is used to block and wait for socket events indicating that a server process wants to establish Mojo communication.)",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29151b08_9abe38a9",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "Consider using base::ObserverList\u003c\u003e here",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b42d3b_46b1a867",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "With the interface only exposing methods for registering, I don\u0027t understand what would trigger the actual dispatching. Is this triggered somewhere in the implementation through a method that is not exposed in the interface?",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e79cf97b_3fbd33c6",
         "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
         "patchSetId": 12
@@ -30,6 +200,23 @@
       "writtenOn": "2017-06-22T19:34:17Z",
       "side": 1,
       "message": "CameraHalServer and CameraHalClient haven\u0027t been implemented yet, correct? Please ensure that they have mojo security review even if no mojom files change.",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc291dba_da6a2a1d",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-22T21:57:43Z",
+      "side": 1,
+      "message": "The last sentence looks like it might be more suited for the description of CameraHalDispatcher, since it describes something that CameraHalDispatcher does.",
       "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
