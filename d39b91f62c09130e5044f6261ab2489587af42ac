@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "274de0ee_fa158985",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-22T17:51:15Z",
+      "side": 1,
+      "message": "Tiny nit: I\u0027d change these \"should\"s to \"must\"s, since the code returns failure.",
+      "revId": "d39b91f62c09130e5044f6261ab2489587af42ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f107b675_fa2233ad",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-22T17:51:15Z",
+      "side": 1,
+      "message": "Are we sure this is the only place to return true?\n\nThe nesting in this function is getting kind of hairy. Maybe break it into smaller helper functions? That might make it easier to read.",
+      "revId": "d39b91f62c09130e5044f6261ab2489587af42ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
