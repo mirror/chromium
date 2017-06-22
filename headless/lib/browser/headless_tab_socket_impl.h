@@ -8,9 +8,14 @@
 #include <list>
 
 #include "base/synchronization/lock.h"
+#include "headless/lib/headless_render_frame_controller.mojom.h"
 #include "headless/lib/tab_socket.mojom.h"
 #include "headless/public/headless_tab_socket.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+
+namespace content {
+class RenderFrameHost;
+}  // namespace content
 
 namespace headless {
 
@@ -20,25 +25,38 @@ class HeadlessTabSocketImpl : public HeadlessTabSocket, public TabSocket {
   ~HeadlessTabSocketImpl() override;
 
   // HeadlessTabSocket implementation:
-  void SendMessageToTab(const std::string& message) override;
+  void SendMessageToContext(const std::string& message,
+                            int v8_execution_context_id) override;
   void SetListener(Listener* listener) override;
 
   // TabSocket implementation:
-  void SendMessageToEmbedder(const std::string& message) override;
-  void AwaitNextMessageFromEmbedder(
-      AwaitNextMessageFromEmbedderCallback callback) override;
+  void SendMessageToEmbedder(const std::string& message,
+                             int32_t v8_execution_context_id) override;
 
   void CreateMojoService(mojo::InterfaceRequest<TabSocket> request);
 
+  // Called by WebContents::ForEachFrame. If |render_frame_host| matches
+  // |target_devtools_frame_id| it requests the RenderFrameController
+  // installs TabSocket bindings in |world_id|, otherwise it does nothing.
+  void MaybeInstallTabSocketBindings(
+      std::string target_devtools_frame_id,
+      int v8_execution_context_id,
+      base::Callback<void(bool)> callback,
+      content::RenderFrameHost* render_frame_host);
+
  private:
   base::Lock lock_;  // Protects everything below.
-  AwaitNextMessageFromEmbedderCallback waiting_for_message_cb_;
-  std::list<std::string> outgoing_message_queue_;
-  std::list<std::string> incoming_message_queue_;
+  using Message = std::pair<std::string, int>;
+  using MessageQueue = std::list<Message>;
+
+  MessageQueue from_tab_message_queue_;
   Listener* listener_;  // NOT OWNED
 
-  // Must be listed last so it gets destructed before |waiting_for_message_cb_|.
   mojo::BindingSet<TabSocket> mojo_bindings_;
+
+  std::map<int, std::string> v8_execution_context_id_to_frame_id_;
+  std::map<std::string, HeadlessRenderFrameControllerPtr>
+      render_frame_controllers_;
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessTabSocketImpl);
 };

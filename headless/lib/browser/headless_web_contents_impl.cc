@@ -33,8 +33,6 @@
 #include "headless/lib/browser/headless_devtools_client_impl.h"
 #include "headless/lib/browser/headless_tab_socket_impl.h"
 #include "printing/features/features.h"
-#include "services/service_manager/public/cpp/binder_registry.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
 #include "headless/lib/browser/headless_print_manager.h"
@@ -132,11 +130,10 @@ std::unique_ptr<HeadlessWebContentsImpl> HeadlessWebContentsImpl::Create(
           content::WebContents::Create(create_params),
           builder->browser_context_));
 
-  if (builder->tab_socket_type_ != Builder::TabSocketType::NONE) {
+  if (builder->tab_sockets_allowed_) {
     headless_web_contents->headless_tab_socket_ =
         base::MakeUnique<HeadlessTabSocketImpl>();
-    headless_web_contents->inject_mojo_services_into_isolated_world_ =
-        builder->tab_socket_type_ == Builder::TabSocketType::ISOLATED_WORLD;
+    headless_web_contents->inject_mojo_services_into_isolated_world_ = true;
 
     builder->mojo_services_.emplace_back(
         TabSocket::Name_, base::Bind(&CreateTabSocketMojoServiceForContents));
@@ -227,30 +224,6 @@ void HeadlessWebContentsImpl::CreateMojoService(
 
 void HeadlessWebContentsImpl::RenderFrameCreated(
     content::RenderFrameHost* render_frame_host) {
-  render_frame_host->GetRemoteInterfaces()->GetInterface(
-      &render_frame_controller_);
-  if (!mojo_services_.empty()) {
-    base::Closure callback;
-    // We only fire DevToolsTargetReady when the tab socket is set up for the
-    // main frame.
-    // TODO(eseckler): To indicate tab socket readiness for child frames, we
-    // need to send an event via the parent frame's DevTools connection instead.
-    if (render_frame_host == web_contents()->GetMainFrame()) {
-      callback =
-          base::Bind(&HeadlessWebContentsImpl::MainFrameTabSocketSetupComplete,
-                     weak_ptr_factory_.GetWeakPtr());
-    }
-    render_frame_controller_->AllowTabSocketBindings(
-        inject_mojo_services_into_isolated_world_
-            ? MojoBindingsPolicy::ISOLATED_WORLD
-            : MojoBindingsPolicy::MAIN_WORLD,
-        callback);
-  } else if (render_frame_host == web_contents()->GetMainFrame()) {
-    // Pretend we set up the TabSocket, which allows the DevToolsTargetReady
-    // event to fire.
-    MainFrameTabSocketSetupComplete();
-  }
-
   service_manager::BinderRegistry* interface_registry =
       render_frame_host->GetInterfaceRegistry();
 
@@ -276,18 +249,6 @@ void HeadlessWebContentsImpl::RenderFrameDeleted(
 
 void HeadlessWebContentsImpl::RenderViewReady() {
   DCHECK(web_contents()->GetMainFrame()->IsRenderFrameLive());
-  render_view_ready_ = true;
-  MaybeIssueDevToolsTargetReady();
-}
-
-void HeadlessWebContentsImpl::MainFrameTabSocketSetupComplete() {
-  main_frame_tab_socket_setup_complete_ = true;
-  MaybeIssueDevToolsTargetReady();
-}
-
-void HeadlessWebContentsImpl::MaybeIssueDevToolsTargetReady() {
-  if (!main_frame_tab_socket_setup_complete_ || !render_view_ready_)
-    return;
 
   for (auto& observer : observers_)
     observer.DevToolsTargetReady();
@@ -403,6 +364,17 @@ HeadlessTabSocket* HeadlessWebContentsImpl::GetHeadlessTabSocket() const {
   return headless_tab_socket_.get();
 }
 
+void HeadlessWebContentsImpl::InstallHeadlessTabSocketBindings(
+    std::string devtools_frame_id,
+    int v8_execution_context_id,
+    base::Callback<void(bool)> callback) {
+  // We need to find the right RenderFrameHost to install the bindings on.
+  web_contents_->ForEachFrame(
+      base::Bind(&HeadlessTabSocketImpl::MaybeInstallTabSocketBindings,
+                 base::Unretained(headless_tab_socket_.get()),
+                 devtools_frame_id, v8_execution_context_id, callback));
+}
+
 HeadlessWebContents::Builder::Builder(
     HeadlessBrowserContextImpl* browser_context)
     : browser_context_(browser_context),
@@ -424,9 +396,9 @@ HeadlessWebContents::Builder& HeadlessWebContents::Builder::SetWindowSize(
   return *this;
 }
 
-HeadlessWebContents::Builder& HeadlessWebContents::Builder::SetTabSocketType(
-    TabSocketType type) {
-  tab_socket_type_ = type;
+HeadlessWebContents::Builder& HeadlessWebContents::Builder::SetAllowTabSockets(
+    bool tab_sockets_allowed) {
+  tab_sockets_allowed_ = tab_sockets_allowed;
   return *this;
 }
 

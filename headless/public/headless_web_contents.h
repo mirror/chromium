@@ -80,8 +80,19 @@ class HEADLESS_EXPORT HeadlessWebContents {
   // Close this page. |HeadlessWebContents| object will be destroyed.
   virtual void Close() = 0;
 
-  // Returns the headless tab socket for JS -> C++ if one was created.
+  // Returns the headless tab socket fo  C++ <---> JS if one was created.
   virtual HeadlessTabSocket* GetHeadlessTabSocket() const = 0;
+
+  // Installs a headless tab socket bindings for C++ <---> JS communications in
+  // the specified execution context. If the bindings are successfully installed
+  // then the |callback| is run with |success| = true, otherwise with
+  // |success| = false.
+  // TODO(alexclarke): Replace |devtools_frame_id| once there is a solution for
+  // stable frame IDs. See crbug.com/715541
+  virtual void InstallHeadlessTabSocketBindings(
+      std::string devtools_frame_id,
+      int v8_execution_context_id,
+      base::Callback<void(bool success)> callback) = 0;
 
   // Returns the devtools frame id corresponding to the |frame_tree_node_id|, if
   // any. Note this relies on an IPC sent from blink during navigation.
@@ -112,15 +123,8 @@ class HEADLESS_EXPORT HeadlessWebContents::Builder {
   // Specify the initial window size (default is configured in browser options).
   Builder& SetWindowSize(const gfx::Size& size);
 
-  enum class TabSocketType {
-    NONE,           // No TabSocket binds created (default).
-    MAIN_WORLD,     // TabSocket bindings available only to the main world.
-    ISOLATED_WORLD  // TabSocket bindings available only to isolated worlds
-                    // created via DevTools protocol.
-  };
-
-  // Sets the type of TabSocket to be created, if any.
-  Builder& SetTabSocketType(TabSocketType type);
+  // Specify whether or not TabSockets are allowed.
+  Builder& SetAllowTabSockets(bool tab_sockets_allowed);
 
   // The returned object is owned by HeadlessBrowser. Call
   // HeadlessWebContents::Close() to dispose it.
@@ -153,7 +157,7 @@ class HEADLESS_EXPORT HeadlessWebContents::Builder {
   GURL initial_url_ = GURL("about:blank");
   gfx::Size window_size_;
   std::list<MojoService> mojo_services_;
-  TabSocketType tab_socket_type_ = TabSocketType::NONE;
+  bool tab_sockets_allowed_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(Builder);
 };

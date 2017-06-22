@@ -4,31 +4,70 @@
 
 #include "headless/lib/browser/headless_tab_socket_impl.h"
 
+#include "content/public/browser/devtools_agent_host.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+
 namespace headless {
 
 HeadlessTabSocketImpl::HeadlessTabSocketImpl() : listener_(nullptr) {}
 
 HeadlessTabSocketImpl::~HeadlessTabSocketImpl() {}
 
-void HeadlessTabSocketImpl::SendMessageToTab(const std::string& message) {
-  AwaitNextMessageFromEmbedderCallback callback;
+void HeadlessTabSocketImpl::MaybeInstallTabSocketBindings(
+    std::string target_devtools_frame_id,
+    int v8_execution_context_id,
+    base::Callback<void(bool)> callback,
+    content::RenderFrameHost* render_frame_host) {
+  std::string devtools_frame_id =
+      content::DevToolsAgentHost::GetUntrustedDevToolsFrameIdForFrameTreeNodeId(
+          render_frame_host->GetProcess()->GetID(),
+          render_frame_host->GetFrameTreeNodeId());
 
-  {
-    base::AutoLock lock(lock_);
-    if (waiting_for_message_cb_.is_null() || !outgoing_message_queue_.empty()) {
-      outgoing_message_queue_.push_back(message);
-      return;
-    } else {
-      callback = std::move(waiting_for_message_cb_);
-      DCHECK(waiting_for_message_cb_.is_null());
-    }
+  if (devtools_frame_id.empty()) {
+    LOG(WARNING) << "GetUntrustedDevToolsFrameIdForFrameTreeNodeId failed. "
+                 << "Did you forget to call Page.Enable?";
   }
 
-  std::move(callback).Run(message);
+  // Bail out if this isn't the right RenderFrameHost.
+  if (devtools_frame_id != target_devtools_frame_id)
+    return;
+
+  HeadlessRenderFrameControllerPtr& frame_controller =
+      render_frame_controllers_[devtools_frame_id];
+  if (!frame_controller.is_bound())
+    render_frame_host->GetRemoteInterfaces()->GetInterface(&frame_controller);
+  frame_controller->InstallTabSocket(v8_execution_context_id, callback);
+
+  v8_execution_context_id_to_frame_id_[v8_execution_context_id] =
+      target_devtools_frame_id;
+}
+
+void HeadlessTabSocketImpl::SendMessageToContext(
+    const std::string& message,
+    int32_t v8_execution_context_id) {
+  auto frame_id =
+      v8_execution_context_id_to_frame_id_.find(v8_execution_context_id);
+  if (frame_id == v8_execution_context_id_to_frame_id_.end()) {
+    LOG(WARNING) << "Unknown v8_execution_context_id "
+                 << v8_execution_context_id;
+    return;
+  }
+
+  auto render_frame_controller =
+      render_frame_controllers_.find(frame_id->second);
+  if (render_frame_controller == render_frame_controllers_.end()) {
+    LOG(WARNING) << "Unknown devtools_frame_id " << frame_id->second;
+    return;
+  }
+  render_frame_controller->second->SendMessageToTabSocket(
+      message, v8_execution_context_id);
 }
 
 void HeadlessTabSocketImpl::SetListener(Listener* listener) {
-  std::list<std::string> messages;
+  MessageQueue messages;
 
   {
     base::AutoLock lock(lock_);
@@ -36,44 +75,29 @@ void HeadlessTabSocketImpl::SetListener(Listener* listener) {
     if (!listener)
       return;
 
-    std::swap(messages, incoming_message_queue_);
+    std::swap(messages, from_tab_message_queue_);
   }
 
-  for (const std::string& message : messages) {
-    listener_->OnMessageFromTab(message);
+  for (const Message& message : messages) {
+    listener_->OnMessageFromContext(message.first, message.second);
   }
 }
 
-void HeadlessTabSocketImpl::SendMessageToEmbedder(const std::string& message) {
+void HeadlessTabSocketImpl::SendMessageToEmbedder(
+    const std::string& message,
+    int32_t v8_execution_context_id) {
   Listener* listener = nullptr;
   {
     base::AutoLock lock(lock_);
     if (listener_) {
       listener = listener_;
     } else {
-      incoming_message_queue_.push_back(message);
+      from_tab_message_queue_.emplace_back(message, v8_execution_context_id);
       return;
     }
   }
 
-  listener->OnMessageFromTab(message);
-}
-
-void HeadlessTabSocketImpl::AwaitNextMessageFromEmbedder(
-    AwaitNextMessageFromEmbedderCallback callback) {
-  std::string message;
-  {
-    base::AutoLock lock(lock_);
-    if (outgoing_message_queue_.empty()) {
-      waiting_for_message_cb_ = std::move(callback);
-      DCHECK(!waiting_for_message_cb_.is_null());
-      return;
-    } else {
-      message = outgoing_message_queue_.front();
-      outgoing_message_queue_.pop_front();
-    }
-  }
-  std::move(callback).Run(message);
+  listener->OnMessageFromContext(message, v8_execution_context_id);
 }
 
 void HeadlessTabSocketImpl::CreateMojoService(

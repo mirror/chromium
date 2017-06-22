@@ -22,13 +22,15 @@ class HEADLESS_EXPORT HeadlessTabSocket {
 
     // The |message| may be potentially sent by untrusted web content so it
     // should be validated carefully.
-    virtual void OnMessageFromTab(const std::string& message) = 0;
+    virtual void OnMessageFromContext(const std::string& message,
+                                      int v8_execution_context_id) = 0;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(Listener);
   };
 
-  virtual void SendMessageToTab(const std::string& message) = 0;
+  virtual void SendMessageToContext(const std::string& message,
+                                    int v8_execution_context_id) = 0;
 
   virtual void SetListener(Listener* listener) = 0;
 
