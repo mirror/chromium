@@ -16,6 +16,24 @@
       "revId": "b17186ed2c5cd4ad3ca8bffa9b22af6ad9a5ec34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38421eb_e83fcc91",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-22T11:18:16Z",
+      "side": 1,
+      "message": "Thanks, removed this and a few others",
+      "parentUuid": "57549baa_0c828f2d",
+      "revId": "b17186ed2c5cd4ad3ca8bffa9b22af6ad9a5ec34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
