@@ -44,7 +44,6 @@
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/NodeListsNodeData.h"
 #include "core/dom/NodeTraversal.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/GestureEvent.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
@@ -891,30 +890,39 @@ void HTMLSelectElement::ScrollToOption(HTMLOptionElement* option) {
     return;
   if (UsesMenuList())
     return;
-  bool has_pending_task = option_to_scroll_to_;
-  // We'd like to keep an HTMLOptionElement reference rather than the index of
-  // the option because the task should work even if unselected option is
-  // inserted before executing scrollToOptionTask().
+  if (GetLayoutObject() &&
+      GetDocument().Lifecycle().GetState() >= DocumentLifecycle::kLayoutClean) {
+    ToLayoutListBox(GetLayoutObject())->ScrollToRect(option->BoundingBox());
+    return;
+  }
   option_to_scroll_to_ = option;
-  if (!has_pending_task)
-    TaskRunnerHelper::Get(TaskType::kUserInteraction, &GetDocument())
-        ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&HTMLSelectElement::ScrollToOptionTask,
-                             WrapPersistent(this)));
 }
 
-void HTMLSelectElement::ScrollToOptionTask() {
+ScrollOffset HTMLSelectElement::MaybeUpdateScrollOffsetAfterLayout(
+    const ScrollOffset& offset,
+    const LayoutSize& visible_size) {
   HTMLOptionElement* option = option_to_scroll_to_.Release();
-  if (!option || !isConnected())
-    return;
-  // optionRemoved() makes sure m_optionToScrollTo doesn't have an option with
-  // another owner.
-  DCHECK_EQ(option->OwnerSelectElement(), this);
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  if (!GetLayoutObject() || !GetLayoutObject()->IsListBox())
-    return;
-  LayoutRect bounds = option->BoundingBox();
-  ToLayoutListBox(GetLayoutObject())->ScrollToRect(bounds);
+  if (!option)
+    return offset;
+  LayoutBox* option_box = option->GetLayoutBox();
+  if (!option_box)
+    return offset;
+
+  LayoutObject* container = option_box->Container();
+  LayoutSize option_offset = option_box->OffsetFromContainer(container);
+  for (; container != GetLayoutObject(); container = container->Container()) {
+    option_offset += container->OffsetFromContainer(container->Container());
+  }
+
+  LayoutUnit option_top = option_offset.Height();
+  float scroll_y = offset.Height();
+  if (scroll_y > option_top)
+    return ScrollOffset(offset.Width(), option_top);
+  LayoutUnit visible_height = visible_size.Height();
+  LayoutUnit option_bottom = option_top + option_box->ContentHeight();
+  if (scroll_y + visible_height < option_bottom)
+    return ScrollOffset(offset.Width(), option_bottom - visible_height);
+  return offset;
 }
 
 void HTMLSelectElement::OptionSelectionStateChanged(HTMLOptionElement* option,
