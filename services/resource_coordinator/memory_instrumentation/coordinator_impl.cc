@@ -125,7 +125,7 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
                 << base::trace_event::MemoryDumpLevelOfDetailToString(
                        args.level_of_detail)
                 << ") is already in the queue";
-        callback.Run(args.dump_guid, false /* success */,
+        callback.Run(false /* success */, args.dump_guid,
                      nullptr /* global_memory_dump */);
         return;
       }
@@ -162,8 +162,9 @@ void CoordinatorImpl::UnregisterClientProcess(
   if (pending_clients_for_current_dump_.count(client_process)) {
     DCHECK(!queued_memory_dump_requests_.empty());
     OnProcessMemoryDumpResponse(
-        client_process, queued_memory_dump_requests_.front().args.dump_guid,
-        false /* success */, nullptr /* process_memory_dump */);
+        client_process, false /* success */,
+        queued_memory_dump_requests_.front().args.dump_guid,
+        nullptr /* process_memory_dump */);
   }
   size_t num_deleted = clients_.erase(client_process);
   DCHECK(num_deleted == 1);
@@ -199,8 +200,8 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
 
 void CoordinatorImpl::OnProcessMemoryDumpResponse(
     mojom::ClientProcess* client_process,
-    uint64_t dump_guid,
     bool success,
+    uint64_t dump_guid,
     mojom::RawProcessMemoryDumpPtr process_memory_dump) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto it = pending_clients_for_current_dump_.find(client_process);
@@ -255,7 +256,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     return;
 
   DCHECK(!queued_memory_dump_requests_.empty());
-  QueuedMemoryDumpRequest& request = queued_memory_dump_requests_.front();
+  QueuedMemoryDumpRequest* request = &queued_memory_dump_requests_.front();
 
   // Reconstruct a map of pid -> ProcessMemoryDump by reassembling the responses
   // received by the clients for this dump. In some cases the response coming
@@ -264,7 +265,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   // details for the child processes to get around sandbox restrictions on
   // opening /proc pseudo files.
   std::map<base::ProcessId, mojom::ProcessMemoryDumpPtr> finalized_pmds;
-  for (auto& result : request.process_memory_dumps) {
+  for (auto& result : request->process_memory_dumps) {
     const base::ProcessId pid = result.first;
     mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[pid];
     if (!pmd)
@@ -303,17 +304,19 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     global_dump->process_dumps.push_back(std::move(pmd));
   }
 
-  const auto& callback = request.callback;
+  const auto& callback = request->callback;
   const bool global_success = failed_memory_dump_count_ == 0;
-  callback.Run(request.args.dump_guid, global_success, std::move(global_dump));
-  queued_memory_dump_requests_.pop_front();
+  callback.Run(global_success, request->args.dump_guid, std::move(global_dump));
 
   char guid_str[20];
-  sprintf(guid_str, "0x%" PRIx64, request.args.dump_guid);
+  sprintf(guid_str, "0x%" PRIx64, request->args.dump_guid);
   TRACE_EVENT_NESTABLE_ASYNC_END2(
       base::trace_event::MemoryDumpManager::kTraceCategory, "GlobalMemoryDump",
-      TRACE_ID_LOCAL(request.args.dump_guid), "dump_guid",
+      TRACE_ID_LOCAL(request->args.dump_guid), "dump_guid",
       TRACE_STR_COPY(guid_str), "success", global_success);
+
+  queued_memory_dump_requests_.pop_front();
+  request = nullptr;
 
   // Schedule the next queued dump (if applicable).
   if (!queued_memory_dump_requests_.empty()) {
