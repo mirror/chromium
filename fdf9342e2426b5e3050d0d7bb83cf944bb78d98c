@@ -199,6 +199,30 @@
       "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b44959a_40750d13",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-22T00:47:23Z",
+      "side": 1,
+      "message": "Somehow part of my comment was included with the quoted text from previous response. Re-posting below to avoid confusion.\n\nMy question is about how is this making any difference, in other words where is the code that checks whether the focus() was called asynchronously and decides to not show the keyboard. After digging deeper into the linked bug, I suppose that the reason is https://codereview.chromium.org/2699533009.\n\nEither way, this solution seems hacky, and I would like to ensure that is the only way to achieve the desired behavior.\n\nQuestion: Is this related at all to the note at https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#Notes? Asking because the CL above makes it sound that there problem is the timing between mouse events and focus.",
+      "parentUuid": "b101f018_b3fffd0a",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
