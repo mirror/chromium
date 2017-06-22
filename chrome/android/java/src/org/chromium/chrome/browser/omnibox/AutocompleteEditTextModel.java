@@ -8,11 +8,14 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputConnectionWrapper;
 
 import org.chromium.base.Log;
+
+import java.util.concurrent.Callable;
 
 /**
  * An autocomplete model that appends autocomplete text at the end of query/URL text and selects it.
@@ -36,6 +39,10 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
 
     private boolean mLastEditWasDelete;
     private boolean mIsPastedText;
+
+    // For testing.
+    private int mLastUpdateSelStart;
+    private int mLastUpdateSelEnd;
 
     public AutocompleteEditTextModel(AutocompleteEditTextModel.Delegate delegate) {
         mDelegate = delegate;
@@ -123,6 +130,7 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
         mTextDeletedInBatchMode = false;
         mBeforeBatchEditAutocompleteIndex = -1;
         mBeforeBatchEditFullText = null;
+        updateSelectionForTesting();
     }
 
     @Override
@@ -134,6 +142,7 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
                 boolean textDeleted = mDelegate.getText().length() < beforeTextLength;
                 notifyAutocompleteTextStateChanged(textDeleted, false);
             }
+            updateSelectionForTesting();
         } else {
             mSelectionChangedInBatchMode = true;
         }
@@ -411,6 +420,8 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
     @Override
     public InputConnection onCreateInputConnection(InputConnection superInputConnection) {
         if (DEBUG) Log.i(TAG, "onCreateInputConnection");
+        mLastUpdateSelStart = mDelegate.getSelectionStart();
+        mLastUpdateSelEnd = mDelegate.getSelectionEnd();
         mInputConnection.setTarget(superInputConnection);
         return mInputConnection;
     }
@@ -422,7 +433,13 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
         }
         if (mIgnoreTextChangeFromAutocomplete) return;
         mLastEditWasDelete = textDeleted;
-        mDelegate.onAutocompleteTextStateChanged(textDeleted, updateDisplay);
+        mDelegate.onAutocompleteTextStateChanged(updateDisplay);
+        // Occasionally, was seeing the selection in the URL not being cleared during
+        // very rapid editing.  This is here to hopefully force a selection reset during
+        // deletes.
+        if (textDeleted) {
+            mDelegate.setSelection(mDelegate.getSelectionStart(), mDelegate.getSelectionStart());
+        }
     }
 
     @Override
@@ -467,5 +484,24 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
             mAutocompleteText = null;
             mUserText = null;
         }
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event, Callable<Boolean> superDispatchKeyEvent) {
+        try {
+            return superDispatchKeyEvent.call();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void updateSelectionForTesting() {
+        int selStart = mDelegate.getSelectionStart();
+        int selEnd = mDelegate.getSelectionEnd();
+        if (selStart == mLastUpdateSelStart && selEnd == mLastUpdateSelEnd) return;
+
+        mLastUpdateSelStart = selStart;
+        mLastUpdateSelEnd = selEnd;
+        mDelegate.onUpdateSelectionForTesting(selStart, selEnd);
     }
 }

@@ -22,6 +22,8 @@ import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.widget.VerticallyFixedEditText;
 
+import java.util.concurrent.Callable;
+
 /**
  * An {@link EditText} that shows autocomplete text at the end.
  */
@@ -30,6 +32,8 @@ public class AutocompleteEditText
     private static final String TAG = "cr_AutocompleteEdit";
 
     private static final boolean DEBUG = false;
+    // TODO(changwan): use a feature flag instead.
+    private static final boolean USE_SPANNABLE_MODEL = false;
 
     private final AccessibilityManager mAccessibilityManager;
 
@@ -54,7 +58,16 @@ public class AutocompleteEditText
     private void ensureModel() {
         // Lazy initialization here to ensure that model methods get called even in View's
         // constructor.
-        if (mModel == null) mModel = new AutocompleteEditTextModel(this);
+        if (mModel == null) mModel = createModel();
+    }
+
+    @VisibleForTesting
+    protected AutocompleteEditTextModelBase createModel() {
+        if (USE_SPANNABLE_MODEL) {
+            return new SpannableAutocompleteEditTextModel(this);
+        } else {
+            return new AutocompleteEditTextModel(this);
+        }
     }
 
     /**
@@ -241,9 +254,14 @@ public class AutocompleteEditText
     }
 
     @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
+    public boolean dispatchKeyEvent(final KeyEvent event) {
         if (mIgnoreImeForTest) return true;
-        return super.dispatchKeyEvent(event);
+        return mModel.dispatchKeyEvent(event, new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return AutocompleteEditText.super.dispatchKeyEvent(event);
+            }
+        });
     }
 
     /**
@@ -260,7 +278,7 @@ public class AutocompleteEditText
     }
 
     @Override
-    public void onAutocompleteTextStateChanged(boolean textDeleted, boolean updateDisplay) {
+    public void onAutocompleteTextStateChanged(boolean updateDisplay) {
         assert false; // make sure that this method is properly overridden.
     }
 
@@ -280,4 +298,7 @@ public class AutocompleteEditText
             sendAccessibilityEventUnchecked(event);
         }
     }
+
+    @Override
+    public void onUpdateSelectionForTesting(int selStart, int selEnd) {}
 }
