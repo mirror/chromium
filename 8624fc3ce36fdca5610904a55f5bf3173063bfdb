@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d592f04e_36ab6a34",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy/connect-src-beacon-redirect-to-blocked-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T05:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "091a4e3e_32a2bb24",
+      "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aac44bfb_ab1d4f2d",
         "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3503bb00_2e9bbf61",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T05:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aac44bfb_ab1d4f2d",
+      "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "72483143_fb2a742e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T05:29:34Z",
+      "side": 1,
+      "message": "\"keepalive\" comes from the Fetch spec, so I would use the name. Fixed.",
+      "parentUuid": "4db4f8da_37dc8955",
+      "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "574620e5_bbc38911",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a3bb01_3368b4cd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-22T05:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "574620e5_bbc38911",
+      "revId": "8624fc3ce36fdca5610904a55f5bf3173063bfdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
