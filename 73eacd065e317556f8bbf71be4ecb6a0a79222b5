@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84d46c7c_9c2a48d2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T15:15:07Z",
+      "side": 1,
+      "message": "Done.\n\nGood catch! Indeed url() does not return amp url. \n\nIt is a shame that we are having 2 similar classes with a bit different interfaces. I guess RemoteSuggestion should inherit from ContentSuggestion.",
+      "parentUuid": "59c9dad7_f55af3ce",
+      "range": {
+        "startLine": 925,
+        "startChar": 14,
+        "endLine": 925,
+        "endChar": 38
+      },
+      "revId": "73eacd065e317556f8bbf71be4ecb6a0a79222b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7418bcd6_97a0b570",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2b66c4ce_b858c16f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T15:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7418bcd6_97a0b570",
+      "range": {
+        "startLine": 926,
+        "startChar": 45,
+        "endLine": 926,
+        "endChar": 59
+      },
+      "revId": "73eacd065e317556f8bbf71be4ecb6a0a79222b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3056fff_0214f1f8",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "73eacd065e317556f8bbf71be4ecb6a0a79222b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2852bbc7_148a6955",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-22T15:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3056fff_0214f1f8",
+      "range": {
+        "startLine": 933,
+        "startChar": 4,
+        "endLine": 962,
+        "endChar": 5
+      },
+      "revId": "73eacd065e317556f8bbf71be4ecb6a0a79222b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
