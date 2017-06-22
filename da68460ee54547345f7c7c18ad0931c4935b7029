@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43a157c3_3a20e6fb",
+        "filename": "third_party/WebKit/Source/web/tests/ScreenWakeLockTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T22:33:35Z",
+      "side": 1,
+      "message": "Note: Blink style doesn\u0027t currently permit underscore_names.",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "da68460ee54547345f7c7c18ad0931c4935b7029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
