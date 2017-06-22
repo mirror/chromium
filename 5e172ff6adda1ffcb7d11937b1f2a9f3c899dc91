@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c444139_09b48f34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-22T23:22:28Z",
+      "side": 1,
+      "message": "An example is paint/invalidation/percentage-transform-paint-offset.html.\n\nIn this test, the div with id container-outer is transformed and has an empty\nvisual rect before and after the style change, due to being clipped out by its\ncontainer\u0027s clip, but nevertheless changes width from 700px to 600px. Without\nthe change to stop optimizing out such invalidations, we wouldn\u0027t paint the\ncontents of that transform correctly. This is not user-visibile for SPv1,\nso it is technically not a bug. For SPv2 there will be no empty visual rect\nin this case.",
+      "parentUuid": "1abb5080_3cc8f716",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ab585d4_f2b4f871",
         "filename": "third_party/WebKit/Source/platform/geometry/FloatRoundedRect.h",
         "patchSetId": 6
