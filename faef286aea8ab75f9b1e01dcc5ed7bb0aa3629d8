@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "67d697ef_37ea4ee2",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T16:46:20Z",
+      "side": 1,
+      "message": "doesn\u0027t seem really necessary to me, as long as the action name and/or description makes it clear that it represents requests from both sources.",
+      "parentUuid": "a007cc7a_cacb43b0",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d4fe017_c39371c2",
         "filename": "ash/shutdown_reason.h",
         "patchSetId": 1
@@ -268,6 +292,24 @@
     },
     {
       "key": {
+        "uuid": "fc3ad3cb_a05643a8",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T16:46:20Z",
+      "side": 1,
+      "message": "it\u0027s something i\u0027d expect us to report, although it\u0027s hard to predict when/if a particular metric is needed to make a UX decision. i\u0027m fine with punting on it for now if we don\u0027t have something like that already.\n\nmy reason for filing the bug was that i actually needed to look at user behavior regarding power buttons for a UX discussion, and then discovered after looking at the code that we\u0027re misreporting various things. :-/",
+      "parentUuid": "b9126af2_93df79ba",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc6b3965_46ff56ac",
         "filename": "ash/wm/lock_state_controller.h",
         "patchSetId": 1
@@ -398,6 +440,23 @@
       "side": 1,
       "message": "I get the legacy path but I\u0027m looking at the line `lock_state_controller_-\u003eStartLockAnimation(true);` in the `!has_legacy_power_button_` clause. That should be the path for chromebooks, right? I am not seeing any way to lock the screen with the power button on the two devices on my desk. This is the only place that \"lock then shutdown\" path is used, so if it isn\u0027t actually needed we could tear out a bit of confusing code.",
       "parentUuid": "045c3c94_77fdd201",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b15fc2_1542306b",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T16:46:20Z",
+      "side": 1,
+      "message": "(continuing discussion from above)\n\nLockStateController::PostLockAnimationFinished checks shutdown_after_lock_ (the \"true\" in this call) and calls StartLockToShutdownTimer, which waits 150 ms and calls StartCancellableShutdownAnimation, which starts the shutdown animation, etc.\n\ndoes that answer the question?",
       "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
