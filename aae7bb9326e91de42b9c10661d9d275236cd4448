@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d00c0ab_3ab4fb93",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3773,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-22T16:15:53Z",
+      "side": 1,
+      "message": "Oops. I\u0027ll remove the stray pipe in the next patchset.",
+      "range": {
+        "startLine": 3773,
+        "startChar": 22,
+        "endLine": 3773,
+        "endChar": 23
+      },
+      "revId": "aae7bb9326e91de42b9c10661d9d275236cd4448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
