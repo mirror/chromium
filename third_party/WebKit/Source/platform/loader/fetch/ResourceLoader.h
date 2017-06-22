@@ -31,6 +31,7 @@
 
 #include <memory>
 #include "platform/PlatformExport.h"
+#include "platform/loader/fetch/ResourceLoadScheduler.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/Forward.h"
@@ -50,15 +51,18 @@ class ResourceFetcher;
 // implemented in this class basically.
 class PLATFORM_EXPORT ResourceLoader final
     : public GarbageCollectedFinalized<ResourceLoader>,
+      public ResourceLoadSchedulerClient,
       protected WebURLLoaderClient {
   USING_PRE_FINALIZER(ResourceLoader, Dispose);
 
  public:
-  static ResourceLoader* Create(ResourceFetcher*, Resource*);
+  static ResourceLoader* Create(ResourceFetcher*,
+                                ResourceLoadScheduler*,
+                                Resource*);
   ~ResourceLoader() override;
-  DECLARE_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-  void Start(const ResourceRequest&);
+  void Start();
 
   void Cancel();
 
@@ -111,9 +115,15 @@ class PLATFORM_EXPORT ResourceLoader final
 
   void DidFinishLoadingFirstPartInMultipart();
 
+  // ResourceLoadSchedulerClient.
+  void Run() override;
+
  private:
   // Assumes ResourceFetcher and Resource are non-null.
-  ResourceLoader(ResourceFetcher*, Resource*);
+  ResourceLoader(ResourceFetcher*, ResourceLoadScheduler*, Resource*);
+
+  void StartWith(const ResourceRequest&);
+  void Release();
 
   // This method is currently only used for service worker fallback request and
   // cache-aware loading, other users should be careful not to break
@@ -130,7 +140,9 @@ class PLATFORM_EXPORT ResourceLoader final
   void Dispose();
 
   std::unique_ptr<WebURLLoader> loader_;
+  ResourceLoadScheduler::RequestId request_id_;
   Member<ResourceFetcher> fetcher_;
+  Member<ResourceLoadScheduler> scheduler_;
   Member<Resource> resource_;
   bool is_cache_aware_loading_activated_;
 };

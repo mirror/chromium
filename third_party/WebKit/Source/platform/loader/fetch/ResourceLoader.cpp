@@ -53,12 +53,17 @@
 namespace blink {
 
 ResourceLoader* ResourceLoader::Create(ResourceFetcher* fetcher,
+                                       ResourceLoadScheduler* scheduler,
                                        Resource* resource) {
-  return new ResourceLoader(fetcher, resource);
+  return new ResourceLoader(fetcher, scheduler, resource);
 }
 
-ResourceLoader::ResourceLoader(ResourceFetcher* fetcher, Resource* resource)
-    : fetcher_(fetcher),
+ResourceLoader::ResourceLoader(ResourceFetcher* fetcher,
+                               ResourceLoadScheduler* scheduler,
+                               Resource* resource)
+    : request_id_(ResourceLoadScheduler::kInvalidRequestId),
+      fetcher_(fetcher),
+      scheduler_(scheduler),
       resource_(resource),
       is_cache_aware_loading_activated_(false) {
   DCHECK(resource_);
@@ -71,10 +76,30 @@ ResourceLoader::~ResourceLoader() {}
 
 DEFINE_TRACE(ResourceLoader) {
   visitor->Trace(fetcher_);
+  visitor->Trace(scheduler_);
   visitor->Trace(resource_);
 }
 
-void ResourceLoader::Start(const ResourceRequest& request) {
+void ResourceLoader::Start() {
+  const ResourceRequest& request = resource_->GetResourceRequest();
+  ActivateCacheAwareLoadingIfNeeded(request);
+  // Synchronous requests should not work with a throttling. Also, tentatively
+  // disables throttling for fetch requests that could keep on holding an active
+  // connection until data is read by JavaScript.
+  ResourceLoadScheduler::ThrottleOption option =
+      (resource_->Options().synchronous_policy == kRequestSynchronously ||
+       request.GetRequestContext() == WebURLRequest::kRequestContextFetch)
+          ? ResourceLoadScheduler::ThrottleOption::kCanNotBeThrottled
+          : ResourceLoadScheduler::ThrottleOption::kCanBeThrottled;
+  DCHECK_EQ(ResourceLoadScheduler::kInvalidRequestId, request_id_);
+  scheduler_->Request(this, option, &request_id_);
+}
+
+void ResourceLoader::Run() {
+  StartWith(resource_->GetResourceRequest());
+}
+
+void ResourceLoader::StartWith(const ResourceRequest& request) {
   DCHECK(!loader_);
 
   if (resource_->Options().synchronous_policy == kRequestSynchronously &&
@@ -83,7 +108,7 @@ void ResourceLoader::Start(const ResourceRequest& request) {
     return;
   }
 
-  loader_ = fetcher_->Context().CreateURLLoader(request);
+  loader_ = Context().CreateURLLoader(request);
   DCHECK(loader_);
   loader_->SetDefersLoading(Context().DefersLoading());
 
@@ -103,11 +128,19 @@ void ResourceLoader::Start(const ResourceRequest& request) {
     loader_->LoadAsynchronously(WrappedResourceRequest(request), this);
 }
 
+void ResourceLoader::Release() {
+  if (request_id_ == ResourceLoadScheduler::kInvalidRequestId)
+    return;
+  bool released = scheduler_->Release(request_id_);
+  DCHECK(released);
+  request_id_ = ResourceLoadScheduler::kInvalidRequestId;
+}
+
 void ResourceLoader::Restart(const ResourceRequest& request) {
   CHECK_EQ(resource_->Options().synchronous_policy, kRequestAsynchronously);
 
   loader_.reset();
-  Start(request);
+  StartWith(request);
 }
 
 void ResourceLoader::SetDefersLoading(bool defers) {
@@ -449,6 +482,7 @@ void ResourceLoader::DidFinishLoading(double finish_time,
   resource_->SetEncodedBodyLength(encoded_body_length);
   resource_->SetDecodedBodyLength(decoded_body_length);
 
+  Release();
   loader_.reset();
 
   network_instrumentation::EndResourceLoad(
@@ -478,6 +512,7 @@ void ResourceLoader::HandleError(const ResourceError& error) {
     return;
   }
 
+  Release();
   loader_.reset();
 
   network_instrumentation::EndResourceLoad(
@@ -531,6 +566,10 @@ void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
 
 void ResourceLoader::Dispose() {
   loader_ = nullptr;
+
+  // Release() should be called to release |request_id_| beforehand in
+  // DidFinishLoading() or DidFail().
+  DCHECK_EQ(ResourceLoadScheduler::kInvalidRequestId, request_id_);
 }
 
 void ResourceLoader::ActivateCacheAwareLoadingIfNeeded(
