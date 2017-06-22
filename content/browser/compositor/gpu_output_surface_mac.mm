@@ -27,6 +27,7 @@ struct GpuOutputSurfaceMac::RemoteLayers {
         [content_layer setContextId:content_ca_context_id];
         [content_layer
             setAutoresizingMask:kCALayerMaxXMargin | kCALayerMaxYMargin];
+        [content_layer setAllowsHitTesting:NO];
       }
     } else {
       content_layer.reset();
@@ -38,6 +39,7 @@ struct GpuOutputSurfaceMac::RemoteLayers {
         fullscreen_low_power_layer.reset([[CALayerHost alloc] init]);
         [fullscreen_low_power_layer
             setContextId:fullscreen_low_power_ca_context_id];
+        [fullscreen_low_power_layer setAllowsHitTesting:NO];
       }
     } else {
       fullscreen_low_power_layer.reset();

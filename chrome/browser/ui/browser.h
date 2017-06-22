@@ -593,6 +593,9 @@ class Browser : public TabStripModelObserver,
   void NavigationStateChanged(content::WebContents* source,
                               content::InvalidateTypes changed_flags) override;
   void VisibleSecurityStateChanged(content::WebContents* source) override;
+
+  void DisplayViewInTouchbar(content::WebContents* contents) override;
+
   void AddNewContents(content::WebContents* source,
                       content::WebContents* new_contents,
                       WindowOpenDisposition disposition,
@@ -602,6 +605,7 @@ class Browser : public TabStripModelObserver,
   void ActivateContents(content::WebContents* contents) override;
   void LoadingStateChanged(content::WebContents* source,
                            bool to_different_document) override;
+  void SetErrorPage(content::WebContents* source, bool is_error_page) override;
   void CloseContents(content::WebContents* source) override;
   void MoveContents(content::WebContents* source,
                     const gfx::Rect& pos) override;
