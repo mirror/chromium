@@ -104,6 +104,24 @@
       "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730c9582_ea81e24f",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T19:05:50Z",
+      "side": 1,
+      "message": "lgtm!",
+      "parentUuid": "9948b4ef_29dc6c87",
+      "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
