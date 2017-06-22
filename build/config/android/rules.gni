@@ -192,7 +192,6 @@ if (enable_java_templates) {
         "--depfile",
         rebase_path(depfile, root_build_dir),
         "--input_file={{source}}",
-        "--optimize_generation=1",
         "--ptr_type=long",
         "--output_dir",
         rebase_path(jni_output_dir, root_build_dir),
@@ -302,7 +301,6 @@ if (enable_java_templates) {
           rebase_path(jar_file, root_build_dir),
           "--input_file",
           class,
-          "--optimize_generation=1",
           "--ptr_type=long",
           "--output_dir",
           rebase_path(jni_output_dir, root_build_dir),
@@ -331,6 +329,53 @@ if (enable_java_templates) {
                              ])
       public_deps += jni_actions
       public_configs = [ ":jni_includes_${target_name}" ]
+    }
+  }
+
+  # Declare a jni registration target.
+  #
+  # This target generates registration functions for all .java files calling
+  # native methods.
+  #
+  # See base/android/jni_generator/jni_registration_generator.py for more info
+  # about the format of the registration functions.
+  #
+  # Variables
+  #   target: chrome_public_apk.build_config
+  #
+  # Example
+  #   generate_jni_registration("chrome_jni_registration") {
+  #     target = ":chrome_public_apk"
+  #     output = "${target_gen_dir}/${target_name}/chrome_jni_registration.h"
+  #   }
+  template("generate_jni_registration") {
+    action(target_name) {
+      forward_variables_from(invoker, [ "testonly" ])
+      _build_config = get_label_info(invoker.target, "target_gen_dir") + "/" +
+                      get_label_info(invoker.target, "name") + ".build_config"
+      _rebased_build_config = rebase_path(_build_config, root_build_dir)
+
+      _rebase_exception_java_files =
+          rebase_path(invoker.exception_files, root_build_dir)
+
+      script = "//base/android/jni_generator/jni_registration_generator.py"
+      deps = [
+        "${invoker.target}__build_config",
+      ]
+      inputs = [
+        _build_config,
+      ]
+      outputs = [
+        invoker.output,
+      ]
+
+      args = [
+        # This is a list of .sources files.
+        "--sources_files=@FileArg($_rebased_build_config:jni:all_source)",
+        "--output",
+        rebase_path(invoker.output, root_build_dir),
+        "--no_register_java=$_rebase_exception_java_files",
+      ]
     }
   }
 
