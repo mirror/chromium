@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be334b11_ae5a3889",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-22T21:12:16Z",
+      "side": 1,
+      "message": "I think the check we want here is probably instead that the window id is equal to the window id of the opener tab\u0027s window (which might be different than the current window).  Does that make sense?",
+      "revId": "bb7ab2bc2361dabf6191685e4384de64863a7047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
