@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "915a9dca_8f388f32",
+        "filename": "content/public/test/test_browser_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-22T15:30:46Z",
+      "side": 1,
+      "message": "Aaaah, I see, because Init() is only called from Thread::ThreadMain() for new physical threads.\n\nWe should only initialize COM here for BrowserThread::IDs that have it in practice (i.e. FILE?)",
+      "revId": "b7498db39c49b8130ae83ab2e3ea66983662e19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8eddc86_79b3b102",
+        "filename": "content/public/test/test_browser_thread_bundle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-22T15:30:46Z",
+      "side": 1,
+      "message": "rm \"the\" ?",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 102,
+        "endChar": 31
+      },
+      "revId": "b7498db39c49b8130ae83ab2e3ea66983662e19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78e29d8_7eb6da37",
+        "filename": "content/public/test/test_browser_thread_bundle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-22T15:30:46Z",
+      "side": 1,
+      "message": "separately?",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 59
+      },
+      "revId": "b7498db39c49b8130ae83ab2e3ea66983662e19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
