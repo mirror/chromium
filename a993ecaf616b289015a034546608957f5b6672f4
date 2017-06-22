@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2251cd30_b5b684dd",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-22T12:58:33Z",
+      "side": 1,
+      "message": "Should we rather directly call RF\u0027s method here? I.e.\n\nfetch_context_-\u003eGetResourceFetcher()-\u003eClearContext();\n\n(with null check)\n\nUsually ResourceFetcher is the one that calls FetchContext\u0027s methods, having FetchContext methods that call into ResourceFetcher in the opposite way makes me worry a bit as it could make cyclic call if done incorrectly",
+      "revId": "a993ecaf616b289015a034546608957f5b6672f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
