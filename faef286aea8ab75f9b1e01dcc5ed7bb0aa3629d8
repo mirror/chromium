@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "a007cc7a_cacb43b0",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-22T16:31:23Z",
+      "side": 1,
+      "message": "Probably, but I haven\u0027t figured out how yet. If it seems like a useful distinction I can take a closer look.",
+      "parentUuid": "2e443f44_8d86c578",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d4fe017_c39371c2",
         "filename": "ash/shutdown_reason.h",
         "patchSetId": 1
@@ -226,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "b9126af2_93df79ba",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-22T16:31:23Z",
+      "side": 1,
+      "message": "Got it. To clarify, you are suggesting adding a \"user explicitly chose to restart to update\" event?",
+      "parentUuid": "3435b675_cdc60b4d",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc6b3965_46ff56ac",
         "filename": "ash/wm/lock_state_controller.h",
         "patchSetId": 1
@@ -338,6 +380,24 @@
       "side": 1,
       "message": "this is the \"legacy power button\" path. it\u0027s only used for systems that have regular ACPI power buttons that don\u0027t report button-down and button-up separately -- instead, both events come in simultaneously. for the most part, i think that it only applies to chromeboxes (e.g. stumpy, panther). i\u0027m not sure about chromebases. i think you can pass --aura-legacy-power-button to chrome (see /etc/chrome_dev.conf) to force it on a chromebook, though.\n\noh, and to answer your specific question, the intended user experience is that the first button-down event locks the screen and a second event while locked shuts the system down. at the login screen or in guest mode, where locking isn\u0027t possible, the first event shuts down instead. we ignore legacy button-up events since they\u0027re meaningless.",
       "parentUuid": "70a195c0_d7615947",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cf64af_00d55146",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-22T16:31:23Z",
+      "side": 1,
+      "message": "I get the legacy path but I\u0027m looking at the line `lock_state_controller_-\u003eStartLockAnimation(true);` in the `!has_legacy_power_button_` clause. That should be the path for chromebooks, right? I am not seeing any way to lock the screen with the power button on the two devices on my desk. This is the only place that \"lock then shutdown\" path is used, so if it isn\u0027t actually needed we could tear out a bit of confusing code.",
+      "parentUuid": "045c3c94_77fdd201",
       "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
