@@ -7,18 +7,40 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include <memory>
+
 #include "base/timer/timer.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
 
+class FullscreenToolbarAnimationController;
 @class FullscreenToolbarController;
+
+namespace content {
+class WebContents;
+}
+
+class FullscreenToolbarAnimationWebObserver
+    : public content::WebContentsObserver {
+ public:
+  FullscreenToolbarAnimationWebObserver(
+      content::WebContents* contents,
+      FullscreenToolbarAnimationController* owner);
+
+  void DidFirstVisuallyNonEmptyPaint() override;
+
+ private:
+  FullscreenToolbarAnimationController* owner_;
+};
 
 // This class provides a controller that manages the fullscreen toolbar's
 // animation.
 class FullscreenToolbarAnimationController : public gfx::AnimationDelegate {
  public:
-  explicit FullscreenToolbarAnimationController(
-      FullscreenToolbarController* owner);
+  FullscreenToolbarAnimationController(FullscreenToolbarController* owner);
+
+  ~FullscreenToolbarAnimationController() override;
 
   // Called by |owner_| when the fullscreen toolbar layout is updated.
   void ToolbarDidUpdate();
@@ -27,7 +49,8 @@ class FullscreenToolbarAnimationController : public gfx::AnimationDelegate {
   void StopAnimationAndTimer();
 
   // Animates the toolbar in and out to show changes with the tabstrip.
-  void AnimateToolbarForTabstripChanges();
+  void AnimateToolbarForTabstripChanges(content::WebContents* contents,
+                                        bool in_foreground);
 
   // Animates the toolbar in if it's not fully shown.
   void AnimateToolbarIn();
@@ -45,13 +68,19 @@ class FullscreenToolbarAnimationController : public gfx::AnimationDelegate {
   // Only for testing. Sets the duration of |animation_|.
   void SetAnimationDuration(CGFloat duration);
 
+  void DidFirstVisuallyNonEmptyPaint();
+
   // gfx::AnimationDelegate:
   void AnimationProgressed(const gfx::Animation* animation) override;
   void AnimationEnded(const gfx::Animation* animation) override;
 
  private:
+  void StartHideTimerIfPossible();
+
   // Our owner.
   FullscreenToolbarController* owner_;  // weak
+
+  std::unique_ptr<FullscreenToolbarAnimationWebObserver> observer_;
 
   // The animation of the decoration.
   gfx::SlideAnimation animation_;

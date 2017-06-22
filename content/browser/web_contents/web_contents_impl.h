@@ -231,6 +231,10 @@ class CONTENT_EXPORT WebContentsImpl
 
   bool should_normally_be_visible() { return should_normally_be_visible_; }
 
+  bool did_first_visually_non_empty_paint() {
+    return did_first_visually_non_empty_paint_;
+  }
+
   // Indicate if the window has been occluded, and pass this to the views, only
   // if there is no active capture going on (otherwise it is dropped on the
   // floor).
@@ -469,6 +473,8 @@ class CONTENT_EXPORT WebContentsImpl
 #elif defined(OS_MACOSX)
   void SetAllowOtherViews(bool allow) override;
   bool GetAllowOtherViews() override;
+  bool DidFirstVisuallyNonEmptyPaint() const override;
+
 #endif
 
   // Implementation of PageNavigator.

@@ -827,6 +827,8 @@ class WebContents : public PageNavigator,
 
   // Returns true if other views are allowed, false otherwise.
   virtual bool GetAllowOtherViews() = 0;
+
+  virtual bool DidFirstVisuallyNonEmptyPaint() const = 0;
 #endif  // OS_ANDROID
 
  private:
