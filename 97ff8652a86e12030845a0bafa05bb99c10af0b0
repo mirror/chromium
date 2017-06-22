@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3105f508_72ce4e3a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4053,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-22T15:56:05Z",
+      "side": 1,
+      "message": "It has changed on occasion, but because its values get written to persistent storage I would expect that it\u0027s values need to remain backward-compatible (no reordering, no removal), just like histogram enums.",
+      "parentUuid": "d28fdce4_d401c49f",
+      "range": {
+        "startLine": 4053,
+        "startChar": 13,
+        "endLine": 4053,
+        "endChar": 28
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d1b9784_448bc406",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "58ad7ecc_7cc3fa19",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25573,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-22T15:56:05Z",
+      "side": 1,
+      "message": "I believe never cleared, but that code is maintained by ahassani@.",
+      "parentUuid": "55fc2bbb_f5d7db1d",
+      "range": {
+        "startLine": 25573,
+        "startChar": 44,
+        "endLine": 25573,
+        "endChar": 53
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7aef9a59_29dda4d0",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -134,6 +182,54 @@
         "startChar": 31,
         "endLine": 25575,
         "endChar": 36
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bea4f9f_e400e750",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25575,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-22T15:56:05Z",
+      "side": 1,
+      "message": "Basically, yes. The recovery script writes a \"recovery report\" file to the stateful partition during recovery. If the system successfully boots after that the metrics will be reported.\n\nSee: https://chromium-review.googlesource.com/c/540828",
+      "parentUuid": "8bd862cf_c96be533",
+      "range": {
+        "startLine": 25575,
+        "startChar": 31,
+        "endLine": 25575,
+        "endChar": 36
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc368d9e_4ae61f3e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25575,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-22T15:56:05Z",
+      "side": 1,
+      "message": "My understanding is that the encrypted stateful fs (where metrics are stored) does not exist until first boot after recovery.",
+      "parentUuid": "7aef9a59_29dda4d0",
+      "range": {
+        "startLine": 25575,
+        "startChar": 24,
+        "endLine": 25575,
+        "endChar": 30
       },
       "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
