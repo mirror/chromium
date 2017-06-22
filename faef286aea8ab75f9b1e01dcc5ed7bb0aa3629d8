@@ -481,6 +481,24 @@
     },
     {
       "key": {
+        "uuid": "c629e045_d467b713",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-22T16:58:40Z",
+      "side": 1,
+      "message": "ah, i just realized that you\u0027re probably testing with a convertible chromebook with a side power button. those are handled by ash/system/power/tablet_power_button_controller.h, and the behavior is different (tapping the button turns the screen off and possibly locks; holding it shuts down).\n\ntry using a non-convertible chromebook to exercise this code.",
+      "parentUuid": "f99711d5_43e172ea",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e81a70_28469caa",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 1
