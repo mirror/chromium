@@ -54,6 +54,9 @@ void HotwordAudioHistoryHandler::UpdateLocalPreference(
 
 void HotwordAudioHistoryHandler::GetAudioHistoryEnabled(
     const HotwordAudioHistoryCallback& callback) {
+// Please add network traffic annotation if you want to remove this #if.
+//
+#if defined(OS_CHROMEOS)
   history::WebHistoryService* web_history = GetWebHistory();
   if (web_history) {
     web_history->GetAudioHistoryEnabled(
@@ -66,11 +69,17 @@ void HotwordAudioHistoryHandler::GetAudioHistoryEnabled(
     PrefService* prefs = profile_->GetPrefs();
     callback.Run(false, prefs->GetBoolean(prefs::kHotwordAudioLoggingEnabled));
   }
+#else
+  NOTREACHED()
+      << ": This functions is supposed to be called only in Chrome OS.";
+#endif  // defined(OS_CHROMEOS)
 }
 
 void HotwordAudioHistoryHandler::SetAudioHistoryEnabled(
     const bool enabled,
     const HotwordAudioHistoryCallback& callback) {
+// Please add network traffic annotation if you want to remove this #if.
+#if defined(OS_CHROMEOS)
   history::WebHistoryService* web_history = GetWebHistory();
   if (web_history) {
     web_history->SetAudioHistoryEnabled(
@@ -84,6 +93,10 @@ void HotwordAudioHistoryHandler::SetAudioHistoryEnabled(
     PrefService* prefs = profile_->GetPrefs();
     callback.Run(false, prefs->GetBoolean(prefs::kHotwordAudioLoggingEnabled));
   }
+#else
+  NOTREACHED()
+      << ": This functions is supposed to be called only in Chrome OS.";
+#endif  // defined(OS_CHROMEOS)
 }
 
 void HotwordAudioHistoryHandler::GetAudioHistoryComplete(
