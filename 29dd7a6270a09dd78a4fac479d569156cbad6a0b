@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8549b19_6d78ebe4",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-22T09:14:36Z",
+      "side": 1,
+      "message": "I think we said that we also need some way of avoiding these situations (checkerboard animations / missing hi-res). @Sunny, I didn\u0027t come across any clues about the ad-hoc mechanism to prepare tiles during draw you mentioned. Did you have a chance to check if that\u0027s still around somewhere?\n\nIf not, any alternative suggestions? Maybe we could wait for ready_to_draw again (and then try drawing another time) if this happens, i.e. trigger the current BeginFrame\u0027s deadline again later? Thanks!",
+      "range": {
+        "startLine": 815,
+        "startChar": 4,
+        "endLine": 837,
+        "endChar": 12
+      },
+      "revId": "29dd7a6270a09dd78a4fac479d569156cbad6a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
