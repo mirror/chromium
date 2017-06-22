@@ -203,7 +203,7 @@ void MediaWebContentsObserver::OnMediaEffectivelyFullscreenChanged(
     return;
   }
 
-  fullscreen_player_ = id;
+  fullscreen_player_.emplace(id);
 }
 
 void MediaWebContentsObserver::OnMediaSizeChanged(

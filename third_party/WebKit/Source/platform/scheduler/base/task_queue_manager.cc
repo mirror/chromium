@@ -450,7 +450,7 @@ TaskQueueManager::ComputeDelayTillNextTaskLocked(LazyNow* lazy_now) {
                                    : NextTaskDelay(delay.value(), time_domain);
 
     if (!delay_till_next_task || delay_till_next_task > task_delay)
-      delay_till_next_task = task_delay;
+      delay_till_next_task = std::move(task_delay);
   }
   return delay_till_next_task;
 }

@@ -142,7 +142,7 @@ class DelegatingURLLoaderClient final : public mojom::URLLoaderClient {
   }
 
   void MayBeReportToDevTools(WorkerId worker_id, int fetch_event_id) {
-    worker_id_ = worker_id;
+    worker_id_.emplace(worker_id);
     devtools_request_id_ = base::StringPrintf("preload-%d", fetch_event_id);
     MayBeRunDevToolsCallbacks();
   }

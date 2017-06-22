@@ -31,7 +31,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattDescriptor
  public:
   // The ValueCallback is used to return the value of a remote characteristic
   // descriptor upon a read request.
-  typedef base::Callback<void(const std::vector<uint8_t>&)> ValueCallback;
+  typedef base::Callback<void(std::vector<uint8_t>)> ValueCallback;
 
   // Returns the value of the descriptor. For remote descriptors, this is the
   // most recently cached value of the remote descriptor. For local descriptors

@@ -215,7 +215,7 @@ void DispatchNotificationClickEventOnWorker(
 
   base::Optional<base::string16> optional_reply;
   if (!reply.is_null())
-    optional_reply = reply.string();
+    optional_reply.emplace(reply.string());
 
   service_worker->event_dispatcher()->DispatchNotificationClickEvent(
       notification_database_data.notification_id,

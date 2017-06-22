@@ -22,7 +22,7 @@ SurfaceDependencyDeadline::~SurfaceDependencyDeadline() {
 void SurfaceDependencyDeadline::Set(uint32_t number_of_frames_to_deadline) {
   DCHECK_GT(number_of_frames_to_deadline, 0u);
   DCHECK(!number_of_frames_to_deadline_);
-  number_of_frames_to_deadline_ = number_of_frames_to_deadline;
+  number_of_frames_to_deadline_ = std::move(number_of_frames_to_deadline);
   begin_frame_source_->AddObserver(this);
 }
 

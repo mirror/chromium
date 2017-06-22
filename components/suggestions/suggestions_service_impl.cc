@@ -162,14 +162,14 @@ bool SuggestionsServiceImpl::FetchSuggestionsData() {
 
 base::Optional<SuggestionsProfile>
 SuggestionsServiceImpl::GetSuggestionsDataFromCache() const {
-  SuggestionsProfile suggestions;
+  base::Optional<SuggestionsProfile> suggestions = SuggestionsProfile();
   // In case of empty cache or error, return empty.
-  if (!suggestions_store_->LoadSuggestions(&suggestions)) {
-    return base::Optional<SuggestionsProfile>();
+  if (!suggestions_store_->LoadSuggestions(&*suggestions)) {
+    return base::nullopt;
   }
-  thumbnail_manager_->Initialize(suggestions);
-  blacklist_store_->FilterSuggestions(&suggestions);
-  return base::Optional<SuggestionsProfile>(suggestions);
+  thumbnail_manager_->Initialize(*suggestions);
+  blacklist_store_->FilterSuggestions(&*suggestions);
+  return suggestions;
 }
 
 std::unique_ptr<SuggestionsServiceImpl::ResponseCallbackList::Subscription>

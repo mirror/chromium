@@ -130,7 +130,7 @@ void OffscreenPresentationManager::OffscreenPresentation::RegisterController(
                                   std::move(receiver_connection_request))));
   }
 
-  route_ = route;
+  route_.emplace(route);
 }
 
 void OffscreenPresentationManager::OffscreenPresentation::UnregisterController(

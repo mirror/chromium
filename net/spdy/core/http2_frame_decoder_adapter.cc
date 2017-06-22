@@ -343,7 +343,7 @@ class Http2DecoderAdapter : public SpdyFramerDecoderAdapter,
 
   void OnPadLength(size_t trailing_length) override {
     DVLOG(1) << "OnPadLength: " << trailing_length;
-    opt_pad_length_ = trailing_length;
+    opt_pad_length_.emplace(trailing_length);
     if (frame_header_.type == Http2FrameType::DATA) {
       visitor()->OnStreamPadding(stream_id(), 1);
     } else if (frame_header_.type == Http2FrameType::HEADERS) {

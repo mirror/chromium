@@ -142,33 +142,6 @@ TEST(OptionalTest, CopyConstructor) {
   }
 }
 
-TEST(OptionalTest, ValueConstructor) {
-  {
-    constexpr float value = 0.1f;
-    constexpr Optional<float> o(value);
-
-    EXPECT_TRUE(o);
-    EXPECT_EQ(value, o.value());
-  }
-
-  {
-    std::string value("foo");
-    Optional<std::string> o(value);
-
-    EXPECT_TRUE(o);
-    EXPECT_EQ(value, o.value());
-  }
-
-  {
-    TestObject value(3, 0.1);
-    Optional<TestObject> o(value);
-
-    EXPECT_TRUE(o);
-    EXPECT_EQ(TestObject::State::COPY_CONSTRUCTED, o->state());
-    EXPECT_EQ(value, o.value());
-  }
-}
-
 TEST(OptionalTest, MoveConstructor) {
   {
     Optional<float> first(0.1f);

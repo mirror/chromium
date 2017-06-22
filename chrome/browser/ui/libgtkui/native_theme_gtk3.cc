@@ -467,7 +467,7 @@ SkColor NativeThemeGtk3::GetSystemColor(ColorId color_id) const {
     return color_cache_[color_id].value();
 
   SkColor color = SkColorFromColorId(color_id);
-  color_cache_[color_id] = color;
+  color_cache_[color_id].emplace(color);
   return color;
 }
 

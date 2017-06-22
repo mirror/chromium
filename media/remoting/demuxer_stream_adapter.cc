@@ -113,7 +113,9 @@ base::Optional<uint32_t> DemuxerStreamAdapter::SignalFlush(bool flushing) {
     // Sets callback handle invalid to abort ongoing read request.
     read_until_callback_handle_ = RpcBroker::kInvalidHandle;
   }
-  return last_count_;
+  base::Optional<uint32_t> opt;
+  opt.emplace(last_count_);
+  return opt;
 }
 
 void DemuxerStreamAdapter::OnReceivedRpc(
@@ -377,7 +379,7 @@ void DemuxerStreamAdapter::SendReadAck() {
   rpc->set_proc(pb::RpcMessage::RPC_DS_READUNTIL_CALLBACK);
   auto* message = rpc->mutable_demuxerstream_readuntilcb_rpc();
   message->set_count(last_count_);
-  message->set_status(ToProtoDemuxerStreamStatus(media_status_).value());
+  message->set_status(ToProtoDemuxerStreamStatus(media_status_));
   if (media_status_ == DemuxerStream::kConfigChanged) {
     if (audio_config_.IsValidConfig()) {
       pb::AudioDecoderConfig* audio_message =

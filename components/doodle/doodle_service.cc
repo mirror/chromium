@@ -72,7 +72,9 @@ DoodleService::DoodleService(
   DCHECK(tick_clock_);
   DCHECK(image_fetcher_);
 
-  image_fetcher_->SetImageDownloadLimit(kMaxImageDownloadBytes);
+  base::Optional<int64_t> opt_limit;
+  opt_limit.emplace(kMaxImageDownloadBytes);
+  image_fetcher_->SetImageDownloadLimit(std::move(opt_limit));
   image_fetcher_->SetDataUseServiceName(
       data_use_measurement::DataUseUserData::DOODLE);
 

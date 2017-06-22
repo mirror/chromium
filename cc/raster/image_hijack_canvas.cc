@@ -39,7 +39,7 @@ class ScopedDecodedImageLock {
             image_decode_cache_->GetDecodedImageForDraw(draw_image_)) {
     DCHECK(draw_image_.image()->isLazyGenerated());
     if (paint) {
-      decoded_paint_ = *paint;
+      decoded_paint_.emplace(*paint);
       decoded_paint_->setFilterQuality(decoded_draw_image_.filter_quality());
     }
   }

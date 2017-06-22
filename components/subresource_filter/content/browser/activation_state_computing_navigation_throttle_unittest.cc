@@ -179,7 +179,7 @@ class ActivationStateComputingNavigationThrottleTest
     if (auto filter = test_throttle_->ReleaseFilter()) {
       EXPECT_NE(ActivationLevel::DISABLED,
                 filter->activation_state().activation_level);
-      last_activation_state_ = filter->activation_state();
+      last_activation_state_.emplace(filter->activation_state());
     } else {
       last_activation_state_ = ActivationState(ActivationLevel::DISABLED);
     }

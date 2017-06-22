@@ -2655,7 +2655,7 @@ void GLRenderer::SwapBuffers(std::vector<ui::LatencyInfo> latency_info) {
                                            : swap_buffer_rect_.y(),
                   swap_buffer_rect_.width(), swap_buffer_rect_.height());
   } else if (swap_buffer_rect_.IsEmpty() && allow_empty_swap_) {
-    output_frame.sub_buffer_rect = swap_buffer_rect_;
+    output_frame.sub_buffer_rect.emplace(swap_buffer_rect_);
   }
 
   swapping_overlay_resources_.push_back(std::move(pending_overlay_resources_));

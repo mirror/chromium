@@ -83,7 +83,7 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
            !start_time_null_transport_rtt_ && !recent_transport_rtt_ &&
            !start_time_null_downlink_throughput_kbps_ &&
            !recent_downlink_throughput_kbps_);
-    effective_connection_type_ = type;
+    effective_connection_type_.emplace(type);
   }
 
   // Returns the effective connection type that was set using
@@ -98,7 +98,7 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
            !start_time_null_transport_rtt_ && !recent_transport_rtt_ &&
            !start_time_null_downlink_throughput_kbps_ &&
            !recent_downlink_throughput_kbps_);
-    recent_effective_connection_type_ = type;
+    recent_effective_connection_type_.emplace(type);
   }
 
   // Returns the effective connection type that was set using
@@ -128,14 +128,14 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
     // Callers should not set effective connection type along with the
     // lower-layer metrics.
     DCHECK(!effective_connection_type_ && !recent_effective_connection_type_);
-    start_time_null_http_rtt_ = http_rtt;
+    start_time_null_http_rtt_.emplace(http_rtt);
   }
 
   void set_recent_http_rtt(const base::TimeDelta& recent_http_rtt) {
     // Callers should not set effective connection type along with the
     // lower-layer metrics.
     DCHECK(!effective_connection_type_ && !recent_effective_connection_type_);
-    recent_http_rtt_ = recent_http_rtt;
+    recent_http_rtt_.emplace(recent_http_rtt);
   }
   // Returns the recent HTTP RTT that was set using |set_recent_http_rtt|. If
   // the recent HTTP RTT has not been set, then the base implementation is
@@ -147,14 +147,14 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
     // Callers should not set effective connection type along with the
     // lower-layer metrics.
     DCHECK(!effective_connection_type_ && !recent_effective_connection_type_);
-    start_time_null_transport_rtt_ = transport_rtt;
+    start_time_null_transport_rtt_.emplace(transport_rtt);
   }
 
   void set_recent_transport_rtt(const base::TimeDelta& recent_transport_rtt) {
     // Callers should not set effective connection type along with the
     // lower-layer metrics.
     DCHECK(!effective_connection_type_ && !recent_effective_connection_type_);
-    recent_transport_rtt_ = recent_transport_rtt;
+    recent_transport_rtt_.emplace(recent_transport_rtt);
   }
 
   base::Optional<base::TimeDelta> GetTransportRTT() const override;
@@ -170,7 +170,7 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
     // Callers should not set effective connection type along with the
     // lower-layer metrics.
     DCHECK(!effective_connection_type_ && !recent_effective_connection_type_);
-    start_time_null_downlink_throughput_kbps_ = downlink_throughput_kbps;
+    start_time_null_downlink_throughput_kbps_.emplace(downlink_throughput_kbps);
   }
 
   void set_recent_downlink_throughput_kbps(
@@ -178,7 +178,7 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
     // Callers should not set effective connection type along with the
     // lower-layer metrics.
     DCHECK(!effective_connection_type_ && !recent_effective_connection_type_);
-    recent_downlink_throughput_kbps_ = recent_downlink_throughput_kbps;
+    recent_downlink_throughput_kbps_.emplace(recent_downlink_throughput_kbps);
   }
   // Returns the downlink throughput that was set using
   // |set_recent_downlink_throughput_kbps|. If the downlink throughput has not
@@ -197,7 +197,7 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
       int percentile) const override;
 
   void set_rtt_estimate_internal(base::TimeDelta value) {
-    rtt_estimate_internal_ = value;
+    rtt_estimate_internal_.emplace(value);
   }
 
   void SetAccuracyRecordingIntervals(

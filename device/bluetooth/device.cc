@@ -337,7 +337,7 @@ mojom::ServiceInfoPtr Device::ConstructServiceInfoStruct(
 
 void Device::OnReadRemoteCharacteristic(
     ReadValueForCharacteristicCallback callback,
-    const std::vector<uint8_t>& value) {
+    std::vector<uint8_t> value) {
   std::move(callback).Run(mojom::GattResult::SUCCESS, std::move(value));
 }
 
@@ -360,7 +360,7 @@ void Device::OnWriteRemoteCharacteristicError(
 }
 
 void Device::OnReadRemoteDescriptor(ReadValueForDescriptorCallback callback,
-                                    const std::vector<uint8_t>& value) {
+                                    std::vector<uint8_t> value) {
   std::move(callback).Run(mojom::GattResult::SUCCESS, std::move(value));
 }
 

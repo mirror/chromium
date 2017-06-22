@@ -1790,13 +1790,14 @@ TEST_F(DataReductionProxyNetworkDelegateTest, IncrementingMainFramePageId) {
   Init(USE_SECURE_PROXY, false /* enable_brotli_globally */);
 
   io_data()->request_options()->SetSecureSession("new-session");
-  uint64_t page_id = io_data()->request_options()->GeneratePageId();
+  base::Optional<uint64_t> page_id = io_data()->request_options()->GeneratePageId();
 
-  FetchURLRequestAndVerifyPageIdDirective(++page_id, false);
-
-  FetchURLRequestAndVerifyPageIdDirective(++page_id, false);
-
-  FetchURLRequestAndVerifyPageIdDirective(++page_id, false);
+  ++(*page_id);
+  FetchURLRequestAndVerifyPageIdDirective(page_id, false);
+  ++(*page_id);
+  FetchURLRequestAndVerifyPageIdDirective(page_id, false);
+  ++(*page_id);
+  FetchURLRequestAndVerifyPageIdDirective(page_id, false);
 }
 
 TEST_F(DataReductionProxyNetworkDelegateTest, ResetSessionResetsId) {

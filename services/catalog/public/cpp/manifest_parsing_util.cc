@@ -42,9 +42,8 @@ base::Optional<RequiredFileMap> RetrieveRequiredFiles(
     return base::nullopt;
   }
 
-  RequiredFileMap required_files;
   if (!manifest_dictionary->HasKey(Store::kRequiredFilesKey))
-    return {required_files};
+    return base::nullopt;
 
   const base::DictionaryValue* required_files_value = nullptr;
   if (!manifest_dictionary->GetDictionary(Store::kRequiredFilesKey,
@@ -53,6 +52,7 @@ base::Optional<RequiredFileMap> RetrieveRequiredFiles(
     return base::nullopt;
   }
 
+  base::Optional<RequiredFileMap> required_files = RequiredFileMap();
   base::DictionaryValue::Iterator it(*required_files_value);
   for (; !it.IsAtEnd(); it.Advance()) {
     const std::string& entry_name = it.key();
@@ -92,16 +92,16 @@ base::Optional<RequiredFileMap> RetrieveRequiredFiles(
                     << " value.";
         return base::nullopt;
       }
-      if (required_files.count(entry_name) > 0) {
+      if (required_files->count(entry_name) > 0) {
         DLOG(ERROR) << "Entry::Deserialize: value of RequiredFiles entry for "
                     << "key: " << entry_name << " has more than one value for "
                     << "platform: " << platform;
         return base::nullopt;
       }
-      required_files[entry_name] = base::FilePath(path);
+      (*required_files)[entry_name] = base::FilePath(path);
     }
   }
-  return base::make_optional(std::move(required_files));
+  return required_files;
 }
 
 }  // namespace content

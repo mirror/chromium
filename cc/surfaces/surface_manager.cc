@@ -201,7 +201,7 @@ void SurfaceManager::AssignTemporaryReference(const SurfaceId& surface_id,
   if (!HasTemporaryReference(surface_id))
     return;
 
-  temporary_references_[surface_id] = owner;
+  temporary_references_[surface_id].emplace(owner);
 }
 
 void SurfaceManager::DropTemporaryReference(const SurfaceId& surface_id) {

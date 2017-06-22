@@ -165,7 +165,9 @@ class DataReductionProxyRequestOptionsTest : public testing::Test {
                             uint64_t page_id) {
     test_context_->RunUntilIdle();
     net::HttpRequestHeaders headers;
-    request_options_->AddRequestHeader(&headers, page_id);
+    base::Optional<uint64_t> opt_page_id;
+    opt_page_id.emplace(page_id);
+    request_options_->AddRequestHeader(&headers, opt_page_id);
     if (expected_header.empty()) {
       EXPECT_FALSE(headers.HasHeader(kChromeProxyHeader));
       return;

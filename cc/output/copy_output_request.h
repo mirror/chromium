@@ -54,7 +54,7 @@ class CC_EXPORT CopyOutputRequest {
   // Optionally specify the source of this copy request. If set when this copy
   // request is submitted to a layer, a prior uncommitted copy request from the
   // same source will be aborted.
-  void set_source(const base::UnguessableToken& source) { source_ = source; }
+  void set_source(const base::UnguessableToken& source) { source_.emplace(source); }
   bool has_source() const { return source_.has_value(); }
   const base::UnguessableToken& source() const { return *source_; }
 
@@ -63,7 +63,7 @@ class CC_EXPORT CopyOutputRequest {
   // By default copy requests copy the entire layer's subtree output. If an
   // area is given, then the intersection of this rect (in layer space) with
   // the layer's subtree output will be returned.
-  void set_area(const gfx::Rect& area) { area_ = area; }
+  void set_area(const gfx::Rect& area) { area_.emplace(area); }
   bool has_area() const { return area_.has_value(); }
   const gfx::Rect& area() const { return *area_; }
 

@@ -263,7 +263,7 @@ void DesktopWindowTreeHostMus::SendHitTestMaskToServer() {
   gfx::Path mask_path;
   native_widget_delegate_->GetHitTestMask(&mask_path);
   // TODO(jamescook): Use the full path for the mask.
-  gfx::Rect mask_rect =
+  base::Optional<gfx::Rect> mask_rect =
       gfx::ToEnclosingRect(gfx::SkRectToRectF(mask_path.getBounds()));
   SetHitTestMask(mask_rect);
 }

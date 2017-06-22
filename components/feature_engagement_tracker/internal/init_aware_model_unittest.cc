@@ -56,7 +56,7 @@ class InitAwareModelTest : public testing::Test {
   }
 
  protected:
-  void OnModelInitialized(bool success) { load_success_ = success; }
+  void OnModelInitialized(bool success) { load_success_.emplace(success); }
 
   std::unique_ptr<InitAwareModel> model_;
   MockModel* mocked_model_;

@@ -218,7 +218,7 @@ class BluetoothGattDescriptorClientImpl
     if (bytes)
       value.assign(bytes, bytes + length);
 
-    callback.Run(value);
+    callback.Run(std::move(value));
   }
 
   // Called when a response for a failed method call is received.

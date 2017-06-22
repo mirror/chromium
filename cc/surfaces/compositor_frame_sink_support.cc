@@ -213,7 +213,7 @@ void CompositorFrameSinkSupport::UpdateSurfaceReferences(
           SurfaceId(frame_sink_id_, referenced_local_surface_id_.value())));
     }
 
-    referenced_local_surface_id_ = local_surface_id;
+    referenced_local_surface_id_.emplace(local_surface_id);
   }
 
   // Modify surface references stored in SurfaceManager.

@@ -46,7 +46,7 @@ void FakePeripheral::SetNextGATTConnectionResponse(uint16_t code) {
 
 void FakePeripheral::SetNextGATTDiscoveryResponse(uint16_t code) {
   DCHECK(!next_discovery_response_);
-  next_discovery_response_ = code;
+  next_discovery_response_.emplace(code);
 }
 
 std::string FakePeripheral::AddFakeService(

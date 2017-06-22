@@ -50,7 +50,9 @@ void TimeDomain::ScheduleDelayedWork(
     delayed_wake_up_queue_.insert({wake_up, queue});
   }
 
-  queue->SetScheduledTimeDomainWakeUp(wake_up.time);
+  base::Optional<base::TimeTicks> opt_wake_up_time;
+  opt_wake_up_time.emplace(wake_up.time);
+  queue->SetScheduledTimeDomainWakeUp(std::move(opt_wake_up_time));
 
   // If |queue| is the first wake-up then request the wake-up.
   if (delayed_wake_up_queue_.Min().queue == queue)
@@ -95,7 +97,9 @@ void TimeDomain::WakeUpReadyDelayedQueues(LazyNow* lazy_now) {
     if (next_wake_up) {
       // O(log n)
       delayed_wake_up_queue_.ReplaceMin({*next_wake_up, queue});
-      queue->SetScheduledTimeDomainWakeUp(next_wake_up->time);
+      base::Optional<base::TimeTicks> opt_next_wake_up_time;
+      opt_next_wake_up_time.emplace(next_wake_up->time);
+      queue->SetScheduledTimeDomainWakeUp(std::move(next_wake_up->time));
     } else {
       // O(log n)
       delayed_wake_up_queue_.Pop();

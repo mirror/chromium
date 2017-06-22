@@ -27,80 +27,67 @@ namespace remoting {
 // converters is to decouple the media/base modules from the media/remoting
 // modules while maintaining compile-time checks to ensure that there are always
 // valid, backwards-compatible mappings between the two.
-//
-// Each returns a base::Optional value. If it is not set, that indicates the
-// conversion failed.
 
-base::Optional<EncryptionScheme::CipherMode> ToMediaEncryptionSchemeCipherMode(
+EncryptionScheme::CipherMode ToMediaEncryptionSchemeCipherMode(
     pb::EncryptionScheme::CipherMode value);
-base::Optional<pb::EncryptionScheme::CipherMode>
-ToProtoEncryptionSchemeCipherMode(EncryptionScheme::CipherMode value);
+pb::EncryptionScheme::CipherMode ToProtoEncryptionSchemeCipherMode(
+    EncryptionScheme::CipherMode value);
 
-base::Optional<AudioCodec> ToMediaAudioCodec(
-    pb::AudioDecoderConfig::Codec value);
-base::Optional<pb::AudioDecoderConfig::Codec> ToProtoAudioDecoderConfigCodec(
-    AudioCodec value);
+AudioCodec ToMediaAudioCodec(pb::AudioDecoderConfig::Codec value);
+pb::AudioDecoderConfig::Codec ToProtoAudioDecoderConfigCodec(AudioCodec value);
 
-base::Optional<SampleFormat> ToMediaSampleFormat(
-    pb::AudioDecoderConfig::SampleFormat value);
-base::Optional<pb::AudioDecoderConfig::SampleFormat>
-ToProtoAudioDecoderConfigSampleFormat(SampleFormat value);
+SampleFormat ToMediaSampleFormat(pb::AudioDecoderConfig::SampleFormat value);
+pb::AudioDecoderConfig::SampleFormat ToProtoAudioDecoderConfigSampleFormat(
+    SampleFormat value);
 
-base::Optional<ChannelLayout> ToMediaChannelLayout(
-    pb::AudioDecoderConfig::ChannelLayout value);
-base::Optional<pb::AudioDecoderConfig::ChannelLayout>
-ToProtoAudioDecoderConfigChannelLayout(ChannelLayout value);
+ChannelLayout ToMediaChannelLayout(pb::AudioDecoderConfig::ChannelLayout value);
+pb::AudioDecoderConfig::ChannelLayout ToProtoAudioDecoderConfigChannelLayout(
+    ChannelLayout value);
 
-base::Optional<VideoCodec> ToMediaVideoCodec(
-    pb::VideoDecoderConfig::Codec value);
-base::Optional<pb::VideoDecoderConfig::Codec> ToProtoVideoDecoderConfigCodec(
-    VideoCodec value);
+VideoCodec ToMediaVideoCodec(pb::VideoDecoderConfig::Codec value);
+pb::VideoDecoderConfig::Codec ToProtoVideoDecoderConfigCodec(VideoCodec value);
 
-base::Optional<VideoCodecProfile> ToMediaVideoCodecProfile(
+VideoCodecProfile ToMediaVideoCodecProfile(
     pb::VideoDecoderConfig::Profile value);
-base::Optional<pb::VideoDecoderConfig::Profile>
-ToProtoVideoDecoderConfigProfile(VideoCodecProfile value);
+pb::VideoDecoderConfig::Profile ToProtoVideoDecoderConfigProfile(
+    VideoCodecProfile value);
 
-base::Optional<VideoPixelFormat> ToMediaVideoPixelFormat(
-    pb::VideoDecoderConfig::Format value);
-base::Optional<pb::VideoDecoderConfig::Format> ToProtoVideoDecoderConfigFormat(
+VideoPixelFormat ToMediaVideoPixelFormat(pb::VideoDecoderConfig::Format value);
+pb::VideoDecoderConfig::Format ToProtoVideoDecoderConfigFormat(
     VideoPixelFormat value);
 
-base::Optional<ColorSpace> ToMediaColorSpace(
-    pb::VideoDecoderConfig::ColorSpace value);
-base::Optional<pb::VideoDecoderConfig::ColorSpace>
-ToProtoVideoDecoderConfigColorSpace(ColorSpace value);
+ColorSpace ToMediaColorSpace(pb::VideoDecoderConfig::ColorSpace value);
+pb::VideoDecoderConfig::ColorSpace ToProtoVideoDecoderConfigColorSpace(
+    ColorSpace value);
 
-base::Optional<BufferingState> ToMediaBufferingState(
+BufferingState ToMediaBufferingState(
     pb::RendererClientOnBufferingStateChange::State value);
-base::Optional<pb::RendererClientOnBufferingStateChange::State>
-ToProtoMediaBufferingState(BufferingState value);
+pb::RendererClientOnBufferingStateChange::State ToProtoMediaBufferingState(
+    BufferingState value);
 
-base::Optional<CdmKeyInformation::KeyStatus> ToMediaCdmKeyInformationKeyStatus(
+CdmKeyInformation::KeyStatus ToMediaCdmKeyInformationKeyStatus(
     pb::CdmKeyInformation::KeyStatus value);
-base::Optional<pb::CdmKeyInformation::KeyStatus> ToProtoCdmKeyInformation(
+pb::CdmKeyInformation::KeyStatus ToProtoCdmKeyInformation(
     CdmKeyInformation::KeyStatus value);
 
-base::Optional<CdmPromise::Exception> ToCdmPromiseException(
-    pb::CdmException value);
-base::Optional<pb::CdmException> ToProtoCdmException(
-    CdmPromise::Exception value);
+CdmPromise::Exception ToCdmPromiseException(pb::CdmException value);
+pb::CdmException ToProtoCdmException(CdmPromise::Exception value);
 
-base::Optional<CdmMessageType> ToMediaCdmMessageType(pb::CdmMessageType value);
-base::Optional<pb::CdmMessageType> ToProtoCdmMessageType(CdmMessageType value);
+CdmMessageType ToMediaCdmMessageType(pb::CdmMessageType value);
+pb::CdmMessageType ToProtoCdmMessageType(CdmMessageType value);
 
-base::Optional<CdmSessionType> ToCdmSessionType(pb::CdmSessionType value);
-base::Optional<pb::CdmSessionType> ToProtoCdmSessionType(CdmSessionType value);
+CdmSessionType ToCdmSessionType(pb::CdmSessionType value);
+pb::CdmSessionType ToProtoCdmSessionType(CdmSessionType value);
 
-base::Optional<EmeInitDataType> ToMediaEmeInitDataType(
+EmeInitDataType ToMediaEmeInitDataType(
     pb::CdmCreateSessionAndGenerateRequest::EmeInitDataType value);
-base::Optional<pb::CdmCreateSessionAndGenerateRequest::EmeInitDataType>
+pb::CdmCreateSessionAndGenerateRequest::EmeInitDataType
 ToProtoMediaEmeInitDataType(EmeInitDataType value);
 
-base::Optional<DemuxerStream::Status> ToDemuxerStreamStatus(
+DemuxerStream::Status ToDemuxerStreamStatus(
     pb::DemuxerStreamReadUntilCallback::Status value);
-base::Optional<pb::DemuxerStreamReadUntilCallback::Status>
-ToProtoDemuxerStreamStatus(DemuxerStream::Status value);
+pb::DemuxerStreamReadUntilCallback::Status ToProtoDemuxerStreamStatus(
+    DemuxerStream::Status value);
 
 }  // namespace remoting
 }  // namespace media

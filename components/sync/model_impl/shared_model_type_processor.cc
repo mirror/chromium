@@ -154,7 +154,7 @@ void SharedModelTypeProcessor::ReportError(const ModelError& error) {
   if (model_error_)
     return;
 
-  model_error_ = error;
+  model_error_.emplace(error);
 
   if (dump_stack_) {
     // Upload a stack trace if possible.

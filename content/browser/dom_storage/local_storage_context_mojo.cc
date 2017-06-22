@@ -464,8 +464,10 @@ void LocalStorageContextMojo::InitiateConnection(bool in_memory_only) {
   } else {
     // We were not given a subdirectory. Use a memory backed database.
     connector_->BindInterface(file::mojom::kServiceName, &leveldb_service_);
+    base::Optional<base::trace_event::MemoryAllocatorDumpGuid> opt_dump_id;
+    opt_dump_id.emplace(memory_dump_id_);
     leveldb_service_->OpenInMemory(
-        memory_dump_id_, MakeRequest(&database_),
+        opt_dump_id, MakeRequest(&database_),
         base::Bind(&LocalStorageContextMojo::OnDatabaseOpened,
                    weak_ptr_factory_.GetWeakPtr(), true));
   }
@@ -501,9 +503,11 @@ void LocalStorageContextMojo::OnDirectoryOpened(
   // Default write_buffer_size is 4 MB but that might leave a 3.999
   // memory allocation in RAM from a log file recovery.
   options->write_buffer_size = 64 * 1024;
+  base::Optional<base::trace_event::MemoryAllocatorDumpGuid> opt_dump_id;
+  opt_dump_id.emplace(memory_dump_id_);
   leveldb_service_->OpenWithOptions(
       std::move(options), std::move(directory_clone), "leveldb",
-      memory_dump_id_, MakeRequest(&database_),
+      std::move(opt_dump_id), MakeRequest(&database_),
       base::Bind(&LocalStorageContextMojo::OnDatabaseOpened,
                  weak_ptr_factory_.GetWeakPtr(), false));
 }

@@ -1390,7 +1390,7 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::ParseRegistrationData(
       for (int j = 0; j < feature.tokens_size(); ++j)
         origin_trial_tokens[feature.name()].push_back(feature.tokens(j));
     }
-    out->origin_trial_tokens = origin_trial_tokens;
+    out->origin_trial_tokens = std::move(origin_trial_tokens);
   }
   if (data.has_navigation_preload_state()) {
     const ServiceWorkerNavigationPreloadState& state =

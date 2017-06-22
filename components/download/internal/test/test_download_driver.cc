@@ -98,10 +98,11 @@ void TestDownloadDriver::Resume(const std::string& guid) {
 }
 
 base::Optional<DriverEntry> TestDownloadDriver::Find(const std::string& guid) {
+  base::Optional<DriverEntry> opt;
   auto it = entries_.find(guid);
-  if (it == entries_.end())
-    return base::nullopt;
-  return it->second;
+  if (it != entries_.end())
+    opt.emplace(it->second);
+  return opt;
 }
 
 std::set<std::string> TestDownloadDriver::GetActiveDownloads() {

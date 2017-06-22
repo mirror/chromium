@@ -424,7 +424,7 @@ UserMessageImpl::UserMessageImpl(ports::UserMessageEvent* message_event,
       message_event_(message_event),
       context_(context) {
   if (thunks)
-    context_thunks_ = *thunks;
+    context_thunks_.emplace(*thunks);
 }
 
 UserMessageImpl::UserMessageImpl(ports::UserMessageEvent* message_event,

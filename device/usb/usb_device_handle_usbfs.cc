@@ -178,7 +178,7 @@ struct UsbDeviceHandleUsbfs::Transfer {
 
   void* operator new(std::size_t size, size_t number_of_iso_packets);
   void RunCallback(UsbTransferStatus status, size_t bytes_transferred);
-  void RunIsochronousCallback(const std::vector<IsochronousPacket>& packets);
+  void RunIsochronousCallback(std::vector<IsochronousPacket> packets);
 
   scoped_refptr<net::IOBuffer> control_transfer_buffer;
   scoped_refptr<net::IOBuffer> buffer;
@@ -397,10 +397,10 @@ void UsbDeviceHandleUsbfs::Transfer::RunCallback(UsbTransferStatus status,
 }
 
 void UsbDeviceHandleUsbfs::Transfer::RunIsochronousCallback(
-    const std::vector<IsochronousPacket>& packets) {
+    std::vector<IsochronousPacket> packets) {
   DCHECK_EQ(urb.type, USBDEVFS_URB_TYPE_ISO);
   DCHECK(isoc_callback);
-  isoc_callback.Run(buffer, packets);
+  isoc_callback.Run(buffer, std::move(packets));
   isoc_callback.Reset();
 }
 
@@ -834,7 +834,7 @@ void UsbDeviceHandleUsbfs::TransferComplete(
                                     : transfer->urb.status);
     }
 
-    transfer->RunIsochronousCallback(packets);
+    transfer->RunIsochronousCallback(std::move(packets));
   } else {
     if (transfer->urb.status == 0 &&
         transfer->urb.type == USBDEVFS_URB_TYPE_CONTROL) {
@@ -888,7 +888,7 @@ void UsbDeviceHandleUsbfs::ReportIsochronousError(
     packets[i].transferred_length = 0;
     packets[i].status = status;
   }
-  task_runner_->PostTask(FROM_HERE, base::Bind(callback, nullptr, packets));
+  task_runner_->PostTask(FROM_HERE, base::Bind(callback, nullptr, std::move(packets)));
 }
 
 void UsbDeviceHandleUsbfs::SetUpTimeoutCallback(Transfer* transfer,
@@ -948,7 +948,7 @@ void UsbDeviceHandleUsbfs::CancelTransfer(Transfer* transfer,
       packets[i].transferred_length = 0;
       packets[i].status = status;
     }
-    transfer->RunIsochronousCallback(packets);
+    transfer->RunIsochronousCallback(std::move(packets));
   } else {
     transfer->RunCallback(status, 0);
   }

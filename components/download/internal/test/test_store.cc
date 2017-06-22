@@ -44,7 +44,7 @@ void TestStore::Remove(const std::string& guid, StoreCallback callback) {
 }
 
 void TestStore::AutomaticallyTriggerAllFutureCallbacks(bool success) {
-  automatic_callback_response_ = success;
+  automatic_callback_response_.emplace(success);
 }
 
 void TestStore::TriggerInit(bool success,

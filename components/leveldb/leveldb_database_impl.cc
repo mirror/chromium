@@ -187,7 +187,7 @@ void LevelDBDatabaseImpl::NewIteratorFromSnapshot(
   // If the snapshot id is invalid, send back invalid argument
   auto it = snapshot_map_.find(snapshot);
   if (it == snapshot_map_.end()) {
-    std::move(callback).Run(base::Optional<base::UnguessableToken>());
+    std::move(callback).Run(base::nullopt);
     return;
   }
 
@@ -195,9 +195,10 @@ void LevelDBDatabaseImpl::NewIteratorFromSnapshot(
   options.snapshot = it->second;
 
   Iterator* iterator = db_->NewIterator(options);
-  base::UnguessableToken new_token = base::UnguessableToken::Create();
-  iterator_map_.insert(std::make_pair(new_token, iterator));
-  std::move(callback).Run(new_token);
+  base::Optional<base::UnguessableToken> new_token =
+      base::UnguessableToken::Create();
+  iterator_map_.insert(std::make_pair(*new_token, iterator));
+  std::move(callback).Run(std::move(new_token));
 }
 
 void LevelDBDatabaseImpl::ReleaseIterator(
