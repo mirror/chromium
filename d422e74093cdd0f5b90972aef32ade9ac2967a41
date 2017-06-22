@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a03943fd_d8f3c975",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-22T00:10:53Z",
+      "side": 1,
+      "message": "There are generated constants named like this: Storage::StorageTypeEnum::File_systems.\nYou can also remove the ones above (lines 23-32) and use generated instead, if you don\u0027t mind doing extra :)",
+      "revId": "d422e74093cdd0f5b90972aef32ade9ac2967a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5bb2f2_c5fa696b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-22T00:10:53Z",
+      "side": 1,
+      "message": "There are generated constants like Protocol.Storage.StorageType.Appcache. See line 40 of this file.",
+      "revId": "d422e74093cdd0f5b90972aef32ade9ac2967a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b5a72e_e35f7d74",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-22T00:10:53Z",
+      "side": 1,
+      "message": "style: blink prefers ToBoolean checks instead of comparing with 0 or \"\"\n\nif (!usageForType.usage)",
+      "revId": "d422e74093cdd0f5b90972aef32ade9ac2967a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
