@@ -42,7 +42,7 @@ class MultiplexRouter::InterfaceEndpoint
         client_(nullptr) {}
 
   // ---------------------------------------------------------------------------
-  // The following public methods are safe to call from any threads without
+  // The following public methods are safe to call from any sequence without
   // locking.
 
   InterfaceId id() const { return id_; }
@@ -92,7 +92,7 @@ class MultiplexRouter::InterfaceEndpoint
     client_ = client;
   }
 
-  // This method must be called on the same thread as the corresponding
+  // This method must be called on the same sequence as the corresponding
   // AttachClient() call.
   void DetachClient() {
     router_->AssertLockAcquired();
@@ -125,7 +125,7 @@ class MultiplexRouter::InterfaceEndpoint
 
   // ---------------------------------------------------------------------------
   // The following public methods (i.e., InterfaceEndpointController
-  // implementation) are called by the client on the same thread as the
+  // implementation) are called by the client on the same sequence as the
   // AttachClient() call. They are called outside of the router's lock.
 
   bool SendMessage(Message* message) override {
@@ -204,7 +204,7 @@ class MultiplexRouter::InterfaceEndpoint
   }
 
   // ---------------------------------------------------------------------------
-  // The following members are safe to access from any threads.
+  // The following members are safe to access from any sequence.
 
   MultiplexRouter* const router_;
   const InterfaceId id_;
@@ -236,7 +236,7 @@ class MultiplexRouter::InterfaceEndpoint
 
   // ---------------------------------------------------------------------------
   // The following members are only valid while a client is attached. They are
-  // used exclusively on the client's thread. They may be accessed outside of
+  // used exclusively on the client's sequence. They may be accessed outside of
   // the router's lock.
 
   std::unique_ptr<SyncEventWatcher> sync_watcher_;
@@ -347,7 +347,7 @@ MultiplexRouter::MultiplexRouter(
     // Always participate in sync handle watching in multi-interface mode,
     // because even if it doesn't expect sync requests during sync handle
     // watching, it may still need to dispatch messages to associated endpoints
-    // on a different thread.
+    // on a different sequence.
     connector_.AllowWokenUpBySyncWatchOnSameThread();
   }
   connector_.set_incoming_receiver(&filters_);
@@ -797,7 +797,7 @@ bool MultiplexRouter::ProcessNotifyErrorTask(
     // object within NotifyError(). Holding the lock will lead to deadlock.
     //
     // It is safe to call into |client| without the lock. Because |client| is
-    // always accessed on the same thread, including DetachEndpointClient().
+    // always accessed on the same sequence, including DetachEndpointClient().
     MayAutoUnlock unlocker(&lock_);
     client->NotifyError(disconnect_reason);
   }
@@ -871,7 +871,7 @@ bool MultiplexRouter::ProcessIncomingMessage(
     // deadlock.
     //
     // It is safe to call into |client| without the lock. Because |client| is
-    // always accessed on the same thread, including DetachEndpointClient().
+    // always accessed on the same sequence, including DetachEndpointClient().
     MayAutoUnlock unlocker(&lock_);
     result = client->HandleIncomingMessage(message);
   }

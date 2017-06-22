@@ -61,9 +61,9 @@ class AssociatedInterfacePtr {
   // Calling with an invalid |info| has the same effect as reset(). In this
   // case, the AssociatedInterfacePtr is not considered as bound.
   //
-  // |runner| must belong to the same thread. It will be used to dispatch all
+  // |runner| must belong to the same sequence. It will be used to dispatch all
   // callbacks and connection error notification. It is useful when you attach
-  // multiple task runners to a single thread for the purposes of task
+  // multiple task runners to a single sequence for the purposes of task
   // scheduling.
   //
   // NOTE: The corresponding AssociatedInterfaceRequest must be sent over
@@ -148,7 +148,7 @@ class AssociatedInterfacePtr {
 
   // Unbinds and returns the associated interface pointer information which
   // could be used to setup an AssociatedInterfacePtr again. This method may be
-  // used to move the proxy to a different thread.
+  // used to move the proxy to a different sequence.
   //
   // It is an error to call PassInterface() while there are pending responses.
   // TODO: fix this restriction, it's not always obvious when there is a

@@ -13,8 +13,8 @@
 
 namespace mojo {
 
-// Blocks the calling thread, waiting for one or more signals in |signals| to be
-// become satisfied -- or for all of them to become unsatisfiable -- on the
+// Blocks the calling sequence, waiting for one or more signals in |signals| to
+// be become satisfied -- or for all of them to become unsatisfiable -- on the
 // given Handle.
 //
 // If |signals_state| is non-null, |handle| is valid, the wait is not cancelled
@@ -28,7 +28,7 @@ namespace mojo {
 //       that no signals in |signals| can ever be raised again.
 //   |MOJO_RESULT_INVALID_ARGUMENT| if |handle| is not a valid handle.
 //   |MOJO_RESULT_CANCELLED| if the wait was cancelled because |handle| was
-//       closed by some other thread while waiting.
+//       closed by some other sequence while waiting.
 MOJO_CPP_SYSTEM_EXPORT MojoResult
 Wait(Handle handle,
      MojoHandleSignals signals,
@@ -60,7 +60,7 @@ Wait(Handle handle,
 //   |MOJO_RESULT_INVALID_ARGUMENT| if any Handle in |handles| is invalid,
 //       or if either |handles| or |signals| is null.
 //   |MOJO_RESULT_CANCELLED| if the wait was cancelled because a handle in
-//       |handles| was closed by some other thread while waiting.
+//       |handles| was closed by some other sequence while waiting.
 //       |*result_index| contains the index of the closed Handle if
 //       |result_index| is non-null.
 MOJO_CPP_SYSTEM_EXPORT MojoResult

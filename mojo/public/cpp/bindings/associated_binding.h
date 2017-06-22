@@ -83,11 +83,11 @@ class MOJO_CPP_BINDINGS_EXPORT AssociatedBindingBase {
 //
 // When you bind this class to a request, optionally you can specify a
 // base::SequencedTaskRunner. This task runner must belong to the same
-// thread. It will be used to dispatch incoming method calls and connection
+// sequence. It will be used to dispatch incoming method calls and connection
 // error notification. It is useful when you attach multiple task runners to a
-// single thread for the purposes of task scheduling. Please note that incoming
-// synchrounous method calls may not be run from this task runner, when they
-// reenter outgoing synchrounous calls on the same thread.
+// single sequence for the purposes of task scheduling. Please note that
+// incoming synchrounous method calls may not be run from this task runner, when
+// they reenter outgoing synchrounous calls on the same sequence.
 template <typename Interface,
           typename ImplRefTraits = RawPtrImplRefTraits<Interface>>
 class AssociatedBinding : public AssociatedBindingBase {
@@ -124,7 +124,7 @@ class AssociatedBinding : public AssociatedBindingBase {
   }
 
   // Unbinds and returns the associated interface request so it can be
-  // used in another context, such as on another thread or with a different
+  // used in another context, such as on another sequence or with a different
   // implementation. Puts this object into a state where it can be rebound.
   AssociatedInterfaceRequest<Interface> Unbind() {
     DCHECK(endpoint_client_);

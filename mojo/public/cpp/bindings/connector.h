@@ -36,14 +36,14 @@ namespace mojo {
 //   - MessagePipe I/O is non-blocking.
 //   - Sending messages can be configured to be thread safe (please see comments
 //     of the constructor). Other than that, the object should only be accessed
-//     on the creating thread.
+//     on the creating sequence.
 class MOJO_CPP_BINDINGS_EXPORT Connector
     : NON_EXPORTED_BASE(public MessageReceiver) {
  public:
   enum ConnectorConfig {
-    // Connector::Accept() is only called from a single thread.
+    // Connector::Accept() is only called from a single sequence.
     SINGLE_THREADED_SEND,
-    // Connector::Accept() is allowed to be called from multiple threads.
+    // Connector::Accept() is allowed to be called from multiple sequences.
     MULTI_THREADED_SEND
   };
 
@@ -129,7 +129,7 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
   }
 
   // Allows |message_pipe_| to be watched while others perform sync handle
-  // watching on the same thread. Please see comments of
+  // watching on the same sequence. Please see comments of
   // SyncHandleWatcher::AllowWokenUpBySyncWatchOnSameThread().
   void AllowWokenUpBySyncWatchOnSameThread();
 
@@ -198,7 +198,7 @@ class MOJO_CPP_BINDINGS_EXPORT Connector
 
   bool paused_ = false;
 
-  // If sending messages is allowed from multiple threads, |lock_| is used to
+  // If sending messages is allowed from multiple sequences, |lock_| is used to
   // protect modifications to |message_pipe_| and |drop_writes_|.
   base::Optional<base::Lock> lock_;
 

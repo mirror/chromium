@@ -55,17 +55,17 @@ class MessageReceiver;
 //   };
 //
 // This class is thread hostile while bound to a message pipe. All calls to this
-// class must be from the thread that bound it. The interface implementation's
-// methods will be called from the thread that bound this. If a Binding is not
-// bound to a message pipe, it may be bound or destroyed on any thread.
+// class must be from the sequence that bound it. The interface implementation's
+// methods will be called from the sequence that bound this. If a Binding is not
+// bound to a message pipe, it may be bound or destroyed on any sequence.
 //
 // When you bind this class to a message pipe, optionally you can specify a
 // base::SequencedTaskRunner. This task runner must belong to the same
-// thread. It will be used to dispatch incoming method calls and connection
+// sequence. It will be used to dispatch incoming method calls and connection
 // error notification. It is useful when you attach multiple task runners to a
-// single thread for the purposes of task scheduling. Please note that incoming
-// synchrounous method calls may not be run from this task runner, when they
-// reenter outgoing synchrounous calls on the same thread.
+// single sequence for the purposes of task scheduling. Please note that
+// incoming synchrounous method calls may not be run from this task runner, when
+// they reenter outgoing synchrounous calls on the same sequence.
 template <typename Interface,
           typename ImplRefTraits = RawPtrImplRefTraits<Interface>>
 class Binding {
@@ -130,7 +130,7 @@ class Binding {
     internal_state_.ResumeIncomingMethodCallProcessing();
   }
 
-  // Blocks the calling thread until either a call arrives on the previously
+  // Blocks the calling sequence until either a call arrives on the previously
   // bound message pipe, the deadline is exceeded, or an error occurs. Returns
   // true if a method was successfully read and dispatched.
   //
@@ -152,7 +152,7 @@ class Binding {
   }
 
   // Unbinds the underlying pipe from this binding and returns it so it can be
-  // used in another context, such as on another thread or with a different
+  // used in another context, such as on another sequence or with a different
   // implementation. Put this object into a state where it can be rebound to a
   // new pipe.
   //
@@ -214,7 +214,7 @@ class Binding {
   // from directly within the stack frame of a message dispatch, but the
   // returned callback may be called exactly once any time thereafter to report
   // the message as bad. This may only be called once per message. The returned
-  // callback must be called on the Binding's own thread.
+  // callback must be called on the Binding's own sequence.
   ReportBadMessageCallback GetBadMessageCallback() {
     return internal_state_.GetBadMessageCallback();
   }
