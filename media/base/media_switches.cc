@@ -203,7 +203,7 @@ const base::Feature kMediaCastOverlayButton{"MediaCastOverlayButton",
 
 // Use AndroidOverlay rather than ContentVideoView in clank?
 const base::Feature kUseAndroidOverlay{"use-android_overlay",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Let video track be unselected when video is playing in the background.
 const base::Feature kBackgroundVideoTrackOptimization{
