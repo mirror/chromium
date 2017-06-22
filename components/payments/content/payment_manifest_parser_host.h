@@ -13,8 +13,10 @@
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
+#include "base/strings/string16.h"
 #include "components/payments/mojom/payment_manifest_parser.mojom.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 template <class MojoInterface>
@@ -23,12 +25,15 @@ class UtilityProcessMojoClient;
 
 namespace payments {
 
+class PaymentManifestParserHostTest;
+
 // Host of the utility process that parses manifest contents.
 class PaymentManifestParserHost {
  public:
-  // Called on successful parsing of a payment method manifest. The result is a
-  // move-only vector, which is empty on parse failure.
-  using PaymentMethodCallback = base::OnceCallback<void(std::vector<GURL>)>;
+  // Called on successful parsing of a payment method manifest. Parse failure
+  // results in empty vectors and "false".
+  using PaymentMethodCallback = base::OnceCallback<
+      void(const std::vector<GURL>&, const std::vector<url::Origin>&, bool)>;
   // Called on successful parsing of a web app manifest. The result is a
   // move-only vector, which is empty on parse failure.
   using WebAppCallback =
@@ -48,8 +53,12 @@ class PaymentManifestParserHost {
   void ParseWebAppManifest(const std::string& content, WebAppCallback callback);
 
  private:
+  friend class PaymentManifestParserHostTest;
+
   void OnPaymentMethodParse(int64_t callback_identifier,
-                            const std::vector<GURL>& web_app_manifest_urls);
+                            const std::vector<GURL>& web_app_manifest_urls,
+                            const std::vector<url::Origin>& supported_origins,
+                            bool all_origins_supported);
   void OnWebAppParse(int64_t callback_identifier,
                      std::vector<mojom::WebAppManifestSectionPtr> manifest);
 
