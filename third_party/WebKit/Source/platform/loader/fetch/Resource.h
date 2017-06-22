@@ -258,9 +258,12 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
     return IsPreloaded() && GetPreloadResult() == kPreloadNotReferenced;
   }
   bool IsPreloaded() const { return preload_count_; }
-  void IncreasePreloadCount() { ++preload_count_; }
+  void IncreasePreloadCount() {
+    CHECK_EQ(0u, preload_count_);
+    ++preload_count_;
+  }
   void DecreasePreloadCount() {
-    DCHECK(preload_count_);
+    CHECK_EQ(1u, preload_count_);
     --preload_count_;
   }
 
