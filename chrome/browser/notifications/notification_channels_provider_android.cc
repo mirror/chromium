@@ -210,8 +210,14 @@ bool NotificationChannelsProviderAndroid::SetWebsiteSetting(
 
 void NotificationChannelsProviderAndroid::ClearAllContentSettingsRules(
     ContentSettingsType content_type) {
-  // TODO(crbug.com/700377): If |content_type| == NOTIFICATIONS, delete
-  // all channels.
+  if (content_type != CONTENT_SETTINGS_TYPE_NOTIFICATIONS ||
+      !should_use_channels_) {
+    return;
+  }
+  std::vector<NotificationChannel> channels = bridge_->GetChannels();
+  for (auto channel : channels) {
+    bridge_->DeleteChannel(channel.origin_);
+  }
 }
 
 void NotificationChannelsProviderAndroid::ShutdownOnUIThread() {
