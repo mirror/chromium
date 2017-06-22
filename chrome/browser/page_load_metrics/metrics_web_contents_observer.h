@@ -143,7 +143,8 @@ class MetricsWebContentsObserver
   // public only for testing
   void OnTimingUpdated(content::RenderFrameHost* render_frame_host,
                        const mojom::PageLoadTiming& timing,
-                       const mojom::PageLoadMetadata& metadata);
+                       const mojom::PageLoadMetadata& metadata,
+                       const std::vector<blink::WebFeature>& new_features);
 
  private:
   friend class content::WebContentsUserData<MetricsWebContentsObserver>;

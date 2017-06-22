@@ -12,6 +12,7 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "chrome/common/page_load_metrics/page_load_metrics.mojom.h"
+#include "third_party/WebKit/public/platform/WebFeature.h"
 
 namespace content {
 class NavigationHandle;
@@ -89,6 +90,8 @@ class PageLoadMetricsUpdateDispatcher {
         const mojom::PageLoadTiming& timing) = 0;
     virtual void OnMainFrameMetadataChanged() = 0;
     virtual void OnSubframeMetadataChanged() = 0;
+    virtual void UpdateFeatureUsage(
+        const std::vector<blink::WebFeature>& new_features) = 0;
   };
 
   // The |client| instance must outlive this object.
@@ -100,7 +103,8 @@ class PageLoadMetricsUpdateDispatcher {
 
   void UpdateMetrics(content::RenderFrameHost* render_frame_host,
                      const mojom::PageLoadTiming& new_timing,
-                     const mojom::PageLoadMetadata& new_metadata);
+                     const mojom::PageLoadMetadata& new_metadata,
+                     const std::vector<blink::WebFeature>& new_features);
 
   void DidFinishSubFrameNavigation(
       content::NavigationHandle* navigation_handle);

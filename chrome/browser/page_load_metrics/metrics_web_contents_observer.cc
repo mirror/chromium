@@ -592,7 +592,8 @@ MetricsWebContentsObserver::NotifyAbortedProvisionalLoadsNewNavigation(
 void MetricsWebContentsObserver::OnTimingUpdated(
     content::RenderFrameHost* render_frame_host,
     const mojom::PageLoadTiming& timing,
-    const mojom::PageLoadMetadata& metadata) {
+    const mojom::PageLoadMetadata& metadata,
+    const std::vector<blink::WebFeature>& new_features) {
   // We may receive notifications from frames that have been navigated away
   // from. We simply ignore them.
   if (GetMainFrame(render_frame_host) != web_contents()->GetMainFrame()) {
@@ -632,7 +633,8 @@ void MetricsWebContentsObserver::OnUpdateTimingOverIPC(
     const mojom::PageLoadTiming& timing,
     const mojom::PageLoadMetadata& metadata) {
   DCHECK(!base::FeatureList::IsEnabled(features::kPageLoadMetricsMojofication));
-  OnTimingUpdated(render_frame_host, timing, metadata);
+  OnTimingUpdated(render_frame_host, timing, metadata,
+                  std::vector<blink::WebFeature>());
 
   for (auto& observer : testing_observers_)
     observer.DidReceiveTimingUpdate(TestingObserver::IPCType::LEGACY);
@@ -644,7 +646,8 @@ void MetricsWebContentsObserver::UpdateTiming(
   content::RenderFrameHost* render_frame_host =
       page_load_metrics_binding_.GetCurrentTargetFrame();
   DCHECK(base::FeatureList::IsEnabled(features::kPageLoadMetricsMojofication));
-  OnTimingUpdated(render_frame_host, *timing, *metadata);
+  OnTimingUpdated(render_frame_host, *timing, *metadata,
+                  std::vector<blink::WebFeature>());
 
   for (auto& observer : testing_observers_)
     observer.DidReceiveTimingUpdate(TestingObserver::IPCType::MOJO);
