@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "a3486a80_238b0bc0",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-22T23:07:34Z",
+      "side": 1,
+      "message": "How about:\n\nSetScrollable(const WebSize\u0026 scroll_container_bounds)? If changed, a bunch of names\nin various files in this patch would change also.",
+      "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2448160e_45a6c20a",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 3
@@ -30,6 +47,23 @@
       "writtenOn": "2017-06-22T22:33:38Z",
       "side": 1,
       "message": "Can the contents viewport change size? How does this get updated, if so?",
+      "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f6bbe5_4b297407",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-22T23:07:34Z",
+      "side": 1,
+      "message": "Why is this new line needed?",
       "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

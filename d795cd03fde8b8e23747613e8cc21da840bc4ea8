@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6ed2aed_2c457732",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-22T23:07:34Z",
+      "side": 0,
+      "message": "I think we can avoid this change if you re-introduce the scrollable bit as\na private variable in cc::Layer, which will allow you to distiguish between\nscrollability and a scrolling container bound that happens to be empty.",
+      "revId": "d795cd03fde8b8e23747613e8cc21da840bc4ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
