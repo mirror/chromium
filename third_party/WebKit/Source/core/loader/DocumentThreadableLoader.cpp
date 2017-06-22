@@ -328,6 +328,35 @@ void DocumentThreadableLoader::PrepareCrossOriginRequest(
     request.SetHTTPReferrer(referrer_after_redirect_);
 }
 
+void DocumentThreadableLoader::LoadPreflightRequest(
+    const ResourceRequest& actual_request,
+    const ResourceLoaderOptions& actual_options) {
+  ResourceRequest preflight_request =
+      CreateAccessControlPreflightRequest(actual_request);
+
+  // TODO(tyoshino): Call prepareCrossOriginRequest(preflightRequest) to
+  // also set the referrer header.
+  if (GetSecurityOrigin())
+    preflight_request.SetHTTPOrigin(GetSecurityOrigin());
+
+  actual_request_ = actual_request;
+  actual_options_ = actual_options;
+
+  // Explicitly set the ServiceWorkerMode to None here. Although the page is
+  // not controlled by a SW at this point, a new SW may be controlling the
+  // page when this request gets sent later. We should not send the actual
+  // request to the SW. https://crbug.com/604583
+  // Similarly we don't want any requests that could involve a CORS preflight
+  // to get intercepted by a foreign fetch service worker, even if we have the
+  // result of the preflight cached already. https://crbug.com/674370
+  actual_request_.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
+
+  // Create a ResourceLoaderOptions for preflight.
+  ResourceLoaderOptions preflight_options = actual_options;
+
+  LoadRequest(preflight_request, preflight_options);
+}
+
 void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
     const ResourceRequest& request) {
   DCHECK(options_.fetch_request_mode == WebURLRequest::kFetchRequestModeCORS ||
@@ -368,74 +397,65 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
 
   cross_origin_request.RemoveUserAndPassFromURL();
 
-  bool skip_preflight = false;
-  if (options_.preflight_policy == kPreventPreflight) {
-    skip_preflight = true;
-  } else {
+  // Enforce the CORS preflight for checking the Access-Control-Allow-External
+  // header. The CORS preflight cache doesn't help for this purpose.
+  if (request.IsExternalRequest()) {
+    LoadPreflightRequest(cross_origin_request, cross_origin_options);
+    return;
+  }
+
+  if (options_.fetch_request_mode !=
+      WebURLRequest::kFetchRequestModeCORSWithForcedPreflight) {
+    if (options_.preflight_policy == kPreventPreflight) {
+      PrepareCrossOriginRequest(cross_origin_request);
+      LoadRequest(cross_origin_request, cross_origin_options);
+      return;
+    }
+
     DCHECK_EQ(options_.preflight_policy, kConsiderPreflight);
 
     // We use ContainsOnlyCORSSafelistedOrForbiddenHeaders() here since
-    // |request| may have been modified in the process of loading (not from the
-    // user's input). For example, referrer. We need to accept them. For
+    // |request| may have been modified in the process of loading (not from
+    // the user's input). For example, referrer. We need to accept them. For
     // security, we must reject forbidden headers/methods at the point we
     // accept user's input. Not here.
     if (FetchUtils::IsCORSSafelistedMethod(request.HttpMethod()) &&
         FetchUtils::ContainsOnlyCORSSafelistedOrForbiddenHeaders(
-            request.HttpHeaderFields()))
-      skip_preflight = true;
+            request.HttpHeaderFields())) {
+      PrepareCrossOriginRequest(cross_origin_request);
+      LoadRequest(cross_origin_request, cross_origin_options);
+      return;
+    }
   }
 
-  if (!request.IsExternalRequest() &&
-      options_.fetch_request_mode !=
-          WebURLRequest::kFetchRequestModeCORSWithForcedPreflight &&
-      skip_preflight) {
-    PrepareCrossOriginRequest(cross_origin_request);
-    LoadRequest(cross_origin_request, cross_origin_options);
-    return;
+  // Now, we need to check that the request passes the CORS preflight either by
+  // issuing a CORS preflight or based on an entry in the CORS preflight cache.
+
+  bool should_ignore_preflight_cache = false;
+  if (MainThread()) {
+    // TODO(horo): Currently we don't support the CORS preflight cache on
+    // worker thread when off-main-thread-fetch is enabled.
+    // See https://crbug.com/443374
+    should_ignore_preflight_cache = true;
+  } else {
+    // Prevent use of the CORS preflight cache when instructed by the DevTools
+    // not to use caches.
+    probe::shouldForceCORSPreflight(GetDocument(),
+                                    &should_ignore_preflight_cache);
   }
 
-  // Explicitly set the ServiceWorkerMode to None here. Although the page is
-  // not controlled by a SW at this point, a new SW may be controlling the
-  // page when this request gets sent later. We should not send the actual
-  // request to the SW. https://crbug.com/604583
-  // Similarly we don't want any requests that could involve a CORS preflight
-  // to get intercepted by a foreign fetch service worker, even if we have the
-  // result of the preflight cached already. https://crbug.com/674370
-  cross_origin_request.SetServiceWorkerMode(
-      WebURLRequest::ServiceWorkerMode::kNone);
-
-  bool should_force_preflight = request.IsExternalRequest();
-  if (!should_force_preflight)
-    probe::shouldForceCORSPreflight(GetDocument(), &should_force_preflight);
-  // TODO(horo): Currently we don't support the CORS preflight cache on worker
-  // thread when off-main-thread-fetch is enabled. https://crbug.com/443374
-  bool can_skip_preflight =
-      IsMainThread() &&
-      CrossOriginPreflightResultCache::Shared().CanSkipPreflight(
+  if (should_ignore_preflight_cache ||
+      !CrossOriginPreflightResultCache::Shared().CanSkipPreflight(
           GetSecurityOrigin()->ToString(), cross_origin_request.Url(),
           cross_origin_request.GetFetchCredentialsMode(),
           cross_origin_request.HttpMethod(),
-          cross_origin_request.HttpHeaderFields());
-  if (can_skip_preflight && !should_force_preflight) {
-    PrepareCrossOriginRequest(cross_origin_request);
-    LoadRequest(cross_origin_request, cross_origin_options);
+          cross_origin_request.HttpHeaderFields())) {
+    LoadPreflightRequest(cross_origin_request, cross_origin_options);
     return;
   }
 
-  ResourceRequest preflight_request =
-      CreateAccessControlPreflightRequest(cross_origin_request);
-  // TODO(tyoshino): Call prepareCrossOriginRequest(preflightRequest) to
-  // also set the referrer header.
-  if (GetSecurityOrigin())
-    preflight_request.SetHTTPOrigin(GetSecurityOrigin());
-
-  // Create a ResourceLoaderOptions for preflight.
-  ResourceLoaderOptions preflight_options = cross_origin_options;
-
-  actual_request_ = cross_origin_request;
-  actual_options_ = cross_origin_options;
-
-  LoadRequest(preflight_request, preflight_options);
+  PrepareCrossOriginRequest(cross_origin_request);
+  LoadRequest(cross_origin_request, cross_origin_options);
 }
 
 DocumentThreadableLoader::~DocumentThreadableLoader() {
