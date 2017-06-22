@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e9e922c_6328143a",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-22T01:01:20Z",
+      "side": 1,
+      "message": "This is extremely unfortunate :(\n\nI assume this is all strictly necessary, and I don\u0027t want to block you more. Would you add a TODO(csharrison) to clean up the test teardown logic to avoid leaks?",
+      "revId": "fd5961e95aa7344492e04cc19538a0112b77a89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
