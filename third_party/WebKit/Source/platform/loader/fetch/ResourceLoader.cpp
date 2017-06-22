@@ -72,9 +72,28 @@ ResourceLoader::~ResourceLoader() {}
 DEFINE_TRACE(ResourceLoader) {
   visitor->Trace(fetcher_);
   visitor->Trace(resource_);
+  ResourceLoadSchedulerClient::Trace(visitor);
 }
 
-void ResourceLoader::Start(const ResourceRequest& request) {
+void ResourceLoader::Start() {
+  const ResourceRequest& request = resource_->GetResourceRequest();
+  ActivateCacheAwareLoadingIfNeeded(request);
+  // Asynchronous requests should not work with a throttling. Also, tentatively
+  // disables throttling for fetch requests that could keep on holding an active
+  // connection until data is read by JavaScript.
+  ResourceLoadScheduler::ThrottleOption option =
+      (resource_->Options().synchronous_policy == kRequestSynchronously ||
+       request.GetRequestContext() == WebURLRequest::kRequestContextFetch)
+          ? ResourceLoadScheduler::ThrottleOption::kCanNotBeThrottled
+          : ResourceLoadScheduler::ThrottleOption::kCanBeThrottled;
+  fetcher_->Scheduler().Request(this, option);
+}
+
+void ResourceLoader::OnRequestGranted() {
+  Issue(resource_->GetResourceRequest());
+}
+
+void ResourceLoader::Issue(const ResourceRequest& request) {
   DCHECK(!loader_);
 
   if (resource_->Options().synchronous_policy == kRequestSynchronously &&
@@ -83,7 +102,7 @@ void ResourceLoader::Start(const ResourceRequest& request) {
     return;
   }
 
-  loader_ = fetcher_->Context().CreateURLLoader(request);
+  loader_ = Context().CreateURLLoader(request);
   DCHECK(loader_);
   loader_->SetDefersLoading(Context().DefersLoading());
 
@@ -107,7 +126,7 @@ void ResourceLoader::Restart(const ResourceRequest& request) {
   CHECK_EQ(resource_->Options().synchronous_policy, kRequestAsynchronously);
 
   loader_.reset();
-  Start(request);
+  Issue(request);
 }
 
 void ResourceLoader::SetDefersLoading(bool defers) {
@@ -128,6 +147,13 @@ void ResourceLoader::DidChangePriority(ResourceLoadPriority load_priority,
 void ResourceLoader::Cancel() {
   HandleError(
       ResourceError::CancelledError(resource_->LastResourceRequest().Url()));
+
+  // Cancel could be called before the fetch request is granted to create
+  // |loader_|, but HandleError() releases the request only when |loader_| is
+  // alive. Let's release the request here for the case cancel happens before a
+  // grant.
+  if (!loader_)
+    fetcher_->Scheduler().Release(this);
 }
 
 void ResourceLoader::CancelForRedirectAccessCheckError(
@@ -449,6 +475,7 @@ void ResourceLoader::DidFinishLoading(double finish_time,
   resource_->SetEncodedBodyLength(encoded_body_length);
   resource_->SetDecodedBodyLength(decoded_body_length);
 
+  CHECK(fetcher_->Scheduler().Release(this));
   loader_.reset();
 
   network_instrumentation::EndResourceLoad(
@@ -478,7 +505,10 @@ void ResourceLoader::HandleError(const ResourceError& error) {
     return;
   }
 
-  loader_.reset();
+  if (loader_) {
+    loader_.reset();
+    CHECK(fetcher_->Scheduler().Release(this));
+  }
 
   network_instrumentation::EndResourceLoad(
       resource_->Identifier(), network_instrumentation::RequestOutcome::kFail);
@@ -531,6 +561,9 @@ void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
 
 void ResourceLoader::Dispose() {
   loader_ = nullptr;
+
+  // Release() should be called beforehand on a proper event handling.
+  CHECK(!fetcher_->Scheduler().Release(this));
 }
 
 void ResourceLoader::ActivateCacheAwareLoadingIfNeeded(

@@ -37,6 +37,7 @@
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourceLoadScheduler.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/SubstituteData.h"
 #include "platform/wtf/HashMap.h"
@@ -83,8 +84,11 @@ class PLATFORM_EXPORT ResourceFetcher
     return document_resources_;
   }
 
-  // Actually starts loading a Resource if it wasn't started during
-  // requestResource().
+  // Binds the given Resource instance to this ResourceFetcher instance to
+  // start loading the Resource actually.
+  // Usually, RequestResource() calls this method internally, but needs to
+  // call this method explicitly on cases such as ResourceNeedsLoad() returning
+  // false.
   bool StartLoad(Resource*);
 
   void SetAutoLoadImages(bool);
@@ -94,6 +98,8 @@ class PLATFORM_EXPORT ResourceFetcher
     return context_ ? *context_.Get() : FetchContext::NullInstance();
   }
   void ClearContext();
+
+  ResourceLoadScheduler& Scheduler() const { return *scheduler_.Get(); }
 
   int BlockingRequestCount() const;
   int NonblockingRequestCount() const;
@@ -235,6 +241,7 @@ class PLATFORM_EXPORT ResourceFetcher
                               bool is_static_data) const;
 
   Member<FetchContext> context_;
+  Member<ResourceLoadScheduler> scheduler_;
 
   HashSet<String> validated_urls_;
   mutable DocumentResourceMap document_resources_;
