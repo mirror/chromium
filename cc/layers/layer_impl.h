@@ -295,15 +295,12 @@ class CC_EXPORT LayerImpl {
   // initial scroll
   gfx::Vector2dF ScrollBy(const gfx::Vector2dF& scroll);
 
-  // TODO(pdr): Remove scroll_clip_layer_id and use the scroll node's scroll
-  // clip bounds instead of the scroll_clip_layer bounds.
-  void SetScrollClipLayer(int scroll_clip_layer_id);
-  LayerImpl* scroll_clip_layer() const;
-
-  // Marks this layer as being scrollable and having an associated scroll node
-  // with bounds synced to this layer's bounds.
-  void SetScrollable(bool scrollable = true);
-  bool scrollable() const { return scrollable_; }
+  // Marks this layer as being scrollable and needing an associated scroll node.
+  // The scroll node's bounds and scroll_clip_layer_bounds will be kept in sync
+  // with this layer.
+  void SetScrollContainerBounds(const gfx::Size& bounds);
+  gfx::Size scroll_container_bounds() const { return scroll_container_bounds_; }
+  bool scrollable() const { return !scroll_container_bounds_.IsEmpty(); }
 
   void set_main_thread_scrolling_reasons(
       uint32_t main_thread_scrolling_reasons) {
@@ -476,14 +473,13 @@ class CC_EXPORT LayerImpl {
 
   // Properties synchronized from the associated Layer.
   gfx::Size bounds_;
-  int scroll_clip_layer_id_;
+
+  // Size of the scroll container that this layer scrolls in. If this is empty
+  // the layer will not be scrollable.
+  gfx::Size scroll_container_bounds_;
 
   gfx::Vector2dF offset_to_transform_parent_;
   uint32_t main_thread_scrolling_reasons_;
-
-  // Indicates that this layer is scrollable and has an associated scroll node
-  // with bounds synced to this layer's bounds.
-  bool scrollable_ : 1;
 
   bool should_flatten_transform_from_property_tree_ : 1;
 
