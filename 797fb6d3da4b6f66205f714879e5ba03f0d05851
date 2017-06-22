@@ -2,6 +2,103 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d04ab66_4a19a988",
+        "filename": "extensions/browser/api/webcam_private/v4l2_webcam.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T20:49:59Z",
+      "side": 1,
+      "message": "Notice that GetWebcamParameter called above does the exactly the same thing, it just currently ignores everything except value :)",
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70834a0_a5c503e1",
+        "filename": "extensions/browser/api/webcam_private/visca_webcam.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T20:49:59Z",
+      "side": 1,
+      "message": "(false, 0 /* value */, 0 /* minimum */, 0 /* maximum */)\n\nalternatively you could have callback return a struct {value, min, max} (though, I\u0027ll leave that call to you).\n\nIs 0 a valid min value? (Maybe -1 would be more appropriate value to return if that is the case)",
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a582076f_0f1c8993",
+        "filename": "extensions/browser/api/webcam_private/webcam.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T20:49:59Z",
+      "side": 1,
+      "message": "for readability, can you name the args",
+      "range": {
+        "startLine": 34,
+        "startChar": 59,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aab673e_496ac9ea",
+        "filename": "extensions/browser/api/webcam_private/webcam_private_api_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T20:49:59Z",
+      "side": 1,
+      "message": "would it be better to test min_pan_ !\u003d 0 \u0026\u0026 max_pan !\u003d 0 (depends on whether min \u003d\u003d max could ever hold in non-error cases)",
+      "range": {
+        "startLine": 397,
+        "startChar": 10,
+        "endLine": 397,
+        "endChar": 30
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444f8139_19c35281",
+        "filename": "extensions/browser/api/webcam_private/webcam_private_api_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T20:49:59Z",
+      "side": 1,
+      "message": "can we use base::MakeUnique\u003cdouble\u003e here?",
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc2f5225_ae9b53c4",
         "filename": "extensions/common/api/webcam_private.idl",
         "patchSetId": 3
@@ -18,6 +115,76 @@
         "startChar": 13,
         "endLine": 29,
         "endChar": 42
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd3715b_daebb55d",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T20:49:59Z",
+      "side": 1,
+      "message": "Though, that\u0027s not backward-compatible, and it would be preferable not to break current usages :)",
+      "parentUuid": "dc2f5225_ae9b53c4",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b757b6f5_02baf0a8",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T20:49:59Z",
+      "side": 1,
+      "message": "get does not seem to ever return speed/direction, so you can probably just remove it.\n(also, pan, tilt, and zoom are always set, so they can probably don\u0027t have to be optional).\n\nNote that this applies only to WebcamConfigurationWithRanges.",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938822db_d4347b65",
+        "filename": "extensions/common/api/webcam_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-22T20:49:59Z",
+      "side": 1,
+      "message": "while here, can you remove this?",
+      "range": {
+        "startLine": 61,
+        "startChar": 77,
+        "endLine": 61,
+        "endChar": 78
       },
       "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
