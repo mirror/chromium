@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ee6b3555_a531c5dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/IncognitoTabModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-22T19:08:14Z",
+      "side": 1,
+      "message": "Actually, I believe I lied.  mIsPendingTabAdd is local to this class.  I think in general we have an issue where we are not updating TabModelImpl with a valid mIsPendingTabAdd value (it will always be false as we are not calling mDelegateModel.setIsPendingTabAdd below).\n\nI \"think\" we might need to do something gross where we need a separate mIsPendingTabAdd param here that we use to determine the ensure model stuff.  I think we should call it differently as well.  We could use an even more awesome name of mPendingIsPendingTabAdd :-P\n\nBut we should work towards calling mDelegateModel.setIsPendingTabApp and mDelegateModel.isPendingTabAdd.",
+      "parentUuid": "5bcb2645_942eeb06",
+      "range": {
+        "startLine": 161,
+        "startChar": 34,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "0bfeaf162f4406314adcccb794d21c1ec332a8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d46c030_d1630bf2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
         "patchSetId": 2
