@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/payments/payment_request.h"
+
 class ToolbarModelIOS;
 
 namespace ios {
@@ -22,7 +24,7 @@ class WebState;
 // Implements the app-side of the Payment Request JavaScript API. Injects and
 // listens to the injected JavaScript and invokes the creation of the user
 // interface.
-@interface PaymentRequestManager : NSObject
+@interface PaymentRequestManager : NSObject<PaymentRequestUIDelegate>
 
 // YES if Payment Request is enabled on the current web state.
 @property(readonly) BOOL enabled;

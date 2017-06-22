@@ -5,6 +5,7 @@
 #include "ios/chrome/browser/payments/payment_request.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_task_environment.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/field_types.h"
@@ -12,6 +13,7 @@
 #include "components/payments/core/currency_formatter.h"
 #include "components/payments/core/payment_method_data.h"
 #include "ios/chrome/browser/application_context.h"
+#include "ios/chrome/browser/payments/test_payment_request.h"
 #include "ios/web/public/payments/payment_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -45,6 +47,8 @@ class PaymentRequestTest : public testing::Test {
     options.request_shipping = request_shipping;
     return options;
   }
+
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 // Tests that the payments::CurrencyFormatter is constructed with the correct
@@ -54,16 +58,19 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
 
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   web_payment_request.details.total.amount.currency = base::ASCIIToUTF16("USD");
-  PaymentRequest payment_request1(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request1(web_payment_request, &personal_data_manager,
+                                  payment_request_delegate);
   payments::CurrencyFormatter* currency_formatter =
       payment_request1.GetOrCreateCurrencyFormatter();
   EXPECT_EQ(base::UTF8ToUTF16("$55.00"), currency_formatter->Format("55.00"));
   EXPECT_EQ("USD", currency_formatter->formatted_currency_code());
 
   web_payment_request.details.total.amount.currency = base::ASCIIToUTF16("JPY");
-  PaymentRequest payment_request2(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request2(web_payment_request, &personal_data_manager,
+                                  payment_request_delegate);
   currency_formatter = payment_request2.GetOrCreateCurrencyFormatter();
   EXPECT_EQ(base::UTF8ToUTF16("¥55"), currency_formatter->Format("55.00"));
   EXPECT_EQ("JPY", currency_formatter->formatted_currency_code());
@@ -71,7 +78,8 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   web_payment_request.details.total.amount.currency_system =
       base::ASCIIToUTF16("NOT_ISO4217");
   web_payment_request.details.total.amount.currency = base::ASCIIToUTF16("USD");
-  PaymentRequest payment_request3(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request3(web_payment_request, &personal_data_manager,
+                                  payment_request_delegate);
   currency_formatter = payment_request3.GetOrCreateCurrencyFormatter();
   EXPECT_EQ(base::UTF8ToUTF16("55.00"), currency_formatter->Format("55.00"));
   EXPECT_EQ("USD", currency_formatter->formatted_currency_code());
@@ -81,6 +89,7 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
 TEST_F(PaymentRequestTest, AcceptedPaymentNetworks) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   payments::PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("visa");
@@ -89,7 +98,8 @@ TEST_F(PaymentRequestTest, AcceptedPaymentNetworks) {
   method_datum2.supported_methods.push_back("mastercard");
   web_payment_request.method_data.push_back(method_datum2);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   ASSERT_EQ(2U, payment_request.supported_card_networks().size());
   EXPECT_EQ("visa", payment_request.supported_card_networks()[0]);
   EXPECT_EQ("mastercard", payment_request.supported_card_networks()[1]);
@@ -100,6 +110,7 @@ TEST_F(PaymentRequestTest, AcceptedPaymentNetworks) {
 TEST_F(PaymentRequestTest, SupportedMethods) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   payments::PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("visa");
@@ -109,7 +120,8 @@ TEST_F(PaymentRequestTest, SupportedMethods) {
   method_datum1.supported_methods.push_back("visa");
   web_payment_request.method_data.push_back(method_datum1);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   ASSERT_EQ(2U, payment_request.supported_card_networks().size());
   EXPECT_EQ("visa", payment_request.supported_card_networks()[0]);
   EXPECT_EQ("mastercard", payment_request.supported_card_networks()[1]);
@@ -120,6 +132,7 @@ TEST_F(PaymentRequestTest, SupportedMethods) {
 TEST_F(PaymentRequestTest, SupportedMethods_MultipleEntries) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   payments::PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("visa");
@@ -134,7 +147,8 @@ TEST_F(PaymentRequestTest, SupportedMethods_MultipleEntries) {
   method_datum4.supported_methods.push_back("visa");
   web_payment_request.method_data.push_back(method_datum4);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   ASSERT_EQ(2U, payment_request.supported_card_networks().size());
   EXPECT_EQ("visa", payment_request.supported_card_networks()[0]);
   EXPECT_EQ("mastercard", payment_request.supported_card_networks()[1]);
@@ -144,12 +158,14 @@ TEST_F(PaymentRequestTest, SupportedMethods_MultipleEntries) {
 TEST_F(PaymentRequestTest, SupportedMethods_OnlyBasicCard) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   payments::PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("basic-card");
   web_payment_request.method_data.push_back(method_datum1);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
 
   // All of the basic card networks are supported.
   ASSERT_EQ(8U, payment_request.supported_card_networks().size());
@@ -168,13 +184,15 @@ TEST_F(PaymentRequestTest, SupportedMethods_OnlyBasicCard) {
 TEST_F(PaymentRequestTest, SupportedMethods_BasicCard_WithSpecificMethod) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   payments::PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("jcb");
   method_datum1.supported_methods.push_back("basic-card");
   web_payment_request.method_data.push_back(method_datum1);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
 
   // All of the basic card networks are supported, but JCB is first because it
   // was specified first.
@@ -194,6 +212,7 @@ TEST_F(PaymentRequestTest, SupportedMethods_BasicCard_WithSpecificMethod) {
 TEST_F(PaymentRequestTest, SupportedMethods_BasicCard_Overlap) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   payments::PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("mastercard");
@@ -206,7 +225,8 @@ TEST_F(PaymentRequestTest, SupportedMethods_BasicCard_Overlap) {
   method_datum2.supported_networks.push_back("unionpay");
   web_payment_request.method_data.push_back(method_datum2);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
 
   EXPECT_EQ(3u, payment_request.supported_card_networks().size());
   EXPECT_EQ("mastercard", payment_request.supported_card_networks()[0]);
@@ -219,6 +239,7 @@ TEST_F(PaymentRequestTest, SupportedMethods_BasicCard_Overlap) {
 TEST_F(PaymentRequestTest, SupportedMethods_BasicCard_WithSupportedNetworks) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   payments::PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("basic-card");
@@ -226,7 +247,8 @@ TEST_F(PaymentRequestTest, SupportedMethods_BasicCard_WithSupportedNetworks) {
   method_datum1.supported_networks.push_back("unionpay");
   web_payment_request.method_data.push_back(method_datum1);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
 
   // Only the specified networks are supported.
   EXPECT_EQ(2u, payment_request.supported_card_networks().size());
@@ -244,11 +266,13 @@ TEST_F(PaymentRequestTest, AddCreditCard) {
   web_payment_request.method_data.push_back(method_datum);
 
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   autofill::CreditCard credit_card_1 = autofill::test::GetCreditCard();
   personal_data_manager.AddTestingCreditCard(&credit_card_1);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   EXPECT_EQ(1U, payment_request.credit_cards().size());
 
   autofill::CreditCard credit_card_2 = autofill::test::GetCreditCard2();
@@ -267,11 +291,13 @@ TEST_F(PaymentRequestTest, AddAutofillProfile) {
       /*request_payer_email=*/true, /*request_shipping=*/true);
 
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   autofill::AutofillProfile profile_1 = autofill::test::GetFullProfile();
   personal_data_manager.AddTestingProfile(&profile_1);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   EXPECT_EQ(1U, payment_request.shipping_profiles().size());
   EXPECT_EQ(1U, payment_request.contact_profiles().size());
 
@@ -288,6 +314,7 @@ TEST_F(PaymentRequestTest, AddAutofillProfile) {
 TEST_F(PaymentRequestTest, SelectedShippingOptions) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+  id<PaymentRequestUIDelegate> payment_request_delegate;
 
   web::PaymentDetails details;
   std::vector<web::PaymentShippingOption> shipping_options;
@@ -306,7 +333,8 @@ TEST_F(PaymentRequestTest, SelectedShippingOptions) {
   details.shipping_options = std::move(shipping_options);
   web_payment_request.details = std::move(details);
 
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   // The last one marked "selected" should be selected.
   EXPECT_EQ(base::UTF8ToUTF16("option:3"),
             payment_request.selected_shipping_option()->id);
@@ -327,8 +355,11 @@ TEST_F(PaymentRequestTest, SelectedProfiles_NoProfiles) {
       /*request_payer_name=*/true, /*request_payer_phone=*/true,
       /*request_payer_email=*/true, /*request_shipping=*/true);
 
+  id<PaymentRequestUIDelegate> payment_request_delegate;
+
   // No profiles are selected because none are available!
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   EXPECT_EQ(nullptr, payment_request.selected_shipping_profile());
   EXPECT_EQ(nullptr, payment_request.selected_contact_profile());
 }
@@ -349,8 +380,11 @@ TEST_F(PaymentRequestTest, SelectedProfiles_Complete) {
       /*request_payer_name=*/true, /*request_payer_phone=*/true,
       /*request_payer_email=*/true, /*request_shipping=*/true);
 
+  id<PaymentRequestUIDelegate> payment_request_delegate;
+
   // address2 is selected because it has the most use count (Frecency model).
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   EXPECT_EQ(address2.guid(),
             payment_request.selected_shipping_profile()->guid());
   EXPECT_EQ(address2.guid(),
@@ -372,9 +406,12 @@ TEST_F(PaymentRequestTest, SelectedProfiles_Complete_NoShippingOption) {
       /*request_payer_name=*/true, /*request_payer_phone=*/true,
       /*request_payer_email=*/true, /*request_shipping=*/true);
 
+  id<PaymentRequestUIDelegate> payment_request_delegate;
+
   // No shipping profile is selected because the merchant has not selected a
   // shipping option. However there is a suitable contact profile.
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   EXPECT_EQ(nullptr, payment_request.selected_shipping_profile());
   EXPECT_EQ(address.guid(), payment_request.selected_contact_profile()->guid());
 }
@@ -399,9 +436,12 @@ TEST_F(PaymentRequestTest, SelectedProfiles_Incomplete) {
       /*request_payer_name=*/true, /*request_payer_phone=*/true,
       /*request_payer_email=*/true, /*request_shipping=*/true);
 
+  id<PaymentRequestUIDelegate> payment_request_delegate;
+
   // Even though address1 has more use counts, address2 is selected because it
   // is complete.
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   EXPECT_EQ(address2.guid(),
             payment_request.selected_shipping_profile()->guid());
   EXPECT_EQ(address2.guid(),
@@ -432,11 +472,14 @@ TEST_F(PaymentRequestTest,
       /*request_payer_name=*/true, /*request_payer_phone=*/false,
       /*request_payer_email=*/true, /*request_shipping=*/true);
 
+  id<PaymentRequestUIDelegate> payment_request_delegate;
+
   // address1 has more use counts, and even though it has no phone number, it's
   // still selected as the contact profile because merchant doesn't require
   // phone. address2 is selected as the shipping profile because it's the most
   // complete for shipping.
-  PaymentRequest payment_request(web_payment_request, &personal_data_manager);
+  PaymentRequest payment_request(web_payment_request, &personal_data_manager,
+                                 payment_request_delegate);
   EXPECT_EQ(address2.guid(),
             payment_request.selected_shipping_profile()->guid());
   EXPECT_EQ(address1.guid(),
