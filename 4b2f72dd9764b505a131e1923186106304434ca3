@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3895f651_602fe507",
+        "filename": "third_party/WebKit/LayoutTests/external/README",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-22T15:43:20Z",
+      "side": 1,
+      "message": "There\u0027s no more csswg-test now, so there\u0027s only one repo that\u0027s synced.\n\nWDYT about changing this to:\n\"The tests in wpt are imported from https://github.com/w3c/web-platform-tests, and changes to web-platform-tests are automatically upstreamed within 24 hours.\"",
+      "revId": "4b2f72dd9764b505a131e1923186106304434ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c423d917_5f944666",
+        "filename": "third_party/WebKit/LayoutTests/external/README",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-22T15:43:20Z",
+      "side": 1,
+      "message": "This is definitely better phrasing.\n\nBut regarding \"within 24 hours\": In practice, we have a very high percentage of commits that are upstreamed very quickly -- for example https://crrev.com/c/535085 was upstreamed in ~20 minutes -- and some number of commits that require manual intervention and would be stuck until somebody manually closes the PR.\n\nDoes \"within 24 hours\" still seem like a good thing to put here?",
+      "revId": "4b2f72dd9764b505a131e1923186106304434ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
