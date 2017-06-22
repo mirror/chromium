@@ -435,7 +435,8 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
   bool was_renderer_initiated = !navigation_request_->browser_initiated();
   NavigationRequest::AssociatedSiteInstanceType site_instance_type =
       navigation_request_->associated_site_instance_type();
-  navigation_request_.reset();
+  BrowserThread::DeleteSoon(BrowserThread::UI, FROM_HERE,
+                            navigation_request_.release());
 
   if (keep_state)
     return;
