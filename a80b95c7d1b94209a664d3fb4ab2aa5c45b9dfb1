@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b7d3f1_ae6d4a0c",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-22T17:02:30Z",
+      "side": 1,
+      "message": "There\u0027s no need to keep this inline; this code is not nearly as performance critical as style recalcs. So this impl can just move to the .cpp and there\u0027s no need to introduce FullReset()",
+      "revId": "a80b95c7d1b94209a664d3fb4ab2aa5c45b9dfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
