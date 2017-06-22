@@ -189,7 +189,7 @@ void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
     client_->OnDownloadUpdated(entry);
   } else if (reason !=
              content::DownloadInterruptReason::DOWNLOAD_INTERRUPT_REASON_NONE) {
-    client_->OnDownloadFailed(entry, static_cast<int>(reason));
+    client_->OnDownloadFailed(entry, FailureTypeFromInterruptReason(reason));
     // TODO(dtrainor, xingliu): This actually might not be correct.  What if we
     // restart the download?
     item->RemoveObserver(this);
@@ -218,6 +218,25 @@ void DownloadDriverImpl::OnManagerInitialized() {
 void DownloadDriverImpl::ManagerGoingDown(content::DownloadManager* manager) {
   DCHECK_EQ(download_manager_, manager);
   download_manager_ = nullptr;
+}
+
+FailureType DownloadDriverImpl::FailureTypeFromInterruptReason(
+    content::DownloadInterruptReason reason) {
+  switch (reason) {
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_ACCESS_DENIED:
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_NO_SPACE:
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_NAME_TOO_LONG:
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_TOO_LARGE:
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_VIRUS_INFECTED:
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_BLOCKED:
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_SECURITY_CHECK_FAILED:
+    case content::DOWNLOAD_INTERRUPT_REASON_SERVER_UNAUTHORIZED:
+    case content::DOWNLOAD_INTERRUPT_REASON_SERVER_CERT_PROBLEM:
+    case content::DOWNLOAD_INTERRUPT_REASON_SERVER_FORBIDDEN:
+      return FailureType::NOT_RECOVERABLE;
+    default:
+      return FailureType::RECOVERABLE;
+  }
 }
 
 }  // namespace download

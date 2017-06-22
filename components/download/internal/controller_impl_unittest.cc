@@ -120,6 +120,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
     auto driver = base::MakeUnique<test::TestDownloadDriver>();
     auto store = base::MakeUnique<test::TestStore>();
     config_ = base::MakeUnique<Configuration>();
+    config_->max_retry_count = 2;
     config_->file_keep_alive_time = base::TimeDelta::FromMinutes(10);
     config_->file_cleanup_window = base::TimeDelta::FromMinutes(5);
 
@@ -655,7 +656,7 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadFailed) {
   DriverEntry driver_entry;
   driver_entry.guid = entry.guid;
 
-  driver_->NotifyDownloadFailed(driver_entry, 1);
+  driver_->NotifyDownloadFailed(driver_entry, FailureType::NOT_RECOVERABLE);
   EXPECT_EQ(nullptr, model_->Get(entry.guid));
 
   task_runner_->RunUntilIdle();
@@ -796,7 +797,7 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
   EXPECT_CALL(*client_,
               OnDownloadFailed(entry3.guid, Client::FailureReason::NETWORK))
       .Times(1);
-  driver_->NotifyDownloadFailed(dentry3, 1);
+  driver_->NotifyDownloadFailed(dentry3, FailureType::NOT_RECOVERABLE);
 
   task_runner_->RunUntilIdle();
 }
@@ -1063,7 +1064,7 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
 
   // Simulate a failed external download.
   dentry2.state = DriverEntry::State::INTERRUPTED;
-  driver_->NotifyDownloadFailed(dentry2, 1);
+  driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
 
   EXPECT_FALSE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);

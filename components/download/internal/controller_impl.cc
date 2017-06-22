@@ -149,7 +149,7 @@ void ControllerImpl::PauseDownload(const std::string& guid) {
   }
 
   TransitTo(entry, Entry::State::PAUSED, model_.get());
-  UpdateDriverState(*entry);
+  UpdateDriverState(entry);
 
   // Pausing a download may yield a concurrent slot to start a new download, and
   // may change the scheduling criteria.
@@ -166,7 +166,7 @@ void ControllerImpl::ResumeDownload(const std::string& guid) {
     return;
 
   TransitTo(entry, Entry::State::ACTIVE, model_.get());
-  UpdateDriverState(*entry);
+  UpdateDriverState(entry);
 
   ActivateMoreDownloads();
 }
@@ -199,7 +199,7 @@ void ControllerImpl::ChangeDownloadCriteria(const std::string& guid,
     return;
   }
 
-  UpdateDriverState(*entry);
+  UpdateDriverState(entry);
 
   // Update the scheduling parameters.
   entry->scheduling_params = params;
@@ -302,7 +302,8 @@ void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {
   }
 }
 
-void ControllerImpl::OnDownloadFailed(const DriverEntry& download, int reason) {
+void ControllerImpl::OnDownloadFailed(const DriverEntry& download,
+                                      FailureType failure_type) {
   if (initializing_internals_)
     return;
 
@@ -314,11 +315,14 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download, int reason) {
 
   // TODO(dtrainor): Add retry logic here.  Connect to restart code for tracking
   // number of retries.
-
-  // TODO(dtrainor, xingliu): We probably have to prevent cancel calls from
-  // coming through here as we remove downloads (especially through
-  // initialization).
-  HandleCompleteDownload(CompletionType::FAIL, download.guid);
+  if (failure_type == FailureType::RECOVERABLE) {
+    UpdateDriverState(entry);
+  } else {
+    // TODO(dtrainor, xingliu): We probably have to prevent cancel calls from
+    // coming through here as we remove downloads (especially through
+    // initialization).
+    HandleCompleteDownload(CompletionType::FAIL, download.guid);
+  }
 }
 
 void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download,
@@ -605,41 +609,50 @@ void ControllerImpl::ResolveInitialRequestStates() {
 void ControllerImpl::UpdateDriverStates() {
   DCHECK(startup_status_.Complete());
 
-  for (auto* const entry : model_->PeekEntries())
-    UpdateDriverState(*entry);
+  for (auto* entry : model_->PeekEntries())
+    UpdateDriverState(entry);
 }
 
-void ControllerImpl::UpdateDriverState(const Entry& entry) {
+void ControllerImpl::UpdateDriverState(Entry* entry) {
   DCHECK(!initializing_internals_);
 
-  if (entry.state != Entry::State::ACTIVE &&
-      entry.state != Entry::State::PAUSED) {
+  if (entry->state != Entry::State::ACTIVE &&
+      entry->state != Entry::State::PAUSED) {
     return;
   }
 
   // This method will need to figure out what to do with a failed download and
   // either a) restart it or b) fail the download.
 
-  base::Optional<DriverEntry> driver_entry = driver_->Find(entry.guid);
+  base::Optional<DriverEntry> driver_entry = driver_->Find(entry->guid);
 
   bool meets_device_criteria = device_status_listener_->CurrentDeviceStatus()
-                                   .MeetsCondition(entry.scheduling_params)
+                                   .MeetsCondition(entry->scheduling_params)
                                    .MeetsRequirements();
   bool force_pause =
       !externally_active_downloads_.empty() &&
-      entry.scheduling_params.priority != SchedulingParams::Priority::UI;
-  bool entry_paused = entry.state == Entry::State::PAUSED;
+      entry->scheduling_params.priority != SchedulingParams::Priority::UI;
+  bool entry_paused = entry->state == Entry::State::PAUSED;
 
   bool pause_driver = entry_paused || force_pause || !meets_device_criteria;
 
   if (pause_driver) {
     if (driver_entry.has_value())
-      driver_->Pause(entry.guid);
+      driver_->Pause(entry->guid);
   } else {
     if (driver_entry.has_value()) {
-      driver_->Resume(entry.guid);
+      bool is_retry = driver_entry->state == DriverEntry::State::INTERRUPTED;
+      if (is_retry) {
+        entry->attempt_count++;
+        if (entry->attempt_count >= config_->max_retry_count) {
+          HandleCompleteDownload(CompletionType::FAIL, entry->guid);
+          return;
+        }
+      }
+      driver_->Resume(entry->guid);
     } else {
-      driver_->Start(entry.request_params, entry.guid,
+      entry->attempt_count++;
+      driver_->Start(entry->request_params, entry->guid,
                      NO_TRAFFIC_ANNOTATION_YET);
     }
   }
@@ -793,7 +806,7 @@ void ControllerImpl::ActivateMoreDownloads() {
   while (next) {
     DCHECK_EQ(Entry::State::AVAILABLE, next->state);
     TransitTo(next, Entry::State::ACTIVE, model_.get());
-    UpdateDriverState(*next);
+    UpdateDriverState(next);
     next = scheduler_->Next(model_->PeekEntries(),
                             device_status_listener_->CurrentDeviceStatus());
   }
