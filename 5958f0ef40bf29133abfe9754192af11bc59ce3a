@@ -22,6 +22,30 @@
       "revId": "5958f0ef40bf29133abfe9754192af11bc59ce3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bec23f3_e2d1443b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-06-22T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d7b51ee_d02e1ee3",
+      "range": {
+        "startLine": 260,
+        "startChar": 32,
+        "endLine": 260,
+        "endChar": 39
+      },
+      "revId": "5958f0ef40bf29133abfe9754192af11bc59ce3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
