@@ -85,7 +85,7 @@ class PaymentRequestCoordinatorTest : public PlatformTest {
 
     payment_request_ = base::MakeUnique<PaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
 
     TestChromeBrowserState::Builder test_cbs_builder;
     browser_state_ = test_cbs_builder.Build();
@@ -94,6 +94,7 @@ class PaymentRequestCoordinatorTest : public PlatformTest {
   autofill::AutofillProfile autofill_profile_;
   autofill::CreditCard credit_card_;
   autofill::TestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<PaymentRequest> payment_request_;
   std::unique_ptr<ios::ChromeBrowserState> browser_state_;
 };

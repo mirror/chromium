@@ -34,12 +34,13 @@ class PaymentRequestPaymentMethodSelectionCoordinatorTest
     personal_data_manager_.AddTestingCreditCard(&credit_card2_);
     payment_request_ = base::MakeUnique<PaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
   }
 
   autofill::CreditCard credit_card1_;
   autofill::CreditCard credit_card2_;
   autofill::TestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<PaymentRequest> payment_request_;
 };
 
