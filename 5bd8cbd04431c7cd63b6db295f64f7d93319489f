@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69065072_4e907634",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConstants.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-22T23:17:18Z",
+      "side": 1,
+      "message": "Why do these intent extras refer to the //content layer?",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 41
+      },
+      "revId": "5bd8cbd04431c7cd63b6db295f64f7d93319489f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
