@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16c52d30_d943de19",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-22T19:09:16Z",
+      "side": 1,
+      "message": "Set this here based on state here instead of below?",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "6ddf870dd69b9e37e958c795fbea5e836854825e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf4990c_0f0e9fb2",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-22T19:09:16Z",
+      "side": 1,
+      "message": "Call into stats here so we can just update stats to add all the UMA?",
+      "range": {
+        "startLine": 703,
+        "startChar": 6,
+        "endLine": 703,
+        "endChar": 35
+      },
+      "revId": "6ddf870dd69b9e37e958c795fbea5e836854825e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1104b29b_79bf1afc",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-22T19:09:16Z",
+      "side": 1,
+      "message": "Put this inside the if so we have one block that deals with this weirdness?",
+      "range": {
+        "startLine": 705,
+        "startChar": 4,
+        "endLine": 705,
+        "endChar": 62
+      },
+      "revId": "6ddf870dd69b9e37e958c795fbea5e836854825e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
