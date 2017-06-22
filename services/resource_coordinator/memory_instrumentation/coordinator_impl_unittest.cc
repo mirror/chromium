@@ -32,7 +32,7 @@ class CoordinatorImplTest : public testing::Test {
  public:
   CoordinatorImplTest() {}
   void SetUp() override {
-    dump_response_args_ = {0U, false};
+    dump_response_args_ = {false, 0U};
     coordinator_.reset(new FakeCoordinatorImpl);
   }
 
@@ -56,17 +56,17 @@ class CoordinatorImplTest : public testing::Test {
   }
 
   void OnGlobalMemoryDumpResponse(base::Closure closure,
-                                  uint64_t dump_guid,
                                   bool success,
+                                  uint64_t dump_guid,
                                   mojom::GlobalMemoryDumpPtr) {
-    dump_response_args_ = {dump_guid, success};
+    dump_response_args_ = {success, dump_guid};
     closure.Run();
   }
 
  protected:
   struct DumpResponseArgs {
-    uint64_t dump_guid;
     bool success;
+    uint64_t dump_guid;
   };
 
   DumpResponseArgs dump_response_args_;
@@ -92,7 +92,7 @@ class MockClientProcess : public mojom::ClientProcess {
       const base::trace_event::MemoryDumpRequestArgs& args,
       const RequestProcessMemoryDumpCallback& callback) override {
     expected_calls_--;
-    callback.Run(args.dump_guid, true, mojom::RawProcessMemoryDumpPtr());
+    callback.Run(true, args.dump_guid, mojom::RawProcessMemoryDumpPtr());
   }
 
  private:
