@@ -8,12 +8,14 @@
 #include <memory>
 #include <vector>
 
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "content/common/frame_messages.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_utils.h"
 #include "content/test/test_render_frame_host.h"
@@ -149,6 +151,130 @@ TEST_F(RenderProcessHostUnitTest, ReuseCommittedSite) {
   site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
   EXPECT_EQ(subframe->GetProcess(), site_instance->GetProcess());
+}
+
+TEST_F(RenderProcessHostUnitTest, ReuseServiceWorkerReusableProcess) {
+  const GURL kUrl("http://foo.com");
+
+  // Gets a RenderProcessHost for a service worker.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance1 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  sw_site_instance1->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host1 = sw_site_instance1->GetProcess();
+
+  // Getting a RenderProcessHost for a service worker with DEFAULT flag should
+  // not reuse the existing service worker only process.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance2 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  sw_site_instance2->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host2 = sw_site_instance2->GetProcess();
+  EXPECT_NE(sw_host1, sw_host2);
+
+  // Getting a RenderProcessHost must reuse the newest reusable service worker
+  // only process (= sw_host2).
+  scoped_refptr<SiteInstanceImpl> site_instance1 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  EXPECT_EQ(site_instance1->GetProcess(), sw_host2);
+
+  // Getting a RenderProcessHost must reuse the newest reusable service worker
+  // only process (= sw_host1).
+  scoped_refptr<SiteInstanceImpl> site_instance2 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  EXPECT_EQ(site_instance2->GetProcess(), sw_host1);
+
+  // Getting a RenderProcessHost should return a new process because there is no
+  // reusable process.
+  scoped_refptr<SiteInstanceImpl> site_instance3 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  EXPECT_NE(site_instance3->GetProcess(), sw_host1);
+  EXPECT_NE(site_instance3->GetProcess(), sw_host2);
+}
+
+TEST_F(RenderProcessHostUnitTest, ReuseServiceWorkerProcessForServiceWorker) {
+  const GURL kUrl("http://foo.com");
+
+  // Gets a RenderProcessHost for a service worker.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance1 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  sw_site_instance1->set_process_reuse_policy(
+      SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
+  sw_site_instance1->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host1 = sw_site_instance1->GetProcess();
+
+  // Getting a RenderProcessHost for a service worker should not reuse the
+  // existing service worker only process.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance2 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  sw_site_instance2->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host2 = sw_site_instance2->GetProcess();
+  EXPECT_NE(sw_host1, sw_host2);
+
+  // Getting a RenderProcessHost for a service worker with
+  // REUSE_PENDING_OR_COMMITTED_SITE flag should reuse the newest reusable
+  // service worker only process (= sw_host2).
+  scoped_refptr<SiteInstanceImpl> sw_site_instance3 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  sw_site_instance3->set_process_reuse_policy(
+      SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
+  sw_site_instance3->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host3 = sw_site_instance3->GetProcess();
+  EXPECT_EQ(sw_host2, sw_host3);
+
+  // Getting a RenderProcessHost for a service worker with
+  // REUSE_PENDING_OR_COMMITTED_SITE flag should reuse the newest reusable
+  // service worker only process (= sw_host2).
+  scoped_refptr<SiteInstanceImpl> sw_site_instance4 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  sw_site_instance4->set_process_reuse_policy(
+      SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
+  sw_site_instance4->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host4 = sw_site_instance4->GetProcess();
+  EXPECT_EQ(sw_host2, sw_host4);
+}
+
+TEST_F(RenderProcessHostUnitTest,
+       ReuseServiceWorkerProcessInProcessPerSitePolicy) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kProcessPerSite);
+  const GURL kUrl("http://foo.com");
+
+  // Gets a RenderProcessHost for a service worker with process-per-site flag.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance1 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  sw_site_instance1->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host1 = sw_site_instance1->GetProcess();
+
+  // Getting a RenderProcessHost for a service worker with process-per-site flag
+  // should reuse the existing service worker only process.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance2 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  sw_site_instance2->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host2 = sw_site_instance2->GetProcess();
+  EXPECT_EQ(sw_host1, sw_host2);
+
+  // Getting a RenderProcessHost for a navigation with process-per-site flag
+  // should reuse the existing service worker only process.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance3 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  RenderProcessHost* sw_host3 = sw_site_instance2->GetProcess();
+  EXPECT_EQ(sw_host1, sw_host3);
+}
+
+TEST_F(RenderProcessHostUnitTest, DoNotReuseOtherSiteServiceWorkerProcess) {
+  const GURL kUrl1("http://foo.com");
+  const GURL kUrl2("http://bar.com");
+
+  // Gets a RenderProcessHost for a service worker.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance1 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl1);
+  sw_site_instance1->set_is_for_service_worker(true);
+  RenderProcessHost* sw_host1 = sw_site_instance1->GetProcess();
+
+  // Getting a RenderProcessHost should return a new process because there is no
+  // reusable process.
+  scoped_refptr<SiteInstanceImpl> sw_site_instance2 =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl2);
+  EXPECT_NE(sw_host1, sw_site_instance2->GetProcess());
 }
 
 // Tests that RenderProcessHost will not consider reusing a process that has
