@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bcfe284_8c73ac56",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-22T17:09:05Z",
+      "side": 1,
+      "message": "Given that we could not figure out a nice way to do the scoped RAII solution, can you at least change this to a bool? That should be at least a little bit easier to reason about :(\n\nWe\u0027re open to suggestions, though.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "a77500969fff47e82763838c784004683955adda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
