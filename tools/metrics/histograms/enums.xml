@@ -3540,6 +3540,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Visible"/>
 </enum>
 
+<enum name="BooleanWaited">
+  <int value="0" label="Did not wait"/>
+  <int value="1" label="Waited"/>
+</enum>
+
 <enum name="BooleanWasFast">
   <int value="0" label="Slow"/>
   <int value="1" label="Fast"/>
