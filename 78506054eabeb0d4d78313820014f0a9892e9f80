@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2386f3_c878514d",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-22T11:47:10Z",
+      "side": 1,
+      "message": "nit: I have hard time understanding this comment. I know you\u0027ve just copied it from the old code, but I find it confusing. Could you also change it to something like the following:\n\n  // Fetch the name of the UIApplication delegate stored in the application\n  // Info.plist under the \"UIApplicationDelegate\" key.",
+      "revId": "78506054eabeb0d4d78313820014f0a9892e9f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
