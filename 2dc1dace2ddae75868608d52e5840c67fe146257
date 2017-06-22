@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ffd6f3b_7cc927d4",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-22T18:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e45bdf69_8edf7226",
+      "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60195d20_1f745c08",
         "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d9a19964_a52c50bc",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-22T18:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60195d20_1f745c08",
+      "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db303ab4_56fac344",
         "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-22T18:27:28Z",
       "side": 1,
       "message": "Let\u0027s move this comment above testSetOpenerOutsideOfWindow, and add a similar one above testSetOpenerToSelf (including the linked bug).",
+      "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9948b4ef_29dc6c87",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-22T18:47:15Z",
+      "side": 1,
+      "message": "Before I git cl submit this, lmk what you think of the comment added above testSetOpenerToSelf.\nIf it lgty, I\u0027ll submit.",
+      "parentUuid": "db303ab4_56fac344",
       "revId": "2dc1dace2ddae75868608d52e5840c67fe146257",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
