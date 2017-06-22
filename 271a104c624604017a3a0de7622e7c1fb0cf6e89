@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b46deca_2adeb056",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-22T22:31:14Z",
+      "side": 0,
+      "message": "I removed this optimization, because otherwise we\u0027d have to somehow either\n(a) invalidate invisible things only when transformed, or (b) change\nthe definition of Visual Rect to skip clips above transforms.\n\n(b) would lead to negative performance impacts on RTRees, or the need\nto compute two kinds of rects for every LayoutObject.\n\nNote, however, that SPv2 will not have a significant amount of empty visual\nrects, because the Visual Rect in SPv2 is defined as the unclipped bounds\nof painting of the object in the space of the containing transform node.\nTherefore SPv2 will have to pay the cost of invalidating these objects,\nand so we should pay that cost now in order to gather any important\nperformance feedback.",
+      "revId": "271a104c624604017a3a0de7622e7c1fb0cf6e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af23cd3_d0db08e6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-22T22:31:14Z",
+      "side": 0,
+      "message": "This codes stops culling transformed content. based on clips above it.\n\nIt will have a negative performance impact of some kind on some web pages which\nhad hidden content under a transform, or when transformed offscrreen (a\nmore likely scenario).\n\nHowever, it seems unavoidable in the SPv2 architecture, so I think we should bite\nthe bullet and accept it now, so we can gather any performance feedback earlier.",
+      "revId": "271a104c624604017a3a0de7622e7c1fb0cf6e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
