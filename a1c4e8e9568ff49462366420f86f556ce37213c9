@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7513f324_33e7778d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-22T02:13:11Z",
+      "side": 1,
+      "message": "Sanity check: Is this a bug?  Not knowing much about ContextualSearchManager, it sounds like this refers to the page that the contextual search was conducted for.  That would be the last committed URL, not the pending URL if there is one.",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f0f40f_068e1349",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-22T02:13:11Z",
+      "side": 1,
+      "message": "Do you know what the intention was here?  It feels like it almost certainly needs some cleanup, since checking for the pending entry first is almost redundant with getVisibleUrl().\n\n(There is a slight difference for cases where we don\u0027t think the pending entry is safe to display, such as renderer-initiated navigations.  I\u0027m not sure that was intentional, though, and we might be able to simplify this method to just use getVisibleUrl() and nothing else.)",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75f5b43_162acd1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-22T02:13:11Z",
+      "side": 1,
+      "message": "This seems ok if you intend to enter reader mode on the pending URL if there is one.  (Might be a bit unexpected, but it doesn\u0027t seem like a problem if that\u0027s what you want.)",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270b2f76_a3be189b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-22T02:13:11Z",
+      "side": 1,
+      "message": "Seems right-- I would expect this to use the pending URL, and I wouldn\u0027t expect a case where getVisibleUrl would return something else here.",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ddd6ed_0c826c68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1893,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-22T02:13:11Z",
+      "side": 1,
+      "message": "Can you elaborate in this comment?  We should make it clear this is the URL visible in the address bar, which may not be the last committed URL if a new navigation is in progress.",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98feda27_2e6e9965",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabCreatorManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-22T02:13:11Z",
+      "side": 1,
+      "message": "Sounds right, given the comment on line 67.",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f57e05_100e1145",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/HistoryUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-22T02:13:11Z",
+      "side": 1,
+      "message": "If we use getVisibleUrl, then this comment is wrong and the comment above is ambiguous.  Should we be using getLastCommittedUrl() below instead?  Either way we should clarify the comments.",
+      "revId": "a1c4e8e9568ff49462366420f86f556ce37213c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
