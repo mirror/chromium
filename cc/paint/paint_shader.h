@@ -84,10 +84,11 @@ class CC_PAINT_EXPORT PaintShader {
   PaintShader& operator=(const PaintShader& other);
   PaintShader& operator=(PaintShader&& other);
 
-  const sk_sp<SkShader>& sk_shader() const { return sk_shader_; }
-
  private:
+  friend class PaintFlags;
+
   PaintShader(sk_sp<SkShader> shader, SkColor fallback_color);
+  const sk_sp<SkShader>& sk_shader() const { return sk_shader_; }
 
   sk_sp<SkShader> sk_shader_;
 };
