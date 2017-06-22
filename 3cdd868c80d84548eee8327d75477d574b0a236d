@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fd31043a_c48ab1cc",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-22T01:12:46Z",
+      "side": 1,
+      "message": "Can we add a comment and mention that this must be extremely fast?\n\nWould it help to inline the fast path in a header file? (I don\u0027t know.)",
+      "revId": "3cdd868c80d84548eee8327d75477d574b0a236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1341ac0_25449142",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 1
