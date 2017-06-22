@@ -13,8 +13,10 @@ class ShadowList;
 
 class CSSShadowListInterpolationType : public CSSInterpolationType {
  public:
-  CSSShadowListInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+  CSSShadowListInterpolationType(
+      PropertyHandle property,
+      const PropertyRegistration* registration = nullptr)
+      : CSSInterpolationType(property, registration) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;
