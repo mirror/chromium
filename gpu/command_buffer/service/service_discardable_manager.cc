@@ -5,11 +5,25 @@
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 
 #include "base/memory/singleton.h"
+#include "base/sys_info.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 
 namespace gpu {
-
-const size_t ServiceDiscardableManager::kMaxSize;
+namespace {
+// Cache size values are designed to roughly correspond to existing image cache
+// sizes for 2-3 renderers. These will be updated as more types of data are
+// moved to this cache. Cache size values for Android:
+#if defined(OS_ANDROID)
+const size_t kLowEndAndroidCacheSizeBytes = 2 * 1024 * 1024;
+const size_t kNormalAndroidCacheSizeBytes = 128 * 1024 * 1024;
+#else
+// Cache size values for desktop:
+const size_t kNormalCacheSizeBytes = 384 * 1024 * 1024;
+const size_t kHighMemoryMaxCacheSizeBytes = 512 * 1024 * 1024;
+// Threshold at which we move from a normal cache to a high-memory cache.
+const int kHighMemoryCacheSizeMemoryThresholdMB = 4 * 1024;
+#endif
+}  // namespace
 
 ServiceDiscardableManager::GpuDiscardableEntry::GpuDiscardableEntry(
     ServiceDiscardableHandle handle,
@@ -23,7 +37,23 @@ ServiceDiscardableManager::GpuDiscardableEntry::~GpuDiscardableEntry() =
     default;
 
 ServiceDiscardableManager::ServiceDiscardableManager()
-    : entries_(EntryCache::NO_AUTO_EVICT) {}
+    : entries_(EntryCache::NO_AUTO_EVICT) {
+#if defined(OS_ANDROID)
+  if (base::SysInfo::IsLowEndDevice()) {
+    cache_size_limit_ = kLowEndAndroidCacheSizeBytes;
+  } else {
+    cache_size_limit_ = kNormalAndroidCacheSizeBytes;
+  }
+#else
+  if (base::SysInfo::AmountOfPhysicalMemoryMB() <
+      kHighMemoryCacheSizeMemoryThresholdMB) {
+    cache_size_limit_ = kNormalCacheSizeBytes;
+  } else {
+    cache_size_limit_ = kHighMemoryMaxCacheSizeBytes;
+  }
+#endif
+}
+
 ServiceDiscardableManager::~ServiceDiscardableManager() {
 #if DCHECK_IS_ON()
   for (const auto& entry : entries_) {
@@ -132,7 +162,7 @@ void ServiceDiscardableManager::OnTextureSizeChanged(
 
 void ServiceDiscardableManager::EnforceLimits() {
   for (auto it = entries_.rbegin(); it != entries_.rend();) {
-    if (total_size_ <= kMaxSize) {
+    if (total_size_ <= cache_size_limit_) {
       return;
     }
     if (!it->second.handle.Delete()) {
@@ -149,6 +179,7 @@ void ServiceDiscardableManager::EnforceLimits() {
     // manager for cleanup.
     texture_manager->ReturnTexture(std::move(it->second.unlocked_texture_ref));
 
+    LOG(ERROR) << "DELETE!!";
     // Erase before calling texture_manager->RemoveTexture, to avoid attempting
     // to remove the texture from entries_ twice.
     it = entries_.Erase(it);
