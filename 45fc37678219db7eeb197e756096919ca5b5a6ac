@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "066c88d9_d831f090",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-23T02:02:43Z",
+      "side": 1,
+      "message": "I agree",
+      "parentUuid": "421c0f21_9bfbf9ae",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35fc06a5_967d5473",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 3
@@ -64,6 +82,24 @@
       "writtenOn": "2017-06-23T00:10:08Z",
       "side": 1,
       "message": "Don\u0027t forget your disallows.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8829ad24_fdb74d60",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-23T02:02:43Z",
+      "side": 1,
+      "message": ":) that\u0027s more in depth that I was expecting ;)",
+      "parentUuid": "35fc06a5_967d5473",
       "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +120,24 @@
       "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eae7313_deb823ea",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-23T02:02:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "463dd1b0_eb6a7cd2",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +169,24 @@
       "writtenOn": "2017-06-23T00:10:08Z",
       "side": 1,
       "message": "Friends are typically frowned upon for non-test cases.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd03125_e06f1ad7",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-23T02:02:43Z",
+      "side": 1,
+      "message": "I actually like to use `friend` to delegate something out of a main class as it is makes it clear the friend class is actually virtually part of the main one, just a different logical component and it avoids exposing too many public methods.",
+      "parentUuid": "fce84497_be9f1b45",
       "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "da7036a5_30be846e",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-23T02:02:43Z",
+      "side": 1,
+      "message": "The idea is to reduce the boilerplate to add something. Even if it\u0027s only two places, the loops help do this IMO. I\u0027m fine with the vector fwiw, that wasn\u0027t thought of much yet :) In practice, we can\u0027t make the \"Update\"/\"Change\" methods generic, at best, there can be a OnChange\u003cT\u003e but still, we will need to know which observer needs to be called. Though, there are a few places where",
+      "parentUuid": "470ed9b9_c3a27130",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfb28fe6_1b277ff2",
         "filename": "media/blink/watch_time_sub_reporter.cc",
         "patchSetId": 3
@@ -166,6 +256,24 @@
       "writtenOn": "2017-06-23T00:10:08Z",
       "side": 1,
       "message": "Instead return bool and let WTR do this.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b2594e_90ddd852",
+        "filename": "media/blink/watch_time_sub_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-23T02:02:43Z",
+      "side": 1,
+      "message": "I feel a bit icky leaving duplicated code but if you feel strongly against passing WTR, I think the only alternative would be to pass two cb which doesn\u0027t sound satisfying.",
+      "parentUuid": "dfb28fe6_1b277ff2",
       "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
