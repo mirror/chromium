@@ -22,6 +22,30 @@
       "revId": "db8c1c10f5dc46925758e3f5c9486ac196de9e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393effba_07e85669",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-23T15:43:20Z",
+      "side": 1,
+      "message": "Done (I was on the fence about doing this but agree it\u0027s the right thing to do). \n\nNote that I\u0027m still reluctant to pass the whole sb_error_ui() object rather than just the display options struct since the error UI has more than we need (and will be more complicated to construct for other triggers which may not be tied to an interstitial).",
+      "parentUuid": "62c7bb09_7ae92a19",
+      "range": {
+        "startLine": 143,
+        "startChar": 23,
+        "endLine": 143,
+        "endChar": 24
+      },
+      "revId": "db8c1c10f5dc46925758e3f5c9486ac196de9e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
