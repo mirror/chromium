@@ -84,7 +84,6 @@ public class ChildProcessServiceImpl {
     private final Semaphore mActivitySemaphore = new Semaphore(1);
 
     public ChildProcessServiceImpl(ChildProcessServiceDelegate delegate) {
-        KillChildUncaughtExceptionHandler.maybeInstallHandler();
         mDelegate = delegate;
     }
 
