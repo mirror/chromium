@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33788456_66afd1e5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T20:16:40Z",
+      "side": 0,
+      "message": "This is no longer needed because now we invalidate row (https://chromium-review.googlesource.com/c/540178/7/third_party/WebKit/Source/core/layout/LayoutTableCell.cpp#1255) and table (if needed, new line 1511).",
+      "revId": "ff38a416a16591a0606b0eebf2daf96eaab24091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1b8151_e972d672",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T20:16:40Z",
+      "side": 0,
+      "message": "This is no longer needed because cell no longer paints collapsed borders.\n\nTable and row\u0027s visual overflow include collapsed borders.",
+      "revId": "ff38a416a16591a0606b0eebf2daf96eaab24091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
