@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f7ae2db_a93041cc",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T22:28:41Z",
+      "side": 1,
+      "message": "I would ignore what git cl format says here and do one per line. This is certainly a regression from the old format.",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "aa7a102c9521730acd9d19c6648e77cfd53c02e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
