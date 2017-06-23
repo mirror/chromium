@@ -182,6 +182,12 @@ void FakePowerManagerClient::SendBrightnessChanged(int level,
     observer.BrightnessChanged(level, user_initiated);
 }
 
+void FakePowerManagerClient::SendKeyboardBrightnessChanged(int level,
+                                                           bool user_initiated) {
+  for (auto& observer : observers_)
+    observer.KeyboardBrightnessChanged(level, user_initiated);
+}
+
 void FakePowerManagerClient::SendPowerButtonEvent(
     bool down,
     const base::TimeTicks& timestamp) {
