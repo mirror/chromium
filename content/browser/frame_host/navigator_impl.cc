@@ -1023,7 +1023,8 @@ void NavigatorImpl::OnBeginNavigation(
       NavigationRequest::CreateRendererInitiated(
           frame_tree_node, pending_entry, common_params, begin_params,
           controller_->GetLastCommittedEntryIndex(),
-          controller_->GetEntryCount()));
+          controller_->GetEntryCount(),
+          controller_->GetLastCommittedEntry()->GetIsOverridingUserAgent()));
   NavigationRequest* navigation_request = frame_tree_node->navigation_request();
 
   // For main frames, NavigationHandle will be created after the call to
