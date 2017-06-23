@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fae81c8_d69988da",
+        "filename": "ui/views_content_client/views_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-23T05:05:48Z",
+      "side": 1,
+      "message": "Hey there! Looks like we are gonna conflict. Sadly, there are more yaks to shave here.. While we\u0027re changing all these we should change the callback into a OnceCallback. The function currently being used for all these has a TODO\n\n// TODO(tzik): Update all callers of the Callback version to use OnceCallback.\ntemplate \u003ctypename TaskReturnType, typename ReplyArgType\u003e\nvoid PostTaskAndReplyWithResult(const tracked_objects::Location\u0026 from_here,\n\nAlso, all this repeated code sucks. Since the dependency on content::BrowserThread is disappearing we can just move the PostTask into quota_settings.cc\n\nThis is all done here - https://codereview.chromium.org/2958483002/",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "8ea98ec77fe001144b933f11c04831e744913560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
