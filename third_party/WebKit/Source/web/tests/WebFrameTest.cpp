@@ -7221,7 +7221,8 @@ class TestNewWindowWebViewClient : public FrameTestHelpers::TestWebViewClient {
                               const WebWindowFeatures&,
                               const WebString&,
                               WebNavigationPolicy,
-                              bool) override {
+                              bool,
+                              WebSandboxFlags) override {
     EXPECT_TRUE(false);
     return 0;
   }
