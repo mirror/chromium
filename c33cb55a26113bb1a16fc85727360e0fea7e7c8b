@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6f6a1a_ed8f9d6c",
+        "filename": "components/ukm/public/interfaces/ukm_interface.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T21:09:08Z",
+      "side": 1,
+      "message": "Since this is a url, can we use url.mojom.Url? It\u0027s already included as an import.",
+      "range": {
+        "startLine": 22,
+        "startChar": 35,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "c33cb55a26113bb1a16fc85727360e0fea7e7c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
