@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "95ab495c_82bc88ae",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-23T12:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea9dbd94_8380e98e",
+      "revId": "ac98ca46a77d797978ba1ce931996f56937c258c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1050e777_9030b18f",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.h",
         "patchSetId": 2
