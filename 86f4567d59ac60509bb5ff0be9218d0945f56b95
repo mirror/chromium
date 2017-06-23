@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ab7200_d779e7f5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T02:16:44Z",
+      "side": 1,
+      "message": "you want to remove this regardless, right? otherwise the list of listeners would just keep growing as long as something is allocated",
+      "revId": "86f4567d59ac60509bb5ff0be9218d0945f56b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed1f1cfa_f7695055",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T02:16:44Z",
+      "side": 1,
+      "message": "maybe also assert the allocator being removed \u003d\u003d allocator",
+      "revId": "86f4567d59ac60509bb5ff0be9218d0945f56b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
