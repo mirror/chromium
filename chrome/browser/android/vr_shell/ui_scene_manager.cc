@@ -6,6 +6,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/android/vr_shell/textures/close_button_texture.h"
 #include "chrome/browser/android/vr_shell/textures/ui_texture.h"
 #include "chrome/browser/android/vr_shell/ui_browser_interface.h"
@@ -225,6 +226,8 @@ void UiSceneManager::CreateSystemIndicators() {
        IDS_VIDEO_CALL_NOTIFICATION_TEXT_2},
       {&screen_capture_indicator_, kScreenCaptureIndicator,
        vector_icons::kScreenShareIcon, IDS_SCREEN_CAPTURE_NOTIFICATION_TEXT_2},
+      {&bluetooth_connected_indicator_, kBluetoothConnectedIndicator,
+       kBluetoothConnectedIcon, 0},
       {&location_access_indicator_, kLocationAccessIndicator,
        ui::kLocationOnIcon, 0},
   };
@@ -530,6 +533,11 @@ void UiSceneManager::SetLocationAccessIndicator(bool enabled) {
   ConfigureIndicators();
 }
 
+void UiSceneManager::SetBluetoothConnectedIndicator(bool enabled) {
+  bluetooth_connected_ = enabled;
+  ConfigureIndicators();
+}
+
 void UiSceneManager::SetWebVrSecureOrigin(bool secure) {
   secure_origin_ = secure;
   ConfigureSecurityWarnings();
@@ -583,6 +591,8 @@ void UiSceneManager::ConfigureIndicators() {
   video_capture_indicator_->set_visible(!web_vr_mode_ && video_capturing_);
   screen_capture_indicator_->set_visible(!web_vr_mode_ && screen_capturing_);
   location_access_indicator_->set_visible(!web_vr_mode_ && location_access_);
+  bluetooth_connected_indicator_->set_visible(!web_vr_mode_ &&
+                                              bluetooth_connected_);
 
   // Position elements dynamically relative to each other, based on which
   // indicators are showing, and how big each one is.

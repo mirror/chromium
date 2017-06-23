@@ -96,6 +96,7 @@ static_library("vr_common") {
     "//base",
     "//cc/paint",
     "//chrome/app:generated_resources",
+    "//chrome/app/vector_icons",
     "//components/security_state/core",
     "//components/strings",
     "//components/toolbar:vector_icons",
