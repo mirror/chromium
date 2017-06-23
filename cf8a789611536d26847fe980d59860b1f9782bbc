@@ -22,6 +22,30 @@
       "revId": "cf8a789611536d26847fe980d59860b1f9782bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b8a147_c928ce0a",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-23T19:09:53Z",
+      "side": 1,
+      "message": "Added a section for resolving false positives.",
+      "parentUuid": "db701b3f_0df8ea89",
+      "range": {
+        "startLine": 11,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "cf8a789611536d26847fe980d59860b1f9782bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
