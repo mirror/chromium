@@ -121,6 +121,7 @@ class ChangeListProcessor {
   //
   // Must be run on the same task runner as |resource_metadata_| uses.
   FileError Apply(std::unique_ptr<google_apis::AboutResource> about_resource,
+                  const std::string& team_drive_id,
                   std::vector<std::unique_ptr<ChangeList>> change_lists,
                   bool is_delta_update);
 
@@ -157,6 +158,10 @@ class ChangeListProcessor {
 
   // Adds the directories changed by the update on |entry| to |changed_dirs_|.
   void UpdateChangedDirs(const ResourceEntry& entry);
+
+  // Sets the largest changestamp of the user's changelist or Team Drive's.
+  FileError SetLargestChangestamp(const std::string& team_drive_id,
+                                  int64_t value);
 
   ResourceMetadata* resource_metadata_;  // Not owned.
   base::CancellationFlag* in_shutdown_;  // Not owned.
