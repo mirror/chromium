@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bd70354c_abe359d4",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-23T18:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a54cb6_2a788f53",
+      "revId": "c48741ce5fddc581ff4d91dd8b364def70684cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11bbd0b5_385c6425",
         "filename": "third_party/WebKit/Source/core/page/Page.cpp",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "c48741ce5fddc581ff4d91dd8b364def70684cc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ac5a1b_b420dc0a",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-23T18:17:36Z",
+      "side": 1,
+      "message": "Done. I\u0027ve also fixed the two occurrences above for consistency.",
+      "parentUuid": "11bbd0b5_385c6425",
+      "revId": "c48741ce5fddc581ff4d91dd8b364def70684cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
