@@ -1929,9 +1929,9 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   [[DeferredInitializationRunner sharedInstance]
       runBlockIfNecessary:kPrefObserverInit];
   DCHECK(_localStatePrefObserverBridge);
-  _settingsNavigationController = [SettingsNavigationController
-      newSettingsMainControllerWithMainBrowserState:_mainBrowserState
-                                           delegate:self];
+  _settingsNavigationController =
+      [SettingsNavigationController newSettingsMainController:_mainBrowserState
+                                                     delegate:self];
   [[self topPresentedViewController]
       presentViewController:_settingsNavigationController
                    animated:YES
