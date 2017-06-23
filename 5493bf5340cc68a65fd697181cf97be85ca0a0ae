@@ -33,6 +33,24 @@
       "revId": "5493bf5340cc68a65fd697181cf97be85ca0a0ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650d3a93_ffe5ce31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-23T16:46:31Z",
+      "side": 1,
+      "message": "WindowTreeHost doesn\u0027t normally call ResizedInPixels() during initialization if the requested bounds don\u0027t change. It\u0027s only WindowTreeHostPlatform that is broken and only if the window gets moved by X11.\n\nI don\u0027t think anything could rely on the broken behaviour since (1) it doesn\u0027t happen with WindowTreeHostX11 (2) will never happen in tests because of override_redirect is set and (3) won\u0027t happen unless the new X window overlaps with a screen edge.",
+      "parentUuid": "b2e38a02_b8d737de",
+      "revId": "5493bf5340cc68a65fd697181cf97be85ca0a0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
