@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbf1377c_d809d1e4",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-23T07:26:36Z",
+      "side": 1,
+      "message": "Sorry in advance if I\u0027m missing something but is that possible? OnInstanceStarted() has to handle the following 3 cases:\n\n1. OnSocketCreated() sends the D-Bus message for login screen, the user doesn\u0027t call Start(), then OnInstanceStarted() is called.\n2. The user calls Start(), OnSocketCreated() sends the D-Bus message for full instance, then OnInstanceStarted() is called.\n3. OnSocketCreated() sends the D-Bus message for login screen, the user calls Start() before OnInstanceStart() is called, then OnInstanceStarted() is called.\n\nCan we distinguish 2 and 3 without |is_instance_for_login_screen|? 2 does not require re-sending a D-Bus message but 3 does, but both are in the same \"OnInstanceStarted() is called with start_requested_ \u003d\u003d true\" state.\n\nI\u0027m okay with renaming |login_screen_instance_requested_| to |start_requested_| but not really sure if NOT setting it to true in StartForLoginScreen(), which also says \"Start\", is any easier to read.\n\nAnother way to eliminate |is_instance_for_login_screen| parameter is to duplicate state (ie adding CREATING_SOCKET_FOR_LOGIN_SCREEN and STARTING_INSTANCE_FOR_LOGIN_SCREEN) but increasing the number of state tends to make the code larger and I\u0027m a bit reluctant to do so until we get an ability to unit-test this file.",
+      "parentUuid": "71207b30_d5b3ee4a",
+      "revId": "96291d8a05c1f2ec2167a47f050dc80e25a93e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3addba52_955f6f18",
         "filename": "components/arc/arc_session.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "96291d8a05c1f2ec2167a47f050dc80e25a93e41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a55d3c_4ca94646",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-23T07:26:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3addba52_955f6f18",
+      "revId": "96291d8a05c1f2ec2167a47f050dc80e25a93e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
