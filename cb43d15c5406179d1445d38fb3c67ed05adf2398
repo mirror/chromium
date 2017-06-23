@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59a0d24b_4579cc94",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Updated the comment.",
+      "parentUuid": "9a18c2a4_60fb0723",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b4a3150_3b812d29",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26cc1341_2ebf620c",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4a3150_3b812d29",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2bf5c477_d7ffd016",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "111f4482_3886f53a",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4ae78b5_90152090",
         "filename": "chrome/browser/resources/offline_pages/offline_internals_browser_proxy.js",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6507118_17586014",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ae78b5_90152090",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1fe8875b_a9f25b78",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0516fc5c_0a4431b5",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cde80c1_65793507",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86aed661_14b20393",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cde80c1_65793507",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5551d83c_132a8c52",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "With more thought and discussion, we\u0027re going to move this into PrefetchNetworkRequestFactory and we can mock methods there for testing purpose.",
+      "parentUuid": "c62e3762_7bcf2519",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8823f5b_2f137d2f",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
         "patchSetId": 8
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "654d0d31_e9ac9ab2",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Yes, the download can\u0027t start until the download service is ready. If the download service can\u0027t start, we can\u0027t do anything.",
+      "parentUuid": "d8823f5b_2f137d2f",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad4be035_73bb1255",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
         "patchSetId": 8
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-22T18:17:59Z",
       "side": 1,
       "message": "How do we guarantee the lifetime of |download_service_|?",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cfee18a_12849b6b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "I added OnDownloadServiceShutdown which will clear download_service_.",
+      "parentUuid": "ad4be035_73bb1255",
       "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "6013abd9_1b4b0038",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebf86318_1ffec6d5",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ca8472a_081c9533",
         "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.h",
         "patchSetId": 8
@@ -200,6 +380,24 @@
       "writtenOn": "2017-06-22T18:17:59Z",
       "side": 1,
       "message": "nit: Why don\u0027t we just remove \"Get\" from these function names?  If you prefer, we could s/Get/Make/",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1468d3_3d6f0388",
+        "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "We rarely start these methods with Make. I just drop \"Get\".",
+      "parentUuid": "5ca8472a_081c9533",
       "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +418,24 @@
       "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc72ec7_b1782724",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-23T00:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ebcd6e5_a99bbdee",
+      "revId": "cb43d15c5406179d1445d38fb3c67ed05adf2398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
