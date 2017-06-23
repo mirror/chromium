@@ -16,6 +16,7 @@
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/navigation_request.h"
 #include "content/browser/frame_host/navigator.h"
+#include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/common/frame_messages.h"
@@ -435,7 +436,15 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
   bool was_renderer_initiated = !navigation_request_->browser_initiated();
   NavigationRequest::AssociatedSiteInstanceType site_instance_type =
       navigation_request_->associated_site_instance_type();
-  navigation_request_.reset();
+
+  // Defer destroying the ongoing NavigationRequest to avoid UAF case that
+  // can happen if one of throttles later attempts to delete this request too.
+  // Do not defer deletion when this happens by the WebContents on its way out
+  // as the UAF above won't happen. It also helps tests do the timely cleanup.
+  if (!render_manager()->current_frame_host()->delegate()->IsBeingDestroyed())
+    navigation_request_.release()->DeleteSoon();
+  else
+    navigation_request_.reset();
 
   if (keep_state)
     return;
@@ -571,6 +580,11 @@ void FrameTreeNode::BeforeUnloadCanceled() {
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
   render_manager_.OnSetHasReceivedUserGesture();
   replication_state_.has_received_user_gesture = true;
+}
+
+void FrameTreeNode::DeleteNavigationRequestForTesting() {
+  if (navigation_request_)
+    navigation_request_.reset();
 }
 
 FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {
