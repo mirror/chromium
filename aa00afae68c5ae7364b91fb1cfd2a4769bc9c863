@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4e1b5a_59ecda45",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T13:55:03Z",
+      "side": 0,
+      "message": "These are pretty cool though. I hope we\u0027re keeping them for when we switch search_provider_logos over to the new API?",
+      "range": {
+        "startLine": 934,
+        "startChar": 6,
+        "endLine": 934,
+        "endChar": 66
+      },
+      "revId": "aa00afae68c5ae7364b91fb1cfd2a4769bc9c863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
