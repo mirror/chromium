@@ -34,6 +34,24 @@
       "revId": "9c5b2610e5305ee8a38a92521fd8191b680393a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285122ce_0973e8da",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-23T11:55:16Z",
+      "side": 1,
+      "message": "No I\u0027m saying it\u0027s ok probably to get the flag from the last committed entry, but the NavigationEntry you pass to NR:CreateRendererInitiated _must_ be the pending NavigationEntry. This is why I asked you to make the UA override flag a parameter to NR::CreateRendererInitiated - so that it can be computed form a different NavigationEntry than the one we pass to the function.",
+      "parentUuid": "58484053_4faeaa70",
+      "revId": "9c5b2610e5305ee8a38a92521fd8191b680393a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
