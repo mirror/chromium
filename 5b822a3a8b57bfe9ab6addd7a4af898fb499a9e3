@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7f057a1_f35e9741",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-23T22:25:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this return |client_| instead?",
+      "range": {
+        "startLine": 1144,
+        "startChar": 13,
+        "endLine": 1144,
+        "endChar": 17
+      },
+      "revId": "5b822a3a8b57bfe9ab6addd7a4af898fb499a9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0e7d38e_0469511e",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
         "patchSetId": 5
@@ -67,6 +90,24 @@
       "side": 1,
       "message": "Sorry, There is no problem. I once thought that DataReceived handled the data from begin to end.",
       "parentUuid": "f368ea70_455ad0e8",
+      "revId": "5b822a3a8b57bfe9ab6addd7a4af898fb499a9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6462e57_ba888a7b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-23T22:25:38Z",
+      "side": 1,
+      "message": "This code block has been a source of security bugs and increasing the number of client callbacks looks alarming to me.\n\nThese days this is less dangerous because of CHECK()s are inserted and the things are more Oilpanized, and I haven\u0027t found particular issues yet, so probably this is OK?\n(Retaining RefPtr\u003cSharedBuffer\u003e data \u003d Data() here is safer though)\n\n(Also, note that DataReceived() can call arbitrary javascript code.)",
+      "parentUuid": "b684da3a_00eff3e0",
       "revId": "5b822a3a8b57bfe9ab6addd7a4af898fb499a9e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
