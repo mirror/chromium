@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5fbf91_0514974f",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/DummySuggestionsRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:20:45Z",
+      "side": 1,
+      "message": "What\u0027s the difference between this and UiCaptureSuggestionsRule? Or should the comment here just be updated?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 82
+      },
+      "revId": "2a331eb328b8f5242ddd81d2c61173de513535ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
