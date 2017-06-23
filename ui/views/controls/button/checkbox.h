@@ -12,6 +12,7 @@
 #include "base/strings/string16.h"
 #include "cc/paint/paint_flags.h"
 #include "ui/views/controls/button/label_button.h"
+#include "ui/views/controls/focus_ring.h"
 
 namespace gfx {
 struct VectorIcon;
@@ -21,7 +22,8 @@ namespace views {
 
 // A native themed class representing a checkbox.  This class does not use
 // platform specific objects to replicate the native platforms looks and feel.
-class VIEWS_EXPORT Checkbox : public LabelButton {
+class VIEWS_EXPORT Checkbox : public LabelButton,
+                              public FocusRing::FocusRingDelegate {
  public:
   static const char kViewClassName[];
 
@@ -49,7 +51,6 @@ class VIEWS_EXPORT Checkbox : public LabelButton {
   std::unique_ptr<InkDrop> CreateInkDrop() override;
   std::unique_ptr<InkDropRipple> CreateInkDropRipple() const override;
   SkColor GetInkDropBaseColor() const override;
-  void PaintButtonContents(gfx::Canvas* canvas) override;
   gfx::ImageSkia GetImage(ButtonState for_state) const override;
 
   // Set the image shown for each button state depending on whether it is
@@ -59,8 +60,14 @@ class VIEWS_EXPORT Checkbox : public LabelButton {
                       ButtonState for_state,
                       const gfx::ImageSkia& image);
 
+  // FocusRingDelegate:
+  void LayoutFocusRing(FocusRing* focus_ring) override;
+  void PaintFocusRing(FocusRing* focus_ring, gfx::Canvas* canvas) override;
+
   // Paints a focus indicator for the view.
-  virtual void PaintFocusRing(gfx::Canvas* canvas, const cc::PaintFlags& flags);
+  virtual void PaintFocusRing(FocusRing* focus_ring,
+                              gfx::Canvas* canvas,
+                              const cc::PaintFlags& flags);
 
   // Gets the vector icon to use based on the current state of |checked_|.
   virtual const gfx::VectorIcon& GetVectorIcon() const;
