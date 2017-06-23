@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47919b94_455022e4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageLoadTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "I\u0027ll probably just move it to that other CL. Was separate to allow ensuring I was detecting the bug and for testing the factory.",
+      "revId": "3ed39bd59509ed4568d716642dd71c354446f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

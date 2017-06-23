@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4990e783_49befb4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "Oops, thanks!",
+      "parentUuid": "b29a2acb_5d98a99f",
+      "range": {
+        "startLine": 96,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 40
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ef2aa7_16b822b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPage.java",
         "patchSetId": 2
@@ -62,6 +86,24 @@
       "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eca14a6_0a51b31a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12ef2aa7_16b822b4",
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,53 @@
     },
     {
       "key": {
+        "uuid": "959edae2_41337050",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "Made SuggestionsSource itself a destruction observer and removed the member from here, since we don\u0027t use it for anything else. Note: BottomSheet used that mechanism for destruction already.",
+      "parentUuid": "7f5cc359_a3940f7a",
+      "range": {
+        "startLine": 564,
+        "startChar": 59,
+        "endLine": 564,
+        "endChar": 68
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aac9719b_75f77f07",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "AAAAAAAAARGH!",
+      "range": {
+        "startLine": 52,
+        "startChar": 43,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95cdf4b4_b9c72ad2",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
         "patchSetId": 2
@@ -102,6 +191,24 @@
       "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8092491_60ddda52",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95cdf4b4_b9c72ad2",
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "468cfc83_aa96687b",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "Yes, removed.",
+      "parentUuid": "44fa58dd_a1ebd17a",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 64
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3be7c725_63e9f37b",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
         "patchSetId": 2
@@ -139,6 +270,24 @@
       "writtenOn": "2017-06-23T17:12:49Z",
       "side": 1,
       "message": "This method basically needs to be called in order to get proper suggestions, right? In that case, we could pass the rule to the constructor, then set things up in beforeStartingActivity(). Or alternatively, are nested Rules supported? IOW, could you have a @Rule annotation on a member here? Then we could do that for the SuggestionsDependenciesRule :)",
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352a279c_8e776d42",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "I\u0027ll sync with Anthony about what to do with this rule, since he has grand plans related to data initialisation. It would be nice if that was independent from instru/unit tests.",
+      "parentUuid": "3be7c725_63e9f37b",
       "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "d7bb397f_e8a91b33",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/SuggestionsDependenciesRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92fa3f85_4a6ad632",
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75c6b54b_c9ac94df",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/SuggestionsDependenciesRule.java",
         "patchSetId": 2
@@ -182,6 +349,30 @@
       "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8bd2da_f34e74f2",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/SuggestionsDependenciesRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T18:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75c6b54b_c9ac94df",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 54
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
