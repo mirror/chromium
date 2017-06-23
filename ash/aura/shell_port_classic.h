@@ -41,9 +41,6 @@ class ASH_EXPORT ShellPortClassic : public ShellPort {
   void HideCursor() override;
   void SetGlobalOverrideCursor(base::Optional<ui::CursorData> cursor) override;
   bool IsMouseEventsEnabled() override;
-  void RecordGestureAction(GestureActionType action) override;
-  void RecordUserMetricsAction(UserMetricsAction action) override;
-  void RecordTaskSwitchMetric(TaskSwitchSource source) override;
   std::unique_ptr<WindowResizer> CreateDragWindowResizer(
       std::unique_ptr<WindowResizer> next_window_resizer,
       wm::WindowState* window_state) override;
