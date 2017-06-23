@@ -1,11 +1,6 @@
 integer 1 integer 123 integer 12345
 identifier A123 identifier A_A
 
-COMMENT /*XXXX*/
-COMMENT //XXXX
-
-COMMENT /*MULTI LINE*/
-
 [ [
 ] ]
 * *
