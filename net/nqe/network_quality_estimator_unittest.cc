@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <cmath>
 #include <limits>
 #include <map>
 #include <memory>
@@ -2211,6 +2212,13 @@ TEST(NetworkQualityEstimatorTest, MAYBE_TestTCPSocketRTT) {
                            NETWORK_QUALITY_OBSERVATION_SOURCE_TCP, 1);
   ExpectBucketCountAtLeast(&histogram_tester, "NQE.Kbps.ObservationSource",
                            NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, 1);
+
+  // Two BDP computations must exist, one for each request sent.
+  histogram_tester.ExpectTotalCount(
+      "NQE.MainFrame.TransportRTT.OnBDPComputation", 2);
+  histogram_tester.ExpectTotalCount("NQE.MainFrame.Kbps.OnBDPComputation", 2);
+  histogram_tester.ExpectTotalCount("NQE.MainFrame.BDPKbits", 2);
+
   EXPECT_LE(1u,
             histogram_tester
                 .GetAllSamples("NQE.EffectiveConnectionType.OnECTComputation")
@@ -3071,6 +3079,28 @@ TEST(NetworkQualityEstimatorTest, OnPrefsReadWithReadingDisabled) {
   estimator.RemoveRTTAndThroughputEstimatesObserver(&rtt_throughput_observer);
   estimator.RemoveEffectiveConnectionTypeObserver(
       &effective_connection_type_observer);
+}
+
+// Tests that |ComputeBandwidthDelayProductOnMainFrameRequest| calculates the
+// BDP correctly on a main-frame request.
+TEST(NetworkQualityEstimatorTest, ComputeBDPOnMainFrame) {
+  TestNetworkQualityEstimator estimator;
+  base::TimeTicks now = base::TimeTicks::Now();
+  for (int i = 1; i <= std::pow(2, 10); i *= 2) {
+    estimator.rtt_observations_.AddObservation(
+        NetworkQualityEstimator::RttObservation(
+            base::TimeDelta::FromMilliseconds(i), now, INT32_MIN,
+            NETWORK_QUALITY_OBSERVATION_SOURCE_TCP));
+  }
+  for (int i = 1; i <= std::pow(3, 10); i *= 3) {
+    estimator.downstream_throughput_kbps_observations_.AddObservation(
+        NetworkQualityEstimator::ThroughputObservation(
+            i, now, INT32_MIN, NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP));
+  }
+  estimator.RunOneRequest();
+  EXPECT_TRUE(estimator.GetBandwidthDelayProductKBits().has_value());
+  EXPECT_EQ(estimator.GetBandwidthDelayProductKBits().value(),
+            (int32_t)(std::pow(2, 2) * std::pow(3, 8) / 1000));
 }
 
 }  // namespace net
