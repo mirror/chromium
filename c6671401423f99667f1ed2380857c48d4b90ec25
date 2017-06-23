@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d525fd1_40ee18a1",
+        "filename": "components/viz/common/test/real_gl_test_suite.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-23T23:26:55Z",
+      "side": 1,
+      "message": "I made it not a unique_ptr so no need for either anymore.",
+      "parentUuid": "e3ccdcd7_ee4d6810",
+      "revId": "c6671401423f99667f1ed2380857c48d4b90ec25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8d33ea1_6e2da7ad",
         "filename": "components/viz/common/test/real_gl_test_suite.cc",
         "patchSetId": 6
