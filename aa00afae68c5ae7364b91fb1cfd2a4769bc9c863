@@ -22,6 +22,30 @@
       "revId": "aa00afae68c5ae7364b91fb1cfd2a4769bc9c863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec32f01a_f6bdec65",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-23T14:01:44Z",
+      "side": 0,
+      "message": "That\u0027ll require some extra wiring that\u0027s not in place yet in search_provider_logos, but yes, I hope we can get something similar eventually.\n\nI\u0027m not sure how gstatic handles query params - I guess they\u0027re ignored? Then these won\u0027t work with fingerprints, i.e. the response will always contain the inlined image data, which isn\u0027t great but probably good enough for testing.",
+      "parentUuid": "5d4e1b5a_59ecda45",
+      "range": {
+        "startLine": 934,
+        "startChar": 6,
+        "endLine": 934,
+        "endChar": 66
+      },
+      "revId": "aa00afae68c5ae7364b91fb1cfd2a4769bc9c863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
