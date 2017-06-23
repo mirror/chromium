@@ -3137,6 +3137,12 @@ bool WebContentsImpl::ShowingInterstitialPage() const {
   return interstitial_page_ != nullptr;
 }
 
+void WebContentsImpl::AdjustPreviewsStateForNavigation(
+    PreviewsState* previews_state) {
+  if (delegate_ != nullptr)
+    delegate_->AdjustPreviewsStateForNavigation(previews_state);
+}
+
 InterstitialPage* WebContentsImpl::GetInterstitialPage() const {
   return interstitial_page_;
 }

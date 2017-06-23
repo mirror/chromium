@@ -11,6 +11,7 @@
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/reload_type.h"
+#include "content/public/common/previews_state.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/base/window_open_disposition.h"
 
@@ -131,6 +132,9 @@ class CONTENT_EXPORT NavigatorDelegate {
   // Whether the delegate is displaying an interstitial page over the current
   // page.
   virtual bool ShowingInterstitialPage() const = 0;
+
+  // Gives the delegate a chance to adjust the previews state during navigation.
+  virtual void AdjustPreviewsStateForNavigation(PreviewsState* previews_state);
 };
 
 }  // namspace content
