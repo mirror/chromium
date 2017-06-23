@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bf19edc_018cd0cb",
+        "filename": "components/tracing/child/child_trace_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-23T14:19:40Z",
+      "side": 1,
+      "message": "There is one issue, I don\u0027t think components/tracing/ can depend on services/resource_coordinator/. (I get a presubmit error: \n\nYou added one or more #includes that violate checkdeps rules.\n  components/tracing/child/child_trace_message_filter.cc\n      Illegal include: \"services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h\"\n    Because of no rule applying.)\n\nNot sure what the cleanest way to avoid this is given we expect this to be very temporary. I could inject another function pointer into MDM?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "0e758335c2adeaa4bc0f6e0da86661a731e6eb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
