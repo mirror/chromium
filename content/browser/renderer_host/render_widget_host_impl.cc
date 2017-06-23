@@ -2217,6 +2217,11 @@ void RenderWidgetHostImpl::DidOverscroll(
     view_->DidOverscroll(params);
 }
 
+void RenderWidgetHostImpl::OnTouchAction(cc::TouchAction touch_action) {
+  if (view_)
+    view_->OnTouchAction(touch_action);
+}
+
 void RenderWidgetHostImpl::DidStopFlinging() {
   is_in_touchpad_gesture_fling_ = false;
   if (view_)
