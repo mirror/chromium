@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1371573e_55491797",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8Binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-23T17:52:36Z",
+      "side": 1,
+      "message": "Yeah makes sense, I\u0027ll remove this one.",
+      "parentUuid": "fac13149_06fa3fc0",
+      "revId": "98947121d2e73c2ffe7c458b43d84e7d5b849941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f348d4c_57551705",
         "filename": "third_party/WebKit/Source/platform/bindings/V8Binding.h",
         "patchSetId": 6
@@ -47,6 +65,24 @@
       "writtenOn": "2017-06-23T14:51:24Z",
       "side": 1,
       "message": "Similarly here, is the measurement effect similar if we measure V8ExternalString, or is it worthwhile to inline the RCS at every use of V8String?",
+      "revId": "98947121d2e73c2ffe7c458b43d84e7d5b849941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de4691f_68b2d2f8",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8Binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-23T17:52:36Z",
+      "side": 1,
+      "message": "Looks like the counts are slightly lower, but the times are similar, so I\u0027m moving it to V8ExternalString. Doing the same for V8SetReturnValueString.",
+      "parentUuid": "8f348d4c_57551705",
       "revId": "98947121d2e73c2ffe7c458b43d84e7d5b849941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
