@@ -12,7 +12,7 @@ namespace blink {
 class CSSSizeListInterpolationType : public CSSInterpolationType {
  public:
   CSSSizeListInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+      : CSSInterpolationType(property, nullptr) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;

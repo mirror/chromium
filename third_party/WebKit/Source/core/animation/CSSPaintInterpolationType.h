@@ -12,7 +12,7 @@ namespace blink {
 class CSSPaintInterpolationType : public CSSInterpolationType {
  public:
   CSSPaintInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {}
+      : CSSInterpolationType(property, nullptr) {}
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
       const ComputedStyle&) const final;
