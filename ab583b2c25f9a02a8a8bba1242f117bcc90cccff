@@ -22,6 +22,30 @@
       "revId": "ab583b2c25f9a02a8a8bba1242f117bcc90cccff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d368ae7f_360e1ff3",
+        "filename": "headless/public/util/throttled_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-23T12:22:29Z",
+      "side": 1,
+      "message": "I filed a bug to investigate: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d736323",
+      "parentUuid": "61b20c1a_a0e7168c",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "ab583b2c25f9a02a8a8bba1242f117bcc90cccff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
