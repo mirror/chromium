@@ -4,10 +4,9 @@
 <script src="inspector-test.js"></script>
 <script src="resources-test.js"></script>
 <script src="network-test.js"></script>
-
 <script>
-var test = function()
-{
+
+async function test() {
     function visibleNewlines(s)
     {
         return s.replace(/\r/, "\\r").replace(/\n/, "\\n");
@@ -60,12 +59,12 @@ var test = function()
         "_transferSize": "formatAsTypeName",
         "_error": "skip"
     };
-    InspectorTest.addObject(new NetworkLog.HAREntry(testRequest).build(), stillNondeterministic, "", "HAR:");
+    // We convert in and out of JSON to make sure it strips out undefined values.
+    var data = JSON.parse(JSON.stringify(await NetworkLog.HARBuilder.buildEntry(testRequest, false)));
+    InspectorTest.addObject(data, stillNondeterministic, "", "HAR:");
     InspectorTest.completeTest();
 }
 </script>
-
-
 </head>
 
 <body onload="runTest()">

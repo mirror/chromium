@@ -197,7 +197,7 @@ InspectorTest.HARPropertyFormatters = {
     onContentLoad: "formatAsTypeName",
     onLoad: "formatAsTypeName",
     receive: "formatAsTypeName",
-    startedDateTime: "formatAsRecentTime",
+    startedDateTime: "formatAsTypeName",
     time: "formatAsTypeName",
     timings: "formatAsTypeName",
     version: "formatAsTypeName",

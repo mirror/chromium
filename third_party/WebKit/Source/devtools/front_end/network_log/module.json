@@ -26,6 +26,7 @@
     ],
     "scripts": [
         "NetworkLog.js",
-        "HAREntry.js"
+        "HARBuilder.js",
+        "HARFormat.js"
     ]
 }
