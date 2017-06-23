@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/viz/service/display_compositor/gl_helper_scaling.h"
+#include "components/viz/common/gl_helper_scaling.h"
 
 #include <stddef.h>
 

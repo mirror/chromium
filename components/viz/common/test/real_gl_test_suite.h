@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_VIZ_SERVICE_DISPLAY_COMPOSITOR_DISPLAY_COMPOSITOR_TEST_SUITE_H_
-#define COMPONENTS_VIZ_SERVICE_DISPLAY_COMPOSITOR_DISPLAY_COMPOSITOR_TEST_SUITE_H_
+#ifndef COMPONENTS_VIZ_COMMON_TEST_REAL_GL_TEST_SUITE_H_
+#define COMPONENTS_VIZ_COMMON_TEST_REAL_GL_TEST_SUITE_H_
 
 #include <memory>
 
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/test/test_discardable_memory_allocator.h"
 #include "base/test/test_suite.h"
 
@@ -17,23 +18,22 @@ class MessageLoop;
 
 namespace viz {
 
-class DisplayCompositorTestSuite : public base::TestSuite {
+class RealGLTestSuite : public base::TestSuite {
  public:
-  DisplayCompositorTestSuite(int argc, char** argv);
-  ~DisplayCompositorTestSuite() override;
+  RealGLTestSuite(int argc, char** argv);
+  ~RealGLTestSuite() override;
 
  protected:
   // Overridden from base::TestSuite:
   void Initialize() override;
-  void Shutdown() override;
 
  private:
-  std::unique_ptr<base::MessageLoop> message_loop_;
+  base::MessageLoop message_loop_;
 
   base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
-  DISALLOW_COPY_AND_ASSIGN(DisplayCompositorTestSuite);
+  DISALLOW_COPY_AND_ASSIGN(RealGLTestSuite);
 };
 
 }  // namespace viz
 
-#endif  // COMPONENTS_VIZ_SERVICE_DISPLAY_COMPOSITOR_DISPLAY_COMPOSITOR_TEST_SUITE_H_
+#endif  // COMPONENTS_VIZ_COMMON_TEST_REAL_GL_TEST_SUITE_H_
