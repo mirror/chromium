@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba8275a6_90577fae",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-23T08:14:24Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e for std::move",
+      "range": {
+        "startLine": 133,
+        "startChar": 21,
+        "endLine": 133,
+        "endChar": 30
+      },
+      "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c02d742_9406eb1d",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-23T08:14:24Z",
+      "side": 1,
+      "message": "nit: now that this has its own comment, please add a blank line before the comment. :-)",
+      "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b75d6a4_f641cc66",
+        "filename": "chrome/browser/conflicts/enumerate_input_method_editors_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-23T08:14:24Z",
+      "side": 1,
+      "message": "nit: please document these two uint32_t args.",
+      "range": {
+        "startLine": 23,
+        "startChar": 56,
+        "endLine": 23,
+        "endChar": 74
+      },
+      "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b507b2_1aefd1ba",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-23T08:14:24Z",
+      "side": 1,
+      "message": "nit:\n  std::unique_ptr\u003cuint8_t[]\u003e buffer(new uint8_t[kPageSize]);\nsince you don\u0027t need the buffer to be zero initialized and don\u0027t really need the other powers of vector.",
+      "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
