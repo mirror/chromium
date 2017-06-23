@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4613a621_8d773759",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1173097
+      },
+      "writtenOn": "2017-06-23T16:45:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d0724db_5415e9ff",
+      "range": {
+        "startLine": 13,
+        "startChar": 79,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "d5acc0e5cee4cfa0d52a58201bb1a8370d3502e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6261d764_69ee648c",
         "filename": "components/safe_browsing/triggers/trigger_manager.h",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5d75b9db_2fd72fd1",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1173097
+      },
+      "writtenOn": "2017-06-23T16:45:09Z",
+      "side": 1,
+      "message": "I\u0027m keeping GetSBErrorDisplayOptions which still uses this.",
+      "parentUuid": "6261d764_69ee648c",
+      "range": {
+        "startLine": 16,
+        "startChar": 18,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "d5acc0e5cee4cfa0d52a58201bb1a8370d3502e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d186cf8_e26c52c0",
         "filename": "components/safe_browsing/triggers/trigger_manager.h",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "d5acc0e5cee4cfa0d52a58201bb1a8370d3502e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c4def6_dadea38b",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1173097
+      },
+      "writtenOn": "2017-06-23T16:45:09Z",
+      "side": 1,
+      "message": "Yes, for testing at the moment, but other triggers will also need this (ie: the ones not tied to interstitials).",
+      "parentUuid": "6d186cf8_e26c52c0",
+      "range": {
+        "startLine": 57,
+        "startChar": 49,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "d5acc0e5cee4cfa0d52a58201bb1a8370d3502e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
