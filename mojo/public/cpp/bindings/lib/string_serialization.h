@@ -24,10 +24,10 @@ struct Serializer<StringDataView, MaybeConstUserType> {
 
   static size_t PrepareToSerialize(MaybeConstUserType& input,
                                    SerializationContext* context) {
-    if (CallIsNullIfExists<Traits>(input))
+    void* custom_context = CustomContextHelper<Traits>::SetUp(input, context);
+    if (CallIsNullIfExists<Traits>(input, custom_context))
       return 0;
 
-    void* custom_context = CustomContextHelper<Traits>::SetUp(input, context);
     return Align(sizeof(String_Data) +
                  CallWithContext(Traits::GetSize, input, custom_context));
   }
@@ -36,12 +36,11 @@ struct Serializer<StringDataView, MaybeConstUserType> {
                         Buffer* buffer,
                         String_Data** output,
                         SerializationContext* context) {
-    if (CallIsNullIfExists<Traits>(input)) {
+    void* custom_context = CustomContextHelper<Traits>::GetNext(context);
+    if (CallIsNullIfExists<Traits>(input, custom_context)) {
       *output = nullptr;
       return;
     }
-
-    void* custom_context = CustomContextHelper<Traits>::GetNext(context);
 
     String_Data* result = String_Data::New(
         CallWithContext(Traits::GetSize, input, custom_context), buffer);

@@ -8,6 +8,24 @@
 
 namespace mojo {
 
+namespace {
+
+class FileSerializationContext {
+ public:
+  FileSerializationContext(ScopedHandle fd_handle)
+      : fd_handle_(std::move(fd_handle)) {}
+  ~FileSerializationContext() {}
+
+  ScopedHandle& fd_handle() { return fd_handle_; }
+
+ private:
+  ScopedHandle fd_handle_;
+
+  DISALLOW_COPY_AND_ASSIGN(FileSerializationContext);
+};
+
+}  // namespace
+
 // static
 bool StructTraits<common::mojom::String16DataView, base::string16>::Read(
     common::mojom::String16DataView data,
@@ -53,10 +71,30 @@ bool StructTraits<
   return true;
 }
 
-mojo::ScopedHandle StructTraits<common::mojom::FileDataView, base::File>::fd(
+void* StructTraits<common::mojom::FileDataView, base::File>::SetUpContext(
     base::File& file) {
-  DCHECK(file.IsValid());
-  return mojo::WrapPlatformFile(file.TakePlatformFile());
+  if (!file.IsValid())
+    return new mojo::ScopedHandle();
+  return new mojo::ScopedHandle(
+      mojo::WrapPlatformFile(file.TakePlatformFile()));
+}
+
+void StructTraits<common::mojom::FileDataView, base::File>::TearDownContext(
+    const base::File& file,
+    void* context) {
+  delete static_cast<mojo::ScopedHandle*>(context);
+}
+
+bool StructTraits<common::mojom::FileDataView, base::File>::IsNull(
+    const base::File& file,
+    void* context) {
+  return !static_cast<mojo::ScopedHandle*>(context)->is_valid();
+}
+
+mojo::ScopedHandle& StructTraits<common::mojom::FileDataView, base::File>::fd(
+    base::File& file,
+    void* context) {
+  return *static_cast<mojo::ScopedHandle*>(context);
 }
 
 bool StructTraits<common::mojom::FileDataView, base::File>::Read(

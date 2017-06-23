@@ -58,6 +58,8 @@ class InterfaceRequest {
   // Removes the message pipe from the request and returns it.
   ScopedMessagePipeHandle PassMessagePipe() { return std::move(handle_); }
 
+  MessagePipeHandle message_pipe() const { return handle_.get(); }
+
   bool Equals(const InterfaceRequest& other) const {
     if (this == &other)
       return true;
