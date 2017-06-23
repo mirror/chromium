@@ -390,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "e05750e2_2d935805",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "For now, could you always return false from this method in the Spannable implementation and implement the better solution for this class as part of this CL?  Then, deleting shouldIgnoreTextChangeFromAutocomplete() later will be a simple task of cleaning up dead code rather than a substantive change.",
+      "parentUuid": "ee6d90d5_4a22f72f",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50ad7f0a_6e781376",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 2
@@ -419,6 +437,24 @@
       "side": 1,
       "message": "We\u0027ve been using the same mechanism in AutocompleteEditTextModel. Without it, we will expose autocomplete text for non-English character set when the keyboard composes text and then deletion behavior will be different.",
       "parentUuid": "50ad7f0a_6e781376",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c2f7672_046c0f07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "As discussed offline, it\u0027s safer and cleaner to add additional \"naturally non-combining\" scripts (which I would define as, \"scripts that have a small number of characters which do not need to be decomposed into parts during entry\" -- maybe write that verbatim in a comment) to the initial list: all variations of Latin, Cyrillic, Hebrew, Greek, and any others you discover.",
+      "parentUuid": "eeb2d987_e9fd1acd",
       "revId": "e193697550b818d0902238cbe82ce3128708564d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

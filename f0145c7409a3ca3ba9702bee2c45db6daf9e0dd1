@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38331c05_2d3547fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "Why not private?",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d79857b_f47d3e94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "Can these zero-information comments be deleted?  I prefer not to have them unless they\u0027re needed to fix a presubmit warning.",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99532b3_90f2cd09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "\u0027When the user manually types the next character that was already suggested in the previous autocomplete, then the suggestion is still valid if we simply remove one character from the beginning of it.  For example, if prev \u003d \"a[bc]\" and current text is \"ab\", this method constructs \"ab[c]\".\u0027",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50ceadb_13de575d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "\"shift\" word is a bit ambiguous, I suggest naming this something like \"reuseAutocompleteTextIfPrefixExtension\"",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6c77d9_96482415",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "Can you pull out this assignment into the two outer callers?  IMO it is not obvious enough that this method performs this mutation even if it returns false.",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7afaa8_5efcf81a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "I\u0027d prefer the model-state mutation was moved out of here into endBatchEdit().  Then, setAutocompleteSpan will be clearly defined to only operate on \"View\" part of MVC.",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0a4e30_f85b7b40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "Does this need to be before the early-return?  Seems confusing.",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b3e635_65dd6d88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "This bypass of the \"check\" is difficult to reason about.  Please find a way to align mCurrentState/mPreviouslyNotifiedState at the right timings in such a way that you can simply call notifyAutocompleteTextStateChanged() from here.",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d35610_6d904468",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "This bypass of the \"check\" is difficult to reason about.  Please find a way to align mCurrentState/mPreviouslyNotifiedState at the right timings in such a way that you can simply call notifyAutocompleteTextStateChanged() from here.",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858d507f_8a9f2c6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "On second thought, I prefer the name \"isNonCombiningScript\", because it\u0027s confusing to mention physical keyboard in code that mostly does not handle physical keyboard events.",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3151cf9_e06316f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T22:50:04Z",
+      "side": 1,
+      "message": "I\u0027d again like to avoid direct calls to notifyAutocompleteTextStateChangedNoCheck().  Since there\u0027s no need to notify the delegate anymore, can we just directly do \"mLastEditWasDelete \u003d textDeleted; if (textDeleted) removeAutocomplete();\" here instead?",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
