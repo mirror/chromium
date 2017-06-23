@@ -16,6 +16,24 @@
       "revId": "a04716787aea435bb62e38b694d8db887a472efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da32ad2_00b58a82",
+        "filename": "third_party/WebKit/LayoutTests/external/README",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T01:42:21Z",
+      "side": 1,
+      "message": "Reworded to \"in the wpt directory\" for clarity.",
+      "parentUuid": "cd0d5663_2bb7f15a",
+      "revId": "a04716787aea435bb62e38b694d8db887a472efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
