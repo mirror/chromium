@@ -570,7 +570,8 @@ const PointerId PointerDetails::kUnknownPointerId = -1;
 MouseEvent::MouseEvent(const base::NativeEvent& native_event)
     : LocatedEvent(native_event),
       changed_button_flags_(GetChangedMouseButtonFlagsFromNative(native_event)),
-      pointer_details_(GetMousePointerDetailsFromNative(native_event)) {
+      pointer_details_(GetMousePointerDetailsFromNative(native_event)),
+      only_for_ui_hover_state_(false) {
   latency()->AddLatencyNumberWithTimestamp(
       INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, 0,
       base::TimeTicks::FromInternalValue(time_stamp().ToInternalValue()), 1);
@@ -582,7 +583,8 @@ MouseEvent::MouseEvent(const base::NativeEvent& native_event)
 MouseEvent::MouseEvent(const PointerEvent& pointer_event)
     : LocatedEvent(pointer_event),
       changed_button_flags_(pointer_event.changed_button_flags()),
-      pointer_details_(pointer_event.pointer_details()) {
+      pointer_details_(pointer_event.pointer_details()),
+      only_for_ui_hover_state_(false) {
   DCHECK(pointer_event.IsMousePointerEvent());
   switch (pointer_event.type()) {
     case ET_POINTER_DOWN:
@@ -638,7 +640,8 @@ MouseEvent::MouseEvent(EventType type,
                    time_stamp,
                    flags),
       changed_button_flags_(changed_button_flags),
-      pointer_details_(pointer_details) {
+      pointer_details_(pointer_details),
+      only_for_ui_hover_state_(false) {
   DCHECK_NE(ET_MOUSEWHEEL, type);
   latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
   if (this->type() == ET_MOUSE_MOVED && IsAnyButton())

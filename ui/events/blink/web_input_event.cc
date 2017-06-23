@@ -402,8 +402,9 @@ blink::WebMouseEvent MakeWebMouseEventFromUiEvent(const MouseEvent& event) {
 #endif
       static bool s_send_leave =
           base::FeatureList::IsEnabled(features::kSendMouseLeaveEvents);
-      type = s_send_leave ? blink::WebInputEvent::kMouseLeave
-                          : blink::WebInputEvent::kMouseMove;
+      type = s_send_leave && !event.only_for_ui_hover_state()
+                 ? blink::WebInputEvent::kMouseLeave
+                 : blink::WebInputEvent::kMouseMove;
       break;
     }
     case ET_MOUSE_ENTERED:
