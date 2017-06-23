@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "341dfe26_34f47256",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-23T20:59:37Z",
+      "side": 0,
+      "message": "I\u0027d agree - having UMA of a single extension\u0027s total block time doesn\u0027t really help us from a metrics standpoint, because it doesn\u0027t have any context (did it run on 100 pages, 1000?).  I think having UMA from individual block times will serve the purpose we want more accurately.\n\nWDYT, Karan?",
+      "parentUuid": "8e4b168e_f6189999",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc911042_cde2c05c",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
         "patchSetId": 1
