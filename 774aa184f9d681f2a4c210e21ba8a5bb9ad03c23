@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d094f283_74fd699a",
+        "filename": "base/memory/shared_memory_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T19:36:59Z",
+      "side": 1,
+      "message": "The default rights of the vmo object include MX_RIGHT_EXECUTE. Don\u0027t we want to lower some permissions depending on SharedMemoryCreateOptions.\n\nDon\u0027t we also want to remove MX_RIGHT_SET_PROPERTY once we\u0027re done modifying the properties?",
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30fc1e3_75fb6433",
+        "filename": "base/memory/shared_memory_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T19:36:59Z",
+      "side": 1,
+      "message": "don\u0027t we want to call this regardless of whether mx_vmar_unmap fails?",
+      "range": {
+        "startLine": 94,
+        "startChar": 38,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0edc360_f5584618",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T19:36:59Z",
+      "side": 1,
+      "message": "why aren\u0027t we running this test on fuchsia?",
+      "range": {
+        "startLine": 241,
+        "startChar": 43,
+        "endLine": 241,
+        "endChar": 44
+      },
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3247acf_fb2ec14d",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T19:36:59Z",
+      "side": 1,
+      "message": "can we also test for lack of MX_RIGHT_SET_PROPERTY, otherwise the client can just modify the vmo to give it the appropriate properties?",
+      "range": {
+        "startLine": 388,
+        "startChar": 19,
+        "endLine": 388,
+        "endChar": 34
+      },
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
