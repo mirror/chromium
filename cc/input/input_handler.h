@@ -14,6 +14,7 @@
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/input/scroll_state.h"
 #include "cc/input/scrollbar.h"
+#include "cc/input/touch_action.h"
 #include "cc/trees/swap_promise_monitor.h"
 
 namespace gfx {
@@ -200,7 +201,8 @@ class CC_EXPORT InputHandler {
   // |viewport_point|, and whether |viewport_point| is on the currently
   // scrolling layer.
   virtual TouchStartOrMoveEventListenerType
-  EventListenerTypeForTouchStartOrMoveAt(const gfx::Point& viewport_point) = 0;
+  EventListenerTypeForTouchStartOrMoveAt(const gfx::Point& viewport_point,
+                                         TouchAction* touch_action) = 0;
 
   // Calling CreateLatencyInfoSwapPromiseMonitor() to get a scoped
   // LatencyInfoSwapPromiseMonitor. During the life time of the

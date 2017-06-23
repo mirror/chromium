@@ -25,6 +25,7 @@ class CC_EXPORT TouchActionRegion {
   const Region& region() const { return *region_; }
   const Region& GetRegionForTouchAction(TouchAction);
 
+  TouchAction GetWhiteListedTouchAction(const gfx::Point&) const;
   TouchActionRegion& operator=(const TouchActionRegion& other);
   TouchActionRegion& operator=(TouchActionRegion&& other);
   bool operator==(const TouchActionRegion& other) const;
