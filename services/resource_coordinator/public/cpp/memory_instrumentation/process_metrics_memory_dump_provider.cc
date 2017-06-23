@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/tracing/common/process_metrics_memory_dump_provider.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/process_metrics_memory_dump_provider.h"
 
 #include <fcntl.h>
 #include <stdint.h>
@@ -49,7 +49,7 @@
 #include <base/win/win_util.h>
 #endif  // defined(OS_WIN)
 
-namespace tracing {
+namespace memory_instrumentation {
 
 namespace {
 
@@ -87,19 +87,19 @@ bool ParseSmapsHeader(const char* header_line,
   region->protection_flags = 0;
   if (protection_flags[0] == 'r') {
     region->protection_flags |=
-      base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsRead;
+        base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsRead;
   }
   if (protection_flags[1] == 'w') {
     region->protection_flags |=
-      base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsWrite;
+        base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsWrite;
   }
   if (protection_flags[2] == 'x') {
     region->protection_flags |=
-      base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsExec;
+        base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsExec;
   }
   if (protection_flags[3] == 's') {
-    region->protection_flags |=
-      base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsMayshare;
+    region->protection_flags |= base::trace_event::ProcessMemoryMaps::VMRegion::
+        kProtectionFlagsMayshare;
   }
 
   region->mapped_file = mapped_file;
@@ -237,10 +237,11 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessMemoryMaps(
   if (proc_smaps_for_testing) {
     res = ReadLinuxProcSmapsFile(proc_smaps_for_testing, pmd->process_mmaps());
   } else {
-    std::string file_name = "/proc/" + (process_ == base::kNullProcessId
-                                            ? "self"
-                                            : base::IntToString(process_)) +
-                            "/smaps";
+    std::string file_name =
+        "/proc/" +
+        (process_ == base::kNullProcessId ? "self"
+                                          : base::IntToString(process_)) +
+        "/smaps";
     base::ScopedFILE smaps_file(fopen(file_name.c_str(), "r"));
     res = ReadLinuxProcSmapsFile(smaps_file.get(), pmd->process_mmaps());
   }
@@ -266,8 +267,8 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessMemoryMaps(
       continue;
 
     MODULEINFO module_info;
-    if (!::GetModuleInformation(::GetCurrentProcess(), modules[i],
-                                &module_info, sizeof(MODULEINFO))) {
+    if (!::GetModuleInformation(::GetCurrentProcess(), modules[i], &module_info,
+                                sizeof(MODULEINFO))) {
       continue;
     }
     base::trace_event::ProcessMemoryMaps::VMRegion region;
@@ -767,4 +768,4 @@ void ProcessMetricsMemoryDumpProvider::SuspendFastMemoryPolling() {
 #endif
 }
 
-}  // namespace tracing
+}  // namespace memory_instrumentation

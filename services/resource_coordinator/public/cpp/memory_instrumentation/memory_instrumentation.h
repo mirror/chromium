@@ -54,6 +54,14 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT MemoryInstrumentation {
   // only one client of this API (process_memory_metrics_emitter.cc). Delay this
   // API and change that only once the cleaned up interface is ready.
 
+  // TODO(hjd): Remove once service knows which processes to collect OS dumps
+  // from.
+  void RegisterProcessForOSDumps(base::ProcessId);
+
+  // TODO(hjd): Remove once service knows which processes to collect OS dumps
+  // from.
+  void UnregisterProcessForOSDumps(base::ProcessId);
+
  private:
   MemoryInstrumentation(service_manager::Connector* connector,
                         const std::string& service_name);

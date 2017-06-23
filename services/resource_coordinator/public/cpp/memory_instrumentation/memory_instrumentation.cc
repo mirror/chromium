@@ -6,6 +6,7 @@
 
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/process_metrics_memory_dump_provider.h"
 
 namespace memory_instrumentation {
 
@@ -86,6 +87,18 @@ MemoryInstrumentation::GetCoordinatorBindingForCurrentThread() {
 void MemoryInstrumentation::BindCoordinatorRequestOnConnectorThread(
     mojom::CoordinatorRequest coordinator_request) {
   connector_->BindInterface(service_name_, std::move(coordinator_request));
+}
+
+void RegisterProcessForOSDumps(base::ProcessId) {}
+
+void UnregisterProcessForOSDumps(base::ProcessId) {}
+
+void MemoryInstrumentation::RegisterProcessForOSDumps(base::ProcessId pid) {
+  ProcessMetricsMemoryDumpProvider::RegisterForProcess(pid);
+}
+
+void MemoryInstrumentation::UnregisterProcessForOSDumps(base::ProcessId pid) {
+  ProcessMetricsMemoryDumpProvider::UnregisterForProcess(pid);
 }
 
 }  // namespace memory_instrumentation

@@ -10,9 +10,9 @@
 #include "base/metrics/statistics_recorder.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/trace_event.h"
-#include "components/tracing/common/process_metrics_memory_dump_provider.h"
 #include "components/tracing/common/tracing_messages.h"
 #include "ipc/ipc_channel.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 
 using base::trace_event::MemoryDumpManager;
 using base::trace_event::TraceLog;
@@ -38,8 +38,8 @@ void ChildTraceMessageFilter::OnFilterAdded(IPC::Channel* channel) {
 #if !defined(OS_LINUX) && !defined(OS_NACL)
   // On linux the browser process takes care of dumping process metrics.
   // The child process is not allowed to do so due to BPF sandbox.
-  tracing::ProcessMetricsMemoryDumpProvider::RegisterForProcess(
-      base::kNullProcessId);
+  memory_instrumentation::MemoryInstrumentation::GetInstance()
+      ->RegisterProcessForOSDumps(base::kNullProcessId);
 #endif
 }
 

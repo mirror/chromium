@@ -1,9 +1,8 @@
 // Copyright 2015 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
-#ifndef COMPONENTS_TRACING_COMMON_PROCESS_MEMORY_METRICS_DUMP_PROVIDER_H_
-#define COMPONENTS_TRACING_COMMON_PROCESS_MEMORY_METRICS_DUMP_PROVIDER_H_
+#ifndef SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_MEMORY_INSTRUMENTATION_PROCESS_MEMORY_METRICS_DUMP_PROVIDER_H_
+#define SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_MEMORY_INSTRUMENTATION_PROCESS_MEMORY_METRICS_DUMP_PROVIDER_H_
 
 #include <memory>
 
@@ -13,16 +12,17 @@
 #include "base/process/process_handle.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "build/build_config.h"
-#include "components/tracing/tracing_export.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_export.h"
 
 namespace base {
 class ProcessMetrics;
 }
 
-namespace tracing {
+namespace memory_instrumentation {
 
 // Dump provider which collects process-wide memory stats.
-class TRACING_EXPORT ProcessMetricsMemoryDumpProvider
+class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
+    ProcessMetricsMemoryDumpProvider
     : public base::trace_event::MemoryDumpProvider {
  public:
   // Pass base::kNullProcessId to register for current process.
@@ -90,6 +90,6 @@ class TRACING_EXPORT ProcessMetricsMemoryDumpProvider
   DISALLOW_COPY_AND_ASSIGN(ProcessMetricsMemoryDumpProvider);
 };
 
-}  // namespace tracing
+}  // namespace memory_instrumentation
 
-#endif  // COMPONENTS_TRACING_COMMON_PROCESS_MEMORY_METRICS_DUMP_PROVIDER_H_
+#endif  // SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_MEMORY_INSTRUMENTATION_PROCESS_MEMORY_METRICS_DUMP_PROVIDER_H_

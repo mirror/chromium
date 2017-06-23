@@ -11,8 +11,6 @@ component("tracing") {
     "child/child_trace_message_filter.h",
     "common/graphics_memory_dump_provider_android.cc",
     "common/graphics_memory_dump_provider_android.h",
-    "common/process_metrics_memory_dump_provider.cc",
-    "common/process_metrics_memory_dump_provider.h",
     "common/tracing_messages.cc",
     "common/tracing_messages.h",
     "core/proto_utils.cc",
@@ -44,10 +42,6 @@ component("tracing") {
   public_deps = [
     "//components/tracing/proto:protos",
   ]
-
-  if (is_nacl) {
-    sources -= [ "common/process_metrics_memory_dump_provider.cc" ]
-  }
 }
 
 component("startup_tracing") {
@@ -96,7 +90,6 @@ source_set("unit_tests") {
   sources = [
     "child/child_trace_message_filter_unittest.cc",
     "common/graphics_memory_dump_provider_android_unittest.cc",
-    "common/process_metrics_memory_dump_provider_unittest.cc",
     "core/proto_utils_unittest.cc",
     "core/proto_zero_message_unittest.cc",
     "core/scattered_stream_writer_unittest.cc",

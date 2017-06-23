@@ -24,7 +24,6 @@
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "components/tracing/common/process_metrics_memory_dump_provider.h"
 #include "content/browser/tracing/file_tracing_provider_impl.h"
 #include "content/browser/tracing/trace_message_filter.h"
 #include "content/browser/tracing/tracing_ui.h"
@@ -39,6 +38,7 @@
 #include "content/public/common/content_switches.h"
 #include "gpu/config/gpu_info.h"
 #include "net/base/network_change_notifier.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 #include "v8/include/v8-version-string.h"
 
 #if (defined(OS_POSIX) && defined(USE_UDEV)) || defined(OS_WIN) || \
@@ -413,8 +413,8 @@ void TracingControllerImpl::AddTraceMessageFilter(
 #if defined(OS_LINUX)
   // On Linux the browser process dumps process metrics for child process due to
   // sandbox.
-  tracing::ProcessMetricsMemoryDumpProvider::RegisterForProcess(
-      trace_message_filter->peer_pid());
+  memory_instrumentation::MemoryInstrumentation::GetInstance()
+      ->RegisterProcessForOSDumps(trace_message_filter->peer_pid());
 #endif
 
   trace_message_filters_.insert(trace_message_filter);
@@ -429,8 +429,8 @@ void TracingControllerImpl::RemoveTraceMessageFilter(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
 #if defined(OS_LINUX)
-  tracing::ProcessMetricsMemoryDumpProvider::UnregisterForProcess(
-      trace_message_filter->peer_pid());
+  memory_instrumentation::MemoryInstrumentation::GetInstance()
+      ->UnregisterProcessForOSDumps(trace_message_filter->peer_pid());
 #endif
 
   // If a filter is removed while a response from that filter is pending then
