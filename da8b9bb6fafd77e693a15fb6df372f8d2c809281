@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21142de7_d3996e3a",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b55be417_832e70e0",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46dab3b2_d8d06424",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4dc8caf_0f00878c",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46dab3b2_d8d06424",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e007fa11_c398f2e0",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "s/complicated/quadratic/\n\nAdded a comment to this effect and renamed the to/from properties.",
+      "parentUuid": "8a376e98_310fbfad",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a71cce79_23a6f520",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-23T05:02:29Z",
       "side": 1,
       "message": "Should the animations be paused before setting the current time, at least for a clearer test?",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58939eb_e0b352b3",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "I think that would be detrimental to the reader\u0027s understanding of the animation API as it would suggest that pausing is necessary.",
+      "parentUuid": "a71cce79_23a6f520",
       "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e6886b55_db9351f6",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-any-order.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Added comment explaining why it\u0027s a single test.",
+      "parentUuid": "83c599e4_34c2811a",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e925fc9_04735055",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-any-order.html",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d701dc0f_11bce094",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-any-order.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "String ordering, e.g. \u0027--a\u0027 \u003c \u0027--b\u0027.\nAdded the word lexicographical.",
+      "parentUuid": "1e925fc9_04735055",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "505e0679_b2839adb",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Renamed to --transitioning-property.",
+      "parentUuid": "1301f706_e147a424",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "477d7d9c_ea4706c9",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884b09b4_47349149",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Added comment.",
+      "parentUuid": "477d7d9c_ea4706c9",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "2a116dc9_95b0d61f",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Ty, copy paste errors are the worst.",
+      "parentUuid": "356d2f25_c0e7ac89",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f50175_a98867aa",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
         "patchSetId": 11
@@ -169,6 +331,24 @@
       "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf5bc8e_1ad2d21b",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Oops, thanks.\nFixed text up, this was a copy paste error.",
+      "parentUuid": "d4f50175_a98867aa",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "09946e35_5cea6c9e",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered-animating.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01768469_8476987b",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0436b4e5_bb1a58c9",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered.html",
         "patchSetId": 11
@@ -203,6 +401,24 @@
       "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae4798d_58a59e0b",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Renamed unregistered properties to indicate that they\u0027re unregistered.",
+      "parentUuid": "0436b4e5_bb1a58c9",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

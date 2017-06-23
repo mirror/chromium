@@ -192,6 +192,24 @@
       "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffae475c_0b570e09",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationEnvironment.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T06:22:22Z",
+      "side": 1,
+      "message": "Removed the default parameter for variable_resolver to make misusing this code harder to do.",
+      "parentUuid": "b38665b3_1076596e",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
