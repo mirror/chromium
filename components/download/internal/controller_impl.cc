@@ -244,27 +244,35 @@ void ControllerImpl::ProcessScheduledTasks() {
     return;
   }
 
-  while (!task_finished_callbacks_.empty()) {
-    auto it = task_finished_callbacks_.begin();
+  for (auto it = task_finished_callbacks_.begin();
+       it != task_finished_callbacks_.end(); it++) {
     if (it->first == DownloadTaskType::DOWNLOAD_TASK) {
       ActivateMoreDownloads();
     } else if (it->first == DownloadTaskType::CLEANUP_TASK) {
-      auto timed_out_entries =
-          file_monitor_->CleanupFilesForCompletedEntries(model_->PeekEntries());
+      auto timed_out_entries = file_monitor_->CleanupFilesForCompletedEntries(
+          model_->PeekEntries(),
+          base::Bind(&ControllerImpl::OnCompleteCleanupTask,
+                     weak_ptr_factory_.GetWeakPtr()));
       for (auto* entry : timed_out_entries) {
         DCHECK_EQ(Entry::State::COMPLETE, entry->state);
         model_->Remove(entry->guid);
       }
     }
-
-    HandleTaskFinished(it->first, false,
-                       stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
   }
+}
+
+void ControllerImpl::OnCompleteCleanupTask() {
+  HandleTaskFinished(DownloadTaskType::CLEANUP_TASK, false,
+                     stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
 }
 
 void ControllerImpl::HandleTaskFinished(DownloadTaskType task_type,
                                         bool needs_reschedule,
                                         stats::ScheduledTaskStatus status) {
+  if (task_finished_callbacks_.find(task_type) ==
+      task_finished_callbacks_.end())
+    return;
+
   if (status != stats::ScheduledTaskStatus::CANCELLED_ON_STOP) {
     base::ResetAndReturn(&task_finished_callbacks_[task_type])
         .Run(needs_reschedule);
@@ -272,7 +280,16 @@ void ControllerImpl::HandleTaskFinished(DownloadTaskType task_type,
   // TODO(dtrainor): It might be useful to log how many downloads we have
   // running when we're asked to stop processing.
   stats::LogScheduledTaskStatus(task_type, status);
-  task_finished_callbacks_.erase(task_type);
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&ControllerImpl::ClearTaskEntry,
+                            weak_ptr_factory_.GetWeakPtr(), task_type));
+}
+
+void ControllerImpl::ClearTaskEntry(DownloadTaskType task_type) {
+  auto it = task_finished_callbacks_.find(task_type);
+  if (it != task_finished_callbacks_.end()) {
+    task_finished_callbacks_.erase(it);
+  }
 }
 
 void ControllerImpl::OnDriverReady(bool success) {
@@ -799,6 +816,13 @@ void ControllerImpl::ActivateMoreDownloads() {
 
   Entry* next = scheduler_->Next(
       model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
+
+  if (!next && task_finished_callbacks_.find(DownloadTaskType::DOWNLOAD_TASK) !=
+                   task_finished_callbacks_.end()) {
+    HandleTaskFinished(DownloadTaskType::DOWNLOAD_TASK, false,
+                       stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
+    return;
+  }
 
   while (next) {
     DCHECK_EQ(Entry::State::AVAILABLE, next->state);

@@ -142,7 +142,8 @@ class ControllerImpl : public Controller,
   void HandleTaskFinished(DownloadTaskType task_type,
                           bool needs_reschedule,
                           stats::ScheduledTaskStatus status);
-
+  void OnCompleteCleanupTask();
+  void ClearTaskEntry(DownloadTaskType task_type);
   void HandleCompleteDownload(CompletionType type, const std::string& guid);
 
   // Find more available entries to download, until the number of active entries

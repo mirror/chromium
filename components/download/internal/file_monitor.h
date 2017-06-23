@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "components/download/internal/model.h"
 #include "components/download/internal/stats.h"
 
@@ -38,7 +39,8 @@ class FileMonitor {
   // Deletes the files for the database entries which have been completed and
   // ready for cleanup. Returns the entries eligible for clean up.
   virtual std::vector<Entry*> CleanupFilesForCompletedEntries(
-      const Model::EntryList& entries) = 0;
+      const Model::EntryList& entries,
+      const base::Closure& completion_callback) = 0;
 
   // Deletes a list of files and logs UMA.
   virtual void DeleteFiles(const std::vector<base::FilePath>& files_to_remove,

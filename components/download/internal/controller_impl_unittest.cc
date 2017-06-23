@@ -78,21 +78,34 @@ class MockScheduler : public Scheduler {
 
 class MockFileMonitor : public FileMonitor {
  public:
-  MockFileMonitor() = default;
+  MockFileMonitor() : cleanup_task_completed_(false) {}
   ~MockFileMonitor() override = default;
 
   void Initialize(const FileMonitor::InitCallback& callback) override;
+  std::vector<Entry*> CleanupFilesForCompletedEntries(
+      const Model::EntryList& entries,
+      const base::Closure& completion_callback) override;
   MOCK_METHOD2(DeleteUnknownFiles,
                void(const Model::EntryList&, const std::vector<DriverEntry>&));
-  MOCK_METHOD1(CleanupFilesForCompletedEntries,
-               std::vector<Entry*>(const Model::EntryList&));
   MOCK_METHOD2(DeleteFiles,
                void(const std::vector<base::FilePath>&,
                     stats::FileCleanupReason));
+  bool CleanupTaskCompleted() { return cleanup_task_completed_; }
+
+ private:
+  bool cleanup_task_completed_;
 };
 
 void MockFileMonitor::Initialize(const FileMonitor::InitCallback& callback) {
   callback.Run(true);
+}
+
+std::vector<Entry*> MockFileMonitor::CleanupFilesForCompletedEntries(
+    const Model::EntryList& entries,
+    const base::Closure& completion_callback) {
+  completion_callback.Run();
+  cleanup_task_completed_ = true;
+  return std::vector<Entry*>();
 }
 
 class DownloadServiceControllerImplTest : public testing::Test {
@@ -291,8 +304,6 @@ TEST_F(DownloadServiceControllerImplTest,
 
   std::vector<Entry> entries = {entry1, entry2, entry3};
 
-  EXPECT_CALL(*file_monitor_, CleanupFilesForCompletedEntries(_)).Times(1);
-
   controller_->Initialize();
   driver_->MakeReady();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
@@ -300,6 +311,7 @@ TEST_F(DownloadServiceControllerImplTest,
                                     base::Bind(&NotifyTaskFinished));
 
   task_runner_->RunUntilIdle();
+  EXPECT_TRUE(file_monitor_->CleanupTaskCompleted());
 }
 
 TEST_F(DownloadServiceControllerImplTest, FailedInitWithBadModel) {
