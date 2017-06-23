@@ -420,6 +420,18 @@ std::unique_ptr<blink::WebThread> BlinkPlatformImpl::CreateThread(
   return std::move(thread);
 }
 
+std::unique_ptr<blink::WebThread> BlinkPlatformImpl::CreateWebAudioThread() {
+  base::Thread::Options options;
+  options.message_loop_type = base::MessageLoop::TYPE_IO;
+  options.priority = base::ThreadPriority::REALTIME_AUDIO;
+  std::unique_ptr<blink::scheduler::WebThreadBase> thread =
+      blink::scheduler::WebThreadBase::CreateWorkerThread(
+          "WebAudio Rendering Thread", options);
+  thread->Init();
+  WaitUntilWebThreadTLSUpdate(thread.get());
+  return std::move(thread);
+}
+
 void BlinkPlatformImpl::SetCompositorThread(
     blink::scheduler::WebThreadBase* compositor_thread) {
   compositor_thread_ = compositor_thread;

@@ -83,6 +83,7 @@ class CONTENT_EXPORT BlinkPlatformImpl
   blink::WebString UserAgent() override;
   blink::WebURLError CancelledError(const blink::WebURL& url) const override;
   std::unique_ptr<blink::WebThread> CreateThread(const char* name) override;
+  std::unique_ptr<blink::WebThread> CreateWebAudioThread() override;
   blink::WebThread* CurrentThread() override;
   void RecordAction(const blink::UserMetricsAction&) override;
 
