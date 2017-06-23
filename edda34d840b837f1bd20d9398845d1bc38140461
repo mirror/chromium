@@ -16,6 +16,24 @@
       "revId": "edda34d840b837f1bd20d9398845d1bc38140461",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c676c9bd_596e679d",
+        "filename": "components/viz/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-23T21:35:21Z",
+      "side": 0,
+      "message": "Done. I also split out the test support into a real_gl_test_support source-set.",
+      "parentUuid": "d53d0177_4908a353",
+      "revId": "edda34d840b837f1bd20d9398845d1bc38140461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
