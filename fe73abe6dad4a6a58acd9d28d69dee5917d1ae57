@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb4877b9_ed9f0b1a",
+        "filename": "components/printing/renderer/print_web_view_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-23T08:34:20Z",
+      "side": 1,
+      "message": "I don\u0027t see classes declared in the middle of functions very often. What do the style lawyers say about this?",
+      "revId": "fe73abe6dad4a6a58acd9d28d69dee5917d1ae57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcbcb97_0d4cb5a3",
+        "filename": "components/printing/renderer/print_web_view_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-23T08:34:20Z",
+      "side": 1,
+      "message": "I think for Clang (plugin?) to actually check this, we need to add an override dtor.",
+      "range": {
+        "startLine": 587,
+        "startChar": 47,
+        "endLine": 587,
+        "endChar": 55
+      },
+      "revId": "fe73abe6dad4a6a58acd9d28d69dee5917d1ae57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
