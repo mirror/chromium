@@ -99,10 +99,6 @@ void PredictorDatabaseInternal::Initialize() {
   autocomplete_table_->Initialize(db_.get());
   resource_prefetch_tables_->Initialize(db_.get());
 
-  // The logged_in_predictor table is obsolete as of Chrome 44.
-  // TODO(davidben): Remove this after April 16, 2016.
-  ignore_result(db_->Execute("DROP TABLE IF EXISTS logged_in_predictor"));
-
   LogDatabaseStats();
 }
 
