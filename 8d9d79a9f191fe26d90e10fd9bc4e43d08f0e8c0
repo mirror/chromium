@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "f9f5fcf3_7047e7fd",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-23T21:57:51Z",
+      "side": 1,
+      "message": "My point is that there are 3 separate tests now doing almost the same thing (and in some cases, duplicating the same checks).  It could all be one test, that goes through the same states.  Or if you want to start fresh, you can just make a new manager in the same test.  That is my 2 cents...",
+      "parentUuid": "80bba332_2da201f7",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e662ee5_4f8a99ad",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
         "patchSetId": 2
@@ -288,6 +306,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "e796dc1a_2d561e76",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "537ec6f0_d304e510",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-23T21:57:51Z",
+      "side": 1,
+      "message": "It looks like I was confused, and my comment applied to enums, not initializers.  Sorry about that!",
+      "parentUuid": "bad81ee1_200d78b1",
       "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
