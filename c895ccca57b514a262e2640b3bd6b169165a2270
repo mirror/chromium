@@ -1060,6 +1060,30 @@
     },
     {
       "key": {
+        "uuid": "46341287_70c86667",
+        "filename": "chrome/browser/extensions/api/platform_keys/platform_keys_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-23T08:47:59Z",
+      "side": 1,
+      "message": "Resolving for now - please re-comment if you\u0027d prefer another solution.",
+      "parentUuid": "f56e84f0_0f4a2893",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de0ce2a2_e39e7350",
         "filename": "chrome/browser/extensions/api/platform_keys/platform_keys_api.cc",
         "patchSetId": 3
@@ -1409,6 +1433,30 @@
       "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243304a6_7f4d579c",
+        "filename": "chrome/renderer/resources/extensions/platform_keys/get_public_key.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-23T08:47:59Z",
+      "side": 1,
+      "message": "Resolving for now - please re-comment if you\u0027d prefer another solution.",
+      "parentUuid": "a9a1f87a_abc4df5c",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 20
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
