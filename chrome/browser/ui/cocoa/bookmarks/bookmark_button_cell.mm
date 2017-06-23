@@ -496,4 +496,16 @@ const CGFloat kKernAmount = 0.2;
   return title;
 }
 
+- (id)accessibilityAttributeValue:(NSString*)attribute {
+  // The buttons on the bookmark bar are like popup buttons, in that they make a
+  // new menu appear, so they ascribe to that role. All other items in the
+  // bookmark menus end up being "buttons".
+  // TODO(lgrey): move menus over to using the MenuItem role
+  if ([attribute isEqual:NSAccessibilityRoleAttribute] && [self bookmarkNode] &&
+      [self bookmarkNode]->is_folder() && ![self isFolderButtonCell]) {
+    return NSAccessibilityPopUpButtonRole;
+  }
+  return [super accessibilityAttributeValue:attribute];
+}
+
 @end
