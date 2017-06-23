@@ -4,21 +4,27 @@
 <style>
 #target {
   --has-value: 100;
+  --fallback-value: 200;
 }
 </style>
 <div id="target"></div>
 <script>
-for (let name of ['--test', '--has-value']) {
-  CSS.registerProperty({
-    name,
-    syntax: '<number>',
-    initialValue: '0',
-  });
-}
+setup(() => {
+  for (let name of ['--test', '--has-value']) {
+    CSS.registerProperty({
+      name,
+      syntax: '<number>',
+      initialValue: '0',
+    });
+  }
+});
 
 test(() => {
   let animation = target.animate({
-    '--test': ['var(--has-value)', 'var(--has-no-value, 200)'],
+    '--test': [
+      'var(--has-value)',
+      'var(--has-no-value, var(--fallback-value))',
+    ],
   }, 100);
 
   animation.currentTime = 25;

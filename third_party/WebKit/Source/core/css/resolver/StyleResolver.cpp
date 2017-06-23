@@ -1294,7 +1294,7 @@ void StyleResolver::ApplyAnimatedStandardProperties(
     const Interpolation& interpolation = *entry.value.front();
     if (interpolation.IsInvalidatableInterpolation()) {
       CSSInterpolationTypesMap map(state.GetDocument().GetPropertyRegistry());
-      CSSInterpolationEnvironment environment(map, state);
+      CSSInterpolationEnvironment environment(map, state, nullptr);
       InvalidatableInterpolation::ApplyStack(entry.value, environment);
     } else if (interpolation.IsTransitionInterpolation()) {
       ToTransitionInterpolation(interpolation).Apply(state);

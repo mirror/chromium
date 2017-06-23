@@ -3,20 +3,22 @@
 <script src="../../resources/testharnessreport.js"></script>
 <style>
 #target {
-  --from: 100;
-  --to: 200;
+  --unregistered-a: 100;
+  --unregistered-b: 200;
 }
 </style>
 <div id="target"></div>
 <script>
-CSS.registerProperty({
-  name: '--test',
-  syntax: '<number>',
-  initialValue: '0',
+setup(() => {
+  CSS.registerProperty({
+    name: '--test',
+    syntax: '<number>',
+    initialValue: '0',
+  });
 });
 
 test(() => {
-  let animation = target.animate({'--test': ['var(--from)', 'var(--to)']}, 100);
+  let animation = target.animate({'--test': ['var(--unregistered-a)', 'var(--unregistered-b)']}, 100);
 
   animation.currentTime = 25;
   assert_equals(getComputedStyle(target).getPropertyValue('--test'), '125', 'target at 25%');

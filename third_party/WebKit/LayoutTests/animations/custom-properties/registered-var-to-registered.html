@@ -9,13 +9,15 @@
 </style>
 <div id="target"></div>
 <script>
-for (let name of ['--test', '--from', '--to']) {
-  CSS.registerProperty({
-    name,
-    syntax: '<number>',
-    initialValue: '0',
-  });
-}
+setup(() => {
+  for (let name of ['--test', '--from', '--to']) {
+    CSS.registerProperty({
+      name,
+      syntax: '<number>',
+      initialValue: '0',
+    });
+  }
+});
 
 test(() => {
   let animation = target.animate({'--test': ['var(--from)', 'var(--to)']}, 100);

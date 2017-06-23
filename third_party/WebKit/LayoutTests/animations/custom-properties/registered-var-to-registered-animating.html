@@ -3,22 +3,25 @@
 <script src="../../resources/testharnessreport.js"></script>
 <style>
 #target {
-  --from: 100;
+  --static: 100;
 }
 </style>
 <div id="target"></div>
 <script>
-for (let name of ['--test', '--from', '--to']) {
-  CSS.registerProperty({
-    name,
-    syntax: '<number>',
-    initialValue: '0',
-  });
-}
+setup(() => {
+  for (let name of ['--test', '--static', '--animated']) {
+    CSS.registerProperty({
+      name,
+      syntax: '<number>',
+      initialValue: '0',
+    });
+  }
+});
 
 test(() => {
-  let animation = target.animate({'--test': ['var(--from)', 'var(--to)']}, 100);
-  let toAnimation = target.animate({'--to': ['200', '300']}, 100);
+  // --test is animating from a static value to an animated value resulting in it changing quadratically.
+  let animation = target.animate({'--test': ['var(--static)', 'var(--animated)']}, 100);
+  let toAnimation = target.animate({'--animated': ['200', '300']}, 100);
 
   toAnimation.currentTime = 25;
   {
@@ -41,5 +44,5 @@ test(() => {
     // lerp(100, lerp(200, 300, 75%), 75%) == 0.25*100 + 0.75*(0.25*200 + 0.75*300) == 231.25
     assert_equals(getComputedStyle(target).getPropertyValue('--test'), '231.25', 'target at 75%, to at 25%');
   }
-}, 'Registered custom property animation keyframes with var() references to animating unregistered custom properties');
+}, 'Registered custom property animation keyframes with var() references to animating registered custom properties');
 </script>

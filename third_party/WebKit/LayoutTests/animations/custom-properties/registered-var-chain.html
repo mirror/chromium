@@ -3,16 +3,22 @@
 <script src="../../resources/testharnessreport.js"></script>
 <div id="target">target</div>
 <script>
-for (let name of ['--a', '--b', '--c']) {
-  CSS.registerProperty({
-    name,
-    syntax: '<number>',
-    initialValue: '0',
-  });
-}
+setup(() => {
+  for (let name of ['--a', '--b', '--c']) {
+    CSS.registerProperty({
+      name,
+      syntax: '<number>',
+      initialValue: '0',
+    });
+  }
+});
 
 test(() => {
-  // --a is a dependency of --b's keyframes which is a dependency of --c's keyframes.
+  // These keyframes are equivalent to: {
+  // '--a': ['100', '200'],
+  // '--b': ['100', '300'],
+  // '--c': ['100', '400'],
+  // }.
   let animation = target.animate({
     '--a': ['100', '200'],
     '--b': ['var(--a)', 'calc(var(--a) + 100)'],

@@ -15,10 +15,9 @@ class CSSVariableResolver;
 
 class CSSInterpolationEnvironment : public InterpolationEnvironment {
  public:
-  explicit CSSInterpolationEnvironment(
-      const InterpolationTypesMap& map,
-      StyleResolverState& state,
-      CSSVariableResolver* variable_resolver = nullptr)
+  explicit CSSInterpolationEnvironment(const InterpolationTypesMap& map,
+                                       StyleResolverState& state,
+                                       CSSVariableResolver* variable_resolver)
       : InterpolationEnvironment(map),
         state_(&state),
         style_(state.Style()),

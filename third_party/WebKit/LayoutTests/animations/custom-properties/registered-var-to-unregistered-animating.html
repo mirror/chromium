@@ -3,22 +3,25 @@
 <script src="../../resources/testharnessreport.js"></script>
 <style>
 #target {
-  --from: 100;
+  --unregistered-a: 100;
 }
 </style>
 <div id="target"></div>
 <script>
-CSS.registerProperty({
-  name: '--test',
-  syntax: '<number>',
-  initialValue: '0',
+setup(() => {
+  CSS.registerProperty({
+    name: '--test',
+    syntax: '<number>',
+    initialValue: '0',
+  });
 });
 
 test(() => {
-  let animation = target.animate({'--test': ['var(--from)', 'var(--to)']}, 100);
-  let toAnimation = target.animate({'--to': ['200', '300']}, 100);
+  let animation = target.animate({'--test': ['var(--unregistered-a)', 'var(--unregistered-b)']}, 100);
+  // Because this property is unregistered it will not interpolate smoothly, instead it will flip at 50%.
+  let unregisteredAnimation = target.animate({'--unregistered-b': ['200', '300']}, 100);
 
-  toAnimation.currentTime = 25;
+  unregisteredAnimation.currentTime = 25;
   {
     animation.currentTime = 25;
     assert_equals(getComputedStyle(target).getPropertyValue('--test'), '125', 'target at 25%, to at 25%');
@@ -27,7 +30,7 @@ test(() => {
     assert_equals(getComputedStyle(target).getPropertyValue('--test'), '175', 'target at 75%, to at 25%');
   }
 
-  toAnimation.currentTime = 75;
+  unregisteredAnimation.currentTime = 75;
   {
     animation.currentTime = 25;
     assert_equals(getComputedStyle(target).getPropertyValue('--test'), '150', 'target at 25%, to at 75%');
