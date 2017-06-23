@@ -22,6 +22,30 @@
       "revId": "485c603c8c60b0353aae3d9bb4484f987196bde2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829cea6d_37d13d97",
+        "filename": "chrome/browser/ui/webui/settings_utils_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-23T23:00:08Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "b958d2c9_4d2bd092",
+      "range": {
+        "startLine": 141,
+        "startChar": 38,
+        "endLine": 141,
+        "endChar": 48
+      },
+      "revId": "485c603c8c60b0353aae3d9bb4484f987196bde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
