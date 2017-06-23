@@ -40,6 +40,7 @@ from pylib.base import test_instance_factory
 from pylib.base import test_run_factory
 from pylib.results import json_results
 from pylib.results import report_results
+from pylib.utils import instrumentation_tracing
 from pylib.utils import logdog_helper
 from pylib.utils import logging_utils
 
@@ -101,6 +102,11 @@ def AddTracingOptions(parser):
       '--trace-output',
       metavar='FILENAME', type=os.path.realpath,
       help='Path to save test_runner trace data to.')
+
+  parser.add_argument(
+      '--trace-all',
+      action='store_true',
+      help='Whether to trace all function calls.')
 
 
 def AddCommonOptions(parser):
@@ -926,6 +932,12 @@ def main():
       args.command_line_flags = unknown_args
     else:
       parser.error('unrecognized arguments: %s' % ' '.join(unknown_args))
+
+  if args.trace_output and args.trace_all:
+    to_include = [r'pylib\..*', r'devil\..*', '__main__']
+    to_exclude = ['proguard', 'logging']
+    instrumentation_tracing.start_instrumenting(args.trace_output + '.json',
+                                               to_include, to_exclude)
 
   try:
     return RunTestsCommand(args)

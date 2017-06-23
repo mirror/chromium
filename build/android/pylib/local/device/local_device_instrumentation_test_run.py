@@ -23,6 +23,7 @@ from pylib.instrumentation import instrumentation_test_instance
 from pylib.local.device import local_device_environment
 from pylib.local.device import local_device_test_run
 from pylib.utils import google_storage_helper
+from pylib.utils import instrumentation_tracing
 from pylib.utils import logdog_helper
 from py_trace_event import trace_event
 from py_utils import contextlib_ext
@@ -126,6 +127,7 @@ class LocalDeviceInstrumentationTestRun(
       steps = []
 
       def install_helper(apk, permissions):
+        @instrumentation_tracing.no_tracing
         @trace_event.traced("apk_path")
         def install_helper_internal(apk_path=apk.path):
           # pylint: disable=unused-argument
@@ -204,7 +206,7 @@ class LocalDeviceInstrumentationTestRun(
                   str(type(value)), key))
           prefs.Commit()
 
-      @trace_event.traced
+      @instrumentation_tracing.no_tracing
       def push_test_data():
         device_root = posixpath.join(dev.GetExternalStoragePath(),
                                      'chromium_tests_root')
