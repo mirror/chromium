@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/timer/timer.h"
+#include "chrome/browser/ui/views/tabs/newtab_promo.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/tabs/tab_controller.h"
 #include "ui/gfx/animation/animation_container.h"
@@ -25,6 +26,7 @@
 #include "ui/views/view_targeter_delegate.h"
 
 class NewTabButton;
+class NewTabPromo;
 class StackedTabStripLayout;
 class Tab;
 class TabDragController;
@@ -256,6 +258,12 @@ class TabStrip : public views::View,
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   views::View* GetTooltipHandlerForPoint(const gfx::Point& point) override;
+
+  // NewTabPromo
+  const gfx::Rect GetPromoAnchorRect();
+  void ShowPromo();
+  void ClosePromo();
+  bool IsShowingPromo();
 
  private:
   typedef std::vector<Tab*> Tabs;
@@ -573,6 +581,9 @@ class TabStrip : public views::View,
 
   // The "New Tab" button.
   NewTabButton* newtab_button_;
+
+  // The "New Tab Promo"
+  NewTabPromo* newtab_promo_;
 
   // Ideal bounds of the new tab button.
   gfx::Rect newtab_button_bounds_;
