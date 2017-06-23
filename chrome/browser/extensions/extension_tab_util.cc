@@ -159,11 +159,10 @@ base::DictionaryValue* ExtensionTabUtil::OpenTab(
     return NULL;
   }
 
-  // TODO(jstritar): Add a constant, chrome.tabs.TAB_ID_ACTIVE, that
-  // represents the active tab.
+  int opener_id = api::tabs::TAB_ID_ACTIVE;
   WebContents* opener = NULL;
   if (params.opener_tab_id.get()) {
-    int opener_id = *params.opener_tab_id;
+    opener_id = *params.opener_tab_id;
 
     if (!ExtensionTabUtil::GetTabById(opener_id, profile,
                                       function->include_incognito(), NULL, NULL,
