@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d0724db_5415e9ff",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-23T16:18:56Z",
+      "side": 1,
+      "message": "nit: maybe just forward declare (if the comment about GetSBErrorDisplayOptions applies)",
+      "range": {
+        "startLine": 13,
+        "startChar": 79,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "d5acc0e5cee4cfa0d52a58201bb1a8370d3502e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6261d764_69ee648c",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-23T16:18:56Z",
+      "side": 1,
+      "message": "no need?",
+      "range": {
+        "startLine": 16,
+        "startChar": 18,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "d5acc0e5cee4cfa0d52a58201bb1a8370d3502e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d186cf8_e26c52c0",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-23T16:18:56Z",
+      "side": 1,
+      "message": "is this still needed?",
+      "range": {
+        "startLine": 57,
+        "startChar": 49,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "d5acc0e5cee4cfa0d52a58201bb1a8370d3502e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

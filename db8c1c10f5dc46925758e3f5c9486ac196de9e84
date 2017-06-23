@@ -46,6 +46,30 @@
       "revId": "db8c1c10f5dc46925758e3f5c9486ac196de9e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c74320b6_5f03314f",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-23T16:18:56Z",
+      "side": 1,
+      "message": "Makes sense. Thanks a lot!",
+      "parentUuid": "393effba_07e85669",
+      "range": {
+        "startLine": 143,
+        "startChar": 23,
+        "endLine": 143,
+        "endChar": 24
+      },
+      "revId": "db8c1c10f5dc46925758e3f5c9486ac196de9e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
