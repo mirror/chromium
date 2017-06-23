@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e95df64_b7b5a07e",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-23T17:52:54Z",
+      "side": 0,
+      "message": "I\u0027m a little confused about the state of this test.  Should it be testing the rects in PositionScaleDrawImage as well and comparing against inset_rects? Should inset_rects and PositionScaleDrawImage go away entirely and this just checks against DrawImage itself?",
+      "revId": "14072aff84d5ba7298a8e61be8dba95fa209c112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
