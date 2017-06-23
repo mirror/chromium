@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "52a7e828_cd485448",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T19:56:07Z",
+      "side": 1,
+      "message": "SGTM if you mean keeping the old code as-is. If we do need the bigger rect for SPv2, I think we should add a condition here to avoid the change from affecting SPv1 non-composited layers.",
+      "parentUuid": "257325d3_79adce95",
+      "revId": "30487fcfd49c53d43622e8e7c284374c78c699fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c7df01c_5db237e3",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
