@@ -30,6 +30,12 @@ class DialogOverlayImpl : public ContentViewCoreImplObserver {
   // Clean up and post to delete |this| later.
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
 
+  // Fill in |coords| with the compositor screen offset.
+  void GetCompositorOffset(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jintArray>& coords);
+
   // ContentViewCoreImplObserver
   void OnContentViewCoreDestroyed() override;
   void OnAttachedToWindow() override;

@@ -7,6 +7,7 @@
 
 #include <list>
 
+#include "base/android/jni_array.h"
 #include "base/android/jni_weak_ref.h"
 #include "base/bind.h"
 #include "base/memory/ref_counted.h"
@@ -150,6 +151,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
 
   // This may return null.
   base::android::ScopedJavaLocalRef<jobject> GetContainerView();
+
+  void GetLocationOfContainerViewOnScreen(
+      const base::android::JavaRef<jintArray>& coords);
 
   float GetDipScale();
 
