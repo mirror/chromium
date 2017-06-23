@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a8063f1_64725936",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/imports/resources/import-quirks.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-23T11:00:24Z",
+      "side": 1,
+      "message": "Maybe with the comment below, we can remove the line 1 completely, as\nit is just confusing.",
+      "parentUuid": "7a1339b8_52db290b",
+      "revId": "f6a4062591f934bca3651f123149d2a67fc99b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f346d489_1686dba6",
         "filename": "third_party/WebKit/LayoutTests/fast/html/imports/resources/import-quirks.html",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T10:49:38Z",
       "side": 1,
       "message": "\"all HTML Import files are\" and \"strict mode\" is a more common term than \"no quirks mode\".",
+      "revId": "f6a4062591f934bca3651f123149d2a67fc99b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899c0499_7551c116",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/imports/resources/import-quirks.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-23T11:00:24Z",
+      "side": 1,
+      "message": "Yeah, I thought so... but in the DOM spec,\nhttps://dom.spec.whatwg.org/#concept-document-no-quirks\nit says \"no quirks mode\"...\n\n\u003e No-quirks mode was originally known as \"standards mode\" and limited-quirks mode was once known as \"almost standards mode\". They have been renamed because their details are now defined by standards. (And because Ian Hickson vetoed their original names on the basis that they are nonsensical.)",
+      "parentUuid": "f346d489_1686dba6",
       "revId": "f6a4062591f934bca3651f123149d2a67fc99b9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
