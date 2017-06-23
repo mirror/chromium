@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2314ba9d_8373c4e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-23T09:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a55a34_0c0a8e25",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d18ff3_3077ccf9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 2
@@ -283,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "6141ff45_e436ebc5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-23T09:25:22Z",
+      "side": 1,
+      "message": "Refactored as suggested.",
+      "parentUuid": "90af0485_364171cc",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f15e7989_3aaaa180",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 2
@@ -330,6 +366,24 @@
       "side": 1,
       "message": "This seems like a questionable method of suppressing the accessibility event in the first place. With the new spannable approach, the text is more hidden than before.  Is there a way to mark the spannable in such a way that it\u0027s hidden from accessibility as well as from the IME?",
       "parentUuid": "0eb98488_9e0b9671",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6d90d5_4a22f72f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-23T09:25:22Z",
+      "side": 1,
+      "message": "That is possible, but that does not remove this method as AutocompleteEditText still inquires it. I\u0027ll file a separate bug to handle this when the new model fully replaces the old one.",
+      "parentUuid": "03c22c24_a9ffdaab",
       "revId": "e193697550b818d0902238cbe82ce3128708564d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
