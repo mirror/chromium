@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e549f510_aa23e7b3",
+        "filename": "ios/chrome/browser/ui/authentication/signin_account_selector_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-23T16:31:06Z",
+      "side": 1,
+      "message": "Since this one is no longer designated, you can probably remove it from all these headers?",
+      "range": {
+        "startLine": 29,
+        "startChar": 16,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a018bd_a3299628",
+        "filename": "ios/chrome/browser/ui/collection_view/collection_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-23T16:31:06Z",
+      "side": 1,
+      "message": "Optional nit: I\u0027d have called it, to better match the parent designated:\n\n- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout*)layout\n    style:(CollectionViewControllerStyle)style;",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b11bac9_4f486f3d",
+        "filename": "ios/chrome/browser/ui/collection_view/collection_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-23T16:31:06Z",
+      "side": 1,
+      "message": "Sad we can\u0027t use it most of the time :(\nActually, are we using it even once now?",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc2d012_caf43190",
+        "filename": "ios/chrome/browser/ui/collection_view/collection_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-23T16:31:06Z",
+      "side": 1,
+      "message": "In one line:\n\nreturn [self initWithStyle:style layout:layout];",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
