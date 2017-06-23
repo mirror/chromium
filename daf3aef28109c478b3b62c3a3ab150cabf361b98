@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17272127_e86a1934",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-23T15:29:02Z",
+      "side": 0,
+      "message": "Still need explicit.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 11
+      },
+      "revId": "daf3aef28109c478b3b62c3a3ab150cabf361b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
