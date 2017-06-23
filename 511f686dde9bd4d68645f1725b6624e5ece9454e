@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c00ba297_5f806012",
+        "filename": "content/renderer/media_recorder/video_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-23T21:49:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this just be 1? IOW, let\u0027s say we have a very high source\nframe rate: we start encoding the first VideoFrame, but because they\nkeep coming we queue (via the PostTask()s) up to \n|kMaxNumberOfFramesInEncode| -1;  when encoding the 1st frame is \nfinished, the encoder will grab the second VideoFrame (i.e. the first\n\"queued up\"), but that\u0027s a very old frame that we should not be \ninterested in, anyway. \n\nI think that for a real-time encoder there should be no queueing, \ninstead, if the encoder is busy, we should hold on to the last\nseen VideoFrame here, so that there\u0027s some work to do when the \nencoder is released. You could say that we have a Last-In-First-Out\nqueue of size 1 :-) here. WDYT?",
+      "range": {
+        "startLine": 78,
+        "startChar": 39,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "511f686dde9bd4d68645f1725b6624e5ece9454e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
