@@ -1171,8 +1171,8 @@ Network.NetworkLogView = class extends UI.VBox {
     return httpRequests.filter(Network.NetworkLogView.FinishedRequestsFilter);
   }
 
-  _copyAll() {
-    var harArchive = {log: (new NetworkLog.HARLog(this._harRequests())).build()};
+  async _copyAll() {
+    var harArchive = await NetworkLog.HARBuilder.build(this._harRequests(), false);
     InspectorFrontendHost.copyText(JSON.stringify(harArchive, null, 2));
   }
 

@@ -24,7 +24,7 @@ async function test()
         InspectorTest.evaluateInPage("doXHR()", step2);
     }
 
-    function step2()
+    async function step2()
     {
         function findRequestByURL(url)
         {
@@ -47,7 +47,8 @@ async function test()
         }
 
         addCookieHeadersToRequest(findRequestByURL(/inspector-test\.js$/));
-        var log = (new NetworkLog.HARLog(InspectorTest.networkRequests())).build();
+        // We convert in and out of JSON to make sure it strips out undefined values.
+        var log = JSON.parse(JSON.stringify(await NetworkLog.HARBuilder.build(InspectorTest.networkRequests(), false))).log;
         // Filter out favicon.ico requests that only appear on certain platforms.
         log.entries = log.entries.filter(function(entry) {
             return !/favicon\.ico$/.test(entry.request.url);

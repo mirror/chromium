@@ -1,0 +1,192 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// See http://www.softwareishard.com/blog/har-12-spec/ for HAR specification.
+NetworkLog.HARBuilder = class {
+  /**
+   * @param {!Array<!SDK.NetworkRequest>} requests
+   * @param {boolean} includeContent
+   * @param {!Common.Progress=} progress
+   * @return {!Promise<!NetworkLog.HARRoot>}
+   */
+  static async build(requests, includeContent, progress) {
+    if (progress)
+      progress.setTotalWork(requests.length);
+    var promises = requests.map(request => NetworkLog.HARBuilder.buildEntry(request, includeContent, progress));
+    return new NetworkLog.HARRoot({
+      log: {
+        version: '1.2',
+        creator: {
+          name: 'Chrome Devtools',
+          version: SDK.MultitargetNetworkManager.patchUserAgentWithChromeVersion('%s') || 'n/a'
+        },
+        pages: NetworkLog.HARBuilder._buildPages(requests),
+        entries: await Promise.all(promises)
+      }
+    });
+  }
+
+  /**
+   * @param {!Array<!SDK.NetworkRequest>} requests
+   * @return {!Array<!Object>}
+   */
+  static _buildPages(requests) {
+    var pages = new Map();
+    for (var request of requests) {
+      var page = NetworkLog.networkLog.pageLoadForRequest(request);
+      if (!page || pages.has(page))
+        continue;
+      pages.set(page, NetworkLog.HARBuilder._buildPage(page));
+    }
+    return Array.from(pages.values());
+  }
+
+  /**
+   * @param {!NetworkLog.PageLoad} page
+   * @return {!Object}
+   */
+  static _buildPage(page) {
+    var contentLoadTime = -1;
+    if (page.startTime !== -1 && page.contentLoadTime !== -1)
+      contentLoadTime = (page.contentLoadTime - page.startTime) * 1000;
+    var loadTime = -1;
+    if (page.loadTime !== -1 && page.contentLoadTime !== -1)
+      loadTime = (page.loadTime - page.startTime) * 1000;
+    return {
+      startedDateTime: new Date(page.mainRequest.pseudoWallTime(page.startTime)),
+      id: 'page_' + page.id,
+      title: page.url,  // We don't have actual page title here. URL is probably better than nothing.
+      pageTimings: {onContentLoad: contentLoadTime, onLoad: loadTime}
+    };
+  }
+
+  /**
+   * @param {!SDK.NetworkRequest} request
+   * @param {boolean} includeContent
+   * @param {!Common.Progress=} progress
+   * @return {!Promise<!Object>}
+   */
+  static async buildEntry(request, includeContent, progress) {
+    var contentData = includeContent ? await request.contentData() : null;
+    if (progress)
+      progress.worked();
+    var ipAddress = request.remoteAddress();
+    var portPositionInString = ipAddress.lastIndexOf(':');
+    if (portPositionInString !== -1)
+      ipAddress = ipAddress.substr(0, portPositionInString);
+
+    var pageLoad = NetworkLog.networkLog.pageLoadForRequest(request);
+    var headersText = request.requestHeadersText();
+
+    var url = request.url();
+    var hashIndex = url.indexOf('#');
+    if (hashIndex !== -1)
+      url = url.substring(0, hashIndex);
+    var requestCookies = request.requestCookies;
+    var responseCookies = request.responseCookies;
+
+    var compression = undefined;
+    var isCacheOrRedirect = request.cached() || request.statusCode === 304;
+    var responseBodySize = isCacheOrRedirect ? 0 : -1;
+    if (!isCacheOrRedirect && request.responseHeadersText) {
+      responseBodySize = request.transferSize - request.responseHeadersText.length;
+      if (request.statusCode !== 206)  // Partial content.
+        compression = request.resourceSize - responseBodySize;
+    }
+
+    var bodySize = request.requestFormData ? request.requestFormData.length : 0;
+    var postData = undefined;
+    if (request.requestFormData) {
+      postData = {
+        mimeType: request.requestContentType(),
+        text: request.requestFormData,
+        params: request.formParameters ? request.formParameters.slice() : undefined
+      };
+    }
+
+    return {
+      connection: (request.connectionId !== '0') ? request.connectionId : undefined,
+      pageref: pageLoad ? ('page_' + pageLoad.id) : undefined,
+      startedDateTime: new Date(request.pseudoWallTime(request.startTime)),
+      time: request.duration !== -1 ? (request.duration * 1000) : 0,
+      request: {
+        method: request.requestMethod,
+        url: url,
+        httpVersion: request.requestHttpVersion(),
+        headers: request.requestHeaders(),
+        queryString: request.queryParameters ? request.queryParameters.slice() : [],
+        cookies: requestCookies ? requestCookies.map(buildCookie) : [],
+        headersSize: headersText ? headersText.length : -1,
+        bodySize: bodySize,
+        postData: postData
+      },
+      response: {
+        status: request.statusCode,
+        statusText: request.statusText,
+        httpVersion: request.responseHttpVersion(),
+        headers: request.responseHeaders,
+        cookies: responseCookies ? responseCookies.map(buildCookie) : [],
+        content: {
+          size: request.resourceSize,
+          mimeType: request.mimeType || 'x-unknown',
+          compression: compression,
+          text: (contentData && contentData.content) ? contentData.content : undefined,
+          encoding: (contentData && contentData.encoded) ? 'base64' : undefined
+        },
+        redirectURL: request.responseHeaderValue('Location') || '',
+        headersSize: request.responseHeadersText ? request.responseHeadersText.length : -1,
+        bodySize: responseBodySize,
+        _transferSize: request.transferSize,
+        _error: request.localizedFailDescription
+      },
+      cache: {},  // Not supported yet.
+      timings: NetworkLog.HARBuilder._buildTimings(request.timing, request.duration * 1000),
+      serverIPAddress: ipAddress
+    };
+
+    /**
+     * @param {!SDK.Cookie} cookie
+     * @return {!Object}
+     */
+    function buildCookie(cookie) {
+      return {
+        name: cookie.name(),
+        value: cookie.value(),
+        path: cookie.path(),
+        domain: cookie.domain(),
+        expires: cookie.expiresDate(request.startTime !== -1 ? request.pseudoWallTime(request.startTime) : null),
+        httpOnly: cookie.httpOnly(),
+        secure: cookie.secure(),
+        sameSite: cookie.sameSite()
+      };
+    }
+  }
+
+  /**
+   * @param {!Protocol.Network.ResourceTiming|undefined} timing
+   * @param {number} duration
+   * @return {!Object}
+   */
+  static _buildTimings(timing, duration) {
+    // Order of events: request_start = 0, [proxy], [dns], [connect [ssl]], [send], receive_headers_end
+    // HAR 'blocked' time is time before first network activity.
+    if (!timing)
+      return {blocked: -1, dns: -1, connect: -1, send: 0, wait: 0, receive: 0, ssl: -1};
+
+    var blocked = [timing.dnsStart, timing.connectStart, timing.sendStart].find(time => time !== -1) || -1;
+
+    var dns = (timing.dnsStart >= 0) ? ([timing.connectStart, timing.sendStart].find(time => time !== -1) || -1) : -1;
+    if (dns !== -1)
+      dns -= timing.dnsStart;
+
+    var connect = (timing.connectStart >= 0) ? (timing.sendStart - timing.connectStart) : -1;
+    var send = timing.sendEnd - timing.sendStart;
+    var wait = timing.receiveHeadersEnd - timing.sendEnd;
+    // TODO(allada) We may want to calculate duration different here, since duration is using endTime we pass it now.
+    var receive = duration - timing.receiveHeadersEnd;
+    var ssl = (timing.sslStart >= 0 && timing.sslEnd >= 0) ? (timing.sslEnd - timing.sslStart) : -1;
+
+    return {blocked: blocked, dns: dns, connect: connect, send: send, wait: wait, receive: receive, ssl: ssl};
+  }
+};
