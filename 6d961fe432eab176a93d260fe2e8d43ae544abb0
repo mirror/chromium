@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd1e3586_ed54a163",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T21:07:24Z",
+      "side": 1,
+      "message": "It would help if you were trying to debug shutdown metrics.",
+      "parentUuid": "0ae3c819_8c325147",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "206ca701_064b7677",
         "filename": "ash/shutdown_controller.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T20:41:52Z",
       "side": 1,
       "message": "nit: maybe also mention that this reports a user action for ShutdownReason::POWER_BUTTON but not otherwise. or do you plan to add additional actions for the other reasons? it doesn\u0027t look like the other reasons get consumed by anything right now, do they?",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f72382a_fc6a7ea6",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T21:07:24Z",
+      "side": 1,
+      "message": "I don\u0027t think the metrics behavior is fundamental to the method. I\u0027m on the fence about whether other metrics should move in here; the metrics advice seems to be to move metrics recording as \"close to\" the UI as possible.",
+      "parentUuid": "206ca701_064b7677",
       "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "38053dd0_74b3c03d",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T21:07:24Z",
+      "side": 1,
+      "message": "It gets reset at 131 below.",
+      "parentUuid": "5d717534_ac5c9620",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "649af06a_e38c0165",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3a97ff_3b773441",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T21:07:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "649af06a_e38c0165",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
