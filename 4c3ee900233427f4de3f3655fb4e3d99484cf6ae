@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "5084414a_bedc0c47",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-23T16:40:55Z",
+      "side": 1,
+      "message": "Makes sense. Done.\nSince we don\u0027t yet have a concept of incognito Browser from a non-incognito Browser object, I will just check the BrowserState of the Browser of this coordinator.",
+      "parentUuid": "22c116ca_f04b1936",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 68
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07013d5d_402950dd",
         "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
         "patchSetId": 2
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Can we keep a stack of coordinators as view controllers are pushed/popped onto the nav stack?",
       "parentUuid": "bd05c2a2_193dd2fe",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 30
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb492834_e63a954d",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-23T16:40:55Z",
+      "side": 1,
+      "message": "I see three ways to keep a consistent mapping:\n1- have the VC keep a link to their coordinator and getting it when the nav delegate gets called. The link would need to be \"typeless\" (id, void* context,…) to respect the UI layer separation.\n\n2- When a VC is pushed, the children traversal is made to find whose coordinator it originates from.\n\n3- The coordinators transitively notify parents when a child is added. That way the top level knows about all its descendants.\n\nWhat do you think?",
+      "parentUuid": "eed87314_5f4110e0",
       "range": {
         "startLine": 87,
         "startChar": 2,
@@ -259,6 +307,30 @@
       "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffe1dd6_b77e0ded",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-23T16:40:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dca181b_7389864b",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
