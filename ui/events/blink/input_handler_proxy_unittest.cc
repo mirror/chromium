@@ -216,9 +216,10 @@ class MockInputHandler : public cc::InputHandler {
   MOCK_CONST_METHOD1(
       GetEventListenerProperties,
       cc::EventListenerProperties(cc::EventListenerClass event_class));
-  MOCK_METHOD1(EventListenerTypeForTouchStartOrMoveAt,
+  MOCK_METHOD2(EventListenerTypeForTouchStartOrMoveAt,
                cc::InputHandler::TouchStartOrMoveEventListenerType(
-                   const gfx::Point& point));
+                   const gfx::Point& point,
+                   cc::TouchAction* touch_action));
 
   MOCK_METHOD0(RequestUpdateForSynchronousInputHandler, void());
   MOCK_METHOD1(SetSynchronousInputHandlerRootScrollOffset,
@@ -2430,7 +2431,7 @@ TEST_P(InputHandlerProxyTest, MultiTouchPointHitTestNegative) {
       GetEventListenerProperties(cc::EventListenerClass::kTouchEndOrCancel))
       .WillOnce(testing::Return(cc::EventListenerProperties::kNone));
   EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(testing::_))
+              EventListenerTypeForTouchStartOrMoveAt(testing::_, testing::_))
       .Times(2)
       .WillRepeatedly(testing::Return(
           cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER));
@@ -2453,14 +2454,16 @@ TEST_P(InputHandlerProxyTest, MultiTouchPointHitTestPositive) {
   expected_disposition_ = InputHandlerProxy::DID_NOT_HANDLE;
   VERIFY_AND_RESET_MOCKS();
 
-  EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(
-                  testing::Property(&gfx::Point::x, testing::Eq(0))))
+  EXPECT_CALL(
+      mock_input_handler_,
+      EventListenerTypeForTouchStartOrMoveAt(
+          testing::Property(&gfx::Point::x, testing::Eq(0)), testing::_))
       .WillOnce(testing::Return(
           cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER));
-  EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(
-                  testing::Property(&gfx::Point::x, testing::Gt(0))))
+  EXPECT_CALL(
+      mock_input_handler_,
+      EventListenerTypeForTouchStartOrMoveAt(
+          testing::Property(&gfx::Point::x, testing::Gt(0)), testing::_))
       .WillOnce(
           testing::Return(cc::InputHandler::TouchStartOrMoveEventListenerType::
                               HANDLER_ON_SCROLLING_LAYER));
@@ -2490,7 +2493,7 @@ TEST_P(InputHandlerProxyTest, MultiTouchPointHitTestPassivePositive) {
       GetEventListenerProperties(cc::EventListenerClass::kTouchStartOrMove))
       .WillRepeatedly(testing::Return(cc::EventListenerProperties::kPassive));
   EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(testing::_))
+              EventListenerTypeForTouchStartOrMoveAt(testing::_, testing::_))
       .WillRepeatedly(testing::Return(
           cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER));
 
@@ -2522,7 +2525,7 @@ TEST_P(InputHandlerProxyTest, TouchStartPassiveAndTouchEndBlocking) {
       GetEventListenerProperties(cc::EventListenerClass::kTouchEndOrCancel))
       .WillOnce(testing::Return(cc::EventListenerProperties::kBlocking));
   EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(testing::_))
+              EventListenerTypeForTouchStartOrMoveAt(testing::_, testing::_))
       .WillOnce(testing::Return(
           cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER));
 
@@ -2551,7 +2554,7 @@ TEST_P(InputHandlerProxyTest, TouchMoveBlockingAddedAfterPassiveTouchStart) {
       GetEventListenerProperties(cc::EventListenerClass::kTouchStartOrMove))
       .WillOnce(testing::Return(cc::EventListenerProperties::kPassive));
   EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(testing::_))
+              EventListenerTypeForTouchStartOrMoveAt(testing::_, testing::_))
       .WillOnce(testing::Return(
           cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER));
 
@@ -2563,7 +2566,7 @@ TEST_P(InputHandlerProxyTest, TouchMoveBlockingAddedAfterPassiveTouchStart) {
             input_handler_->HandleInputEvent(touch));
 
   EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(testing::_))
+              EventListenerTypeForTouchStartOrMoveAt(testing::_, testing::_))
       .WillOnce(testing::Return(
           cc::InputHandler::TouchStartOrMoveEventListenerType::HANDLER));
 
@@ -3353,9 +3356,10 @@ TEST_P(InputHandlerProxyTest, GestureScrollingThreadStatusHistogram) {
   gesture_scroll_end.source_device = blink::kWebGestureDeviceTouchscreen;
 
   // Touch start with passive event listener.
-  EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(
-                  testing::Property(&gfx::Point::x, testing::Gt(0))))
+  EXPECT_CALL(
+      mock_input_handler_,
+      EventListenerTypeForTouchStartOrMoveAt(
+          testing::Property(&gfx::Point::x, testing::Gt(0)), testing::_))
       .WillOnce(testing::Return(
           cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER));
   EXPECT_CALL(
@@ -3385,9 +3389,10 @@ TEST_P(InputHandlerProxyTest, GestureScrollingThreadStatusHistogram) {
   VERIFY_AND_RESET_MOCKS();
 
   // Touch event with HANDLER_ON_SCROLLING_LAYER event listener.
-  EXPECT_CALL(mock_input_handler_,
-              EventListenerTypeForTouchStartOrMoveAt(
-                  testing::Property(&gfx::Point::x, testing::Gt(0))))
+  EXPECT_CALL(
+      mock_input_handler_,
+      EventListenerTypeForTouchStartOrMoveAt(
+          testing::Property(&gfx::Point::x, testing::Gt(0)), testing::_))
       .WillOnce(
           testing::Return(cc::InputHandler::TouchStartOrMoveEventListenerType::
                               HANDLER_ON_SCROLLING_LAYER));
