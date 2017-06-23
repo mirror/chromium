@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b554f719_352819ee",
+        "filename": "content/browser/renderer_host/render_widget_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T15:51:51Z",
+      "side": 1,
+      "message": "What happens if you just omit std::move() / base::Passed() entirely?",
+      "parentUuid": "f88931f7_4a6002bd",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f821cbdd_feb80925",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 2
