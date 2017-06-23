@@ -130,22 +130,6 @@ public class WebShareTest {
     }
 
     /**
-     * Verify that WebShare fails if the origin trial is disabled.
-     * @throws Exception
-     */
-    @Test
-    @MediumTest
-    @CommandLineFlags.Add({"enable-blink-features=WebShare",
-            "origin-trial-disabled-features=WebShare"})
-    @Feature({"WebShare"})
-    public void testWebShareOriginTrialDisabled() throws Exception {
-        mActivityTestRule.loadUrl(mUrl);
-        TouchCommon.singleClickView(mTab.getView());
-        Assert.assertEquals(
-                "Fail: SecurityError: WebShare is disabled.", mUpdateWaiter.waitForUpdate());
-    }
-
-    /**
      * Verify WebShare fails if share is called from a user gesture, and canceled.
      * @throws Exception
      */
