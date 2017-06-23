@@ -16,6 +16,7 @@
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/system/tray/tri_view.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
@@ -46,8 +47,20 @@ bool IsCurrentRotationPortrait() {
           ->display_manager()
           ->GetDisplayInfo(display::Display::InternalDisplayId())
           .GetActiveRotation();
-  return current_rotation == display::Display::ROTATE_90 ||
-         current_rotation == display::Display::ROTATE_270;
+  switch (
+      Shell::Get()->screen_orientation_controller()->natural_orientation()) {
+    case blink::kWebScreenOrientationLockLandscape:
+      return current_rotation == display::Display::ROTATE_90 ||
+             current_rotation == display::Display::ROTATE_270;
+    case blink::kWebScreenOrientationLockPortrait:
+      return current_rotation == display::Display::ROTATE_0 ||
+             current_rotation == display::Display::ROTATE_180;
+    default:
+      break;
+  }
+  // natural_orientation() should only return one of the two above.
+  NOTREACHED();
+  return false;
 }
 
 }  // namespace

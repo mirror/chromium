@@ -120,6 +120,10 @@ class ASH_EXPORT ScreenOrientationController
   void OnMaximizeModeStarted() override;
   void OnMaximizeModeEnding() override;
 
+  blink::WebScreenOrientationLockType natural_orientation() {
+    return natural_orientation_;
+  }
+
  private:
   friend class test::ScreenOrientationControllerTestApi;
 
