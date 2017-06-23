@@ -16,6 +16,24 @@
       "revId": "293f2bf5824c9ec1029df09aabb4dfe47e433e8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527a93ad_3fd1dd7c",
+        "filename": "chrome/browser/resources/md_user_manager/create_profile.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002479
+      },
+      "writtenOn": "2017-06-23T14:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54260dcd_8e0805b6",
+      "revId": "293f2bf5824c9ec1029df09aabb4dfe47e433e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
