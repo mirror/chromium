@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5544af2a_9fee3f65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-06-23T18:29:31Z",
+      "side": 1,
+      "message": "I would go ahead and delete the second sentence. My concern is mostly making sure that\u0027s not seen as the canonical URL for Chromium, even though we do pull from there.",
+      "revId": "9479dd89c073ac5d0c1a1dd2d5bab6a47ab0ffd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
