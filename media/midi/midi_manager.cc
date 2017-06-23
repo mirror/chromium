@@ -38,6 +38,16 @@ enum class Usage {
   MAX = OUTPUT_PORT_ADDED,
 };
 
+enum class SendReceiveUsage {
+  NOUSE,
+  SENT,
+  RECEIVED,
+  SENT_AND_RECEIVED,
+
+  // New items should be inserted here, and |MAX| should point the last item.
+  MAX = SENT_AND_RECEIVED,
+};
+
 void ReportUsage(Usage usage) {
   UMA_HISTOGRAM_ENUMERATION("Media.Midi.Usage",
                             static_cast<Sample>(usage),
@@ -50,6 +60,8 @@ MidiManager::MidiManager(MidiService* service)
     : initialization_state_(InitializationState::NOT_STARTED),
       finalized_(false),
       result_(Result::NOT_INITIALIZED),
+      data_sent_(false),
+      data_received_(false),
       service_(service) {
   ReportUsage(Usage::CREATED);
 }
@@ -165,6 +177,7 @@ void MidiManager::EndSession(MidiManagerClient* client) {
 
 void MidiManager::AccumulateMidiBytesSent(MidiManagerClient* client, size_t n) {
   base::AutoLock auto_lock(lock_);
+  data_sent_ = true;
   if (clients_.find(client) == clients_.end())
     return;
 
@@ -239,6 +252,7 @@ void MidiManager::ReceiveMidiData(uint32_t port_index,
                                   size_t length,
                                   double timestamp) {
   base::AutoLock auto_lock(lock_);
+  data_received_ = true;
 
   for (auto* client : clients_)
     client->ReceiveMidiData(port_index, data, length, timestamp);
@@ -287,6 +301,15 @@ void MidiManager::ShutdownOnSessionThread() {
   // Detach all clients so that they do not call MidiManager methods any more.
   for (auto* client : clients_)
     client->Detach();
+
+  UMA_HISTOGRAM_ENUMERATION(
+      "Media.Midi.SendReceiveUsage",
+      static_cast<Sample>(
+          data_sent_ ? (data_received_ ? SendReceiveUsage::SENT_AND_RECEIVED
+                                       : SendReceiveUsage::SENT)
+                     : (data_received_ ? SendReceiveUsage::RECEIVED
+                                       : SendReceiveUsage::NOUSE)),
+      static_cast<Sample>(SendReceiveUsage::MAX) + 1);
 }
 
 }  // namespace midi

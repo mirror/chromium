@@ -29302,6 +29302,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The final status of MidiManager on browser shutdown.</summary>
 </histogram>
 
+<histogram name="Media.Midi.SendReceiveUsage" enum="MidiSendReceiveUsage">
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Reports if data is sent and received in the current MidiManager life cycle.
+  </summary>
+</histogram>
+
 <histogram name="Media.Midi.SysExMessageSizeUpTo1MB" units="bytes">
   <owner>toyoshim@chromium.org</owner>
   <summary>Reports sysex message size.</summary>
