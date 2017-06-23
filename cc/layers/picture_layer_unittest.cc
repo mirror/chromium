@@ -233,7 +233,7 @@ TEST(PictureLayerTest, ClearVisibleRectWhenNoTiling) {
   host_impl.active_tree()->root_layer_for_testing()->DidDraw(nullptr);
 }
 
-TEST(PictureLayerTest, SuitableForGpuRasterization) {
+TEST(PictureLayerTest, HasSlowPaths) {
   std::unique_ptr<FakeRecordingSource> recording_source_owned(
       new FakeRecordingSource);
   FakeRecordingSource* recording_source = recording_source_owned.get();
@@ -267,12 +267,12 @@ TEST(PictureLayerTest, SuitableForGpuRasterization) {
   recording_source->UpdateDisplayItemList(display_list,
                                           painter_reported_memory_usage);
 
-  // Layer is suitable for gpu rasterization by default.
-  EXPECT_TRUE(layer->IsSuitableForGpuRasterization());
+  // Layer does not have slow paths by default.
+  EXPECT_FALSE(layer->HasSlowPaths());
 
-  // Veto gpu rasterization.
-  layer->set_force_unsuitable_for_gpu_rasterization(true);
-  EXPECT_FALSE(layer->IsSuitableForGpuRasterization());
+  // Force slow paths.
+  layer->set_force_content_has_slow_paths(true);
+  EXPECT_TRUE(layer->HasSlowPaths());
 }
 
 // PicturePile uses the source frame number as a unit for measuring invalidation
