@@ -65648,8 +65648,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time between starting raster work on the pending tree and when it is ready
     to activate. Unlike PendingTreeDuration which - includes the time to commit
-    to this tree, the raster duration and the time for which the pending
-    tree waits before it can be activated - this only measures the time taken to
+    to this tree, the raster duration and the time for which the pending tree
+    waits before it can be activated - this only measures the time taken to
     rasterize tiles required for activation.
 
     The interval is recorded each time we are notifed that a pending tree is
@@ -80549,7 +80549,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>TBD</summary>
 </histogram>
 
@@ -80569,7 +80569,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>TBD</summary>
 </histogram>
 
@@ -80577,7 +80577,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>Time spent generating native code for functions.</summary>
 </histogram>
 
@@ -80585,7 +80585,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <owner>rmcilroy@chromium.org</owner>
   <summary>
     Fraction of the total generated code which was generated using the
@@ -80597,7 +80597,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.CompileMicroSeconds.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <owner>yangguo@chromium.org</owner>
   <summary>Time spent in V8 compiler (full codegen).</summary>
 </histogram>
@@ -80626,13 +80626,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.CompileEvalMicroSeconds.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>yangguo@chromium.org</owner>
   <summary>Time spent in V8 compiler (full codegen) for eval.</summary>
 </histogram>
 
 <histogram name="V8.CompileEvalMicroSeconds" units="microseconds">
-  <owner>jochen@chromium.org</owner>
   <owner>yangguo@chromium.org</owner>
   <summary>Time spent in V8 compiler (full codegen) for eval.</summary>
 </histogram>
@@ -80646,12 +80644,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.CompileLazyMicroSeconds.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>Time spent compiling functions lazily on first run.</summary>
 </histogram>
 
 <histogram name="V8.CompileLazyMicroSeconds" units="microseconds">
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>
     Aggregated time spent compiling functions lazily during a single script
     execution.
@@ -80659,7 +80657,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.CompileMicroSeconds" units="microseconds">
-  <owner>jochen@chromium.org</owner>
   <owner>yangguo@chromium.org</owner>
   <summary>Time spent in V8 compiler (full codegen) excluding parser.</summary>
 </histogram>
@@ -80712,7 +80709,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>Time spent generating deferred code stubs.</summary>
 </histogram>
 
@@ -80738,14 +80735,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>
     The maximum memory used to store V8 compiled code on a given process.
   </summary>
 </histogram>
 
 <histogram name="V8.Execute" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>rmcilroy@chromium.org</owner>
   <summary>
     Time spent in JavaScript Execution, including runtime calls, callbacks, and
@@ -80754,13 +80750,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.GCCompactor" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent in mark-sweep phase of GC.</summary>
 </histogram>
 
 <histogram name="V8.GCContext" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent doing a full GC during an IdleNotification.</summary>
 </histogram>
@@ -80790,19 +80784,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.GCIdleNotification" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent in IdleNotifications.</summary>
 </histogram>
 
 <histogram name="V8.GCIdleTimeAllottedInMS" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Idle time passed to V8 via IdleNotifications.</summary>
 </histogram>
 
 <histogram name="V8.GCIdleTimeLimit.Overshot" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Milliseconds the idle time limit was overshot by the IdleNotification.
@@ -80810,7 +80801,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.GCIdleTimeLimit.Undershot" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Milliseconds the idle time limit was undershot by the IdleNotification.
@@ -80818,13 +80808,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.GCIncrementalMarking" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent doing incremental marking steps during GC.</summary>
 </histogram>
 
 <histogram name="V8.GCIncrementalMarkingFinalize" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent in finalizing incremental marking.</summary>
 </histogram>
@@ -80835,13 +80823,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.GCIncrementalMarkingStart" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent in starting incremental marking.</summary>
 </histogram>
 
 <histogram name="V8.GCLowMemoryNotification" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent in LowMemoryNotifications.</summary>
 </histogram>
@@ -80852,7 +80838,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.GCScavenger" units="ms">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent in scavenging phase of GC.</summary>
 </histogram>
@@ -80882,7 +80867,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryExternalFragmentationCellSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     External memory fragmentation in the cell space after each GC in percent.
@@ -80890,7 +80874,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryExternalFragmentationCodeSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     External memory fragmentation in the code space after each GC in percent.
@@ -80898,7 +80881,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryExternalFragmentationLoSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     External memory fragmentation in the large object space after each GC in
@@ -80907,7 +80889,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryExternalFragmentationMapSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     External memory fragmentation in the map space after each GC in percent.
@@ -80918,7 +80899,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.MemoryExternalFragmentationOldSpace.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     External memory fragmentation in the old data space after each GC in
@@ -80930,7 +80910,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.MemoryExternalFragmentationOldSpace.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     External memory fragmentation in the old pointer space after each GC in
@@ -80939,7 +80918,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryExternalFragmentationOldSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     External memory fragmentation in the old space after each GC in percent.
@@ -80947,7 +80925,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryExternalFragmentationTotal" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Total external memory fragmentation after each GC in percent.
@@ -80963,7 +80940,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapFractionCellSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Fraction of the total heap used by the cell space after each GC in percent.
@@ -80971,7 +80947,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapFractionCodeSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Fraction of the total heap used by the code space after each GC in percent.
@@ -80979,7 +80954,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapFractionLoSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Fraction of the total heap used by the lo space after each GC in percent.
@@ -80987,7 +80961,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapFractionMapSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Fraction of the total heap used by the map space after each GC in percent.
@@ -80995,7 +80968,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapFractionNewSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Fraction of the total heap used by the new space after each GC in percent.
@@ -81006,7 +80978,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.MemoryHeapFractionOldSpace.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Fraction of the total heap used by the old data space after each GC in
@@ -81018,7 +80989,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.MemoryHeapFractionOldSpace.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Fraction of the total heap used by the old pointer space after each GC in
@@ -81027,7 +80997,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapFractionOldSpace" units="%">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Fraction of the total heap used by the old space after each GC in percent.
@@ -81035,7 +81004,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapSampleCellSpaceCommitted" units="KB">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     The size of committed memory in the cell space after each GC in KB.
@@ -81043,7 +81011,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapSampleCodeSpaceCommitted" units="KB">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     The size of committed memory in the code space after each GC in KB.
@@ -81051,7 +81018,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapSampleMapSpaceCommitted" units="KB">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     The size of committed memory in the map space after each GC in KB.
@@ -81059,7 +81025,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapSampleMaximumCommitted" units="KB">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     The maximum size of committed memory used by V8 after each GC in KB.
@@ -81067,7 +81032,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapSampleTotalCommitted" units="KB">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     The total size of committed memory used by V8 after each GC in KB.
@@ -81075,7 +81039,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.MemoryHeapSampleTotalUsed" units="KB">
-  <owner>jochen@chromium.org</owner>
   <owner>hpayer@chromium.org</owner>
   <summary>
     The total size of live memory used by V8 after each GC in KB.
@@ -81093,7 +81056,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.ParseMicroSeconds.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>marja@chromium.org</owner>
   <summary>Time spent in V8 parser.</summary>
 </histogram>
@@ -81102,7 +81064,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.ParseLazyMicroSeconds.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>marja@chromium.org</owner>
   <summary>
     Time spent parsing functions when they are lazily compiled on first run.
@@ -81113,7 +81074,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Deprecated.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>marja@chromium.org</owner>
   <summary>
     Time spent parsing functions when they are lazily compiled on first run.
@@ -81124,7 +81084,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Deprecated.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>marja@chromium.org</owner>
   <summary>Time spent in V8 parser.</summary>
 </histogram>
@@ -81133,7 +81092,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram has been replaced by V8.PreParseMicroSeconds.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>marja@chromium.org</owner>
   <summary>Time spent preparsing source code.</summary>
 </histogram>
@@ -81142,7 +81100,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Deprecated.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>marja@chromium.org</owner>
   <summary>Time spent preparsing source code.</summary>
 </histogram>
@@ -81151,7 +81108,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>Time spent on rewriting ASTs before compilation.</summary>
 </histogram>
 
@@ -81159,7 +81116,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>TBD</summary>
 </histogram>
 
@@ -81167,7 +81124,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>TBD</summary>
 </histogram>
 
@@ -81175,7 +81132,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
   <owner>yangguo@chromium.org</owner>
   <summary>
     The generation a compiled script was found in the compilation cache.
@@ -81195,7 +81151,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>Time spent analysing the usage of variables.</summary>
 </histogram>
 
@@ -81203,7 +81159,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     This histogram is no longer present in V8.
   </obsolete>
-  <owner>jochen@chromium.org</owner>
+  <owner>hablich@chromium.org</owner>
   <summary>TBD</summary>
 </histogram>
 
