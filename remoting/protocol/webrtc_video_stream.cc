@@ -255,6 +255,9 @@ void WebrtcVideoStream::OnEncoderCreated(webrtc::VideoCodecType codec_type) {
   } else if (codec_type == webrtc::kVideoCodecVP9) {
     encoder_ = base::MakeUnique<WebrtcVideoEncoderProxy>(
         WebrtcVideoEncoderVpx::CreateForVP9(), encode_task_runner_);
+  } else if (codec_type == webrtc::kVideoCodecH264) {
+    // TODO(gusss)
+    // encoder_ = WebrtcVideoEncoderH264?
   } else {
     LOG(FATAL) << "Unknown codec type: " << codec_type;
   }

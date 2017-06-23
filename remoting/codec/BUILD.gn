@@ -17,6 +17,8 @@ source_set("encoder") {
     "video_encoder_vpx.h",
     "webrtc_video_encoder_proxy.cc",
     "webrtc_video_encoder_proxy.h",
+    "webrtc_video_encoder_vea.cc",
+    "webrtc_video_encoder_vea.h",
     "webrtc_video_encoder_vpx.cc",
     "webrtc_video_encoder_vpx.h",
   ]
@@ -26,8 +28,10 @@ source_set("encoder") {
   deps = [
     ":vpx_codec",
     "//base/third_party/dynamic_annotations",
+    "//gpu/command_buffer/service",
     "//media",
     "//media:shared_memory_support",
+    "//media/gpu",
     "//remoting/proto",
     "//third_party/libvpx",
     "//third_party/libyuv",
@@ -108,6 +112,7 @@ source_set("unit_tests") {
     "video_encoder_helper_unittest.cc",
     "video_encoder_verbatim_unittest.cc",
     "video_encoder_vpx_unittest.cc",
+    "webrtc_video_encoder_vea_unittest.cc",
   ]
 
   deps = [
