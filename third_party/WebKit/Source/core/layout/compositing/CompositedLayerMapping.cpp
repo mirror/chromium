@@ -2338,6 +2338,7 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
         scrolling_coordinator->ScrollableAreasDidChange();
       }
     }
+    UpdateUserInputScrollable();
   } else if (scrolling_layer_) {
     scrolling_layer_ = nullptr;
     scrolling_contents_layer_ = nullptr;
@@ -2350,6 +2351,14 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
   }
 
   return layer_changed;
+}
+
+void CompositedLayerMapping::UpdateUserInputScrollable() {
+  DCHECK(scrolling_contents_layer_);
+  PaintLayerScrollableArea* scrollable_area = owning_layer_.GetScrollableArea();
+  scrolling_contents_layer_->PlatformLayer()->SetUserScrollable(
+      scrollable_area->UserInputScrollable(kHorizontalScrollbar),
+      scrollable_area->UserInputScrollable(kVerticalScrollbar));
 }
 
 static void UpdateScrollParentForGraphicsLayer(
