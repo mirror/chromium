@@ -341,6 +341,7 @@ void SigninCreateProfileHandler::HandleProfileCreationSuccess(
       break;
     }
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+    // code.
     case SUPERVISED_PROFILE_CREATION:
     case SUPERVISED_PROFILE_IMPORT:
       RegisterSupervisedUser(create_shortcut, supervised_user_id,
@@ -377,6 +378,7 @@ void SigninCreateProfileHandler::CreateShortcutAndShowSuccess(
   bool open_new_window = !is_force_signin_enabled;
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+
   // If the new profile is a supervised user, instead of opening a new window
   // right away, a confirmation page will be shown by JS from the creation
   // dialog. If we are importing an existing supervised profile or creating a
