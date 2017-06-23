@@ -1,0 +1,26 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//media/mojo/interfaces/media_types.mojom"
+
+# Additional headers required by any code which would depend on the mojom
+# definition of media.mojom.EncryptionScheme now that the typemap is applied.
+# Any headers required for the native target type definition should be listed
+# here.
+public_headers = [ "//media/base/encryption_scheme.h" ]
+
+# Headers which contain the relevant StructTraits specialization(s) for any
+# type mappings described by this file.
+traits_headers = [ "//media/mojo/interfaces/encryption_scheme_struct_traits.h" ]
+
+# Target dependencies exposed by the public_headers and traits_headers.
+public_deps = [
+  "//media",
+]
+
+# See media_types.typemap for enum mappings.
+type_mappings = [
+  "media.mojom.Pattern=media::EncryptionScheme::Pattern",
+  "media.mojom.EncryptionScheme=media::EncryptionScheme",
+]
