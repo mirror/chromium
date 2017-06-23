@@ -1,0 +1,585 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b1240b9_297cb030",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "This might be the right place to document the definition of matched and unmatched ServiceWorkers, as we\u0027ve proposed on the design doc?",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2c9603_26ce76dd",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Maybe UnmatchedServiceWorkerProcessTracker would convey a bit more?",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cb0308_3ef9c84b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "nit: These methods all need comments.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbb7e49_48e98013",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Maybe MatchWithSite?",
+      "range": {
+        "startLine": 766,
+        "startChar": 28,
+        "endLine": 766,
+        "endChar": 39
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73eb7bfe_6994ce5a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right to me, at least with the approach we\u0027ve been describing.  A process could be registered with multiple sites\u0027 ServiceWorkers.  If it has ServiceWorkers for sites A and B, and site A puts a page in the process, then we may still want to later put a page from site B in the process as well.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2eb60f_68d7eac5",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Is it worth having both of these maps?  It seems like we\u0027d need a pretty large N for the overhead to be worth it, compared to a set of (site, process) pairs we look through manually.  Given that it will just contain unmatched ones (likely temporarily in the common case), maybe we can go with the simpler approach?",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9dbe8a_f0fabed5",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 3217,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "This early return is making it hard to reason about the new Register block below, since it\u0027s not immediately clear which cases will reach that block.  I\u0027d prefer to avoid all early returns in this method if possible, given how it\u0027s structured (i.e., a series of fallbacks, and now a final action to take on the resulting process).\n\nI suspect we\u0027re trying to avoid Register in some of the cases, but maybe we can be more explicit about that by declaring a is_unmatched_service_worker local variable above, initialize it to is_for_service_worker(), and clear it if the REUSE_PENDING_OR_COMMITTED_SITE case found a process to reuse.  Then we can call Register below if is_unmatched_service_worker is true?",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4cc468_5bad2f55",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 3228,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "I\u0027m trying to think of a way to make this easier to understand, but I haven\u0027t found one yet.  We can at least update the comments to use the new terminology.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea452a7_09dde40d",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Maybe ReuseUnmatchedServiceWorkerProcess?",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4bb3cc_04c0e970",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "nit: ServiceWorkers are only supported on HTTPS sites, right?  :)  (Same in test below.)",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f73b017_6f1786e4",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "nit: for an unmatched service worker.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425958c8_76520d56",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "s/flag/reuse policy/",
+      "range": {
+        "startLine": 165,
+        "startChar": 67,
+        "endLine": 165,
+        "endChar": 71
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f058d59_2c7c8d50",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Can you explain why in the comment?  I\u0027m not clear when a Service Worker SiteInstance would have a DEFAULT reuse policy.  (Is this the case that it was having trouble starting in the existing process and thus wants to try in a new one?)\n\nAlso nit: existing service worker\u0027s process.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4c7b63_911ce6a7",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "newest unmatched service worker\u0027s process (i.e., sw_host2).",
+      "range": {
+        "startLine": 173,
+        "startChar": 48,
+        "endLine": 173,
+        "endChar": 78
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a85593_e72885a0",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "for a navigation to the same site",
+      "range": {
+        "startLine": 173,
+        "startChar": 15,
+        "endLine": 173,
+        "endChar": 32
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582b5663_2db1052b",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "nit: Reverse order of parameters, here and in the EXPECT_EQs below.  (It\u0027s EXPECT_EQ(expected, actual), which affects the error message that gets printed if it fails.)",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d211495e_0e4df249",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Similar nits for comment as above.  Can you also clarify that sw_host2 is no longer unmatched, so sw_host1 is now the newest (and only) process with a corresponding unmatched service worker?",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df288202_44c88efc",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Same nits as above.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8267abda_1f667983",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Minor nit: Can you move this above the set_process_reuse_policy call, to be consistent with the order we use in service_worker_process_manager.cc?  Same below.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b8c2b4_a0f9223b",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "This seems redundant with lines 165-171 above.  It seems to fit better in this test (which is about ServiceWorker process assignment), so maybe we can apply my suggestions to this one and simplify the one above?\n\nThen again, I\u0027m guessing it\u0027s in both tests just so you have a second ServiceWorker and can test the \"find the newest process\" logic, right?  Even if there\u0027s nothing to simplify in the above case, we should probably mention this reason in the comments of both.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1371fb_66b38683",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Same nits about terminology.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee559dd6_c20d5690",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Worth mentioning that sw_host3 doesn\u0027t cause sw_host2 to be considered matched, so we can keep putting more service workers in that process.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e69937e_836b62a8",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Might be worth doing a second navigation as well, since that\u0027s where the default and process-per-site behavior would diverge.  (It wouldn\u0027t look any different for the first navigation.)",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ca3606_3b42c94c",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Great, glad you tested this case as well.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c07000_56afb73a",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "The unmatched ServiceWorker logic affects PROCESS_PER_SITE as well, right?  It feels odd to me to be describing it here on these two particular policies when it kind of applies to all (or at least most) of them.\n\nMaybe it would be better to describe it above the enum class declaration instead (perhaps with the DEFAULT ServiceWorker caveat mentioned here)?",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbad151_9764baa2",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Whether",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 13
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc94c71_cf732b05",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "s/a service worker only process/having an unmatched service worker/",
+      "range": {
+        "startLine": 95,
+        "startChar": 24,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1607c922_31418428",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "another SiteInstance from the same site whose",
+      "range": {
+        "startLine": 96,
+        "startChar": 5,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c9ba3e_f23e3883",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "nit: Will we ever call this with false?  If not, maybe it can take no parameters and just set is_for_service_worker_ to true.",
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7781dbe6_63098b4b",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "Whether",
+      "range": {
+        "startLine": 225,
+        "startChar": 5,
+        "endLine": 225,
+        "endChar": 13
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3002c4_ce8e4b9a",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-23T07:27:06Z",
+      "side": 1,
+      "message": "s/is/was/",
+      "range": {
+        "startLine": 225,
+        "startChar": 31,
+        "endLine": 225,
+        "endChar": 33
+      },
+      "revId": "292d404b2d92793f25a10d949b2657ae2afa38eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
