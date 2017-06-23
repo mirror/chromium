@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3ccdcd7_ee4d6810",
+        "filename": "components/viz/common/test/real_gl_test_suite.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-23T22:08:23Z",
+      "side": 1,
+      "message": "nit: MakeUnique since there is another related nit anyways :)",
+      "revId": "c6671401423f99667f1ed2380857c48d4b90ec25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d33ea1_6e2da7ad",
+        "filename": "components/viz/common/test/real_gl_test_suite.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-23T22:08:23Z",
+      "side": 1,
+      "message": "nit: I know this is jut copied from before, but unless it\u0027s somehow necessary should be removed.",
+      "revId": "c6671401423f99667f1ed2380857c48d4b90ec25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
