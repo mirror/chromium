@@ -16,6 +16,24 @@
       "revId": "a993ecaf616b289015a034546608957f5b6672f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6ceaf9_560b19fa",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-23T06:07:44Z",
+      "side": 1,
+      "message": "Agreed. But only calling ClearContext isn\u0027t enough. I\u0027ll call both StopFetching and ClearContext as other upper level Loaders do.",
+      "parentUuid": "2251cd30_b5b684dd",
+      "revId": "a993ecaf616b289015a034546608957f5b6672f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
