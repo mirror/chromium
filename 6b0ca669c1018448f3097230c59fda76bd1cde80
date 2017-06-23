@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b4e3aa_8cb23261",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-06-23T17:23:12Z",
+      "side": 0,
+      "message": "intentional removal - probably not? please revert",
+      "range": {
+        "startLine": 87,
+        "startChar": 42,
+        "endLine": 87,
+        "endChar": 61
+      },
+      "revId": "6b0ca669c1018448f3097230c59fda76bd1cde80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
