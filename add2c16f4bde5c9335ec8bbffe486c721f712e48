@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1598f29a_796c468a",
+        "filename": "third_party/WebKit/Source/platform/graphics/Gradient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-23T00:44:49Z",
+      "side": 1,
+      "message": "Performance of caching the shader is not important?",
+      "revId": "add2c16f4bde5c9335ec8bbffe486c721f712e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d7b448_106d4ecd",
+        "filename": "third_party/WebKit/Source/platform/graphics/Pattern.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-23T00:44:49Z",
+      "side": 1,
+      "message": "Same question here about the value of caching shaders.",
+      "revId": "add2c16f4bde5c9335ec8bbffe486c721f712e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
