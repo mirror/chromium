@@ -41,7 +41,7 @@ namespace base {
 
 namespace {
 
-#if !defined(OS_MACOSX)
+#if !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 // Each thread will open the shared memory.  Each thread will take a different 4
 // byte int pointer, and keep changing it, with some small pauses in between.
 // Verify that each thread's value in the shared memory is always correct.
@@ -87,13 +87,13 @@ class MultipleThreadMain : public PlatformThread::Delegate {
 
 const char MultipleThreadMain::s_test_name_[] =
     "SharedMemoryOpenThreadTest";
-#endif  // !defined(OS_MACOSX)
+#endif  // !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 
 }  // namespace
 
-// Android/Mac doesn't support SharedMemory::Open/Delete/
+// Android/Mac/Fuchsia doesn't support SharedMemory::Open/Delete/
 // CreateNamedDeprecated(openExisting=true)
-#if !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if !defined(OS_ANDROID) && !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 TEST(SharedMemoryTest, OpenClose) {
   const uint32_t kDataSize = 1024;
   std::string test_name = "SharedMemoryOpenCloseTest";
@@ -207,7 +207,7 @@ TEST(SharedMemoryTest, OpenExclusive) {
   rv = memory1.Delete(test_name);
   EXPECT_TRUE(rv);
 }
-#endif  // !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#endif  // !defined(OS_ANDROID) && !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 
 // Check that memory is still mapped after its closed.
 TEST(SharedMemoryTest, CloseNoUnmap) {
@@ -232,7 +232,7 @@ TEST(SharedMemoryTest, CloseNoUnmap) {
   EXPECT_EQ(nullptr, memory.memory());
 }
 
-#if !defined(OS_MACOSX)
+#if !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 // Create a set of N threads to each open a shared memory segment and write to
 // it. Verify that they are always reading/writing consistent data.
 TEST(SharedMemoryTest, MultipleThreads) {
@@ -365,6 +365,9 @@ TEST(SharedMemoryTest, GetReadOnlyHandle) {
 #if defined(OS_ANDROID)
   // The "read-only" handle is still writable on Android:
   // http://crbug.com/320865
+  (void)handle;
+#elif defined(OS_FUCHSIA)
+  // TODO(fuchsia).
   (void)handle;
 #elif defined(OS_POSIX)
   int handle_fd = SharedMemory::GetFdFromSharedMemoryHandle(handle);
@@ -501,8 +504,9 @@ TEST(SharedMemoryTest, AnonymousExecutable) {
 
 // Android supports a different permission model than POSIX for its "ashmem"
 // shared memory implementation. So the tests about file permissions are not
-// included on Android.
-#if !defined(OS_ANDROID)
+// included on Android. Fuchsia does not use a file-backed shared memory
+// implementation.
+#if !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
 
 // Set a umask and restore the old mask on destruction.
 class ScopedUmaskSetter {
@@ -567,7 +571,7 @@ TEST(SharedMemoryTest, FilePermissionsNamed) {
   EXPECT_FALSE(shm_stat.st_mode & S_IRWXO);
   EXPECT_FALSE(shm_stat.st_mode & S_IRWXG);
 }
-#endif  // !defined(OS_ANDROID)
+#endif  // !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
 
 #endif  // defined(OS_POSIX)
 
@@ -633,7 +637,8 @@ TEST(SharedMemoryTest, UnsafeImageSection) {
 // iOS does not allow multiple processes.
 // Android ashmem does not support named shared memory.
 // Mac SharedMemory does not support named shared memory. crbug.com/345734
-#if !defined(OS_IOS) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if !defined(OS_IOS) && !defined(OS_ANDROID) && !defined(OS_MACOSX) && \
+    !defined(OS_FUCHSIA)
 // On POSIX it is especially important we test shmem across processes,
 // not just across threads.  But the test is enabled on all platforms.
 class SharedMemoryProcessTest : public MultiProcessTest {
@@ -708,6 +713,7 @@ TEST_F(SharedMemoryProcessTest, SharedMemoryAcrossProcesses) {
 MULTIPROCESS_TEST_MAIN(SharedMemoryTestMain) {
   return SharedMemoryProcessTest::TaskTestMain();
 }
-#endif  // !defined(OS_IOS) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#endif  // !defined(OS_IOS) && !defined(OS_ANDROID) && !defined(OS_MACOSX) &&
+        // !defined(OS_FUCHSIA)
 
 }  // namespace base
