@@ -352,7 +352,15 @@ class LayerTreeHostContextTestLostContextSucceeds
   bool first_initialized_;
 };
 
-SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostContextTestLostContextSucceeds);
+#if defined(OS_LINUX)
+#define MAYBE_LayerTreeHostContextTestLostContextSucceeds \
+  DISABLED_LayerTreeHostContextTestLostContextSucceeds
+#else
+#define MAYBE_LayerTreeHostContextTestLostContextSucceeds \
+  LayerTreeHostContextTestLostContextSucceeds
+#endif
+SINGLE_AND_MULTI_THREAD_TEST_F(
+    MAYBE_LayerTreeHostContextTestLostContextSucceeds);
 
 class LayerTreeHostClientNotVisibleDoesNotCreateLayerTreeFrameSink
     : public LayerTreeHostContextTest {
