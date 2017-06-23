@@ -105,8 +105,6 @@ void NotificationImageLoader::Start(
   image_callback_ = std::move(image_callback);
 
   ThreadableLoaderOptions threadable_loader_options;
-  threadable_loader_options.fetch_request_mode =
-      WebURLRequest::kFetchRequestModeNoCORS;
   threadable_loader_options.timeout_milliseconds = kImageFetchTimeoutInMs;
 
   // TODO(mvanouwerkerk): Add an entry for notifications to
@@ -116,6 +114,7 @@ void NotificationImageLoader::Start(
     resource_loader_options.request_initiator_context = kWorkerContext;
 
   ResourceRequest resource_request(url);
+  resource_request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeNoCORS);
   resource_request.SetFetchCredentialsMode(
       WebURLRequest::kFetchCredentialsModeInclude);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextImage);
