@@ -454,6 +454,8 @@ class BluetoothTestBase : public testing::Test {
                               std::unique_ptr<BluetoothGattConnection>);
   void NotifyCallback(Call expected,
                       std::unique_ptr<BluetoothGattNotifySession>);
+  void ReplacingNotifyCallback(Call expected,
+                               std::unique_ptr<BluetoothGattNotifySession>);
   void NotifyCheckForPrecedingCalls(
       int num_of_preceding_calls,
       std::unique_ptr<BluetoothGattNotifySession>);
@@ -483,6 +485,8 @@ class BluetoothTestBase : public testing::Test {
       Call expected);
   BluetoothRemoteGattCharacteristic::NotifySessionCallback GetNotifyCallback(
       Call expected);
+  BluetoothRemoteGattCharacteristic::NotifySessionCallback
+  GetReplacingNotifyCallback(Call expected);
   BluetoothRemoteGattCharacteristic::NotifySessionCallback
   GetNotifyCheckForPrecedingCalls(int num_of_preceding_calls);
   base::Closure GetStopNotifyCallback(Call expected);
