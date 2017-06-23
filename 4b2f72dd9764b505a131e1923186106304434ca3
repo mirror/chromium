@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b51f0132_9808cca3",
+        "filename": "third_party/WebKit/LayoutTests/external/README",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T00:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3895f651_602fe507",
+      "revId": "4b2f72dd9764b505a131e1923186106304434ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c423d917_5f944666",
         "filename": "third_party/WebKit/LayoutTests/external/README",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4b2f72dd9764b505a131e1923186106304434ca3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4557b7_ecf44f2b",
+        "filename": "third_party/WebKit/LayoutTests/external/README",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T00:22:35Z",
+      "side": 1,
+      "message": "Rephrased as \"usually within 24 hours\".",
+      "parentUuid": "c423d917_5f944666",
+      "revId": "4b2f72dd9764b505a131e1923186106304434ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
