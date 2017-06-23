@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7579d707_66e5350c",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-23T17:59:03Z",
+      "side": 1,
+      "message": "nit: RuntimeEnabledFeatures::Backup is useful for doing this more generally, and restoring whatever the initial state is.",
+      "revId": "4f7637578049e4ee4bed572c0eb2c3404b2b861e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
