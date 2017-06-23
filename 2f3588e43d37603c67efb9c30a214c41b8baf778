@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6dcc484_ac86fea0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-23T17:29:09Z",
+      "side": 1,
+      "message": "Instead of describing the problem, state what the CL does,\ne.g. \"remove TODOs and handle null Bitmap case\" or some such.\n\nAlso, now that I notice, please mention in this CL description\nthat you\u0027re handling the case when BitmapUtils.convertToBitmap()\nreturns null in FaceDetectionImpl.",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "2f3588e43d37603c67efb9c30a214c41b8baf778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
