@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36c9c109_5c1ab7a2",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T22:57:58Z",
+      "side": 1,
+      "message": "We\u0027d have to flip the boolean in that case right?  In any case the name should probably be CanActivateMoreDownloads() if we don\u0027t want to change the name.",
+      "parentUuid": "4009ad52_d85e1100",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2aba4330_4ea1794b",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,47 @@
       "writtenOn": "2017-06-23T20:13:28Z",
       "side": 1,
       "message": "Do we need the || here, i.e. max_running_downloads \u003c\u003d active_count ?\nShouldn\u0027t the first condition be sufficient?",
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57d9129_41237879",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T22:57:58Z",
+      "side": 1,
+      "message": "I think we need both.  If max_concurrent_downloads is 5 and max_running_downloads is 2 and we had two active downloads, the first condition would be false but the second would be true.",
+      "parentUuid": "2aba4330_4ea1794b",
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1c8ed9_85a7df6b",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T22:57:58Z",
+      "side": 1,
+      "message": "Should we just get rid of the if check above and below and make this:\n\nwhile (CanActiveMoreDownloads(...) \u0026\u0026 next) {\n  // ...\n}",
+      "range": {
+        "startLine": 826,
+        "startChar": 2,
+        "endLine": 826,
+        "endChar": 16
+      },
       "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
