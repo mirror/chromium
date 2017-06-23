@@ -14,11 +14,13 @@
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "components/offline_pages/core/prefetch/test_offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_gcm_handler.h"
+#include "components/prefs/testing_pref_service.h"
 
 namespace offline_pages {
 
 PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
-  metrics_collector_ = base::MakeUnique<TestOfflineMetricsCollector>();
+  metrics_collector_ = base::MakeUnique<TestOfflineMetricsCollector>(
+      new TestingPrefServiceSimple());
   dispatcher_ = base::MakeUnique<PrefetchDispatcherImpl>();
   gcm_handler_ = base::MakeUnique<TestPrefetchGCMHandler>();
   suggested_articles_observer_ = base::MakeUnique<SuggestedArticlesObserver>();
