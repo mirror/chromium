@@ -47149,6 +47149,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Number of offline pages the user has. Android only.</summary>
 </histogram>
 
+<histogram name="OfflinePages.OfflineUsage" enum="OfflinePagesOfflineUsage">
+  <owner>dimich@chromium.org</owner>
+  <summary>
+    Accumulated offline/online/mixed usage of Chrome. The counters of days of
+    each type (unused/started/offline/online/mixed) are accumulated and then
+    reported when connection supposedly exists. The resulting histogram reflects
+    moving average of offline/online distribution with the bucket counts
+    providing rough estimate of total number of days of each type encountered by
+    the participating users.
+  </summary>
+</histogram>
+
 <histogram name="OfflinePages.OnlineOnOpen" enum="Boolean">
   <obsolete>
     Deprecated 5/2016. Offline pages no longer depend on bookmarks UI.
