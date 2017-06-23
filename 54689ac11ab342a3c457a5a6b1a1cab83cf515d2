@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95140582_d61e3536",
+        "filename": "media/gpu/mojo/jpeg_decoder_typemap_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-23T17:57:09Z",
+      "side": 1,
+      "message": "Requires base/logging.h.\n\nSimilarly, I\u0027ve been listing all my typemap deps completely. I have not figured out if there really are some that are always safe to elide. c.f. https://cs.chromium.org/chromium/src/media/mojo/interfaces/video_frame.typemap\n\n(I\u0027m not listing that as its own nit because standard practice seems to be to only add the deps required to get it to compile. I got paranoid when that list turned out to be different for Chrome vs my unittest, https://cs.chromium.org/chromium/src/media/mojo/interfaces/video_frame_struct_traits_unittest.cc)",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "54689ac11ab342a3c457a5a6b1a1cab83cf515d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd9e7b1_4ba01c88",
+        "filename": "media/gpu/mojo/jpeg_decoder_typemap_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-23T17:57:09Z",
+      "side": 1,
+      "message": "Can we rename (or somehow namespace) this?",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "54689ac11ab342a3c457a5a6b1a1cab83cf515d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
