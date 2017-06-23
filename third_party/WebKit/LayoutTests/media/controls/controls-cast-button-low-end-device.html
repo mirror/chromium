@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<title>media controls cast button low end device</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../media-file.js"></script>
+<script src="../media-controls.js"></script>
+<video width="500"></video>
+<script>
+async_test(function(t) {
+    internals.setIsLowEndDevice(true);
+    t.add_cleanup(_ => {
+      internals.setIsLowEndDevice(false);
+    });
+
+    var video = document.querySelector("video");
+    video.setAttribute("controls", "");
+
+    // No idea why timeouts are needed but it doesn't work without two of
+    // them. Note: probably shouldn't report the availability as true unless
+    // there's a URL to fling.
+    video.onloadedmetadata = t.step_func_done(_ => {
+      var button = castButton(video);
+      assert_true(("display" in button.style) && (button.style.display != "none"), "button should exist");
+    });
+
+    video.src = findMediaFile("video", "../content/test");
+});
+</script>
