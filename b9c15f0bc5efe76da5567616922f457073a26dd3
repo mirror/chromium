@@ -70,6 +70,24 @@
       "revId": "b9c15f0bc5efe76da5567616922f457073a26dd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d526f6ef_1d080977",
+        "filename": "third_party/WebKit/Source/modules/websockets/WebPepperSocket.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T05:10:14Z",
+      "side": 1,
+      "message": "WebPepperSocketImpl.h has dependency to Source/modules. Not sure if it\u0027s acceptable to add it even inside BLINK_IMPLEMENTATION.\n\nAnyway, networking API team takes over this.\nhttps://chromium-review.googlesource.com/c/544405/",
+      "parentUuid": "f272aacc_6ff1cc58",
+      "revId": "b9c15f0bc5efe76da5567616922f457073a26dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
