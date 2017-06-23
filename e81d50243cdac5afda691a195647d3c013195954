@@ -93,6 +93,30 @@
       "revId": "e81d50243cdac5afda691a195647d3c013195954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e29fdf_dd9503c4",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-06-23T06:51:04Z",
+      "side": 1,
+      "message": "It should hit the DCHECK for the magic word.\n\nAs I wrote in the general reply. Wrapper tracing was built under the assumption that we only trace objects that live on Oilpans heap.",
+      "parentUuid": "e674a786_2d582419",
+      "range": {
+        "startLine": 64,
+        "startChar": 22,
+        "endLine": 64,
+        "endChar": 38
+      },
+      "revId": "e81d50243cdac5afda691a195647d3c013195954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
