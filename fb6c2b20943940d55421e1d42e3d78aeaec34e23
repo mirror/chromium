@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e17eb68_572a6a5f",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-23T20:37:37Z",
+      "side": 1,
+      "message": "referrer",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ed758e_4f7f606c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 27147,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-23T20:37:37Z",
+      "side": 1,
+      "message": "I would suggest using the histogram_suffix syntax to simplify comprehension of this section.\n\nYou might want to consider even doing a multilevel suffixing since this is so redundant. See top of file for some examples.",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
