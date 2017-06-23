@@ -2,13 +2,22 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//testing/test.gni")
+
 source_set("common") {
   sources = [
+    "gl_helper.cc",
+    "gl_helper.h",
+    "gl_helper_readback_support.cc",
+    "gl_helper_readback_support.h",
+    "gl_helper_scaling.cc",
+    "gl_helper_scaling.h",
     "server_gpu_memory_buffer_manager.cc",
     "server_gpu_memory_buffer_manager.h",
   ]
 
   deps = [
+    "//gpu/command_buffer/client:gles2_interface",
     "//gpu/ipc/client",
     "//gpu/ipc/common",
     "//services/ui/gpu/interfaces",
@@ -24,13 +33,88 @@ source_set("common") {
 source_set("unit_tests") {
   testonly = true
   sources = [
+    "gl_helper_unittest.cc",
     "server_gpu_memory_buffer_manager_unittest.cc",
   ]
 
   deps = [
     ":common",
     "//base/test:test_support",
+    "//gpu/command_buffer/client:gles2_implementation",
+    "//gpu/command_buffer/client:gles2_interface",
+    "//gpu/ipc:gl_in_process_context",
+    "//media",
     "//services/ui/gpu/interfaces",
     "//testing/gtest",
+  ]
+}
+
+source_set("real_gl_test_support") {
+  testonly = true
+  sources = [
+    "test/real_gl_test_suite.cc",
+    "test/real_gl_test_suite.h",
+    "test/run_all_real_gl_unittests.cc",
+  ]
+
+  configs += [
+    "//build/config/compiler:no_size_t_to_int_warning",
+    "//third_party/khronos:khronos_headers",
+  ]
+
+  deps = [
+    "//base",
+    "//base/test:test_support",
+    "//cc:test_support",
+    "//ui/gl:test_support",
+  ]
+
+  data_deps = [
+    "//third_party/mesa:osmesa",
+  ]
+}
+
+test("viz_gl_tests") {
+  sources = [
+    "yuv_readback_unittest.cc",
+  ]
+
+  deps = [
+    ":common",
+    ":real_gl_test_support",
+    "//base",
+    "//base/test:test_support",
+    "//gpu/command_buffer/client",
+    "//gpu/command_buffer/client:gles2_implementation",
+    "//gpu/ipc:gl_in_process_context",
+    "//media",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}
+
+test("viz_benchmark") {
+  sources = [
+    "gl_helper_benchmark.cc",
+  ]
+
+  configs += [
+    "//build/config/compiler:no_size_t_to_int_warning",
+    "//third_party/khronos:khronos_headers",
+  ]
+
+  deps = [
+    ":common",
+    ":real_gl_test_support",
+    "//base",
+    "//gpu/command_buffer/client",
+    "//gpu/command_buffer/client:gles2_implementation",
+    "//gpu/ipc:gl_in_process_context",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+
+  data_deps = [
+    "//third_party/mesa:osmesa",
   ]
 }
