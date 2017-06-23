@@ -22,6 +22,30 @@
       "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779b2cbe_834e7e00",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-23T04:03:17Z",
+      "side": 0,
+      "message": "Yep, thanks for cleaning up this.",
+      "parentUuid": "183a000d_e0a25909",
+      "range": {
+        "startLine": 178,
+        "startChar": 40,
+        "endLine": 178,
+        "endChar": 55
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
