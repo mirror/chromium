@@ -9,10 +9,12 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/blink/blink_event_util.h"
+#include "ui/events/blink/blink_features.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
 #include "ui/events/keycodes/dom/dom_code.h"
@@ -406,6 +408,21 @@ TEST(WebInputEventTest, TestMakeWebMouseEvent) {
     EXPECT_EQ(ui_event.GetClickCount(), webkit_event.click_count);
     EXPECT_EQ(123, webkit_event.PositionInWidget().x);
     EXPECT_EQ(321, webkit_event.PositionInWidget().y);
+  }
+  {
+    // Verify mouse exit event with only_for_ui_hover_state should convert to
+    // mouse move.
+    base::test::ScopedFeatureList feature_list;
+    feature_list.InitAndEnableFeature(features::kSendMouseLeaveEvents);
+
+    base::TimeTicks timestamp = EventTimeForNow();
+    MouseEvent ui_event(ET_MOUSE_EXITED, gfx::Point(123, 321),
+                        gfx::Point(123, 321), timestamp, 0, 0);
+    ui_event.set_only_for_ui_hover_state(true);
+    blink::WebMouseEvent webkit_event =
+        MakeWebMouseEvent(ui_event, base::Bind(&GetScreenLocationFromEvent));
+
+    EXPECT_EQ(blink::WebInputEvent::kMouseMove, webkit_event.GetType());
   }
   {
     // Default values for PointerDetails.
