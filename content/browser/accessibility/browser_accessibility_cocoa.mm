@@ -962,8 +962,9 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
 - (NSNumber*)enabled {
   if (![self instanceActive])
     return nil;
-  return [NSNumber numberWithBool:
-      !GetState(browserAccessibility_, ui::AX_STATE_DISABLED)];
+  return [NSNumber numberWithBool:browserAccessibility_->GetIntAttribute(
+                                      ui::AX_ATTR_CONTROL_MODE) ==
+                                  ui::AX_CONTROL_MODE_ENABLED];
 }
 
 // Returns a text marker that points to the last character in the document that
