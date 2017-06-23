@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b221cc03_38634eb9",
+        "filename": "gin/array_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-23T08:46:12Z",
+      "side": 1,
+      "message": "nit. no {}  needed for case:",
+      "revId": "c1696251faca4570376ab3dfbe1159a6baba6e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
