@@ -140,12 +140,6 @@ static const gfx::Transform& Transform(LayerImpl* layer) {
   return layer->test_properties()->transform;
 }
 
-static void SetIsScrollClipLayer(Layer* layer) {
-  layer->set_is_scroll_clip_layer();
-}
-
-static void SetIsScrollClipLayer(LayerImpl* layer) {}
-
 // Methods to query state from the AnimationHost ----------------------
 template <typename LayerType>
 bool OpacityIsAnimating(LayerType* layer) {
@@ -394,7 +388,6 @@ bool AddTransformNodeIfNeeded(
     data_for_children->affected_by_outer_viewport_bounds_delta =
         layer == data_from_ancestor.outer_viewport_scroll_layer;
     if (is_scrollable) {
-      DCHECK(!is_root);
       DCHECK(Transform(layer).IsIdentity());
       data_for_children->transform_fixed_parent = Parent(layer);
     } else {
@@ -1044,7 +1037,6 @@ void AddScrollNodeIfNeeded(
     node.scrollable = scrollable;
     node.main_thread_scrolling_reasons = main_thread_scrolling_reasons;
     node.non_fast_scrollable_region = layer->non_fast_scrollable_region();
-
     node.scrolls_inner_viewport =
         layer == data_from_ancestor.inner_viewport_scroll_layer;
     node.scrolls_outer_viewport =
@@ -1055,12 +1047,8 @@ void AddScrollNodeIfNeeded(
       node.max_scroll_offset_affected_by_page_scale = true;
     }
 
-    if (LayerType* scroll_clip_layer = layer->scroll_clip_layer()) {
-      SetIsScrollClipLayer(scroll_clip_layer);
-      node.scroll_clip_layer_bounds = scroll_clip_layer->bounds();
-    }
-
     node.bounds = layer->bounds();
+    node.scroll_clip_layer_bounds = layer->scroll_container_bounds();
     node.offset_to_transform_parent = layer->offset_to_transform_parent();
     node.should_flatten = layer->should_flatten_transform_from_property_tree();
     node.user_scrollable_horizontal = UserScrollableHorizontal(layer);
