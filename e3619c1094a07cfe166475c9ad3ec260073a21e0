@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df09a83a_d4ce51ec",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-23T18:26:22Z",
+      "side": 1,
+      "message": "These are just 2 files in media/mixers so I thought that we would not create BUILD.gn file.\n\nI will Update it.",
+      "parentUuid": "be478502_e8dfaa7a",
+      "revId": "e3619c1094a07cfe166475c9ad3ec260073a21e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e8db5ae_076a3b15",
         "filename": "media/filters/BUILD.gn",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T17:12:47Z",
       "side": 1,
       "message": "I don\u0027t understand this. This code doesn\u0027t depend on the files in media/base, the ones in media/base depend on this code. Can we instead just move the files from media/base that need the ffmpeg code to media/filters?",
+      "revId": "e3619c1094a07cfe166475c9ad3ec260073a21e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89d80c8_9c5a593b",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-23T18:26:22Z",
+      "side": 1,
+      "message": "Do you mean that move the files present in base_ffmpeg_header targets from media/base folder to media/filters folder so that we can directly put those file in filters target ?",
+      "parentUuid": "3e8db5ae_076a3b15",
       "revId": "e3619c1094a07cfe166475c9ad3ec260073a21e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
