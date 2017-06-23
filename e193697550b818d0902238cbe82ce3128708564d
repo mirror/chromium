@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "63a55a34_0c0a8e25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T00:26:46Z",
+      "side": 1,
+      "message": "Well, OK, at least please rename mIsPastedText to mLastEditWasPaste.",
+      "parentUuid": "93a37de4_4c0fa8e0",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0d18ff3_3077ccf9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 2
@@ -247,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "90af0485_364171cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T00:26:46Z",
+      "side": 1,
+      "message": "It\u0027s very unlikely that this patch will be fully ready to land tomorrow anyway, and I think the TODOs are low-risk refactorings that should only be a day or two of coding, so please do them now and we can figure out the launch timeline questions next week.",
+      "parentUuid": "4614f73b_2b1286d6",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f15e7989_3aaaa180",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 2
@@ -276,6 +312,24 @@
       "side": 1,
       "message": "Hmm... Probably I could move the ignoretextchangefromautocomplete logic into AutocompleteEditText(), but not beyond it for now. But I don\u0027t think the gain is huge if I move there. Let me know if you have a better idea.",
       "parentUuid": "f15e7989_3aaaa180",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c22c24_a9ffdaab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-23T00:26:46Z",
+      "side": 1,
+      "message": "This seems like a questionable method of suppressing the accessibility event in the first place. With the new spannable approach, the text is more hidden than before.  Is there a way to mark the spannable in such a way that it\u0027s hidden from accessibility as well as from the IME?",
+      "parentUuid": "0eb98488_9e0b9671",
       "revId": "e193697550b818d0902238cbe82ce3128708564d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
