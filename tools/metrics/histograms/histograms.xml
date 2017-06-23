@@ -46110,6 +46110,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="NQE.MainFrame.BDPKbits" units="kbits">
+  <owner>devdeepray@chromium.org</owner>
+  <owner>tbansal@chromium.org</owner>
+  <summary>
+    An estimate of the bandwidth delay product which is computed on main-frame
+    requests. It is calculated using the 80th percentile throughput and 20th
+    percentile TransportRTT values.
+  </summary>
+</histogram>
+
 <histogram name="NQE.MainFrame.EffectiveConnectionType"
     enum="NQEEffectiveConnectionType">
   <owner>tbansal@chromium.org</owner>
@@ -46132,6 +46142,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="NQE.MainFrame.Kbps.OnBDPComputation" units="Kbps">
+  <owner>devdeepray@chromium.org</owner>
+  <owner>tbansal@chromium.org</owner>
+  <summary>
+    The value of the downstream throughput used to compute the bandwidth delay
+    product. The 80th percentile throughput observation is used to calculate the
+    bandwidth delay product.
+  </summary>
+</histogram>
+
 <histogram name="NQE.MainFrame.RTT" units="ms">
   <owner>bengr@chromium.org</owner>
   <owner>tbansal@chromium.org</owner>
@@ -46151,6 +46171,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     different percentiles.
 
     This metric is recorded on main-frame requests.
+  </summary>
+</histogram>
+
+<histogram name="NQE.MainFrame.TransportRTT.OnBDPComputation" units="ms">
+  <owner>devdeepray@chromium.org</owner>
+  <owner>tbansal@chromium.org</owner>
+  <summary>
+    The value of the TransportRTT used to compute the bandwidth delay product.
+    The 20th percentile TransportRTT observation is used to calculate the
+    bandwidth delay product.
   </summary>
 </histogram>
 
