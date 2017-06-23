@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ca53909_6db4970d",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-23T17:17:16Z",
+      "side": 1,
+      "message": "Should we update this comment? As it isn\u0027t an experiment anymore is it?",
+      "revId": "c3a7f79f502aa02e6453ccf9b8951f4c75f050f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
