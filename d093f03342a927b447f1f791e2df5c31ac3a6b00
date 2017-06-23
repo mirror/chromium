@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10cdfe50_ed66302b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-06-23T00:25:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55cd42b2_2b6aad86",
+      "range": {
+        "startLine": 7,
+        "startChar": 33,
+        "endLine": 7,
+        "endChar": 68
+      },
+      "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e957ee9_f4464cc2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8047e53_79117290",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-06-23T00:25:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e957ee9_f4464cc2",
+      "range": {
+        "startLine": 10,
+        "startChar": 55,
+        "endLine": 10,
+        "endChar": 56
+      },
+      "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "36d4f70a_dc9376ec",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-06-23T00:25:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fae6c9c_c16d7084",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e19bacdd_7f5dcb83",
         "filename": "components/feature_engagement_tracker/public/feature_list.cc",
         "patchSetId": 3
@@ -82,6 +154,24 @@
       "writtenOn": "2017-06-22T20:09:49Z",
       "side": 1,
       "message": "Is this intentionally also available on OS_WIN?",
+      "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee876b3_9c20fa1f",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-06-23T00:25:38Z",
+      "side": 1,
+      "message": "Yup, we\u0027re planning on having the feature recommendation in OS_WIN, OS_LINUX, and OS_CHROMEOS I believe.",
+      "parentUuid": "e19bacdd_7f5dcb83",
       "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "0fdefb5b_6e15a20f",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5212,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-06-23T00:25:38Z",
+      "side": 1,
+      "message": "Done. Also added NewTab with this",
+      "parentUuid": "63ff30e8_125e9ade",
+      "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e605b9c1_5ea411f9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -119,6 +227,24 @@
       "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64cfc56a_0cc102eb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 89726,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-06-23T00:25:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e605b9c1_5ea411f9",
+      "revId": "d093f03342a927b447f1f791e2df5c31ac3a6b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
