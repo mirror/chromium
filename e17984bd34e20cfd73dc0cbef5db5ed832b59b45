@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "252697c0_259d293d",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13eaeb26_571ca0c1",
+      "range": {
+        "startLine": 1029,
+        "startChar": 18,
+        "endLine": 1029,
+        "endChar": 21
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7304b15_3b3c22cc",
         "filename": "net/nqe/network_quality_estimator.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39541676_1e097d44",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7304b15_3b3c22cc",
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b9584868_7439ad94",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f10527a2_42b23cd7",
+      "range": {
+        "startLine": 1044,
+        "startChar": 4,
+        "endLine": 1044,
+        "endChar": 53
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8c72fa9_e3064e70",
         "filename": "net/nqe/network_quality_estimator.cc",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2017-06-23T04:27:09Z",
       "side": 1,
       "message": "nit: Better to use similar histogram names as currently used in RecordMetricsOnMainFrameRequest().\nMay be NQE.MainFrame.TransportRTT.Percentile20.\nNQE.MainFrame.Kbps.Percentile20\nNQE.MainFrame.BDPKbps.",
+      "range": {
+        "startLine": 1045,
+        "startChar": 29,
+        "endLine": 1045,
+        "endChar": 41
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db26c4f_8d49df5a",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "Okay. But instead of percentile20, I\u0027d like to go with .OnBDPComputation. is that okay?",
+      "parentUuid": "e8c72fa9_e3064e70",
       "range": {
         "startLine": 1045,
         "startChar": 29,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c727cd7d_b4ea174b",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "I was thinking in bits earlier. In kbits, I think a reasonable range is 50Mbps throughput and 2s latency, which gets us to 0.1M. So 1M should be fine.",
+      "parentUuid": "9caab92c_6e2b5eb6",
+      "range": {
+        "startLine": 1048,
+        "startChar": 4,
+        "endLine": 1048,
+        "endChar": 28
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83fe7175_3f0a104a",
         "filename": "net/nqe/network_quality_estimator.h",
         "patchSetId": 3
@@ -131,6 +245,30 @@
       "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac14f0a_ad68e514",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83fe7175_3f0a104a",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 24
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "8439f7ca_472f3af3",
+        "filename": "net/nqe/network_quality_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7faa22d_a58eedfd",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fa240b8_f29d1989",
         "filename": "net/nqe/network_quality_provider.h",
         "patchSetId": 3
@@ -168,6 +330,30 @@
       "writtenOn": "2017-06-23T04:27:09Z",
       "side": 1,
       "message": "comment that it is computed from transport RTT estimate and downlink bandwidth estimate.",
+      "range": {
+        "startLine": 60,
+        "startChar": 54,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5a418e_b5db8d0d",
+        "filename": "net/nqe/network_quality_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "This is the virtual function. Should not put impl details?",
+      "parentUuid": "8fa240b8_f29d1989",
       "range": {
         "startLine": 60,
         "startChar": 54,
@@ -200,6 +386,30 @@
       "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e2ebcd9_4b3fc6d3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 45950,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-23T17:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79c7eb5_f10ee4ae",
+      "range": {
+        "startLine": 45950,
+        "startChar": 15,
+        "endLine": 45950,
+        "endChar": 18
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
