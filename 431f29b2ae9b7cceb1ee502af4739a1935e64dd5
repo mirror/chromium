@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c96a9e78_6d0c3a1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T10:09:06Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "431f29b2ae9b7cceb1ee502af4739a1935e64dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645f4ee1_f7676ba2",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T10:09:06Z",
+      "side": 1,
+      "message": "nit: try not to hide too much away from the actual tests, otherwise it\u0027s harder to know what to expect and find failure reasons later.\n\nFollow an Arrange-Act-Assert pattern (http://wiki.c2.com/?ArrangeActAssert) by moving the actual request (getThumbnail call) and the verification in the tests, rename makeRequest to setupProvider or similar.\n\nThe duplicated code would just be 2 lines, and it\u0027s okay to have duplication in tests, when it serves clarity: https://softwareengineering.stackexchange.com/q/312228/251540 https://hackernoon.com/when-code-duplication-is-acceptable-51ce33ecd0f5,",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 19
+      },
+      "revId": "431f29b2ae9b7cceb1ee502af4739a1935e64dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
