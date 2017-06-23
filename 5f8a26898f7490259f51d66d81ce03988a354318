@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88a657c0_10675cbc",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-23T17:28:36Z",
+      "side": 1,
+      "message": "So what do you suggest really. This API needs to return a KeyDataPtr so that isn\u0027t great because even if I allocate a KeyData in the SetUpContext and stash it.\nI still need to call ::Clone() on it to return a ptr here.\n\nAny other suggestions on how to structure this data differently?",
+      "parentUuid": "f0b559a3_c47a011f",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "5f8a26898f7490259f51d66d81ce03988a354318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93ee2f0_0655acdc",
         "filename": "content/common/input/input_event_struct_traits.cc",
         "patchSetId": 1
