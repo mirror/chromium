@@ -411,6 +411,7 @@ void NetworkQualityEstimator::NotifyHeadersReceived(const URLRequest& request) {
 
   if (request.load_flags() & LOAD_MAIN_FRAME_DEPRECATED) {
     ComputeEffectiveConnectionType();
+    ComputeBandwidthDelayProductOnMainFrameRequest();
     RecordMetricsOnMainFrameRequest();
     MaybeQueryExternalEstimateProvider();
   }
@@ -1019,6 +1020,34 @@ void NetworkQualityEstimator::RecordMetricsOnMainFrameRequest() const {
           10 * 1000, 50, base::HistogramBase::kUmaTargetedHistogramFlag);
       rtt_histogram->Add(http_rtt_at_last_main_frame_[i].InMilliseconds());
     }
+  }
+}
+
+void NetworkQualityEstimator::ComputeBandwidthDelayProductOnMainFrameRequest() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  base::TimeDelta rtt;
+  int32_t downlink_throughput_kbps;
+  // Record the bandwidth delay product (BDP) from the 80 percentile throughput
+  // and the 20 percentile RTT.
+  if (GetRecentTransportRTT(base::TimeTicks(), &rtt) &&
+      GetRecentDownlinkThroughputKbps(base::TimeTicks(),
+                                      &downlink_throughput_kbps)) {
+    // Percentiles are reversed for throughput.
+    rtt = GetRTTEstimateInternal(disallowed_observation_sources_for_transport_,
+                                 base::TimeTicks(), base::Optional<Statistic>(),
+                                 20);
+    downlink_throughput_kbps =
+        GetDownlinkThroughputKbpsEstimateInternal(base::TimeTicks(), 20);
+    // Compute the bandwidth delay product in kbits.
+    int64_t bdp = (downlink_throughput_kbps * rtt.InMilliseconds()) / 1000;
+    bandwidth_delay_product_kbits_at_last_main_frame_ = bdp;
+    UMA_HISTOGRAM_TIMES("NQE.TransportRTT.OnBDPComputation", rtt);
+    UMA_HISTOGRAM_COUNTS_1M("NQE.Kbps.OnBDPComputation",
+                            downlink_throughput_kbps);
+    UMA_HISTOGRAM_COUNTS_10M("NQE.BDPKbits.OnBDPComputation", bdp);
+  } else {
+    bandwidth_delay_product_kbits_at_last_main_frame_.reset();
   }
 }
 
@@ -1768,6 +1797,13 @@ base::Optional<int32_t> NetworkQualityEstimator::GetDownstreamThroughputKbps()
     return base::Optional<int32_t>();
   }
   return network_quality_.downstream_throughput_kbps();
+}
+
+base::Optional<int64_t> NetworkQualityEstimator::GetBandwidthDelayProductKBits()
+    const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  return bandwidth_delay_product_kbits_at_last_main_frame_;
 }
 
 void NetworkQualityEstimator::MaybeUpdateNetworkQualityFromCache(
