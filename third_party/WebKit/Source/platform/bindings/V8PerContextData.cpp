@@ -76,6 +76,12 @@ V8PerContextData::~V8PerContextData() {
   }
 }
 
+DEFINE_TRACE_WRAPPERS(V8PerContextData) {
+  for (const auto& it : data_map_) {
+    visitor->TraceWrappersWithManualWriteBarrier(it.value);
+  }
+}
+
 std::unique_ptr<V8PerContextData> V8PerContextData::Create(
     v8::Local<v8::Context> context) {
   return WTF::WrapUnique(new V8PerContextData(context));
@@ -198,6 +204,10 @@ void V8PerContextData::AddCustomElementBinding(
 }
 
 void V8PerContextData::AddData(const char* key, Data* data) {
+  // Issue a manual write barrier to prevent data from garbage collected.
+  ScriptWrappableVisitor::CurrentVisitor(isolate_)->MarkAndPushToMarkingDeque(
+      data);
+
   data_map_.Set(key, data);
 }
 

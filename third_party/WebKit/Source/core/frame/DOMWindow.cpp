@@ -34,7 +34,7 @@ namespace blink {
 
 DOMWindow::DOMWindow(Frame& frame)
     : frame_(frame),
-      window_proxy_manager_(frame.GetWindowProxyManager()),
+      window_proxy_manager_(this, frame.GetWindowProxyManager()),
       location_(this, nullptr),
       window_is_closing_(false) {}
 
@@ -461,6 +461,7 @@ DEFINE_TRACE(DOMWindow) {
 
 DEFINE_TRACE_WRAPPERS(DOMWindow) {
   visitor->TraceWrappers(location_);
+  visitor->TraceWrappers(window_proxy_manager_);
   EventTargetWithInlineData::TraceWrappers(visitor);
 }
 

@@ -469,6 +469,10 @@ void LocalWindowProxy::UpdateSecurityOrigin(SecurityOrigin* origin) {
   SetSecurityToken(origin);
 }
 
+DEFINE_TRACE_WRAPPERS(LocalWindowProxy) {
+  script_state_->PerContextData()->TraceWrappers(visitor);
+}
+
 LocalWindowProxy::LocalWindowProxy(v8::Isolate* isolate,
                                    LocalFrame& frame,
                                    RefPtr<DOMWrapperWorld> world)

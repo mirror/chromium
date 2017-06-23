@@ -37,6 +37,7 @@
 #include "gin/public/gin_embedders.h"
 #include "platform/PlatformExport.h"
 #include "platform/bindings/ScopedPersistent.h"
+#include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/V0CustomElementBinding.h"
 #include "platform/bindings/V8GlobalValueMap.h"
 #include "platform/bindings/WrapperTypeInfo.h"
@@ -70,6 +71,8 @@ class PLATFORM_EXPORT V8PerContextData final {
   static V8PerContextData* From(v8::Local<v8::Context>);
 
   ~V8PerContextData();
+
+  DECLARE_TRACE_WRAPPERS();
 
   v8::Local<v8::Context> GetContext() { return context_.NewLocal(isolate_); }
 
@@ -123,7 +126,12 @@ class PLATFORM_EXPORT V8PerContextData final {
   // Garbage collected classes that use V8PerContextData to hold an instance
   // should subclass Data, and use addData / clearData / getData to manage the
   // instance.
-  class PLATFORM_EXPORT Data : public GarbageCollectedMixin {};
+  class PLATFORM_EXPORT Data : public GarbageCollectedFinalized<Data>,
+                               public TraceWrapperBase {
+   public:
+    virtual ~Data() = default;
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
+  };
 
   void AddData(const char* key, Data*);
   void ClearData(const char* key);
