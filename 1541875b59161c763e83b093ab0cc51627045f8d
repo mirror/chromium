@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c66539c1_e11e27bc",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-23T07:48:05Z",
+      "side": 1,
+      "message": "i think it\u0027s safe to use base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN here too.",
+      "revId": "1541875b59161c763e83b093ab0cc51627045f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
