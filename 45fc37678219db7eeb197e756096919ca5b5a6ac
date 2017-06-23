@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48b110a9_e12f2b2e",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Put all these in the same file as the WatchTimeReporterComponent interface.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f183b355_8c27b612",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Drop, prefer passing in is_running. Return true from here if you want WTR to start the timer, don\u0027t try to do in the depths.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421c0f21_9bfbf9ae",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Don\u0027t use macros here, it\u0027s just more confusing.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35fc06a5_967d5473",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Don\u0027t forget your disallows.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463dd1b0_eb6a7cd2",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Again stick them in a vector at fixed indices. If we\u0027re not reporting something for a given case, leave it as a nullptr, it shouldn\u0027t be called anyways. DCHECK if you want.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017fb2f8_88dd42d9",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "WatchTimeReporterComponent ?",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce84497_be9f1b45",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Friends are typically frowned upon for non-test cases.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dff46ab_5c88e030",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "No private ForTesting methods; should either be done through the friend interface or public.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470ed9b9_c3a27130",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Just std::vector\u003c\u003e where enum is int index; we always have all reported. This avoids needing to find() everytime.\n\nThat said, you have static casts everywhere and there are only a few of these, so why not just skip the map/vector and give each a specific type and variable name for clarity.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb28fe6_1b277ff2",
+        "filename": "media/blink/watch_time_sub_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Instead return bool and let WTR do this.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffde1c24_77a4f21f",
+        "filename": "media/blink/watch_time_sub_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Drop.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf23d404_b122bca6",
+        "filename": "media/blink/watch_time_sub_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Drop.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250a0b09_7462399d",
+        "filename": "media/blink/watch_time_sub_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Drop.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47f40e5_117978da",
+        "filename": "media/blink/watch_time_sub_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T00:10:08Z",
+      "side": 1,
+      "message": "Avoid this dependency chain; pass in is_background_ and has_video_.",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
