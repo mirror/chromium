@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a32a4390_21b3f5de",
+        "filename": "components/autofill/content/common/autofill_agent.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-06-23T03:53:38Z",
+      "side": 1,
+      "message": "nit: A bit hard to read. Might I suggest...\n\nConfigures the render to require, or not, a user gesture before notifying the autofill agent of a field change. The default is true. Bypassing the user gesture check should only used for Android Webview, which needs to be notified of every change to the field.\n\nNote: The Android platform autofill framework only sends values to the autofill service with the user\u0027s consent, so the gesture check is redundant there anyway.",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "0d975632fba847d5c7d4ac6cae688a28ac617500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694651aa_405c7a48",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-06-23T03:53:38Z",
+      "side": 1,
+      "message": "nit:\n\nWhether or not a user gesture is required before notification of a text field change. Default to true.",
+      "range": {
+        "startLine": 282,
+        "startChar": 39,
+        "endLine": 282,
+        "endChar": 52
+      },
+      "revId": "0d975632fba847d5c7d4ac6cae688a28ac617500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
