@@ -16,6 +16,24 @@
       "revId": "2f437abfe19de4603a124b883648b6f57aa068c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82633a7_d999cf53",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/IndexedDB/nested-cloning-common.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-23T17:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea8291d5_becfe77e",
+      "revId": "2f437abfe19de4603a124b883648b6f57aa068c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
