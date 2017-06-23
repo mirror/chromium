@@ -4,6 +4,10 @@
 
 #include "net/nqe/network_quality_provider.h"
 
+#include <stdint.h>
+
+#include "base/optional.h"
+
 namespace net {
 
 base::Optional<base::TimeDelta> NetworkQualityProvider::GetHttpRTT() const {
@@ -18,6 +22,11 @@ base::Optional<base::TimeDelta> NetworkQualityProvider::GetTransportRTT()
 base::Optional<int32_t> NetworkQualityProvider::GetDownstreamThroughputKbps()
     const {
   return base::Optional<int32_t>();
+}
+
+base::Optional<int64_t> NetworkQualityProvider::GetBandwidthDelayProductKBits()
+    const {
+  return base ::Optional<int64_t>();
 }
 
 }  // namespace net
