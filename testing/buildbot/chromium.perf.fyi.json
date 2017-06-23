@@ -275,36 +275,6 @@
       },
       {
         "args": [
-          "blink_perf.shadow_dom",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=android-webview",
-          "--webview-embedder-apk=../../out/Release/apks/SystemWebViewShell.apk"
-        ],
-        "isolate_name": "telemetry_perf_webview_tests",
-        "name": "blink_perf.shadow_dom",
-        "override_compile_targets": [
-          "telemetry_perf_webview_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "android_devices": "1",
-              "id": "build243-m4--device6",
-              "os": "Android",
-              "pool": "Chrome-perf-fyi"
-            }
-          ],
-          "expiration": 36000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 3600
-        }
-      },
-      {
-        "args": [
           "blink_perf.svg",
           "-v",
           "--upload-results",
@@ -2988,65 +2958,6 @@
             {
               "android_devices": "1",
               "id": "build249-m4--device5",
-              "os": "Android",
-              "pool": "Chrome-perf-fyi"
-            }
-          ],
-          "expiration": 36000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 3600
-        }
-      },
-      {
-        "args": [
-          "blink_perf.shadow_dom",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=android-chromium"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "blink_perf.shadow_dom",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "android_devices": "1",
-              "id": "build245-m4--device7",
-              "os": "Android",
-              "pool": "Chrome-perf-fyi"
-            }
-          ],
-          "expiration": 36000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 3600
-        }
-      },
-      {
-        "args": [
-          "blink_perf.shadow_dom",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "blink_perf.shadow_dom.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "android_devices": "1",
-              "id": "build245-m4--device7",
               "os": "Android",
               "pool": "Chrome-perf-fyi"
             }
