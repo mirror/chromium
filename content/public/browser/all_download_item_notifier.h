@@ -47,6 +47,8 @@ class CONTENT_EXPORT AllDownloadItemNotifier : public DownloadManager::Observer,
     Observer() {}
     virtual ~Observer() {}
 
+    virtual void OnManagerInitialized(DownloadManager* manager) {}
+    virtual void OnManagerGoingDown(DownloadManager* manager) {}
     virtual void OnDownloadCreated(DownloadManager* manager,
                                    DownloadItem* item) {}
     virtual void OnDownloadUpdated(DownloadManager* manager,
@@ -69,6 +71,7 @@ class CONTENT_EXPORT AllDownloadItemNotifier : public DownloadManager::Observer,
 
  private:
   // DownloadManager::Observer
+  void OnManagerInitialized() override;
   void ManagerGoingDown(DownloadManager* manager) override;
   void OnDownloadCreated(DownloadManager* manager, DownloadItem* item) override;
 
