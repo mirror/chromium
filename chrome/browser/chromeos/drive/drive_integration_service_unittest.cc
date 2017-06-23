@@ -10,6 +10,7 @@
 #include "components/drive/chromeos/dummy_file_system.h"
 #include "components/drive/service/dummy_drive_service.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_service_manager_context.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -22,12 +23,14 @@ const char kTestProfileName[] = "test-profile";
 class DriveIntegrationServiceTest : public testing::Test {
  public:
   DriveIntegrationServiceTest()
-      : profile_manager_(TestingBrowserProcess::GetGlobal()) {}
+      : context_(base::MakeUnique<content::TestServiceManagerContext>()),
+        profile_manager_(TestingBrowserProcess::GetGlobal()) {}
 
   void SetUp() override { ASSERT_TRUE(profile_manager_.SetUp()); }
 
  protected:
   content::TestBrowserThreadBundle thread_bundle_;
+  std::unique_ptr<content::TestServiceManagerContext> context_;
   // DriveIntegrationService depends on DriveNotificationManager which depends
   // on InvalidationService. On Chrome OS, the InvalidationServiceFactory
   // uses chromeos::ProfileHelper, which needs the ProfileManager or a

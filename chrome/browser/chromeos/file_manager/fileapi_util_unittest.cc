@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/drive/drive_integration_service.h"
 #include "chrome/browser/chromeos/file_manager/fileapi_util.h"
+#include "chrome/browser/chromeos/drive/drive_integration_service.h"
 #include "chrome/browser/chromeos/file_manager/mount_test_util.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
@@ -15,6 +15,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/file_chooser_file_info.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_service_manager_context.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/shell_dialogs/selected_file_info.h"
@@ -50,6 +51,7 @@ TEST(FileManagerFileAPIUtilTest,
      ConvertSelectedFileInfoListToFileChooserFileInfoList) {
   // Prepare the test drive environment.
   content::TestBrowserThreadBundle threads;
+  content::TestServiceManagerContext service_manager_context;
   TestingProfileManager profile_manager(TestingBrowserProcess::GetGlobal());
   ASSERT_TRUE(profile_manager.SetUp());
   base::ScopedTempDir drive_cache_dir;
