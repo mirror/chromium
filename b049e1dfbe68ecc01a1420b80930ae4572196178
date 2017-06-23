@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "30da08e0_830ac821",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-23T04:53:52Z",
+      "side": 1,
+      "message": "I see, you\u0027ve added another conditional block.\n\nThat is much neater now, thankyou.",
+      "parentUuid": "aa16c648_24002093",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "b049e1dfbe68ecc01a1420b80930ae4572196178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ab59e75_f306266a",
         "filename": "chrome/browser/search/hotword_service.cc",
         "patchSetId": 4
