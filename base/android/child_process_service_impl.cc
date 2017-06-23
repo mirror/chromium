@@ -69,6 +69,8 @@ void RegisterFileDescriptors(JNIEnv* env,
 }
 
 void ExitChildProcess(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+  base::debug::StackTrace st;
+  st.Print();
   VLOG(0) << "ChildProcessServiceImpl: Exiting child process.";
   base::android::LibraryLoaderExitHook();
   _exit(0);

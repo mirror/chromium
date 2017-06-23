@@ -5,7 +5,6 @@
 package org.chromium.base;
 
 import org.chromium.base.ITestController;
-import org.chromium.base.MainReturnCodeResult;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
 
 /**
@@ -13,4 +12,6 @@ import org.chromium.base.process_launcher.FileDescriptorInfo;
  */
 oneway interface ITestCallback {
   void childConnected(ITestController controller);
+
+  void mainReturned(int returnCode);
 }

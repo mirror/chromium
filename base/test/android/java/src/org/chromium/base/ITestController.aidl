@@ -4,22 +4,16 @@
 
 package org.chromium.base;
 
-import org.chromium.base.MainReturnCodeResult;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
 
 /**
  * This interface is used to control child processes.
  */
 interface ITestController {
-   /**
-   * Blocks until the <code>main</code> method started with {@link #launch()} returns, or returns
-   * immediately if main has already returned.
-   * @param timeoutMs time in milliseconds after which this method returns even if the main method
-   * has not returned yet.
-   * @return a result containing whether a timeout occured and the value returned by the
-   * <code>main</code> method
+  /**
+   * Must be called when the test has received the main result to ensure the service can be stopped.
    */
-  MainReturnCodeResult waitForMainToReturn(int timeoutMs);
+  oneway void mainResultReceived();
 
   /**
    * Forces the service process to terminate and block until the process stops.
@@ -32,5 +26,5 @@ interface ITestController {
    * Forces the service process to terminate.
    * @param exitCode the exit code the process should terminate with.
    */
-  void forceStop(int exitCode);
+  oneway void forceStop(int exitCode);
 }
