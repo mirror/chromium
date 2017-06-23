@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0acc47bb_0557f9dc",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "It\u0027s because CameraHalDispatcherImpl::AddClientObserver takes unique_ptr of the observer object.\n\nThe CameraHalDispatcherImpl takes two kinds of observers: LocalCameraClient and MojoCameraClient. The CameraHalDelegate resides in the same process as CameraHalDispatcher so it\u0027s using the LocalCameraClient here without going through Mojo to talk to the dispatcher.\n\nWhile I can let CameraHalDelegate inherit CameraClientObserver and pass raw pointer of CameraHalDelegate, I need to use unique_ptr for the MojoCameraClient in CameraHalDispatcherImpl to retain the ownership of the Mojo connection from CameraHalClient so that when the Mojo connection breaks the MojoCameraClient and the InterfacePtr are deleted together.",
+      "parentUuid": "01b64daa_fdde1f69",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a12c56a7_1f6f7165",
         "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740e97a4_eb60affb",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12c56a7_1f6f7165",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dfe89e3c_6e31f693",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04301ab8_215aa47a",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8718eec_de466c06",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-22T21:57:43Z",
       "side": 1,
       "message": "Do we have/need/want test coverage of these edge cases?",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b662d7f_4aa7bab0",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "I should\u0027ve updated the comments. In our case the |raw_cancel_fd| is signaled only on CameraHalDispatcherImpl\u0027s destructor. This function was copied from https://cs.chromium.org/chromium/src/components/arc/arc_session.cc?type\u003dcs\u0026q\u003dWaitForSocketReadable\u0026l\u003d90.",
+      "parentUuid": "e8718eec_de466c06",
       "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "68829f59_d37a31a9",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "I\u0027ve added a test case for server connection error in camera_hal_dispatcher_impl_unittest.cc.",
+      "parentUuid": "b9522055_1b766271",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6cd4020_a8a3521a",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 12
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-22T21:57:43Z",
       "side": 1,
       "message": "Do we have test coverage for cases where this error handler gets triggered?",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12585288_1ecc7c0a",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "I\u0027ve added a test case for server connection error in camera_hal_dispatcher_impl_unittest.cc.",
+      "parentUuid": "f6cd4020_a8a3521a",
       "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "bc5176d7_5df93dc5",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdb7127d_bbc660bf",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6763eb_dc261308",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
         "patchSetId": 12
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "e45d96f6_744161f9",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd6763eb_dc261308",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29151b08_9abe38a9",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
         "patchSetId": 12
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-22T21:57:43Z",
       "side": 1,
       "message": "Consider using base::ObserverList\u003c\u003e here",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ac1d88_f3099f59",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "base::ObserverList takes raw pointer to the Observer object while I need unique_ptr to here to hold the ownership of the InterfacePtr of CameraHalClient. I guess I have to stick to my own implementation.",
+      "parentUuid": "29151b08_9abe38a9",
       "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "72ad3c3b_2cb7dd48",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "Yes the dispatching is triggered in the implementation. The Mojo interface only exposes the peer registration interface.",
+      "parentUuid": "d5b42d3b_46b1a867",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e79cf97b_3fbd33c6",
         "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
         "patchSetId": 12
@@ -183,6 +363,24 @@
       "writtenOn": "2017-06-22T19:34:17Z",
       "side": 1,
       "message": "Is there any possible badness that could result from something other than the camera HAL calling RegisterServer, before the HAL does? I think it only means that the clients wouldn\u0027t have a working camera, but I wonder if you have any thoughts on that.",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf322ea_11199439",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "Yes, the clients wouldn\u0027t have a working camera if someone else registers as server before the camera HAL does.\n\nOn production these codes will run on Chrome OS with verified boot. The Mojo connection is set up through a unix domain socket which is writable only by Chrome, and readable only by users in the arc-camera group. Only the camera-related processes (e.g. the camera HAL process and the cameraserver process in Android container) can access the unix domain socket. So the attack surface is limited.",
+      "parentUuid": "e79cf97b_3fbd33c6",
       "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "abbe6227_3a83db0d",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "The CameraHalServer is implemented in this CL: https://chromium-review.googlesource.com/c/487551/, which runs on Chrome OS.\n\nThe CameraHalClient is implemented in this CL: https://googleplex-android-review.git.corp.google.com/#/c/2162018/, which runs inside the Android container on Chrome OS.",
+      "parentUuid": "16d93b5b_15ec248e",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc291dba_da6a2a1d",
         "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
         "patchSetId": 12
@@ -220,6 +436,24 @@
       "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32a7afe_51191567",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-23T11:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc291dba_da6a2a1d",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
