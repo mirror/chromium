@@ -16,6 +16,24 @@
       "revId": "4bb071c118ffec06a641c354322ec79220b77273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e66bf5_ea32cd1e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-23T06:53:08Z",
+      "side": 1,
+      "message": "If this global scope owns the RF, that makes sense. But current situation that FetchContext owns RF looks a little confusing to me, though I guess this is a temporary intermediate state for switching. That\u0027s my motivation to have this comment.\n\nAnyway, it isn\u0027t important. I will remove this.",
+      "parentUuid": "e19e0262_9bb82da7",
+      "revId": "4bb071c118ffec06a641c354322ec79220b77273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
