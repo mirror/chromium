@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d0c221d_51e5c3a1",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-23T05:28:51Z",
+      "side": 1,
+      "message": "Yep, added a few words.",
+      "parentUuid": "cdd44821_be9c44c1",
+      "range": {
+        "startLine": 251,
+        "startChar": 32,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "ebeb8881cdc2a16965eebaa9451fa1fa201d58c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "204e4133_3999f09d",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b4a8f3d4_0dcbdc2f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-23T05:28:51Z",
+      "side": 1,
+      "message": "Expanded this TODO comment to make the current situation clearer.",
+      "parentUuid": "204e4133_3999f09d",
+      "range": {
+        "startLine": 287,
+        "startChar": 37,
+        "endLine": 287,
+        "endChar": 68
+      },
+      "revId": "ebeb8881cdc2a16965eebaa9451fa1fa201d58c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cc9ee1c_a3622110",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-23T05:00:45Z",
       "side": 1,
       "message": "If ServiceWorker is a request for the service worker script, what\u0027s the difference between Script and Import? The comment on the top of WebURLRequest::GetRequestContext() is broken.",
+      "range": {
+        "startLine": 118,
+        "startChar": 11,
+        "endLine": 118,
+        "endChar": 26
+      },
+      "revId": "ebeb8881cdc2a16965eebaa9451fa1fa201d58c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd51947_9acb1bd6",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-23T05:28:51Z",
+      "side": 1,
+      "message": "It\u0027s for, say, \u003cscript\u003e. I don\u0027t think currently we have kRequestContextScript resources in worker cases, but 1) don\u0027t want to change the existing logic, and 2) this might become necessary once we started supporting modules / non-classic scripts?",
+      "parentUuid": "1cc9ee1c_a3622110",
       "range": {
         "startLine": 118,
         "startChar": 11,
