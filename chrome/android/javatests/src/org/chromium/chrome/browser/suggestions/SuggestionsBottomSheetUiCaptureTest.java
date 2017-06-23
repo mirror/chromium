@@ -28,6 +28,7 @@ import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.SuggestionsBottomSheetTestRule;
+import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 
 /**
  * Tests for the appearance of Article Snippets.
@@ -41,6 +42,8 @@ public class SuggestionsBottomSheetUiCaptureTest {
     @Rule
     public SuggestionsBottomSheetTestRule mSuggestionsTestRule =
             new SuggestionsBottomSheetTestRule();
+    @Rule
+    public SuggestionsDependenciesRule mSuggestionsDeps = new SuggestionsDependenciesRule();
 
     @Rule
     public ScreenShooter mScreenShooter = new ScreenShooter();
@@ -49,6 +52,7 @@ public class SuggestionsBottomSheetUiCaptureTest {
 
     @Before
     public void setup() throws InterruptedException {
+        mSuggestionsTestRule.initDependencies(mSuggestionsDeps.getFactory());
         mSuggestionsTestRule.startMainActivityOnBlankPage();
     }
 
