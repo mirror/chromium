@@ -21,6 +21,7 @@
 #include "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h"
 #include "chrome/browser/chromeos/certificate_provider/certificate_provider_service_factory.h"
 #include "chrome/browser/extensions/api/certificate_provider/certificate_provider_api.h"
+#include "chrome/browser/extensions/api/certificate_provider/certificate_provider_test_util.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -39,8 +40,6 @@
 #include "extensions/test/result_catcher.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "testing/gmock/include/gmock/gmock.h"
-#include "third_party/boringssl/src/include/openssl/evp.h"
-#include "third_party/boringssl/src/include/openssl/rsa.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/widget/widget.h"
@@ -48,6 +47,8 @@
 
 using testing::Return;
 using testing::_;
+
+namespace chromeos {
 
 namespace {
 
@@ -77,55 +78,10 @@ void StoreDigest(std::vector<uint8_t>* digest,
   callback.Run();
 }
 
-// See net::SSLPrivateKey::SignDigest for the expected padding and DigestInfo
-// prefixing.
-bool RsaSign(const std::vector<uint8_t>& digest,
-             crypto::RSAPrivateKey* key,
-             std::vector<uint8_t>* signature) {
-  RSA* rsa_key = EVP_PKEY_get0_RSA(key->key());
-  if (!rsa_key)
-    return false;
-
-  uint8_t* prefixed_digest = nullptr;
-  size_t prefixed_digest_len = 0;
-  int is_alloced = 0;
-  if (!RSA_add_pkcs1_prefix(&prefixed_digest, &prefixed_digest_len, &is_alloced,
-                            NID_sha1, digest.data(), digest.size())) {
-    return false;
-  }
-  size_t len = 0;
-  signature->resize(RSA_size(rsa_key));
-  const int rv =
-      RSA_sign_raw(rsa_key, &len, signature->data(), signature->size(),
-                   prefixed_digest, prefixed_digest_len, RSA_PKCS1_PADDING);
-  if (is_alloced)
-    free(prefixed_digest);
-
-  if (rv) {
-    signature->resize(len);
-    return true;
-  } else {
-    signature->clear();
-    return false;
-  }
-}
-
-// Create a string that if evaluated in JavaScript returns a Uint8Array with
-// |bytes| as content.
-std::string JsUint8Array(const std::vector<uint8_t>& bytes) {
-  std::string res = "new Uint8Array([";
-  for (const uint8_t byte : bytes) {
-    res += base::UintToString(byte);
-    res += ", ";
-  }
-  res += "])";
-  return res;
-}
-
 // Enters the code in the ShowPinDialog window and pushes the OK event.
-void EnterCode(chromeos::CertificateProviderService* service,
+void EnterCode(CertificateProviderService* service,
                const base::string16& code) {
-  chromeos::RequestPinView* view =
+  RequestPinView* view =
       service->pin_dialog_manager()->active_view_for_testing();
   view->textfield_for_testing()->SetText(code);
   view->Accept();
@@ -136,7 +92,7 @@ void EnterCode(chromeos::CertificateProviderService* service,
 // ShowPinDialog window and waits for the window to close. The extension code
 // is expected to send "Success" message after the validation and request to
 // stopPinRequest is done.
-void EnterCorrectPin(chromeos::CertificateProviderService* service) {
+void EnterCorrectPin(CertificateProviderService* service) {
   ExtensionTestMessageListener listener("Success", false);
   EnterCode(service, base::ASCIIToUTF16("1234"));
   ASSERT_TRUE(listener.WaitUntilSatisfied());
@@ -146,13 +102,13 @@ void EnterCorrectPin(chromeos::CertificateProviderService* service) {
 // ShowPinDialog window and waits for the window to update with the error. The
 // extension code is expected to send "Invalid PIN" message after the validation
 // and the new requestPin (with the error) is done.
-void EnterWrongPin(chromeos::CertificateProviderService* service) {
+void EnterWrongPin(CertificateProviderService* service) {
   ExtensionTestMessageListener listener("Invalid PIN", false);
   EnterCode(service, base::ASCIIToUTF16("567"));
   ASSERT_TRUE(listener.WaitUntilSatisfied());
 
   // Check that we have an error message displayed.
-  chromeos::RequestPinView* view =
+  RequestPinView* view =
       service->pin_dialog_manager()->active_view_for_testing();
   EXPECT_EQ(SK_ColorRED, view->error_label_for_testing()->enabled_color());
 }
@@ -174,7 +130,7 @@ class CertificateProviderApiTest : public ExtensionApiTest {
     // Set up the AutoSelectCertificateForUrls policy to avoid the client
     // certificate selection dialog.
     const std::string autoselect_pattern =
-        "{\"pattern\": \"*\", \"filter\": {\"ISSUER\": {\"CN\": \"root\"}}}";
+        "{\"pattern\": \"*\", \"filter\": {\"ISSUER\": {\"CN\": \"root1\"}}}";
 
     std::unique_ptr<base::ListValue> autoselect_policy(new base::ListValue);
     autoselect_policy->AppendString(autoselect_pattern);
@@ -197,16 +153,15 @@ class CertificateProviderRequestPinTest : public CertificateProviderApiTest {
  public:
   // Loads certificate_provider extension from |folder| and |file_name|.
   // Returns the CertificateProviderService object from browser context.
-  chromeos::CertificateProviderService* LoadRequestPinExtension(
+  CertificateProviderService* LoadRequestPinExtension(
       const std::string& folder,
       const std::string& file_name) {
     const base::FilePath extension_path =
         test_data_dir_.AppendASCII("certificate_provider/" + folder);
     const extensions::Extension* const extension =
         LoadExtension(extension_path);
-    chromeos::CertificateProviderService* service =
-        chromeos::CertificateProviderServiceFactory::GetForBrowserContext(
-            profile());
+    CertificateProviderService* service =
+        CertificateProviderServiceFactory::GetForBrowserContext(profile());
     service->pin_dialog_manager()->AddSignRequestId(extension->id(), 123);
     ui_test_utils::NavigateToURL(browser(),
                                  extension->GetResourceURL(file_name));
@@ -227,7 +182,7 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderApiTest, Basic) {
   extensions::ResultCatcher catcher;
 
   const base::FilePath extension_path =
-      test_data_dir_.AppendASCII("certificate_provider");
+      test_data_dir_.AppendASCII("certificate_provider/test_extension");
   const extensions::Extension* const extension = LoadExtension(extension_path);
   ui_test_utils::NavigateToURL(browser(),
                                extension->GetResourceURL("basic.html"));
@@ -265,9 +220,24 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderApiTest, Basic) {
     run_loop.Run();
   }
 
+  // Note that the hash algorithm has been normalized in the getKeyPair()
+  // function (see basic.js).
+  VLOG(1) << "Fetch the hash algorithm from the sign request.";
+  std::string request_hash_algorithm;
+  {
+    base::RunLoop run_loop;
+    extension_contents->GetMainFrame()->ExecuteJavaScriptForTests(
+        base::ASCIIToUTF16("signDigestRequest.hash;"),
+        base::Bind(&StoreString, &request_hash_algorithm,
+                   run_loop.QuitClosure()));
+    run_loop.Run();
+  }
+
   VLOG(1) << "Sign the digest using the private key.";
   std::string key_pk8;
-  base::ReadFileToString(extension_path.AppendASCII("l1_leaf.pk8"), &key_pk8);
+  base::ReadFileToString(
+      test_data_dir_.AppendASCII("certificate_provider/root1_l1_leaf.pk8"),
+      &key_pk8);
 
   const uint8_t* const key_pk8_begin =
       reinterpret_cast<const uint8_t*>(key_pk8.data());
@@ -277,13 +247,15 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderApiTest, Basic) {
   ASSERT_TRUE(key);
 
   std::vector<uint8_t> signature;
-  EXPECT_TRUE(RsaSign(request_digest, key.get(), &signature));
+  EXPECT_TRUE(platform_keys_test_util::RsaSign(
+      request_digest, request_hash_algorithm, key.get(), &signature));
 
   VLOG(1) << "Inject the signature back to the extension and let it reply.";
   {
     base::RunLoop run_loop;
-    const std::string code =
-        "replyWithSignature(" + JsUint8Array(signature) + ");";
+    const std::string code = "replyWithSignature(" +
+                             platform_keys_test_util::JsUint8Array(signature) +
+                             ");";
     extension_contents->GetMainFrame()->ExecuteJavaScriptForTests(
         base::ASCIIToUTF16(code),
         base::Bind(&IgnoreResult, run_loop.QuitClosure()));
@@ -303,13 +275,14 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderApiTest, Basic) {
         base::Bind(&StoreString, &https_reply, run_loop.QuitClosure()));
     run_loop.Run();
     // Expect the server to return the fingerprint of the client cert that we
-    // presented, which should be the fingerprint of 'l1_leaf.der'.
+    // presented, which should be the fingerprint of 'root1_l1_leaf.der'.
     // The fingerprint can be calculated independently using:
     // openssl x509 -inform DER -noout -fingerprint -in
-    //   chrome/test/data/extensions/api_test/certificate_provider/l1_leaf.der
+    //   chrome/test/data/extensions/api_test/certificate_provider/
+    //      test_extension/root1_l1_leaf.der
     ASSERT_EQ(
         "got client cert with fingerprint: "
-        "2ab3f55e06eb8b36a741fe285a769da45edb2695",
+        "a828bd55baa8141c782c6c8c08d18c9ebae1af6c",
         https_reply);
   }
 
@@ -328,7 +301,7 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderApiTest, Basic) {
 
 // User enters the correct PIN.
 IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest, ShowPinDialogAccept) {
-  chromeos::CertificateProviderService* service =
+  CertificateProviderService* service =
       LoadRequestPinExtension("request_pin", "basic.html");
 
   // Enter the valid PIN.
@@ -341,7 +314,7 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest, ShowPinDialogAccept) {
 // User closes the dialog kMaxClosedDialogsPer10Mins times, and the extension
 // should be blocked from showing it again.
 IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest, ShowPinDialogClose) {
-  chromeos::CertificateProviderService* service =
+  CertificateProviderService* service =
       LoadRequestPinExtension("request_pin", "basic.html");
 
   views::Widget* window =
@@ -369,7 +342,7 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest, ShowPinDialogClose) {
 // User enters a wrong PIN first and a correct PIN on the second try.
 IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest,
                        ShowPinDialogWrongPin) {
-  chromeos::CertificateProviderService* service =
+  CertificateProviderService* service =
       LoadRequestPinExtension("request_pin", "basic.html");
   EnterWrongPin(service);
 
@@ -389,13 +362,13 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest,
 // User enters wrong PIN three times.
 IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest,
                        ShowPinDialogWrongPinThreeTimes) {
-  chromeos::CertificateProviderService* service =
+  CertificateProviderService* service =
       LoadRequestPinExtension("request_pin", "basic.html");
   for (int i = 0; i < 3; i++) {
     EnterWrongPin(service);
   }
 
-  chromeos::RequestPinView* view =
+  RequestPinView* view =
       service->pin_dialog_manager()->active_view_for_testing();
 
   // The textfield has to be disabled, as extension does not allow input now.
@@ -411,7 +384,7 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest,
 // User closes the dialog while the extension is processing the request.
 IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest,
                        ShowPinDialogCloseWhileProcessing) {
-  chromeos::CertificateProviderService* service =
+  CertificateProviderService* service =
       LoadRequestPinExtension("request_pin", "basic_lock.html");
 
   EnterCode(service, base::ASCIIToUTF16("123"));
@@ -421,3 +394,5 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderRequestPinTest,
   // The view should be set to nullptr when the window is closed.
   EXPECT_EQ(service->pin_dialog_manager()->active_view_for_testing(), nullptr);
 }
+
+}  // namespace chromeos
