@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6718fa9_ad01fcf1",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 28
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-23T22:09:16Z",
+      "side": 1,
+      "message": "The generation relies on using an APK target to find all the java sources - cronet itself doesn\u0027t define an APK, so I guess this is the only one that depends on the right stuff?",
+      "parentUuid": "25a209e5_5c552172",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "bc314fd25623bbd15b4e0934414cac2ce13dac2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01936ee3_4caf4b03",
         "filename": "components/cronet/android/BUILD.gn",
         "patchSetId": 28
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T21:46:38Z",
       "side": 1,
       "message": "Why do we need to change this config? I think Cronet currently does use RegisterJNI instead of exporting all JNI symbols.",
+      "range": {
+        "startLine": 544,
+        "startChar": 31,
+        "endLine": 544,
+        "endChar": 62
+      },
+      "revId": "bc314fd25623bbd15b4e0934414cac2ce13dac2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18e0406_1e012d96",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 28
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-23T22:09:16Z",
+      "side": 1,
+      "message": "To simplify this process we\u0027ve moved all test targets to just exporting all JNI symbols, to avoid having to generate the registration code and adjust the dep tree to make it work.",
+      "parentUuid": "01936ee3_4caf4b03",
       "range": {
         "startLine": 544,
         "startChar": 31,
