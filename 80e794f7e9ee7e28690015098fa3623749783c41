@@ -174,6 +174,24 @@
       "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b38665b3_1076596e",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationEnvironment.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "I disagree. Or, well, I agree, but in a different sense to the one I meant here. Yes, you want DCHECKs to document your assumptions about the code at a particular point, and be tripped if those assumptions are violated. What I mean is that a client of CSSInterpolationEnvironment, from looking at its API, could easily miss that they should only call VariableResolver() if they provided one to the constructor. From seeing that VariableResolver() returns a reference, I think it would be reasonable for them to expect that a CSSVariableResolver is always returned, with some sensible default if they did not provide one. If that is not the case, I think this should return a CSSVariableResolver*, which at least is explicit that it could still be null.",
+      "parentUuid": "a1f8486e_1581952d",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

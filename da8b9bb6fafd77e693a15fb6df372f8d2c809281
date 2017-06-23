@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b55be417_832e70e0",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "This is not really what I had in mind. I was expecting something describing the actual animation. My best guess is: \"The dependency between variables ultimately causes --a to animate from 100 to 200, --b to animate from 100 to 300, and --c to animate from 100 to 400. Because the interpolations all have the same duration, all three progress at a constant rate.\" (as opposed to, say, --b increasing, then decreasing, then increasing again)",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46dab3b2_d8d06424",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "Maybe create a variable fallback_value\u003d200 and substitute it in instead of giving it as a literal? I think that would make it clearer that this is the fallback value you mention below.",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a376e98_310fbfad",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "My comment about adding a verbal explanation to registered-var-chain.html applies doubly here. I guess the salient point of this test is that the progress of the two animations can be varied independently and so the value of --test is complicated?",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71cce79_23a6f520",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "Should the animations be paused before setting the current time, at least for a clearer test?",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c599e4_34c2811a",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-any-order.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "Should these be two separate tests instead?",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e925fc9_04735055",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-any-order.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "What do you mean by \"name ordering\" here?",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1301f706_e147a424",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "Consider something like --transitioning-value or --value instead, to avoid confusion in the test with the \u0027transition\u0027 property itself.",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477d7d9c_ea4706c9",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this value is 150.",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356d2f25_c0e7ac89",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "Typo: 50% -\u003e 100%",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f50175_a98867aa",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "Neither property is unregistered, are they?",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01768469_8476987b",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered-animating.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "As above, please add a fuller explanation to the test. Because --to is not registered, does this mean that \"toAnimation.currentTime \u003d 25\" means --to is 200 (i.e. 50/50 flip) instead of 225 (i.e. interpolated)?",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0436b4e5_bb1a58c9",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T05:02:29Z",
+      "side": 1,
+      "message": "This test confused me at first, because I thought we couldn\u0027t interpolate unregistered properties. Consider explicitly saying that the interpolation only requires that the animating property (--test) is registered; the other custom properties provide static values which are known to be numbers.",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
