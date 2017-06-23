@@ -16,6 +16,23 @@
       "revId": "70980dd6748fbbae9fb60d64bf24c3c271964f7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c25689_4ec38e05",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-06-23T20:34:04Z",
+      "side": 1,
+      "message": "Could you leave a comment here about avoiding the extra copy? I think we can just query for DrawImages here and apply scale/color space and all other transformations on the image in place in TileManager.\nThere is a bug you filed earlier about DrawImage copies. Just link that here.",
+      "revId": "70980dd6748fbbae9fb60d64bf24c3c271964f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
