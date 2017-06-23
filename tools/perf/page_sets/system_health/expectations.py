@@ -142,6 +142,8 @@ class SystemHealthMobileMemoryExpectations(expectations.StoryExpectations):
                       'Webview does not have tabs')
     self.DisableStory('browse:social:pinterest_infinite_scroll',
                       [expectations.ANDROID_WEBVIEW], 'crbug.com/728528')
+    self.DisableStory('browse:shopping:avito',
+                      [expectations.ANDROID_NEXUS6], 'crbug.com/736497')
 
 
 # Should only include browse:*:* stories.
