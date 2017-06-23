@@ -392,6 +392,7 @@ void SelectTabUsingUI(NSString* title) {
   OpenNewIncognitoTabUsingUIAndEvictMainTabs();
   SwitchToNormalMode();
   [ChromeEarlGrey waitForWebViewContainingText:kURL1FirstWord];
+  chrome_test_util::AssertMainTabCount(1);
 
   histogramTester.ExpectUniqueSample(kEvictedTabReloadSuccessRate,
                                      TabUsageRecorder::LOAD_SUCCESS, 1,
