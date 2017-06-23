@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c014ca_bda7c70a",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T23:26:04Z",
+      "side": 1,
+      "message": "probably new_tab_promo instead?",
+      "range": {
+        "startLine": 1885,
+        "startChar": 20,
+        "endLine": 1885,
+        "endChar": 32
+      },
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4edb9a_5cf0b873",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T23:26:04Z",
+      "side": 1,
+      "message": "nit: no need for this-\u003e in C++. That\u0027s always implied.",
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40465694_9d219d06",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T23:26:04Z",
+      "side": 1,
+      "message": "comments for all public methods please. :)",
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e296dd_66ed1c57",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T23:26:04Z",
+      "side": 1,
+      "message": "all points should explicitly indicate the ownership relationship [which also determines lifetime semantics of the pointer itself].\n\nIf the object is owned, use a scoped_ptr.\nIf the object is not owned, and is guaranteed to outlive this object, indicate this in a comment.\n\nIf neither of these two is the case, something horrible has happened. \u003dP",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4415c3_13aa09bb",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo_dialog_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-23T23:26:04Z",
+      "side": 1,
+      "message": "What is the test? Usually there\u0027s something to verify that the test has functionally correctly. :)",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
