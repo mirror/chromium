@@ -107,6 +107,18 @@ class CC_EXPORT PictureLayerImpl
       const PaintImageIdFlatSet& images_to_invalidate);
 
  protected:
+  enum class ScaleChangeReason {
+    kNone,
+    kNoRasterScaleSet,
+    kDirectlyCompositedImage,
+    kScreenSpaceAnimationChanged,
+    kPinchZoomChanged,
+    kPageScaleChanged,
+    kDeviceScaleChanged,
+    kRasterScaleOutsideBounds,
+    kRasterScaleMismatch
+  };
+
   PictureLayerImpl(LayerTreeImpl* tree_impl,
                    int id,
                    Layer::LayerMaskType mask_type);
@@ -114,8 +126,8 @@ class CC_EXPORT PictureLayerImpl
   void RemoveAllTilings();
   void AddTilingsForRasterScale();
   void AddLowResolutionTilingIfNeeded();
-  bool ShouldAdjustRasterScale() const;
-  void RecalculateRasterScales();
+  ScaleChangeReason ShouldAdjustRasterScale() const;
+  void RecalculateRasterScales(ScaleChangeReason reason);
   gfx::Vector2dF CalculateRasterTranslation(float raster_scale);
   void CleanUpTilingsOnActiveLayer(
       const std::vector<PictureLayerTiling*>& used_tilings);

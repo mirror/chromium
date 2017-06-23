@@ -481,8 +481,9 @@ bool PictureLayerImpl::UpdateTiles() {
 
   UpdateIdealScales();
 
-  if (!raster_contents_scale_ || ShouldAdjustRasterScale()) {
-    RecalculateRasterScales();
+  auto reason = ShouldAdjustRasterScale();
+  if (reason != ScaleChangeReason::kNone) {
+    RecalculateRasterScales(reason);
     AddTilingsForRasterScale();
   }
 
@@ -977,19 +978,24 @@ void PictureLayerImpl::AddTilingsForRasterScale() {
   SanityCheckTilingState();
 }
 
-bool PictureLayerImpl::ShouldAdjustRasterScale() const {
+PictureLayerImpl::ScaleChangeReason PictureLayerImpl::ShouldAdjustRasterScale()
+    const {
   if (is_directly_composited_image_) {
     float max_scale = std::max(1.f, MinimumContentsScale());
     if (raster_source_scale_ < std::min(ideal_source_scale_, max_scale))
-      return true;
+      return ScaleChangeReason::kDirectlyCompositedImage;
     if (raster_source_scale_ > 4 * ideal_source_scale_)
-      return true;
-    return false;
+      return ScaleChangeReason::kDirectlyCompositedImage;
+    return ScaleChangeReason::kNone;
   }
 
+  if (!raster_contents_scale_)
+    return ScaleChangeReason::kNoRasterScaleSet;
+
   if (was_screen_space_transform_animating_ !=
-      draw_properties().screen_space_transform_is_animating)
-    return true;
+      draw_properties().screen_space_transform_is_animating) {
+    return ScaleChangeReason::kScreenSpaceAnimationChanged;
+  }
 
   bool is_pinching = layer_tree_impl()->PinchGestureActive();
   if (is_pinching && raster_page_scale_) {
@@ -998,37 +1004,42 @@ bool PictureLayerImpl::ShouldAdjustRasterScale() const {
     // - Too far from ideal (need a higher-res tiling available)
     float ratio = ideal_page_scale_ / raster_page_scale_;
     if (raster_page_scale_ > ideal_page_scale_ ||
-        ratio > kMaxScaleRatioDuringPinch)
-      return true;
+        ratio > kMaxScaleRatioDuringPinch) {
+      return ScaleChangeReason::kPinchZoomChanged;
+    }
   }
 
-  if (!is_pinching) {
-    // When not pinching, match the ideal page scale factor.
-    if (raster_page_scale_ != ideal_page_scale_)
-      return true;
-  }
+  // When not pinching, match the ideal page scale factor.
+  if (!is_pinching && raster_page_scale_ != ideal_page_scale_)
+    return ScaleChangeReason::kPageScaleChanged;
 
   // Always match the ideal device scale factor.
   if (raster_device_scale_ != ideal_device_scale_)
-    return true;
+    return ScaleChangeReason::kDeviceScaleChanged;
 
   if (raster_contents_scale_ > MaximumContentsScale())
-    return true;
+    return ScaleChangeReason::kRasterScaleOutsideBounds;
   if (raster_contents_scale_ < MinimumContentsScale())
-    return true;
+    return ScaleChangeReason::kRasterScaleOutsideBounds;
 
   // Don't change the raster scale if any of the following are true:
   //  - We have an animating transform.
-  //  - We have a will-change transform hint.
   //  - The raster scale is already ideal.
   if (draw_properties().screen_space_transform_is_animating ||
-      has_will_change_transform_hint() ||
       raster_source_scale_ == ideal_source_scale_) {
-    return false;
+    return ScaleChangeReason::kNone;
+  }
+
+  // If we have a will-change: transform hint, that means that we should just
+  // keep the current scale unless it is below the min, which is the device
+  // scale.
+  if (has_will_change_transform_hint() &&
+      raster_contents_scale_ >= (ideal_device_scale_ * ideal_page_scale_)) {
+    return ScaleChangeReason::kNone;
   }
 
   // Match the raster scale in all other cases.
-  return true;
+  return ScaleChangeReason::kRasterScaleMismatch;
 }
 
 void PictureLayerImpl::AddLowResolutionTilingIfNeeded() {
@@ -1060,8 +1071,9 @@ void PictureLayerImpl::AddLowResolutionTilingIfNeeded() {
   }
 }
 
-void PictureLayerImpl::RecalculateRasterScales() {
-  if (is_directly_composited_image_) {
+void PictureLayerImpl::RecalculateRasterScales(ScaleChangeReason reason) {
+  DCHECK(reason != ScaleChangeReason::kNone);
+  if (reason == ScaleChangeReason::kDirectlyCompositedImage) {
     if (!raster_source_scale_)
       raster_source_scale_ = 1.f;
 
@@ -1088,15 +1100,24 @@ void PictureLayerImpl::RecalculateRasterScales() {
   float old_raster_contents_scale = raster_contents_scale_;
   float old_raster_page_scale = raster_page_scale_;
 
-  raster_device_scale_ = ideal_device_scale_;
-  raster_page_scale_ = ideal_page_scale_;
-  raster_source_scale_ = ideal_source_scale_;
-  raster_contents_scale_ = ideal_contents_scale_;
+  // If the only reason we're changing the scale is that raster scale doesn't
+  // match, and we're in the will-change: transform case, then only update the
+  // raster scale to be the native scale.
+  if (has_will_change_transform_hint() &&
+      reason == ScaleChangeReason::kRasterScaleMismatch) {
+    raster_contents_scale_ = std::max(raster_contents_scale_,
+                                      ideal_device_scale_ * ideal_page_scale_);
+  } else {
+    raster_device_scale_ = ideal_device_scale_;
+    raster_page_scale_ = ideal_page_scale_;
+    raster_source_scale_ = ideal_source_scale_;
+    raster_contents_scale_ = ideal_contents_scale_;
+  }
 
   // During pinch we completely ignore the current ideal scale, and just use
   // a multiple of the previous scale.
-  bool is_pinching = layer_tree_impl()->PinchGestureActive();
-  if (is_pinching && old_raster_contents_scale) {
+  if (reason == ScaleChangeReason::kPinchZoomChanged &&
+      old_raster_contents_scale) {
     // See ShouldAdjustRasterScale:
     // - When zooming out, preemptively create new tiling at lower resolution.
     // - When zooming in, approximate ideal using multiple of kMaxScaleRatio.
