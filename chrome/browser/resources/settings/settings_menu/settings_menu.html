@@ -115,6 +115,10 @@
         <iron-icon icon="settings:android"></iron-icon>
         $i18n{androidAppsPageTitle}
       </a>
+      <a href="/androidSettings" hidden="[[!showAndroidSettings]]">
+        <iron-icon icon="settings:android"></iron-icon>
+        $i18n{androidSettingsPageTitle}
+      </a>
 </if>
 <if expr="not chromeos">
       <a href="/defaultBrowser" hidden="[[!pageVisibility.defaultBrowser]]">
