@@ -22,6 +22,30 @@
       "revId": "afc0756af6a7790dcbdbf0716ff5694b7f94a4d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a940e45e_36f9515c",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-23T21:00:10Z",
+      "side": 1,
+      "message": "Will do, thanks! (not at a workstation right now)",
+      "parentUuid": "3615a81f_7af359ce",
+      "range": {
+        "startLine": 121,
+        "startChar": 30,
+        "endLine": 121,
+        "endChar": 36
+      },
+      "revId": "afc0756af6a7790dcbdbf0716ff5694b7f94a4d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
