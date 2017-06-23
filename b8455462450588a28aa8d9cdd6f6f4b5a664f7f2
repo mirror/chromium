@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad2276d_fe160009",
+        "filename": "chrome/browser/google/google_update_settings_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-23T08:42:09Z",
+      "side": 1,
+      "message": "hmm, this also relates to the question i recently asked on chromium-dev: the priority of tasks posted to collect stats consent is really determined by the context in which the poster of the task is running, whereas whether the task can continue to run while the browser is shutting down is more tied to the implementation of the task itself, no? actually, it\u0027s more complicated than that -- whether the task does things that are safe to do during shutdown is an implementation detail of the task, whereas whether browser shutdown should be delayed until the task completes is a detail of the poster of the task.",
+      "range": {
+        "startLine": 26,
+        "startChar": 45,
+        "endLine": 26,
+        "endChar": 57
+      },
+      "revId": "b8455462450588a28aa8d9cdd6f6f4b5a664f7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39970b85_dcb60322",
+        "filename": "chrome/installer/util/google_update_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-23T08:42:09Z",
+      "side": 1,
+      "message": "since GetCollectStatsConsent on Windows only goes to the registry, this doesn\u0027t need MayBlock().",
+      "range": {
+        "startLine": 63,
+        "startChar": 25,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "b8455462450588a28aa8d9cdd6f6f4b5a664f7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
