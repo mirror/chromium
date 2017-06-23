@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4208cb66_80efa52f",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-23T12:15:49Z",
+      "side": 1,
+      "message": "The content/ policy is not to add any change to the public API that has no caller outside content/. Please include at least one usage of this function outside content/ in this CL so that I can review the intended usage. Thanks!",
+      "revId": "f99fa888e8437cf2bd60078ea9e1d8dc753afe96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
