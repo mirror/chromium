@@ -1,9 +1,9 @@
 // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
 /**
  * @implements {Common.OutputStream}
- * @implements {Bindings.OutputStreamDelegate}
  * @unrestricted
  */
 Timeline.TimelineLoader = class {
@@ -31,36 +31,34 @@ Timeline.TimelineLoader = class {
 
   /**
    * @param {!File} file
-   * @param {!Timeline.TimelineLoader.Client} client
-   * @return {!Timeline.TimelineLoader}
+   * @return {!Promise}
    */
-  static loadFromFile(file, client) {
-    var loader = new Timeline.TimelineLoader(client);
-    var fileReader = Timeline.TimelineLoader._createFileReader(file, loader);
-    loader._canceledCallback = fileReader.cancel.bind(fileReader);
-    loader._totalSize = file.size;
-    fileReader.start(loader);
-    return loader;
+  async loadFromFile(file) {
+    var fileReader = new Bindings.ChunkedFileReader(file, Timeline.TimelineLoader.TransferChunkLengthBytes);
+    this._canceledCallback = fileReader.cancel.bind(fileReader);
+    this._totalSize = file.size;
+    if (await fileReader.start(this))
+      return;
+    switch (fileReader.error().name) {
+      case 'NotFoundError':
+        this._reportErrorAndCancelLoading(Common.UIString('File "%s" not found.', fileReader.fileName()));
+        break;
+      case 'NotReadableError':
+        this._reportErrorAndCancelLoading(Common.UIString('File "%s" is not readable', fileReader.fileName()));
+        break;
+      case 'AbortError':
+        break;
+      default:
+        this._reportErrorAndCancelLoading(
+            Common.UIString('An error occurred while reading the file "%s"', fileReader.fileName()));
+    }
   }
 
   /**
    * @param {string} url
-   * @param {!Timeline.TimelineLoader.Client} client
-   * @return {!Timeline.TimelineLoader}
    */
-  static loadFromURL(url, client) {
-    var stream = new Timeline.TimelineLoader(client);
-    Host.ResourceLoader.loadAsStream(url, null, stream);
-    return stream;
-  }
-
-  /**
-   * @param {!File} file
-   * @param {!Bindings.OutputStreamDelegate} delegate
-   * @return {!Bindings.ChunkedReader}
-   */
-  static _createFileReader(file, delegate) {
-    return new Bindings.ChunkedFileReader(file, Timeline.TimelineLoader.TransferChunkLengthBytes, delegate);
+  loadFromURL(url) {
+    Host.ResourceLoader.loadAsStream(url, null, this);
   }
 
   cancel() {
@@ -199,46 +197,6 @@ Timeline.TimelineLoader = class {
   }
 
   /**
-   * @override
-   */
-  onTransferStarted() {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   */
-  onChunkTransferred(reader) {
-  }
-
-  /**
-   * @override
-   */
-  onTransferFinished() {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   * @param {!Event} event
-   */
-  onError(reader, event) {
-    switch (event.target.error.name) {
-      case 'NotFoundError':
-        this._reportErrorAndCancelLoading(Common.UIString('File "%s" not found.', reader.fileName()));
-        break;
-      case 'NotReadableError':
-        this._reportErrorAndCancelLoading(Common.UIString('File "%s" is not readable', reader.fileName()));
-        break;
-      case 'AbortError':
-        break;
-      default:
-        this._reportErrorAndCancelLoading(
-            Common.UIString('An error occurred while reading the file "%s"', reader.fileName()));
-    }
-  }
-
-  /**
    * @param {string} text
    */
   _parseCPUProfileFormat(text) {
@@ -287,40 +245,4 @@ Timeline.TimelineLoader.State = {
   ReadingEvents: Symbol('ReadingEvents'),
   SkippingTail: Symbol('SkippingTail'),
   LoadingCPUProfileFormat: Symbol('LoadingCPUProfileFormat')
-};
-
-/**
- * @implements {Bindings.OutputStreamDelegate}
- * @unrestricted
- */
-Timeline.TracingTimelineSaver = class {
-  /**
-   * @override
-   */
-  onTransferStarted() {
-  }
-
-  /**
-   * @override
-   */
-  onTransferFinished() {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   */
-  onChunkTransferred(reader) {
-  }
-
-  /**
-   * @override
-   * @param {!Bindings.ChunkedReader} reader
-   * @param {!Event} event
-   */
-  onError(reader, event) {
-    var error = event.target.error;
-    Common.console.error(
-        Common.UIString('Failed to save timeline: %s (%s, %s)', error.message, error.name, error.code));
-  }
 };

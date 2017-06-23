@@ -59,7 +59,8 @@ Timeline.ExtensionTracingSession = class {
       return;
     }
     this._timeOffset = timeOffsetMicroseconds;
-    Timeline.TimelineLoader.loadFromURL(url, this);
+    var loader = new Timeline.TimelineLoader(this);
+    loader.loadFromURL(url);
   }
 
   start() {
