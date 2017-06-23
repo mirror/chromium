@@ -22,6 +22,30 @@
       "revId": "da68460ee54547345f7c7c18ad0931c4935b7029",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a82d478_8f4e73c7",
+        "filename": "third_party/WebKit/Source/web/tests/ScreenWakeLockTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-23T00:28:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43a157c3_3a20e6fb",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "da68460ee54547345f7c7c18ad0931c4935b7029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
