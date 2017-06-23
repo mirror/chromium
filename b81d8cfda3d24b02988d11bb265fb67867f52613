@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f63f5972_9f2aa9f8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-direction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T00:18:09Z",
+      "side": 1,
+      "message": "This failure is on mac only, which might because the spacing of left and right of a character don\u0027t equal, causing different locations of rtl and ltr.\n\nRemoved \u0027a\u0027 and \u0027b\u0027 from the tests.",
+      "parentUuid": "b7b161d0_b826606c",
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3940cae3_430745e4",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction-ref.html",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-22T21:41:27Z",
       "side": 1,
       "message": "This changes text direction only. Was this supposed to be in the -ref file? Perhaps to fix the spacing of the characters inside the cells?",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6daeb8_b5ede508",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T00:18:09Z",
+      "side": 1,
+      "message": "It should not be there. Removed.",
+      "parentUuid": "3940cae3_430745e4",
       "range": {
         "startLine": 37,
         "startChar": 13,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "94fc0b6c_6d1ee04d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T00:18:09Z",
+      "side": 1,
+      "message": "It just tests whether the specified ltr (though equal to default) has any effect. It also makes this test case symmetric to others.",
+      "parentUuid": "acde43d8_08c601e3",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8e773b6_155e3643",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction.html",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2017-06-22T21:41:27Z",
       "side": 1,
       "message": "So this changes the order of the columns AND text direction?",
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58930f3c_daed88a5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T00:18:09Z",
+      "side": 1,
+      "message": "Yes. Removed the text to test column order only.",
+      "parentUuid": "f8e773b6_155e3643",
       "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "9b880963_e829fb2d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-direction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T00:18:09Z",
+      "side": 1,
+      "message": "This test case makes the test complete (all combinations of table and row specified directions).\n\nIt also triggers a bug of collapsed borders (making them wrong) on ToT. There is an extra green border on the right.\n\nI expected the 1 character not to change for text direction, but it failed on mac. Removed the text.",
+      "parentUuid": "b9b0ac24_75ff341b",
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a8c71cf_14009d19",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-group-direction-ref.html",
         "patchSetId": 1
@@ -110,6 +212,30 @@
       "writtenOn": "2017-06-22T21:41:27Z",
       "side": 1,
       "message": "Did you intend for this to be \u003ctbody\u003e in this table and the below? (off the top of my head I forgot if multiple thead s are \"allowed\")",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "b81d8cfda3d24b02988d11bb265fb67867f52613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6469e9a5_e52a367b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/rendering/non-replaced-elements/tables/table-row-group-direction-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T00:18:09Z",
+      "side": 1,
+      "message": "It should be tbody. However I removed the theads and tbodys from this ref file.",
+      "parentUuid": "1a8c71cf_14009d19",
       "range": {
         "startLine": 27,
         "startChar": 3,
