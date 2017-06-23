@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbea8968_b12fe21d",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoader.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-23T12:20:56Z",
+      "side": 1,
+      "message": "This is not needed (but you may need to add the directive in dependent files such as DocumentThreadableLoader).",
+      "revId": "8fc90737a135fa76ce4cba87c5a31a12f2b56741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
