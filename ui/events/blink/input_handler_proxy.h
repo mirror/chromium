@@ -174,6 +174,11 @@ class InputHandlerProxy
                         const cc::InputHandlerScrollResult& scroll_result,
                         bool bundle_overscroll_params_with_ack);
 
+  // Used to send touch action message to the browser.
+  // |bundle_touch_action_with_ack| means touch action message should be
+  // bundled with triggering event respond.
+  void HandleTouchAction(const cc::TouchAction& touch_action);
+
   // Whether to use a smooth scroll animation for this event.
   bool ShouldAnimate(bool has_precise_scroll_deltas) const;
 
@@ -185,7 +190,8 @@ class InputHandlerProxy
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
 
   EventDisposition HitTestTouchEvent(const blink::WebTouchEvent& touch_event,
-                                     bool* is_touching_scrolling_layer);
+                                     bool* is_touching_scrolling_layer,
+                                     cc::TouchAction* touch_action);
 
   std::unique_ptr<blink::WebGestureCurve> fling_curve_;
   // Parameters for the active fling animation, stored in case we need to
@@ -258,6 +264,11 @@ class InputHandlerProxy
   // bundled in the event ack, saving an IPC.  Note that we must continue
   // supporting overscroll IPC notifications due to fling animation updates.
   std::unique_ptr<DidOverscrollParams> current_overscroll_params_;
+
+  // Used to record touch action while an event is being dispacted. If the
+  // event is a touch action, the white listed touch action can be bundled in
+  // the event ACK, saving an IPC.
+  std::unique_ptr<cc::TouchAction> touch_action_;
 
   std::unique_ptr<CompositorThreadEventQueue> compositor_event_queue_;
   bool has_ongoing_compositor_scroll_fling_pinch_;

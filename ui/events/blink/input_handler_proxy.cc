@@ -373,6 +373,7 @@ void InputHandlerProxy::DispatchSingleInputEvent(
       input_handler_->CreateLatencyInfoSwapPromiseMonitor(
           &monitored_latency_info);
 
+  touch_action_.reset();
   current_overscroll_params_.reset();
   InputHandlerProxy::EventDisposition disposition =
       HandleInputEvent(event_with_callback->event());
@@ -397,7 +398,8 @@ void InputHandlerProxy::DispatchSingleInputEvent(
 
   // Will run callback for every original events.
   event_with_callback->RunCallbacks(disposition, monitored_latency_info,
-                                    std::move(current_overscroll_params_));
+                                    std::move(current_overscroll_params_),
+                                    std::move(touch_action_));
 }
 
 void InputHandlerProxy::DispatchQueuedInputEvents() {
@@ -1054,7 +1056,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
 
 InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
     const blink::WebTouchEvent& touch_event,
-    bool* is_touching_scrolling_layer) {
+    bool* is_touching_scrolling_layer,
+    cc::TouchAction* touch_action) {
   *is_touching_scrolling_layer = false;
   EventDisposition result = DROP_EVENT;
   for (size_t i = 0; i < touch_event.touches_length; ++i) {
@@ -1065,7 +1068,9 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
     cc::InputHandler::TouchStartOrMoveEventListenerType event_listener_type =
         input_handler_->EventListenerTypeForTouchStartOrMoveAt(
             gfx::Point(touch_event.touches[i].PositionInWidget().x,
-                       touch_event.touches[i].PositionInWidget().y));
+                       touch_event.touches[i].PositionInWidget().y),
+            touch_action);
+
     if (event_listener_type !=
         cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER) {
       *is_touching_scrolling_layer =
@@ -1116,8 +1121,10 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
 InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
     const blink::WebTouchEvent& touch_event) {
   bool is_touching_scrolling_layer;
-  EventDisposition result =
-      HitTestTouchEvent(touch_event, &is_touching_scrolling_layer);
+  cc::TouchAction touch_action;
+  EventDisposition result = HitTestTouchEvent(
+      touch_event, &is_touching_scrolling_layer, &touch_action);
+  HandleTouchAction(touch_action);
   // If |result| is still DROP_EVENT look at the touch end handler as
   // we may not want to discard the entire touch sequence. Note this
   // code is explicitly after the assignment of the |touch_result_|
@@ -1144,7 +1151,12 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchMove(
   if (touch_result_ == kEventDispositionUndefined ||
       touch_event.touch_start_or_first_touch_move) {
     bool is_touching_scrolling_layer;
-    return HitTestTouchEvent(touch_event, &is_touching_scrolling_layer);
+    cc::TouchAction touch_action;
+    InputHandlerProxy::EventDisposition event_disposition_result =
+        HitTestTouchEvent(touch_event, &is_touching_scrolling_layer,
+                          &touch_action);
+    HandleTouchAction(touch_action);
+    return event_disposition_result;
   }
   return static_cast<EventDisposition>(touch_result_);
 }
@@ -1461,6 +1473,12 @@ void InputHandlerProxy::HandleOverscroll(
                          scroll_result.unused_scroll_delta,
                          ToClientScrollIncrement(current_fling_velocity_),
                          gfx::PointF(causal_event_viewport_point));
+}
+
+void InputHandlerProxy::HandleTouchAction(const cc::TouchAction& touch_action) {
+  touch_action_.reset();
+  touch_action_ = base::MakeUnique<cc::TouchAction>(touch_action);
+  return;
 }
 
 bool InputHandlerProxy::CancelCurrentFling() {

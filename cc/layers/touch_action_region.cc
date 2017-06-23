@@ -32,6 +32,20 @@ const Region& TouchActionRegion::GetRegionForTouchAction(
   return it->second;
 }
 
+TouchAction TouchActionRegion::GetWhiteListedTouchAction(
+    const gfx::Point& point) const {
+  if (map_.empty())
+    return kTouchActionNone;
+
+  TouchAction restricted_touch_action = kTouchActionMax;
+  for (const auto& pair : map_) {
+    if (!pair.second.Contains(point))
+      continue;
+    restricted_touch_action &= pair.first;
+  }
+  return restricted_touch_action;
+}
+
 TouchActionRegion& TouchActionRegion::operator=(
     const TouchActionRegion& other) {
   *region_ = *other.region_;

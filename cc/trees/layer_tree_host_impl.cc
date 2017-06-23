@@ -617,7 +617,8 @@ bool LayerTreeHostImpl::IsScrolledBy(LayerImpl* child, ScrollNode* ancestor) {
 
 InputHandler::TouchStartOrMoveEventListenerType
 LayerTreeHostImpl::EventListenerTypeForTouchStartOrMoveAt(
-    const gfx::Point& viewport_point) {
+    const gfx::Point& viewport_point,
+    TouchAction* touch_action) {
   gfx::PointF device_viewport_point = gfx::ScalePoint(
       gfx::PointF(viewport_point), active_tree_->device_scale_factor());
 
@@ -626,8 +627,15 @@ LayerTreeHostImpl::EventListenerTypeForTouchStartOrMoveAt(
   LayerImpl* layer_impl_with_touch_handler =
       active_tree_->FindLayerThatIsHitByPointInTouchHandlerRegion(
           device_viewport_point);
-  if (layer_impl_with_touch_handler == NULL)
+
+  if (layer_impl_with_touch_handler == NULL) {
+    *touch_action = kTouchActionNone;
     return InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER;
+  }
+  *touch_action =
+      layer_impl_with_touch_handler->touch_action_region()
+          .GetWhiteListedTouchAction(
+              gfx::Point(device_viewport_point.x(), device_viewport_point.y()));
 
   if (!CurrentlyScrollingNode())
     return InputHandler::TouchStartOrMoveEventListenerType::HANDLER;
