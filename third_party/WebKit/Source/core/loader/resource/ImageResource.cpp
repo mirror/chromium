@@ -268,7 +268,7 @@ void ImageResource::DestroyDecodedDataForFailedRevalidation() {
 
 void ImageResource::DestroyDecodedDataIfPossible() {
   GetContent()->DestroyDecodedData();
-  if (GetContent()->HasImage() && !IsPreloaded() &&
+  if (GetContent()->HasImage() && GetPreloadState() != kPreloadNotReferenced &&
       GetContent()->IsRefetchableDataFromDiskCache()) {
     UMA_HISTOGRAM_MEMORY_KB("Memory.Renderer.EstimatedDroppableEncodedSize",
                             EncodedSize() / 1024);

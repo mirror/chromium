@@ -162,11 +162,12 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
                          PreloadReferencePolicy = kMarkAsReferenced);
   void RemoveFinishObserver(ResourceFinishObserver*);
 
-  enum PreloadResult : uint8_t {
+  enum PreloadState : uint8_t {
+    kNotPreload,
     kPreloadNotReferenced,
     kPreloadReferenced,
   };
-  PreloadResult GetPreloadResult() const { return preload_result_; }
+  PreloadState GetPreloadState() const { return preload_state_; }
 
   ResourceStatus GetStatus() const { return status_; }
   void SetStatus(ResourceStatus status) { status_ = status; }
@@ -249,18 +250,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
   void SetDataBufferingPolicy(DataBufferingPolicy);
 
-  // The isPreloaded() flag is using a counter in order to make sure that even
-  // when multiple ResourceFetchers are preloading the resource, it will remain
-  // marked as preloaded until *all* of them have used it.
-  bool IsUnusedPreload() const {
-    return IsPreloaded() && GetPreloadResult() == kPreloadNotReferenced;
-  }
-  bool IsPreloaded() const { return preload_count_; }
-  void IncreasePreloadCount() { ++preload_count_; }
-  void DecreasePreloadCount() {
-    DCHECK(preload_count_);
-    --preload_count_;
-  }
+  void MarkAsPreload();
+  void MatchPreload();
 
   bool CanReuseRedirectChain() const;
   bool MustRevalidateDueToCacheHeaders() const;
@@ -434,7 +425,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   // MemoryCoordinatorClient overrides:
   void OnPurgeMemory() override;
 
-  PreloadResult preload_result_;
+  PreloadState preload_state_;
   Type type_;
   ResourceStatus status_;
 
