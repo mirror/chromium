@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b6a980f_979d055b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-23T17:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8503a181_650cc2f3",
+      "revId": "b545a44e4f38baf249e3b740f316c32a7bb1a36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08b28ee8_8a6b9823",
         "filename": "ui/android/window_android_compositor.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T02:10:46Z",
       "side": 1,
       "message": "WindowAndroidCompositor is not a thing on unfortuantely webview, so how would any of this work on webview?\n\nThe existing way to position dialogs against the \"local\" view is \"anchor views\", which are basically just child views added to the container view, then I think dialog can just position itself where the anchor view is supposed to be. I guess that kind of defeats the whole purpose of dialogsurface?\n\nHow about just asking the container view where it is in screen location then?",
+      "revId": "b545a44e4f38baf249e3b740f316c32a7bb1a36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f620f9f6_ff2a11c8",
+        "filename": "ui/android/window_android_compositor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-23T17:53:00Z",
+      "side": 1,
+      "message": "yikes, thanks!\n\ni\u0027ve switched to using the location of the container view as you suggest, which seems to work okay.  certainly it\u0027s a lot less code.\n\ni had wondered about this before, but wasn\u0027t sure what a container view would actually be with respect to the compositor output.  could the compositor be, e.g., centered in its container?",
+      "parentUuid": "08b28ee8_8a6b9823",
       "revId": "b545a44e4f38baf249e3b740f316c32a7bb1a36e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
