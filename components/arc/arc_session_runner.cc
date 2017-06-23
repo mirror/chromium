@@ -7,6 +7,7 @@
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/task_runner.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 
 namespace arc {
 
@@ -15,17 +16,34 @@ namespace {
 constexpr base::TimeDelta kDefaultRestartDelay =
     base::TimeDelta::FromSeconds(5);
 
+chromeos::SessionManagerClient* GetSessionManagerClient() {
+  // If the DBusThreadManager or the SessionManagerClient aren't available,
+  // there isn't much we can do. This should only happen when running tests.
+  if (!chromeos::DBusThreadManager::IsInitialized() ||
+      !chromeos::DBusThreadManager::Get() ||
+      !chromeos::DBusThreadManager::Get()->GetSessionManagerClient())
+    return nullptr;
+  return chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
+}
+
 }  // namespace
 
 ArcSessionRunner::ArcSessionRunner(const ArcSessionFactory& factory)
     : restart_delay_(kDefaultRestartDelay),
       factory_(factory),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  chromeos::SessionManagerClient* client = GetSessionManagerClient();
+  if (client)
+    client->AddObserver(this);
+}
 
 ArcSessionRunner::~ArcSessionRunner() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (arc_session_)
     arc_session_->RemoveObserver(this);
+  chromeos::SessionManagerClient* client = GetSessionManagerClient();
+  if (client)
+    client->RemoveObserver(this);
 }
 
 void ArcSessionRunner::AddObserver(Observer* observer) {
@@ -52,7 +70,7 @@ void ArcSessionRunner::RequestStart() {
   // previous RequestStop() call).
   DCHECK(!restart_timer_.IsRunning());
 
-  if (arc_session_) {
+  if (arc_session_ && state_ != State::STOPPED) {
     // In this case, RequestStop() was called, and before |arc_session_| had
     // finished stopping, RequestStart() was called. Do nothing in that case,
     // since when |arc_session_| does actually stop, OnSessionStopped() will
@@ -64,12 +82,16 @@ void ArcSessionRunner::RequestStart() {
   }
 }
 
-void ArcSessionRunner::RequestStop() {
+void ArcSessionRunner::RequestStop(bool always_stop_session) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  // Consecutive RequestStop() call. Do nothing.
-  if (!run_requested_)
+  if (!run_requested_) {
+    // Call Stop() to stop an instance for login screen (if any.) If this is
+    // just a consecutive RequestStop() call, Stop() does nothing.
+    if (always_stop_session && arc_session_)
+      arc_session_->Stop();
     return;
+  }
 
   VLOG(1) << "Session ended";
   run_requested_ = false;
@@ -104,6 +126,10 @@ void ArcSessionRunner::OnShutdown() {
   if (arc_session_) {
     DCHECK_NE(state_, State::STOPPED);
     state_ = State::STOPPING;
+    // Make sure |this| is registered as an observer. If the session is only
+    // used for login screen. |this| hasn't been registered.
+    arc_session_->RemoveObserver(this);
+    arc_session_->AddObserver(this);
     arc_session_->OnShutdown();
   }
   // ArcSession::OnShutdown() invokes OnSessionStopped() synchronously.
@@ -124,7 +150,6 @@ bool ArcSessionRunner::IsStopped() const {
 void ArcSessionRunner::SetRestartDelayForTesting(
     const base::TimeDelta& restart_delay) {
   DCHECK_EQ(state_, State::STOPPED);
-  DCHECK(!arc_session_);
   DCHECK(!restart_timer_.IsRunning());
   restart_delay_ = restart_delay;
 }
@@ -132,11 +157,11 @@ void ArcSessionRunner::SetRestartDelayForTesting(
 void ArcSessionRunner::StartArcSession() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::STOPPED);
-  DCHECK(!arc_session_);
   DCHECK(!restart_timer_.IsRunning());
 
   VLOG(1) << "Starting ARC instance";
-  arc_session_ = factory_.Run();
+  if (!arc_session_)
+    arc_session_ = factory_.Run();
   arc_session_->AddObserver(this);
   state_ = State::STARTING;
   arc_session_->Start();
@@ -190,6 +215,22 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason) {
   state_ = State::STOPPED;
   for (auto& observer : observer_list_)
     observer.OnSessionStopped(stop_reason, restarting);
+}
+
+void ArcSessionRunner::EmitLoginPromptVisibleCalled() {
+  DCHECK(!arc_session_);
+  // Create an |arc_session_| object so that it can pre-start ARC instance as
+  // needed. However, do NOT add |this| as an observer of the |arc_session_|
+  // yet because |this| (and more importantly, c/b/chromeos/arc/ objects) have
+  // zero interest in the status of the session e.g. termination/crash of the
+  // instance.
+  arc_session_ = factory_.Run();
+
+  // Since 'login-prompt-visible' Upstart signal starts all Upstart jobs the
+  // container may depend on such as cras, EmitLoginPromptVisibleCalled() is the
+  // safe place to start the container for login screen.
+  // TODO(yusukes): Once Chrome OS side is ready, uncomment the following:
+  // arc_session_->StartForLoginScreen();
 }
 
 }  // namespace arc
