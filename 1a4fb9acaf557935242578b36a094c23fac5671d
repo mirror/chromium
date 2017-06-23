@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "484e4fd1_16f69513",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-23T02:22:00Z",
+      "side": 1,
+      "message": "(I like the proactive begin frame because it\u0027s based on a simple rule: if anything changes, start observing begin frames; if nothing changes in a begin frame, stop observing begin frames.)",
+      "parentUuid": "2af24f53_3390244d",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8215630e_c77fd9bc",
         "filename": "cc/surfaces/display_scheduler.cc",
         "patchSetId": 2

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ad2b49_db0afe67",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-23T02:22:00Z",
+      "side": 1,
+      "message": "nit: I think the same overall effect can be achieved if we change this to needs_draw_ \u0026\u0026 all_surfaces_ready \u0026\u0026 !expecting_root_surface_damage_because_of_resize without any changes in UpdateHasPendingSurfaces.",
+      "revId": "27792afe56d4baa10918615160c6c9cd0a23c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
