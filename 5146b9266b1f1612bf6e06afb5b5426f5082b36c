@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c76a0d5_4a05c71a",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:00:07Z",
+      "side": 1,
+      "message": "how about naming the former kIntegritySuccess?",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be1cd43_1c800b1d",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:00:07Z",
+      "side": 1,
+      "message": "as this is used by only 1 test case currently, it\u0027ll be easier to read if you put this in it.\n\nsee https://cs.chromium.org/chromium/src/net/base/url_util_unittest.cc?dr\u003dC\u0026l\u003d170 for example.",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200b95e9_19aff650",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:00:07Z",
+      "side": 1,
+      "message": "this comment is now about a single test below. i think you can remove this blank line.",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228345c8_c2c492ae",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:00:07Z",
+      "side": 1,
+      "message": "no CORS is a bit confusing as there\u0027s a technical term no-CORS in the fetch algorithm.\n\nhow about just saying \"CORS failure\" or more concretely \"CORS headers missing\"?",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b927beb_809693a4",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:00:07Z",
+      "side": 1,
+      "message": "s/opaque service worker/opaque response from service worker/",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c10b88_f412f7af",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:00:07Z",
+      "side": 1,
+      "message": "now this is dup with L525",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
