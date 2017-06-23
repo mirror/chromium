@@ -54,32 +54,12 @@ Network.HARWriter = class {
     progress.setTitle(Common.UIString('Collecting content\u2026'));
     progress.setTotalWork(requests.length);
 
-    var harLog = (new NetworkLog.HARLog(requests)).build();
-
-    var promises = [];
-    for (var i = 0; i < requests.length; i++) {
-      var promise = requests[i].contentData();
-      promises.push(promise.then(contentLoaded.bind(null, harLog.entries[i])));
-    }
-
-    await Promise.all(promises);
-    progress.done();
-
+    var harLog = await NetworkLog.HARBuilder.build(requests, true);
     if (progress.isCanceled())
       return '';
-    return JSON.stringify({log: harLog}, null, Network.HARWriter._jsonIndent);
+    progress.done();
 
-    /**
-     * @param {!Object} entry
-     * @param {!SDK.NetworkRequest.ContentData} contentData
-     */
-    function contentLoaded(entry, contentData) {
-      progress.worked();
-      if (contentData.content !== null)
-        entry.response.content.text = contentData.content;
-      if (contentData.encoded)
-        entry.response.content.encoding = 'base64';
-    }
+    return JSON.stringify(harLog, null, Network.HARWriter._jsonIndent);
   }
 
   /**
@@ -92,10 +72,8 @@ Network.HARWriter = class {
     var progress = compositeProgress.createSubProgress();
     progress.setTitle(Common.UIString('Writing file\u2026'));
     progress.setTotalWork(fileContent.length);
-    var chunks = fileContent.split('', Network.HARWriter._chunkSize);
-    for (var chunk of chunks) {
-      if (progress.isCanceled())
-        break;
+    for (var i = 0; i < fileContent.length && !progress.isCanceled(); i += Network.HARWriter._chunkSize) {
+      var chunk = fileContent.substr(i, Network.HARWriter._chunkSize);
       await stream.write(chunk);
       progress.worked(chunk.length);
     }

@@ -59,7 +59,7 @@ http://127.0.0.1:8000/inspector/resources/post-target.cgi?queryParam1=queryValue
         statusText : "OK"
     }
     serverIPAddress : "127.0.0.1"
-    startedDateTime : <plausible>
+    startedDateTime : <string>
     time : <number>
     timings : <object>
 }
