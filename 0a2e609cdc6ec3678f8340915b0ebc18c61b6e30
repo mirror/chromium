@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ce852c6_c4e221e1",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-06-23T09:51:11Z",
+      "side": 1,
+      "message": "double derp. This should have been #",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "0a2e609cdc6ec3678f8340915b0ebc18c61b6e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
