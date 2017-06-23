@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1339b8_52db290b",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/imports/resources/import-quirks.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-23T10:49:38Z",
+      "side": 1,
+      "message": "It\u0027s clearer if this comment says \u003c!-- strict mode --\u003e I think.",
+      "revId": "f6a4062591f934bca3651f123149d2a67fc99b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f346d489_1686dba6",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/imports/resources/import-quirks.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-23T10:49:38Z",
+      "side": 1,
+      "message": "\"all HTML Import files are\" and \"strict mode\" is a more common term than \"no quirks mode\".",
+      "revId": "f6a4062591f934bca3651f123149d2a67fc99b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
