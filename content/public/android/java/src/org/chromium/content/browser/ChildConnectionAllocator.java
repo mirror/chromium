@@ -26,8 +26,10 @@ import java.util.List;
 public class ChildConnectionAllocator {
     private static final String TAG = "ChildConnAllocator";
 
-    /** Listener that clients can use to get notified when connections get freed. */
+    /** Listener that clients can use to get notified when connections get allocated/freed. */
     public interface Listener {
+        void onConnectionAllocated(
+                ChildConnectionAllocator allocator, ChildProcessConnection connection);
         void onConnectionFreed(
                 ChildConnectionAllocator allocator, ChildProcessConnection connection);
     }
