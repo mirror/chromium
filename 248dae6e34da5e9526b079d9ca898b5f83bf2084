@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "96448d4b_cc2acd4e",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-23T02:01:45Z",
+      "side": 0,
+      "message": "+1 to do this. crbug.com/736174 created",
+      "parentUuid": "2cdf0e2b_1a86ca27",
+      "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6a2b335_ff07a9a6",
         "filename": "extensions/browser/extension_icon_image.h",
         "patchSetId": 7
@@ -138,6 +156,24 @@
       "side": 0,
       "message": "ImageSkia can contain different scales, but Image can contain different \"formats\".  i.e., it can hold ImageSkia, NSImage, etc.  The latter is important on Mac, where we have to reserialize ImageSkia to NSImage in order to use Cocoa elements.  By having a persistent Image that\u0027s returned, if something uses image.ToImage(), the gfx::Image will store that in its internal storage, thus saving the need to re-convert.  I\u0027d prefer we keep gfx::Image here.",
       "parentUuid": "111803be_03638a84",
+      "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b328af1_3381f747",
+        "filename": "extensions/browser/extension_icon_image.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-23T02:01:45Z",
+      "side": 0,
+      "message": "Ok, convinced to leave this :). It looks like creating Image from ImageSkia is not very expensive.",
+      "parentUuid": "ebe4aeea_754a98e6",
       "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
