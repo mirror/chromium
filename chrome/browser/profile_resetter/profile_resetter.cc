@@ -11,9 +11,11 @@
 
 #include "base/macros.h"
 #include "base/synchronization/cancellation_flag.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
-
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -51,7 +53,7 @@
 namespace {
 
 void ResetShortcutsOnFileThread() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   // Get full path of chrome.
   base::FilePath chrome_exe;
   if (!PathService::Get(base::FILE_EXE, &chrome_exe))
@@ -140,7 +142,7 @@ void ProfileResetter::Reset(
 }
 
 bool ProfileResetter::IsActive() const {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return pending_reset_flags_ != 0;
 }
 
@@ -322,12 +324,10 @@ void ProfileResetter::ResetPinnedTabs() {
 
 void ProfileResetter::ResetShortcuts() {
 #if defined(OS_WIN)
-  content::BrowserThread::PostTaskAndReply(
-      content::BrowserThread::FILE,
-      FROM_HERE,
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&ResetShortcutsOnFileThread),
-      base::Bind(&ProfileResetter::MarkAsDone,
-                 weak_ptr_factory_.GetWeakPtr(),
+      base::Bind(&ProfileResetter::MarkAsDone, weak_ptr_factory_.GetWeakPtr(),
                  SHORTCUTS));
 #else
   MarkAsDone(SHORTCUTS);
@@ -351,7 +351,7 @@ void ProfileResetter::OnBrowsingDataRemoverDone() {
 
 std::vector<ShortcutCommand> GetChromeLaunchShortcuts(
     const scoped_refptr<SharedCancellationFlag>& cancel) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
 #if defined(OS_WIN)
   // Get full path of chrome.
   base::FilePath chrome_exe;
