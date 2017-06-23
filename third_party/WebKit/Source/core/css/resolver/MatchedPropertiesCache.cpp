@@ -123,8 +123,8 @@ bool MatchedPropertiesCache::IsStyleCacheable(const ComputedStyle& style) {
     return false;
   if (style.Zoom() != ComputedStyle::InitialZoom())
     return false;
-  if (style.GetWritingMode() != ComputedStyle::InitialWritingMode() ||
-      style.Direction() != ComputedStyle::InitialDirection())
+  if (style.GetWritingMode() != ComputedStyle::InitialSpecifiedWritingMode() ||
+      style.Direction() != ComputedStyle::InitialSpecifiedDirection())
     return false;
   // styles with non inherited properties that reference variables are not
   // cacheable.

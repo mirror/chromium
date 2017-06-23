@@ -236,7 +236,7 @@ void StyleBuilderFunctions::applyValueCSSPropertyCursor(
 void StyleBuilderFunctions::applyValueCSSPropertyDirection(
     StyleResolverState& state,
     const CSSValue& value) {
-  state.Style()->SetDirection(
+  state.Style()->SetSpecifiedDirection(
       ToCSSIdentifierValue(value).ConvertTo<TextDirection>());
 }
 
