@@ -82,7 +82,7 @@ public class NewTabPageRecyclerViewTest {
     // We currently mix the fake and the snippets bridge, resulting in crashes with unregistered
     // categories.
     @CategoryInt
-    private static final int TEST_CATEGORY = KnownCategories.BOOKMARKS;
+    private static final int TEST_CATEGORY = KnownCategories.ARTICLES;
 
     private Tab mTab;
     private NewTabPage mNtp;
@@ -418,7 +418,7 @@ public class NewTabPageRecyclerViewTest {
                 source.setSuggestionsForCategory(TEST_CATEGORY, buildSuggestions(suggestionsCount));
             }
         });
-        RecyclerViewTestUtils.waitForStableRecyclerView(getRecyclerView());
+        //        RecyclerViewTestUtils.waitForStableRecyclerView(getRecyclerView());
     }
 
     private List<SnippetArticle> buildSuggestions(int suggestionsCount) {
