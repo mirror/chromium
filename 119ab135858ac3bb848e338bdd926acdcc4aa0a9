@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "15f5b160_a84d4154",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "Good point! However, after discussing it with Mike and looking at MixedContentCheckerTest, I refactored the test, dropping the googletest macro in favor of a (hopefully) more readable and maintainable approach. \n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/MixedContentCheckerTest.cpp",
+      "parentUuid": "9514049d_e9ebbf9d",
+      "revId": "119ab135858ac3bb848e338bdd926acdcc4aa0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65321e16_4439cd83",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 4
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "340921d0_f96a44ad",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee8eec5_2f93712f",
+      "revId": "119ab135858ac3bb848e338bdd926acdcc4aa0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05e68b69_9703661c",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 4
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "The new tests do cross origin requests via service worker with and without cors, which should run into this check. However, same-origin opaque responses are indeed not tested at the moment (or else they should have found the bug just above. \n\nI\u0027ll add some more tests.",
       "parentUuid": "05e68b69_9703661c",
+      "revId": "119ab135858ac3bb848e338bdd926acdcc4aa0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf84fdd2_f12fbcbb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "Now we have way more test coverage, including some that catch this particular case.",
+      "parentUuid": "16f0560c_7b810d9b",
       "revId": "119ab135858ac3bb848e338bdd926acdcc4aa0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

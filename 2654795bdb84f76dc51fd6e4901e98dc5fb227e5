@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1c20945_42f0aabe",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "I replaced the enum by instead using allow_origin_url as a signal for whether to add CORS headers or not so that we would need on less parameter.",
+      "parentUuid": "3187f7ce_f2b2feaf",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7164bb61_65b16c95",
         "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T07:07:58Z",
       "side": 1,
       "message": "Can we move the stuffs specific to SubresourceIntegrityOriginTest to it?",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1891904_5f730fc8",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "Now with the refactoring, the test is a single class again.",
+      "parentUuid": "7164bb61_65b16c95",
       "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "56073aa4_ddbfdc40",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b70de25_f71a966e",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e0e1646_3aeb021f",
         "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5f16e1_6d46e62b",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e0e1646_3aeb021f",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2620354a_725b3b72",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "This part is completely refactored and _hopefully_ more readable now.",
+      "parentUuid": "6f682b10_f43d2550",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ee261a5_775ef7c2",
         "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-22T07:07:58Z",
       "side": 1,
       "message": "given you parameterized the tests, you can now test the failing cases for all the expected-to-success cases easily for more test coverage though I also think it\u0027s fine to have a few cases for that (before this patch, we had only 1 failing expectation which was in CheckSubresourceIntegrityInInsecureOrigin).",
+      "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43063533_a769b4f7",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T07:39:42Z",
+      "side": 1,
+      "message": "After refactoring, the cases are now tested in 14 different scenarios, so test coverage is increased, even the added benefit is probably small - though, had I had those testes before, they would have caught the mistake I made in Resource::IsEligibleForIntegrityCheck.",
+      "parentUuid": "1ee261a5_775ef7c2",
       "revId": "2654795bdb84f76dc51fd6e4901e98dc5fb227e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
