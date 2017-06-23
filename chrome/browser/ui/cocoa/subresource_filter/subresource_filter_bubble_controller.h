@@ -23,8 +23,10 @@
 // The methods on this category are used internally by the controller and are
 // only exposed for testing purposes. DO NOT USE OTHERWISE.
 @interface SubresourceFilterBubbleController (ExposedForTesting)
+- (void)loadView;
 - (void)manageCheckboxChecked:(id)sender;
 - (id)messageLabel;
+- (id)learnMoreLink;
 - (id)manageCheckbox;
 - (id)doneButton;
 @end
