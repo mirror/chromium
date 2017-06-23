@@ -13,8 +13,7 @@
 #include "ash/wm/window_state_observer.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "components/exo/surface_delegate.h"
-#include "components/exo/surface_observer.h"
+#include "components/exo/surface_tree_host.h"
 #include "components/exo/wm_helper.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/hit_test.h"
@@ -42,8 +41,7 @@ class Surface;
 // This class provides functions for treating a surfaces like toplevel,
 // fullscreen or popup widgets, move, resize or maximize them, associate
 // metadata like title and class, etc.
-class ShellSurface : public SurfaceDelegate,
-                     public SurfaceObserver,
+class ShellSurface : public SurfaceTreeHost,
                      public views::WidgetDelegate,
                      public views::View,
                      public ash::wm::WindowStateObserver,
@@ -218,11 +216,8 @@ class ShellSurface : public SurfaceDelegate,
   // Returns a trace value representing the state of the surface.
   std::unique_ptr<base::trace_event::TracedValue> AsTracedValue() const;
 
-  // Overridden from SurfaceDelegate:
+  // Overridden from SurfaceTreeHost:
   void OnSurfaceCommit() override;
-  bool IsSurfaceSynchronized() const override;
-
-  // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
 
   // Overridden from views::WidgetDelegate:
@@ -279,7 +274,7 @@ class ShellSurface : public SurfaceDelegate,
   aura::Window* shadow_overlay() { return shadow_overlay_.get(); }
   aura::Window* shadow_underlay() { return shadow_underlay_.get(); }
 
-  Surface* surface_for_testing() { return surface_; }
+  Surface* surface_for_testing() { return root_surface(); }
 
  private:
   class ScopedConfigure;
@@ -336,7 +331,6 @@ class ShellSurface : public SurfaceDelegate,
   gfx::Point GetMouseLocation() const;
 
   views::Widget* widget_ = nullptr;
-  Surface* surface_;
   aura::Window* parent_;
   const BoundsMode bounds_mode_;
   int64_t primary_display_id_;
