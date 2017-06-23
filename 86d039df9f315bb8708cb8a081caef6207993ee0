@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9551c91_bfc22fe9",
+        "filename": "headless/lib/browser/headless_tab_socket_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-23T18:54:00Z",
+      "side": 1,
+      "message": "nit: just int?",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "86d039df9f315bb8708cb8a081caef6207993ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
