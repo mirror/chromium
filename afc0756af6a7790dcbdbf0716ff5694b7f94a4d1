@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3615a81f_7af359ce",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-23T20:28:13Z",
+      "side": 1,
+      "message": "Another typo. Feel feel to fix later.",
+      "range": {
+        "startLine": 121,
+        "startChar": 30,
+        "endLine": 121,
+        "endChar": 36
+      },
+      "revId": "afc0756af6a7790dcbdbf0716ff5694b7f94a4d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
