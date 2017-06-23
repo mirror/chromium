@@ -57,7 +57,8 @@ void ContentLayerDelegate::PaintContents(
     WebDisplayItemList* web_display_item_list,
     WebContentLayerClient::PaintingControlSetting painting_control) {
   TRACE_EVENT0("blink,benchmark", "ContentLayerDelegate::paintContents");
-  RuntimeCallTimerScope runtime_timer_scope(
+  RUNTIME_CALL_TIMER_SCOPE(
+      runtime_timer_scope,
       RuntimeCallStats::From(V8PerIsolateData::MainThreadIsolate()),
       RuntimeCallStats::CounterId::kPaintContents);
 
