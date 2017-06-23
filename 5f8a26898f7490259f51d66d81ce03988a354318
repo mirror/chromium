@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c583f25d_731845b2",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T18:14:34Z",
+      "side": 1,
+      "message": "Ah... that\u0027s a good point. I guess another way would be to typemap the subtypes... though maybe that would be hard here.\n\nAre key_data / pointer_data / touch_data essentially a unioned type? Or can they all be present together? They seem mutually exclusive, right?",
+      "parentUuid": "88a657c0_10675cbc",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "5f8a26898f7490259f51d66d81ce03988a354318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93ee2f0_0655acdc",
         "filename": "content/common/input/input_event_struct_traits.cc",
         "patchSetId": 1
