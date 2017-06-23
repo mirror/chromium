@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef3a3116_ec10a2fb",
+        "filename": "components/download/content/internal/download_driver_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T06:13:02Z",
+      "side": 1,
+      "message": "Anonymous method in CC file?",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "7523e4708744169dbe2e15d3b87e587e338a5a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e123092_2ebb72ef",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T06:13:02Z",
+      "side": 1,
+      "message": "bool is_new_attempt \u003d !driver_entry.has_value() || driver_entry-\u003estate \u003d\u003d DriverEntry::State::INTERRUPTED;\n\nThen you can get rid of new_download?",
+      "range": {
+        "startLine": 642,
+        "startChar": 20,
+        "endLine": 642,
+        "endChar": 47
+      },
+      "revId": "7523e4708744169dbe2e15d3b87e587e338a5a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1856da36_740ca19b",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T06:13:02Z",
+      "side": 1,
+      "message": "Can we pass the attempt_count here too?  Would be nice to log that as well.",
+      "range": {
+        "startLine": 707,
+        "startChar": 35,
+        "endLine": 707,
+        "endChar": 37
+      },
+      "revId": "7523e4708744169dbe2e15d3b87e587e338a5a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d234c51_9f752123",
+        "filename": "components/download/internal/proto/entry.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T06:13:02Z",
+      "side": 1,
+      "message": "New line before this?  Feels like the two above are associated with times?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "7523e4708744169dbe2e15d3b87e587e338a5a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
