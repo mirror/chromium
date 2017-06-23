@@ -5500,6 +5500,9 @@ the Bookmarks menu.">
       <message name="IDS_ACCNAME_NEWTAB" desc="The accessible name for the New Tab (+) button.">
         New Tab
       </message>
+      <message name="IDS_ACCNAME_NEWTAB_PROMO" desc="The shown text for the Newtab Promo.">
+        Open a new tab with one click
+      </message>
       <message name="IDS_ACCNAME_MINIMIZE" desc="The accessible name for the Minimize button.">
         Minimize
       </message>
