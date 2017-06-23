@@ -55,6 +55,10 @@ class DownloadDriverImpl : public DownloadDriver,
   void OnManagerInitialized() override;
   void ManagerGoingDown(content::DownloadManager* manager) override;
 
+  // Maps the interrupt reason to a failure type.
+  FailureType FailureTypeFromInterruptReason(
+      content::DownloadInterruptReason reason);
+
   // Low level download handle.
   content::DownloadManager* download_manager_;
 
