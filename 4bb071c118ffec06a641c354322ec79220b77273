@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e19e0262_9bb82da7",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-23T06:24:51Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment\u0027s needed? Doing this when execution context goes away totally makes sense to me.",
+      "revId": "4bb071c118ffec06a641c354322ec79220b77273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
