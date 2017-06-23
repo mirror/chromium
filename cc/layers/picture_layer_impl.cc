@@ -1019,11 +1019,17 @@ bool PictureLayerImpl::ShouldAdjustRasterScale() const {
 
   // Don't change the raster scale if any of the following are true:
   //  - We have an animating transform.
-  //  - We have a will-change transform hint.
   //  - The raster scale is already ideal.
   if (draw_properties().screen_space_transform_is_animating ||
-      has_will_change_transform_hint() ||
       raster_source_scale_ == ideal_source_scale_) {
+    return false;
+  }
+
+  // If we have a will-change: transform hint, that means that we should just
+  // keep the current scale unless it is below the min, which is the device
+  // scale.
+  if (has_will_change_transform_hint() &&
+      raster_contents_scale_ >= ideal_device_scale_) {
     return false;
   }
 
@@ -1082,6 +1088,20 @@ void PictureLayerImpl::RecalculateRasterScales() {
     raster_device_scale_ = 1.f;
     raster_contents_scale_ = raster_source_scale_;
     low_res_raster_contents_scale_ = raster_contents_scale_;
+    return;
+  }
+
+  if (has_will_change_transform_hint()) {
+    raster_device_scale_ = ideal_device_scale_;
+    raster_page_scale_ = ideal_page_scale_;
+    raster_source_scale_ = ideal_source_scale_;
+    // If we don't actually have a raster scale, start with the ideal one.
+    if (!raster_contents_scale_)
+      raster_contents_scale_ = ideal_contents_scale_;
+
+    // Keep the scale unless it's below the device scale.
+    raster_contents_scale_ =
+        std::max(raster_contents_scale_, raster_device_scale_);
     return;
   }
 
