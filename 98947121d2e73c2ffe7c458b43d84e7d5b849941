@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7858e12f_49b3cc8b",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8Binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-23T14:51:24Z",
+      "side": 1,
+      "message": "Similarly here, do you measure more than you would in SetReturnValueFromStringSlow?\n\nThis has on the order of 1,000 call sites where we expect this to be inlined, so the binary size expansion here is non-trivial.",
+      "revId": "98947121d2e73c2ffe7c458b43d84e7d5b849941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac13149_06fa3fc0",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8Binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-23T14:51:24Z",
+      "side": 1,
+      "message": "Does this instrument much given that wrapper creation and association are both separately measured? The only other work here seems to be a couple null checks.\n\n(i.e., does this product data above measurement noise?)\n\nIf not, I\u0027d prefer to skip this one, as it gets inlined (or tries to, anyway) into every PerWorldBindings method that returns a wrapper.",
+      "revId": "98947121d2e73c2ffe7c458b43d84e7d5b849941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f348d4c_57551705",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8Binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-23T14:51:24Z",
+      "side": 1,
+      "message": "Similarly here, is the measurement effect similar if we measure V8ExternalString, or is it worthwhile to inline the RCS at every use of V8String?",
+      "revId": "98947121d2e73c2ffe7c458b43d84e7d5b849941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
