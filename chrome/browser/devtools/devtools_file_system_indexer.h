@@ -39,14 +39,14 @@ class DevToolsFileSystemIndexer
    private:
     friend class base::RefCounted<FileSystemIndexingJob>;
     friend class DevToolsFileSystemIndexer;
-    FileSystemIndexingJob(const base::FilePath& file_system_path,
-                          const TotalWorkCallback& total_work_callback,
-                          const WorkedCallback& worked_callback,
-                          const DoneCallback& done_callback);
+    FileSystemIndexingJob(base::FilePath file_system_path,
+                          TotalWorkCallback total_work_callback,
+                          WorkedCallback worked_callback,
+                          DoneCallback done_callback);
     virtual ~FileSystemIndexingJob();
 
     void Start();
-    void StopOnFileThread();
+    void StopOnImplSequence();
     void CollectFilesToIndex();
     void IndexFiles();
     void StartFileIndexing(base::File::Error error);
@@ -56,7 +56,6 @@ class DevToolsFileSystemIndexer
                 int bytes_read);
     void FinishFileIndexing(bool success);
     void CloseFile();
-    void CloseCallback(base::File::Error error);
     void ReportWorked();
 
     base::FilePath file_system_path_;
@@ -89,18 +88,18 @@ class DevToolsFileSystemIndexer
       const DoneCallback& done_callback);
 
   // Performs trigram search for given |query| in |file_system_path|.
-  void SearchInPath(const std::string& file_system_path,
-                    const std::string& query,
-                    const SearchCallback& callback);
+  void SearchInPath(std::string file_system_path,
+                    std::string query,
+                    SearchCallback callback);
 
  private:
   friend class base::RefCountedThreadSafe<DevToolsFileSystemIndexer>;
 
   virtual ~DevToolsFileSystemIndexer();
 
-  void SearchInPathOnFileThread(const std::string& file_system_path,
-                                const std::string& query,
-                                const SearchCallback& callback);
+  void SearchInPathOnImplSequence(std::string file_system_path,
+                                  std::string query,
+                                  SearchCallback callback);
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsFileSystemIndexer);
 };
