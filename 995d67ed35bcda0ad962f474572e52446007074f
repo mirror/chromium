@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91143869_6cfbc1e9",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-23T14:31:44Z",
+      "side": 1,
+      "message": "I would change this to be talking about a singular instance. Similar comment for the other descriptions.",
+      "revId": "995d67ed35bcda0ad962f474572e52446007074f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0248efa5_c554a773",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-23T14:31:44Z",
+      "side": 1,
+      "message": "I would use \u0027values\u0027 not buckets, here and other comments",
+      "range": {
+        "startLine": 455,
+        "startChar": 6,
+        "endLine": 455,
+        "endChar": 12
+      },
+      "revId": "995d67ed35bcda0ad962f474572e52446007074f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
