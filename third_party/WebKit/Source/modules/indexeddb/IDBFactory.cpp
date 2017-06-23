@@ -66,7 +66,8 @@ static bool IsContextValid(ExecutionContext* context) {
 IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
                                          ExceptionState& exception_state) {
   IDB_TRACE("IDBFactory::getDatabaseNamesRequestSetup");
-  IDBRequest::AsyncTraceState metrics("IDBFactory::getDatabaseNames", this);
+  IDBRequest::AsyncTraceState metrics("IDBFactory::getDatabaseNames",
+                                      ++async_tracing_number_ + this);
   IDBRequest* request = IDBRequest::Create(script_state, IDBAny::CreateNull(),
                                            nullptr, std::move(metrics));
   // TODO(jsbell): Used only by inspector; remove unneeded checks/exceptions?

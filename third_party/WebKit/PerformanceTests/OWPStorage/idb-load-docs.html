@@ -1,0 +1,16 @@
+<script src="../resources/runner.js"></script>
+<script src="resources/shared.js"></script>
+<script src="resources/idb-load-docs-shared.js"></script>
+<script src="resources/idb-load-docs-setup.js"></script>
+<script>
+  delete_then_open(database_name, populate_fake_docs_database, ()=>{
+    var test = {
+      description: '..',
+      iterationCount: 10,
+      chunkSize: 1000,
+      path: "resources/idb-load-docs-runner.html"
+    }
+    PerfTestRunner.measurePageLoadTimeAfterDoneMessage(test);
+  }
+  );
+</script>

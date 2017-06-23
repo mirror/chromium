@@ -138,6 +138,7 @@ class IDBIndex final : public GarbageCollectedFinalized<IDBIndex>,
   Member<IDBObjectStore> object_store_;
   Member<IDBTransaction> transaction_;
   bool deleted_ = false;
+  int64_t async_tracing_number_ = 0;
 };
 
 }  // namespace blink
