@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cbcaba0_5e507785",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-06-23T10:08:50Z",
+      "side": 1,
+      "message": "Optional: would it make sense to rename something like NONFATAL-\u003eTRANSIENT and FATAL-\u003ePERMANENT? It\u0027d be a bit less abstract IMO.",
+      "revId": "ac98ca46a77d797978ba1ce931996f56937c258c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1050e777_9030b18f",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-06-23T10:08:50Z",
+      "side": 1,
+      "message": "If only base had something like StatusOr / OneOf...",
+      "revId": "ac98ca46a77d797978ba1ce931996f56937c258c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957ead6e_1de9192b",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-06-23T10:08:50Z",
+      "side": 1,
+      "message": "Do you actually need Eq here? Similar occurrences follow.",
+      "revId": "ac98ca46a77d797978ba1ce931996f56937c258c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
