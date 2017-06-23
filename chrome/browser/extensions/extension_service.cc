@@ -381,6 +381,8 @@ ExtensionService::ExtensionService(Profile* profile,
       base::StringToInt(command_line->GetSwitchValueASCII(
           switches::kExtensionsUpdateFrequency),
           &update_frequency);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "Extensions.UpdateFrequencyCommandLineFlagUsageCounts", 1);
     }
     updater_.reset(new extensions::ExtensionUpdater(
         this,
