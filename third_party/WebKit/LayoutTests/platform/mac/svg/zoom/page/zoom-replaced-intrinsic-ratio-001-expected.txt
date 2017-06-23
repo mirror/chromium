@@ -14,7 +14,6 @@ layer at (0,0) size 800x476
       LayoutBlockFlow {P} at (1,129.80) size 138.88x9.25
         LayoutText {#text} at (0,-1) size 14x10
           text run at (0,-1) width 14: "      "
-        LayoutText {#text} at (0,0) size 0x0
       LayoutBlockFlow {P} at (1,194.59) size 138.88x9.25
       LayoutTable (anonymous) at (1,259.39) size 138x46
         LayoutTableSection (anonymous) at (0,0) size 138x46
