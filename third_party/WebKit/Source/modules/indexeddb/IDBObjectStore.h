@@ -218,6 +218,8 @@ class IDBObjectStore final : public GarbageCollectedFinalized<IDBObjectStore>,
   // after a transaction is finished, and can be cleared.
   IDBIndexMap index_map_;
 
+  int64_t async_tracing_number_ = 0;
+
 #if DCHECK_IS_ON()
   bool clear_index_cache_called_ = false;
 #endif  // DCHECK_IS_ON()

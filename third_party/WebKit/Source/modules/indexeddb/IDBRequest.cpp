@@ -61,7 +61,7 @@ namespace blink {
 IDBRequest::AsyncTraceState::AsyncTraceState(const char* tracing_name, void* id)
     : tracing_name_(tracing_name), id_(id) {
   if (tracing_name_)
-    TRACE_EVENT_ASYNC_BEGIN0("IndexedDB", tracing_name_, id);
+    TRACE_EVENT_ASYNC_BEGIN0("IndexedDB", tracing_name_, id_);
 }
 
 void IDBRequest::AsyncTraceState::RecordAndReset() {
@@ -260,21 +260,8 @@ void IDBRequest::AckReceivedBlobs(const Vector<RefPtr<IDBValue>>& values) {
 }
 
 bool IDBRequest::ShouldEnqueueEvent() const {
-  const ExecutionContext* execution_context = GetExecutionContext();
-
-  // https://crbug.com/733642 - Document::Shutdown() calls
-  // LocalDOMWindow::ClearEventQueue(), which nulls out the context's event
-  // queue, before calling ExecutionContext::NotifyContextDestroyed(). The
-  // latter eventually calls IDBRequest::ContextDestroyed(), which aborts the
-  // request. As an aborted IDBRequest is removed from its' IDBTransaction
-  // result queue, it may unblock another request whose result is already
-  // available. If the unblocked request hasn't received a
-  // NotifyContextDestroyed() call yet, it will hang onto an ExecutionContext
-  // whose event queue has been nulled out. The event queue null check covers
-  // these specific circumstances.
-  if (!execution_context || !execution_context->GetEventQueue())
+  if (!GetExecutionContext())
     return false;
-
   DCHECK(ready_state_ == PENDING || ready_state_ == DONE);
   if (request_aborted_)
     return false;
@@ -411,7 +398,8 @@ void IDBRequest::EnqueueResponse(std::unique_ptr<WebIDBCursor> backend,
                                  IDBKey* key,
                                  IDBKey* primary_key,
                                  RefPtr<IDBValue>&& value) {
-  IDB_TRACE("IDBRequest::EnqueueResponse(IDBCursor)");
+  IDB_TRACE1("IDBRequest::EnqueueResponse(IDBCursor)", "size",
+             value ? value->data_size() : 0);
   if (!ShouldEnqueueEvent()) {
     metrics_.RecordAndReset();
     return;
@@ -451,7 +439,11 @@ void IDBRequest::EnqueueResponse(IDBKey* idb_key) {
 }
 
 void IDBRequest::EnqueueResponse(const Vector<RefPtr<IDBValue>>& values) {
-  IDB_TRACE("IDBRequest::EnqueueResponse([IDBValue])");
+  size_t total_size = 0;
+  for (const auto& value : values) {
+    total_size += value ? value->data_size() : 0;
+  }
+  IDB_TRACE1("IDBRequest::EnqueueResponse([IDBValue])", "size", total_size);
   if (!ShouldEnqueueEvent()) {
     metrics_.RecordAndReset();
     return;
@@ -475,7 +467,8 @@ static IDBObjectStore* EffectiveObjectStore(IDBAny* source) {
 #endif  // DCHECK_IS_ON()
 
 void IDBRequest::EnqueueResponse(RefPtr<IDBValue>&& value) {
-  IDB_TRACE("IDBRequest::EnqueueResponse(IDBValue)");
+  IDB_TRACE1("IDBRequest::EnqueueResponse(IDBValue)", "size",
+             value ? value->data_size() : 0);
   if (!ShouldEnqueueEvent()) {
     metrics_.RecordAndReset();
     return;
