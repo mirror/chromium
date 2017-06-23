@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d66ae79_5dd0f45d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Update the comment message with the following format\n\n[One Line Title]\n\n[Description of Change]\n\nBUG\u003d[Bug Number]\n\nCheck out other changes in this directory for examples via git log.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b4084c_254a31ce",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 5503,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Nit: New Tab",
+      "range": {
+        "startLine": 5503,
+        "startChar": 76,
+        "endLine": 5503,
+        "endChar": 82
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db62768_185c51f5",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Move this to to the top.",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 32
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3cd4be5_49fc5c20",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Remove \"this-\u003e\" here and for the rest of the code. It\u0027s implicit in the call.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bd9db4_c91e606f",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Move this to the .cc file. The details of the TabStrip aren\u0027t used in this file.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9da4da_7ceae140",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Move the headers not directly used in this file to the .cc file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12869ba_9737c9ad",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Nit: the New Tab\n\nNewtab -\u003e New Tab for the rest of the CL too in comments.",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6511d06c_e4af8f47",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Describe who generally triggers this UI.",
+      "range": {
+        "startLine": 22,
+        "startChar": 42,
+        "endLine": 22,
+        "endChar": 63
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6f9d30_16c9554f",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Move to the beginning of the public block. Conventionally these occur before method declarations.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df098c88_7a7a1d7e",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Remove this part of the declaration.",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a8dd0e_abe114d2",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Add \n// BubbleDialogDelegateView:\nbefore this line.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 23
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecf549e_38e15dc0",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Nit: Add ending periods here and below.",
+      "range": {
+        "startLine": 45,
+        "startChar": 41,
+        "endLine": 45,
+        "endChar": 47
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847a0cd9_4030a558",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Would StartAutoCloseTimer be a more descriptive name?",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922d43e0_746d61c7",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "TabStrip* const",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 12
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41f8303_74246dbd",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:45:28Z",
+      "side": 1,
+      "message": "Move this include to the .cc file. The implementation details of NewTabPromo aren\u0027t used in this file.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 54
+      },
+      "revId": "2b89c087c57cd7d3a8ba7c1e22f3dad331ee41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
