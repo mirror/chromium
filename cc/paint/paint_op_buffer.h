@@ -72,6 +72,8 @@ enum class PaintOpType : uint8_t {
   LastPaintOpType = Translate,
 };
 
+std::string PaintOpTypeToString(PaintOpType type);
+
 struct CC_PAINT_EXPORT PaintOp {
   uint32_t type : 8;
   uint32_t skip : 24;

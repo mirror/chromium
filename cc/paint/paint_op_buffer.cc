@@ -188,6 +188,72 @@ TYPES(M);
 
 SkRect PaintOp::kUnsetRect = {SK_ScalarInfinity, 0, 0, 0};
 
+std::string PaintOpTypeToString(PaintOpType type) {
+  switch (type) {
+    case Annotate:
+      return "Annotate";
+    case ClipPath:
+      return "ClipPath";
+    case ClipRect:
+      return "ClipRect";
+    case ClipRRect:
+      return "ClipRRect";
+    case Concat:
+      return "Concat";
+    case DrawArc:
+      return "DrawArc";
+    case DrawCircle:
+      return "DrawCircle";
+    case DrawColor:
+      return "DrawColor";
+    case DrawDRRect:
+      return "DrawDRRect";
+    case DrawImage:
+      return "DrawImage";
+    case DrawImageRect:
+      return "DrawImageRect";
+    case DrawIRect:
+      return "DrawIRect";
+    case DrawLine:
+      return "DrawLine";
+    case DrawOval:
+      return "DrawOval";
+    case DrawPath:
+      return "DrawPath";
+    case DrawPosText:
+      return "DrawPosText";
+    case DrawRecord:
+      return "DrawRecord";
+    case DrawRect:
+      return "DrawRect";
+    case DrawRRect:
+      return "DrawRRect";
+    case DrawText:
+      return "DrawText";
+    case DrawTextBlob:
+      return "DrawTextBlob";
+    case Noop:
+      return "Noop";
+    case Restore:
+      return "Restore";
+    case Rotate:
+      return "Rotate";
+    case Save:
+      return "Save";
+    case SaveLayer:
+      return "SaveLayer";
+    case SaveLayerAlpha:
+      return "SaveLayerAlpha";
+    case Scale:
+      return "Scale";
+    case SetMatrix:
+      return "SetMatrix";
+    case Translate:
+      return "Translate";
+  }
+  return "UNKNOWN";
+}
+
 void AnnotateOp::Raster(const PaintOp* base_op,
                         SkCanvas* canvas,
                         const SkMatrix& original_ctm) {
