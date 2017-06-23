@@ -1475,8 +1475,8 @@ void CompositedLayerMapping::UpdateScrollingLayerGeometry(
   if (overflow_clip_rect_offset_changed)
     scrolling_contents_layer_->SetNeedsDisplay();
 
-  FloatPoint scroll_position =
-      owning_layer_.GetScrollableArea()->ScrollPosition();
+  ScrollableArea* scrollable_area = owning_layer_.GetScrollableArea();
+  FloatPoint scroll_position = scrollable_area->ScrollPosition();
   DoubleSize scrolling_contents_offset(
       overflow_clip_rect.Location().X() - scroll_position.X(),
       overflow_clip_rect.Location().Y() - scroll_position.Y());
@@ -1487,19 +1487,15 @@ void CompositedLayerMapping::UpdateScrollingLayerGeometry(
     bool coordinator_handles_offset =
         Compositor()->ScrollingLayerDidChange(&owning_layer_);
     scrolling_contents_layer_->SetPosition(
-        coordinator_handles_offset ? FloatPoint()
-                                   : FloatPoint(-ToFloatSize(scroll_position)));
+        coordinator_handles_offset ? FloatPoint(scrollable_area->ScrollOrigin())
+                                   : -scroll_position);
   }
   scrolling_contents_offset_ = scrolling_contents_offset;
 
   scrolling_contents_layer_->SetSize(FloatSize(scroll_size));
 
-  IntPoint scrolling_contents_layer_offset_from_layout_object;
-  if (PaintLayerScrollableArea* scrollable_area =
-          owning_layer_.GetScrollableArea()) {
-    scrolling_contents_layer_offset_from_layout_object =
-        -scrollable_area->ScrollOrigin();
-  }
+  IntPoint scrolling_contents_layer_offset_from_layout_object =
+      -scrollable_area->ScrollOrigin();
   scrolling_contents_layer_offset_from_layout_object.MoveBy(
       overflow_clip_rect.Location());
 
