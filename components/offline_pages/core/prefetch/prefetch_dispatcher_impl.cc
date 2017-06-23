@@ -39,8 +39,9 @@ void PrefetchDispatcherImpl::AddCandidatePrefetchURLs(
   if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
-  std::unique_ptr<Task> add_task =
-      base::MakeUnique<AddUniqueUrlsTask>(name_space, prefetch_urls);
+  PrefetchStoreSQL* prefetch_store = service_->GetPrefetchStore();
+  std::unique_ptr<Task> add_task = base::MakeUnique<AddUniqueUrlsTask>(
+      prefetch_store, name_space, prefetch_urls);
   task_queue_.AddTask(std::move(add_task));
 }
 

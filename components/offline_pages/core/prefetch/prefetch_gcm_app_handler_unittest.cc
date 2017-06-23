@@ -8,6 +8,8 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/test/test_simple_task_runner.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "components/gcm_driver/instance_id/instance_id.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_test_taco.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
@@ -34,7 +36,9 @@ class TestTokenFactory : public PrefetchGCMAppHandler::TokenFactory {
 
 class PrefetchGCMAppHandlerTest : public testing::Test {
  public:
-  PrefetchGCMAppHandlerTest() {
+  PrefetchGCMAppHandlerTest()
+      : task_runner_(new base::TestSimpleTaskRunner),
+        task_runner_handle_(task_runner_) {
     auto dispatcher = base::MakeUnique<TestPrefetchDispatcher>();
 
     auto token_factory = base::MakeUnique<TestTokenFactory>();
@@ -46,9 +50,10 @@ class PrefetchGCMAppHandlerTest : public testing::Test {
     test_dispatcher_ = dispatcher.get();
     handler_ = gcm_app_handler.get();
 
-    prefetch_service_taco_.SetPrefetchGCMHandler(std::move(gcm_app_handler));
-    prefetch_service_taco_.SetPrefetchDispatcher(std::move(dispatcher));
-    prefetch_service_taco_.CreatePrefetchService();
+    prefetch_service_taco_.reset(new PrefetchServiceTestTaco);
+    prefetch_service_taco_->SetPrefetchGCMHandler(std::move(gcm_app_handler));
+    prefetch_service_taco_->SetPrefetchDispatcher(std::move(dispatcher));
+    prefetch_service_taco_->CreatePrefetchService();
   }
 
   TestPrefetchDispatcher* dispatcher() { return test_dispatcher_; }
@@ -56,13 +61,17 @@ class PrefetchGCMAppHandlerTest : public testing::Test {
   TestTokenFactory* token_factory() { return token_factory_; }
 
  private:
-  PrefetchServiceTestTaco prefetch_service_taco_;
+  std::unique_ptr<PrefetchServiceTestTaco> prefetch_service_taco_;
   // Owned by the taco.
   TestPrefetchDispatcher* test_dispatcher_;
   // Owned by the taco.
   PrefetchGCMAppHandler* handler_;
   // Owned by the PrefetchGCMAppHandler.
   TestTokenFactory* token_factory_;
+
+  // Necessary to ensure database works.
+  scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
+  base::ThreadTaskRunnerHandle task_runner_handle_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchGCMAppHandlerTest);
 };
