@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/metrics/desktop_session_duration/audible_contents_tracker.h"
@@ -44,6 +45,16 @@ class DesktopSessionDurationTracker : public AudibleContentsTracker::Observer {
   void SetInactivityTimeoutForTesting(int seconds) {
     inactivity_timeout_ = base::TimeDelta::FromSeconds(seconds);
   }
+
+  class Observer {
+   public:
+    virtual ~Observer();
+    virtual void OnSessionEnded(base::TimeDelta delta);
+  };
+
+  // For observing the status of the session timer.
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
 
  protected:
   DesktopSessionDurationTracker();
@@ -88,6 +99,8 @@ class DesktopSessionDurationTracker : public AudibleContentsTracker::Observer {
   base::TimeDelta inactivity_timeout_;
 
   base::OneShotTimer timer_;
+
+  base::ObserverList<Observer> observer_list_;
 
   ChromeVisibilityObserver visibility_observer_;
   AudibleContentsTracker audio_tracker_;
