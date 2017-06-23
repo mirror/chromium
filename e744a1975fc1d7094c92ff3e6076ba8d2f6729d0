@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2cd848a_8fc49166",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1211259
+      },
+      "writtenOn": "2017-06-23T19:24:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17417766_68b596df",
+      "revId": "e744a1975fc1d7094c92ff3e6076ba8d2f6729d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fec00062_a48cdfd2",
         "filename": "chromecast/browser/cast_browser_main_parts.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-23T16:10:11Z",
       "side": 1,
       "message": "actually, you could use range-based for here, more succinct.",
+      "range": {
+        "startLine": 270,
+        "startChar": 54,
+        "endLine": 270,
+        "endChar": 0
+      },
+      "revId": "e744a1975fc1d7094c92ff3e6076ba8d2f6729d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70374661_87e45feb",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1211259
+      },
+      "writtenOn": "2017-06-23T19:24:19Z",
+      "side": 1,
+      "message": "Done, forgot you could do that for plain arrays.",
+      "parentUuid": "fec00062_a48cdfd2",
       "range": {
         "startLine": 270,
         "startChar": 54,
