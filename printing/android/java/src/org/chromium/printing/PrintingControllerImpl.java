@@ -17,7 +17,6 @@ import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.printing.PrintDocumentAdapterWrapper.PdfGenerator;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -214,8 +213,6 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
             mOnWriteCallback.onWriteFailed(mErrorMessage);
             resetCallbacks();
         }
-        closeFileDescriptor(mFileDescriptor);
-        mFileDescriptor = -1;
     }
 
     @Override
@@ -291,9 +288,7 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
                 // the state isn't PRINTING_STATE_READY, so we enter here and make this call (no
                 // extra). If we complete the PDF generation successfully from onLayout or onWrite,
                 // we already make the state PRINTING_STATE_READY and call askUserForSettingsReply
-                // inside pdfWritingDone, thus not entering here.  Also, if we get an extra
-                // AskUserForSettings call, it's handled inside {@link
-                // PrintingContext#pageCountEstimationDone}.
+                // inside pdfWritingDone, thus not entering here.
                 mPrintingContext.askUserForSettingsReply(false);
             }
             mPrintingContext.updatePrintingContextMap(mFileDescriptor, true);
@@ -307,9 +302,6 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
 
         mPrintingState = PRINTING_STATE_FINISHED;
 
-        closeFileDescriptor(mFileDescriptor);
-        mFileDescriptor = -1;
-
         resetCallbacks();
         // The printmanager contract is that onFinish() is always called as the last
         // callback. We set busy to false here.
@@ -319,15 +311,6 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
     private void resetCallbacks() {
         mOnWriteCallback = null;
         mOnLayoutCallback = null;
-    }
-
-    private static void closeFileDescriptor(int fd) {
-        ParcelFileDescriptor fileDescriptor = ParcelFileDescriptor.adoptFd(fd);
-        try {
-            fileDescriptor.close();
-        } catch (IOException ioe) {
-            /* ignore */
-        }
     }
 
     private static PageRange[] convertIntegerArrayToPageRanges(int[] pagesArray) {
