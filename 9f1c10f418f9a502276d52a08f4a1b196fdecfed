@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4ead3c_28a508eb",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_shelf_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-23T20:55:20Z",
+      "side": 1,
+      "message": "nit: can it just be prefix ?",
+      "revId": "9f1c10f418f9a502276d52a08f4a1b196fdecfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
