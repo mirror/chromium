@@ -112,7 +112,6 @@ test("webkit_unit_tests") {
     "tests/ScrollbarsTest.cpp",
     "tests/SmoothScrollTest.cpp",
     "tests/SpinLockTest.cpp",
-    "tests/TextSelectionRepaintTest.cpp",
     "tests/TimerPerfTest.cpp",
     "tests/TouchActionTest.cpp",
     "tests/ViewportTest.cpp",
