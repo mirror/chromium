@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf133176_068c6a58",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-23T13:42:57Z",
+      "side": 1,
+      "message": "Is this guaranteed to be the right Document*?",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 52
+      },
+      "revId": "8b74ea272ae7d17c2c30e85a9e8f2bed2bff4ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -22,6 +22,30 @@
       "revId": "ea249e9e231ed4f779efed1dc730825213526d48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba01fa80_238a7ead",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-23T13:42:57Z",
+      "side": 0,
+      "message": "So... I went with 3. :)\n\nMy thinking was: TryStream is private and only has a single caller, so it can\u0027t be easily abused. And now TryStream (\u0026 its callees) no longer contains any reference to RuntimeEnabledFeatures::*, so it should be easy to see that this path is unconditional.\n\nTryStreamAny, however, contains a prominent check of RuntimeEnabledFeatures right at the start, so I think it\u0027s also easy to see that that code path depends 100% on the runtime flag.",
+      "parentUuid": "81bfee1e_bbd7c672",
+      "range": {
+        "startLine": 615,
+        "startChar": 4,
+        "endLine": 615,
+        "endChar": 45
+      },
+      "revId": "ea249e9e231ed4f779efed1dc730825213526d48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
