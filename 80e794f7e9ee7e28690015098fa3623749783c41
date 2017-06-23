@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ad2c39e_1998631a",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T03:25:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c989b76_58ea9699",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14563ae2_1675ddc9",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705c47f3_6a154d56",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T03:25:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14563ae2_1675ddc9",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c1db8fb8_3653be77",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T03:25:25Z",
+      "side": 1,
+      "message": "Renamed properties to be more descriptive.",
+      "parentUuid": "decc1bb7_256f7805",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ce932ca_66cabb62",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e403e04c_12582f7d",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T03:25:25Z",
+      "side": 1,
+      "message": "The latter. Reworded as unset.",
+      "parentUuid": "6ce932ca_66cabb62",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f09456f_f1ce3308",
         "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationEnvironment.h",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f8486e_1581952d",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationEnvironment.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T03:25:25Z",
+      "side": 1,
+      "message": "I think we want DCHECKs to be as easily hit as possible. This is WAI IMO.",
+      "parentUuid": "6f09456f_f1ce3308",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
