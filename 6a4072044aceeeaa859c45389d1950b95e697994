@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "e03894a5_3a32ab12",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-23T21:01:05Z",
+      "side": 1,
+      "message": "I think this code should go above line 1015, so 1017, so that a transform below MinimumContentsScale does not override the will-change adjustment.",
+      "revId": "6a4072044aceeeaa859c45389d1950b95e697994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1885e91_1fc1cbd2",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 4
@@ -30,6 +47,24 @@
       "writtenOn": "2017-06-23T20:44:40Z",
       "side": 1,
       "message": "Realistically it would be nice if ShouldAdjustRasterScale returned a reason enum for why it should, which this function would take and this if check would be if reason is \"match in all cases\". The reason for this is there is a slew of reasons that we would change the raster scale before even considering will-change. I think this captures them well, but I might have missed something.\n\nDo you think that\u0027s a better approach?",
+      "revId": "6a4072044aceeeaa859c45389d1950b95e697994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95fc83a_7003fec8",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-23T21:01:05Z",
+      "side": 1,
+      "message": "I agree that it would be cleaner for ShouldAdjustRasterScale to return a raster policy\nenum value, which can be something like:\n\nNoAdjustment, AdjustToDeviceScale, AdjustToCurrent, AdjustForPinchZoom\n\nor something like that.",
+      "parentUuid": "c1885e91_1fc1cbd2",
       "revId": "6a4072044aceeeaa859c45389d1950b95e697994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
