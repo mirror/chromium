@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb398c36_adaac705",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-23T15:42:29Z",
+      "side": 1,
+      "message": "super nit: can we just put this in services/api_standards.md? not sure we need a docs subdirectory for this one file.",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f92c21_255213f2",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-23T15:42:29Z",
+      "side": 1,
+      "message": "curious: why should we care about this? and under what scenarios would a set of mojo interfaces not be implementable by a third party?",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8848c22c_7dd683cc",
         "filename": "services/docs/api_standards.md",
         "patchSetId": 3
@@ -107,6 +141,23 @@
     },
     {
       "key": {
+        "uuid": "fb9f85ec_e399ac42",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-23T15:42:29Z",
+      "side": 1,
+      "message": "similar to my other comment above, I\u0027m not sure commenting about third parties is needed? i.e. we\u0027re aiming for these to be self-contained pieces of code that could run without chrome. so the third party angle is that they could take this service without the rest of chrome.\n\nso maybe a slightly different way of putting this would be:\n-tests should be comprehensive such that we can be confident that any internal changes don\u0027t have unintended effects from a consumer\u0027s POV\n?",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9182ffc_425e7178",
         "filename": "services/docs/api_standards.md",
         "patchSetId": 3
@@ -148,6 +199,40 @@
         "endLine": 74,
         "endChar": 49
       },
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f887d4d7_fd73765c",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-23T15:42:29Z",
+      "side": 1,
+      "message": "sorry to sound like a broken record, but since this idea of third-party is something that we don\u0027t have an intent for, i think it muddles thing.\n\nperhaps a slightly different way is \"third-party implementation\" -\u003e \"reimplementation\"?",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aef0ddb_bd401653",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-23T15:42:29Z",
+      "side": 1,
+      "message": "I don\u0027t understand this line?",
       "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
