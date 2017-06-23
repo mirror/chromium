@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb97e548_862ec3a8",
+        "filename": "media/mojo/clients/mojo_demuxer_stream_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-23T23:32:10Z",
+      "side": 1,
+      "message": "This is (was) another instance of the Optional bug you pointed out. Now fixed.",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "7aa268eee7acd6dd1a0c92fe35dfca7f5417fcfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65863b72_e04e7e5b",
         "filename": "media/mojo/clients/mojo_demuxer_stream_impl.cc",
         "patchSetId": 1
@@ -13,6 +36,30 @@
       "writtenOn": "2017-06-23T01:02:45Z",
       "side": 1,
       "message": "This isn\u0027t an identical transformation, because Ptr types are nullable while the C++ type is not. (An exact conversion would be to base::Optional\u003cFooDecoderConfig\u003e.)\n\n(I didn\u0027t yet check whether the callback distinguishes this.)",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "7aa268eee7acd6dd1a0c92fe35dfca7f5417fcfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdc69c0_4f5f2511",
+        "filename": "media/mojo/clients/mojo_demuxer_stream_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-23T23:32:10Z",
+      "side": 1,
+      "message": "Great catch. The callback actually already expects optional (do to nullable type in mojom def), so I end up converting the empty config to an optional that has_value() \u003d\u003d true. Definitely not desired!\n\nNow fixed.",
+      "parentUuid": "65863b72_e04e7e5b",
       "range": {
         "startLine": 78,
         "startChar": 6,
