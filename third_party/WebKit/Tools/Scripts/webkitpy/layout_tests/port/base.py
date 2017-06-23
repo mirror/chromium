@@ -875,10 +875,10 @@ class Port(object):
 
     # TODO(qyearsley): Update callers to create a finder and call it instead
     # of these next two routines (which should be protected).
-    def path_from_chromium_base(self, *comps):
+    def _path_from_chromium_base(self, *comps):
         return self._path_finder.path_from_chromium_base(*comps)
 
-    def perf_tests_dir(self):
+    def _perf_tests_dir(self):
         return self._path_finder.perf_tests_dir()
 
     def layout_tests_dir(self):
@@ -941,13 +941,13 @@ class Port(object):
 
     @memoized
     def skipped_perf_tests(self):
-        return self._expectations_from_skipped_files([self.perf_tests_dir()])
+        return self._expectations_from_skipped_files([self._perf_tests_dir()])
 
     def skips_perf_test(self, test_name):
         for test_or_category in self.skipped_perf_tests():
             if test_or_category == test_name:
                 return True
-            category = self._filesystem.join(self.perf_tests_dir(), test_or_category)
+            category = self._filesystem.join(self._perf_tests_dir(), test_or_category)
             if self._filesystem.isdir(category) and test_name.startswith(test_or_category):
                 return True
         return False
@@ -1329,7 +1329,7 @@ class Port(object):
 
     def repository_path(self):
         """Returns the repository path for the chromium code base."""
-        return self.path_from_chromium_base('build')
+        return self._path_from_chromium_base('build')
 
     # This is a class variable so we can test error output easily.
     _pretty_patch_error_html = 'Failed to run PrettyPatch, see error log.'
@@ -1444,14 +1444,15 @@ class Port(object):
             # Running the symbolizer script can take a lot of memory, so we need to
             # serialize access to it across all the concurrently running drivers.
 
-            llvm_symbolizer_path = self.path_from_chromium_base(
+            llvm_symbolizer_path = self._path_from_chromium_base(
                 'third_party', 'llvm-build', 'Release+Asserts', 'bin', 'llvm-symbolizer')
             if self._filesystem.exists(llvm_symbolizer_path):
                 env = self.host.environ.copy()
                 env['LLVM_SYMBOLIZER_PATH'] = llvm_symbolizer_path
             else:
                 env = None
-            sanitizer_filter_path = self.path_from_chromium_base('tools', 'valgrind', 'asan', 'asan_symbolize.py')
+            sanitizer_filter_path = self._path_from_chromium_base(
+                'tools', 'valgrind', 'asan', 'asan_symbolize.py')
             sanitizer_strip_path_prefix = 'Release/../../'
             if self._filesystem.exists(sanitizer_filter_path):
                 stderr = self._executive.run_command(
@@ -1593,8 +1594,9 @@ class Port(object):
         # Note that we don't do the option caching that the base class does,
         # because finding the right directory is relatively fast.
         target = target or self.get_option('target')
-        return self._static_build_path(self._filesystem, self.get_option('build_directory'),
-                                       self.path_from_chromium_base(), target, comps)
+        return self._static_build_path(
+            self._filesystem, self.get_option('build_directory'),
+            self._path_from_chromium_base(), target, comps)
 
     def _check_driver_build_up_to_date(self, target):
         # FIXME: We should probably get rid of this check altogether as it has
