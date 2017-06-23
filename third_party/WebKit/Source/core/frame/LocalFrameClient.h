@@ -54,6 +54,7 @@
 #include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
+#include "public/platform/WebSuddenTerminationDisablerType.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/web/WebTriggeringEventInfo.h"
 #include "v8/include/v8.h"
@@ -299,16 +300,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual bool IsLocalFrameClientImpl() const { return false; }
 
-  // Called when elements preventing the sudden termination of the frame become
-  // present or stop being present. |type| is the type of element (BeforeUnload
-  // handler, Unload handler).
-  enum SuddenTerminationDisablerType {
-    kBeforeUnloadHandler,
-    kUnloadHandler,
-  };
   virtual void SuddenTerminationDisablerChanged(bool present,
-                                                SuddenTerminationDisablerType) {
-  }
+                                                WebSuddenTerminationDisabler) {}
 
   virtual LinkResource* CreateServiceWorkerLinkResource(HTMLLinkElement*) {
     return nullptr;
