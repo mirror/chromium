@@ -423,6 +423,7 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
                 .IsEmpty();
   }
   bool UpdateScrollingLayers(bool scrolling_layers);
+  void UpdateUserInputScrollable();
   void UpdateScrollParent(const PaintLayer*);
   void UpdateClipParent(const PaintLayer* scroll_parent);
   bool UpdateSquashingLayers(bool needs_squashing_layers);

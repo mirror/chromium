@@ -512,11 +512,6 @@ bool ScrollingCoordinator::ScrollableAreaScrollLayerDidChange(
     web_layer->SetScrollPosition(scroll_position);
 
     web_layer->SetBounds(scrollable_area->ContentsSize());
-    bool can_scroll_x =
-        scrollable_area->UserInputScrollable(kHorizontalScrollbar);
-    bool can_scroll_y =
-        scrollable_area->UserInputScrollable(kVerticalScrollbar);
-    web_layer->SetUserScrollable(can_scroll_x, can_scroll_y);
   }
   if (WebScrollbarLayer* scrollbar_layer =
           GetWebScrollbarLayer(scrollable_area, kHorizontalScrollbar)) {
