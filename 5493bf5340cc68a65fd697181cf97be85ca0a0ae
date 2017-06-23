@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f0934dc_717ca10c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-23T16:35:23Z",
+      "side": 1,
+      "message": "You should probably split up the CL into two.",
+      "revId": "5493bf5340cc68a65fd697181cf97be85ca0a0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e38a02_b8d737de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-23T16:35:23Z",
+      "side": 1,
+      "message": "This sounds like a problem probably with ozone-x11, and not with WindowTreeHostPlatform? I worry that this can break some existing assumptions where WindowTreeHost::OnHostMoved/ResizedInPixels() are called during initialization. They will no longer be called after this change.",
+      "revId": "5493bf5340cc68a65fd697181cf97be85ca0a0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
