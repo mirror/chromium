@@ -22,6 +22,30 @@
       "revId": "cdf76919b37bff021a1220fa4c2de2b25c31caa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad82c796_54f8b989",
+        "filename": "base/memory/shared_memory_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-23T20:31:24Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "6be28e93_b750eadc",
+      "range": {
+        "startLine": 54,
+        "startChar": 49,
+        "endLine": 54,
+        "endChar": 52
+      },
+      "revId": "cdf76919b37bff021a1220fa4c2de2b25c31caa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
