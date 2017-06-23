@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "955df61f_2ac9b2ba",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T16:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b002ed81_55825574",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f2d9ee4_5d48256b",
         "filename": "ash/shutdown_reason.h",
         "patchSetId": 1
@@ -204,6 +222,30 @@
     },
     {
       "key": {
+        "uuid": "d7a7c958_512b84ed",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T16:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c435f1e_2e98e9d9",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d4fe017_c39371c2",
         "filename": "ash/shutdown_reason.h",
         "patchSetId": 1
@@ -239,6 +281,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "3d4fe017_c39371c2",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58220fd1_fb8093a9",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T16:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed865948_43e865a0",
       "range": {
         "startLine": 14,
         "startChar": 2,
@@ -358,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "a47bc129_10c2cd10",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T16:58:49Z",
+      "side": 1,
+      "message": "Looks like there is an event: StatusArea_OS_Update_Default_Selected",
+      "parentUuid": "fc3ad3cb_a05643a8",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc6b3965_46ff56ac",
         "filename": "ash/wm/lock_state_controller.h",
         "patchSetId": 1
@@ -393,6 +477,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "fc6b3965_46ff56ac",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9ce497d_140f3d25",
+        "filename": "ash/wm/lock_state_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T16:58:49Z",
+      "side": 1,
+      "message": "Fixed by removal.",
+      "parentUuid": "dc9672ff_cff1e40a",
       "range": {
         "startLine": 61,
         "startChar": 6,
@@ -494,6 +602,24 @@
     },
     {
       "key": {
+        "uuid": "186aded5_2616c446",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T16:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50cf64af_00d55146",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2b15fc2_1542306b",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 1
@@ -583,6 +709,24 @@
     },
     {
       "key": {
+        "uuid": "79071120_769718c2",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T16:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f8b65a1_e6922469",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e81a70_28469caa",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 1
@@ -629,6 +773,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "d3bc8667_3e3bca31",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52356b39_ce3a4a87",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T16:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2c78e9f_7b0230d3",
       "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
