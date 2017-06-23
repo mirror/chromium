@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a79c0291_305c427e",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T21:47:54Z",
+      "side": 1,
+      "message": "OK, will remove.",
+      "parentUuid": "83073871_1600b080",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "206ca701_064b7677",
         "filename": "ash/shutdown_controller.h",
         "patchSetId": 2
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "not just 131, but also 149, 256, and 511, right?",
       "parentUuid": "38053dd0_74b3c03d",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8e967e_f0197194",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-23T21:47:54Z",
+      "side": 1,
+      "message": "Yep.",
+      "parentUuid": "e37809da_d9337487",
       "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
