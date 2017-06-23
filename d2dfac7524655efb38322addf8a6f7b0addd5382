@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea60ca7a_698b8dde",
+        "filename": "chrome/browser/supervised_user/legacy/supervised_user_registration_utility.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T14:49:56Z",
+      "side": 1,
+      "message": "Can you move this to the top of the function? Even if there is a testing instance, it shouldn\u0027t be used if the feature is disabled.",
+      "revId": "d2dfac7524655efb38322addf8a6f7b0addd5382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
