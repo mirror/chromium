@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f5aa60e6_fc656038",
+        "filename": "components/viz/common/test/real_gl_test_suite.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-23T23:33:40Z",
+      "side": 1,
+      "message": "Actually that doesn\u0027t work, cuz there\u0027s already a message loop coming from one of the tests, so I just removed it entirely here, and put it in the other test that needs it.",
+      "parentUuid": "6d525fd1_40ee18a1",
+      "revId": "c6671401423f99667f1ed2380857c48d4b90ec25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8d33ea1_6e2da7ad",
         "filename": "components/viz/common/test/real_gl_test_suite.cc",
         "patchSetId": 6
