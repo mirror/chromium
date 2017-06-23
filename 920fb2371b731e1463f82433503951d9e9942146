@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb6459c8_88748dc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-06-23T09:25:49Z",
+      "side": 1,
+      "message": "derp",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "920fb2371b731e1463f82433503951d9e9942146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cebf5b9_b43d1b5d",
         "filename": "infra/config/cq.cfg",
         "patchSetId": 1
@@ -16,6 +39,24 @@
       "revId": "920fb2371b731e1463f82433503951d9e9942146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b66b871_356367ab",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-06-23T09:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cebf5b9_b43d1b5d",
+      "revId": "920fb2371b731e1463f82433503951d9e9942146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
