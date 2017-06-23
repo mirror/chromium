@@ -109,6 +109,19 @@ class PLATFORM_EXPORT PropertyTreeState {
   // DCHECK(iterator.next()->innermostNode() == None);
   InnermostNode GetInnermostNode() const;
 
+  // See PaintPropertyNode::Changed().
+  bool Changed(const PropertyTreeState& relative_to_state) const {
+    return Transform()->Changed(*relative_to_state.Transform()) ||
+           Clip()->Changed(*relative_to_state.Clip()) ||
+           Effect()->Changed(*relative_to_state.Effect());
+  }
+
+  void ClearChangedToRoot() const {
+    Transform()->ClearChangedToRoot();
+    Clip()->ClearChangedToRoot();
+    Effect()->ClearChangedToRoot();
+  }
+
 #if DCHECK_IS_ON()
   // Dumps the tree from this state up to the root as a string.
   String ToTreeString() const;

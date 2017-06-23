@@ -153,20 +153,23 @@ void ContentLayerClientImpl::GenerateRasterInvalidations(
     }
 
     old_chunks_matched[matched] = true;
-    if (matched == old_index) {
-      // TODO(wangxianzhu): Also fully invalidate for paint property changes.
+
+    bool property_changed =
+        new_chunk.properties.property_tree_state.Changed(layer_state);
+    if (!property_changed && matched == old_index) {
       // Add the raster invalidations found by PaintController within the chunk.
       AddDisplayItemRasterInvalidations(new_chunk, layer_state);
     } else {
-      // Invalidate both old and new bounds of the chunk if the chunk is
-      // reordered and may expose area that was previously covered by it.
+      // Invalidate both old and new bounds of the chunk if the chunk's paint
+      // properties changed, or is moved backward and may expose area that was
+      // previously covered by it.
       const auto& old_chunks_info = paint_chunks_info_[matched];
-      InvalidateRasterForOldChunk(old_chunks_info,
-                                  PaintInvalidationReason::kChunkReordered);
-      if (old_chunks_info.bounds_in_layer != new_chunk_info.bounds_in_layer) {
-        InvalidateRasterForNewChunk(new_chunk_info,
-                                    PaintInvalidationReason::kChunkReordered);
-      }
+      PaintInvalidationReason reason =
+          property_changed ? PaintInvalidationReason::kPaintProperty
+                           : PaintInvalidationReason::kChunkReordered;
+      InvalidateRasterForOldChunk(old_chunks_info, reason);
+      if (old_chunks_info.bounds_in_layer != new_chunk_info.bounds_in_layer)
+        InvalidateRasterForNewChunk(new_chunk_info, reason);
       // Ignore the display item raster invalidations because we have fully
       // invalidated the chunk.
     }
@@ -318,6 +321,7 @@ scoped_refptr<cc::PictureLayer> ContentLayerClientImpl::UpdateCcPictureLayer(
   }
 
   for (const auto* chunk : paint_chunks) {
+    chunk->properties.property_tree_state.ClearChangedToRoot();
     // TODO(wangxianzhu): This will be unnecessary if we don't call
     // PaintArtifactCompositor::Update() when paint artifact is unchanged.
     chunk->client_is_just_created = false;
