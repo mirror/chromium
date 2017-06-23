@@ -118,12 +118,18 @@ bool IsNoCORSAllowedContext(
     case WebURLRequest::kRequestContextScript:
     case WebURLRequest::kRequestContextWorker:
     case WebURLRequest::kRequestContextSharedWorker:
+    case WebURLRequest::kRequestContextFetch:
       return true;
     case WebURLRequest::kRequestContextPlugin:
       return service_worker_mode == WebURLRequest::ServiceWorkerMode::kNone;
     default:
       return false;
   }
+}
+
+bool IsCORSEnabledRequestMode(WebURLRequest::FetchRequestMode mode) {
+  return mode == WebURLRequest::kFetchRequestModeCORS ||
+         mode == WebURLRequest::kFetchRequestModeCORSWithForcedPreflight;
 }
 
 }  // namespace
@@ -177,33 +183,34 @@ DocumentThreadableLoader::DocumentThreadableLoader(
                      this,
                      &DocumentThreadableLoader::DidTimeout),
       request_started_seconds_(0.0),
-      cors_redirect_limit_(
-          (options_.fetch_request_mode ==
-               WebURLRequest::kFetchRequestModeCORS ||
-           options_.fetch_request_mode ==
-               WebURLRequest::kFetchRequestModeCORSWithForcedPreflight)
-              ? kMaxCORSRedirects
-              : 0),
+      cors_redirect_limit_(0),
       redirect_mode_(WebURLRequest::kFetchRedirectModeFollow),
       override_referrer_(false) {
   DCHECK(client);
-
-  // kPreventPreflight can be used only when the CORS is enabled.
-  DCHECK(options_.preflight_policy == kConsiderPreflight ||
-         options_.fetch_request_mode == WebURLRequest::kFetchRequestModeCORS ||
-         options_.fetch_request_mode ==
-             WebURLRequest::kFetchRequestModeCORSWithForcedPreflight);
 }
 
 void DocumentThreadableLoader::Start(const ResourceRequest& request) {
   // Setting an outgoing referer is only supported in the async code path.
   DCHECK(async_ || request.HttpReferrer().IsEmpty());
 
-  if (options_.fetch_request_mode != WebURLRequest::kFetchRequestModeNoCORS)
-    cors_flag_ = !GetSecurityOrigin()->CanRequestNoSuborigin(request.Url());
+  bool cors_enabled = IsCORSEnabledRequestMode(request.GetFetchRequestMode());
+
+  // kPreventPreflight can be used only when the CORS is enabled.
+  DCHECK(options_.preflight_policy == kConsiderPreflight || cors_enabled);
+
+  if (cors_enabled) {
+    cors_redirect_limit_ = kMaxCORSRedirects;
+  }
 
   request_context_ = request.GetRequestContext();
   redirect_mode_ = request.GetFetchRedirectMode();
+
+  if (request.GetFetchRequestMode() != WebURLRequest::kFetchRequestModeNoCORS) {
+    cors_flag_ = !GetSecurityOrigin()->CanRequestNoSuborigin(request.Url());
+  } else {
+    SECURITY_CHECK(IsNoCORSAllowedContext(request_context_,
+                                          request.GetServiceWorkerMode()));
+  }
 
   // Per https://w3c.github.io/webappsec-suborigins/#security-model-opt-outs,
   // credentials are forced when credentials mode is "same-origin", the
@@ -216,7 +223,7 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
 
   // The CORS flag variable is not yet used at the step in the spec that
   // corresponds to this line, but divert |cors_flag_| here for convenience.
-  if (cors_flag_ && options_.fetch_request_mode ==
+  if (cors_flag_ && request.GetFetchRequestMode() ==
                         WebURLRequest::kFetchRequestModeSameOrigin) {
     probe::documentThreadableLoaderFailedToStartLoadingForClient(GetDocument(),
                                                                  client_);
@@ -254,26 +261,6 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
   }
 
   ResourceRequest new_request(request);
-  if (request_context_ != WebURLRequest::kRequestContextFetch) {
-    // When the request context is not "fetch", |fetch_request_mode|
-    // represents the fetch request mode. So we set that flag here so that we
-    // can see the correct request mode in the service worker's fetch event
-    // handler.
-    switch (options_.fetch_request_mode) {
-      case WebURLRequest::kFetchRequestModeSameOrigin:
-      case WebURLRequest::kFetchRequestModeCORS:
-      case WebURLRequest::kFetchRequestModeCORSWithForcedPreflight:
-        break;
-      case WebURLRequest::kFetchRequestModeNoCORS:
-        SECURITY_CHECK(IsNoCORSAllowedContext(request_context_,
-                                              request.GetServiceWorkerMode()));
-        break;
-      case WebURLRequest::kFetchRequestModeNavigate:
-        NOTREACHED();
-        break;
-    }
-    new_request.SetFetchRequestMode(options_.fetch_request_mode);
-  }
 
   // We assume that ServiceWorker is skipped for sync requests and unsupported
   // protocol requests by content/ code.
@@ -283,10 +270,7 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
       SchemeRegistry::ShouldTreatURLSchemeAsAllowingServiceWorkers(
           request.Url().Protocol()) &&
       loading_context_->GetResourceFetcher()->IsControlledByServiceWorker()) {
-    if (new_request.GetFetchRequestMode() ==
-            WebURLRequest::kFetchRequestModeCORS ||
-        new_request.GetFetchRequestMode() ==
-            WebURLRequest::kFetchRequestModeCORSWithForcedPreflight) {
+    if (IsCORSEnabledRequestMode(request.GetFetchRequestMode())) {
       fallback_request_for_service_worker_ = ResourceRequest(request);
       // m_fallbackRequestForServiceWorker is used when a regular controlling
       // service worker doesn't handle a cross origin request. When this happens
@@ -312,9 +296,7 @@ void DocumentThreadableLoader::DispatchInitialRequest(
     return;
   }
 
-  DCHECK(options_.fetch_request_mode == WebURLRequest::kFetchRequestModeCORS ||
-         options_.fetch_request_mode ==
-             WebURLRequest::kFetchRequestModeCORSWithForcedPreflight ||
+  DCHECK(IsCORSEnabledRequestMode(request.GetFetchRequestMode()) ||
          request.IsExternalRequest());
 
   MakeCrossOriginAccessRequest(request);
@@ -330,9 +312,7 @@ void DocumentThreadableLoader::PrepareCrossOriginRequest(
 
 void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
     const ResourceRequest& request) {
-  DCHECK(options_.fetch_request_mode == WebURLRequest::kFetchRequestModeCORS ||
-         options_.fetch_request_mode ==
-             WebURLRequest::kFetchRequestModeCORSWithForcedPreflight ||
+  DCHECK(IsCORSEnabledRequestMode(request.GetFetchRequestMode()) ||
          request.IsExternalRequest());
   DCHECK(client_);
   DCHECK(!GetResource());
@@ -386,7 +366,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
   }
 
   if (!request.IsExternalRequest() &&
-      options_.fetch_request_mode !=
+      request.GetFetchRequestMode() !=
           WebURLRequest::kFetchRequestModeCORSWithForcedPreflight &&
       skip_preflight) {
     PrepareCrossOriginRequest(cross_origin_request);
@@ -558,7 +538,7 @@ bool DocumentThreadableLoader::RedirectReceived(
 
   // Allow same origin requests to continue after allowing clients to audit the
   // redirect.
-  if (IsAllowedRedirect(request.Url())) {
+  if (IsAllowedRedirect(request.GetFetchRequestMode(), request.Url())) {
     client_->DidReceiveRedirectTo(request.Url());
     if (client_->IsDocumentThreadableLoaderClient()) {
       return static_cast<DocumentThreadableLoaderClient*>(client_)
@@ -730,6 +710,7 @@ void DocumentThreadableLoader::ResponseReceived(
     is_using_data_consumer_handle_ = true;
 
   HandleResponse(resource->Identifier(),
+                 resource->GetResourceRequest().GetFetchRequestMode(),
                  resource->GetResourceRequest().GetFetchCredentialsMode(),
                  response, std::move(handle));
 }
@@ -813,6 +794,7 @@ void DocumentThreadableLoader::ReportResponseReceived(
 
 void DocumentThreadableLoader::HandleResponse(
     unsigned long identifier,
+    WebURLRequest::FetchRequestMode request_mode,
     WebURLRequest::FetchCredentialsMode credentials_mode,
     const ResourceResponse& response,
     std::unique_ptr<WebDataConsumerHandle> handle) {
@@ -856,10 +838,7 @@ void DocumentThreadableLoader::HandleResponse(
              fallback_request_for_service_worker_.Url()));
   fallback_request_for_service_worker_ = ResourceRequest();
 
-  if ((options_.fetch_request_mode == WebURLRequest::kFetchRequestModeCORS ||
-       options_.fetch_request_mode ==
-           WebURLRequest::kFetchRequestModeCORSWithForcedPreflight) &&
-      cors_flag_) {
+  if (IsCORSEnabledRequestMode(request_mode) && cors_flag_) {
     CrossOriginAccessControl::AccessStatus cors_status =
         CrossOriginAccessControl::CheckAccess(response, credentials_mode,
                                               GetSecurityOrigin());
@@ -1029,7 +1008,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
   }
 
   FetchParameters new_params(request, resource_loader_options);
-  if (options_.fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)
+  if (request.GetFetchRequestMode() == WebURLRequest::kFetchRequestModeNoCORS)
     new_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   DCHECK(!GetResource());
 
@@ -1073,7 +1052,7 @@ void DocumentThreadableLoader::LoadRequestSync(
     const ResourceRequest& request,
     ResourceLoaderOptions resource_loader_options) {
   FetchParameters fetch_params(request, resource_loader_options);
-  if (options_.fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)
+  if (request.GetFetchRequestMode() == WebURLRequest::kFetchRequestModeNoCORS)
     fetch_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   Resource* resource = RawResource::FetchSynchronously(
       fetch_params, loading_context_->GetResourceFetcher());
@@ -1111,14 +1090,15 @@ void DocumentThreadableLoader::LoadRequestSync(
   // a perfect test though, since a server can serve a redirect to the same URL
   // that was requested. Also comparing the request and response URLs as strings
   // will fail if the requestURL still has its credentials.
-  if (request_url != response.Url() && !IsAllowedRedirect(response.Url())) {
+  if (request_url != response.Url() &&
+      !IsAllowedRedirect(request.GetFetchRequestMode(), response.Url())) {
     client_ = nullptr;
     client->DidFailRedirectCheck();
     return;
   }
 
-  HandleResponse(identifier, request.GetFetchCredentialsMode(), response,
-                 nullptr);
+  HandleResponse(identifier, request.GetFetchRequestMode(),
+                 request.GetFetchCredentialsMode(), response, nullptr);
 
   // HandleResponse() may detect an error. In such a case (check |m_client| as
   // it gets reset by clear() call), skip the rest.
@@ -1178,8 +1158,10 @@ void DocumentThreadableLoader::LoadRequest(
     LoadRequestSync(request, resource_loader_options);
 }
 
-bool DocumentThreadableLoader::IsAllowedRedirect(const KURL& url) const {
-  if (options_.fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)
+bool DocumentThreadableLoader::IsAllowedRedirect(
+    WebURLRequest::FetchRequestMode fetch_request_mode,
+    const KURL& url) const {
+  if (fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)
     return true;
 
   return !cors_flag_ && GetSecurityOrigin()->CanRequest(url);
