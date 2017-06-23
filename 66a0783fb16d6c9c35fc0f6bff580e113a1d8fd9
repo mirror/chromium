@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0112cda_1f2fe88c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T15:21:11Z",
+      "side": 1,
+      "message": "both introducing an interface and separating out the initialisation touch more places in the code than I would like, so I can do it in another patch if you think it would be better.\n\nOn a side note,  calling nativeInit() in the Java constructor seems common practice in our codebase.",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
