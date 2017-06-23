@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9eb40435_c45c0cc4",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-23T06:17:16Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "2da7af2d_58bd83f1",
+      "range": {
+        "startLine": 652,
+        "startChar": 0,
+        "endLine": 659,
+        "endChar": 3
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb356dd_88a0218b",
         "filename": "content/renderer/render_view_impl.cc",
         "patchSetId": 6
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "70589db4_b51e0672",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-23T06:17:16Z",
+      "side": 0,
+      "message": "Yes, it\u0027s good to remove that inconsistency, especially since the spec says the comparison should be case-insensitive.  (https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-name)\n\nSo, do I understand correctly that previously, _BLANK was sent to the browser process (and stored as the FTN name, etc.), but Blink would keep the new frame\u0027s name empty?  On the other hand, trying this on stable, window.open(\"about:blank\",\"_BLANK\") ends up with the window.name being \"_BLANK\", which is surprising given the case-insensitive comparison to _blank in CreateWindow (that you\u0027re moving), so I don\u0027t think I completely understand how the name gets set in that case...",
+      "parentUuid": "5a7aacd4_384bef2b",
+      "range": {
+        "startLine": 1379,
+        "startChar": 2,
+        "endLine": 1379,
+        "endChar": 29
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9957e707_248acce6",
         "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
         "patchSetId": 6
@@ -91,6 +139,54 @@
       "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c92dbe_5de34b19",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-23T06:17:16Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9957e707_248acce6",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43c2065f_e1787baf",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-23T06:17:16Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9957e707_248acce6",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "df8bde78e96e636afd883deea1fb7e0752a78599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

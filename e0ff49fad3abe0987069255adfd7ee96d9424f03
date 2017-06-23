@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6845a74d_dd788704",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-23T06:17:16Z",
+      "side": 1,
+      "message": "It might be worth referencing 720116 here, the bug with the browser sending us both routing IDs, so we don\u0027t forget to make this mutually exclusive once that bug is fixed.",
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e582e601_77bcc165",
         "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
         "patchSetId": 6
@@ -19,6 +36,64 @@
         "endLine": 70,
         "endChar": 19
       },
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfb01ee_6d4c6a46",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-23T06:17:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e582e601_77bcc165",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e4d2c7e_0954ec0b",
+        "filename": "third_party/WebKit/Source/web/WebFactoryImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-23T06:17:16Z",
+      "side": 1,
+      "message": "Seems weird that this doesn\u0027t take an opener but the one below does.  Is it also just because this arg isn\u0027t interesting for the current callers of this, or is there another reason we don\u0027t want the opener here?",
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f0522a_08ba0ed4",
+        "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-23T06:17:16Z",
+      "side": 1,
+      "message": "If a.com window.opens a new popup and then does a cross-process navigation to b.com, how else would we set the opener for the new main frame for b.com?",
       "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
