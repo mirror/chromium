@@ -42,6 +42,7 @@ import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout.OmniboxLivenessListener;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.ui.UiUtils;
 
@@ -120,8 +121,11 @@ public class UrlBar extends AutocompleteEditText {
     // this (and it the value will only be recalculated after the text has been changed).
     private boolean mDidEllipsizeTextHint;
 
-    /** This tracks whether or not the last ACTION_DOWN event was when the url bar had focus. */
-    boolean mDownEventHadFocus;
+    /** The location of the bottom sheet on the last ACTION_DOWN event. */
+    private float mDownEventSheetOffset;
+
+    /** A handle to the browser's bottom sheet if it exists. */
+    private BottomSheet mBottomSheet;
 
     /**
      * Implement this to get updates when the direction of the text in the URL bar changes.
@@ -231,6 +235,13 @@ public class UrlBar extends AutocompleteEditText {
      */
     public void setWindowDelegate(WindowDelegate windowDelegate) {
         mKeyboardHideHelper.setWindowDelegate(windowDelegate);
+    }
+
+    /**
+     * @param sheet The browser's {@link BottomSheet} if it exists.
+     */
+    public void setBottomSheet(BottomSheet sheet) {
+        mBottomSheet = sheet;
     }
 
     /**
@@ -388,7 +399,9 @@ public class UrlBar extends AutocompleteEditText {
             return true;
         }
 
-        if (event.getActionMasked() == MotionEvent.ACTION_DOWN) mDownEventHadFocus = mFocused;
+        if (event.getActionMasked() == MotionEvent.ACTION_DOWN && mBottomSheet != null) {
+            mDownEventSheetOffset = mBottomSheet.getSheetOffsetFromBottom();
+        }
 
         Tab currentTab = mUrlBarDelegate.getCurrentTab();
         if (event.getAction() == MotionEvent.ACTION_DOWN && currentTab != null) {
@@ -402,11 +415,21 @@ public class UrlBar extends AutocompleteEditText {
 
     @Override
     public boolean performLongClick(float x, float y) {
-        // If the touch event that triggered this was when the url bar was in a different focus
-        // state, ignore the event.
-        if (mDownEventHadFocus != mFocused) return true;
+        return shouldPerformLongClick() ? super.performLongClick(x, y) : true;
+    }
 
-        return super.performLongClick(x, y);
+    @Override
+    public boolean performLongClick() {
+        return shouldPerformLongClick() ? super.performLongClick() : true;
+    }
+
+    /**
+     * @return Whether or not a long click should be performed.
+     */
+    private boolean shouldPerformLongClick() {
+        // If the sheet moved between the last down event, block the long-press.
+        return mBottomSheet == null
+                || mDownEventSheetOffset == mBottomSheet.getSheetOffsetFromBottom();
     }
 
     @Override

@@ -1241,6 +1241,7 @@ public class LocationBarLayout extends FrameLayout
     @Override
     public void setBottomSheet(BottomSheet sheet) {
         mBottomSheet = sheet;
+        mUrlBar.setBottomSheet(sheet);
     }
 
     /**
