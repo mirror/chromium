@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "899b67d5_25a28088",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-23T15:15:15Z",
+      "side": 1,
+      "message": "Seems a bit generous, no?",
+      "range": {
+        "startLine": 747,
+        "startChar": 15,
+        "endLine": 747,
+        "endChar": 25
+      },
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c160822_732a2ead",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-23T15:15:15Z",
+      "side": 1,
+      "message": "technically speaking, we connect to origins, and resolve hosts.",
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fdc29d8_ce31753a",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-23T15:15:15Z",
+      "side": 1,
+      "message": "Comment?",
+      "range": {
+        "startLine": 267,
+        "startChar": 15,
+        "endLine": 267,
+        "endChar": 39
+      },
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a5ae60_a8774e1b",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-23T15:15:15Z",
+      "side": 1,
+      "message": "This is strange, shouldn\u0027t the \"script\" part be truncated when calling .origin() above?",
+      "range": {
+        "startLine": 1655,
+        "startChar": 58,
+        "endLine": 1655,
+        "endChar": 68
+      },
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
