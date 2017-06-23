@@ -16,6 +16,24 @@
       "revId": "9f1c10f418f9a502276d52a08f4a1b196fdecfed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6ff628_5c037f93",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_shelf_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-23T22:04:30Z",
+      "side": 1,
+      "message": "Actually no, and we have check L27:\nDCHECK(crx_file::id_util::IdIsValid(app_id))",
+      "parentUuid": "de4ead3c_28a508eb",
+      "revId": "9f1c10f418f9a502276d52a08f4a1b196fdecfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
