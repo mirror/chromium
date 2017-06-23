@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc08ec96_b301784f",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T23:03:20Z",
+      "side": 0,
+      "message": "This is moved into PaintArtifactCompositor::Update().",
+      "revId": "ef8aa45f36bd3579964d2b30c02e3292735a5edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a17490c_baa3ba52",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T23:03:20Z",
+      "side": 0,
+      "message": "The DCHECK is moved into LowestCommonAncestor().",
+      "revId": "ef8aa45f36bd3579964d2b30c02e3292735a5edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
