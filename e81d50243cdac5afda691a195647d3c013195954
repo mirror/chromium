@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59361e84_ffddd225",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-06-23T06:40:14Z",
+      "side": 1,
+      "message": "This is not safe for incremental marking if script_state_-\u003ePerContextData() can be set at arbitrary times.\n\nThe scenario I am thinking about: Incremental GC starts and marks LocalWindowProxy before setting the PerContextData.",
+      "range": {
+        "startLine": 475,
+        "startChar": 22,
+        "endLine": 475,
+        "endChar": 35
+      },
+      "revId": "e81d50243cdac5afda691a195647d3c013195954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd31835_71cf6408",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-06-23T06:40:14Z",
+      "side": 1,
+      "message": "This doesn\u0027t work as we are not within a GCed object. We require headers for markbits.",
+      "range": {
+        "startLine": 64,
+        "startChar": 22,
+        "endLine": 64,
+        "endChar": 38
+      },
+      "revId": "e81d50243cdac5afda691a195647d3c013195954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
