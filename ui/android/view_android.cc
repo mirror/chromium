@@ -206,6 +206,24 @@ ScopedJavaLocalRef<jobject> ViewAndroid::GetContainerView() {
   return Java_ViewAndroidDelegate_getContainerView(env, delegate);
 }
 
+gfx::Point ViewAndroid::GetLocationOfContainerViewOnScreen() {
+  ScopedJavaLocalRef<jobject> delegate(GetViewAndroidDelegate());
+  if (delegate.is_null())
+    return gfx::Point();
+
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  // Create and retain a temporary array.
+  if (java_location_array_.is_null())
+    java_location_array_.Reset(env, env->NewIntArray(2));
+
+  Java_ViewAndroidDelegate_getLocationOfContainerViewOnScreen(
+      env, delegate, java_location_array_);
+  int location[2];
+  env->GetIntArrayRegion(java_location_array_.obj(), 0, 2, location);
+  return gfx::Point(location[0], location[1]);
+}
+
 void ViewAndroid::RemoveChild(ViewAndroid* child) {
   DCHECK(child);
   DCHECK_EQ(child->parent_, this);
