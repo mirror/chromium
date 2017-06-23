@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "174010d4_49e87fea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:07:08Z",
+      "side": 1,
+      "message": "Good to learn :) Fixed!",
+      "parentUuid": "e8e2d577_6f30d7b3",
+      "range": {
+        "startLine": 11,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "682283b7c5edc9be50a60390059c1f34e4fba4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8f09cfa_8239bbda",
         "filename": "third_party/WebKit/Source/modules/websockets/WebPepperSocketImpl.cpp",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-23T06:07:11Z",
       "side": 1,
       "message": "Already included by WebPepperSocketImpl.h.",
+      "revId": "682283b7c5edc9be50a60390059c1f34e4fba4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fda7b5_41a47e6d",
+        "filename": "third_party/WebKit/Source/modules/websockets/WebPepperSocketImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:07:08Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "d8f09cfa_8239bbda",
       "revId": "682283b7c5edc9be50a60390059c1f34e4fba4c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
