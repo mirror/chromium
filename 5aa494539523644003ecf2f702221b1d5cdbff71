@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35aa4e37_16ef6a2d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-23T13:31:36Z",
+      "side": 1,
+      "message": "Yes.  This is very similar to code in ScriptController::ExecuteScriptInIsolatedWorld",
+      "parentUuid": "cb532bd5_e136dd92",
+      "revId": "5aa494539523644003ecf2f702221b1d5cdbff71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b628cf02_35d09a03",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T13:21:42Z",
       "side": 1,
       "message": "So I think ContextIfInitialized() always returns true here.",
+      "revId": "5aa494539523644003ecf2f702221b1d5cdbff71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da00ef1a_a7dfdd23",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-23T13:31:36Z",
+      "side": 1,
+      "message": "Right.",
+      "parentUuid": "b628cf02_35d09a03",
       "revId": "5aa494539523644003ecf2f702221b1d5cdbff71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
