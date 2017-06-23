@@ -13,6 +13,7 @@
 #include "core/workers/WorkerThread.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/wtf/Functional.h"
 
 namespace blink {
@@ -81,6 +82,14 @@ void WorkerOrWorkletGlobalScope::Dispose() {
   DCHECK(script_controller_);
   script_controller_->Dispose();
   script_controller_.Clear();
+
+  // Due to absence of FrameLoader and DocumentLoader, finalize ResourceFetcher
+  // in the WorkerOrWorkletGlobalScope.
+  if (fetch_context_) {
+    ResourceFetcher* fetcher = fetch_context_->GetResourceFetcher();
+    fetcher->StopFetching();
+    fetcher->ClearContext();
+  }
 }
 
 DEFINE_TRACE(WorkerOrWorkletGlobalScope) {
