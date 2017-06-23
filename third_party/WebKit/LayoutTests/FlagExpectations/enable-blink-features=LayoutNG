@@ -11748,7 +11748,6 @@ crbug.com/591099 fast/forms/select/select-set-length-with-mutation-reorder.html 
 crbug.com/591099 fast/forms/select/select-set-length-with-mutation-reparent.html [ Failure ]
 crbug.com/591099 fast/forms/select/select-set-length-with-mutation.html [ Failure ]
 crbug.com/591099 fast/forms/select/select-set-length.html [ Failure ]
-crbug.com/591099 fast/forms/select/select-size-invalid.html [ Failure ]
 crbug.com/591099 fast/forms/select/select-size.html [ Failure ]
 crbug.com/591099 fast/forms/select/select-state-restore.html [ Crash Failure ]
 crbug.com/591099 fast/forms/select/select-style.html [ Failure ]
