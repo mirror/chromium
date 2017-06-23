@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68da4a07_bb794997",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-23T17:57:24Z",
+      "side": 1,
+      "message": "Thanks for the pointer.\nI think that code is making a potentially bad assumption. It is assuming last-active order corresponds to reverse z-order. There is no guarantee last active order and reverse z-order are the same. It\u0027s entirely possible for a window manager to reorder windows in anyway it seems fit. We only update the BrowserList when the active window changes.",
+      "parentUuid": "23824457_bf349111",
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "953f52dc_6b4cdb51",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 13
