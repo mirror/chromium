@@ -22,6 +22,30 @@
       "revId": "41baade3ac4a19dc6817120042ea1d0910da9cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e89922_20574f9b",
+        "filename": "ios/web/shell/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-23T15:00:04Z",
+      "side": 1,
+      "message": "Nothing else to do; using \"copy_data_to_bundle \u003d true\" in the repack template invocation and having a dependency on the target should be enough.",
+      "parentUuid": "8eb23296_7731fe95",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "41baade3ac4a19dc6817120042ea1d0910da9cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
