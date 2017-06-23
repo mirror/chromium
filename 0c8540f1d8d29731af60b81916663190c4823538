@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cc99037_9e96cb8e",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-23T10:40:10Z",
+      "side": 1,
+      "message": "an opaque",
+      "revId": "0c8540f1d8d29731af60b81916663190c4823538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
