@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3cb58b96_bedc0d16",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-23T19:27:42Z",
+      "side": 1,
+      "message": "I think we might be able to do this a little bit simpler; see comment below.",
+      "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e5cf76_4cd40656",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-23T19:27:42Z",
+      "side": 1,
+      "message": "We look up the opener tab here, and GetTabById() also allows for populating a Browser*.  So what we could do would be something like:\nBrowser* opener_browser \u003d nullptr;\nif (!GetTabById(....)) {\n  if (error) {\n    ...\n  }\n  ...\n}\n\nif (window_id !\u003d GetWindowId(opener_browser)) {\n  if (error) {\n    *error \u003d ...;\n  }\n  return nullptr;\n}\n\nWDYT?",
+      "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a91aa67_7ca38fef",
         "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
         "patchSetId": 2
