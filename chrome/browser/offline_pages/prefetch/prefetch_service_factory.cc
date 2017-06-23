@@ -9,10 +9,13 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
+#include "chrome/browser/download/download_service_factory.h"
 #include "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.h"
+#include "chrome/common/channel_info.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
+#include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
@@ -47,10 +50,15 @@ KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
   auto suggested_articles_observer =
       base::MakeUnique<SuggestedArticlesObserver>();
 
-  return new PrefetchServiceImpl(std::move(offline_metrics_collector),
-                                 std::move(prefetch_dispatcher),
-                                 std::move(prefetch_gcm_app_handler),
-                                 std::move(suggested_articles_observer));
+  // Start the download service if not yet.
+  DownloadServiceFactory::GetForBrowserContext(context);
+  auto prefetch_downloader =
+      base::MakeUnique<PrefetchDownloader>(chrome::GetChannel());
+
+  return new PrefetchServiceImpl(
+      std::move(offline_metrics_collector), std::move(prefetch_dispatcher),
+      std::move(prefetch_gcm_app_handler),
+      std::move(suggested_articles_observer), std::move(prefetch_downloader));
 }
 
 }  // namespace offline_pages

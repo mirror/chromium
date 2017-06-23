@@ -19,6 +19,8 @@ static_library("prefetch") {
     "prefetch_dispatcher.h",
     "prefetch_dispatcher_impl.cc",
     "prefetch_dispatcher_impl.h",
+    "prefetch_downloader.cc",
+    "prefetch_downloader.h",
     "prefetch_gcm_app_handler.cc",
     "prefetch_gcm_app_handler.h",
     "prefetch_gcm_handler.h",
@@ -28,6 +30,8 @@ static_library("prefetch") {
     "prefetch_proto_utils.h",
     "prefetch_request_fetcher.cc",
     "prefetch_request_fetcher.h",
+    "prefetch_server_urls.cc",
+    "prefetch_server_urls.h",
     "prefetch_service.h",
     "prefetch_service_impl.cc",
     "prefetch_service_impl.h",
@@ -42,6 +46,7 @@ static_library("prefetch") {
   ]
   deps = [
     "//base",
+    "//components/download/public",
     "//components/gcm_driver",
     "//components/gcm_driver/common",
     "//components/keyed_service/core",
@@ -91,6 +96,7 @@ source_set("unit_tests") {
     "generate_page_bundle_request_unittest.cc",
     "get_operation_request_unittest.cc",
     "prefetch_dispatcher_impl_unittest.cc",
+    "prefetch_downloader_unittest.cc",
     "prefetch_gcm_app_handler_unittest.cc",
     "prefetch_item_unittest.cc",
     "prefetch_request_fetcher_unittest.cc",
@@ -103,6 +109,7 @@ source_set("unit_tests") {
   deps = [
     ":prefetch",
     ":test_support",
+    "//components/download/public",
     "//components/gcm_driver/instance_id",
     "//components/offline_pages/core",
     "//components/offline_pages/core:switches",

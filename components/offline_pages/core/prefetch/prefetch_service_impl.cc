@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "components/offline_pages/core/prefetch/offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
+#include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 
@@ -19,11 +20,13 @@ PrefetchServiceImpl::PrefetchServiceImpl(
     std::unique_ptr<OfflineMetricsCollector> offline_metrics_collector,
     std::unique_ptr<PrefetchDispatcher> dispatcher,
     std::unique_ptr<PrefetchGCMHandler> gcm_handler,
-    std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer)
+    std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer,
+    std::unique_ptr<PrefetchDownloader> prefetch_downloader)
     : offline_metrics_collector_(std::move(offline_metrics_collector)),
       prefetch_dispatcher_(std::move(dispatcher)),
       prefetch_gcm_handler_(std::move(gcm_handler)),
-      suggested_articles_observer_(std::move(suggested_articles_observer)) {
+      suggested_articles_observer_(std::move(suggested_articles_observer)),
+      prefetch_downloader_(std::move(prefetch_downloader)) {
   prefetch_dispatcher_->SetService(this);
   prefetch_gcm_handler_->SetService(this);
   suggested_articles_observer_->SetPrefetchService(this);
@@ -49,6 +52,10 @@ SuggestedArticlesObserver* PrefetchServiceImpl::GetSuggestedArticlesObserver() {
 
 OfflineEventLogger* PrefetchServiceImpl::GetLogger() {
   return &logger_;
+}
+
+PrefetchDownloader* PrefetchServiceImpl::GetPrefetchDownloader() {
+  return prefetch_downloader_.get();
 }
 
 void PrefetchServiceImpl::Shutdown() {
