@@ -5,6 +5,8 @@
 #import "ios/chrome/browser/ui/payments/payment_method_selection_coordinator.h"
 
 #include "components/autofill/core/browser/credit_card.h"
+#include "components/payments/core/autofill_payment_instrument.h"
+#include "components/payments/core/payment_instrument.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/ui/payments/payment_method_selection_mediator.h"
@@ -32,13 +34,14 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
 // Initializes and starts the CreditCardEditCoordinator. Sets |creditCard| as
 // the credit card to be edited.
 - (void)startCreditCardEditCoordinatorWithCreditCard:
-    (autofill::CreditCard*)creditCard;
+    (payments::AutofillPaymentInstrument*)creditCard;
 
 // Called when the user selects a payment method. The cell is checked, the
 // UI is locked so that the user can't interact with it, then the delegate is
 // notified. The delay is here to let the user get a visual feedback of the
 // selection before this view disappears.
-- (void)delayedNotifyDelegateOfSelection:(autofill::CreditCard*)paymentMethod;
+- (void)delayedNotifyDelegateOfSelection:
+    (payments::PaymentInstrument*)paymentMethod;
 
 @end
 
@@ -82,9 +85,9 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
   // Update the data source with the selection.
   self.mediator.selectedItemIndex = index;
 
-  DCHECK(index < self.paymentRequest->credit_cards().size());
+  DCHECK(index < self.paymentRequest->payment_methods().size());
   [self delayedNotifyDelegateOfSelection:self.paymentRequest
-                                             ->credit_cards()[index]];
+                                             ->payment_methods()[index]];
 }
 
 - (void)paymentRequestSelectorViewControllerDidFinish:
@@ -106,16 +109,22 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
 - (void)paymentRequestSelectorViewController:
             (PaymentRequestSelectorViewController*)controller
               didSelectItemAtIndexForEditing:(NSUInteger)index {
-  DCHECK(index < self.paymentRequest->credit_cards().size());
-  [self
-      startCreditCardEditCoordinatorWithCreditCard:self.paymentRequest
-                                                       ->credit_cards()[index]];
+  DCHECK(index < self.paymentRequest->payment_methods().size());
+  DCHECK(self.paymentRequest->payment_methods()[index]->type() ==
+         payments::PaymentInstrument::Type::AUTOFILL);
+
+  // If we are editing a payment instrument then we know it will
+  // be an AutofillPaymentInstrument.
+  payments::AutofillPaymentInstrument* autofillInstrument =
+      static_cast<payments::AutofillPaymentInstrument*>(
+          self.paymentRequest->payment_methods()[index]);
+  [self startCreditCardEditCoordinatorWithCreditCard:autofillInstrument];
 }
 
 #pragma mark - CreditCardEditCoordinatorDelegate
 
 - (void)creditCardEditCoordinator:(CreditCardEditCoordinator*)coordinator
-       didFinishEditingCreditCard:(autofill::CreditCard*)creditCard {
+       didFinishEditingCreditCard:(payments::PaymentInstrument*)creditCard {
   // Update the data source with the new data.
   [self.mediator loadItems];
 
@@ -141,16 +150,19 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
 #pragma mark - Helper methods
 
 - (void)startCreditCardEditCoordinatorWithCreditCard:
-    (autofill::CreditCard*)creditCard {
+    (payments::AutofillPaymentInstrument*)autofillInstrument {
   self.creditCardEditCoordinator = [[CreditCardEditCoordinator alloc]
       initWithBaseViewController:self.viewController];
   self.creditCardEditCoordinator.paymentRequest = self.paymentRequest;
-  self.creditCardEditCoordinator.creditCard = creditCard;
+  self.creditCardEditCoordinator.paymentMethod = autofillInstrument;
+  self.creditCardEditCoordinator.creditCard =
+      autofillInstrument ? autofillInstrument->credit_card() : nil;
   self.creditCardEditCoordinator.delegate = self;
   [self.creditCardEditCoordinator start];
 }
 
-- (void)delayedNotifyDelegateOfSelection:(autofill::CreditCard*)paymentMethod {
+- (void)delayedNotifyDelegateOfSelection:
+    (payments::PaymentInstrument*)paymentMethod {
   self.viewController.view.userInteractionEnabled = NO;
   __weak PaymentMethodSelectionCoordinator* weakSelf = self;
   dispatch_after(

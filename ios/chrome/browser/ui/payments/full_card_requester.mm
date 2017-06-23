@@ -6,6 +6,7 @@
 
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller_impl.h"
+
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.h"
 #include "ios/chrome/browser/ui/payments/payment_request_coordinator.h"
@@ -53,27 +54,22 @@ FullCardRequester::FullCardRequester(PaymentRequestCoordinator* owner,
                          browser_state->IsOffTheRecord()) {}
 
 void FullCardRequester::GetFullCard(
-    autofill::CreditCard* card,
-    autofill::AutofillManager* autofill_manager) {
-  DCHECK(card);
-  DCHECK(autofill_manager);
-  autofill_manager->GetOrCreateFullCardRequest()->GetFullCard(
-      *card, autofill::AutofillClient::UNMASK_FOR_PAYMENT_REQUEST, AsWeakPtr(),
-      AsWeakPtr());
-}
-
-void FullCardRequester::OnFullCardRequestSucceeded(
     const autofill::CreditCard& card,
-    const base::string16& verificationCode) {
-  [owner_ fullCardRequestDidSucceedWithCard:card
-                           verificationCode:verificationCode];
+    autofill::AutofillManager* autofill_manager,
+    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
+        result_delegate) {
+  DCHECK(autofill_manager);
+  DCHECK(result_delegate);
+  autofill_manager->GetOrCreateFullCardRequest()->GetFullCard(
+      card, autofill::AutofillClient::UNMASK_FOR_PAYMENT_REQUEST,
+      result_delegate, AsWeakPtr());
 }
 
-void FullCardRequester::OnFullCardRequestFailed() {
-  // No action is required here. PRCardUnmaskPromptViewBridge manages its own
-  // life cycle. When the prompt is explicitly dismissed via tapping the close
-  // button (either in presence or absence of an error), the unmask prompt
-  // dialog pops itself and the user is back to the Payment Request UI.
+void FullCardRequester::OnInstrumentDetailsReady(
+    const std::string& method_name,
+    const std::string& stringified_details) {
+  [owner_ fullCardRequestDidSucceed:method_name
+                 stringifiedDetails:stringified_details];
 }
 
 void FullCardRequester::ShowUnmaskPrompt(

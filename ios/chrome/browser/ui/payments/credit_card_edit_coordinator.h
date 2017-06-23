@@ -13,6 +13,10 @@ namespace autofill {
 class CreditCard;
 }  // namespace autofill
 
+namespace payments {
+class PaymentInstrument;
+}
+
 class PaymentRequest;
 
 @class CreditCardEditCoordinator;
@@ -25,7 +29,7 @@ class PaymentRequest;
 // PaymentRequest object if no credit card instance was provided to the
 // coordinator. Otherwise, it will be the same edited instance.
 - (void)creditCardEditCoordinator:(CreditCardEditCoordinator*)coordinator
-       didFinishEditingCreditCard:(autofill::CreditCard*)creditCard;
+       didFinishEditingCreditCard:(payments::PaymentInstrument*)creditCard;
 
 // Notifies the delegate that the user has chosen to cancel editing or creating
 // a credit card and return to the previous screen.
@@ -45,6 +49,10 @@ class PaymentRequest;
 // The credit card to be edited, if any. This pointer is not owned by this class
 // and should outlive it.
 @property(nonatomic, assign) autofill::CreditCard* creditCard;
+
+// The abstraction of the credit card that is getting edited. This pointer is
+// not owned by this class and should outlive it.
+@property(nonatomic, assign) payments::PaymentInstrument* paymentMethod;
 
 // The PaymentRequest object owning an instance of web::PaymentRequest as
 // provided by the page invoking the Payment Request API. This pointer is not

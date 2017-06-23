@@ -13,7 +13,9 @@
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/region_data_loader_impl.h"
 #include "components/payments/core/address_normalizer_impl.h"
+#include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/currency_formatter.h"
+#include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/autofill/validation_rules_storage_factory.h"
@@ -54,15 +56,15 @@ PaymentRequest::PaymentRequest(
           GetAddressInputStorage())),
       selected_shipping_profile_(nullptr),
       selected_contact_profile_(nullptr),
-      selected_credit_card_(nullptr),
+      selected_payment_method_(nullptr),
       selected_shipping_option_(nullptr),
       profile_comparator_(GetApplicationContext()->GetApplicationLocale(),
                           *this) {
   PopulateAvailableShippingOptions();
   PopulateProfileCache();
   PopulateAvailableProfiles();
-  PopulateCreditCardCache();
-  PopulateAvailableCreditCards();
+  PopulatePaymentMethodCache();
+  PopulateAvailablePaymentMethods();
 
   SetSelectedShippingOption();
 
@@ -80,9 +82,9 @@ PaymentRequest::PaymentRequest(
     selected_contact_profile_ = contact_profiles_[0];
   }
 
-  // Select the highest ranking credit card.
-  if (!credit_cards_.empty())
-    selected_credit_card_ = credit_cards_[0];
+  // Select the highest ranking payment method.
+  if (!payment_methods_.empty())
+    selected_payment_method_ = payment_methods_[0];
 }
 
 PaymentRequest::~PaymentRequest() {}
@@ -114,10 +116,8 @@ void PaymentRequest::DoFullCardRequest(
     const autofill::CreditCard& credit_card,
     base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
         result_delegate) {
-  // TODO: In the follow-up CL openFullCardRequestUI will take in arguments,
-  // specifically the |result_delegate| to be used in the
-  // |payment_request_delegate_| object.
-  [payment_request_delegate_ openFullCardRequestUI];
+  [payment_request_delegate_ openFullCardRequestUI:credit_card
+                                    resultDelegate:result_delegate];
 }
 
 payments::AddressNormalizer* PaymentRequest::GetAddressNormalizer() {
@@ -229,14 +229,28 @@ void PaymentRequest::PopulateAvailableProfiles() {
       profile_comparator_.FilterProfilesForShipping(raw_profiles_for_filtering);
 }
 
-autofill::CreditCard* PaymentRequest::AddCreditCard(
+payments::PaymentInstrument* PaymentRequest::AddAutofillPaymentInstrument(
     const autofill::CreditCard& credit_card) {
-  credit_card_cache_.push_back(
-      base::MakeUnique<autofill::CreditCard>(credit_card));
+  std::string spec_issuer_network =
+      autofill::data_util::GetPaymentRequestData(credit_card.network())
+          .basic_card_issuer_network;
 
-  PopulateAvailableCreditCards();
+  if (std::find(supported_card_networks_.begin(),
+                supported_card_networks_.end(),
+                spec_issuer_network) == supported_card_networks_.end()) {
+    return nullptr;
+  }
 
-  return credit_card_cache_.back().get();
+  // AutofillPaymentInstrument makes a copy of |credit_card| so it is
+  // effectively owned by this object.
+  payment_method_cache_.push_back(
+      base::MakeUnique<payments::AutofillPaymentInstrument>(
+          spec_issuer_network, credit_card, shipping_profiles_,
+          GetApplicationContext()->GetApplicationLocale(), AsWeakPtr().get()));
+
+  PopulateAvailablePaymentMethods();
+
+  return payment_method_cache_.back().get();
 }
 
 payments::PaymentsProfileComparator* PaymentRequest::profile_comparator() {
@@ -244,10 +258,10 @@ payments::PaymentsProfileComparator* PaymentRequest::profile_comparator() {
 }
 
 bool PaymentRequest::CanMakePayment() const {
-  return !credit_cards_.empty();
+  return !payment_methods_.empty();
 }
 
-void PaymentRequest::PopulateCreditCardCache() {
+void PaymentRequest::PopulatePaymentMethodCache() {
   // TODO(crbug.com/709036): Validate method data.
   payments::data_util::ParseBasicCardSupportedNetworks(
       web_payment_request_.method_data, &supported_card_networks_,
@@ -259,31 +273,23 @@ void PaymentRequest::PopulateCreditCardCache() {
   if (credit_cards_to_suggest.empty())
     return;
 
-  credit_card_cache_.reserve(credit_cards_to_suggest.size());
+  payment_method_cache_.reserve(credit_cards_to_suggest.size());
 
   for (const auto* credit_card : credit_cards_to_suggest) {
-    std::string spec_issuer_network =
-        autofill::data_util::GetPaymentRequestData(credit_card->network())
-            .basic_card_issuer_network;
-    if (std::find(supported_card_networks_.begin(),
-                  supported_card_networks_.end(),
-                  spec_issuer_network) != supported_card_networks_.end()) {
-      credit_card_cache_.push_back(
-          base::MakeUnique<autofill::CreditCard>(*credit_card));
-    }
+    AddAutofillPaymentInstrument(*credit_card);
   }
 }
 
-void PaymentRequest::PopulateAvailableCreditCards() {
-  if (credit_card_cache_.empty())
+void PaymentRequest::PopulateAvailablePaymentMethods() {
+  if (payment_method_cache_.empty())
     return;
 
-  credit_cards_.clear();
-  credit_cards_.reserve(credit_card_cache_.size());
+  payment_methods_.clear();
+  payment_methods_.reserve(payment_method_cache_.size());
 
-  // TODO(crbug.com/602666): Implement prioritization rules for credit cards.
-  for (auto const& credit_card : credit_card_cache_) {
-    credit_cards_.push_back(credit_card.get());
+  // TODO(crbug.com/602666): Implement prioritization rules for payment methods.
+  for (auto const& payment_method : payment_method_cache_) {
+    payment_methods_.push_back(payment_method.get());
   }
 }
 

@@ -13,6 +13,7 @@
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/strings_util.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/strings/grit/components_strings.h"
@@ -83,15 +84,15 @@ class PaymentRequestMediatorTest : public PlatformTest {
 
 // Tests whether payment can be completed when expected.
 TEST_F(PaymentRequestMediatorTest, TestCanPay) {
-  // Payment cannot be completed if there is no selected credit card.
+  // Payment cannot be completed if there is no selected payment method.
   EXPECT_TRUE([GetPaymentRequestMediator() canPay]);
-  autofill::CreditCard* selected_credit_card =
-      payment_request_->selected_credit_card();
-  payment_request_->set_selected_credit_card(nullptr);
+  payments::PaymentInstrument* selected_payment_method =
+      payment_request_->selected_payment_method();
+  payment_request_->set_selected_payment_method(nullptr);
   EXPECT_FALSE([GetPaymentRequestMediator() canPay]);
 
-  // Restore the selected credit card.
-  payment_request_->set_selected_credit_card(selected_credit_card);
+  // Restore the selected payment method.
+  payment_request_->set_selected_payment_method(selected_payment_method);
   EXPECT_TRUE([GetPaymentRequestMediator() canPay]);
 
   // Payment cannot be completed if there is no selected shipping profile,
@@ -297,11 +298,11 @@ TEST_F(PaymentRequestMediatorTest, TestPaymentMethodItem) {
   EXPECT_EQ(MDCCollectionViewCellAccessoryDisclosureIndicator,
             payment_method_item.accessoryType);
 
-  // Reset the selected credit card.
-  payment_request_->set_selected_credit_card(nullptr);
+  // Reset the selected payment method.
+  payment_request_->set_selected_payment_method(nullptr);
 
-  // When there is no selected credit card, the Payment Method item should be of
-  // type CollectionViewDetailItem.
+  // When there is no selected payment method, the Payment Method item should be
+  // of type CollectionViewDetailItem.
   item = [GetPaymentRequestMediator() paymentMethodItem];
   ASSERT_TRUE([item isMemberOfClass:[CollectionViewDetailItem class]]);
   CollectionViewDetailItem* add_payment_method_item =
@@ -313,8 +314,8 @@ TEST_F(PaymentRequestMediatorTest, TestPaymentMethodItem) {
   EXPECT_EQ(MDCCollectionViewCellAccessoryDisclosureIndicator,
             add_payment_method_item.accessoryType);
 
-  // Remove the credit cards.
-  payment_request_->ClearCreditCards();
+  // Remove the payment methods.
+  payment_request_->ClearPaymentMethods();
 
   // No accessory view indicates there are no payment methods to choose from.
   item = [GetPaymentRequestMediator() paymentMethodItem];
