@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea8291d5_becfe77e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/IndexedDB/nested-cloning-common.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-23T17:29:43Z",
+      "side": 1,
+      "message": "nit: prefer an options argument to boolean, so the caller is more readable (i.e. `{useKeyGenerator: true}`",
+      "revId": "2f437abfe19de4603a124b883648b6f57aa068c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
