@@ -311,6 +311,11 @@ scoped_refptr<VideoFrame> VideoRendererImpl::Render(
   if (!background_rendering && !was_background_rendering_)
     frames_dropped_ += frames_dropped;
   UpdateStats_Locked();
+  if (background_rendering && !was_background_rendering_)
+    LOG(ERROR) << "Entering background render mode...";
+  else if (!background_rendering && was_background_rendering_)
+    LOG(ERROR) << "Entering foreground render mode...";
+
   was_background_rendering_ = background_rendering;
 
   // Always post this task, it will acquire new frames if necessary and since it
@@ -872,10 +877,18 @@ void VideoRendererImpl::UpdateMaxBufferedFrames() {
 
   DCHECK(read_durations_.count());
 
+  // Maximum number of buffered frames, regardless of the resolution.
+  const size_t kMaxBufferedFrames = 100;
+
   // If we're background rendering or reads are faster than the frame duration,
   // our maximum doesn't matter.
   if (was_background_rendering_ || read_durations_.max() <= frame_duration) {
+    LOG(ERROR) << "Lowering buffered frames...";
     max_buffered_frames_ = min_buffered_frames_;
+    return;
+  } else {
+    LOG(ERROR) << "Raising buffered frames...";
+    max_buffered_frames_ = kMaxBufferedFrames;
     return;
   }
 
@@ -902,9 +915,6 @@ void VideoRendererImpl::UpdateMaxBufferedFrames() {
   // enough to be considered as having user engagement.
   if (!has_playback_met_watch_time_duration_requirement_)
     return;
-
-  // Maximum number of buffered frames, regardless of the resolution.
-  const size_t kMaxBufferedFrames = 16;
 
   // Choose a maximum that ensures we have enough frames to cover the length of
   // the longest seen read duration.
