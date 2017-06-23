@@ -30,6 +30,13 @@
 #define JNI_GENERATOR_EXPORT extern "C" __attribute__((visibility("default")))
 #endif
 
+// Used to export JNI registration functions.
+#if defined(COMPONENT_BUILD)
+#define JNI_REGISTRATION_EXPORT __attribute__((visibility("default")))
+#else
+#define JNI_REGISTRATION_EXPORT
+#endif
+
 namespace jni_generator {
 
 inline void HandleRegistrationError(JNIEnv* env,
@@ -42,6 +49,8 @@ inline void CheckException(JNIEnv* env) {
   base::android::CheckException(env);
 }
 
+// TODO: Remove this function since all natives are registered together.
+// Currently gvr-android-sdk stil calls it. https://crbug.com/664306.
 inline bool ShouldSkipJniRegistration(bool is_maindex_class) {
   switch (base::android::GetJniRegistrationType()) {
     case base::android::ALL_JNI_REGISTRATION:
