@@ -46,6 +46,30 @@
       "revId": "72db2a55a9cbb1bbd44e37c6d97fb526b63072cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74fd6c75_867375fa",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-23T22:02:20Z",
+      "side": 1,
+      "message": "Great! Thanks for fixing this!",
+      "parentUuid": "c86b9109_a4ecf1fc",
+      "range": {
+        "startLine": 395,
+        "startChar": 20,
+        "endLine": 395,
+        "endChar": 38
+      },
+      "revId": "72db2a55a9cbb1bbd44e37c6d97fb526b63072cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
