@@ -6,9 +6,10 @@ package org.chromium.chrome.test;
 
 import static org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils.registerCategory;
 
-import org.chromium.chrome.browser.suggestions.SuggestionsBottomSheetContent;
+import org.chromium.chrome.browser.suggestions.SuggestionsDependencyFactory;
 import org.chromium.chrome.test.util.browser.suggestions.DummySuggestionsEventReporter;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
+import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 
 /**
  * Junit4 rule for tests testing suggestions on the Chrome Home bottom sheet.
@@ -16,18 +17,20 @@ import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 public class SuggestionsBottomSheetTestRule extends BottomSheetTestRule {
     @Override
     protected void beforeStartingActivity() {
-        FakeSuggestionsSource suggestionsSource = new FakeSuggestionsSource();
-        registerCategory(suggestionsSource, /* category = */ 42, /* count = */ 5);
-        SuggestionsBottomSheetContent.setSuggestionsSourceForTesting(suggestionsSource);
-        SuggestionsBottomSheetContent.setEventReporterForTesting(
-                new DummySuggestionsEventReporter());
         super.beforeStartingActivity();
     }
 
     @Override
     protected void afterActivityFinished() {
         super.afterActivityFinished();
-        SuggestionsBottomSheetContent.setSuggestionsSourceForTesting(null);
-        SuggestionsBottomSheetContent.setEventReporterForTesting(null);
+        SuggestionsDependencyFactory.setInstanceForTesting(null);
+    }
+
+    public void initDependencies(SuggestionsDependenciesRule.TestFactory testFactory) {
+        FakeSuggestionsSource suggestionsSource = new FakeSuggestionsSource();
+        registerCategory(suggestionsSource, /* category = */ 42, /* count = */ 5);
+        testFactory.mSuggestionsSource = suggestionsSource;
+
+        testFactory.mEventReporter = new DummySuggestionsEventReporter();
     }
 }

@@ -35,13 +35,13 @@ import org.chromium.chrome.browser.compositor.layouts.content.InvalidationAwareT
 import org.chromium.chrome.browser.download.DownloadManagerService;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.ntp.NewTabPageView.NewTabPageManager;
-import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrlServiceObserver;
+import org.chromium.chrome.browser.suggestions.DestructionObserver;
+import org.chromium.chrome.browser.suggestions.SuggestionsDependencyFactory;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporter;
-import org.chromium.chrome.browser.suggestions.SuggestionsEventReporterBridge;
 import org.chromium.chrome.browser.suggestions.SuggestionsMetrics;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegateImpl;
@@ -92,7 +92,7 @@ public class NewTabPage
     private TabObserver mTabObserver;
     private boolean mSearchProviderHasLogo;
     private FakeboxDelegate mFakeboxDelegate;
-    private SnippetsBridge mSnippetsBridge;
+    private SuggestionsSource mSuggestionsSource;
 
     // The timestamp at which the constructor was called.
     private final long mConstructedTimeNs;
@@ -242,7 +242,7 @@ public class NewTabPage
         @Override
         public SuggestionsSource getSuggestionsSource() {
             if (sSuggestionsSourceForTests != null) return sSuggestionsSourceForTests;
-            return mSnippetsBridge;
+            return mSuggestionsSource;
         }
 
         @Override
@@ -320,13 +320,14 @@ public class NewTabPage
         mTabModelSelector = tabModelSelector;
         Profile profile = mTab.getProfile();
 
-        mSnippetsBridge = new SnippetsBridge(profile);
-        SuggestionsEventReporter eventReporter = new SuggestionsEventReporterBridge();
+        SuggestionsDependencyFactory depsFactory = SuggestionsDependencyFactory.getInstance();
+        mSuggestionsSource = depsFactory.createSuggestionSource(profile);
+        SuggestionsEventReporter eventReporter = depsFactory.createEventReporter();
 
         SuggestionsNavigationDelegateImpl navigationDelegate =
                 new SuggestionsNavigationDelegateImpl(
                         activity, profile, nativePageHost, tabModelSelector);
-        mNewTabPageManager = new NewTabPageManagerImpl(mSnippetsBridge, eventReporter,
+        mNewTabPageManager = new NewTabPageManagerImpl(mSuggestionsSource, eventReporter,
                 navigationDelegate, profile, nativePageHost, activity.getReferencePool());
         mTileGroupDelegate = new NewTabPageTileGroupDelegate(
                 activity, profile, tabModelSelector, navigationDelegate);
@@ -558,9 +559,11 @@ public class NewTabPage
                 .isAttachedToWindow(getView()) : "Destroy called before removed from window";
         if (mIsLoaded && !mTab.isHidden()) recordNTPHidden();
 
-        if (mSnippetsBridge != null) {
-            mSnippetsBridge.onDestroy();
-            mSnippetsBridge = null;
+        if (mSuggestionsSource != null) {
+            if (mSuggestionsSource instanceof DestructionObserver) {
+                ((DestructionObserver) mSuggestionsSource).onDestroy();
+            }
+            mSuggestionsSource = null;
         }
         mNewTabPageManager.onDestroy();
         mTileGroupDelegate.destroy();
