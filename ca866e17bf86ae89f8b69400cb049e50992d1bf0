@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e4b168e_f6189999",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-23T20:31:17Z",
+      "side": 0,
+      "message": "I would argue that 1) UMA does not have a mechanism to collect this data per extension and 2) nobody asked for this in the past 5 years. I think we should delete it.",
+      "parentUuid": "53f266a5_ed8f0dc8",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc911042_cde2c05c",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "860bc0b4_bb2eb380",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-23T20:31:17Z",
+      "side": 0,
+      "message": "I believe that this is necessary because maps can be copied and the values would be copied as well. I can try it when I am in the office, though.",
+      "parentUuid": "bc911042_cde2c05c",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3815c1e_cbf5881e",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-23T20:12:23Z",
       "side": 0,
       "message": "Think we required both |request_time_logs_| and |request_ids_| earlier since we needed access to completed requests as well. I think |request_ids_| can be removed now. To simplify even further, we can just keep track of the \"active\" requests.",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba37da0_475bea6b",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-23T20:31:17Z",
+      "side": 0,
+      "message": "request_ids is still used to limit the number of concurrent items in the map and act as a safety-net in case some weird network requests don\u0027t get LogRequestEndTime() called. But I was also on the fence. I\u0027ll delete it.",
+      "parentUuid": "f3815c1e_cbf5881e",
       "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

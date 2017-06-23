@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5781ae2f_5b33c3d9",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-23T20:31:17Z",
+      "side": 1,
+      "message": "Yes, in case of redirect, this code path is processed a second time: https://developer.chrome.com/extensions/webRequest",
+      "parentUuid": "5a6b4788_74c8a488",
+      "revId": "005a554c8f7a31cd300dd61832f6be3469ce5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f2c0139_72b7c305",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
         "patchSetId": 1
