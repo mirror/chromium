@@ -34,6 +34,24 @@
       "revId": "f425ec0248d3f221ff216f2372c320b3147cd99e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44185ea_3c809f27",
+        "filename": "mojo/public/cpp/bindings/associated_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-23T05:19:26Z",
+      "side": 1,
+      "message": "content::ThrottlingURLLoader seems to be using this. It seems plausible to me that there could be multiple SequencedTaskRunners all referring to a single sequence, similar to multiple SingleThreadTaskRunners all running their tasks on the same thread.",
+      "parentUuid": "f3436360_175fc561",
+      "revId": "f425ec0248d3f221ff216f2372c320b3147cd99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
