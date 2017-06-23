@@ -116,6 +116,18 @@ bool BackgroundLoaderContents::CheckMediaAccessPermission(
   return false;  // No permissions granted.
 }
 
+void BackgroundLoaderContents::AdjustPreviewsStateForNavigation(
+    content::PreviewsState* previews_state) {
+  DCHECK(previews_state != nullptr);
+  if (previews_state == nullptr)
+    return;
+
+  if (*previews_state == content::PREVIEWS_UNSPECIFIED)
+    *previews_state = content::PARTIAL_CONTENT_SAFE_PREVIEWS;
+  else if (*previews_state != content::PREVIEWS_OFF)
+    *previews_state &= content::PARTIAL_CONTENT_SAFE_PREVIEWS;
+}
+
 BackgroundLoaderContents::BackgroundLoaderContents()
     : browser_context_(nullptr) {
   web_contents_.reset();
