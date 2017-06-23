@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "031d68e4_8940e410",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-23T01:42:33Z",
+      "side": 1,
+      "message": "This is pretty misleading. I\u0027d suggest:\n\nSplit ui_java into two to minimize remoting dependencies.",
+      "revId": "44472bcb93293ddce2b4598c7d6e2ac92f875f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66527195_ac87bf94",
+        "filename": "ui/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-23T01:42:33Z",
+      "side": 1,
+      "message": "I think it makes sense to remove these two files from ui_java, or else risk someone trying to depend on them both.\n\nRename ui_java -\u003e ui_full_java, and have it depend on ui_utils_java.\n\nThen add:\njava_group(\"ui_java\") {\n  deps \u003d [\":ui_utils_java\", \":ui_full_java\"]",
+      "revId": "44472bcb93293ddce2b4598c7d6e2ac92f875f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
