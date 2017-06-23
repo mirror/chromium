@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa62b672_6e82afbd",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T12:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c76a0d5_4a05c71a",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3be1cd43_1c800b1d",
         "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T10:00:07Z",
       "side": 1,
       "message": "as this is used by only 1 test case currently, it\u0027ll be easier to read if you put this in it.\n\nsee https://cs.chromium.org/chromium/src/net/base/url_util_unittest.cc?dr\u003dC\u0026l\u003d170 for example.",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53186750_7076610f",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T12:31:32Z",
+      "side": 1,
+      "message": "I would like that, but I *think* I would then need to stop using TestCase as a parameter in CheckExpectedIntegrity, which would mean having the calls to CheckExpectedIntegrity requiring multiple lines again which I tried to avoid. Or I might be missing how that could be done, being a C++ novice?",
+      "parentUuid": "3be1cd43_1c800b1d",
       "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fcca131a_01e85bc4",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T12:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "200b95e9_19aff650",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "228345c8_c2c492ae",
         "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46069ed6_6a3be908",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T12:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "228345c8_c2c492ae",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "785fac60_e0015c9f",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T12:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b927beb_809693a4",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95c10b88_f412f7af",
         "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e4c45a_9343da59",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-23T12:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c10b88_f412f7af",
+      "revId": "5146b9266b1f1612bf6e06afb5b5426f5082b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
