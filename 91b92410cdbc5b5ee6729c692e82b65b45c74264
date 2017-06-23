@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "195c8a8e_88c85d24",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T06:06:26Z",
+      "side": 1,
+      "message": "Add a TODO to find a cleaner way to instantiate this?",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 223,
+        "endChar": 31
+      },
+      "revId": "91b92410cdbc5b5ee6729c692e82b65b45c74264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0dfa0fe_d6bfe464",
         "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-06-22T17:15:12Z",
       "side": 1,
       "message": "+dtrainor@\nI have a question. Since we are registering all the clients in our factory before creating DownloadService, does that mean they have to be instantiated before this?",
+      "revId": "91b92410cdbc5b5ee6729c692e82b65b45c74264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa3b7e9_3d6c85ef",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-23T06:06:26Z",
+      "side": 1,
+      "message": "The service factory will create all clients.  If the clients want to instantiate their respective objects they\u0027ll build those as well.",
+      "parentUuid": "f0dfa0fe_d6bfe464",
       "revId": "91b92410cdbc5b5ee6729c692e82b65b45c74264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
