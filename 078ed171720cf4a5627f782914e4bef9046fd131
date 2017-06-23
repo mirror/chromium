@@ -16,6 +16,24 @@
       "revId": "078ed171720cf4a5627f782914e4bef9046fd131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb174d0_e29c5e3e",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-23T23:08:56Z",
+      "side": 1,
+      "message": "I struggled with this name a lot. It\u0027s actually creating the button, so I wanted to make sure it was clear it was a setup/init function. However this is the only version of the button that needs to wait for AddedToWidget and needs to be called again, on theme updates (even if that isn\u0027t plumbed yet), so I didn\u0027t want to move the whole button init block in here.\n\nHow about this: SetupThemeColorButton? So it\u0027s clear what the difference between this and the other init block is.",
+      "parentUuid": "d38faee4_92070ec0",
+      "revId": "078ed171720cf4a5627f782914e4bef9046fd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
