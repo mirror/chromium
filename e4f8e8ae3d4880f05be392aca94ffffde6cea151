@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c20ea42_e5e92da8",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-06-23T16:39:15Z",
+      "side": 1,
+      "message": "Nit: Maybe a small comment to explain what this clause means? (specifically, that it\u0027s excluding folder buttons inside menus)",
+      "range": {
+        "startLine": 505,
+        "startChar": 6,
+        "endLine": 505,
+        "endChar": 68
+      },
+      "revId": "e4f8e8ae3d4880f05be392aca94ffffde6cea151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
