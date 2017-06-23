@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "801e4ac8_3ea1d2ac",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-23T21:19:55Z",
+      "side": 1,
+      "message": "nit: no need",
+      "revId": "02ca57ea773a6b7e7698228fb5b0b593493e74ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582a5709_702ffd18",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-23T21:19:55Z",
+      "side": 1,
+      "message": "this is only called inside content, so dont put it on renderwidgethost interface, but move it to renderwidgethostimpl",
+      "revId": "02ca57ea773a6b7e7698228fb5b0b593493e74ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
