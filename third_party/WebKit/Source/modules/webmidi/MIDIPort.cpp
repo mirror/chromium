@@ -32,6 +32,7 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/DOMException.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "modules/webmidi/MIDIAccess.h"
 #include "modules/webmidi/MIDIConnectionEvent.h"
 
@@ -172,19 +173,9 @@ DEFINE_TRACE_WRAPPERS(MIDIPort) {
 }
 
 void MIDIPort::open() {
-  switch (state_) {
-    case PortState::DISCONNECTED:
-      SetStates(state_, kConnectionStatePending);
-      break;
-    case PortState::CONNECTED:
-      // TODO(toyoshim): Add blink API to perform a real open and close
-      // operation.
-      SetStates(state_, kConnectionStateOpen);
-      break;
-    case PortState::OPENED:
-      NOTREACHED();
-      break;
-  }
+  TaskRunnerHelper::Get(TaskType::kMiscPlatformAPI, GetExecutionContext())
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&MIDIPort::DidOpened, WrapPersistent(this)));
 }
 
 ScriptPromise MIDIPort::Accept(ScriptState* script_state) {
@@ -198,6 +189,22 @@ ScriptPromise MIDIPort::Reject(ScriptState* script_state,
                                const String& message) {
   return ScriptPromise::RejectWithDOMException(
       script_state, DOMException::Create(ec, message));
+}
+
+void MIDIPort::DidOpened() {
+  switch (state_) {
+    case PortState::DISCONNECTED:
+      SetStates(state_, kConnectionStatePending);
+      break;
+    case PortState::CONNECTED:
+      // TODO(toyoshim): Add blink API to perform a real open and close
+      // operation.
+      SetStates(state_, kConnectionStateOpen);
+      break;
+    case PortState::OPENED:
+      NOTREACHED();
+      break;
+  }
 }
 
 void MIDIPort::SetStates(PortState state, ConnectionState connection) {
