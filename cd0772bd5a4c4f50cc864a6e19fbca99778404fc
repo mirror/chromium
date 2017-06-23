@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "88b23fbd_6a2334fe",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-23T18:32:40Z",
+      "side": 1,
+      "message": "nit: shorten this to:\nreturn bool(re.search(re_maindex, contents))",
+      "range": {
+        "startLine": 413,
+        "startChar": 9,
+        "endLine": 413,
+        "endChar": 13
+      },
+      "revId": "cd0772bd5a4c4f50cc864a6e19fbca99778404fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47f415e_78e35e74",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-23T18:32:40Z",
+      "side": 1,
+      "message": "nit: two lines in between top-level methods",
+      "revId": "cd0772bd5a4c4f50cc864a6e19fbca99778404fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f7d9b5_7eb12afe",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 26
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-23T18:32:40Z",
+      "side": 1,
+      "message": "this example is wrong. Should be:\n  target: The Apk target to generate registrations for.\n  output: Path to the generated .h file\n  exception_files: List of .java files that should be ignored when searching for native methods (optional)",
+      "range": {
+        "startLine": 344,
+        "startChar": 14,
+        "endLine": 344,
+        "endChar": 31
+      },
+      "revId": "cd0772bd5a4c4f50cc864a6e19fbca99778404fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86742c74_328227ea",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-23T18:32:40Z",
+      "side": 1,
+      "message": "nit: say: \"This exists here rather than in chrome_sync_shell_test_apk...",
+      "range": {
+        "startLine": 914,
+        "startChar": 20,
+        "endLine": 914,
+        "endChar": 21
+      },
+      "revId": "cd0772bd5a4c4f50cc864a6e19fbca99778404fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9533b422_7ede7d1f",
         "filename": "mojo/android/BUILD.gn",
         "patchSetId": 26
