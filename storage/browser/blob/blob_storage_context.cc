@@ -447,6 +447,31 @@ void BlobStorageContext::RevokePublicBlobURL(const GURL& blob_url) {
   DecrementBlobRefCount(uuid);
 }
 
+std::unique_ptr<BlobDataHandle> BlobStorageContext::AddFutureBlob(
+    const std::string& uuid,
+    const std::string& content_type,
+    const std::string& content_disposition) {
+  DCHECK(!registry_.HasEntry(uuid));
+
+  BlobEntry* entry =
+      registry_.CreateEntry(uuid, content_type, content_disposition);
+  entry->set_size(DataElement::kUnknownSize);
+  entry->set_status(BlobStatus::PENDING_CONSTRUCTION);
+  entry->set_building_state(base::MakeUnique<BlobEntry::BuildingState>(
+      false, TransportAllowedCallback(), 0));
+  return CreateHandle(uuid, entry);
+}
+
+std::unique_ptr<BlobDataHandle> BlobStorageContext::BuildPreregisteredBlob(
+    const BlobDataBuilder& content,
+    const TransportAllowedCallback& transport_allowed_callback) {
+  BlobEntry* entry = registry_.GetEntry(content.uuid());
+  DCHECK(entry);
+  DCHECK_EQ(BlobStatus::PENDING_CONSTRUCTION, entry->status());
+
+  return BuildBlobInternal(entry, content, transport_allowed_callback);
+}
+
 std::unique_ptr<BlobDataHandle> BlobStorageContext::BuildBlob(
     const BlobDataBuilder& content,
     const TransportAllowedCallback& transport_allowed_callback) {
@@ -455,6 +480,13 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::BuildBlob(
   BlobEntry* entry = registry_.CreateEntry(
       content.uuid(), content.content_type_, content.content_disposition_);
 
+  return BuildBlobInternal(entry, content, transport_allowed_callback);
+}
+
+std::unique_ptr<BlobDataHandle> BlobStorageContext::BuildBlobInternal(
+    BlobEntry* entry,
+    const BlobDataBuilder& content,
+    const TransportAllowedCallback& transport_allowed_callback) {
   // This flattens all blob references in the transportion content out and
   // stores the complete item representation in the internal data.
   BlobFlattener flattener(content, entry, &registry_);
@@ -499,6 +531,7 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::BuildBlob(
     }
   }
 
+  auto previous_building_state = std::move(entry->building_state_);
   entry->set_building_state(base::MakeUnique<BlobEntry::BuildingState>(
       !flattener.pending_transport_items.empty(), transport_allowed_callback,
       num_building_dependent_blobs));
@@ -506,6 +539,9 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::BuildBlob(
   std::swap(building_state->copies, flattener.copies);
   std::swap(building_state->dependent_blobs, dependent_blobs);
   std::swap(building_state->transport_items, flattener.transport_items);
+  if (previous_building_state)
+    building_state->build_completion_callbacks =
+        std::move(previous_building_state->build_completion_callbacks);
 
   // Break ourselves if we have an error. BuildingState must be set first so the
   // callback is called correctly.

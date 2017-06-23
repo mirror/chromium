@@ -81,6 +81,15 @@ class STORAGE_EXPORT BlobStorageContext {
 
   const BlobStorageRegistry& registry() { return registry_; }
 
+  std::unique_ptr<BlobDataHandle> AddFutureBlob(
+      const std::string& uuid,
+      const std::string& content_type,
+      const std::string& content_disposition);
+
+  std::unique_ptr<BlobDataHandle> BuildPreregisteredBlob(
+      const BlobDataBuilder& input_builder,
+      const TransportAllowedCallback& transport_allowed_callback);
+
   // This builds a blob with the given |input_builder| and returns a handle to
   // the constructed Blob. Blob metadata and data should be accessed through
   // this handle.
@@ -231,6 +240,11 @@ class STORAGE_EXPORT BlobStorageContext {
   }
 
  private:
+  std::unique_ptr<BlobDataHandle> BuildBlobInternal(
+      BlobEntry* entry,
+      const BlobDataBuilder& input_builder,
+      const TransportAllowedCallback& transport_allowed_callback);
+
   std::unique_ptr<BlobDataHandle> CreateHandle(const std::string& uuid,
                                                BlobEntry* entry);
 
