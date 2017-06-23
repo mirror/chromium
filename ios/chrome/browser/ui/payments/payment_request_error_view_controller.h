@@ -37,6 +37,9 @@ extern NSString* const kPaymentRequestErrorCollectionViewID;
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
 
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_PAYMENTS_PAYMENT_REQUEST_ERROR_VIEW_CONTROLLER_H_

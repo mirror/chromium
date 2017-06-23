@@ -34,6 +34,9 @@
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
 
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
+
 // Scrolls the confirmation view to the bottom of its content.
 - (void)scrollToBottom;
 

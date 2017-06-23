@@ -24,6 +24,12 @@
 
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style {
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  self = [self initWithStyle:style layout:layout];
+  return self;
+}
+
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout {
   self = [super initWithCollectionViewLayout:layout];
   if (self) {
     if (style == CollectionViewControllerStyleAppBar) {

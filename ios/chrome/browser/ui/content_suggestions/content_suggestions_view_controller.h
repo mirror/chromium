@@ -24,6 +24,9 @@
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
 
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
+
 // Handler for the commands sent by the ContentSuggestionsViewController.
 @property(nonatomic, weak) id<ContentSuggestionsCommands>
     suggestionCommandHandler;

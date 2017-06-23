@@ -29,6 +29,9 @@
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
 
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
+
 @property(nonatomic, weak) id<SigninAccountSelectorViewControllerDelegate>
     delegate;
 

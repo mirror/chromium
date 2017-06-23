@@ -53,7 +53,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
                      basePref:(const char*)basePreference
                      wifiPref:(const char*)wifiPreference
                         title:(NSString*)title {
-  self = [super initWithStyle:CollectionViewControllerStyleAppBar];
+  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  self =
+      [super initWithStyle:CollectionViewControllerStyleAppBar layout:layout];
   if (self) {
     self.title = title;
     basePreference_.Init(basePreference, prefs);

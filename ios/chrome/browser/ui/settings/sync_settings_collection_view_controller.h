@@ -29,6 +29,8 @@ extern NSString* const kSwitchAccountDidFinishNotification;
     NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
 
 @end
 

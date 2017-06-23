@@ -25,6 +25,9 @@ class PersonalDataManager;
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
 
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_SETTINGS_AUTOFILL_CREDIT_CARD_EDIT_COLLECTION_VIEW_CONTROLLER_H_

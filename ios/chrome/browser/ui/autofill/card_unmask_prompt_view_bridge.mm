@@ -144,8 +144,10 @@ void CardUnmaskPromptViewBridge::DeleteSelf() {
 @implementation CardUnmaskPromptViewController
 
 - (instancetype)initWithBridge:(autofill::CardUnmaskPromptViewBridge*)bridge {
+  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   DCHECK(bridge);
-  self = [super initWithStyle:CollectionViewControllerStyleAppBar];
+  self =
+      [super initWithStyle:CollectionViewControllerStyleAppBar layout:layout];
   if (self) {
     _bridge = bridge;
   }

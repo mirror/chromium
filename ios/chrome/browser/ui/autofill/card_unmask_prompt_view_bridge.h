@@ -60,6 +60,8 @@ class CardUnmaskPromptViewBridge : public CardUnmaskPromptView {
     NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
 
 // Shows the form that allows the user to input their CVC.
 - (void)showCVCInputForm;

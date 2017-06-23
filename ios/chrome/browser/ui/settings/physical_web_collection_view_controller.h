@@ -22,6 +22,9 @@
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
 
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
+
 // Given the current Physical Web preference state, determine whether the
 // preference should be rendered as enabled.
 + (BOOL)shouldEnableForPreferenceState:(int)preferenceState;

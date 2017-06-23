@@ -50,7 +50,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
 @synthesize delegate = _delegate;
 
 - (instancetype)init {
-  if ((self = [super initWithStyle:CollectionViewControllerStyleAppBar])) {
+  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  if ((self = [super initWithStyle:CollectionViewControllerStyleAppBar
+                            layout:layout])) {
     [self setTitle:l10n_util::GetNSString(IDS_PAYMENTS_TITLE)];
 
     // Set up trailing (ok) button.

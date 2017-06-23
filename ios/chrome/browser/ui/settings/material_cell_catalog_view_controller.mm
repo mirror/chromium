@@ -107,7 +107,9 @@ const CGFloat kCardIssuerNetworkIconDimension = 25.0;
 @implementation MaterialCellCatalogViewController
 
 - (instancetype)init {
-  self = [super initWithStyle:CollectionViewControllerStyleAppBar];
+  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  self =
+      [super initWithStyle:CollectionViewControllerStyleAppBar layout:layout];
   if (self) {
     [self loadModel];
   }

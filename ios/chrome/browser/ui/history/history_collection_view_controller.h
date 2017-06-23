@@ -53,6 +53,8 @@ class ChromeBrowserState;
     NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
 
 // Search history for text |query| and display the results. |query| may be nil.
 // If query is empty, show all history.

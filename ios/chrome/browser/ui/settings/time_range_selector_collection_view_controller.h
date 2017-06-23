@@ -32,6 +32,9 @@ initWithPrefs:(PrefService*)prefs
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
     NS_UNAVAILABLE;
 
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+                       layout:(UICollectionViewLayout*)layout NS_UNAVAILABLE;
+
 // Returns the text for the current setting, based on the values of the
 // preference. Kept in this class, so that all of the code to translate from
 // preference to UI is in one place.

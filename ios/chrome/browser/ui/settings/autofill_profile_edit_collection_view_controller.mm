@@ -94,7 +94,9 @@ static const AutofillFieldDisplayInfo kFieldsToDisplay[] = {
             personalDataManager:(autofill::PersonalDataManager*)dataManager {
   DCHECK(dataManager);
 
-  self = [super initWithStyle:CollectionViewControllerStyleAppBar];
+  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  self =
+      [super initWithStyle:CollectionViewControllerStyleAppBar layout:layout];
   if (self) {
     _personalDataManager = dataManager;
     _autofillProfile = profile;

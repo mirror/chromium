@@ -65,7 +65,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
 #pragma mark - Initialization
 
 - (instancetype)initWithPrefs:(PrefService*)prefs {
-  self = [super initWithStyle:CollectionViewControllerStyleAppBar];
+  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  self =
+      [super initWithStyle:CollectionViewControllerStyleAppBar layout:layout];
   if (self) {
     self.title = l10n_util::GetNSString(IDS_IOS_OPTIONS_ENABLE_PHYSICAL_WEB);
     _physicalWebEnabled.Init(prefs::kIosPhysicalWebEnabled, prefs);

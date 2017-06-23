@@ -50,7 +50,8 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
                    dataSource:(id<ContentSuggestionsDataSource>)dataSource {
-  self = [super initWithStyle:style];
+  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  self = [super initWithStyle:style layout:layout];
   if (self) {
     _collectionUpdater = [[ContentSuggestionsCollectionUpdater alloc]
         initWithDataSource:dataSource];
