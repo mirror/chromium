@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea5ea1d0_7d45b381",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-06-23T17:31:46Z",
+      "side": 1,
+      "message": "I wonder if this should just be:\n\"⚙️ paintWorklet#1\"\n\"⚙️ paintWorklet#2\"\n\n(just \"⚙️ paintWorklet\" for now).\n\nAs most people won\u0027t know what a global scope is...\n\nthoughts?",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "10083ad5de6217f8e907d8d4dab96a2bfe359243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
