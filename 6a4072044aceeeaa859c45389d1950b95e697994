@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1885e91_1fc1cbd2",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-23T20:44:40Z",
+      "side": 1,
+      "message": "Realistically it would be nice if ShouldAdjustRasterScale returned a reason enum for why it should, which this function would take and this if check would be if reason is \"match in all cases\". The reason for this is there is a slew of reasons that we would change the raster scale before even considering will-change. I think this captures them well, but I might have missed something.\n\nDo you think that\u0027s a better approach?",
+      "revId": "6a4072044aceeeaa859c45389d1950b95e697994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
