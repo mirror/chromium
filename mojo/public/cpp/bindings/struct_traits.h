@@ -76,11 +76,19 @@ namespace mojo {
 //
 //        static bool IsNull(const T& input);
 //
+//      or
+//
+//        static bool IsNull(const T& input, void* context);
+//
 //      If this method returns true, it is guaranteed that none of the getters
 //      (described in section 1) will be called for the same |input|. So you
 //      don't have to check whether |input| is null in those getters.
 //
-//      If it is not defined, |T| instances are always considered non-null.
+//      Note however that SetUpContext and TearDownContext ARE still called
+//      if defined and IsNull() return true.
+//
+//      If IsNull() is not defined, |T| instances are always considered
+//      non-null.
 //
 //      [Optional] A static SetToNull() method to set the contents of a given
 //      |T| instance to null.
