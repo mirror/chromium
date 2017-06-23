@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c124743c_eadc8c75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T15:41:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e466566b_7a1b5e8f",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "3219d306a7d3a7cc903101383d8b2414501c525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ff0e814_2f11bada",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegate.java",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "3219d306a7d3a7cc903101383d8b2414501c525e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c299e8_85dd4bbe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegate.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T15:41:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ff0e814_2f11bada",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "3219d306a7d3a7cc903101383d8b2414501c525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
