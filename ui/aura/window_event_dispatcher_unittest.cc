@@ -489,6 +489,7 @@ class EventFilterRecorder : public ui::EventHandler {
   typedef std::vector<ui::EventType> Events;
   typedef std::vector<gfx::Point> EventLocations;
   typedef std::vector<int> EventFlags;
+  typedef std::vector<bool> UIOnlyEvents;
 
   EventFilterRecorder()
       : wait_until_event_(ui::ET_UNKNOWN),
@@ -502,6 +503,7 @@ class EventFilterRecorder : public ui::EventHandler {
   const EventLocations& touch_locations() const { return touch_locations_; }
   const EventLocations& gesture_locations() const { return gesture_locations_; }
   const EventFlags& mouse_event_flags() const { return mouse_event_flags_; }
+  bool ui_only_events(int i) const { return ui_only_events_[i]; }
 
   void WaitUntilReceivedEvent(ui::EventType type) {
     wait_until_event_ = type;
@@ -521,6 +523,7 @@ class EventFilterRecorder : public ui::EventHandler {
     touch_locations_.clear();
     gesture_locations_.clear();
     mouse_event_flags_.clear();
+    ui_only_events_.clear();
     last_touch_may_cause_scrolling_ = false;
   }
 
@@ -537,6 +540,7 @@ class EventFilterRecorder : public ui::EventHandler {
   void OnMouseEvent(ui::MouseEvent* event) override {
     mouse_locations_.push_back(event->location());
     mouse_event_flags_.push_back(event->flags());
+    ui_only_events_.push_back(event->only_for_ui_hover_state());
   }
 
   void OnTouchEvent(ui::TouchEvent* event) override {
@@ -565,6 +569,7 @@ class EventFilterRecorder : public ui::EventHandler {
   EventLocations touch_locations_;
   EventLocations gesture_locations_;
   EventFlags mouse_event_flags_;
+  UIOnlyEvents ui_only_events_;
   bool last_touch_may_cause_scrolling_;
 
   DISALLOW_COPY_AND_ASSIGN(EventFilterRecorder);
@@ -1205,6 +1210,9 @@ TEST_P(WindowEventDispatcherTest, DispatchMouseExitWhenCursorHidden) {
   int translated_y = mouse_location.y() - window_origin.y();
   gfx::Point translated_point(translated_x, translated_y);
   EXPECT_EQ(recorder.mouse_location(0).ToString(), translated_point.ToString());
+
+  // Verify the mouse exit only for ui hover state.
+  EXPECT_TRUE(recorder.ui_only_events(0));
   root_window()->RemovePreTargetHandler(&recorder);
 }
 
