@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61b20c1a_a0e7168c",
+        "filename": "headless/public/util/throttled_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-23T12:17:33Z",
+      "side": 1,
+      "message": "nit: not sure if it\u0027s necessary to PostTask here (assuming that this method is only called on the IO thread). But if we don\u0027t know that for sure, let\u0027s keep it.",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "ab583b2c25f9a02a8a8bba1242f117bcc90cccff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
