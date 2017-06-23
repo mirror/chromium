@@ -25,8 +25,12 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "media/gpu/generic_v4l2_device.h"
+#include "ui/gfx/native_pixmap.h"
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_image_native_pixmap.h"
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/surface_factory_ozone.h"
 
 #if defined(USE_LIBV4L2)
 // Auto-generated for dlopen libv4l2 libraries
@@ -273,6 +277,70 @@ EGLImageKHR GenericV4L2Device::CreateEGLImage(
   glEGLImageTargetTexture2DOES(GL_TEXTURE_EXTERNAL_OES, egl_image);
 
   return egl_image;
+}
+
+scoped_refptr<gl::GLImage> GenericV4L2Device::CreateGLImage(
+    const gfx::Size& size,
+    uint32_t fourcc,
+    const std::vector<base::ScopedFD>& dmabuf_fds) {
+  DCHECK(CanCreateEGLImageFrom(fourcc));
+  VideoPixelFormat vf_format = V4L2PixFmtToVideoPixelFormat(fourcc);
+  size_t num_planes = VideoFrame::NumPlanes(vf_format);
+  DCHECK_LE(num_planes, 3u);
+  DCHECK_LE(dmabuf_fds.size(), num_planes);
+
+  gfx::NativePixmapHandle native_pixmap_handle;
+  for (const auto& fd : dmabuf_fds) {
+    native_pixmap_handle.fds.emplace_back(fd.get(), true /* auto_close */);
+  }
+
+  size_t v4l2_plane = 0;
+  size_t plane_offset = 0;
+  for (size_t p = 0; p < num_planes; ++p) {
+    native_pixmap_handle.planes.emplace_back(
+        VideoFrame::RowBytes(p, vf_format, size.width()), plane_offset,
+        VideoFrame::PlaneSize(vf_format, p, size).GetArea(), 0);
+
+    if (v4l2_plane + 1 < dmabuf_fds.size()) {
+      ++v4l2_plane;
+      plane_offset = 0;
+    } else {
+      plane_offset += VideoFrame::PlaneSize(vf_format, p, size).GetArea();
+    }
+  }
+
+  gfx::BufferFormat buffer_format = gfx::BufferFormat::BGRA_8888;
+  unsigned internalformat = GL_BGRA_EXT;
+  switch (fourcc) {
+    case DRM_FORMAT_ARGB8888:
+      buffer_format = gfx::BufferFormat::BGRA_8888;
+      internalformat = GL_BGRA_EXT;
+      break;
+    case DRM_FORMAT_NV12:
+      buffer_format = gfx::BufferFormat::YUV_420_BIPLANAR;
+      internalformat = GL_RGB_YCBCR_420V_CHROMIUM;
+      break;
+    case DRM_FORMAT_YVU420:
+      buffer_format = gfx::BufferFormat::YVU_420;
+      internalformat = GL_RGB_YCRCB_420_CHROMIUM;
+      break;
+    default:
+      NOTREACHED();
+  }
+
+  scoped_refptr<gfx::NativePixmap> pixmap =
+      ui::OzonePlatform::GetInstance()
+          ->GetSurfaceFactoryOzone()
+          ->CreateNativePixmapFromHandle(0, size, buffer_format,
+                                         native_pixmap_handle);
+
+  DCHECK(pixmap);
+
+  scoped_refptr<gl::GLImageNativePixmap> image(
+      new gl::GLImageNativePixmap(size, internalformat));
+  bool ret = image->Initialize(pixmap.get(), buffer_format);
+  DCHECK(ret);
+  return image;
 }
 
 EGLBoolean GenericV4L2Device::DestroyEGLImage(EGLDisplay egl_display,
