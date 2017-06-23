@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65186488_73770245",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T01:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0541c16_cf2388c6",
+      "revId": "5c17506283bb8575979ccc6bfdda47c9e2847f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d668ab5_36b6ed3e",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/ident-type-interpolation.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5c17506283bb8575979ccc6bfdda47c9e2847f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b0a5ba_62ccd8ba",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/ident-type-interpolation.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T01:37:33Z",
+      "side": 1,
+      "message": "Added less-standard values.",
+      "parentUuid": "7d668ab5_36b6ed3e",
+      "revId": "5c17506283bb8575979ccc6bfdda47c9e2847f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
