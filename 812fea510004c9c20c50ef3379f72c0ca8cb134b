@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f62f197_fa8eb767",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-23T06:51:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9fa7a3f_49f25a08",
+      "revId": "812fea510004c9c20c50ef3379f72c0ca8cb134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b633b4_080778ce",
         "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T04:58:09Z",
       "side": 1,
       "message": "Why do we use webkit_ here and blink_ there?",
+      "revId": "812fea510004c9c20c50ef3379f72c0ca8cb134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad58f4a_ca8cc4fa",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-23T06:51:12Z",
+      "side": 1,
+      "message": "Couldn\u0027t decide which was better :)\n\nSettled on Blink. Done.",
+      "parentUuid": "76b633b4_080778ce",
       "revId": "812fea510004c9c20c50ef3379f72c0ca8cb134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
