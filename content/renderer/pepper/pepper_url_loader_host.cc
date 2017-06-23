@@ -267,24 +267,26 @@ int32_t PepperURLLoaderHost::InternalOnHostMsgOpen(
 
   WebAssociatedURLLoaderOptions options;
   if (has_universal_access_) {
-    options.fetch_credentials_mode =
-        WebURLRequest::kFetchCredentialsModeInclude;
-    options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
+    web_request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeNoCORS);
+    web_request.SetFetchCredentialsMode(
+        WebURLRequest::kFetchCredentialsModeInclude);
   } else {
     // All other HTTP requests are untrusted.
     options.untrusted_http = true;
     if (filled_in_request_data.allow_cross_origin_requests) {
       // Allow cross-origin requests with access control. The request specifies
       // if credentials are to be sent.
-      options.fetch_credentials_mode =
+      web_request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeCORS);
+      web_request.SetFetchCredentialsMode(
           filled_in_request_data.allow_credentials
               ? WebURLRequest::kFetchCredentialsModeInclude
-              : WebURLRequest::kFetchCredentialsModeOmit;
-      options.fetch_request_mode = WebURLRequest::kFetchRequestModeCORS;
+              : WebURLRequest::kFetchCredentialsModeOmit);
     } else {
+      web_request.SetFetchRequestMode(
+          WebURLRequest::kFetchRequestModeSameOrigin);
       // Same-origin requests can always send credentials.
-      options.fetch_credentials_mode =
-          WebURLRequest::kFetchCredentialsModeInclude;
+      web_request.SetFetchCredentialsMode(
+          WebURLRequest::kFetchCredentialsModeInclude);
     }
   }
 

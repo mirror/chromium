@@ -122,6 +122,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // The FetchCredentialsMode argument must be the request's credentials mode.
   // It's used for CORS check.
   void HandleResponse(unsigned long identifier,
+                      WebURLRequest::FetchRequestMode,
                       WebURLRequest::FetchCredentialsMode,
                       const ResourceResponse&,
                       std::unique_ptr<WebDataConsumerHandle>);
@@ -161,7 +162,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // ResourceFetcher doesn't perform some part of the CORS logic since this
   // class performs it by itself.
   void LoadRequest(ResourceRequest&, ResourceLoaderOptions);
-  bool IsAllowedRedirect(const KURL&) const;
+  bool IsAllowedRedirect(WebURLRequest::FetchRequestMode, const KURL&) const;
 
   // TODO(hiroshige): After crbug.com/633696 is fixed,
   // - Remove RawResourceClientStateChecker logic,
