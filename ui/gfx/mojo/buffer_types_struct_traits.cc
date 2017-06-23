@@ -8,6 +8,42 @@
 
 namespace mojo {
 
+namespace {
+
+class GpuMemoryBufferHandleContext {
+ public:
+  GpuMemoryBufferHandleContext(const gfx::GpuMemoryBufferHandle* handle) {
+    switch (handle->type) {
+      case gfx::SHARED_MEMORY_BUFFER:
+        shared_memory_handle_ = mojo::WrapSharedMemoryHandle(
+            handle->handle, handle->handle.GetSize(), false);
+        break;
+#if defined(OS_MACOSX) && !defined(OS_IOS)
+      case gfx::IO_SURFACE_BUFFER:
+        mach_port_ = mojo::WrapMachPort(handle->mach_port.get());
+        break;
+#endif
+
+      default:
+        break;
+    }
+  }
+
+  ~GpuMemoryBufferHandleContext() = default;
+
+  mojo::ScopedSharedBufferHandle& shared_memory_handle() {
+    return shared_memory_handle_;
+  }
+  mojo::ScopedHandle& mach_port() { return mach_port_; }
+
+ private:
+  mojo::ScopedSharedBufferHandle shared_memory_handle_;
+  mojo::ScopedHandle mach_port_;
+  DISALLOW_COPY_AND_ASSIGN(GpuMemoryBufferHandleContext);
+};
+
+}  // namespace
+
 void* StructTraits<gfx::mojom::NativePixmapHandleDataView,
                    gfx::NativePixmapHandle>::
     SetUpContext(const gfx::NativePixmapHandle& pixmap_handle) {
@@ -60,14 +96,25 @@ bool StructTraits<
 #endif
 }
 
-mojo::ScopedSharedBufferHandle
+void* StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
+                   gfx::GpuMemoryBufferHandle>::
+    SetUpContext(const gfx::GpuMemoryBufferHandle& handle) {
+  return new GpuMemoryBufferHandleContext(&handle);
+}
+
+void StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
+                  gfx::GpuMemoryBufferHandle>::
+    TearDownContext(const gfx::GpuMemoryBufferHandle& handle, void* context) {
+  delete static_cast<GpuMemoryBufferHandleContext*>(context);
+}
+
+mojo::ScopedSharedBufferHandle&
 StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
              gfx::GpuMemoryBufferHandle>::
-    shared_memory_handle(const gfx::GpuMemoryBufferHandle& handle) {
-  if (handle.type != gfx::SHARED_MEMORY_BUFFER)
-    return mojo::ScopedSharedBufferHandle();
-  return mojo::WrapSharedMemoryHandle(handle.handle, handle.handle.GetSize(),
-                                      false);
+    shared_memory_handle(const gfx::GpuMemoryBufferHandle& handle,
+                         void* context) {
+  return static_cast<GpuMemoryBufferHandleContext*>(context)
+      ->shared_memory_handle();
 }
 
 const gfx::NativePixmapHandle&
@@ -82,16 +129,10 @@ StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
 #endif
 }
 
-mojo::ScopedHandle StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
-                                gfx::GpuMemoryBufferHandle>::
-    mach_port(const gfx::GpuMemoryBufferHandle& handle) {
-#if defined(OS_MACOSX) && !defined(OS_IOS)
-  if (handle.type != gfx::IO_SURFACE_BUFFER)
-    return mojo::ScopedHandle();
-  return mojo::WrapMachPort(handle.mach_port.get());
-#else
-  return mojo::ScopedHandle();
-#endif
+mojo::ScopedHandle& StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
+                                 gfx::GpuMemoryBufferHandle>::
+    mach_port(const gfx::GpuMemoryBufferHandle& handle, void* context) {
+  return static_cast<GpuMemoryBufferHandleContext*>(context)->mach_port();
 }
 
 bool StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
