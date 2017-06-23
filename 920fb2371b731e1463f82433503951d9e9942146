@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cebf5b9_b43d1b5d",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-23T09:23:14Z",
+      "side": 1,
+      "message": "tabs? o_O",
+      "revId": "920fb2371b731e1463f82433503951d9e9942146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
