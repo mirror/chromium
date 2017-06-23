@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c989b76_58ea9699",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T01:48:48Z",
+      "side": 1,
+      "message": "Since this behaviour is complicated, could you add a comment to describe in words what\u0027s going on?",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14563ae2_1675ddc9",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T01:48:48Z",
+      "side": 1,
+      "message": "I think add the 100% values as well.",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decc1bb7_256f7805",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T01:48:48Z",
+      "side": 1,
+      "message": "Likewise I think this test could benefit from a little more explanation.",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce932ca_66cabb62",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T01:48:48Z",
+      "side": 1,
+      "message": "Is --to \"missing\" because it isn\u0027t passed to CSS.registerProperty, or because it\u0027s not given a value on #target?",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f09456f_f1ce3308",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationEnvironment.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T01:48:48Z",
+      "side": 1,
+      "message": "Given that variable_resolver_ is nullptr by default, I think it\u0027ll be too easy to hit this DCHECK by accident. Is there a suitable alternative resolver for that case? Otherwise perhaps this should return a pointer and leave the caller in charge of checking that it is not null before deref.",
+      "revId": "80e794f7e9ee7e28690015098fa3623749783c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
