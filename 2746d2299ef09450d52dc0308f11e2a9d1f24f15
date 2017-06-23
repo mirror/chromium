@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "45fe25a0_ab17718f",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/select/listbox-not-force-layout.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T23:13:09Z",
+      "side": 1,
+      "message": "Maybe we do, but I\u0027d like to understand better.  Internals::needsLayoutCount counts LayoutObjects that report NeedsLayout().  If setting the selection forces layout we should see needsLayoutCount \u003d\u003d 0 at this point.  But if setting the selection doesn\u0027t force layout, we should see needsLayoutCount \u003e 0 (because the layout has been dirtied).  Is that not accurate?\n\nIt would be nice to avoid adding extra fields to Document that are only used for testing.",
+      "parentUuid": "fd38e274_34702c93",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f4013ec_8e5fbcfb",
         "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/fast/forms/select/listbox-scrollbar-incremental-load-expected.txt",
         "patchSetId": 9
@@ -224,6 +248,24 @@
       "side": 1,
       "message": "New patch uses LayoutListBox::ScrollToRect().  It it safe to call PLSA::ScrollIntoView() inside PLSA::UpdateAfterLayout()?",
       "parentUuid": "d7c154da_cfdb0ba9",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7c5636_fc352783",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T23:13:09Z",
+      "side": 1,
+      "message": "Yes this should be safe.  ScrollIntoView invokes ScrollableArea::SetScrollOffset which is the same API used by other layout-triggered scrolling (like ClampScrollOffsetAfterOverflowChange).",
+      "parentUuid": "87fad5f5_c10a013b",
       "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
