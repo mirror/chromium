@@ -366,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "5285a7bc_4cca57ea",
+        "filename": "net/nqe/network_quality_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-23T17:42:39Z",
+      "side": 1,
+      "message": "IMO that\u0027s not the impl details. That\u0027s just telling the consumer of the API exactly what is returned. Also, it provides a guidance/requirement to all implementors: Anyone implementing this API should use transport RTT (and not HTTP RTT).",
+      "parentUuid": "ae5a418e_b5db8d0d",
+      "range": {
+        "startLine": 60,
+        "startChar": 54,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "e17984bd34e20cfd73dc0cbef5db5ed832b59b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a79c7eb5_f10ee4ae",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
