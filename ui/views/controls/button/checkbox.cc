@@ -14,7 +14,9 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/native_theme/native_theme.h"
 #include "ui/views/animation/ink_drop_highlight.h"
+#include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/animation/ink_drop_ripple.h"
 #include "ui/views/animation/square_ink_drop_ripple.h"
 #include "ui/views/controls/button/label_button_border.h"
@@ -128,12 +130,16 @@ void Checkbox::OnFocus() {
   LabelButton::OnFocus();
   if (!UseMd())
     UpdateImage();
+  else
+    FocusRing::Install(this, ui::NativeTheme::kColorId_NumColors, this);
 }
 
 void Checkbox::OnBlur() {
   LabelButton::OnBlur();
   if (!UseMd())
     UpdateImage();
+  else
+    FocusRing::Uninstall(this);
 }
 
 void Checkbox::OnNativeThemeChanged(const ui::NativeTheme* theme) {
@@ -143,8 +149,9 @@ void Checkbox::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 }
 
 std::unique_ptr<InkDrop> Checkbox::CreateInkDrop() {
-  std::unique_ptr<InkDrop> ink_drop = LabelButton::CreateInkDrop();
+  std::unique_ptr<InkDropImpl> ink_drop = CreateDefaultInkDropImpl();
   ink_drop->SetShowHighlightOnHover(false);
+  ink_drop->SetAutoHighlightMode(views::InkDropImpl::AutoHighlightMode::NONE);
   return ink_drop;
 }
 
@@ -161,21 +168,6 @@ std::unique_ptr<InkDropRipple> Checkbox::CreateInkDropRipple() const {
 SkColor Checkbox::GetInkDropBaseColor() const {
   return GetNativeTheme()->GetSystemColor(
       ui::NativeTheme::kColorId_ButtonEnabledColor);
-}
-
-void Checkbox::PaintButtonContents(gfx::Canvas* canvas) {
-  if (!UseMd() || !HasFocus())
-    return;
-
-  cc::PaintFlags focus_flags;
-  focus_flags.setAntiAlias(true);
-  focus_flags.setColor(
-      SkColorSetA(GetNativeTheme()->GetSystemColor(
-                      ui::NativeTheme::kColorId_FocusedBorderColor),
-                  0x66));
-  focus_flags.setStyle(cc::PaintFlags::kStroke_Style);
-  focus_flags.setStrokeWidth(2);
-  PaintFocusRing(canvas, focus_flags);
 }
 
 gfx::ImageSkia Checkbox::GetImage(ButtonState for_state) const {
@@ -206,9 +198,29 @@ void Checkbox::SetCustomImage(bool checked,
   UpdateImage();
 }
 
-void Checkbox::PaintFocusRing(gfx::Canvas* canvas,
+void Checkbox::LayoutFocusRing(FocusRing* focus_ring) {
+  DCHECK(focus_ring);
+  gfx::Rect focus_bounds = image()->bounds();
+  focus_bounds.Inset(gfx::Insets(-2.f));
+  focus_ring->SetBoundsRect(focus_bounds);
+}
+
+void Checkbox::PaintFocusRing(FocusRing* focus_ring, gfx::Canvas* canvas) {
+  cc::PaintFlags focus_flags;
+  focus_flags.setAntiAlias(true);
+  focus_flags.setColor(
+      SkColorSetA(GetNativeTheme()->GetSystemColor(
+                      ui::NativeTheme::kColorId_FocusedBorderColor),
+                  0x66));
+  focus_flags.setStyle(cc::PaintFlags::kStroke_Style);
+  focus_flags.setStrokeWidth(2);
+  PaintFocusRing(focus_ring, canvas, focus_flags);
+}
+
+void Checkbox::PaintFocusRing(FocusRing* focus_ring,
+                              gfx::Canvas* canvas,
                               const cc::PaintFlags& flags) {
-  gfx::RectF focus_rect(image()->bounds());
+  gfx::RectF focus_rect(focus_ring->GetLocalBounds());
   canvas->DrawRoundRect(focus_rect, 2.f, flags);
 }
 
