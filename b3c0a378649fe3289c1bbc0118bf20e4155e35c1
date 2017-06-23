@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "8e339624_e5a5c4a3",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T18:16:42Z",
+      "side": 1,
+      "message": "Okay, I\u0027ve done that, but since I need the histogram name maps in the unit tests, I have left their declaration in the header file.",
+      "parentUuid": "d16bba95_436d7306",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee560c06_b1eafa76",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 9
