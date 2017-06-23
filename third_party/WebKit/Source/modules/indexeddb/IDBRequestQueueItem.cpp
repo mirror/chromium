@@ -179,13 +179,6 @@ void IDBRequestQueueItem::StartLoading() {
     // The backing store can get the result back to the request after it's been
     // aborted due to a transaction abort. In this case, we can't rely on
     // IDBRequest::Abort() to call CancelLoading().
-
-    // Setting loader_ to null here makes sure we don't call Cancel() on a
-    // IDBRequestLoader that hasn't been Start()ed. The current implementation
-    // behaves well even if Cancel() is called without Start() being called, but
-    // this reset makes the IDBRequestLoader lifecycle easier to reason about.
-    loader_.reset();
-
     CancelLoading();
     return;
   }
@@ -202,11 +195,7 @@ void IDBRequestQueueItem::CancelLoading() {
 
   if (loader_) {
     loader_->Cancel();
-    loader_.reset();
-
-    // IDBRequestLoader::Cancel() should not call any of the EnqueueResponse
-    // variants.
-    DCHECK(!ready_);
+    loader_ = nullptr;
   }
 
   // Mark this item as ready so the transaction's result queue can be drained.
