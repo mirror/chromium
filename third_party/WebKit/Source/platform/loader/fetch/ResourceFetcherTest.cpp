@@ -512,7 +512,7 @@ TEST_F(ResourceFetcherTest, PreloadResourceTwice) {
   fetcher->ClearPreloads(ResourceFetcher::kClearAllPreloads);
   EXPECT_FALSE(fetcher->ContainsAsPreload(resource));
   EXPECT_FALSE(GetMemoryCache()->Contains(resource));
-  EXPECT_FALSE(resource->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadReferenced, resource->GetPreloadState());
 }
 
 TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
@@ -547,7 +547,7 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
   // DCL reached
   fetcher->ClearPreloads(ResourceFetcher::kClearSpeculativeMarkupPreloads);
   EXPECT_TRUE(GetMemoryCache()->Contains(resource));
-  EXPECT_FALSE(resource->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadReferenced, resource->GetPreloadState());
 }
 
 TEST_F(ResourceFetcherTest, PreloadMatchWithBypassingCache) {
@@ -610,21 +610,21 @@ TEST_F(ResourceFetcherTest, RepetitiveLinkPreloadShouldBeMerged) {
 
   Resource* resource1 = MockResource::Fetch(fetch_params_for_preload, fetcher);
   ASSERT_TRUE(resource1);
-  EXPECT_TRUE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadNotReferenced, resource1->GetPreloadState());
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   // The second preload fetch returnes the first preload.
   Resource* resource2 = MockResource::Fetch(fetch_params_for_preload, fetcher);
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_TRUE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadNotReferenced, resource1->GetPreloadState());
   EXPECT_EQ(resource1, resource2);
 
   // preload matching
   Resource* resource3 = MockResource::Fetch(fetch_params_for_request, fetcher);
   EXPECT_EQ(resource1, resource3);
   EXPECT_FALSE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_FALSE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadReferenced, resource1->GetPreloadState());
 }
 
 TEST_F(ResourceFetcherTest, RepetitiveSpeculativePreloadShouldBeMerged) {
@@ -641,21 +641,21 @@ TEST_F(ResourceFetcherTest, RepetitiveSpeculativePreloadShouldBeMerged) {
 
   Resource* resource1 = MockResource::Fetch(fetch_params_for_preload, fetcher);
   ASSERT_TRUE(resource1);
-  EXPECT_TRUE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadNotReferenced, resource1->GetPreloadState());
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   // The second preload fetch returnes the first preload.
   Resource* resource2 = MockResource::Fetch(fetch_params_for_preload, fetcher);
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_TRUE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadNotReferenced, resource1->GetPreloadState());
   EXPECT_EQ(resource1, resource2);
 
   // preload matching
   Resource* resource3 = MockResource::Fetch(fetch_params_for_request, fetcher);
   EXPECT_EQ(resource1, resource3);
   EXPECT_FALSE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_FALSE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadReferenced, resource1->GetPreloadState());
 }
 
 TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
@@ -676,7 +676,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
   Resource* resource1 =
       MockResource::Fetch(fetch_params_for_speculative_preload, fetcher);
   ASSERT_TRUE(resource1);
-  EXPECT_TRUE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadNotReferenced, resource1->GetPreloadState());
   EXPECT_FALSE(resource1->IsLinkPreload());
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
@@ -685,7 +685,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
   Resource* resource2 =
       MockResource::Fetch(fetch_params_for_link_preload, fetcher);
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_TRUE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadNotReferenced, resource1->GetPreloadState());
   EXPECT_TRUE(resource1->IsLinkPreload());
   EXPECT_EQ(resource1, resource2);
 
@@ -693,7 +693,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
   Resource* resource3 = MockResource::Fetch(fetch_params_for_request, fetcher);
   EXPECT_EQ(resource1, resource3);
   EXPECT_FALSE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_FALSE(resource1->IsPreloaded());
+  EXPECT_EQ(Resource::kPreloadReferenced, resource1->GetPreloadState());
   EXPECT_FALSE(resource1->IsLinkPreload());
 }
 

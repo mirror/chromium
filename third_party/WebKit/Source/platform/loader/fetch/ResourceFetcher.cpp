@@ -523,10 +523,8 @@ void ResourceFetcher::RemovePreload(Resource* resource) {
   auto it = preloads_.find(PreloadKey(resource->Url(), resource->GetType()));
   if (it == preloads_.end())
     return;
-  if (it->value == resource) {
-    resource->DecreasePreloadCount();
+  if (it->value == resource)
     preloads_.erase(it);
-  }
 }
 
 ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
@@ -923,7 +921,7 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
   if (!IsReusableAlsoForPreloading(params, resource, false))
     return nullptr;
 
-  resource->DecreasePreloadCount();
+  resource->MatchPreload();
   preloads_.erase(it);
   matched_preloads_.push_back(resource);
   return resource;
@@ -942,7 +940,7 @@ void ResourceFetcher::InsertAsPreloadIfNecessary(Resource* resource,
   PreloadKey key(params.Url(), type);
   if (preloads_.find(key) == preloads_.end()) {
     preloads_.insert(key, resource);
-    resource->IncreasePreloadCount();
+    resource->MarkAsPreload();
     if (preloaded_urls_for_test_)
       preloaded_urls_for_test_->insert(resource->Url().GetString());
   }
@@ -1285,9 +1283,7 @@ void ResourceFetcher::ClearPreloads(ClearPreloadsPolicy policy) {
   for (const auto& pair : preloads_) {
     Resource* resource = pair.value;
     if (policy == kClearAllPreloads || !resource->IsLinkPreload()) {
-      resource->DecreasePreloadCount();
-      if (resource->GetPreloadResult() == Resource::kPreloadNotReferenced)
-        GetMemoryCache()->Remove(resource);
+      GetMemoryCache()->Remove(resource);
       keys_to_be_removed.push_back(pair.key);
     }
   }
@@ -1300,7 +1296,7 @@ void ResourceFetcher::WarnUnusedPreloads() {
   for (const auto& pair : preloads_) {
     Resource* resource = pair.value;
     if (resource && resource->IsLinkPreload() &&
-        resource->GetPreloadResult() == Resource::kPreloadNotReferenced) {
+        resource->GetPreloadState() == Resource::kPreloadNotReferenced) {
       Context().AddConsoleMessage(
           "The resource " + resource->Url().GetString() +
               " was preloaded using link preload but not used within a few "
@@ -1585,7 +1581,7 @@ void ResourceFetcher::LogPreloadStats(ClearPreloadsPolicy policy) {
       continue;
     }
     int miss_count =
-        resource->GetPreloadResult() == Resource::kPreloadNotReferenced ? 1 : 0;
+        resource->GetPreloadState() == Resource::kPreloadNotReferenced ? 1 : 0;
     switch (resource->GetType()) {
       case Resource::kImage:
         images++;

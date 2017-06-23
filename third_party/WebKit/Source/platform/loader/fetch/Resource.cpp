@@ -259,7 +259,7 @@ void Resource::ServiceWorkerResponseCachedMetadataHandler::SendToPlatform() {
 Resource::Resource(const ResourceRequest& request,
                    Type type,
                    const ResourceLoaderOptions& options)
-    : preload_result_(kPreloadNotReferenced),
+    : preload_state_(kNotPreload),
       type_(type),
       status_(ResourceStatus::kNotStarted),
       load_finish_time_(0),
@@ -399,7 +399,8 @@ void Resource::FinishAsError(const ResourceError& error) {
   error_ = error;
   is_revalidating_ = false;
 
-  if ((error_.IsCancellation() || !IsPreloaded()) && IsMainThread())
+  if ((error_.IsCancellation() || preload_state_ != kPreloadReferenced) &&
+      IsMainThread())
     GetMemoryCache()->Remove(this);
 
   if (!ErrorOccurred())
@@ -544,6 +545,7 @@ void Resource::SetRevalidatingRequest(const ResourceRequest& request) {
   is_revalidating_ = true;
   resource_request_ = request;
   status_ = ResourceStatus::kNotStarted;
+  preload_state_ = kNotPreload;
 }
 
 bool Resource::WillFollowRedirect(const ResourceRequest& new_request,
@@ -662,17 +664,6 @@ static bool TypeNeedsSynchronousCacheHit(Resource::Type type) {
 }
 
 void Resource::WillAddClientOrObserver(PreloadReferencePolicy policy) {
-  if (policy == kMarkAsReferenced && preload_result_ == kPreloadNotReferenced) {
-    preload_result_ = kPreloadReferenced;
-
-    if (preload_discovery_time_) {
-      int time_since_discovery = static_cast<int>(
-          1000 * (MonotonicallyIncreasingTime() - preload_discovery_time_));
-      DEFINE_STATIC_LOCAL(CustomCountHistogram, preload_discovery_histogram,
-                          ("PreloadScanner.ReferenceTime", 0, 10000, 50));
-      preload_discovery_histogram.Count(time_since_discovery);
-    }
-  }
   if (!HasClientsOrObservers()) {
     is_alive_ = true;
   }
@@ -965,6 +956,28 @@ void Resource::RevalidationFailed() {
   cache_handler_.Clear();
   DestroyDecodedDataForFailedRevalidation();
   is_revalidating_ = false;
+}
+
+void Resource::MarkAsPreload() {
+  DCHECK_EQ(preload_state_, kNotPreload);
+  DCHECK_EQ(0u, preload_count_);
+  preload_state_ = kPreloadNotReferenced;
+  ++preload_count_;
+}
+
+void Resource::MatchPreload() {
+  CHECK_EQ(1u, preload_count_);
+  DCHECK_EQ(preload_state_, kPreloadNotReferenced);
+  --preload_count_;
+  preload_state_ = kPreloadReferenced;
+
+  if (preload_discovery_time_) {
+    int time_since_discovery = static_cast<int>(
+        1000 * (MonotonicallyIncreasingTime() - preload_discovery_time_));
+    DEFINE_STATIC_LOCAL(CustomCountHistogram, preload_discovery_histogram,
+                        ("PreloadScanner.ReferenceTime", 0, 10000, 50));
+    preload_discovery_histogram.Count(time_since_discovery);
+  }
 }
 
 bool Resource::CanReuseRedirectChain() const {
