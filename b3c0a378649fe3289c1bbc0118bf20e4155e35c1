@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d16bba95_436d7306",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T16:08:11Z",
+      "side": 1,
+      "message": "The most common pattern is to forward declare the method signature in the header, in an internal namespace (as you have) and move the implementation to the .cc file. You\u0027d also need to move your enum definitions to the internal namespace.",
+      "parentUuid": "fcf6c6d2_47a6e482",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee560c06_b1eafa76",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 9
