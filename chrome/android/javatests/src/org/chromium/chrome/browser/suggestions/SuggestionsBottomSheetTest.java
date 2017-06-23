@@ -31,6 +31,7 @@ import org.chromium.chrome.browser.ntp.cards.ItemViewType;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.SuggestionsBottomSheetTestRule;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
+import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 import org.chromium.content.browser.test.util.TestTouchUtils;
 
 /**
@@ -45,9 +46,12 @@ public class SuggestionsBottomSheetTest {
     @Rule
     public SuggestionsBottomSheetTestRule mSuggestionsTestRule =
             new SuggestionsBottomSheetTestRule();
+    @Rule
+    public SuggestionsDependenciesRule mSuggestionsDeps = new SuggestionsDependenciesRule();
 
     @Before
     public void setUp() throws InterruptedException {
+        mSuggestionsTestRule.initDependencies(mSuggestionsDeps.getFactory());
         mSuggestionsTestRule.startMainActivityOnBlankPage();
     }
 
