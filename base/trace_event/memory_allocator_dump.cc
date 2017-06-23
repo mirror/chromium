@@ -15,6 +15,13 @@
 namespace base {
 namespace trace_event {
 
+// static
+MemoryAllocatorDumpGuid MemoryAllocatorDump::GetDumpGuidFromName(
+    const std::string& absolute_name) {
+  return MemoryAllocatorDumpGuid(StringPrintf(
+      "%d:%s", TraceLog::GetInstance()->process_id(), absolute_name.c_str()));
+}
+
 const char MemoryAllocatorDump::kNameSize[] = "size";
 const char MemoryAllocatorDump::kNameObjectCount[] = "object_count";
 const char MemoryAllocatorDump::kTypeScalar[] = "scalar";
@@ -47,10 +54,7 @@ MemoryAllocatorDump::MemoryAllocatorDump(const std::string& absolute_name,
                                          ProcessMemoryDump* process_memory_dump)
     : MemoryAllocatorDump(absolute_name,
                           process_memory_dump,
-                          MemoryAllocatorDumpGuid(StringPrintf(
-                              "%d:%s",
-                              TraceLog::GetInstance()->process_id(),
-                              absolute_name.c_str()))) {
+                          GetDumpGuidFromName(absolute_name)) {
   string_conversion_buffer_.reserve(16);
 }
 

@@ -24,7 +24,8 @@ class BASE_EXPORT SharedMemoryTracker : public trace_event::MemoryDumpProvider {
   // Returns a singleton instance.
   static SharedMemoryTracker* GetInstance();
 
-  static std::string GetDumpNameForTracing(const UnguessableToken& id);
+  static trace_event::MemoryAllocatorDumpGuid GetDumpGUIDForTracing(
+      const UnguessableToken& id);
 
   static trace_event::MemoryAllocatorDumpGuid GetGlobalDumpGUIDForTracing(
       const UnguessableToken& id);
