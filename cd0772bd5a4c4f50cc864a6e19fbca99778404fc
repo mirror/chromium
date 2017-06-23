@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9533b422_7ede7d1f",
+        "filename": "mojo/android/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-23T18:01:54Z",
+      "side": 1,
+      "message": "Could you please elaborate on why the - and then + are necessary here?",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "cd0772bd5a4c4f50cc864a6e19fbca99778404fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
