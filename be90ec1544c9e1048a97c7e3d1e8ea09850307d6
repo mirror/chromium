@@ -39,6 +39,24 @@
       "revId": "be90ec1544c9e1048a97c7e3d1e8ea09850307d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ad9f8a_8b40ccd9",
+        "filename": "components/offline_pages/core/background/save_page_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-23T20:46:27Z",
+      "side": 1,
+      "message": "Removed. we can use the set_request_origin method instead.",
+      "parentUuid": "3ca48179_2e368d5d",
+      "revId": "be90ec1544c9e1048a97c7e3d1e8ea09850307d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
