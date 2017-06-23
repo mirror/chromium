@@ -1369,7 +1369,7 @@ TEST(FieldTrialListTest, DumpAndFetchFromSharedMemory) {
   EXPECT_EQ("value2", shm_params["key2"]);
 }
 
-#if !defined(OS_NACL)
+#if !defined(OS_NACL) && !defined(OS_FUCHSIA)
 TEST(FieldTrialListTest, SerializeSharedMemoryHandleMetadata) {
   std::unique_ptr<base::SharedMemory> shm(new SharedMemory());
   shm->CreateAndMapAnonymous(4 << 10);
@@ -1386,6 +1386,6 @@ TEST(FieldTrialListTest, SerializeSharedMemoryHandleMetadata) {
   EXPECT_EQ(deserialized.GetGUID(), shm->handle().GetGUID());
   EXPECT_FALSE(deserialized.GetGUID().is_empty());
 }
-#endif  // !defined(OS_NACL)
+#endif  // !defined(OS_NACL) && !defined(OS_FUCHSIA)
 
 }  // namespace base
