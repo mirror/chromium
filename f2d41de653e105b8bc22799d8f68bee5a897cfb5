@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1c45570_c12a458e",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-23T22:05:08Z",
+      "side": 1,
+      "message": "nit: Since this object is not really used by this class, maybe add a comment that it\u0027s keeping a reference to MediaKeys to prevent gc from collecting it while the promise is pending. (And I guess add the same comment to SetCertificateResultPromise above.)",
+      "range": {
+        "startLine": 186,
+        "startChar": 20,
+        "endLine": 186,
+        "endChar": 31
+      },
+      "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ff7c33_3792c3f5",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-23T22:05:08Z",
+      "side": 1,
+      "message": "nit: \"Certificate\" is not needed now that the function name includes it.",
+      "range": {
+        "startLine": 294,
+        "startChar": 63,
+        "endLine": 294,
+        "endChar": 74
+      },
+      "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ad500a_b5a824c2",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-23T22:05:08Z",
+      "side": 1,
+      "message": "nit: s/policies/policy/",
+      "range": {
+        "startLine": 314,
+        "startChar": 27,
+        "endLine": 314,
+        "endChar": 35
+      },
+      "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd5b379_c12731dd",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-23T22:05:08Z",
+      "side": 1,
+      "message": "I think this can be optional (not required in the initializer). Should this generate a TypeError if this is empty or maybe even non-ASCII?",
+      "range": {
+        "startLine": 315,
+        "startChar": 46,
+        "endLine": 315,
+        "endChar": 60
+      },
+      "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
