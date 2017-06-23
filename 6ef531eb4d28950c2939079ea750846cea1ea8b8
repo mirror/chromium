@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2fe3e6eb_1fb2fb23",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T09:48:47Z",
+      "side": 1,
+      "message": "ugh right I didn\u0027t think about that. Initialisation at the declaration site sgtm.",
+      "parentUuid": "bc26a447_32f09177",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a43543f5_386cd790",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I still need to replace the constructor because of the nativeInit() call. Since it is in the constructor, I can\u0027t override it before I spy the object as I get a UnsatisfiedLinkError. And this way I don\u0027t expose the isInitialized() or nativeInit() methods.",
       "parentUuid": "a43543f5_386cd790",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 22
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c88c7ce_3abe8bc0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T09:48:47Z",
+      "side": 1,
+      "message": "you\u0027re right, sgtm",
+      "parentUuid": "cde4c055_5c24aa1d",
       "range": {
         "startLine": 109,
         "startChar": 5,
