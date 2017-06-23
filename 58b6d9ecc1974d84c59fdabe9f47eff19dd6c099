@@ -34,6 +34,24 @@
       "revId": "58b6d9ecc1974d84c59fdabe9f47eff19dd6c099",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616f9859_aecb43a9",
+        "filename": "ash/system/rotation/tray_rotation_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-23T17:24:38Z",
+      "side": 1,
+      "message": "It\u0027s supposed to show the orientation that a user requested. That\u0027s how Android\u0027s icon works and we want to be consistent.",
+      "parentUuid": "b772641d_3d58a738",
+      "revId": "58b6d9ecc1974d84c59fdabe9f47eff19dd6c099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
