@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98474c25_97b1234c",
+        "filename": "components/feature_engagement_tracker/public/event_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:27:45Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "24e746002a02aa993966986a17bbb0af15bb9e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df18645_56917114",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:27:45Z",
+      "side": 1,
+      "message": "If these are exclusively for events, should they belong in their own namespace?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 49
+      },
+      "revId": "24e746002a02aa993966986a17bbb0af15bb9e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75303b6a_9a5ba1bb",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:27:45Z",
+      "side": 1,
+      "message": "Nit: This should match the #if statement above. Copy+Paste that to here.",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "24e746002a02aa993966986a17bbb0af15bb9e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
