@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8f20eef_626c9d82",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-23T04:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dba0ae6_7fcbfd51",
+      "revId": "b049e1dfbe68ecc01a1420b80930ae4572196178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dff15c3d_2d8d7196",
         "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-23T03:39:33Z",
       "side": 1,
       "message": "I\u0027m confused, this seems to be reverting to Patch Set 2. I thought you had to change it in PS3 because this code was actually being reached in non-ChromeOS, so this would crash. Is there a reason to revert?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "b049e1dfbe68ecc01a1420b80930ae4572196178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa16c648_24002093",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-23T04:49:05Z",
+      "side": 1,
+      "message": "I applied your former comment and removed unnecessary creating an object of type HotwordAudioHistoryHandler in \nchrome/browser/search/hotword_service.cc and try-bots are OK with it.",
+      "parentUuid": "dff15c3d_2d8d7196",
       "range": {
         "startLine": 73,
         "startChar": 2,
@@ -56,6 +98,24 @@
       "revId": "b049e1dfbe68ecc01a1420b80930ae4572196178",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004d6410_0fb0af21",
+        "filename": "chrome/browser/search/hotword_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-23T04:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ab59e75_f306266a",
+      "revId": "b049e1dfbe68ecc01a1420b80930ae4572196178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
