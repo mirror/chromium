@@ -441,6 +441,10 @@ class WEB_EXPORT WebLocalFrameImpl final
 
   DECLARE_VIRTUAL_TRACE();
 
+#if DCHECK_IS_ON()
+  void AssertWasClosed() override { DCHECK(!self_keep_alive_); }
+#endif
+
  private:
   friend class LocalFrameClientImpl;
 
