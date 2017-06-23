@@ -58,6 +58,7 @@ namespace content {
 
 class MessagePort;
 class ServiceWorkerContextCore;
+class ServiceWorkerInstalledScriptsSender;
 class ServiceWorkerProviderHost;
 class ServiceWorkerRegistration;
 class ServiceWorkerURLRequestJob;
@@ -725,6 +726,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   // Connected to ServiceWorkerContextClient while the worker is running.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
+
+  std::unique_ptr<ServiceWorkerInstalledScriptsSender>
+      installed_scripts_sender_;
 
   std::set<const ServiceWorkerURLRequestJob*> streaming_url_request_jobs_;
 
