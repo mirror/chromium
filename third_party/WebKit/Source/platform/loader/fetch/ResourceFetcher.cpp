@@ -1032,17 +1032,39 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
   //
   // TODO(tyoshino): Consider returning false when the credentials mode
   // differs.
-  if ((params.Options().cors_handling_by_resource_fetcher ==
-           kEnableCORSHandlingByResourceFetcher &&
-       params.GetResourceRequest().GetFetchRequestMode() ==
-           WebURLRequest::kFetchRequestModeCORS) ==
-      (existing_resource->Options().cors_handling_by_resource_fetcher ==
-           kEnableCORSHandlingByResourceFetcher &&
-       existing_resource->GetResourceRequest().GetFetchRequestMode() ==
-           WebURLRequest::kFetchRequestModeCORS))
-    return true;
 
-  return false;
+  bool is_from_dtl = params.Options().cors_handling_by_resource_fetcher ==
+                     kDisableCORSHandlingByResourceFetcher;
+  bool existing_was_from_dtl =
+      existing_resource->Options().cors_handling_by_resource_fetcher ==
+      kDisableCORSHandlingByResourceFetcher;
+
+  if (is_from_dtl) {
+    if (existing_was_from_dtl) {
+      return true;
+    }
+
+    // Requests from the DocumentThreadableLoader whose mode is CORS are
+    // allowed to reuse an existing resources fetched with non-CORS mode and
+    // not using DocumentThreadableLoader for historical reason.
+    return existing_resource->GetResourceRequest().GetFetchRequestMode() !=
+           WebURLRequest::kFetchRequestModeCORS;
+  }
+
+  if (existing_was_from_dtl) {
+    // Requests not from the DocumentThreadableLoader whose mode is CORS
+    // are allowed to reuse an existing resources fetched with non-CORS mode
+    // and using DocumentThreadableLoader for historical reason.
+    return params.GetResourceRequest().GetFetchRequestMode() !=
+           WebURLRequest::kFetchRequestModeCORS;
+  }
+
+  bool with_cors = params.GetResourceRequest().GetFetchRequestMode() ==
+                   WebURLRequest::kFetchRequestModeCORS;
+  bool existing_was_with_cors =
+      existing_resource->GetResourceRequest().GetFetchRequestMode() ==
+      WebURLRequest::kFetchRequestModeCORS;
+  return with_cors == existing_was_with_cors;
 }
 
 ResourceFetcher::RevalidationPolicy
