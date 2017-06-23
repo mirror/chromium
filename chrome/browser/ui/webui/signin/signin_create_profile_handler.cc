@@ -46,6 +46,7 @@
 #include "content/public/browser/web_ui.h"
 #include "ui/base/l10n/l10n_util.h"
 
+// TODO(markusheintz): Supervised Users are deprecated now. Remove this code.
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
 #include "chrome/browser/supervised_user/legacy/supervised_user_registration_utility.h"
 #include "chrome/browser/supervised_user/legacy/supervised_user_sync_service.h"
@@ -63,6 +64,8 @@ SigninCreateProfileHandler::SigninCreateProfileHandler()
 
 SigninCreateProfileHandler::~SigninCreateProfileHandler() {
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+  // TODO(markusheintz): Supervised Users are deprecated now. Remove this code.
+
   // Cancellation is only supported for supervised users.
   CancelProfileRegistration(false);
 #endif
@@ -155,6 +158,7 @@ void SigninCreateProfileHandler::GetLocalizedValues(
 
 void SigninCreateProfileHandler::RegisterMessages() {
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+  // TODO(markusheintz): Supervised Users are deprecated now. Remove this code.
   // Cancellation is only supported for supervised users.
   web_ui()->RegisterMessageCallback(
       "cancelCreateProfile",
@@ -258,6 +262,7 @@ void SigninCreateProfileHandler::CreateProfile(const base::ListValue* args) {
     args->GetBoolean(2, &create_shortcut);
   }
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+  // TODO(markusheintz): Supervised Users are deprecated now. Remove this code.
   std::string supervised_user_id;
   base::FilePath custodian_profile_path;
   if (GetSupervisedCreateProfileArgs(args, &supervised_user_id,
@@ -341,6 +346,8 @@ void SigninCreateProfileHandler::HandleProfileCreationSuccess(
       break;
     }
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+    // TODO(markusheintz): Supervised Users are deprecated now. Remove this
+    // code.
     case SUPERVISED_PROFILE_CREATION:
     case SUPERVISED_PROFILE_IMPORT:
       RegisterSupervisedUser(create_shortcut, supervised_user_id,
@@ -377,6 +384,8 @@ void SigninCreateProfileHandler::CreateShortcutAndShowSuccess(
   bool open_new_window = !is_force_signin_enabled;
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+  // TODO(markusheintz): Supervised Users are deprecated now. Remove this code.
+
   // If the new profile is a supervised user, instead of opening a new window
   // right away, a confirmation page will be shown by JS from the creation
   // dialog. If we are importing an existing supervised profile or creating a
@@ -463,6 +472,8 @@ base::string16 SigninCreateProfileHandler::GetProfileCreationErrorMessageLocal()
     const {
   int message_id = IDS_PROFILES_CREATE_LOCAL_ERROR;
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+  // TODO(markusheintz): Supervised Users are deprecated now. Remove this code.
+
   // Local errors can occur during supervised profile import.
   if (profile_creation_type_ == SUPERVISED_PROFILE_IMPORT)
     message_id = IDS_LEGACY_SUPERVISED_USER_IMPORT_LOCAL_ERROR;
@@ -510,6 +521,8 @@ base::Value SigninCreateProfileHandler::GetWebUIListenerName(
 }
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+// TODO(markusheintz): Supervised Users are deprecated now. Remove this code.
+
 base::string16 SigninCreateProfileHandler::GetProfileCreateErrorMessageRemote()
     const {
   return l10n_util::GetStringUTF16(
