@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be478502_e8dfaa7a",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T17:12:47Z",
+      "side": 1,
+      "message": "TODO needs separate BUILD.gn",
+      "revId": "e3619c1094a07cfe166475c9ad3ec260073a21e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8db5ae_076a3b15",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T17:12:47Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. This code doesn\u0027t depend on the files in media/base, the ones in media/base depend on this code. Can we instead just move the files from media/base that need the ffmpeg code to media/filters?",
+      "revId": "e3619c1094a07cfe166475c9ad3ec260073a21e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
