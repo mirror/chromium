@@ -1046,7 +1046,7 @@
     },
     {
       name: "VisualViewportAPI",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "WakeLock",
