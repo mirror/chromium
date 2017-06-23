@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b21e663f_bdc922d7",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-23T07:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78074cba_7dc2bd82",
+      "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dce11c9_5b5b7ad0",
         "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9dca5f_babb6988",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-23T07:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dce11c9_5b5b7ad0",
+      "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7cfb2d6d_676572b9",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-23T07:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e9b874e_20ca2e5b",
+      "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd5de1bf_a906f979",
         "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5f4450_5d3754ef",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-23T07:58:04Z",
+      "side": 1,
+      "message": "That was exactly my thought when I read this :D\nHowever, ThumbnailingAlgorithm is refcounted, so it should probably be scoped_refptr. I\u0027ll do it in one of the followups; added a TODO for now (in the header).",
+      "parentUuid": "cd5de1bf_a906f979",
+      "revId": "8d3d78886a9701175b0ea4fcbd41af0d35c648ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
