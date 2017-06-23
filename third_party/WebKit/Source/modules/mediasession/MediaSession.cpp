@@ -13,8 +13,8 @@
 #include "modules/mediasession/MediaMetadata.h"
 #include "modules/mediasession/MediaMetadataSanitizer.h"
 #include "platform/wtf/Optional.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -201,7 +201,7 @@ mojom::blink::MediaSessionService* MediaSession::GetService() {
   if (!document->GetFrame())
     return nullptr;
 
-  InterfaceProvider* interface_provider =
+  service_manager::InterfaceProvider* interface_provider =
       document->GetFrame()->GetInterfaceProvider();
   if (!interface_provider)
     return nullptr;

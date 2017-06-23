@@ -10,9 +10,8 @@
 #include "core/frame/LocalFrame.h"
 #include "modules/vr/NavigatorVR.h"
 #include "modules/vr/VRGetDevicesCallback.h"
-#include "public/platform/InterfaceProvider.h"
-
 #include "platform/wtf/Assertions.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 

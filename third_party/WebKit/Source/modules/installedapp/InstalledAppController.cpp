@@ -7,7 +7,7 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "platform/wtf/Functional.h"
-#include "public/platform/InterfaceProvider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 #include <utility>
 

@@ -35,6 +35,10 @@
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Vector.h"
 
+namespace service_manager {
+class InterfaceProvider;
+}
+
 namespace blink {
 
 class InterfaceProvider;
@@ -60,10 +64,10 @@ class WebSocketHandle {
 
   virtual ~WebSocketHandle() {}
 
-  // This method may optionally be called before connect() to specify an
-  // InterfaceProvider to get a WebSocket instance. By default, connect() will
-  // use Platform::interfaceProvider().
+  // This method must be called before connect() to specify an InterfaceProvider
+  // to get a WebSocket instance.
   virtual void Initialize(InterfaceProvider*) = 0;
+  virtual void Initialize(service_manager::InterfaceProvider*) = 0;
 
   virtual void Connect(const KURL&,
                        const Vector<String>& protocols,
