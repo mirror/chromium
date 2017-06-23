@@ -139,6 +139,17 @@ public abstract class ViewAndroidDelegate {
     @CalledByNative
     public abstract ViewGroup getContainerView();
 
+    @CalledByNative
+    public void getLocationOfContainerViewOnScreen(int[] coords) {
+        ViewGroup container = getContainerView();
+        if (container == null) {
+            coords[0] = coords[1] = 0;
+            return;
+        }
+
+        container.getLocationOnScreen(coords);
+    }
+
     /**
      * Create and return a basic implementation of {@link ViewAndroidDelegate} where
      * the container view is not allowed to be changed after initialization.

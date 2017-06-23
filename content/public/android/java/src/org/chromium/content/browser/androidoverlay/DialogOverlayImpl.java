@@ -45,6 +45,9 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
     // Has close() been run yet?
     private boolean mClosed;
 
+    // Temporary, so we don't need to keep allocating arrays.
+    private int[] mCompositorOffset = new int[2];
+
     /**
      * @param client Mojo client interface.
      * @param config initial overlay configuration.
@@ -133,6 +136,11 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         ThreadUtils.assertOnUiThread();
 
         if (mDialogCore == null) return;
+
+        // |rect| is relative to the compositor surface.  Convert it to be relative to the screen.
+        nativeGetCompositorOffset(mNativeHandle, mCompositorOffset);
+        rect.x += mCompositorOffset[0];
+        rect.y += mCompositorOffset[1];
 
         final DialogOverlayCore dialogCore = mDialogCore;
         mOverlayHandler.post(new Runnable() {
@@ -266,6 +274,12 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
      * Stops native side and deallocates |handle|.
      */
     private native void nativeDestroy(long nativeDialogOverlayImpl);
+
+    /**
+     * Fill in |coords| with the screen location (in the View.getLocationOnScreen sense) of the
+     * compositor for our WebContents.
+     */
+    private native void nativeGetCompositorOffset(long nativeDialogOverlayImpl, int[] coords);
 
     /**
      * Register a surface and return the surface id for it.
