@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38e20acb_a54f04b3",
+        "filename": "ash/system/rotation/tray_rotation_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-23T17:00:32Z",
+      "side": 1,
+      "message": "This is actually wrong. It should show the user locked orientation, not current orientation.\n(user_locked_orientation_ in ScreenOrientationController)",
+      "revId": "58b6d9ecc1974d84c59fdabe9f47eff19dd6c099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
