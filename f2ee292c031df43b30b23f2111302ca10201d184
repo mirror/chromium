@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e446e4a9_3ff9e6ee",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T09:02:07Z",
+      "side": 1,
+      "message": "Thanks for adding these comments!",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d60289_dd8bfce8",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T09:02:07Z",
+      "side": 1,
+      "message": "If you want, it\u0027s possible to do this in one line:\n\nauto timing \u003d mojom::EmbeddedWorkerStartTiming::New(\n    start_worker_received_time_, blink_initialized_time_);\n\nOne of the disadvantages is that it\u0027s possible to mix up argument order though...",
+      "range": {
+        "startLine": 1232,
+        "startChar": 2,
+        "endLine": 1233,
+        "endChar": 46
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
