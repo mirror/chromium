@@ -57,6 +57,18 @@ Client::FailureReason FailureReasonFromCompletionType(CompletionType type) {
   return Client::FailureReason::UNKNOWN;
 }
 
+// Helper function to determine if more downloads can be activated based on
+// configuration.
+bool CanActiveMoreDownloads(Configuration* config,
+                            uint32_t active_count,
+                            uint32_t paused_count) {
+  if (config->max_concurrent_downloads <= paused_count + active_count ||
+      config->max_running_downloads <= active_count) {
+    return false;
+  }
+  return true;
+}
+
 }  // namespace
 
 ControllerImpl::ControllerImpl(
@@ -806,18 +818,18 @@ void ControllerImpl::ActivateMoreDownloads() {
     entries_states[entry->state]++;
   uint32_t paused_count = entries_states[Entry::State::PAUSED];
   uint32_t active_count = entries_states[Entry::State::ACTIVE];
-  if (config_->max_concurrent_downloads <= paused_count + active_count ||
-      config_->max_running_downloads <= active_count) {
+  if (!CanActiveMoreDownloads(config_, active_count, paused_count))
     return;
-  }
-
   Entry* next = scheduler_->Next(
       model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
 
   while (next) {
     DCHECK_EQ(Entry::State::AVAILABLE, next->state);
     TransitTo(next, Entry::State::ACTIVE, model_.get());
+    active_count++;
     UpdateDriverState(next);
+    if (!CanActiveMoreDownloads(config_, active_count, paused_count))
+      break;
     next = scheduler_->Next(model_->PeekEntries(),
                             device_status_listener_->CurrentDeviceStatus());
   }
