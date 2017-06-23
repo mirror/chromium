@@ -144,7 +144,6 @@ test("webkit_unit_tests") {
     "tests/WebURLResponseTest.cpp",
     "tests/WebUserGestureTokenTest.cpp",
     "tests/WebViewTest.cpp",
-    "tests/WindowProxyTest.cpp",
     "tests/scheduler/ActiveConnectionThrottlingTest.cpp",
     "tests/scheduler/FrameThrottlingTest.cpp",
     "tests/scheduler/ThrottlingTest.cpp",
