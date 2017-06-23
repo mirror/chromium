@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3638f5cc_776607d3",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-23T17:15:24Z",
+      "side": 1,
+      "message": "No longer used?",
+      "revId": "58a864ea45ed6859ecefc4d55c0fb8254bffe3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a300b574_f36b75cf",
+        "filename": "components/safe_browsing/common/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-23T17:15:24Z",
+      "side": 1,
+      "message": "I thought we usually just put directories into things rather than individual headers? *shrug* I\u0027m good with whatever.",
+      "revId": "58a864ea45ed6859ecefc4d55c0fb8254bffe3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
