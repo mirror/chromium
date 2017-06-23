@@ -125,6 +125,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         self.assertEqual(exit_code, 0)
         self.assertLog([
             'INFO: Finished try jobs found for all try bots.\n',
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/flaky-fail.html\n',
             'INFO: Rebaselining one/missing.html\n',
             'INFO: Rebaselining one/slow-fail.html\n',
@@ -242,6 +243,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         self.assertEqual(exit_code, 0)
         self.assertLog([
             'INFO: Finished try jobs found for all try bots.\n',
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/flaky-fail.html\n',
             'INFO: Rebaselining one/text-fail.html\n',
         ])
@@ -263,6 +265,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         self.assertEqual(exit_code, 0)
         self.assertLog([
             'INFO: Finished try jobs found for all try bots.\n',
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/text-fail.html\n',
         ])
 
@@ -276,6 +279,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         self.assertLog([
             'INFO: Finished try jobs found for all try bots.\n',
             'WARNING: No retry summary available for "MOCK Try Win".\n',
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/flaky-fail.html\n',
             'INFO: Rebaselining one/missing.html\n',
             'INFO: Rebaselining one/slow-fail.html\n',
@@ -368,6 +372,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
             'INFO:   MOCK Try Win\n',
             'INFO: For one/flaky-fail.html:\n',
             'INFO: Using "MOCK Try Linux" build 6000 for test-win-win7.\n',
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/flaky-fail.html\n'
         ])
 
