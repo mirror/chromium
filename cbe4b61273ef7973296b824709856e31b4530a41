@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed98d254_39494527",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-06-23T17:23:56Z",
+      "side": 1,
+      "message": "Prefer StyleRef() over Style().",
+      "revId": "cbe4b61273ef7973296b824709856e31b4530a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
