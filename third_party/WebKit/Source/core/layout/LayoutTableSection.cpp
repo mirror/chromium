@@ -36,6 +36,7 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/SubtreeLayoutScope.h"
 #include "core/paint/TableSectionPainter.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/HashSet.h"
 
 namespace blink {
@@ -97,6 +98,7 @@ LayoutTableSection::LayoutTableSection(Element* element)
       is_repeating_header_group_(false) {
   // init LayoutObject attributes
   SetInline(false);  // our object is not Inline
+  RuntimeEnabledFeatures::SetVisibilityCollapseEnabled(true);
 }
 
 LayoutTableSection::~LayoutTableSection() {}
@@ -564,7 +566,9 @@ unsigned LayoutTableSection::CalcRowHeightHavingOnlySpanningCells(
         row_to_apply_extra_height < end_row)
       total_rowspan_cell_height += extra_table_height_to_propgate;
 
-    if (total_rowspan_cell_height < cell->LogicalHeightForRowSizing()) {
+    // Skip extra height if row is collapsed.
+    if (!RowHasVisibilityCollapse(cell_row_index) &&
+        total_rowspan_cell_height < cell->LogicalHeightForRowSizing()) {
       unsigned extra_height_required =
           cell->LogicalHeightForRowSizing() - total_rowspan_cell_height;
 
@@ -767,6 +771,13 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
   }
 }
 
+bool LayoutTableSection::RowHasVisibilityCollapse(unsigned row) const {
+  return (RuntimeEnabledFeatures::VisibilityCollapseEnabled() &&
+          ((grid_[row].row &&
+            grid_[row].row->Style()->Visibility() == EVisibility::kCollapse) ||
+           Style()->Visibility() == EVisibility::kCollapse));
+}
+
 // Find out the baseline of the cell
 // If the cell's baseline is more than the row's baseline then the cell's
 // baseline become the row's baseline and if the row's baseline goes out of the
@@ -837,18 +848,28 @@ int LayoutTableSection::CalcRowLogicalHeight() {
 
     if (grid_[r].logical_height.IsSpecified()) {
       // Our base size is the biggest logical height from our cells' styles
-      // (excluding row spanning cells).
-      row_pos_[r + 1] =
-          std::max(row_pos_[r] + MinimumValueForLength(grid_[r].logical_height,
-                                                       LayoutUnit())
-                                     .Round(),
-                   0);
+      // (excluding row spanning cells). Any collapsed row's height is skipped.
+      if (RowHasVisibilityCollapse(r)) {
+        row_pos_[r + 1] = row_pos_[r];
+      } else {
+        row_pos_[r + 1] =
+            std::max(row_pos_[r] + MinimumValueForLength(
+                                       grid_[r].logical_height, LayoutUnit())
+                                       .Round(),
+                     0);
+      }
+
     } else {
       // Non-specified lengths are ignored because the row already accounts for
       // the cells intrinsic logical height.
       row_pos_[r + 1] = std::max(row_pos_[r], 0);
     }
 
+    if (RowHasVisibilityCollapse(r)) {
+      // If the row or row group is collapsed, ignore row height.
+      row_pos_[r + 1] = std::max(row_pos_[r + 1], row_pos_[r]);
+      continue;
+    }
     for (auto& grid_cell : grid_[r].grid_cells) {
       if (grid_cell.InColSpan())
         continue;
@@ -863,10 +884,10 @@ int LayoutTableSection::CalcRowLogicalHeight() {
              CrossesPageBoundary(
                  LayoutUnit(row_pos_[r]),
                  LayoutUnit(cell->LogicalHeightForRowSizing())))) {
-          // Entering or extending a range of unstretchable rows. We enter this
-          // mode when a cell in a row crosses a fragmentainer boundary, and
-          // we'll stay in this mode until we get to a row where we're past all
-          // rowspanned cells that we encountered while in this mode.
+          // Entering or extending a range of unstretchable rows. We enter
+          // this mode when a cell in a row crosses a fragmentainer boundary,
+          // and we'll stay in this mode until we get to a row where we're
+          // past all rowspanned cells that we encountered while in this mode.
           DCHECK(state.IsPaginated());
           unsigned row_index_below_cell = r + cell->RowSpan();
           index_of_first_stretchable_row =
