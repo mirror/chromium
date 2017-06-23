@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e35c9226_63762483",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-23T17:30:11Z",
+      "side": 1,
+      "message": "nit (for myself): Also worth including the JSON reader error details - see JSONReader::ReadAndReturnError.",
+      "range": {
+        "startLine": 401,
+        "startChar": 4,
+        "endLine": 401,
+        "endChar": 38
+      },
+      "revId": "c343964964062ae02eac420410120e7ed3ce30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df8e4216_e157bf61",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-23T17:30:11Z",
+      "side": 1,
+      "message": "nit (for myself): s/excessize/excessive/",
+      "range": {
+        "startLine": 252,
+        "startChar": 66,
+        "endLine": 252,
+        "endChar": 67
+      },
+      "revId": "c343964964062ae02eac420410120e7ed3ce30e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
