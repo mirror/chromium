@@ -68,6 +68,11 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
       bool success,
       const base::Optional<base::trace_event::MemoryDumpCallbackResult>&);
 
+  // mojom::ClientProcess implementation. The Coordinator calls this.
+  void RequestOSMemoryDump(
+      const std::vector<base::ProcessId>& ids,
+      const RequestOSMemoryDumpCallback& callback) override;
+
   mojom::CoordinatorPtr coordinator_;
   mojo::Binding<mojom::ClientProcess> binding_;
   const mojom::ProcessType process_type_;
