@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9c6972a9_349690ed",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-23T06:09:12Z",
+      "side": 1,
+      "message": "Discussed w/ kouhei@.\nI think the current patch set is OK for now. ResourceBuffer() can be null, but this is acceptable because it doesn\u0027t affect correctness. Also I think I can incrementally remove the assumption of \"ResourceBuffer() is non-null before first call to SourceText()\" in the future.",
+      "parentUuid": "59e81050_991f7c2c",
+      "range": {
+        "startLine": 365,
+        "startChar": 48,
+        "endLine": 366,
+        "endChar": 23
+      },
+      "revId": "554fae97dba56620438d1ad85ec918090710276c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "937d5031_d26208ca",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 21
