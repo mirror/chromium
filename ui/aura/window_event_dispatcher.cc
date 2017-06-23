@@ -177,6 +177,7 @@ DispatchDetails WindowEventDispatcher::DispatchMouseExitAtPoint(
     const gfx::Point& point) {
   ui::MouseEvent event(ui::ET_MOUSE_EXITED, point, point, ui::EventTimeForNow(),
                        ui::EF_NONE, ui::EF_NONE);
+  event.set_only_for_ui_hover_state(true);
   return DispatchMouseEnterOrExit(window, event, ui::ET_MOUSE_EXITED);
 }
 
