@@ -227,8 +227,8 @@ class DISPLAY_EXPORT Display final {
   // NOTE: this is not currently written to the mojom as it is not used in
   // aura.
   gfx::ICCProfile icc_profile_;
-  int color_depth_;
-  int depth_per_component_;
+  int color_depth_ = 0;
+  int depth_per_component_ = 0;
   bool is_monochrome_ = false;
 };
 
