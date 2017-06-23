@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64a54cb6_2a788f53",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-23T16:27:45Z",
+      "side": 1,
+      "message": "Just to clarify, that is not a problem in terms of Oilpan\u0027s GC. Oilpan\u0027s GC strongly traces weak collections that are referenced from the machine stack. So observers should not be collected during the loop.\n\nHowever, if PluginsChanged() has a code path to remove some observers, that causes the problem.\n\nIn conclusion, the pattern Jeremy proposed looks good.",
+      "parentUuid": "cb7c7f4a_3610f249",
+      "revId": "c48741ce5fddc581ff4d91dd8b364def70684cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11bbd0b5_385c6425",
         "filename": "third_party/WebKit/Source/core/page/Page.cpp",
         "patchSetId": 3
