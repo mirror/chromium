@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ff875879_73e1a572",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-23T19:45:24Z",
+      "side": 1,
+      "message": "PaintPropertyTreeBuilder doesn\u0027t actually track transforms, which is why I didn\u0027t mention\nthis here. But added a comment.",
+      "parentUuid": "892aacf4_97bd419e",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6224e6fc_8a609065",
         "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
         "patchSetId": 6
@@ -100,6 +118,24 @@
       "writtenOn": "2017-06-23T01:37:45Z",
       "side": 1,
       "message": "Do you also need to do this for the svg local transform?",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1a3a0f_6203a434",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-23T19:45:24Z",
+      "side": 1,
+      "message": "I don\u0027t think so, because those can\u0027t be composited right now.",
+      "parentUuid": "6224e6fc_8a609065",
       "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -120,6 +156,24 @@
       "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d104d30_1a10c544",
+        "filename": "third_party/WebKit/Source/platform/geometry/FloatRoundedRect.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-23T19:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab585d4_f2b4f871",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
