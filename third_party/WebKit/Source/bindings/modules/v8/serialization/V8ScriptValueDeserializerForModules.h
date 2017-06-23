@@ -16,13 +16,7 @@ class CryptoKey;
 class MODULES_EXPORT V8ScriptValueDeserializerForModules final
     : public V8ScriptValueDeserializer {
  public:
-  explicit V8ScriptValueDeserializerForModules(
-      RefPtr<ScriptState> script_state,
-      RefPtr<SerializedScriptValue> serialized_script_value,
-      const Options& options = Options())
-      : V8ScriptValueDeserializer(script_state,
-                                  serialized_script_value,
-                                  options) {}
+  using V8ScriptValueDeserializer::V8ScriptValueDeserializer;
 
  protected:
   ScriptWrappable* ReadDOMObject(SerializationTag) override;
