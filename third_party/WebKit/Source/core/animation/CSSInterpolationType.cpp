@@ -118,8 +118,10 @@ class ResolvedRegisteredCustomPropertyChecker
                const InterpolationValue&) const final {
     CSSVariableResolver& variable_resolver =
         ToCSSInterpolationEnvironment(environment).VariableResolver();
+    bool dummy_cycle_detected;
     RefPtr<CSSVariableData> resolved_tokens =
-        variable_resolver.ResolveCustomPropertyAnimationKeyframe(*declaration_);
+        variable_resolver.ResolveCustomPropertyAnimationKeyframe(
+            *declaration_, dummy_cycle_detected);
     return DataEquivalent(resolved_tokens, resolved_tokens_);
   }
 
@@ -228,8 +230,10 @@ InterpolationValue CSSInterpolationType::MaybeConvertCustomPropertyDeclaration(
 
   RefPtr<CSSVariableData> resolved_tokens;
   if (declaration.Value()->NeedsVariableResolution()) {
-    resolved_tokens =
-        variable_resolver.ResolveCustomPropertyAnimationKeyframe(declaration);
+    bool cycle_detected;
+    resolved_tokens = variable_resolver.ResolveCustomPropertyAnimationKeyframe(
+        declaration, cycle_detected);
+    DCHECK(!cycle_detected);
     conversion_checkers.push_back(
         ResolvedRegisteredCustomPropertyChecker::Create(declaration,
                                                         resolved_tokens));
