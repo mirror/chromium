@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc26a447_32f09177",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T08:39:31Z",
+      "side": 1,
+      "message": "I can\u0027t call nativeInit() before the constructor is called, because the object is not created yet. I tried putting the 2 lines which are duplicated in an init() function, but since the fields are final, this is not allowed. Initializing them at their declaration works.",
+      "parentUuid": "5a266f8c_6630e128",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a43543f5_386cd790",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-22T19:04:35Z",
       "side": 1,
       "message": "I think there is a better approach that makes exposes less internal code and avoids replacing internal code. How about that:\n\nSpy and replace only 2 methods:\n- isInitialised (so that you don\u0027t even need to replace the constructor)\n- nativeRetrieveThumbnail (so you can pretent to also be the native code. use doAnswer to replace the implementation, e.g. https://cs.chromium.org/chromium/src/chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGroupTest.java?q\u003ddoAnswer\u0026l\u003d386)\n\nThen just make a real request and go through all the code. You can return the bitmap you want in the callback from nativeRetrieveThumbnail.",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 22
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde4c055_5c24aa1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T08:39:31Z",
+      "side": 1,
+      "message": "I still need to replace the constructor because of the nativeInit() call. Since it is in the constructor, I can\u0027t override it before I spy the object as I get a UnsatisfiedLinkError. And this way I don\u0027t expose the isInitialized() or nativeInit() methods.",
+      "parentUuid": "a43543f5_386cd790",
       "range": {
         "startLine": 109,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "34627d61_200a8f7b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T08:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be8e2f3_9116d179",
+      "range": {
+        "startLine": 63,
+        "startChar": 44,
+        "endLine": 63,
+        "endChar": 47
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6e12a7_9daa3c2a",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03869da_f9384500",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T08:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd6e12a7_9daa3c2a",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 47
+      },
+      "revId": "6ef531eb4d28950c2939079ea750846cea1ea8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
