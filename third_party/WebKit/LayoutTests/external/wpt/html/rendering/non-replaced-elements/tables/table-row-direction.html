@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<link rel="match" href="table-row-direction-ref.html">
+<title>Table row direction</title>
+
+<style>
+  table {
+    border-collapse: collapse;
+  }
+
+  td {
+    border: 2px solid black;
+    width: 20px;
+    height: 20px;
+  }
+
+  td.special {
+    border-left: 5px solid green;
+    border-right: 5px solid blue;
+  }
+</style>
+
+<table>
+  <tr>
+    <td style="direction: ltr"></td>
+    <td class="special"></td>
+  </tr>
+  <tr style="direction: rtl">
+    <td></td>
+    <td class="special"></td>
+  </tr>
+</table>
+
+<hr>
+
+<table style="direction: rtl">
+  <tr style="direction: ltr">
+    <td></td>
+    <td class="special"></td>
+  </tr>
+  <tr style="direction: rtl">
+    <td></td>
+    <td class="special"></td>
+  </tr>
+</table>
