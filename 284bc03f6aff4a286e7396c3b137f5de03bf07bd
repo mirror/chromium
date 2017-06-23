@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41559a4e_bc93fd4d",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-23T11:49:22Z",
+      "side": 1,
+      "message": "Adopted your phrasing, reworded slightly.",
+      "parentUuid": "8848c22c_7dd683cc",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76b4a0ee_680f7354",
         "filename": "services/docs/api_standards.md",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T15:24:19Z",
       "side": 1,
       "message": "nit: Not to get too bikesheddy here but I don\u0027t like the use of \"factory\" for interfaces like this. You aren\u0027t really manufacturing a new Thing, you\u0027re vending or binding new handles to a Thing.\n\nOK so it\u0027s kind of bikesheddy.\n\nMy recommendation has usually been \"FooProvider\" but only because it\u0027s consistent with InterfaceProvider. If I had to do it all over again I would probably use \"binder\" as the noun everywhere. InterfaceBinder, FooBinder, etc.",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96f7ee1_b53b60f5",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-23T11:49:22Z",
+      "side": 1,
+      "message": "I think your point is as important as the other naming etc things we\u0027re discussing here, and I agree with your suggestion.",
+      "parentUuid": "76b4a0ee_680f7354",
       "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "57a039f4_1df4f459",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-23T11:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d6ee341_3799003b",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9182ffc_425e7178",
         "filename": "services/docs/api_standards.md",
         "patchSetId": 3
@@ -64,6 +118,30 @@
       "writtenOn": "2017-06-21T15:24:19Z",
       "side": 1,
       "message": "related thought, though I don\u0027t think this requires changing the text: by no fault of the service implementor, this is already non-trivial due to how service tests are designed. i.e. you have to change the test implementation if you want to connect to a different service implementation. Perhaps we ought to think more about this idea, with reasonably low priority.",
+      "range": {
+        "startLine": 74,
+        "startChar": 14,
+        "endLine": 74,
+        "endChar": 49
+      },
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f26a20_14b567e3",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-23T11:49:22Z",
+      "side": 1,
+      "message": "Yes! I thought about this issue as well while putting down this text. We should absolutely aim for separating the implementation under test from the test itself. I\u0027ll file a bug about this so that we don\u0027t lose sight of it.",
+      "parentUuid": "c9182ffc_425e7178",
       "range": {
         "startLine": 74,
         "startChar": 14,
