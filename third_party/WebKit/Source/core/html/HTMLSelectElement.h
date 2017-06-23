@@ -118,6 +118,7 @@ class CORE_EXPORT HTMLSelectElement final
 
   void ScrollToSelection();
   void ScrollToOption(HTMLOptionElement*);
+  void ScrollToOptionAfterLayout();
 
   bool CanSelectAll() const;
   void SelectAll();
@@ -267,7 +268,6 @@ class CORE_EXPORT HTMLSelectElement final
                                                   SkipDirection) const;
   HTMLOptionElement* EventTargetOption(const Event&);
   AutoscrollController* GetAutoscrollController() const;
-  void ScrollToOptionTask();
 
   bool AreAuthorShadowsAllowed() const override { return false; }
   void FinishParsingChildren() override;
