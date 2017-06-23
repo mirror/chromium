@@ -366,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "15ac8069_cf68f505",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T22:26:23Z",
+      "side": 1,
+      "message": "Right, that\u0027s fine--it just feels like the process of looking up the focused frame and then dispatching to it should be encapsulated on the browser side. So perhaps a helper on RenderWidgetHostView would do the focused frame lookup and do the mojo call.",
+      "parentUuid": "158bc2ef_375b971c",
+      "range": {
+        "startLine": 203,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 7
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0755340_6ef708d2",
         "filename": "content/renderer/input/frame_input_handler_impl.cc",
         "patchSetId": 6
