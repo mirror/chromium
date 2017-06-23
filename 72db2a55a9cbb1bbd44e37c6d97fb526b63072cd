@@ -22,6 +22,30 @@
       "revId": "72db2a55a9cbb1bbd44e37c6d97fb526b63072cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86b9109_a4ecf1fc",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-23T17:05:37Z",
+      "side": 1,
+      "message": "OK, the issue was that there is an NTP when starting, so opening a new tab opens a 2nd tab. Fixed.",
+      "parentUuid": "41826079_a802bf87",
+      "range": {
+        "startLine": 395,
+        "startChar": 20,
+        "endLine": 395,
+        "endChar": 38
+      },
+      "revId": "72db2a55a9cbb1bbd44e37c6d97fb526b63072cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
