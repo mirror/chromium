@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75b2f24c_42e8736e",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2276,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-23T00:41:38Z",
+      "side": 1,
+      "message": "How about this code?:\n\nif (userAgentType !\u003d web::UserAgentType::NONE \u0026\u0026\n    userAgentType \u003d\u003d web::UserAgentType::NONE) {\n  [self requirePageReconstruction];\n}",
+      "range": {
+        "startLine": 2276,
+        "startChar": 6,
+        "endLine": 2276,
+        "endChar": 19
+      },
+      "revId": "ccac06c0d7a8893950e730d6609e64f41fa321ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
