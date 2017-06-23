@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb922642_7c9d4890",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T18:23:09Z",
+      "side": 1,
+      "message": "I can\u0027t call nativeInit() before the actual constructor for the class has been called.",
+      "parentUuid": "e79b94fb_8da3c3e8",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "284ed08d06ad33e6dd13c9c060776002ccaa621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96e7ff9c_0659855e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "63335050_458801c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T18:23:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "96e7ff9c_0659855e",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "284ed08d06ad33e6dd13c9c060776002ccaa621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26cf3407_58dee0d5",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-23T16:48:23Z",
       "side": 1,
       "message": "Sorry, I find this all a bit strange. You\u0027re not actually testing the contract of the class, but instead verifying that it enforces an internal invariant, and you\u0027re not even exercising the full system, because the native part is missing. I think you might have to write an instrumentation test instead (so it can use the native part), and then verify that the returned bitmap never is bigger than the requested size in both dimensions. Sorry to make things more complicated at this stage, but I think that will result in a less brittle test :-/",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "284ed08d06ad33e6dd13c9c060776002ccaa621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9dffb50_a9b818ec",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T18:23:09Z",
+      "side": 1,
+      "message": "From what I understood, this CL was about fixing this small assertion in the ThumbnailProviderImpl class. I thought I should be testing only the new changes I have introduced. But I am happy to write an instrumentation test for the class. Will work on this on Monday though :)",
+      "parentUuid": "26cf3407_58dee0d5",
       "range": {
         "startLine": 51,
         "startChar": 4,
