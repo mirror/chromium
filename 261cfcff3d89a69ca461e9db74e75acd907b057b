@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "052d1139_39c3a58d",
+        "filename": "chrome/browser/predictors/predictor_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-23T22:57:12Z",
+      "side": 0,
+      "message": "what if someone updates Chrome from M43 straight to M61? The table would stay there forever?",
+      "range": {
+        "startLine": 102,
+        "startChar": 38,
+        "endLine": 102,
+        "endChar": 62
+      },
+      "revId": "261cfcff3d89a69ca461e9db74e75acd907b057b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
