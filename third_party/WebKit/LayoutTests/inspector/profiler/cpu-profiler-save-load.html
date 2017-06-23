@@ -108,8 +108,8 @@ function test()
             var profileName = file.name.substr(0, file.name.length - ".cpuprofile".length);
             InspectorTest.waitUntilProfileViewIsShown(profileName, checkLoadedContent);
             profilesPanel._loadFromFile(file);
-            var onTransferFinished = Profiler.CPUProfileHeader.prototype.onTransferFinished;
-            Profiler.CPUProfileHeader.prototype.onTransferFinished = function()
+            var onTransferFinished = Profiler.CPUProfileHeader.prototype._onTransferFinished;
+            Profiler.CPUProfileHeader.prototype._onTransferFinished = function()
             {
                 loadedProfileData = this._jsonifiedProfile;
                 onTransferFinished.call(this);

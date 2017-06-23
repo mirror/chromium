@@ -364,7 +364,11 @@ Timeline.TimelinePanel = class extends UI.Panel {
     if (!accepted)
       return;
 
-    performanceModel.save(stream, new Timeline.TracingTimelineSaver());
+    var error = await performanceModel.save(stream);
+    if (!error)
+      return;
+    Common.console.error(
+        Common.UIString('Failed to save timeline: %s (%s, %s)', error.message, error.name, error.code));
   }
 
   async _showHistory() {
@@ -401,7 +405,8 @@ Timeline.TimelinePanel = class extends UI.Panel {
     if (this._state !== Timeline.TimelinePanel.State.Idle)
       return;
     this._prepareToLoadTimeline();
-    this._loader = Timeline.TimelineLoader.loadFromFile(file, this);
+    this._loader = new Timeline.TimelineLoader(this);
+    this._loader.loadFromFile(file);
     this._createFileSelector();
   }
 
@@ -412,7 +417,8 @@ Timeline.TimelinePanel = class extends UI.Panel {
     if (this._state !== Timeline.TimelinePanel.State.Idle)
       return;
     this._prepareToLoadTimeline();
-    this._loader = Timeline.TimelineLoader.loadFromURL(url, this);
+    this._loader = new Timeline.TimelineLoader(this);
+    this._loader.loadFromURL(url);
   }
 
   _updateOverviewControls() {
