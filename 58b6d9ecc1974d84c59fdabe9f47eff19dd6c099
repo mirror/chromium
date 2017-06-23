@@ -16,6 +16,24 @@
       "revId": "58b6d9ecc1974d84c59fdabe9f47eff19dd6c099",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b772641d_3d58a738",
+        "filename": "ash/system/rotation/tray_rotation_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-23T17:11:53Z",
+      "side": 1,
+      "message": "Is user locked orientation whether this is auto-rotate or not? My understanding is that we shows the auto-rotate when its on (142 - 144) and when its turned off we show the current orientation (133-140).",
+      "parentUuid": "38e20acb_a54f04b3",
+      "revId": "58b6d9ecc1974d84c59fdabe9f47eff19dd6c099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
