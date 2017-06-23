@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e179703_8a16acb1",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T22:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "441513ea_14c7bb79",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dacf3c9b_9be6f11a",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T21:54:07Z",
       "side": 1,
       "message": "I can\u0027t recall if I asked about this previously - is there an important reason that we\u0027re canonicalizing to IPV4Localhost here? is it not sufficient to leave page_ip_address_ alone in this case, even if it\u0027s say an IPV6 address? Or can it contain a value that is neither IPV4 or IPV6 localhost, even in cases where we set page_load_type_ to internal::DOMAIN_TYPE_LOCALHOST? (apologies if i already asked about this)",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5686ab6_0dfb313c",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T22:44:35Z",
+      "side": 1,
+      "message": "You didn\u0027t ask about this before, but I canonicalize (here and for the resource IP) because the net::IsLocalhost check is expensive and requires IP conversion to a string, whereas \u003d\u003d net::IPAddress::IPv4Localhost() is very cheap and can compare IPAddress variables directly. I need the utility functions in IPAddress to compare subnets with resources, which is why I use the IPAddress class internally. (Plus, it\u0027s comparable and can thus be used as a key in a std::map.)\n\nHowever, considering that I stop observing if the page is localhost, it\u0027s not necessary to canonicalize in this specific instance. I\u0027ll remove the line.",
+      "parentUuid": "dacf3c9b_9be6f11a",
       "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "06948d49_2d16f005",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T22:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48f2062_2b33de69",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a60aa4_5b9098f1",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a4ce73_c97f8f97",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T22:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a60aa4_5b9098f1",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "053fbf11_448d0221",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T22:44:35Z",
+      "side": 1,
+      "message": "Thanks, I was a little concerned about the fact that there was an implicit assumption here. I\u0027m not sure why I didn\u0027t think to put a DCHECK here like I did in the if statement above.",
+      "parentUuid": "9bceede9_d02181bc",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b12534_7bedde8a",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0998c021_4a4d96c1",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T22:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1b12534_7bedde8a",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "64e2b68d_24156753",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T22:44:35Z",
+      "side": 1,
+      "message": "Done. I just merged the conditionals with:\n\nif (page_domain_type_ \u003d\u003d internal::DOMAIN_TYPE_LOCALHOST ||\n    g_browser_process-\u003eukm_recorder() \u003d\u003d nullptr) {\n  return;\n}\n\nbecause I need to call g_browser_process-\u003eukm_recorder() within the for loop to create multiple UKM entries with the same event name.",
+      "parentUuid": "a4dc59b4_de378358",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac1c62b_2e853633",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 14
@@ -135,6 +261,24 @@
       "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867d558e_a86bbdac",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T22:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ac1c62b_2e853633",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
