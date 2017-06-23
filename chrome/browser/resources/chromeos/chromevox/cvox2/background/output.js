@@ -213,7 +213,6 @@ Output.STATE_INFO_ = {
   busy: {on: {msgId: 'busy_state'}},
   collapsed: {on: {msgId: 'aria_expanded_false'}},
   default: {on: {msgId: 'default_state'}},
-  disabled: {on: {msgId: 'aria_disabled_true'}},
   expanded: {on: {msgId: 'aria_expanded_true'}},
   multiselectable: {on: {msgId: 'aria_multiselectable_true'}},
   required: {on: {msgId: 'aria_required_true'}},
@@ -234,6 +233,15 @@ Output.INPUT_TYPE_MESSAGE_IDS_ = {
   'tel': 'input_type_number',
   'text': 'input_type_text',
   'url': 'input_type_url',
+};
+
+/**
+ * Rules for mapping the controlMode property to a msg id
+ * @const {Object<string>}
+ * @private
+ */
+Output.CONTROL_MODE_STATE_MAP = {
+  'disabled': 'aria_disabled_true'
 };
 
 /**
@@ -273,7 +281,7 @@ Output.RULES = {
       speak: '$if($valueForRange, $valueForRange, $value) ' +
           '$if($minValueForRange, @aria_value_min($minValueForRange)) ' +
           '$if($maxValueForRange, @aria_value_max($maxValueForRange)) ' +
-          '$name $role $description $state'
+          '$name $role $description $state $controlMode'
     },
     alert: {
       enter: '$name $role $state',
@@ -295,7 +303,7 @@ Output.RULES = {
     },
     checkBox: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
-          '$name $role $checked $description $state'
+          '$name $role $checked $description $state $controlMode'
     },
     client: {speak: '$name'},
     date: {enter: '$nameFromNode $role $description'},
@@ -312,10 +320,12 @@ Output.RULES = {
     heading: {
       enter: '!relativePitch(hierarchicalLevel) ' +
           '$nameFromNode= ' +
-          '$if($hierarchicalLevel, @tag_h+$hierarchicalLevel, $role) $state',
+          '$if($hierarchicalLevel, @tag_h+$hierarchicalLevel, $role) ' +
+          '$state $controlMode',
       speak: '!relativePitch(hierarchicalLevel) ' +
           '$nameOrDescendants= ' +
-          '$if($hierarchicalLevel, @tag_h+$hierarchicalLevel, $role) $state'
+          '$if($hierarchicalLevel, @tag_h+$hierarchicalLevel, $role) ' +
+          '$state $controlMode'
     },
     image: {
       speak: '$if($name, $name, $urlFilename) ' +
@@ -324,8 +334,8 @@ Output.RULES = {
     inlineTextBox: {speak: '$name='},
     inputTime: {enter: '$nameFromNode $role $description'},
     link: {
-      enter: '$nameFromNode= $role $state',
-      speak: '$name $value $state ' +
+      enter: '$nameFromNode= $role $state $controlMode',
+      speak: '$name $value $state $controlMode ' +
           '$if($inPageLinkTarget, @internal_link, $role) $description',
     },
     list: {
@@ -335,33 +345,36 @@ Output.RULES = {
     listBox: {
       enter: '$nameFromNode ' +
           '$role @@list_with_items($countChildren(listBoxOption)) ' +
-          '$description'
+          '$controlMode $description'
     },
     listBoxOption: {
       speak: '$name $role @describe_index($indexInParent, $parentChildCount) ' +
-          '$description $state'
+          '$description $state $controlMode'
     },
     listItem: {
       enter: '$name= $role $state $description',
-      speak: '$nameOrDescendants $earcon(LIST_ITEM) $role $state $description'
+      speak: '$nameOrDescendants $earcon(LIST_ITEM) $role $controlMode ' +
+          '$state $description'
     },
     menu: {
       enter: '$name $role',
-      speak: '$name $role @@list_with_items($countChildren(menuItem)) $state'
+      speak: '$name $role @@list_with_items($countChildren(menuItem)) ' +
+          '$state $controlMode'
     },
     menuItem: {
       speak: '$name $role $if($haspopup, @has_submenu) ' +
           '@describe_index($indexInParent, $parentChildCount) ' +
-          '$description $state'
+          '$description $state $controlMode'
     },
     menuItemCheckBox: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
-          '$name $role $checked $description ' +
+          '$name $role $checked $controlMode $description ' +
           '@describe_index($indexInParent, $parentChildCount) '
     },
     menuItemRadio: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$if($checked, @describe_radio_selected($name), ' +
+          '$controlMode ' +
           '@describe_radio_unselected($name)) $description ' +
           '@describe_index($indexInParent, $parentChildCount) '
     },
@@ -372,14 +385,15 @@ Output.RULES = {
     paragraph: {speak: '$descendants'},
     popUpButton: {
       speak: '$value $name $role @aria_has_popup ' +
-          '$state $description'
+          '$state $controlMode $description'
     },
     radioButton: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$if($checked, @describe_radio_selected($name), ' +
+          '$controlMode ' +
           '@describe_radio_unselected($name)) $description'
     },
-    radioGroup: {enter: '$name $role $description'},
+    radioGroup: {enter: '$name $role $controlMode $description'},
     rootWebArea: {enter: '$name', speak: '$if($name, $name, $docUrl)'},
     region: {speak: '$nameOrTextContent'},
     row: {enter: '$node(tableRowHeader)'},
@@ -387,11 +401,11 @@ Output.RULES = {
     staticText: {speak: '$name='},
     switch: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
-          '$if($checked, @describe_switch_on($name), ' +
+          '$if($checked, @describe_switch_on($name), $controlMode ' +
           '@describe_switch_off($name)) $description $state'
     },
     tab: {
-      speak: '@describe_tab($name) $state $description ' +
+      speak: '@describe_tab($name) $state $controlMode $description ' +
           '$if($setSize, @describe_index($posInSet, $setSize))',
     },
     table: {
@@ -403,7 +417,7 @@ Output.RULES = {
     tableHeaderContainer: {speak: '$nameOrTextContent $state $description'},
     textField: {
       speak: '$name $value $if($multiline, @tag_textarea, $if(' +
-          '$inputType, $inputType, $role)) $description $state',
+          '$inputType, $inputType, $role)) $description $state $controlMode',
       braille: ''
     },
     timer: {speak: '$nameFromNode $descendants $value $state $description'},
@@ -411,14 +425,17 @@ Output.RULES = {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$name $role $pressed $description $state'
     },
-    toolbar: {enter: '$name $role $description'},
-    tree: {enter: '$name $role @@list_with_items($countChildren(treeItem))'},
+    toolbar: {enter: '$name $role $description $controlMode'},
+    tree: {
+      enter: '$name $role @@list_with_items($countChildren(treeItem)) ' +
+          '$controlMode'
+    },
     treeItem: {
-      enter: '$role $expanded $collapsed ' +
+      enter: '$role $expanded $collapsed $controlMode ' +
           '@describe_index($indexInParent, $parentChildCount) ' +
           '@describe_depth($hierarchicalLevel)',
       speak: '$name ' +
-          '$role $state ' +
+          '$role $state $controlMode ' +
           '@describe_index($indexInParent, $parentChildCount) ' +
           '@describe_depth($hierarchicalLevel)'
     },
@@ -981,6 +998,11 @@ Output.prototype = {
                             })
                             .length;
             this.append_(buff, String(count));
+          }
+        } else if (token == 'controlMode') {
+          var msg = Output.CONTROL_MODE_STATE_MAP[node.controlMode];
+          if (msg) {
+            this.format_(node, '@' + msg, buff);
           }
         } else if (token == 'checked') {
           var msg = Output.CHECKED_STATE_MAP[node.checked];
