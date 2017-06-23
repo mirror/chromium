@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b35434e2_57141dc7",
+        "filename": "chrome/browser/win/chrome_select_file_dialog_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-23T18:24:13Z",
+      "side": 1,
+      "message": "Is this because the Mojo IPC is sync? Does this need to be set at all?",
+      "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
