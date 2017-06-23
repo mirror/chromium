@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c06159e_e736273f",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-23T21:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8c2db76_9e20004c",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62336df9_feec1f21",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "12c8e769_99602217",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-23T21:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62336df9_feec1f21",
+      "range": {
+        "startLine": 610,
+        "startChar": 7,
+        "endLine": 610,
+        "endChar": 20
+      },
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28441f03_ab7b176f",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-06-23T18:45:59Z",
       "side": 1,
       "message": "This approach has the problem that if we ever call ConfigurePresentationToast() repeatedly for some reason, the timer restarts (and if the toast has disappeared, it will reappear).  What we\u0027ve done elsewhere is to track whether the toast was visible or not, and start the timer if it is now becoming visible.",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a6abfb_c277c749",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-23T21:37:58Z",
+      "side": 1,
+      "message": "According to offline discussion. Leave it to follow up CL.",
+      "parentUuid": "28441f03_ab7b176f",
       "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "0d3990ab_20fbc6f6",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-23T21:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6331d9a_2f6b54bd",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6240fb80_46e7603d",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
         "patchSetId": 2
@@ -87,6 +165,24 @@
       "writtenOn": "2017-06-23T18:45:59Z",
       "side": 1,
       "message": "I don\u0027t see the point of two tests here - they seem to be mix of the same thing.  Shouldn\u0027t it be one test that goes through the modes, and makes sure the toast appears when entering a mode and disappears when exiting?  Ie:\n\n- Enter fullscreen\n- Exit fullscreen\n- Enter webvr\n- Exit webvr\n\nAlso, s/Controled/Controlled/",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bba332_2da201f7",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-23T21:37:58Z",
+      "side": 1,
+      "message": "I also want to test the two functions could be called in any order. So I add the interop test.",
+      "parentUuid": "6240fb80_46e7603d",
       "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "cdd9f82e_68197e17",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-23T21:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e662ee5_4f8a99ad",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e3b814c_df6c6f6c",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
         "patchSetId": 2
@@ -121,6 +235,24 @@
       "writtenOn": "2017-06-23T18:45:59Z",
       "side": 1,
       "message": "This test made me think about fullscreen to webvr.  What is the toast supposed to do there?  Show once for fullscreen, and again for WebVR?  When we exit WebVR presentation, do we return to fullscreen?  If so, do we show the toast again?",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad6f162_c5787567",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-23T21:37:58Z",
+      "side": 1,
+      "message": "from fullscreen to webvr. A toast should show if WebVr wants to show toast. Otherwise, toast should disappear. Exit from WebVR to fullscreen shouldn\u0027t show toast.",
+      "parentUuid": "0e3b814c_df6c6f6c",
       "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +273,24 @@
       "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad81ee1_200d78b1",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-23T21:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e796dc1a_2d561e76",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
