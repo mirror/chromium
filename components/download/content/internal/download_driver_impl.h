@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/files/file_path.h"
+#include "base/memory/weak_ptr.h"
 #include "components/download/internal/download_driver.h"
 #include "components/download/public/download_params.h"
 #include "content/public/browser/browser_context.h"
@@ -55,11 +56,17 @@ class DownloadDriverImpl : public DownloadDriver,
   void OnManagerInitialized() override;
   void ManagerGoingDown(content::DownloadManager* manager) override;
 
+  // Remove the download, used to be posted to the task queue.
+  void DoRemoveDownload(const std::string& guid);
+
   // Low level download handle.
   content::DownloadManager* download_manager_;
 
   // The client that receives updates from low level download logic.
   DownloadDriver::Client* client_;
+
+  // Only used to post tasks on the same thread.
+  base::WeakPtrFactory<DownloadDriverImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadDriverImpl);
 };
