@@ -59,6 +59,9 @@ Polymer({
     showAndroidApps_: Boolean,
 
     /** @private */
+    showAndroidSettings_: Boolean,
+
+    /** @private */
     lastSearchQuery_: {
       type: String,
       value: '',
@@ -158,6 +161,9 @@ Polymer({
 
     this.showAndroidApps_ = loadTimeData.valueExists('androidAppsVisible') &&
         loadTimeData.getBoolean('androidAppsVisible');
+    this.showAndroidSettings_ =
+      loadTimeData.valueExists('androidSettingsVisible') &&
+      loadTimeData.getBoolean('androidSettingsVisible');
 
     this.addEventListener('show-container', function() {
       this.$.container.style.visibility = 'visible';
