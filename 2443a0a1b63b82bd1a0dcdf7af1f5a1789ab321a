@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daaaa0af_026c7dc8",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-06-23T19:12:28Z",
+      "side": 1,
+      "message": "It took me couple of minutes to understand that this is not a mistake, and you\u0027re taking \u0027type\u0027 into account here. Maybe either restructure code (compute \u0027string_length\u0027 and check string_length % sizeof !\u003d 0, or add a comment?",
+      "revId": "2443a0a1b63b82bd1a0dcdf7af1f5a1789ab321a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62af536_0c990114",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-06-23T19:12:28Z",
+      "side": 1,
+      "message": "reinterpret_cast not needed here, just \u0026result[0] should be enough.",
+      "revId": "2443a0a1b63b82bd1a0dcdf7af1f5a1789ab321a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
