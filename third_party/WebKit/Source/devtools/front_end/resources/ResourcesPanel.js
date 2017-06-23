@@ -29,6 +29,8 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
     /** @type {?UI.EmptyWidget} */
     this._emptyWidget = null;
 
+    this._previewProvider = new SourceFrame.PreviewProvider();
+
     this._sidebar = new Resources.ApplicationPanelSidebar(this);
     this._sidebar.show(this.panelSidebarElement());
   }
@@ -50,6 +52,22 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
       Resources.DatabaseQueryView, Resources.DatabaseTableView
     ];
     return viewClassesToClose.some(type => view instanceof type);
+  }
+
+  /**
+   * @param {!SDK.Resource} resource
+   */
+  async showResourcePreview(resource) {
+    var treeElement = Resources.FrameResourceTreeElement.forResource(resource);
+    var view = treeElement && treeElement.preview();
+
+    if (!view) {
+      view = await this._previewProvider.preview(resource, resource.mimeType);
+      if (treeElement)
+        treeElement.setPreview(view);
+    }
+
+    this.showView(view);
   }
 
   /**

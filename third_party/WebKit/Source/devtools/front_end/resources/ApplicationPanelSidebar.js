@@ -383,25 +383,8 @@ Resources.ApplicationPanelSidebar = class extends UI.VBox {
   showResource(resource, line, column) {
     var resourceTreeElement = Resources.FrameResourceTreeElement.forResource(resource);
     if (resourceTreeElement)
-      resourceTreeElement.revealAndSelect(true);
-
-    if (typeof line === 'number') {
-      var resourceSourceFrame = this._resourceSourceFrameViewForResource(resource);
-      if (resourceSourceFrame)
-        resourceSourceFrame.revealPosition(line, column, true);
-    }
+      resourceTreeElement.revealResource(line, column);
     return true;
-  }
-
-  /**
-   * @param {!SDK.Resource} resource
-   * @return {?SourceFrame.ResourceSourceFrame}
-   */
-  _resourceSourceFrameViewForResource(resource) {
-    var resourceView = Resources.FrameResourceTreeElement.resourceViewForResource(resource);
-    if (resourceView && resourceView instanceof SourceFrame.ResourceSourceFrame)
-      return /** @type {!SourceFrame.ResourceSourceFrame} */ (resourceView);
-    return null;
   }
 
   /**
