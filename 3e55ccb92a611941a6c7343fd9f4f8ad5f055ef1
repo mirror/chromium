@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf933168_43e1aeb4",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:32:45Z",
+      "side": 1,
+      "message": "Add a test for this in\nhttps://cs.chromium.org/chromium/src/chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc\nto verify OnSessionEnded gets called when EndSession fires.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 35
+      },
+      "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be28dd51_10ae7b5e",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-23T23:32:45Z",
+      "side": 1,
+      "message": "One might ask how DesktopSessionDurationObserver fits here (it looks like it\u0027s relatively separate). It might be worthwhile to rename that class. I\u0027ll defer to the owners for that.",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
