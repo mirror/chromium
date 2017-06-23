@@ -69,6 +69,24 @@
       "revId": "b545a44e4f38baf249e3b740f316c32a7bb1a36e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724a5bde_59c974e8",
+        "filename": "ui/android/window_android_compositor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T19:12:30Z",
+      "side": 1,
+      "message": "\u003e i had wondered about this before, but wasn\u0027t sure what a container view would actually be with respect to the compositor output.  could the compositor be, e.g., centered in its container?\n\nI think it is supposed to match the display compositor output exactly. Although I\u0027m not sure if there are corner cases, like when the soft keyboard comes up. +aelias",
+      "parentUuid": "f620f9f6_ff2a11c8",
+      "revId": "b545a44e4f38baf249e3b740f316c32a7bb1a36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

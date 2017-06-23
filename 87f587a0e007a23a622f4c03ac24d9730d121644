@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f3d23e7_d069c5c0",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T19:12:30Z",
+      "side": 1,
+      "message": "don\u0027t need this anymore",
+      "revId": "87f587a0e007a23a622f4c03ac24d9730d121644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b73af6c_4aab844d",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T19:12:30Z",
+      "side": 1,
+      "message": "private, public methods here are meant to be overridden by subclasses",
+      "revId": "87f587a0e007a23a622f4c03ac24d9730d121644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e473786_481dad00",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T19:12:30Z",
+      "side": 1,
+      "message": "don\u0027t pass around JavaRefs in native code. just return a gfx::Point or something like that\n\nalso specify coordinate space, because it\u0027s always confusing whether something is in physical or css pixels",
+      "revId": "87f587a0e007a23a622f4c03ac24d9730d121644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
