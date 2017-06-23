@@ -10,6 +10,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
+#include "base/synchronization/read_write_lock.h"
 #include "base/threading/thread.h"
 #include "base/time/time.h"
 #include "media/midi/midi_export.h"
@@ -69,8 +70,9 @@ class MIDI_EXPORT TaskService final {
   // Holds threads to host SingleThreadTaskRunners.
   std::vector<std::unique_ptr<base::Thread>> threads_;
 
-  // Holds lock objects to ensure that tasks run while the instance is bound.
-  std::vector<std::unique_ptr<base::Lock>> thread_task_locks_;
+  // Holds readers writer lock to ensure that tasks run only while the instance
+  // is bound.
+  base::subtle::ReadWriteLock task_lock_;
 
   // Holds InstanceId for the next bound instance.
   InstanceId next_instance_id_;
@@ -85,8 +87,8 @@ class MIDI_EXPORT TaskService final {
   base::Lock lock_;
 
   // If multiple locks should be obtained simultaneously, we should acquire them
-  // in the order below so to avoid deadklocks.
-  // |instance_lock_| -> |lock_| -> |(one of) thread_task_locks_|.
+  // in the order below so to avoid deadlocks.
+  // |task_lock_| -> |instance_lock_| -> |lock_|.
 
   DISALLOW_COPY_AND_ASSIGN(TaskService);
 };
