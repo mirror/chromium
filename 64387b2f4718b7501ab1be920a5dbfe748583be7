@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da42ab24_80478c51",
+        "filename": "third_party/WebKit/Source/core/animation/CSSNumberInterpolationType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T05:07:31Z",
+      "side": 1,
+      "message": "Renamed to round_to_integer.",
+      "parentUuid": "593b4e71_62f47134",
+      "revId": "64387b2f4718b7501ab1be920a5dbfe748583be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab870600_ec703f80",
         "filename": "third_party/WebKit/Source/core/animation/CSSNumberInterpolationType.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "64387b2f4718b7501ab1be920a5dbfe748583be7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c738078_c0092ca2",
+        "filename": "third_party/WebKit/Source/core/animation/CSSNumberInterpolationType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T05:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab870600_ec703f80",
+      "revId": "64387b2f4718b7501ab1be920a5dbfe748583be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
