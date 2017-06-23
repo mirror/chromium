@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e67e870_dfd06482",
+        "filename": "chrome/browser/download/download_path_reservation_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-23T14:21:23Z",
+      "side": 1,
+      "message": "I saw this pattern but I think this is incorrect and should be replaced by a LazySequencedTaskRunner for robust unittesting. (I copied the code and had issues.)",
+      "revId": "fcbeaac2e4058876f6e76a8dc0215b460f1c36b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
