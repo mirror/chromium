@@ -137,9 +137,25 @@ base::DictionaryValue* ExtensionTabUtil::OpenTab(
   Profile* profile = chrome_details.GetProfile();
   // windowId defaults to "current" window.
   int window_id = extension_misc::kCurrentWindowId;
-  if (params.window_id.get())
+  if (params.window_id.get()) {
     window_id = *params.window_id;
-
+    // If both the windowId and openerTabId are set, the windowId must set to
+    // the window id of the tab opener.
+    int window_id_of_tab_opener = extension_misc::kCurrentWindowId;
+    if (params.opener_tab_id.get()) {
+      int opener_id = *params.opener_tab_id;
+      if (ExtensionTabUtil::GetWindowIdByTabId(opener_id, profile,
+                                               function->include_incognito(),
+                                               &window_id_of_tab_opener)) {
+        if (window_id != window_id_of_tab_opener) {
+          if (error)
+            *error =
+                "Tab opener must be in the same window as the updated tab.";
+          return NULL;
+        }
+      }
+    }
+  }
   Browser* browser = GetBrowserFromWindowID(chrome_details, window_id, error);
   if (!browser) {
     if (!params.create_browser_if_needed) {
@@ -260,8 +276,6 @@ base::DictionaryValue* ExtensionTabUtil::OpenTab(
   if (opener) {
     // Only set the opener if the opener tab is in the same tab strip as the
     // new tab.
-    // TODO(devlin): We should be a) catching this sooner and b) alerting that
-    // this failed by reporting an error.
     if (tab_strip->GetIndexOfWebContents(opener) != TabStripModel::kNoTab)
       tab_strip->SetOpenerOfWebContentsAt(new_index, opener);
   }
@@ -328,6 +342,34 @@ int ExtensionTabUtil::GetWindowIdOfTabStripModel(
       return GetWindowId(browser);
   }
   return -1;
+}
+
+bool ExtensionTabUtil::GetWindowIdByTabId(
+    int tab_id,
+    content::BrowserContext* browser_context,
+    bool include_incognito,
+    int* window_id) {
+  if (tab_id == api::tabs::TAB_ID_NONE)
+    return false;
+  Profile* profile = Profile::FromBrowserContext(browser_context);
+  Profile* incognito_profile =
+      include_incognito && profile->HasOffTheRecordProfile()
+          ? profile->GetOffTheRecordProfile()
+          : NULL;
+  for (auto* target_browser : *BrowserList::GetInstance()) {
+    if (target_browser->profile() == profile ||
+        target_browser->profile() == incognito_profile) {
+      TabStripModel* target_tab_strip = target_browser->tab_strip_model();
+      for (int i = 0; i < target_tab_strip->count(); ++i) {
+        WebContents* target_contents = target_tab_strip->GetWebContentsAt(i);
+        if (SessionTabHelper::IdForTab(target_contents) == tab_id) {
+          *window_id = GetWindowId(target_browser);
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
 int ExtensionTabUtil::GetTabId(const WebContents* web_contents) {

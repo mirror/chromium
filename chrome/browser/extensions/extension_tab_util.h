@@ -73,6 +73,10 @@ class ExtensionTabUtil {
 
   static int GetWindowId(const Browser* browser);
   static int GetWindowIdOfTabStripModel(const TabStripModel* tab_strip_model);
+  static bool GetWindowIdByTabId(int tab_id,
+                                 content::BrowserContext* browser_context,
+                                 bool include_incognito,
+                                 int* window_id);
   static int GetTabId(const content::WebContents* web_contents);
   static std::string GetTabStatusText(bool is_loading);
   static int GetWindowIdOfTab(const content::WebContents* web_contents);
