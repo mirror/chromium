@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "492cfa2b_b82960f2",
+        "filename": "gpu/ipc/service/gpu_channel_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-23T01:57:32Z",
+      "side": 1,
+      "message": "This test is kind of monolithic. Could you factor out the setup into a helper method and test the ~3 scenarios separately?\n - Not low-end mode -- application state change does not destroy command buffer stub\n - Low-end mode, no WebGL -- application state change destroys command buffer stub\n - Low-end mode, WebGL -- application state change does not destroy command buffer stub\n\nThanks.",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "2d79db7659ca52ddaebe67a15fd4858ed69f7071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
