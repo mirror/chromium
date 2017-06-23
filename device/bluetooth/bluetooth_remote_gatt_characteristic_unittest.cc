@@ -1305,6 +1305,45 @@ TEST_F(BluetoothRemoteGattCharacteristicTest, StartNotifySession_Multiple) {
 }
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 
+#if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
+// Tests multiple StartNotifySession success.
+TEST_F(BluetoothRemoteGattCharacteristicTest, StartNotifySession_Replacing) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  ASSERT_NO_FATAL_FAILURE(
+      FakeCharacteristicBoilerplate(/* properties: NOTIFY */ 0x10));
+  SimulateGattDescriptor(
+      characteristic1_,
+      BluetoothRemoteGattDescriptor::ClientCharacteristicConfigurationUuid()
+          .canonical_value());
+  ASSERT_EQ(1u, characteristic1_->GetDescriptors().size());
+
+  characteristic1_->StartNotifySession(
+      GetReplacingNotifyCallback(Call::EXPECTED),
+      GetGattErrorCallback(Call::NOT_EXPECTED));
+  characteristic1_->StartNotifySession(
+      GetReplacingNotifyCallback(Call::EXPECTED),
+      GetGattErrorCallback(Call::NOT_EXPECTED));
+  characteristic1_->StartNotifySession(
+      GetReplacingNotifyCallback(Call::EXPECTED),
+      GetGattErrorCallback(Call::NOT_EXPECTED));
+  EXPECT_EQ(0, callback_count_);
+  SimulateGattNotifySessionStarted(characteristic1_);
+  base::RunLoop().RunUntilIdle();
+  ExpectedChangeNotifyValueAttempts(1);
+  ExpectedNotifyValue(NotifyValueState::NOTIFY);
+  EXPECT_EQ(3, callback_count_);
+  EXPECT_EQ(0, error_callback_count_);
+  ASSERT_EQ(1u, notify_sessions_.size());
+  ASSERT_TRUE(notify_sessions_[0]);
+  EXPECT_EQ(characteristic1_->GetIdentifier(),
+            notify_sessions_[0]->GetCharacteristicIdentifier());
+  EXPECT_TRUE(notify_sessions_[0]->IsActive());
+}
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
+
 #if defined(OS_ANDROID) || defined(OS_MACOSX)
 // Tests multiple StartNotifySessions pending and then an error.
 TEST_F(BluetoothRemoteGattCharacteristicTest,

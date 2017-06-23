@@ -192,6 +192,18 @@ void BluetoothTestBase::NotifyCallback(
     unexpected_success_callback_ = true;
 }
 
+void BluetoothTestBase::ReplacingNotifyCallback(
+    Call expected,
+    std::unique_ptr<BluetoothGattNotifySession> notify_session) {
+  notify_sessions_[0] = std::move(notify_session);
+
+  ++callback_count_;
+  if (expected == Call::EXPECTED)
+    ++actual_success_callback_calls_;
+  else
+    unexpected_success_callback_ = true;
+}
+
 void BluetoothTestBase::NotifyCheckForPrecedingCalls(
     int num_of_preceding_calls,
     std::unique_ptr<BluetoothGattNotifySession> notify_session) {
@@ -333,6 +345,14 @@ BluetoothTestBase::GetNotifyCallback(Call expected) {
   if (expected == Call::EXPECTED)
     ++expected_success_callback_calls_;
   return base::Bind(&BluetoothTestBase::NotifyCallback,
+                    weak_factory_.GetWeakPtr(), expected);
+}
+
+BluetoothRemoteGattCharacteristic::NotifySessionCallback
+BluetoothTestBase::GetReplacingNotifyCallback(Call expected) {
+  if (expected == Call::EXPECTED)
+    ++expected_success_callback_calls_;
+  return base::Bind(&BluetoothTestBase::ReplacingNotifyCallback,
                     weak_factory_.GetWeakPtr(), expected);
 }
 
