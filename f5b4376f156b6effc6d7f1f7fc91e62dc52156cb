@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "63e09ba6_3a282354",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7343d43e_f4d706c1",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 42
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "675f5973_1716af84",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "I don\u0027t think the official Google Markdown style guide mentions the use of different types of bullets. Also, I thought \u0027-\u0027 and \u0027*\u0027 both end up with the same style?\n\nAnyway, I think I\u0027ll keep it as is for now.",
+      "parentUuid": "9d0a47c3_346f6e40",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d14dd0_6482ad5c",
         "filename": "components/feature_engagement_tracker/README.md",
         "patchSetId": 12
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a239f221_07d65542",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0d14dd0_6482ad5c",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf77ecad_1209ab5a",
         "filename": "components/feature_engagement_tracker/README.md",
         "patchSetId": 12
@@ -85,6 +157,24 @@
       "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc454746_e4e936b2",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "Done. Condensed beginning a lot, and briefly expanded a couple of sections here instead. I still think it reads better though :-) Feels less repetitive. Good catch!",
+      "parentUuid": "cf77ecad_1209ab5a",
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c9bdff6a_643e7621",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "284b78ef_1d9dec6e",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 12
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a38f892_2d862624",
         "filename": "components/feature_engagement_tracker/README.md",
         "patchSetId": 12
@@ -131,6 +245,30 @@
       "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183f3ee7_8ae1cee3",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a38f892_2d862624",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 49
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "11ac22ab_4bff7342",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "Done. Good catch!",
+      "parentUuid": "c8e02c25_458fc1ad",
+      "range": {
+        "startLine": 137,
+        "startChar": 37,
+        "endLine": 137,
+        "endChar": 49
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f3f5f50_66a78c73",
         "filename": "components/feature_engagement_tracker/README.md",
         "patchSetId": 12
@@ -171,6 +333,24 @@
       "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abafed2c_656ba157",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f3f5f50_66a78c73",
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +374,30 @@
       "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a874dcb0_10abb28f",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T00:43:46Z",
+      "side": 1,
+      "message": "Done. Using should instead of must since it\u0027s not enforced.",
+      "parentUuid": "2b27d746_9e6ce4cf",
+      "range": {
+        "startLine": 332,
+        "startChar": 70,
+        "endLine": 332,
+        "endChar": 77
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
