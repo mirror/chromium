@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d53d0177_4908a353",
+        "filename": "components/viz/service/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-23T21:15:57Z",
+      "side": 0,
+      "message": "Oh I put this in components_unittests by mistake, I\u0027ll add a viz_gl_tests instead of display_compositor_gl_tests and put it there, and rename VizBenchmarkTestSuite to VizRealGLTestSuite.",
+      "revId": "edda34d840b837f1bd20d9398845d1bc38140461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
