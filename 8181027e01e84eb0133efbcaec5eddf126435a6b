@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53e69cfd_b2b97e43",
+        "filename": "components/feature_engagement_tracker/public/event_constants.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T21:03:13Z",
+      "side": 1,
+      "message": "Same about #ifdef here.",
+      "revId": "8181027e01e84eb0133efbcaec5eddf126435a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2562b3_d0efef31",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T21:03:13Z",
+      "side": 1,
+      "message": "Something is definitely off with your newlines here. Are you using \\r\\n for some reason?",
+      "revId": "8181027e01e84eb0133efbcaec5eddf126435a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987443db_676c2417",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T21:03:13Z",
+      "side": 1,
+      "message": "Nit: Missing period at the end.",
+      "range": {
+        "startLine": 13,
+        "startChar": 29,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "8181027e01e84eb0133efbcaec5eddf126435a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c683cfa3_bcf9e6fd",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T21:03:13Z",
+      "side": 1,
+      "message": "These should all probably only be defined on the platform they will be used on.",
+      "revId": "8181027e01e84eb0133efbcaec5eddf126435a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4178259c_c56709ed",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-23T21:03:13Z",
+      "side": 1,
+      "message": "Is this a rolling event or a one-off? I.e. if the accumulation has happened once, will it trigger again at 4 hours, 6 hours, etc.?",
+      "revId": "8181027e01e84eb0133efbcaec5eddf126435a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
