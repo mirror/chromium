@@ -9,6 +9,7 @@
 #include <cctype>
 #include <string>
 
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
@@ -30,6 +31,7 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/web_applications/web_app.h"
 #include "chrome/browser/webshare/share_target_pref_helper.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
 #include "chrome/common/origin_trials/chrome_origin_trial_policy.h"
@@ -67,9 +69,7 @@
 #include "ui/gfx/image/image_family.h"
 
 #if defined(OS_MACOSX)
-#include "base/command_line.h"
 #include "chrome/browser/web_applications/web_app_mac.h"
-#include "chrome/common/chrome_switches.h"
 #endif
 
 #if defined(OS_WIN)
@@ -590,8 +590,12 @@ void BookmarkAppHelper::OnDidGetManifest(const GURL& manifest_url,
 
   UpdateWebAppInfoFromManifest(manifest, &web_app_info_);
 
-  if (!ChromeOriginTrialPolicy().IsFeatureDisabled("WebShare"))
+  // TODO(mgiuca): Web Share Target should have its own flag, rather than using
+  // the experimental-web-platform-features flag. https://crbug.com/736178.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          "enable-experimental-web-platform-features")) {
     UpdateShareTargetInPrefs(manifest_url, manifest, profile_->GetPrefs());
+  }
 
   // Add urls from the WebApplicationInfo.
   std::vector<GURL> web_app_info_icon_urls;
