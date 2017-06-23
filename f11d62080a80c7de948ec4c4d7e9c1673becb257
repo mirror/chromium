@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f2a7d2_ab443aae",
+        "filename": "third_party/WebKit/Source/bindings/scripts/blink_idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-23T06:03:33Z",
+      "side": 0,
+      "message": "Moved this explanation to the base parser.",
+      "revId": "f11d62080a80c7de948ec4c4d7e9c1673becb257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34353c54_bfb32b4b",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-23T06:03:33Z",
+      "side": 0,
+      "message": "Looks like this should be 3.",
+      "range": {
+        "startLine": 792,
+        "startChar": 17,
+        "endLine": 792,
+        "endChar": 18
+      },
+      "revId": "f11d62080a80c7de948ec4c4d7e9c1673becb257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
