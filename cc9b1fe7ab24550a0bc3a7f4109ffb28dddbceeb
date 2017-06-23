@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3aea444e_8f0fac47",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-23T21:06:18Z",
+      "side": 1,
+      "message": "Yes, nullptr is preferred in all new code - see https://chromium-cpp.appspot.com/.  We don\u0027t usually go out of our way to replace old usages of null since it pollutes the blame history, but if you\u0027re touching the code already, it\u0027s good to update.",
+      "parentUuid": "16d2cfda_63576056",
+      "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a91aa67_7ca38fef",
         "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
         "patchSetId": 2

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df337615_06a1aad6",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-23T21:06:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this go in the if (window_id !\u003d ...) block?  Otherwise, we\u0027ll never open a tab if opener_tab_id is non-null.",
+      "revId": "b9dbc62de0ffdc7b2d31c83d6cd0fde2a0616bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
