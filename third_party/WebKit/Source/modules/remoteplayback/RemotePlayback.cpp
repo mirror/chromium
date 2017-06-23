@@ -377,6 +377,9 @@ void RemotePlayback::SourceChanged(const WebURL& source) {
 }
 
 bool RemotePlayback::RemotePlaybackAvailable() const {
+  if (MemoryCoordinator::IsLowEndDevice())
+    return true;
+
   return availability_ == WebRemotePlaybackAvailability::kDeviceAvailable;
 }
 
@@ -450,6 +453,9 @@ void RemotePlayback::StopListeningForAvailability() {
 }
 
 void RemotePlayback::MaybeStartListeningForAvailability() {
+  if (MemoryCoordinator::IsLowEndDevice())
+    return;
+
   if (!RuntimeEnabledFeatures::RemotePlaybackBackendEnabled())
     return;
 
