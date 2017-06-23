@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e740e2a4_638a7ee1",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-06-23T22:31:15Z",
+      "side": 1,
+      "message": "nit: use os_name.lower()",
+      "revId": "89e94c7970864b7fb22582e5388f8a714fe28e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80f5c95_a505f800",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-06-23T22:31:15Z",
+      "side": 1,
+      "message": "I believe you can change the arguments to be\n\n(benchmark, name, swarming_dimensions[\u0027os\u0027], browser_name)\n\ninstead. name is the name of the bot, like Android Nexus5X Perf, which is I think what you\u0027re trying to find in the for loop on line 786.",
+      "revId": "89e94c7970864b7fb22582e5388f8a714fe28e4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
