@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3fdfe63f_72fae716",
+        "filename": "chrome/browser/win/chrome_select_file_dialog_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-23T00:05:52Z",
+      "side": 1,
+      "message": "\u003e Is there any particular reason not to just run |utility_process_mojo_client_| on the UI thread and use sync IPCs?\n\nIndeed, the original code made the main thread block on a waitable event, and waited for the utility process signal that event.  So yes, that\u0027s just a SYNC IPC re-invented.\n\nMade the mojo calls SYNC and friend-ed mojo\u0027s allow sync call.  Lots of code fell away, and manual testing looks good.\n\nNew patch uploaded, PTAL.",
+      "parentUuid": "391d5d13_51c2e712",
+      "range": {
+        "startLine": 174,
+        "startChar": 46,
+        "endLine": 174,
+        "endChar": 48
+      },
+      "revId": "9630064c287297ea4430f91ccd86aa0e8ffefe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1650463_17d34800",
         "filename": "chrome/common/shell_handler_win.mojom",
         "patchSetId": 5
