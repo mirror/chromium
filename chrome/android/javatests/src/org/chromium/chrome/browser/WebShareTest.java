@@ -142,7 +142,8 @@ public class WebShareTest {
         mActivityTestRule.loadUrl(mUrl);
         TouchCommon.singleClickView(mTab.getView());
         Assert.assertEquals(
-                "Fail: SecurityError: WebShare is disabled.", mUpdateWaiter.waitForUpdate());
+                "Fail: AbortError: Internal error: could not connect to Web Share service.",
+                mUpdateWaiter.waitForUpdate());
     }
 
     /**
