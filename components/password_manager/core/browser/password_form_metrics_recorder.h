@@ -165,7 +165,7 @@ class PasswordFormMetricsRecorder {
   void RecordHistogramsOnSuppressedAccounts(
       bool observed_form_origin_has_cryptographic_scheme,
       const FormFetcher& form_fetcher,
-      const autofill::PasswordForm& pending_credentials) const;
+      const autofill::PasswordForm& pending_credentials);
 
   // Converts the "ActionsTaken" fields (using ManagerActionNew) into an int so
   // they can be logged to UMA.
@@ -190,10 +190,15 @@ class PasswordFormMetricsRecorder {
   // |pending_credentials| stores credentials when the form was submitted but
   // success was still unknown. It contains credentials that are ready to be
   // written (saved or updated) to a password store.
-  int GetHistogramSampleForSuppressedAccounts(
+  SuppressedAccountExistence GetBestMatchingSuppressedAccount(
       const std::vector<const autofill::PasswordForm*>& suppressed_forms,
       autofill::PasswordForm::Type manual_or_generated,
       const autofill::PasswordForm& pending_credentials) const;
+
+  // Encodes a UMA histogram sample for |best_matching_account| and
+  // GetActionsTakenNew().
+  int GetHistogramSampleForSuppressedAccounts(
+      SuppressedAccountExistence best_matching_account) const;
 
   // Records a metric into |ukm_entry_builder_| if it is not nullptr.
   void RecordUkmMetric(const char* metric_name, int64_t value);
