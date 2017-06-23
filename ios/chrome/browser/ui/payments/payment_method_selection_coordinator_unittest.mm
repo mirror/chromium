@@ -10,6 +10,7 @@
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/payments/core/payment_instrument.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #import "ios/chrome/browser/ui/payments/payment_request_selector_view_controller.h"
@@ -93,9 +94,10 @@ TEST_F(PaymentRequestPaymentMethodSelectionCoordinatorTest,
   // Mock the coordinator delegate.
   id delegate = [OCMockObject
       mockForProtocol:@protocol(PaymentMethodSelectionCoordinatorDelegate)];
-  autofill::CreditCard* credit_card = payment_request_->credit_cards()[1];
+  payments::PaymentInstrument* payment_method =
+      payment_request_->payment_methods()[1];
   [[delegate expect] paymentMethodSelectionCoordinator:coordinator
-                                didSelectPaymentMethod:credit_card];
+                                didSelectPaymentMethod:payment_method];
   [coordinator setDelegate:delegate];
 
   EXPECT_EQ(1u, navigation_controller.viewControllers.count);

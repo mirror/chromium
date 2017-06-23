@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/payments/payment_request_coordinator.h"
 
+#include "base/json/json_writer.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -13,6 +14,7 @@
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
 #include "components/payments/core/payment_address.h"
+#include "components/payments/core/payment_request_data_util.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
@@ -54,8 +56,8 @@ typedef void (^mock_coordinator_select_shipping_option)(
 }
 
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
-    didCompletePaymentRequestWithCard:(const autofill::CreditCard&)card
-                     verificationCode:(const base::string16&)verificationCode {
+        didReceiveFullCardDetails:(const autofill::CreditCard&)card
+                 verificationCode:(const base::string16&)verificationCode {
   return static_cast<mock_coordinator_complete>([self blockForSelector:_cmd])(
       coordinator, card, verificationCode);
 }
@@ -149,22 +151,32 @@ TEST_F(PaymentRequestCoordinatorTest, FullCardRequestDidSucceed) {
       mockForProtocol:@protocol(PaymentMethodSelectionCoordinatorDelegate)];
   id delegate_mock([[PaymentRequestCoordinatorDelegateMock alloc]
       initWithRepresentedObject:delegate]);
-  SEL selector =
-      @selector(paymentRequestCoordinator:didCompletePaymentRequestWithCard
-                                         :verificationCode:);
+  SEL selector = @selector
+      (paymentRequestCoordinator:didReceiveFullCardDetails:verificationCode:);
   [delegate_mock onSelector:selector
        callBlockExpectation:^(PaymentRequestCoordinator* callerCoordinator,
-                              const autofill::CreditCard& card,
+                              autofill::CreditCard* card,
                               const base::string16& verificationCode) {
-         EXPECT_EQ(credit_card_, card);
+         EXPECT_EQ(credit_card_, *card);
          EXPECT_EQ(base::ASCIIToUTF16("123"), verificationCode);
          EXPECT_EQ(coordinator, callerCoordinator);
        }];
   [coordinator setDelegate:delegate_mock];
 
+  std::string methodName = "";
+
+  std::string appLocale = "";
+
+  std::unique_ptr<base::DictionaryValue> response_value =
+      payments::data_util::GetBasicCardResponseFromAutofillCreditCard(
+          credit_card_, base::ASCIIToUTF16("123"), autofill_profile_, appLocale)
+          .ToDictionaryValue();
+  std::string stringifiedDetails;
+  base::JSONWriter::Write(*response_value, &stringifiedDetails);
+
   // Call the card unmasking delegate method.
-  [coordinator fullCardRequestDidSucceedWithCard:credit_card_
-                                verificationCode:base::ASCIIToUTF16("123")];
+  [coordinator fullCardRequestDidSucceed:methodName
+                      stringifiedDetails:stringifiedDetails];
 }
 
 // Tests that calling the ShippingAddressSelectionCoordinator delegate method
