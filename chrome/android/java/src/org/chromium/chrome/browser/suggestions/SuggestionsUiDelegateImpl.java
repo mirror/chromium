@@ -158,7 +158,10 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
      */
     private LargeIconBridge getLargeIconBridge() {
         assert !mIsDestroyed;
-        if (mLargeIconBridge == null) mLargeIconBridge = new LargeIconBridge(mProfile);
+        if (mLargeIconBridge == null) {
+            mLargeIconBridge =
+                    SuggestionsDependencyFactory.getInstance().createLargeIconBridge(mProfile);
+        }
         return mLargeIconBridge;
     }
 }

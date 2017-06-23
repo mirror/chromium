@@ -37,6 +37,7 @@ import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
+import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.TestTouchUtils;
@@ -57,6 +58,9 @@ public class TileGroupTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
 
+    @Rule
+    public SuggestionsDependenciesRule mSuggestionsDeps = new SuggestionsDependenciesRule();
+
     private static final String[] FAKE_MOST_VISITED_URLS =
             new String[] {"/chrome/test/data/android/navigate/one.html",
                     "/chrome/test/data/android/navigate/two.html",
@@ -75,11 +79,10 @@ public class TileGroupTest {
         mSiteSuggestionUrls = mTestServer.getURLs(FAKE_MOST_VISITED_URLS);
 
         mMostVisitedSites = new FakeMostVisitedSites();
+        mSuggestionsDeps.getFactory().mMostVisitedSites = mMostVisitedSites;
         mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls);
-        TileGroupDelegateImpl.setMostVisitedSitesForTests(mMostVisitedSites);
 
-        FakeSuggestionsSource mSource = new FakeSuggestionsSource();
-        NewTabPage.setSuggestionsSourceForTests(mSource);
+        mSuggestionsDeps.getFactory().mSuggestionsSource = new FakeSuggestionsSource();
 
         mActivityTestRule.startMainActivityWithURL(UrlConstants.NTP_URL);
         Tab mTab = mActivityTestRule.getActivity().getActivityTab();
@@ -93,8 +96,6 @@ public class TileGroupTest {
 
     @After
     public void tearDown() throws Exception {
-        TileGroupDelegateImpl.setMostVisitedSitesForTests(null);
-        NewTabPage.setSuggestionsSourceForTests(null);
         mTestServer.stopAndDestroyServer();
 
     }
