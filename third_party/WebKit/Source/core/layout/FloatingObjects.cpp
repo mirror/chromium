@@ -97,6 +97,13 @@ std::unique_ptr<FloatingObject> FloatingObject::Create(
 
   new_obj->SetIsDescendant(true);
 
+  // We set this flag in case we get to the next compositing update before
+  // inserting the float and deciding who should paint it. If we've decided
+  // that the current float owner can paint it that step is unnecessary.
+  if (new_obj->ShouldPaint() && layout_object->Layer() &&
+      layout_object->Layer()->SelfPaintingStatusChanged())
+    layout_object->Layer()->ClearSelfPaintingStatusChanged();
+
   return new_obj;
 }
 
