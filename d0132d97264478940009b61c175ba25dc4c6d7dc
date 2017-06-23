@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "23824457_bf349111",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-23T14:04:49Z",
+      "side": 1,
+      "message": "sky: This is the place where bounds are checked. The browser windows are iterated over in z-order, from front to back. Any window that is occluded by a window already in the list is considered invisible.\n\nThis doesn\u0027t handle occlusion by non-browser windows, nor does it handle cases where occlusion occurs via a collection of browser windows. So it\u0027s not perfect, but it errs on the side of assuming a window is visible when it might not be. It also handles the by far most common case of having multiple maximized windows stacked on top of each other.\n\nThe actual CL that added this logic is here:\n\nhttps://chromium-review.googlesource.com/c/539855/",
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "953f52dc_6b4cdb51",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-23T14:04:49Z",
+      "side": 1,
+      "message": "nit: \"tabs selected tabs\"",
+      "range": {
+        "startLine": 268,
+        "startChar": 30,
+        "endLine": 268,
+        "endChar": 39
+      },
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30dafcfc_b8e5bccc",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 13
