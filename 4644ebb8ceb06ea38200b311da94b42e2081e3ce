@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1329d7c7_a053c3dc",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-23T23:19:54Z",
+      "side": 1,
+      "message": "What about macro names that are more generic and more verbose? HATYPE seems to be imposing a Linux norms onto a BSD system. If we\u0027re introducing an alias then we might as well take the opportunity to develop one that\u0027s more self-documenting.\n\nSOCKET_ARP_TYPE()?\nSOCKET_ADDRESS_LEN?\nSOCKET_ADDRESS?",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8007753c_3467c559",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-23T23:19:54Z",
+      "side": 1,
+      "message": "nit: name.empty()",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa15d8b_9618e390",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_wifi_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-23T23:19:54Z",
+      "side": 1,
+      "message": "nit: ssid.empty()",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96495cf_6b6e16f2",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_wifi_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-23T23:19:54Z",
+      "side": 1,
+      "message": "Looks like there isn\u0027t an assign which takes a string\u0026\u0026.\n\nMaybe try using \"swap\", or \"*ssid_out \u003d std::move(ssid)\".",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
