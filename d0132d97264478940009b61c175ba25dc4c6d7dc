@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5e500798_570e11e4",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-23T18:08:55Z",
+      "side": 1,
+      "message": "Agreed that\u0027s generally true, but not the case on ChromeOS, the only place where this is currently shipped.\n\nI\u0027ve updated 731145 with a comment to that effect.\n\nfdoray: You should also add a comment in the code here.",
+      "parentUuid": "68da4a07_bb794997",
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "953f52dc_6b4cdb51",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 13
