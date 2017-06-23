@@ -16,6 +16,24 @@
       "revId": "6b74c4cd8feb9fa03d2b6e61e911d7043e98989d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d225d6c_97519647",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-23T15:08:27Z",
+      "side": 1,
+      "message": "I think it generally does - you definitely need approval to add a new self-owned folder. Not sure what was going on here - you think we should file a bug?",
+      "parentUuid": "a110ad30_2fe4929e",
+      "revId": "6b74c4cd8feb9fa03d2b6e61e911d7043e98989d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
