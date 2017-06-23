@@ -620,8 +620,9 @@ void ThreadState::PerformIdleLazySweep(double deadline_seconds) {
 
   Optional<RuntimeCallTimerScope> timer_scope;
   if (v8::Isolate* isolate = GetIsolate()) {
-    timer_scope.emplace(RuntimeCallStats::From(isolate),
-                        RuntimeCallStats::CounterId::kPerformIdleLazySweep);
+    RUNTIME_CALL_TIMER_SCOPE_WITH_OPTIONAL_PROVIDED(
+        timer_scope, RuntimeCallStats::From(isolate),
+        RuntimeCallStats::CounterId::kPerformIdleLazySweep);
   }
 
   TRACE_EVENT1("blink_gc,devtools.timeline",
@@ -1446,8 +1447,9 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
 
   Optional<RuntimeCallTimerScope> timer_scope;
   if (v8::Isolate* isolate = GetIsolate()) {
-    timer_scope.emplace(RuntimeCallStats::From(isolate),
-                        RuntimeCallStats::CounterId::kCollectGarbage);
+    RUNTIME_CALL_TIMER_SCOPE_WITH_OPTIONAL_PROVIDED(
+        timer_scope, RuntimeCallStats::From(isolate),
+        RuntimeCallStats::CounterId::kCollectGarbage);
   }
 
   GCForbiddenScope gc_forbidden_scope(this);
