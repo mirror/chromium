@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad06151_e92d8c93",
+        "filename": "third_party/WebKit/Source/bindings/scripts/blink_idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-23T06:30:21Z",
+      "side": 1,
+      "message": "nit: Can we use descriptive style?\n  disable\u003dimport-error",
+      "range": {
+        "startLine": 71,
+        "startChar": 47,
+        "endLine": 71,
+        "endChar": 53
+      },
+      "revId": "3ec8d1029e4d4cf387ac06e1ab6a850241de0419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d691c7_d73f780c",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-23T06:30:21Z",
+      "side": 1,
+      "message": "The numbers [xx] are no longer referable in Web IDL spec.\nCan we drop lines 191-192?",
+      "range": {
+        "startLine": 192,
+        "startChar": 43,
+        "endLine": 192,
+        "endChar": 49
+      },
+      "revId": "3ec8d1029e4d4cf387ac06e1ab6a850241de0419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa1d4c6_a6a7844a",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-23T06:30:21Z",
+      "side": 1,
+      "message": "#",
+      "revId": "3ec8d1029e4d4cf387ac06e1ab6a850241de0419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29faee75_0661fd26",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-23T06:30:21Z",
+      "side": 1,
+      "message": "nit: drop the number",
+      "revId": "3ec8d1029e4d4cf387ac06e1ab6a850241de0419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800fadf1_84e56e20",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-23T06:30:21Z",
+      "side": 1,
+      "message": "more descriptive comment.",
+      "revId": "3ec8d1029e4d4cf387ac06e1ab6a850241de0419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
