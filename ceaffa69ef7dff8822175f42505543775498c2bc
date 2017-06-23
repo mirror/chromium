@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c95d35a8_96325cb0",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-23T21:45:43Z",
+      "side": 1,
+      "message": "Sorry for the confusion, I though you already lg\u0027ed. Guess I\u0027ll just ask the question here:\n\n1. I\u0027m getting quite confused about how testonly works because it seems that not all targets honor this variable. For example,\n  \n  source_set(_arch_loadable_module_source) {\n    forward_variables_from(invoker, [ \"deps\" ])\n    visibility \u003d [ \":$_arch_loadable_module_target\" ]\n  }\n\n  loadable_module(_arch_loadable_module_target) {\n    testonly \u003d true\n    deps \u003d [\n      \":$_arch_loadable_module_source\",\n    ]\n  }\n\nthe loadable module is testonly, and it depending on not testonly _arch_loadable_module_source, however, the code still compiles.\n\n2. According to the definition of forward_variables_from:\n\n  As a special case, if the variable_list is a string with the value of \"*\",\n  all variables from the given scope will be copied. \"*\" only copies variables\n  set directly on the from_scope, not enclosing ones. Otherwise it would\n  duplicate all global variables.\n\nSo, setting testonly \u003d true inside a template won\u0027t be passed along when calling other targets or templates. So, I\u0027m not sure if there is a way to apply testonly \u003d true to all the targets in the template.",
+      "parentUuid": "f2c8eb53_942a6404",
+      "revId": "ceaffa69ef7dff8822175f42505543775498c2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5b9a5c_12e4bfd1",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 2
