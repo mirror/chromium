@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c2d979c_68acdfac",
+        "filename": "chrome/browser/memory/chrome_memory_coordinator_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-23T23:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "701b903b_db2f64c3",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "9cf5e63565616319e742113ed1c1e71c5f4fada6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a31bb5_dc95e46b",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 4
