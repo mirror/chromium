@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a91aa67_7ca38fef",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-23T00:14:41Z",
+      "side": 1,
+      "message": "Will update the comment to say one tab in next patch.",
+      "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec64619f_17fced1c",
+        "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-23T00:14:41Z",
+      "side": 1,
+      "message": "ditto in next patch",
+      "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
