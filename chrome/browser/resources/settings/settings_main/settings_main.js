@@ -77,6 +77,8 @@ Polymer({
     pageVisibility: Object,
 
     showAndroidApps: Boolean,
+
+    showAndroidSettings: Boolean,
   },
 
   /** @override */
