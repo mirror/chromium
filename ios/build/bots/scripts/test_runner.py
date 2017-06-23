@@ -6,6 +6,7 @@
 
 import argparse
 import collections
+from datetime import datetime
 import errno
 import os
 import plistlib
@@ -266,6 +267,7 @@ class TestRunner(object):
     """
     print ' '.join(cmd)
     print
+    print self.get_launch_env
 
     result = gtest_utils.GTestResult(cmd)
     if self.xctest_path:
@@ -273,24 +275,12 @@ class TestRunner(object):
     else:
       parser = gtest_utils.GTestLogParser()
 
-    proc = subprocess.Popen(
-        cmd,
-        env=self.get_launch_env(),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    out = subprocess.check_output(cmd, env=self.get_launch_env)
 
-    while True:
-      line = proc.stdout.readline()
-      if not line:
-        break
+    for line in out:
       line = line.rstrip()
       parser.ProcessLine(line)
       print line
-      sys.stdout.flush()
-
-    proc.wait()
-    sys.stdout.flush()
 
     for test in parser.FailedTests(include_flaky=True):
       # Test cases are named as <test group>.<test case>. If the test case
