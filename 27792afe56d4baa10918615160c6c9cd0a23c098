@@ -16,6 +16,24 @@
       "revId": "27792afe56d4baa10918615160c6c9cd0a23c098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b1a061_28022eca",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-23T12:49:51Z",
+      "side": 1,
+      "message": "Hm, you\u0027re right, this might be sensible for non-headless. In headless (full pipe) mode, I want to avoid postponing the deadline if everyone has responded with a no-damage ack (so we might need to special case that mode). But that\u0027s not important for non-headless, so I\u0027ll try your suggestion instead :)",
+      "parentUuid": "52ad2b49_db0afe67",
+      "revId": "27792afe56d4baa10918615160c6c9cd0a23c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
