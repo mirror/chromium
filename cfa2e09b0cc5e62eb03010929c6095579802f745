@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "988b502f_043a9417",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-23T15:45:21Z",
+      "side": 1,
+      "message": "I noticed we have code for this here: https://cs.chromium.org/chromium/src/remoting/codec/webrtc_video_encoder_vpx.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d485\n\nI\u0027m wondering if there\u0027s something more elegant to be done than just copy-pasting a lot of that code over here.",
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f072bd1c_cbc34ad8",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-23T15:45:21Z",
+      "side": 1,
+      "message": "What do we usually do to get timestamps? I see a base::TickClock in WebrtcVideoEncoderVpx.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 77
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5070e760_c496734d",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-23T15:45:21Z",
+      "side": 1,
+      "message": "This function needs a redesign once I get more information about how often this callback is called. I.e., should we expect to have it called multiple times throughout the lifetime of the encoder? And if so, should we dump the old buffers each time and grab fresh ones?\n\nFor now I\u0027m just using a relatively naive implementation.",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369d8f1f_67995a5b",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-23T15:45:21Z",
+      "side": 1,
+      "message": "Not sure what log level to use here.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29cb40c6_d8a04fad",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-23T15:45:21Z",
+      "side": 1,
+      "message": "Here, I\u0027m kinda just parroting what I saw in WebrtcVideoEncoderVpx. It may make sense going forward to use a different method for making VEA encoders of different varieties.",
+      "range": {
+        "startLine": 104,
+        "startChar": 62,
+        "endLine": 104,
+        "endChar": 75
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
