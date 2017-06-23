@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "053cb422_e37566ff",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/ident-type-interpolation.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T03:07:43Z",
+      "side": 1,
+      "message": "Yes. All non-CSS-wide identifiers are permitted.",
+      "parentUuid": "ce249d1a_d8b8e7dd",
+      "revId": "ec8a05a96cce51b14e4b2d479584f5eef6200f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a199d1d_4abe7907",
         "filename": "third_party/WebKit/LayoutTests/animations/interpolation/resources/interpolation-test.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T01:41:27Z",
       "side": 1,
       "message": "Are the changes to this file intentionally included in this patch?",
+      "revId": "ec8a05a96cce51b14e4b2d479584f5eef6200f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c969d4_ef88847e",
+        "filename": "third_party/WebKit/LayoutTests/animations/interpolation/resources/interpolation-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-23T03:07:43Z",
+      "side": 1,
+      "message": "Yes, the token-stream test fails without these changes as spaces after the : get included as part of the custom property\u0027s value.",
+      "parentUuid": "2a199d1d_4abe7907",
       "revId": "ec8a05a96cce51b14e4b2d479584f5eef6200f48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
