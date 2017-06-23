@@ -9,6 +9,7 @@
 #include <gaming-input-unstable-v2-server-protocol.h>
 #include <grp.h>
 #include <keyboard-configuration-unstable-v1-server-protocol.h>
+#include <keyboard-extension-unstable-v1-server-protocol.h>
 #include <linux/input.h>
 #include <presentation-time-server-protocol.h>
 #include <remote-shell-unstable-v1-server-protocol.h>
@@ -54,6 +55,7 @@
 #include "components/exo/keyboard.h"
 #include "components/exo/keyboard_delegate.h"
 #include "components/exo/keyboard_device_configuration_delegate.h"
+#include "components/exo/keyboard_extension_delegate.h"
 #include "components/exo/notification_surface.h"
 #include "components/exo/notification_surface_manager.h"
 #include "components/exo/pointer.h"
@@ -2885,14 +2887,19 @@ class WaylandKeyboardDelegate
     wl_keyboard_send_leave(keyboard_resource_, next_serial(), surface_resource);
     wl_client_flush(client());
   }
-  void OnKeyboardKey(base::TimeTicks time_stamp,
-                     ui::DomCode key,
-                     bool pressed) override {
-    wl_keyboard_send_key(keyboard_resource_, next_serial(),
+  uint32_t OnKeyboardKey(base::TimeTicks time_stamp,
+                         ui::DomCode key,
+                         bool pressed) override {
+    uint32_t serial = next_serial();
+    wl_keyboard_send_key(keyboard_resource_, serial,
                          TimeTicksToMilliseconds(time_stamp), DomCodeToKey(key),
                          pressed ? WL_KEYBOARD_KEY_STATE_PRESSED
                                  : WL_KEYBOARD_KEY_STATE_RELEASED);
+
+    // Add the key event to waiting queue.
+
     wl_client_flush(client());
+    return serial;
   }
   void OnKeyboardModifiers(int modifier_flags) override {
     xkb_state_update_mask(xkb_state_.get(),
@@ -4064,6 +4071,81 @@ void bind_stylus_tools(wl_client* client,
                                  nullptr);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// extended_keyboard interface
+
+class WaylandExtendedKeyboardDelegate : public KeyboardExtensionDelegate {
+ public:
+  WaylandExtendedKeyboardDelegate(Keyboard* keyboard) : keyboard_(keyboard) {
+    keyboard_->SetKeyboardExtensionDelegate(this);
+  }
+  ~WaylandExtendedKeyboardDelegate() override {
+    if (keyboard_)
+      keyboard_->SetKeyboardExtensionDelegate(nullptr);
+  }
+
+  void OnKeyboardDestroying(Keyboard* keyboard) override {
+    keyboard_ = nullptr;
+  }
+  void OnAckKeyEvent(uint32_t serial, bool handled) {
+    keyboard_->OnAckKeyEvent(serial, handled);
+  }
+
+ private:
+  Keyboard* keyboard_;
+
+  DISALLOW_COPY_AND_ASSIGN(WaylandExtendedKeyboardDelegate);
+};
+
+void extended_keyboard_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+void extended_keyboard_ack_key(wl_client* client,
+                               wl_resource* resource,
+                               uint32_t serial,
+                               uint32_t handled_state) {
+  const bool handled =
+      handled_state == ZCR_EXTENDED_KEYBOARD_V1_HANDLED_STATE_HANDLED;
+  GetUserDataAs<WaylandExtendedKeyboardDelegate>(resource)->OnAckKeyEvent(
+      serial, handled);
+}
+
+const struct zcr_extended_keyboard_v1_interface
+    extended_keyboard_implementation = {extended_keyboard_destroy,
+                                        extended_keyboard_ack_key};
+
+////////////////////////////////////////////////////////////////////////////////
+// keyboard_extension interface.
+
+void keyboard_extension_get_extended_keyboard(wl_client* client,
+                                              wl_resource* resource,
+                                              uint32_t id,
+                                              wl_resource* keyboard_resource) {
+  Keyboard* keyboard = GetUserDataAs<Keyboard>(keyboard_resource);
+
+  wl_resource* extended_keyboard_resource =
+      wl_resource_create(client, &zcr_extended_keyboard_v1_interface, 1, id);
+
+  SetImplementation(
+      extended_keyboard_resource, &extended_keyboard_implementation,
+      base::MakeUnique<WaylandExtendedKeyboardDelegate>(keyboard));
+}
+
+const struct zcr_keyboard_extension_v1_interface
+    keyboard_extension_implementation = {
+        keyboard_extension_get_extended_keyboard};
+
+void bind_keyboard_extension(wl_client* client,
+                             void* data,
+                             uint32_t version,
+                             uint32_t id) {
+  wl_resource* resource = wl_resource_create(
+      client, &zcr_keyboard_extension_v1_interface, version, id);
+  wl_resource_set_implementation(resource, &keyboard_extension_implementation,
+                                 data, nullptr);
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4116,6 +4198,8 @@ Server::Server(Display* display)
                    bind_stylus_v2);
   wl_global_create(wl_display_.get(), &zcr_keyboard_configuration_v1_interface,
                    2, display_, bind_keyboard_configuration);
+  wl_global_create(wl_display_.get(), &zcr_keyboard_extension_v1_interface, 1,
+                   display_, bind_keyboard_extension);
   wl_global_create(wl_display_.get(), &zcr_stylus_tools_v1_interface, 1,
                    display_, bind_stylus_tools);
 }

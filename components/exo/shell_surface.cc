@@ -6,11 +6,13 @@
 
 #include <algorithm>
 
+#include "ash/accelerators/accelerator_controller.h"
 #include "ash/frame/custom_frame_view_ash.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/shell.h"
 #include "ash/wm/drag_window_resizer.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
@@ -187,10 +189,15 @@ class ShellSurfaceWidget : public views::Widget {
   void OnKeyEvent(ui::KeyEvent* event) override {
     // TODO(hidehiko): Handle ESC + SHIFT + COMMAND accelerator key
     // to escape pinned mode.
-    // Handle only accelerators. Do not call Widget::OnKeyEvent that eats focus
-    // management keys (like the tab key) as well.
-    if (GetFocusManager()->ProcessAccelerator(ui::Accelerator(*event)))
-      event->StopPropagation();
+    // Handle only reserved accelerators. Do not call Widget::OnKeyEvent that
+    // eats focus management keys (like the tab key) as well.
+    // if (!ash::Shell::Get())
+    //   return;
+    // ash::AcceleratorController* controller =
+    //     ash::Shell::Get()->accelerator_controller();
+    // if (controller && controller->IsReserved(ui::Accelerator(*event)) &&
+    //     controller->Process(ui::Accelerator(*event)))
+    //   event->StopPropagation();
   }
 
  private:
@@ -1058,6 +1065,7 @@ void ShellSurface::OnDisplayConfigurationChanged() {
 // ui::EventHandler overrides:
 
 void ShellSurface::OnKeyEvent(ui::KeyEvent* event) {
+  LOG(ERROR) << "ShellSurface::OnKeyEvent " << event->GetCodeString();
   if (!resizer_) {
     views::View::OnKeyEvent(event);
     return;
@@ -1129,6 +1137,8 @@ void ShellSurface::OnMouseEvent(ui::MouseEvent* event) {
 // ui::AcceleratorTarget overrides:
 
 bool ShellSurface::AcceleratorPressed(const ui::Accelerator& accelerator) {
+  LOG(ERROR) << "ShellSurface::AcceleratorPressed "
+             << accelerator.GetShortcutText();
   for (const auto& entry : kCloseWindowAccelerators) {
     if (ui::Accelerator(entry.keycode, entry.modifiers) == accelerator) {
       if (!close_callback_.is_null())
