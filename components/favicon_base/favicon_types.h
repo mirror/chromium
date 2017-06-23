@@ -119,6 +119,25 @@ struct LargeIconImageResult {
   std::unique_ptr<FallbackIconStyle> fallback_icon_style;
 };
 
+// Enumeration listing all possible outcomes for fetch attempts from Google
+// favicon server. Used for UMA enum GoogleFaviconServerStatus, so do not
+// change existing values. Insert new values at the end, and update the
+// histogram definition.
+enum class GoogleFaviconServerRequestStatus {
+  // Request sent out and the favicon successfully fetched.
+  SUCCESS = 0,
+  // Request sent out and HTTP 404 received.
+  FAILURE_404 = 1,
+  // Request not sent out (previous 404 failure in cache).
+  FAILURE_404_CACHED = 2,
+  // Request sent out and favicon fetched but writing to cache failed.
+  FAILURE_ON_WRITE = 3,
+  // Request not sent out (the request or the fetcher was invalid).
+  FAILURE_INVALID = 4,
+  // Insert new values here
+  COUNT
+};
+
 }  // namespace favicon_base
 
 #endif  // COMPONENTS_FAVICON_BASE_FAVICON_TYPES_H_
