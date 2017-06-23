@@ -176,6 +176,8 @@ void InitAllocatorShim(MemlogSenderPipe* sender_pipe) {
   g_sender_pipe = sender_pipe;
 #ifdef NDEBUG
   base::allocator::InsertAllocatorDispatch(&g_memlog_hooks);
+#else
+  (void)&g_memlog_hooks;
 #endif
 }
 
