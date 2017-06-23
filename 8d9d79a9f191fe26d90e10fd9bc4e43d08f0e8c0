@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62336df9_feec1f21",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-06-23T13:56:52Z",
+      "side": 1,
+      "message": "It should be initialized or there should be a default for the following switch. We don\u0027t use toast_visible without initialization if we add something to ConfigureToastReason later.",
+      "range": {
+        "startLine": 610,
+        "startChar": 7,
+        "endLine": 610,
+        "endChar": 20
+      },
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
