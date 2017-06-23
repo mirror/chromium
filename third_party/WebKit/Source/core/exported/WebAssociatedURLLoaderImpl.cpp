@@ -82,6 +82,20 @@ void HTTPRequestHeaderValidator::VisitHeader(const WebString& name,
              IsValidHTTPHeaderValue(value);
 }
 
+bool ValidateRequest(const WebURLRequest& request) {
+  WebString method = request.HttpMethod();
+
+  if (!IsValidHTTPToken(method))
+    return false;
+
+  if (FetchUtils::IsForbiddenMethod(method))
+    return false;
+
+  HTTPRequestHeaderValidator validator;
+  request.VisitHTTPHeaderFields(&validator);
+  return validator.IsSafe();
+}
+
 }  // namespace
 
 // This class bridges the interface differences between WebCore and WebKit
@@ -363,60 +377,54 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
 
   DCHECK(client);
 
-  bool allow_load = true;
-  WebURLRequest new_request(request);
-  if (options_.untrusted_http) {
-    WebString method = new_request.HttpMethod();
-    allow_load = observer_ && IsValidHTTPToken(method) &&
-                 !FetchUtils::IsForbiddenMethod(method);
-    if (allow_load) {
-      new_request.SetHTTPMethod(FetchUtils::NormalizeMethod(method));
-      HTTPRequestHeaderValidator validator;
-      new_request.VisitHTTPHeaderFields(&validator);
-      allow_load = validator.IsSafe();
-    }
-  }
+  client_ = client;
 
   RefPtr<WebTaskRunner> task_runner = TaskRunnerHelper::Get(
       TaskType::kUnspecedLoading,
       observer_ ? ToDocument(observer_->LifecycleContext()) : nullptr);
-  client_ = client;
   client_adapter_ =
       ClientAdapter::Create(this, client, options_, std::move(task_runner));
 
-  if (allow_load) {
-    ThreadableLoaderOptions options;
-    options.preflight_policy =
-        static_cast<PreflightPolicy>(options_.preflight_policy);
-    options.fetch_request_mode = options_.fetch_request_mode;
-
-    new_request.SetFetchCredentialsMode(options_.fetch_credentials_mode);
-
-    ResourceLoaderOptions resource_loader_options;
-    resource_loader_options.data_buffering_policy = kDoNotBufferData;
-
-    const ResourceRequest& webcore_request = new_request.ToResourceRequest();
-    if (webcore_request.GetRequestContext() ==
-        WebURLRequest::kRequestContextUnspecified) {
-      // FIXME: We load URLs without setting a TargetType (and therefore a
-      // request context) in several places in content/
-      // (P2PPortAllocatorSession::AllocateLegacyRelaySession, for example).
-      // Remove this once those places are patched up.
-      new_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
+  WebURLRequest new_request(request);
+  if (options_.untrusted_http) {
+    if (!observer_ || !ValidateRequest(request)) {
+      // FIXME: return meaningful error codes.
+      client_adapter_->DidFail(ResourceError());
+      client_adapter_->EnableErrorNotifications();
+      return;
     }
 
-    Document* document = ToDocument(observer_->LifecycleContext());
-    DCHECK(document);
-    loader_ = DocumentThreadableLoader::Create(
-        *ThreadableLoadingContext::Create(*document), client_adapter_.get(),
-        options, resource_loader_options);
-    loader_->Start(webcore_request);
+    new_request.SetHTTPMethod(
+        FetchUtils::NormalizeMethod(request.HttpMethod()));
   }
 
-  if (!loader_) {
-    // FIXME: return meaningful error codes.
-    client_adapter_->DidFail(ResourceError());
+  ThreadableLoaderOptions options;
+  options.preflight_policy =
+      static_cast<PreflightPolicy>(options_.preflight_policy);
+  options.fetch_request_mode = options_.fetch_request_mode;
+
+  new_request.SetFetchCredentialsMode(options_.fetch_credentials_mode);
+
+  ResourceLoaderOptions resource_loader_options;
+  resource_loader_options.data_buffering_policy = kDoNotBufferData;
+
+  const ResourceRequest& webcore_request = new_request.ToResourceRequest();
+  if (webcore_request.GetRequestContext() ==
+      WebURLRequest::kRequestContextUnspecified) {
+    // FIXME: We load URLs without setting a TargetType (and therefore a
+    // request context) in several places in content/
+    // (P2PPortAllocatorSession::AllocateLegacyRelaySession, for example).
+    // Remove this once those places are patched up.
+    new_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   }
+
+  Document* document = ToDocument(observer_->LifecycleContext());
+  DCHECK(document);
+  loader_ = DocumentThreadableLoader::Create(
+      *ThreadableLoadingContext::Create(*document), client_adapter_.get(),
+      options, resource_loader_options);
+  DCHECK(loader_);
+  loader_->Start(webcore_request);
   client_adapter_->EnableErrorNotifications();
 }
 
