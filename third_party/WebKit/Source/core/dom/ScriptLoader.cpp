@@ -612,8 +612,6 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
     //  time the prepare a script algorithm started."
     pending_script_ = CreatePendingScript();
     async_exec_type_ = ScriptRunner::kAsync;
-    pending_script_->StartStreamingIfPossible(&element_->GetDocument(),
-                                              ScriptStreamer::kAsync);
     // TODO(hiroshige): Here |contextDocument| is used as "node document"
     // while Step 14 uses |elementDocument| as "node document". Fix this.
     context_document->GetScriptRunner()->QueueScriptForExecution(
@@ -987,6 +985,18 @@ bool ScriptLoader::IsScriptForEventSupported() const {
 
 String ScriptLoader::ScriptContent() const {
   return element_->TextFromChildren();
+}
+
+bool ScriptLoader::StartStreamingIfPossible(
+    ScriptStreamer::Type type,
+    std::unique_ptr<WTF::Closure> closure) {
+  return pending_script_ &&
+         pending_script_->StartStreamingIfPossible(&element_->GetDocument(),
+                                                   type, std::move(closure));
+}
+
+bool ScriptLoader::IsCurrentlyStreaming() const {
+  return pending_script_ && pending_script_->IsCurrentlyStreaming();
 }
 
 }  // namespace blink
