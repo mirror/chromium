@@ -22,6 +22,30 @@
       "revId": "cc1ad95f40d990f2af78007d673636ba2a777dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b9d03c_76fd2812",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-23T17:27:04Z",
+      "side": 1,
+      "message": "Maybe we can cache the removing download guid in driver, and cleared the cache in OnDownloadRemoved.\n\nI think only remove will cause issue, other calls should be ok to be in the same call stack.\nAlso posting all the tasks won\u0027t fix the issue described above(OnDownloadSucceeded after Remove).\n\nwdyt?",
+      "parentUuid": "13fe0743_2216b263",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 67
+      },
+      "revId": "cc1ad95f40d990f2af78007d673636ba2a777dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
