@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3605e6da_551ade54",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T00:41:56Z",
+      "side": 1,
+      "message": "Can add a RuntimeEnabledFeatures::SlimmingPaintV2Enabled() condition here to avoid affecting SPv1, and a TODO?",
+      "parentUuid": "7de801c8_d4cac330",
+      "revId": "30487fcfd49c53d43622e8e7c284374c78c699fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c7df01c_5db237e3",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yes. Will fix that.",
       "parentUuid": "4c7df01c_5db237e3",
+      "revId": "30487fcfd49c53d43622e8e7c284374c78c699fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5717182f_bcc60db1",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-23T00:41:56Z",
+      "side": 1,
+      "message": "I think based on https://chromium-review.googlesource.com/c/537813/7/third_party/WebKit/Source/platform/graphics/paint/ClipPaintPropertyNode.h#50, we can let XXXPaintPropertyNode::Update() return a bool to indicate whether the node value changed, and let ObjectPaintProperties::UpdateXXX() return an enum { kNoChange, kValueChanged, kNodeExistenceChanged }. If this method looks good to you, I can split out the Update() method part from the CL.",
+      "parentUuid": "eb4298b5_8bafe91e",
       "revId": "30487fcfd49c53d43622e8e7c284374c78c699fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
