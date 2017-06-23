@@ -352,6 +352,8 @@ class CONTENT_EXPORT FrameTreeNode {
 
   void OnSetHasReceivedUserGesture();
 
+  void DeleteNavigationRequestForTesting();
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,
                            ContainerPolicyDynamic);
