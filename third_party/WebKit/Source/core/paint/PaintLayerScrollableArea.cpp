@@ -60,6 +60,7 @@
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLSelectElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutFlexibleBox.h"
@@ -907,6 +908,10 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
 
   DisableCompositingQueryAsserts disabler;
   PositionOverflowControls();
+
+  Node* node = Box().GetNode();
+  if (isHTMLSelectElement(node))
+    toHTMLSelectElement(node)->ScrollToOptionAfterLayout();
 }
 
 void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {

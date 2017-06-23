@@ -44,7 +44,6 @@
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/NodeListsNodeData.h"
 #include "core/dom/NodeTraversal.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/GestureEvent.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
@@ -891,27 +890,16 @@ void HTMLSelectElement::ScrollToOption(HTMLOptionElement* option) {
     return;
   if (UsesMenuList())
     return;
-  bool has_pending_task = option_to_scroll_to_;
-  // We'd like to keep an HTMLOptionElement reference rather than the index of
-  // the option because the task should work even if unselected option is
-  // inserted before executing scrollToOptionTask().
+  if (GetLayoutObject() && !GetLayoutObject()->NeedsLayout()) {
+    ToLayoutListBox(GetLayoutObject())->ScrollToRect(option->BoundingBox());
+    return;
+  }
   option_to_scroll_to_ = option;
-  if (!has_pending_task)
-    TaskRunnerHelper::Get(TaskType::kUserInteraction, &GetDocument())
-        ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&HTMLSelectElement::ScrollToOptionTask,
-                             WrapPersistent(this)));
 }
 
-void HTMLSelectElement::ScrollToOptionTask() {
+void HTMLSelectElement::ScrollToOptionAfterLayout() {
   HTMLOptionElement* option = option_to_scroll_to_.Release();
-  if (!option || !isConnected())
-    return;
-  // optionRemoved() makes sure m_optionToScrollTo doesn't have an option with
-  // another owner.
-  DCHECK_EQ(option->OwnerSelectElement(), this);
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  if (!GetLayoutObject() || !GetLayoutObject()->IsListBox())
+  if (!option || UsesMenuList())
     return;
   LayoutRect bounds = option->BoundingBox();
   ToLayoutListBox(GetLayoutObject())->ScrollToRect(bounds);
