@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48c39249_7dd39955",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-23T19:27:16Z",
+      "side": 1,
+      "message": "Devlin, let me know if 1 is the proper count to feed the UMA ping, and if the value needs to be wrapped in a constant or variable.\n\nAlso, wdyt of using a bucket size that is capped at 10000 pings? Too big? We can use a smaller bucket size.",
+      "revId": "e9d51bd854aea46a503dcd40fa3f24aaa8438bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
