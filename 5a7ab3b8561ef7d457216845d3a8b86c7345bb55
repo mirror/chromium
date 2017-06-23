@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d078a081_489e9879",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T10:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e855520_201fea5a",
+      "range": {
+        "startLine": 86,
+        "startChar": 50,
+        "endLine": 86,
+        "endChar": 67
+      },
+      "revId": "5a7ab3b8561ef7d457216845d3a8b86c7345bb55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5d21bb7_c73db4e5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/NewTabPageRecyclerViewTest.java",
         "patchSetId": 18
@@ -76,6 +100,30 @@
       "writtenOn": "2017-06-22T18:05:17Z",
       "side": 1,
       "message": "instead of anyString, use a real one? Something like \"eq(suggestion.mUrl)\" ? Same for the image size.\n\nAnd same below, if it\u0027s not too complicated to get the argument to expect, you might as well verify that too.",
+      "range": {
+        "startLine": 93,
+        "startChar": 41,
+        "endLine": 93,
+        "endChar": 50
+      },
+      "revId": "5a7ab3b8561ef7d457216845d3a8b86c7345bb55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483417e3_5513e8d9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/ImageFetcherTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T10:27:17Z",
+      "side": 1,
+      "message": "The arguments have to either all be real or all be any(..). As we can\u0027t provide the real instance of the FaviconImageCallback (it is created internally in makeFaviconRequest), we need to make all arguments any().",
+      "parentUuid": "be105731_926d19ae",
       "range": {
         "startLine": 93,
         "startChar": 41,

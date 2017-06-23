@@ -16,6 +16,24 @@
       "revId": "5a2a1260369d2c9419344bdceacfbcc0365fd27b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63c853c_0258c4e7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-23T10:27:17Z",
+      "side": 0,
+      "message": "We want the mock image fetcher to be using a mock thumbnail provider here. All methods inside the image fetcher get an instance of the thumbnail provider through a call to getThumbnailProvider(). So, to force the use a mock thumbnail provider, I override that method. I agree that was confusing.",
+      "parentUuid": "f94ab516_099a52e4",
+      "revId": "5a2a1260369d2c9419344bdceacfbcc0365fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
