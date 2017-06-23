@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed70d560_cd022577",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-23T07:14:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f5384cd_304c670f",
+      "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "742d51b1_69ba916d",
         "filename": "media/filters/BUILD.gn",
         "patchSetId": 4
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "No code outside of media should require any other DEP than \"//media\". Can you upload the CL so I can see the issues?",
       "parentUuid": "298ec8d4_2b189f7c",
+      "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c99ea7_8c794119",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-23T07:14:23Z",
+      "side": 1,
+      "message": "It is working now, Config required to add in new source_set.\n\nDone.",
+      "parentUuid": "699ab284_850c0ca5",
       "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
