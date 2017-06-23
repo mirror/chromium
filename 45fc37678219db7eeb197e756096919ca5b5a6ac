@@ -193,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "cfdcb077_1537929a",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T16:19:32Z",
+      "side": 1,
+      "message": "This is generally not good practice since it leads to implementations with high coupling versus having two interfaces which have defined APIs and hence boundaries. \"friend\" does not accurately represent the extent of its access :)\n\nThese mantras are important in a project of Chrome\u0027s size in keeping complexity down over long time periods. Even in tests it makes it hard to replace the implementation without scrapping all the tests and makes even minor changes annoying; e.g. why is there a failure in this other class?",
+      "parentUuid": "9dd03125_e06f1ad7",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dff46ab_5c88e030",
         "filename": "media/blink/watch_time_reporter.h",
         "patchSetId": 3
@@ -245,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "4abe12cb_6ad9f438",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T16:19:32Z",
+      "side": 1,
+      "message": "Your comment seems to have been cut off? I\u0027d be more sympathetic to reducing the boiler plate if there were more than three and it didn\u0027t require a bunch of cast boiler plate :) It\u0027s also really only one place that would have \"boiler plate\", since the public WTR methods are already named appropriately. You can still keep the for loop if you want too, just do something like:\n\nconst std::function/base::Closure {\n  WatchTimeReporterComponent1::OnCommit,\n  ...\n  ...\n};\n\nThen iterate over that. I don\u0027t think it\u0027s any clearer at this stage though. Come back when we have more than 3 of these? :)",
+      "parentUuid": "da7036a5_30be846e",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfb28fe6_1b277ff2",
         "filename": "media/blink/watch_time_sub_reporter.cc",
         "patchSetId": 3
@@ -274,6 +310,24 @@
       "side": 1,
       "message": "I feel a bit icky leaving duplicated code but if you feel strongly against passing WTR, I think the only alternative would be to pass two cb which doesn\u0027t sound satisfying.",
       "parentUuid": "dfb28fe6_1b277ff2",
+      "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96256065_9da910b0",
+        "filename": "media/blink/watch_time_sub_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T16:19:32Z",
+      "side": 1,
+      "message": "I do feel strongly about not passing in WTR for cycle complexity reasons; but I don\u0027t understand why you would need two cbs versus returning a bool. Can you explain?",
+      "parentUuid": "00b2594e_90ddd852",
       "revId": "45fc37678219db7eeb197e756096919ca5b5a6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
