@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25ae48d7_18a3ab06",
+        "filename": "cc/surfaces/display_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-23T20:25:35Z",
+      "side": 1,
+      "message": "nit: triggers late deadline or does not trigger early deadline",
+      "range": {
+        "startLine": 306,
+        "startChar": 50,
+        "endLine": 306,
+        "endChar": 56
+      },
+      "revId": "9b9971adbc02cbe7b166863748da30ee764ba0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
