@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00e29b26_86995c7f",
+        "filename": "build/whitespace_file.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "This change shouldn\u0027t be in this CL :).",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a46b07_d0ddb6fa",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "Does this need the \"source\" argument?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ae0632_26c4745e",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "Does this method need whitespace around it? I also think that \"View\" might be the wrong word. Maybe \"DisplayWebContentsInTouchBar\" or \"SetTouchBarContents\".",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453fd9a5_e1528643",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "I think \"SetIsErrorPage\" would make more sense.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b8cb9f_c895c9e0",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same as SetErrorPage, above?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531fe5e8_c3bc2673",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to change anything, you should remove it.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470e7234_59139f75",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7203f191_db596b5c",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "This method doesn\u0027t seem to be used anywhere. If so, remove.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7586d9_a634f49b",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "I *think* that setIsErrorPage is just used to decide whether to show the custom view, but that information is already carried by whether a custom view is set to a view or to nil. If that\u0027s right, maybe you can remove this property completely.\n\nIf you end up keeping it, I think it could use a more descriptive comment.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8027cd_6a7ebc65",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "Same here — as far as I can tell, isErrorPage will always be YES when touchbarView is non-nil, and NO when touchbarView is nil, so you might be able to remove it.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc06cc0_009ae03f",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "I think that \"touchbar\" is redundant for a class called BrowserWindowTouchBar. Maybe something like \"customView\" or just \"view\"?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e6e6d7_ddfeca82",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "I think that calling this method is the same as calling setTouchbarView:, so maybe you don\u0027t need this method?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f59d753_4e6ae44f",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "You might not have to add this (I don\u0027t *think* it\u0027s used in this file).",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4920e322_10d04a16",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "_COUNT should always be last (despite the warning)… but SLIDER doesn\u0027t seem to be used anywhere.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e9b025_b80d51cf",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "What\u0027s this item used for?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed59473c_34411540",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "It looks like maybe this shouldn\u0027t be here?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfe6a9d_54fc5c41",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "This ID should be put together like the others (a constant passed through GetTouchBarId), not inline.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70bd5bb_8b2df45f",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "I don\u0027t think this is used… is it?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f333d182_baf00cfa",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "Remove this change?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54939cdb_b0cc6753",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "This must be protected/private (https://google.github.io/styleguide/cppguide.html#Access_Control) and end with an underscore, like the other instance variables of this class.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ecd352_d7b71179",
+        "filename": "third_party/WebKit/Source/web/PageWidgetDelegate.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f4755b_fbf5a222",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "This seems to be unused.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b023c010_a915ce75",
+        "filename": "ui/base/cocoa/remote_layer_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-23T21:28:43Z",
+      "side": 1,
+      "message": "allowsHitTesting is a property of CALayer, not CALayerHost. It might make sense to declare it in gpu_output_surface_mac.mm instead of here.",
+      "revId": "612e873fcd120720112d224b195cfd1f94ab018b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
