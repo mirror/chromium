@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f266a5_ed8f0dc8",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-23T20:12:23Z",
+      "side": 0,
+      "message": "Can we keep this and add a histogram for it? It might be useful to know the average delay a single extension causes?",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc911042_cde2c05c",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-23T20:12:23Z",
+      "side": 0,
+      "message": "Is a copy constructor required? If not, add DISALLOW_COPY_AND_ASSIGN.",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3815c1e_cbf5881e",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-23T20:12:23Z",
+      "side": 0,
+      "message": "Think we required both |request_time_logs_| and |request_ids_| earlier since we needed access to completed requests as well. I think |request_ids_| can be removed now. To simplify even further, we can just keep track of the \"active\" requests.",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
