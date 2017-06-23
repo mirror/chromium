@@ -34,6 +34,7 @@
 #include "core/CoreExport.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/ScopedPersistent.h"
+#include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/debug/StackTrace.h"
@@ -141,7 +142,8 @@ class Frame;
 // ====== References ======
 // https://wiki.mozilla.org/Gecko:SplitWindow
 // https://whatwg.org/C/browsers.html#the-windowproxy-exotic-object
-class WindowProxy : public GarbageCollectedFinalized<WindowProxy> {
+class WindowProxy : public GarbageCollectedFinalized<WindowProxy>,
+                    public TraceWrapperBase {
  public:
   virtual ~WindowProxy();
 

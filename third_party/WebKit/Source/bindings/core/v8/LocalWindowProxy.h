@@ -69,6 +69,8 @@ class LocalWindowProxy final : public WindowProxy {
   // (e.g., after setting docoument.domain).
   void UpdateSecurityOrigin(SecurityOrigin*);
 
+  DECLARE_TRACE_WRAPPERS();
+
  private:
   LocalWindowProxy(v8::Isolate*, LocalFrame&, RefPtr<DOMWrapperWorld>);
 

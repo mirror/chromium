@@ -12,6 +12,7 @@
 #include "core/CoreExport.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/RemoteFrame.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "v8/include/v8.h"
 
@@ -20,9 +21,11 @@ namespace blink {
 class DOMWrapperWorld;
 class SecurityOrigin;
 
-class WindowProxyManager : public GarbageCollected<WindowProxyManager> {
+class WindowProxyManager : public GarbageCollected<WindowProxyManager>,
+                           public TraceWrapperBase {
  public:
   DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
   v8::Isolate* GetIsolate() const { return isolate_; }
 
@@ -49,7 +52,7 @@ class WindowProxyManager : public GarbageCollected<WindowProxyManager> {
   }
 
  protected:
-  using IsolatedWorldMap = HeapHashMap<int, Member<WindowProxy>>;
+  using IsolatedWorldMap = HeapHashMap<int, TraceWrapperMember<WindowProxy>>;
   enum class FrameType { kLocal, kRemote };
 
   WindowProxyManager(Frame&, FrameType);
@@ -64,7 +67,7 @@ class WindowProxyManager : public GarbageCollected<WindowProxyManager> {
   const FrameType frame_type_;
 
  protected:
-  const Member<WindowProxy> window_proxy_;
+  const TraceWrapperMember<WindowProxy> window_proxy_;
   IsolatedWorldMap isolated_worlds_;
 };
 

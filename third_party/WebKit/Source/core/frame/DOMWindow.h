@@ -128,7 +128,7 @@ class CORE_EXPORT DOMWindow : public EventTargetWithInlineData,
   // Unlike |frame_|, |window_proxy_manager_| is available even after the
   // window's frame gets detached from the DOM, until the end of the lifetime
   // of this object.
-  const Member<WindowProxyManager> window_proxy_manager_;
+  const TraceWrapperMember<WindowProxyManager> window_proxy_manager_;
   Member<InputDeviceCapabilitiesConstants> input_capabilities_;
   mutable TraceWrapperMember<Location> location_;
 

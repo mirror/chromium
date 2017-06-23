@@ -14,6 +14,12 @@ DEFINE_TRACE(WindowProxyManager) {
   visitor->Trace(isolated_worlds_);
 }
 
+DEFINE_TRACE_WRAPPERS(WindowProxyManager) {
+  visitor->TraceWrappers(window_proxy_);
+  for (const auto& entry : isolated_worlds_)
+    visitor->TraceWrappers(entry.value);
+}
+
 void WindowProxyManager::ClearForClose() {
   window_proxy_->ClearForClose();
   for (auto& entry : isolated_worlds_)
@@ -50,7 +56,7 @@ WindowProxyManager::WindowProxyManager(Frame& frame, FrameType frame_type)
     : isolate_(v8::Isolate::GetCurrent()),
       frame_(&frame),
       frame_type_(frame_type),
-      window_proxy_(CreateWindowProxy(DOMWrapperWorld::MainWorld())) {}
+      window_proxy_(this, CreateWindowProxy(DOMWrapperWorld::MainWorld())) {}
 
 WindowProxy* WindowProxyManager::CreateWindowProxy(DOMWrapperWorld& world) {
   switch (frame_type_) {
@@ -81,7 +87,8 @@ WindowProxy* WindowProxyManager::WindowProxyMaybeUninitialized(
       window_proxy = iter->value.Get();
     } else {
       window_proxy = CreateWindowProxy(world);
-      isolated_worlds_.Set(world.GetWorldId(), window_proxy);
+      isolated_worlds_.Set(world.GetWorldId(),
+                           TraceWrapperMember<WindowProxy>(this, window_proxy));
     }
   }
   return window_proxy;
