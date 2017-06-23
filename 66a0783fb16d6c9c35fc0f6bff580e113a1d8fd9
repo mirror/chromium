@@ -22,6 +22,166 @@
       "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29a2acb_5d98a99f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:12:49Z",
+      "side": 1,
+      "message": "That condition seems the wrong way around.",
+      "range": {
+        "startLine": 96,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 40
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ef2aa7_16b822b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:12:49Z",
+      "side": 1,
+      "message": "Should this also move into the factory?",
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5cc359_a3940f7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:12:49Z",
+      "side": 1,
+      "message": "Can we just add a destroy method to SuggestionsSource? This just doesn\u0027t feel right.",
+      "range": {
+        "startLine": 564,
+        "startChar": 59,
+        "endLine": 564,
+        "endChar": 68
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cdf4b4_b9c72ad2",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:12:49Z",
+      "side": 1,
+      "message": "This is a no-op.",
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fa58dd_a1ebd17a",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:12:49Z",
+      "side": 1,
+      "message": "Wouldn\u0027t the SuggestionsDependenciesRule already do this?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 64
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be7c725_63e9f37b",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:12:49Z",
+      "side": 1,
+      "message": "This method basically needs to be called in order to get proper suggestions, right? In that case, we could pass the rule to the constructor, then set things up in beforeStartingActivity(). Or alternatively, are nested Rules supported? IOW, could you have a @Rule annotation on a member here? Then we could do that for the SuggestionsDependenciesRule :)",
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fa3f85_4a6ad632",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/SuggestionsDependenciesRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:12:49Z",
+      "side": 1,
+      "message": "@Override?",
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c6b54b_c9ac94df",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/SuggestionsDependenciesRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T17:12:49Z",
+      "side": 1,
+      "message": "Call super here too?",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 54
+      },
+      "revId": "66a0783fb16d6c9c35fc0f6bff580e113a1d8fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
