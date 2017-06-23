@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a110ad30_2fe4929e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T14:30:26Z",
+      "side": 1,
+      "message": "That\u0027s interesting... In principle the OWNERS check should apply to the tree *before* the CL -- otherwise I could just land a CL that makes me owner of everything, right? :D",
+      "revId": "6b74c4cd8feb9fa03d2b6e61e911d7043e98989d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
