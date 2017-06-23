@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "570594f3_a5aae388",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T21:18:45Z",
+      "side": 1,
+      "message": ":)\n\nI wish I could just loop over the map, but it seems base::HistogramBase::CheckName fails when histograms with different names are recorded from the same line in the code...\n\nThe only way I can think of to make it cleaner is to define 2 macros (one for each type of histogram name) to decrease the size of the code. If that seems sensible and doesn\u0027t violate the style guide (I didn\u0027t see anything in there about macros), I\u0027ll push a patch set.",
+      "parentUuid": "b36bf605_299effb1",
+      "range": {
+        "startLine": 247,
+        "startChar": 19,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e4411b_6349e4f5",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 11
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-23T20:37:37Z",
       "side": 1,
       "message": "cleanup",
+      "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697216f0_e7577597",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T21:18:45Z",
+      "side": 1,
+      "message": "Done; this was resolved in patch set 13 to deal with checkdeps issues.",
+      "parentUuid": "45e4411b_6349e4f5",
       "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "25a69f69_dd588aba",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T21:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3c2954d_3413b0e7",
+      "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61826ef3_36d9b5d8",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 11
@@ -73,6 +133,24 @@
       "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13998b29_65cd9e40",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-23T21:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61826ef3_36d9b5d8",
+      "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
