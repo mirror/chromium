@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dba0ae6_7fcbfd51",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123014
+      },
+      "writtenOn": "2017-06-23T01:18:58Z",
+      "side": 1,
+      "message": "Remove extra comment line.",
+      "revId": "b049e1dfbe68ecc01a1420b80930ae4572196178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab59e75_f306266a",
+        "filename": "chrome/browser/search/hotword_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1123014
+      },
+      "writtenOn": "2017-06-23T01:18:58Z",
+      "side": 1,
+      "message": "s/platrofms/platforms",
+      "revId": "b049e1dfbe68ecc01a1420b80930ae4572196178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
