@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "766db3ac_2b9cfc07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-23T09:41:08Z",
+      "side": 1,
+      "message": "The documentation says otherwise: \n\n\"After you are done writing, you should close the file descriptor and invoke onWriteFinished[...]\"\n\nhttps://developer.android.com/reference/android/print/PrintDocumentAdapter.html#onWrite(android.print.PageRange%5B%5D%2C%20android.os.ParcelFileDescriptor%2C%20android.os.CancellationSignal%2C%20android.print.PrintDocumentAdapter.WriteResultCallback)\n\nHow come we could just get rid of that?",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "7c5cfa13c2923393026754fc6ce057f9dc4cb5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
