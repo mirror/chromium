@@ -40,27 +40,26 @@ function normalizeImportParams(importParams) {
   return resultParams;
 }
 
-function combineAlgorithms(algorithm, importParams) {
+function convertInternalApiAlgorithm(algorithm) {
   // internalAPI.getPublicKey returns publicExponent as ArrayBuffer, but it
   // should be a Uint8Array.
   if (algorithm.publicExponent) {
     algorithm.publicExponent = new Uint8Array(algorithm.publicExponent);
   }
 
-  algorithm.hash = importParams.hash;
   return algorithm;
 }
 
 function getPublicKey(cert, importParams, callback) {
   importParams = normalizeImportParams(importParams);
   internalAPI.getPublicKey(
-      cert, importParams.name, function(publicKey, algorithm) {
+      '' /* token_id */, cert, importParams, function(publicKey, algorithm) {
         if (chrome.runtime.lastError) {
           callback();
           return;
         }
-        var combinedAlgorithm = combineAlgorithms(algorithm, importParams);
-        callback(publicKey, combinedAlgorithm);
+        algorithm = convertInternalApiAlgorithm(algorithm);
+        callback(publicKey, algorithm);
       });
 }
 

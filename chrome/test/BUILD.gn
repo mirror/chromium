@@ -2284,6 +2284,8 @@ test("browser_tests") {
         "../browser/download/notification/download_notification_browsertest.cc",
         "../browser/drive/drive_notification_manager_factory_browsertest.cc",
         "../browser/extensions/api/certificate_provider/certificate_provider_apitest.cc",
+        "../browser/extensions/api/certificate_provider/certificate_provider_test_util.cc",
+        "../browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
         "../browser/extensions/api/hotword_private/hotword_private_apitest.cc",
         "../browser/extensions/api/vpn_provider/vpn_provider_apitest.cc",
         "../browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
