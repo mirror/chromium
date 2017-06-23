@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a7aa618_f33d0a51",
+        "filename": "content/renderer/media/android/media_info_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T17:24:47Z",
+      "side": 0,
+      "message": "Mark histogram as deprecated?",
+      "revId": "a0b7787a076e2a83f6b60853dc80d31ed99c7be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
