@@ -37,6 +37,75 @@
     },
     {
       "key": {
+        "uuid": "de3c2354_acbefc5a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-23T01:37:45Z",
+      "side": 1,
+      "message": "We talked about this patch possibly fixing an existing spv1 bug where transformed content is animated up from the bottom of the html5 single page spec. Is that a real bug fixed by this patch?",
+      "parentUuid": "4c444139_09b48f34",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e137852_7cadb197",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-23T01:37:45Z",
+      "side": 1,
+      "message": "+1 to Xianzhu\u0027s idea of returning an 3-state enum from the Update functions.",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892aacf4_97bd419e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-23T01:37:45Z",
+      "side": 1,
+      "message": "Can you add a comment here describing why we need to track this and how it is used? It would be useful to mention that we\u0027re only tracking up to the nearest transform. Maybe clip_to_transform_changed?",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6224e6fc_8a609065",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-23T01:37:45Z",
+      "side": 1,
+      "message": "Do you also need to do this for the svg local transform?",
+      "revId": "5e172ff6adda1ffcb7d11937b1f2a9f3c899dc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ab585d4_f2b4f871",
         "filename": "third_party/WebKit/Source/platform/geometry/FloatRoundedRect.h",
         "patchSetId": 6
