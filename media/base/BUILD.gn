@@ -29,6 +29,27 @@ if (is_component_build) {
 } else {
   link_target_type = "static_library"
 }
+
+if (media_use_ffmpeg) {
+  target(link_target_type, "base_ffmpeg_header") {
+    visibility = [ "//media/filters" ]
+
+    sources = [
+      "audio_video_metadata_extractor.cc",
+      "audio_video_metadata_extractor.h",
+      "media_file_checker.cc",
+      "media_file_checker.h",
+    ]
+
+    configs += [ ":base_config" ]
+
+    deps = [
+      "//skia",
+      "//third_party/ffmpeg",
+    ]
+  }
+}
+
 target(link_target_type, "base") {
   # This should only be depended on by "media" target. Other targets should
   # depend on "media" target directly.
@@ -298,17 +319,11 @@ target(link_target_type, "base") {
   configs += [ ":base_config" ]
 
   if (media_use_ffmpeg) {
-    if (!is_android) {
-      sources += [
-        "audio_video_metadata_extractor.cc",
-        "audio_video_metadata_extractor.h",
-        "media_file_checker.cc",
-        "media_file_checker.h",
-      ]
-      deps += [ "//media:filters_common" ]
-    }
-
     deps += [ "//third_party/ffmpeg" ]
+  }
+
+  if (media_use_libvpx) {
+    deps += [ "//third_party/libvpx" ]
   }
 
   if (is_android) {
