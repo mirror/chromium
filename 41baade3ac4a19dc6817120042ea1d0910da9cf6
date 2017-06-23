@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eb23296_7731fe95",
+        "filename": "ios/web/shell/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-23T09:15:48Z",
+      "side": 1,
+      "message": "Do I need to alter how this is done in light of now bundling a pakfile, or is this fine as-is?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "41baade3ac4a19dc6817120042ea1d0910da9cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
