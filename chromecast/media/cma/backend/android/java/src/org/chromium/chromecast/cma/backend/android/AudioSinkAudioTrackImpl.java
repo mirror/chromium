@@ -56,8 +56,12 @@ class AudioSinkAudioTrackImpl {
     private static final long NO_TIMESTAMP = Long.MIN_VALUE;
 
     private static final long SEC_IN_NSEC = 1000000000L;
+    private static final long MSEC_IN_NSEC = 1000000L;
     private static final long TIMESTAMP_UPDATE_PERIOD = 3 * SEC_IN_NSEC;
     private static final long UNDERRUN_LOG_THROTTLE_PERIOD = SEC_IN_NSEC;
+
+    private static final long MAX_SLEEPTIME_WHEN_STOPPING_MSEC = 500;
+    private static final long MIN_SLEEPTIME_WHEN_STOPPING_MSEC = 10;
 
     private final long mNativeAudioSinkAudioTrackImpl;
 
@@ -69,7 +73,7 @@ class AudioSinkAudioTrackImpl {
     private AudioTrack mAudioTrack;
 
     // Timestamping logic for RenderingDelay calculations.
-    private AudioTimestamp mLastPlayoutTStamp;
+    private AudioTimestamp mRefPointTStamp;
     private long mLastTimestampUpdateNsec; // Last time we updated the timestamp.
     private boolean mTriggerTimestampUpdateNow; // Set to true to trigger an early update.
 
@@ -109,6 +113,10 @@ class AudioSinkAudioTrackImpl {
         mTotalFramesWritten = 0;
     }
 
+    private boolean haveValidRefPoint() {
+        return mLastTimestampUpdateNsec != NO_TIMESTAMP;
+    }
+
     /**
      * Initializes the instance by creating the AudioTrack object and allocating
      * the shared memory buffers.
@@ -139,7 +147,7 @@ class AudioSinkAudioTrackImpl {
 
         mAudioTrack = new AudioTrack(STREAM_TYPE, mSampleRateInHz, CHANNEL_CONFIG, AUDIO_FORMAT,
                 bufferSizeInBytes, AUDIO_MODE);
-        mLastPlayoutTStamp = new AudioTimestamp();
+        mRefPointTStamp = new AudioTimestamp();
 
         // Allocated shared buffers.
         mPcmBuffer = ByteBuffer.allocateDirect(bytesPerBuffer);
@@ -199,8 +207,32 @@ class AudioSinkAudioTrackImpl {
             return;
         }
         mAudioTrack.stop();
+        waitForTrackToRunEmtpy();
         mAudioTrack.release();
         mIsInitialized = false;
+    }
+
+    /** Waits for the AudioTrack to run empty to allow all data left in the
+     * internal buffer to be played out. */
+    private void waitForTrackToRunEmtpy() {
+        long sleepTimeMsecs;
+        updateRefPointTimestamp();
+        long lastPlayoutTimeNsecs =
+                getInterpolatedTStampNsecs(mRefPointTStamp, mTotalFramesWritten);
+        if (lastPlayoutTimeNsecs != NO_TIMESTAMP) {
+            // Sleep until the last playout time.
+            long nowNsecs = System.nanoTime();
+            sleepTimeMsecs = (lastPlayoutTimeNsecs - nowNsecs) / MSEC_IN_NSEC;
+        } else {
+            // We have no timestamp to estimate how much is left to play, so
+            // just assume the worst case and assume the entire internal buffer is full.
+            long bufferSizeInMsec = 1000L * mAudioTrack.getBufferSizeInFrames() / mSampleRateInHz;
+            sleepTimeMsecs = bufferSizeInMsec;
+        }
+        sleepTimeMsecs = Math.min(MAX_SLEEPTIME_WHEN_STOPPING_MSEC,
+                Math.max(MIN_SLEEPTIME_WHEN_STOPPING_MSEC, sleepTimeMsecs));
+        Log.i(TAG, "Waiting " + sleepTimeMsecs + "ms for the AudioTrack to consume all data.");
+        SystemClock.sleep(sleepTimeMsecs);
     }
 
     private String getPlayStateString() {
@@ -322,8 +354,9 @@ class AudioSinkAudioTrackImpl {
     }
 
     private void updateRenderingDelay() {
-        updateTimestamp();
-        if (mLastTimestampUpdateNsec == NO_TIMESTAMP) {
+        checkForUnderruns();
+        updateRefPointTimestamp();
+        if (!haveValidRefPoint()) {
             // No timestamp available yet, just put dummy values and return.
             mRenderingDelayBuffer.putLong(0, 0);
             mRenderingDelayBuffer.putLong(8, NO_TIMESTAMP);
@@ -331,50 +364,67 @@ class AudioSinkAudioTrackImpl {
         }
 
         // Interpolate to get proper Rendering delay.
-        long delta_frames = mTotalFramesWritten - mLastPlayoutTStamp.framePosition;
-        long delta_nsecs = 1000000000 * delta_frames / mSampleRateInHz;
-        long playout_time_nsecs = mLastPlayoutTStamp.nanoTime + delta_nsecs;
-        long now_nsecs = System.nanoTime();
-        long delay_nsecs = playout_time_nsecs - now_nsecs;
+        long playoutTimeNsecs = getInterpolatedTStampNsecs(mRefPointTStamp, mTotalFramesWritten);
+        long nowNsecs = System.nanoTime();
+        long delayNsecs = playoutTimeNsecs - nowNsecs;
 
         // Populate RenderingDelay return value for native land.
-        mRenderingDelayBuffer.putLong(0, delay_nsecs / 1000);
-        mRenderingDelayBuffer.putLong(8, now_nsecs / 1000);
+        mRenderingDelayBuffer.putLong(0, delayNsecs / 1000);
+        mRenderingDelayBuffer.putLong(8, nowNsecs / 1000);
 
         if (DEBUG_LEVEL >= 3) {
             Log.i(TAG,
                     "RenderingDelay: "
-                            + " df=" + delta_frames + " dt=" + (delta_nsecs / 1000)
-                            + " delay=" + (delay_nsecs / 1000) + " play=" + (now_nsecs / 1000));
+                            + " delay=" + (delayNsecs / 1000) + " play=" + (nowNsecs / 1000));
         }
     }
 
-    /** Gets a new timestamp from AudioTrack. For performance reasons we only
-     * read a new timestamp in certain intervals. */
-    private void updateTimestamp() {
+    /** Returns an interpolated timestamp based on the reference point timestamp and given frame
+     * position. If no valid reference point exists, returns NO_TIMESTAMP.  */
+    private long getInterpolatedTStampNsecs(AudioTimestamp referencePoint, long framePosition) {
+        if (!haveValidRefPoint()) {
+            return NO_TIMESTAMP;
+        }
+        long deltaFrames = framePosition - referencePoint.framePosition;
+        long deltaNsecs = 1000000000L * deltaFrames / mSampleRateInHz;
+        long interpolatedTimestampNsecs = referencePoint.nanoTime + deltaNsecs;
+        return interpolatedTimestampNsecs;
+    }
+
+    /** Checks for underruns and if detected invalidates the reference point timestamp. */
+    private void checkForUnderruns() {
         int underruns = getUnderrunCount();
         if (underruns != mLastUnderrunCount) {
             logUnderruns(underruns);
+            // Invalidate timestamp (resets RenderingDelay).
             mLastTimestampUpdateNsec = NO_TIMESTAMP;
             mLastUnderrunCount = underruns;
         }
-        if (!mTriggerTimestampUpdateNow && mLastTimestampUpdateNsec != NO_TIMESTAMP
+    }
+
+    /** Gets a new reference point timestamp from AudioTrack. For performance reasons we only
+     * read a new timestamp in certain intervals. */
+    private void updateRefPointTimestamp() {
+        if (!mTriggerTimestampUpdateNow && haveValidRefPoint()
                 && elapsedNsec(mLastTimestampUpdateNsec) <= TIMESTAMP_UPDATE_PERIOD) {
             // not time for an update yet
             return;
         }
 
-        if (mAudioTrack.getTimestamp(mLastPlayoutTStamp)) {
-            // Got a new value.
-            if (DEBUG_LEVEL >= 1) {
-                Log.i(TAG,
-                        "New AudioTrack timestamp:"
-                                + " pos=" + mLastPlayoutTStamp.framePosition
-                                + " ts=" + mLastPlayoutTStamp.nanoTime / 1000 + "us");
-            }
-            mLastTimestampUpdateNsec = System.nanoTime();
-            mTriggerTimestampUpdateNow = false;
+        if (!mAudioTrack.getTimestamp(mRefPointTStamp)) {
+            return; // no timestamp available
         }
+
+        // Got a new value.
+        if (DEBUG_LEVEL >= 1) {
+            Log.i(TAG,
+                    "New AudioTrack timestamp:"
+                            + " pos=" + mRefPointTStamp.framePosition
+                            + " ts=" + mRefPointTStamp.nanoTime / 1000 + "us");
+        }
+
+        mLastTimestampUpdateNsec = System.nanoTime();
+        mTriggerTimestampUpdateNow = false;
     }
 
     /** Logs underruns in a throttled manner. */
