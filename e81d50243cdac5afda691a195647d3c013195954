@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7ee5993_5b7324a1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-23T06:48:06Z",
+      "side": 1,
+      "message": "Yeah, agreed. Nice catch. We need to move PerContextData to Oilpan\u0027s heap and use TraceWrapperMember to refer to PerContextData from ScriptState.",
+      "parentUuid": "59361e84_ffddd225",
+      "range": {
+        "startLine": 475,
+        "startChar": 22,
+        "endLine": 475,
+        "endChar": 35
+      },
+      "revId": "e81d50243cdac5afda691a195647d3c013195954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fd31835_71cf6408",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T06:40:14Z",
       "side": 1,
       "message": "This doesn\u0027t work as we are not within a GCed object. We require headers for markbits.",
+      "range": {
+        "startLine": 64,
+        "startChar": 22,
+        "endLine": 64,
+        "endChar": 38
+      },
+      "revId": "e81d50243cdac5afda691a195647d3c013195954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e674a786_2d582419",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-23T06:48:06Z",
+      "side": 1,
+      "message": "Won\u0027t this hit a runtime error because the wrapper tracing cannot find an Oilpan\u0027s header?",
+      "parentUuid": "9fd31835_71cf6408",
       "range": {
         "startLine": 64,
         "startChar": 22,
