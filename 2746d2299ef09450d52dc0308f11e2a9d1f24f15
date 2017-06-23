@@ -16,6 +16,143 @@
       "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d80226_a70a6344",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/select/listbox-not-force-layout.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T01:06:42Z",
+      "side": 1,
+      "message": "We already have internals.needsLayoutCount, can we use that here?",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4013ec_8e5fbcfb",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/fast/forms/select/listbox-scrollbar-incremental-load-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T01:06:42Z",
+      "side": 1,
+      "message": "What causes this diff?",
+      "range": {
+        "startLine": 27,
+        "startChar": 63,
+        "endLine": 27,
+        "endChar": 68
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c30120f_b761642e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T01:06:42Z",
+      "side": 1,
+      "message": "This doesn\u0027t really make sense on Element.  I would make it non-virtual and use isHTMLSelectElement / toHTMLSelectElement in \nPLSA.",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec77b20_3fc787c0",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T01:06:42Z",
+      "side": 1,
+      "message": "I think this should be GetLayoutObject()-\u003eNeedsLayout().  If other elements need layout but this one doesn\u0027t, PLSA::UpdateAfterLayout won\u0027t be called for us.",
+      "range": {
+        "startLine": 894,
+        "startChar": 46,
+        "endLine": 894,
+        "endChar": 63
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c154da_cfdb0ba9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T01:06:42Z",
+      "side": 1,
+      "message": "I think this should call LayoutListBox::ScrollToRect the way it did before, instead of returning an offset to the PLSA.  That way all the side effects of the scroll will be processed correctly.",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d181ea_122aec47",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T01:06:42Z",
+      "side": 1,
+      "message": "I think a better name would be ScrollToOptionAfterLayout.",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef381a0_2415304d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-23T01:06:42Z",
+      "side": 1,
+      "message": "These OffsetDidChange calls shouldn\u0027t be necessary if the HTMLSelectElement uses the proper API to scroll.",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
