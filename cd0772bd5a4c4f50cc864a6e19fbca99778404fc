@@ -22,6 +22,30 @@
       "revId": "cd0772bd5a4c4f50cc864a6e19fbca99778404fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf8ce17_bd82bd0e",
+        "filename": "mojo/android/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-23T18:23:46Z",
+      "side": 1,
+      "message": "This switches the target from using explicit JNI registration (via RegisterNatives()), to using implicit JNI registration (just export the symbols and let dalvik look them up lazily).\n\nThis switch simplifies things a great deal, as the only reason for using explicit registration is to work around a deficiency in the crazy linker, which most targets don\u0027t use.",
+      "parentUuid": "9533b422_7ede7d1f",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "cd0772bd5a4c4f50cc864a6e19fbca99778404fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
