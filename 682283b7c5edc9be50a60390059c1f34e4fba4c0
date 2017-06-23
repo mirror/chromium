@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8e2d577_6f30d7b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-06-23T06:07:11Z",
+      "side": 1,
+      "message": "English nitpick: \"functionality\" behaves like a mass noun, so it should be \"unused functionality\" not \"unused functionalities\".",
+      "range": {
+        "startLine": 11,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "682283b7c5edc9be50a60390059c1f34e4fba4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f09cfa_8239bbda",
+        "filename": "third_party/WebKit/Source/modules/websockets/WebPepperSocketImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-06-23T06:07:11Z",
+      "side": 1,
+      "message": "Already included by WebPepperSocketImpl.h.",
+      "revId": "682283b7c5edc9be50a60390059c1f34e4fba4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
