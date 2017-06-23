@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae79176_46e0c192",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-06-23T23:56:19Z",
+      "side": 1,
+      "message": "Reviewers:  Can you suggest a good way to test this?  The function is currently in an anonymous namespace inside the file, so I can\u0027t call it directly, and GetPreviewsState is called by a function that\u0027s called by a function that\u0027s called by a function which the test calls, so it is hard to observe it\u0027s effects in a unit test or browser test.",
+      "range": {
+        "startLine": 251,
+        "startChar": 63,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
