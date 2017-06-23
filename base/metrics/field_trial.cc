@@ -217,7 +217,7 @@ void OnOutOfMemory(size_t size) {
 #endif
 }
 
-#if !defined(OS_NACL)
+#if !defined(OS_NACL) && !defined(OS_FUCHSIA)
 // Returns whether the operation succeeded.
 bool DeserializeGUIDFromStringPieces(base::StringPiece first,
                                      base::StringPiece second,
@@ -1157,7 +1157,7 @@ SharedMemoryHandle FieldTrialList::DeserializeSharedMemoryHandleMetadata(
 }
 #endif  // defined(OS_WIN)
 
-#if defined(OS_POSIX) && !defined(OS_NACL)
+#if defined(OS_POSIX) && !defined(OS_NACL) && !defined(OS_FUCHSIA)
 // static
 SharedMemoryHandle FieldTrialList::DeserializeSharedMemoryHandleMetadata(
     int fd,
@@ -1179,7 +1179,7 @@ SharedMemoryHandle FieldTrialList::DeserializeSharedMemoryHandleMetadata(
   return SharedMemoryHandle(FileDescriptor(fd, true), static_cast<size_t>(size),
                             guid);
 }
-#endif  // defined(OS_POSIX) && !defined(OS_NACL)
+#endif  // defined(OS_POSIX) && !defined(OS_NACL) && !defined(OS_FUCHSIA)
 
 #if defined(OS_WIN)
 // static
