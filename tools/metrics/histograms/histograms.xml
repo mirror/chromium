@@ -65696,8 +65696,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time between starting raster work on the pending tree and when it is ready
     to activate. Unlike PendingTreeDuration which - includes the time to commit
-    to this tree, the raster duration and the time for which the pending
-    tree waits before it can be activated - this only measures the time taken to
+    to this tree, the raster duration and the time for which the pending tree
+    waits before it can be activated - this only measures the time taken to
     rasterize tiles required for activation.
 
     The interval is recorded each time we are notifed that a pending tree is
@@ -77183,6 +77183,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Recorded for each discarding, allowing us to know whether the discarded tab
     succeeded in doing a render process fast shutdown.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.Discarding.DiscardedTabCouldUnsafeFastShutdown"
+    enum="BooleanTabDiscardFastShutdown">
+  <owner>oysteine@chromium.org</owner>
+  <summary>
+    Recorded for each discarding, allowing us to know whether the discarded tab
+    succeeded an unsafe process shutdown (not invoking unload handlers).
   </summary>
 </histogram>
 
