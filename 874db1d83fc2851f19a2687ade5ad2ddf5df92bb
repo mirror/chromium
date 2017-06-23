@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "821e7968_e1cb594b",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T19:29:49Z",
+      "side": 0,
+      "message": "why delete this comment?",
+      "revId": "874db1d83fc2851f19a2687ade5ad2ddf5df92bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
