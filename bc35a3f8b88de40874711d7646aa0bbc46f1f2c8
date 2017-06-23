@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b36b4c80_16b965b0",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Yes, it is supposed to mean nothing inside is traced, because the infinite-loop and timeout problems occur somewhere within the function, not necessarily at the top (I think).\n\nAs far as I could tell, the problem was that things took longer, so interactions with the device kept timing out.",
+      "parentUuid": "38ef3466_1258bec4",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74532bb7_c712355b",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26746bea_88b3035e",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74532bb7_c712355b",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7778ccb6_fbaafe6f",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f602466_58642856",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ced2fafe_e3c25404",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-22T22:35:19Z",
       "side": 1,
       "message": "nit: I think* (unsure tbh) that this docstring should by under __init__",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796404f4_df46f1de",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Hmm, OK. Classes in different utils/ files seem to be divided, but this has it under __init__:\nhttps://cs.chromium.org/chromium/src/build/android/pylib/utils/logging_utils.py?q\u003d%5Eclass%5C+_+file:%5Esrc/build/android/pylib/utils/+package:%5Echromium$\u0026l\u003d18\u0026dr\u003dC",
+      "parentUuid": "ced2fafe_e3c25404",
       "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c709fa83_57604221",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": ":D",
+      "parentUuid": "734e6bbd_8025891f",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ebbe252_1a4e6329",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc1665e_a26d31fe",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ebbe252_1a4e6329",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6a9ea0e9_23279c3c",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32c20953_66fe904a",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b99f05e_ac0bb59f",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c963adb_02ee6c43",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b99f05e_ac0bb59f",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9daaa9d3_0630df28",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc3096e_6bb66391",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "527276cb_1dab4ae6",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 3
@@ -169,6 +331,42 @@
       "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29751fad_291fae05",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "527276cb_1dab4ae6",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a3a25b_50c1c3ff",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "527276cb_1dab4ae6",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "64e23647_50c4cd56",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebed1885_7f2dc3fd",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "031a1f5a_73451f5b",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 3
@@ -200,6 +416,24 @@
       "writtenOn": "2017-06-22T22:35:19Z",
       "side": 1,
       "message": "should this be inside try?",
+      "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ef9b82_36bcedf2",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-23T22:43:31Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t think so, actually; the start_instrumenting itself shouldn\u0027t throw an exception, it\u0027s just about what might happen afterwards (once tracing is enabled). I based it off this (I think): https://www.python.org/dev/peps/pep-0343/",
+      "parentUuid": "031a1f5a_73451f5b",
       "revId": "bc35a3f8b88de40874711d7646aa0bbc46f1f2c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
