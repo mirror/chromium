@@ -40,7 +40,11 @@
 
 namespace blink {
 
+class InspectedFrames;
+class InspectorDOMAgent;
+class InspectorSession;
 class LocalFrame;
+class Page;
 
 class CORE_EXPORT InspectorAgent
     : public GarbageCollectedFinalized<InspectorAgent> {
@@ -57,6 +61,19 @@ class CORE_EXPORT InspectorAgent
                     protocol::UberDispatcher*,
                     protocol::DictionaryValue*) = 0;
   virtual void Dispose() = 0;
+
+  struct GC_PLUGIN_IGNORE("xxxx") SessionInitArgs {
+    STACK_ALLOCATED();
+    bool allow_view_agents;
+    InspectorDOMAgent* dom_agent;
+    InspectedFrames* inspected_frames;
+    Page* page;
+  };
+  using SessionInitCallback = void (*)(InspectorSession*,
+                                       const SessionInitArgs*);
+  static void RegisterSessionInitCallback(SessionInitCallback);
+  static void CallSessionInitCallbacks(InspectorSession*,
+                                       const SessionInitArgs*);
 };
 
 template <typename DomainMetainfo>
