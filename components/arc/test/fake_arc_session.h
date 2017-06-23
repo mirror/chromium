@@ -20,6 +20,7 @@ class FakeArcSession : public ArcSession {
   ~FakeArcSession() override;
 
   // ArcSession overrides:
+  void StartForLoginScreen() override;
   void Start() override;
   void Stop() override;
   void OnShutdown() override;

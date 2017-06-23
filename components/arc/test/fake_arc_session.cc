@@ -15,6 +15,8 @@ FakeArcSession::FakeArcSession() = default;
 
 FakeArcSession::~FakeArcSession() = default;
 
+void FakeArcSession::StartForLoginScreen() {}
+
 void FakeArcSession::Start() {
   if (boot_failure_emulation_enabled_) {
     for (auto& observer : observer_list_)
