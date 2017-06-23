@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b9c99865_34f8695c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-23T19:27:54Z",
+      "side": 1,
+      "message": "How so? There is nothing stopping ChromeOS from reordering non-active windows, which would then result in the z-order and active order being different.",
+      "parentUuid": "5e500798_570e11e4",
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "953f52dc_6b4cdb51",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 13
