@@ -34,6 +34,8 @@ class WebTaskRunner;
 // module map.
 class CORE_EXPORT SingleModuleClient : public GarbageCollectedMixin {
  public:
+  virtual ~SingleModuleClient() = default;
+
   virtual void NotifyModuleLoadFinished(ModuleScript*) = 0;
 };
 
@@ -41,6 +43,8 @@ class CORE_EXPORT SingleModuleClient : public GarbageCollectedMixin {
 // tree load is complete.
 class CORE_EXPORT ModuleTreeClient : public GarbageCollectedMixin {
  public:
+  virtual ~ModuleTreeClient() = default;
+
   virtual void NotifyModuleTreeLoadFinished(ModuleScript*) = 0;
 };
 
@@ -53,19 +57,12 @@ enum class ModuleGraphLevel { kTopLevelModuleFetch, kDependentModuleFetch };
 // https://html.spec.whatwg.org/#environment-settings-object
 //
 // A Modulator also serves as an entry point for various module spec algorithms.
-class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
-                              public V8PerContextData::Data,
-                              public TraceWrapperBase {
-  USING_GARBAGE_COLLECTED_MIXIN(Modulator);
-
+class CORE_EXPORT Modulator : public V8PerContextData::Data {
  public:
   static Modulator* From(ScriptState*);
-  virtual ~Modulator();
 
   static void SetModulator(ScriptState*, Modulator*);
   static void ClearModulator(ScriptState*);
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual ScriptModuleResolver* GetScriptModuleResolver() = 0;
   virtual WebTaskRunner* TaskRunner() = 0;

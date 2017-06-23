@@ -35,6 +35,7 @@
 #include "platform/InstanceCounters.h"
 #include "platform/bindings/ConditionalFeatures.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/bindings/V8Binding.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/PtrUtil.h"
@@ -42,13 +43,28 @@
 
 namespace blink {
 
+class V8PerContextData::DataMapContainer
+    : public GarbageCollected<V8PerContextData::DataMapContainer>,
+      public TraceWrapperBase {
+ public:
+  DEFINE_INLINE_TRACE() { visitor->Trace(map); }
+  DEFINE_INLINE_TRACE_WRAPPERS() {
+    for (const auto& it : map) {
+      visitor->TraceWrappers(it.value);
+    }
+  }
+
+  HeapHashMap<const char*, TraceWrapperMember<V8PerContextData::Data>> map;
+};
+
 V8PerContextData::V8PerContextData(v8::Local<v8::Context> context)
     : isolate_(context->GetIsolate()),
       wrapper_boilerplates_(isolate_),
       constructor_map_(isolate_),
       context_holder_(WTF::MakeUnique<gin::ContextHolder>(isolate_)),
       context_(isolate_, context),
-      activity_logger_(nullptr) {
+      activity_logger_(nullptr),
+      data_map_container_(new DataMapContainer) {
   context_holder_->SetContext(context);
 
   v8::Context::Scope context_scope(context);
@@ -74,6 +90,11 @@ V8PerContextData::~V8PerContextData() {
     InstanceCounters::DecrementCounter(
         InstanceCounters::kV8PerContextDataCounter);
   }
+}
+
+DEFINE_TRACE_WRAPPERS(V8PerContextData) {
+  if (data_map_container_.Get())
+    visitor->TraceWrappersWithManualWriteBarrier(data_map_container_.Get());
 }
 
 std::unique_ptr<V8PerContextData> V8PerContextData::Create(
@@ -198,15 +219,16 @@ void V8PerContextData::AddCustomElementBinding(
 }
 
 void V8PerContextData::AddData(const char* key, Data* data) {
-  data_map_.Set(key, data);
+  data_map_container_->map.Set(key, TraceWrapperMember<V8PerContextData::Data>(
+                                        data_map_container_.Get(), data));
 }
 
 void V8PerContextData::ClearData(const char* key) {
-  data_map_.erase(key);
+  data_map_container_->map.erase(key);
 }
 
 V8PerContextData::Data* V8PerContextData::GetData(const char* key) {
-  return data_map_.at(key);
+  return data_map_container_->map.at(key);
 }
 
 }  // namespace blink

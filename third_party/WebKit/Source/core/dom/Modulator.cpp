@@ -47,8 +47,6 @@ Modulator* Modulator::From(ScriptState* script_state) {
   return modulator;
 }
 
-Modulator::~Modulator() {}
-
 void Modulator::SetModulator(ScriptState* script_state, Modulator* modulator) {
   DCHECK(script_state);
   V8PerContextData* per_context_data = script_state->PerContextData();
