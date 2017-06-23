@@ -10,6 +10,8 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/Time.h"
@@ -37,6 +39,8 @@ class PLATFORM_EXPORT RuntimeCallCounter {
     time_ = TimeDelta();
     count_ = 0;
   }
+
+  void Dump(TracedValue&);
 
  private:
   RuntimeCallCounter() {}
@@ -196,6 +200,8 @@ class PLATFORM_EXPORT RuntimeCallStats {
   // Reset all the counters.
   void Reset();
 
+  void Dump(TracedValue&);
+
   RuntimeCallCounter* GetCounter(CounterId id) {
     return &(counters_[static_cast<uint16_t>(id)]);
   }
@@ -227,6 +233,69 @@ class PLATFORM_EXPORT RuntimeCallTimerScope {
  private:
   RuntimeCallStats* call_stats_;
   RuntimeCallTimer timer_;
+};
+
+#define TRACE_EVENT_RUNTIME_STATS_SCOPED(stats, category_group, name, ...) \
+  RuntimeCallStatsScopedTracer rcs_tracer(stats, category_group, name,     \
+                                          ##__VA_ARGS__);
+
+class PLATFORM_EXPORT RuntimeCallStatsScopedTracer {
+ public:
+  RuntimeCallStatsScopedTracer() : begin_event_created_(true) {}
+
+  RuntimeCallStatsScopedTracer(RuntimeCallStats* stats,
+                               const char* category_group,
+                               const char* name)
+      : RuntimeCallStatsScopedTracer() {
+    InitializeData(stats, category_group, name);
+    if (RuntimeEnabledFeatures::BlinkRuntimeCallStatsEnabled()) {
+      TRACE_EVENT_BEGIN0(category_group, name);
+    } else {
+      begin_event_created_ = false;
+    }
+  }
+
+  template <typename ARG1_TYPE>
+  RuntimeCallStatsScopedTracer(RuntimeCallStats* stats,
+                               const char* category_group,
+                               const char* name,
+                               const char* arg1_name,
+                               ARG1_TYPE arg1_value)
+      : RuntimeCallStatsScopedTracer() {
+    InitializeData(stats, category_group, name);
+    TRACE_EVENT_BEGIN1(category_group, name, arg1_name, arg1_value);
+  }
+
+  template <typename ARG1_TYPE, typename ARG2_TYPE>
+  RuntimeCallStatsScopedTracer(RuntimeCallStats* stats,
+                               const char* category_group,
+                               const char* name,
+                               const char* arg1_name,
+                               ARG1_TYPE arg1_value,
+                               const char* arg2_name,
+                               ARG2_TYPE arg2_value)
+      : RuntimeCallStatsScopedTracer() {
+    InitializeData(stats, category_group, name);
+    TRACE_EVENT_BEGIN2(category_group, name, arg1_name, arg1_value, arg2_name,
+                       arg2_value);
+  }
+
+  ~RuntimeCallStatsScopedTracer() { AddEndTraceEvent(); }
+
+  void InitializeData(RuntimeCallStats*,
+                      const char* category_group,
+                      const char* name);
+
+ private:
+  void AddEndTraceEvent();
+
+  struct Data {
+    RuntimeCallStats* stats;
+    const char* category_group;
+    const char* name;
+  };
+  Data data_;
+  bool begin_event_created_;
 };
 
 }  // namespace blink
