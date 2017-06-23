@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e005e1d4_5c2a84df",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T21:04:53Z",
+      "side": 1,
+      "message": "oh just noticed this.. an \"easier\" way to do this is just have native callback to java to set two int values.\n\nat least no chance of making memory mistakes",
+      "revId": "f3dd5412bb52b44011fc455f874f9ff8de6fe70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75190f8e_6e5a1471",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T21:04:53Z",
+      "side": 1,
+      "message": "ditto about that suggestion..",
+      "revId": "f3dd5412bb52b44011fc455f874f9ff8de6fe70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
