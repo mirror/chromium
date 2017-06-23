@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "83073871_1600b080",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-23T21:40:29Z",
+      "side": 1,
+      "message": "i\u0027m not sure if it\u0027s the most recent discussion of this on chromium-dev, but see https://groups.google.com/a/chromium.org/d/topic/chromium-dev/nAiKeh-zLws/discussion.\n\ni\u0027d advise against adding VLOGs unless you plan to temporarily turn them on in production by adding a --vmodule flag when we run chrome (which we do sometimes for debugging hard-to-track down issues). otherwise we\u0027re just shipping strings and code that are never going to be used.\n\nif you really want to include this, consider using DVLOG(1) instead. i think it\u0027s better if anyone who\u0027s working on this code in the future just adds their own logging statements in their own local builds in the spots where they need them, though.",
+      "parentUuid": "fd1e3586_ed54a163",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "206ca701_064b7677",
         "filename": "ash/shutdown_controller.h",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "46660e69_952f867d",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-23T21:40:29Z",
+      "side": 1,
+      "message": "my thinking is that these metrics seem most likely to be used by someone who\u0027s trying to compare the relative frequencies of the various ways that users can shut the system down. if all of these metrics are reported in this method, then that provides more of a guarantee that they\u0027re comparable.\n\nwith that said, the same argument could be made for e.g. keeping the system tray shutdown button\u0027s metric in the system tray code, so the metric is easy to compare against those of other system tray buttons. :-P\n\ncc-ing mark in case he can offer guidance here.",
+      "parentUuid": "5f72382a_fc6a7ea6",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d717534_ac5c9620",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "It gets reset at 131 below.",
       "parentUuid": "5d717534_ac5c9620",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37809da_d9337487",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-23T21:40:29Z",
+      "side": 1,
+      "message": "not just 131, but also 149, 256, and 511, right?",
+      "parentUuid": "38053dd0_74b3c03d",
       "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
