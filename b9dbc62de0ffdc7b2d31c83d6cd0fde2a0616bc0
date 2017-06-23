@@ -16,6 +16,24 @@
       "revId": "b9dbc62de0ffdc7b2d31c83d6cd0fde2a0616bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a43b6bb_af74a2e5",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-23T22:42:36Z",
+      "side": 1,
+      "message": "Missed this. That\u0027s correct.",
+      "parentUuid": "df337615_06a1aad6",
+      "revId": "b9dbc62de0ffdc7b2d31c83d6cd0fde2a0616bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
