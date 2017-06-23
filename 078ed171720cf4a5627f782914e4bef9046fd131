@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d38faee4_92070ec0",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-23T06:04:14Z",
+      "side": 1,
+      "message": "Nit: The name choice here seems odd.  Nothing in the function is really \"md\"-specific, and I\u0027d like to avoid referring to \"md\" in the code anyway where possible since the whole top Chrome should be MD at this point and that\u0027s just the standard Chrome style.\n\nMaybe SetColors() would be a more accurate name?",
+      "revId": "078ed171720cf4a5627f782914e4bef9046fd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
