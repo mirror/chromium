@@ -46,6 +46,30 @@
       "revId": "29dd7a6270a09dd78a4fac479d569156cbad6a0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723309e7_5974dc03",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-23T02:33:13Z",
+      "side": 1,
+      "message": "I think we should be ok if we don\u0027t mutate the layer tree after commit e.g. due to input events or animation. In the flush deadline mode we shouldn\u0027t have begin frames ticking while previous raster is pending (waiting for ready to draw) so animations shouldn\u0027t affect us. And with vsync aligned input (which has landed AFAIK) we should only flush input events on begin frame (and after commit outside of begin frames - not applicable here). So maybe we don\u0027t need to do anything?",
+      "parentUuid": "3ad235be_5f741189",
+      "range": {
+        "startLine": 815,
+        "startChar": 4,
+        "endLine": 837,
+        "endChar": 12
+      },
+      "revId": "29dd7a6270a09dd78a4fac479d569156cbad6a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
