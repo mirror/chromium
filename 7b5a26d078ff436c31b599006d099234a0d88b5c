@@ -16,6 +16,23 @@
       "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39cf9c8_78bdc2e5",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-23T22:16:51Z",
+      "side": 1,
+      "message": "Why are these becoming sync IPCs if they weren\u0027t sync before?",
+      "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
