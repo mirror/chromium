@@ -4,7 +4,7 @@ Tests conversion of Inspector's resource representation into HAR format.
 Page reloaded.
 {
     creator : {
-        name : "WebInspector"
+        name : "Chrome Devtools"
         version : <string>
     }
     entries : [
@@ -26,7 +26,6 @@ Page reloaded.
                 url : "http://127.0.0.1:8000/inspector/resource-har-conversion.html"
             }
             response : {
-                _transferSize : <number>
                 bodySize : <number>
                 content : {
                     compression : <number>
@@ -43,7 +42,7 @@ Page reloaded.
                 statusText : "OK"
             }
             serverIPAddress : "127.0.0.1"
-            startedDateTime : <plausible>
+            startedDateTime : <string>
             time : <number>
             timings : <object>
         }
@@ -57,7 +56,6 @@ Page reloaded.
                 cookies : [
                     {
                         domain : "example.com"
-                        expires : null
                         httpOnly : false
                         name : "a"
                         path : "/path"
@@ -65,20 +63,14 @@ Page reloaded.
                         value : "b"
                     }
                     {
-                        domain : undefined
-                        expires : null
                         httpOnly : false
                         name : "a1"
-                        path : undefined
                         secure : false
                         value : "b1"
                     }
                     {
-                        domain : undefined
-                        expires : null
                         httpOnly : false
                         name : "c1"
-                        path : undefined
                         secure : false
                         value : "d1"
                     }
@@ -92,7 +84,6 @@ Page reloaded.
                 url : "http://127.0.0.1:8000/inspector/inspector-test.js"
             }
             response : {
-                _transferSize : <number>
                 bodySize : <number>
                 content : {
                     compression : <number>
@@ -102,7 +93,6 @@ Page reloaded.
                 cookies : [
                     {
                         domain : "example.com"
-                        expires : null
                         httpOnly : true
                         name : "x"
                         path : "/path"
@@ -110,22 +100,14 @@ Page reloaded.
                         value : "y"
                     }
                     {
-                        domain : undefined
-                        expires : null
                         httpOnly : false
                         name : "x1"
-                        path : undefined
-                        sameSite : "Strict"
                         secure : false
                         value : "y1"
                     }
                     {
-                        domain : undefined
-                        expires : null
                         httpOnly : false
                         name : "z2"
-                        path : undefined
-                        sameSite : "Lax"
                         secure : false
                         value : "y2"
                     }
@@ -138,7 +120,7 @@ Page reloaded.
                 statusText : "OK"
             }
             serverIPAddress : "127.0.0.1"
-            startedDateTime : <plausible>
+            startedDateTime : <string>
             time : <number>
             timings : <object>
         }
@@ -160,7 +142,6 @@ Page reloaded.
                 url : "http://127.0.0.1:8000/inspector/network-test.js"
             }
             response : {
-                _transferSize : <number>
                 bodySize : <number>
                 content : {
                     compression : <number>
@@ -177,7 +158,7 @@ Page reloaded.
                 statusText : "OK"
             }
             serverIPAddress : "127.0.0.1"
-            startedDateTime : <plausible>
+            startedDateTime : <string>
             time : <number>
             timings : <object>
         }
@@ -196,6 +177,8 @@ Page reloaded.
                 method : "POST"
                 postData : {
                     mimeType : "text/xml"
+                    params : [
+                    ]
                     text : "<xml></xml>"
                 }
                 queryString : [
@@ -203,7 +186,6 @@ Page reloaded.
                 url : "http://127.0.0.1:8000/inspector/resources/post-target.cgi"
             }
             response : {
-                _transferSize : <number>
                 bodySize : <number>
                 content : {
                     compression : <number>
@@ -220,7 +202,7 @@ Page reloaded.
                 statusText : "OK"
             }
             serverIPAddress : ""
-            startedDateTime : <plausible>
+            startedDateTime : <string>
             time : <number>
             timings : <object>
         }
@@ -232,7 +214,7 @@ Page reloaded.
                 onContentLoad : <number>
                 onLoad : <number>
             }
-            startedDateTime : <plausible>
+            startedDateTime : <string>
             title : "http://127.0.0.1:8000/inspector/resource-har-conversion.html"
         }
     ]

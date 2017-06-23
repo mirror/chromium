@@ -59,7 +59,7 @@ http://[::1]:8000/inspector/resources/post-target.cgi?queryParam1=queryValue1&qu
         statusText : "OK"
     }
     serverIPAddress : "[::1]"
-    startedDateTime : <plausible>
+    startedDateTime : <string>
     time : <number>
     timings : <object>
 }
