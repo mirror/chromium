@@ -87,6 +87,24 @@
       "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7dcc895_f8414af0",
+        "filename": "build/cipd_wrapper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-06-23T00:20:29Z",
+      "side": 1,
+      "message": "Hm... That\u0027s actually an interesting question. I think for now we should use the bot version because we cache it and make it available as a real service for this purpose. In particular, we\u0027re planning on augmenting the bot-provided version of this tool to report extra monitoring information that won\u0027t be present in the depot_tools version of the tool.\n\nMaybe the cipd_wrapper could look for cipd/cipd.bat in $PATH, and use that if available, and otherwise fall back onto the third_party version? That would take chromium one step closer to the `git clone \u0026\u0026 sync.py` workflow. On the other hand, we basically wouldn\u0027t be using this codepath on the bots or for most devs today, which usually means the code will break easily and no one will notice.",
+      "parentUuid": "243ef4a8_fdf5cbf3",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
