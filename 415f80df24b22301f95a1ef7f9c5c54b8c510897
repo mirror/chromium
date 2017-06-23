@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1182e3bd_268c2733",
+        "filename": "content/browser/renderer_host/render_view_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-23T15:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8610564a_e45c3dc5",
+      "range": {
+        "startLine": 82,
+        "startChar": 52,
+        "endLine": 82,
+        "endChar": 59
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82027d2f_3fd65b8e",
         "filename": "content/browser/renderer_host/render_widget_helper.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88931f7_4a6002bd",
+        "filename": "content/browser/renderer_host/render_widget_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-23T15:50:15Z",
+      "side": 1,
+      "message": "Actually generates error:\n\n../../content/browser/renderer_host/render_widget_helper.cc:97:33: error: moving a temporary object prevents copy elision [-Werror,-Wpessimizing-move]",
+      "parentUuid": "82027d2f_3fd65b8e",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "030da6ae_ccb95c04",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-23T15:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f821cbdd_feb80925",
+      "range": {
+        "startLine": 299,
+        "startChar": 53,
+        "endLine": 299,
+        "endChar": 60
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3cbc970_f6f0cfb9",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8ce18f_0d3a56ff",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-23T15:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3cbc970_f6f0cfb9",
+      "range": {
+        "startLine": 393,
+        "startChar": 2,
+        "endLine": 393,
+        "endChar": 50
+      },
+      "revId": "415f80df24b22301f95a1ef7f9c5c54b8c510897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
