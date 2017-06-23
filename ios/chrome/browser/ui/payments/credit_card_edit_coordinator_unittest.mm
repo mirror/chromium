@@ -37,8 +37,11 @@ class MockTestPersonalDataManager : public autofill::TestPersonalDataManager {
 class MockPaymentRequest : public PaymentRequest {
  public:
   MockPaymentRequest(web::PaymentRequest web_payment_request,
-                     autofill::PersonalDataManager* personal_data_manager)
-      : PaymentRequest(web_payment_request, personal_data_manager) {}
+                     autofill::PersonalDataManager* personal_data_manager,
+                     id<PaymentRequestUIDelegate> payment_request_delegate)
+      : PaymentRequest(web_payment_request,
+                       personal_data_manager,
+                       payment_request_delegate) {}
   MOCK_METHOD1(AddCreditCard,
                autofill::CreditCard*(const autofill::CreditCard&));
 };
@@ -107,10 +110,11 @@ class PaymentRequestCreditCardEditCoordinatorTest : public PlatformTest {
   PaymentRequestCreditCardEditCoordinatorTest() {
     payment_request_ = base::MakeUnique<MockPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
   }
 
   MockTestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<MockPaymentRequest> payment_request_;
 };
 
