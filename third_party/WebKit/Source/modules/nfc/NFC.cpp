@@ -18,8 +18,8 @@
 #include "modules/nfc/NFCPushOptions.h"
 #include "modules/nfc/NFCWatchOptions.h"
 #include "platform/mojo/MojoHelper.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace {
 const char kJsonMimePostfix[] = "+json";

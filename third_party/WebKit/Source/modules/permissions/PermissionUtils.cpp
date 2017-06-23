@@ -7,7 +7,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameClient.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerThread.h"
 #include "public/platform/InterfaceProvider.h"
@@ -25,7 +24,7 @@ bool ConnectToPermissionService(
   if (execution_context->IsDocument()) {
     LocalFrame* frame = ToDocument(execution_context)->GetFrame();
     if (frame) {
-      frame->Client()->GetInterfaceProvider()->GetInterface(std::move(request));
+      frame->GetInterfaceProvider()->GetInterface(std::move(request));
       return true;
     }
   } else if (execution_context->IsWorkerGlobalScope()) {

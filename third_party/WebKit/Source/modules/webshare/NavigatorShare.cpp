@@ -14,8 +14,8 @@
 #include "modules/webshare/ShareData.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/mojo/MojoHelper.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 

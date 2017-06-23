@@ -44,9 +44,9 @@
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/mojo/MojoHelper.h"
 #include "platform/wtf/HashSet.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebTraceLocation.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace {
 

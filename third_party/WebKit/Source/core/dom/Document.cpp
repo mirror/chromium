@@ -253,12 +253,12 @@
 #include "platform/wtf/text/CharacterNames.h"
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebPrerenderingSupport.h"
 #include "public/platform/modules/sensitive_input_visibility/sensitive_input_visibility_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 #include <memory>
 

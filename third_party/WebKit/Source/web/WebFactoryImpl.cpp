@@ -26,9 +26,8 @@ WebViewBase* WebFactoryImpl::CreateWebViewBase(
 WebLocalFrameBase* WebFactoryImpl::CreateWebLocalFrameBase(
     WebTreeScopeType type,
     WebFrameClient* client,
-    blink::InterfaceProvider* provider,
     blink::InterfaceRegistry* registry,
     WebFrame* opener) const {
-  return WebLocalFrameImpl::Create(type, client, provider, registry, opener);
+  return WebLocalFrameImpl::Create(type, client, registry, opener);
 }
 }

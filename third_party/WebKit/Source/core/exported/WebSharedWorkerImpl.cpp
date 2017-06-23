@@ -139,8 +139,7 @@ void WebSharedWorkerImpl::InitializeLoader(bool data_saver_enabled) {
   // Browser process when the worker is created (similar to
   // RenderThread::OnCreateNewView).
   main_frame_ = WebFactory::GetInstance().CreateWebLocalFrameBase(
-      WebTreeScopeType::kDocument, this,
-      Platform::Current()->GetInterfaceProvider(), nullptr);
+      WebTreeScopeType::kDocument, this, nullptr);
   web_view_->SetMainFrame(main_frame_.Get());
   main_frame_->SetDevToolsAgentClient(this);
 

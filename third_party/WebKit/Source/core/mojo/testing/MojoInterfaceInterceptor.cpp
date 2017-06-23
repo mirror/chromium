@@ -8,7 +8,6 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameClient.h"
 #include "core/mojo/MojoHandle.h"
 #include "core/mojo/testing/MojoInterfaceRequestEvent.h"
 #include "platform/bindings/ScriptState.h"
@@ -33,7 +32,7 @@ void MojoInterfaceInterceptor::start(ExceptionState& exception_state) {
   std::string interface_name =
       StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
   service_manager::InterfaceProvider::TestApi test_api(
-      GetFrame()->Client()->GetInterfaceProvider());
+      GetFrame()->GetInterfaceProvider());
   if (test_api.HasBinderForName(interface_name)) {
     exception_state.ThrowDOMException(
         kInvalidModificationError,
@@ -55,7 +54,7 @@ void MojoInterfaceInterceptor::stop() {
 
   started_ = false;
   service_manager::InterfaceProvider::TestApi test_api(
-      GetFrame()->Client()->GetInterfaceProvider());
+      GetFrame()->GetInterfaceProvider());
   std::string interface_name =
       StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
   DCHECK(test_api.HasBinderForName(interface_name));
