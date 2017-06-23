@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0d7cc33_e7929233",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa_browsertest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-23T14:59:09Z",
+      "side": 1,
+      "message": "Try adding EXPECT_TRUE([filterController window]); here to force the view to load. (If that doesn\u0027t work, an explicit -loadView may).",
+      "revId": "28a5be2966dad80705ccb80de15d2b4fdc269dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
