@@ -81,7 +81,7 @@ class MediaGpuChannelFilter : public IPC::MessageFilter {
 MediaGpuChannel::MediaGpuChannel(
     gpu::GpuChannel* channel,
     const base::UnguessableToken& channel_token,
-    const AndroidOverlayMojoFactoryCB& overlay_factory_cb)
+    const AndroidOverlayWithTokenFactoryCB& overlay_factory_cb)
     : channel_(channel),
       filter_(new MediaGpuChannelFilter(channel_token)),
       overlay_factory_cb_(overlay_factory_cb) {

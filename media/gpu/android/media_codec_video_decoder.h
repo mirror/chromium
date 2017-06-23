@@ -10,12 +10,12 @@
 #include "base/threading/thread_checker.h"
 #include "base/timer/elapsed_timer.h"
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
-#include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/overlay_info.h"
 #include "media/base/video_decoder.h"
 #include "media/gpu/android/codec_wrapper.h"
 #include "media/gpu/android/device_info.h"
 #include "media/gpu/android/video_frame_factory.h"
+#include "media/gpu/android_overlay_with_token_factory.h"
 #include "media/gpu/android_video_surface_chooser.h"
 #include "media/gpu/avda_codec_allocator.h"
 #include "media/gpu/media_gpu_export.h"
@@ -183,7 +183,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   AndroidVideoSurfaceChooser::State chooser_state_;
 
   // An optional factory callback for creating mojo AndroidOverlays.
-  AndroidOverlayMojoFactoryCB overlay_factory_cb_;
+  AndroidOverlayWithTokenFactoryCB overlay_factory_cb_;
 
   DeviceInfo* device_info_;
 

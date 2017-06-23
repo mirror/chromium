@@ -128,6 +128,7 @@ component("gpu") {
   defines = [ "MEDIA_GPU_IMPLEMENTATION" ]
 
   sources = [
+    "android_overlay_with_token_factory.h",
     "fake_jpeg_decode_accelerator.cc",
     "fake_jpeg_decode_accelerator.h",
     "fake_video_decode_accelerator.cc",

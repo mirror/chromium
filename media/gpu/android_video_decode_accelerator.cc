@@ -229,7 +229,7 @@ AndroidVideoDecodeAccelerator::AndroidVideoDecodeAccelerator(
     std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const GetGLES2DecoderCallback& get_gles2_decoder_cb,
-    const AndroidOverlayMojoFactoryCB& overlay_factory_cb,
+    const AndroidOverlayWithTokenFactoryCB& overlay_factory_cb,
     DeviceInfo* device_info)
     : client_(nullptr),
       codec_allocator_(codec_allocator),

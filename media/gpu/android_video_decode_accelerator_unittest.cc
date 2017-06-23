@@ -126,7 +126,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
         codec_allocator_.get(), std::move(chooser_that_is_usually_null_),
         base::Bind(&MakeContextCurrent),
         base::Bind(&GetGLES2Decoder, gl_decoder_.AsWeakPtr()),
-        AndroidOverlayMojoFactoryCB(), device_info_.get());
+        AndroidOverlayWithTokenFactoryCB(), device_info_.get());
     vda_.reset(avda);
     avda->force_defer_surface_creation_for_testing_ =
         force_defer_surface_creation;

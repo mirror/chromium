@@ -12,9 +12,13 @@
 
 namespace media {
 
+// Common factory type that's useful if one must also supply a routing token
+// during construction (e.g., the mojo impl).
 // Note that this compiles on non-android too.
-using AndroidOverlayMojoFactoryCB = base::RepeatingCallback<std::unique_ptr<
-    AndroidOverlay>(const base::UnguessableToken&, AndroidOverlayConfig)>;
+using AndroidOverlayWithTokenFactoryCB =
+    base::RepeatingCallback<std::unique_ptr<AndroidOverlay>(
+        const base::UnguessableToken&,
+        AndroidOverlayConfig)>;
 
 }  // namespace media
 

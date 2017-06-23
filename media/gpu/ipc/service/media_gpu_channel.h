@@ -10,7 +10,7 @@
 #include "base/unguessable_token.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
-#include "media/base/android_overlay_mojo_factory.h"
+#include "media/gpu/android_overlay_with_token_factory.h"
 #include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h"
 #include "media/video/video_decode_accelerator.h"
 
@@ -31,7 +31,7 @@ class MediaGpuChannel : public IPC::Listener, public IPC::Sender {
  public:
   MediaGpuChannel(gpu::GpuChannel* channel,
                   const base::UnguessableToken& channel_token,
-                  const AndroidOverlayMojoFactoryCB& overlay_factory_cb);
+                  const AndroidOverlayWithTokenFactoryCB& overlay_factory_cb);
   ~MediaGpuChannel() override;
 
   // IPC::Sender implementation:
@@ -56,7 +56,7 @@ class MediaGpuChannel : public IPC::Listener, public IPC::Sender {
   gpu::GpuChannel* const channel_;
   scoped_refptr<MediaGpuChannelFilter> filter_;
   std::unique_ptr<GpuJpegDecodeAccelerator> jpeg_decoder_;
-  AndroidOverlayMojoFactoryCB overlay_factory_cb_;
+  AndroidOverlayWithTokenFactoryCB overlay_factory_cb_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaGpuChannel);
 };

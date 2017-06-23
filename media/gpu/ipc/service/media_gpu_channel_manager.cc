@@ -59,7 +59,7 @@ gpu::GpuChannel* MediaGpuChannelManager::LookupChannel(
 }
 
 void MediaGpuChannelManager::SetOverlayFactory(
-    AndroidOverlayMojoFactoryCB overlay_factory_cb) {
+    AndroidOverlayWithTokenFactoryCB overlay_factory_cb) {
   overlay_factory_cb_ = std::move(overlay_factory_cb);
 }
 

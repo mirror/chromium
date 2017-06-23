@@ -21,7 +21,7 @@
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
-#include "media/base/android_overlay_mojo_factory.h"
+#include "media/gpu/android_overlay_with_token_factory.h"
 #include "media/gpu/gpu_video_decode_accelerator_helpers.h"
 #include "media/video/video_decode_accelerator.h"
 #include "ui/gfx/geometry/size.h"
@@ -46,7 +46,7 @@ class GpuVideoDecodeAccelerator
       int32_t host_route_id,
       gpu::GpuCommandBufferStub* stub,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
-      const AndroidOverlayMojoFactoryCB& factory);
+      const AndroidOverlayWithTokenFactoryCB& factory);
 
   // Static query for the capabilities, which includes the supported profiles.
   // This query calls the appropriate platform-specific version.  The returned
@@ -157,7 +157,7 @@ class GpuVideoDecodeAccelerator
   const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   // Optional factory for mojo-based android overlays.
-  AndroidOverlayMojoFactoryCB overlay_factory_cb_;
+  AndroidOverlayWithTokenFactoryCB overlay_factory_cb_;
 
   // Weak pointers will be invalidated on IO thread.
   base::WeakPtrFactory<Client> weak_factory_for_io_;

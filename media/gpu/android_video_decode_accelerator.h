@@ -20,9 +20,9 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "media/base/android/media_codec_bridge_impl.h"
 #include "media/base/android/media_drm_bridge_cdm_context.h"
-#include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/content_decryption_module.h"
 #include "media/gpu/android/device_info.h"
+#include "media/gpu/android_overlay_with_token_factory.h"
 #include "media/gpu/android_video_surface_chooser.h"
 #include "media/gpu/avda_codec_allocator.h"
 #include "media/gpu/avda_picture_buffer_manager.h"
@@ -53,7 +53,7 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
       std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
       const MakeGLContextCurrentCallback& make_context_current_cb,
       const GetGLES2DecoderCallback& get_gles2_decoder_cb,
-      const AndroidOverlayMojoFactoryCB& overlay_factory_cb,
+      const AndroidOverlayWithTokenFactoryCB& overlay_factory_cb,
       DeviceInfo* device_info);
 
   ~AndroidVideoDecodeAccelerator() override;
@@ -390,7 +390,7 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
   AndroidVideoSurfaceChooser::State chooser_state_;
 
   // Optional factory to produce mojo AndroidOverlay instances.
-  AndroidOverlayMojoFactoryCB overlay_factory_cb_;
+  AndroidOverlayWithTokenFactoryCB overlay_factory_cb_;
 
   // WeakPtrFactory for posting tasks back to |this|.
   base::WeakPtrFactory<AndroidVideoDecodeAccelerator> weak_this_factory_;
