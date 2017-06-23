@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2c8eb53_942a6404",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-23T18:25:43Z",
+      "side": 1,
+      "message": "Hmm, looks like setting \"testonly \u003d true\" here won\u0027t be inherited by the targets below. Since this is not very critical, I\u0027ll land this CL for now and send out a separate email thread to discuss this issue.",
+      "parentUuid": "1bc524d4_52cb4132",
+      "revId": "ceaffa69ef7dff8822175f42505543775498c2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f5b9a5c_12e4bfd1",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-23T15:24:03Z",
       "side": 1,
       "message": "I think this should be default_shared_library_configs (since this target creates a loadable_module and not an executable).",
+      "range": {
+        "startLine": 1511,
+        "startChar": 12,
+        "endLine": 1511,
+        "endChar": 38
+      },
+      "revId": "ceaffa69ef7dff8822175f42505543775498c2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e8e89d_2ba55f05",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-23T18:25:43Z",
+      "side": 1,
+      "message": "Yes, thanks for pointing me to this config, the comment says clearly:\n\n# Shared library and loadable module defaults (also for components in component\n# mode).\ndefault_shared_library_configs",
+      "parentUuid": "4f5b9a5c_12e4bfd1",
       "range": {
         "startLine": 1511,
         "startChar": 12,
