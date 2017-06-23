@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "956a3531_746b58cc",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-23T13:52:47Z",
+      "side": 1,
+      "message": "nit: Should have a trailing underscore as this is a class data member.\n\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names\n\nI thought that it should be s_xxx_, but the style guide now says no need to prefix s_.",
+      "range": {
+        "startLine": 264,
+        "startChar": 39,
+        "endLine": 264,
+        "endChar": 71
+      },
+      "revId": "8f352978d9a0a6a1edcd856de39ff0d9637183f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a77e51f_aabe4d09",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8ArrayBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-23T13:52:47Z",
+      "side": 1,
+      "message": "It\u0027s okay, but it\u0027s a kind of funny that we\u0027re only generating a declaration without body nor use case.  :P",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "8f352978d9a0a6a1edcd856de39ff0d9637183f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
