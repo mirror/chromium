@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "441513ea_14c7bb79",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T21:54:07Z",
+      "side": 1,
+      "message": "similar to the logic you have below when calling GetIPAndPort, we can get rid of the temporary by doing:\n\nif (!net::ParseURLHostnameToAddress(address.host(), \u0026page_ip_address_) ||\n    page_ip_address_.IsZero()) {\n  return STOP_OBSERVING;\n}\n\nThis is slightly more compact and as readable as before.",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dacf3c9b_9be6f11a",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T21:54:07Z",
+      "side": 1,
+      "message": "I can\u0027t recall if I asked about this previously - is there an important reason that we\u0027re canonicalizing to IPV4Localhost here? is it not sufficient to leave page_ip_address_ alone in this case, even if it\u0027s say an IPV6 address? Or can it contain a value that is neither IPV4 or IPV6 localhost, even in cases where we set page_load_type_ to internal::DOMAIN_TYPE_LOCALHOST? (apologies if i already asked about this)",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48f2062_2b33de69",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T21:54:07Z",
+      "side": 1,
+      "message": "suggestion: as a reader of the code, i think this would become slightly more readable if you flattened this up into the else block above, to reduce hierarchy:\n\nif (net::IsLocalhost(address.host()) ||\n      page_ip_address_ \u003d\u003d net::IPAddress::IPv6Localhost()) {\n  page_load_type_ \u003d internal::DOMAIN_TYPE_LOCALHOST;\n  ...\n} else if (page_ip_address_.IsReserved()) {\n  page_load_type_ \u003d internal::DOMAIN_TYPE_PRIVATE;\n  ...\n} else {\n  page_load_type_ \u003d internal::DOMAIN_TYPE_PUBLIC;\n}",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a60aa4_5b9098f1",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T21:54:07Z",
+      "side": 1,
+      "message": "I tend to prefer using ternary expressions where the if condition is simple:\n\nreturn IsLikelyRouterIP(resource_ip) ? internal::RESOURCE_TYPE_ROUTER : internal::RESOURCE_TYPE_PRIVATE;",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bceede9_d02181bc",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T21:54:07Z",
+      "side": 1,
+      "message": "since we should never call this method when page_load_type_ is DOMAIN_TYPE_LOCALHOST, this else clause should only trigger when the value is DOMAIN_TYPE_PRIVATE. It seems like the code in the else blocks assume this, so this is a nice opportunity to use a DCHECK to enforce this, just in case a future refactor of code causes this method to be called with DOMAIN_TYPE_LOCALHOST in the future. So:\n\n} else {\n  DCHECK_EQ(internal::DOMAIN_TYPE_PRIVATE, page_load_type_);\n  ...\n\nthis also documents the expected state within the else block for code readers, which improves code readability.\n\nNote that DCHECKs get compiled out in release builds, so they don\u0027t actually execute there. This is a case where the DCHECK\u0027s primary purpose is documentation and it should also help to catch regressions in debug builds should this method get called when page_load_type_ is localhost in the future.\n\nNote too that since you return 100% of the time from the initial if () block above, I find code slightly more readable in these cases if you omit the else block altogether and move the code that was in the else up one level of indentation in the function. you could consider also using a switch/case on page_load_type_ in this method - but I\u0027m not sure if that would help or hurt code readability.",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b12534_7bedde8a",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T21:54:07Z",
+      "side": 1,
+      "message": "same here, though since the if condition is more complex, i tend to break these out into a boolean temporary for improved readability:\n\nconst bool is_same_subnet \u003d net::CommonPrefixLength(page_ip_address_, resource_ip) \u003e\u003d page_ip_prefix_length_;\nreturn is_same_subnet ? internal::RESOURCE_TYPE_LOCAL_SAME_SUBNET : internal::RESOURCE_TYPE_LOCAL_DIFF_SUBNET;",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4dc59b4_de378358",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T21:54:07Z",
+      "side": 1,
+      "message": "if ukm_recorder is null, it looks like this whole for loop is a no-op, same with the one below. so let\u0027s pull this logic up in the function, above ResolveResourceTypes:\n\n  if (page_load_type_ \u003d\u003d internal::DOMAIN_TYPE_LOCALHOST) {\n    return;\n  }\n  ukm::UkmRecorder* ukm_recorder \u003d g_browser_process-\u003eukm_recorder();\n  if (!ukm_recorder) {\n    return;\n  }",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac1c62b_2e853633",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-23T21:54:07Z",
+      "side": 1,
+      "message": "let\u0027s call this \u0027page_domain_type_\u0027 - slightly more accurate i think",
+      "revId": "fb6c2b20943940d55421e1d42e3d78aeaec34e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e17eb68_572a6a5f",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 14
