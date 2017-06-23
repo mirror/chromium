@@ -44,7 +44,7 @@ GpuVideoDecodeAcceleratorFactory::Create(
     const BindGLImageCallback& bind_image_cb) {
   return base::WrapUnique(new GpuVideoDecodeAcceleratorFactory(
       get_gl_context_cb, make_context_current_cb, bind_image_cb,
-      GetGLES2DecoderCallback(), AndroidOverlayMojoFactoryCB()));
+      GetGLES2DecoderCallback(), AndroidOverlayWithTokenFactoryCB()));
 }
 
 // static
@@ -54,7 +54,7 @@ GpuVideoDecodeAcceleratorFactory::CreateWithGLES2Decoder(
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const BindGLImageCallback& bind_image_cb,
     const GetGLES2DecoderCallback& get_gles2_decoder_cb,
-    const AndroidOverlayMojoFactoryCB& overlay_factory_cb) {
+    const AndroidOverlayWithTokenFactoryCB& overlay_factory_cb) {
   return base::WrapUnique(new GpuVideoDecodeAcceleratorFactory(
       get_gl_context_cb, make_context_current_cb, bind_image_cb,
       get_gles2_decoder_cb, overlay_factory_cb));
@@ -266,7 +266,7 @@ GpuVideoDecodeAcceleratorFactory::GpuVideoDecodeAcceleratorFactory(
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const BindGLImageCallback& bind_image_cb,
     const GetGLES2DecoderCallback& get_gles2_decoder_cb,
-    const AndroidOverlayMojoFactoryCB& overlay_factory_cb)
+    const AndroidOverlayWithTokenFactoryCB& overlay_factory_cb)
     : get_gl_context_cb_(get_gl_context_cb),
       make_context_current_cb_(make_context_current_cb),
       bind_image_cb_(bind_image_cb),

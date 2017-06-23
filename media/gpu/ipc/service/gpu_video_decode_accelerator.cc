@@ -158,7 +158,7 @@ GpuVideoDecodeAccelerator::GpuVideoDecodeAccelerator(
     int32_t host_route_id,
     gpu::GpuCommandBufferStub* stub,
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
-    const AndroidOverlayMojoFactoryCB& overlay_factory_cb)
+    const AndroidOverlayWithTokenFactoryCB& overlay_factory_cb)
     : host_route_id_(host_route_id),
       stub_(stub),
       texture_target_(0),

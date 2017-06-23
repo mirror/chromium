@@ -29,7 +29,7 @@
 #include "gpu/ipc/service/gpu_channel_manager_delegate.h"
 #include "gpu/ipc/service/gpu_config.h"
 #include "gpu/ipc/service/x_util.h"
-#include "media/base/android_overlay_mojo_factory.h"
+#include "media/gpu/android_overlay_with_token_factory.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
