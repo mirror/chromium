@@ -16,6 +16,24 @@
       "revId": "4241b283ada4b42df005e50c029ef1f78653d87e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc07c649_a7433436",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-23T21:08:35Z",
+      "side": 1,
+      "message": "I tried getting rid of this but it breaks the tests.",
+      "parentUuid": "ec08ffa6_743023e9",
+      "revId": "4241b283ada4b42df005e50c029ef1f78653d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
