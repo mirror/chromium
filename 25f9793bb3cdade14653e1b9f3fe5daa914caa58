@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66b4672_e2af967a",
+        "filename": "tools/gn/visual_studio_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-06-23T18:51:46Z",
+      "side": 1,
+      "message": "Make these const char [] instead of std::string to avoid global-variable constructors and destructors",
+      "revId": "25f9793bb3cdade14653e1b9f3fe5daa914caa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
