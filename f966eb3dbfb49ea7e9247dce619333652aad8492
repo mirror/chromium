@@ -22,6 +22,23 @@
       "revId": "f966eb3dbfb49ea7e9247dce619333652aad8492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf715c4_cedc2f15",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_editor_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-23T18:29:50Z",
+      "side": 1,
+      "message": "If you can repro, I wonder if this is getting called after -windowWillClose: and maybe it should return nil in that case.",
+      "revId": "f966eb3dbfb49ea7e9247dce619333652aad8492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
