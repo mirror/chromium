@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7c97e99_d735ee1a",
+        "filename": "ui/views/controls/button/radio_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-23T23:35:02Z",
+      "side": 1,
+      "message": "This is the wrong place to request focus. A better fix for this is to make the constructor call set_request_focus_on_press(true) (assuming !md) and remove this code.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 16
+      },
+      "revId": "e7925c271f14b50811d68c36535dd317b1599342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
