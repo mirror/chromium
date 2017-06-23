@@ -419,6 +419,8 @@ void ChangeListLoader::Load(const FileOperationCallback& callback) {
 
   // Check the current status of local metadata, and start loading if needed.
   int64_t* local_changestamp = new int64_t(0);
+  // TODO(yamaguchi): Get the largest changestamp from the Team Drive root
+  // directory instead of About resource when we handle Team Drive changelists.
   base::PostTaskAndReplyWithResult(
       blocking_task_runner_.get(),
       FROM_HERE,
@@ -584,8 +586,8 @@ void ChangeListLoader::LoadChangeListFromServerAfterLoadChangeList(
       FROM_HERE,
       base::Bind(&ChangeListProcessor::Apply,
                  base::Unretained(change_list_processor),
-                 base::Passed(&about_resource), base::Passed(&change_lists),
-                 is_delta_update),
+                 base::Passed(&about_resource), std::string(),
+                 base::Passed(&change_lists), is_delta_update),
       base::Bind(&ChangeListLoader::LoadChangeListFromServerAfterUpdate,
                  weak_ptr_factory_.GetWeakPtr(),
                  base::Owned(change_list_processor),

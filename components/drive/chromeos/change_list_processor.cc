@@ -132,8 +132,27 @@ ChangeListProcessor::ChangeListProcessor(ResourceMetadata* resource_metadata,
 ChangeListProcessor::~ChangeListProcessor() {
 }
 
+FileError ChangeListProcessor::SetLargestChangestamp(
+    const std::string& team_drive_id,
+    int64_t value) {
+  if (team_drive_id.empty())
+    return resource_metadata_->SetLargestChangestamp(value);
+  ResourceEntry entry;
+  std::string local_id;
+  FileError error =
+      resource_metadata_->GetIdByResourceId(team_drive_id, &local_id);
+  if (error != FILE_ERROR_OK)
+    return error;
+  error = resource_metadata_->GetResourceEntryById(local_id, &entry);
+  if (error != FILE_ERROR_OK)
+    return error;
+  entry.mutable_directory_specific_info()->set_changestamp(value);
+  return resource_metadata_->RefreshEntry(entry);
+}
+
 FileError ChangeListProcessor::Apply(
     std::unique_ptr<google_apis::AboutResource> about_resource,
+    const std::string& team_drive_id,
     std::vector<std::unique_ptr<ChangeList>> change_lists,
     bool is_delta_update) {
   DCHECK(about_resource);
@@ -192,7 +211,7 @@ FileError ChangeListProcessor::Apply(
   }
 
   // Update changestamp.
-  error = resource_metadata_->SetLargestChangestamp(largest_changestamp);
+  error = SetLargestChangestamp(team_drive_id, largest_changestamp);
   if (error != FILE_ERROR_OK) {
     DLOG(ERROR) << "SetLargestChangeStamp failed: " << FileErrorToString(error);
     return error;
