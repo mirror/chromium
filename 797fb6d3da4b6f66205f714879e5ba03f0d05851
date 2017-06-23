@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8242f9b2_88f78f33",
+        "filename": "extensions/browser/api/webcam_private/v4l2_webcam.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-06-23T16:44:03Z",
+      "side": 1,
+      "message": "Agreed, thanks, done!",
+      "parentUuid": "4fb6746c_1238806e",
+      "revId": "797fb6d3da4b6f66205f714879e5ba03f0d05851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b70834a0_a5c503e1",
         "filename": "extensions/browser/api/webcam_private/visca_webcam.cc",
         "patchSetId": 3
