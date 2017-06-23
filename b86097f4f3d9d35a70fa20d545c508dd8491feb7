@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a6a3d97_f37793bc",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-06-23T23:20:57Z",
+      "side": 1,
+      "message": "1. Do we need this comment on CreateRemoteChild as well?\n2. Would it make sense to change from |WebRemoteFrameClient*| to |WebRemoteFrameClient\u0026| (or does Blink Style not apply to the public Blink API?).",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "b86097f4f3d9d35a70fa20d545c508dd8491feb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
