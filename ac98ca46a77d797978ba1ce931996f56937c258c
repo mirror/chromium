@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ea9dbd94_8380e98e",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-06-23T11:19:53Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "dc3d9af5_c092b660",
+      "revId": "ac98ca46a77d797978ba1ce931996f56937c258c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1050e777_9030b18f",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.h",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Yes, it\u0027s required, though I\u0027m not completely sure why - I guess it somehow can\u0027t match the nullopt to the actual Optional\u003c\u003e type otherwise?\n\nThe error message looks like this:\ncannot convert argument 2 from \u0027const base::nullopt_t\u0027 to \u0027const testing::Matcher\u003cA2\u003e \u0026\u0027\n...\nA2\u003dconst base::Optional\u003cOneGoogleBarData\u003e \u0026",
       "parentUuid": "957ead6e_1de9192b",
+      "revId": "ac98ca46a77d797978ba1ce931996f56937c258c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1445877a_37f7b007",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-06-23T11:19:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "067d72ec_039df62e",
       "revId": "ac98ca46a77d797978ba1ce931996f56937c258c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
