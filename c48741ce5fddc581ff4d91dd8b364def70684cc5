@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb7c7f4a_3610f249",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-23T15:01:42Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned about the process of running the observers invalidating iterators into |plugins_changed_observers_| (either by modifying the collection, or by causing an Oilpan GC which collects a weakly held observer).\n\nA pattern for handling this (inline capacity optional, but reasonable if you\u0027re concerned about allocating another collection backing buffer):\n\nHeapVector\u003cMember\u003cPluginsChangedObserver\u003e, 32\u003e observers;\nCopyToVector(plugins_changed_observers_, observers);\nfor (PluginsChangedObserver* observer : observers)\n  observer-\u003ePluginsChanged();\n\nSomething fancier could be done if we wanted to allow observers to remove other observers and have them not be notified, but this is simpler and at least safe.",
+      "revId": "c48741ce5fddc581ff4d91dd8b364def70684cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bbd0b5_385c6425",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-23T15:01:42Z",
+      "side": 1,
+      "message": "nit: put the break inside the braces",
+      "revId": "c48741ce5fddc581ff4d91dd8b364def70684cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
