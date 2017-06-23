@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6ec76c5_4bff59a6",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-23T23:36:22Z",
+      "side": 1,
+      "message": "This is copied from aw_browser_context.cc, yes? Best not to define the same constant in 2 places. It\u0027s slightly wasteful, but more importantly, someone might change one and not realize there\u0027s another one. I recommend just specifying it inside GetOrCreateGUID and removing it as an argument.",
+      "range": {
+        "startLine": 128,
+        "startChar": 27,
+        "endLine": 128,
+        "endChar": 44
+      },
+      "revId": "ae0e4618829359b31dac29c841a98d78249fadf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b924ff_97fb6a6d",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-23T23:36:22Z",
+      "side": 1,
+      "message": "Chrome style is generally to put things like this in an anonymous namespace, in the .cc only, rather than using private+static. Notice how I did that with kUploadIntervalMinutes. The idea is to keep the .h as lean as possible, and not expose any internal details there.",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "ae0e4618829359b31dac29c841a98d78249fadf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b287a745_01aae2d0",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-23T23:36:22Z",
+      "side": 1,
+      "message": "Since we\u0027re now caching the GUID, it\u0027s surprising that this function doesn\u0027t check for a cached value before reading again. It works for now because I think we only call this function once, but it could cause inefficiencies in the future if someone calls this function again without realizing it doesn\u0027t respect the cache.",
+      "revId": "ae0e4618829359b31dac29c841a98d78249fadf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f36ed8_234d650d",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-23T23:36:22Z",
+      "side": 1,
+      "message": "Please assert that guid has been initialized at this point, and add a comment explaining why it must have already been initialized.",
+      "revId": "ae0e4618829359b31dac29c841a98d78249fadf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3abbfb_85869cce",
+        "filename": "android_webview/browser/aw_metrics_service_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-23T23:36:22Z",
+      "side": 1,
+      "message": "This bunch of functions makes up the MetricsServiceClient implementation, so GetOrCreateGUID shouldn\u0027t be mixed in here. Put it up with GetInstance.",
+      "revId": "ae0e4618829359b31dac29c841a98d78249fadf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8360f1_77c7963d",
+        "filename": "android_webview/browser/aw_metrics_service_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-23T23:36:22Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "ae0e4618829359b31dac29c841a98d78249fadf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
