@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddde23aa_8fbefb24",
+        "filename": "base/memory/shared_memory_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-23T20:15:35Z",
+      "side": 1,
+      "message": "Ah, good point on making EXECUTE match .executable. Done, by duplicate.\n\nI don\u0027t believe SET_PROPERTY allows changing permissions like that based on https://fuchsia.googlesource.com/magenta/+/HEAD/docs/syscalls/object_get_property.md but let me ask some Fuchsia peeps.\n\n(I did remove SET_PROPERTY in the read-only getter below as it seemed \"logically read only\" that way, but perhaps that\u0027s a bit aggressive.)",
+      "parentUuid": "d094f283_74fd699a",
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b30fc1e3_75fb6433",
         "filename": "base/memory/shared_memory_fuchsia.cc",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "48776c26_9f5d4ed9",
+        "filename": "base/memory/shared_memory_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-23T20:15:35Z",
+      "side": 1,
+      "message": "Looks like! Done.",
+      "parentUuid": "b30fc1e3_75fb6433",
+      "range": {
+        "startLine": 94,
+        "startChar": 38,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0edc360_f5584618",
         "filename": "base/memory/shared_memory_unittest.cc",
         "patchSetId": 11
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-23T19:36:59Z",
       "side": 1,
       "message": "why aren\u0027t we running this test on fuchsia?",
+      "range": {
+        "startLine": 241,
+        "startChar": 43,
+        "endLine": 241,
+        "endChar": 44
+      },
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1b6e11_0f4b2b1c",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-23T20:15:35Z",
+      "side": 1,
+      "message": "It uses MultipleThreadMain which uses named shared memory which isn\u0027t supported on Fuchsia. At least that\u0027s why I #if\u0027d it out -- there\u0027s no CreateNamedDeprecated implemented on Fuchsia.\n\nNow that I read the test, I\u0027m not really sure what it\u0027s trying to test. I thought it was interthread communication via shm, but they\u0027re all opening the same block, offseting by 1 int, and then writing 0..100 and checking to see that they read what they wrote. But multiple threads are all doing that? So I must be mistaken.",
+      "parentUuid": "b0edc360_f5584618",
       "range": {
         "startLine": 241,
         "startChar": 43,
