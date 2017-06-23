@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3183c6c_0b7c5a52",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-23T22:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb58b96_bedc0d16",
+      "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e5cf76_4cd40656",
         "filename": "chrome/browser/extensions/extension_tab_util.cc",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964ee85b_60381abd",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-23T22:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aea444e_8f0fac47",
+      "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
