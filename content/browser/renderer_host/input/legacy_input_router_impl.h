@@ -143,6 +143,7 @@ class CONTENT_EXPORT LegacyInputRouterImpl
   // IPC message handlers
   void OnInputEventAck(const InputEventAck& ack);
   void OnDidOverscroll(const ui::DidOverscrollParams& params);
+  void OnTouchAction(const cc::TouchAction& touch_action);
   void OnMsgMoveCaretAck();
   void OnSelectMessageAck();
   void OnHasTouchEventHandlers(bool has_handlers);

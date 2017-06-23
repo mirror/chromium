@@ -2557,7 +2557,7 @@ void RenderViewImpl::HandleInputEvent(
     HandledEventCallback callback) {
   if (is_swapped_out_) {
     std::move(callback).Run(INPUT_EVENT_ACK_STATE_NOT_CONSUMED, latency_info,
-                            nullptr);
+                            nullptr, nullptr);
     return;
   }
   idle_user_detector_->ActivityDetected();
