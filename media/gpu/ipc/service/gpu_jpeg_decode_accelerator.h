@@ -49,7 +49,8 @@ class GpuJpegDecodeAccelerator : public mojom::GpuJpegDecodeAccelerator,
               DecodeCallback callback) override;
   void Uninitialize() override;
 
-  void NotifyDecodeStatus(int32_t bitstream_buffer_id, mojom::Error error);
+  void NotifyDecodeStatus(int32_t bitstream_buffer_id,
+                          JpegDecodeAccelerator::Error error);
 
   const std::vector<
       GpuJpegDecodeAcceleratorFactoryProvider::CreateAcceleratorCB>
