@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fed3fd8_95908ee6",
+        "filename": "components/feature_engagement_tracker/public/event_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-23T23:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98474c25_97b1234c",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "24e746002a02aa993966986a17bbb0af15bb9e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7df18645_56917114",
         "filename": "components/feature_engagement_tracker/public/event_constants.h",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T23:27:45Z",
       "side": 1,
       "message": "If these are exclusively for events, should they belong in their own namespace?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 49
+      },
+      "revId": "24e746002a02aa993966986a17bbb0af15bb9e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0476cb_285c1692",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-23T23:56:21Z",
+      "side": 1,
+      "message": "Changed it to new_tab_feature_engagement_tracker",
+      "parentUuid": "7df18645_56917114",
       "range": {
         "startLine": 11,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "24e746002a02aa993966986a17bbb0af15bb9e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4889a04a_36ed2032",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-23T23:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75303b6a_9a5ba1bb",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "24e746002a02aa993966986a17bbb0af15bb9e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
