@@ -49,6 +49,7 @@
 #include "core/page/ContextMenuController.h"
 #include "core/page/DragController.h"
 #include "core/page/FocusController.h"
+#include "core/page/PluginsChangedObserver.h"
 #include "core/page/PointerLockController.h"
 #include "core/page/ScopedPageSuspender.h"
 #include "core/page/ValidationMessageClient.h"
@@ -529,7 +530,8 @@ void Page::SettingsChanged(SettingsDelegate::ChangeType change_type) {
         break;
       if (Document* doc = ToLocalFrame(MainFrame())->GetDocument())
         doc->GetStyleEngine().ViewportRulesChanged();
-    } break;
+      break;
+    }
     case SettingsDelegate::kTextTrackKindUserPreferenceChange:
       for (Frame* frame = MainFrame(); frame;
            frame = frame->Tree().TraverseNext()) {
@@ -557,7 +559,8 @@ void Page::SettingsChanged(SettingsDelegate::ChangeType change_type) {
               DOMWrapperWorld::MainWorld());
         }
       }
-    } break;
+      break;
+    }
     case SettingsDelegate::kMediaControlsChange:
       for (Frame* frame = MainFrame(); frame;
            frame = frame->Tree().TraverseNext()) {
@@ -568,6 +571,13 @@ void Page::SettingsChanged(SettingsDelegate::ChangeType change_type) {
           HTMLMediaElement::OnMediaControlsEnabledChange(doc);
       }
       break;
+    case SettingsDelegate::kPluginsChange: {
+      HeapVector<Member<PluginsChangedObserver>, 32> observers;
+      CopyToVector(plugins_changed_observers_, observers);
+      for (PluginsChangedObserver* observer : observers)
+        observer->PluginsChanged();
+      break;
+    }
   }
 }
 
@@ -639,6 +649,7 @@ DEFINE_TRACE(Page) {
   visitor->Trace(plugin_data_);
   visitor->Trace(validation_message_client_);
   visitor->Trace(use_counter_);
+  visitor->Trace(plugins_changed_observers_);
   Supplementable<Page>::Trace(visitor);
   PageVisibilityNotifier::Trace(visitor);
 }
@@ -676,6 +687,10 @@ void Page::WillBeDestroyed() {
   main_frame_ = nullptr;
 
   PageVisibilityNotifier::NotifyContextDestroyed();
+}
+
+void Page::RegisterPluginsChangedObserver(PluginsChangedObserver* observer) {
+  plugins_changed_observers_.insert(observer);
 }
 
 Page::PageClients::PageClients()
