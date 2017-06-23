@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "16d2cfda_63576056",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-23T20:01:52Z",
+      "side": 1,
+      "message": "Yeah, this is a simpler approach. I will go with it.\n\nI noticed that you\u0027re returning nullptr here. Do you have a preference for nullptr over NULL? NULL is returned throughout this function, so if you do, I\u0027ll update the rest to return nullptr.",
+      "parentUuid": "34e5cf76_4cd40656",
+      "revId": "cc9b1fe7ab24550a0bc3a7f4109ffb28dddbceeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a91aa67_7ca38fef",
         "filename": "chrome/test/data/extensions/api_test/tabs/tab_opener_id/background.js",
         "patchSetId": 2
