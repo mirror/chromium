@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03e51cbc_85ab51b6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-23T11:55:28Z",
+      "side": 1,
+      "message": "is_cors_from_dtl",
+      "revId": "dcc5b20b0f93425e7b5b05150c425e09d1568bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3e04b0_116f7334",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-23T11:55:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "dcc5b20b0f93425e7b5b05150c425e09d1568bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26692e93_d143d79d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-23T11:55:28Z",
+      "side": 1,
+      "message": "[optional] Would it be good to use existing_was_with_cors?",
+      "revId": "dcc5b20b0f93425e7b5b05150c425e09d1568bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c6e455_24eaf88c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-23T11:55:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "dcc5b20b0f93425e7b5b05150c425e09d1568bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
