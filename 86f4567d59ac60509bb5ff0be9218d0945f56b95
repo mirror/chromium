@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72555909_5aea28bd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-23T17:57:22Z",
+      "side": 1,
+      "message": "We are only adding this listener when the allocator gets created (so one listener per allocator). If we remove the listener everytime time a connection gets freed, the listener will be removed on the first one and then we won\u0027t catch the next ones.",
+      "parentUuid": "08ab7200_d779e7f5",
+      "revId": "86f4567d59ac60509bb5ff0be9218d0945f56b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed1f1cfa_f7695055",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "86f4567d59ac60509bb5ff0be9218d0945f56b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2963f158_926cbecb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-23T17:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed1f1cfa_f7695055",
+      "revId": "86f4567d59ac60509bb5ff0be9218d0945f56b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
