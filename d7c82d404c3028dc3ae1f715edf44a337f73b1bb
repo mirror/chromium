@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8100cca_43ea482d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-23T09:13:29Z",
+      "side": 1,
+      "message": "TIL testing::NiceMock",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "d7c82d404c3028dc3ae1f715edf44a337f73b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065b5aef_e437f415",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-23T09:13:29Z",
+      "side": 1,
+      "message": "this is missing a set_\nBTW do you really need this? Maybe you can GMOCK the GetClientIdentityForCurrentRequest and use .Return() instead?",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "d7c82d404c3028dc3ae1f715edf44a337f73b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb21673b_816ba33a",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-23T09:13:29Z",
+      "side": 1,
+      "message": "I\u0027d probably do OTHER by default here. I imagine that at some point in the future weird things could happen in the test if \u003e1 browser process type is registered.",
+      "range": {
+        "startLine": 98,
+        "startChar": 46,
+        "endLine": 98,
+        "endChar": 53
+      },
+      "revId": "d7c82d404c3028dc3ae1f715edf44a337f73b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2ed9f5_6297f394",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-23T09:13:29Z",
+      "side": 1,
+      "message": "can you move this below to line 273, just before using it?",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 51
+      },
+      "revId": "d7c82d404c3028dc3ae1f715edf44a337f73b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62aa2215_e9274440",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-23T09:13:29Z",
+      "side": 1,
+      "message": "After my last CL this has to be 0",
+      "range": {
+        "startLine": 251,
+        "startChar": 6,
+        "endLine": 251,
+        "endChar": 10
+      },
+      "revId": "d7c82d404c3028dc3ae1f715edf44a337f73b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb3c461_f234d499",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-23T09:13:29Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be SUMMARY_ONLY?",
+      "range": {
+        "startLine": 252,
+        "startChar": 50,
+        "endLine": 252,
+        "endChar": 58
+      },
+      "revId": "d7c82d404c3028dc3ae1f715edf44a337f73b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001dfa39_890540bd",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-23T09:13:29Z",
+      "side": 1,
+      "message": "and this Ne(0)",
+      "range": {
+        "startLine": 255,
+        "startChar": 31,
+        "endLine": 255,
+        "endChar": 36
+      },
+      "revId": "d7c82d404c3028dc3ae1f715edf44a337f73b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
