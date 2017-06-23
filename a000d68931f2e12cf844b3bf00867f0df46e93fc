@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71bdbce4_8d706f46",
+        "filename": "chrome/common/chrome_paths_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-06-23T17:39:41Z",
+      "side": 1,
+      "message": "Can you add a test for this new functionality? I think it\u0027s going to be rarely used, which makes me concerned about regressions going unnoticed for a long time.",
+      "range": {
+        "startLine": 72,
+        "startChar": 72,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "a000d68931f2e12cf844b3bf00867f0df46e93fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
