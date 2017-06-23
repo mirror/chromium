@@ -1661,11 +1661,38 @@ CrSettingsAndroidAppsPageTest.prototype = {
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
     '../test_browser_proxy.js',
+    'android_apps_browser_proxy.js',
     'android_apps_page_test.js',
   ]),
 };
 
 TEST_F('CrSettingsAndroidAppsPageTest', 'All', function() {
+  mocha.run();
+});
+
+/**
+ * Test fixture for the Android settings (ARC) page.
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsAndroidSettingsPageTest() {}
+
+CrSettingsAndroidSettingsPageTest.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload:
+      'chrome://md-settings/android_apps_page/android_settings_page.html',
+
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
+    '../test_browser_proxy.js',
+    'android_apps_browser_proxy.js',
+    'android_settings_page_test.js',
+  ]),
+};
+
+TEST_F('CrSettingsAndroidSettingsPageTest', 'All', function() {
   mocha.run();
 });
 
