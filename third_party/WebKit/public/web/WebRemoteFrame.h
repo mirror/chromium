@@ -24,6 +24,7 @@ class WebString;
 
 class WebRemoteFrame : public WebFrame {
  public:
+  // WebRemoteFrameClient may not be null.
   BLINK_EXPORT static WebRemoteFrame* Create(WebTreeScopeType,
                                              WebRemoteFrameClient*,
                                              WebFrame* opener = nullptr);
