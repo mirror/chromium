@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6830f7ce_1c5b78ca",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/FileUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "nit: read()?",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571ab919_aae3b980",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "Should we perhaps make client\u0027s life easier by calling this once before the first read?",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9997a426_91ce4641",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "Should this be called in case of failure?",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4ec273_e72f4f5b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "I think this could be in a more common place, e.g. reader.errorMessage().",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f0d699_347744ce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/ProfileView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "It doesn\u0027t looks like it\u0027s supposed to run in case of failure. Also, inline?",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e62d80_572bcc7c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/ProfilesPanel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "is being recorded.",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ffa191_4fb82a4e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineLoader.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "Please keep it static! You can\u0027t load using the same loader more than once.",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf73561a_b55902cd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineLoader.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "I\u0027ve already seen this somewhere...",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181d62a5_036e23c1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineLoader.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-23T02:10:29Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "25a52c3e1b4193f5c8253d9870666970f0a79839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
