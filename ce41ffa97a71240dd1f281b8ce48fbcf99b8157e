@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a02293a8_40cc34e6",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1640,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-23T03:24:42Z",
+      "side": 1,
+      "message": "This was originally because we needed to set the size before updating scroll offset in case the size changed to/from zero which affected scrollability. With Chris\u0027s suggestion to add a scrollable bit, this change is no longer needed.",
+      "parentUuid": "d665549e_ebdac45a",
+      "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3486a80_238b0bc0",
         "filename": "third_party/WebKit/public/platform/WebLayer.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T23:07:34Z",
       "side": 1,
       "message": "How about:\n\nSetScrollable(const WebSize\u0026 scroll_container_bounds)? If changed, a bunch of names\nin various files in this patch would change also.",
+      "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e46669_f9223753",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-23T03:24:42Z",
+      "side": 1,
+      "message": "I like how this turned out. Done.",
+      "parentUuid": "a3486a80_238b0bc0",
       "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e22c51a_f1f73434",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-23T03:24:42Z",
+      "side": 1,
+      "message": "Yes, this happens in ScrollView::Layout when we call \"contents_viewport_-\u003eSetBoundsRect\". In the same function we now update the contents_-\u003elayer\u0027s scroll container bounds.",
+      "parentUuid": "2448160e_45a6c20a",
+      "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1f6bbe5_4b297407",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-22T23:07:34Z",
       "side": 1,
       "message": "Why is this new line needed?",
+      "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9ff1f5_2cbbc668",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-23T03:24:42Z",
+      "side": 1,
+      "message": "This is to handle the case when the viewport layer\u0027s bounds change.",
+      "parentUuid": "f1f6bbe5_4b297407",
       "revId": "ce41ffa97a71240dd1f281b8ce48fbcf99b8157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
