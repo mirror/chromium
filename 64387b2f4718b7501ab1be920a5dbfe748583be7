@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593b4e71_62f47134",
+        "filename": "third_party/WebKit/Source/core/animation/CSSNumberInterpolationType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T01:58:22Z",
+      "side": 1,
+      "message": "Perhaps a more accurate description is \u0027snap to integer values\u0027 or \u0027restrict to integer values\u0027?",
+      "revId": "64387b2f4718b7501ab1be920a5dbfe748583be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab870600_ec703f80",
+        "filename": "third_party/WebKit/Source/core/animation/CSSNumberInterpolationType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-23T01:58:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether the general style is to use the parameter is_integer or the member is_integer_ in this DCHECK...",
+      "revId": "64387b2f4718b7501ab1be920a5dbfe748583be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
