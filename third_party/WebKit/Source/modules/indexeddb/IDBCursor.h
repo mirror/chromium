@@ -107,6 +107,7 @@ class IDBCursor : public GarbageCollectedFinalized<IDBCursor>,
             IDBTransaction*);
 
  private:
+  friend class IndexPopulator;
   IDBObjectStore* EffectiveObjectStore() const;
 
   std::unique_ptr<WebIDBCursor> backend_;
@@ -121,6 +122,7 @@ class IDBCursor : public GarbageCollectedFinalized<IDBCursor>,
   Member<IDBKey> key_;
   Member<IDBKey> primary_key_;
   RefPtr<IDBValue> value_;
+  int64_t async_tracing_number_ = 0;
 };
 
 }  // namespace blink

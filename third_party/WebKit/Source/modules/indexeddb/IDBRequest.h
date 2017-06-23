@@ -73,7 +73,7 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   class AsyncTraceState {
    public:
     AsyncTraceState() {}
-    AsyncTraceState(const char* tracing_name, void*);
+    AsyncTraceState(const char* tracing_name, void* id);
     ~AsyncTraceState();
     AsyncTraceState(AsyncTraceState&& other) {
       this->tracing_name_ = other.tracing_name_;
@@ -92,7 +92,7 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
 
    private:
     const char* tracing_name_ = nullptr;
-    void* id_;
+    const void* id_;
 
     DISALLOW_COPY_AND_ASSIGN(AsyncTraceState);
   };

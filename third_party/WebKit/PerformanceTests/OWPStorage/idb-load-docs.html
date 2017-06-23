@@ -1,0 +1,51 @@
+<script src="../resources/runner.js"></script>
+<script src="resources/shared.js"></script>
+<script src="resources/idb-load-docs-shared.js"></script>
+<script src="resources/idb-load-docs-setup.js"></script>
+<script>
+  var db_name = "testdb";
+  delete_then_open(db_name, populate_fake_docs_database, ()=>{
+
+    var test = {
+      description: '..',
+      iterationCount: 5,
+      path: "resources/idb-load-docs-runner.html"
+    }
+
+    PerfTestRunner.measurePageLoadTimeAfterDoneMessage(test);
+
+    // var file = PerfTestRunner.loadFile("resources/run-idb-docs-load.html");
+    // var chunkSize = 100;
+
+    // var chunks = [];
+    // // The smaller the chunks the more style resolves we do.
+    // // Smaller chunk sizes will show more samples in style resolution.
+    // // Larger chunk sizes will show more samples in line layout.
+    // // Smaller chunk sizes run slower overall, as the per-chunk overhead is high.
+    // var chunkCount = Math.ceil(file.length / chunkSize);
+    // for (var chunkIndex = 0; chunkIndex < chunkCount; chunkIndex++) {
+    //   var chunk = file.substr(chunkIndex * chunkSize, chunkSize);
+    //   chunks.push(chunk);
+    // }
+
+    // console.log("Testing " + file.length + " byte document in " + chunkCount + " " + chunkSize + " byte chunks.");
+
+    // var iframe = document.createElement("iframe");
+    // document.body.appendChild(iframe);
+
+    // iframe.sandbox = '';
+    // // Prevent external loads which could cause write() to return before completing the parse.
+    // iframe.style.width = "600px";
+    // // Have a reasonable size so we're not line-breaking on every character.
+    // iframe.style.height = "800px";
+    // iframe.contentDocument.open();
+
+    // for (var chunkIndex = 0; chunkIndex < chunks.length; chunkIndex++) {
+    //   iframe.contentDocument.write(chunks[chunkIndex]);
+    //   PerfTestRunner.forceLayout(iframe.contentDocument);
+    // }
+
+    // iframe.contentDocument.close();
+  }
+  );
+</script>
