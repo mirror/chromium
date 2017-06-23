@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d73ccc1f_4c9018cd",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T07:10:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6845a74d_dd788704",
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e582e601_77bcc165",
         "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
         "patchSetId": 6
@@ -83,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "921ec4fd_0c4b974b",
+        "filename": "third_party/WebKit/Source/web/WebFactoryImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T07:10:15Z",
+      "side": 1,
+      "message": "It\u0027s only used for the worker shadow page, which doesn\u0027t need this: thus I figured it\u0027s not worth the trouble plumbing it through.",
+      "parentUuid": "1e4d2c7e_0954ec0b",
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20f0522a_08ba0ed4",
         "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
         "patchSetId": 6
@@ -94,6 +130,24 @@
       "writtenOn": "2017-06-23T06:17:16Z",
       "side": 1,
       "message": "If a.com window.opens a new popup and then does a cross-process navigation to b.com, how else would we set the opener for the new main frame for b.com?",
+      "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42986045_bff06a89",
+        "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T07:10:15Z",
+      "side": 1,
+      "message": "I guess what I mean is the caller could set it too. I\u0027ll delete this comment, since it\u0027s not very useful.",
+      "parentUuid": "20f0522a_08ba0ed4",
       "revId": "e0ff49fad3abe0987069255adfd7ee96d9424f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
