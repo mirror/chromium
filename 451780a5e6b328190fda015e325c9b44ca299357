@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24cb0ba0_c36184a4",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-23T06:41:06Z",
+      "side": 1,
+      "message": "Why do we want {{v8_class}} here?\n{{v8_class}}::s_install_runtime_enabled_function_ should be enough, I think?",
+      "range": {
+        "startLine": 922,
+        "startChar": 54,
+        "endLine": 922,
+        "endChar": 62
+      },
+      "revId": "451780a5e6b328190fda015e325c9b44ca299357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204803e1_0c3d7ab5",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-23T06:41:06Z",
+      "side": 1,
+      "message": "This function should be used by V8Window, etc.\n\nIIUC, currently we have duplicate code, right?  I\u0027d like to use this function in production (before snapshot will be introduced) so that we can confirm that there will be no regression.",
+      "range": {
+        "startLine": 720,
+        "startChar": 30,
+        "endLine": 720,
+        "endChar": 69
+      },
+      "revId": "451780a5e6b328190fda015e325c9b44ca299357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
