@@ -1019,11 +1019,17 @@ bool PictureLayerImpl::ShouldAdjustRasterScale() const {
 
   // Don't change the raster scale if any of the following are true:
   //  - We have an animating transform.
-  //  - We have a will-change transform hint.
   //  - The raster scale is already ideal.
   if (draw_properties().screen_space_transform_is_animating ||
-      has_will_change_transform_hint() ||
       raster_source_scale_ == ideal_source_scale_) {
+    return false;
+  }
+
+  // If we have a will-change: transform hint, that means that we should just
+  // keep the current scale unless it is below the min, which is the device
+  // scale.
+  if (has_will_change_transform_hint() &&
+      raster_contents_scale_ >= (ideal_device_scale_ * ideal_page_scale_)) {
     return false;
   }
 
@@ -1091,11 +1097,22 @@ void PictureLayerImpl::RecalculateRasterScales() {
   raster_device_scale_ = ideal_device_scale_;
   raster_page_scale_ = ideal_page_scale_;
   raster_source_scale_ = ideal_source_scale_;
-  raster_contents_scale_ = ideal_contents_scale_;
+
+  bool is_pinching = layer_tree_impl()->PinchGestureActive();
+  // If we're in will-change: transform case and we already have a raster scale
+  // and we're not pinching, then make sure to clamp the raster scale to be at
+  // least the native scale (ie device scale * page scale);
+  if (has_will_change_transform_hint() && raster_contents_scale_ &&
+      !is_pinching) {
+    // Keep the scale unless it's below the device scale.
+    raster_contents_scale_ = std::max(
+        raster_contents_scale_, raster_device_scale_ * raster_page_scale_);
+  } else {
+    raster_contents_scale_ = ideal_contents_scale_;
+  }
 
   // During pinch we completely ignore the current ideal scale, and just use
   // a multiple of the previous scale.
-  bool is_pinching = layer_tree_impl()->PinchGestureActive();
   if (is_pinching && old_raster_contents_scale) {
     // See ShouldAdjustRasterScale:
     // - When zooming out, preemptively create new tiling at lower resolution.
