@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce5434e_e8cc4a75",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-23T15:16:13Z",
+      "side": 1,
+      "message": "This is simpler than TestServiceManagerConnection. WDYT?",
+      "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
