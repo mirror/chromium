@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c9a749f_0d1bebd4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T19:43:39Z",
+      "side": 1,
+      "message": "since you are modifying it, no need for class qualification",
+      "revId": "f19e76f3c47f649ee3e2934613f9b1d3ed84a5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0b4230_876205b7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-23T19:43:39Z",
+      "side": 1,
+      "message": "I\u0027d like to see changes here so that this method and notifyDeathCallback never recurses unto themselves. So seems like need to split this into a @CalledByNative stop, and a private onChildStopped, something like that?",
+      "revId": "f19e76f3c47f649ee3e2934613f9b1d3ed84a5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
