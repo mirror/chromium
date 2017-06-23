@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3db578e_93164faf",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-23T22:31:51Z",
+      "side": 0,
+      "message": "dcastagna@ is this still a valid concern? I\u0027m having trouble figuring out how to implement stale resource expiration if this is kept. I.e. if we keep the FIFO way, all buffers are touched as we cycle through decoded frames.",
+      "revId": "ccfa72e7b30a947010c262b5ad3f80814cddba38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
