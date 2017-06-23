@@ -87,6 +87,24 @@
       "revId": "b545a44e4f38baf249e3b740f316c32a7bb1a36e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf13ea5b_6ed20a36",
+        "filename": "ui/android/window_android_compositor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-23T20:41:40Z",
+      "side": 1,
+      "message": "fwiw, i\u0027ve tried enabling overlays for inline videos, and typing in the omnibox.  seems okay.\n\nthe only weird thing i\u0027ve found is that the size of the overlay shrinks a little horizontally when one brings up split screen mode.  the offset looks okay, though, which is all this CL affects.  i\u0027ll have to dig into the size issue separately.",
+      "parentUuid": "724a5bde_59c974e8",
+      "revId": "b545a44e4f38baf249e3b740f316c32a7bb1a36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

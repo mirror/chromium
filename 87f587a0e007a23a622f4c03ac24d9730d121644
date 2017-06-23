@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "844567ae_5834fc53",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-23T20:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3d23e7_d069c5c0",
+      "revId": "87f587a0e007a23a622f4c03ac24d9730d121644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b73af6c_4aab844d",
         "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "36064652_7dfbff17",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-23T20:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b73af6c_4aab844d",
+      "revId": "87f587a0e007a23a622f4c03ac24d9730d121644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e473786_481dad00",
         "filename": "ui/android/view_android.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "87f587a0e007a23a622f4c03ac24d9730d121644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6b6338_44e0b4e8",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-23T20:41:40Z",
+      "side": 1,
+      "message": "gfx::Point: done.\ncoordinate space: physical, done.",
+      "parentUuid": "8e473786_481dad00",
+      "revId": "87f587a0e007a23a622f4c03ac24d9730d121644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
