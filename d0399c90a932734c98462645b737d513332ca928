@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0604608_a900ea20",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-23T18:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a9b55c8_aadf7a67",
+      "revId": "d0399c90a932734c98462645b737d513332ca928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8fbf3ba_917df884",
         "filename": "chrome/browser/media/media_engagement_contents_observer.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-20T15:11:10Z",
       "side": 1,
       "message": "It doesn\u0027t have to have a video track, right?",
+      "revId": "d0399c90a932734c98462645b737d513332ca928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a80c314_b0814970",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-23T18:20:31Z",
+      "side": 1,
+      "message": "Nope, fixed the comment.",
+      "parentUuid": "b8fbf3ba_917df884",
       "revId": "d0399c90a932734c98462645b737d513332ca928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e17dad52_f859cc3b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-23T18:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc389d3_48d26ee2",
+      "revId": "d0399c90a932734c98462645b737d513332ca928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4114130_b7d8c850",
         "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "d0399c90a932734c98462645b737d513332ca928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98279133_498a8ada",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-23T18:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4114130_b7d8c850",
+      "revId": "d0399c90a932734c98462645b737d513332ca928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
