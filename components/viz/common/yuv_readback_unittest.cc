@@ -11,7 +11,7 @@
 #include "base/test/test_suite.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
-#include "components/viz/service/display_compositor/gl_helper.h"
+#include "components/viz/common/gl_helper.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/ipc/common/surface_handle.h"

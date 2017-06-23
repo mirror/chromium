@@ -4,12 +4,12 @@
 
 #include "base/bind.h"
 #include "base/test/launcher/unit_test_launcher.h"
-#include "components/viz/service/display_compositor/display_compositor_test_suite.h"
+#include "components/viz/common/test/viz_benchmark_test_suite.h"
 
 int main(int argc, char** argv) {
-  viz::DisplayCompositorTestSuite test_suite(argc, argv);
+  viz::VizBenchmarkTestSuite test_suite(argc, argv);
 
   return base::LaunchUnitTests(argc, argv,
-                               base::Bind(&viz::DisplayCompositorTestSuite::Run,
+                               base::Bind(&viz::VizBenchmarkTestSuite::Run,
                                           base::Unretained(&test_suite)));
 }

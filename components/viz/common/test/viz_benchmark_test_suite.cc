@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/viz/service/display_compositor/display_compositor_test_suite.h"
+#include "components/viz/common/test/viz_benchmark_test_suite.h"
 
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread_id_name_manager.h"
@@ -11,12 +11,12 @@
 
 namespace viz {
 
-DisplayCompositorTestSuite::DisplayCompositorTestSuite(int argc, char** argv)
+VizBenchmarkTestSuite::VizBenchmarkTestSuite(int argc, char** argv)
     : base::TestSuite(argc, argv) {}
 
-DisplayCompositorTestSuite::~DisplayCompositorTestSuite() {}
+VizBenchmarkTestSuite::~VizBenchmarkTestSuite() {}
 
-void DisplayCompositorTestSuite::Initialize() {
+void VizBenchmarkTestSuite::Initialize() {
   base::TestSuite::Initialize();
   gl::GLSurfaceTestSupport::InitializeOneOff();
   cc::CCPaths::RegisterPathProvider();
@@ -29,7 +29,7 @@ void DisplayCompositorTestSuite::Initialize() {
   base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
 }
 
-void DisplayCompositorTestSuite::Shutdown() {
+void VizBenchmarkTestSuite::Shutdown() {
   message_loop_ = nullptr;
 
   base::TestSuite::Shutdown();
