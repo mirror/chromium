@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "079d4c0d_ce27d503",
+        "filename": "gpu/command_buffer/client/context_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-23T19:41:17Z",
+      "side": 1,
+      "message": "I like the shallow option, thanks!",
+      "parentUuid": "9aa663eb_3c414d55",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "8856cabd40633550bf6434251e4bac69d48560d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73c63316_451a3eec",
         "filename": "gpu/command_buffer/client/context_support.h",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "8856cabd40633550bf6434251e4bac69d48560d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75a8101_6d8c982b",
+        "filename": "gpu/command_buffer/client/context_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-23T19:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73c63316_451a3eec",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 53
+      },
+      "revId": "8856cabd40633550bf6434251e4bac69d48560d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
