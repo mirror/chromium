@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "fd38e274_34702c93",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/select/listbox-not-force-layout.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-23T09:56:35Z",
+      "side": 1,
+      "message": "It\u0027s different.  I\u0027m sure we need to introduce something in internals.",
+      "parentUuid": "24d80226_a70a6344",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f4013ec_8e5fbcfb",
         "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/fast/forms/select/listbox-scrollbar-incremental-load-expected.txt",
         "patchSetId": 9
@@ -53,6 +77,30 @@
       "writtenOn": "2017-06-23T01:06:42Z",
       "side": 1,
       "message": "What causes this diff?",
+      "range": {
+        "startLine": 27,
+        "startChar": 63,
+        "endLine": 27,
+        "endChar": 68
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13dbbd9_632a1028",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/fast/forms/select/listbox-scrollbar-incremental-load-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-23T09:56:35Z",
+      "side": 1,
+      "message": "This is due to the difference between PLSA::ScrollIntoView() and HTMLSelectElement::MaybeUpdateScrollOffsetAfterLayout(). If we use LayoutListBox::ScrollToRect() as you suggested, we won\u0027t see such differences.",
+      "parentUuid": "7f4013ec_8e5fbcfb",
       "range": {
         "startLine": 27,
         "startChar": 63,
@@ -82,6 +130,24 @@
     },
     {
       "key": {
+        "uuid": "07b98cc2_61da6e54",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-23T09:56:35Z",
+      "side": 1,
+      "message": "We have no plan to apply this to elements other than HTMLSelectElement.  Done.",
+      "parentUuid": "5c30120f_b761642e",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ec77b20_3fc787c0",
         "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
         "patchSetId": 9
@@ -105,6 +171,30 @@
     },
     {
       "key": {
+        "uuid": "7ac3c2b3_10e8cf5a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-23T09:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec77b20_3fc787c0",
+      "range": {
+        "startLine": 894,
+        "startChar": 46,
+        "endLine": 894,
+        "endChar": 63
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c154da_cfdb0ba9",
         "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
         "patchSetId": 9
@@ -116,6 +206,24 @@
       "writtenOn": "2017-06-23T01:06:42Z",
       "side": 1,
       "message": "I think this should call LayoutListBox::ScrollToRect the way it did before, instead of returning an offset to the PLSA.  That way all the side effects of the scroll will be processed correctly.",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fad5f5_c10a013b",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-23T09:56:35Z",
+      "side": 1,
+      "message": "New patch uses LayoutListBox::ScrollToRect().  It it safe to call PLSA::ScrollIntoView() inside PLSA::UpdateAfterLayout()?",
+      "parentUuid": "d7c154da_cfdb0ba9",
       "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +244,24 @@
       "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea08edbe_e33c4856",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-23T09:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25d181ea_122aec47",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
