@@ -33,6 +33,7 @@
 
 #include <memory>
 
+#include "core/CoreExport.h"
 #include "core/inspector/InspectorEmulationAgent.h"
 #include "core/inspector/InspectorLayerTreeAgent.h"
 #include "core/inspector/InspectorPageAgent.h"
@@ -59,7 +60,7 @@ class WebLayerTreeView;
 class WebLocalFrameBase;
 class WebString;
 
-class WebDevToolsAgentImpl final
+class CORE_EXPORT WebDevToolsAgentImpl final
     : public GarbageCollectedFinalized<WebDevToolsAgentImpl>,
       public WebDevToolsAgent,
       public InspectorEmulationAgent::Client,
