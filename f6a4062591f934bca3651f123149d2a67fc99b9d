@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "338ad509_dd4cece2",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/imports/resources/import-quirks.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-23T11:42:52Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "7a8063f1_64725936",
+      "revId": "f6a4062591f934bca3651f123149d2a67fc99b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f346d489_1686dba6",
         "filename": "third_party/WebKit/LayoutTests/fast/html/imports/resources/import-quirks.html",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "f6a4062591f934bca3651f123149d2a67fc99b9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3e044f_a4a82fdd",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/imports/resources/import-quirks.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-23T11:42:52Z",
+      "side": 1,
+      "message": "Heh, my knowledge is outdated. :-)",
+      "parentUuid": "899c0499_7551c116",
+      "revId": "f6a4062591f934bca3651f123149d2a67fc99b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
