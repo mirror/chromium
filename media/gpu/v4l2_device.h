@@ -23,6 +23,7 @@
 #include "media/video/video_encode_accelerator.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_image.h"
 
 // TODO(posciak): remove this once V4L2 headers are updated.
 #define V4L2_PIX_FMT_MT21 v4l2_fourcc('M', 'T', '2', '1')
@@ -121,6 +122,18 @@ class MEDIA_GPU_EXPORT V4L2Device
       unsigned int buffer_index,
       uint32_t v4l2_pixfmt,
       const std::vector<base::ScopedFD>& dmabuf_fds) = 0;
+
+  // Create a GLImage from provided |dmabuf_fds| and set |texture_id| to it.
+  // Some implementations may also require the V4L2 |buffer_index| of the buffer
+  // for which |dmabuf_fds| have been exported.
+  // The caller may choose to close the file descriptors after this method
+  // returns, and may expect the buffers to remain valid for the lifetime of
+  // the created EGLImage.
+  // Return EGL_NO_IMAGE_KHR on failure.
+  virtual scoped_refptr<gl::GLImage> CreateGLImage(
+      const gfx::Size& size,
+      uint32_t fourcc,
+      const std::vector<base::ScopedFD>& dmabuf_fds);
 
   // Destroys the EGLImageKHR.
   virtual EGLBoolean DestroyEGLImage(EGLDisplay egl_display,
