@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad97576_92c5fda5",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T18:08:22Z",
+      "side": 1,
+      "message": "Nit: const String\u0026 (sorry for not noticing this in an earlier CL)",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "c5de3be406a670a474af3b9f6c88bff8e6c5809a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea2010e_fbd58dfe",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T18:08:22Z",
+      "side": 1,
+      "message": "Ditto--though String is movable, we don\u0027t have a convention of passing it by value. If that\u0027s a conversation you\u0027d like to start, it could be an interesting conversation for cxx \u003d)",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "c5de3be406a670a474af3b9f6c88bff8e6c5809a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46ca7c5_16c83217",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T18:08:22Z",
+      "side": 1,
+      "message": "I think this would be easier to read as a positive check, i.e.\n\nIsOriginHttpOrHttps",
+      "range": {
+        "startLine": 1025,
+        "startChar": 0,
+        "endLine": 1026,
+        "endChar": 74
+      },
+      "revId": "c5de3be406a670a474af3b9f6c88bff8e6c5809a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987e645c_a84e302f",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T18:08:22Z",
+      "side": 1,
+      "message": "Then we can write !IsOriginHttpOrHttps(previous_origin) | !IsOriginHttpOrHttps(new_origin) here. It puts the important bit (the not) at the front.",
+      "range": {
+        "startLine": 1033,
+        "startChar": 0,
+        "endLine": 1034,
+        "endChar": 55
+      },
+      "revId": "c5de3be406a670a474af3b9f6c88bff8e6c5809a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
