@@ -10,6 +10,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/logging.h"
 #include "base/run_loop.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
@@ -292,6 +293,12 @@ class ServiceWorkerActivationTest : public ServiceWorkerRegistrationTest {
   ServiceWorkerProviderHost* controllee() { return host_.get(); }
   int inflight_request_id() const { return inflight_request_id_; }
 
+  void RunActivationTimer() {
+    EXPECT_TRUE(registration_->activation_timer_);
+    EXPECT_TRUE(registration_->activation_timer_->IsRunning());
+    registration_->ActivateIfReady();
+  }
+
  private:
   scoped_refptr<ServiceWorkerRegistration> registration_;
   std::unique_ptr<ServiceWorkerProviderHost> host_;
@@ -371,6 +378,34 @@ TEST_F(ServiceWorkerActivationTest, SkipWaitingWithInflightRequest) {
   // Finish the request. Activation should happen.
   version_1->FinishRequest(inflight_request_id(), true /* was_handled */,
                            base::Time::Now());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(version_2.get(), reg->active_version());
+}
+
+// Test activation triggered by skipWaiting and finishing requests.
+TEST_F(ServiceWorkerActivationTest, LameDuckTime_SkipWaiting) {
+  scoped_refptr<ServiceWorkerRegistration> reg = registration();
+  scoped_refptr<ServiceWorkerVersion> version_1 = reg->active_version();
+  scoped_refptr<ServiceWorkerVersion> version_2 = reg->waiting_version();
+  base::SimpleTestTickClock* clock_1 = new base::SimpleTestTickClock();
+  base::SimpleTestTickClock* clock_2 = new base::SimpleTestTickClock();
+  clock_1->SetNowTicks(base::TimeTicks::Now());
+  clock_2->SetNowTicks(clock_1->NowTicks());
+  version_1->SetTickClockForTesting(base::WrapUnique(clock_1));
+  version_2->SetTickClockForTesting(base::WrapUnique(clock_2));
+
+  // Set skip waiting flag. Since there is still an in-flight request,
+  // activation should not happen.
+  version_2->OnSkipWaiting(77 /* dummy request_id */);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(version_1.get(), reg->active_version());
+
+  // Move forward by lame duck time.
+  clock_2->Advance(base::TimeDelta::FromMinutes(5) +
+                   base::TimeDelta::FromSeconds(1));
+
+  // Activation should happen.
+  RunActivationTimer();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(version_2.get(), reg->active_version());
 }
