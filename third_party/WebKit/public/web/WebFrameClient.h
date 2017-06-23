@@ -68,6 +68,7 @@
 #include "public/platform/WebSourceLocation.h"
 #include "public/platform/WebStorageQuotaCallbacks.h"
 #include "public/platform/WebStorageQuotaType.h"
+#include "public/platform/WebSuddenTerminationDisablerType.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoader.h"
 #include "public/platform/WebURLRequest.h"
@@ -759,13 +760,8 @@ class BLINK_EXPORT WebFrameClient {
   // Called when elements preventing the sudden termination of the frame
   // become present or stop being present. |type| is the type of element
   // (BeforeUnload handler, Unload handler).
-  enum SuddenTerminationDisablerType {
-    kBeforeUnloadHandler,
-    kUnloadHandler,
-  };
   virtual void SuddenTerminationDisablerChanged(bool present,
-                                                SuddenTerminationDisablerType) {
-  }
+                                                WebSuddenTerminationDisabler) {}
 
   // Navigator Content Utils  --------------------------------------------
 
