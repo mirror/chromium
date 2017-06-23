@@ -119,7 +119,7 @@ class ArcServiceManager {
                           std::unique_ptr<ArcService> service);
   ArcService* GetNamedServiceInternal(const std::string& name);
 
-  THREAD_CHECKER(thread_checker_);
+  base::ThreadChecker thread_checker_;
   scoped_refptr<base::TaskRunner> blocking_task_runner_;
 
   std::unique_ptr<ArcBridgeService> arc_bridge_service_;

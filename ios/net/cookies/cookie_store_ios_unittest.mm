@@ -100,11 +100,10 @@ class CookieStoreIOSTest : public testing::Test {
   ~CookieStoreIOSTest() override {}
 
   // Gets the cookies. |callback| will be called on completion.
-  void GetCookies(net::CookieStore::GetCookiesCallback callback) {
+  void GetCookies(const net::CookieStore::GetCookiesCallback& callback) {
     net::CookieOptions options;
     options.set_include_httponly();
-    store_->GetCookiesWithOptionsAsync(kTestCookieURL, options,
-                                       std::move(callback));
+    store_->GetCookiesWithOptionsAsync(kTestCookieURL, options, callback);
   }
 
   // Sets a cookie.

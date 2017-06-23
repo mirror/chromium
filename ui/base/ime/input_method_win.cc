@@ -107,9 +107,11 @@ bool InputMethodWin::OnUntranslatedIMEMessage(
   return !!handled;
 }
 
-ui::EventDispatchDetails InputMethodWin::DispatchKeyEvent(ui::KeyEvent* event) {
-  if (!event->HasNativeEvent())
-    return DispatchFabricatedKeyEvent(event);
+void InputMethodWin::DispatchKeyEvent(ui::KeyEvent* event) {
+  if (!event->HasNativeEvent()) {
+    DispatchFabricatedKeyEvent(event);
+    return;
+  }
 
   const base::NativeEvent& native_key_event = event->native_event();
   BOOL handled = FALSE;
@@ -119,7 +121,7 @@ ui::EventDispatchDetails InputMethodWin::DispatchKeyEvent(ui::KeyEvent* event) {
            &handled);
     if (handled)
       event->StopPropagation();
-    return ui::EventDispatchDetails();
+    return;
   }
 
   std::vector<MSG> char_msgs;
@@ -190,34 +192,27 @@ ui::EventDispatchDetails InputMethodWin::DispatchKeyEvent(ui::KeyEvent* event) {
         base::Owned(new ui::KeyEvent(*event)),
         base::Owned(new std::vector<MSG>(char_msgs)));
     GetEngine()->ProcessKeyEvent(*event, callback);
-    return ui::EventDispatchDetails();
+  } else {
+    ProcessKeyEventDone(event, &char_msgs, false);
   }
-
-  return ProcessUnhandledKeyEvent(event, &char_msgs);
 }
 
 void InputMethodWin::ProcessKeyEventDone(ui::KeyEvent* event,
                                          const std::vector<MSG>* char_msgs,
                                          bool is_handled) {
+  DCHECK(event);
   if (is_handled)
     return;
-  ProcessUnhandledKeyEvent(event, char_msgs);
-}
 
-ui::EventDispatchDetails InputMethodWin::ProcessUnhandledKeyEvent(
-    ui::KeyEvent* event,
-    const std::vector<MSG>* char_msgs) {
-  DCHECK(event);
   ui::EventDispatchDetails details = DispatchKeyEventPostIME(event);
   if (details.dispatcher_destroyed || details.target_destroyed ||
       event->stopped_propagation()) {
-    return details;
+    return;
   }
 
   BOOL handled;
   for (const auto& msg : (*char_msgs))
     OnChar(msg.hwnd, msg.message, msg.wParam, msg.lParam, msg, &handled);
-  return details;
 }
 
 void InputMethodWin::OnTextInputTypeChanged(const TextInputClient* client) {
@@ -691,19 +686,17 @@ bool InputMethodWin::IsWindowFocused(const TextInputClient* client) const {
       GetActiveWindow() == toplevel_window_handle_;
 }
 
-ui::EventDispatchDetails InputMethodWin::DispatchFabricatedKeyEvent(
-    ui::KeyEvent* event) {
+void InputMethodWin::DispatchFabricatedKeyEvent(ui::KeyEvent* event) {
   // The key event if from calling input.ime.sendKeyEvent or test.
   ui::EventDispatchDetails details = DispatchKeyEventPostIME(event);
   if (details.dispatcher_destroyed || details.target_destroyed ||
       event->stopped_propagation()) {
-    return details;
+    return;
   }
 
   if ((event->is_char() || event->GetDomKey().IsCharacter()) &&
       event->type() == ui::ET_KEY_PRESSED && GetTextInputClient())
     GetTextInputClient()->InsertChar(*event);
-  return details;
 }
 
 void InputMethodWin::ConfirmCompositionText() {

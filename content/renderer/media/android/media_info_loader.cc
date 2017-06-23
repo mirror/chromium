@@ -13,11 +13,11 @@
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebAssociatedURLLoader.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebFrame.h"
 
 using blink::WebAssociatedURLLoader;
 using blink::WebAssociatedURLLoaderOptions;
-using blink::WebLocalFrame;
+using blink::WebFrame;
 using blink::WebURLError;
 using blink::WebURLRequest;
 using blink::WebURLResponse;
@@ -40,7 +40,7 @@ MediaInfoLoader::MediaInfoLoader(
 
 MediaInfoLoader::~MediaInfoLoader() {}
 
-void MediaInfoLoader::Start(blink::WebLocalFrame* frame) {
+void MediaInfoLoader::Start(blink::WebFrame* frame) {
   // Make sure we have not started.
   DCHECK(!ready_cb_.is_null());
   CHECK(frame);
@@ -66,8 +66,7 @@ void MediaInfoLoader::Start(blink::WebLocalFrame* frame) {
   } else {
     WebAssociatedURLLoaderOptions options;
     if (cors_mode_ == blink::WebMediaPlayer::kCORSModeUnspecified) {
-      request.SetFetchCredentialsMode(
-          WebURLRequest::kFetchCredentialsModeInclude);
+      options.allow_credentials = true;
       options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
       allow_stored_credentials_ = true;
     } else {
@@ -77,12 +76,8 @@ void MediaInfoLoader::Start(blink::WebLocalFrame* frame) {
           WebAssociatedURLLoaderOptions::kPreventPreflight;
       options.fetch_request_mode = WebURLRequest::kFetchRequestModeCORS;
       if (cors_mode_ == blink::WebMediaPlayer::kCORSModeUseCredentials) {
-        request.SetFetchCredentialsMode(
-            WebURLRequest::kFetchCredentialsModeInclude);
+        options.allow_credentials = true;
         allow_stored_credentials_ = true;
-      } else {
-        request.SetFetchCredentialsMode(
-            WebURLRequest::kFetchCredentialsModeSameOrigin);
       }
     }
     loader.reset(frame->CreateAssociatedURLLoader(options));

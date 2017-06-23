@@ -4,7 +4,6 @@
 
 #include "core/css/cssom/CSSRotation.h"
 
-#include "bindings/core/v8/ExceptionState.h"
 #include "core/css/CSSFunctionValue.h"
 #include "core/css/CSSPrimitiveValue.h"
 
@@ -60,26 +59,6 @@ CSSRotation* FromCSSRotateXYZ(const CSSFunctionValue& value) {
 }
 
 }  // namespace
-
-CSSRotation* CSSRotation::Create(double x,
-                                 double y,
-                                 double z,
-                                 CSSNumericValue* angle,
-                                 ExceptionState& exception_state) {
-  if (angle->GetType() != CSSStyleValue::StyleValueType::kAngleType) {
-    exception_state.ThrowTypeError("Must pass an angle to CSSRotation");
-    return nullptr;
-  }
-  return new CSSRotation(x, y, z, angle);
-}
-
-CSSRotation* CSSRotation::Create(double x,
-                                 double y,
-                                 double z,
-                                 CSSNumericValue* angle) {
-  DCHECK_EQ(angle->GetType(), CSSStyleValue::StyleValueType::kAngleType);
-  return new CSSRotation(x, y, z, angle);
-}
 
 CSSRotation* CSSRotation::FromCSSValue(const CSSFunctionValue& value) {
   switch (value.FunctionType()) {

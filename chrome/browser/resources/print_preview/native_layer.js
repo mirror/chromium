@@ -66,17 +66,6 @@ print_preview.PrivetPrinterCapabilitiesResponse;
  */
 print_preview.PrinterSetupResponse;
 
-/**
- * @typedef {{
- *   extensionId: string,
- *   extensionName: string,
- *   id: string,
- *   name: string,
- *   description: (string|undefined),
- * }}
- */
-print_preview.ProvisionalDestinationInfo;
-
 cr.define('print_preview', function() {
   'use strict';
 
@@ -98,10 +87,15 @@ cr.define('print_preview', function() {
     global.onDidGetPreviewPageCount = this.onDidGetPreviewPageCount_.bind(this);
     global.onDidPreviewPage = this.onDidPreviewPage_.bind(this);
     global.updatePrintPreview = this.onUpdatePrintPreview_.bind(this);
+    global.onDidGetAccessToken = this.onDidGetAccessToken_.bind(this);
     global.onEnableManipulateSettingsForTest =
         this.onEnableManipulateSettingsForTest_.bind(this);
     global.printPresetOptionsFromDocument =
         this.onPrintPresetOptionsFromDocument_.bind(this);
+    global.onProvisionalPrinterResolved =
+        this.onProvisionalDestinationResolved_.bind(this);
+    global.failedToResolveProvisionalPrinter =
+        this.failedToResolveProvisionalDestination_.bind(this);
 
     /** @private {!cr.EventTarget} */
     this.eventTarget_ = new cr.EventTarget();
@@ -134,6 +128,7 @@ cr.define('print_preview', function() {
    * @const
    */
   NativeLayer.EventType = {
+    ACCESS_TOKEN_READY: 'print_preview.NativeLayer.ACCESS_TOKEN_READY',
     CLOUD_PRINT_ENABLE: 'print_preview.NativeLayer.CLOUD_PRINT_ENABLE',
     DESTINATIONS_RELOAD: 'print_preview.NativeLayer.DESTINATIONS_RELOAD',
     DISABLE_SCALING: 'print_preview.NativeLayer.DISABLE_SCALING',
@@ -152,6 +147,8 @@ cr.define('print_preview', function() {
     PRINT_TO_CLOUD: 'print_preview.NativeLayer.PRINT_TO_CLOUD',
     SETTINGS_INVALID: 'print_preview.NativeLayer.SETTINGS_INVALID',
     PRINT_PRESET_OPTIONS: 'print_preview.NativeLayer.PRINT_PRESET_OPTIONS',
+    PROVISIONAL_DESTINATION_RESOLVED:
+        'print_preview.NativeLayer.PROVISIONAL_DESTINATION_RESOLVED'
   };
 
   /**
@@ -184,10 +181,9 @@ cr.define('print_preview', function() {
     /**
      * Requests access token for cloud print requests.
      * @param {string} authType type of access token.
-     * @return {!Promise<string>}
      */
-    getAccessToken: function(authType) {
-      return cr.sendWithPromise('getAccessToken', authType);
+    startGetAccessToken: function(authType) {
+      chrome.send('getAccessToken', [authType]);
     },
 
     /**
@@ -290,13 +286,14 @@ cr.define('print_preview', function() {
 
     /**
      * Requests Chrome to resolve provisional extension destination by granting
-     * the provider extension access to the printer.
+     * the provider extension access to the printer. Chrome will respond with
+     * the resolved destination properties by calling
+     * {@code onProvisionalPrinterResolved}, or in case of an error
+     * {@code failedToResolveProvisionalPrinter}
      * @param {string} provisionalDestinationId
-     * @return {!Promise<!print_preview.ProvisionalDestinationInfo>}
      */
     grantExtensionPrinterAccess: function(provisionalDestinationId) {
-      return cr.sendWithPromise('grantExtensionPrinterAccess',
-                                provisionalDestinationId);
+      chrome.send('grantExtensionPrinterAccess', [provisionalDestinationId]);
     },
 
     /**
@@ -685,6 +682,20 @@ cr.define('print_preview', function() {
     },
 
     /**
+     * Notification that access token is ready.
+     * @param {string} authType Type of access token.
+     * @param {string} accessToken Access token.
+     * @private
+     */
+    onDidGetAccessToken_: function(authType, accessToken) {
+      var getAccessTokenEvent =
+          new Event(NativeLayer.EventType.ACCESS_TOKEN_READY);
+      getAccessTokenEvent.authType = authType;
+      getAccessTokenEvent.accessToken = accessToken;
+      this.eventTarget_.dispatchEvent(getAccessTokenEvent);
+    },
+
+    /**
      * Update the print preview when new preview data is available.
      * Create the PDF plugin as needed.
      * Called from PrintPreviewUI::PreviewDataIsAvailable().
@@ -714,6 +725,42 @@ cr.define('print_preview', function() {
           new Event(NativeLayer.EventType.PRINT_PRESET_OPTIONS);
       printPresetOptionsEvent.optionsFromDocument = options;
       this.eventTarget_.dispatchEvent(printPresetOptionsEvent);
+    },
+
+    /**
+     * Called when Chrome reports that attempt to resolve a provisional
+     * destination failed.
+     * @param {string} destinationId The provisional destination ID.
+     * @private
+     */
+    failedToResolveProvisionalDestination_: function(destinationId) {
+      var evt =
+          new Event(NativeLayer.EventType.PROVISIONAL_DESTINATION_RESOLVED);
+      evt.provisionalId = destinationId;
+      evt.destination = null;
+      this.eventTarget_.dispatchEvent(evt);
+    },
+
+    /**
+     * Called when Chrome reports that a provisional destination has been
+     * successfully resolved.
+     * Currently used only for extension provided destinations.
+     * @param {string} provisionalDestinationId The provisional destination id.
+     * @param {!{extensionId: string,
+     *           extensionName: string,
+     *           id: string,
+     *           name: string,
+     *           description: (string|undefined)}} destinationInfo The resolved
+     *     destination info.
+     * @private
+     */
+    onProvisionalDestinationResolved_: function(
+        provisionalDestinationId, destinationInfo) {
+      var evt =
+          new Event(NativeLayer.EventType.PROVISIONAL_DESTINATION_RESOLVED);
+      evt.provisionalId = provisionalDestinationId;
+      evt.destination = destinationInfo;
+      this.eventTarget_.dispatchEvent(evt);
     },
 
     /**

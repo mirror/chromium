@@ -97,6 +97,7 @@ NSString* const kTitleId = @"title";
 // Helper functions to get source type, or get data entities based on source
 // type.
 - (DesktopMediaID::Type)selectedSourceType;
+- (DesktopMediaID::Type)sourceTypeForList:(DesktopMediaList*)list;
 - (DesktopMediaID::Type)sourceTypeForBrowser:(id)browser;
 - (id)browserViewForType:(DesktopMediaID::Type)sourceType;
 - (NSMutableArray*)itemSetForType:(DesktopMediaID::Type)sourceType;
@@ -107,13 +108,14 @@ NSString* const kTitleId = @"title";
 
 @implementation DesktopMediaPickerController
 
-- (id)initWithSourceLists:
-          (std::vector<std::unique_ptr<DesktopMediaList>>)sourceLists
-                   parent:(NSWindow*)parent
-                 callback:(const DesktopMediaPicker::DoneCallback&)callback
-                  appName:(const base::string16&)appName
-               targetName:(const base::string16&)targetName
-             requestAudio:(bool)requestAudio {
+- (id)initWithScreenList:(std::unique_ptr<DesktopMediaList>)screenList
+              windowList:(std::unique_ptr<DesktopMediaList>)windowList
+                 tabList:(std::unique_ptr<DesktopMediaList>)tabList
+                  parent:(NSWindow*)parent
+                callback:(const DesktopMediaPicker::DoneCallback&)callback
+                 appName:(const base::string16&)appName
+              targetName:(const base::string16&)targetName
+            requestAudio:(bool)requestAudio {
   const NSUInteger kStyleMask =
       NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask;
   base::scoped_nsobject<NSWindow> window(
@@ -125,25 +127,21 @@ NSString* const kTitleId = @"title";
   if ((self = [super initWithWindow:window])) {
     [parent addChildWindow:window ordered:NSWindowAbove];
     [window setDelegate:self];
+    if (screenList) {
+      screenList_ = std::move(screenList);
+      screenItems_.reset([[NSMutableArray alloc] init]);
+    }
 
-    sourceLists_ = std::move(sourceLists);
-    for (auto& sourceList : sourceLists_) {
-      switch (sourceList->GetMediaListType()) {
-        case DesktopMediaID::TYPE_NONE:
-          NOTREACHED();
-          break;
-        case DesktopMediaID::TYPE_SCREEN:
-          screenItems_.reset([[NSMutableArray alloc] init]);
-          break;
-        case DesktopMediaID::TYPE_WINDOW:
-          sourceList->SetViewDialogWindowId(DesktopMediaID(
-              DesktopMediaID::TYPE_WINDOW, [window windowNumber]));
-          windowItems_.reset([[NSMutableArray alloc] init]);
-          break;
-        case DesktopMediaID::TYPE_WEB_CONTENTS:
-          tabItems_.reset([[NSMutableArray alloc] init]);
-          break;
-      }
+    if (windowList) {
+      windowList_ = std::move(windowList);
+      windowList_->SetViewDialogWindowId(
+          DesktopMediaID(DesktopMediaID::TYPE_WINDOW, [window windowNumber]));
+      windowItems_.reset([[NSMutableArray alloc] init]);
+    }
+
+    if (tabList) {
+      tabList_ = std::move(tabList);
+      tabItems_.reset([[NSMutableArray alloc] init]);
     }
 
     [self initializeContentsWithAppName:appName
@@ -231,44 +229,39 @@ NSString* const kTitleId = @"title";
   sourceTypeControl_.reset(
       [[NSSegmentedControl alloc] initWithFrame:NSZeroRect]);
 
-  NSInteger segmentCount = sourceLists_.size();
+  NSInteger segmentCount =
+      (screenList_ ? 1 : 0) + (windowList_ ? 1 : 0) + (tabList_ ? 1 : 0);
   [sourceTypeControl_ setSegmentCount:segmentCount];
   NSInteger segmentIndex = 0;
 
-  for (auto& sourceList : sourceLists_) {
-    switch (sourceList->GetMediaListType()) {
-      case DesktopMediaID::TYPE_NONE:
-        NOTREACHED();
-        break;
-      case DesktopMediaID::TYPE_SCREEN:
-        [sourceTypeControl_
-              setLabel:l10n_util::GetNSString(
-                           IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_SCREEN)
-            forSegment:segmentIndex];
+  if (screenList_) {
+    [sourceTypeControl_
+          setLabel:l10n_util::GetNSString(
+                       IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_SCREEN)
+        forSegment:segmentIndex];
 
-        [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_SCREEN
-                               forSegment:segmentIndex];
-        break;
-      case DesktopMediaID::TYPE_WINDOW:
-        [sourceTypeControl_
-              setLabel:l10n_util::GetNSString(
-                           IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_WINDOW)
-            forSegment:segmentIndex];
-        [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WINDOW
-                               forSegment:segmentIndex];
-        break;
-      case DesktopMediaID::TYPE_WEB_CONTENTS:
-        [sourceTypeControl_
-              setLabel:l10n_util::GetNSString(
-                           IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_TAB)
-            forSegment:segmentIndex];
-        [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WEB_CONTENTS
-                               forSegment:segmentIndex];
-        break;
-    }
+    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_SCREEN
+                           forSegment:segmentIndex];
     ++segmentIndex;
   }
 
+  if (windowList_) {
+    [sourceTypeControl_
+          setLabel:l10n_util::GetNSString(
+                       IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_WINDOW)
+        forSegment:segmentIndex];
+    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WINDOW
+                           forSegment:segmentIndex];
+    ++segmentIndex;
+  }
+
+  if (tabList_) {
+    [sourceTypeControl_ setLabel:l10n_util::GetNSString(
+                                     IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_TAB)
+                      forSegment:segmentIndex];
+    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WEB_CONTENTS
+                           forSegment:segmentIndex];
+  }
   [sourceTypeControl_ setTarget:self];
   [sourceTypeControl_ setAction:@selector(typeButtonPressed:)];
 
@@ -287,51 +280,41 @@ NSString* const kTitleId = @"title";
 }
 
 - (void)createSourceViewsAtOrigin:(NSPoint)origin {
-  for (auto& sourceList : sourceLists_) {
-    switch (sourceList->GetMediaListType()) {
-      case DesktopMediaID::TYPE_NONE: {
-        NOTREACHED();
-        break;
-      }
-      case DesktopMediaID::TYPE_SCREEN: {
-        const bool is_single = sourceList->GetSourceCount() <= 1;
-        const CGFloat width =
-            is_single ? kSingleScreenWidth : kMultipleScreenWidth;
-        const CGFloat height =
-            is_single ? kSingleScreenHeight : kMultipleScreenHeight;
-        screenBrowser_.reset([[self
-            createImageBrowserWithSize:NSMakeSize(width, height)] retain]);
-        break;
-      }
-
-      case DesktopMediaID::TYPE_WINDOW: {
-        windowBrowser_.reset([[self
-            createImageBrowserWithSize:NSMakeSize(kThumbnailWidth,
-                                                  kThumbnailHeight)] retain]);
-        break;
-      }
-      case DesktopMediaID::TYPE_WEB_CONTENTS: {
-        tabBrowser_.reset([[NSTableView alloc] initWithFrame:NSZeroRect]);
-        [tabBrowser_ setDelegate:self];
-        [tabBrowser_ setDataSource:self];
-        [tabBrowser_ setAllowsMultipleSelection:NO];
-        [tabBrowser_ setRowHeight:kRowHeight];
-        [tabBrowser_ setDoubleAction:@selector(sharePressed:)];
-        base::scoped_nsobject<NSTableColumn> iconColumn(
-            [[NSTableColumn alloc] initWithIdentifier:kIconId]);
-        [iconColumn setEditable:NO];
-        [iconColumn setWidth:kIconWidth];
-        [tabBrowser_ addTableColumn:iconColumn];
-        base::scoped_nsobject<NSTableColumn> titleColumn(
-            [[NSTableColumn alloc] initWithIdentifier:kTitleId]);
-        [titleColumn setEditable:NO];
-        [titleColumn setWidth:kRowWidth];
-        [tabBrowser_ addTableColumn:titleColumn];
-        [tabBrowser_ setHeaderView:nil];
-        break;
-      }
-    }
+  if (screenList_) {
+    const bool is_single = screenList_->GetSourceCount() <= 1;
+    const CGFloat width = is_single ? kSingleScreenWidth : kMultipleScreenWidth;
+    const CGFloat height =
+        is_single ? kSingleScreenHeight : kMultipleScreenHeight;
+    screenBrowser_.reset(
+        [[self createImageBrowserWithSize:NSMakeSize(width, height)] retain]);
   }
+
+  if (windowList_) {
+    windowBrowser_.reset([
+        [self createImageBrowserWithSize:NSMakeSize(kThumbnailWidth,
+                                                    kThumbnailHeight)] retain]);
+  }
+
+  if (tabList_) {
+    tabBrowser_.reset([[NSTableView alloc] initWithFrame:NSZeroRect]);
+    [tabBrowser_ setDelegate:self];
+    [tabBrowser_ setDataSource:self];
+    [tabBrowser_ setAllowsMultipleSelection:NO];
+    [tabBrowser_ setRowHeight:kRowHeight];
+    [tabBrowser_ setDoubleAction:@selector(sharePressed:)];
+    base::scoped_nsobject<NSTableColumn> iconColumn(
+        [[NSTableColumn alloc] initWithIdentifier:kIconId]);
+    [iconColumn setEditable:NO];
+    [iconColumn setWidth:kIconWidth];
+    [tabBrowser_ addTableColumn:iconColumn];
+    base::scoped_nsobject<NSTableColumn> titleColumn(
+        [[NSTableColumn alloc] initWithIdentifier:kTitleId]);
+    [titleColumn setEditable:NO];
+    [titleColumn setWidth:kRowWidth];
+    [tabBrowser_ addTableColumn:titleColumn];
+    [tabBrowser_ setHeaderView:nil];
+  }
+
   // Create a scroll view to host the image browsers.
   NSRect imageBrowserScrollFrame =
       NSMakeRect(origin.x, origin.y, kPaddedWidth, 350);
@@ -429,30 +412,20 @@ NSString* const kTitleId = @"title";
 - (void)showWindow:(id)sender {
   // Signal the source lists to start sending thumbnails. |bridge_| is used as
   // the observer, and will forward notifications to this object.
-  for (auto& sourceList : sourceLists_) {
-    switch (sourceList->GetMediaListType()) {
-      case DesktopMediaID::TYPE_NONE: {
-        NOTREACHED();
-        break;
-      }
-      case DesktopMediaID::TYPE_SCREEN: {
-        sourceList->SetThumbnailSize(
-            gfx::Size(kSingleScreenWidth, kSingleScreenHeight));
-        sourceList->StartUpdating(bridge_.get());
-        break;
-      }
-      case DesktopMediaID::TYPE_WINDOW: {
-        sourceList->SetThumbnailSize(
-            gfx::Size(kThumbnailWidth, kThumbnailHeight));
-        sourceList->StartUpdating(bridge_.get());
-        break;
-      }
-      case DesktopMediaID::TYPE_WEB_CONTENTS: {
-        sourceList->SetThumbnailSize(gfx::Size(kIconWidth, kRowHeight));
-        sourceList->StartUpdating(bridge_.get());
-        break;
-      }
-    }
+  if (screenList_) {
+    screenList_->SetThumbnailSize(
+        gfx::Size(kSingleScreenWidth, kSingleScreenHeight));
+    screenList_->StartUpdating(bridge_.get());
+  }
+
+  if (windowList_) {
+    windowList_->SetThumbnailSize(gfx::Size(kThumbnailWidth, kThumbnailHeight));
+    windowList_->StartUpdating(bridge_.get());
+  }
+
+  if (tabList_) {
+    tabList_->SetThumbnailSize(gfx::Size(kIconWidth, kRowHeight));
+    tabList_->StartUpdating(bridge_.get());
   }
 
   [self.window center];
@@ -527,6 +500,14 @@ NSString* const kTitleId = @"title";
   NSInteger segment = [sourceTypeControl_ selectedSegment];
   return static_cast<DesktopMediaID::Type>(
       [[sourceTypeControl_ cell] tagForSegment:segment]);
+}
+
+- (DesktopMediaID::Type)sourceTypeForList:(DesktopMediaList*)list {
+  if (list == screenList_.get())
+    return DesktopMediaID::TYPE_SCREEN;
+  if (list == windowList_.get())
+    return DesktopMediaID::TYPE_WINDOW;
+  return DesktopMediaID::TYPE_WEB_CONTENTS;
 }
 
 - (DesktopMediaID::Type)sourceTypeForBrowser:(id)browser {
@@ -697,7 +678,7 @@ NSString* const kTitleId = @"title";
 #pragma mark DesktopMediaPickerObserver
 
 - (void)sourceAddedForList:(DesktopMediaList*)list atIndex:(int)index {
-  DesktopMediaID::Type sourceType = list->GetMediaListType();
+  DesktopMediaID::Type sourceType = [self sourceTypeForList:list];
   NSMutableArray* items = [self itemSetForType:sourceType];
   id browser = [self browserViewForType:sourceType];
   NSInteger selectedIndex = [self selectedIndexForType:sourceType];
@@ -739,7 +720,7 @@ NSString* const kTitleId = @"title";
 }
 
 - (void)sourceRemovedForList:(DesktopMediaList*)list atIndex:(int)index {
-  DesktopMediaID::Type sourceType = list->GetMediaListType();
+  DesktopMediaID::Type sourceType = [self sourceTypeForList:list];
   NSMutableArray* items = [self itemSetForType:sourceType];
   id browser = [self browserViewForType:sourceType];
 
@@ -768,7 +749,7 @@ NSString* const kTitleId = @"title";
 - (void)sourceMovedForList:(DesktopMediaList*)list
                       from:(int)oldIndex
                         to:(int)newIndex {
-  DesktopMediaID::Type sourceType = list->GetMediaListType();
+  DesktopMediaID::Type sourceType = [self sourceTypeForList:list];
   NSMutableArray* items = [self itemSetForType:sourceType];
   id browser = [self browserViewForType:sourceType];
   NSInteger selectedIndex = [self selectedIndexForType:sourceType];
@@ -790,7 +771,7 @@ NSString* const kTitleId = @"title";
 }
 
 - (void)sourceNameChangedForList:(DesktopMediaList*)list atIndex:(int)index {
-  DesktopMediaID::Type sourceType = list->GetMediaListType();
+  DesktopMediaID::Type sourceType = [self sourceTypeForList:list];
   NSMutableArray* items = [self itemSetForType:sourceType];
   id browser = [self browserViewForType:sourceType];
   NSInteger selectedIndex = [self selectedIndexForType:sourceType];
@@ -805,7 +786,7 @@ NSString* const kTitleId = @"title";
 
 - (void)sourceThumbnailChangedForList:(DesktopMediaList*)list
                               atIndex:(int)index {
-  DesktopMediaID::Type sourceType = list->GetMediaListType();
+  DesktopMediaID::Type sourceType = [self sourceTypeForList:list];
   NSMutableArray* items = [self itemSetForType:sourceType];
   id browser = [self browserViewForType:sourceType];
   NSInteger selectedIndex = [self selectedIndexForType:sourceType];

@@ -32,10 +32,6 @@
 #include "extensions/common/stack_frame.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
-namespace content {
-class RenderFrameHost;
-}
-
 namespace gfx {
 class Image;
 }
@@ -146,8 +142,9 @@ class TabHelper : public content::WebContentsObserver,
   void RenderFrameCreated(content::RenderFrameHost* host) override;
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
+  bool OnMessageReceived(const IPC::Message& message) override;
   bool OnMessageReceived(const IPC::Message& message,
-                         content::RenderFrameHost* sender) override;
+                         content::RenderFrameHost* render_frame_host) override;
   void DidCloneToNewWebContents(
       content::WebContents* old_web_contents,
       content::WebContents* new_web_contents) override;
@@ -169,8 +166,7 @@ class TabHelper : public content::WebContentsObserver,
       DoInlineInstallCallback callback) override;
 
   // Message handlers.
-  void OnDidGetWebApplicationInfo(content::RenderFrameHost* sender,
-                                  const WebApplicationInfo& info);
+  void OnDidGetWebApplicationInfo(const WebApplicationInfo& info);
   void OnGetAppInstallState(content::RenderFrameHost* host,
                             const GURL& requestor_url,
                             int return_route_id,

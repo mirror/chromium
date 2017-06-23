@@ -13,7 +13,7 @@ class SerialIoHandlerPosixTest : public testing::Test {
   SerialIoHandlerPosixTest() {}
 
   void SetUp() override {
-    serial_io_handler_posix_ = new SerialIoHandlerPosix(nullptr);
+    serial_io_handler_posix_ = new SerialIoHandlerPosix(nullptr, nullptr);
   }
 
   void Initialize(bool parity_check_enabled,

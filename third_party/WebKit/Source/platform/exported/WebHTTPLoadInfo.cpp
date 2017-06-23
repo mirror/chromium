@@ -48,10 +48,10 @@ void WebHTTPLoadInfo::Assign(const WebHTTPLoadInfo& r) {
   private_ = r.private_;
 }
 
-WebHTTPLoadInfo::WebHTTPLoadInfo(WTF::RefPtr<ResourceLoadInfo> value)
+WebHTTPLoadInfo::WebHTTPLoadInfo(WTF::PassRefPtr<ResourceLoadInfo> value)
     : private_(std::move(value)) {}
 
-WebHTTPLoadInfo::operator WTF::RefPtr<ResourceLoadInfo>() const {
+WebHTTPLoadInfo::operator WTF::PassRefPtr<ResourceLoadInfo>() const {
   return private_.Get();
 }
 

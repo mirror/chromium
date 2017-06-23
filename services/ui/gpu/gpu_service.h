@@ -73,9 +73,6 @@ class GpuService : public gpu::GpuChannelManagerDelegate,
   }
 
   gpu::ImageFactory* gpu_image_factory();
-  gpu::GpuMemoryBufferFactory* gpu_memory_buffer_factory() {
-    return gpu_memory_buffer_factory_.get();
-  }
 
   gpu::GpuWatchdogThread* watchdog_thread() { return watchdog_thread_.get(); }
 

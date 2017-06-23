@@ -35,13 +35,6 @@ const HeapVector<Member<DocumentMarker>>& TextMatchMarkerListImpl::GetMarkers()
   return markers_;
 }
 
-HeapVector<Member<DocumentMarker>>
-TextMatchMarkerListImpl::MarkersIntersectingRange(unsigned start_offset,
-                                                  unsigned end_offset) const {
-  return DocumentMarkerListEditor::MarkersIntersectingRange(
-      markers_, start_offset, end_offset);
-}
-
 bool TextMatchMarkerListImpl::MoveMarkers(int length,
                                           DocumentMarkerList* dst_list) {
   return DocumentMarkerListEditor::MoveMarkers(&markers_, length, dst_list);
@@ -65,8 +58,8 @@ DEFINE_TRACE(TextMatchMarkerListImpl) {
 }
 
 static void UpdateMarkerLayoutRect(const Node& node, TextMatchMarker& marker) {
-  const Position start_position(node, marker.StartOffset());
-  const Position end_position(node, marker.EndOffset());
+  const Position start_position(&const_cast<Node&>(node), marker.StartOffset());
+  const Position end_position(&const_cast<Node&>(node), marker.EndOffset());
   EphemeralRange range(start_position, end_position);
   marker.SetLayoutRect(LayoutRect(ComputeTextRect(range)));
 }

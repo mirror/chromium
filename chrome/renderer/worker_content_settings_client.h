@@ -19,6 +19,7 @@ class RenderFrame;
 }
 
 namespace blink {
+class WebFrame;
 class WebSecurityOrigin;
 }
 
@@ -26,7 +27,8 @@ class WebSecurityOrigin;
 // blink's worker thread.
 class WorkerContentSettingsClient : public blink::WebContentSettingsClient {
  public:
-  explicit WorkerContentSettingsClient(content::RenderFrame* render_frame);
+  WorkerContentSettingsClient(content::RenderFrame* render_frame,
+                              blink::WebFrame* frame);
   ~WorkerContentSettingsClient() override;
 
   // WebContentSettingsClient overrides.

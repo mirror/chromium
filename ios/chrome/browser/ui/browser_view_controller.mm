@@ -62,6 +62,7 @@
 #include "ios/chrome/browser/infobars/infobar_container_view.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
 #include "ios/chrome/browser/metrics/tab_usage_recorder.h"
+#import "ios/chrome/browser/native_app_launcher/native_app_navigation_controller.h"
 #import "ios/chrome/browser/open_url_util.h"
 #import "ios/chrome/browser/passwords/password_controller.h"
 #include "ios/chrome/browser/pref_names.h"
@@ -1638,7 +1639,6 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
 
           if (self.foregroundTabWasAddedCompletionBlock) {
             self.foregroundTabWasAddedCompletionBlock();
-            self.foregroundTabWasAddedCompletionBlock = nil;
           }
         });
   } else {
@@ -1677,11 +1677,10 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
             [topTab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
           startVoiceSearchIfNecessaryBlock();
         });
-    // Reset the foreground tab completion block so that it can never be
-    // called more than once regardless of foreground/background tab
-    // appearances.
-    self.foregroundTabWasAddedCompletionBlock = nil;
   }
+  // Reset the foreground tab completion block so that it can never be
+  // called more than once regardless of foreground/background tab appearances.
+  self.foregroundTabWasAddedCompletionBlock = nil;
 }
 
 #pragma mark - UI Configuration and Layout
@@ -3767,6 +3766,8 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
     if (oldTab && newTab && canPruneItems) {
       [newTab navigationManager]->CopyStateFromAndPrune(
           [oldTab navigationManager]);
+      [[newTab nativeAppNavigationController]
+          copyStateFrom:[oldTab nativeAppNavigationController]];
 
       [_model webStateList]->ReplaceWebStateAt([_model indexOfTab:oldTab],
                                                std::move(newWebState));

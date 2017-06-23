@@ -471,8 +471,10 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // Returns YES if the user interacted with the page recently.
 @property(nonatomic, readonly) BOOL userClickedRecently;
 
-// Whether or not desktop user agent is used for the currentItem.
-@property(nonatomic, readonly) BOOL usesDesktopUserAgent;
+// User agent type of the transient item if any, the pending item if a
+// navigation is in progress or the last committed item otherwise.
+// Returns MOBILE, the default type, if navigation manager is nullptr or empty.
+@property(nonatomic, readonly) web::UserAgentType userAgentType;
 
 // Facade for Mojo API.
 @property(nonatomic, readonly) web::MojoFacade* mojoFacade;
@@ -493,10 +495,18 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // loaded.
 @property(nonatomic, readwrite) BOOL userInteractionRegistered;
 
-// Requires page reconstruction if |item| has a non-NONE UserAgentType and it
-// differs from that of |fromItem|.
-- (void)updateDesktopUserAgentForItem:(web::NavigationItem*)item
-                previousUserAgentType:(web::UserAgentType)userAgentType;
+// Updates web view's user agent according to |userAgentType|. It is no-op if
+// |userAgentType| is NONE.
+- (void)updateWebViewUserAgentFromUserAgentType:
+    (web::UserAgentType)userAgentType;
+
+// Requires that the next load rebuild the web view. This is expensive, and
+// should be used only in the case where something has changed that web view
+// only checks on creation, such that the whole object needs to be rebuilt.
+// TODO(stuartmorgan): Merge this and reinitializeWebViewAndReload:. They are
+// currently subtly different in terms of implementation, but are for
+// fundamentally the same purpose.
+- (void)requirePageReconstruction;
 
 // Removes the container view from the hierarchy and resets the ivar.
 - (void)resetContainerView;
@@ -745,6 +755,11 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
 - (BOOL)shouldOpenURL:(const GURL&)url
       mainDocumentURL:(const GURL&)mainDocumentURL
           linkClicked:(BOOL)linkClicked;
+// Called when |URL| needs to be opened in a matching native app.
+// Returns YES if the url was succesfully opened in the native app.
+- (BOOL)urlTriggersNativeAppLaunch:(const GURL&)URL
+                         sourceURL:(const GURL&)sourceURL
+           linkActivatedNavigation:(BOOL)linkActivatedNavigation;
 // Returns YES if the navigation action is associated with a main frame request.
 - (BOOL)isMainFrameNavigationAction:(WKNavigationAction*)action;
 // Returns whether external URL navigation action should be opened.
@@ -1635,6 +1650,13 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   [self ensureWebViewCreated];
 
+  // Update web view's user agent is called for every load, which may have
+  // performance implications because update web view's user agent may
+  // potentially send a message to a separate thread. However, this is not an
+  // issue for WKWebView because WKWebView's |setCustomUserAgent| is non-op if
+  // user agent stays thesame.
+  [self updateWebViewUserAgentFromUserAgentType:self.userAgentType];
+
   [self loadRequestForCurrentNavigationItem];
 }
 
@@ -2056,15 +2078,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   // Update the user agent before attempting the navigation.
   web::NavigationItem* toItem = items[index].get();
-  web::NavigationItem* previousItem = sessionController.currentItem;
-  web::UserAgentType previousUserAgentType =
-      previousItem ? previousItem->GetUserAgentType()
-                   : web::UserAgentType::NONE;
-  [self updateDesktopUserAgentForItem:toItem
-                previousUserAgentType:previousUserAgentType];
+  [self updateWebViewUserAgentFromUserAgentType:toItem->GetUserAgentType()];
 
+  web::NavigationItem* fromItem = sessionController.currentItem;
   BOOL sameDocumentNavigation =
-      [sessionController isSameDocumentNavigationBetweenItem:previousItem
+      [sessionController isSameDocumentNavigationBetweenItem:fromItem
                                                      andItem:toItem];
   if (sameDocumentNavigation) {
     [sessionController goToItemAtIndex:index discardNonCommittedItems:YES];
@@ -2221,9 +2239,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
   return rendererInitiatedWithoutInteraction || noNavigationItems;
 }
 
-- (BOOL)usesDesktopUserAgent {
+- (web::UserAgentType)userAgentType {
   web::NavigationItem* item = self.currentNavItem;
-  return item && item->GetUserAgentType() == web::UserAgentType::DESKTOP;
+  return item ? item->GetUserAgentType() : web::UserAgentType::MOBILE;
 }
 
 - (web::MojoFacade*)mojoFacade {
@@ -2262,15 +2280,14 @@ registerLoadRequestForURL:(const GURL&)requestURL
   return _passKitDownloader.get();
 }
 
-- (void)updateDesktopUserAgentForItem:(web::NavigationItem*)item
-                previousUserAgentType:(web::UserAgentType)userAgentType {
-  if (!item)
+- (void)updateWebViewUserAgentFromUserAgentType:
+    (web::UserAgentType)userAgentType {
+  if (userAgentType == web::UserAgentType::NONE)
     return;
-  web::UserAgentType itemUserAgentType = item->GetUserAgentType();
-  if (itemUserAgentType == web::UserAgentType::NONE)
-    return;
-  if (itemUserAgentType != userAgentType)
-    [self requirePageReconstruction];
+
+  NSString* userAgent =
+      base::SysUTF8ToNSString(web::GetWebClient()->GetUserAgent(userAgentType));
+  [_webView setCustomUserAgent:userAgent];
 }
 
 #pragma mark -
@@ -2930,17 +2947,43 @@ registerLoadRequestForURL:(const GURL&)requestURL
 // method, which provides less information than the WKWebView version. Audit
 // this for things that should be handled in the subclass instead.
 - (BOOL)shouldAllowLoadWithNavigationAction:(WKNavigationAction*)action {
+  NSURLRequest* request = action.request;
+  GURL requestURL = net::GURLWithNSURL(request.URL);
+
   // External application launcher needs |isNavigationTypeLinkActivated| to
   // decide if the user intended to open the application by clicking on a link.
   BOOL isNavigationTypeLinkActivated =
       action.navigationType == WKNavigationTypeLinkActivated;
 
+  // Checks if the link navigation leads to a launch of an external app.
+  // TODO(crbug.com/704417): External apps will not be launched from clicking
+  // a Bookmarked URL or a Recently Closed URL.
+  // TODO(crbug.com/607780): Revise the logic of allowing external app launch
+  // and move it to externalAppLauncher.
+  BOOL isOpenInNewTabNavigation = !(self.navigationManagerImpl->GetItemCount());
+  BOOL isPossibleLinkClick = [self isLinkNavigation:action.navigationType];
+  if (isPossibleLinkClick || isOpenInNewTabNavigation) {
+    web::NavigationItem* item = self.currentNavItem;
+    const GURL currentNavigationURL =
+        item ? item->GetVirtualURL() : GURL::EmptyGURL();
+    // Check If the URL is handled by a native app.
+    if ([self urlTriggersNativeAppLaunch:requestURL
+                               sourceURL:currentNavigationURL
+                 linkActivatedNavigation:isNavigationTypeLinkActivated]) {
+      // External app has been launched successfully. Stop the current page
+      // load operation (e.g. notifying all observers) and record the URL so
+      // that errors reported following the 'NO' reply can be safely ignored.
+      if ([self shouldClosePageOnNativeApplicationLoad])
+        _webStateImpl->CloseWebState();
+      [self stopLoading];
+      [_openedApplicationURL addObject:request.URL];
+      return NO;
+    }
+  }
+
   // The WebDelegate may instruct the CRWWebController to stop loading, and
   // instead instruct the next page to be loaded in an animation.
-  NSURLRequest* request = action.request;
-  GURL requestURL = net::GURLWithNSURL(request.URL);
   GURL mainDocumentURL = net::GURLWithNSURL(request.mainDocumentURL);
-  BOOL isPossibleLinkClick = [self isLinkNavigation:action.navigationType];
   DCHECK(_webView);
   if (![self shouldOpenURL:requestURL
            mainDocumentURL:mainDocumentURL
@@ -3778,6 +3821,19 @@ registerLoadRequestForURL:(const GURL&)requestURL
          [_delegate webController:self shouldOpenExternalURL:requestURL];
 }
 
+- (BOOL)urlTriggersNativeAppLaunch:(const GURL&)URL
+                         sourceURL:(const GURL&)sourceURL
+           linkActivatedNavigation:(BOOL)linkActivatedNavigation {
+  if (![_delegate respondsToSelector:@selector(urlTriggersNativeAppLaunch:
+                                                                sourceURL:
+                                                              linkClicked:)]) {
+    return NO;
+  }
+  return [_delegate urlTriggersNativeAppLaunch:URL
+                                     sourceURL:sourceURL
+                                   linkClicked:linkActivatedNavigation];
+}
+
 - (CGFloat)headerHeight {
   if (![_delegate respondsToSelector:@selector(headerHeightForWebController:)])
     return 0.0f;
@@ -3973,7 +4029,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // delegate must be specified.
   return web::BuildWKWebView(CGRectZero, config,
                              self.webStateImpl->GetBrowserState(),
-                             self.usesDesktopUserAgent);
+                             self.userAgentType);
 }
 
 - (void)setWebView:(WKWebView*)webView {
@@ -4482,9 +4538,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     didCommitNavigation:(WKNavigation*)navigation {
   [self displayWebView];
 
-  bool navigationFinished = [_navigationStates stateForNavigation:navigation] ==
-                            web::WKNavigationState::FINISHED;
-
   // Record the navigation state.
   [_navigationStates setState:web::WKNavigationState::COMMITTED
                 forNavigation:navigation];
@@ -4576,21 +4629,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
     UMA_HISTOGRAM_BOOLEAN("WebController.WKWebViewHasCertForSecureConnection",
                           static_cast<bool>(cert));
   }
-
-  if (navigationFinished) {
-    // webView:didFinishNavigation: was called before
-    // webView:didCommitNavigation:, so remove the navigation now and signal
-    // that navigation was finished.
-    [_navigationStates removeNavigation:navigation];
-    [self didFinishNavigation:navigation];
-  }
 }
 
 - (void)webView:(WKWebView*)webView
     didFinishNavigation:(WKNavigation*)navigation {
-  bool navigationCommitted =
-      [_navigationStates stateForNavigation:navigation] ==
-      web::WKNavigationState::COMMITTED;
   [_navigationStates setState:web::WKNavigationState::FINISHED
                 forNavigation:navigation];
 
@@ -4601,12 +4643,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // appropriate time rather than invoking here.
   web::ExecuteJavaScript(webView, @"__gCrWeb.didFinishNavigation()", nil);
   [self didFinishNavigation:navigation];
-
-  // Remove navigation only if it has been committed. Otherwise it will be
-  // removed in webView:didCommitNavigation: callback.
-  if (navigationCommitted) {
-    [_navigationStates removeNavigation:navigation];
-  }
+  [_navigationStates removeNavigation:navigation];
 }
 
 - (void)webView:(WKWebView*)webView

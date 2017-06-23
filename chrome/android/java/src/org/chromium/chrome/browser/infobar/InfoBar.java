@@ -132,13 +132,6 @@ public abstract class InfoBar implements InfoBarView {
         return mView;
     }
 
-    /**
-     * Returns the accessibility message from the view to announce when this infobar is first shown.
-     */
-    protected CharSequence getAccessibilityMessage(TextView messageView) {
-        return messageView.getText();
-    }
-
     @Override
     public CharSequence getAccessibilityText() {
         if (mView == null) return "";
@@ -148,8 +141,7 @@ public abstract class InfoBar implements InfoBarView {
         if (usesCompactLayout()) return mContext.getString(R.string.bottom_bar_screen_position);
         TextView messageView = (TextView) mView.findViewById(R.id.infobar_message);
         if (messageView == null) return "";
-        return getAccessibilityMessage(messageView)
-                + mContext.getString(R.string.bottom_bar_screen_position);
+        return messageView.getText() + mContext.getString(R.string.bottom_bar_screen_position);
     }
 
     @Override

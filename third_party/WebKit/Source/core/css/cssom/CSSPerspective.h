@@ -17,26 +17,28 @@ class ExceptionState;
 // Represents a perspective value in a CSSTransformValue used for properties
 // like "transform".
 // See CSSPerspective.idl for more information about this class.
-class CORE_EXPORT CSSPerspective final : public CSSTransformComponent {
+class CORE_EXPORT CSSPerspective : public CSSTransformComponent {
   WTF_MAKE_NONCOPYABLE(CSSPerspective);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
   // Constructor defined in the IDL.
-  static CSSPerspective* Create(CSSNumericValue*, ExceptionState&);
+  static CSSPerspective* Create(const CSSNumericValue*, ExceptionState&);
 
   // Blink-internal ways of creating CSSPerspectives.
   static CSSPerspective* FromCSSValue(const CSSFunctionValue&);
 
   // Getters and setters for attributes defined in the IDL.
-  CSSNumericValue* length() { return length_.Get(); }
-  void setLength(CSSNumericValue*, ExceptionState&);
+  // Bindings require a non const return value.
+  CSSNumericValue* length() const {
+    return const_cast<CSSNumericValue*>(length_.Get());
+  }
 
   // Internal methods - from CSSTransformComponent.
-  TransformComponentType GetType() const final { return kPerspectiveType; }
+  TransformComponentType GetType() const override { return kPerspectiveType; }
   // TODO: Implement AsMatrix for CSSPerspective.
-  DOMMatrix* AsMatrix() const final { return nullptr; }
-  CSSFunctionValue* ToCSSValue() const final;
+  DOMMatrix* AsMatrix() const override { return nullptr; }
+  CSSFunctionValue* ToCSSValue() const override;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(length_);
@@ -44,9 +46,9 @@ class CORE_EXPORT CSSPerspective final : public CSSTransformComponent {
   }
 
  private:
-  CSSPerspective(CSSNumericValue* length) : length_(length) {}
+  CSSPerspective(const CSSNumericValue* length) : length_(length) {}
 
-  Member<CSSNumericValue> length_;
+  Member<const CSSNumericValue> length_;
 };
 
 }  // namespace blink

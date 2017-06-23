@@ -14,6 +14,7 @@
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_window_watcher_item_delegate.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/strings/string_util.h"
@@ -260,7 +261,8 @@ void ShelfWindowWatcher::OnWindowActivated(ActivationReason reason,
 }
 
 void ShelfWindowWatcher::OnDisplayAdded(const display::Display& new_display) {
-  aura::Window* root = Shell::GetRootWindowForDisplayId(new_display.id());
+  aura::Window* root =
+      ShellPort::Get()->GetRootWindowForDisplayId(new_display.id());
 
   // When the primary root window's display is removed, the existing root window
   // is taken over by the new display, and the observer is already set.

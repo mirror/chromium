@@ -21,7 +21,6 @@
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/chromeos/accelerometer/accelerometer_util.h"
 #include "ui/display/display.h"
-#include "ui/display/manager/display_manager.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/geometry/vector3d_f.h"
@@ -229,7 +228,7 @@ void MaximizeModeController::OnAccelerometerUpdated(
   if (!display::Display::HasInternalDisplay())
     return;
 
-  if (!Shell::Get()->display_manager()->IsActiveDisplayId(
+  if (!ShellPort::Get()->IsActiveDisplayId(
           display::Display::InternalDisplayId())) {
     return;
   }
@@ -272,7 +271,7 @@ void MaximizeModeController::TabletModeEventReceived(
   tablet_mode_switch_is_on_ = on;
   // Do not change if docked.
   if (!display::Display::HasInternalDisplay() ||
-      !Shell::Get()->display_manager()->IsActiveDisplayId(
+      !ShellPort::Get()->IsActiveDisplayId(
           display::Display::InternalDisplayId())) {
     return;
   }
@@ -404,7 +403,7 @@ void MaximizeModeController::OnShellInitialized() {
 
 void MaximizeModeController::OnDisplayConfigurationChanged() {
   if (!display::Display::HasInternalDisplay() ||
-      !Shell::Get()->display_manager()->IsActiveDisplayId(
+      !ShellPort::Get()->IsActiveDisplayId(
           display::Display::InternalDisplayId())) {
     LeaveMaximizeMode();
   } else if (tablet_mode_switch_is_on_ &&

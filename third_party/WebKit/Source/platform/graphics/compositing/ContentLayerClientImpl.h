@@ -17,7 +17,6 @@ namespace blink {
 
 class JSONArray;
 class JSONObject;
-class PaintArtifact;
 struct RasterInvalidationTracking;
 
 class PLATFORM_EXPORT ContentLayerClientImpl : public cc::ContentLayerClient {
@@ -25,14 +24,28 @@ class PLATFORM_EXPORT ContentLayerClientImpl : public cc::ContentLayerClient {
   USING_FAST_MALLOC(ContentLayerClientImpl);
 
  public:
-  ContentLayerClientImpl()
-      : cc_picture_layer_(cc::PictureLayer::Create(this)) {}
-  ~ContentLayerClientImpl() override {}
+  ContentLayerClientImpl(const PaintChunk& paint_chunk)
+      : id_(paint_chunk.id),
+        is_cacheable_(paint_chunk.is_cacheable),
+        debug_name_(paint_chunk.id.client.DebugName()),
+        cc_picture_layer_(cc::PictureLayer::Create(this)) {}
+
+  ~ContentLayerClientImpl();
+
+  void SetDisplayList(scoped_refptr<cc::DisplayItemList> cc_display_item_list) {
+    cc_display_item_list_ = std::move(cc_display_item_list);
+  }
+  void SetPaintableRegion(const gfx::Rect& region) {
+    paintable_region_ = region;
+  }
+
+  void AddPaintChunkDebugData(std::unique_ptr<JSONArray> json) {
+    paint_chunk_debug_data_.push_back(std::move(json));
+  }
+  void ClearPaintChunkDebugData() { paint_chunk_debug_data_.clear(); }
 
   // cc::ContentLayerClient
-  gfx::Rect PaintableRegion() override {
-    return gfx::Rect(layer_bounds_.size());
-  }
+  gfx::Rect PaintableRegion() override { return paintable_region_; }
   scoped_refptr<cc::DisplayItemList> PaintContentsToDisplayList(
       PaintingControlSetting) override {
     return cc_display_item_list_;
@@ -43,75 +56,31 @@ class PLATFORM_EXPORT ContentLayerClientImpl : public cc::ContentLayerClient {
     return 0;
   }
 
-  void SetTracksRasterInvalidations(bool);
+  void ResetTrackedRasterInvalidations();
+  RasterInvalidationTracking& EnsureRasterInvalidationTracking();
+
+  void SetNeedsDisplayRect(const gfx::Rect& rect) {
+    cc_picture_layer_->SetNeedsDisplayRect(rect);
+  }
 
   std::unique_ptr<JSONObject> LayerAsJSON(LayerTreeFlags);
 
-  scoped_refptr<cc::PictureLayer> UpdateCcPictureLayer(
-      const PaintArtifact&,
-      const gfx::Rect& layer_bounds,
-      const Vector<const PaintChunk*>&,
-      const PropertyTreeState& layer_state,
-      bool store_debug_info);
+  scoped_refptr<cc::PictureLayer> CcPictureLayer() { return cc_picture_layer_; }
 
   bool Matches(const PaintChunk& paint_chunk) {
-    return paint_chunks_info_.size() && paint_chunks_info_[0].is_cacheable &&
-           paint_chunk.Matches(paint_chunks_info_[0].id);
+    return is_cacheable_ && paint_chunk.Matches(id_);
   }
 
+  const String& DebugName() const { return debug_name_; }
+
  private:
-  friend class ContentLayerClientImplTest;
-  const Vector<RasterInvalidationInfo>& TrackedRasterInvalidations() const;
-
-  struct PaintChunkInfo {
-    PaintChunkInfo(const IntRect& bounds, const PaintChunk& chunk)
-        : bounds_in_layer(bounds),
-          id(chunk.id),
-          is_cacheable(chunk.is_cacheable) {}
-
-    bool Matches(const PaintChunk& new_chunk) const {
-      return is_cacheable && new_chunk.Matches(id);
-    }
-
-    IntRect bounds_in_layer;
-    PaintChunk::Id id;
-    bool is_cacheable;
-  };
-
-  IntRect MapRasterInvalidationRectFromChunkToLayer(
-      const FloatRect&,
-      const PaintChunk&,
-      const PropertyTreeState&) const;
-
-  void GenerateRasterInvalidations(
-      const Vector<const PaintChunk*>& new_chunks,
-      const Vector<PaintChunkInfo>& new_chunks_info,
-      const PropertyTreeState&);
-  size_t MatchNewChunkToOldChunk(const PaintChunk& new_chunk, size_t old_index);
-  void AddDisplayItemRasterInvalidations(const PaintChunk&,
-                                         const PropertyTreeState&);
-  void InvalidateRasterForNewChunk(const PaintChunkInfo&,
-                                   PaintInvalidationReason);
-  void InvalidateRasterForOldChunk(const PaintChunkInfo&,
-                                   PaintInvalidationReason);
-  void InvalidateRasterForWholeLayer();
-
+  PaintChunk::Id id_;
+  bool is_cacheable_;
+  String debug_name_;
   scoped_refptr<cc::PictureLayer> cc_picture_layer_;
   scoped_refptr<cc::DisplayItemList> cc_display_item_list_;
-  gfx::Rect layer_bounds_;
-
-  Vector<PaintChunkInfo> paint_chunks_info_;
+  gfx::Rect paintable_region_;
   Vector<std::unique_ptr<JSONArray>> paint_chunk_debug_data_;
-  String debug_name_;
-
-  struct RasterInvalidationTrackingInfo {
-    using ClientDebugNamesMap = HashMap<const DisplayItemClient*, String>;
-    ClientDebugNamesMap new_client_debug_names;
-    ClientDebugNamesMap old_client_debug_names;
-    RasterInvalidationTracking tracking;
-  };
-  std::unique_ptr<RasterInvalidationTrackingInfo>
-      raster_invalidation_tracking_info_;
 };
 
 }  // namespace blink

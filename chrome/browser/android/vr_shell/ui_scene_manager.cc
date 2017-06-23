@@ -9,24 +9,23 @@
 #include "chrome/browser/android/vr_shell/textures/close_button_texture.h"
 #include "chrome/browser/android/vr_shell/textures/ui_texture.h"
 #include "chrome/browser/android/vr_shell/ui_browser_interface.h"
+#include "chrome/browser/android/vr_shell/ui_elements/audio_capture_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_elements/button.h"
 #include "chrome/browser/android/vr_shell/ui_elements/exit_prompt.h"
 #include "chrome/browser/android/vr_shell/ui_elements/exit_prompt_backplane.h"
 #include "chrome/browser/android/vr_shell/ui_elements/exit_warning.h"
 #include "chrome/browser/android/vr_shell/ui_elements/loading_indicator.h"
+#include "chrome/browser/android/vr_shell/ui_elements/location_access_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_elements/permanent_security_warning.h"
-#include "chrome/browser/android/vr_shell/ui_elements/presentation_toast.h"
+#include "chrome/browser/android/vr_shell/ui_elements/screen_capture_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_elements/screen_dimmer.h"
-#include "chrome/browser/android/vr_shell/ui_elements/system_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_elements/transient_security_warning.h"
 #include "chrome/browser/android/vr_shell/ui_elements/transient_url_bar.h"
 #include "chrome/browser/android/vr_shell/ui_elements/ui_element.h"
 #include "chrome/browser/android/vr_shell/ui_elements/ui_element_debug_id.h"
 #include "chrome/browser/android/vr_shell/ui_elements/url_bar.h"
+#include "chrome/browser/android/vr_shell/ui_elements/video_capture_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_scene.h"
-#include "chrome/grit/generated_resources.h"
-#include "components/vector_icons/vector_icons.h"
-#include "ui/vector_icons/vector_icons.h"
 
 namespace vr_shell {
 
@@ -70,10 +69,17 @@ static constexpr float kUrlBarHeight = kUrlBarHeightDMM * kUrlBarDistance;
 static constexpr float kUrlBarVerticalOffset = -0.516 * kUrlBarDistance;
 static constexpr float kUrlBarRotationRad = -0.175;
 
-static constexpr float kIndicatorHeight = 0.08;
-static constexpr float kIndicatorGap = 0.05;
-static constexpr float kIndicatorVerticalOffset = 0.1;
-static constexpr float kIndicatorDistanceOffset = 0.1;
+static constexpr float kIndicatorContentDistance = 0.1;
+static constexpr float kAudioCaptureIndicatorWidth = 0.5;
+static constexpr float kVideoCaptureIndicatorWidth = 0.5;
+static constexpr float kScreenCaptureIndicatorWidth = 0.4;
+static constexpr float kLocationIndicatorWidth = 0.088;
+
+static constexpr float kCaptureIndicatorsVerticalOffset = 0.1;
+static constexpr float kAudioCaptureHorizontalOffset = -0.6;
+static constexpr float kVideoCaptureHorizontalOffset = 0;
+static constexpr float kScreenCaptureHorizontalOffset = 0.6;
+static constexpr float kLocationAccessHorizontalOffset = 1.0;
 
 static constexpr float kTransientUrlBarDistance = 1.4;
 static constexpr float kTransientUrlBarWidth =
@@ -83,11 +89,6 @@ static constexpr float kTransientUrlBarHeight =
 static constexpr float kTransientUrlBarVerticalOffset =
     -0.2 * kTransientUrlBarDistance;
 static constexpr int kTransientUrlBarTimeoutSeconds = 6;
-
-static constexpr float kToastDistance = 1.4;
-static constexpr float kToastWidth = 0.512 * kToastDistance;
-static constexpr float kToastHeight = 0.16 * kToastDistance;
-static constexpr int kToastTimeoutSeconds = kTransientUrlBarTimeoutSeconds;
 
 static constexpr float kCloseButtonDistance = 2.4;
 static constexpr float kCloseButtonHeight =
@@ -138,7 +139,6 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateCloseButton();
   CreateScreenDimmer();
   CreateExitPrompt();
-  CreateToasts();
 
   ConfigureScene();
   ConfigureSecurityWarnings();
@@ -212,37 +212,57 @@ void UiSceneManager::CreateSecurityWarnings() {
 void UiSceneManager::CreateSystemIndicators() {
   std::unique_ptr<UiElement> element;
 
-  struct Indicator {
-    UiElement** element;
-    UiElementDebugId debug_id;
-    const gfx::VectorIcon& icon;
-    int resource_string;
-  };
-  const std::vector<Indicator> indicators = {
-      {&audio_capture_indicator_, kAudioCaptureIndicator, ui::kMicrophoneIcon,
-       IDS_AUDIO_CALL_NOTIFICATION_TEXT_2},
-      {&video_capture_indicator_, kVideoCaptureIndicator, ui::kVideocamIcon,
-       IDS_VIDEO_CALL_NOTIFICATION_TEXT_2},
-      {&screen_capture_indicator_, kScreenCaptureIndicator,
-       vector_icons::kScreenShareIcon, IDS_SCREEN_CAPTURE_NOTIFICATION_TEXT_2},
-      {&location_access_indicator_, kLocationAccessIndicator,
-       ui::kLocationOnIcon, 0},
-  };
+  element = base::MakeUnique<AudioCaptureIndicator>(512);
+  element->set_debug_id(kAudioCaptureIndicator);
+  element->set_id(AllocateId());
+  element->set_translation({kAudioCaptureHorizontalOffset,
+                            kCaptureIndicatorsVerticalOffset,
+                            kIndicatorContentDistance});
+  element->set_parent_id(main_content_->id());
+  element->set_y_anchoring(YAnchoring::YTOP);
+  element->set_size({kAudioCaptureIndicatorWidth, 0, 1});
+  element->set_visible(false);
+  audio_capture_indicator_ = element.get();
+  scene_->AddUiElement(std::move(element));
 
-  for (const auto& indicator : indicators) {
-    element = base::MakeUnique<SystemIndicator>(
-        512, kIndicatorHeight, indicator.icon, indicator.resource_string);
-    element->set_debug_id(indicator.debug_id);
-    element->set_id(AllocateId());
-    element->set_parent_id(main_content_->id());
-    element->set_y_anchoring(YAnchoring::YTOP);
-    element->set_visible(false);
-    *(indicator.element) = element.get();
-    system_indicators_.push_back(element.get());
-    scene_->AddUiElement(std::move(element));
-  }
+  element = base::MakeUnique<LocationAccessIndicator>(250);
+  element->set_debug_id(kLocationAccessIndicator);
+  element->set_id(AllocateId());
+  element->set_translation({kLocationAccessHorizontalOffset,
+                            kCaptureIndicatorsVerticalOffset,
+                            kIndicatorContentDistance});
+  element->set_size({kLocationIndicatorWidth, 0, 1});
+  element->set_parent_id(main_content_->id());
+  element->set_y_anchoring(YAnchoring::YTOP);
+  element->set_visible(false);
+  location_access_indicator_ = element.get();
+  scene_->AddUiElement(std::move(element));
 
-  ConfigureIndicators();
+  element = base::MakeUnique<VideoCaptureIndicator>(512);
+  element->set_debug_id(kVideoCaptureIndicator);
+  element->set_id(AllocateId());
+  element->set_translation({kVideoCaptureHorizontalOffset,
+                            kCaptureIndicatorsVerticalOffset,
+                            kIndicatorContentDistance});
+  element->set_parent_id(main_content_->id());
+  element->set_y_anchoring(YAnchoring::YTOP);
+  element->set_size({kVideoCaptureIndicatorWidth, 0, 1});
+  element->set_visible(false);
+  video_capture_indicator_ = element.get();
+  scene_->AddUiElement(std::move(element));
+
+  element = base::MakeUnique<ScreenCaptureIndicator>(512);
+  element->set_debug_id(kScreenCaptureIndicator);
+  element->set_id(AllocateId());
+  element->set_translation({kScreenCaptureHorizontalOffset,
+                            kCaptureIndicatorsVerticalOffset,
+                            kIndicatorContentDistance});
+  element->set_parent_id(main_content_->id());
+  element->set_y_anchoring(YAnchoring::YTOP);
+  element->set_size({kScreenCaptureIndicatorWidth, 0, 1});
+  element->set_visible(false);
+  screen_capture_indicator_ = element.get();
+  scene_->AddUiElement(std::move(element));
 }
 
 void UiSceneManager::CreateContentQuad() {
@@ -405,39 +425,19 @@ void UiSceneManager::CreateExitPrompt() {
   scene_->AddUiElement(std::move(element));
 }
 
-void UiSceneManager::CreateToasts() {
-  std::unique_ptr<UiElement> element = base::MakeUnique<PresentationToast>(512);
-  element->set_debug_id(kPresentationToast);
-  element->set_id(AllocateId());
-  element->set_fill(vr_shell::Fill::NONE);
-  element->set_size({kToastWidth, kToastHeight, 1});
-  element->set_translation({0, 0, -kToastDistance});
-  element->set_visible(false);
-  element->set_hit_testable(false);
-  element->set_lock_to_fov(true);
-  presentation_toast_ = element.get();
-  scene_->AddUiElement(std::move(element));
-}
-
 base::WeakPtr<UiSceneManager> UiSceneManager::GetWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-void UiSceneManager::SetWebVrMode(bool web_vr,
-                                  bool auto_presented,
-                                  bool show_toast) {
-  if (web_vr_mode_ == web_vr && web_vr_autopresented_ == auto_presented &&
-      web_vr_show_toast_ == show_toast) {
+void UiSceneManager::SetWebVrMode(bool web_vr, bool auto_presented) {
+  if (web_vr_mode_ == web_vr)
     return;
-  }
   web_vr_mode_ = web_vr;
   web_vr_autopresented_ = auto_presented;
-  web_vr_show_toast_ = show_toast;
   ConfigureScene();
   ConfigureSecurityWarnings();
   ConfigureTransientUrlBar();
   ConfigureIndicators();
-  ConfigurePresentationToast();
 }
 
 void UiSceneManager::ConfigureScene() {
@@ -542,13 +542,6 @@ void UiSceneManager::SetIncognito(bool incognito) {
   ConfigureScene();
 }
 
-void UiSceneManager::OnGLInitialized() {
-  scene_->OnGLInitialized();
-
-  // Indicators don't know their position until they've rendered themselves.
-  ConfigureIndicators();
-}
-
 void UiSceneManager::OnAppButtonClicked() {
   // App button click exits the WebVR presentation and fullscreen.
   browser_->ExitPresent();
@@ -583,35 +576,6 @@ void UiSceneManager::ConfigureIndicators() {
   video_capture_indicator_->set_visible(!web_vr_mode_ && video_capturing_);
   screen_capture_indicator_->set_visible(!web_vr_mode_ && screen_capturing_);
   location_access_indicator_->set_visible(!web_vr_mode_ && location_access_);
-
-  // Position elements dynamically relative to each other, based on which
-  // indicators are showing, and how big each one is.
-  float total_width = kIndicatorGap * (system_indicators_.size() - 1);
-  for (const UiElement* indicator : system_indicators_) {
-    if (indicator->visible())
-      total_width += indicator->size().x();
-  }
-  float x_position = -total_width / 2;
-  for (UiElement* indicator : system_indicators_) {
-    if (!indicator->visible())
-      continue;
-    float width = indicator->size().x();
-    indicator->set_translation({x_position + width / 2,
-                                kIndicatorVerticalOffset,
-                                kIndicatorDistanceOffset});
-    x_position += width + kIndicatorGap;
-  }
-}
-
-void UiSceneManager::ConfigurePresentationToast() {
-  presentation_toast_->set_visible(web_vr_show_toast_);
-  if (web_vr_show_toast_) {
-    presentation_toast_timer_.Start(
-        FROM_HERE, base::TimeDelta::FromSeconds(kToastTimeoutSeconds), this,
-        &UiSceneManager::OnPresentationToastTimer);
-  } else {
-    presentation_toast_timer_.Stop();
-  }
 }
 
 void UiSceneManager::OnSecurityWarningTimer() {
@@ -632,10 +596,6 @@ void UiSceneManager::ConfigureTransientUrlBar() {
 
 void UiSceneManager::OnTransientUrlBarTimer() {
   transient_url_bar_->set_visible(false);
-}
-
-void UiSceneManager::OnPresentationToastTimer() {
-  presentation_toast_->set_visible(false);
 }
 
 void UiSceneManager::OnBackButtonClicked() {

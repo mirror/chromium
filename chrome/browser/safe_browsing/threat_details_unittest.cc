@@ -240,15 +240,13 @@ class ThreatDetailsTest : public ChromeRenderViewHostTestHarness {
   }
 
  protected:
-  void InitResource(SBThreatType threat_type,
-                    ThreatSource threat_source,
+  void InitResource(UnsafeResource* resource,
+                    SBThreatType threat_type,
                     bool is_subresource,
-                    const GURL& url,
-                    UnsafeResource* resource) {
+                    const GURL& url) {
     resource->url = url;
     resource->is_subresource = is_subresource;
     resource->threat_type = threat_type;
-    resource->threat_source = threat_source;
     resource->web_contents_getter =
         SafeBrowsingUIManager::UnsafeResource::GetWebContentsGetter(
             web_contents()->GetRenderProcessHost()->GetID(),
@@ -302,9 +300,6 @@ class ThreatDetailsTest : public ChromeRenderViewHostTestHarness {
       VerifyElement(*actual_dom_map[expected_element.id()], expected_element);
     }
 
-    EXPECT_TRUE(report_pb.client_properties().has_url_api_type());
-    EXPECT_EQ(expected_pb.client_properties().url_api_type(),
-              report_pb.client_properties().url_api_type());
     EXPECT_EQ(expected_pb.complete(), report_pb.complete());
   }
 
@@ -392,8 +387,8 @@ TEST_F(ThreatDetailsTest, ThreatSubResource) {
           ui::PAGE_TRANSITION_TYPED);
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_MALWARE, ThreatSource::CLIENT_SIDE_DETECTION,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_MALWARE, true /* is_subresource */,
+               GURL(kThreatURL));
 
   scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
       ui_manager_.get(), web_contents(), resource, NULL, history_service());
@@ -435,8 +430,8 @@ TEST_F(ThreatDetailsTest, ThreatSubResourceWithOriginalUrl) {
       ->NavigateAndCommit(GURL(kLandingURL));
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_PHISHING, ThreatSource::DATA_SAVER,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_PHISHING,
+               true /* is_subresource */, GURL(kThreatURL));
   resource.original_url = GURL(kOriginalLandingURL);
 
   scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
@@ -450,8 +445,6 @@ TEST_F(ThreatDetailsTest, ThreatSubResourceWithOriginalUrl) {
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_PHISHING);
-  expected.mutable_client_properties()->set_url_api_type(
-      ClientSafeBrowsingReportRequest::FLYWHEEL);
   expected.set_url(kThreatURL);
   expected.set_page_url(kLandingURL);
   expected.set_referrer_url("");
@@ -483,8 +476,8 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails) {
       ->NavigateAndCommit(GURL(kLandingURL));
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_UNWANTED, ThreatSource::LOCAL_PVER3,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_UNWANTED,
+               true /* is_subresource */, GURL(kThreatURL));
 
   scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
       ui_manager_.get(), web_contents(), resource, NULL, history_service());
@@ -510,8 +503,6 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails) {
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_UNWANTED);
-  expected.mutable_client_properties()->set_url_api_type(
-      ClientSafeBrowsingReportRequest::PVER3_NATIVE);
   expected.set_url(kThreatURL);
   expected.set_page_url(kLandingURL);
   expected.set_referrer_url("");
@@ -615,8 +606,6 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_UNWANTED);
-  expected.mutable_client_properties()->set_url_api_type(
-      ClientSafeBrowsingReportRequest::PVER4_NATIVE);
   expected.set_url(kThreatURL);
   expected.set_page_url(kLandingURL);
   expected.set_referrer_url("");
@@ -687,8 +676,8 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
   elem_dom_inner_script->mutable_attribute(0)->set_value(kDOMChildUrl2);
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_UNWANTED, ThreatSource::LOCAL_PVER4,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_UNWANTED,
+               true /* is_subresource */, GURL(kThreatURL));
 
   // Send both sets of nodes, from different render frames.
   {
@@ -851,9 +840,8 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM) {
   pb_element->mutable_attribute(0)->set_value(kDOMChildUrl2);
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_UNWANTED,
-               ThreatSource::PASSWORD_PROTECTION_SERVICE,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_UNWANTED,
+               true /* is_subresource */, GURL(kThreatURL));
   scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
       ui_manager_.get(), web_contents(), resource, NULL, history_service());
   base::HistogramTester histograms;
@@ -879,8 +867,8 @@ TEST_F(ThreatDetailsTest, ThreatWithRedirectUrl) {
       ->NavigateAndCommit(GURL(kLandingURL));
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_MALWARE, ThreatSource::REMOTE,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_MALWARE, true /* is_subresource */,
+               GURL(kThreatURL));
   resource.original_url = GURL(kOriginalLandingURL);
 
   // add some redirect urls
@@ -898,8 +886,6 @@ TEST_F(ThreatDetailsTest, ThreatWithRedirectUrl) {
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_MALWARE);
-  expected.mutable_client_properties()->set_url_api_type(
-      ClientSafeBrowsingReportRequest::ANDROID_SAFETYNET);
   expected.set_url(kThreatURL);
   expected.set_page_url(kLandingURL);
   expected.set_referrer_url("");
@@ -957,8 +943,8 @@ TEST_F(ThreatDetailsTest, ThreatOnMainPageLoadBlocked) {
 
   // Create UnsafeResource for the pending main page load.
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_MALWARE, ThreatSource::UNKNOWN,
-               false /* is_subresource */, GURL(kLandingURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_MALWARE,
+               false /* is_subresource */, GURL(kLandingURL));
 
   // Start ThreatDetails collection.
   scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
@@ -1012,8 +998,8 @@ TEST_F(ThreatDetailsTest, ThreatWithPendingLoad) {
 
   // Create UnsafeResource for fake sub-resource of landing page.
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_MALWARE, ThreatSource::LOCAL_PVER4,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_MALWARE, true /* is_subresource */,
+               GURL(kThreatURL));
 
   // Start a pending load before creating ThreatDetails.
   controller().LoadURL(GURL(kPendingURL),
@@ -1032,8 +1018,6 @@ TEST_F(ThreatDetailsTest, ThreatWithPendingLoad) {
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_MALWARE);
-  expected.mutable_client_properties()->set_url_api_type(
-      ClientSafeBrowsingReportRequest::PVER4_NATIVE);
   expected.set_url(kThreatURL);
   expected.set_page_url(kLandingURL);
   // Note that the referrer policy is not actually enacted here, since that's
@@ -1065,8 +1049,8 @@ TEST_F(ThreatDetailsTest, ThreatOnFreshTab) {
   // Simulate a subresource malware hit (this could happen if the WebContents
   // was created with window.open, and had content injected into it).
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_MALWARE, ThreatSource::CLIENT_SIDE_DETECTION,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_MALWARE, true /* is_subresource */,
+               GURL(kThreatURL));
 
   // Do ThreatDetails collection.
   scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
@@ -1097,9 +1081,8 @@ TEST_F(ThreatDetailsTest, HTTPCache) {
       ->NavigateAndCommit(GURL(kLandingURL));
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_CLIENT_SIDE_PHISHING,
-               ThreatSource::CLIENT_SIDE_DETECTION, true /* is_subresource */,
-               GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_CLIENT_SIDE_PHISHING,
+               true /* is_subresource */, GURL(kThreatURL));
 
   scoped_refptr<ThreatDetailsWrap> report =
       new ThreatDetailsWrap(ui_manager_.get(), web_contents(), resource,
@@ -1181,9 +1164,8 @@ TEST_F(ThreatDetailsTest, HttpsResourceSanitization) {
       ->NavigateAndCommit(GURL(kLandingURL));
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_CLIENT_SIDE_PHISHING,
-               ThreatSource::CLIENT_SIDE_DETECTION, true /* is_subresource */,
-               GURL(kThreatURLHttps), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_CLIENT_SIDE_PHISHING,
+               true /* is_subresource */, GURL(kThreatURLHttps));
 
   scoped_refptr<ThreatDetailsWrap> report =
       new ThreatDetailsWrap(ui_manager_.get(), web_contents(), resource,
@@ -1262,9 +1244,8 @@ TEST_F(ThreatDetailsTest, HTTPCacheNoEntries) {
       ->NavigateAndCommit(GURL(kLandingURL));
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_CLIENT_SIDE_MALWARE,
-               ThreatSource::LOCAL_PVER3, true /* is_subresource */,
-               GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_CLIENT_SIDE_MALWARE,
+               true /* is_subresource */, GURL(kThreatURL));
 
   scoped_refptr<ThreatDetailsWrap> report =
       new ThreatDetailsWrap(ui_manager_.get(), web_contents(), resource,
@@ -1287,8 +1268,6 @@ TEST_F(ThreatDetailsTest, HTTPCacheNoEntries) {
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_CLIENT_SIDE_MALWARE);
-  expected.mutable_client_properties()->set_url_api_type(
-      ClientSafeBrowsingReportRequest::PVER3_NATIVE);
   expected.set_url(kThreatURL);
   expected.set_page_url(kLandingURL);
   expected.set_referrer_url("");
@@ -1323,8 +1302,8 @@ TEST_F(ThreatDetailsTest, HistoryServiceUrls) {
       ->NavigateAndCommit(GURL(kLandingURL));
 
   UnsafeResource resource;
-  InitResource(SB_THREAT_TYPE_URL_MALWARE, ThreatSource::LOCAL_PVER3,
-               true /* is_subresource */, GURL(kThreatURL), &resource);
+  InitResource(&resource, SB_THREAT_TYPE_URL_MALWARE, true /* is_subresource */,
+               GURL(kThreatURL));
   scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
       ui_manager_.get(), web_contents(), resource, NULL, history_service());
 
@@ -1342,8 +1321,6 @@ TEST_F(ThreatDetailsTest, HistoryServiceUrls) {
 
   ClientSafeBrowsingReportRequest expected;
   expected.set_type(ClientSafeBrowsingReportRequest::URL_MALWARE);
-  expected.mutable_client_properties()->set_url_api_type(
-      ClientSafeBrowsingReportRequest::PVER3_NATIVE);
   expected.set_url(kThreatURL);
   expected.set_page_url(kLandingURL);
   expected.set_referrer_url("");

@@ -27,10 +27,9 @@ DefaultAshEventGeneratorDelegate::GetScreenPositionClient(
   return nullptr;
 }
 
-ui::EventDispatchDetails
-DefaultAshEventGeneratorDelegate::DispatchKeyEventToIME(ui::EventTarget* target,
-                                                        ui::KeyEvent* event) {
-  return ui::EventDispatchDetails();
+void DefaultAshEventGeneratorDelegate::DispatchKeyEventToIME(
+    ui::EventTarget* target,
+    ui::KeyEvent* event) {
 }
 
 DefaultAshEventGeneratorDelegate::DefaultAshEventGeneratorDelegate()

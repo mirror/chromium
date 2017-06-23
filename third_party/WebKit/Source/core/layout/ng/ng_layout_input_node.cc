@@ -72,10 +72,6 @@ bool NGLayoutInputNode::IsOutOfFlowPositioned() const {
   return IsBlock() && Style().HasOutOfFlowPosition();
 }
 
-bool NGLayoutInputNode::CreatesNewFormattingContext() const {
-  return box_->AvoidsFloats();
-}
-
 RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(NGConstraintSpace* space,
                                                  NGBreakToken* break_token) {
   return IsInline() ? ToNGInlineNode(*this).Layout(space, break_token)

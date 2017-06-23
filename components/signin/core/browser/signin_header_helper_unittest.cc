@@ -10,10 +10,10 @@
 #include "base/command_line.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/stringprintf.h"
+#include "build/build_config.h"
 #include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/signin/core/browser/chrome_connected_header_helper.h"
 #include "components/signin/core/common/profile_management_switches.h"
-#include "components/signin/core/common/signin_features.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
@@ -21,7 +21,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !defined(OS_IOS) && !defined(OS_ANDROID)
 #include "components/signin/core/browser/dice_header_helper.h"
 #endif
 
@@ -86,7 +86,7 @@ class SigninHeaderHelperTest : public testing::Test {
         url_request.get(), kChromeConnectedHeader, expected_request);
   }
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !defined(OS_IOS) && !defined(OS_ANDROID)
   void CheckDiceHeaderRequest(const GURL& url,
                               const std::string& account_id,
                               bool sync_enabled,
@@ -162,7 +162,7 @@ TEST_F(SigninHeaderHelperTest, TestMirrorRequestGoogleCom) {
 
 // Mirror is always enabled on Android and iOS, so these tests are only relevant
 // on Desktop.
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
 
 // Tests that the Mirror request is returned when the target is a Gaia URL, even
 // if account consistency is disabled.
@@ -287,7 +287,7 @@ TEST_F(SigninHeaderHelperTest, TestBuildDiceResponseParams) {
   }
 }
 
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
+#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
 // Tests that the Mirror header request is returned normally when the redirect
 // URL is eligible.

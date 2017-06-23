@@ -1,4 +1,9 @@
 
+This text field has an error!
+
+
+Details
+Select All  
 {
   "nodeId": "<string>",
   "ignored": false,

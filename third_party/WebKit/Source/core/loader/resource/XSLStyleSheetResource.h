@@ -27,7 +27,6 @@
 #define XSLStyleSheetResource_h
 
 #include "core/loader/resource/StyleSheetResource.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 
 namespace blink {
 
@@ -48,19 +47,17 @@ class XSLStyleSheetResource final : public StyleSheetResource {
   class XSLStyleSheetResourceFactory : public ResourceFactory {
    public:
     XSLStyleSheetResourceFactory()
-        : ResourceFactory(Resource::kXSLStyleSheet,
-                          TextResourceDecoderOptions::kXMLContent) {}
+        : ResourceFactory(Resource::kXSLStyleSheet) {}
 
-    Resource* Create(
-        const ResourceRequest& request,
-        const ResourceLoaderOptions& options,
-        const TextResourceDecoderOptions& decoder_options) const override {
-      return new XSLStyleSheetResource(request, options, decoder_options);
+    Resource* Create(const ResourceRequest& request,
+                     const ResourceLoaderOptions& options,
+                     const String& charset) const override {
+      return new XSLStyleSheetResource(request, options, charset);
     }
   };
   XSLStyleSheetResource(const ResourceRequest&,
                         const ResourceLoaderOptions&,
-                        const TextResourceDecoderOptions&);
+                        const String& charset);
 
   void CheckNotify() override;
 

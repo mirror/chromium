@@ -16,7 +16,6 @@ interface Accelerometer : Sensor
     method constructor
 interface AccessibleNode
     attribute @@toStringTag
-    getter activeDescendant
     getter atomic
     getter autocomplete
     getter busy
@@ -25,9 +24,7 @@ interface AccessibleNode
     getter colIndex
     getter colSpan
     getter current
-    getter details
     getter disabled
-    getter errorMessage
     getter expanded
     getter hidden
     getter invalid
@@ -58,7 +55,6 @@ interface AccessibleNode
     getter valueNow
     getter valueText
     method constructor
-    setter activeDescendant
     setter atomic
     setter autocomplete
     setter busy
@@ -67,9 +63,7 @@ interface AccessibleNode
     setter colIndex
     setter colSpan
     setter current
-    setter details
     setter disabled
-    setter errorMessage
     setter expanded
     setter hidden
     setter invalid
@@ -195,6 +189,7 @@ interface AnimationTimeline
     getter currentTime
     method constructor
     method getAnimations
+    setter currentTime
 interface AppBannerPromptResult
     attribute @@toStringTag
     getter outcome
@@ -688,7 +683,6 @@ interface CSSPerspective : CSSTransformComponent
     attribute @@toStringTag
     getter length
     method constructor
-    setter length
 interface CSSPositionValue : CSSStyleValue
     attribute @@toStringTag
     getter x
@@ -1017,6 +1011,20 @@ interface CompositionEvent : UIEvent
     getter data
     method constructor
     method initCompositionEvent
+interface CompositorProxy
+    attribute @@toStringTag
+    getter initialized
+    getter opacity
+    getter scrollLeft
+    getter scrollTop
+    getter transform
+    method constructor
+    method disconnect
+    method supports
+    setter opacity
+    setter scrollLeft
+    setter scrollTop
+    setter transform
 interface CompositorWorker : EventTarget
     attribute @@toStringTag
     getter onerror
@@ -8491,7 +8499,7 @@ interface WebKitAnimationEvent : Event
     getter animationName
     getter elapsedTime
     method constructor
-interface WebKitCSSMatrix : DOMMatrixReadOnly
+interface WebKitCSSMatrix
     attribute @@toStringTag
     getter a
     getter b
@@ -8516,18 +8524,16 @@ interface WebKitCSSMatrix : DOMMatrixReadOnly
     getter m43
     getter m44
     method constructor
-    method invertSelf
-    method multiplySelf
-    method preMultiplySelf
-    method rotateAxisAngleSelf
-    method rotateFromVectorSelf
-    method rotateSelf
-    method scale3dSelf
-    method scaleSelf
+    method inverse
+    method multiply
+    method rotate
+    method rotateAxisAngle
+    method scale
     method setMatrixValue
-    method skewXSelf
-    method skewYSelf
-    method translateSelf
+    method skewX
+    method skewY
+    method toString
+    method translate
     setter a
     setter b
     setter c

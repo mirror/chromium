@@ -53,7 +53,7 @@ PositionTemplate<Strategy> StartOfParagraphAlgorithm(
     return PositionTemplate<Strategy>();
 
   if (IsRenderedAsNonInlineTableImageOrHR(start_node))
-    return PositionTemplate<Strategy>::BeforeNode(*start_node);
+    return PositionTemplate<Strategy>::BeforeNode(start_node);
 
   Element* const start_block = EnclosingBlock(
       PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(start_node),
@@ -161,7 +161,7 @@ PositionTemplate<Strategy> EndOfParagraphAlgorithm(
     return PositionTemplate<Strategy>();
 
   if (IsRenderedAsNonInlineTableImageOrHR(start_node))
-    return PositionTemplate<Strategy>::AfterNode(*start_node);
+    return PositionTemplate<Strategy>::AfterNode(start_node);
 
   Element* const start_block = EnclosingBlock(
       PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(start_node),

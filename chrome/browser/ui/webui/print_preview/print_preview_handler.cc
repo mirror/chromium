@@ -458,11 +458,6 @@ base::FilePath GetUniquePath(const base::FilePath& path) {
   return unique_path;
 }
 
-void CreateDirectoryIfNeeded(const base::FilePath& path) {
-  if (!base::DirectoryExists(path))
-    base::CreateDirectory(path);
-}
-
 bool PrivetPrintingEnabled() {
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   return true;
@@ -481,9 +476,9 @@ class PrintPreviewHandler::AccessTokenService
         handler_(handler) {
   }
 
-  void RequestToken(const std::string& type, const std::string& callback_id) {
+  void RequestToken(const std::string& type) {
     if (requests_.find(type) != requests_.end())
-      return;  // Should never happen, see cloud_print_interface.js
+      return;  // Already in progress.
 
     OAuth2TokenService* service = NULL;
     std::string account_id;
@@ -512,32 +507,29 @@ class PrintPreviewHandler::AccessTokenService
       std::unique_ptr<OAuth2TokenService::Request> request(
           service->StartRequest(account_id, oauth_scopes, this));
       requests_[type] = std::move(request);
-      callbacks_[type] = callback_id;
     } else {
-      // Unknown type.
-      handler_->SendAccessToken(callback_id, std::string());
+      handler_->SendAccessToken(type, std::string());  // Unknown type.
     }
   }
 
   void OnGetTokenSuccess(const OAuth2TokenService::Request* request,
                          const std::string& access_token,
                          const base::Time& expiration_time) override {
-    OnServiceResponse(request, access_token);
+    OnServiceResponce(request, access_token);
   }
 
   void OnGetTokenFailure(const OAuth2TokenService::Request* request,
                          const GoogleServiceAuthError& error) override {
-    OnServiceResponse(request, std::string());
+    OnServiceResponce(request, std::string());
   }
 
  private:
-  void OnServiceResponse(const OAuth2TokenService::Request* request,
+  void OnServiceResponce(const OAuth2TokenService::Request* request,
                          const std::string& access_token) {
     for (Requests::iterator i = requests_.begin(); i != requests_.end(); ++i) {
       if (i->second.get() == request) {
-        handler_->SendAccessToken(callbacks_[i->first], access_token);
+        handler_->SendAccessToken(i->first, access_token);
         requests_.erase(i);
-        callbacks_.erase(i->first);
         return;
       }
     }
@@ -547,8 +539,6 @@ class PrintPreviewHandler::AccessTokenService
   using Requests =
       std::map<std::string, std::unique_ptr<OAuth2TokenService::Request>>;
   Requests requests_;
-  using Callbacks = std::map<std::string, std::string>;
-  Callbacks callbacks_;
   PrintPreviewHandler* handler_;
 
   DISALLOW_COPY_AND_ASSIGN(AccessTokenService);
@@ -755,17 +745,14 @@ void PrintPreviewHandler::HandleGetExtensionPrinters(
 
 void PrintPreviewHandler::HandleGrantExtensionPrinterAccess(
     const base::ListValue* args) {
-  std::string callback_id;
   std::string printer_id;
-  bool ok = args->GetString(0, &callback_id) &&
-            args->GetString(1, &printer_id) && !callback_id.empty();
+  bool ok = args->GetString(0, &printer_id);
   DCHECK(ok);
 
-  AllowJavascript();
   EnsureExtensionPrinterHandlerSet();
   extension_printer_handler_->StartGrantPrinterAccess(
       printer_id, base::Bind(&PrintPreviewHandler::OnGotExtensionPrinterInfo,
-                             weak_factory_.GetWeakPtr(), callback_id));
+                             weak_factory_.GetWeakPtr(), printer_id));
 }
 
 void PrintPreviewHandler::HandleGetExtensionPrinterCapabilities(
@@ -1167,17 +1154,12 @@ void PrintPreviewHandler::HandleSignin(const base::ListValue* args) {
 }
 
 void PrintPreviewHandler::HandleGetAccessToken(const base::ListValue* args) {
-  std::string callback_id;
   std::string type;
-
-  bool ok = args->GetString(0, &callback_id) && args->GetString(1, &type) &&
-            !callback_id.empty();
-  DCHECK(ok);
-
-  AllowJavascript();
+  if (!args->GetString(0, &type))
+    return;
   if (!token_service_)
     token_service_ = base::MakeUnique<AccessTokenService>(this);
-  token_service_->RequestToken(type, callback_id);
+  token_service_->RequestToken(type);
 }
 
 void PrintPreviewHandler::HandleManageCloudPrint(
@@ -1336,11 +1318,11 @@ void PrintPreviewHandler::ClosePreviewDialog() {
   print_preview_ui()->OnClosePrintPreviewDialog();
 }
 
-void PrintPreviewHandler::SendAccessToken(const std::string& callback_id,
+void PrintPreviewHandler::SendAccessToken(const std::string& type,
                                           const std::string& access_token) {
   VLOG(1) << "Get getAccessToken finished";
-  ResolveJavascriptCallback(base::Value(callback_id),
-                            base::Value(access_token));
+  web_ui()->CallJavascriptFunctionUnsafe(
+      "onDidGetAccessToken", base::Value(type), base::Value(access_token));
 }
 
 void PrintPreviewHandler::SendPrinterCapabilities(
@@ -1450,50 +1432,36 @@ void PrintPreviewHandler::SelectFile(const base::FilePath& default_filename,
   // Get save location from Download Preferences.
   DownloadPrefs* download_prefs = DownloadPrefs::FromBrowserContext(
       preview_web_contents()->GetBrowserContext());
-  base::FilePath path = download_prefs->SaveFilePath();
+  base::FilePath file_path = download_prefs->SaveFilePath();
   printing::StickySettings* sticky_settings = GetStickySettings();
   sticky_settings->SaveInPrefs(Profile::FromBrowserContext(
       preview_web_contents()->GetBrowserContext())->GetPrefs());
-
   // Handle the no prompting case. Like the dialog prompt, this function
   // returns and eventually FileSelected() gets called.
   if (!prompt_user) {
     base::PostTaskWithTraitsAndReplyWithResult(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-        base::Bind(&GetUniquePath, path.Append(default_filename)),
+        base::Bind(&GetUniquePath,
+                   download_prefs->SaveFilePath().Append(default_filename)),
         base::Bind(&PrintPreviewHandler::OnGotUniqueFileName,
                    weak_factory_.GetWeakPtr()));
     return;
   }
 
-  // If the directory is empty there is no reason to create it.
-  if (path.empty()) {
-    OnDirectoryCreated(default_filename);
-    return;
-  }
-
-  // Create the directory to save in if it does not exist.
-  base::PostTaskWithTraitsAndReply(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&CreateDirectoryIfNeeded, path),
-      base::Bind(&PrintPreviewHandler::OnDirectoryCreated,
-                 weak_factory_.GetWeakPtr(), path.Append(default_filename)));
-}
-
-void PrintPreviewHandler::OnDirectoryCreated(const base::FilePath& path) {
-  // Prompts the user to select the file.
+  // Otherwise prompt the user.
   ui::SelectFileDialog::FileTypeInfo file_type_info;
   file_type_info.extensions.resize(1);
   file_type_info.extensions[0].push_back(FILE_PATH_LITERAL("pdf"));
-  file_type_info.include_all_files = true;
-  file_type_info.allowed_paths =
-      ui::SelectFileDialog::FileTypeInfo::NATIVE_OR_DRIVE_PATH;
 
   select_file_dialog_ =
       ui::SelectFileDialog::Create(this, nullptr /*policy already checked*/);
   select_file_dialog_->SelectFile(
-      ui::SelectFileDialog::SELECT_SAVEAS_FILE, base::string16(), path,
-      &file_type_info, 0, base::FilePath::StringType(),
+      ui::SelectFileDialog::SELECT_SAVEAS_FILE,
+      base::string16(),
+      download_prefs->SaveFilePath().Append(default_filename),
+      &file_type_info,
+      0,
+      base::FilePath::StringType(),
       platform_util::GetTopLevel(preview_web_contents()->GetNativeView()),
       NULL);
 }
@@ -1815,13 +1783,16 @@ void PrintPreviewHandler::OnGotPrintersForExtension(
 }
 
 void PrintPreviewHandler::OnGotExtensionPrinterInfo(
-    const std::string& callback_id,
+    const std::string& printer_id,
     const base::DictionaryValue& printer_info) {
   if (printer_info.empty()) {
-    RejectJavascriptCallback(base::Value(callback_id), base::Value());
+    web_ui()->CallJavascriptFunctionUnsafe("failedToResolveProvisionalPrinter",
+                                           base::Value(printer_id));
     return;
   }
-  ResolveJavascriptCallback(base::Value(callback_id), printer_info);
+
+  web_ui()->CallJavascriptFunctionUnsafe("onProvisionalPrinterResolved",
+                                         base::Value(printer_id), printer_info);
 }
 
 void PrintPreviewHandler::OnGotExtensionPrinterCapabilities(

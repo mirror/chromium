@@ -60,13 +60,15 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
     _client = [[RemotingClient alloc] init];
 
     __weak RemotingClient* weakClient = _client;
-    [RemotingService.instance.authentication
-        callbackWithAccessToken:^(RemotingAuthenticationStatus status,
-                                  NSString* userEmail, NSString* accessToken) {
+    [[RemotingService SharedInstance].authentication
+        callbackWithAccessToken:base::BindBlockArc(^(
+                                    remoting::OAuthTokenGetter::Status status,
+                                    const std::string& user_email,
+                                    const std::string& access_token) {
           [weakClient connectToHost:hostInfo
-                           username:userEmail
-                        accessToken:accessToken];
-        }];
+                           username:base::SysUTF8ToNSString(user_email)
+                        accessToken:base::SysUTF8ToNSString(access_token)];
+        })];
 
     _remoteHostName = hostInfo.hostName;
 

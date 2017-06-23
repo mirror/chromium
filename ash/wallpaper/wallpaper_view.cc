@@ -14,7 +14,6 @@
 #include "ash/wm/overview/window_selector_controller.h"
 #include "ui/aura/window.h"
 #include "ui/display/display.h"
-#include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/canvas.h"
@@ -48,9 +47,10 @@ class LayerControlView : public views::View {
     display::Display display =
         display::Screen::GetScreen()->GetDisplayNearestWindow(window);
 
+    // TODO(mash): Mash returns a fake ManagedDisplayInfo. crbug.com/622480
     float ui_scale = 1.f;
     display::ManagedDisplayInfo info =
-        Shell::Get()->display_manager()->GetDisplayInfo(display.id());
+        ShellPort::Get()->GetDisplayInfo(display.id());
     if (info.id() == display.id())
       ui_scale = info.GetEffectiveUIScale();
 

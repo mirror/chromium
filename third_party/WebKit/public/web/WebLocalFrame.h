@@ -32,7 +32,6 @@ class WebData;
 class WebDataSource;
 class WebDevToolsAgent;
 class WebDevToolsAgentClient;
-class WebDocument;
 class WebDoubleSize;
 class WebDOMEvent;
 class WebFrameClient;
@@ -137,8 +136,6 @@ class WebLocalFrame : public WebFrame {
   // WebIconURL::Type values, used to select from the available set of icon
   // URLs
   virtual WebVector<WebIconURL> IconURLs(int icon_types_mask) const = 0;
-
-  virtual WebDocument GetDocument() const = 0;
 
   // Hierarchy ----------------------------------------------------------
 
@@ -703,10 +700,6 @@ class WebLocalFrame : public WebFrame {
   virtual void LoadRequest(const WebURLRequest&) = 0;
 
   // Geometry -----------------------------------------------------------------
-
-  // The scroll offset from the top-left corner of the frame in pixels.
-  virtual WebSize GetScrollOffset() const = 0;
-  virtual void SetScrollOffset(const WebSize&) = 0;
 
   // If set to false, do not draw scrollbars on this frame's view.
   virtual void SetCanHaveScrollbars(bool) = 0;

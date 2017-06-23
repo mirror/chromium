@@ -123,7 +123,6 @@ size_t EstimateMemoryUsage(const P& proto) {
 
 INSTANTIATE(AttachmentMetadata)
 INSTANTIATE(DataTypeContext)
-INSTANTIATE(DataTypeProgressMarker)
 INSTANTIATE(EntityMetadata)
 INSTANTIATE(EntitySpecifics)
 INSTANTIATE(ModelTypeState)

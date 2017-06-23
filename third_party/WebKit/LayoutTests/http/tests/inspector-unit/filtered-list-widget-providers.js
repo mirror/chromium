@@ -1,4 +1,4 @@
-TestRunner.loadModule('quick_open').then(test);
+TestRunner.loadLazyModules(['quick_open']).then(test);
 function test() {
   TestRunner.addResult(
       'Test that FilteredListWidget.setProvider changes the provider.');
@@ -36,7 +36,7 @@ function test() {
   ]);
 
   function setProvider(provider) {
-    var promise = TestRunner.addSnifferPromise(filteredListWidget, "_itemsFilteredForTest").then(dump);
+    var promise = TestRunner.addSniffer(filteredListWidget, "_itemsFilteredForTest").then(dump);
     filteredListWidget.setProvider(provider);
     return promise;
   }

@@ -11,6 +11,7 @@
 #include "ash/root_window_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/wm/resize_handle_window_targeter.h"
 #include "ash/wm/widget_finder.h"
 #include "ash/wm/window_properties.h"
@@ -108,7 +109,7 @@ void SetAutoHideShelf(aura::Window* window, bool autohide) {
 
 bool MoveWindowToDisplay(aura::Window* window, int64_t display_id) {
   DCHECK(window);
-  aura::Window* root = Shell::GetRootWindowForDisplayId(display_id);
+  aura::Window* root = ShellPort::Get()->GetRootWindowForDisplayId(display_id);
   return root && MoveWindowToRoot(window, root);
 }
 

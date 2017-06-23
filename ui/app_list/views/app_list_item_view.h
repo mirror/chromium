@@ -127,7 +127,6 @@ class APP_LIST_EXPORT AppListItemView : public views::CustomButton,
   // views::View overrides:
   const char* GetClassName() const override;
   void Layout() override;
-  gfx::Size CalculatePreferredSize() const override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnMouseReleased(const ui::MouseEvent& event) override;
@@ -152,17 +151,15 @@ class APP_LIST_EXPORT AppListItemView : public views::CustomButton,
 
   std::unique_ptr<views::MenuRunner> context_menu_runner_;
 
-  UIState ui_state_ = UI_STATE_NORMAL;
+  UIState ui_state_;
 
   // True if scroll gestures should contribute to dragging.
-  bool touch_dragging_ = false;
+  bool touch_dragging_;
 
   ImageShadowAnimator shadow_animator_;
 
-  bool is_installing_ = false;
-  bool is_highlighted_ = false;
-
-  const bool is_fullscreen_app_list_enabled_;
+  bool is_installing_;
+  bool is_highlighted_;
 
   base::string16 tooltip_text_;
 

@@ -139,7 +139,6 @@ void SetRow(gfx::BufferFormat format,
     case gfx::BufferFormat::DXT1:
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
-    case gfx::BufferFormat::R_16:
     case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::RGBX_8888:
     case gfx::BufferFormat::UYVY_422:
@@ -156,8 +155,6 @@ GLenum InternalFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::R_8:
       return GL_RED;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
     case gfx::BufferFormat::RG_88:
       return GL_RG;
     case gfx::BufferFormat::BGR_565:

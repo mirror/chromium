@@ -18,7 +18,7 @@
 #include "net/base/escape.h"
 #include "net/url_request/url_request.h"
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !defined(OS_IOS) && !defined(OS_ANDROID)
 #include "components/signin/core/browser/dice_header_helper.h"
 #endif
 
@@ -127,7 +127,8 @@ void AppendOrRemoveAccountConsistentyRequestHeader(
     const content_settings::CookieSettings* cookie_settings,
     int profile_mode_mask) {
   const GURL& url = redirect_url.is_empty() ? request->url() : redirect_url;
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+// Dice is not enabled on mobile.
+#if !defined(OS_IOS) && !defined(OS_ANDROID)
   DiceHeaderHelper dice_helper;
   std::string dice_header_value;
   if (dice_helper.ShouldBuildRequestHeader(url, cookie_settings)) {
@@ -154,7 +155,7 @@ ManageAccountsParams BuildManageAccountsParams(
   return ChromeConnectedHeaderHelper::BuildManageAccountsParams(header_value);
 }
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !defined(OS_IOS) && !defined(OS_ANDROID)
 DiceResponseParams BuildDiceResponseParams(const std::string& header_value) {
   return DiceHeaderHelper::BuildDiceResponseParams(header_value);
 }

@@ -86,19 +86,13 @@ TEST_F(InputMethodMusTest, PendingCallbackRunFromDestruction) {
     std::unique_ptr<EventResultCallback> callback =
         base::MakeUnique<EventResultCallback>(base::Bind(
             &RunFunctionWithEventResult, &was_event_result_callback_run));
-
-    ui::EventDispatchDetails details =
-        InputMethodMusTestApi::CallSendKeyEventToInputMethod(
-            &input_method_mus,
-            ui::KeyEvent(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0),
-            std::move(callback));
-    ASSERT_TRUE(!details.dispatcher_destroyed && !details.target_destroyed);
-
+    InputMethodMusTestApi::CallSendKeyEventToInputMethod(
+        &input_method_mus, ui::KeyEvent(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0),
+        std::move(callback));
     // Add a null callback as well, to make sure null is deal with.
-    details = InputMethodMusTestApi::CallSendKeyEventToInputMethod(
+    InputMethodMusTestApi::CallSendKeyEventToInputMethod(
         &input_method_mus, ui::KeyEvent(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0),
         nullptr);
-    ASSERT_TRUE(!details.dispatcher_destroyed && !details.target_destroyed);
     // The event should have been queued.
     EXPECT_EQ(2u, test_input_method.process_key_event_callbacks()->size());
     // Callback should not have been run yet.
@@ -122,12 +116,9 @@ TEST_F(InputMethodMusTest, PendingCallbackRunFromOnDidChangeFocusedClient) {
   std::unique_ptr<EventResultCallback> callback =
       base::MakeUnique<EventResultCallback>(base::Bind(
           &RunFunctionWithEventResult, &was_event_result_callback_run));
-  ui::EventDispatchDetails details =
-      InputMethodMusTestApi::CallSendKeyEventToInputMethod(
-          &input_method_mus,
-          ui::KeyEvent(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0),
-          std::move(callback));
-  ASSERT_TRUE(!details.dispatcher_destroyed && !details.target_destroyed);
+  InputMethodMusTestApi::CallSendKeyEventToInputMethod(
+      &input_method_mus, ui::KeyEvent(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0),
+      std::move(callback));
   // The event should have been queued.
   EXPECT_EQ(1u, test_input_method.process_key_event_callbacks()->size());
   // Callback should not have been run yet.
@@ -189,10 +180,8 @@ TEST_F(InputMethodMusTest, ChangeTextInputTypeWhileProcessingCallback) {
       base::MakeUnique<EventResultCallback>(base::Bind(
           &RunFunctionWithEventResult, &was_event_result_callback_run));
   const ui::KeyEvent key_event(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0);
-  ui::EventDispatchDetails details =
-      InputMethodMusTestApi::CallSendKeyEventToInputMethod(
-          &input_method_mus, key_event, std::move(callback));
-  ASSERT_TRUE(!details.dispatcher_destroyed && !details.target_destroyed);
+  InputMethodMusTestApi::CallSendKeyEventToInputMethod(
+      &input_method_mus, key_event, std::move(callback));
   // The event should have been queued.
   ASSERT_EQ(1u, test_input_method.process_key_event_callbacks()->size());
   // Callback should not have been run yet.

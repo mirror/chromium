@@ -84,15 +84,15 @@ PositionInFlatTree AdjustPositionInFlatTreeForStart(
     Node* shadow_host) {
   if (IsEnclosedBy(position, *shadow_host)) {
     if (position.IsBeforeChildren())
-      return PositionInFlatTree::BeforeNode(*shadow_host);
-    return PositionInFlatTree::AfterNode(*shadow_host);
+      return PositionInFlatTree::BeforeNode(shadow_host);
+    return PositionInFlatTree::AfterNode(shadow_host);
   }
 
   // We use |firstChild|'s after instead of beforeAllChildren for backward
   // compatibility. The positions are same but the anchors would be different,
   // and selection painting uses anchor nodes.
   if (Node* first_child = FlatTreeTraversal::FirstChild(*shadow_host))
-    return PositionInFlatTree::BeforeNode(*first_child);
+    return PositionInFlatTree::BeforeNode(first_child);
   return PositionInFlatTree();
 }
 
@@ -105,12 +105,12 @@ Position AdjustPositionForEnd(const Position& current_position,
   if (Node* ancestor = tree_scope.AncestorInThisScope(
           current_position.ComputeContainerNode())) {
     if (ancestor->contains(start_container_node))
-      return Position::AfterNode(*ancestor);
-    return Position::BeforeNode(*ancestor);
+      return Position::AfterNode(ancestor);
+    return Position::BeforeNode(ancestor);
   }
 
   if (Node* last_child = tree_scope.RootNode().lastChild())
-    return Position::AfterNode(*last_child);
+    return Position::AfterNode(last_child);
 
   return Position();
 }
@@ -120,15 +120,15 @@ PositionInFlatTree AdjustPositionInFlatTreeForEnd(
     Node* shadow_host) {
   if (IsEnclosedBy(position, *shadow_host)) {
     if (position.IsAfterChildren())
-      return PositionInFlatTree::AfterNode(*shadow_host);
-    return PositionInFlatTree::BeforeNode(*shadow_host);
+      return PositionInFlatTree::AfterNode(shadow_host);
+    return PositionInFlatTree::BeforeNode(shadow_host);
   }
 
   // We use |lastChild|'s after instead of afterAllChildren for backward
   // compatibility. The positions are same but the anchors would be different,
   // and selection painting uses anchor nodes.
   if (Node* last_child = FlatTreeTraversal::LastChild(*shadow_host))
-    return PositionInFlatTree::AfterNode(*last_child);
+    return PositionInFlatTree::AfterNode(last_child);
   return PositionInFlatTree();
 }
 
@@ -141,12 +141,12 @@ Position AdjustPositionForStart(const Position& current_position,
   if (Node* ancestor = tree_scope.AncestorInThisScope(
           current_position.ComputeContainerNode())) {
     if (ancestor->contains(end_container_node))
-      return Position::BeforeNode(*ancestor);
-    return Position::AfterNode(*ancestor);
+      return Position::BeforeNode(ancestor);
+    return Position::AfterNode(ancestor);
   }
 
   if (Node* first_child = tree_scope.RootNode().firstChild())
-    return Position::BeforeNode(*first_child);
+    return Position::BeforeNode(first_child);
 
   return Position();
 }

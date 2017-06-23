@@ -191,7 +191,6 @@ void HTMLIFrameElement::ParseAttribute(
     }
     FrameOwnerPropertiesChanged();
     UpdateContainerPolicy();
-    UseCounter::Count(GetDocument(), WebFeature::kFeaturePolicyAllowAttribute);
   } else {
     if (name == srcAttr)
       LogUpdateAttributeIfIsolatedWorldAndInDocument("iframe", params);

@@ -109,12 +109,11 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
                                           nil)]
       assertWithMatcher:grey_notNil()];
 
-  [[EarlGrey
-      selectElementWithMatcher:grey_accessibilityLabel(@"City/Province*")]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"Province*")]
       assertWithMatcher:grey_notNil()];
   [[EarlGrey
-      selectElementWithMatcher:grey_accessibilityID(@"City/Province_textField")]
-      assertWithMatcher:grey_text(@"Montreal / Quebec")];
+      selectElementWithMatcher:grey_accessibilityID(@"Province_textField")]
+      assertWithMatcher:grey_text(@"Quebec")];
 
   [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"Address*")]
       assertWithMatcher:grey_notNil()];
@@ -142,16 +141,13 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
 - (void)testVerifyProvinceFieldInputView {
   // Tap the province textfield.
   [[EarlGrey
-      selectElementWithMatcher:grey_accessibilityID(@"City/Province_textField")]
+      selectElementWithMatcher:grey_accessibilityID(@"Province_textField")]
       performAction:grey_tap()];
 
-  // Assert that a UIPicker view is displaying and the expected rows are
-  // selected.
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
-                                          @"City/Province_pickerView")]
-      assertWithMatcher:grey_allOf(grey_pickerColumnSetToValue(0, @"Montreal"),
-                                   grey_pickerColumnSetToValue(1, @"Quebec"),
-                                   nil)];
+  // Assert that a UIPicker view is displaying and the expected row is selected.
+  [[EarlGrey
+      selectElementWithMatcher:grey_accessibilityID(@"Province_pickerView")]
+      assertWithMatcher:grey_pickerColumnSetToValue(0, @"Quebec")];
 }
 
 // Tests if tapping the selector field notifies the delegate.
@@ -227,8 +223,7 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
       assertWithMatcher:grey_enabled()] performAction:grey_tap()];
 
   // Assert the province textfield is focused.
-  AssertTextFieldWithAccessibilityIDIsFirstResponder(
-      @"City/Province_textField");
+  AssertTextFieldWithAccessibilityIDIsFirstResponder(@"Province_textField");
 
   // Assert the input accessory view's previous button is enabled.
   [[EarlGrey selectElementWithMatcher:InputAccessoryViewPreviousButton()]
@@ -284,8 +279,7 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
       assertWithMatcher:grey_notVisible()];
 
   // Assert the province textfield is focused.
-  AssertTextFieldWithAccessibilityIDIsFirstResponder(
-      @"City/Province_textField");
+  AssertTextFieldWithAccessibilityIDIsFirstResponder(@"Province_textField");
 
   // Assert the input accessory view's previous button is enabled.
   [[EarlGrey selectElementWithMatcher:InputAccessoryViewPreviousButton()]
@@ -311,8 +305,7 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
       performAction:grey_typeText(@"\n")];
 
   // Assert the province textfield is focused.
-  AssertTextFieldWithAccessibilityIDIsFirstResponder(
-      @"City/Province_textField");
+  AssertTextFieldWithAccessibilityIDIsFirstResponder(@"Province_textField");
 
   // The standard keyboard does not display for the province field. Instead, tap
   // the address textfield.

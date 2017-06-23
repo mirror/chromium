@@ -215,15 +215,11 @@ function AutomationRichEditableText(node) {
   AutomationEditableText.call(this, node);
 
   var root = this.node_.root;
-  if (!root || !root.anchorObject || !root.focusObject ||
-      root.anchorOffset === undefined || root.focusOffset === undefined)
+  if (!root || !root.anchorObject || !root.focusObject)
     return;
 
-  this.anchorLine_ = new editing.EditableLine(
-      root.anchorObject, root.anchorOffset, root.anchorObject,
-      root.anchorOffset);
-  this.focusLine_ = new editing.EditableLine(
-      root.focusObject, root.focusOffset, root.focusObject, root.focusOffset);
+  this.line_ = new editing.EditableLine(
+      root.anchorObject, root.anchorOffset, root.focusObject, root.focusOffset);
 }
 
 AutomationRichEditableText.prototype = {
@@ -232,38 +228,19 @@ AutomationRichEditableText.prototype = {
   /** @override */
   onUpdate: function() {
     var root = this.node_.root;
-    if (!root.anchorObject || !root.focusObject ||
-        root.anchorOffset === undefined || root.focusOffset === undefined)
+    if (!root.anchorObject || !root.focusObject)
       return;
 
-    var anchorLine = new editing.EditableLine(
-        root.anchorObject, root.anchorOffset, root.anchorObject,
-        root.anchorOffset);
-    var focusLine = new editing.EditableLine(
-        root.focusObject, root.focusOffset, root.focusObject, root.focusOffset);
-
-    var prevAnchorLine = this.anchorLine_;
-    var prevFocusLine = this.focusLine_;
-    this.anchorLine_ = anchorLine;
-    this.focusLine_ = focusLine;
-
-    // Compute the current line based upon whether the current selection was
-    // extended from anchor or focus. The default behavior is to compute lines
-    // via focus.
-    var baseLineOnStart = prevFocusLine.isSameLineAndSelection(focusLine);
-
     var cur = new editing.EditableLine(
-        root.anchorObject, root.anchorOffset, root.focusObject,
-        root.focusOffset, baseLineOnStart);
+        root.anchorObject, root.anchorOffset || 0, root.focusObject,
+        root.focusOffset || 0);
     var prev = this.line_;
     this.line_ = cur;
 
-    // Selection stayed within the same line(s) and didn't cross into new lines.
-    if (anchorLine.isSameLine(prevAnchorLine) &&
-        focusLine.isSameLine(prevFocusLine)) {
-      // Intra-line changes.
+    if (prev.equals(cur)) {
+      // Collapsed cursor.
       this.changed(new cvox.TextChangeEvent(
-          cur.text || '', cur.startOffset, cur.endOffset, true));
+          cur.text || '', cur.startOffset || 0, cur.endOffset || 0, true));
       this.brailleCurrentRichLine_();
 
       // Finally, queue up any text markers/styles at bounds.
@@ -306,20 +283,9 @@ AutomationRichEditableText.prototype = {
       return;
     }
 
-    if (cur.text == '') {
-      // This line has no text content. Describe the DOM selection.
-      new Output()
-          .withRichSpeechAndBraille(
-              new Range(cur.start_, cur.end_),
-              new Range(prev.start_, prev.end_), Output.EventType.NAVIGATE)
-          .go();
-    } else {
-      // Describe the current line. This accounts for previous/current
-      // selections and picking the line edge boundary that changed (as computed
-      // above). This is also the code path for describing paste.
-      cvox.ChromeVox.tts.speak(cur.text, cvox.QueueMode.CATEGORY_FLUSH);
-      this.brailleCurrentRichLine_();
-    }
+    // Just output the current line.
+    cvox.ChromeVox.tts.speak(cur.text, cvox.QueueMode.CATEGORY_FLUSH);
+    this.brailleCurrentRichLine_();
 
     // The state in EditableTextBase needs to get updated with the new line
     // contents, so that subsequent intra-line changes get the right state
@@ -475,19 +441,9 @@ editing.observer_ = new editing.EditingChromeVoxStateObserver();
 /**
  * An EditableLine encapsulates all data concerning a line in the automation
  * tree necessary to provide output.
- * Editable: an editable selection (e.g. start/end offsets) get saved.
- * Line: nodes/offsets at the beginning/end of a line get saved.
- * @param {!AutomationNode} startNode
- * @param {number} startIndex
- * @param {!AutomationNode} endNode
- * @param {number} endIndex
- * @param {boolean=} opt_baseLineOnStart Controls whether to use anchor or
- * focus for Line computations as described above. Selections are automatically
- * truncated up to either the line start or end.
  * @constructor
  */
-editing.EditableLine = function(
-    startNode, startIndex, endNode, endIndex, opt_baseLineOnStart) {
+editing.EditableLine = function(startNode, startIndex, endNode, endIndex) {
   /** @private {!Cursor} */
   this.start_ = new Cursor(startNode, startIndex);
   this.start_ = this.start_.deepEquivalent || this.start_;
@@ -511,41 +467,29 @@ editing.EditableLine = function(
   this.lineStartContainer_;
   /** @private {number} */
   this.localLineStartContainerOffset_ = 0;
-  /** @private {AutomationNode|undefined} */
-  this.lineEndContainer_;
-  /** @private {number} */
-  this.localLineEndContainerOffset_ = 0;
 
-  this.computeLineData_(opt_baseLineOnStart);
+  this.computeLineData_();
 };
 
 editing.EditableLine.prototype = {
   /** @private */
-  computeLineData_: function(opt_baseLineOnStart) {
-    // Note that we calculate the line based only upon anchor or focus even if
-    // they do not fall on the same line. It is up to the caller to specify
-    // which end to base this line upon since it requires reasoning about two
-    // lines.
+  computeLineData_: function() {
     var nameLen = 0;
-    var lineBase = opt_baseLineOnStart ? this.start_ : this.end_;
-    var lineExtend = opt_baseLineOnStart ? this.end_ : this.start_;
+    if (this.start_.node.name)
+      nameLen = this.start_.node.name.length;
 
-    if (lineBase.node.name)
-      nameLen = lineBase.node.name.length;
-
-    this.value_ = new Spannable(lineBase.node.name || '', lineBase);
-    if (lineBase.node == lineExtend.node)
-      this.value_.setSpan(lineExtend, 0, nameLen);
+    this.value_ = new Spannable(this.start_.node.name || '', this.start_);
+    if (this.start_.node == this.end_.node)
+      this.value_.setSpan(this.end_, 0, nameLen);
 
     // Initialize defaults.
-    this.lineStart_ = lineBase.node;
+    this.lineStart_ = this.start_.node;
     this.lineEnd_ = this.lineStart_;
     this.startContainer_ = this.lineStart_.parent;
     this.lineStartContainer_ = this.lineStart_.parent;
-    this.lineEndContainer_ = this.lineStart_.parent;
 
     // Annotate each chunk with its associated inline text box node.
-    this.value_.setSpan(this.lineStart_, 0, nameLen);
+    this.value_.setSpan(this.lineStart_, 0, this.lineStart_.name.length);
 
     // If the current selection is not on an inline text box (e.g. an image),
     // return early here so that the line contents are just the node. This is
@@ -589,7 +533,6 @@ editing.EditableLine.prototype = {
 
       this.value_.append(new Spannable(lineEnd.name, annotation));
     }
-    this.lineEndContainer_ = this.lineEnd_.parent;
 
     // Finally, annotate with all parent static texts as NodeSpan's so that
     // braille routing can key properly into the node with an offset.
@@ -607,11 +550,6 @@ editing.EditableLine.prototype = {
     while (finder.nextSibling) {
       finder = finder.nextSibling;
       textCountAfterLineEnd += finder.name.length;
-    }
-
-    if (this.lineEndContainer_.name) {
-      this.localLineEndContainerOffset_ =
-          this.lineEndContainer_.name.length - textCountAfterLineEnd;
     }
 
     var len = 0;
@@ -654,14 +592,7 @@ editing.EditableLine.prototype = {
    * @return {number}
    */
   get startOffset() {
-    // It is possible that the start cursor points to content before this line
-    // (e.g. in a multi-line selection).
-    try {
-      return this.value_.getSpanStart(this.start_) + this.start_.index;
-    } catch (e) {
-      // When that happens, fall back to the start of this line.
-      return 0;
-    }
+    return this.value_.getSpanStart(this.start_) + this.start_.index;
   },
 
   /**
@@ -669,11 +600,7 @@ editing.EditableLine.prototype = {
    * @return {number}
    */
   get endOffset() {
-    try {
-      return this.value_.getSpanStart(this.end_) + this.end_.index;
-    } catch (e) {
-      return this.value_.length;
-    }
+    return this.value_.getSpanStart(this.end_) + this.end_.index;
   },
 
   /**
@@ -723,31 +650,15 @@ editing.EditableLine.prototype = {
   /**
    * Returns true if |otherLine| surrounds the same line as |this|. Note that
    * the contents of the line might be different.
-   * @param {editing.EditableLine} otherLine
    * @return {boolean}
    */
-  isSameLine: function(otherLine) {
+  equals: function(otherLine) {
     // Equality is intentionally loose here as any of the state nodes can be
     // invalidated at any time. We rely upon the start/anchor of the line
     // staying the same.
-    return (otherLine.lineStartContainer_ == this.lineStartContainer_ &&
-            otherLine.localLineStartContainerOffset_ ==
-                this.localLineStartContainerOffset_) ||
-        (otherLine.lineEndContainer_ == this.lineEndContainer_ &&
-         otherLine.localLineEndContainerOffset_ ==
-             this.localLineEndContainerOffset_);
-  },
-
-  /**
-   * Returns true if |otherLine| surrounds the same line as |this| and has the
-   * same selection.
-   * @param {editing.EditableLine} otherLine
-   * @return {boolean}
-   */
-  isSameLineAndSelection: function(otherLine) {
-    return this.isSameLine(otherLine) &&
-        this.startOffset == otherLine.startOffset &&
-        this.endOffset == otherLine.endOffset;
+    return otherLine.lineStartContainer_ == this.lineStartContainer_ &&
+        otherLine.localLineStartContainerOffset_ ==
+        this.localLineStartContainerOffset_;
   }
 };
 

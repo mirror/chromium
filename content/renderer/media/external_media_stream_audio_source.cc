@@ -76,8 +76,4 @@ void ExternalMediaStreamAudioSource::OnCaptureError(const std::string& why) {
   StopSourceOnError(why);
 }
 
-void ExternalMediaStreamAudioSource::OnCaptureMuted(bool is_muted) {
-  SetMutedState(is_muted);
-}
-
 }  // namespace content

@@ -140,24 +140,25 @@ AXTextMarkerRef AXTextMarkerRangeCopyEndMarker(
 
 }  // extern "C"
 
-// AXTextMarkerCreate copies from data buffer given to it.
+// to call |release| on it to transfer ownership of the position to the text
+// marker object.
 id CreateTextMarker(AXPlatformPositionInstance position) {
   AXTextMarkerRef text_marker = AXTextMarkerCreate(
-      kCFAllocatorDefault, reinterpret_cast<const UInt8*>(position.get()),
+      kCFAllocatorDefault, reinterpret_cast<const UInt8*>(position.release()),
       sizeof(AXPlatformPosition));
   return static_cast<id>(
       base::mac::CFTypeRefToNSObjectAutorelease(text_marker));
 }
 
-// |range| is destructed at the end of this method. |anchor| and |focus| are
-// copied into the individual text markers.
+// |range| is destructed at the end of this method and ownership of its |anchor|
+// and |focus| are transfered to the marker range object.
 id CreateTextMarkerRange(const AXPlatformRange range) {
-  base::ScopedCFTypeRef<AXTextMarkerRef> start_marker(AXTextMarkerCreate(
+  AXTextMarkerRef start_marker = AXTextMarkerCreate(
       kCFAllocatorDefault, reinterpret_cast<const UInt8*>(range.anchor()),
-      sizeof(AXPlatformPosition)));
-  base::ScopedCFTypeRef<AXTextMarkerRef> end_marker(AXTextMarkerCreate(
+      sizeof(AXPlatformPosition));
+  AXTextMarkerRef end_marker = AXTextMarkerCreate(
       kCFAllocatorDefault, reinterpret_cast<const UInt8*>(range.focus()),
-      sizeof(AXPlatformPosition)));
+      sizeof(AXPlatformPosition));
   AXTextMarkerRangeRef marker_range =
       AXTextMarkerRangeCreate(kCFAllocatorDefault, start_marker, end_marker);
   return static_cast<id>(

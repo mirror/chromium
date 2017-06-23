@@ -44,7 +44,6 @@
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/wtf/PassRefPtr.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
@@ -103,7 +102,8 @@ void FileReaderLoader::Start(ExecutionContext* execution_context,
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
 
-  ResourceLoaderOptions resource_loader_options;
+  ResourceLoaderOptions resource_loader_options(
+      kAllowStoredCredentials, kClientDidNotRequestCredentials);
   // Use special initiator to hide the request from the inspector.
   resource_loader_options.initiator_info.name =
       FetchInitiatorTypeNames::internal;
@@ -366,9 +366,9 @@ String FileReaderLoader::ConvertToText() {
   // FIXME: consider supporting incremental decoding to improve the perf.
   StringBuilder builder;
   if (!decoder_) {
-    decoder_ = TextResourceDecoder::Create(TextResourceDecoderOptions(
-        TextResourceDecoderOptions::kPlainTextContent,
-        encoding_.IsValid() ? encoding_ : UTF8Encoding()));
+    decoder_ = TextResourceDecoder::Create(
+        TextResourceDecoder::kPlainTextContent,
+        encoding_.IsValid() ? encoding_ : UTF8Encoding());
   }
   builder.Append(decoder_->Decode(static_cast<const char*>(raw_data_->Data()),
                                   raw_data_->ByteLength()));

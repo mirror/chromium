@@ -95,7 +95,6 @@ class CONTENT_EXPORT ProcessedLocalAudioSource final
                double volume,
                bool key_pressed) override;
   void OnCaptureError(const std::string& message) override;
-  void OnCaptureMuted(bool is_muted) override;
 
  private:
   // Helper function to get the source buffer size based on whether audio

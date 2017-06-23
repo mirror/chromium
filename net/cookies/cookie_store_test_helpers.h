@@ -29,7 +29,7 @@ class DelayedCookieMonster : public CookieStore {
       const GURL& url,
       const std::string& cookie_line,
       const CookieOptions& options,
-      CookieMonster::SetCookiesCallback callback) override;
+      const CookieMonster::SetCookiesCallback& callback) override;
 
   void SetCookieWithDetailsAsync(const GURL& url,
                                  const std::string& name,
@@ -43,23 +43,19 @@ class DelayedCookieMonster : public CookieStore {
                                  bool http_only,
                                  CookieSameSite same_site,
                                  CookiePriority priority,
-                                 SetCookiesCallback callback) override;
-
-  void SetCanonicalCookieAsync(std::unique_ptr<CanonicalCookie> cookie,
-                               bool secure_source,
-                               bool modify_http_only,
-                               SetCookiesCallback callback) override;
+                                 const SetCookiesCallback& callback) override;
 
   void GetCookiesWithOptionsAsync(
       const GURL& url,
       const CookieOptions& options,
-      CookieMonster::GetCookiesCallback callback) override;
+      const CookieMonster::GetCookiesCallback& callback) override;
 
-  void GetCookieListWithOptionsAsync(const GURL& url,
-                                     const CookieOptions& options,
-                                     GetCookieListCallback callback) override;
+  void GetCookieListWithOptionsAsync(
+      const GURL& url,
+      const CookieOptions& options,
+      const GetCookieListCallback& callback) override;
 
-  void GetAllCookiesAsync(GetCookieListCallback callback) override;
+  void GetAllCookiesAsync(const GetCookieListCallback& callback) override;
 
   virtual bool SetCookieWithOptions(const GURL& url,
                                     const std::string& cookie_line,
@@ -73,24 +69,24 @@ class DelayedCookieMonster : public CookieStore {
 
   void DeleteCookieAsync(const GURL& url,
                          const std::string& cookie_name,
-                         base::OnceClosure callback) override;
+                         const base::Closure& callback) override;
 
   void DeleteCanonicalCookieAsync(const CanonicalCookie& cookie,
-                                  DeleteCallback callback) override;
+                                  const DeleteCallback& callback) override;
 
   void DeleteAllCreatedBetweenAsync(const base::Time& delete_begin,
                                     const base::Time& delete_end,
-                                    DeleteCallback callback) override;
+                                    const DeleteCallback& callback) override;
 
   void DeleteAllCreatedBetweenWithPredicateAsync(
       const base::Time& delete_begin,
       const base::Time& delete_end,
       const base::Callback<bool(const CanonicalCookie&)>& predicate,
-      DeleteCallback callback) override;
+      const DeleteCallback& callback) override;
 
-  void DeleteSessionCookiesAsync(DeleteCallback) override;
+  void DeleteSessionCookiesAsync(const DeleteCallback&) override;
 
-  void FlushStore(base::OnceClosure callback) override;
+  void FlushStore(const base::Closure& callback) override;
 
   std::unique_ptr<CookieStore::CookieChangedSubscription> AddCallbackForCookie(
       const GURL& url,
@@ -109,13 +105,14 @@ class DelayedCookieMonster : public CookieStore {
 
   // Invoke the original callbacks.
 
-  void InvokeSetCookiesCallback(CookieMonster::SetCookiesCallback callback);
+  void InvokeSetCookiesCallback(
+      const CookieMonster::SetCookiesCallback& callback);
 
   void InvokeGetCookieStringCallback(
-      CookieMonster::GetCookiesCallback callback);
+      const CookieMonster::GetCookiesCallback& callback);
 
   void InvokeGetCookieListCallback(
-      CookieMonster::GetCookieListCallback callback);
+      const CookieMonster::GetCookieListCallback& callback);
 
   friend class base::RefCountedThreadSafe<DelayedCookieMonster>;
 

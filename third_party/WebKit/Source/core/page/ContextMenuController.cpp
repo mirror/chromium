@@ -29,6 +29,7 @@
 #include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/Node.h"
+#include "core/events/Event.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/input/EventHandler.h"
@@ -37,7 +38,6 @@
 #include "platform/ContextMenu.h"
 #include "platform/ContextMenuItem.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/WebMenuSourceType.h"
 
 namespace blink {
 
@@ -76,12 +76,11 @@ void ContextMenuController::DocumentDetached(Document* document) {
   }
 }
 
-void ContextMenuController::HandleContextMenuEvent(MouseEvent* mouse_event) {
-  context_menu_ = CreateContextMenu(mouse_event);
+void ContextMenuController::HandleContextMenuEvent(Event* event) {
+  context_menu_ = CreateContextMenu(event);
   if (!context_menu_)
     return;
-
-  ShowContextMenu(mouse_event);
+  ShowContextMenu(event);
 }
 
 void ContextMenuController::ShowContextMenuAtPoint(
@@ -103,12 +102,15 @@ void ContextMenuController::ShowContextMenuAtPoint(
 }
 
 std::unique_ptr<ContextMenu> ContextMenuController::CreateContextMenu(
-    MouseEvent* mouse_event) {
-  DCHECK(mouse_event);
+    Event* event) {
+  DCHECK(event);
 
-  return CreateContextMenu(
-      mouse_event->target()->ToNode()->GetDocument().GetFrame(),
-      LayoutPoint(mouse_event->AbsoluteLocation()));
+  if (!event->IsMouseEvent())
+    return nullptr;
+
+  MouseEvent* mouse_event = ToMouseEvent(event);
+  return CreateContextMenu(event->target()->ToNode()->GetDocument().GetFrame(),
+                           LayoutPoint(mouse_event->AbsoluteLocation()));
 }
 
 std::unique_ptr<ContextMenu> ContextMenuController::CreateContextMenu(
@@ -129,15 +131,15 @@ std::unique_ptr<ContextMenu> ContextMenuController::CreateContextMenu(
   return WTF::WrapUnique(new ContextMenu);
 }
 
-void ContextMenuController::ShowContextMenu(MouseEvent* mouse_event) {
-  WebMenuSourceType source_type = kMenuSourceNone;
-  if (mouse_event) {
-    DCHECK(mouse_event->type() == EventTypeNames::contextmenu);
-    source_type = mouse_event->GetMenuSourceType();
+void ContextMenuController::ShowContextMenu(Event* event) {
+  bool from_touch = false;
+  if (event && event->IsMouseEvent()) {
+    MouseEvent* mouse_event = static_cast<MouseEvent*>(event);
+    from_touch = mouse_event->FromTouch();
   }
 
-  if (client_->ShowContextMenu(context_menu_.get(), source_type) && mouse_event)
-    mouse_event->SetDefaultHandled();
+  if (client_->ShowContextMenu(context_menu_.get(), from_touch) && event)
+    event->SetDefaultHandled();
 }
 
 void ContextMenuController::ContextMenuItemSelected(

@@ -11,7 +11,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
-#include "base/sys_info.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "components/leveldb/public/cpp/util.h"
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
@@ -52,16 +51,6 @@ const uint8_t kMetaPrefix[] = {'M', 'E', 'T', 'A', ':'};
 const int64_t kMinSchemaVersion = 1;
 const int64_t kCurrentSchemaVersion = 1;
 
-// Use a smaller block cache on android. Because of the extra caching done in
-// LevelDBWrapperImpl the block cache isn't particularly useful, but it still
-// provides some benefit with speeding up compaction. And since this is a once
-// per profile overhead, the overhead should be fairly minimal on desktop.
-#if defined(OS_ANDROID)
-const size_t kMaxBlockCacheSize = 100 * 1024;
-#else
-const size_t kMaxBlockCacheSize = 2 * 1024 * 1024;
-#endif
-
 const char kStorageOpenHistogramName[] = "LocalStorageContext.OpenError";
 // These values are written to logs.  New enum values can be added, but existing
 // enums must never be renumbered or deleted and reused.
@@ -72,16 +61,6 @@ enum class LocalStorageOpenHistogram {
   VERSION_READ_ERROR = 3,
   MAX
 };
-
-// Limits on the cache size and number of areas in memory, over which the areas
-// are purged.
-#if defined(OS_ANDROID)
-const unsigned kMaxStorageAreaCount = 10;
-const size_t kMaxCacheSize = 2 * 1024 * 1024;
-#else
-const unsigned kMaxStorageAreaCount = 50;
-const size_t kMaxCacheSize = 20 * 1024 * 1024;
-#endif
 
 std::vector<uint8_t> CreateMetaDataKey(const url::Origin& origin) {
   auto serialized_origin = leveldb::StdStringToUint8Vector(origin.Serialize());
@@ -134,45 +113,6 @@ void AddDeleteOriginOperations(
   operations->push_back(std::move(item));
 }
 
-enum class CachePurgeReason {
-  NotNeeded,
-  SizeLimitExceeded,
-  AreaCountLimitExceeded,
-  InactiveOnLowEndDevice,
-  AggressivePurgeTriggered
-};
-
-void RecordCachePurgedHistogram(CachePurgeReason reason,
-                                size_t purged_size_kib) {
-  UMA_HISTOGRAM_COUNTS_100000("LocalStorageContext.CachePurgedInKB",
-                              purged_size_kib);
-  switch (reason) {
-    case CachePurgeReason::SizeLimitExceeded:
-      UMA_HISTOGRAM_COUNTS_100000(
-          "LocalStorageContext.CachePurgedInKB.SizeLimitExceeded",
-          purged_size_kib);
-      break;
-    case CachePurgeReason::AreaCountLimitExceeded:
-      UMA_HISTOGRAM_COUNTS_100000(
-          "LocalStorageContext.CachePurgedInKB.AreaCountLimitExceeded",
-          purged_size_kib);
-      break;
-    case CachePurgeReason::InactiveOnLowEndDevice:
-      UMA_HISTOGRAM_COUNTS_100000(
-          "LocalStorageContext.CachePurgedInKB.InactiveOnLowEndDevice",
-          purged_size_kib);
-      break;
-    case CachePurgeReason::AggressivePurgeTriggered:
-      UMA_HISTOGRAM_COUNTS_100000(
-          "LocalStorageContext.CachePurgedInKB.AggressivePurgeTriggered",
-          purged_size_kib);
-      break;
-    case CachePurgeReason::NotNeeded:
-      NOTREACHED();
-      break;
-  }
-}
-
 }  // namespace
 
 class LocalStorageContextMojo::LevelDBWrapperHolder
@@ -202,11 +142,10 @@ class LocalStorageContextMojo::LevelDBWrapperHolder
   LevelDBWrapperImpl* level_db_wrapper() { return level_db_wrapper_ptr_; }
 
   void OnNoBindings() override {
-    has_bindings_ = false;
-    // Don't delete ourselves, but do schedule an immediate commit. Possible
-    // deletion will happen under memory pressure or when another localstorage
-    // area is opened.
-    level_db_wrapper()->ScheduleImmediateCommit();
+    // Will delete |this|.
+    DCHECK(context_->level_db_wrappers_.find(origin_) !=
+           context_->level_db_wrappers_.end());
+    context_->level_db_wrappers_.erase(origin_);
   }
 
   std::vector<leveldb::mojom::BatchedOperationPtr> PrepareToCommit() override {
@@ -280,13 +219,6 @@ class LocalStorageContextMojo::LevelDBWrapperHolder
                                 leveldb_env::LEVELDB_STATUS_MAX);
   }
 
-  void Bind(mojom::LevelDBWrapperRequest request) {
-    has_bindings_ = true;
-    level_db_wrapper()->Bind(std::move(request));
-  }
-
-  bool has_bindings() const { return has_bindings_; }
-
  private:
   base::FilePath sql_db_path() const {
     if (context_->old_localstorage_path_.empty())
@@ -304,7 +236,6 @@ class LocalStorageContextMojo::LevelDBWrapperHolder
   // could already be null, but this field should still be valid.
   LevelDBWrapperImpl* level_db_wrapper_ptr_;
   bool deleted_old_data_ = false;
-  bool has_bindings_ = false;
 };
 
 LocalStorageContextMojo::LocalStorageContextMojo(
@@ -321,7 +252,6 @@ LocalStorageContextMojo::LocalStorageContextMojo(
                                          reinterpret_cast<uintptr_t>(this))),
       task_runner_(std::move(legacy_task_runner)),
       old_localstorage_path_(old_localstorage_path),
-      is_low_end_device_(base::SysInfo::IsLowEndDevice()),
       weak_ptr_factory_(this) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       this, "LocalStorage", task_runner);
@@ -417,58 +347,8 @@ void LocalStorageContextMojo::ShutdownAndDelete() {
 }
 
 void LocalStorageContextMojo::PurgeMemory() {
-  size_t total_cache_size, unused_wrapper_count;
-  GetStatistics(&total_cache_size, &unused_wrapper_count);
-
-  for (auto it = level_db_wrappers_.begin(); it != level_db_wrappers_.end();) {
-    if (it->second->has_bindings()) {
-      it->second->level_db_wrapper()->PurgeMemory();
-      ++it;
-    } else {
-      it = level_db_wrappers_.erase(it);
-    }
-  }
-
-  // Track the size of cache purged.
-  size_t final_total_cache_size;
-  GetStatistics(&final_total_cache_size, &unused_wrapper_count);
-  size_t purged_size_kib = (total_cache_size - final_total_cache_size) / 1024;
-  RecordCachePurgedHistogram(CachePurgeReason::AggressivePurgeTriggered,
-                             purged_size_kib);
-}
-
-void LocalStorageContextMojo::PurgeUnusedWrappersIfNeeded() {
-  size_t total_cache_size, unused_wrapper_count;
-  GetStatistics(&total_cache_size, &unused_wrapper_count);
-
-  // Nothing to purge.
-  if (!unused_wrapper_count)
-    return;
-
-  CachePurgeReason purge_reason = CachePurgeReason::NotNeeded;
-
-  if (total_cache_size > kMaxCacheSize)
-    purge_reason = CachePurgeReason::SizeLimitExceeded;
-  else if (level_db_wrappers_.size() > kMaxStorageAreaCount)
-    purge_reason = CachePurgeReason::AreaCountLimitExceeded;
-  else if (is_low_end_device_)
-    purge_reason = CachePurgeReason::InactiveOnLowEndDevice;
-
-  if (purge_reason == CachePurgeReason::NotNeeded)
-    return;
-
-  for (auto it = level_db_wrappers_.begin(); it != level_db_wrappers_.end();) {
-    if (it->second->has_bindings())
-      ++it;
-    else
-      it = level_db_wrappers_.erase(it);
-  }
-
-  // Track the size of cache purged.
-  size_t final_total_cache_size;
-  GetStatistics(&final_total_cache_size, &unused_wrapper_count);
-  size_t purged_size_kib = (total_cache_size - final_total_cache_size) / 1024;
-  RecordCachePurgedHistogram(purge_reason, purged_size_kib);
+  for (const auto& it : level_db_wrappers_)
+    it.second->level_db_wrapper()->PurgeMemory();
 }
 
 void LocalStorageContextMojo::SetDatabaseForTesting(
@@ -499,8 +379,9 @@ bool LocalStorageContextMojo::OnMemoryDump(
 
   if (args.level_of_detail ==
       base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
-    size_t total_cache_size, unused_wrapper_count;
-    GetStatistics(&total_cache_size, &unused_wrapper_count);
+    size_t total_cache_size = 0;
+    for (const auto& it : level_db_wrappers_)
+      total_cache_size += it.second->level_db_wrapper()->bytes_used();
     auto* mad = pmd->CreateAllocatorDump(context_name + "/cache_size");
     mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                    base::trace_event::MemoryAllocatorDump::kUnitsBytes,
@@ -620,10 +501,6 @@ void LocalStorageContextMojo::OnDirectoryOpened(
   // Default write_buffer_size is 4 MB but that might leave a 3.999
   // memory allocation in RAM from a log file recovery.
   options->write_buffer_size = 64 * 1024;
-  // Default block_cache_size is 8 MB, but we don't really want to cache that
-  // much data, so instead set it to a lower value. LevelDBWrapperImpl takes
-  // care of almost all the actual block caching we care about.
-  options->block_cache_size = kMaxBlockCacheSize;
   leveldb_service_->OpenWithOptions(
       std::move(options), std::move(directory_clone), "leveldb",
       memory_dump_id_, MakeRequest(&database_),
@@ -784,43 +661,25 @@ void LocalStorageContextMojo::BindLocalStorage(
   GetOrCreateDBWrapper(origin)->Bind(std::move(request));
 }
 
-LocalStorageContextMojo::LevelDBWrapperHolder*
-LocalStorageContextMojo::GetOrCreateDBWrapper(const url::Origin& origin) {
+LevelDBWrapperImpl* LocalStorageContextMojo::GetOrCreateDBWrapper(
+    const url::Origin& origin) {
   DCHECK_EQ(connection_state_, CONNECTION_FINISHED);
   auto found = level_db_wrappers_.find(origin);
-  if (found != level_db_wrappers_.end()) {
-    return found->second.get();
-  }
-
-  size_t total_cache_size, unused_wrapper_count;
-  GetStatistics(&total_cache_size, &unused_wrapper_count);
-
-  // Track the total localStorage cache size.
-  UMA_HISTOGRAM_COUNTS_100000("LocalStorageContext.CacheSizeInKB",
-                              total_cache_size / 1024);
-
-  PurgeUnusedWrappersIfNeeded();
+  if (found != level_db_wrappers_.end())
+    return found->second->level_db_wrapper();
 
   auto holder = base::MakeUnique<LevelDBWrapperHolder>(this, origin);
-  LevelDBWrapperHolder* holder_ptr = holder.get();
+  LevelDBWrapperImpl* wrapper_ptr = holder->level_db_wrapper();
   level_db_wrappers_[origin] = std::move(holder);
-  return holder_ptr;
+  return wrapper_ptr;
 }
 
 void LocalStorageContextMojo::RetrieveStorageUsage(
     GetStorageUsageCallback callback) {
   if (!database_) {
     // If for whatever reason no leveldb database is available, no storage is
-    // used, so return an array only containing the current leveldb wrappers.
-    std::vector<LocalStorageUsageInfo> result;
-    base::Time now = base::Time::Now();
-    for (const auto& it : level_db_wrappers_) {
-      LocalStorageUsageInfo info;
-      info.origin = it.first.GetURL();
-      info.last_modified = now;
-      result.push_back(std::move(info));
-    }
-    std::move(callback).Run(std::move(result));
+    // used, so return an empty array.
+    std::move(callback).Run(std::vector<LocalStorageUsageInfo>());
     return;
   }
 
@@ -835,13 +694,11 @@ void LocalStorageContextMojo::OnGotMetaData(
     leveldb::mojom::DatabaseError status,
     std::vector<leveldb::mojom::KeyValuePtr> data) {
   std::vector<LocalStorageUsageInfo> result;
-  std::set<url::Origin> origins;
   for (const auto& row : data) {
     DCHECK_GT(row->key.size(), arraysize(kMetaPrefix));
     LocalStorageUsageInfo info;
     info.origin = GURL(leveldb::Uint8VectorToStdString(row->key).substr(
         arraysize(kMetaPrefix)));
-    origins.insert(url::Origin(info.origin));
     if (!info.origin.is_valid()) {
       // TODO(mek): Deal with database corruption.
       continue;
@@ -854,17 +711,6 @@ void LocalStorageContextMojo::OnGotMetaData(
     }
     info.data_size = data.size_bytes();
     info.last_modified = base::Time::FromInternalValue(data.last_modified());
-    result.push_back(std::move(info));
-  }
-  // Add any origins for which LevelDBWrappers exist, but which haven't
-  // committed any data to disk yet.
-  base::Time now = base::Time::Now();
-  for (const auto& it : level_db_wrappers_) {
-    if (origins.find(it.first) != origins.end())
-      continue;
-    LocalStorageUsageInfo info;
-    info.origin = it.first.GetURL();
-    info.last_modified = now;
     result.push_back(std::move(info));
   }
   std::move(callback).Run(std::move(result));
@@ -906,17 +752,6 @@ void LocalStorageContextMojo::OnGotStorageUsageForShutdown(
 void LocalStorageContextMojo::OnShutdownComplete(
     leveldb::mojom::DatabaseError error) {
   delete this;
-}
-
-void LocalStorageContextMojo::GetStatistics(size_t* total_cache_size,
-                                            size_t* unused_wrapper_count) {
-  *total_cache_size = 0;
-  *unused_wrapper_count = 0;
-  for (const auto& it : level_db_wrappers_) {
-    *total_cache_size += it.second->level_db_wrapper()->bytes_used();
-    if (!it.second->has_bindings())
-      (*unused_wrapper_count)++;
-  }
 }
 
 }  // namespace content

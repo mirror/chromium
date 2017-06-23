@@ -9,7 +9,6 @@
 #include "base/android/jni_android.h"
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
-#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
@@ -54,7 +53,6 @@
 #include "jni/AutocompleteController_jni.h"
 #include "net/base/escape.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
-#include "ui/base/device_form_factor.h"
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertJavaStringToUTF16;
@@ -133,17 +131,17 @@ AutocompleteControllerAndroid::AutocompleteControllerAndroid(Profile* profile)
       inside_synchronous_start_(false),
       profile_(profile) {}
 
-void AutocompleteControllerAndroid::Start(JNIEnv* env,
-                                          const JavaRef<jobject>& obj,
-                                          const JavaRef<jstring>& j_text,
-                                          jint j_cursor_pos,
-                                          const JavaRef<jstring>& j_desired_tld,
-                                          const JavaRef<jstring>& j_current_url,
-                                          bool prevent_inline_autocomplete,
-                                          bool prefer_keyword,
-                                          bool allow_exact_keyword_match,
-                                          bool want_asynchronous_matches,
-                                          bool focused_from_fakebox) {
+void AutocompleteControllerAndroid::Start(
+    JNIEnv* env,
+    const JavaRef<jobject>& obj,
+    const JavaRef<jstring>& j_text,
+    jint j_cursor_pos,
+    const JavaRef<jstring>& j_desired_tld,
+    const JavaRef<jstring>& j_current_url,
+    bool prevent_inline_autocomplete,
+    bool prefer_keyword,
+    bool allow_exact_keyword_match,
+    bool want_asynchronous_matches) {
   if (!autocomplete_controller_)
     return;
 
@@ -155,7 +153,7 @@ void AutocompleteControllerAndroid::Start(JNIEnv* env,
     desired_tld = base::android::ConvertJavaStringToUTF8(env, j_desired_tld);
   base::string16 text = ConvertJavaStringToUTF16(env, j_text);
   OmniboxEventProto::PageClassification page_classification =
-      ClassifyPage(current_url, focused_from_fakebox);
+      OmniboxEventProto::OTHER;
   size_t cursor_pos = j_cursor_pos == -1 ? base::string16::npos : j_cursor_pos;
   input_ = AutocompleteInput(
       text, cursor_pos, desired_tld, current_url, base::string16(),
@@ -168,9 +166,8 @@ void AutocompleteControllerAndroid::Start(JNIEnv* env,
 ScopedJavaLocalRef<jobject> AutocompleteControllerAndroid::Classify(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& j_text,
-    bool focused_from_fakebox) {
-  return GetTopSynchronousResult(env, obj, j_text, true, focused_from_fakebox);
+    const JavaParamRef<jstring>& j_text) {
+  return GetTopSynchronousResult(env, obj, j_text, true);
 }
 
 void AutocompleteControllerAndroid::OnOmniboxFocused(
@@ -400,16 +397,6 @@ AutocompleteControllerAndroid::ClassifyPage(const GURL& gurl,
   }
 
   if (url == chrome::kChromeUINativeNewTabURL) {
-    // If the fakebox demotion experiment is not active, pretend all focus
-    // events go to the omnibox.
-    if (!base::FeatureList::IsEnabled(omnibox::kAndroidFakeboxDemotion))
-      return OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS;
-    // On phones, the specific feature flag for the experiment on phones has to
-    // be enabled.  (Because there is only one box on the NTP on phones, the
-    // case for demoting URLs is less clear; hence the separate experiment)
-    if ((ui::GetDeviceFormFactor() == ui::DEVICE_FORM_FACTOR_PHONE) &&
-        !base::FeatureList::IsEnabled(omnibox::kAndroidFakeboxDemotionOnPhones))
-      return OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS;
     return focused_from_fakebox ?
         OmniboxEventProto::INSTANT_NTP_WITH_FAKEBOX_AS_STARTING_FOCUS :
         OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS;
@@ -540,14 +527,21 @@ AutocompleteControllerAndroid::GetTopSynchronousResult(
     JNIEnv* env,
     const JavaRef<jobject>& obj,
     const JavaRef<jstring>& j_text,
-    bool prevent_inline_autocomplete,
-    bool focused_from_fakebox) {
+    bool prevent_inline_autocomplete) {
   if (!autocomplete_controller_)
     return ScopedJavaLocalRef<jobject>();
 
   inside_synchronous_start_ = true;
-  Start(env, obj, j_text, -1, nullptr, nullptr, prevent_inline_autocomplete,
-        false, false, false, focused_from_fakebox);
+  Start(env,
+        obj,
+        j_text,
+        -1,
+        nullptr,
+        nullptr,
+        prevent_inline_autocomplete,
+        false,
+        false,
+        false);
   inside_synchronous_start_ = false;
   DCHECK(autocomplete_controller_->done());
   const AutocompleteResult& result = autocomplete_controller_->result();

@@ -61,7 +61,6 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   void GetLayoutTextOffsets(Vector<unsigned, 32>*);
 
   bool IsBidiEnabled() const { return Data().is_bidi_enabled_; }
-  TextDirection BaseDirection() const { return Data().BaseDirection(); }
 
   void AssertOffset(unsigned index, unsigned offset) const;
   void AssertEndOffset(unsigned index, unsigned offset) const;

@@ -21,12 +21,12 @@ void FakeLockHandler::HideUserPodCustomIcon(const AccountId& account_id) {}
 void FakeLockHandler::EnableInput() {}
 
 void FakeLockHandler::SetAuthType(const AccountId& account_id,
-                                  mojom::AuthType auth_type,
+                                  FakeLockHandler::AuthType auth_type,
                                   const base::string16& auth_value) {}
 
-mojom::AuthType FakeLockHandler::GetAuthType(
+FakeLockHandler::AuthType FakeLockHandler::GetAuthType(
     const AccountId& account_id) const {
-  return mojom::AuthType::USER_CLICK;
+  return USER_CLICK;
 }
 
 FakeLockHandler::ScreenType FakeLockHandler::GetScreenType() const {

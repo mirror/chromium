@@ -438,6 +438,7 @@ fast/doctypes/005-case-preserving.html
 fast/doctypes/doctype-after-comment.html
 fast/dom/Comment/remove.html
 fast/dom/compatMode-Strict.html
+fast/dom/CompositorProxy/proxy-forces-layer.html
 fast/dom/CSSStyleDeclaration/css-computed-style-item.html
 fast/dom/CSSStyleDeclaration/css-style-item.html
 fast/dom/DocumentFragment/parent-node-interface.html
@@ -955,6 +956,7 @@ transforms/2d/transform-accuracy.html
 transforms/3d/hit-testing/composited-hit-test.html
 transforms/3d/hit-testing/rotated-hit-test-with-child.html
 transforms/container-transform-crash.html
+transforms/cssmatrix-crash.html
 transforms/focus-on-transformed-node.html
 transforms/no_transform_hit_testing.html
 transforms/topmost-becomes-bottomost-for-scrolling.html

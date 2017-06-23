@@ -1673,6 +1673,8 @@ TEST_F(DisplayManagerTest, Rotate) {
 }
 
 TEST_F(DisplayManagerTest, UIScale) {
+  display::test::ScopedDisable125DSFForUIScaling disable;
+
   UpdateDisplay("1280x800");
   int64_t display_id = display::Screen::GetScreen()->GetPrimaryDisplay().id();
   display::test::DisplayManagerTestApi(display_manager())
@@ -1779,6 +1781,17 @@ TEST_F(DisplayManagerTest, UIScale) {
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 2.0f);
   EXPECT_EQ(2.0f, GetDisplayInfoAt(0).configured_ui_scale());
+  EXPECT_EQ(1.0f, GetDisplayInfoAt(0).GetEffectiveUIScale());
+  display = display::Screen::GetScreen()->GetPrimaryDisplay();
+  EXPECT_EQ(1.0f, display.device_scale_factor());
+  EXPECT_EQ("1280x850", display.bounds().size().ToString());
+
+  // 1.25 ui scaling on 1.25 DSF device should use 1.0 DSF
+  // on screen.
+  UpdateDisplay("1280x850*1.25");
+  display::test::DisplayManagerTestApi(display_manager())
+      .SetDisplayUIScale(display_id, 1.25f);
+  EXPECT_EQ(1.25f, GetDisplayInfoAt(0).configured_ui_scale());
   EXPECT_EQ(1.0f, GetDisplayInfoAt(0).GetEffectiveUIScale());
   display = display::Screen::GetScreen()->GetPrimaryDisplay();
   EXPECT_EQ(1.0f, display.device_scale_factor());
@@ -2783,6 +2796,16 @@ TEST_F(DisplayManagerFontTest, TextSubpixelPositioningWithDsf100Internal) {
   EXPECT_NE(gfx::FontRenderParams::HINTING_NONE, GetFontHintingParams());
 }
 
+TEST_F(DisplayManagerFontTest, TextSubpixelPositioningWithDsf125Internal) {
+  display::test::ScopedDisable125DSFForUIScaling disable;
+  FontTestHelper helper(1.25f, FontTestHelper::INTERNAL);
+  ASSERT_DOUBLE_EQ(
+      1.25f,
+      display::Screen::GetScreen()->GetPrimaryDisplay().device_scale_factor());
+  EXPECT_TRUE(IsTextSubpixelPositioningEnabled());
+  EXPECT_EQ(gfx::FontRenderParams::HINTING_NONE, GetFontHintingParams());
+}
+
 TEST_F(DisplayManagerFontTest, TextSubpixelPositioningWithDsf200Internal) {
   FontTestHelper helper(2.0f, FontTestHelper::INTERNAL);
   ASSERT_DOUBLE_EQ(
@@ -2906,42 +2929,6 @@ TEST_F(DisplayManagerTest, GuessDisplayIdFieldsInDisplayLayout) {
 
   EXPECT_EQ(id1, stored.placement_list[0].parent_display_id);
   EXPECT_EQ(id2, stored.placement_list[0].display_id);
-}
-
-TEST_F(DisplayManagerTest, AccelerometerSupport) {
-  display::test::DisplayManagerTestApi(display_manager())
-      .SetFirstDisplayAsInternalDisplay();
-  display::Screen* screen = display::Screen::GetScreen();
-  EXPECT_EQ(display::Display::ACCELEROMETER_SUPPORT_UNAVAILABLE,
-            screen->GetPrimaryDisplay().accelerometer_support());
-
-  display_manager()->set_internal_display_has_accelerometer(true);
-  display_manager()->UpdateDisplays();
-  EXPECT_EQ(display::Display::ACCELEROMETER_SUPPORT_AVAILABLE,
-            screen->GetPrimaryDisplay().accelerometer_support());
-
-  UpdateDisplay("1000x1000,800x800");
-  EXPECT_EQ(display::Display::ACCELEROMETER_SUPPORT_AVAILABLE,
-            screen->GetPrimaryDisplay().accelerometer_support());
-  EXPECT_EQ(display::Display::ACCELEROMETER_SUPPORT_UNAVAILABLE,
-            display_manager()->GetSecondaryDisplay().accelerometer_support());
-
-  // Secondary is now primary and should not have accelerometer support.
-  std::vector<display::ManagedDisplayInfo> display_info_list;
-  display_info_list.push_back(
-      CreateDisplayInfo(display_manager()->GetSecondaryDisplay().id(),
-                        gfx::Rect(1, 1, 100, 100)));
-  display_manager()->OnNativeDisplaysChanged(display_info_list);
-  EXPECT_EQ(display::Display::ACCELEROMETER_SUPPORT_UNAVAILABLE,
-            screen->GetPrimaryDisplay().accelerometer_support());
-
-  // Re-enable internal display.
-  display_info_list.clear();
-  display_info_list.push_back(CreateDisplayInfo(
-      display::Display::InternalDisplayId(), gfx::Rect(1, 1, 100, 100)));
-  display_manager()->OnNativeDisplaysChanged(display_info_list);
-  EXPECT_EQ(display::Display::ACCELEROMETER_SUPPORT_AVAILABLE,
-            screen->GetPrimaryDisplay().accelerometer_support());
 }
 
 namespace {
@@ -3224,28 +3211,6 @@ TEST_F(DisplayManagerOrientationTest, LockToSpecificOrientation) {
   wm::ActivateWindow(window_ps);
   EXPECT_EQ(blink::kWebScreenOrientationLockPortraitSecondary,
             test_api.GetCurrentOrientation());
-}
-
-// crbug.com/734107
-TEST_F(DisplayManagerOrientationTest, DisplayChangeShouldNotSaveUserRotation) {
-  Shell* shell = Shell::Get();
-  display::DisplayManager* display_manager = shell->display_manager();
-  display::test::DisplayManagerTestApi test_api(display_manager);
-  test_api.SetFirstDisplayAsInternalDisplay();
-  display::Screen* screen = display::Screen::GetScreen();
-
-  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
-      true);
-  // Emulate that Animator is calling this async when animation is completed.
-  display_manager->SetDisplayRotation(
-      screen->GetPrimaryDisplay().id(), display::Display::ROTATE_90,
-      display::Display::ROTATION_SOURCE_ACCELEROMETER);
-  EXPECT_EQ(display::Display::ROTATE_90,
-            screen->GetPrimaryDisplay().rotation());
-
-  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
-      false);
-  EXPECT_EQ(display::Display::ROTATE_0, screen->GetPrimaryDisplay().rotation());
 }
 
 }  // namespace ash

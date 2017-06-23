@@ -91,8 +91,8 @@ class SVGImage::SVGImageLocalFrameClient : public EmptyLocalFrameClient {
   SVGImage* image_;
 };
 
-SVGImage::SVGImage(ImageObserver* observer, bool is_multipart)
-    : Image(observer, is_multipart),
+SVGImage::SVGImage(ImageObserver* observer)
+    : Image(observer),
       paint_controller_(PaintController::Create()),
       has_pending_timeline_rewind_(false) {}
 

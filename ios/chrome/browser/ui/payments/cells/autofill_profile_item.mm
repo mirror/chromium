@@ -31,7 +31,6 @@ const CGFloat kVerticalSpacingBetweenLabels = 8;
 @synthesize email = _email;
 @synthesize notification = _notification;
 @synthesize accessoryType = _accessoryType;
-@synthesize complete = _complete;
 
 #pragma mark CollectionViewItem
 

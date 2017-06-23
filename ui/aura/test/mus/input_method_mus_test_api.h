@@ -17,18 +17,16 @@ class InputMethodMusTestApi {
     input_method_mus->input_method_ = input_method;
   }
 
-  static ui::EventDispatchDetails CallSendKeyEventToInputMethod(
+  static void CallSendKeyEventToInputMethod(
       InputMethodMus* input_method_mus,
       const ui::KeyEvent& event,
-      std::unique_ptr<InputMethodMus::EventResultCallback> ack_callback)
-      WARN_UNUSED_RESULT {
-    return input_method_mus->SendKeyEventToInputMethod(event,
-                                                       std::move(ack_callback));
+      std::unique_ptr<InputMethodMus::EventResultCallback> ack_callback) {
+    input_method_mus->SendKeyEventToInputMethod(event, std::move(ack_callback));
   }
 
   static void Disable(InputMethodMus* input_method) {
     DCHECK(input_method->pending_callbacks_.empty());
-    input_method->ime_driver_.reset();
+    input_method->ime_server_.reset();
   }
 
   static void CallOnDidChangeFocusedClient(InputMethodMus* input_method,

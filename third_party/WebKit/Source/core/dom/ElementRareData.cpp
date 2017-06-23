@@ -31,6 +31,7 @@
 #include "core/dom/ElementRareData.h"
 
 #include "core/css/cssom/InlineStylePropertyMap.h"
+#include "core/dom/CompositorProxiedPropertySet.h"
 #include "core/dom/ResizeObservation.h"
 #include "core/dom/ResizeObserver.h"
 #include "core/style/ComputedStyle.h"
@@ -41,7 +42,7 @@ struct SameSizeAsElementRareData : NodeRareData {
   LayoutSize size_for_resizing;
   IntSize scroll_offset;
   AtomicString nonce;
-  void* pointers[1];
+  void* pointers[2];
   Member<void*> members[14];
 };
 

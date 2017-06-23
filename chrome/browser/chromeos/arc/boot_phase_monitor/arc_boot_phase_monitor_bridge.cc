@@ -28,16 +28,17 @@ ArcBootPhaseMonitorBridge::ArcBootPhaseMonitorBridge(
     ArcBridgeService* bridge_service,
     const AccountId& account_id)
     : ArcService(bridge_service), account_id_(account_id), binding_(this) {
+  DCHECK(thread_checker_.CalledOnValidThread());
   arc_bridge_service()->boot_phase_monitor()->AddObserver(this);
 }
 
 ArcBootPhaseMonitorBridge::~ArcBootPhaseMonitorBridge() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   arc_bridge_service()->boot_phase_monitor()->RemoveObserver(this);
 }
 
 void ArcBootPhaseMonitorBridge::OnInstanceReady() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service()->boot_phase_monitor(), Init);
   DCHECK(instance);
@@ -47,11 +48,11 @@ void ArcBootPhaseMonitorBridge::OnInstanceReady() {
 }
 
 void ArcBootPhaseMonitorBridge::OnInstanceClosed() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 }
 
 void ArcBootPhaseMonitorBridge::OnBootCompleted() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   VLOG(2) << "OnBootCompleted";
 
   chromeos::SessionManagerClient* session_manager_client =

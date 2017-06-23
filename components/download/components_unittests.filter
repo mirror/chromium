@@ -7,7 +7,6 @@ DownloadServiceImplTest.*
 DownloadServiceEntryUtilsTest.*
 DownloadServiceModelImplTest.*
 DownloadStoreTest.*
-FileMonitorTest.*
 NetworkListenerTest.*
 ProtoConversionsTest.*
 ServiceConfigImplTest.*

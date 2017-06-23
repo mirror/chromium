@@ -151,8 +151,9 @@ bool GetCOMPort(const std::string friendly_name, std::string* com_port) {
 
 // static
 scoped_refptr<SerialIoHandler> SerialIoHandler::Create(
+    scoped_refptr<base::SingleThreadTaskRunner> file_thread_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> ui_thread_task_runner) {
-  return new SerialIoHandlerWin(ui_thread_task_runner);
+  return new SerialIoHandlerWin(file_thread_task_runner, ui_thread_task_runner);
 }
 
 class SerialIoHandlerWin::UiThreadHelper final
@@ -358,8 +359,9 @@ bool SerialIoHandlerWin::ConfigurePortImpl() {
 }
 
 SerialIoHandlerWin::SerialIoHandlerWin(
+    scoped_refptr<base::SingleThreadTaskRunner> file_thread_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> ui_thread_task_runner)
-    : SerialIoHandler(ui_thread_task_runner),
+    : SerialIoHandler(file_thread_task_runner, ui_thread_task_runner),
       event_mask_(0),
       is_comm_pending_(false),
       helper_(nullptr),

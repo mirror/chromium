@@ -872,10 +872,15 @@ INSTANTIATE_TEST_CASE_P(WebViewTests, WebViewSpeechAPITest, testing::Bool());
 
 // The following test suites are created to group tests based on specific
 // features of <webview>.
+// These features currently would not work with
+// --enable-features=GuestViewCrossProcessFrames and is disabled on
+// GuestViewCrossProcessFrames.
+// TODO(avallee): https://crbug.com/610795: Enable this for testing::Bool().
 class WebViewAccessibilityTest : public WebViewTest {};
 INSTANTIATE_TEST_CASE_P(WebViewTests,
                         WebViewAccessibilityTest,
-                        testing::Bool());
+                        testing::Values(false));
+
 
 class WebViewDPITest : public WebViewTest {
  protected:
@@ -3930,7 +3935,7 @@ INSTANTIATE_TEST_CASE_P(WebViewScrollGuestContent,
                         WebViewScrollGuestContentTest,
                         testing::Values(false));
 
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN)
 #define MAYBE_ScrollGuestContent DISABLED_ScrollGuestContent
 #else
 #define MAYBE_ScrollGuestContent ScrollGuestContent

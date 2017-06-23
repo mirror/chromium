@@ -50,30 +50,28 @@ function test()
             {
                 Bindings.FileOutputStream = function() { }
                 Bindings.FileOutputStream.prototype = {
-                    open: async function(fileName)
+                    open: function(fileName, callback)
                     {
                         file.name = fileName;
                         if (fileName.endsWith(".cpuprofile")) {
                             InspectorTest.addResult("PASS: open was called with extension '.cpuprofile'");
-                            return true;
+                            callback(true);
                         } else {
                             InspectorTest.addResult("FAILED: open was called with wrong extension. fileName: '" + fileName + "'");
                             next();
                         }
                     },
 
-                    write: function(data)
+                    write: function(data, callback)
                     {
-                        return new Promise(resolve => {
-                            file._appendData(data);
-                            if (data.length) {
-                                InspectorTest.addResult("PASS: write was called with data length more than zero");
-                                resolve();
-                            } else {
-                                InspectorTest.addResult("FAILED: write was called with zero data length");
-                                next();
-                            }
-                        });
+                        file._appendData(data);
+                        if (data.length) {
+                            InspectorTest.addResult("PASS: write was called with data length more than zero");
+                            callback(this);
+                        } else {
+                            InspectorTest.addResult("FAILED: write was called with zero data length");
+                            next();
+                        }
                     },
 
                     close: function()

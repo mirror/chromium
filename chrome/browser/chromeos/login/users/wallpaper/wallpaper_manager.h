@@ -27,12 +27,9 @@
 #include "content/public/browser/notification_registrar.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/aura/window_observer.h"
+#include "ui/gfx/image/image_skia.h"
 #include "ui/wm/public/activation_change_observer.h"
 #include "ui/wm/public/activation_client.h"
-
-namespace gfx {
-class ImageSkia;
-}
 
 namespace chromeos {
 

@@ -2,100 +2,73 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-(function initialize_DumpAccessibilityNodesTest(testRunner, session) {
-
-  function trackGetChildNodesEvents(nodeInfo, callback)
-  {
-    session.protocol.DOM.onSetChildNodes(setChildNodes);
-
-    function setChildNodes(message)
-    {
-      var nodes = message.params.nodes;
-      for (var i = 0; i < nodes.length; ++i)
-        addNode(nodeInfo, nodes[i]);
-      if (callback)
-        callback();
-    }
-  }
-
-  function addNode(nodeInfo, node)
-  {
-    nodeInfo[node.nodeId] = node;
-    delete node.nodeId;
-    var children = node.children || [];
-    for (var i = 0; i < children.length; ++i)
-      addNode(nodeInfo, children[i]);
-    var shadowRoots = node.shadowRoots || [];
-    for (var i = 0; i < shadowRoots.length; ++i)
-      addNode(nodeInfo, shadowRoots[i]);
-  }
-
-  async function requestDocumentNodeId(callback)
-  {
-    var result = (await session.protocol.DOM.getDocument()).result;
-    if (callback)
-      callback(result.root.nodeId);
-    return result.root.nodeId;
-  };
-
-  async function requestNodeId(documentNodeId, selector, callback)
-  {
-    var result = (await session.protocol.DOM.querySelector({"nodeId": documentNodeId , "selector": selector})).result;
-    if (callback)
-      callback(result.nodeId);
-    return result.nodeId;
-  };
+function initialize_DumpAccessibilityNodesTest() {
 
 var nodeInfo = {};
-trackGetChildNodesEvents(nodeInfo);
+InspectorTest.trackGetChildNodesEvents(nodeInfo);
 
-function dumpAccessibilityNodesBySelectorAndCompleteTest(selector, fetchRelatives, msg) {
+InspectorTest.dumpAccessibilityNodesBySelectorAndCompleteTest = function(selector, fetchRelatives, msg) {
     if (msg.error) {
-        testRunner.log(msg.error.message);
-        testRunner.completeTest();
+        InspectorTest.log(msg.error.message);
+        InspectorTest.completeTest();
         return;
     }
 
     var rootNode = msg.result.root;
     var rootNodeId = rootNode.nodeId;
-    addNode(nodeInfo, rootNode);
+    InspectorTest.addNode(nodeInfo, rootNode);
 
     sendQuerySelectorAll(rootNodeId, selector)
         .then((msg) => { return getAXNodes(msg, fetchRelatives || false) } )
         .then(() => { done(); })
         .then(() => {
-            testRunner.completeTest();
+            InspectorTest.completeTest();
         })
-        .catch((msg) => { testRunner.log("Error: " + JSON.stringify(msg)); })
+        .catch((msg) => { InspectorTest.log("Error: " + JSON.stringify(msg)); })
+}
+
+function sendCommandPromise(command, params)
+{
+    return new Promise(function(resolve, reject) {
+        InspectorTest.sendCommand(command, params, function(msg) {
+            if (msg.error) {
+                reject(msg.error);
+                return;
+            }
+
+            resolve(msg);
+        })
+    });
 }
 
 function done()
 {
-    session.protocol.Runtime.evaluate({expression: "done();"});
+    sendCommandPromise("Runtime.evaluate", { expression: "done();" });
 }
 
 function sendQuerySelectorAll(nodeId, selector)
 {
-    return session.protocol.DOM.querySelectorAll({"nodeId": nodeId, "selector": selector });
+    return sendCommandPromise("DOM.querySelectorAll", { "nodeId": nodeId, "selector":
+ selector });
 }
 
 function getAXNodes(msg, fetchRelatives)
 {
     var promise = Promise.resolve();
     if (!msg.result || !msg.result.nodeIds) {
-        testRunner.log("Unexpected result: " + JSON.stringify(msg));
-        testRunner.completeTest();
+        InspectorTest.log("Unexpected result: " + JSON.stringify(msg));
+        InspectorTest.completeTest();
     }
     msg.result.nodeIds.forEach((id) => {
         if (fetchRelatives) {
             promise = promise.then(() => {
-                return session.protocol.Accessibility.getPartialAXTree({ "nodeId": id, "fetchRelatives": true });
+                return sendCommandPromise("Accessibility.getPartialAXTree", { "nodeId": id, "fetchRelatives": true });
             });
             promise = promise.then((msg) => { return rewriteRelatedNodes(msg, id); })
                              .then((msg) => { return dumpTreeStructure(msg); });
 
         }
-        promise = promise.then(() => { return session.protocol.Accessibility.getPartialAXTree({ "nodeId": id, "fetchRelatives": false }); })
+        promise = promise.then(() => { return sendCommandPromise("Accessibility.getPartialAXTree", { "nodeId": id, "fetchRelatives": false }); })
                          .then((msg) => { return rewriteRelatedNodes(msg, id); })
                          .then((msg) => { return dumpNode(msg); });
 
@@ -131,8 +104,8 @@ function rewriteBackendDomNodeId(axNode, selectedNodeId, promises)
         function onDomNodeResolved(backendDOMNodeId, message)
         {
             if (!message.result || !message.result.nodeIds) {
-                testRunner.log("Unexpected result for pushNodesByBackendIdsToFrontend: " + JSON.stringify(message));
-                testRunner.completeTest();
+                InspectorTest.log("Unexpected result for pushNodesByBackendIdsToFrontend: " + JSON.stringify(message));
+                InspectorTest.completeTest();
                 return;
             }
             var nodeId = message.result.nodeIds[0];
@@ -150,7 +123,7 @@ function rewriteBackendDomNodeId(axNode, selectedNodeId, promises)
         }
 
         var params = { "backendNodeIds": [ backendDOMNodeId ] };
-        session.protocol.DOM.pushNodesByBackendIdsToFrontend(params).then(onDomNodeResolved.bind(null, backendDOMNodeId));
+        InspectorTest.sendCommand("DOM.pushNodesByBackendIdsToFrontend", params , onDomNodeResolved.bind(null, backendDOMNodeId));
     }
     promises.push(new Promise(rewriteBackendDomNodeIdPromise));
 }
@@ -168,8 +141,8 @@ function rewriteRelatedNode(relatedNode)
         function onNodeResolved(backendDOMNodeId, message)
         {
             if (!message.result || !message.result.nodeIds) {
-                testRunner.log("Unexpected result for pushNodesByBackendIdsToFrontend: " + JSON.stringify(message));
-                testRunner.completeTest();
+                InspectorTest.log("Unexpected result for pushNodesByBackendIdsToFrontend: " + JSON.stringify(message));
+                InspectorTest.completeTest();
                 return;
             }
             var nodeId = message.result.nodeIds[0];
@@ -184,7 +157,7 @@ function rewriteRelatedNode(relatedNode)
             resolve();
         }
         var params = { "backendNodeIds": [ backendDOMNodeId ] };
-        session.protocol.DOM.pushNodesByBackendIdsToFrontend(params).then(onNodeResolved.bind(null, backendDOMNodeId));
+        InspectorTest.sendCommand("DOM.pushNodesByBackendIdsToFrontend", params, onNodeResolved.bind(null, backendDOMNodeId));
 
     }
     return new Promise(rewriteRelatedNodePromise);
@@ -206,8 +179,8 @@ function checkExists(path, obj)
         }
         currentPath.push(component);
         if (!(component in currentObject)) {
-            testRunner.log("Could not find " + currentPath.join(".") + " in " + JSON.stringify(obj, null, "  "));
-            testRunner.completeTest();
+            InspectorTest.log("Could not find " + currentPath.join(".") + " in " + JSON.stringify(obj, null, "  "));
+            InspectorTest.completeTest();
         }
         if (isArray)
             currentObject = currentObject[component][index];
@@ -288,10 +261,10 @@ function dumpNode(msg)
         return value;
     }
     if (!msg.result || !msg.result.nodes || msg.result.nodes.length !== 1) {
-        testRunner.log("Expected exactly one node in " + JSON.stringify(msg, null, "  "));
+        InspectorTest.log("Expected exactly one node in " + JSON.stringify(msg, null, "  "));
         return;
     }
-    testRunner.log(JSON.stringify(msg.result.nodes[0], stripIds, "  "));
+    InspectorTest.log(JSON.stringify(msg.result.nodes[0], stripIds, "  "));
 }
 
 function dumpTreeStructure(msg)
@@ -347,9 +320,7 @@ function dumpTreeStructure(msg)
     for (var node of Object.values(nodeMap))
         delete node.parentId;
 
-    testRunner.log("\n" + printNodeAndChildren(rootNode));
+    InspectorTest.log("\n" + printNodeAndChildren(rootNode));
 }
 
-return dumpAccessibilityNodesBySelectorAndCompleteTest;
-
-})
+}

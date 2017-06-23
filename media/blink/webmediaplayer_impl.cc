@@ -456,24 +456,6 @@ void WebMediaPlayerImpl::OnHasNativeControlsChanged(bool has_native_controls) {
     watch_time_reporter_->OnNativeControlsDisabled();
 }
 
-void WebMediaPlayerImpl::OnDisplayTypeChanged(
-    WebMediaPlayer::DisplayType display_type) {
-  if (!watch_time_reporter_)
-    return;
-
-  switch (display_type) {
-    case WebMediaPlayer::DisplayType::kInline:
-      watch_time_reporter_->OnDisplayTypeInline();
-      break;
-    case WebMediaPlayer::DisplayType::kFullscreen:
-      watch_time_reporter_->OnDisplayTypeFullscreen();
-      break;
-    case WebMediaPlayer::DisplayType::kPictureInPicture:
-      watch_time_reporter_->OnDisplayTypePictureInPicture();
-      break;
-  }
-}
-
 void WebMediaPlayerImpl::DoLoad(LoadType load_type,
                                 const blink::WebURL& url,
                                 CORSMode cors_mode) {
@@ -1807,16 +1789,6 @@ void WebMediaPlayerImpl::OnOverlayInfoRequested(
   decoder_requires_restart_for_overlay_ = decoder_requires_restart_for_overlay;
   provide_overlay_info_cb_ = provide_overlay_info_cb;
 
-  // We always force (allow, actually) video overlays in AndroidOverlayMode.
-  // AVDA figures out when to use them.  If the decoder requires restart, then
-  // we still want to restart the decoder on the fullscreen transitions anyway.
-  if (overlay_mode_ == OverlayMode::kUseAndroidOverlay &&
-      !decoder_requires_restart_for_overlay) {
-    force_video_overlays_ = true;
-    if (!overlay_enabled_)
-      EnableOverlay();
-  }
-
   // If we're waiting for the surface to arrive, OnSurfaceCreated() will be
   // called later when it arrives; so do nothing for now.  For AndroidOverlay,
   // if we're waiting for the token then... OnOverlayRoutingToken()...
@@ -2339,28 +2311,14 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
                             media_log_.get(), pipeline_metadata_.natural_size,
                             base::Bind(&GetCurrentTimeInternal, this)));
   watch_time_reporter_->OnVolumeChange(volume_);
-
   if (delegate_->IsFrameHidden())
     watch_time_reporter_->OnHidden();
   else
     watch_time_reporter_->OnShown();
-
   if (client_->HasNativeControls())
     watch_time_reporter_->OnNativeControlsEnabled();
   else
     watch_time_reporter_->OnNativeControlsDisabled();
-
-  switch (client_->DisplayType()) {
-    case WebMediaPlayer::DisplayType::kInline:
-      watch_time_reporter_->OnDisplayTypeInline();
-      break;
-    case WebMediaPlayer::DisplayType::kFullscreen:
-      watch_time_reporter_->OnDisplayTypeFullscreen();
-      break;
-    case WebMediaPlayer::DisplayType::kPictureInPicture:
-      watch_time_reporter_->OnDisplayTypePictureInPicture();
-      break;
-  }
 }
 
 bool WebMediaPlayerImpl::IsHidden() const {

@@ -23,6 +23,8 @@ enum class CompositorElementIdNamespace {
   kScrollState,
   kViewport,
   kLinkHighlight,
+  kPrimaryCompositorProxy,
+  kScrollCompositorProxy,
   // The following are SPv2-only.
   kEffectFilter,
   kEffectMask,
@@ -44,7 +46,9 @@ CompositorElementId PLATFORM_EXPORT
 
 // This method should only be used for "special" layers that are not allocated
 // during the normal lifecycle. Examples include VisualViewport,
-// root scrolling (when rootLayerScrollingEnabled is off), and LinkHighlight.
+// root scrolling (when rootLayerScrollingEnabled is off), and LinkHighlight,
+// or when CompositorProxies are involved.
+
 // Otherwise, CompositorElementIdFromLayoutObjectId is preferred for performance
 // reasons (since computing a DOMNodeId requires a hash map lookup),
 // and future compatibility with multicol/pagination.

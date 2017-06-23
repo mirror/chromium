@@ -38,7 +38,7 @@ class UiSceneManager {
   void SetIncognito(bool incognito);
   void SetURL(const GURL& gurl);
   void SetWebVrSecureOrigin(bool secure);
-  void SetWebVrMode(bool web_vr, bool auto_presented, bool show_toast);
+  void SetWebVrMode(bool web_vr, bool auto_presented);
   void SetSecurityInfo(security_state::SecurityLevel level, bool malware);
   void SetLoading(bool loading);
   void SetLoadProgress(float progress);
@@ -51,7 +51,6 @@ class UiSceneManager {
   // These methods are currently stubbed.
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward);
 
-  void OnGLInitialized();
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(UiInterface::Direction direction);
 
@@ -68,18 +67,15 @@ class UiSceneManager {
   void CreateTransientUrlBar();
   void CreateCloseButton();
   void CreateExitPrompt();
-  void CreateToasts();
 
   void ConfigureScene();
   void ConfigureSecurityWarnings();
   void ConfigureTransientUrlBar();
   void ConfigureIndicators();
-  void ConfigurePresentationToast();
   void UpdateBackgroundColor();
   void CloseExitPrompt();
   void OnSecurityWarningTimer();
   void OnTransientUrlBarTimer();
-  void OnPresentationToastTimer();
   void OnBackButtonClicked();
   void OnSecurityIconClicked();
   void OnExitPromptPrimaryButtonClicked();
@@ -97,7 +93,6 @@ class UiSceneManager {
   // UI element pointers (not owned by the scene manager).
   UiElement* permanent_security_warning_ = nullptr;
   UiElement* transient_security_warning_ = nullptr;
-  UiElement* presentation_toast_ = nullptr;
   UiElement* exit_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
@@ -114,12 +109,9 @@ class UiSceneManager {
   TransientUrlBar* transient_url_bar_ = nullptr;
   LoadingIndicator* loading_indicator_ = nullptr;
 
-  std::vector<UiElement*> system_indicators_;
-
   bool in_cct_;
   bool web_vr_mode_;
   bool web_vr_autopresented_ = false;
-  bool web_vr_show_toast_ = false;
   bool secure_origin_ = false;
   bool fullscreen_ = false;
   bool incognito_ = false;
@@ -136,7 +128,6 @@ class UiSceneManager {
 
   base::OneShotTimer security_warning_timer_;
   base::OneShotTimer transient_url_bar_timer_;
-  base::OneShotTimer presentation_toast_timer_;
 
   base::WeakPtrFactory<UiSceneManager> weak_ptr_factory_;
 

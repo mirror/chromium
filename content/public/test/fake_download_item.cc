@@ -294,6 +294,7 @@ bool FakeDownloadItem::IsSavePackageDownload() const {
 }
 
 const base::FilePath& FakeDownloadItem::GetFullPath() const {
+  NOTREACHED();
   return dummy_file_path;
 }
 

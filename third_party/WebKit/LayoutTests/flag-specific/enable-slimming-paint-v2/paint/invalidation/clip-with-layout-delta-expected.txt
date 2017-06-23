@@ -14,22 +14,12 @@
         {
           "object": "LayoutBlockFlow (relative positioned) DIV",
           "rect": [108, 8, 100, 100],
-          "reason": "chunk reordered"
+          "reason": "disappeared"
         },
         {
           "object": "LayoutBlockFlow DIV",
           "rect": [8, 8, 100, 100],
           "reason": "appeared"
-        },
-        {
-          "object": "LayoutBlockFlow DIV",
-          "rect": [8, 8, 100, 100],
-          "reason": "disappeared"
-        },
-        {
-          "object": "LayoutBlockFlow (relative positioned) DIV",
-          "rect": [108, 8, 4, 19],
-          "reason": "disappeared"
         },
         {
           "object": "LayoutBlockFlow DIV",

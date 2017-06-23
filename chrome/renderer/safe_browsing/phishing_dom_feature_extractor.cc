@@ -390,10 +390,8 @@ blink::WebDocument PhishingDOMFeatureExtractor::GetNextDocument() {
   // Advance to the next frame that contains a document, with no wrapping.
   if (frame) {
     for (frame = frame->TraverseNext(); frame; frame = frame->TraverseNext()) {
-      // TODO(dcheng): Verify if the WebDocument::IsNull check is really needed.
-      if (frame->IsWebLocalFrame() &&
-          !frame->ToWebLocalFrame()->GetDocument().IsNull()) {
-        return frame->ToWebLocalFrame()->GetDocument();
+      if (!frame->GetDocument().IsNull()) {
+        return frame->GetDocument();
       }
     }
   } else {

@@ -4,8 +4,6 @@
 
 #include "core/frame/VisualViewport.h"
 
-#include <memory>
-
 #include "core/dom/Document.h"
 #include "core/frame/BrowserControls.h"
 #include "core/frame/FrameTestHelpers.h"
@@ -159,7 +157,9 @@ class VisualViewportTest
   }
 
   WebViewBase* WebViewImpl() const { return helper_.WebView(); }
-  LocalFrame* GetFrame() const { return helper_.LocalMainFrame()->GetFrame(); }
+  LocalFrame* GetFrame() const {
+    return helper_.WebView()->MainFrameImpl()->GetFrame();
+  }
 
   static void ConfigureSettings(WebSettings* settings) {
     settings->SetJavaScriptEnabled(true);
@@ -229,7 +229,7 @@ TEST_P(VisualViewportTest, TestVisibleContentRect) {
   WebViewImpl()->Resize(size);
 
   // Scroll layout viewport and verify visibleContentRect.
-  WebViewImpl()->MainFrameImpl()->SetScrollOffset(WebSize(0, 50));
+  WebViewImpl()->MainFrame()->SetScrollOffset(WebSize(0, 50));
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
   EXPECT_EQ(IntRect(IntPoint(0, 0), size - scrollbar_size),
@@ -330,7 +330,7 @@ TEST_P(VisualViewportTest, TestResizeAfterVerticalScroll) {
   WebViewImpl()->Resize(IntSize(100, 200));
 
   // Scroll main frame to the bottom of the document
-  WebViewImpl()->MainFrameImpl()->SetScrollOffset(WebSize(0, 400));
+  WebViewImpl()->MainFrame()->SetScrollOffset(WebSize(0, 400));
   EXPECT_SIZE_EQ(
       ScrollOffset(0, 400),
       GetFrame()->View()->LayoutViewportScrollableArea()->GetScrollOffset());
@@ -1876,7 +1876,7 @@ TEST_P(VisualViewportTest, AccessibilityHitTestWhileZoomedIn) {
   WebViewImpl()->Resize(IntSize(500, 500));
   WebViewImpl()->UpdateAllLifecyclePhases();
 
-  WebDocument web_doc = WebViewImpl()->MainFrameImpl()->GetDocument();
+  WebDocument web_doc = WebViewImpl()->MainFrame()->GetDocument();
   LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   WebViewImpl()->SetPageScaleFactor(2);
@@ -2393,7 +2393,7 @@ TEST_P(VisualViewportTest, InvalidateLayoutViewWhenDocumentSmallerThanView) {
     const RasterInvalidationTracking* invalidation_tracking =
         document->GetLayoutView()
             ->Layer()
-            ->GraphicsLayerBacking(document->GetLayoutView())
+            ->GraphicsLayerBacking()
             ->GetRasterInvalidationTracking();
     ASSERT_TRUE(invalidation_tracking);
     const auto* raster_invalidations = &invalidation_tracking->invalidations;

@@ -88,12 +88,14 @@ ShellURLRequestContextGetter::ShellURLRequestContextGetter(
     bool ignore_certificate_errors,
     const base::FilePath& base_path,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     ProtocolHandlerMap* protocol_handlers,
     URLRequestInterceptorScopedVector request_interceptors,
     net::NetLog* net_log)
     : ignore_certificate_errors_(ignore_certificate_errors),
       base_path_(base_path),
       io_task_runner_(std::move(io_task_runner)),
+      file_task_runner_(std::move(file_task_runner)),
       net_log_(net_log),
       request_interceptors_(std::move(request_interceptors)) {
   // Must first be created on the UI thread.
@@ -117,7 +119,8 @@ ShellURLRequestContextGetter::CreateNetworkDelegate() {
 
 std::unique_ptr<net::ProxyConfigService>
 ShellURLRequestContextGetter::GetProxyConfigService() {
-  return net::ProxyService::CreateSystemProxyConfigService(io_task_runner_);
+  return net::ProxyService::CreateSystemProxyConfigService(io_task_runner_,
+                                                           file_task_runner_);
 }
 
 std::unique_ptr<net::ProxyService>

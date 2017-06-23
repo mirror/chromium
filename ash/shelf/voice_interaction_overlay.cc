@@ -39,7 +39,6 @@
 #include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/scoped_canvas.h"
-#include "ui/gfx/skia_paint_util.h"
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/animation/ink_drop_mask.h"
@@ -74,29 +73,55 @@ constexpr float kBackgroundStartSizeDip = 10.f;
 constexpr float kBackgroundSizeDip = 48.f;
 constexpr int kBackgroundStartDelayMs = 100;
 constexpr int kBackgroundOpacityDurationMs = 200;
-constexpr float kBackgroundShadowElevationDip = 24.f;
+constexpr float kBackgroundShadowSizeDip = 12;
+
+class CircleImageSource : public gfx::CanvasImageSource {
+ public:
+  CircleImageSource(float radius, float padding)
+      : CanvasImageSource(
+            gfx::Size((radius + padding) * 2, (radius + padding) * 2),
+            false),
+        radius_(radius),
+        padding_(padding) {}
+  ~CircleImageSource() override {}
+
+ private:
+  void Draw(gfx::Canvas* canvas) override {
+    cc::PaintFlags flags;
+    flags.setColor(SK_ColorWHITE);
+    flags.setAntiAlias(true);
+    flags.setStyle(cc::PaintFlags::kFill_Style);
+    canvas->DrawCircle(gfx::PointF(radius_ + padding_, radius_ + padding_),
+                       radius_, flags);
+  }
+
+  float radius_;
+  float padding_;
+
+  DISALLOW_COPY_AND_ASSIGN(CircleImageSource);
+};
 
 class VoiceInteractionIconBackground : public ui::Layer,
                                        public ui::LayerDelegate {
  public:
-  VoiceInteractionIconBackground() : Layer(ui::LAYER_NOT_DRAWN) {
+  VoiceInteractionIconBackground()
+      : Layer(ui::LAYER_NOT_DRAWN),
+        shadow_values_(1,
+                       gfx::ShadowValue(gfx::Vector2d(0, 0),
+                                        kBackgroundShadowSizeDip,
+                                        SkColorSetARGB(0x54, 0, 0, 0))) {
     set_name("VoiceInteractionOverlay:BACKGROUND_LAYER");
     SetBounds(gfx::Rect(0, 0, kBackgroundInitSizeDip, kBackgroundInitSizeDip));
     SetFillsBoundsOpaquely(false);
     SetMasksToBounds(false);
 
-    shadow_values_ =
-        gfx::ShadowValue::MakeMdShadowValues(kBackgroundShadowElevationDip);
-    const gfx::Insets shadow_margin =
-        gfx::ShadowValue::GetMargin(shadow_values_);
-
     shadow_layer_.reset(new ui::Layer());
     shadow_layer_->set_delegate(this);
     shadow_layer_->SetFillsBoundsOpaquely(false);
     shadow_layer_->SetBounds(
-        gfx::Rect(shadow_margin.left(), shadow_margin.top(),
-                  kBackgroundInitSizeDip - shadow_margin.width(),
-                  kBackgroundInitSizeDip - shadow_margin.height()));
+        gfx::Rect(-kBackgroundShadowSizeDip, -kBackgroundShadowSizeDip,
+                  kBackgroundInitSizeDip + kBackgroundShadowSizeDip * 2,
+                  kBackgroundInitSizeDip + kBackgroundShadowSizeDip * 2));
     Add(shadow_layer_.get());
   }
   ~VoiceInteractionIconBackground() override{};
@@ -106,18 +131,17 @@ class VoiceInteractionIconBackground : public ui::Layer,
     // Radius is based on the parent layer size, the shadow layer is expanded
     // to make room for the shadow.
     float radius = size().width() / 2.f;
+    CircleImageSource* circle_image =
+        new CircleImageSource(radius, kBackgroundShadowSizeDip);
+    gfx::ImageSkia background_with_shadow =
+        gfx::ImageSkiaOperations::CreateImageWithDropShadow(
+            gfx::ImageSkia(circle_image, circle_image->size()), shadow_values_);
 
-    ui::PaintRecorder recorder(context, shadow_layer_->size());
+    ui::PaintRecorder recorder(context, background_with_shadow.size());
     gfx::Canvas* canvas = recorder.canvas();
-
-    cc::PaintFlags flags;
-    flags.setColor(SK_ColorWHITE);
-    flags.setAntiAlias(true);
-    flags.setStyle(cc::PaintFlags::kFill_Style);
-    flags.setLooper(gfx::CreateShadowDrawLooper(shadow_values_));
-    gfx::Rect shadow_bounds = shadow_layer_->bounds();
-    canvas->DrawCircle({radius - shadow_bounds.x(), radius - shadow_bounds.y()},
-                       radius, flags);
+    float shadow_offset =
+        (shadow_layer_->size().width() - background_with_shadow.width()) / 2.f;
+    canvas->DrawImageInt(background_with_shadow, shadow_offset, shadow_offset);
   }
 
   void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
@@ -381,7 +405,7 @@ void VoiceInteractionOverlay::EndAnimation() {
                                        IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
     settings.SetTransitionDuration(
         base::TimeDelta::FromMilliseconds(kFullRetractDurationMs));
-    settings.SetTweenType(gfx::Tween::SLOW_OUT_LINEAR_IN);
+    settings.SetTweenType(gfx::Tween::LINEAR_OUT_SLOW_IN);
 
     ripple_layer_->SetTransform(transform);
 
@@ -405,7 +429,7 @@ void VoiceInteractionOverlay::EndAnimation() {
                                        IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
     settings.SetTransitionDuration(
         base::TimeDelta::FromMilliseconds(kFullRetractDurationMs));
-    settings.SetTweenType(gfx::Tween::SLOW_OUT_LINEAR_IN);
+    settings.SetTweenType(gfx::Tween::LINEAR_OUT_SLOW_IN);
 
     icon_layer_->SetTransform(transform);
     icon_layer_->SetOpacity(0);
@@ -426,7 +450,7 @@ void VoiceInteractionOverlay::EndAnimation() {
                                        IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
     settings.SetTransitionDuration(
         base::TimeDelta::FromMilliseconds(kFullRetractDurationMs));
-    settings.SetTweenType(gfx::Tween::SLOW_OUT_LINEAR_IN);
+    settings.SetTweenType(gfx::Tween::LINEAR_OUT_SLOW_IN);
 
     background_layer_->SetTransform(transform);
     background_layer_->SetOpacity(0);

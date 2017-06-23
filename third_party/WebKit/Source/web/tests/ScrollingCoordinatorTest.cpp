@@ -111,7 +111,9 @@ class ScrollingCoordinatorTest : public ::testing::Test,
   }
 
   WebViewBase* GetWebView() const { return helper_.WebView(); }
-  LocalFrame* GetFrame() const { return helper_.LocalMainFrame()->GetFrame(); }
+  LocalFrame* GetFrame() const {
+    return helper_.WebView()->MainFrameImpl()->GetFrame();
+  }
 
   WebLayerTreeView* GetWebLayerTreeView() const {
     return GetWebView()->LayerTreeView();
@@ -970,6 +972,7 @@ TEST_P(ScrollingCoordinatorTest,
   NavigateTo(base_url_ + "has-non-layer-viewport-constrained-objects.html");
   ForceFullCompositingUpdate();
 
+  LOG(ERROR) << GetFrame()->View()->GetMainThreadScrollingReasons();
   Element* element = GetFrame()->GetDocument()->getElementById("scrollable");
   ASSERT_TRUE(element);
 
@@ -981,7 +984,11 @@ TEST_P(ScrollingCoordinatorTest,
                                     ->LayerForScrolling();
   WebLayer* web_scroll_layer;
 
-  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+    // When RLS is enabled, the LayoutView won't have a scrolling contents
+    // because it does not overflow.
+    ASSERT_FALSE(scroll_layer);
+  } else {
     ASSERT_TRUE(scroll_layer);
     web_scroll_layer = scroll_layer->PlatformLayer();
     ASSERT_TRUE(web_scroll_layer->Scrollable());
@@ -1022,7 +1029,11 @@ TEST_P(ScrollingCoordinatorTest,
   scroll_layer = layout_object->GetFrameView()
                      ->LayoutViewportScrollableArea()
                      ->LayerForScrolling();
-  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+    // When RLS is enabled, the LayoutView won't have a scrolling contents
+    // because it does not overflow.
+    ASSERT_FALSE(scroll_layer);
+  } else {
     ASSERT_TRUE(scroll_layer);
     web_scroll_layer = scroll_layer->PlatformLayer();
     ASSERT_TRUE(web_scroll_layer->Scrollable());

@@ -11,11 +11,12 @@
 #include "base/trace_event/memory_dump_request_args.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/coordinator.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace memory_instrumentation {
+
+ClientProcessImpl::Config::~Config() {}
 
 // static
 void ClientProcessImpl::CreateInstance(const Config& config) {
@@ -28,27 +29,28 @@ void ClientProcessImpl::CreateInstance(const Config& config) {
 }
 
 ClientProcessImpl::ClientProcessImpl(const Config& config)
-    : binding_(this), process_type_(config.process_type), task_runner_() {
-  config.connector->BindInterface(config.service_name,
-                                  mojo::MakeRequest(&coordinator_));
+    : binding_(this),
+      config_(config),
+      task_runner_(nullptr),
+      pending_memory_dump_guid_(0) {
+  if (config.connector() != nullptr) {
+    config.connector()->BindInterface(config.service_name(),
+                                      mojo::MakeRequest(&coordinator_));
+  } else {
+    task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    config.coordinator()->BindCoordinatorRequest(
+        service_manager::BindSourceInfo(), mojo::MakeRequest(&coordinator_));
+  }
+
   mojom::ClientProcessPtr process;
   binding_.Bind(mojo::MakeRequest(&process));
   coordinator_->RegisterClientProcess(std::move(process));
 
-  // Initialize the public-facing MemoryInstrumentation helper.
-  MemoryInstrumentation::CreateInstance(config.connector, config.service_name);
-  task_runner_ = base::ThreadTaskRunnerHandle::Get();
-
-  // TODO(primiano): this is a temporary workaround to tell the
-  // base::MemoryDumpManager that it is special and should coordinate periodic
-  // dumps for tracing. Remove this once the periodic dump scheduler is moved
-  // from base to the service. MDM should not care about being the coordinator.
-  bool is_coordinator_process =
-      config.process_type == mojom::ProcessType::BROWSER;
+  // Only one process should handle periodic dumping.
+  bool is_coordinator_process = !!config.coordinator();
   base::trace_event::MemoryDumpManager::GetInstance()->Initialize(
-      base::BindRepeating(
-          &ClientProcessImpl::RequestGlobalMemoryDump_NoCallback,
-          base::Unretained(this)),
+      base::BindRepeating(&ClientProcessImpl::RequestGlobalMemoryDump,
+                          base::Unretained(this)),
       is_coordinator_process);
 }
 
@@ -69,7 +71,7 @@ void ClientProcessImpl::OnProcessMemoryDumpDone(
     const base::Optional<base::trace_event::MemoryDumpCallbackResult>& result) {
   mojom::RawProcessMemoryDumpPtr process_memory_dump(
       mojom::RawProcessMemoryDump::New());
-  process_memory_dump->process_type = process_type_;
+  process_memory_dump->process_type = config_.process_type();
   if (result) {
     process_memory_dump->os_dump = result->os_dump;
     process_memory_dump->chrome_dump = result->chrome_dump;
@@ -84,26 +86,66 @@ void ClientProcessImpl::OnProcessMemoryDumpDone(
   callback.Run(dump_guid, success, std::move(process_memory_dump));
 }
 
-void ClientProcessImpl::RequestGlobalMemoryDump_NoCallback(
-    const base::trace_event::MemoryDumpRequestArgs& args) {
-  if (!task_runner_->RunsTasksInCurrentSequence()) {
+void ClientProcessImpl::RequestGlobalMemoryDump(
+    const base::trace_event::MemoryDumpRequestArgs& args,
+    const base::trace_event::GlobalMemoryDumpCallback& callback) {
+  // Note: This condition is here to match the old behavior. If the delegate is
+  // in the browser process, we do not drop parallel requests in the delegate
+  // and so they will be queued by the Coordinator service (see
+  // CoordinatorImpl::RequestGlobalMemoryDump). If the delegate is in a child
+  // process, parallel requests will be cancelled.
+  //
+  // TODO(primiano): Remove all this boilerplate. There should be no need of
+  // any lock, proxy, callback adaption or early out. The service is able to
+  // deal with queueing.
+  if (task_runner_) {
+    auto callback_proxy =
+        base::Bind(&ClientProcessImpl::MemoryDumpCallbackProxy,
+                   base::Unretained(this), callback);
     task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&ClientProcessImpl::RequestGlobalMemoryDump_NoCallback,
-                   base::Unretained(this), args));
+        base::Bind(&mojom::Coordinator::RequestGlobalMemoryDump,
+                   base::Unretained(coordinator_.get()), args, callback_proxy));
     return;
   }
-  coordinator_->RequestGlobalMemoryDump(
-      args, mojom::Coordinator::RequestGlobalMemoryDumpCallback());
+
+  bool early_out_because_of_another_dump_pending = false;
+  {
+    base::AutoLock lock(pending_memory_dump_guid_lock_);
+    if (pending_memory_dump_guid_)
+      early_out_because_of_another_dump_pending = true;
+    else
+      pending_memory_dump_guid_ = args.dump_guid;
+  }
+  if (early_out_because_of_another_dump_pending) {
+    callback.Run(args.dump_guid, false);
+    return;
+  }
+
+  auto callback_proxy = base::Bind(&ClientProcessImpl::MemoryDumpCallbackProxy,
+                                   base::Unretained(this), callback);
+  coordinator_->RequestGlobalMemoryDump(args, callback_proxy);
 }
 
-ClientProcessImpl::Config::Config(service_manager::Connector* connector,
-                                  const std::string& service_name,
-                                  mojom::ProcessType process_type)
-    : connector(connector),
-      service_name(service_name),
-      process_type(process_type) {}
+void ClientProcessImpl::MemoryDumpCallbackProxy(
+    const base::trace_event::GlobalMemoryDumpCallback& callback,
+    uint64_t dump_guid,
+    bool success,
+    mojom::GlobalMemoryDumpPtr) {
+  {
+    base::AutoLock lock(pending_memory_dump_guid_lock_);
+    pending_memory_dump_guid_ = 0;
+  }
 
-ClientProcessImpl::Config::~Config() {}
+  // The GlobalMemoryDumpPtr argument is ignored. The actual data of the dump
+  // is exposed only through the service and is not passed back to base.
+  // TODO(primiano): All these roundtrips are transitional until we move all
+  // the clients of memory-infra to use directly the service. crbug.com/720352 .
+  callback.Run(dump_guid, success);
+}
+
+void ClientProcessImpl::SetAsNonCoordinatorForTesting() {
+  task_runner_ = nullptr;
+}
 
 }  // namespace memory_instrumentation

@@ -1,10 +1,10 @@
 # Failures and crashes
--NativeCursorManagerAshTest.FractionalScale
--NativeCursorManagerAshTest.LockCursor
--NativeCursorManagerAshTest.SetCursor
--NativeCursorManagerAshTest.SetCursorSet
--NativeCursorManagerAshTest.SetDeviceScaleFactorAndRotation
--NativeCursorManagerAshTest.UIScaleShouldNotChangeCursor
+-AshNativeCursorManagerTest.FractionalScale
+-AshNativeCursorManagerTest.LockCursor
+-AshNativeCursorManagerTest.SetCursor
+-AshNativeCursorManagerTest.SetCursorSet
+-AshNativeCursorManagerTest.SetDeviceScaleFactorAndRotation
+-AshNativeCursorManagerTest.UIScaleShouldNotChangeCursor
 -CursorWindowControllerTest.DSF
 -CursorWindowControllerTest.MoveToDifferentDisplay
 -CursorWindowControllerTest.VisibilityTest

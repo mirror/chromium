@@ -18,8 +18,6 @@
 #include "core/css/CSSVariableData.h"
 #include "core/css/StyleColor.h"
 #include "core/css/parser/CSSParserContext.h"
-#include "core/css/parser/CSSParserLocalContext.h"
-#include "core/css/properties/CSSPropertyTransformUtils.h"
 #include "core/frame/UseCounter.h"
 #include "platform/RuntimeEnabledFeatures.h"
 
@@ -1463,11 +1461,9 @@ void AddProperty(CSSPropertyID resolved_property,
                  CSSPropertyID current_shorthand,
                  const CSSValue& value,
                  bool important,
-                 IsImplicitProperty implicit,
+                 bool implicit,
                  HeapVector<CSSProperty, 256>& properties) {
   DCHECK(!isPropertyAlias(resolved_property));
-  DCHECK(implicit == IsImplicitProperty::kNotImplicit ||
-         implicit == IsImplicitProperty::kImplicit);
 
   int shorthand_index = 0;
   bool set_from_shorthand = false;
@@ -1484,13 +1480,7 @@ void AddProperty(CSSPropertyID resolved_property,
 
   properties.push_back(CSSProperty(resolved_property, value, important,
                                    set_from_shorthand, shorthand_index,
-                                   implicit == IsImplicitProperty::kImplicit));
-}
-
-CSSValue* ConsumeTransformList(CSSParserTokenRange& range,
-                               const CSSParserContext& context) {
-  return CSSPropertyTransformUtils::ConsumeTransformList(
-      range, context, CSSParserLocalContext());
+                                   implicit));
 }
 
 }  // namespace CSSPropertyParserHelpers

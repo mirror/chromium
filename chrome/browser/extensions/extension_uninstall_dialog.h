@@ -7,26 +7,23 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/scoped_observer.h"
 #include "base/strings/string16.h"
 #include "base/threading/thread_checker.h"
-#include "chrome/browser/extensions/chrome_app_icon.h"
-#include "chrome/browser/extensions/chrome_app_icon_delegate.h"
-#include "extensions/browser/extension_registry_observer.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/native_widget_types.h"
 
-class NativeWindowTracker;
 class Profile;
+
+namespace gfx {
+class Image;
+}
 
 namespace extensions {
 class Extension;
 
 class ExtensionUninstallDialog
-    : public base::SupportsWeakPtr<ExtensionUninstallDialog>,
-      public ChromeAppIconDelegate,
-      public ExtensionRegistryObserver {
+    : public base::SupportsWeakPtr<ExtensionUninstallDialog> {
  public:
   // The type of action the dialog took at close.
   // Do not reorder this enum, as it is used in UMA histograms.
@@ -59,7 +56,7 @@ class ExtensionUninstallDialog
                                           gfx::NativeWindow parent,
                                           Delegate* delegate);
 
-  ~ExtensionUninstallDialog() override;
+  virtual ~ExtensionUninstallDialog();
 
   // This is called to verify whether the uninstallation should proceed.
   // Starts the process of showing a confirmation UI, which is split into two.
@@ -87,9 +84,7 @@ class ExtensionUninstallDialog
 
  protected:
   // Constructor used by the derived classes.
-  ExtensionUninstallDialog(Profile* profile,
-                           gfx::NativeWindow parent,
-                           Delegate* delegate);
+  ExtensionUninstallDialog(Profile* profile, Delegate* delegate);
 
   // Accessors for members.
   const Profile* profile() const { return profile_; }
@@ -97,8 +92,7 @@ class ExtensionUninstallDialog
   const Extension* extension() const { return extension_.get(); }
   const Extension* triggering_extension() const {
       return triggering_extension_.get(); }
-  const gfx::ImageSkia& icon() const { return icon_->image_skia(); }
-  gfx::NativeWindow parent() { return parent_; }
+  const gfx::ImageSkia& icon() const { return icon_; }
 
  private:
   // Uninstalls the extension. Returns true on success, and populates |error| on
@@ -109,22 +103,17 @@ class ExtensionUninstallDialog
   // dialog.
   void HandleReportAbuse();
 
-  // ChromeAppIconDelegate:
-  void OnIconUpdated(ChromeAppIcon* icon) override;
+  // Sets the icon that will be used in the dialog. If |icon| contains an empty
+  // image, then we use a default icon instead.
+  void SetIcon(const gfx::Image& image);
 
-  // ExtensionRegistryObserver:
-  void OnExtensionUninstalled(content::BrowserContext* browser_context,
-                              const Extension* extension,
-                              UninstallReason reason) override;
+  void OnImageLoaded(const std::string& extension_id, const gfx::Image& image);
 
   // Displays the prompt. This should only be called after loading the icon.
   // The implementations of this method are platform-specific.
   virtual void Show() = 0;
 
   Profile* const profile_;
-
-  // The dialog's parent window.
-  gfx::NativeWindow parent_;
 
   // The delegate we will call Accepted/Canceled on after confirmation dialog.
   Delegate* delegate_;
@@ -136,17 +125,10 @@ class ExtensionUninstallDialog
   // chrome.management.uninstall.
   scoped_refptr<const Extension> triggering_extension_;
 
-  std::unique_ptr<ChromeAppIcon> icon_;
+  // The extensions icon.
+  gfx::ImageSkia icon_;
 
-  // Tracks whether |parent_| got destroyed.
-  std::unique_ptr<NativeWindowTracker> parent_window_tracker_;
-
-  // Indicates that dialog was shown.
-  bool dialog_shown_ = false;
-
-  UninstallReason uninstall_reason_ = UNINSTALL_REASON_FOR_TESTING;
-
-  ScopedObserver<ExtensionRegistry, ExtensionRegistryObserver> observer_;
+  UninstallReason uninstall_reason_;
 
   base::ThreadChecker thread_checker_;
 

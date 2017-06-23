@@ -9,7 +9,11 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/metrics/user_metrics.h"
-#include "base/task_scheduler/post_task.h"
+#include "base/strings/string16.h"
+#include "base/task_runner_util.h"
+#include "base/threading/sequenced_worker_pool.h"
+#include "chrome/browser/android/offline_pages/offline_page_utils.h"
+#include "chrome/browser/android/shortcut_helper.h"
 #include "chrome/browser/android/webapk/webapk_web_manifest_checker.h"
 #include "chrome/browser/favicon/favicon_service_factory.h"
 #include "chrome/browser/installable/installable_manager.h"
@@ -22,8 +26,8 @@
 #include "components/favicon_base/favicon_types.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/manifest_icon_selector.h"
-#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/manifest.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
 #include "ui/gfx/codec/png_codec.h"
@@ -72,7 +76,11 @@ AddToHomescreenDataFetcher::AddToHomescreenDataFetcher(
     int badge_size_in_px,
     bool check_webapk_compatibility,
     Observer* observer)
-    : content::WebContentsObserver(web_contents),
+    : WebContentsObserver(web_contents),
+      background_task_runner_(
+          content::BrowserThread::GetBlockingPool()
+              ->GetTaskRunnerWithShutdownBehavior(
+                  base::SequencedWorkerPool::SKIP_ON_SHUTDOWN)),
       weak_observer_(observer),
       shortcut_info_(GetShortcutUrl(web_contents->GetBrowserContext(),
                                     web_contents->GetLastCommittedURL())),
@@ -89,9 +97,7 @@ AddToHomescreenDataFetcher::AddToHomescreenDataFetcher(
   DCHECK(minimum_splash_image_size_in_px <= ideal_splash_image_size_in_px);
 
   // Send a message to the renderer to retrieve information about the page.
-  content::RenderFrameHost* main_frame = web_contents->GetMainFrame();
-  main_frame->Send(
-      new ChromeFrameMsg_GetWebApplicationInfo(main_frame->GetRoutingID()));
+  Send(new ChromeViewMsg_GetWebApplicationInfo(routing_id()));
 }
 
 void AddToHomescreenDataFetcher::OnDidGetWebApplicationInfo(
@@ -160,15 +166,14 @@ AddToHomescreenDataFetcher::~AddToHomescreenDataFetcher() {
 }
 
 bool AddToHomescreenDataFetcher::OnMessageReceived(
-    const IPC::Message& message,
-    content::RenderFrameHost* sender) {
+    const IPC::Message& message) {
   if (!is_waiting_for_web_application_info_)
     return false;
 
   bool handled = true;
 
   IPC_BEGIN_MESSAGE_MAP(AddToHomescreenDataFetcher, message)
-    IPC_MESSAGE_HANDLER(ChromeFrameHostMsg_DidGetWebApplicationInfo,
+    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_DidGetWebApplicationInfo,
                         OnDidGetWebApplicationInfo)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -281,23 +286,16 @@ void AddToHomescreenDataFetcher::FetchFavicon() {
 
 void AddToHomescreenDataFetcher::OnFaviconFetched(
     const favicon_base::FaviconRawBitmapResult& bitmap_result) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
   if (!web_contents() || !weak_observer_ || is_icon_saved_)
     return;
 
-  // The user is waiting for the icon to be processed before they can proceed
-  // with add to homescreen. But if we shut down, there's no point starting the
-  // image processing. Use USER_VISIBLE with MayBlock and SKIP_ON_SHUTDOWN.
-  base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE,
-      {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
-      base::BindOnce(&AddToHomescreenDataFetcher::
-                         CreateLauncherIconFromFaviconInBackground,
-                     base::Unretained(this), bitmap_result),
-      base::BindOnce(&AddToHomescreenDataFetcher::NotifyObserver,
-                     base::RetainedRef(this)));
+  base::PostTaskAndReplyWithResult(
+      background_task_runner_.get(), FROM_HERE,
+      base::Bind(&AddToHomescreenDataFetcher::
+                     CreateLauncherIconFromFaviconInBackground,
+                 base::Unretained(this), bitmap_result),
+      base::Bind(&AddToHomescreenDataFetcher::NotifyObserver,
+                 base::RetainedRef(this)));
 }
 
 SkBitmap AddToHomescreenDataFetcher::CreateLauncherIconFromFaviconInBackground(
@@ -316,19 +314,12 @@ SkBitmap AddToHomescreenDataFetcher::CreateLauncherIconFromFaviconInBackground(
 
 void AddToHomescreenDataFetcher::CreateLauncherIcon(const SkBitmap& raw_icon) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  // The user is waiting for the icon to be processed before they can proceed
-  // with add to homescreen. But if we shut down, there's no point starting the
-  // image processing. Use USER_VISIBLE with MayBlock and SKIP_ON_SHUTDOWN.
-  base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE,
-      {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
-      base::BindOnce(
-          &AddToHomescreenDataFetcher::CreateLauncherIconInBackground,
-          base::Unretained(this), raw_icon),
-      base::BindOnce(&AddToHomescreenDataFetcher::NotifyObserver,
-                     base::RetainedRef(this)));
+  base::PostTaskAndReplyWithResult(
+      background_task_runner_.get(), FROM_HERE,
+      base::Bind(&AddToHomescreenDataFetcher::CreateLauncherIconInBackground,
+                 base::Unretained(this), raw_icon),
+      base::Bind(&AddToHomescreenDataFetcher::NotifyObserver,
+                 base::RetainedRef(this)));
 }
 
 SkBitmap AddToHomescreenDataFetcher::CreateLauncherIconInBackground(

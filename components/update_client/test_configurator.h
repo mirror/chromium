@@ -90,7 +90,6 @@ class TestConfigurator : public Configurator {
       const override;
   PrefService* GetPrefService() const override;
   bool IsPerUserInstall() const override;
-  std::vector<uint8_t> GetRunActionKeyHash() const override;
 
   void SetBrand(const std::string& brand);
   void SetOnDemandTime(int seconds);

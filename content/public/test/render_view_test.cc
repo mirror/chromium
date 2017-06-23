@@ -637,11 +637,7 @@ ContentRendererClient* RenderViewTest::CreateContentRendererClient() {
 }
 
 std::unique_ptr<ResizeParams> RenderViewTest::InitialSizeParams() {
-  auto initial_size = base::MakeUnique<ResizeParams>();
-  // Ensure the view has some size so tests involving scrolling bounds work.
-  initial_size->new_size = gfx::Size(400, 300);
-  initial_size->visible_viewport_size = gfx::Size(400, 300);
-  return initial_size;
+  return base::MakeUnique<ResizeParams>();
 }
 
 void RenderViewTest::GoToOffset(int offset,

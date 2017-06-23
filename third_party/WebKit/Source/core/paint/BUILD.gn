@@ -39,8 +39,6 @@ blink_core_sources("paint") {
     "ClipRect.h",
     "ClipRects.h",
     "ClipRectsCache.h",
-    "CollapsedBorderPainter.cpp",
-    "CollapsedBorderPainter.h",
     "DecorationInfo.h",
     "DetailsMarkerPainter.cpp",
     "DetailsMarkerPainter.h",

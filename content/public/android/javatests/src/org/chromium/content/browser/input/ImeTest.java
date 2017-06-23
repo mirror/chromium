@@ -1186,7 +1186,7 @@ public class ImeTest {
             @Override
             public boolean isSatisfied() {
                 return mRule.getSelectionPopupController().isPastePopupShowing()
-                        && mRule.getSelectionPopupController().isInsertionForTesting();
+                        && mRule.getSelectionPopupController().isInsertion();
             }
         });
 
@@ -1197,7 +1197,7 @@ public class ImeTest {
                 return !mRule.getSelectionPopupController().isPastePopupShowing();
             }
         });
-        Assert.assertFalse(mRule.getSelectionPopupController().isInsertionForTesting());
+        Assert.assertFalse(mRule.getSelectionPopupController().isInsertion());
     }
 
     @Test

@@ -125,7 +125,8 @@ void InspectorResourceContentLoader::Start() {
 
     if (!resource_request.Url().GetString().IsEmpty()) {
       urls_to_fetch.insert(resource_request.Url().GetString());
-      ResourceLoaderOptions options;
+      ResourceLoaderOptions options(kAllowStoredCredentials,
+                                    kClientRequestedCredentials);
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
       Resource* resource = RawResource::Fetch(params, document->Fetcher());
@@ -150,7 +151,8 @@ void InspectorResourceContentLoader::Start() {
       ResourceRequest resource_request(url);
       resource_request.SetRequestContext(
           WebURLRequest::kRequestContextInternal);
-      ResourceLoaderOptions options;
+      ResourceLoaderOptions options(kAllowStoredCredentials,
+                                    kClientRequestedCredentials);
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
       Resource* resource =

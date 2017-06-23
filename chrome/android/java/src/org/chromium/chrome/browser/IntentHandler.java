@@ -417,7 +417,7 @@ public class IntentHandler {
                 IntentUtils.safeGetIntExtra(intent, EXTRA_REFERRER_ID, 0));
         if (!TextUtils.isEmpty(referrerUrl)) {
             return referrerUrl;
-        } else if (isValidReferrerHeader(referrerExtra)) {
+        } else if (isValidReferrerHeader(referrerExtra.toString())) {
             return referrerExtra.toString();
         } else if (IntentHandler.isIntentChromeOrFirstParty(intent)) {
             return referrerExtra.toString();
@@ -441,9 +441,8 @@ public class IntentHandler {
         if (bundleExtraHeaders == null) return null;
         for (String key : bundleExtraHeaders.keySet()) {
             String value = bundleExtraHeaders.getString(key);
-            if (value != null && "referer".equals(key.toLowerCase(Locale.US))) {
-                Uri referrer = Uri.parse(value).normalizeScheme();
-                if (isValidReferrerHeader(referrer)) return referrer.toString();
+            if ("referer".equals(key.toLowerCase(Locale.US)) && isValidReferrerHeader(value)) {
+                return value;
             }
         }
         return null;
@@ -468,11 +467,9 @@ public class IntentHandler {
      * @return Whether that the given referrer is of the format that Chrome allows external
      * apps to specify.
      */
-    private static boolean isValidReferrerHeader(Uri referrer) {
-        if (referrer == null) return false;
-        Uri normalized = referrer.normalizeScheme();
-        return TextUtils.equals(normalized.getScheme(), ANDROID_APP_REFERRER_SCHEME)
-                && !TextUtils.isEmpty(normalized.getHost());
+    private static boolean isValidReferrerHeader(String referrer) {
+        return referrer != null
+                && referrer.toLowerCase(Locale.US).startsWith(ANDROID_APP_REFERRER_SCHEME + "://");
     }
 
     /**

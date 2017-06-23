@@ -1,5 +1,5 @@
 
-TestRunner.loadModule('product_registry_impl').then(test);
+TestRunner.loadLazyModules(['product_registry_impl']).then(test);
 function test() {
   TestRunner.addResult("This tests product registry impl's register function.");
 

@@ -10,11 +10,11 @@
 #include "content/public/renderer/associated_resource_fetcher.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/geometry/size.h"
 
-using blink::WebLocalFrame;
+using blink::WebFrame;
 using blink::WebAssociatedURLLoaderOptions;
 using blink::WebURLRequest;
 using blink::WebURLResponse;
@@ -23,7 +23,7 @@ namespace content {
 
 MultiResolutionImageResourceFetcher::MultiResolutionImageResourceFetcher(
     const GURL& image_url,
-    WebLocalFrame* frame,
+    WebFrame* frame,
     int id,
     WebURLRequest::RequestContext request_context,
     blink::WebCachePolicy cache_policy,
@@ -35,7 +35,7 @@ MultiResolutionImageResourceFetcher::MultiResolutionImageResourceFetcher(
   fetcher_.reset(AssociatedResourceFetcher::Create(image_url));
 
   WebAssociatedURLLoaderOptions options;
-  options.fetch_credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
+  options.allow_credentials = true;
   options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
   fetcher_->SetLoaderOptions(options);
 

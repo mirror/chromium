@@ -200,7 +200,8 @@ void IOSChromeMetricsServiceClient::Initialize() {
 
   // Register metrics providers.
   metrics_service_->RegisterMetricsProvider(
-      base::MakeUnique<metrics::NetworkMetricsProvider>());
+      base::MakeUnique<metrics::NetworkMetricsProvider>(
+          web::WebThread::GetBlockingPool()));
 
   // Currently, we configure OmniboxMetricsProvider to not log events to UMA
   // if there is a single incognito session visible. In the future, it may

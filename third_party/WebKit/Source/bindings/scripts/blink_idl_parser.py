@@ -53,10 +53,6 @@ http://www.chromium.org/developers/design-documents/idl-compiler#TOC-Front-end
 #
 # Disable attribute validation, as lint can't import parent class to check
 # pylint: disable=E1101
-#
-# Disable check for invalid name as patterns use p_ prefix and they take |p|
-# argument
-# pylint: disable=C0103
 
 import os.path
 import sys
@@ -207,6 +203,62 @@ class BlinkIDLParser(IDLParser):
     # Numbers are as per Candidate Recommendation 19 April 2012:
     # http://www.w3.org/TR/2012/CR-WebIDL-20120419/
 
+    # [b27] Add strings, more 'Literal' productions
+    # 'Literal's needed because integers and strings are both internally strings
+    def p_ConstValue(self, p):
+        """ConstValue : BooleanLiteral
+                      | FloatLiteral
+                      | IntegerLiteral
+                      | StringLiteral
+                      | null"""
+        # Standard is (no 'string', fewer 'Literal's):
+        # ConstValue : BooleanLiteral
+        #            | FloatLiteral
+        #            | integer
+        #            | NULL
+        p[0] = p[1]
+
+    # [b27.1]
+    def p_IntegerLiteral(self, p):
+        """IntegerLiteral : integer"""
+        p[0] = ListFromConcat(self.BuildAttribute('TYPE', 'integer'),
+                              self.BuildAttribute('NAME', p[1]))
+
+    # [b27.2]
+    def p_StringLiteral(self, p):
+        """StringLiteral : string"""
+        p[0] = ListFromConcat(self.BuildAttribute('TYPE', 'DOMString'),
+                              self.BuildAttribute('NAME', p[1]))
+
+    # [b47]
+    def p_ExceptionMember(self, p):
+        """ExceptionMember : Const
+                           | ExceptionField
+                           | Attribute
+                           | ExceptionOperation"""
+        # Standard is (no Attribute, no ExceptionOperation):
+        # ExceptionMember : Const
+        #                 | ExceptionField
+        # FIXME: In DOMException.idl, Attributes should be changed to
+        # ExceptionFields, and Attribute removed from this rule.
+        p[0] = p[1]
+
+    # [b47.1] FIXME: rename to ExceptionAttribute
+    def p_Attribute(self, p):
+        """Attribute : ReadOnly ATTRIBUTE Type identifier ';'"""
+        p[0] = self.BuildNamed('Attribute', p, 4,
+                               ListFromConcat(p[1], p[3]))
+
+    # [b47.2]
+    def p_ExceptionOperation(self, p):
+        """ExceptionOperation : Type identifier '(' ')' ';'"""
+        # Needed to handle one case in DOMException.idl:
+        # // Override in a Mozilla compatible format
+        # [NotEnumerable] DOMString toString();
+        # Limited form of Operation to prevent others from being added.
+        # FIXME: Should be a stringifier instead.
+        p[0] = self.BuildNamed('ExceptionOperation', p, 2, p[1])
+
     # Extended attributes
     # [b49] Override base parser: remove comment field, since comments stripped
     # FIXME: Upstream
@@ -232,6 +284,47 @@ class BlinkIDLParser(IDLParser):
             p[0] = ListFromConcat(p[2], p[3])
         elif len(p) == 2:
             p[0] = self.BuildError(p, 'ExtendedAttributes')
+
+    # [b51] Add ExtendedAttributeStringLiteral and ExtendedAttributeStringLiteralList
+    def p_ExtendedAttribute(self, p):
+        """ExtendedAttribute : ExtendedAttributeNoArgs
+                             | ExtendedAttributeArgList
+                             | ExtendedAttributeIdent
+                             | ExtendedAttributeIdentList
+                             | ExtendedAttributeNamedArgList
+                             | ExtendedAttributeStringLiteral
+                             | ExtendedAttributeStringLiteralList"""
+        p[0] = p[1]
+
+    # Blink extension: Add support for string literal Extended Attribute values
+    def p_ExtendedAttributeStringLiteral(self, p):
+        """ExtendedAttributeStringLiteral : identifier '=' StringLiteral """
+        def unwrap_string(ls):
+            """Reach in and grab the string literal's "NAME"."""
+            return ls[1].value
+
+        value = self.BuildAttribute('VALUE', unwrap_string(p[3]))
+        p[0] = self.BuildNamed('ExtAttribute', p, 1, value)
+
+    # Blink extension: Add support for compound Extended Attribute values over string literals ("A","B")
+    def p_ExtendedAttributeStringLiteralList(self, p):
+        """ExtendedAttributeStringLiteralList : identifier '=' '(' StringLiteralList ')' """
+        value = self.BuildAttribute('VALUE', p[4])
+        p[0] = self.BuildNamed('ExtAttribute', p, 1, value)
+
+    # Blink extension: one or more string literals. The values aren't propagated as literals,
+    # but their by their value only.
+    def p_StringLiteralList(self, p):
+        """StringLiteralList : StringLiteral ',' StringLiteralList
+                             | StringLiteral"""
+        def unwrap_string(ls):
+            """Reach in and grab the string literal's "NAME"."""
+            return ls[1].value
+
+        if len(p) > 3:
+            p[0] = ListFromConcat(unwrap_string(p[1]), p[3])
+        else:
+            p[0] = ListFromConcat(unwrap_string(p[1]))
 
     def __init__(self,
                  # common parameters

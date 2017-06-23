@@ -6,9 +6,8 @@
 
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
-#include "base/strings/stringprintf.h"
+#include "base/strings/string_number_conversions.h"
 #include "device/bluetooth/bluetooth_uuid.h"
 #include "device/bluetooth/test/fake_remote_gatt_service.h"
 
@@ -51,9 +50,7 @@ void FakePeripheral::SetNextGATTDiscoveryResponse(uint16_t code) {
 
 std::string FakePeripheral::AddFakeService(
     const device::BluetoothUUID& service_uuid) {
-  // Attribute instance Ids need to be unique.
-  std::string new_service_id =
-      base::StringPrintf("%s_%zu", GetAddress().c_str(), ++last_service_id_);
+  std::string new_service_id = base::SizeTToString(++last_service_id_);
 
   GattServiceMap::iterator it;
   bool inserted;

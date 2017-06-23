@@ -44,10 +44,11 @@ void TestDownloadDriver::NotifyDownloadFailed(const DriverEntry& entry,
   }
 }
 
-void TestDownloadDriver::NotifyDownloadSucceeded(const DriverEntry& entry) {
+void TestDownloadDriver::NotifyDownloadSucceeded(const DriverEntry& entry,
+                                                 const base::FilePath& path) {
   if (client_) {
     entries_[entry.guid] = entry;
-    client_->OnDownloadSucceeded(entry);
+    client_->OnDownloadSucceeded(entry, path);
   }
 }
 
@@ -63,11 +64,9 @@ bool TestDownloadDriver::IsReady() const {
 void TestDownloadDriver::Start(
     const RequestParams& params,
     const std::string& guid,
-    const base::FilePath& file_path,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DriverEntry entry;
   entry.guid = guid;
-  entry.current_file_path = file_path;
   entry.state = DriverEntry::State::IN_PROGRESS;
   entry.paused = false;
   entry.bytes_downloaded = 0;

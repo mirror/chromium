@@ -31,6 +31,12 @@
 NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
     @"JavaScriptDialogTextFieldAccessibiltyIdentifier";
 
+namespace {
+// The hostname to use for JavaScript alerts when there is no valid hostname in
+// the URL passed to |+localizedTitleForJavaScriptAlertFromPage:type:|.
+const char kAboutNullHostname[] = "about:null";
+}  // namespace
+
 @interface DialogPresenter () {
   // Queue of WebStates which correspond to the keys in
   // |_dialogCoordinatorsForWebStates|.
@@ -67,8 +73,8 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
 // Shows the dialog associated with the next context in |contextQueue|.
 - (void)showNextDialog;
 
-// Called when |coordinator| is stopped.
-- (void)dialogCoordinatorWasStopped:(AlertCoordinator*)coordinator;
+// Called when a button in |coordinator| is tapped.
+- (void)buttonWasTappedForCoordinator:(AlertCoordinator*)coordinator;
 
 // Adds buttons to |alertCoordinator|.  A confirmation button with |label| as
 // the text will be added for |confirmAction|, and a cancel button will be added
@@ -147,7 +153,7 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
   ProceduralBlock OKHandler = ^{
     if (completionHandler)
       completionHandler();
-    [weakSelf dialogCoordinatorWasStopped:weakCoordinator];
+    [weakSelf buttonWasTappedForCoordinator:weakCoordinator];
   };
 
   // Add button.
@@ -306,24 +312,15 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
 }
 
 - (void)cancelDialogForWebState:(web::WebState*)webState {
-  BOOL cancelingPresentedDialog = webState == self.presentedDialogWebState;
-  AlertCoordinator* dialogToCancel =
-      cancelingPresentedDialog ? self.presentedDialogCoordinator
-                               : _dialogCoordinatorsForWebStates[webState];
-  DCHECK(!cancelingPresentedDialog || dialogToCancel);
-  [dialogToCancel executeCancelHandler];
-  [dialogToCancel stop];
-
-  if (cancelingPresentedDialog) {
-    DCHECK(_dialogCoordinatorsForWebStates[webState] == nil);
-    // Simulate a button tap to trigger showing the next dialog.
-    [self dialogCoordinatorWasStopped:dialogToCancel];
-  } else if (dialogToCancel) {
-    // Clean up queued state.
+  DCHECK_NE(webState, self.presentedDialogWebState);
+  AlertCoordinator* dialogToCancel = _dialogCoordinatorsForWebStates[webState];
+  if (dialogToCancel) {
     auto it =
         std::find(_queuedWebStates.begin(), _queuedWebStates.end(), webState);
     DCHECK(it != _queuedWebStates.end());
     _queuedWebStates.erase(it);
+    [dialogToCancel executeCancelHandler];
+    [dialogToCancel stop];
     _dialogCoordinatorsForWebStates.erase(webState);
   }
 }
@@ -350,16 +347,11 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
 }
 
 + (NSString*)localizedTitleForJavaScriptAlertFromPage:(const GURL&)pageURL {
-  NSString* localizedTitle = nil;
   NSString* hostname = base::SysUTF8ToNSString(pageURL.host());
-  if (!hostname.length) {
-    localizedTitle = l10n_util::GetNSString(
-        IDS_JAVASCRIPT_MESSAGEBOX_TITLE_NONSTANDARD_URL_IFRAME);
-  } else {
-    localizedTitle = l10n_util::GetNSStringF(
-        IDS_JAVASCRIPT_MESSAGEBOX_TITLE, base::SysNSStringToUTF16(hostname));
-  }
-  return localizedTitle;
+  if (!hostname.length)
+    hostname = base::SysUTF8ToNSString(kAboutNullHostname);
+  return l10n_util::GetNSStringF(IDS_JAVASCRIPT_MESSAGEBOX_TITLE,
+                                 base::SysNSStringToUTF16(hostname));
 }
 
 #pragma mark - Private methods.
@@ -394,7 +386,7 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
   [self.presentedDialogCoordinator start];
 }
 
-- (void)dialogCoordinatorWasStopped:(AlertCoordinator*)coordinator {
+- (void)buttonWasTappedForCoordinator:(AlertCoordinator*)coordinator {
   if (coordinator != self.presentedDialogCoordinator)
     return;
   self.presentedDialogWebState = nil;
@@ -415,13 +407,13 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
   ProceduralBlock confirmHandler = ^{
     if (confirmAction)
       confirmAction();
-    [weakSelf dialogCoordinatorWasStopped:weakCoordinator];
+    [weakSelf buttonWasTappedForCoordinator:weakCoordinator];
   };
 
   ProceduralBlock cancelHandler = ^{
     if (cancelAction)
       cancelAction();
-    [weakSelf dialogCoordinatorWasStopped:weakCoordinator];
+    [weakSelf buttonWasTappedForCoordinator:weakCoordinator];
   };
 
   // Add buttons.
@@ -493,12 +485,12 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
       if (!strongSelf)
         return;
       DialogBlockingOptionSelected([strongSelf presentedDialogWebState]);
-      [strongSelf dialogCoordinatorWasStopped:weakCoordinator];
+      [strongSelf buttonWasTappedForCoordinator:weakCoordinator];
     };
     ProceduralBlock cancelHandler = ^{
       if (cancelAction)
         cancelAction();
-      [weakSelf dialogCoordinatorWasStopped:weakCoordinator];
+      [weakSelf buttonWasTappedForCoordinator:weakCoordinator];
     };
     NSString* blockingOptionTitle =
         l10n_util::GetNSString(IDS_IOS_JAVA_SCRIPT_DIALOG_BLOCKING_BUTTON_TEXT);

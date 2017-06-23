@@ -51,7 +51,7 @@ class HidDetectionTest : public OobeBaseTest {
   typedef device::InputServiceLinux::InputDeviceInfo InputDeviceInfo;
 
   HidDetectionTest() : weak_ptr_factory_(this) {
-    InputServiceProxy::SetUseUIThreadForTesting(true);
+    InputServiceProxy::SetThreadIdForTesting(content::BrowserThread::UI);
     HidDetectionTest::InitInputService();
   }
 

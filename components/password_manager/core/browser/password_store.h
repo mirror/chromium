@@ -23,7 +23,6 @@
 
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-#include "components/password_manager/core/browser/hash_password_manager.h"
 #include "components/password_manager/core/browser/password_reuse_detector.h"
 #include "components/password_manager/core/browser/password_reuse_detector_consumer.h"
 #endif
@@ -433,8 +432,7 @@ class PasswordStore : protected PasswordStoreSync,
                       const std::string& domain);
 
   // Synchronous implementation of SaveSyncPasswordHash().
-  void SaveSyncPasswordHashImpl(
-      base::Optional<SyncPasswordData> sync_password_data);
+  void SaveSyncPasswordHashImpl(const base::string16& password);
 
   // Synchronous implementation of ClearSyncPasswordHash().
   void ClearSyncPasswordHashImpl();
@@ -586,7 +584,8 @@ class PasswordStore : protected PasswordStoreSync,
   // Creates PasswordSyncableService and PasswordReuseDetector instances on the
   // background thread.
   void InitOnBackgroundThread(
-      const syncer::SyncableService::StartSyncFlare& flare);
+      const syncer::SyncableService::StartSyncFlare& flare,
+      PrefService* prefs);
 
   // Deletes objest that should be destroyed on the background thread.
   void DestroyOnBackgroundThread();
@@ -599,7 +598,6 @@ class PasswordStore : protected PasswordStoreSync,
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
   std::unique_ptr<PasswordReuseDetector> reuse_detector_;
-  HashPasswordManager hash_password_manager_;
 #endif
   bool is_propagating_password_changes_to_web_credentials_enabled_;
 

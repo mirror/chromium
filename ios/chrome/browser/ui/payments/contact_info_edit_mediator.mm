@@ -6,11 +6,9 @@
 
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
-#include "components/autofill/core/browser/autofill_country.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/field_types.h"
-#include "components/payments/core/payment_request_data_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -76,17 +74,6 @@
   return NO;
 }
 
-- (void)formatValueForEditorField:(EditorField*)field {
-  if (field.autofillUIType == AutofillUITypeProfileHomePhoneWholeNumber) {
-    const std::string countryCode =
-        autofill::AutofillCountry::CountryCodeForLocale(
-            GetApplicationContext()->GetApplicationLocale());
-    field.value =
-        base::SysUTF8ToNSString(payments::data_util::FormatPhoneForDisplay(
-            base::SysNSStringToUTF8(field.value), countryCode));
-  }
-}
-
 - (UIImage*)iconIdentifyingEditorField:(EditorField*)field {
   return nil;
 }
@@ -107,21 +94,13 @@
                                    IDS_PAYMENTS_NAME_FIELD_IN_CONTACT_DETAILS)
                          value:name
                       required:YES];
-    if (!_paymentRequest->request_payer_phone() &&
-        !_paymentRequest->request_payer_email()) {
-      nameField.returnKeyType = UIReturnKeyDone;
-    }
     [self.fields addObject:nameField];
   }
 
   if (_paymentRequest->request_payer_phone()) {
     NSString* phone =
-        self.profile
-            ? base::SysUTF16ToNSString(
-                  payments::data_util::GetFormattedPhoneNumberForDisplay(
-                      *self.profile,
-                      GetApplicationContext()->GetApplicationLocale()))
-            : nil;
+        [self fieldValueFromProfile:self.profile
+                          fieldType:autofill::PHONE_HOME_WHOLE_NUMBER];
     EditorField* phoneField = [[EditorField alloc]
         initWithAutofillUIType:AutofillUITypeProfileHomePhoneWholeNumber
                      fieldType:EditorFieldTypeTextField
@@ -129,9 +108,6 @@
                                    IDS_PAYMENTS_PHONE_FIELD_IN_CONTACT_DETAILS)
                          value:phone
                       required:YES];
-    phoneField.keyboardType = UIKeyboardTypePhonePad;
-    if (!_paymentRequest->request_payer_email())
-      phoneField.returnKeyType = UIReturnKeyDone;
     [self.fields addObject:phoneField];
   }
 
@@ -145,9 +121,6 @@
                                    IDS_PAYMENTS_EMAIL_FIELD_IN_CONTACT_DETAILS)
                          value:email
                       required:YES];
-    emailField.keyboardType = UIKeyboardTypeEmailAddress;
-    emailField.autoCapitalizationType = UITextAutocapitalizationTypeNone;
-    emailField.returnKeyType = UIReturnKeyDone;
     [self.fields addObject:emailField];
   }
 

@@ -10,10 +10,7 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
-#include "chrome/grit/chromium_strings.h"
-#include "chrome/grit/generated_resources.h"
 #include "components/constrained_window/constrained_window_views.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/events/event.h"
 #include "ui/gfx/geometry/insets.h"
@@ -37,7 +34,6 @@ void ShowChromeCleanerPrompt(
 
 namespace {
 constexpr int kDialogWidth = 448;
-
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -53,8 +49,7 @@ ChromeCleanerDialog::ChromeCleanerDialog(
                            ChromeLayoutProvider::Get()->GetInsetsMetric(
                                views::INSETS_DIALOG_CONTENTS),
                            0));
-  views::Label* label = new views::Label(
-      l10n_util::GetStringUTF16(IDS_CHROME_CLEANUP_PROMPT_EXPLANATION));
+  views::Label* label = new views::Label(controller_->GetMainText());
   label->SetMultiLine(true);
   label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   AddChildView(label);
@@ -87,7 +82,7 @@ ui::ModalType ChromeCleanerDialog::GetModalType() const {
 
 base::string16 ChromeCleanerDialog::GetWindowTitle() const {
   DCHECK(controller_);
-  return l10n_util::GetStringUTF16(IDS_CHROME_CLEANUP_PROMPT_TITLE);
+  return controller_->GetWindowTitle();
 }
 
 // DialogDelegate overrides.
@@ -98,15 +93,13 @@ base::string16 ChromeCleanerDialog::GetDialogButtonLabel(
   DCHECK(controller_);
 
   return button == ui::DIALOG_BUTTON_OK
-             ? l10n_util::GetStringUTF16(
-                   IDS_CHROME_CLEANUP_PROMPT_REMOVE_BUTTON_LABEL)
+             ? controller_->GetAcceptButtonLabel()
              : DialogDelegate::GetDialogButtonLabel(button);
 }
 
 views::View* ChromeCleanerDialog::CreateExtraView() {
   return views::MdTextButton::CreateSecondaryUiButton(
-      this, l10n_util::GetStringUTF16(
-                IDS_CHROME_CLEANUP_PROMPT_DETAILS_BUTTON_LABEL));
+      this, controller_->GetDetailsButtonLabel());
 }
 
 bool ChromeCleanerDialog::Accept() {

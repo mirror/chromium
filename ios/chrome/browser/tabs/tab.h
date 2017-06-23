@@ -26,6 +26,7 @@
 @class FullScreenController;
 @protocol FullScreenControllerDelegate;
 class GURL;
+@class NativeAppNavigationController;
 @class OpenInController;
 @class OverscrollActionsController;
 @protocol OverscrollActionsControllerDelegate;
@@ -282,6 +283,9 @@ extern NSString* const kProxyPassthroughHeaderValue;
 
 // Called when the snapshot of the content will be taken.
 - (void)willUpdateSnapshot;
+
+// Returns the NativeAppNavigationController for this tab.
+- (NativeAppNavigationController*)nativeAppNavigationController;
 
 // Called when this tab is shown.
 - (void)wasShown;

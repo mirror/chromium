@@ -69,8 +69,8 @@ class CORE_EXPORT CSPDirectiveList
                         const String& style_content) const;
   bool AllowEval(ScriptState*,
                  SecurityViolationReportingPolicy,
-                 ContentSecurityPolicy::ExceptionStatus,
-                 const String& script_content) const;
+                 ContentSecurityPolicy::ExceptionStatus =
+                     ContentSecurityPolicy::kWillNotThrowException) const;
   bool AllowPluginType(const String& type,
                        const String& type_attribute,
                        const KURL&,
@@ -233,13 +233,13 @@ class CORE_EXPORT CSPDirectiveList
                                    const WTF::OrdinalNumber& context_line,
                                    Element*,
                                    const String& source) const;
-  void ReportEvalViolation(const String& directive_text,
-                           const ContentSecurityPolicy::DirectiveType&,
-                           const String& message,
-                           const KURL& blocked_url,
-                           ScriptState*,
-                           const ContentSecurityPolicy::ExceptionStatus,
-                           const String& content) const;
+  void ReportViolationWithState(
+      const String& directive_text,
+      const ContentSecurityPolicy::DirectiveType&,
+      const String& message,
+      const KURL& blocked_url,
+      ScriptState*,
+      const ContentSecurityPolicy::ExceptionStatus) const;
 
   bool CheckEval(SourceListDirective*) const;
   bool CheckDynamic(SourceListDirective*) const;
@@ -261,11 +261,12 @@ class CORE_EXPORT CSPDirectiveList
     eval_disabled_error_message_ = error_message;
   }
 
-  bool CheckEvalAndReportViolation(SourceListDirective*,
-                                   const String& console_message,
-                                   ScriptState*,
-                                   ContentSecurityPolicy::ExceptionStatus,
-                                   const String& script_content) const;
+  bool CheckEvalAndReportViolation(
+      SourceListDirective*,
+      const String& console_message,
+      ScriptState*,
+      ContentSecurityPolicy::ExceptionStatus =
+          ContentSecurityPolicy::kWillNotThrowException) const;
   bool CheckInlineAndReportViolation(SourceListDirective*,
                                      const String& console_message,
                                      Element*,

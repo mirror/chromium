@@ -48,8 +48,8 @@ class MemoryCacheTest : public ::testing::Test {
    public:
     static FakeDecodedResource* Create(const String& url, Type type) {
       ResourceRequest request(url);
-      request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
-      ResourceLoaderOptions options;
+      ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
+                                    kClientDidNotRequestCredentials);
       return new FakeDecodedResource(request, type, options);
     }
 
@@ -74,10 +74,8 @@ class MemoryCacheTest : public ::testing::Test {
     }
     static FakeResource* Create(const KURL& url, Type type) {
       ResourceRequest request(url);
-      request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
-
-      ResourceLoaderOptions options;
-
+      ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
+                                    kClientDidNotRequestCredentials);
       return new FakeResource(request, type, options);
     }
 

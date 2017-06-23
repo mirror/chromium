@@ -67,7 +67,7 @@ class BluetoothHostPairingNoInputTest : public OobeBaseTest {
   using InputDeviceInfo = device::InputServiceLinux::InputDeviceInfo;
 
   BluetoothHostPairingNoInputTest() {
-    InputServiceProxy::SetUseUIThreadForTesting(true);
+    InputServiceProxy::SetThreadIdForTesting(content::BrowserThread::UI);
     device::InputServiceLinux::SetForTesting(
         base::MakeUnique<device::FakeInputServiceLinux>());
 

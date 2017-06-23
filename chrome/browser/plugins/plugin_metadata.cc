@@ -6,9 +6,10 @@
 
 #include <stddef.h>
 
+#include <algorithm>
+
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "base/stl_util.h"
 #include "base/strings/pattern.h"
 #include "base/strings/string_util.h"
 #include "content/public/common/webplugininfo.h"
@@ -60,7 +61,8 @@ void PluginMetadata::AddMatchingMimeType(const std::string& mime_type) {
 }
 
 bool PluginMetadata::HasMimeType(const std::string& mime_type) const {
-  return base::ContainsValue(all_mime_types_, mime_type);
+  return std::find(all_mime_types_.begin(), all_mime_types_.end(), mime_type) !=
+      all_mime_types_.end();
 }
 
 bool PluginMetadata::MatchesPlugin(const content::WebPluginInfo& plugin) {

@@ -349,18 +349,6 @@ void GaiaScreenHandler::LoadGaiaWithVersion(
     params.SetString("gaiaPath", eafe_path);
   }
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kCrosGaiaApiV1)) {
-    params.SetString("chromeOSApiVersion", "1");
-  } else if (use_easy_bootstrap_) {
-    // Easy bootstrap is not v2-compatible
-    params.SetString("chromeOSApiVersion", "1");
-  } else {
-    // This enables GLIF MM UI for the online Gaia screen by default.
-    // (see https://crbug.com/709244 ).
-    params.SetString("chromeOSApiVersion", "2");
-  }
-
   frame_state_ = FRAME_STATE_LOADING;
   CallJS("loadAuthExtension", params);
 }

@@ -485,7 +485,7 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
 
     UpdateCurrentPaintChunkProperties(
         cached_chunk->is_cacheable ? &cached_chunk->id : nullptr,
-        cached_chunk->properties, kForceNewChunk);
+        cached_chunk->properties, ForceNewChunk);
   } else {
     // Avoid uninitialized variable error on Windows.
     cached_chunk = current_paint_artifact_.PaintChunks().begin();
@@ -509,7 +509,7 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
         DCHECK(cached_chunk != current_paint_artifact_.PaintChunks().end());
         UpdateCurrentPaintChunkProperties(
             cached_chunk->is_cacheable ? &cached_chunk->id : nullptr,
-            cached_chunk->properties, kForceNewChunk);
+            cached_chunk->properties, ForceNewChunk);
       }
 
 #if DCHECK_IS_ON()
@@ -671,9 +671,14 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
       current_cached_subsequence_begin_index_in_new_list_)
     return;
 
-  // Uncacheable chunks will be invalidated in ContentLayerClientImpl.
-  if (!new_chunk.is_cacheable)
+  static FloatRect infinite_float_rect(LayoutRect::InfiniteIntRect());
+  if (!new_chunk.is_cacheable) {
+    // This chunk is not cacheable, so always invalidate the whole chunk.
+    AddRasterInvalidation(
+        new_display_item_list_[new_chunk.begin_index].Client(), new_chunk,
+        infinite_float_rect, PaintInvalidationReason::kFull);
     return;
+  }
 
   // Try to match old chunk sequentially first.
   const auto& old_chunks = current_paint_artifact_.PaintChunks();
@@ -709,6 +714,10 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
       }
     }
   }
+
+  // We reach here because the chunk is new.
+  AddRasterInvalidation(new_chunk.id.client, new_chunk, infinite_float_rect,
+                        PaintInvalidationReason::kAppeared);
 }
 
 void PaintController::AddRasterInvalidation(const DisplayItemClient& client,

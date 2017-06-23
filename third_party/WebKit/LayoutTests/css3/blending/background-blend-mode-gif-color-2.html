@@ -10,7 +10,16 @@
         margin: 5px;
     }
 </style>
+<script type="text/javascript">
+    if (window.testRunner)
+        window.testRunner.waitUntilDone();
 
+    function done() {
+        if (window.testRunner)
+            window.testRunner.notifyDone();
+    }
+
+</script>
 </head>
 <!-- This file should contain a gif on top of a background color with every type of blending. -->
 <body>
@@ -29,23 +38,8 @@
     <div style="background-blend-mode: saturation, normal"></div>
     <div style="background-blend-mode: color, normal"></div>
     <div style="background-blend-mode: luminosity, normal"></div>
-
-    <img id='image' style='display: none'>
-
     <script type="text/javascript">
-      onload = function() {
-        if (window.testRunner)
-          testRunner.waitUntilDone();
-
-        // use a parallel instance to drive the animation
-        image.src = 'resources/squares.gif';
-        image.onload = function() {
-          if (window.testRunner) {
-            internals.advanceImageAnimation(image);
-            testRunner.notifyDone();
-          }
-        };
-      };
+        window.setTimeout("done()", 400);
     </script>
 </body>
 </html>

@@ -148,7 +148,6 @@
 #include "public/platform/WebImage.h"
 #include "public/platform/WebInputEvent.h"
 #include "public/platform/WebLayerTreeView.h"
-#include "public/platform/WebMenuSourceType.h"
 #include "public/platform/WebTextInputInfo.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebVector.h"
@@ -163,6 +162,7 @@
 #include "public/web/WebInputElement.h"
 #include "public/web/WebMeaningfulLayout.h"
 #include "public/web/WebMediaPlayerAction.h"
+#include "public/web/WebMenuSourceType.h"
 #include "public/web/WebNode.h"
 #include "public/web/WebPlugin.h"
 #include "public/web/WebPluginAction.h"
@@ -521,7 +521,6 @@ void WebViewImpl::MouseContextMenu(const WebMouseEvent& event) {
 
   WebMouseEvent transformed_event =
       TransformWebMouseEvent(MainFrameImpl()->GetFrameView(), event);
-  transformed_event.menu_source_type = kMenuSourceMouse;
   IntPoint position_in_root_frame =
       FlooredIntPoint(transformed_event.PositionInRootFrame());
 
@@ -1295,13 +1294,8 @@ WebRect WebViewImpl::WidenRectWithinPageBounds(const WebRect& source,
   if (MainFrame())
     max_size = MainFrame()->ContentsSize();
   IntSize scroll_offset;
-  if (MainFrame()) {
-    // TODO(lukasza): https://crbug.com/734209: The DCHECK below holds now, but
-    // only because all of the callers don't support OOPIFs and exit early if
-    // the main frame is not local.
-    DCHECK(MainFrame()->IsWebLocalFrame());
-    scroll_offset = MainFrame()->ToWebLocalFrame()->GetScrollOffset();
-  }
+  if (MainFrame())
+    scroll_offset = MainFrame()->GetScrollOffset();
   int left_margin = target_margin;
   int right_margin = target_margin;
 
@@ -1521,7 +1515,6 @@ void WebViewImpl::EnableTapHighlights(
 }
 
 void WebViewImpl::AnimateDoubleTapZoom(const IntPoint& point_in_root_frame) {
-  // TODO(lukasza): https://crbug.com/734209: Add OOPIF support.
   if (!MainFrameImpl())
     return;
 
@@ -1568,7 +1561,6 @@ void WebViewImpl::AnimateDoubleTapZoom(const IntPoint& point_in_root_frame) {
 }
 
 void WebViewImpl::ZoomToFindInPageRect(const WebRect& rect_in_root_frame) {
-  // TODO(lukasza): https://crbug.com/734209: Add OOPIF support.
   if (!MainFrameImpl())
     return;
 
@@ -1595,7 +1587,6 @@ void WebViewImpl::ZoomToFindInPageRect(const WebRect& rect_in_root_frame) {
 }
 
 bool WebViewImpl::ZoomToMultipleTargetsRect(const WebRect& rect_in_root_frame) {
-  // TODO(lukasza): https://crbug.com/734209: Add OOPIF support.
   if (!MainFrameImpl())
     return false;
 
@@ -1644,7 +1635,7 @@ WebInputEventResult WebViewImpl::SendContextMenuEvent(
       focused_element->scrollIntoViewIfNeeded();
     return ToLocalFrame(focused_frame)
         ->GetEventHandler()
-        .ShowNonLocatedContextMenu(nullptr, kMenuSourceKeyboard);
+        .ShowNonLocatedContextMenu(nullptr);
   }
 }
 #else

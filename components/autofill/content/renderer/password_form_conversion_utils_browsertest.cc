@@ -27,7 +27,7 @@
 
 using blink::WebFormControlElement;
 using blink::WebFormElement;
-using blink::WebLocalFrame;
+using blink::WebFrame;
 using blink::WebInputElement;
 using blink::WebVector;
 
@@ -242,7 +242,7 @@ class MAYBE_PasswordFormConversionUtilsTest : public content::RenderViewTest {
   void LoadWebFormFromHTML(const std::string& html, WebFormElement* form) {
     LoadHTML(html.c_str());
 
-    WebLocalFrame* frame = GetMainFrame();
+    WebFrame* frame = GetMainFrame();
     ASSERT_NE(nullptr, frame);
 
     WebVector<WebFormElement> forms;

@@ -20,6 +20,8 @@
 #include "ash/aura/shell_port_classic.h"
 #include "ash/autoclick/autoclick_controller.h"
 #include "ash/cast_config_controller.h"
+#include "ash/devtools/ash_devtools_css_agent.h"
+#include "ash/devtools/ash_devtools_dom_agent.h"
 #include "ash/display/ash_display_controller.h"
 #include "ash/display/cursor_window_controller.h"
 #include "ash/display/display_color_manager_chromeos.h"
@@ -40,7 +42,6 @@
 #include "ash/frame/custom_frame_view_ash.h"
 #include "ash/gpu_support.h"
 #include "ash/high_contrast/high_contrast_controller.h"
-#include "ash/host/ash_window_tree_host_init_params.h"
 #include "ash/ime/ime_controller.h"
 #include "ash/keyboard/keyboard_ui.h"
 #include "ash/laser/laser_pointer_controller.h"
@@ -92,6 +93,7 @@
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wallpaper/wallpaper_delegate.h"
 #include "ash/wm/ash_focus_rules.h"
+#include "ash/wm/ash_native_cursor_manager.h"
 #include "ash/wm/container_finder.h"
 #include "ash/wm/event_client_impl.h"
 #include "ash/wm/immersive_context_ash.h"
@@ -100,8 +102,6 @@
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/wm/mru_window_tracker.h"
-#include "ash/wm/native_cursor_manager_ash_classic.h"
-#include "ash/wm/native_cursor_manager_ash_mus.h"
 #include "ash/wm/overlay_event_filter.h"
 #include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/power_button_controller.h"
@@ -132,6 +132,7 @@
 #include "chromeos/system/devicemode.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/ui_devtools/devtools_server.h"
 #include "services/preferences/public/cpp/pref_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -267,21 +268,15 @@ Shell::RootWindowControllerList Shell::GetAllRootWindowControllers() {
 RootWindowController* Shell::GetRootWindowControllerWithDisplayId(
     int64_t display_id) {
   CHECK(HasInstance());
-  aura::Window* root = GetRootWindowForDisplayId(display_id);
+  aura::Window* root =
+      instance_->shell_port_->GetRootWindowForDisplayId(display_id);
   return root ? RootWindowController::ForWindow(root) : nullptr;
-}
-
-// static
-aura::Window* Shell::GetRootWindowForDisplayId(int64_t display_id) {
-  CHECK(HasInstance());
-  return instance_->window_tree_host_manager_->GetRootWindowForDisplayId(
-      display_id);
 }
 
 // static
 aura::Window* Shell::GetPrimaryRootWindow() {
   CHECK(HasInstance());
-  return instance_->window_tree_host_manager_->GetPrimaryRootWindow();
+  return instance_->shell_port_->GetPrimaryRootWindow();
 }
 
 // static
@@ -296,7 +291,7 @@ aura::Window* Shell::GetRootWindowForNewWindows() {
 // static
 aura::Window::Windows Shell::GetAllRootWindows() {
   CHECK(HasInstance());
-  return instance_->window_tree_host_manager_->GetAllRootWindows();
+  return instance_->shell_port_->GetAllRootWindows();
 }
 
 // static
@@ -328,6 +323,15 @@ void Shell::RegisterPrefs(PrefRegistrySimple* registry) {
   NightLightController::RegisterPrefs(registry);
 }
 
+// static
+bool Shell::ShouldEnableSimplifiedDisplayManagement() {
+  return ShouldEnableSimplifiedDisplayManagement(GetAshConfig());
+}
+
+bool Shell::ShouldEnableSimplifiedDisplayManagement(Config config) {
+  return true;
+}
+
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
     views::Widget* widget) {
   // Use translucent-style window frames for dialogs.
@@ -336,8 +340,7 @@ views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
 
 void Shell::SetDisplayWorkAreaInsets(Window* contains,
                                      const gfx::Insets& insets) {
-  window_tree_host_manager_->UpdateWorkAreaOfDisplayNearestWindow(contains,
-                                                                  insets);
+  shell_port_->SetDisplayWorkAreaInsets(contains, insets);
 }
 
 void Shell::OnCastingSessionStartedOrStopped(bool started) {
@@ -450,8 +453,8 @@ void Shell::SetLargeCursorSizeInDip(int large_cursor_size_in_dip) {
 }
 
 void Shell::SetCursorCompositingEnabled(bool enabled) {
-  if (GetAshConfig() != Config::MASH) {
-    // TODO: needs to work in mash. http://crbug.com/705592.
+  if (GetAshConfig() == Config::CLASSIC) {
+    // TODO: needs to work in mus. http://crbug.com/705592.
     window_tree_host_manager_->cursor_window_controller()
         ->SetCursorCompositingEnabled(enabled);
     native_cursor_manager_->SetNativeCursorEnabled(!enabled);
@@ -614,9 +617,12 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
 
   gpu_support_.reset(shell_delegate_->CreateGPUSupport());
 
-  display_manager_.reset(ScreenAsh::CreateDisplayManager());
-  window_tree_host_manager_ = base::MakeUnique<WindowTreeHostManager>();
-  user_metrics_recorder_ = base::MakeUnique<UserMetricsRecorder>();
+  // Don't use Shell::GetAshConfig() as |instance_| has not yet been set.
+  if (ShouldEnableSimplifiedDisplayManagement(shell_port_->GetAshConfig())) {
+    display_manager_.reset(ScreenAsh::CreateDisplayManager());
+    window_tree_host_manager_.reset(new WindowTreeHostManager);
+    user_metrics_recorder_.reset(new UserMetricsRecorder);
+  }
 
   PowerStatus::Initialize();
 
@@ -655,8 +661,10 @@ Shell::~Shell() {
   RemovePreTargetHandler(event_transformation_handler_.get());
   RemovePreTargetHandler(toplevel_window_event_handler_.get());
   RemovePostTargetHandler(toplevel_window_event_handler_.get());
-  RemovePreTargetHandler(system_gesture_filter_.get());
-  RemovePreTargetHandler(mouse_cursor_filter_.get());
+  if (ShouldEnableSimplifiedDisplayManagement()) {
+    RemovePreTargetHandler(system_gesture_filter_.get());
+    RemovePreTargetHandler(mouse_cursor_filter_.get());
+  }
   RemovePreTargetHandler(modality_filter_.get());
 
   // TooltipController is deleted with the Shell so removing its references.
@@ -769,7 +777,6 @@ Shell::~Shell() {
   shelf_controller_.reset();
 
   shell_port_->Shutdown();
-  window_tree_host_manager_->Shutdown();
 
   // Depends on |focus_controller_|, so must be destroyed before.
   window_tree_host_manager_.reset();
@@ -848,6 +855,19 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   wallpaper_controller_ = base::MakeUnique<WallpaperController>();
 
+  // Start devtools server
+  devtools_server_ = ui::devtools::UiDevToolsServer::Create(nullptr);
+  if (devtools_server_) {
+    auto dom_backend = base::MakeUnique<devtools::AshDevToolsDOMAgent>();
+    auto css_backend =
+        base::MakeUnique<devtools::AshDevToolsCSSAgent>(dom_backend.get());
+    auto devtools_client = base::MakeUnique<ui::devtools::UiDevToolsClient>(
+        "Ash", devtools_server_.get());
+    devtools_client->AddAgent(std::move(dom_backend));
+    devtools_client->AddAgent(std::move(css_backend));
+    devtools_server_->AttachClient(std::move(devtools_client));
+  }
+
   if (config == Config::MASH)
     app_list_delegate_impl_ = base::MakeUnique<AppListDelegateImpl>();
 
@@ -858,27 +878,27 @@ void Shell::Init(const ShellInitParams& init_params) {
   window_positioner_ = base::MakeUnique<WindowPositioner>();
 
   if (config == Config::CLASSIC) {
-    native_cursor_manager_ = new NativeCursorManagerAshClassic;
-    cursor_manager_ = base::MakeUnique<CursorManager>(
-        base::WrapUnique(native_cursor_manager_));
-  } else if (config == Config::MUS) {
-    native_cursor_manager_ = new NativeCursorManagerAshMus;
-    cursor_manager_ = base::MakeUnique<CursorManager>(
-        base::WrapUnique(native_cursor_manager_));
+    // TODO: needs to work in mus. http://crbug.com/705592.
+    native_cursor_manager_ = new AshNativeCursorManager;
+    cursor_manager_.reset(
+        new CursorManager(base::WrapUnique(native_cursor_manager_)));
   }
 
   shell_delegate_->PreInit();
-  bool display_initialized = display_manager_->InitFromCommandLine();
-  if (!display_initialized && config != Config::CLASSIC) {
+  bool display_initialized = (!ShouldEnableSimplifiedDisplayManagement() ||
+                              display_manager_->InitFromCommandLine());
+  if (!display_initialized && config != Config::CLASSIC &&
+      ShouldEnableSimplifiedDisplayManagement()) {
     // Run display configuration off device in mus mode.
     display_manager_->set_configure_displays(true);
     display_configurator_->set_configure_display(true);
   }
-  display_configuration_controller_ =
-      base::MakeUnique<DisplayConfigurationController>(
-          display_manager_.get(), window_tree_host_manager_.get());
-  display_configurator_->Init(shell_port_->CreateNativeDisplayDelegate(),
-                              !gpu_support_->IsPanelFittingDisabled());
+  if (ShouldEnableSimplifiedDisplayManagement()) {
+    display_configuration_controller_.reset(new DisplayConfigurationController(
+        display_manager_.get(), window_tree_host_manager_.get()));
+    display_configurator_->Init(shell_port_->CreateNativeDisplayDelegate(),
+                                !gpu_support_->IsPanelFittingDisabled());
+  }
 
   // The DBusThreadManager must outlive this Shell. See the DCHECK in ~Shell.
   chromeos::DBusThreadManager* dbus_thread_manager =
@@ -888,8 +908,9 @@ void Shell::Init(const ShellInitParams& init_params) {
   display_configurator_->AddObserver(projecting_observer_.get());
   AddShellObserver(projecting_observer_.get());
 
-  if (!display_initialized &&
-      (config != Config::CLASSIC || chromeos::IsRunningAsSystemCompositor())) {
+  if (!display_initialized && ((config != Config::CLASSIC &&
+                                ShouldEnableSimplifiedDisplayManagement()) ||
+                               chromeos::IsRunningAsSystemCompositor())) {
     display_change_observer_ = base::MakeUnique<display::DisplayChangeObserver>(
         display_configurator_.get(), display_manager_.get());
 
@@ -943,14 +964,13 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   screen_position_controller_.reset(new ScreenPositionController);
 
-  window_tree_host_manager_->Start();
-  AshWindowTreeHostInitParams ash_init_params;
-  window_tree_host_manager_->CreatePrimaryHost(ash_init_params);
-
+  shell_port_->CreatePrimaryHost();
   root_window_for_new_windows_ = GetPrimaryRootWindow();
 
-  resolution_notification_controller_ =
-      base::MakeUnique<ResolutionNotificationController>();
+  if (ShouldEnableSimplifiedDisplayManagement()) {
+    resolution_notification_controller_.reset(
+        new ResolutionNotificationController);
+  }
 
   if (cursor_manager_) {
     cursor_manager_->SetDisplay(
@@ -1012,17 +1032,18 @@ void Shell::Init(const ShellInitParams& init_params) {
         std::move(user_activity_monitor), user_activity_detector_.get());
   }
 
-  // In mash drag and drop is handled by mus.
-  if (config != Config::MASH)
-    drag_drop_controller_ = base::MakeUnique<DragDropController>();
-
+  drag_drop_controller_.reset(new DragDropController);
   // |screenshot_controller_| needs to be created (and prepended as a
   // pre-target handler) at this point, because |mouse_cursor_filter_| needs to
   // process mouse events prior to screenshot session.
   // See http://crbug.com/459214
   screenshot_controller_.reset(new ScreenshotController());
-  mouse_cursor_filter_ = base::MakeUnique<MouseCursorEventFilter>();
-  PrependPreTargetHandler(mouse_cursor_filter_.get());
+  // TODO: evaluate if MouseCursorEventFilter needs to work for mash.
+  // http://crbug.com/706474.
+  if (ShouldEnableSimplifiedDisplayManagement()) {
+    mouse_cursor_filter_.reset(new MouseCursorEventFilter());
+    PrependPreTargetHandler(mouse_cursor_filter_.get());
+  }
 
   // Create Controllers that may need root window.
   // TODO(oshima): Move as many controllers before creating
@@ -1066,14 +1087,16 @@ void Shell::Init(const ShellInitParams& init_params) {
   // WindowTreeHostManager::InitDisplays()
   // since AshTouchTransformController listens on
   // WindowTreeHostManager::Observer::OnDisplaysInitialized().
-  touch_transformer_controller_ = base::MakeUnique<AshTouchTransformController>(
-      display_configurator_.get(), display_manager_.get(),
-      shell_port_->CreateTouchTransformDelegate());
+  if (ShouldEnableSimplifiedDisplayManagement()) {
+    touch_transformer_controller_ =
+        base::MakeUnique<AshTouchTransformController>(
+            display_configurator_.get(), display_manager_.get(),
+            shell_port_->CreateTouchTransformDelegate());
+  }
 
   keyboard_ui_ = shell_port_->CreateKeyboardUI();
 
-  window_tree_host_manager_->InitHosts();
-  shell_port_->OnHostsInitialized();
+  shell_port_->InitHosts(init_params);
 
   // Needs to be created after InitDisplays() since it may cause the virtual
   // keyboard to be deployed.
@@ -1099,15 +1122,17 @@ void Shell::Init(const ShellInitParams& init_params) {
   video_activity_notifier_.reset(
       new VideoActivityNotifier(video_detector_.get()));
   bluetooth_notification_controller_.reset(new BluetoothNotificationController);
-  screen_orientation_controller_ =
-      base::MakeUnique<ScreenOrientationController>();
-  screen_layout_observer_.reset(new ScreenLayoutObserver());
+  if (ShouldEnableSimplifiedDisplayManagement()) {
+    screen_orientation_controller_.reset(new ScreenOrientationController());
+    screen_layout_observer_.reset(new ScreenLayoutObserver());
+  }
   sms_observer_.reset(new SmsObserver());
 
   // The compositor thread and main message loop have to be running in
   // order to create mirror window. Run it after the main message loop
   // is started.
-  display_manager_->CreateMirrorWindowAsyncIfAny();
+  if (ShouldEnableSimplifiedDisplayManagement())
+    display_manager_->CreateMirrorWindowAsyncIfAny();
 
   for (auto& observer : shell_observers_)
     observer.OnShellInitialized();
@@ -1119,17 +1144,13 @@ void Shell::Init(const ShellInitParams& init_params) {
 void Shell::InitRootWindow(aura::Window* root_window) {
   DCHECK(focus_controller_);
   DCHECK(visibility_controller_.get());
+  DCHECK(drag_drop_controller_.get());
 
   aura::client::SetFocusClient(root_window, focus_controller_.get());
   ::wm::SetActivationClient(root_window, focus_controller_.get());
   root_window->AddPreTargetHandler(focus_controller_.get());
   aura::client::SetVisibilityClient(root_window, visibility_controller_.get());
-  if (drag_drop_controller_) {
-    DCHECK_NE(Config::MASH, GetAshConfig());
-    aura::client::SetDragDropClient(root_window, drag_drop_controller_.get());
-  } else {
-    DCHECK_EQ(Config::MASH, GetAshConfig());
-  }
+  aura::client::SetDragDropClient(root_window, drag_drop_controller_.get());
   aura::client::SetScreenPositionClient(root_window,
                                         screen_position_controller_.get());
   aura::client::SetCursorClient(root_window, cursor_manager_.get());

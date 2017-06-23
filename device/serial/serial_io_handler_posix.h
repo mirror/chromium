@@ -47,6 +47,7 @@ class SerialIoHandlerPosix : public SerialIoHandler {
   friend class SerialIoHandlerPosixTest;
 
   SerialIoHandlerPosix(
+      scoped_refptr<base::SingleThreadTaskRunner> file_thread_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> ui_thread_task_runner);
   ~SerialIoHandlerPosix() override;
 

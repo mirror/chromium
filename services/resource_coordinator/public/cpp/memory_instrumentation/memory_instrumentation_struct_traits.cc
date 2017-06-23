@@ -141,9 +141,9 @@ bool StructTraits<memory_instrumentation::mojom::ChromeMemDumpDataView,
 }
 
 // static
-bool StructTraits<memory_instrumentation::mojom::RawOSMemDumpDataView,
+bool StructTraits<memory_instrumentation::mojom::OSMemDumpDataView,
                   base::trace_event::MemoryDumpCallbackResult::OSMemDump>::
-    Read(memory_instrumentation::mojom::RawOSMemDumpDataView input,
+    Read(memory_instrumentation::mojom::OSMemDumpDataView input,
          base::trace_event::MemoryDumpCallbackResult::OSMemDump* out) {
   out->resident_set_kb = input.resident_set_kb();
   if (!input.ReadPlatformPrivateFootprint(&out->platform_private_footprint))

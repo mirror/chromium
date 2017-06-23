@@ -26,6 +26,7 @@ class SpecialStoragePolicy;
 namespace content {
 
 class DOMStorageTaskRunner;
+class LevelDBWrapperImpl;
 struct LocalStorageUsageInfo;
 
 // Used for mojo-based LocalStorage implementation (can be disabled with
@@ -72,9 +73,6 @@ class CONTENT_EXPORT LocalStorageContextMojo
   // storage for a particular origin will reload the data from the database.
   void PurgeMemory();
 
-  // Clears unused leveldb wrappers, when thresholds are reached.
-  void PurgeUnusedWrappersIfNeeded();
-
   void SetDatabaseForTesting(
       leveldb::mojom::LevelDBDatabaseAssociatedPtr database);
 
@@ -112,7 +110,7 @@ class CONTENT_EXPORT LocalStorageContextMojo
   // directly from that function, or through |on_database_open_callbacks_|.
   void BindLocalStorage(const url::Origin& origin,
                         mojom::LevelDBWrapperRequest request);
-  LevelDBWrapperHolder* GetOrCreateDBWrapper(const url::Origin& origin);
+  LevelDBWrapperImpl* GetOrCreateDBWrapper(const url::Origin& origin);
 
   // The (possibly delayed) implementation of GetStorageUsage(). Can be called
   // directly from that function, or through |on_database_open_callbacks_|.
@@ -127,8 +125,6 @@ class CONTENT_EXPORT LocalStorageContextMojo
 
   void OnGotStorageUsageForShutdown(std::vector<LocalStorageUsageInfo> usage);
   void OnShutdownComplete(leveldb::mojom::DatabaseError error);
-
-  void GetStatistics(size_t* total_cache_size, size_t* unused_wrapper_count);
 
   std::unique_ptr<service_manager::Connector> connector_;
   const base::FilePath subdirectory_;
@@ -162,8 +158,6 @@ class CONTENT_EXPORT LocalStorageContextMojo
   // Used to access old data for migration.
   scoped_refptr<DOMStorageTaskRunner> task_runner_;
   base::FilePath old_localstorage_path_;
-
-  bool is_low_end_device_;
 
   base::WeakPtrFactory<LocalStorageContextMojo> weak_ptr_factory_;
 };

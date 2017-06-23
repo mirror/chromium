@@ -3485,29 +3485,21 @@ bool HTMLMediaElement::IsFullscreen() const {
 void HTMLMediaElement::DidEnterFullscreen() {
   UpdateControlsVisibility();
 
-  if (web_media_player_) {
-    // FIXME: There is no embedder-side handling in layout test mode.
-    if (!LayoutTestSupport::IsRunningLayoutTest())
-      web_media_player_->EnteredFullscreen();
-    web_media_player_->OnDisplayTypeChanged(DisplayType());
-  }
-
+  // FIXME: There is no embedder-side handling in layout test mode.
+  if (GetWebMediaPlayer() && !LayoutTestSupport::IsRunningLayoutTest())
+    GetWebMediaPlayer()->EnteredFullscreen();
   // Cache this in case the player is destroyed before leaving fullscreen.
   in_overlay_fullscreen_video_ = UsesOverlayFullscreenVideo();
-  if (in_overlay_fullscreen_video_) {
+  if (in_overlay_fullscreen_video_)
     GetDocument().GetLayoutViewItem().Compositor()->SetNeedsCompositingUpdate(
         kCompositingUpdateRebuildTree);
-  }
 }
 
 void HTMLMediaElement::DidExitFullscreen() {
   UpdateControlsVisibility();
 
-  if (GetWebMediaPlayer()) {
+  if (GetWebMediaPlayer())
     GetWebMediaPlayer()->ExitedFullscreen();
-    GetWebMediaPlayer()->OnDisplayTypeChanged(DisplayType());
-  }
-
   if (in_overlay_fullscreen_video_)
     GetDocument().GetLayoutViewItem().Compositor()->SetNeedsCompositingUpdate(
         kCompositingUpdateRebuildTree);
@@ -4090,11 +4082,6 @@ void HTMLMediaElement::ActivateViewportIntersectionMonitoring(bool activate) {
 
 bool HTMLMediaElement::HasNativeControls() {
   return ShouldShowControls(RecordMetricsBehavior::kDoRecord);
-}
-
-WebMediaPlayer::DisplayType HTMLMediaElement::DisplayType() const {
-  return IsFullscreen() ? WebMediaPlayer::DisplayType::kFullscreen
-                        : WebMediaPlayer::DisplayType::kInline;
 }
 
 void HTMLMediaElement::CheckViewportIntersectionTimerFired(TimerBase*) {

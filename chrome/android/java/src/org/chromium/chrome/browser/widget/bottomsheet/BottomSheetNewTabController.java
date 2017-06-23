@@ -26,8 +26,6 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
 
     private boolean mIsShowingNewTabUi;
     private boolean mIsShowingNormalToolbar;
-    private boolean mHideOverviewOnClose;
-    private boolean mSelectIncognitoModelOnClose;
 
     /**
      * Creates a new {@link BottomSheetNewTabController}.
@@ -77,16 +75,6 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
      */
     public void displayNewTabUi(boolean isIncognito) {
         mIsShowingNewTabUi = true;
-        mHideOverviewOnClose = !mLayoutManager.overviewVisible();
-        mSelectIncognitoModelOnClose = mTabModelSelector.isIncognitoSelected();
-
-        // Show the tab switcher if needed. The overview should be shown before the sheet is opened
-        // to ensure the toolbar ends up in the correct state.
-        if (!mLayoutManager.overviewVisible()) mLayoutManager.showOverview(true);
-
-        // Transition from the tab switcher toolbar back to the normal toolbar.
-        mToolbar.showNormalToolbar();
-        mIsShowingNormalToolbar = true;
 
         // Tell the model that a new tab may be added soon.
         mTabModelSelector.getModel(isIncognito).setIsPendingTabAdd(true);
@@ -96,18 +84,27 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
         if (mTabModelSelector.isIncognitoSelected() != isIncognito) {
             mTabModelSelector.selectModel(isIncognito);
             mBottomSheet.endTransitionAnimations();
-            mTabModelSelector.getModel(!isIncognito).setIsPendingTabAdd(false);
         }
 
-        // Open the sheet if it isn't already open to the desired height.
-        int sheetState = mTabModelSelector.getCurrentModel().getCount() == 0
-                ? BottomSheet.SHEET_STATE_FULL
-                : BottomSheet.SHEET_STATE_HALF;
-        if (mBottomSheet.getSheetState() != sheetState) {
-            mBottomSheet.setSheetState(sheetState, true);
+        // Show the tab switcher if needed. The overview should be shown before the sheet is opened
+        // to ensure the toolbar ends up in the correct state.
+        if (!mLayoutManager.overviewVisible()) mLayoutManager.showOverview(true);
+
+        // Open the sheet if it isn't open already. When toggling accessibility mode, this method
+        // may get called while the sheet is open. In that case, we should finish showing the new
+        // tab UI.
+        if (!mBottomSheet.isSheetOpen()) {
+            mBottomSheet.setSheetState(mTabModelSelector.getCurrentModel().getCount() == 0
+                            ? BottomSheet.SHEET_STATE_FULL
+                            : BottomSheet.SHEET_STATE_HALF,
+                    true);
             mBottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
                     BottomSheetMetrics.OPENED_BY_NEW_TAB_CREATION);
         }
+
+        // Transition from the tab switcher toolbar to the normal toolbar.
+        mToolbar.showNormalToolbar();
+        mIsShowingNormalToolbar = true;
     }
 
     /**
@@ -143,8 +140,10 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
 
         // Start transitioning back to the tab switcher toolbar when the sheet is released to help
         // smooth out animations.
-        if (mBottomSheet.getTargetSheetState() == BottomSheet.SHEET_STATE_PEEK) {
-            showTabSwitcherToolbarIfNecessary();
+        if (mBottomSheet.getTargetSheetState() == BottomSheet.SHEET_STATE_PEEK
+                && mIsShowingNormalToolbar) {
+            mIsShowingNormalToolbar = false;
+            mToolbar.showTabSwitcherToolbar();
         }
     }
 
@@ -154,9 +153,11 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
 
         // Start transitioning to the tab switcher toolbar when the sheet is close to the bottom
         // of the screen.
-        if (heightFraction < 0.2f
-                && mBottomSheet.getTargetSheetState() == BottomSheet.SHEET_STATE_PEEK) {
-            showTabSwitcherToolbarIfNecessary();
+        if (mIsShowingNormalToolbar && heightFraction < 0.2f
+                && mBottomSheet.getTargetSheetState() == BottomSheet.SHEET_STATE_PEEK
+                && mLayoutManager.overviewVisible()) {
+            mIsShowingNormalToolbar = false;
+            mToolbar.showTabSwitcherToolbar();
         }
     }
 
@@ -166,37 +167,25 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
 
         mIsShowingNewTabUi = false;
 
-        showTabSwitcherToolbarIfNecessary();
-
-        if (mLayoutManager.overviewVisible()
-                && mTabModelSelector.isIncognitoSelected() != mSelectIncognitoModelOnClose
-                && (!mSelectIncognitoModelOnClose
-                           || mTabModelSelector.getModel(true).getCount() > 0)) {
-            mTabModelSelector.selectModel(mSelectIncognitoModelOnClose);
-            // End transitions immediately to ensure previous tab model is no longer in use and
-            // can be destroyed if necessary.
-            mBottomSheet.endTransitionAnimations();
+        // If the incognito tab model is showing, but has no tabs, this indicates that the model
+        // was switched during the creation of an incognito ntp and the user closed the sheet
+        // without loading a URL. Switch back to the normal model.
+        if (mTabModelSelector.isIncognitoSelected()
+                && mTabModelSelector.getModel(true).getCount() == 0) {
+            mTabModelSelector.selectModel(false);
         }
 
-        mTabModelSelector.getModel(false).setIsPendingTabAdd(false);
-        mTabModelSelector.getModel(true).setIsPendingTabAdd(false);
-
-        // Hide the overview after setting pendingTabAdd to false so that the StackLayout animation
-        // knows which tab index is being selected and animates the tab stacks correctly.
-        if (mLayoutManager.overviewVisible() && mHideOverviewOnClose) {
-            // TODO(twellington): Ideally we would start hiding the overview sooner. Modifications
-            // are needed for the StackLayout to know which tab will be selected before the sheet is
-            // closed so that it can animate properly.
-            mLayoutManager.hideOverview(true);
-        }
-
-        mHideOverviewOnClose = false;
-    }
-
-    private void showTabSwitcherToolbarIfNecessary() {
-        if (mLayoutManager.overviewVisible() && !mHideOverviewOnClose && mIsShowingNormalToolbar) {
+        if (mIsShowingNormalToolbar && mLayoutManager.overviewVisible()) {
             mIsShowingNormalToolbar = false;
             mToolbar.showTabSwitcherToolbar();
         }
+
+        onNewTabUiHidden();
+    }
+
+    /** Called after the new tab UI is hidden. Resets properties on the tab models. */
+    private void onNewTabUiHidden() {
+        mTabModelSelector.getModel(false).setIsPendingTabAdd(false);
+        mTabModelSelector.getModel(true).setIsPendingTabAdd(false);
     }
 }

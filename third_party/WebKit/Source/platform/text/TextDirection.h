@@ -48,10 +48,6 @@ inline bool IsLtr(TextDirection direction) {
 inline bool IsRtl(TextDirection direction) {
   return direction != TextDirection::kLtr;
 }
-
-inline TextDirection DirectionFromLevel(unsigned level) {
-  return level & 1 ? TextDirection::kRtl : TextDirection::kLtr;
-}
 }
 
 #endif

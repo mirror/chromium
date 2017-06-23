@@ -75,7 +75,8 @@ class CORE_EXPORT V8DOMConfiguration final {
   typedef v8::Local<v8::Private> (*CachedPropertyKey)(v8::Isolate*);
 
   // AttributeConfiguration translates into calls to SetNativeDataProperty() on
-  // either of instance or prototype object (or their object template).
+  // either the instance or the prototype ObjectTemplate, based on
+  // |propertyLocationConfiguration|.
   struct AttributeConfiguration {
     AttributeConfiguration& operator=(const AttributeConfiguration&) = delete;
     DISALLOW_NEW();
@@ -101,20 +102,20 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::Local<v8::ObjectTemplate> prototype_template,
       const AttributeConfiguration*,
       size_t attribute_count);
-  static void InstallAttribute(v8::Isolate*,
-                               const DOMWrapperWorld&,
-                               v8::Local<v8::ObjectTemplate> instance_template,
-                               v8::Local<v8::ObjectTemplate> prototype_template,
-                               const AttributeConfiguration&);
 
-  // If an empty handle is passed as |instance| or |prototype|, that object is
-  // ignored and no properties are installed on that object.
   static void InstallAttributes(v8::Isolate*,
                                 const DOMWrapperWorld&,
                                 v8::Local<v8::Object> instance,
                                 v8::Local<v8::Object> prototype,
                                 const AttributeConfiguration*,
                                 size_t attribute_count);
+
+  static void InstallAttribute(v8::Isolate*,
+                               const DOMWrapperWorld&,
+                               v8::Local<v8::ObjectTemplate> instance_template,
+                               v8::Local<v8::ObjectTemplate> prototype_template,
+                               const AttributeConfiguration&);
+
   static void InstallAttribute(v8::Isolate*,
                                const DOMWrapperWorld&,
                                v8::Local<v8::Object> instance,
@@ -135,9 +136,8 @@ class CORE_EXPORT V8DOMConfiguration final {
       const AttributeConfiguration*,
       size_t attribute_count);
 
-  // AccessorConfiguration translates into calls to SetAccessorProperty() on
-  // either of instance, prototype, or interface object (or their object
-  // template).
+  // AccessorConfiguration translates into calls to SetAccessorProperty()
+  // on prototype ObjectTemplate.
   struct AccessorConfiguration {
     AccessorConfiguration& operator=(const AccessorConfiguration&) = delete;
     DISALLOW_NEW();
@@ -166,6 +166,16 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::Local<v8::Signature>,
       const AccessorConfiguration*,
       size_t accessor_count);
+
+  static void InstallAccessors(v8::Isolate*,
+                               const DOMWrapperWorld&,
+                               v8::Local<v8::Object> instance,
+                               v8::Local<v8::Object> prototype,
+                               v8::Local<v8::Function> interface,
+                               v8::Local<v8::Signature>,
+                               const AccessorConfiguration*,
+                               size_t accessor_count);
+
   static void InstallAccessor(
       v8::Isolate*,
       const DOMWrapperWorld&,
@@ -175,16 +185,6 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::Local<v8::Signature>,
       const AccessorConfiguration&);
 
-  // If an empty handle is passed as |instance|, |prototype|, or |interface|,
-  // then that object is ignored and no properties are installed on that object.
-  static void InstallAccessors(v8::Isolate*,
-                               const DOMWrapperWorld&,
-                               v8::Local<v8::Object> instance,
-                               v8::Local<v8::Object> prototype,
-                               v8::Local<v8::Function> interface,
-                               v8::Local<v8::Signature>,
-                               const AccessorConfiguration*,
-                               size_t accessor_count);
   static void InstallAccessor(v8::Isolate*,
                               const DOMWrapperWorld&,
                               v8::Local<v8::Object> instance,
@@ -228,6 +228,7 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::Local<v8::ObjectTemplate> prototype_template,
       const ConstantConfiguration*,
       size_t constant_count);
+
   static void InstallConstant(
       v8::Isolate*,
       v8::Local<v8::FunctionTemplate> interface_template,
@@ -247,8 +248,8 @@ class CORE_EXPORT V8DOMConfiguration final {
       v8::AccessorNameGetterCallback);
 
   // MethodConfiguration translates into calls to Set() for setting up an
-  // object's callbacks. It sets a method on instance, prototype or
-  // interface object (or their object tepmplate).
+  // object's callbacks. It sets the method on both the FunctionTemplate or
+  // the ObjectTemplate.
   struct MethodConfiguration {
     MethodConfiguration& operator=(const MethodConfiguration&) = delete;
     DISALLOW_NEW();
@@ -302,6 +303,7 @@ class CORE_EXPORT V8DOMConfiguration final {
                              v8::Local<v8::Signature>,
                              const MethodConfiguration*,
                              size_t method_count);
+
   static void InstallMethod(v8::Isolate*,
                             const DOMWrapperWorld&,
                             v8::Local<v8::ObjectTemplate> instance_template,
@@ -309,14 +311,7 @@ class CORE_EXPORT V8DOMConfiguration final {
                             v8::Local<v8::FunctionTemplate> interface_template,
                             v8::Local<v8::Signature>,
                             const MethodConfiguration&);
-  static void InstallMethod(v8::Isolate*,
-                            const DOMWrapperWorld&,
-                            v8::Local<v8::ObjectTemplate>,
-                            v8::Local<v8::Signature>,
-                            const SymbolKeyedMethodConfiguration&);
 
-  // If an empty handle is passed as |instance|, |prototype|, or |interface|,
-  // then that object is ignored and no properties are installed on that object.
   static void InstallMethod(v8::Isolate*,
                             const DOMWrapperWorld&,
                             v8::Local<v8::Object> instance,
@@ -324,6 +319,12 @@ class CORE_EXPORT V8DOMConfiguration final {
                             v8::Local<v8::Function> interface,
                             v8::Local<v8::Signature>,
                             const MethodConfiguration&);
+
+  static void InstallMethod(v8::Isolate*,
+                            const DOMWrapperWorld&,
+                            v8::Local<v8::ObjectTemplate>,
+                            v8::Local<v8::Signature>,
+                            const SymbolKeyedMethodConfiguration&);
 
   static void InitializeDOMInterfaceTemplate(
       v8::Isolate*,

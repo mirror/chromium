@@ -5,11 +5,7 @@
 #include "content/renderer/browser_plugin/browser_plugin.h"
 
 #include <stddef.h>
-
-#include <map>
-#include <string>
 #include <utility>
-#include <vector>
 
 #include "base/command_line.h"
 #include "base/location.h"
@@ -163,11 +159,7 @@ void BrowserPlugin::Attach() {
     blink::WebLocalFrame* frame = Container()->GetDocument().GetFrame();
     attach_params.is_full_page_plugin =
         frame->View()->MainFrame()->IsWebLocalFrame() &&
-        frame->View()
-            ->MainFrame()
-            ->ToWebLocalFrame()
-            ->GetDocument()
-            .IsPluginDocument();
+        frame->View()->MainFrame()->GetDocument().IsPluginDocument();
   }
   BrowserPluginManager::Get()->Send(new BrowserPluginHostMsg_Attach(
       render_frame_routing_id_,

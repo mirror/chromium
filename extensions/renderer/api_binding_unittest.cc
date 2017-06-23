@@ -16,7 +16,6 @@
 #include "extensions/renderer/api_invocation_errors.h"
 #include "extensions/renderer/api_request_handler.h"
 #include "extensions/renderer/api_type_reference_map.h"
-#include "extensions/renderer/binding_access_checker.h"
 #include "gin/arguments.h"
 #include "gin/converter.h"
 #include "gin/public/context_holder.h"
@@ -103,7 +102,6 @@ class APIBindingUnittest : public APIBindingTest {
 
   void TearDown() override {
     DisposeAllContexts();
-    access_checker_.reset();
     request_handler_.reset();
     event_handler_.reset();
     binding_.reset();
@@ -151,7 +149,7 @@ class APIBindingUnittest : public APIBindingTest {
   }
 
   void SetAvailabilityCallback(
-      const BindingAccessChecker::AvailabilityCallback& callback) {
+      const APIBinding::AvailabilityCallback& callback) {
     availability_callback_ = callback;
   }
 
@@ -168,13 +166,11 @@ class APIBindingUnittest : public APIBindingTest {
         base::Bind(&RunFunctionOnGlobalAndIgnoreResult),
         base::Bind(&RunFunctionOnGlobalAndReturnHandle),
         base::Bind(&OnEventListenersChanged));
-    access_checker_ =
-        base::MakeUnique<BindingAccessChecker>(availability_callback_);
     binding_ = base::MakeUnique<APIBinding>(
         kBindingName, binding_functions_.get(), binding_types_.get(),
         binding_events_.get(), binding_properties_.get(), create_custom_type_,
-        std::move(binding_hooks_), &type_refs_, request_handler_.get(),
-        event_handler_.get(), access_checker_.get());
+        availability_callback_, std::move(binding_hooks_), &type_refs_,
+        request_handler_.get(), event_handler_.get());
     EXPECT_EQ(!binding_types_.get(), type_refs_.empty());
   }
 
@@ -233,7 +229,6 @@ class APIBindingUnittest : public APIBindingTest {
   std::unique_ptr<APIBinding> binding_;
   std::unique_ptr<APIEventHandler> event_handler_;
   std::unique_ptr<APIRequestHandler> request_handler_;
-  std::unique_ptr<BindingAccessChecker> access_checker_;
   APITypeReferenceMap type_refs_;
 
   std::unique_ptr<base::ListValue> binding_functions_;
@@ -243,7 +238,7 @@ class APIBindingUnittest : public APIBindingTest {
   std::unique_ptr<APIBindingHooks> binding_hooks_;
   std::unique_ptr<APIBindingHooksDelegate> binding_hooks_delegate_;
   APIBinding::CreateCustomType create_custom_type_;
-  BindingAccessChecker::AvailabilityCallback availability_callback_;
+  APIBinding::AvailabilityCallback availability_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(APIBindingUnittest);
 };

@@ -35,7 +35,9 @@ class DocumentLoaderTest : public ::testing::Test {
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
-  WebLocalFrameBase* MainFrame() { return web_view_helper_.LocalMainFrame(); }
+  WebLocalFrameBase* MainFrame() {
+    return web_view_helper_.WebView()->MainFrameImpl();
+  }
 
   FrameTestHelpers::WebViewHelper web_view_helper_;
 };

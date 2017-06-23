@@ -32,13 +32,14 @@ ImeMenuTray* GetTray() {
   return StatusAreaWidgetTestHelper::GetStatusAreaWidget()->ime_menu_tray();
 }
 
-void SetCurrentIme(const std::string& current_ime_id,
+void SetCurrentIme(mojom::ImeInfo current_ime,
                    const std::vector<mojom::ImeInfo>& available_imes) {
+  mojom::ImeInfoPtr current_ime_ptr = current_ime.Clone();
   std::vector<mojom::ImeInfoPtr> available_ime_ptrs;
   for (const auto& ime : available_imes)
     available_ime_ptrs.push_back(ime.Clone());
   Shell::Get()->ime_controller()->RefreshIme(
-      current_ime_id, std::move(available_ime_ptrs),
+      std::move(current_ime_ptr), std::move(available_ime_ptrs),
       std::vector<mojom::ImeMenuItemPtr>());
 }
 
@@ -130,11 +131,14 @@ TEST_F(ImeMenuTrayTest, TrayLabelTest) {
   info2.third_party = true;
 
   // Changes the input method to "ime1".
-  SetCurrentIme("ime1", {info1, info2});
+  info1.selected = true;
+  SetCurrentIme(info1, {info1, info2});
   EXPECT_EQ(UTF8ToUTF16("US"), GetTrayText());
 
   // Changes the input method to a third-party IME extension.
-  SetCurrentIme("ime2", {info1, info2});
+  info1.selected = false;
+  info2.selected = true;
+  SetCurrentIme(info2, {info1, info2});
   EXPECT_EQ(UTF8ToUTF16("UK*"), GetTrayText());
 }
 
@@ -191,28 +195,33 @@ TEST_F(ImeMenuTrayTest, RefreshImeWithListViewCreated) {
   info1.medium_name = UTF8ToUTF16("English");
   info1.short_name = UTF8ToUTF16("US");
   info1.third_party = false;
+  info1.selected = true;
 
   info2.id = "ime2";
   info2.name = UTF8ToUTF16("English UK");
   info2.medium_name = UTF8ToUTF16("English UK");
   info2.short_name = UTF8ToUTF16("UK");
   info2.third_party = true;
+  info2.selected = false;
 
   info3.id = "ime3";
   info3.name = UTF8ToUTF16("Pinyin");
   info3.medium_name = UTF8ToUTF16("Chinese Pinyin");
   info3.short_name = UTF8ToUTF16("拼");
   info3.third_party = false;
+  info3.selected = false;
 
   std::vector<mojom::ImeInfo> ime_info_list{info1, info2, info3};
 
   // Switch to ime1.
-  SetCurrentIme("ime1", ime_info_list);
+  SetCurrentIme(info1, ime_info_list);
   EXPECT_EQ(UTF8ToUTF16("US"), GetTrayText());
   ExpectValidImeList(ime_info_list, info1);
 
   // Switch to ime3.
-  SetCurrentIme("ime3", ime_info_list);
+  ime_info_list[0].selected = false;
+  ime_info_list[2].selected = true;
+  SetCurrentIme(info3, ime_info_list);
   EXPECT_EQ(UTF8ToUTF16("拼"), GetTrayText());
   ExpectValidImeList(ime_info_list, info3);
 

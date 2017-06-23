@@ -13,11 +13,8 @@ import android.view.View;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout;
-import org.chromium.chrome.browser.omnibox.OmniboxSuggestion;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.ui.UiUtils;
-
-import java.util.List;
 
 /** Implementation of the {@link LocationBarLayout} that is displayed for widget searches. */
 public class SearchActivityLocationBarLayout extends LocationBarLayout {
@@ -31,12 +28,10 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
     }
 
     private Delegate mDelegate;
-    private boolean mShowSuggestions;
 
     public SearchActivityLocationBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.layout.location_bar_base);
         setUrlBarFocusable(true);
-        mShowSuggestions = !LocaleManager.getInstance().needToCheckForSearchEnginePromo();
     }
 
     /** Set the {@link Delegate}. */
@@ -70,22 +65,13 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
         super.onNativeLibraryReady();
         setAutocompleteProfile(Profile.getLastUsedProfile().getOriginalProfile());
         setShowCachedZeroSuggestResults(true);
-        mShowSuggestions = !LocaleManager.getInstance().needToCheckForSearchEnginePromo();
-    }
-
-    @Override
-    public void onSuggestionsReceived(
-            List<OmniboxSuggestion> newSuggestions, String inlineAutocompleteText) {
-        if (!mShowSuggestions) return;
-        super.onSuggestionsReceived(newSuggestions, inlineAutocompleteText);
     }
 
     /** Called when the SearchActivity has finished initialization. */
     void onDeferredStartup(boolean isVoiceSearchIntent) {
         SearchWidgetProvider.updateCachedVoiceSearchAvailability(isVoiceSearchEnabled());
         if (isVoiceSearchIntent && mUrlBar.isFocused()) onUrlFocusChange(true);
-        if (!TextUtils.isEmpty(mUrlBar.getText())) onTextChangedForAutocomplete();
-        mShowSuggestions = true;
+        if (!TextUtils.isEmpty(mUrlBar.getText())) onTextChangedForAutocomplete(false);
     }
 
     /** Begins a new query. */

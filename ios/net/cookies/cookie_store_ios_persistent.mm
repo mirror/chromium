@@ -28,11 +28,11 @@ void CookieStoreIOSPersistent::SetCookieWithOptionsAsync(
     const GURL& url,
     const std::string& cookie_line,
     const net::CookieOptions& options,
-    SetCookiesCallback callback) {
+    const SetCookiesCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
 
-  cookie_monster()->SetCookieWithOptionsAsync(
-      url, cookie_line, options, WrapSetCallback(std::move(callback)));
+  cookie_monster()->SetCookieWithOptionsAsync(url, cookie_line, options,
+                                              WrapSetCallback(callback));
 }
 
 void CookieStoreIOSPersistent::SetCookieWithDetailsAsync(
@@ -48,103 +48,87 @@ void CookieStoreIOSPersistent::SetCookieWithDetailsAsync(
     bool http_only,
     CookieSameSite same_site,
     CookiePriority priority,
-    SetCookiesCallback callback) {
+    const SetCookiesCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
 
   cookie_monster()->SetCookieWithDetailsAsync(
       url, name, value, domain, path, creation_time, expiration_time,
       last_access_time, secure, http_only, same_site, priority,
-      WrapSetCallback(std::move(callback)));
-}
-
-void CookieStoreIOSPersistent::SetCanonicalCookieAsync(
-    std::unique_ptr<CanonicalCookie> cookie,
-    bool secure_source,
-    bool modify_http_only,
-    SetCookiesCallback callback) {
-  DCHECK(thread_checker().CalledOnValidThread());
-
-  cookie_monster()->SetCanonicalCookieAsync(
-      std::move(cookie), secure_source, modify_http_only,
-      WrapSetCallback(std::move(callback)));
+      WrapSetCallback(callback));
 }
 
 void CookieStoreIOSPersistent::GetCookiesWithOptionsAsync(
     const GURL& url,
     const net::CookieOptions& options,
-    GetCookiesCallback callback) {
+    const GetCookiesCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
-  cookie_monster()->GetCookiesWithOptionsAsync(url, options,
-                                               std::move(callback));
+  cookie_monster()->GetCookiesWithOptionsAsync(url, options, callback);
 }
 
 void CookieStoreIOSPersistent::GetCookieListWithOptionsAsync(
     const GURL& url,
     const net::CookieOptions& options,
-    GetCookieListCallback callback) {
+    const GetCookieListCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
 
-  cookie_monster()->GetCookieListWithOptionsAsync(url, options,
-                                                  std::move(callback));
+  cookie_monster()->GetCookieListWithOptionsAsync(url, options, callback);
 }
 
 void CookieStoreIOSPersistent::GetAllCookiesAsync(
-    GetCookieListCallback callback) {
+    const GetCookieListCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
-  cookie_monster()->GetAllCookiesAsync(std::move(callback));
+  cookie_monster()->GetAllCookiesAsync(callback);
 }
 
-void CookieStoreIOSPersistent::DeleteCookieAsync(const GURL& url,
-                                                 const std::string& cookie_name,
-                                                 base::OnceClosure callback) {
+void CookieStoreIOSPersistent::DeleteCookieAsync(
+    const GURL& url,
+    const std::string& cookie_name,
+    const base::Closure& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
-  cookie_monster()->DeleteCookieAsync(url, cookie_name,
-                                      WrapClosure(std::move(callback)));
+  cookie_monster()->DeleteCookieAsync(url, cookie_name, WrapClosure(callback));
 }
 
 void CookieStoreIOSPersistent::DeleteCanonicalCookieAsync(
     const CanonicalCookie& cookie,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
-  cookie_monster()->DeleteCanonicalCookieAsync(
-      cookie, WrapDeleteCallback(std::move(callback)));
+  cookie_monster()->DeleteCanonicalCookieAsync(cookie,
+                                               WrapDeleteCallback(callback));
 }
 
 void CookieStoreIOSPersistent::DeleteAllCreatedBetweenAsync(
     const base::Time& delete_begin,
     const base::Time& delete_end,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
   if (metrics_enabled())
     ResetCookieCountMetrics();
 
-  cookie_monster()->DeleteAllCreatedBetweenAsync(
-      delete_begin, delete_end, WrapDeleteCallback(std::move(callback)));
+  cookie_monster()->DeleteAllCreatedBetweenAsync(delete_begin, delete_end,
+                                                 WrapDeleteCallback(callback));
 }
 
 void CookieStoreIOSPersistent::DeleteAllCreatedBetweenWithPredicateAsync(
     const base::Time& delete_begin,
     const base::Time& delete_end,
     const CookiePredicate& predicate,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
 
   if (metrics_enabled())
     ResetCookieCountMetrics();
 
   cookie_monster()->DeleteAllCreatedBetweenWithPredicateAsync(
-      delete_begin, delete_end, predicate,
-      WrapDeleteCallback(std::move(callback)));
+      delete_begin, delete_end, predicate, WrapDeleteCallback(callback));
 }
 
 void CookieStoreIOSPersistent::DeleteSessionCookiesAsync(
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   DCHECK(thread_checker().CalledOnValidThread());
   if (metrics_enabled())
     ResetCookieCountMetrics();
 
-  cookie_monster()->DeleteSessionCookiesAsync(
-      WrapDeleteCallback(std::move(callback)));
+  cookie_monster()->DeleteSessionCookiesAsync(WrapDeleteCallback(callback));
 }
 
 #pragma mark -

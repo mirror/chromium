@@ -94,7 +94,7 @@ class ArcIntentHelperBridge
   internal::ActivityIconLoader icon_loader_;
   scoped_refptr<LocalActivityResolver> activity_resolver_;
 
-  THREAD_CHECKER(thread_checker_);
+  base::ThreadChecker thread_checker_;
 
   base::ObserverList<ArcIntentHelperObserver> observer_list_;
 

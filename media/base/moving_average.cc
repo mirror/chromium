@@ -8,9 +8,11 @@
 
 namespace media {
 
-MovingAverage::MovingAverage(size_t depth) : depth_(depth), samples_(depth_) {}
+MovingAverage::MovingAverage(size_t depth)
+    : depth_(depth), count_(0), samples_(depth_), square_sum_us_(0) {}
 
-MovingAverage::~MovingAverage() {}
+MovingAverage::~MovingAverage() {
+}
 
 void MovingAverage::AddSample(base::TimeDelta sample) {
   // |samples_| is zero-initialized, so |oldest| is also zero before |count_|
@@ -20,8 +22,6 @@ void MovingAverage::AddSample(base::TimeDelta sample) {
   square_sum_us_ += sample.InMicroseconds() * sample.InMicroseconds() -
                     oldest.InMicroseconds() * oldest.InMicroseconds();
   oldest = sample;
-  if (sample > max_)
-    max_ = sample;
 }
 
 base::TimeDelta MovingAverage::Average() const {
@@ -48,7 +48,6 @@ base::TimeDelta MovingAverage::Deviation() const {
 void MovingAverage::Reset() {
   count_ = 0;
   total_ = base::TimeDelta();
-  max_ = kNoTimestamp;
   square_sum_us_ = 0;
   std::fill(samples_.begin(), samples_.end(), base::TimeDelta());
 }

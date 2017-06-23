@@ -18,6 +18,7 @@
 #import "remoting/ios/facade/host_list_fetcher.h"
 #import "remoting/ios/facade/ios_client_runtime_delegate.h"
 #import "remoting/ios/facade/remoting_authentication.h"
+#import "remoting/ios/facade/remoting_service.h"
 #import "remoting/ios/keychain_wrapper.h"
 
 #include "base/i18n/time_formatting.h"
@@ -36,19 +37,19 @@ NSString* const kUserDidUpdate = @"kUserDidUpdate";
 NSString* const kUserInfo = @"kUserInfo";
 
 @interface RemotingService ()<RemotingAuthenticationDelegate> {
-  id<RemotingAuthentication> _authentication;
+  std::unique_ptr<remoting::OAuthTokenGetter> _tokenGetter;
   remoting::HostListFetcher* _hostListFetcher;
   remoting::IosClientRuntimeDelegate* _clientRuntimeDelegate;
-  BOOL _isHostListFetching;
 }
 @end
 
 @implementation RemotingService
 
+@synthesize authentication = _authentication;
 @synthesize hosts = _hosts;
 
 // RemotingService is a singleton.
-+ (RemotingService*)instance {
++ (RemotingService*)SharedInstance {
   static RemotingService* sharedInstance = nil;
   static dispatch_once_t guard;
   dispatch_once(&guard, ^{
@@ -60,10 +61,10 @@ NSString* const kUserInfo = @"kUserInfo";
 - (instancetype)init {
   self = [super init];
   if (self) {
+    _authentication = [[RemotingAuthentication alloc] init];
+    _authentication.delegate = self;
     _hosts = nil;
     _hostListFetcher = nil;
-    // TODO(yuweih): Maybe better to just cancel the previous request.
-    _isHostListFetching = NO;
     // TODO(nicholss): This might need a pointer back to the service.
     _clientRuntimeDelegate =
         new remoting::IosClientRuntimeDelegate();
@@ -75,10 +76,6 @@ NSString* const kUserInfo = @"kUserInfo";
 #pragma mark - RemotingService Implementation
 
 - (void)startHostListFetchWith:(NSString*)accessToken {
-  if (_isHostListFetching) {
-    return;
-  }
-  _isHostListFetching = YES;
   if (!_hostListFetcher) {
     _hostListFetcher = new remoting::HostListFetcher(
         remoting::ChromotingClientRuntime::GetInstance()->url_requester());
@@ -119,7 +116,6 @@ NSString* const kUserInfo = @"kUserInfo";
         }
         _hosts = hosts;
         [self hostListUpdated];
-        _isHostListFetching = NO;
       }));
 }
 
@@ -137,7 +133,6 @@ NSString* const kUserInfo = @"kUserInfo";
   NSDictionary* userInfo = nil;
   if (user) {
     userInfo = [NSDictionary dictionaryWithObject:user forKey:kUserInfo];
-    [self requestHostListFetch];
   } else {
     _hosts = nil;
     [self hostListUpdated];
@@ -164,21 +159,13 @@ NSString* const kUserInfo = @"kUserInfo";
 
 - (void)requestHostListFetch {
   [_authentication
-      callbackWithAccessToken:^(RemotingAuthenticationStatus status,
-                                NSString* userEmail, NSString* accessToken) {
+      callbackWithAccessToken:base::BindBlockArc(^(
+                                  remoting::OAuthTokenGetter::Status status,
+                                  const std::string& user_email,
+                                  const std::string& access_token) {
+        NSString* accessToken = base::SysUTF8ToNSString(access_token);
         [self startHostListFetchWith:accessToken];
-      }];
-}
-
-- (void)setAuthentication:(id<RemotingAuthentication>)authentication {
-  DCHECK(_authentication == nil);
-  authentication.delegate = self;
-  _authentication = authentication;
-}
-
-- (id<RemotingAuthentication>)authentication {
-  DCHECK(_authentication != nil);
-  return _authentication;
+      })];
 }
 
 @end

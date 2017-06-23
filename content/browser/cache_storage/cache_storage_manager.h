@@ -58,24 +58,24 @@ class CONTENT_EXPORT CacheStorageManager {
   // corresponding CacheStorage method on the appropriate thread.
   void OpenCache(const GURL& origin,
                  const std::string& cache_name,
-                 CacheStorage::CacheAndErrorCallback callback);
+                 const CacheStorage::CacheAndErrorCallback& callback);
   void HasCache(const GURL& origin,
                 const std::string& cache_name,
-                CacheStorage::BoolAndErrorCallback callback);
+                const CacheStorage::BoolAndErrorCallback& callback);
   void DeleteCache(const GURL& origin,
                    const std::string& cache_name,
-                   CacheStorage::BoolAndErrorCallback callback);
+                   const CacheStorage::BoolAndErrorCallback& callback);
   void EnumerateCaches(const GURL& origin,
-                       CacheStorage::IndexCallback callback);
+                       const CacheStorage::IndexCallback& callback);
   void MatchCache(const GURL& origin,
                   const std::string& cache_name,
                   std::unique_ptr<ServiceWorkerFetchRequest> request,
                   const CacheStorageCacheQueryParams& match_params,
-                  CacheStorageCache::ResponseCallback callback);
+                  const CacheStorageCache::ResponseCallback& callback);
   void MatchAllCaches(const GURL& origin,
                       std::unique_ptr<ServiceWorkerFetchRequest> request,
                       const CacheStorageCacheQueryParams& match_params,
-                      CacheStorageCache::ResponseCallback callback);
+                      const CacheStorageCache::ResponseCallback& callback);
 
   // This must be called before creating any of the public *Cache functions
   // above.

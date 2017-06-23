@@ -33,17 +33,11 @@ const CGFloat kLabelAndFieldGap = 5;
 @synthesize textFieldEnabled = _textFieldEnabled;
 @synthesize autofillUIType = _autofillUIType;
 @synthesize required = _required;
-@synthesize returnKeyType = _returnKeyType;
-@synthesize keyboardType = _keyboardType;
-@synthesize autoCapitalizationType = _autoCapitalizationType;
 
 - (instancetype)initWithType:(NSInteger)type {
   self = [super initWithType:type];
   if (self) {
     self.cellClass = [AutofillEditCell class];
-    _returnKeyType = UIReturnKeyNext;
-    _keyboardType = UIKeyboardTypeDefault;
-    _autoCapitalizationType = UITextAutocapitalizationTypeWords;
   }
   return self;
 }
@@ -68,9 +62,6 @@ const CGFloat kLabelAndFieldGap = 5;
                      action:@selector(textFieldChanged:)
            forControlEvents:UIControlEventEditingChanged];
   cell.textField.inputView = self.inputView;
-  cell.textField.returnKeyType = self.returnKeyType;
-  cell.textField.keyboardType = self.keyboardType;
-  cell.textField.autocapitalizationType = self.autoCapitalizationType;
   cell.identifyingIconView.image = self.identifyingIcon;
 }
 
@@ -113,7 +104,9 @@ const CGFloat kLabelAndFieldGap = 5;
 
     _textField.font = [[MDCTypography fontLoader] lightFontOfSize:16];
     _textField.textColor = [[MDCPalette greyPalette] tint500];
+    _textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     _textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    _textField.returnKeyType = UIReturnKeyDone;
     _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _textField.contentVerticalAlignment =
         UIControlContentVerticalAlignmentCenter;
@@ -187,11 +180,9 @@ const CGFloat kLabelAndFieldGap = 5;
   [super prepareForReuse];
   self.textLabel.text = nil;
   self.textField.text = nil;
-  self.textField.returnKeyType = UIReturnKeyNext;
-  self.textField.keyboardType = UIKeyboardTypeDefault;
   self.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
   self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-  self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  self.textField.returnKeyType = UIReturnKeyDone;
   self.textField.accessibilityIdentifier = nil;
   self.textField.enabled = NO;
   self.textField.delegate = nil;

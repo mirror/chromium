@@ -31,9 +31,11 @@ class ArcClipboardBridge
   void GetTextContent() override;
 
  private:
-  THREAD_CHECKER(thread_checker_);
+  bool CalledOnValidThread();
 
   mojo::Binding<mojom::ClipboardHost> binding_;
+
+  base::ThreadChecker thread_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcClipboardBridge);
 };

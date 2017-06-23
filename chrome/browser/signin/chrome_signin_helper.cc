@@ -11,8 +11,6 @@
 #include "chrome/browser/profiles/profile_io_data.h"
 #include "chrome/browser/signin/account_reconcilor_factory.h"
 #include "chrome/browser/signin/chrome_signin_client.h"
-#include "chrome/browser/signin/chrome_signin_client_factory.h"
-#include "chrome/browser/signin/dice_response_handler.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/common/url_constants.h"
@@ -20,7 +18,6 @@
 #include "components/signin/core/browser/chrome_connected_header_helper.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 #include "components/signin/core/common/profile_management_switches.h"
-#include "components/signin/core/common/signin_features.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
 #include "google_apis/gaia/gaia_auth_util.h"
@@ -41,7 +38,7 @@ namespace {
 
 const char kChromeManageAccountsHeader[] = "X-Chrome-Manage-Accounts";
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !defined(OS_ANDROID)
 const char kDiceResponseHeader[] = "X-Chrome-ID-Consistency-Response";
 #endif
 
@@ -108,29 +105,6 @@ void ProcessMirrorHeaderUIThread(
 #endif  // !defined(OS_ANDROID)
 }
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-void ProcessDiceHeaderUIThread(
-    const DiceResponseParams& dice_params,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DCHECK_EQ(switches::AccountConsistencyMethod::kDice,
-            switches::GetAccountConsistencyMethod());
-
-  content::WebContents* web_contents = web_contents_getter.Run();
-  if (!web_contents)
-    return;
-
-  Profile* profile =
-      Profile::FromBrowserContext(web_contents->GetBrowserContext());
-  DCHECK(!profile->IsOffTheRecord());
-
-  DiceResponseHandler* dice_response_handler =
-      DiceResponseHandler::GetForProfile(profile);
-  dice_response_handler->ProcessDiceHeader(dice_params);
-}
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
-
 // Looks for the X-Chrome-Manage-Accounts response header, and if found,
 // tries to show the avatar bubble in the browser identified by the
 // child/route id. Must be called on IO thread.
@@ -183,12 +157,9 @@ void ProcessMirrorResponseHeaderIfExists(
       base::Bind(ProcessMirrorHeaderUIThread, params, web_contents_getter));
 }
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-void ProcessDiceResponseHeaderIfExists(
-    net::URLRequest* request,
-    ProfileIOData* io_data,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
+#if !defined(OS_ANDROID)
+void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
+                                       ProfileIOData* io_data) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   if (io_data->IsOffTheRecord())
@@ -223,11 +194,11 @@ void ProcessDiceResponseHeaderIfExists(
   if (params.user_intention == DiceAction::NONE)
     return;
 
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::Bind(ProcessDiceHeaderUIThread, params, web_contents_getter));
+  // TODO(droger): Process the Dice header: on sign-in, exchange the
+  // authorization code for a refresh token, on sign-out just follow the
+  // sign-out URL.
 }
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
+#endif  // !defined(OS_ANDROID)
 
 }  // namespace
 
@@ -281,15 +252,16 @@ void ProcessAccountConsistencyResponseHeaders(
     // See if the response contains the X-Chrome-Manage-Accounts header. If so
     // show the profile avatar bubble so that user can complete signin/out
     // action the native UI.
-    ProcessMirrorResponseHeaderIfExists(request, io_data, web_contents_getter);
+    signin::ProcessMirrorResponseHeaderIfExists(request, io_data,
+                                                web_contents_getter);
   } else {
-    // This is a redirect.
+// This is a redirect.
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !defined(OS_ANDROID)
     // Process the Dice header: on sign-in, exchange the authorization code for
     // a refresh token, on sign-out just follow the sign-out URL.
-    ProcessDiceResponseHeaderIfExists(request, io_data, web_contents_getter);
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
+    signin::ProcessDiceResponseHeaderIfExists(request, io_data);
+#endif
   }
 }
 

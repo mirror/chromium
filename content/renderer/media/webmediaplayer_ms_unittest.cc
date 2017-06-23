@@ -473,9 +473,6 @@ class WebMediaPlayerMSTest
     return blink::WebMediaPlayer::TrackId();
   }
   bool HasNativeControls() override { return false; }
-  blink::WebMediaPlayer::DisplayType DisplayType() const override {
-    return blink::WebMediaPlayer::DisplayType::kInline;
-  }
 
   // Implementation of cc::VideoFrameProvider::Client
   void StopUsingProvider() override;

@@ -442,8 +442,8 @@ Resource* ResourceFetcher::ResourceForStaticData(
     response.SetTextEncodingName(archive_resource->TextEncoding());
   }
 
-  Resource* resource = factory.Create(
-      params.GetResourceRequest(), params.Options(), params.DecoderOptions());
+  Resource* resource = factory.Create(params.GetResourceRequest(),
+                                      params.Options(), params.Charset());
   resource->SetNeedsSynchronousCacheHit(substitute_data.ForceSynchronousLoad());
   // FIXME: We should provide a body stream here.
   resource->SetStatus(ResourceStatus::kPending);
@@ -468,8 +468,8 @@ Resource* ResourceFetcher::ResourceForBlockedRequest(
     const FetchParameters& params,
     const ResourceFactory& factory,
     ResourceRequestBlockedReason blocked_reason) {
-  Resource* resource = factory.Create(
-      params.GetResourceRequest(), params.Options(), params.DecoderOptions());
+  Resource* resource = factory.Create(params.GetResourceRequest(),
+                                      params.Options(), params.Charset());
   resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
@@ -541,8 +541,6 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
          factory.GetType() == Resource::kRaw ||
          factory.GetType() == Resource::kXSLStyleSheet);
 
-  params.OverrideContentType(factory.ContentType());
-
   SecurityViolationReportingPolicy reporting_policy =
       params.IsSpeculativePreload()
           ? SecurityViolationReportingPolicy::kSuppressReporting
@@ -584,37 +582,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (!params.Url().IsValid())
     return kAbort;
 
-  RefPtr<SecurityOrigin> origin = params.Options().security_origin;
-  params.MutableOptions().cors_flag =
-      !origin || !origin->CanRequestNoSuborigin(params.Url());
-
-  if (params.Options().cors_handling_by_resource_fetcher ==
-      kEnableCORSHandlingByResourceFetcher) {
-    if (resource_request.GetFetchRequestMode() ==
-        WebURLRequest::kFetchRequestModeCORS) {
-      bool allow_stored_credentials = false;
-      switch (resource_request.GetFetchCredentialsMode()) {
-        case WebURLRequest::kFetchCredentialsModeOmit:
-          break;
-        case WebURLRequest::kFetchCredentialsModeSameOrigin:
-          allow_stored_credentials =
-              !params.Options().cors_flag ||
-              (origin &&
-               origin->HasSuboriginAndShouldAllowCredentialsFor(params.Url()));
-          break;
-        case WebURLRequest::kFetchCredentialsModeInclude:
-        case WebURLRequest::kFetchCredentialsModePassword:
-          allow_stored_credentials = true;
-          break;
-      }
-      resource_request.SetAllowStoredCredentials(allow_stored_credentials);
-    } else {
-      resource_request.SetAllowStoredCredentials(
-          resource_request.GetFetchCredentialsMode() !=
-          WebURLRequest::kFetchCredentialsModeOmit);
-    }
-  }
-
+  resource_request.SetAllowStoredCredentials(
+      params.Options().allow_credentials == kAllowStoredCredentials);
   return kContinue;
 }
 
@@ -697,7 +666,7 @@ Resource* ResourceFetcher::RequestResource(
       GetMemoryCache()->Remove(resource);
     // Fall through
     case kLoad:
-      resource = CreateResourceForLoading(params, factory);
+      resource = CreateResourceForLoading(params, params.Charset(), factory);
       break;
     case kRevalidate:
       InitializeRevalidation(resource_request, resource);
@@ -826,6 +795,7 @@ void ResourceFetcher::InitializeRevalidation(
 
 Resource* ResourceFetcher::CreateResourceForLoading(
     FetchParameters& params,
+    const String& charset,
     const ResourceFactory& factory) {
   const String cache_identifier = GetCacheIdentifier();
   DCHECK(!IsMainThread() ||
@@ -835,8 +805,8 @@ Resource* ResourceFetcher::CreateResourceForLoading(
   RESOURCE_LOADING_DVLOG(1) << "Loading Resource for "
                             << params.GetResourceRequest().Url().ElidedString();
 
-  Resource* resource = factory.Create(
-      params.GetResourceRequest(), params.Options(), params.DecoderOptions());
+  Resource* resource =
+      factory.Create(params.GetResourceRequest(), params.Options(), charset);
   resource->SetLinkPreload(params.IsLinkPreload());
   if (params.IsSpeculativePreload()) {
     resource->SetPreloadDiscoveryTime(params.PreloadDiscoveryTime());
@@ -1005,44 +975,12 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
     return false;
   }
 
-  if (is_static_data)
-    return true;
-
-  // Answers the question "can a separate request with different options be
-  // re-used" (e.g. preload request). The safe (but possibly slow) answer is
-  // always false.
-  //
-  // Data buffering policy differences are believed to be safe for re-use.
-  //
-  // TODO: Check content_security_policy_option.
-  //
-  // initiator_info is purely informational and should be benign for re-use.
-  //
-  // request_initiator_context is benign (indicates document vs. worker).
-
-  if (params.Options().synchronous_policy !=
-      existing_resource->Options().synchronous_policy)
+  if (!is_static_data &&
+      !params.Options().CanReuseRequest(existing_resource->Options())) {
     return false;
+  }
 
-  // securityOrigin has more complicated checks which callers are responsible
-  // for.
-
-  // TODO(yhirano): Clean up this condition. This is generated to keep the old
-  // behavior across refactoring.
-  //
-  // TODO(tyoshino): Consider returning false when the credentials mode
-  // differs.
-  if ((params.Options().cors_handling_by_resource_fetcher ==
-           kEnableCORSHandlingByResourceFetcher &&
-       params.GetResourceRequest().GetFetchRequestMode() ==
-           WebURLRequest::kFetchRequestModeCORS) ==
-      (existing_resource->Options().cors_handling_by_resource_fetcher ==
-           kEnableCORSHandlingByResourceFetcher &&
-       existing_resource->GetResourceRequest().GetFetchRequestMode() ==
-           WebURLRequest::kFetchRequestModeCORS))
-    return true;
-
-  return false;
+  return true;
 }
 
 ResourceFetcher::RevalidationPolicy
@@ -1251,7 +1189,8 @@ void ResourceFetcher::ReloadImagesIfNotDeferred() {
 
 void ResourceFetcher::ClearContext() {
   ClearPreloads(ResourceFetcher::kClearAllPreloads);
-  context_ = Context().Detach();
+  Context().Detach();
+  context_.Clear();
 }
 
 int ResourceFetcher::BlockingRequestCount() const {

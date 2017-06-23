@@ -15,11 +15,12 @@
 namespace device {
 
 TestSerialIoHandler::TestSerialIoHandler()
-    : SerialIoHandler(NULL),
+    : SerialIoHandler(NULL, NULL),
       opened_(false),
       dtr_(false),
       rts_(false),
-      flushes_(0) {}
+      flushes_(0) {
+}
 
 scoped_refptr<SerialIoHandler> TestSerialIoHandler::Create() {
   return scoped_refptr<SerialIoHandler>(new TestSerialIoHandler);

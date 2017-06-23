@@ -10,10 +10,11 @@
 #include "chromeos/components/tether/ble_connection_manager.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
 #include "chromeos/components/tether/host_scan_cache.h"
-#include "chromeos/components/tether/host_scan_device_prioritizer_impl.h"
+#include "chromeos/components/tether/host_scan_device_prioritizer.h"
 #include "chromeos/components/tether/host_scan_scheduler.h"
 #include "chromeos/components/tether/host_scanner.h"
 #include "chromeos/components/tether/keep_alive_scheduler.h"
+#include "chromeos/components/tether/local_device_data_provider.h"
 #include "chromeos/components/tether/network_configuration_remover.h"
 #include "chromeos/components/tether/network_connection_handler_tether_delegate.h"
 #include "chromeos/components/tether/notification_presenter.h"
@@ -29,7 +30,6 @@
 #include "chromeos/network/network_state_handler.h"
 #include "components/cryptauth/bluetooth_throttler_impl.h"
 #include "components/cryptauth/cryptauth_service.h"
-#include "components/cryptauth/local_device_data_provider.h"
 #include "components/cryptauth/remote_beacon_seed_fetcher.h"
 #include "components/prefs/pref_service.h"
 #include "components/proximity_auth/logging/logging.h"
@@ -130,7 +130,6 @@ Initializer::Initializer(
 
 Initializer::~Initializer() {
   token_service_->RemoveObserver(this);
-  network_state_handler_->set_tether_sort_delegate(nullptr);
 }
 
 void Initializer::FetchBluetoothAdapter() {
@@ -174,7 +173,7 @@ void Initializer::OnBluetoothAdapterAdvertisingIntervalSet(
   tether_host_fetcher_ =
       base::MakeUnique<TetherHostFetcher>(cryptauth_service_);
   local_device_data_provider_ =
-      base::MakeUnique<cryptauth::LocalDeviceDataProvider>(cryptauth_service_);
+      base::MakeUnique<LocalDeviceDataProvider>(cryptauth_service_);
   remote_beacon_seed_fetcher_ =
       base::MakeUnique<cryptauth::RemoteBeaconSeedFetcher>(
           cryptauth_service_->GetCryptAuthDeviceManager());
@@ -184,14 +183,8 @@ void Initializer::OnBluetoothAdapterAdvertisingIntervalSet(
       cryptauth::BluetoothThrottlerImpl::GetInstance());
   tether_host_response_recorder_ =
       base::MakeUnique<TetherHostResponseRecorder>(pref_service_);
-  device_id_tether_network_guid_map_ =
-      base::MakeUnique<DeviceIdTetherNetworkGuidMap>();
-  host_scan_device_prioritizer_ =
-      base::MakeUnique<HostScanDevicePrioritizerImpl>(
-          tether_host_response_recorder_.get(),
-          device_id_tether_network_guid_map_.get());
-  network_state_handler_->set_tether_sort_delegate(
-      host_scan_device_prioritizer_.get());
+  host_scan_device_prioritizer_ = base::MakeUnique<HostScanDevicePrioritizer>(
+      tether_host_response_recorder_.get());
   wifi_hotspot_connector_ = base::MakeUnique<WifiHotspotConnector>(
       network_state_handler_, network_connect_);
   active_host_ =
@@ -199,6 +192,8 @@ void Initializer::OnBluetoothAdapterAdvertisingIntervalSet(
   active_host_network_state_updater_ =
       base::MakeUnique<ActiveHostNetworkStateUpdater>(active_host_.get(),
                                                       network_state_handler_);
+  device_id_tether_network_guid_map_ =
+      base::MakeUnique<DeviceIdTetherNetworkGuidMap>();
   host_scan_cache_ = base::MakeUnique<HostScanCache>(
       network_state_handler_, active_host_.get(),
       tether_host_response_recorder_.get(),

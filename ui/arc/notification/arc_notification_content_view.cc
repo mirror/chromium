@@ -11,7 +11,6 @@
 #include "components/exo/surface.h"
 #include "ui/accessibility/ax_action_data.h"
 #include "ui/accessibility/ax_node_data.h"
-#include "ui/arc/notification/arc_notification_surface.h"
 #include "ui/arc/notification/arc_notification_view.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -119,8 +118,8 @@ class ArcNotificationContentView::SlideHelper
     // Reset opacity to 1 to handle to case when the surface is sliding before
     // getting managed by this class, e.g. sliding in a popup before showing
     // in a message center view.
-    if (owner_->surface_ && owner_->surface_->GetWindow())
-      owner_->surface_->GetWindow()->layer()->SetOpacity(1.0f);
+    if (owner_->surface_ && owner_->surface_->window())
+      owner_->surface_->window()->layer()->SetOpacity(1.0f);
   }
   ~SlideHelper() override {
     if (GetSlideOutLayer())
@@ -151,19 +150,19 @@ class ArcNotificationContentView::SlideHelper
   }
 
   void OnSlideStart() {
-    if (!owner_->surface_ || !owner_->surface_->GetWindow())
+    if (!owner_->surface_ || !owner_->surface_->window())
       return;
-    surface_copy_ = ::wm::RecreateLayers(owner_->surface_->GetWindow());
+    surface_copy_ = ::wm::RecreateLayers(owner_->surface_->window());
     // |surface_copy_| is at (0, 0) in owner_->layer().
     surface_copy_->root()->SetBounds(gfx::Rect(surface_copy_->root()->size()));
     owner_->layer()->Add(surface_copy_->root());
-    owner_->surface_->GetWindow()->layer()->SetOpacity(0.0f);
+    owner_->surface_->window()->layer()->SetOpacity(0.0f);
   }
 
   void OnSlideEnd() {
-    if (!owner_->surface_ || !owner_->surface_->GetWindow())
+    if (!owner_->surface_ || !owner_->surface_->window())
       return;
-    owner_->surface_->GetWindow()->layer()->SetOpacity(1.0f);
+    owner_->surface_->window()->layer()->SetOpacity(1.0f);
     owner_->Layout();
     surface_copy_.reset();
   }
@@ -239,10 +238,6 @@ void ArcNotificationContentView::ControlButton::OnBlur() {
   owner_->UpdateControlButtonsVisibility();
 }
 
-// static, for ArcNotificationContentView::GetClassName().
-const char ArcNotificationContentView::kViewClassName[] =
-    "ArcNotificationContentView";
-
 ArcNotificationContentView::ArcNotificationContentView(
     ArcNotificationItem* item)
     : item_(item),
@@ -257,8 +252,8 @@ ArcNotificationContentView::ArcNotificationContentView(
   auto* surface_manager = ArcNotificationSurfaceManager::Get();
   if (surface_manager) {
     surface_manager->AddObserver(this);
-    ArcNotificationSurface* surface =
-        surface_manager->GetArcSurface(notification_key_);
+    exo::NotificationSurface* surface =
+        surface_manager->GetSurface(notification_key_);
     if (surface)
       OnNotificationSurfaceAdded(surface);
   }
@@ -279,10 +274,6 @@ ArcNotificationContentView::~ArcNotificationContentView() {
     item_->RemoveObserver(this);
     item_->DecrementWindowRefCount();
   }
-}
-
-const char* ArcNotificationContentView::GetClassName() const {
-  return kViewClassName;
 }
 
 std::unique_ptr<ArcNotificationContentViewDelegate>
@@ -342,7 +333,7 @@ void ArcNotificationContentView::MaybeCreateFloatingControlButtons() {
   views::Widget::InitParams params(views::Widget::InitParams::TYPE_CONTROL);
   params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
-  params.parent = surface_->GetWindow();
+  params.parent = surface_->window();
 
   floating_control_buttons_widget_.reset(new views::Widget);
   floating_control_buttons_widget_->Init(params);
@@ -356,7 +347,7 @@ void ArcNotificationContentView::MaybeCreateFloatingControlButtons() {
   Layout();
 }
 
-void ArcNotificationContentView::SetSurface(ArcNotificationSurface* surface) {
+void ArcNotificationContentView::SetSurface(exo::NotificationSurface* surface) {
   if (surface_ == surface)
     return;
 
@@ -366,19 +357,19 @@ void ArcNotificationContentView::SetSurface(ArcNotificationSurface* surface) {
   settings_button_ = nullptr;
   close_button_.reset();
 
-  if (surface_ && surface_->GetWindow()) {
-    surface_->GetWindow()->RemoveObserver(this);
-    surface_->GetWindow()->RemovePreTargetHandler(event_forwarder_.get());
+  if (surface_ && surface_->window()) {
+    surface_->window()->RemoveObserver(this);
+    surface_->window()->RemovePreTargetHandler(event_forwarder_.get());
 
-    if (GetWidget() && surface_->IsAttached())
-      surface_->Detach();
+    if (GetWidget())
+      Detach();
   }
 
   surface_ = surface;
 
-  if (surface_ && surface_->GetWindow()) {
-    surface_->GetWindow()->AddObserver(this);
-    surface_->GetWindow()->AddPreTargetHandler(event_forwarder_.get());
+  if (surface_ && surface_->window()) {
+    surface_->window()->AddObserver(this);
+    surface_->window()->AddPreTargetHandler(event_forwarder_.get());
 
     if (GetWidget())
       AttachSurface();
@@ -455,12 +446,12 @@ void ArcNotificationContentView::AttachSurface() {
     return;
 
   UpdatePreferredSize();
-  surface_->Attach(this);
+  Attach(surface_->window());
 
   // The texture for this window can be placed at subpixel position
   // with fractional scale factor. Force to align it at the pixel
   // boundary here, and when layout is updated in Layout().
-  ash::wm::SnapWindowToPixelBoundary(surface_->GetWindow());
+  ash::wm::SnapWindowToPixelBoundary(surface_->window());
 
   // Creates slide helper after this view is added to its parent.
   slide_helper_.reset(new SlideHelper(this));
@@ -526,8 +517,8 @@ void ArcNotificationContentView::ViewHierarchyChanged(
   if (!widget || !surface_ || !details.is_add)
     return;
 
-  if (surface_->IsAttached())
-    surface_->Detach();
+  if (native_view())
+    Detach();
   AttachSurface();
 }
 
@@ -553,7 +544,7 @@ void ArcNotificationContentView::Layout() {
 
   // Apply the transform to the surface content so that close button can
   // be positioned without the need to consider the transform.
-  surface_->GetContentWindow()->SetTransform(transform);
+  surface_->window()->children()[0]->SetTransform(transform);
 
   if (!floating_control_buttons_widget_)
     return;
@@ -579,7 +570,7 @@ void ArcNotificationContentView::Layout() {
 
   UpdateControlButtonsVisibility();
 
-  ash::wm::SnapWindowToPixelBoundary(surface_->GetWindow());
+  ash::wm::SnapWindowToPixelBoundary(surface_->window());
 }
 
 void ArcNotificationContentView::OnPaint(gfx::Canvas* canvas) {
@@ -649,10 +640,6 @@ bool ArcNotificationContentView::HandleAccessibleAction(
 void ArcNotificationContentView::GetAccessibleNodeData(
     ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_BUTTON;
-  node_data->AddStringAttribute(
-      ui::AX_ATTR_ROLE_DESCRIPTION,
-      l10n_util::GetStringUTF8(
-          IDS_MESSAGE_NOTIFICATION_SETTINGS_BUTTON_ACCESSIBLE_NAME));
   node_data->SetName(accessible_name_);
 }
 
@@ -700,16 +687,16 @@ void ArcNotificationContentView::OnItemUpdated() {
 }
 
 void ArcNotificationContentView::OnNotificationSurfaceAdded(
-    ArcNotificationSurface* surface) {
-  if (surface->GetNotificationKey() != notification_key_)
+    exo::NotificationSurface* surface) {
+  if (surface->notification_key() != notification_key_)
     return;
 
   SetSurface(surface);
 }
 
 void ArcNotificationContentView::OnNotificationSurfaceRemoved(
-    ArcNotificationSurface* surface) {
-  if (surface->GetNotificationKey() != notification_key_)
+    exo::NotificationSurface* surface) {
+  if (surface->notification_key() != notification_key_)
     return;
 
   SetSurface(nullptr);

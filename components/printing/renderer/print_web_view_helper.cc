@@ -759,10 +759,8 @@ void PrepareFrameAndViewForPrint::ResizeForPrinting() {
   // Backup size and offset if it's a local frame.
   blink::WebView* web_view = frame_.view();
   if (blink::WebFrame* web_frame = web_view->MainFrame()) {
-    // TODO(lukasza, weili): Support restoring scroll offset of a remote main
-    // frame - https://crbug.com/734815.
     if (web_frame->IsWebLocalFrame())
-      prev_scroll_offset_ = web_frame->ToWebLocalFrame()->GetScrollOffset();
+      prev_scroll_offset_ = web_frame->GetScrollOffset();
   }
   prev_view_size_ = web_view->Size();
 
@@ -841,11 +839,9 @@ blink::WebLocalFrame* PrepareFrameAndViewForPrint::CreateChildFrame(
     blink::WebSandboxFlags sandbox_flags,
     const blink::WebParsedFeaturePolicy& container_policy,
     const blink::WebFrameOwnerProperties& frame_owner_properties) {
-  // This is called when printing a selection and when this selection contains
-  // an iframe. This is not supported yet. An empty rectangle will be displayed
-  // instead.
-  // Please see: https://crbug.com/732780.
-  return nullptr;
+  blink::WebLocalFrame* frame =
+      parent->CreateLocalChild(scope, this, nullptr, nullptr);
+  return frame;
 }
 
 std::unique_ptr<blink::WebURLLoader>
@@ -865,10 +861,8 @@ void PrepareFrameAndViewForPrint::RestoreSize() {
   blink::WebView* web_view = frame_.GetFrame()->View();
   web_view->Resize(prev_view_size_);
   if (blink::WebFrame* web_frame = web_view->MainFrame()) {
-    // TODO(lukasza, weili): Support restoring scroll offset of a remote main
-    // frame - https://crbug.com/734815.
     if (web_frame->IsWebLocalFrame())
-      web_frame->ToWebLocalFrame()->SetScrollOffset(prev_scroll_offset_);
+      web_frame->SetScrollOffset(prev_scroll_offset_);
   }
 }
 

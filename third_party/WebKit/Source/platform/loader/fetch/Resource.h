@@ -39,7 +39,6 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/ResourceStatus.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/HashCountedSet.h"
@@ -166,6 +165,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   enum PreloadResult : uint8_t {
     kPreloadNotReferenced,
     kPreloadReferenced,
+    kPreloadReferencedWhileLoading,
+    kPreloadReferencedWhileComplete
   };
   PreloadResult GetPreloadResult() const { return preload_result_; }
 
@@ -177,14 +178,14 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   // Returns the size of content (response body) before decoding. Adding a new
   // usage of this function is not recommended (See the TODO below).
   //
-  // TODO(hiroshige): Now EncodedSize/DecodedSize states are inconsistent and
+  // TODO(hiroshige): Now encodedSize/decodedSize states are inconsistent and
   // need to be refactored (crbug/643135).
   size_t EncodedSize() const { return encoded_size_; }
 
   // Returns the current memory usage for the encoded data. Adding a new usage
-  // of this function is not recommended as the same reason as |EncodedSize()|.
+  // of this function is not recommended as the same reason as |encodedSize()|.
   //
-  // |EncodedSize()| and |EncodedSizeMemoryUsageForTesting()| can return
+  // |encodedSize()| and |encodedSizeMemoryUsageForTesting()| can return
   // different values, e.g., when ImageResource purges encoded image data after
   // finishing loading.
   size_t EncodedSizeMemoryUsageForTesting() const {
@@ -213,8 +214,10 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   bool PassesAccessControlCheck(const SecurityOrigin*) const;
 
-  virtual RefPtr<const SharedBuffer> ResourceBuffer() const { return data_; }
-  void SetResourceBuffer(RefPtr<SharedBuffer>);
+  virtual PassRefPtr<const SharedBuffer> ResourceBuffer() const {
+    return data_;
+  }
+  void SetResourceBuffer(PassRefPtr<SharedBuffer>);
 
   virtual bool WillFollowRedirect(const ResourceRequest&,
                                   const ResourceResponse&);
@@ -250,7 +253,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
   void SetDataBufferingPolicy(DataBufferingPolicy);
 
-  // The IsPreloaded() flag is using a counter in order to make sure that even
+  // The isPreloaded() flag is using a counter in order to make sure that even
   // when multiple ResourceFetchers are preloading the resource, it will remain
   // marked as preloaded until *all* of them have used it.
   bool IsUnusedPreload() const {
@@ -317,8 +320,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual void WillReloadAfterDiskCacheMiss() {}
 
   // TODO(shaochuan): This is for saving back the actual ResourceRequest sent
-  // in ResourceFetcher::StartLoad() for retry in cache-aware loading, remove
-  // once ResourceRequest is not modified in StartLoad(). crbug.com/632580
+  // in ResourceFetcher::startLoad() for retry in cache-aware loading, remove
+  // once ResourceRequest is not modified in startLoad(). crbug.com/632580
   void SetResourceRequest(const ResourceRequest& resource_request) {
     resource_request_ = resource_request;
   }
@@ -337,7 +340,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   // Used to notify ImageResourceContent of the start of actual loading.
   // JavaScript calls or client/observer notifications are disallowed inside
-  // NotifyStartLoad().
+  // notifyStartLoad().
   virtual void NotifyStartLoad() {}
 
   static const char* ResourceTypeToString(
@@ -401,7 +404,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   virtual void DestroyDecodedDataIfPossible() {}
 
-  // Returns the memory dump name used for tracing. See Resource::OnMemoryDump.
+  // Returns the memory dump name used for tracing. See Resource::onMemoryDump.
   String GetMemoryDumpName() const;
 
   const HeapHashCountedSet<WeakMember<ResourceClient>>& Clients() const {
@@ -455,7 +458,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   size_t encoded_size_memory_usage_;
   size_t decoded_size_;
 
-  // Resource::CalculateOverheadSize() is affected by changes in
+  // Resource::calculateOverheadSize() is affected by changes in
   // |m_resourceRequest.url()|, but |m_overheadSize| is not updated after
   // initial |m_resourceRequest| is given, to reduce MemoryCache manipulation
   // and thus potential bugs. crbug.com/594644
@@ -501,35 +504,13 @@ class ResourceFactory {
  public:
   virtual Resource* Create(const ResourceRequest&,
                            const ResourceLoaderOptions&,
-                           const TextResourceDecoderOptions&) const = 0;
-
+                           const String&) const = 0;
   Resource::Type GetType() const { return type_; }
-  TextResourceDecoderOptions::ContentType ContentType() const {
-    return content_type_;
-  }
 
  protected:
-  explicit ResourceFactory(Resource::Type type,
-                           TextResourceDecoderOptions::ContentType content_type)
-      : type_(type), content_type_(content_type) {}
+  explicit ResourceFactory(Resource::Type type) : type_(type) {}
 
   Resource::Type type_;
-  TextResourceDecoderOptions::ContentType content_type_;
-};
-
-class NonTextResourceFactory : public ResourceFactory {
- protected:
-  explicit NonTextResourceFactory(Resource::Type type)
-      : ResourceFactory(type, TextResourceDecoderOptions::kPlainTextContent) {}
-
-  virtual Resource* Create(const ResourceRequest&,
-                           const ResourceLoaderOptions&) const = 0;
-
-  Resource* Create(const ResourceRequest& request,
-                   const ResourceLoaderOptions& options,
-                   const TextResourceDecoderOptions&) const final {
-    return Create(request, options);
-  }
 };
 
 #define DEFINE_RESOURCE_TYPE_CASTS(typeName)                      \

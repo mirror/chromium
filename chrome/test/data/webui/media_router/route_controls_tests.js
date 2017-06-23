@@ -47,8 +47,6 @@ cr.define('route_controls', function() {
             params.title ? params.title : '',
             params.status ? params.status : '', !!params.canPlayPause,
             !!params.canMute, !!params.canSetVolume, !!params.canSeek,
-            params.playState ? params.playState :
-                               media_router.PlayState.PLAYING,
             !!params.isPaused, !!params.isMuted,
             params.volume ? params.volume : 0,
             params.duration ? params.duration : 0,
@@ -140,8 +138,8 @@ cr.define('route_controls', function() {
           done();
         });
 
-        controls.routeStatus = createRouteStatus(
-            {canPlayPause: true, playState: media_router.PlayState.PAUSED});
+        controls.routeStatus =
+            createRouteStatus({canPlayPause: true, isPaused: true});
         MockInteractions.tap(controls.$$('#route-play-pause-button'));
       });
 
@@ -151,8 +149,8 @@ cr.define('route_controls', function() {
           done();
         });
 
-        controls.routeStatus = createRouteStatus(
-            {canPlayPause: true, playState: media_router.PlayState.PLAYING});
+        controls.routeStatus =
+            createRouteStatus({canPlayPause: true, isPaused: false});
         MockInteractions.tap(controls.$$('#route-play-pause-button'));
       });
 
@@ -239,30 +237,6 @@ cr.define('route_controls', function() {
         // with the slider.
         controls.$$('#route-volume-slider').value = volume;
         controls.$$('#route-volume-slider').fire('change');
-      });
-
-      test('increment current time while playing', function(done) {
-        var initialTime = 50;
-        controls.routeStatus = createRouteStatus({
-          canSeek: true,
-          playState: media_router.PlayState.PLAYING,
-          duration: 100,
-          currentTime: initialTime,
-        });
-
-        // Check that the current time has been incremented after a second.
-        setTimeout(function() {
-          controls.routeStatus.playState = media_router.PlayState.PAUSED;
-          var pausedTime = controls.routeStatus.currentTime;
-          assertTrue(pausedTime > initialTime);
-
-          // Check that the current time stayed the same after a second, now
-          // that the media is paused.
-          setTimeout(function() {
-            assertEquals(pausedTime, controls.routeStatus.currentTime);
-            done();
-          }, 1000);
-        }, 1000);
       });
     });
   }

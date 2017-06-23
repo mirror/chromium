@@ -31,7 +31,6 @@
 #include "components/subresource_filter/core/common/activation_state.h"
 #include "components/subresource_filter/core/common/test_ruleset_creator.h"
 #include "components/subresource_filter/core/common/test_ruleset_utils.h"
-#include "components/url_pattern_index/proto/rules.pb.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -167,7 +166,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
     Configure();
     test_io_task_runner_ = new base::TestMockTimeTaskRunner();
     // Note: Using NiceMock to allow uninteresting calls and suppress warnings.
-    std::vector<url_pattern_index::proto::UrlRule> rules;
+    std::vector<proto::UrlRule> rules;
     rules.push_back(testing::CreateSuffixRule("disallowed.html"));
     ASSERT_NO_FATAL_FAILURE(test_ruleset_creator_.CreateRulesetWithRules(
         rules, &test_ruleset_pair_));
@@ -193,17 +192,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
 
   void TearDown() override {
     client_.reset();
-
-    // RunUntilIdle() must be called multiple times to flush any outstanding
-    // cross-thread interactions.
-    // TODO(csharrison): Clean up test teardown logic.
     RunUntilIdle();
-    RunUntilIdle();
-
-    // RunUntilIdle() called once more, to delete the database on the IO thread.
-    fake_safe_browsing_database_ = nullptr;
-    RunUntilIdle();
-
     content::RenderViewHostTestHarness::TearDown();
   }
 
@@ -326,8 +315,8 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
   void UsePassThroughThrottle() { fake_safe_browsing_database_ = nullptr; }
 
   void RunUntilIdle() {
-    base::RunLoop().RunUntilIdle();
     test_io_task_runner_->RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
   }
 
   content::NavigationSimulator* navigation_simulator() {

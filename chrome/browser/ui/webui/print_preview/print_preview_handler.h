@@ -107,10 +107,8 @@ class PrintPreviewHandler
   void SetPdfSavedClosureForTesting(const base::Closure& closure);
 
  protected:
-  // If |prompt_user| is true, starts a task to create the default Save As PDF
-  // directory if needed. OnDirectoryCreated() will be called when it
-  // finishes to open the modal dialog and prompt the user. Otherwise, just
-  // accept |default_path| and uniquify it.
+  // If |prompt_user| is true, displays a modal dialog, prompting the user to
+  // select a file. Otherwise, just accept |default_path| and uniquify it.
   // Protected so unit tests can access.
   virtual void SelectFile(const base::FilePath& default_path, bool prompt_user);
 
@@ -225,11 +223,8 @@ class PrintPreviewHandler
                            const std::string& default_printer);
 
   // Send OAuth2 access token.
-  void SendAccessToken(const std::string& callback_id,
+  void SendAccessToken(const std::string& type,
                        const std::string& access_token);
-
-  // Send message indicating a request for token was already in progress.
-  void SendRequestInProgress(const std::string& callback_id);
 
   // Sends the printer capabilities to the Web UI. |settings_info| contains
   // printer capabilities information. If |settings_info| is empty, sends
@@ -266,10 +261,6 @@ class PrintPreviewHandler
 
   // Clears initiator details for the print preview dialog.
   void ClearInitiatorDetails();
-
-  // Called when the directory to save to has been created. Opens a modal
-  // dialog to prompt the user to select the file for Save As PDF.
-  void OnDirectoryCreated(const base::FilePath& path);
 
   // Posts a task to save |data| to pdf at |print_to_pdf_path_|.
   void PostPrintToPdfTask();
@@ -343,9 +334,9 @@ class PrintPreviewHandler
 
   // Called when an extension reports information requested for a provisional
   // printer.
-  // |callback_id|: The javascript callback to resolve or reject.
+  // |printer_id|: The provisional printer id.
   // |printer_info|: The data reported by the extension.
-  void OnGotExtensionPrinterInfo(const std::string& callback_id,
+  void OnGotExtensionPrinterInfo(const std::string& printer_id,
                                  const base::DictionaryValue& printer_info);
 
   // Called when an extension reports the set of print capabilites for a

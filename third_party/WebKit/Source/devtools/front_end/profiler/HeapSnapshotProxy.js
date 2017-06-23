@@ -271,23 +271,30 @@ Profiler.HeapSnapshotLoaderProxy = class extends Profiler.HeapSnapshotProxyObjec
   /**
    * @override
    * @param {string} chunk
-   * @return {!Promise}
+   * @param {function(!Common.OutputStream)=} callback
    */
-  write(chunk) {
-    return this._callMethodPromise('write', chunk);
+  write(chunk, callback) {
+    this._callMethodPromise('write', chunk).then(callback);
   }
 
   /**
    * @override
+   * @param {function()=} callback
    */
-  async close() {
-    await this._callMethodPromise('close');
-    var snapshotProxy =
-        await new Promise(resolve => this.callFactoryMethod(resolve, 'buildSnapshot', Profiler.HeapSnapshotProxy));
-    this.dispose();
-    snapshotProxy.setProfileUid(this._profileUid);
-    await snapshotProxy.updateStaticData();
-    this._snapshotReceivedCallback(snapshotProxy);
+  close(callback) {
+    this._callMethodPromise('close').then(callback).then(buildSnapshot.bind(this));
+
+    /**
+     * @this {Profiler.HeapSnapshotLoaderProxy}
+     */
+    async function buildSnapshot() {
+      var snapshotProxy =
+          await new Promise(resolve => this.callFactoryMethod(resolve, 'buildSnapshot', Profiler.HeapSnapshotProxy));
+      this.dispose();
+      snapshotProxy.setProfileUid(this._profileUid);
+      await snapshotProxy.updateStaticData();
+      this._snapshotReceivedCallback(snapshotProxy);
+    }
   }
 };
 

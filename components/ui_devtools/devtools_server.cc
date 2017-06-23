@@ -21,7 +21,8 @@
 #include "net/socket/server_socket.h"
 #include "net/socket/tcp_server_socket.h"
 
-namespace ui_devtools {
+namespace ui {
+namespace devtools {
 
 namespace {
 const char kChromeDeveloperToolsPrefix[] =
@@ -181,4 +182,5 @@ void UiDevToolsServer::OnClose(int connection_id) {
   connections_.erase(it);
 }
 
-}  // namespace ui_devtools
+}  // namespace devtools
+}  // namespace ui

@@ -35,6 +35,7 @@ class BattOrConnectionImpl
   BattOrConnectionImpl(
       const std::string& path,
       BattOrConnection::Listener* listener,
+      scoped_refptr<base::SingleThreadTaskRunner> file_thread_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> ui_thread_task_runner);
   ~BattOrConnectionImpl() override;
 
@@ -104,6 +105,7 @@ class BattOrConnectionImpl
   size_t pending_write_length_;
 
   // Threads needed for serial communication.
+  scoped_refptr<base::SingleThreadTaskRunner> file_thread_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> ui_thread_task_runner_;
 
   std::fstream serial_log_;

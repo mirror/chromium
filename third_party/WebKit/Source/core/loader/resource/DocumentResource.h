@@ -23,12 +23,12 @@
 #ifndef DocumentResource_h
 #define DocumentResource_h
 
-#include <memory>
+#include "core/html/parser/TextResourceDecoder.h"
 #include "core/loader/resource/TextResource.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceClient.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
+#include <memory>
 
 namespace blink {
 
@@ -51,22 +51,15 @@ class CORE_EXPORT DocumentResource final : public TextResource {
  private:
   class SVGDocumentResourceFactory : public ResourceFactory {
    public:
-    SVGDocumentResourceFactory()
-        : ResourceFactory(Resource::kSVGDocument,
-                          TextResourceDecoderOptions::kXMLContent) {}
+    SVGDocumentResourceFactory() : ResourceFactory(Resource::kSVGDocument) {}
 
-    Resource* Create(
-        const ResourceRequest& request,
-        const ResourceLoaderOptions& options,
-        const TextResourceDecoderOptions& decoder_options) const override {
-      return new DocumentResource(request, Resource::kSVGDocument, options,
-                                  decoder_options);
+    Resource* Create(const ResourceRequest& request,
+                     const ResourceLoaderOptions& options,
+                     const String& charset) const override {
+      return new DocumentResource(request, Resource::kSVGDocument, options);
     }
   };
-  DocumentResource(const ResourceRequest&,
-                   Type,
-                   const ResourceLoaderOptions&,
-                   const TextResourceDecoderOptions&);
+  DocumentResource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
 
   bool MimeTypeAllowed() const;
   Document* CreateDocument(const KURL&);

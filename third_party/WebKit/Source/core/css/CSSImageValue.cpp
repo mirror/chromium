@@ -61,7 +61,8 @@ StyleImage* CSSImageValue::CacheImage(const Document& document,
     ResourceRequest resource_request(absolute_url_);
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
         referrer_.referrer_policy, resource_request.Url(), referrer_.referrer));
-    ResourceLoaderOptions options;
+    ResourceLoaderOptions options(kAllowStoredCredentials,
+                                  kClientRequestedCredentials);
     options.initiator_info.name = initiator_name_.IsEmpty()
                                       ? FetchInitiatorTypeNames::css
                                       : initiator_name_;
@@ -71,7 +72,6 @@ StyleImage* CSSImageValue::CacheImage(const Document& document,
       params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),
                                          cross_origin);
     }
-
     if (document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 

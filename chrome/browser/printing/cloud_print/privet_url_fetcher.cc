@@ -15,12 +15,13 @@
 #include "base/location.h"
 #include "base/memory/singleton.h"
 #include "base/rand_util.h"
+#include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/printing/cloud_print/privet_constants.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
+#include "content/public/browser/browser_thread.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/url_request_context.h"
@@ -174,8 +175,11 @@ void PrivetURLFetcher::Try() {
           MakeRangeHeader(byte_range_start_, byte_range_end_));
     }
 
-    if (make_response_file_)
-      url_fetcher_->SaveResponseToTemporaryFile(GetFileTaskRunner());
+    if (make_response_file_) {
+      url_fetcher_->SaveResponseToTemporaryFile(
+          content::BrowserThread::GetTaskRunnerForThread(
+              content::BrowserThread::FILE));
+    }
 
     // URLFetcher requires us to set upload data for POST requests.
     if (request_type_ == net::URLFetcher::POST) {
@@ -183,7 +187,8 @@ void PrivetURLFetcher::Try() {
         url_fetcher_->SetUploadFilePath(
             upload_content_type_, upload_file_path_, 0 /*offset*/,
             std::numeric_limits<uint64_t>::max() /*length*/,
-            GetFileTaskRunner());
+            content::BrowserThread::GetTaskRunnerForThread(
+                content::BrowserThread::FILE));
       } else {
         url_fetcher_->SetUploadData(upload_content_type_, upload_data_);
       }
@@ -384,15 +389,6 @@ bool PrivetURLFetcher::PrivetErrorTransient(const std::string& error) {
   return (error == kPrivetErrorDeviceBusy) ||
          (error == kPrivetErrorPendingUserAction) ||
          (error == kPrivetErrorPrinterBusy);
-}
-
-scoped_refptr<base::SequencedTaskRunner> PrivetURLFetcher::GetFileTaskRunner() {
-  if (!file_task_runner_) {
-    file_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
-        {base::TaskPriority::BACKGROUND, base::MayBlock()});
-  }
-
-  return file_task_runner_;
 }
 
 }  // namespace cloud_print

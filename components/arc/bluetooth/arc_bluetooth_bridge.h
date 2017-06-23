@@ -430,6 +430,8 @@ class ArcBluetoothBridge
 
   void SendDevice(const device::BluetoothDevice* device) const;
 
+  bool CalledOnValidThread();
+
   mojo::Binding<mojom::BluetoothHost> binding_;
 
   scoped_refptr<bluez::BluetoothAdapterBlueZ> bluetooth_adapter_;
@@ -476,7 +478,7 @@ class ArcBluetoothBridge
   std::map<int32_t, scoped_refptr<device::BluetoothAdvertisement>>
       advertisements_;
 
-  THREAD_CHECKER(thread_checker_);
+  base::ThreadChecker thread_checker_;
 
   // WeakPtrFactory to use for callbacks.
   base::WeakPtrFactory<ArcBluetoothBridge> weak_factory_;

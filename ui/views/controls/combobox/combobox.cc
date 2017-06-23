@@ -751,11 +751,7 @@ void Combobox::OnBlur() {
 }
 
 void Combobox::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  // AX_ROLE_COMBO_BOX is for UI elements with a dropdown and an editable text
-  // field, which views::Combobox does not have. Use AX_ROLE_POP_UP_BUTTON to
-  // match an HTML <select> element.
-  node_data->role = ui::AX_ROLE_POP_UP_BUTTON;
-
+  node_data->role = ui::AX_ROLE_COMBO_BOX;
   node_data->SetName(accessible_name_);
   node_data->SetValue(model_->GetItemAt(selected_index_));
   if (enabled()) {

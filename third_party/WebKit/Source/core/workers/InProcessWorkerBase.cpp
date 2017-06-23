@@ -51,17 +51,12 @@ bool InProcessWorkerBase::Initialize(ExecutionContext* context,
     return false;
 
   WebURLRequest::FetchRequestMode fetch_request_mode =
-      WebURLRequest::kFetchRequestModeSameOrigin;
-  WebURLRequest::FetchCredentialsMode fetch_credentials_mode =
-      WebURLRequest::kFetchCredentialsModeSameOrigin;
-  if (script_url.ProtocolIsData()) {
-    fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
-    fetch_credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
-  }
+      script_url.ProtocolIsData() ? WebURLRequest::kFetchRequestModeNoCORS
+                                  : WebURLRequest::kFetchRequestModeSameOrigin;
 
   script_loader_ = WorkerScriptLoader::Create();
   script_loader_->LoadAsynchronously(
-      *context, script_url, fetch_request_mode, fetch_credentials_mode,
+      *context, script_url, fetch_request_mode,
       context->GetSecurityContext().AddressSpace(),
       WTF::Bind(&InProcessWorkerBase::OnResponse, WrapPersistent(this)),
       WTF::Bind(&InProcessWorkerBase::OnFinished, WrapPersistent(this)));

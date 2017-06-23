@@ -8,4 +8,6 @@ package org.chromium.content.app;
  * Privileged (unsandboxed) Services inherit from this class. We enforce the
  * privileged/sandboxed distinction by type-checking objects against this parent class.
  */
-public class PrivilegedProcessService extends ContentChildProcessService {}
+public class PrivilegedProcessService extends ChildProcessService {
+
+}

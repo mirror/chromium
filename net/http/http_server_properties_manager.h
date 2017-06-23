@@ -21,7 +21,6 @@
 #include "net/base/net_export.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_server_properties_impl.h"
-#include "net/log/net_log_with_source.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -96,8 +95,7 @@ class NET_EXPORT HttpServerPropertiesManager : public HttpServerProperties {
   HttpServerPropertiesManager(
       PrefDelegate* pref_delegate,
       scoped_refptr<base::SingleThreadTaskRunner> pref_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> network_task_runner,
-      NetLog* net_log);
+      scoped_refptr<base::SingleThreadTaskRunner> network_task_runner);
   ~HttpServerPropertiesManager() override;
 
   // Initialize on Network thread.
@@ -322,8 +320,6 @@ class NET_EXPORT HttpServerPropertiesManager : public HttpServerProperties {
   // Used to get |weak_ptr_| to self on the network thread.
   std::unique_ptr<base::WeakPtrFactory<HttpServerPropertiesManager>>
       network_weak_ptr_factory_;
-
-  const NetLogWithSource net_log_;
 
   DISALLOW_COPY_AND_ASSIGN(HttpServerPropertiesManager);
 };

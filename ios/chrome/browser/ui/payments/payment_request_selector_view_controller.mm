@@ -13,7 +13,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/icons/chrome_icon.h"
-#import "ios/chrome/browser/ui/payments/cells/payments_is_selectable.h"
+#import "ios/chrome/browser/ui/payments/cells/payments_has_accessory_type.h"
 #import "ios/chrome/browser/ui/payments/cells/payments_text_item.h"
 #import "ios/chrome/browser/ui/payments/payment_request_selector_view_controller_actions.h"
 #import "ios/chrome/browser/ui/payments/payment_request_selector_view_controller_data_source.h"
@@ -47,6 +47,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 @interface PaymentRequestSelectorViewController ()<
     PaymentRequestSelectorViewControllerActions>
+
+// Whether or not the editor is in the editing mode.
+@property(nonatomic, assign, getter=isEditing) BOOL editing;
 
 @end
 
@@ -144,7 +147,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   [[self.dataSource selectableItems]
       enumerateObjectsUsingBlock:^(
-          CollectionViewItem<PaymentsIsSelectable>* item, NSUInteger index,
+          CollectionViewItem<PaymentsHasAccessoryType>* item, NSUInteger index,
           BOOL* stop) {
         DCHECK([item respondsToSelector:@selector(accessoryType)]);
         item.type = ItemTypeSelectableItem;
@@ -263,7 +266,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
       if (self.dataSource.selectedItemIndex != NSUIntegerMax) {
         DCHECK(self.dataSource.selectedItemIndex <
                [[self.dataSource selectableItems] count]);
-        CollectionViewItem<PaymentsIsSelectable>* oldSelectedItem =
+        CollectionViewItem<PaymentsHasAccessoryType>* oldSelectedItem =
             [[self.dataSource selectableItems]
                 objectAtIndex:self.dataSource.selectedItemIndex];
         oldSelectedItem.accessoryType = MDCCollectionViewCellAccessoryNone;
@@ -271,8 +274,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
       }
 
       // Update the newly selected cell.
-      CollectionViewItem<PaymentsIsSelectable>* newSelectedItem =
-          reinterpret_cast<CollectionViewItem<PaymentsIsSelectable>*>(item);
+      CollectionViewItem<PaymentsHasAccessoryType>* newSelectedItem =
+          reinterpret_cast<CollectionViewItem<PaymentsHasAccessoryType>*>(item);
       newSelectedItem.accessoryType = MDCCollectionViewCellAccessoryCheckmark;
       [self reconfigureCellsForItems:@[ newSelectedItem ]];
 

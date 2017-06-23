@@ -113,7 +113,8 @@ StyleImage* CSSImageSetValue::CacheImage(
     ImageWithScale image = BestImageForScaleFactor(device_scale_factor);
     ResourceRequest resource_request(document.CompleteURL(image.image_url));
     resource_request.SetHTTPReferrer(image.referrer);
-    ResourceLoaderOptions options;
+    ResourceLoaderOptions options(kAllowStoredCredentials,
+                                  kClientRequestedCredentials);
     options.initiator_info.name = FetchInitiatorTypeNames::css;
     FetchParameters params(resource_request, options);
 
@@ -121,7 +122,6 @@ StyleImage* CSSImageSetValue::CacheImage(
       params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),
                                          cross_origin);
     }
-
     if (document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 

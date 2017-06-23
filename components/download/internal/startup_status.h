@@ -18,7 +18,6 @@ struct StartupStatus {
 
   base::Optional<bool> driver_ok;
   base::Optional<bool> model_ok;
-  base::Optional<bool> file_monitor_ok;
 
   // Whether or not all components have finished initialization.  Note that this
   // does not mean that all components were initialized successfully.

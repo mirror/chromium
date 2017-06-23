@@ -224,8 +224,7 @@ void InputMethodBase::SendKeyEvent(KeyEvent* event) {
     key_events_for_testing_.push_back(
         std::unique_ptr<ui::KeyEvent>(new KeyEvent(*event)));
   }
-  ui::EventDispatchDetails details = DispatchKeyEvent(event);
-  DCHECK(!details.dispatcher_destroyed);
+  DispatchKeyEvent(event);
   sending_key_event_ = false;
 }
 

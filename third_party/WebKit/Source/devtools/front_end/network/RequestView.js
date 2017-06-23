@@ -28,6 +28,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * @unrestricted
+ */
 Network.RequestView = class extends UI.VBox {
   /**
    * @param {!SDK.NetworkRequest} request
@@ -41,14 +44,13 @@ Network.RequestView = class extends UI.VBox {
 
   /**
    * @param {!SDK.NetworkRequest} request
-   * @param {!SDK.NetworkRequest.ContentData} contentData
    * @return {boolean}
    */
-  static hasTextContent(request, contentData) {
+  static hasTextContent(request) {
     if (request.resourceType().isTextType())
       return true;
-    if (request.resourceType() === Common.resourceTypes.Other || contentData.error)
-      return !!contentData.content && !contentData.encoded;
+    if (request.resourceType() === Common.resourceTypes.Other || request.hasErrorStatusCode())
+      return !!request.content && !request.contentEncoded;
     return false;
   }
 

@@ -21,9 +21,9 @@
 #include "components/subresource_filter/content/common/subresource_filter_messages.h"
 #include "components/subresource_filter/core/common/activation_level.h"
 #include "components/subresource_filter/core/common/activation_state.h"
+#include "components/subresource_filter/core/common/proto/rules.pb.h"
 #include "components/subresource_filter/core/common/test_ruleset_creator.h"
 #include "components/subresource_filter/core/common/test_ruleset_utils.h"
-#include "components/url_pattern_index/proto/rules.pb.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/web_contents.h"
@@ -36,8 +36,6 @@
 #include "url/url_constants.h"
 
 namespace subresource_filter {
-
-namespace proto = url_pattern_index::proto;
 
 const char kTestURLWithActivation[] = "https://www.page-with-activation.com/";
 const char kTestURLWithActivation2[] =
@@ -681,8 +679,12 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
 
 TEST_F(ContentSubresourceFilterThrottleManagerTest, LogActivation) {
   base::HistogramTester tester;
+  NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
   const char kActivationStateHistogram[] =
       "SubresourceFilter.PageLoad.ActivationState";
+  tester.ExpectBucketCount(kActivationStateHistogram,
+                           static_cast<int>(ActivationLevel::ENABLED), 1);
+
   NavigateAndCommitMainFrame(GURL(kTestURLWithDryRun));
   tester.ExpectBucketCount(kActivationStateHistogram,
                            static_cast<int>(ActivationLevel::DRYRUN), 1);
@@ -690,10 +692,6 @@ TEST_F(ContentSubresourceFilterThrottleManagerTest, LogActivation) {
   NavigateAndCommitMainFrame(GURL(kTestURLWithNoActivation));
   tester.ExpectBucketCount(kActivationStateHistogram,
                            static_cast<int>(ActivationLevel::DISABLED), 1);
-
-  NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  tester.ExpectBucketCount(kActivationStateHistogram,
-                           static_cast<int>(ActivationLevel::ENABLED), 1);
 
   // Navigate a subframe that is not filtered, but should still activate.
   CreateSubframeWithTestNavigation(GURL("https://whitelist.com"), main_rfh());

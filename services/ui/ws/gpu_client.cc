@@ -7,15 +7,6 @@
 #include "components/viz/common/server_gpu_memory_buffer_manager.h"
 #include "services/ui/gpu/interfaces/gpu_service.mojom.h"
 
-namespace {
-
-void RunCallback(const ui::mojom::Gpu::CreateGpuMemoryBufferCallback& callback,
-                 const gfx::GpuMemoryBufferHandle& handle) {
-  callback.Run(handle);
-}
-
-}  // namespace
-
 namespace ui {
 namespace ws {
 
@@ -62,9 +53,9 @@ void GpuClient::CreateGpuMemoryBuffer(
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
     const mojom::Gpu::CreateGpuMemoryBufferCallback& callback) {
-  gpu_memory_buffer_manager_->AllocateGpuMemoryBuffer(
-      id, client_id_, size, format, usage, gpu::kNullSurfaceHandle,
-      base::BindOnce(&RunCallback, callback));
+  auto handle = gpu_memory_buffer_manager_->CreateGpuMemoryBufferHandle(
+      id, client_id_, size, format, usage, gpu::kNullSurfaceHandle);
+  callback.Run(handle);
 }
 
 void GpuClient::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,

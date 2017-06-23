@@ -226,7 +226,6 @@ std::unique_ptr<CanonicalCookie> CanonicalCookie::Create(
   if (options.has_server_time())
     server_time = options.server_time();
 
-  DCHECK(!creation_time.is_null());
   Time cookie_expires = CanonicalCookie::CanonExpiration(parsed_cookie,
                                                          creation_time,
                                                          server_time);
@@ -446,11 +445,6 @@ bool CanonicalCookie::IsCanonical() const {
   }
 
   return true;
-}
-
-void CanonicalCookie::SetCreationDate(base::Time new_creation_date) {
-  DCHECK(CreationDate().is_null());
-  creation_date_ = new_creation_date;
 }
 
 // static

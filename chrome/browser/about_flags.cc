@@ -66,7 +66,6 @@
 #include "components/proximity_auth/switches.h"
 #include "components/security_state/core/security_state.h"
 #include "components/security_state/core/switches.h"
-#include "components/signin/core/common/signin_features.h"
 #include "components/signin/core/common/signin_switches.h"
 #include "components/spellcheck/common/spellcheck_features.h"
 #include "components/spellcheck/common/spellcheck_switches.h"
@@ -306,17 +305,15 @@ const FeatureEntry::Choice kDefaultTileHeightChoices[] = {
     {flag_descriptions::kDefaultTileHeightVenti, switches::kDefaultTileHeight,
      "1024"}};
 
-#if !BUILDFLAG(ENABLE_MIRROR)
+#if !defined(OS_ANDROID)
 const FeatureEntry::Choice kAccountConsistencyChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
     {flag_descriptions::kAccountConsistencyChoiceMirror,
      switches::kAccountConsistency, switches ::kAccountConsistencyMirror},
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
     {flag_descriptions::kAccountConsistencyChoiceDice,
      switches::kAccountConsistency, switches::kAccountConsistencyDice},
-#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 };
-#endif  // !BUILDFLAG(ENABLE_MIRROR)
+#endif
 
 const FeatureEntry::Choice kSimpleCacheBackendChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
@@ -1674,10 +1671,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebglDraftExtensionsName,
      flag_descriptions::kWebglDraftExtensionsDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebGLDraftExtensions)},
-#if !BUILDFLAG(ENABLE_MIRROR)
+#if !defined(OS_ANDROID)
     {"account-consistency", flag_descriptions::kAccountConsistencyName,
-     flag_descriptions::kAccountConsistencyDescription, kOsAll,
-     MULTI_VALUE_TYPE(kAccountConsistencyChoices)},
+     flag_descriptions::kAccountConsistencyDescription,
+     kOsWin | kOsLinux | kOsMac, MULTI_VALUE_TYPE(kAccountConsistencyChoices)},
 #endif
 #if BUILDFLAG(ENABLE_APP_LIST)
     {"reset-app-list-install-state",
@@ -2729,9 +2726,9 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // OS_ANDROID
 
 #if defined(OS_CHROMEOS)
-    {ui_devtools::kEnableUiDevTools, flag_descriptions::kUiDevToolsName,
+    {ui::devtools::kEnableUiDevTools, flag_descriptions::kUiDevToolsName,
      flag_descriptions::kUiDevToolsDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(ui_devtools::kEnableUiDevTools)},
+     SINGLE_VALUE_TYPE(ui::devtools::kEnableUiDevTools)},
 #endif  // defined(OS_CHROMEOS)
 
     {"enable-autofill-credit-card-last-used-date-display",
@@ -2749,11 +2746,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableAutofillCreditCardUploadCvcPromptDescription,
      kOsDesktop,
      FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamRequestCvcIfMissing)},
-    {"enable-autofill-credit-card-bank-name-display",
-     flag_descriptions::kEnableAutofillCreditCardBankNameDisplayName,
-     flag_descriptions::kEnableAutofillCreditCardBankNameDisplayDescription,
-     kOsAll, FEATURE_VALUE_TYPE(autofill::kAutofillCreditCardBankNameDisplay)},
-
 #if defined(OS_WIN)
     {"windows10-custom-titlebar",
      flag_descriptions::kWindows10CustomTitlebarName,
@@ -3154,7 +3146,7 @@ bool SkipConditionalFeatureEntry(const FeatureEntry& entry) {
   }
 
   // enable-ui-devtools is only available on for non Stable channels.
-  if (!strcmp(ui_devtools::kEnableUiDevTools, entry.internal_name) &&
+  if (!strcmp(ui::devtools::kEnableUiDevTools, entry.internal_name) &&
       channel == version_info::Channel::STABLE) {
     return true;
   }

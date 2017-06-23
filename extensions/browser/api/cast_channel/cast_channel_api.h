@@ -134,24 +134,26 @@ class CastChannelOpenFunction : public CastChannelAsyncApiFunction {
   //     Parameter #0 is a scoped pointer to the event payload.
   using EventDispatchCallback = base::Callback<void(std::unique_ptr<Event>)>;
 
-  // Receives incoming messages and errors and provides additional API context.
-  class CastMessageHandler : public cast_channel::CastSocket::Observer {
+  // Receives incoming messages and errors and provides additional API and
+  // origin socket context.
+  class CastMessageHandler : public cast_channel::CastTransport::Delegate {
    public:
     CastMessageHandler(const EventDispatchCallback& ui_dispatch_cb,
+                       cast_channel::CastSocket* socket,
                        scoped_refptr<cast_channel::Logger> logger);
     ~CastMessageHandler() override;
 
-    // CastSocket::Observer implementation.
-    void OnError(const cast_channel::CastSocket& socket,
-                 cast_channel::ChannelError error_state) override;
-    void OnMessage(const cast_channel::CastSocket& socket,
-                   const cast_channel::CastMessage& message) override;
+    // CastTransport::Delegate implementation.
+    void OnError(cast_channel::ChannelError error_state) override;
+    void OnMessage(const cast_channel::CastMessage& message) override;
+    void Start() override;
 
    private:
     // Callback for sending events to the extension.
     // Should be bound to a weak pointer, to prevent any use-after-free
     // conditions.
     EventDispatchCallback const ui_dispatch_cb_;
+    cast_channel::CastSocket* const socket_;
     // Logger object for reporting error details.
     scoped_refptr<cast_channel::Logger> logger_;
 

@@ -91,6 +91,15 @@ GetReleaseChannelFromUpdateChannelName(const std::string& channel_name) {
 
 }  // namespace
 
+// static
+std::unique_ptr<CastMetricsServiceClient> CastMetricsServiceClient::Create(
+    base::TaskRunner* io_task_runner,
+    PrefService* pref_service,
+    net::URLRequestContextGetter* request_context) {
+  return base::WrapUnique(new CastMetricsServiceClient(
+      io_task_runner, pref_service, request_context));
+}
+
 void CastMetricsServiceClient::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(kMetricsOldClientID, std::string());
 }
@@ -275,9 +284,11 @@ void CastMetricsServiceClient::EnableMetricsService(bool enabled) {
 }
 
 CastMetricsServiceClient::CastMetricsServiceClient(
+    base::TaskRunner* io_task_runner,
     PrefService* pref_service,
     net::URLRequestContextGetter* request_context)
-    : pref_service_(pref_service),
+    : io_task_runner_(io_task_runner),
+      pref_service_(pref_service),
       cast_service_(nullptr),
       client_info_loaded_(false),
 #if defined(OS_LINUX)
@@ -358,7 +369,8 @@ void CastMetricsServiceClient::Initialize(CastService* cast_service) {
             new ::metrics::ScreenInfoMetricsProvider));
   }
   metrics_service_->RegisterMetricsProvider(
-      base::MakeUnique<::metrics::NetworkMetricsProvider>());
+      std::unique_ptr<::metrics::MetricsProvider>(
+          new ::metrics::NetworkMetricsProvider(io_task_runner_)));
   metrics_service_->RegisterMetricsProvider(
       std::unique_ptr<::metrics::MetricsProvider>(
           new ::metrics::ProfilerMetricsProvider));

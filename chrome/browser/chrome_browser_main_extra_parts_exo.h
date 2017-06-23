@@ -19,7 +19,7 @@ class Server;
 }
 
 namespace arc {
-class ArcNotificationSurfaceManagerImpl;
+class ArcNotificationSurfaceManager;
 }
 
 class ChromeBrowserMainExtraPartsExo : public ChromeBrowserMainExtraParts {
@@ -32,7 +32,7 @@ class ChromeBrowserMainExtraPartsExo : public ChromeBrowserMainExtraParts {
   void PostMainMessageLoopRun() override;
 
  private:
-  std::unique_ptr<arc::ArcNotificationSurfaceManagerImpl>
+  std::unique_ptr<arc::ArcNotificationSurfaceManager>
       arc_notification_surface_manager_;
   std::unique_ptr<exo::WMHelper> wm_helper_;
   std::unique_ptr<exo::Display> display_;

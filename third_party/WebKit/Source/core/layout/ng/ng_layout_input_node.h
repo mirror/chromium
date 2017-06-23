@@ -31,8 +31,6 @@ class CORE_EXPORT NGLayoutInputNode {
   bool IsFloating() const;
   bool IsOutOfFlowPositioned() const;
 
-  bool CreatesNewFormattingContext() const;
-
   // Performs layout on this input node, will return the layout result.
   RefPtr<NGLayoutResult> Layout(NGConstraintSpace*, NGBreakToken*);
 

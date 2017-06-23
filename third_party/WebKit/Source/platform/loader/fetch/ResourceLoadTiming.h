@@ -27,6 +27,7 @@
 #define ResourceLoadTiming_h
 
 #include "platform/PlatformExport.h"
+#include "platform/wtf/PassRefPtr.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
 
@@ -35,9 +36,9 @@ namespace blink {
 class PLATFORM_EXPORT ResourceLoadTiming
     : public RefCounted<ResourceLoadTiming> {
  public:
-  static RefPtr<ResourceLoadTiming> Create();
+  static PassRefPtr<ResourceLoadTiming> Create();
 
-  RefPtr<ResourceLoadTiming> DeepCopy();
+  PassRefPtr<ResourceLoadTiming> DeepCopy();
   bool operator==(const ResourceLoadTiming&) const;
   bool operator!=(const ResourceLoadTiming&) const;
 

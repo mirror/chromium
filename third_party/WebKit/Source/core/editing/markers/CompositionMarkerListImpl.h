@@ -28,9 +28,6 @@ class CORE_EXPORT CompositionMarkerListImpl final : public DocumentMarkerList {
   void Clear() final;
 
   const HeapVector<Member<DocumentMarker>>& GetMarkers() const final;
-  HeapVector<Member<DocumentMarker>> MarkersIntersectingRange(
-      unsigned start_offset,
-      unsigned end_offset) const final;
 
   bool MoveMarkers(int length, DocumentMarkerList* dst_list) final;
   bool RemoveMarkers(unsigned start_offset, int length) final;

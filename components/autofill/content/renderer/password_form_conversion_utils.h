@@ -7,8 +7,6 @@
 
 #include <map>
 #include <memory>
-#include <string>
-#include <utility>
 #include <vector>
 
 #include "base/strings/string_piece.h"
@@ -20,8 +18,8 @@
 namespace blink {
 class WebFormElement;
 class WebFormControlElement;
+class WebFrame;
 class WebInputElement;
-class WebLocalFrame;
 }
 
 namespace autofill {
@@ -58,7 +56,7 @@ std::unique_ptr<PasswordForm> CreatePasswordFormFromWebForm(
 // Same as CreatePasswordFormFromWebForm() but for input elements that are not
 // enclosed in <form> element.
 std::unique_ptr<PasswordForm> CreatePasswordFormFromUnownedInputElements(
-    const blink::WebLocalFrame& frame,
+    const blink::WebFrame& frame,
     const FieldValueAndPropertiesMaskMap* nonscript_modified_values,
     const FormsPredictionsMap* form_predictions);
 

@@ -35,7 +35,7 @@ class ArcEnterpriseReportingService
   void ReportManagementState(mojom::ManagementState state) override;
 
  private:
-  THREAD_CHECKER(thread_checker_);
+  base::ThreadChecker thread_checker_;
 
   mojo::Binding<mojom::EnterpriseReportingHost> binding_;
 

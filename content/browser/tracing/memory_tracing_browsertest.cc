@@ -21,7 +21,6 @@
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/shell/browser/shell.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using base::trace_event::MemoryDumpArgs;
@@ -44,20 +43,28 @@ class MockDumpProvider : public base::trace_event::MemoryDumpProvider {
 
 class MemoryTracingTest : public ContentBrowserTest {
  public:
+  void DoRequestGlobalDump(
+      const MemoryDumpType& dump_type,
+      const MemoryDumpLevelOfDetail& level_of_detail,
+      const base::trace_event::GlobalMemoryDumpCallback& cb) {
+    MemoryDumpManager::GetInstance()->RequestGlobalDump(dump_type,
+                                                        level_of_detail, cb);
+  }
+
   // Used as callback argument for MemoryDumpManager::RequestGlobalDump():
   void OnGlobalMemoryDumpDone(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       base::Closure closure,
       uint32_t request_index,
-      bool success,
-      uint64_t dump_guid) {
+      uint64_t dump_guid,
+      bool success) {
     // Make sure we run the RunLoop closure on the same thread that originated
     // the run loop (which is the IN_PROC_BROWSER_TEST_F main thread).
     if (!task_runner->RunsTasksInCurrentSequence()) {
       task_runner->PostTask(
           FROM_HERE, base::Bind(&MemoryTracingTest::OnGlobalMemoryDumpDone,
                                 base::Unretained(this), task_runner, closure,
-                                request_index, success, dump_guid));
+                                request_index, dump_guid, success));
       return;
     }
     if (success)
@@ -78,15 +85,10 @@ class MemoryTracingTest : public ContentBrowserTest {
         base::ThreadTaskRunnerHandle::Get(), closure, request_index);
     if (from_renderer_thread) {
       PostTaskToInProcessRendererAndWait(base::Bind(
-          &memory_instrumentation::MemoryInstrumentation::
-              RequestGlobalDumpAndAppendToTrace,
-          base::Unretained(
-              memory_instrumentation::MemoryInstrumentation::GetInstance()),
+          &MemoryTracingTest::DoRequestGlobalDump, base::Unretained(this),
           dump_type, level_of_detail, callback));
     } else {
-      memory_instrumentation::MemoryInstrumentation::GetInstance()
-          ->RequestGlobalDumpAndAppendToTrace(dump_type, level_of_detail,
-                                              callback);
+      DoRequestGlobalDump(dump_type, level_of_detail, callback);
     }
   }
 

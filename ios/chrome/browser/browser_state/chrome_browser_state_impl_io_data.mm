@@ -158,9 +158,7 @@ void ChromeBrowserStateImplIOData::Handle::LazyInitialize() const {
   initialized_ = true;
   PrefService* pref_service = browser_state_->GetPrefs();
   io_data_->http_server_properties_manager_ =
-      HttpServerPropertiesManagerFactory::CreateManager(
-          pref_service,
-          GetApplicationContext()->GetIOSChromeIOThread()->net_log());
+      HttpServerPropertiesManagerFactory::CreateManager(pref_service);
   io_data_->set_http_server_properties(
       base::WrapUnique(io_data_->http_server_properties_manager_));
   io_data_->InitializeOnUIThread(browser_state_);

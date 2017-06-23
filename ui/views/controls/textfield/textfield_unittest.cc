@@ -85,7 +85,7 @@ class MockInputMethod : public ui::InputMethodBase {
   // Overridden from InputMethod:
   bool OnUntranslatedIMEMessage(const base::NativeEvent& event,
                                 NativeEventResult* result) override;
-  ui::EventDispatchDetails DispatchKeyEvent(ui::KeyEvent* key) override;
+  void DispatchKeyEvent(ui::KeyEvent* key) override;
   void OnTextInputTypeChanged(const ui::TextInputClient* client) override;
   void OnCaretBoundsChanged(const ui::TextInputClient* client) override {}
   void CancelComposition(const ui::TextInputClient* client) override;
@@ -151,13 +151,15 @@ bool MockInputMethod::OnUntranslatedIMEMessage(const base::NativeEvent& event,
   return false;
 }
 
-ui::EventDispatchDetails MockInputMethod::DispatchKeyEvent(ui::KeyEvent* key) {
+void MockInputMethod::DispatchKeyEvent(ui::KeyEvent* key) {
 // On Mac, emulate InputMethodMac behavior for character events. Composition
 // still needs to be mocked, since it's not possible to generate test events
 // which trigger the appropriate NSResponder action messages for composition.
 #if defined(OS_MACOSX)
-  if (key->is_char())
-    return DispatchKeyEventPostIME(key);
+  if (key->is_char()) {
+    ignore_result(DispatchKeyEventPostIME(key));
+    return;
+  }
 #endif
 
   // Checks whether the key event is from EventGenerator on Windows which will
@@ -165,10 +167,8 @@ ui::EventDispatchDetails MockInputMethod::DispatchKeyEvent(ui::KeyEvent* key) {
   // The MockInputMethod will insert char on WM_KEYDOWN so ignore WM_CHAR here.
   if (key->is_char() && key->HasNativeEvent()) {
     key->SetHandled();
-    return ui::EventDispatchDetails();
+    return;
   }
-
-  ui::EventDispatchDetails dispatch_details;
 
   bool handled = !IsTextInputTypeNone() && HasComposition();
   ClearStates();
@@ -177,13 +177,10 @@ ui::EventDispatchDetails MockInputMethod::DispatchKeyEvent(ui::KeyEvent* key) {
     ui::KeyEvent mock_key(ui::ET_KEY_PRESSED,
                           ui::VKEY_PROCESSKEY,
                           key->flags());
-    dispatch_details = DispatchKeyEventPostIME(&mock_key);
+    DispatchKeyEventPostIME(&mock_key);
   } else {
-    dispatch_details = DispatchKeyEventPostIME(key);
+    DispatchKeyEventPostIME(key);
   }
-
-  if (dispatch_details.dispatcher_destroyed)
-    return dispatch_details;
 
   ui::TextInputClient* client = GetTextInputClient();
   if (client) {
@@ -202,8 +199,6 @@ ui::EventDispatchDetails MockInputMethod::DispatchKeyEvent(ui::KeyEvent* key) {
   }
 
   ClearComposition();
-
-  return dispatch_details;
 }
 
 void MockInputMethod::OnTextInputTypeChanged(

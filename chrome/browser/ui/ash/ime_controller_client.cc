@@ -142,20 +142,22 @@ void ImeControllerClient::RefreshIme() {
   InputMethodManager::State* state =
       input_method_manager_->GetActiveIMEState().get();
   if (!state) {
-    const std::string empty_ime_id;
-    ime_controller_ptr_->RefreshIme(empty_ime_id,
+    ime_controller_ptr_->RefreshIme(ash::mojom::ImeInfo::New(),
                                     std::vector<ash::mojom::ImeInfoPtr>(),
                                     std::vector<ash::mojom::ImeMenuItemPtr>());
     return;
   }
 
-  const std::string current_ime_id = state->GetCurrentInputMethod().id();
+  InputMethodDescriptor current_descriptor = state->GetCurrentInputMethod();
+  ash::mojom::ImeInfoPtr current_ime = GetAshImeInfo(current_descriptor);
+  current_ime->selected = true;
 
   std::vector<ash::mojom::ImeInfoPtr> available_imes;
   std::unique_ptr<std::vector<InputMethodDescriptor>>
       available_ime_descriptors = state->GetActiveInputMethods();
   for (const InputMethodDescriptor& descriptor : *available_ime_descriptors) {
     ash::mojom::ImeInfoPtr info = GetAshImeInfo(descriptor);
+    info->selected = descriptor.id() == current_ime->id;
     available_imes.push_back(std::move(info));
   }
 
@@ -170,6 +172,7 @@ void ImeControllerClient::RefreshIme() {
     ash_item->checked = menu_item.is_selection_item_checked;
     ash_menu_items.push_back(std::move(ash_item));
   }
-  ime_controller_ptr_->RefreshIme(current_ime_id, std::move(available_imes),
+  ime_controller_ptr_->RefreshIme(std::move(current_ime),
+                                  std::move(available_imes),
                                   std::move(ash_menu_items));
 }

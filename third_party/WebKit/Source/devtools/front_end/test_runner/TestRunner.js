@@ -4,7 +4,7 @@
 
 /* eslint-disable no-console */
 
-/** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
+/** @type {!{notifyDone: function()}|undefined} */
 self.testRunner;
 
 TestRunner.executeTestScript = function() {
@@ -58,16 +58,6 @@ TestRunner.addResult = function(text) {
 };
 
 /**
- * @param {!Array<string>} textArray
- */
-TestRunner.addResults = function(textArray) {
-  if (!textArray)
-    return;
-  for (var i = 0, size = textArray.length; i < size; ++i)
-    TestRunner.addResult(textArray[i]);
-};
-
-/**
  * @param {!Array<function()>} tests
  */
 TestRunner.runTests = function(tests) {
@@ -90,40 +80,9 @@ TestRunner.runTests = function(tests) {
 /**
  * @param {!Object} receiver
  * @param {string} methodName
- * @param {!Function} override
- * @param {boolean} opt_sticky
- */
-TestRunner.addSniffer = function(receiver, methodName, override, opt_sticky) {
-  override = TestRunner.safeWrap(override);
-
-  var original = receiver[methodName];
-  if (typeof original !== 'function')
-    throw new Error('Cannot find method to override: ' + methodName);
-
-  receiver[methodName] = function(var_args) {
-    try {
-      var result = original.apply(this, arguments);
-    } finally {
-      if (!opt_sticky)
-        receiver[methodName] = original;
-    }
-    // In case of exception the override won't be called.
-    try {
-      Array.prototype.push.call(arguments, result);
-      override.apply(this, arguments);
-    } catch (e) {
-      throw new Error('Exception in overriden method \'' + methodName + '\': ' + e);
-    }
-    return result;
-  };
-};
-
-/**
- * @param {!Object} receiver
- * @param {string} methodName
  * @return {!Promise<*>}
  */
-TestRunner.addSnifferPromise = function(receiver, methodName) {
+TestRunner.addSniffer = function(receiver, methodName) {
   return new Promise(function(resolve, reject) {
     var original = receiver[methodName];
     if (typeof original !== 'function') {
@@ -151,19 +110,11 @@ TestRunner.addSnifferPromise = function(receiver, methodName) {
 };
 
 /**
- * @param {string} module
- * @return {!Promise<undefined>}
+ * @param {!Array<string>} lazyModules
+ * @return {!Promise<!Array<undefined>>}
  */
-TestRunner.loadModule = function(module) {
-  return self.runtime.loadModulePromise(module);
-};
-
-/**
- * @param {string} panel
- * @return {!Promise<!UI.Panel>}
- */
-TestRunner.loadPanel = function(panel) {
-  return UI.inspectorView.panel(panel);
+TestRunner.loadLazyModules = function(lazyModules) {
+  return Promise.all(lazyModules.map(lazyModule => self.runtime.loadModulePromise(lazyModule)));
 };
 
 /**
@@ -185,43 +136,6 @@ TestRunner.createKeyEvent = function(key, ctrlKey, altKey, shiftKey, metaKey) {
     metaKey: !!metaKey
   });
 };
-
-/**
- * @param {!Function} func
- * @param {!Function=} onexception
- * @return {!Function}
- */
-TestRunner.safeWrap = function(func, onexception) {
-  /**
-   * @this {*}
-   */
-  function result() {
-    if (!func)
-      return;
-    var wrapThis = this;
-    try {
-      return func.apply(wrapThis, arguments);
-    } catch (e) {
-      TestRunner.addResult('Exception while running: ' + func + '\n' + (e.stack || e));
-      if (onexception)
-        TestRunner.safeWrap(onexception)();
-      else
-        TestRunner.completeTest();
-    }
-  }
-  return result;
-};
-
-/**
- * @param {!Function} testFunction
- * @return {!Function}
- */
-function debugTest(testFunction) {
-  self.test = testFunction;
-  TestRunner.addResult = console.log;
-  TestRunner.completeTest = () => console.log('Test completed');
-  return () => {};
-}
 
 (function() {
   /**

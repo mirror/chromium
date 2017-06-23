@@ -21,7 +21,6 @@
 #include "components/autofill/core/browser/country_combobox_model.h"
 #include "components/autofill/core/browser/field_types.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
-#include "components/payments/core/payment_request_data_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -120,15 +119,6 @@
   return NO;
 }
 
-- (void)formatValueForEditorField:(EditorField*)field {
-  if (field.autofillUIType == AutofillUITypeProfileHomePhoneWholeNumber) {
-    field.value =
-        base::SysUTF8ToNSString(payments::data_util::FormatPhoneForDisplay(
-            base::SysNSStringToUTF8(field.value),
-            base::SysNSStringToUTF8(self.selectedCountryCode)));
-  }
-}
-
 - (UIImage*)iconIdentifyingEditorField:(EditorField*)field {
   return nil;
 }
@@ -161,7 +151,7 @@
   // Notify the view controller asynchronously to allow for the view to update.
   __weak AddressEditMediator* weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
-    [weakSelf.consumer setOptions:@[ [regions allKeys] ]
+    [weakSelf.consumer setOptions:[regions allKeys]
                    forEditorField:weakSelf.regionField];
   });
 }
@@ -260,15 +250,6 @@
                                                   label:nil
                                                   value:value
                                                required:required];
-        // Set the keyboardType and autoCapitalizationType as appropriate.
-        if (autofillUIType == AutofillUITypeProfileEmailAddress) {
-          field.keyboardType = UIKeyboardTypeEmailAddress;
-          field.autoCapitalizationType = UITextAutocapitalizationTypeNone;
-        } else if (autofillUIType == AutofillUITypeProfileHomeAddressZip) {
-          field.autoCapitalizationType =
-              UITextAutocapitalizationTypeAllCharacters;
-        }
-
         [self.fieldsMap setObject:field forKey:fieldKey];
       }
 
@@ -318,20 +299,14 @@
   EditorField* field = self.fieldsMap[phoneNumberFieldKey];
   if (!field) {
     NSString* value =
-        self.address
-            ? base::SysUTF16ToNSString(
-                  payments::data_util::GetFormattedPhoneNumberForDisplay(
-                      *self.address,
-                      GetApplicationContext()->GetApplicationLocale()))
-            : nil;
+        [self fieldValueFromProfile:self.address
+                          fieldType:autofill::PHONE_HOME_WHOLE_NUMBER];
     field = [[EditorField alloc]
         initWithAutofillUIType:AutofillUITypeProfileHomePhoneWholeNumber
                      fieldType:EditorFieldTypeTextField
                          label:l10n_util::GetNSString(IDS_IOS_AUTOFILL_PHONE)
                          value:value
                       required:YES];
-    field.keyboardType = UIKeyboardTypePhonePad;
-    field.returnKeyType = UIReturnKeyDone;
     [self.fieldsMap setObject:field forKey:phoneNumberFieldKey];
   }
   [self.fields addObject:field];

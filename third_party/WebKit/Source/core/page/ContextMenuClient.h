@@ -27,7 +27,6 @@
 #define ContextMenuClient_h
 
 #include "core/CoreExport.h"
-#include "public/platform/WebMenuSourceType.h"
 
 namespace blink {
 
@@ -43,7 +42,7 @@ class CORE_EXPORT ContextMenuClient {
   virtual ~ContextMenuClient() {}
 
   // Returns whether a Context Menu was actually shown.
-  virtual bool ShowContextMenu(const ContextMenu*, WebMenuSourceType);
+  virtual bool ShowContextMenu(const ContextMenu*, bool from_touch);
   virtual void ClearContextMenu();
 
  protected:

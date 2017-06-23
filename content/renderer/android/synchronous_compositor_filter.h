@@ -48,12 +48,12 @@ class SynchronousCompositorFilter
   bool Send(IPC::Message* message) override;
 
   // SynchronousCompositorRegistry overrides.
-  void RegisterLayerTreeFrameSink(
+  void RegisterCompositorFrameSink(
       int routing_id,
-      SynchronousLayerTreeFrameSink* layer_tree_frame_sink) override;
-  void UnregisterLayerTreeFrameSink(
+      SynchronousCompositorFrameSink* compositor_frame_sink) override;
+  void UnregisterCompositorFrameSink(
       int routing_id,
-      SynchronousLayerTreeFrameSink* layer_tree_frame_sink) override;
+      SynchronousCompositorFrameSink* compositor_frame_sink) override;
 
   // SynchronousInputHandlerProxyClient overrides.
   void DidAddSynchronousHandlerProxy(
@@ -74,9 +74,9 @@ class SynchronousCompositorFilter
   void CreateSynchronousCompositorProxy(
       int routing_id,
       ui::SynchronousInputHandlerProxy* synchronous_input_handler_proxy);
-  void SetProxyLayerTreeFrameSink(
+  void SetProxyCompositorFrameSink(
       int routing_id,
-      SynchronousLayerTreeFrameSink* layer_tree_frame_sink);
+      SynchronousCompositorFrameSink* compositor_frame_sink);
   void UnregisterObjects(int routing_id);
   void RemoveEntryIfNeeded(int routing_id);
   SynchronousCompositorProxy* FindProxy(int routing_id);
@@ -99,14 +99,14 @@ class SynchronousCompositorFilter
   bool filter_ready_;
   using SynchronousInputHandlerProxyMap =
       base::hash_map<int, ui::SynchronousInputHandlerProxy*>;
-  using LayerTreeFrameSinkMap =
-      base::hash_map<int, SynchronousLayerTreeFrameSink*>;
+  using CompositorFrameSinkMap =
+      base::hash_map<int, SynchronousCompositorFrameSink*>;
 
   // This is only used before FilterReadyOnCompositorThread.
   SynchronousInputHandlerProxyMap synchronous_input_handler_proxy_map_;
 
   // This is only used if input_handler_proxy has not been registered.
-  LayerTreeFrameSinkMap layer_tree_frame_sink_map_;
+  CompositorFrameSinkMap compositor_frame_sink_map_;
 
   DISALLOW_COPY_AND_ASSIGN(SynchronousCompositorFilter);
 };

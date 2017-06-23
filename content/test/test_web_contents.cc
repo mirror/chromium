@@ -229,7 +229,7 @@ bool TestWebContents::CreateRenderViewForRenderManager(
 WebContents* TestWebContents::Clone() {
   WebContentsImpl* contents =
       Create(GetBrowserContext(), SiteInstance::Create(GetBrowserContext()));
-  contents->GetController().CopyStateFrom(controller_, true);
+  contents->GetController().CopyStateFrom(controller_);
   return contents;
 }
 

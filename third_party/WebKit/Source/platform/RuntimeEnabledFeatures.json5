@@ -468,7 +468,7 @@
     {
       name: "FullscreenUnprefixed",
       settable_from_internals: true,
-      status: "experimental",
+      status: "test",
     },
     {
       name: "GamepadExtensions",
@@ -478,7 +478,7 @@
     {
       name: "GeometryInterfaces",
       implied_by: ["CompositorWorker"],
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "GetUserMedia",
@@ -905,7 +905,7 @@
     // as per the spec, matching other Web engines.
     {
       name: "ScrollTopLeftInterop",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "SendBeaconThrowForBlobWithNonSimpleType",

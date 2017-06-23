@@ -13,7 +13,6 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "media/base/media_export.h"
-#include "media/base/timestamp_constants.h"
 
 namespace media {
 
@@ -39,21 +38,16 @@ class MEDIA_EXPORT MovingAverage {
 
   size_t count() const { return count_; }
 
-  base::TimeDelta max() const { return max_; }
-
  private:
   // Maximum number of elements allowed in the average.
   const size_t depth_;
-  std::vector<base::TimeDelta> samples_;
 
   // Number of elements seen thus far.
-  uint64_t count_ = 0;
+  uint64_t count_;
 
+  std::vector<base::TimeDelta> samples_;
   base::TimeDelta total_;
-  uint64_t square_sum_us_ = 0;
-
-  // Maximum value ever seen.
-  base::TimeDelta max_ = kNoTimestamp;
+  uint64_t square_sum_us_;
 
   DISALLOW_COPY_AND_ASSIGN(MovingAverage);
 };

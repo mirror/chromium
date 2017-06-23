@@ -88,18 +88,30 @@ Network.HARWriter = class {
    * @param {string} fileContent
    * @return {!Promise}
    */
-  static async _writeToStream(stream, compositeProgress, fileContent) {
+  static _writeToStream(stream, compositeProgress, fileContent) {
     var progress = compositeProgress.createSubProgress();
     progress.setTitle(Common.UIString('Writing file\u2026'));
     progress.setTotalWork(fileContent.length);
+
     var chunks = fileContent.split('', Network.HARWriter._chunkSize);
-    for (var chunk of chunks) {
+    var chain = chunks.reduce((promise, chunk) => promise.then(writeChunk.bind(null, chunk)), Promise.resolve(0));
+    return chain.then(() => progress.done());
+
+    /**
+     * @param {string} chunk
+     * @param {number} bytesWritten
+     * @return {!Promise<number>}
+     */
+    function writeChunk(chunk, bytesWritten) {
       if (progress.isCanceled())
-        break;
-      await stream.write(chunk);
-      progress.worked(chunk.length);
+        return Promise.resolve(bytesWritten);
+      return new Promise(resolve => {
+        stream.write(chunk, () => {
+          progress.setWorked(bytesWritten + chunk.length);
+          resolve(bytesWritten + chunk.length);
+        });
+      });
     }
-    progress.done();
   }
 };
 

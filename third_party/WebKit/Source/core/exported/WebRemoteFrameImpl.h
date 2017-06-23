@@ -34,10 +34,13 @@ class CORE_EXPORT WebRemoteFrameImpl final
   void Close() override;
   WebString AssignedName() const override;
   void SetName(const WebString&) override;
+  WebSize GetScrollOffset() const override;
+  void SetScrollOffset(const WebSize&) override;
   WebSize ContentsSize() const override;
   bool HasVisibleContent() const override;
   WebRect VisibleContentRect() const override;
   WebView* View() const override;
+  WebDocument GetDocument() const override;
   WebPerformance Performance() const override;
   void StopLoading() override;
   void EnableViewSourceMode(bool enable) override;

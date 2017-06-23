@@ -11,7 +11,6 @@
 #include "platform/loader/fetch/CachedMetadata.h"
 #include "platform/loader/fetch/CachedMetadataHandler.h"
 #include "platform/weborigin/KURL.h"
-#include "platform/wtf/text/TextEncoding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "v8/include/v8.h"
 
@@ -68,12 +67,10 @@ class V8ScriptRunnerTest : public ::testing::Test {
   }
 
   void SetEmptyResource() {
-    resource_ = ScriptResource::CreateForTest(KURL(), UTF8Encoding());
+    resource_ = ScriptResource::Create(KURL(), "UTF-8");
   }
 
-  void SetResource() {
-    resource_ = ScriptResource::CreateForTest(Url(), UTF8Encoding());
-  }
+  void SetResource() { resource_ = ScriptResource::Create(Url(), "UTF-8"); }
 
   CachedMetadataHandler* CacheHandler() { return resource_->CacheHandler(); }
 
@@ -106,8 +103,7 @@ TEST_F(V8ScriptRunnerTest, parseOption) {
   EXPECT_FALSE(
       CacheHandler()->GetCachedMetadata(TagForCodeCache(CacheHandler())));
   // The cached data is associated with the encoding.
-  ScriptResource* another_resource =
-      ScriptResource::CreateForTest(Url(), UTF16LittleEndianEncoding());
+  ScriptResource* another_resource = ScriptResource::Create(Url(), "UTF-16");
   EXPECT_FALSE(CacheHandler()->GetCachedMetadata(
       TagForParserCache(another_resource->CacheHandler())));
 }
@@ -124,8 +120,7 @@ TEST_F(V8ScriptRunnerTest, codeOption) {
   EXPECT_TRUE(
       CacheHandler()->GetCachedMetadata(TagForCodeCache(CacheHandler())));
   // The cached data is associated with the encoding.
-  ScriptResource* another_resource =
-      ScriptResource::CreateForTest(Url(), UTF16LittleEndianEncoding());
+  ScriptResource* another_resource = ScriptResource::Create(Url(), "UTF-16");
   EXPECT_FALSE(CacheHandler()->GetCachedMetadata(
       TagForCodeCache(another_resource->CacheHandler())));
 }

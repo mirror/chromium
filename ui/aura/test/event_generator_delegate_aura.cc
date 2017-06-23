@@ -133,11 +133,10 @@ void EventGeneratorDelegateAura::ConvertPointFromHost(
   window->GetHost()->ConvertPixelsToDIP(point);
 }
 
-ui::EventDispatchDetails EventGeneratorDelegateAura::DispatchKeyEventToIME(
-    ui::EventTarget* target,
-    ui::KeyEvent* event) {
+void EventGeneratorDelegateAura::DispatchKeyEventToIME(ui::EventTarget* target,
+                                                       ui::KeyEvent* event) {
   Window* window = static_cast<Window*>(target);
-  return window->GetHost()->GetInputMethod()->DispatchKeyEvent(event);
+  window->GetHost()->GetInputMethod()->DispatchKeyEvent(event);
 }
 
 void EventGeneratorDelegateAura::DispatchEventToPointerWatchers(

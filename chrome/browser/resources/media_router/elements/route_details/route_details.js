@@ -226,13 +226,15 @@ Polymer({
   /**
    * Updates either the extensionview or the WebUI route controller, depending
    * on which should be shown.
-   * @param {?media_router.Route} newRoute
    * @private
    */
   onRouteChange_: function(newRoute) {
     if (this.controllerType_ !== media_router.ControllerType.WEBUI) {
       this.updateActivityStatus_();
-    } else if (this.$$('route-controls')) {
+    }
+    if (newRoute &&
+        this.controllerType_ === media_router.ControllerType.WEBUI &&
+        this.$$('route-controls')) {
       this.$$('route-controls').onRouteUpdated(newRoute);
     }
   },

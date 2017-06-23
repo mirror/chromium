@@ -431,7 +431,7 @@ class CookieMonster::SetCookieWithDetailsTask : public CookieMonsterTask {
                            bool http_only,
                            CookieSameSite same_site,
                            CookiePriority priority,
-                           SetCookiesCallback callback)
+                           const SetCookiesCallback& callback)
       : CookieMonsterTask(cookie_monster),
         url_(url),
         name_(name),
@@ -445,7 +445,7 @@ class CookieMonster::SetCookieWithDetailsTask : public CookieMonsterTask {
         http_only_(http_only),
         same_site_(same_site),
         priority_(priority),
-        callback_(std::move(callback)) {}
+        callback_(callback) {}
 
   // CookieMonsterTask:
   void Run() override;
@@ -476,15 +476,15 @@ void CookieMonster::SetCookieWithDetailsTask::Run() {
       url_, name_, value_, domain_, path_, creation_time_, expiration_time_,
       last_access_time_, secure_, http_only_, same_site_, priority_);
   if (!callback_.is_null())
-    std::move(callback_).Run(success);
+    callback_.Run(success);
 }
 
 // Task class for GetAllCookies call.
 class CookieMonster::GetAllCookiesTask : public CookieMonsterTask {
  public:
   GetAllCookiesTask(CookieMonster* cookie_monster,
-                    GetCookieListCallback callback)
-      : CookieMonsterTask(cookie_monster), callback_(std::move(callback)) {}
+                    const GetCookieListCallback& callback)
+      : CookieMonsterTask(cookie_monster), callback_(callback) {}
 
   // CookieMonsterTask
   void Run() override;
@@ -501,7 +501,7 @@ class CookieMonster::GetAllCookiesTask : public CookieMonsterTask {
 void CookieMonster::GetAllCookiesTask::Run() {
   if (!callback_.is_null()) {
     CookieList cookies = this->cookie_monster()->GetAllCookies();
-    std::move(callback_).Run(cookies);
+    callback_.Run(cookies);
   }
 }
 
@@ -511,11 +511,11 @@ class CookieMonster::GetCookieListWithOptionsTask : public CookieMonsterTask {
   GetCookieListWithOptionsTask(CookieMonster* cookie_monster,
                                const GURL& url,
                                const CookieOptions& options,
-                               GetCookieListCallback callback)
+                               const GetCookieListCallback& callback)
       : CookieMonsterTask(cookie_monster),
         url_(url),
         options_(options),
-        callback_(std::move(callback)) {}
+        callback_(callback) {}
 
   // CookieMonsterTask:
   void Run() override;
@@ -535,18 +535,18 @@ void CookieMonster::GetCookieListWithOptionsTask::Run() {
   if (!callback_.is_null()) {
     CookieList cookies =
         this->cookie_monster()->GetCookieListWithOptions(url_, options_);
-    std::move(callback_).Run(cookies);
+    callback_.Run(cookies);
   }
 }
 
 template <typename Result>
 struct CallbackType {
-  typedef base::OnceCallback<void(Result)> Type;
+  typedef base::Callback<void(Result)> Type;
 };
 
 template <>
 struct CallbackType<void> {
-  typedef base::OnceClosure Type;
+  typedef base::Closure Type;
 };
 
 // Base task class for Delete*Task.
@@ -554,8 +554,8 @@ template <typename Result>
 class CookieMonster::DeleteTask : public CookieMonsterTask {
  public:
   DeleteTask(CookieMonster* cookie_monster,
-             typename CallbackType<Result>::Type callback)
-      : CookieMonsterTask(cookie_monster), callback_(std::move(callback)) {}
+             const typename CallbackType<Result>::Type& callback)
+      : CookieMonsterTask(cookie_monster), callback_(callback) {}
 
   // CookieMonsterTask:
   void Run() override;
@@ -570,7 +570,7 @@ class CookieMonster::DeleteTask : public CookieMonsterTask {
   // flushing the persistent store.
   // TODO(mmenke): This seems like a pretty ugly and needlessly confusing API.
   // Simplify it?
-  base::OnceClosure RunDeleteTaskAndBindCallback();
+  base::Closure RunDeleteTaskAndBindCallback();
 
   typename CallbackType<Result>::Type callback_;
 
@@ -582,31 +582,29 @@ CookieMonster::DeleteTask<Result>::~DeleteTask() {
 }
 
 template <typename Result>
-base::OnceClosure
+base::Closure
 CookieMonster::DeleteTask<Result>::RunDeleteTaskAndBindCallback() {
   Result result = RunDeleteTask();
   if (callback_.is_null())
-    return base::OnceClosure();
-  return base::BindOnce(std::move(callback_), result);
+    return base::Closure();
+  return base::Bind(callback_, result);
 }
 
 template <>
-base::OnceClosure
-CookieMonster::DeleteTask<void>::RunDeleteTaskAndBindCallback() {
+base::Closure CookieMonster::DeleteTask<void>::RunDeleteTaskAndBindCallback() {
   RunDeleteTask();
-  return std::move(callback_);
+  return callback_;
 }
 
 template <typename Result>
 void CookieMonster::DeleteTask<Result>::Run() {
-  base::OnceClosure callback = RunDeleteTaskAndBindCallback();
+  base::Closure callback = RunDeleteTaskAndBindCallback();
   if (!callback.is_null()) {
-    callback =
-        base::BindOnce(&CookieMonster::RunCallback,
-                       this->cookie_monster()->weak_ptr_factory_.GetWeakPtr(),
-                       std::move(callback));
+    callback = base::Bind(
+        &CookieMonster::RunCallback,
+        this->cookie_monster()->weak_ptr_factory_.GetWeakPtr(), callback);
   }
-  this->cookie_monster()->FlushStore(std::move(callback));
+  this->cookie_monster()->FlushStore(callback);
 }
 
 // Task class for DeleteAllCreatedBetween call.
@@ -615,8 +613,8 @@ class CookieMonster::DeleteAllCreatedBetweenTask : public DeleteTask<int> {
   DeleteAllCreatedBetweenTask(CookieMonster* cookie_monster,
                               const Time& delete_begin,
                               const Time& delete_end,
-                              DeleteCallback callback)
-      : DeleteTask<int>(cookie_monster, std::move(callback)),
+                              const DeleteCallback& callback)
+      : DeleteTask<int>(cookie_monster, callback),
         delete_begin_(delete_begin),
         delete_end_(delete_end) {}
 
@@ -647,8 +645,8 @@ class CookieMonster::DeleteAllCreatedBetweenWithPredicateTask
       Time delete_begin,
       Time delete_end,
       base::Callback<bool(const CanonicalCookie&)> predicate,
-      DeleteCallback callback)
-      : DeleteTask<int>(cookie_monster, std::move(callback)),
+      const DeleteCallback& callback)
+      : DeleteTask<int>(cookie_monster, callback),
         delete_begin_(delete_begin),
         delete_end_(delete_end),
         predicate_(predicate) {}
@@ -677,8 +675,8 @@ class CookieMonster::DeleteCanonicalCookieTask : public DeleteTask<int> {
  public:
   DeleteCanonicalCookieTask(CookieMonster* cookie_monster,
                             const CanonicalCookie& cookie,
-                            DeleteCallback callback)
-      : DeleteTask<int>(cookie_monster, std::move(callback)), cookie_(cookie) {}
+                            const DeleteCallback& callback)
+      : DeleteTask<int>(cookie_monster, callback), cookie_(cookie) {}
 
   // DeleteTask:
   int RunDeleteTask() override;
@@ -696,42 +694,6 @@ int CookieMonster::DeleteCanonicalCookieTask::RunDeleteTask() {
   return this->cookie_monster()->DeleteCanonicalCookie(cookie_);
 }
 
-// Task class for SetCanonicalCookie call.
-class CookieMonster::SetCanonicalCookieTask : public CookieMonsterTask {
- public:
-  SetCanonicalCookieTask(CookieMonster* cookie_monster,
-                         std::unique_ptr<CanonicalCookie> cookie,
-                         bool secure_source,
-                         bool modify_http_only,
-                         SetCookiesCallback callback)
-      : CookieMonsterTask(cookie_monster),
-        cookie_(std::move(cookie)),
-        secure_source_(secure_source),
-        modify_http_only_(modify_http_only),
-        callback_(std::move(callback)) {}
-
-  // CookieMonsterTask:
-  void Run() override;
-
- protected:
-  ~SetCanonicalCookieTask() override {}
-
- private:
-  std::unique_ptr<CanonicalCookie> cookie_;
-  bool secure_source_;
-  bool modify_http_only_;
-  SetCookiesCallback callback_;
-
-  DISALLOW_COPY_AND_ASSIGN(SetCanonicalCookieTask);
-};
-
-void CookieMonster::SetCanonicalCookieTask::Run() {
-  bool result = this->cookie_monster()->SetCanonicalCookie(
-      std::move(cookie_), secure_source_, modify_http_only_);
-  if (!callback_.is_null())
-    std::move(callback_).Run(result);
-}
-
 // Task class for SetCookieWithOptions call.
 class CookieMonster::SetCookieWithOptionsTask : public CookieMonsterTask {
  public:
@@ -739,12 +701,12 @@ class CookieMonster::SetCookieWithOptionsTask : public CookieMonsterTask {
                            const GURL& url,
                            const std::string& cookie_line,
                            const CookieOptions& options,
-                           SetCookiesCallback callback)
+                           const SetCookiesCallback& callback)
       : CookieMonsterTask(cookie_monster),
         url_(url),
         cookie_line_(cookie_line),
         options_(options),
-        callback_(std::move(callback)) {}
+        callback_(callback) {}
 
   // CookieMonsterTask:
   void Run() override;
@@ -765,7 +727,7 @@ void CookieMonster::SetCookieWithOptionsTask::Run() {
   bool result = this->cookie_monster()->SetCookieWithOptions(url_, cookie_line_,
                                                              options_);
   if (!callback_.is_null())
-    std::move(callback_).Run(result);
+    callback_.Run(result);
 }
 
 // Task class for SetAllCookies call.
@@ -773,10 +735,8 @@ class CookieMonster::SetAllCookiesTask : public CookieMonsterTask {
  public:
   SetAllCookiesTask(CookieMonster* cookie_monster,
                     const CookieList& list,
-                    SetCookiesCallback callback)
-      : CookieMonsterTask(cookie_monster),
-        list_(list),
-        callback_(std::move(callback)) {}
+                    const SetCookiesCallback& callback)
+      : CookieMonsterTask(cookie_monster), list_(list), callback_(callback) {}
 
   // CookieMonsterTask:
   void Run() override;
@@ -808,7 +768,7 @@ void CookieMonster::SetAllCookiesTask::Run() {
     result = this->cookie_monster()->SetAllCookies(list_);
 
   if (!callback_.is_null())
-    std::move(callback_).Run(result);
+    callback_.Run(result);
 }
 
 // Task class for GetCookiesWithOptions call.
@@ -817,11 +777,11 @@ class CookieMonster::GetCookiesWithOptionsTask : public CookieMonsterTask {
   GetCookiesWithOptionsTask(CookieMonster* cookie_monster,
                             const GURL& url,
                             const CookieOptions& options,
-                            GetCookiesCallback callback)
+                            const GetCookiesCallback& callback)
       : CookieMonsterTask(cookie_monster),
         url_(url),
         options_(options),
-        callback_(std::move(callback)) {}
+        callback_(callback) {}
 
   // CookieMonsterTask:
   void Run() override;
@@ -841,7 +801,7 @@ void CookieMonster::GetCookiesWithOptionsTask::Run() {
   std::string cookie =
       this->cookie_monster()->GetCookiesWithOptions(url_, options_);
   if (!callback_.is_null())
-    std::move(callback_).Run(cookie);
+    callback_.Run(cookie);
 }
 
 // Task class for DeleteCookie call.
@@ -850,8 +810,8 @@ class CookieMonster::DeleteCookieTask : public DeleteTask<void> {
   DeleteCookieTask(CookieMonster* cookie_monster,
                    const GURL& url,
                    const std::string& cookie_name,
-                   base::OnceClosure callback)
-      : DeleteTask<void>(cookie_monster, std::move(callback)),
+                   const base::Closure& callback)
+      : DeleteTask<void>(cookie_monster, callback),
         url_(url),
         cookie_name_(cookie_name) {}
 
@@ -876,8 +836,8 @@ void CookieMonster::DeleteCookieTask::RunDeleteTask() {
 class CookieMonster::DeleteSessionCookiesTask : public DeleteTask<int> {
  public:
   DeleteSessionCookiesTask(CookieMonster* cookie_monster,
-                           DeleteCallback callback)
-      : DeleteTask<int>(cookie_monster, std::move(callback)) {}
+                           const DeleteCallback& callback)
+      : DeleteTask<int>(cookie_monster, callback) {}
 
   // DeleteTask:
   int RunDeleteTask() override;
@@ -895,37 +855,36 @@ int CookieMonster::DeleteSessionCookiesTask::RunDeleteTask() {
 
 // Asynchronous CookieMonster API
 
-void CookieMonster::SetCookieWithDetailsAsync(const GURL& url,
-                                              const std::string& name,
-                                              const std::string& value,
-                                              const std::string& domain,
-                                              const std::string& path,
-                                              Time creation_time,
-                                              Time expiration_time,
-                                              Time last_access_time,
-                                              bool secure,
-                                              bool http_only,
-                                              CookieSameSite same_site,
-                                              CookiePriority priority,
-                                              SetCookiesCallback callback) {
+void CookieMonster::SetCookieWithDetailsAsync(
+    const GURL& url,
+    const std::string& name,
+    const std::string& value,
+    const std::string& domain,
+    const std::string& path,
+    Time creation_time,
+    Time expiration_time,
+    Time last_access_time,
+    bool secure,
+    bool http_only,
+    CookieSameSite same_site,
+    CookiePriority priority,
+    const SetCookiesCallback& callback) {
   scoped_refptr<SetCookieWithDetailsTask> task = new SetCookieWithDetailsTask(
       this, url, name, value, domain, path, creation_time, expiration_time,
-      last_access_time, secure, http_only, same_site, priority,
-      std::move(callback));
+      last_access_time, secure, http_only, same_site, priority, callback);
   DoCookieTaskForURL(task, url);
 }
 
-void CookieMonster::FlushStore(base::OnceClosure callback) {
+void CookieMonster::FlushStore(const base::Closure& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (initialized_ && store_.get()) {
     if (channel_id_service_) {
       channel_id_service_->GetChannelIDStore()->Flush();
     }
-    store_->Flush(std::move(callback));
+    store_->Flush(callback);
   } else if (!callback.is_null()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(callback));
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
   }
 }
 
@@ -937,44 +896,29 @@ void CookieMonster::SetForceKeepSessionState() {
 }
 
 void CookieMonster::SetAllCookiesAsync(const CookieList& list,
-                                       SetCookiesCallback callback) {
+                                       const SetCookiesCallback& callback) {
   scoped_refptr<SetAllCookiesTask> task =
-      new SetAllCookiesTask(this, list, std::move(callback));
+      new SetAllCookiesTask(this, list, callback);
   DoCookieTask(task);
 }
 
-void CookieMonster::SetCanonicalCookieAsync(
-    std::unique_ptr<CanonicalCookie> cookie,
-    bool secure_source,
-    bool modify_http_only,
-    SetCookiesCallback callback) {
-  DCHECK(cookie->IsCanonical());
-  scoped_refptr<SetCanonicalCookieTask> task =
-      new SetCanonicalCookieTask(this, std::move(cookie), secure_source,
-                                 modify_http_only, std::move(callback));
-
-  // TODO(rdsmith): Switch to DoCookieTaskForURL (or the equivalent).
-  // This is tricky because we don't have the scheme in this routine
-  // and DoCookieTaskForURL uses cookie_util::GetEffectiveDomain(scheme, host)
-  // to generate the database key to block behind.
-  DoCookieTask(task);
-}
-
-void CookieMonster::SetCookieWithOptionsAsync(const GURL& url,
-                                              const std::string& cookie_line,
-                                              const CookieOptions& options,
-                                              SetCookiesCallback callback) {
-  scoped_refptr<SetCookieWithOptionsTask> task = new SetCookieWithOptionsTask(
-      this, url, cookie_line, options, std::move(callback));
+void CookieMonster::SetCookieWithOptionsAsync(
+    const GURL& url,
+    const std::string& cookie_line,
+    const CookieOptions& options,
+    const SetCookiesCallback& callback) {
+  scoped_refptr<SetCookieWithOptionsTask> task =
+      new SetCookieWithOptionsTask(this, url, cookie_line, options, callback);
 
   DoCookieTaskForURL(task, url);
 }
 
-void CookieMonster::GetCookiesWithOptionsAsync(const GURL& url,
-                                               const CookieOptions& options,
-                                               GetCookiesCallback callback) {
+void CookieMonster::GetCookiesWithOptionsAsync(
+    const GURL& url,
+    const CookieOptions& options,
+    const GetCookiesCallback& callback) {
   scoped_refptr<GetCookiesWithOptionsTask> task =
-      new GetCookiesWithOptionsTask(this, url, options, std::move(callback));
+      new GetCookiesWithOptionsTask(this, url, options, callback);
 
   DoCookieTaskForURL(task, url);
 }
@@ -982,43 +926,42 @@ void CookieMonster::GetCookiesWithOptionsAsync(const GURL& url,
 void CookieMonster::GetCookieListWithOptionsAsync(
     const GURL& url,
     const CookieOptions& options,
-    GetCookieListCallback callback) {
+    const GetCookieListCallback& callback) {
   scoped_refptr<GetCookieListWithOptionsTask> task =
-      new GetCookieListWithOptionsTask(this, url, options, std::move(callback));
+      new GetCookieListWithOptionsTask(this, url, options, callback);
 
   DoCookieTaskForURL(task, url);
 }
 
-void CookieMonster::GetAllCookiesAsync(GetCookieListCallback callback) {
-  scoped_refptr<GetAllCookiesTask> task =
-      new GetAllCookiesTask(this, std::move(callback));
+void CookieMonster::GetAllCookiesAsync(const GetCookieListCallback& callback) {
+  scoped_refptr<GetAllCookiesTask> task = new GetAllCookiesTask(this, callback);
 
   DoCookieTask(task);
 }
 
 void CookieMonster::DeleteCookieAsync(const GURL& url,
                                       const std::string& cookie_name,
-                                      base::OnceClosure callback) {
+                                      const base::Closure& callback) {
   scoped_refptr<DeleteCookieTask> task =
-      new DeleteCookieTask(this, url, cookie_name, std::move(callback));
+      new DeleteCookieTask(this, url, cookie_name, callback);
 
   DoCookieTaskForURL(task, url);
 }
 
 void CookieMonster::DeleteCanonicalCookieAsync(const CanonicalCookie& cookie,
-                                               DeleteCallback callback) {
+                                               const DeleteCallback& callback) {
   scoped_refptr<DeleteCanonicalCookieTask> task =
-      new DeleteCanonicalCookieTask(this, cookie, std::move(callback));
+      new DeleteCanonicalCookieTask(this, cookie, callback);
 
   DoCookieTask(task);
 }
 
-void CookieMonster::DeleteAllCreatedBetweenAsync(const Time& delete_begin,
-                                                 const Time& delete_end,
-                                                 DeleteCallback callback) {
+void CookieMonster::DeleteAllCreatedBetweenAsync(
+    const Time& delete_begin,
+    const Time& delete_end,
+    const DeleteCallback& callback) {
   scoped_refptr<DeleteAllCreatedBetweenTask> task =
-      new DeleteAllCreatedBetweenTask(this, delete_begin, delete_end,
-                                      std::move(callback));
+      new DeleteAllCreatedBetweenTask(this, delete_begin, delete_end, callback);
 
   DoCookieTask(task);
 }
@@ -1027,21 +970,21 @@ void CookieMonster::DeleteAllCreatedBetweenWithPredicateAsync(
     const Time& delete_begin,
     const Time& delete_end,
     const base::Callback<bool(const CanonicalCookie&)>& predicate,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   if (predicate.is_null()) {
-    std::move(callback).Run(0);
+    callback.Run(0);
     return;
   }
   scoped_refptr<DeleteAllCreatedBetweenWithPredicateTask> task =
       new DeleteAllCreatedBetweenWithPredicateTask(
-          this, delete_begin, delete_end, predicate, std::move(callback));
+          this, delete_begin, delete_end, predicate, callback);
   DoCookieTask(task);
 }
 
 void CookieMonster::DeleteSessionCookiesAsync(
-    CookieStore::DeleteCallback callback) {
+    const CookieStore::DeleteCallback& callback) {
   scoped_refptr<DeleteSessionCookiesTask> task =
-      new DeleteSessionCookiesTask(this, std::move(callback));
+      new DeleteSessionCookiesTask(this, callback);
 
   DoCookieTask(task);
 }
@@ -1124,6 +1067,16 @@ bool CookieMonster::SetCookieWithDetails(const GURL& url,
   if (!HasCookieableScheme(url))
     return false;
 
+  // TODO(mmenke): This class assumes each cookie to have a unique creation
+  // time. Allowing the caller to set the creation time violates that
+  // assumption. Worth fixing? Worth noting that time changes between browser
+  // restarts can cause the same issue.
+  base::Time actual_creation_time = creation_time;
+  if (creation_time.is_null()) {
+    actual_creation_time = CurrentTime();
+    last_time_seen_ = actual_creation_time;
+  }
+
   // Validate consistency of passed arguments.
   if (ParsedCookie::ParseTokenString(name) != name ||
       ParsedCookie::ParseValueString(value) != value ||
@@ -1150,8 +1103,9 @@ bool CookieMonster::SetCookieWithDetails(const GURL& url,
                             canon_path_component.len);
 
   std::unique_ptr<CanonicalCookie> cc(base::MakeUnique<CanonicalCookie>(
-      name, value, cookie_domain, cookie_path, creation_time, expiration_time,
-      last_access_time, secure, http_only, same_site, priority));
+      name, value, cookie_domain, cookie_path, actual_creation_time,
+      expiration_time, last_access_time, secure, http_only, same_site,
+      priority));
 
   return SetCanonicalCookie(std::move(cc), url.SchemeIsCryptographic(), true);
 }
@@ -1811,19 +1765,9 @@ bool CookieMonster::SetCanonicalCookie(std::unique_ptr<CanonicalCookie> cc,
   if (cc->IsSecure() && !secure_source)
     return false;
 
+  Time creation_time = cc->CreationDate();
   const std::string key(GetKey(cc->Domain()));
-
-  // TODO(mmenke): This class assumes each cookie to have a unique creation
-  // time. Allowing the caller to set the creation time violates that
-  // assumption. Worth fixing? Worth noting that time changes between browser
-  // restarts can cause the same issue.
-  base::Time creation_date = cc->CreationDate();
-  if (creation_date.is_null()) {
-    creation_date = CurrentTime();
-    cc->SetCreationDate(creation_date);
-    last_time_seen_ = creation_date;
-  }
-  bool already_expired = cc->IsExpired(creation_date);
+  bool already_expired = cc->IsExpired(creation_time);
 
   if (DeleteAnyEquivalentCookie(key, *cc, secure_source, !modify_http_only,
                                 already_expired)) {
@@ -1845,7 +1789,7 @@ bool CookieMonster::SetCanonicalCookie(std::unique_ptr<CanonicalCookie> cc,
     // See InitializeHistograms() for details.
     if (cc->IsPersistent()) {
       histogram_expiration_duration_minutes_->Add(
-          (cc->ExpiryDate() - creation_date).InMinutes());
+          (cc->ExpiryDate() - creation_time).InMinutes());
     }
 
     // Histogram the type of scheme used on URLs that set cookies. This
@@ -1873,7 +1817,7 @@ bool CookieMonster::SetCanonicalCookie(std::unique_ptr<CanonicalCookie> cc,
   // make sure that we garbage collect...  We can also make the assumption that
   // if a cookie was set, in the common case it will be used soon after,
   // and we will purge the expired cookies in GetCookies().
-  GarbageCollect(creation_date, key);
+  GarbageCollect(creation_time, key);
 
   return true;
 }
@@ -2478,9 +2422,9 @@ void CookieMonster::ComputeCookieDiff(CookieList* old_cookies,
                       FullDiffCookieSorter);
 }
 
-void CookieMonster::RunCallback(base::OnceClosure callback) {
+void CookieMonster::RunCallback(const base::Closure& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  std::move(callback).Run();
+  callback.Run();
 }
 
 void CookieMonster::RunCookieChangedCallbacks(const CanonicalCookie& cookie,

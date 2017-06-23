@@ -91,11 +91,6 @@ bool RenderFrameHostDelegate::ShouldRouteMessageEvent(
   return false;
 }
 
-RenderFrameHost*
-RenderFrameHostDelegate::GetFocusedFrameIncludingInnerWebContents() {
-  return nullptr;
-}
-
 std::unique_ptr<WebUIImpl>
 RenderFrameHostDelegate::CreateWebUIForRenderFrameHost(const GURL& url) {
   return nullptr;

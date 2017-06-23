@@ -8,9 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
-#include <string>
 #include <utility>
-#include <vector>
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -29,7 +27,7 @@
 #include "third_party/WebKit/public/platform/WebRTCOfferOptions.h"
 #include "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebUserMediaRequest.h"
 
 using webrtc::MediaConstraintsInterface;
@@ -138,7 +136,7 @@ static const char* SerializeIceTransportType(
     break;
   default:
     NOTREACHED();
-  }
+  };
   return transport_type;
 }
 
@@ -157,7 +155,7 @@ static const char* SerializeBundlePolicy(
     break;
   default:
     NOTREACHED();
-  }
+  };
   return policy_str;
 }
 
@@ -173,7 +171,7 @@ static const char* SerializeRtcpMuxPolicy(
     break;
   default:
     NOTREACHED();
-  }
+  };
   return policy_str;
 }
 
@@ -314,7 +312,7 @@ static std::unique_ptr<base::DictionaryValue> GetDictValue(
 
 class InternalStatsObserver : public webrtc::StatsObserver {
  public:
-  explicit InternalStatsObserver(int lid)
+  InternalStatsObserver(int lid)
       : lid_(lid), main_thread_(base::ThreadTaskRunnerHandle::Get()) {}
 
   void OnComplete(const StatsReports& reports) override {
@@ -438,7 +436,7 @@ void PeerConnectionTracker::RegisterPeerConnection(
     RTCPeerConnectionHandler* pc_handler,
     const webrtc::PeerConnectionInterface::RTCConfiguration& config,
     const blink::WebMediaConstraints& constraints,
-    const blink::WebLocalFrame* frame) {
+    const blink::WebFrame* frame) {
   DCHECK(main_thread_.CalledOnValidThread());
   DCHECK_EQ(GetLocalIDForHandler(pc_handler), -1);
   DVLOG(1) << "PeerConnectionTracker::RegisterPeerConnection()";
@@ -590,7 +588,7 @@ void PeerConnectionTracker::TrackAddStream(
 void PeerConnectionTracker::TrackRemoveStream(
     RTCPeerConnectionHandler* pc_handler,
     const blink::WebMediaStream& stream,
-    Source source) {
+    Source source){
   DCHECK(main_thread_.CalledOnValidThread());
   int id = GetLocalIDForHandler(pc_handler);
   if (id == -1)

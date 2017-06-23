@@ -2164,10 +2164,8 @@ void Document::UpdateStyle() {
     InheritHtmlAndBodyElementStyles(change);
     if (document_element->ShouldCallRecalcStyle(change)) {
       TRACE_EVENT0("blink,blink_style", "Document::recalcStyle");
-      Element* viewport_defining = ViewportDefiningElement();
       document_element->RecalcStyle(change);
-      if (viewport_defining != ViewportDefiningElement())
-        ViewportDefiningElementDidChange();
+      UpdateHasOverflowClipForBody();
     }
     if (document_element->NeedsReattachLayoutTree() ||
         document_element->ChildNeedsReattachLayoutTree()) {
@@ -2208,21 +2206,13 @@ void Document::UpdateStyle() {
   CSSTiming::From(*this).RecordUpdateDuration(update_duration_seconds);
 }
 
-void Document::ViewportDefiningElementDidChange() {
+void Document::UpdateHasOverflowClipForBody() {
   HTMLBodyElement* body = FirstBodyElement();
   if (!body)
     return;
   LayoutObject* layout_object = body->GetLayoutObject();
-  if (layout_object && layout_object->IsLayoutBlock()) {
-    // When the overflow style for documentElement changes to or from visible,
-    // it changes whether the body element's box should have scrollable overflow
-    // on its own box or propagated to the viewport. If the body style did not
-    // need a recalc, this will not be updated as its done as part of setting
-    // ComputedStyle on the LayoutObject. Force a SetStyle for body when the
-    // ViewportDefiningElement changes in order to trigger an update of
-    // HasOverflowClip() and the PaintLayer in StyleDidChange().
-    layout_object->SetStyle(ComputedStyle::Clone(*layout_object->Style()));
-  }
+  if (layout_object && layout_object->IsLayoutBlock())
+    ToLayoutBlock(layout_object)->UpdateHasOverflowClip();
 }
 
 void Document::NotifyLayoutTreeOfSubtreeChanges() {
@@ -3250,6 +3240,8 @@ void Document::DispatchUnloadEvents() {
     return;
 
   if (load_event_progress_ <= kUnloadEventInProgress) {
+    if (GetPage())
+      GetPage()->WillUnloadDocument(*this);
     Element* current_focused_element = FocusedElement();
     if (isHTMLInputElement(current_focused_element))
       toHTMLInputElement(*current_focused_element).EndEditing();
@@ -5730,9 +5722,6 @@ HTMLLinkElement* Document::LinkManifest() const {
 void Document::SetFeaturePolicy(const String& feature_policy_header) {
   if (!RuntimeEnabledFeatures::FeaturePolicyEnabled())
     return;
-
-  if (!feature_policy_header.IsEmpty())
-    UseCounter::Count(*this, WebFeature::kFeaturePolicyHeader);
 
   WebFeaturePolicy* parent_feature_policy = nullptr;
   WebParsedFeaturePolicy container_policy;

@@ -75,11 +75,6 @@ Polymer({
     event.stopPropagation();
   },
 
-  /** @return {boolean} */
-  isEnforced_: function(pref) {
-    return pref.enforcement == chrome.settingsPrivate.Enforcement.ENFORCED;
-  },
-
   /** @private */
   onSubpageTap_: function() {
     if (this.androidAppsInfo_.playStoreEnabled)

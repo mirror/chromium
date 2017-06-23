@@ -40,13 +40,6 @@ APP_LIST_EXPORT extern const SkColor kResultDimmedTextColor;
 APP_LIST_EXPORT extern const SkColor kResultURLTextColor;
 
 APP_LIST_EXPORT extern const SkColor kGridTitleColor;
-APP_LIST_EXPORT extern const SkColor kGridTitleColorFullscreen;
-
-APP_LIST_EXPORT extern const int kGridTileWidth;
-APP_LIST_EXPORT extern const int kGridTileHeight;
-APP_LIST_EXPORT extern const int kGridIconTopPadding;
-APP_LIST_EXPORT extern const int kGridTitleSpacing;
-APP_LIST_EXPORT extern const int kGridTitleHorizontalPadding;
 
 APP_LIST_EXPORT extern const SkColor kFolderTitleColor;
 APP_LIST_EXPORT extern const SkColor kFolderTitleHintTextColor;
@@ -70,7 +63,6 @@ APP_LIST_EXPORT extern const int kPreferredRows;
 APP_LIST_EXPORT extern const int kGridIconDimension;
 
 APP_LIST_EXPORT extern const int kAppBadgeIconSize;
-APP_LIST_EXPORT extern const int kBadgeBackgroundRadius;
 
 APP_LIST_EXPORT extern const int kListIconSize;
 APP_LIST_EXPORT extern const int kListBadgeIconSize;

@@ -24,13 +24,9 @@ ScrollableArea* ScrollableAreaForRootScroller(const Node*);
 // rather than <html>'s since scrolling is handled by LayoutView.
 PaintLayer* PaintLayerForRootScroller(const Node*);
 
-// Return true if the given object is the effective root scroller in its
-// Document. See |effective root scroller| in README.md. Note: a root scroller
-// always establishes a PaintLayer.
+// Returns true if the given LayoutBox is the effective root scroller in its
+// Document. See |effective root scroller| in README.md.
 bool IsEffective(const LayoutBox&);
-
-bool IsGlobal(const LayoutBox&);
-bool IsGlobal(const PaintLayer&);
 
 }  // namespace RootScrollerUtil
 

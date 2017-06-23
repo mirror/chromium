@@ -52,6 +52,8 @@ class ChromeBrowserState;
 // clang-format off
 + (SettingsNavigationController*)newSettingsMainControllerWithMainBrowserState:
         (ios::ChromeBrowserState*)browserState
+                                                           currentBrowserState:
+        (ios::ChromeBrowserState*)currentBrowserState
                                                                       delegate:
         (id<SettingsNavigationControllerDelegate>)delegate;
 // clang-format on

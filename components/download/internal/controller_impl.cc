@@ -15,7 +15,6 @@
 #include "components/download/internal/config.h"
 #include "components/download/internal/entry.h"
 #include "components/download/internal/entry_utils.h"
-#include "components/download/internal/file_monitor.h"
 #include "components/download/internal/model.h"
 #include "components/download/internal/scheduler/scheduler.h"
 #include "components/download/internal/stats.h"
@@ -66,18 +65,14 @@ ControllerImpl::ControllerImpl(
     std::unique_ptr<Model> model,
     std::unique_ptr<DeviceStatusListener> device_status_listener,
     std::unique_ptr<Scheduler> scheduler,
-    std::unique_ptr<TaskScheduler> task_scheduler,
-    std::unique_ptr<FileMonitor> file_monitor,
-    const base::FilePath& download_file_dir)
+    std::unique_ptr<TaskScheduler> task_scheduler)
     : config_(config),
-      download_file_dir_(download_file_dir),
       clients_(std::move(clients)),
       driver_(std::move(driver)),
       model_(std::move(model)),
       device_status_listener_(std::move(device_status_listener)),
       scheduler_(std::move(scheduler)),
       task_scheduler_(std::move(task_scheduler)),
-      file_monitor_(std::move(file_monitor)),
       initializing_internals_(false),
       weak_ptr_factory_(this) {}
 
@@ -89,8 +84,6 @@ void ControllerImpl::Initialize() {
   initializing_internals_ = true;
   driver_->Initialize(this);
   model_->Initialize(this);
-  file_monitor_->Initialize(base::Bind(&ControllerImpl::OnFileMonitorReady,
-                                       weak_ptr_factory_.GetWeakPtr()));
 }
 
 const StartupStatus* ControllerImpl::GetStartupStatus() {
@@ -99,8 +92,6 @@ const StartupStatus* ControllerImpl::GetStartupStatus() {
 
 void ControllerImpl::StartDownload(const DownloadParams& params) {
   DCHECK(startup_status_.Ok());
-  DCHECK_LE(base::Time::Now(), params.scheduling_params.cancel_time);
-  KillTimedOutDownloads();
 
   // TODO(dtrainor): Check if there are any downloads we can cancel.  We don't
   // want to return a BACKOFF if we technically could time out a download to
@@ -132,9 +123,7 @@ void ControllerImpl::StartDownload(const DownloadParams& params) {
   }
 
   start_callbacks_[params.guid] = params.callback;
-  Entry entry(params);
-  entry.target_file_path = download_file_dir_.AppendASCII(params.guid);
-  model_->Add(entry);
+  model_->Add(Entry(params));
 }
 
 void ControllerImpl::PauseDownload(const std::string& guid) {
@@ -246,16 +235,7 @@ void ControllerImpl::ProcessScheduledTasks() {
 
   while (!task_finished_callbacks_.empty()) {
     auto it = task_finished_callbacks_.begin();
-    if (it->first == DownloadTaskType::DOWNLOAD_TASK) {
-      ActivateMoreDownloads();
-    } else if (it->first == DownloadTaskType::CLEANUP_TASK) {
-      auto timed_out_entries =
-          file_monitor_->CleanupFilesForCompletedEntries(model_->PeekEntries());
-      for (auto* entry : timed_out_entries) {
-        DCHECK_EQ(Entry::State::COMPLETE, entry->state);
-        model_->Remove(entry->guid);
-      }
-    }
+    // TODO(shaktisahu): Execute the scheduled task.
 
     HandleTaskFinished(it->first, false,
                        stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
@@ -321,7 +301,8 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download, int reason) {
   HandleCompleteDownload(CompletionType::FAIL, download.guid);
 }
 
-void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download) {
+void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download,
+                                         const base::FilePath& path) {
   if (initializing_internals_)
     return;
 
@@ -350,12 +331,6 @@ void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {
       FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadUpdated,
                             weak_ptr_factory_.GetWeakPtr(), entry->client,
                             download.guid, download.bytes_downloaded));
-}
-
-void ControllerImpl::OnFileMonitorReady(bool success) {
-  DCHECK(!startup_status_.file_monitor_ok.has_value());
-  startup_status_.file_monitor_ok = success;
-  AttemptToFinalizeSetup();
 }
 
 void ControllerImpl::OnModelReady(bool success) {
@@ -430,7 +405,6 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   device_status_listener_->Start(this);
   PollActiveDriverDownloads();
   CancelOrphanedRequests();
-  CleanupUnknownFiles();
   ResolveInitialRequestStates();
   NotifyClientsOfStartup();
 
@@ -438,8 +412,6 @@ void ControllerImpl::AttemptToFinalizeSetup() {
 
   UpdateDriverStates();
   ProcessScheduledTasks();
-
-  KillTimedOutDownloads();
 
   // Pull the initial straw if active downloads haven't reach maximum.
   ActivateMoreDownloads();
@@ -458,33 +430,16 @@ void ControllerImpl::CancelOrphanedRequests() {
   auto entries = model_->PeekEntries();
 
   std::vector<std::string> guids_to_remove;
-  std::vector<base::FilePath> files_to_remove;
   for (auto* entry : entries) {
-    if (!clients_->GetClient(entry->client)) {
+    if (!clients_->GetClient(entry->client))
       guids_to_remove.push_back(entry->guid);
-      files_to_remove.push_back(entry->target_file_path);
-    }
   }
 
   for (const auto& guid : guids_to_remove) {
+    // TODO(xingliu): Use file monitor to delete the files.
     driver_->Remove(guid);
     model_->Remove(guid);
   }
-
-  file_monitor_->DeleteFiles(files_to_remove,
-                             stats::FileCleanupReason::ORPHANED);
-}
-
-void ControllerImpl::CleanupUnknownFiles() {
-  auto entries = model_->PeekEntries();
-  std::vector<DriverEntry> driver_entries;
-  for (auto* entry : entries) {
-    base::Optional<DriverEntry> driver_entry = driver_->Find(entry->guid);
-    if (driver_entry.has_value())
-      driver_entries.push_back(driver_entry.value());
-  }
-
-  file_monitor_->DeleteUnknownFiles(entries, driver_entries);
 }
 
 void ControllerImpl::ResolveInitialRequestStates() {
@@ -638,7 +593,7 @@ void ControllerImpl::UpdateDriverState(const Entry& entry) {
     if (driver_entry.has_value()) {
       driver_->Resume(entry.guid);
     } else {
-      driver_->Start(entry.request_params, entry.guid, entry.target_file_path,
+      driver_->Start(entry.request_params, entry.guid,
                      NO_TRAFFIC_ANNOTATION_YET);
     }
   }
@@ -699,104 +654,30 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
   if (type == CompletionType::SUCCEED) {
     auto driver_entry = driver_->Find(guid);
     DCHECK(driver_entry.has_value());
-    if (driver_entry->current_file_path != entry->target_file_path) {
-      stats::LogFilePathsAreStrangelyDifferent();
-      entry->target_file_path = driver_entry->current_file_path;
-    }
-    entry->completion_time = driver_entry->completion_time;
+    // TODO(dtrainor): Move the FilePath generation to the controller and store
+    // it in Entry.  Then pass it into the DownloadDriver.
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadSucceeded,
-                              weak_ptr_factory_.GetWeakPtr(), entry->client,
-                              guid, driver_entry->current_file_path,
-                              driver_entry->bytes_downloaded));
+        FROM_HERE,
+        base::Bind(&ControllerImpl::SendOnDownloadSucceeded,
+                   weak_ptr_factory_.GetWeakPtr(), entry->client, guid,
+                   base::FilePath(), driver_entry->bytes_downloaded));
     TransitTo(entry, Entry::State::COMPLETE, model_.get());
-    ScheduleCleanupTask();
   } else {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadFailed,
                               weak_ptr_factory_.GetWeakPtr(), entry->client,
                               guid, FailureReasonFromCompletionType(type)));
-    // TODO(dtrainor): Handle the case where we crash before the model write
-    // happens and we have no driver entry.
-    driver_->Remove(entry->guid);
     model_->Remove(guid);
   }
 
   ActivateMoreDownloads();
 }
 
-void ControllerImpl::ScheduleCleanupTask() {
-  base::Time earliest_completion_time = base::Time::Max();
-  for (const Entry* entry : model_->PeekEntries()) {
-    if (entry->completion_time == base::Time() ||
-        entry->state != Entry::State::COMPLETE)
-      continue;
-    if (entry->completion_time < earliest_completion_time) {
-      earliest_completion_time = entry->completion_time;
-    }
-  }
-
-  if (earliest_completion_time == base::Time::Max())
-    return;
-
-  base::TimeDelta start_time = earliest_completion_time +
-                               config_->file_keep_alive_time -
-                               base::Time::Now();
-  base::TimeDelta end_time = start_time + config_->file_cleanup_window;
-
-  task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
-                                start_time.InSeconds(), end_time.InSeconds());
-}
-
-void ControllerImpl::ScheduleKillDownloadTaskIfNecessary() {
-  base::Time earliest_cancel_time = base::Time::Max();
-  for (const Entry* entry : model_->PeekEntries()) {
-    if (entry->state != Entry::State::COMPLETE &&
-        entry->scheduling_params.cancel_time < earliest_cancel_time) {
-      earliest_cancel_time = entry->scheduling_params.cancel_time;
-    }
-  }
-
-  if (earliest_cancel_time == base::Time::Max())
-    return;
-
-  base::TimeDelta time_to_cancel =
-      earliest_cancel_time > base::Time::Now()
-          ? earliest_cancel_time - base::Time::Now()
-          : base::TimeDelta();
-
-  cancel_downloads_callback_.Reset(base::Bind(
-      &ControllerImpl::KillTimedOutDownloads, weak_ptr_factory_.GetWeakPtr()));
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, cancel_downloads_callback_.callback(), time_to_cancel);
-}
-
-void ControllerImpl::KillTimedOutDownloads() {
-  for (const Entry* entry : model_->PeekEntries()) {
-    if (entry->state != Entry::State::COMPLETE &&
-        entry->scheduling_params.cancel_time <= base::Time::Now()) {
-      HandleCompleteDownload(CompletionType::TIMEOUT, entry->guid);
-    }
-  }
-
-  ScheduleKillDownloadTaskIfNecessary();
-}
-
 void ControllerImpl::ActivateMoreDownloads() {
   if (initializing_internals_)
     return;
 
-  // Check the configuration to throttle number of downloads.
-  std::map<Entry::State, uint32_t> entries_states;
-  for (const auto* const entry : model_->PeekEntries())
-    entries_states[entry->state]++;
-  uint32_t paused_count = entries_states[Entry::State::PAUSED];
-  uint32_t active_count = entries_states[Entry::State::ACTIVE];
-  if (config_->max_concurrent_downloads <= paused_count + active_count ||
-      config_->max_running_downloads <= active_count) {
-    return;
-  }
-
+  // TODO(xingliu): Check the configuration to throttle downloads.
   Entry* next = scheduler_->Next(
       model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
 

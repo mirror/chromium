@@ -242,7 +242,7 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
@@ -261,7 +261,7 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -280,7 +280,7 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
@@ -12065,34 +12065,11 @@
     "isolated_scripts": [
       {
         "isolate_name": "webkit_layout_tests_exparchive",
-        "merge": {
-          "args": [
-            "--verbose",
-            "--results-json-override-with-build-property",
-            "build_number",
-            "buildnumber",
-            "--results-json-override-with-build-property",
-            "builder_name",
-            "buildername",
-            "--results-json-override-with-build-property",
-            "chromium_revision",
-            "got_revision_cp"
-          ],
-          "script": "//third_party/WebKit/Tools/Scripts/merge-layout-test-results"
-        },
         "name": "webkit_layout_tests",
-        "results_handler": "layout tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "os": "Mac-10.9"
-            },
-            {
-              "os": "Mac-10.12"
-            },
-            {
-              "gpu": "8086:0a2e",
               "os": "Mac-10.12"
             }
           ],
@@ -12374,11 +12351,6 @@
         },
         "test": "views_unittests"
       }
-    ]
-  },
-  "Win Builder (ANGLE)": {
-    "additional_compile_targets": [
-      "all"
     ]
   }
 }

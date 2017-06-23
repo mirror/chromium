@@ -70,8 +70,7 @@ bool TextTrackLoader::RedirectReceived(Resource* resource,
                                        const ResourceRequest& request,
                                        const ResourceResponse&) {
   DCHECK_EQ(this->GetResource(), resource);
-  if (resource->GetResourceRequest().GetFetchRequestMode() ==
-          WebURLRequest::kFetchRequestModeCORS ||
+  if (resource->Options().cors_enabled == kIsCORSEnabled ||
       GetDocument().GetSecurityOrigin()->CanRequestNoSuborigin(request.Url()))
     return true;
 
@@ -127,9 +126,9 @@ bool TextTrackLoader::Load(const KURL& url,
                            CrossOriginAttributeValue cross_origin) {
   CancelLoad();
 
-  ResourceLoaderOptions options;
+  ResourceLoaderOptions options(kAllowStoredCredentials,
+                                kClientRequestedCredentials);
   options.initiator_info.name = FetchInitiatorTypeNames::texttrack;
-
   FetchParameters cue_fetch_params(ResourceRequest(url), options);
 
   if (cross_origin != kCrossOriginAttributeNotSet) {

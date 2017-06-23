@@ -97,7 +97,6 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/result_codes.h"
-#include "content/public/common/service_names.mojom.h"
 #include "device/gamepad/gamepad_service.h"
 #include "gpu/vulkan/features.h"
 #include "media/audio/audio_manager.h"
@@ -114,7 +113,6 @@
 #include "net/ssl/ssl_config_service.h"
 #include "ppapi/features/features.h"
 #include "services/resource_coordinator/memory_instrumentation/coordinator_impl.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
 #include "services/service_manager/runner/common/client_util.h"
 #include "skia/ext/event_tracer_impl.h"
 #include "skia/ext/skia_memory_dump_provider.h"
@@ -819,6 +817,9 @@ int BrowserMainLoop::PreCreateThreads() {
 
   InitializeMemoryManagementComponent();
 
+  if (base::FeatureList::IsEnabled(features::kMemoryCoordinator))
+    MemoryCoordinatorImpl::GetInstance()->Start();
+
 #if defined(OS_MACOSX)
   if (base::CommandLine::InitializedForCurrentProcess() &&
       base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -1386,17 +1387,10 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   // dump manager, too. It makes sense that BrowserMainLoop owns the service;
   // this way, the service is alive for the lifetime of Mojo. Mojo is shutdown
   // in BrowserMainLoop::ShutdownThreadsAndCleanupIO.
-  service_manager::Connector* connector =
-      content::ServiceManagerConnection::GetForProcess()->GetConnector();
   memory_instrumentation_coordinator_ =
-      base::MakeUnique<memory_instrumentation::CoordinatorImpl>(connector);
-
-  // Registers the browser process as a memory-instrumentation client, so
-  // that data for the browser process will be available in memory dumps.
-  memory_instrumentation::ClientProcessImpl::Config config(
-      connector, mojom::kBrowserServiceName,
-      memory_instrumentation::mojom::ProcessType::BROWSER);
-  memory_instrumentation::ClientProcessImpl::CreateInstance(config);
+      base::MakeUnique<memory_instrumentation::CoordinatorImpl>(
+          true /* initialize_memory_dump_manager */,
+          content::ServiceManagerConnection::GetForProcess()->GetConnector());
 
 #if defined(USE_AURA)
   if (service_manager::ServiceManagerIsRemote()) {
@@ -1610,8 +1604,16 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
       CreateWinMemoryPressureMonitor(parsed_command_line_);
 #endif
 
-  if (base::FeatureList::IsEnabled(features::kMemoryCoordinator))
-    MemoryCoordinatorImpl::GetInstance()->Start();
+  if (base::FeatureList::IsEnabled(features::kMemoryCoordinator)) {
+    // Disable MemoryPressureListener when memory coordinator is enabled.
+    base::MemoryPressureListener::SetNotificationsSuppressed(true);
+    auto* coordinator = MemoryCoordinatorImpl::GetInstance();
+    if (memory_pressure_monitor_) {
+      memory_pressure_monitor_->SetDispatchCallback(
+          base::Bind(&MemoryCoordinatorImpl::RecordMemoryPressure,
+                     base::Unretained(coordinator)));
+    }
+  }
 
   auto* swap_metrics_observer = SwapMetricsObserver::GetInstance();
   if (swap_metrics_observer)

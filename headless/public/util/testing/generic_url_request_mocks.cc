@@ -63,71 +63,64 @@ void MockCookieStore::SetCookieWithOptionsAsync(
     const GURL& url,
     const std::string& cookie_line,
     const net::CookieOptions& options,
-    SetCookiesCallback callback) {
+    const SetCookiesCallback& callback) {
   CHECK(false);
 }
 
-void MockCookieStore::SetCookieWithDetailsAsync(const GURL& url,
-                                                const std::string& name,
-                                                const std::string& value,
-                                                const std::string& domain,
-                                                const std::string& path,
-                                                base::Time creation_time,
-                                                base::Time expiration_time,
-                                                base::Time last_access_time,
-                                                bool secure,
-                                                bool http_only,
-                                                net::CookieSameSite same_site,
-                                                net::CookiePriority priority,
-                                                SetCookiesCallback callback) {
-  CHECK(false);
-}
-
-void MockCookieStore::SetCanonicalCookieAsync(
-    std::unique_ptr<net::CanonicalCookie> cookie,
-    bool secure_source,
-    bool can_modify_httponly,
-    SetCookiesCallback callback) {
+void MockCookieStore::SetCookieWithDetailsAsync(
+    const GURL& url,
+    const std::string& name,
+    const std::string& value,
+    const std::string& domain,
+    const std::string& path,
+    base::Time creation_time,
+    base::Time expiration_time,
+    base::Time last_access_time,
+    bool secure,
+    bool http_only,
+    net::CookieSameSite same_site,
+    net::CookiePriority priority,
+    const SetCookiesCallback& callback) {
   CHECK(false);
 }
 
 void MockCookieStore::GetCookiesWithOptionsAsync(
     const GURL& url,
     const net::CookieOptions& options,
-    GetCookiesCallback callback) {
+    const GetCookiesCallback& callback) {
   CHECK(false);
 }
 
 void MockCookieStore::GetCookieListWithOptionsAsync(
     const GURL& url,
     const net::CookieOptions& options,
-    GetCookieListCallback callback) {
+    const GetCookieListCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&MockCookieStore::SendCookies, base::Unretained(this), url,
-                     options, std::move(callback)));
+      FROM_HERE, base::Bind(&MockCookieStore::SendCookies,
+                            base::Unretained(this), url, options, callback));
 }
 
-void MockCookieStore::GetAllCookiesAsync(GetCookieListCallback callback) {
+void MockCookieStore::GetAllCookiesAsync(
+    const GetCookieListCallback& callback) {
   CHECK(false);
 }
 
 void MockCookieStore::DeleteCookieAsync(const GURL& url,
                                         const std::string& cookie_name,
-                                        base::OnceClosure callback) {
+                                        const base::Closure& callback) {
   CHECK(false);
 }
 
 void MockCookieStore::DeleteCanonicalCookieAsync(
     const net::CanonicalCookie& cookie,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   CHECK(false);
 }
 
 void MockCookieStore::DeleteAllCreatedBetweenAsync(
     const base::Time& delete_begin,
     const base::Time& delete_end,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   CHECK(false);
 }
 
@@ -135,15 +128,15 @@ void MockCookieStore::DeleteAllCreatedBetweenWithPredicateAsync(
     const base::Time& delete_begin,
     const base::Time& delete_end,
     const CookiePredicate& predicate,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   CHECK(false);
 }
 
-void MockCookieStore::DeleteSessionCookiesAsync(DeleteCallback) {
+void MockCookieStore::DeleteSessionCookiesAsync(const DeleteCallback&) {
   CHECK(false);
 }
 
-void MockCookieStore::FlushStore(base::OnceClosure callback) {
+void MockCookieStore::FlushStore(const base::Closure& callback) {
   CHECK(false);
 }
 
@@ -166,13 +159,13 @@ bool MockCookieStore::IsEphemeral() {
 
 void MockCookieStore::SendCookies(const GURL& url,
                                   const net::CookieOptions& options,
-                                  GetCookieListCallback callback) {
+                                  const GetCookieListCallback& callback) {
   net::CookieList result;
   for (const auto& cookie : cookies_) {
     if (cookie.IncludeForRequestURL(url, options))
       result.push_back(cookie);
   }
-  std::move(callback).Run(result);
+  callback.Run(result);
 }
 
 // MockURLRequestDelegate

@@ -61,7 +61,6 @@
 #include "components/subresource_filter/core/common/scoped_timers.h"
 #include "components/subresource_filter/core/common/test_ruleset_creator.h"
 #include "components/subresource_filter/core/common/test_ruleset_utils.h"
-#include "components/url_pattern_index/proto/rules.pb.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
@@ -81,8 +80,6 @@
 #include "url/gurl.h"
 
 namespace {
-
-namespace proto = url_pattern_index::proto;
 
 // The path to a multi-frame document used for tests.
 static constexpr const char kTestFrameSetPath[] =
@@ -1129,6 +1126,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, BlockOpenURLFromTab) {
   tester.ExpectBucketCount(kSubresourceFilterActionsHistogram, kActionUIShown,
                            0);
 
+  // Make sure the popup UI was shown.
   EXPECT_TRUE(TabSpecificContentSettings::FromWebContents(web_contents)
                   ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
 
@@ -1142,30 +1140,6 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, BlockOpenURLFromTab) {
   navigation_observer.Wait();
 
   // Popup UI should not be shown.
-  EXPECT_FALSE(TabSpecificContentSettings::FromWebContents(web_contents)
-                   ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
-}
-
-IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
-                       TraditionalWindowOpen_NotBlocked) {
-  Configuration config = Configuration::MakePresetForLiveRunOnPhishingSites();
-  config.activation_options.should_strengthen_popup_blocker = true;
-  ResetConfiguration(std::move(config));
-  GURL url(GetTestUrl("/title2.html"));
-  ConfigureAsPhishingURL(url);
-  ui_test_utils::NavigateToURL(browser(), GetTestUrl("/title1.html"));
-
-  // Only necessary so we have a valid ruleset.
-  ASSERT_NO_FATAL_FAILURE(SetRulesetWithRules(std::vector<proto::UrlRule>()));
-
-  // Should not trigger the popup blocker because internally opens the tab with
-  // a user gesture.
-  ui_test_utils::NavigateToURLWithDisposition(
-      browser(), url, WindowOpenDisposition::NEW_FOREGROUND_TAB,
-      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
-
-  content::WebContents* web_contents =
-      browser()->tab_strip_model()->GetActiveWebContents();
   EXPECT_FALSE(TabSpecificContentSettings::FromWebContents(web_contents)
                    ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
 }

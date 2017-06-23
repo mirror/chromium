@@ -7,8 +7,6 @@
 namespace subresource_filter {
 namespace testing {
 
-namespace proto = url_pattern_index::proto;
-
 proto::UrlRule CreateSuffixRule(base::StringPiece suffix) {
   proto::UrlRule rule;
   rule.set_semantics(proto::RULE_SEMANTICS_BLACKLIST);

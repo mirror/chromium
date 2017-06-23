@@ -38,7 +38,6 @@
 #include "platform/HTTPNames.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceResponse.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include "platform/network/NetworkUtils.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -66,22 +65,22 @@ WorkerScriptLoader::~WorkerScriptLoader() {
 void WorkerScriptLoader::LoadSynchronously(
     ExecutionContext& execution_context,
     const KURL& url,
+    WebURLRequest::FetchRequestMode fetch_request_mode,
     WebAddressSpace creation_address_space) {
   url_ = url;
   execution_context_ = &execution_context;
 
   ResourceRequest request(CreateResourceRequest(creation_address_space));
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeInclude);
-
   SECURITY_DCHECK(execution_context.IsWorkerGlobalScope());
 
   ThreadableLoaderOptions options;
-  options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
+  options.fetch_request_mode = fetch_request_mode;
   // FIXME: Should we add EnforceScriptSrcDirective here?
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
 
-  ResourceLoaderOptions resource_loader_options;
+  ResourceLoaderOptions resource_loader_options(
+      kAllowStoredCredentials, kClientDidNotRequestCredentials);
 
   WorkerThreadableLoader::LoadResourceSynchronously(
       ToWorkerGlobalScope(execution_context), request, *this, options,
@@ -92,7 +91,6 @@ void WorkerScriptLoader::LoadAsynchronously(
     ExecutionContext& execution_context,
     const KURL& url,
     WebURLRequest::FetchRequestMode fetch_request_mode,
-    WebURLRequest::FetchCredentialsMode fetch_credentials_mode,
     WebAddressSpace creation_address_space,
     std::unique_ptr<WTF::Closure> response_callback,
     std::unique_ptr<WTF::Closure> finished_callback) {
@@ -103,12 +101,11 @@ void WorkerScriptLoader::LoadAsynchronously(
   execution_context_ = &execution_context;
 
   ResourceRequest request(CreateResourceRequest(creation_address_space));
-  request.SetFetchCredentialsMode(fetch_credentials_mode);
-
   ThreadableLoaderOptions options;
   options.fetch_request_mode = fetch_request_mode;
 
-  ResourceLoaderOptions resource_loader_options;
+  ResourceLoaderOptions resource_loader_options(
+      kAllowStoredCredentials, kClientDidNotRequestCredentials);
 
   // During create, callbacks may happen which could remove the last reference
   // to this object, while some of the callchain assumes that the client and
@@ -183,12 +180,12 @@ void WorkerScriptLoader::DidReceiveData(const char* data, unsigned len) {
 
   if (!decoder_) {
     if (!response_encoding_.IsEmpty()) {
-      decoder_ = TextResourceDecoder::Create(TextResourceDecoderOptions(
-          TextResourceDecoderOptions::kPlainTextContent,
-          WTF::TextEncoding(response_encoding_)));
+      decoder_ =
+          TextResourceDecoder::Create(TextResourceDecoder::kPlainTextContent,
+                                      WTF::TextEncoding(response_encoding_));
     } else {
-      decoder_ = TextResourceDecoder::Create(TextResourceDecoderOptions(
-          TextResourceDecoderOptions::kPlainTextContent, UTF8Encoding()));
+      decoder_ = TextResourceDecoder::Create(
+          TextResourceDecoder::kPlainTextContent, UTF8Encoding());
     }
   }
 

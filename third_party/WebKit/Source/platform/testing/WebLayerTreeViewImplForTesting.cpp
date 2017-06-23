@@ -138,11 +138,11 @@ void WebLayerTreeViewImplForTesting::RecordWheelAndTouchScrollingCount(
     bool has_scrolled_by_wheel,
     bool has_scrolled_by_touch) {}
 
-void WebLayerTreeViewImplForTesting::RequestNewLayerTreeFrameSink() {
-  // Intentionally do not create and set a LayerTreeFrameSink.
+void WebLayerTreeViewImplForTesting::RequestNewCompositorFrameSink() {
+  // Intentionally do not create and set an CompositorFrameSink.
 }
 
-void WebLayerTreeViewImplForTesting::DidFailToInitializeLayerTreeFrameSink() {
+void WebLayerTreeViewImplForTesting::DidFailToInitializeCompositorFrameSink() {
   NOTREACHED();
 }
 

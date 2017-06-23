@@ -4,9 +4,6 @@
 
 #include "services/resource_coordinator/memory_instrumentation/coordinator_impl.h"
 
-#include <inttypes.h>
-#include <stdio.h>
-
 #include <utility>
 
 #include "base/bind.h"
@@ -17,7 +14,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_request_args.h"
-#include "base/trace_event/trace_event.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/constants.mojom.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
@@ -31,15 +27,14 @@ namespace {
 
 memory_instrumentation::CoordinatorImpl* g_coordinator_impl;
 
-using OSMemDump = base::trace_event::MemoryDumpCallbackResult::OSMemDump;
-
 // Returns the private memory footprint calcualted from given |os_dump|.
 //
 // See design docs linked in the bugs for the rationale of the computation:
 // - Linux/Android: https://crbug.com/707019 .
 // - Mac OS: https://crbug.com/707021 .
 // - Win: https://crbug.com/707022 .
-uint32_t CalculatePrivateFootprintKb(const OSMemDump& os_dump) {
+uint32_t CalculatePrivateFootprintKb(
+    const base::trace_event::MemoryDumpCallbackResult::OSMemDump& os_dump) {
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   uint64_t rss_anon_bytes = os_dump.platform_private_footprint.rss_anon_bytes;
   uint64_t vm_swap_bytes = os_dump.platform_private_footprint.vm_swap_bytes;
@@ -64,16 +59,6 @@ uint32_t CalculatePrivateFootprintKb(const OSMemDump& os_dump) {
 #endif
 }
 
-memory_instrumentation::mojom::OSMemDumpPtr CreatePublicOSDump(
-    const OSMemDump& internal_os_dump) {
-  memory_instrumentation::mojom::OSMemDumpPtr os_dump =
-      memory_instrumentation::mojom::OSMemDump::New();
-
-  os_dump->resident_set_kb = internal_os_dump.resident_set_kb;
-  os_dump->private_footprint_kb = CalculatePrivateFootprintKb(internal_os_dump);
-  return os_dump;
-}
-
 }  // namespace
 
 namespace memory_instrumentation {
@@ -83,13 +68,22 @@ CoordinatorImpl* CoordinatorImpl::GetInstance() {
   return g_coordinator_impl;
 }
 
-CoordinatorImpl::CoordinatorImpl(service_manager::Connector* connector)
-    : failed_memory_dump_count_(0), next_dump_id_(0) {
+CoordinatorImpl::CoordinatorImpl(bool initialize_memory_dump_manager,
+                                 service_manager::Connector* connector)
+    : failed_memory_dump_count_(0),
+      initialize_memory_dump_manager_(initialize_memory_dump_manager) {
+  if (initialize_memory_dump_manager) {
+    // TODO(primiano): the current state where the coordinator also creates a
+    // client (ClientProcessImpl) is contra-intuitive. BrowserMainLoop
+    // should be doing this.
+    ClientProcessImpl::CreateInstance(
+        ClientProcessImpl::Config(this, mojom::ProcessType::BROWSER));
+    base::trace_event::MemoryDumpManager::GetInstance()->set_tracing_process_id(
+        mojom::kServiceTracingProcessId);
+  }
   process_map_ = base::MakeUnique<ProcessMap>(connector);
   DCHECK(!g_coordinator_impl);
   g_coordinator_impl = this;
-  base::trace_event::MemoryDumpManager::GetInstance()->set_tracing_process_id(
-      mojom::kServiceTracingProcessId);
 }
 
 CoordinatorImpl::~CoordinatorImpl() {
@@ -109,16 +103,10 @@ void CoordinatorImpl::BindCoordinatorRequest(
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDump(
-    const base::trace_event::MemoryDumpRequestArgs& args_in,
+    const base::trace_event::MemoryDumpRequestArgs& args,
     const RequestGlobalMemoryDumpCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   bool another_dump_already_in_progress = !queued_memory_dump_requests_.empty();
-
-  // TODO(primiano): remove dump_guid from the request. For the moment callers
-  // should just pass a zero |dump_guid| in input. It should be an out-only arg.
-  DCHECK_EQ(0u, args_in.dump_guid);
-  base::trace_event::MemoryDumpRequestArgs args = args_in;
-  args.dump_guid = ++next_dump_id_;
 
   // If this is a periodic or peak memory dump request and there already is
   // another request in the queue with the same level of detail, there's no
@@ -186,15 +174,9 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
   const base::trace_event::MemoryDumpRequestArgs& args =
       queued_memory_dump_requests_.front().args;
 
-  TRACE_EVENT_NESTABLE_ASYNC_BEGIN2(
-      base::trace_event::MemoryDumpManager::kTraceCategory, "GlobalMemoryDump",
-      TRACE_ID_LOCAL(args.dump_guid), "dump_type",
-      base::trace_event::MemoryDumpTypeToString(args.dump_type),
-      "level_of_detail",
-      base::trace_event::MemoryDumpLevelOfDetailToString(args.level_of_detail));
-
-  // Note: the service process itself is registered as a ClientProcess and
-  // will be treated like any other process for the sake of memory dumps.
+  // No need to treat the service process different than other processes. The
+  // service process will register itself as a ClientProcess and
+  // will be treated like other client processes.
   pending_clients_for_current_dump_.clear();
   failed_memory_dump_count_ = 0;
   for (const auto& kv : clients_) {
@@ -266,7 +248,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     return;
 
   DCHECK(!queued_memory_dump_requests_.empty());
-  QueuedMemoryDumpRequest* request = &queued_memory_dump_requests_.front();
+  QueuedMemoryDumpRequest& request = queued_memory_dump_requests_.front();
 
   // Reconstruct a map of pid -> ProcessMemoryDump by reassembling the responses
   // received by the clients for this dump. In some cases the response coming
@@ -274,36 +256,30 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   // processes. A concrete case is Linux, where the browser process provides
   // details for the child processes to get around sandbox restrictions on
   // opening /proc pseudo files.
-
-  std::map<base::ProcessId, OSMemDump> os_dumps;
-  for (auto& result : request->process_memory_dumps) {
-    const base::ProcessId pid = result.first;
-    const OSMemDump dump = result.second->os_dump;
-
-    // TODO(hjd): We should have a better way to tell if os_dump is filled.
-    if (dump.resident_set_kb > 0) {
-      DCHECK_EQ(0u, os_dumps.count(pid));
-      os_dumps[pid] = dump;
-    }
-
-    for (auto& extra : result.second->extra_processes_dumps) {
-      const base::ProcessId extra_pid = extra.first;
-      const OSMemDump extra_dump = extra.second;
-      DCHECK_EQ(0u, os_dumps.count(extra_pid));
-      os_dumps[extra_pid] = extra_dump;
-    }
-  }
-
   std::map<base::ProcessId, mojom::ProcessMemoryDumpPtr> finalized_pmds;
-  for (auto& result : request->process_memory_dumps) {
+  for (auto& result : request.process_memory_dumps) {
     const base::ProcessId pid = result.first;
     mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[pid];
     if (!pmd)
       pmd = mojom::ProcessMemoryDump::New();
+    pmd->chrome_dump = result.second->chrome_dump;
+
+    // TODO(hjd): We should have a better way to tell if os_dump is filled.
+    if (result.second->os_dump.resident_set_kb > 0) {
+      DCHECK_EQ(0u, pmd->os_dump.resident_set_kb);
+      pmd->os_dump = result.second->os_dump;
+    }
+
+    for (auto& pair : result.second->extra_processes_dumps) {
+      const base::ProcessId extra_pid = pair.first;
+      mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[extra_pid];
+      if (!pmd)
+        pmd = mojom::ProcessMemoryDump::New();
+      DCHECK_EQ(0u, pmd->os_dump.resident_set_kb);
+      pmd->os_dump = result.second->extra_processes_dumps[extra_pid];
+    }
 
     pmd->process_type = result.second->process_type;
-    pmd->chrome_dump = result.second->chrome_dump;
-    pmd->os_dump = CreatePublicOSDump(os_dumps[pid]);
   }
 
   mojom::GlobalMemoryDumpPtr global_dump(mojom::GlobalMemoryDump::New());
@@ -316,22 +292,14 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     mojom::ProcessMemoryDumpPtr& pmd = pair.second;
     if (!pmd || !pmd->chrome_dump.malloc_total_kb)
       continue;
+    pmd->private_footprint = CalculatePrivateFootprintKb(pmd->os_dump);
     global_dump->process_dumps.push_back(std::move(pmd));
   }
 
-  const auto& callback = request->callback;
+  const auto& callback = request.callback;
   const bool global_success = failed_memory_dump_count_ == 0;
-  callback.Run(request->args.dump_guid, global_success, std::move(global_dump));
-
-  char guid_str[20];
-  sprintf(guid_str, "0x%" PRIx64, request->args.dump_guid);
-  TRACE_EVENT_NESTABLE_ASYNC_END2(
-      base::trace_event::MemoryDumpManager::kTraceCategory, "GlobalMemoryDump",
-      TRACE_ID_LOCAL(request->args.dump_guid), "dump_guid",
-      TRACE_STR_COPY(guid_str), "success", global_success);
-
+  callback.Run(request.args.dump_guid, global_success, std::move(global_dump));
   queued_memory_dump_requests_.pop_front();
-  request = nullptr;
 
   // Schedule the next queued dump (if applicable).
   if (!queued_memory_dump_requests_.empty()) {

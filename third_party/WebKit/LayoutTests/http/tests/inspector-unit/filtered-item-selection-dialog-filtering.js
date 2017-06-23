@@ -1,4 +1,4 @@
-TestRunner.loadModule("quick_open").then(test);
+TestRunner.loadLazyModules(["quick_open"]).then(test);
 function test() {
     TestRunner.addResult("Check to see that FilteredItemSelectionDialog uses proper regex to filter results.");
 
@@ -25,7 +25,7 @@ function test() {
 
         var filteredSelectionDialog = new QuickOpen.FilteredListWidget(provider, history);
         filteredSelectionDialog.showAsDialog();
-        var promise = TestRunner.addSnifferPromise(filteredSelectionDialog, "_itemsFilteredForTest").then(accept);
+        var promise = TestRunner.addSniffer(filteredSelectionDialog, "_itemsFilteredForTest").then(accept);
         filteredSelectionDialog.setQuery(query);
         filteredSelectionDialog._updateAfterItemsLoaded();
         return promise;

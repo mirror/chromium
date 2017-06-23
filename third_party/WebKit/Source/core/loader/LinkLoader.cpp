@@ -350,7 +350,8 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
         referrer_policy, href, document.OutgoingReferrer()));
   }
 
-  ResourceLoaderOptions options;
+  ResourceLoaderOptions options(kAllowStoredCredentials,
+                                kClientRequestedCredentials);
   options.initiator_info.name = FetchInitiatorTypeNames::link;
   FetchParameters link_fetch_params(resource_request, options);
   link_fetch_params.SetCharset(document.Encoding());
@@ -384,7 +385,8 @@ static Resource* PrefetchIfNeeded(Document& document,
           referrer_policy, href, document.OutgoingReferrer()));
     }
 
-    ResourceLoaderOptions options;
+    ResourceLoaderOptions options(kAllowStoredCredentials,
+                                  kClientRequestedCredentials);
     options.initiator_info.name = FetchInitiatorTypeNames::link;
     FetchParameters link_fetch_params(resource_request, options);
     if (cross_origin != kCrossOriginAttributeNotSet) {

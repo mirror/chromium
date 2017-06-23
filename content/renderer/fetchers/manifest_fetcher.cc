@@ -9,7 +9,7 @@
 #include "content/public/renderer/associated_resource_fetcher.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebFrame.h"
 
 namespace content {
 
@@ -23,17 +23,13 @@ ManifestFetcher::~ManifestFetcher() {
     Cancel();
 }
 
-void ManifestFetcher::Start(blink::WebLocalFrame* frame,
+void ManifestFetcher::Start(blink::WebFrame* frame,
                             bool use_credentials,
                             const Callback& callback) {
   callback_ = callback;
 
   blink::WebAssociatedURLLoaderOptions options;
-  // See https://w3c.github.io/manifest/. Use "include" when use_credentials is
-  // true, and "omit" otherwise.
-  options.fetch_credentials_mode =
-      use_credentials ? blink::WebURLRequest::kFetchCredentialsModeInclude
-                      : blink::WebURLRequest::kFetchCredentialsModeOmit;
+  options.allow_credentials = use_credentials;
   options.fetch_request_mode = blink::WebURLRequest::kFetchRequestModeCORS;
   fetcher_->SetLoaderOptions(options);
 
@@ -57,4 +53,4 @@ void ManifestFetcher::OnLoadComplete(const blink::WebURLResponse& response,
   callback.Run(response, data);
 }
 
-}  // namespace content
+} // namespace content

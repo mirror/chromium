@@ -37,9 +37,9 @@ constexpr int kOperationDelaySeconds = 3;
 // |serialized_payload|.
 bool WritePolicyFile(const base::FilePath& policy_path,
                      const std::string& serialized_payload,
-                     const std::string& policy_type,
-                     const base::TimeDelta& delay) {
-  base::PlatformThread::Sleep(delay);
+                     const std::string& policy_type) {
+  base::PlatformThread::Sleep(
+      base::TimeDelta::FromSeconds(kOperationDelaySeconds));
 
   em::PolicyData data;
   data.set_policy_value(serialized_payload);
@@ -63,18 +63,17 @@ bool WritePolicyFile(const base::FilePath& policy_path,
   return bytes_written == static_cast<int>(serialized_response.size());
 }
 
-void PostDelayedClosure(base::OnceClosure closure,
-                        const base::TimeDelta& delay) {
+void PostDelayedClosure(base::OnceClosure closure) {
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, std::move(closure), delay);
+      FROM_HERE, std::move(closure),
+      base::TimeDelta::FromSeconds(kOperationDelaySeconds));
 }
 
 }  // namespace
 
 namespace chromeos {
 
-FakeAuthPolicyClient::FakeAuthPolicyClient()
-    : operation_delay_(base::TimeDelta::FromSeconds(kOperationDelaySeconds)) {}
+FakeAuthPolicyClient::FakeAuthPolicyClient() {}
 
 FakeAuthPolicyClient::~FakeAuthPolicyClient() {}
 
@@ -101,8 +100,7 @@ void FakeAuthPolicyClient::JoinAdDomain(const std::string& machine_name,
       error = authpolicy::ERROR_PARSE_UPN_FAILED;
     }
   }
-  PostDelayedClosure(base::BindOnce(std::move(callback), error),
-                     operation_delay_);
+  PostDelayedClosure(base::BindOnce(std::move(callback), error));
 }
 
 void FakeAuthPolicyClient::AuthenticateUser(
@@ -124,29 +122,15 @@ void FakeAuthPolicyClient::AuthenticateUser(
     }
     error = auth_error_;
   }
-  PostDelayedClosure(base::BindOnce(std::move(callback), error, account_info),
-                     operation_delay_);
+  PostDelayedClosure(base::BindOnce(std::move(callback), error, account_info));
 }
 
 void FakeAuthPolicyClient::GetUserStatus(const std::string& object_guid,
                                          GetUserStatusCallback callback) {
   authpolicy::ActiveDirectoryUserStatus user_status;
-  user_status.set_password_status(password_status_);
-  user_status.set_tgt_status(tgt_status_);
-
-  authpolicy::ActiveDirectoryAccountInfo* const account_info =
-      user_status.mutable_account_info();
-  account_info->set_account_id(object_guid);
-  if (!display_name_.empty())
-    account_info->set_display_name(display_name_);
-  if (!given_name_.empty())
-    account_info->set_given_name(given_name_);
-
+  user_status.mutable_account_info()->set_account_id(object_guid);
   PostDelayedClosure(
-      base::BindOnce(std::move(callback), authpolicy::ERROR_NONE, user_status),
-      operation_delay_);
-  if (!on_get_status_closure_.is_null())
-    PostDelayedClosure(std::move(on_get_status_closure_), operation_delay_);
+      base::BindOnce(std::move(callback), authpolicy::ERROR_NONE, user_status));
 }
 
 void FakeAuthPolicyClient::RefreshDevicePolicy(RefreshPolicyCallback callback) {
@@ -172,7 +156,7 @@ void FakeAuthPolicyClient::RefreshDevicePolicy(RefreshPolicyCallback callback) {
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::BindOnce(&WritePolicyFile, policy_path, payload,
-                     "google/chromeos/device", operation_delay_),
+                     "google/chromeos/device"),
       std::move(callback));
 }
 
@@ -205,7 +189,7 @@ void FakeAuthPolicyClient::RefreshUserPolicy(const AccountId& account_id,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::BindOnce(&WritePolicyFile, policy_path, payload,
-                     "google/chromeos/user", operation_delay_),
+                     "google/chromeos/user"),
       std::move(callback));
 }
 

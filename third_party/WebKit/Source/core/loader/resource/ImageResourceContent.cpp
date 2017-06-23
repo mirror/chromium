@@ -313,10 +313,10 @@ void ImageResourceContent::NotifyObservers(
   }
 }
 
-PassRefPtr<Image> ImageResourceContent::CreateImage(bool is_multipart) {
+PassRefPtr<Image> ImageResourceContent::CreateImage() {
   if (info_->GetResponse().MimeType() == "image/svg+xml")
-    return SVGImage::Create(this, is_multipart);
-  return BitmapImage::Create(this, is_multipart);
+    return SVGImage::Create(this);
+  return BitmapImage::Create(this);
 }
 
 void ImageResourceContent::ClearImage() {
@@ -419,8 +419,7 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
     PassRefPtr<SharedBuffer> data,
     ResourceStatus status,
     UpdateImageOption update_image_option,
-    bool all_data_received,
-    bool is_multipart) {
+    bool all_data_received) {
   TRACE_EVENT0("blink", "ImageResourceContent::updateImage");
 
 #if DCHECK_IS_ON()
@@ -453,7 +452,7 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
       // or specific image frames).
       if (data) {
         if (!image_)
-          image_ = CreateImage(is_multipart);
+          image_ = CreateImage();
         DCHECK(image_);
         size_available_ = image_->SetData(std::move(data), all_data_received);
         DCHECK(all_data_received ||

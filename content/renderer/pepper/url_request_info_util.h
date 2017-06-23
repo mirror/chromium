@@ -14,7 +14,7 @@ struct URLRequestInfoData;
 }
 
 namespace blink {
-class WebLocalFrame;
+class WebFrame;
 class WebURLRequest;
 }
 
@@ -26,7 +26,7 @@ namespace content {
 // pointers) will be populated by this function on success.
 CONTENT_EXPORT bool CreateWebURLRequest(PP_Instance instance,
                                         ppapi::URLRequestInfoData* data,
-                                        blink::WebLocalFrame* frame,
+                                        blink::WebFrame* frame,
                                         blink::WebURLRequest* dest);
 
 // Returns true if universal access is required to use the given request.

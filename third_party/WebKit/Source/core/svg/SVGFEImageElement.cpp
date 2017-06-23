@@ -71,7 +71,8 @@ void SVGFEImageElement::ClearResourceReferences() {
 }
 
 void SVGFEImageElement::FetchImageResource() {
-  ResourceLoaderOptions options;
+  ResourceLoaderOptions options(kAllowStoredCredentials,
+                                kClientRequestedCredentials);
   options.initiator_info.name = localName();
   FetchParameters params(
       ResourceRequest(GetDocument().CompleteURL(HrefString())), options);

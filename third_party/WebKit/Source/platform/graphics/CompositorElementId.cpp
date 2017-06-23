@@ -40,7 +40,10 @@ CompositorElementIdFromDOMNodeId(DOMNodeId id,
   DCHECK(namespace_id == CompositorElementIdNamespace::kViewport ||
          namespace_id == CompositorElementIdNamespace::kLinkHighlight ||
          namespace_id == CompositorElementIdNamespace::kRootScroll ||
-         namespace_id == CompositorElementIdNamespace::kScrollState);
+         namespace_id == CompositorElementIdNamespace::kScrollState ||
+         namespace_id ==
+             CompositorElementIdNamespace::kPrimaryCompositorProxy ||
+         namespace_id == CompositorElementIdNamespace::kScrollCompositorProxy);
   return CreateCompositorElementId(id, namespace_id);
 }
 

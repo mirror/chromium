@@ -31,11 +31,6 @@ class PixelExpectations(GpuTestExpectations):
     # TODO(ccameron) fix these on Mac Retina
     self.Fail('Pixel_CSS3DBlueBox', ['mac'], bug=533690)
 
-    # TODO(ccameron): These changed when forcing the display to sRGB, and will
-    # need rebaseline.
-    self.Fail('Pixel_Video_MP4', bug=734255)
-    self.Fail('Pixel_Video_VP9', bug=734255)
-
     # TODO(vmiura) check / generate reference images for Android devices
     self.Fail('Pixel_SolidColorBackground', ['mac', 'android'], bug=624256)
 
@@ -69,8 +64,3 @@ class PixelExpectations(GpuTestExpectations):
               ['mac', ('intel', 0x0a2e)], bug=718183)
     self.Fail('Pixel_WebGLGreenTriangle_NonChromiumImage_NoAA_NoAlpha',
               ['mac', ('intel', 0x0a2e)], bug=718183)
-
-    self.Flaky('Pixel_OffscreenCanvasTransferBeforeStyleResize',
-              ['mac', 'linux', 'win', 'android'], bug=735228)
-    self.Flaky('Pixel_OffscreenCanvasTransferAfterStyleResize',
-              ['mac', 'linux', 'win', 'android'], bug=735171)

@@ -151,16 +151,11 @@ test("components_unittests") {
     "//components/upload_list:unit_tests",
     "//components/url_formatter:unit_tests",
     "//components/url_matcher:unit_tests",
-    "//components/url_pattern_index:unit_tests",
     "//components/variations:unit_tests",
     "//components/variations/service:unit_tests",
     "//components/web_resource:unit_tests",
     "//components/webdata/common:unit_tests",
   ]
-
-  if (toolkit_views && use_aura) {
-    deps += [ "//components/ui_devtools/views:unit_tests" ]
-  }
 
   if (enable_nacl) {
     deps += [ "//components/nacl/browser:unit_tests" ]
@@ -225,8 +220,6 @@ test("components_unittests") {
       "//components/subresource_filter/content/renderer:unit_tests",
       "//components/tracing:unit_tests",
       "//components/visitedlink/test:unit_tests",
-      "//components/viz/common:unit_tests",
-      "//components/viz/host:unit_tests",
       "//components/viz/service:unit_tests",
       "//components/wallpaper:unit_tests",
       "//components/web_cache/browser:unit_tests",

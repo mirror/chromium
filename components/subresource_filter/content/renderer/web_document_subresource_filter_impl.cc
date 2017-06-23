@@ -17,8 +17,6 @@
 
 namespace subresource_filter {
 
-namespace proto = url_pattern_index::proto;
-
 namespace {
 
 using WebLoadPolicy = blink::WebDocumentSubresourceFilter::LoadPolicy;

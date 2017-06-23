@@ -12,7 +12,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/output/layer_tree_frame_sink.h"
+#include "cc/output/compositor_frame_sink.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/shared_quad_state.h"
 #include "cc/quads/solid_color_draw_quad.h"
@@ -194,8 +194,8 @@ Surface::Surface() : window_(new aura::Window(new CustomWindowDelegate(this))) {
   window_->set_owned_by_parent(false);
   window_->AddObserver(this);
   aura::Env::GetInstance()->context_factory()->AddObserver(this);
-  layer_tree_frame_sink_holder_ = base::MakeUnique<LayerTreeFrameSinkHolder>(
-      this, window_->CreateLayerTreeFrameSink());
+  compositor_frame_sink_holder_ = base::MakeUnique<CompositorFrameSinkHolder>(
+      this, window_->CreateCompositorFrameSink());
 }
 
 Surface::~Surface() {
@@ -447,7 +447,7 @@ void Surface::Commit() {
   if (current_begin_frame_ack_.sequence_number !=
       cc::BeginFrameArgs::kInvalidFrameNumber) {
     if (!current_begin_frame_ack_.has_damage) {
-      layer_tree_frame_sink_holder_->GetLayerTreeFrameSink()
+      compositor_frame_sink_holder_->GetCompositorFrameSink()
           ->DidNotProduceFrame(current_begin_frame_ack_);
     }
     current_begin_frame_ack_.sequence_number =
@@ -491,7 +491,7 @@ void Surface::CommitSurfaceHierarchy() {
   // Reset damage.
   pending_damage_.setEmpty();
   DCHECK(!current_resource_.id ||
-         layer_tree_frame_sink_holder_->HasReleaseCallbackForResource(
+         compositor_frame_sink_holder_->HasReleaseCallbackForResource(
              current_resource_.id));
 
   // Synchronize window hierarchy. This will position and update the stacking
@@ -744,7 +744,7 @@ void Surface::BufferAttachment::Reset(base::WeakPtr<Buffer> buffer) {
 void Surface::UpdateResource(bool client_usage) {
   if (current_buffer_.buffer() &&
       current_buffer_.buffer()->ProduceTransferableResource(
-          layer_tree_frame_sink_holder_.get(), next_resource_id_++,
+          compositor_frame_sink_holder_.get(), next_resource_id_++,
           state_.only_visible_on_secure_output, client_usage,
           &current_resource_)) {
     current_resource_has_alpha_ =
@@ -776,7 +776,7 @@ void Surface::UpdateSurface(bool full_damage) {
 
   content_size_ = layer_size;
   // We need update window_'s bounds with content size, because the
-  // LayerTreeFrameSink may not update the window's size base the size of
+  // CompositorFrameSink may not update the window's size base the size of
   // the lastest submitted CompositorFrame.
   window_->SetBounds(gfx::Rect(window_->bounds().origin(), content_size_));
   // TODO(jbauman): Figure out how this interacts with the pixel size of
@@ -859,8 +859,8 @@ void Surface::UpdateSurface(bool full_damage) {
   }
 
   frame.render_pass_list.push_back(std::move(render_pass));
-  layer_tree_frame_sink_holder_->GetLayerTreeFrameSink()->SubmitCompositorFrame(
-      std::move(frame));
+  compositor_frame_sink_holder_->GetCompositorFrameSink()
+      ->SubmitCompositorFrame(std::move(frame));
 }
 
 }  // namespace exo

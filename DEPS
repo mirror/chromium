@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'eb64b9b201d04f9f72b37a05e86d459e6a91d974',
+  'skia_revision': '49b7b6f38fc9d6cbcfa5865db364ff79c3ed7bfe',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '4162e53c387a2e152e6cba1441b42304aa0c9660',
+  'v8_revision': '88178697abff240c3bdc774506b5b11e4db4c839',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -52,11 +52,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': '579d8c7dfcfaeb44fc7a650cd151539d87eedcd2',
+  'angle_revision': '12b0b399aaa22d0f5df0784997753f74ecdb8e36',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
-  'buildtools_revision': '38477c2e103caf651d113dad07cd3e4efb992209',
+  'buildtools_revision': 'b92ff913082ac9223b48eee9a5fc9db91346279a',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
@@ -64,7 +64,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '7726a581626bbb72d6ab294ae1adbad4ca10dfb0',
+  'pdfium_revision': 'e10509a3d2a1641984845d579963d574305ea6cc',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -72,7 +72,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling BoringSSL
   # and whatever else without interference from each other.
-  'boringssl_revision': '773ae91d0e0b94d35cbd123441f75d3299e4ad62',
+  'boringssl_revision': '24e5886c0edfc409c8083d10f9f1120111efd6f5',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling google-toolbox-for-mac
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'e810453155c3306b259a1db2270ab2dc4db21d16',
+  'catapult_revision': '1556ddcf20a16bdd8f54d7a9bd43df8dc5b4a53d',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -124,7 +124,7 @@ allowed_hosts = [
 
 deps = {
   'src/breakpad/src':
-    Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + '7a65a47345a86c9e9a3fbc2e92a756a429a0c82f',
+    Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + '29e4a2c5dfd36961d9207755e1f78faf2c933b44',
 
   'src/buildtools':
     Var('chromium_git') + '/chromium/buildtools.git' + '@' +  Var('buildtools_revision'),
@@ -235,7 +235,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'db65e09f7280a3cbe98bb11a394f1f4c2a952603', # commit position 18709
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'e6fddec2d5f2b9883f3d678c9e5623a8e1c6e28b', # commit position 18665
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),
@@ -287,6 +287,9 @@ deps = {
 
   'src/third_party/boringssl/src':
     Var('boringssl_git') + '/boringssl.git' + '@' +  Var('boringssl_revision'),
+
+  'src/third_party/py_trace_event/src':
+    Var('chromium_git') + '/external/py_trace_event.git' + '@' + 'dd463ea9e2c430de2b9e53dea57a77b4c3ac9b30',
 
   'src/third_party/dom_distiller_js/dist':
     Var('chromium_git') + '/external/github.com/chromium/dom-distiller-dist.git' + '@' + '232c293a4d3ebcbc4320f642af017ee054b3be93',
@@ -407,7 +410,7 @@ deps_os = {
 
     # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
     'src/third_party/chromite':
-      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '357960ebb8e053359b83fc91e53aea4744d0d179',
+      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '72c510ef4082934f80d526fcc72d66710baa9d25',
 
     # Dependency of chromite.git and skia.
     'src/third_party/pyelftools':
@@ -434,7 +437,7 @@ deps_os = {
 
     # Wayland protocols that add functionality not available in the core protocol.
     'src/third_party/wayland-protocols/src':
-      Var('chromium_git') + '/external/anongit.freedesktop.org/git/wayland/wayland-protocols.git' + '@' + '26c99346ab5f2273fe5581bc4f6397bbb834f747',
+      Var('chromium_git') + '/external/anongit.freedesktop.org/git/wayland/wayland-protocols.git' + '@' + '2e541a36deff5f2e16e25e27f7f93d26822eecc2',
 
     # The libevdev library (Chrome OS version).
     'src/third_party/libevdev/src':
@@ -785,6 +788,19 @@ hooks = [
                 '-d', 'src/tools/luci-go/linux64',
     ],
   },
+  # Pull eu-strip binaries using checked-in hashes.
+  {
+    'name': 'eu-strip',
+    'pattern': '.',
+    'action': [ 'python',
+                'src/third_party/depot_tools/download_from_google_storage.py',
+                '--no_resume',
+                '--platform=linux*',
+                '--no_auth',
+                '--bucket', 'chromium-eu-strip',
+                '-s', 'src/build/linux/bin/eu-strip.sha1',
+    ],
+  },
   {
     'name': 'drmemory',
     'pattern': '.',
@@ -804,7 +820,7 @@ hooks = [
     'action': ['python',
                'src/build/get_syzygy_binaries.py',
                '--output-dir=src/third_party/syzygy/binaries',
-               '--revision=9fe2e8224cea590f3bba83f244cb657785106c3b',
+               '--revision=dbb218b6d05ff1c17a4d86252b10880c2d8ebe08',
                '--overwrite',
                '--copy-dia-binaries',
     ],
@@ -1201,7 +1217,7 @@ hooks_os = {
       'action': [
         'python',
         'src/build/fuchsia/update_sdk.py',
-        '457adecd1600ab82efa6d142cc506560b7d8f7c8',
+        '239d463baa852d08322444f229fdf47ed446db97',
       ],
     },
   ],

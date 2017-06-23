@@ -72,9 +72,7 @@ Audits.AuditController = class {
     }
 
     var networkManager = target.model(SDK.NetworkManager);
-    var requests =
-        NetworkLog.networkLog.requests().filter(request => SDK.NetworkManager.forRequest(request) === networkManager);
-
+    var requests = networkManager ? NetworkLog.networkLog.requestsForManager(networkManager).slice() : [];
     var compositeProgress = new Common.CompositeProgress(this._progress);
     var subprogresses = [];
     for (var i = 0; i < categories.length; ++i)

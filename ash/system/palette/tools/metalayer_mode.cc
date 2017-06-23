@@ -41,11 +41,13 @@ void MetalayerMode::OnDisable() {
 }
 
 const gfx::VectorIcon& MetalayerMode::GetActiveTrayIcon() const {
-  return kPaletteTrayIconMetalayerIcon;
+  // TODO(kaznacheev) replace with the correct icon when it is available
+  return kPaletteTrayIconCaptureRegionIcon;
 }
 
 const gfx::VectorIcon& MetalayerMode::GetPaletteIcon() const {
-  return kPaletteModeMetalayerIcon;
+  // TODO(kaznacheev) replace with the correct icon when it is available
+  return kPaletteActionCaptureRegionIcon;
 }
 
 views::View* MetalayerMode::CreateView() {

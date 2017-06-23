@@ -33,28 +33,25 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/text/StringHash.h"
-#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
 class HTTPHeaderMap;
 class ResourceResponse;
 
-// Represents an entry of the CORS-preflight cache.
-// See https://fetch.spec.whatwg.org/#concept-cache.
 class CrossOriginPreflightResultCacheItem {
   WTF_MAKE_NONCOPYABLE(CrossOriginPreflightResultCacheItem);
   USING_FAST_MALLOC(CrossOriginPreflightResultCacheItem);
 
  public:
-  explicit CrossOriginPreflightResultCacheItem(
-      WebURLRequest::FetchCredentialsMode);
+  explicit CrossOriginPreflightResultCacheItem(StoredCredentials credentials)
+      : absolute_expiry_time_(0), credentials_(credentials) {}
 
   bool Parse(const ResourceResponse&, String& error_description);
   bool AllowsCrossOriginMethod(const String&, String& error_description) const;
   bool AllowsCrossOriginHeaders(const HTTPHeaderMap&,
                                 String& error_description) const;
-  bool AllowsRequest(WebURLRequest::FetchCredentialsMode,
+  bool AllowsRequest(StoredCredentials,
                      const String& method,
                      const HTTPHeaderMap& request_headers) const;
 
@@ -65,9 +62,7 @@ class CrossOriginPreflightResultCacheItem {
   // be to start a timer for the expiration delta that removes this from the
   // cache when it fires.
   double absolute_expiry_time_;
-
-  // Corresponds to the fields of the CORS-preflight cache with the same name.
-  bool credentials_;
+  StoredCredentials credentials_;
   HashSet<String> methods_;
   HeadersSet headers_;
 };
@@ -84,7 +79,7 @@ class CrossOriginPreflightResultCache {
                    std::unique_ptr<CrossOriginPreflightResultCacheItem>);
   bool CanSkipPreflight(const String& origin,
                         const KURL&,
-                        WebURLRequest::FetchCredentialsMode,
+                        StoredCredentials,
                         const String& method,
                         const HTTPHeaderMap& request_headers);
 

@@ -11,12 +11,12 @@ async function test() {
     target._resourceCategoryFilterUI._toggleTypeFilter(categoryName, false);
     InspectorTest.addResult("Clicked '" + categoryName + "' button.");
 
-    var requestFoo = new SDK.NetworkRequest("", "", "", "", "");
+    var requestFoo = new SDK.NetworkRequest(InspectorTest.networkManager, "", "", "", "", "");
     requestFoo.setResourceType(types.Script);
     requestFoo.setRequestId("foo");
     InspectorTest.networkManager._dispatcher._startNetworkRequest(requestFoo);
 
-    var requestBar = new SDK.NetworkRequest("", "", "", "", "");
+    var requestBar = new SDK.NetworkRequest(InspectorTest.networkManager, "", "", "", "", "");
     requestBar.setResourceType(types.Script);
     requestBar.setRequestId("bar");
     InspectorTest.networkManager._dispatcher._startNetworkRequest(requestBar);

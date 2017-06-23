@@ -493,7 +493,8 @@ TEST_P(WebViewTest, SetBaseBackgroundColorAndBlendWithExistingContent) {
 
   // Paint the root of the main frame in the way that CompositedLayerMapping
   // would.
-  LocalFrameView* view = web_view_helper_.LocalMainFrame()->GetFrameView();
+  LocalFrameView* view =
+      web_view_helper_.WebView()->MainFrameImpl()->GetFrameView();
   PaintLayer* root_layer = view->GetLayoutViewItem().Layer();
   LayoutRect paint_rect(0, 0, kWidth, kHeight);
   PaintLayerPaintingInfo painting_info(root_layer, paint_rect,
@@ -1328,8 +1329,8 @@ TEST_P(WebViewTest, FinishCompositionDoesNotRevealSelection) {
       web_view_helper_.InitializeAndLoad(base_url_ + "form_with_input.html");
   web_view->Resize(WebSize(800, 600));
   web_view->SetInitialFocus(false);
-  EXPECT_EQ(0, web_view->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_EQ(0, web_view->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(0, web_view->MainFrame()->GetScrollOffset().width);
+  EXPECT_EQ(0, web_view->MainFrame()->GetScrollOffset().height);
 
   // Set up a composition from existing text that needs to be committed.
   Vector<CompositionUnderline> empty_underlines;
@@ -1339,10 +1340,10 @@ TEST_P(WebViewTest, FinishCompositionDoesNotRevealSelection) {
 
   // Scroll the input field out of the viewport.
   Element* element = static_cast<Element*>(
-      web_view->MainFrameImpl()->GetDocument().GetElementById("btn"));
+      web_view->MainFrame()->GetDocument().GetElementById("btn"));
   element->scrollIntoView();
-  float offset_height = web_view->MainFrameImpl()->GetScrollOffset().height;
-  EXPECT_EQ(0, web_view->MainFrameImpl()->GetScrollOffset().width);
+  float offset_height = web_view->MainFrame()->GetScrollOffset().height;
+  EXPECT_EQ(0, web_view->MainFrame()->GetScrollOffset().width);
   EXPECT_LT(0, offset_height);
 
   WebTextInputInfo info = frame->GetInputMethodController()->TextInputInfo();
@@ -1352,8 +1353,8 @@ TEST_P(WebViewTest, FinishCompositionDoesNotRevealSelection) {
   frame->FrameWidget()
       ->GetActiveWebInputMethodController()
       ->FinishComposingText(WebInputMethodController::kDoNotKeepSelection);
-  EXPECT_EQ(0, web_view->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_EQ(offset_height, web_view->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(0, web_view->MainFrame()->GetScrollOffset().width);
+  EXPECT_EQ(offset_height, web_view->MainFrame()->GetScrollOffset().height);
 }
 
 TEST_P(WebViewTest, InsertNewLinePlacementAfterFinishComposingText) {
@@ -1539,7 +1540,7 @@ TEST_P(WebViewTest, SetCompositionFromExistingTextInRichText) {
   underlines[0] = WebCompositionUnderline(0, 4, 0, false, 0);
   WebLocalFrameBase* frame = web_view->MainFrameImpl();
   frame->SetEditableSelectionOffsets(1, 1);
-  WebDocument document = web_view->MainFrameImpl()->GetDocument();
+  WebDocument document = web_view->MainFrame()->GetDocument();
   EXPECT_FALSE(document.GetElementById("bold").IsNull());
   frame->SetCompositionFromExistingText(0, 4, underlines);
   EXPECT_FALSE(document.GetElementById("bold").IsNull());
@@ -1661,15 +1662,15 @@ TEST_P(WebViewTest, HistoryResetScrollAndScaleState) {
       web_view_helper_.InitializeAndLoad(base_url_ + "200-by-300.html");
   web_view_impl->Resize(WebSize(100, 150));
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().width);
+  EXPECT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().height);
 
   // Make the page scale and scroll with the given paremeters.
   web_view_impl->SetPageScaleFactor(2.0f);
-  web_view_impl->MainFrameImpl()->SetScrollOffset(WebSize(94, 111));
+  web_view_impl->MainFrame()->SetScrollOffset(WebSize(94, 111));
   EXPECT_EQ(2.0f, web_view_impl->PageScaleFactor());
-  EXPECT_EQ(94, web_view_impl->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_EQ(111, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(94, web_view_impl->MainFrame()->GetScrollOffset().width);
+  EXPECT_EQ(111, web_view_impl->MainFrame()->GetScrollOffset().height);
   LocalFrame* main_frame_local =
       ToLocalFrame(web_view_impl->GetPage()->MainFrame());
   main_frame_local->Loader().SaveScrollState();
@@ -1691,8 +1692,8 @@ TEST_P(WebViewTest, HistoryResetScrollAndScaleState) {
   // Confirm that resetting the page state resets the saved scroll position.
   web_view_impl->ResetScrollAndScaleState();
   EXPECT_EQ(1.0f, web_view_impl->PageScaleFactor());
-  EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().width);
+  EXPECT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().height);
   EXPECT_EQ(1.0f, main_frame_local->Loader()
                       .GetDocumentLoader()
                       ->GetHistoryItem()
@@ -1717,7 +1718,7 @@ TEST_P(WebViewTest, BackForwardRestoreScroll) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   // Emulate a user scroll
-  web_view_impl->MainFrameImpl()->SetScrollOffset(WebSize(0, 900));
+  web_view_impl->MainFrame()->SetScrollOffset(WebSize(0, 900));
   LocalFrame* main_frame_local =
       ToLocalFrame(web_view_impl->GetPage()->MainFrame());
   Persistent<HistoryItem> item1 =
@@ -1761,8 +1762,8 @@ TEST_P(WebViewTest, BackForwardRestoreScroll) {
       FrameLoadRequest(nullptr, item3->GenerateResourceRequest(
                                     WebCachePolicy::kUseProtocolCachePolicy)),
       kFrameLoadTypeBackForward, item3.Get(), kHistorySameDocumentLoad);
-  EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_GT(web_view_impl->MainFrameImpl()->GetScrollOffset().height, 2000);
+  EXPECT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().width);
+  EXPECT_GT(web_view_impl->MainFrame()->GetScrollOffset().height, 2000);
 }
 
 // Tests that we restore scroll and scale *after* the fullscreen styles are
@@ -1775,8 +1776,8 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleFullscreenStyles) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   // Scroll the page down.
-  web_view_impl->MainFrameImpl()->SetScrollOffset(WebSize(0, 2000));
-  ASSERT_EQ(2000, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  web_view_impl->MainFrame()->SetScrollOffset(WebSize(0, 2000));
+  ASSERT_EQ(2000, web_view_impl->MainFrame()->GetScrollOffset().height);
 
   // Enter fullscreen.
   Document* document =
@@ -1788,7 +1789,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleFullscreenStyles) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   // Sanity-check. There should be no scrolling possible.
-  ASSERT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  ASSERT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().height);
   ASSERT_EQ(0, web_view_impl->MainFrameImpl()
                    ->GetFrameView()
                    ->MaximumScrollOffset()
@@ -1802,7 +1803,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleFullscreenStyles) {
   EXPECT_TRUE(web_view_impl->MainFrameImpl()->GetFrameView()->NeedsLayout());
   web_view_impl->UpdateAllLifecyclePhases();
 
-  EXPECT_EQ(2000, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(2000, web_view_impl->MainFrame()->GetScrollOffset().height);
 }
 
 // Tests that exiting and immediately reentering fullscreen doesn't cause the
@@ -1815,8 +1816,8 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleExitAndReenter) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   // Scroll the page down.
-  web_view_impl->MainFrameImpl()->SetScrollOffset(WebSize(0, 2000));
-  ASSERT_EQ(2000, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  web_view_impl->MainFrame()->SetScrollOffset(WebSize(0, 2000));
+  ASSERT_EQ(2000, web_view_impl->MainFrame()->GetScrollOffset().height);
 
   // Enter fullscreen.
   Document* document =
@@ -1828,7 +1829,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleExitAndReenter) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   // Sanity-check. There should be no scrolling possible.
-  ASSERT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  ASSERT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().height);
   ASSERT_EQ(0, web_view_impl->MainFrameImpl()
                    ->GetFrameView()
                    ->MaximumScrollOffset()
@@ -1843,7 +1844,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleExitAndReenter) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   // Sanity-check. There should be no scrolling possible.
-  ASSERT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  ASSERT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().height);
   ASSERT_EQ(0, web_view_impl->MainFrameImpl()
                    ->GetFrameView()
                    ->MaximumScrollOffset()
@@ -1853,7 +1854,7 @@ TEST_P(WebViewTest, FullscreenResetScrollAndScaleExitAndReenter) {
   web_view_impl->DidExitFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
 
-  EXPECT_EQ(2000, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(2000, web_view_impl->MainFrame()->GetScrollOffset().height);
 }
 
 TEST_P(WebViewTest, EnterFullscreenResetScrollAndScaleState) {
@@ -1862,16 +1863,16 @@ TEST_P(WebViewTest, EnterFullscreenResetScrollAndScaleState) {
       web_view_helper_.InitializeAndLoad(base_url_ + "200-by-300.html");
   web_view_impl->Resize(WebSize(100, 150));
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().width);
+  EXPECT_EQ(0, web_view_impl->MainFrame()->GetScrollOffset().height);
 
   // Make the page scale and scroll with the given paremeters.
   web_view_impl->SetPageScaleFactor(2.0f);
-  web_view_impl->MainFrameImpl()->SetScrollOffset(WebSize(94, 111));
+  web_view_impl->MainFrame()->SetScrollOffset(WebSize(94, 111));
   web_view_impl->SetVisualViewportOffset(WebFloatPoint(12, 20));
   EXPECT_EQ(2.0f, web_view_impl->PageScaleFactor());
-  EXPECT_EQ(94, web_view_impl->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_EQ(111, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(94, web_view_impl->MainFrame()->GetScrollOffset().width);
+  EXPECT_EQ(111, web_view_impl->MainFrame()->GetScrollOffset().height);
   EXPECT_EQ(12, web_view_impl->VisualViewportOffset().x);
   EXPECT_EQ(20, web_view_impl->VisualViewportOffset().y);
 
@@ -1895,8 +1896,8 @@ TEST_P(WebViewTest, EnterFullscreenResetScrollAndScaleState) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   EXPECT_EQ(2.0f, web_view_impl->PageScaleFactor());
-  EXPECT_EQ(94, web_view_impl->MainFrameImpl()->GetScrollOffset().width);
-  EXPECT_EQ(111, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
+  EXPECT_EQ(94, web_view_impl->MainFrame()->GetScrollOffset().width);
+  EXPECT_EQ(111, web_view_impl->MainFrame()->GetScrollOffset().height);
   EXPECT_EQ(12, web_view_impl->VisualViewportOffset().x);
   EXPECT_EQ(20, web_view_impl->VisualViewportOffset().y);
 }
@@ -1960,12 +1961,12 @@ TEST_P(WebViewTest, DragDropURL) {
   // Drag and drop barUrl and verify that we've navigated to it.
   DragAndDropURL(web_view, bar_url);
   EXPECT_EQ(bar_url,
-            web_view->MainFrameImpl()->GetDocument().Url().GetString().Utf8());
+            web_view->MainFrame()->GetDocument().Url().GetString().Utf8());
 
   // Drag and drop fooUrl and verify that we've navigated back to it.
   DragAndDropURL(web_view, foo_url);
   EXPECT_EQ(foo_url,
-            web_view->MainFrameImpl()->GetDocument().Url().GetString().Utf8());
+            web_view->MainFrame()->GetDocument().Url().GetString().Utf8());
 
   // Disable navigation on drag-and-drop.
   web_view->SettingsImpl()->SetNavigateOnDragDrop(false);
@@ -1974,7 +1975,7 @@ TEST_P(WebViewTest, DragDropURL) {
   // occurred.
   DragAndDropURL(web_view, bar_url);
   EXPECT_EQ(foo_url,
-            web_view->MainFrameImpl()->GetDocument().Url().GetString().Utf8());
+            web_view->MainFrame()->GetDocument().Url().GetString().Utf8());
 }
 
 bool WebViewTest::TapElement(WebInputEvent::Type type, Element* element) {
@@ -2010,7 +2011,8 @@ bool WebViewTest::TapElementById(WebInputEvent::Type type,
                                  const WebString& id) {
   DCHECK(web_view_helper_.WebView());
   Element* element = static_cast<Element*>(
-      web_view_helper_.LocalMainFrame()->GetDocument().GetElementById(id));
+      web_view_helper_.WebView()->MainFrame()->GetDocument().GetElementById(
+          id));
   return TapElement(type, element);
 }
 
@@ -2136,8 +2138,8 @@ TEST_P(WebViewTest, LongPressObject) {
   EXPECT_NE(WebInputEventResult::kHandledSystem,
             web_view->HandleInputEvent(WebCoalescedInputEvent(event)));
 
-  HTMLElement* element = ToHTMLElement(
-      web_view->MainFrameImpl()->GetDocument().GetElementById("obj"));
+  HTMLElement* element =
+      ToHTMLElement(web_view->MainFrame()->GetDocument().GetElementById("obj"));
   EXPECT_FALSE(element->CanStartSelection());
 }
 
@@ -2161,8 +2163,8 @@ TEST_P(WebViewTest, LongPressObjectFallback) {
   EXPECT_EQ(WebInputEventResult::kHandledSystem,
             web_view->HandleInputEvent(WebCoalescedInputEvent(event)));
 
-  HTMLElement* element = ToHTMLElement(
-      web_view->MainFrameImpl()->GetDocument().GetElementById("obj"));
+  HTMLElement* element =
+      ToHTMLElement(web_view->MainFrame()->GetDocument().GetElementById("obj"));
   EXPECT_TRUE(element->CanStartSelection());
 }
 
@@ -2248,11 +2250,11 @@ TEST_P(WebViewTest, showContextMenuOnLongPressingLinks) {
 
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureLongPress, anchor_tag_id));
   EXPECT_STREQ("anchor contextmenu",
-               web_view->MainFrameImpl()->GetDocument().Title().Utf8().data());
+               web_view->MainFrame()->GetDocument().Title().Utf8().data());
 
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureLongPress, image_tag_id));
   EXPECT_STREQ("image contextmenu",
-               web_view->MainFrameImpl()->GetDocument().Title().Utf8().data());
+               web_view->MainFrame()->GetDocument().Title().Utf8().data());
 }
 
 TEST_P(WebViewTest, LongPressEmptyEditableSelection) {
@@ -2383,8 +2385,7 @@ TEST_P(WebViewTest, TouchDoesntSelectEmptyTextarea) {
   EXPECT_TRUE(frame->SelectionAsText().IsEmpty());
 
   HTMLTextAreaElement* text_area_element = toHTMLTextAreaElement(
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
-          blanklinestextbox));
+      web_view->MainFrame()->GetDocument().GetElementById(blanklinestextbox));
   text_area_element->setValue("hello");
 
   // Long-press past last word of textbox.
@@ -2739,7 +2740,7 @@ TEST_P(WebViewTest, FinishComposingTextDoesntTriggerAutofillTextChange) {
   frame->SetAutofillClient(&client);
   web_view->SetInitialFocus(false);
 
-  WebDocument document = web_view->MainFrameImpl()->GetDocument();
+  WebDocument document = web_view->MainFrame()->GetDocument();
   HTMLFormControlElement* form =
       ToHTMLFormControlElement(document.GetElementById("sample"));
 
@@ -2794,7 +2795,7 @@ TEST_P(WebViewTest,
 
   EXPECT_EQ(0, client.TextChanges());
 
-  WebDocument document = web_view->MainFrameImpl()->GetDocument();
+  WebDocument document = web_view->MainFrame()->GetDocument();
   EXPECT_EQ(WebString::FromUTF8("none"),
             document.GetElementById("inputEvent").FirstChild().NodeValue());
 
@@ -2881,7 +2882,7 @@ TEST_P(WebViewTest, FocusExistingFrameOnNavigate) {
 
 TEST_P(WebViewTest, DispatchesFocusOutFocusInOnViewToggleFocus) {
   RegisterMockedHttpURLLoad("focusout_focusin_events.html");
-  WebViewBase* web_view = web_view_helper_.InitializeAndLoad(
+  WebView* web_view = web_view_helper_.InitializeAndLoad(
       base_url_ + "focusout_focusin_events.html");
 
   web_view->SetFocus(true);
@@ -2889,13 +2890,13 @@ TEST_P(WebViewTest, DispatchesFocusOutFocusInOnViewToggleFocus) {
   web_view->SetFocus(true);
 
   WebElement element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById("message");
+      web_view->MainFrame()->GetDocument().GetElementById("message");
   EXPECT_STREQ("focusoutfocusin", element.TextContent().Utf8().data());
 }
 
 TEST_P(WebViewTest, DispatchesDomFocusOutDomFocusInOnViewToggleFocus) {
   RegisterMockedHttpURLLoad("domfocusout_domfocusin_events.html");
-  WebViewBase* web_view = web_view_helper_.InitializeAndLoad(
+  WebView* web_view = web_view_helper_.InitializeAndLoad(
       base_url_ + "domfocusout_domfocusin_events.html");
 
   web_view->SetFocus(true);
@@ -2903,7 +2904,7 @@ TEST_P(WebViewTest, DispatchesDomFocusOutDomFocusInOnViewToggleFocus) {
   web_view->SetFocus(true);
 
   WebElement element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById("message");
+      web_view->MainFrame()->GetDocument().GetElementById("message");
   EXPECT_STREQ("DOMFocusOutDOMFocusIn", element.TextContent().Utf8().data());
 }
 
@@ -3010,7 +3011,7 @@ TEST_P(WebViewTest, ChooseValueFromDateTimeChooser) {
 
 TEST_P(WebViewTest, DispatchesFocusBlurOnViewToggle) {
   RegisterMockedHttpURLLoad("focus_blur_events.html");
-  WebViewBase* web_view =
+  WebView* web_view =
       web_view_helper_.InitializeAndLoad(base_url_ + "focus_blur_events.html");
 
   web_view->SetFocus(true);
@@ -3018,7 +3019,7 @@ TEST_P(WebViewTest, DispatchesFocusBlurOnViewToggle) {
   web_view->SetFocus(true);
 
   WebElement element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById("message");
+      web_view->MainFrame()->GetDocument().GetElementById("message");
   // Expect not to see duplication of events.
   EXPECT_STREQ("blurfocus", element.TextContent().Utf8().data());
 }
@@ -3190,7 +3191,7 @@ TEST_P(WebViewTest, AddFrameInCloseURLUnload) {
   RegisterMockedHttpURLLoad("add_frame_in_unload.html");
   web_view_helper_.InitializeAndLoad(base_url_ + "add_frame_in_unload.html",
                                      &frame_client);
-  web_view_helper_.LocalMainFrame()->DispatchUnloadEvent();
+  web_view_helper_.WebView()->MainFrameImpl()->DispatchUnloadEvent();
   EXPECT_EQ(0, frame_client.Count());
   web_view_helper_.Reset();
 }
@@ -3554,7 +3555,7 @@ TEST_P(WebViewTest, AutoResizeSubtreeLayout) {
   LoadFrame(web_view->MainFrameImpl(), url);
 
   LocalFrameView* frame_view =
-      web_view_helper_.LocalMainFrame()->GetFrameView();
+      web_view_helper_.WebView()->MainFrameImpl()->GetFrameView();
 
   // Auto-resizing used to DCHECK(needsLayout()) in LayoutBlockFlow::layout.
   // This EXPECT is merely a dummy. The real test is that we don't trigger
@@ -3604,9 +3605,9 @@ TEST_P(WebViewTest, PreferredSizeDirtyLayout) {
   std::string url = base_url_ + "specify_size.html?100px:100px";
   URLTestHelpers::RegisterMockedURLLoad(
       ToKURL(url), testing::WebTestDataPath("specify_size.html"));
-  WebViewBase* web_view = web_view_helper_.InitializeAndLoad(url);
+  WebView* web_view = web_view_helper_.InitializeAndLoad(url);
   WebElement document_element =
-      web_view->MainFrameImpl()->GetDocument().DocumentElement();
+      web_view->MainFrame()->GetDocument().DocumentElement();
 
   WebSize size = web_view->ContentsPreferredMinimumSize();
   EXPECT_EQ(100, size.width);
@@ -3654,8 +3655,8 @@ TEST_P(WebViewTest, ShowUnhandledTapUIIfNeeded) {
   RegisterMockedHttpURLLoad("Ahem.ttf");
   RegisterMockedHttpURLLoad(test_file);
   UnhandledTapWebViewClient client;
-  WebViewBase* web_view = web_view_helper_.InitializeAndLoad(
-      base_url_ + test_file, nullptr, &client);
+  WebView* web_view = web_view_helper_.InitializeAndLoad(base_url_ + test_file,
+                                                         nullptr, &client);
   web_view->Resize(WebSize(500, 300));
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
@@ -3681,7 +3682,7 @@ TEST_P(WebViewTest, ShowUnhandledTapUIIfNeeded) {
   EXPECT_TRUE(client.GetWebNode().IsTextNode());
   // Make sure the returned text node has the parent element that was our
   // target.
-  EXPECT_EQ(web_view->MainFrameImpl()->GetDocument().GetElementById("target"),
+  EXPECT_EQ(web_view->MainFrame()->GetDocument().GetElementById("target"),
             client.GetWebNode().ParentNode());
 
   // Test correct conversion of coordinates to viewport space under pinch-zoom.
@@ -3958,7 +3959,7 @@ TEST_P(WebViewTest, SubframeBeforeUnloadUseCounter) {
   WebViewBase* web_view =
       web_view_helper_.InitializeAndLoad(base_url_ + "single_iframe.html");
 
-  WebLocalFrame* frame = web_view_helper_.LocalMainFrame();
+  WebLocalFrame* frame = web_view_helper_.WebView()->MainFrameImpl();
   Document* document =
       ToLocalFrame(web_view_helper_.WebView()->GetPage()->MainFrame())
           ->GetDocument();

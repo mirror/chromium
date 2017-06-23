@@ -126,8 +126,6 @@ class CORE_EXPORT ContentSecurityPolicy
     kCheckReportOnly
   };
 
-  static const size_t kMaxSampleLength = 40;
-
   static ContentSecurityPolicy* Create() { return new ContentSecurityPolicy(); }
   ~ContentSecurityPolicy();
   DECLARE_TRACE();
@@ -174,10 +172,10 @@ class CORE_EXPORT ContentSecurityPolicy
   // exception in the event of a violation. When the caller will throw
   // an exception, ContentSecurityPolicy does not log a violation
   // message to the console because it would be redundant.
-  bool AllowEval(ScriptState*,
-                 SecurityViolationReportingPolicy,
-                 ExceptionStatus,
-                 const String& script_content) const;
+  bool AllowEval(ScriptState* = nullptr,
+                 SecurityViolationReportingPolicy =
+                     SecurityViolationReportingPolicy::kReport,
+                 ExceptionStatus = kWillNotThrowException) const;
   bool AllowPluginType(const String& type,
                        const String& type_attribute,
                        const KURL&,

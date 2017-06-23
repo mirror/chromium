@@ -721,7 +721,8 @@ bool ScriptLoader::FetchClassicScript(
         DocumentWriteIntervention::kDoNotFetchDocWrittenScript;
   }
 
-  ResourceLoaderOptions options;
+  ResourceLoaderOptions options(kAllowStoredCredentials,
+                                kClientRequestedCredentials);
   options.initiator_info.name = element_->InitiatorName();
   FetchParameters params(resource_request, options);
 

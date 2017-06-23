@@ -72,7 +72,6 @@ PerfUI.PieChart = class {
       this._slices[i].remove();
     this._slices = [];
     this._totalValue = totalValue;
-    this._lastAngle = -Math.PI / 2;
     var totalString;
     if (totalValue)
       totalString = this._formatter ? this._formatter(totalValue) : totalValue;

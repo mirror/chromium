@@ -68,7 +68,6 @@
 #include "components/security_state/core/security_state.h"
 #include "components/security_state/core/switches.h"
 #include "components/ssl_errors/error_classification.h"
-#include "components/strings/grit/components_strings.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/variations/variations_switches.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
@@ -107,7 +106,6 @@
 #include "net/ssl/ssl_info.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
-#include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/request_handler_util.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "net/test/test_certificate_data.h"
@@ -116,7 +114,6 @@
 #include "net/url_request/url_request_filter.h"
 #include "net/url_request/url_request_job.h"
 #include "net/url_request/url_request_test_util.h"
-#include "ui/base/l10n/l10n_util.h"
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 #include "chrome/browser/ssl/captive_portal_blocking_page.h"
@@ -3606,56 +3603,10 @@ IN_PROC_BROWSER_TEST_F(SSLNetworkTimeBrowserTest,
   TriggerTimeResponse();
 }
 
-namespace {
-
-// Fails with a CHECK for all requests over HTTP except for favicons. This is to
-// ensure that name mismatch redirect feature's suggest URL ping stops on
-// redirects and never hits an HTTP URL.
-class HttpNameMismatchPingInterceptor : public net::URLRequestInterceptor {
- public:
-  HttpNameMismatchPingInterceptor() {}
-  ~HttpNameMismatchPingInterceptor() override {}
-
-  net::URLRequestJob* MaybeInterceptRequest(
-      net::URLRequest* request,
-      net::NetworkDelegate* delegate) const override {
-    if (request->url().path() == "/favicon.ico") {
-      // When a page doesn't list a favicon, a favicon request is automatically
-      // made over HTTP. These are harmless and don't leak the original page's
-      // URL, so ignore them.
-      return nullptr;
-    }
-
-    EXPECT_TRUE(false)
-        << "Name mismatch pings must never be over HTTP. This request was for "
-        << request->url();
-    return nullptr;
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(HttpNameMismatchPingInterceptor);
-};
-
-void SetUpHttpNameMismatchPingInterceptorOnIOThread() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  // Add interceptors for HTTP versions of example.org and www.example.org.
-  // These are the hostnames used in the tests, and we never want them to be
-  // contacted over HTTP.
-  net::URLRequestFilter::GetInstance()->AddHostnameInterceptor(
-      "http", "example.org",
-      std::unique_ptr<HttpNameMismatchPingInterceptor>(
-          new HttpNameMismatchPingInterceptor()));
-  net::URLRequestFilter::GetInstance()->AddHostnameInterceptor(
-      "http", "www.example.org",
-      std::unique_ptr<HttpNameMismatchPingInterceptor>(
-          new HttpNameMismatchPingInterceptor()));
-}
-
-}  // namespace
-
 class CommonNameMismatchBrowserTest : public CertVerifierBrowserTest {
  public:
   CommonNameMismatchBrowserTest() : CertVerifierBrowserTest() {}
+  ~CommonNameMismatchBrowserTest() override {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // Enable finch experiment for SSL common name mismatch handling.
@@ -3666,15 +3617,6 @@ class CommonNameMismatchBrowserTest : public CertVerifierBrowserTest {
   void SetUpOnMainThread() override {
     CertVerifierBrowserTest::SetUpOnMainThread();
     host_resolver()->AddRule("*", "127.0.0.1");
-    content::BrowserThread::PostTask(
-        content::BrowserThread::IO, FROM_HERE,
-        base::Bind(&SetUpHttpNameMismatchPingInterceptorOnIOThread));
-  }
-
-  void TearDownOnMainThread() override {
-    content::BrowserThread::PostTask(content::BrowserThread::IO, FROM_HERE,
-                                     base::Bind(&CleanUpOnIOThread));
-    CertVerifierBrowserTest::TearDownOnMainThread();
   }
 };
 
@@ -3683,14 +3625,14 @@ class CommonNameMismatchBrowserTest : public CertVerifierBrowserTest {
 // mail.example.com.
 IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
                        ShouldShowWWWSubdomainMismatchInterstitial) {
-  net::EmbeddedTestServer https_server_example_domain(
+  net::EmbeddedTestServer https_server_example_domain_(
       net::EmbeddedTestServer::TYPE_HTTPS);
-  https_server_example_domain.ServeFilesFromSourceDirectory(
+  https_server_example_domain_.ServeFilesFromSourceDirectory(
       base::FilePath(kDocRoot));
-  ASSERT_TRUE(https_server_example_domain.Start());
+  ASSERT_TRUE(https_server_example_domain_.Start());
 
   scoped_refptr<net::X509Certificate> cert =
-      https_server_example_domain.GetCertificate();
+      https_server_example_domain_.GetCertificate();
 
   // Use the "spdy_pooling.pem" cert which has "mail.example.com"
   // as one of its SANs.
@@ -3714,11 +3656,11 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
 
   // Use a complex URL to ensure the path, etc., are preserved. The path itself
   // does not matter.
-  const GURL https_server_url =
-      https_server_example_domain.GetURL("/ssl/google.html?a=b#anchor");
+  GURL https_server_url =
+      https_server_example_domain_.GetURL("/ssl/google.html?a=b#anchor");
   GURL::Replacements replacements;
   replacements.SetHostStr("www.mail.example.com");
-  const GURL https_server_mismatched_url =
+  GURL https_server_mismatched_url =
       https_server_url.ReplaceComponents(replacements);
 
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
@@ -3743,14 +3685,14 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
 // for www.example.org. Verify that the page redirects to www.example.org.
 IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
                        CheckWWWSubdomainMismatchInverse) {
-  net::EmbeddedTestServer https_server_example_domain(
+  net::EmbeddedTestServer https_server_example_domain_(
       net::EmbeddedTestServer::TYPE_HTTPS);
-  https_server_example_domain.ServeFilesFromSourceDirectory(
+  https_server_example_domain_.ServeFilesFromSourceDirectory(
       base::FilePath(kDocRoot));
-  ASSERT_TRUE(https_server_example_domain.Start());
+  ASSERT_TRUE(https_server_example_domain_.Start());
 
   scoped_refptr<net::X509Certificate> cert =
-      https_server_example_domain.GetCertificate();
+      https_server_example_domain_.GetCertificate();
 
   net::CertVerifyResult verify_result;
   verify_result.verified_cert =
@@ -3767,11 +3709,11 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
   mock_cert_verifier()->AddResultForCertAndHost(cert.get(), "www.example.org",
                                                 verify_result_valid, net::OK);
 
-  const GURL https_server_url =
-      https_server_example_domain.GetURL("/ssl/google.html?a=b");
+  GURL https_server_url =
+      https_server_example_domain_.GetURL("/ssl/google.html?a=b");
   GURL::Replacements replacements;
   replacements.SetHostStr("example.org");
-  const GURL https_server_mismatched_url =
+  GURL https_server_mismatched_url =
       https_server_url.ReplaceComponents(replacements);
 
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
@@ -3787,85 +3729,6 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
                      AuthState::NONE);
 }
 
-namespace {
-// Redirects incoming request to http://example.org.
-std::unique_ptr<net::test_server::HttpResponse> HTTPSToHTTPRedirectHandler(
-    const net::EmbeddedTestServer* test_server,
-    const net::test_server::HttpRequest& request) {
-  GURL::Replacements replacements;
-  replacements.SetHostStr("example.org");
-  replacements.SetSchemeStr("http");
-  const GURL redirect_url =
-      test_server->base_url().ReplaceComponents(replacements);
-
-  std::unique_ptr<net::test_server::BasicHttpResponse> http_response(
-      new net::test_server::BasicHttpResponse);
-  http_response->set_code(net::HTTP_MOVED_PERMANENTLY);
-  http_response->AddCustomHeader("Location", redirect_url.spec());
-  return std::move(http_response);
-}
-}  // namespace
-
-// Common name mismatch handling feature should ignore redirects when pinging
-// the suggested hostname. Visit the URL example.org on a server that presents a
-// valid certificate for www.example.org. In this case, www.example.org
-// redirects to http://example.org, and the SSL error should not be redirected
-// to this URL.
-IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
-                       WWWSubdomainMismatch_StopOnRedirects) {
-  net::EmbeddedTestServer https_server_example_domain(
-      net::EmbeddedTestServer::TYPE_HTTPS);
-
-  // Redirect all URLs to http://example.org. Since this test will trigger only
-  // one request to check the suggested URL, redirecting all requests is OK.
-  // We would normally use content::SetupCrossSiteRedirector here, but that
-  // function does not support https to http redirects.
-  // This must be done before ServeFilesFromSourceDirectory(), otherwise the
-  // test server will serve files instead of redirecting requests to them.
-  https_server_example_domain.RegisterRequestHandler(
-      base::Bind(&HTTPSToHTTPRedirectHandler, &https_server_example_domain));
-
-  https_server_example_domain.ServeFilesFromSourceDirectory(
-      base::FilePath(kDocRoot));
-
-  ASSERT_TRUE(https_server_example_domain.Start());
-
-  scoped_refptr<net::X509Certificate> cert =
-      https_server_example_domain.GetCertificate();
-
-  net::CertVerifyResult verify_result;
-  verify_result.verified_cert =
-      net::ImportCertFromFile(net::GetTestCertsDirectory(), "spdy_pooling.pem");
-  verify_result.cert_status = net::CERT_STATUS_COMMON_NAME_INVALID;
-
-  mock_cert_verifier()->AddResultForCertAndHost(
-      cert.get(), "example.org", verify_result,
-      net::ERR_CERT_COMMON_NAME_INVALID);
-
-  net::CertVerifyResult verify_result_valid;
-  verify_result_valid.verified_cert =
-      net::ImportCertFromFile(net::GetTestCertsDirectory(), "spdy_pooling.pem");
-  mock_cert_verifier()->AddResultForCertAndHost(cert.get(), "www.example.org",
-                                                verify_result_valid, net::OK);
-
-  // The user will visit https://example.org:port/ssl/blank.html.
-  GURL::Replacements replacements;
-  replacements.SetHostStr("example.org");
-  const GURL https_server_mismatched_url =
-      https_server_example_domain.GetURL("/ssl/blank.html")
-          .ReplaceComponents(replacements);
-
-  // Should simply show an interstitial, because the suggested URL
-  // (https://www.example.org) redirected to http://example.org.
-  WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
-  ui_test_utils::NavigateToURL(browser(), https_server_mismatched_url);
-  WaitForInterstitialAttach(contents);
-
-  CheckSecurityState(contents, net::CERT_STATUS_COMMON_NAME_INVALID,
-                     security_state::DANGEROUS,
-                     AuthState::SHOWING_INTERSTITIAL);
-}
-
 // Tests this scenario:
 // - |CommonNameMismatchHandler| does not give a callback as it's set into the
 //   state |IGNORE_REQUESTS_FOR_TESTING|. So no suggested URL check result can
@@ -3876,14 +3739,14 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
 // - Stopping the page load shouldn't result in any interstitials.
 IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
                        InterstitialStopNavigationWhileLoading) {
-  net::EmbeddedTestServer https_server_example_domain(
+  net::EmbeddedTestServer https_server_example_domain_(
       net::EmbeddedTestServer::TYPE_HTTPS);
-  https_server_example_domain.ServeFilesFromSourceDirectory(
+  https_server_example_domain_.ServeFilesFromSourceDirectory(
       base::FilePath(kDocRoot));
-  ASSERT_TRUE(https_server_example_domain.Start());
+  ASSERT_TRUE(https_server_example_domain_.Start());
 
   scoped_refptr<net::X509Certificate> cert =
-      https_server_example_domain.GetCertificate();
+      https_server_example_domain_.GetCertificate();
 
   net::CertVerifyResult verify_result;
   verify_result.verified_cert =
@@ -3900,11 +3763,11 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
   mock_cert_verifier()->AddResultForCertAndHost(cert.get(), "mail.example.com",
                                                 verify_result_valid, net::OK);
 
-  const GURL https_server_url =
-      https_server_example_domain.GetURL("/ssl/google.html?a=b");
+  GURL https_server_url =
+      https_server_example_domain_.GetURL("/ssl/google.html?a=b");
   GURL::Replacements replacements;
   replacements.SetHostStr("www.mail.example.com");
-  const GURL https_server_mismatched_url =
+  GURL https_server_mismatched_url =
       https_server_url.ReplaceComponents(replacements);
 
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
@@ -3939,14 +3802,14 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
 // result is the same. (i.e. page load stops, no interstitials shown)
 IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
                        InterstitialReloadNavigationWhileLoading) {
-  net::EmbeddedTestServer https_server_example_domain(
+  net::EmbeddedTestServer https_server_example_domain_(
       net::EmbeddedTestServer::TYPE_HTTPS);
-  https_server_example_domain.ServeFilesFromSourceDirectory(
+  https_server_example_domain_.ServeFilesFromSourceDirectory(
       base::FilePath(kDocRoot));
-  ASSERT_TRUE(https_server_example_domain.Start());
+  ASSERT_TRUE(https_server_example_domain_.Start());
 
   scoped_refptr<net::X509Certificate> cert =
-      https_server_example_domain.GetCertificate();
+      https_server_example_domain_.GetCertificate();
 
   net::CertVerifyResult verify_result;
   verify_result.verified_cert =
@@ -3963,11 +3826,11 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
   mock_cert_verifier()->AddResultForCertAndHost(cert.get(), "mail.example.com",
                                                 verify_result_valid, net::OK);
 
-  const GURL https_server_url =
-      https_server_example_domain.GetURL("/ssl/google.html?a=b");
+  GURL https_server_url =
+      https_server_example_domain_.GetURL("/ssl/google.html?a=b");
   GURL::Replacements replacements;
   replacements.SetHostStr("www.mail.example.com");
-  const GURL https_server_mismatched_url =
+  GURL https_server_mismatched_url =
       https_server_url.ReplaceComponents(replacements);
 
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
@@ -4000,14 +3863,14 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
 // new page should load, and no interstitials should be shown.
 IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
                        InterstitialNavigateAwayWhileLoading) {
-  net::EmbeddedTestServer https_server_example_domain(
+  net::EmbeddedTestServer https_server_example_domain_(
       net::EmbeddedTestServer::TYPE_HTTPS);
-  https_server_example_domain.ServeFilesFromSourceDirectory(
+  https_server_example_domain_.ServeFilesFromSourceDirectory(
       base::FilePath(kDocRoot));
-  ASSERT_TRUE(https_server_example_domain.Start());
+  ASSERT_TRUE(https_server_example_domain_.Start());
 
   scoped_refptr<net::X509Certificate> cert =
-      https_server_example_domain.GetCertificate();
+      https_server_example_domain_.GetCertificate();
 
   net::CertVerifyResult verify_result;
   verify_result.verified_cert =
@@ -4024,11 +3887,11 @@ IN_PROC_BROWSER_TEST_F(CommonNameMismatchBrowserTest,
   mock_cert_verifier()->AddResultForCertAndHost(cert.get(), "mail.example.com",
                                                 verify_result_valid, net::OK);
 
-  const GURL https_server_url =
-      https_server_example_domain.GetURL("/ssl/google.html?a=b");
+  GURL https_server_url =
+      https_server_example_domain_.GetURL("/ssl/google.html?a=b");
   GURL::Replacements replacements;
   replacements.SetHostStr("www.mail.example.com");
-  const GURL https_server_mismatched_url =
+  GURL https_server_mismatched_url =
       https_server_url.ReplaceComponents(replacements);
 
   WebContents* contents = browser()->tab_strip_model()->GetActiveWebContents();
@@ -4070,7 +3933,7 @@ class SSLBlockingPageIDNTest : public SecurityInterstitialIDNTest {
         net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
     return SSLBlockingPage::Create(
         contents, net::ERR_CERT_CONTAINS_ERRORS, ssl_info, request_url, 0,
-        base::Time::NowFromSystemTime(), nullptr, false /* is superfish */,
+        base::Time::NowFromSystemTime(), nullptr,
         base::Callback<void(content::CertificateRequestResultType)>());
   }
 };
@@ -4882,63 +4745,11 @@ IN_PROC_BROWSER_TEST_F(SuperfishSSLUITest, SuperfishRecorded) {
 // certificate is not present.
 IN_PROC_BROWSER_TEST_F(SuperfishSSLUITest, NoSuperfishRecorded) {
   SetUpCertVerifier(false /* use superfish cert */);
+  GURL url(https_server_.GetURL("/ssl/google.html"));
   base::HistogramTester histograms;
-  ui_test_utils::NavigateToURL(browser(),
-                               https_server_.GetURL("/ssl/google.html"));
+  ui_test_utils::NavigateToURL(browser(), url);
   histograms.ExpectUniqueSample("interstitial.ssl_error_handler.superfish",
                                 false, 1);
-}
-
-// Tests that the Superfish interstitial is shown when the Finch feature is
-// enabled and the Superfish certificate is present.
-IN_PROC_BROWSER_TEST_F(SuperfishSSLUITest, SuperfishInterstitial) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitFromCommandLine("SuperfishInterstitial",
-                                          std::string());
-  SetUpCertVerifier(true /* use superfish cert */);
-  ui_test_utils::NavigateToURL(browser(),
-                               https_server_.GetURL("/ssl/google.html"));
-  content::WebContents* tab =
-      browser()->tab_strip_model()->GetActiveWebContents();
-  content::WaitForInterstitialAttach(tab);
-  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
-  ASSERT_TRUE(interstitial_page);
-  EXPECT_TRUE(WaitForRenderFrameReady(interstitial_page->GetMainFrame()));
-  EXPECT_EQ(SSLBlockingPage::kTypeForTesting,
-            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
-
-  // Look for keywords on the page to check that the Superfish interstitial is
-  // showing.
-  const std::string expected_title =
-      l10n_util::GetStringUTF8(IDS_SSL_SUPERFISH_HEADING);
-  EXPECT_TRUE(chrome_browser_interstitials::IsInterstitialDisplayingText(
-      interstitial_page, expected_title));
-}
-
-// Tests that the Superfish interstitial is not shown when the Finch feature is
-// disabled.
-IN_PROC_BROWSER_TEST_F(SuperfishSSLUITest, SuperfishInterstitialDisabled) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitFromCommandLine(std::string(),
-                                          "SuperfishInterstitial");
-  SetUpCertVerifier(true /* use superfish cert */);
-  ui_test_utils::NavigateToURL(browser(),
-                               https_server_.GetURL("/ssl/google.html"));
-  content::WebContents* tab =
-      browser()->tab_strip_model()->GetActiveWebContents();
-  content::WaitForInterstitialAttach(tab);
-  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
-  ASSERT_TRUE(interstitial_page);
-  EXPECT_TRUE(WaitForRenderFrameReady(interstitial_page->GetMainFrame()));
-  EXPECT_EQ(SSLBlockingPage::kTypeForTesting,
-            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
-
-  // Look for keywords on the page to check that the Superfish interstitial is
-  // not showing.
-  const std::string expected_title =
-      l10n_util::GetStringUTF8(IDS_SSL_V2_HEADING);
-  EXPECT_TRUE(chrome_browser_interstitials::IsInterstitialDisplayingText(
-      interstitial_page, expected_title));
 }
 
 // TODO(jcampan): more tests to do below.

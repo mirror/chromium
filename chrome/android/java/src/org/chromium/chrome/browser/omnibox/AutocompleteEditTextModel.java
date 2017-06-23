@@ -422,13 +422,7 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
         }
         if (mIgnoreTextChangeFromAutocomplete) return;
         mLastEditWasDelete = textDeleted;
-        mDelegate.onAutocompleteTextStateChanged(updateDisplay);
-        // Occasionally, was seeing the selection in the URL not being cleared during
-        // very rapid editing.  This is here to hopefully force a selection reset during
-        // deletes.
-        if (textDeleted) {
-            mDelegate.setSelection(mDelegate.getSelectionStart(), mDelegate.getSelectionStart());
-        }
+        mDelegate.onAutocompleteTextStateChanged(textDeleted, updateDisplay);
     }
 
     @Override

@@ -97,15 +97,13 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb,
     DeviceInfo* device_info,
     AVDACodecAllocator* codec_allocator,
-    std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
-    std::unique_ptr<VideoFrameFactory> video_frame_factory)
+    std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser)
     : state_(State::kBeforeSurfaceInit),
       lazy_init_pending_(true),
       gpu_task_runner_(gpu_task_runner),
       get_stub_cb_(get_stub_cb),
       codec_allocator_(codec_allocator),
       surface_chooser_(std::move(surface_chooser)),
-      video_frame_factory_(std::move(video_frame_factory)),
       device_info_(device_info),
       weak_factory_(this) {
   DVLOG(2) << __func__;
@@ -158,20 +156,9 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
 
 void MediaCodecVideoDecoder::StartLazyInit() {
   DVLOG(2) << __func__;
-  video_frame_factory_->Initialize(
-      gpu_task_runner_, get_stub_cb_,
-      base::Bind(&MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized,
-                 weak_factory_.GetWeakPtr()));
-}
-
-void MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized(
-    scoped_refptr<SurfaceTextureGLOwner> surface_texture) {
-  DVLOG(2) << __func__;
-  if (!surface_texture) {
-    HandleError();
-    return;
-  }
-  surface_texture_ = std::move(surface_texture);
+  lazy_init_pending_ = false;
+  // TODO(watk): Initialize surface_texture_ properly.
+  surface_texture_ = SurfaceTextureGLOwnerImpl::Create();
   InitializeSurfaceChooser();
 }
 
@@ -181,7 +168,7 @@ void MediaCodecVideoDecoder::SetOverlayInfo(const OverlayInfo& overlay_info) {
   overlay_info_ = overlay_info;
   // Only update surface chooser if it's initialized and the overlay changed.
   if (state_ != State::kBeforeSurfaceInit && overlay_changed)
-    surface_chooser_->UpdateState(CreateOverlayFactoryCb(), chooser_state_);
+    surface_chooser_->ReplaceOverlayFactory(CreateOverlayFactoryCb());
 }
 
 void MediaCodecVideoDecoder::InitializeSurfaceChooser() {
@@ -194,7 +181,7 @@ void MediaCodecVideoDecoder::InitializeSurfaceChooser() {
                  weak_factory_.GetWeakPtr()),
       base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
                  weak_factory_.GetWeakPtr(), nullptr),
-      CreateOverlayFactoryCb(), chooser_state_);
+      CreateOverlayFactoryCb());
 }
 
 void MediaCodecVideoDecoder::OnSurfaceChosen(
@@ -325,14 +312,10 @@ void MediaCodecVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
                                     const DecodeCB& decode_cb) {
   DVLOG(2) << __func__;
   pending_decodes_.emplace_back(buffer, std::move(decode_cb));
-
-  if (lazy_init_pending_) {
-    lazy_init_pending_ = false;
+  if (lazy_init_pending_)
     StartLazyInit();
-    return;
-  }
-
-  PumpCodec(true);
+  else
+    PumpCodec(true);
 }
 
 void MediaCodecVideoDecoder::PumpCodec(bool force_start_timer) {
@@ -468,9 +451,7 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
     return true;
   }
 
-  video_frame_factory_->CreateVideoFrame(
-      std::move(output_buffer), surface_texture_, presentation_time,
-      decoder_config_.natural_size(), output_cb_);
+  // TODO(watk): Create a VideoFrame backed by output_buffer.
   return true;
 }
 

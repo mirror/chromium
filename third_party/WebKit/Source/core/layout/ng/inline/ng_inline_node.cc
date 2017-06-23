@@ -192,7 +192,8 @@ void NGInlineNode::PrepareLayout() {
   // Scan list of siblings collecting all in-flow non-atomic inlines. A single
   // NGInlineNode represent a collection of adjacent non-atomic inlines.
   CollectInlines(Data().start_inline_, GetLayoutBlockFlow());
-  SegmentText();
+  if (Data().is_bidi_enabled_)
+    SegmentText();
   ShapeText();
 }
 
@@ -281,30 +282,21 @@ LayoutObject* NGInlineNode::CollectInlines(LayoutObject* start,
 }
 
 void NGInlineNode::SegmentText() {
-  NGInlineNodeData& data = MutableData();
-  if (!data.is_bidi_enabled_) {
-    data.SetBaseDirection(TextDirection::kLtr);
-    return;
-  }
-
+  // TODO(kojii): Move this to caller, this will be used again after line break.
   NGBidiParagraph bidi;
-  data.text_content_.Ensure16Bit();
-  if (!bidi.SetParagraph(data.text_content_, Style())) {
+  MutableData().text_content_.Ensure16Bit();
+  if (!bidi.SetParagraph(Data().text_content_, Style())) {
     // On failure, give up bidi resolving and reordering.
-    data.is_bidi_enabled_ = false;
-    data.SetBaseDirection(TextDirection::kLtr);
+    MutableData().is_bidi_enabled_ = false;
     return;
   }
-
-  data.SetBaseDirection(bidi.BaseDirection());
-
-  if (bidi.IsUnidirectional() && IsLtr(bidi.BaseDirection())) {
+  if (bidi.Direction() == UBIDI_LTR) {
     // All runs are LTR, no need to reorder.
-    data.is_bidi_enabled_ = false;
+    MutableData().is_bidi_enabled_ = false;
     return;
   }
 
-  Vector<NGInlineItem>& items = data.items_;
+  Vector<NGInlineItem>& items = MutableData().items_;
   unsigned item_index = 0;
   for (unsigned start = 0; start < Data().text_content_.length();) {
     UBiDiLevel level;
@@ -373,7 +365,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   NGLineInfo line_info;
   LayoutUnit result;
   while (line_breaker.NextLine(&line_info, NGLogicalOffset())) {
-    LayoutUnit inline_size = line_info.TextIndent();
+    LayoutUnit inline_size;
     for (const NGInlineItemResult item_result : line_info.Results())
       inline_size += item_result.inline_size;
     if (mode == ContentSizeMode::Max) {

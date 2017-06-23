@@ -323,9 +323,7 @@ TEST_F(PresentationServiceDelegateImplTest, AddSameListenerTwice) {
 
 TEST_F(PresentationServiceDelegateImplTest, AddListenerForInvalidUrl) {
   MockScreenAvailabilityListener listener(GURL("unsupported-url://foo"));
-  EXPECT_CALL(listener,
-              OnScreenAvailabilityChanged(
-                  blink::mojom::ScreenAvailability::SOURCE_NOT_SUPPORTED));
+  EXPECT_CALL(listener, OnScreenAvailabilityChanged(false));
   EXPECT_FALSE(delegate_impl_->AddScreenAvailabilityListener(
       main_frame_process_id_, main_frame_routing_id_, &listener));
   EXPECT_CALL(router_, RegisterMediaSinksObserver(_)).Times(0);
@@ -518,8 +516,7 @@ TEST_F(PresentationServiceDelegateImplTest, DelegateObservers) {
 
 TEST_F(PresentationServiceDelegateImplTest, SinksObserverCantRegister) {
   EXPECT_CALL(router_, RegisterMediaSinksObserver(_)).WillOnce(Return(false));
-  EXPECT_CALL(listener1_, OnScreenAvailabilityChanged(
-                              blink::mojom::ScreenAvailability::DISABLED));
+  EXPECT_CALL(listener1_, OnScreenAvailabilityNotSupported());
   EXPECT_FALSE(delegate_impl_->AddScreenAvailabilityListener(
       main_frame_process_id_, main_frame_routing_id_, &listener1_));
 }
@@ -588,7 +585,7 @@ TEST_F(PresentationServiceDelegateImplTest,
   delegate_impl_->Reset(main_frame_process_id_, main_frame_routing_id_);
 }
 
-TEST_F(PresentationServiceDelegateImplTest, ConnectToOffscreenPresentation) {
+TEST_F(PresentationServiceDelegateImplTest, ConnectToPresentation) {
   content::RenderFrameHost* main_frame = GetWebContents()->GetMainFrame();
   ASSERT_TRUE(main_frame);
   int render_process_id = main_frame->GetProcess()->GetID();
@@ -630,46 +627,6 @@ TEST_F(PresentationServiceDelegateImplTest, ConnectToOffscreenPresentation) {
                   RenderFrameHostId(render_process_id, render_frame_id)));
   EXPECT_CALL(router_, DetachRoute("route_id")).Times(0);
   delegate_impl_->Reset(render_process_id, render_frame_id);
-}
-
-TEST_F(PresentationServiceDelegateImplTest, ConnectToPresentation) {
-  content::RenderFrameHost* main_frame = GetWebContents()->GetMainFrame();
-  ASSERT_TRUE(main_frame);
-  int render_process_id = main_frame->GetProcess()->GetID();
-  int render_frame_id = main_frame->GetRoutingID();
-  std::string presentation_id = "presentation_id";
-  GURL presentation_url = GURL("http://www.example.com/presentation.html");
-  content::PresentationInfo presentation_info(presentation_url,
-                                              presentation_id);
-
-  MediaRoute media_route(
-      "route_id",
-      MediaSourceForPresentationUrl(presentation_info.presentation_url),
-      "mediaSinkId", "", true, "", true);
-
-  base::MockCallback<content::PresentationConnectionCallback> success_cb;
-  EXPECT_CALL(success_cb, Run(_));
-
-  delegate_impl_->OnStartPresentationSucceeded(
-      render_process_id, render_frame_id, success_cb.Get(), presentation_info,
-      media_route);
-
-  content::PresentationConnectionPtr connection_ptr;
-  MockPresentationConnectionProxy mock_proxy;
-  mojo::Binding<blink::mojom::PresentationConnection> binding(
-      &mock_proxy, mojo::MakeRequest(&connection_ptr));
-
-  content::PresentationConnectionRequest connection_request;
-  EXPECT_CALL(router_, RegisterRouteMessageObserver(_));
-  delegate_impl_->ConnectToPresentation(
-      render_process_id, render_frame_id, presentation_info,
-      std::move(connection_ptr), std::move(connection_request));
-
-  EXPECT_CALL(router_, UnregisterRouteMessageObserver(_));
-  EXPECT_CALL(router_, DetachRoute("route_id")).Times(1);
-  delegate_impl_->Reset(render_process_id, render_frame_id);
-
-  //  binding.Close();
 }
 
 #if !defined(OS_ANDROID)

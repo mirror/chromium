@@ -96,8 +96,8 @@ void WindowPortMus::Embed(
   window_tree_client_->Embed(window_, std::move(client), flags, callback);
 }
 
-std::unique_ptr<viz::ClientLayerTreeFrameSink>
-WindowPortMus::RequestLayerTreeFrameSink(
+std::unique_ptr<viz::ClientCompositorFrameSink>
+WindowPortMus::RequestCompositorFrameSink(
     scoped_refptr<cc::ContextProvider> context_provider,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager) {
   cc::mojom::MojoCompositorFrameSinkPtrInfo sink_info;
@@ -107,7 +107,7 @@ WindowPortMus::RequestLayerTreeFrameSink(
   cc::mojom::MojoCompositorFrameSinkClientRequest client_request =
       mojo::MakeRequest(&client);
   constexpr bool enable_surface_synchronization = true;
-  auto layer_tree_frame_sink = base::MakeUnique<viz::ClientLayerTreeFrameSink>(
+  auto compositor_frame_sink = base::MakeUnique<viz::ClientCompositorFrameSink>(
       std::move(context_provider), nullptr /* worker_context_provider */,
       gpu_memory_buffer_manager, nullptr /* shared_bitmap_manager */,
       nullptr /* synthetic_begin_frame_source */, std::move(sink_info),
@@ -116,7 +116,7 @@ WindowPortMus::RequestLayerTreeFrameSink(
       enable_surface_synchronization);
   window_tree_client_->AttachCompositorFrameSink(
       server_id(), std::move(sink_request), std::move(client));
-  return layer_tree_frame_sink;
+  return compositor_frame_sink;
 }
 
 WindowPortMus::ServerChangeIdType WindowPortMus::ScheduleChange(
@@ -307,8 +307,8 @@ const cc::LocalSurfaceId& WindowPortMus::GetOrAllocateLocalSurfaceId(
   if (frame_sink_id_.is_valid())
     UpdatePrimarySurfaceInfo();
 
-  if (local_layer_tree_frame_sink_)
-    local_layer_tree_frame_sink_->SetLocalSurfaceId(local_surface_id_);
+  if (local_compositor_frame_sink_)
+    local_compositor_frame_sink_->SetLocalSurfaceId(local_surface_id_);
 
   return local_surface_id_;
 }
@@ -434,8 +434,8 @@ void WindowPortMus::NotifyEmbeddedAppDisconnected() {
     observer.OnEmbeddedAppDisconnected(window_);
 }
 
-bool WindowPortMus::HasLocalLayerTreeFrameSink() {
-  return !!local_layer_tree_frame_sink_;
+bool WindowPortMus::HasLocalCompositorFrameSink() {
+  return !!local_compositor_frame_sink_;
 }
 
 void WindowPortMus::OnPreInit(Window* window) {
@@ -531,14 +531,14 @@ void WindowPortMus::OnPropertyChanged(const void* key,
                                                     std::move(data));
 }
 
-std::unique_ptr<cc::LayerTreeFrameSink>
-WindowPortMus::CreateLayerTreeFrameSink() {
+std::unique_ptr<cc::CompositorFrameSink>
+WindowPortMus::CreateCompositorFrameSink() {
   DCHECK_EQ(window_mus_type(), WindowMusType::LOCAL);
-  DCHECK(!local_layer_tree_frame_sink_);
-  auto frame_sink = RequestLayerTreeFrameSink(
+  DCHECK(!local_compositor_frame_sink_);
+  auto frame_sink = RequestCompositorFrameSink(
       nullptr,
       aura::Env::GetInstance()->context_factory()->GetGpuMemoryBufferManager());
-  local_layer_tree_frame_sink_ = frame_sink->GetWeakPtr();
+  local_compositor_frame_sink_ = frame_sink->GetWeakPtr();
   return std::move(frame_sink);
 }
 

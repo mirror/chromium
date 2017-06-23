@@ -94,12 +94,6 @@ bool ParseAccessControlAllowList(const String& string,
 
 }  // namespace
 
-CrossOriginPreflightResultCacheItem::CrossOriginPreflightResultCacheItem(
-    WebURLRequest::FetchCredentialsMode credentials_mode)
-    : absolute_expiry_time_(0),
-      credentials_(
-          FetchUtils::ShouldTreatCredentialsModeAsInclude(credentials_mode)) {}
-
 bool CrossOriginPreflightResultCacheItem::Parse(
     const ResourceResponse& response,
     String& error_description) {
@@ -166,14 +160,14 @@ bool CrossOriginPreflightResultCacheItem::AllowsCrossOriginHeaders(
 }
 
 bool CrossOriginPreflightResultCacheItem::AllowsRequest(
-    WebURLRequest::FetchCredentialsMode credentials_mode,
+    StoredCredentials include_credentials,
     const String& method,
     const HTTPHeaderMap& request_headers) const {
   String ignored_explanation;
   if (absolute_expiry_time_ < CurrentTime())
     return false;
-  if (!credentials_ &&
-      FetchUtils::ShouldTreatCredentialsModeAsInclude(credentials_mode))
+  if (include_credentials == kAllowStoredCredentials &&
+      credentials_ == kDoNotAllowStoredCredentials)
     return false;
   if (!AllowsCrossOriginMethod(method, ignored_explanation))
     return false;
@@ -200,7 +194,7 @@ void CrossOriginPreflightResultCache::AppendEntry(
 bool CrossOriginPreflightResultCache::CanSkipPreflight(
     const String& origin,
     const KURL& url,
-    WebURLRequest::FetchCredentialsMode credentials_mode,
+    StoredCredentials include_credentials,
     const String& method,
     const HTTPHeaderMap& request_headers) {
   DCHECK(IsMainThread());
@@ -209,7 +203,8 @@ bool CrossOriginPreflightResultCache::CanSkipPreflight(
   if (cache_it == preflight_hash_map_.end())
     return false;
 
-  if (cache_it->value->AllowsRequest(credentials_mode, method, request_headers))
+  if (cache_it->value->AllowsRequest(include_credentials, method,
+                                     request_headers))
     return true;
 
   preflight_hash_map_.erase(cache_it);

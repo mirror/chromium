@@ -381,8 +381,6 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
     return;
   }
 
-  chooser_state_.is_fullscreen = config_.overlay_info.is_fullscreen;
-
   // Handle the sync path, which must use SurfaceTexture anyway.  Note that we
   // check both |during_initialize_| and |deferred_initialization_pending_|,
   // since we might get here during deferred surface creation.  In that case,
@@ -427,7 +425,7 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
                  weak_this_factory_.GetWeakPtr()),
       base::Bind(&AndroidVideoDecodeAccelerator::OnSurfaceTransition,
                  weak_this_factory_.GetWeakPtr(), nullptr),
-      std::move(factory), chooser_state_);
+      std::move(factory));
 }
 
 void AndroidVideoDecodeAccelerator::OnSurfaceTransition(
@@ -1256,9 +1254,6 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
   if (state_ == BEFORE_OVERLAY_INIT)
     return;
 
-  // Notify the chooser about the fullscreen state.
-  chooser_state_.is_fullscreen = overlay_info.is_fullscreen;
-
   // Note that these might be kNoSurfaceID / empty.  In that case, we will
   // revoke the factory.
   int32_t surface_id = overlay_info.surface_id;
@@ -1267,16 +1262,18 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
   // We don't want to change the factory unless this info has actually changed.
   // We'll get the same info many times if some other part of the config is now
   // different, such as fullscreen state.
-  base::Optional<AndroidOverlayFactoryCB> new_factory;
-  if (surface_id != previous_info.surface_id ||
-      routing_token != previous_info.routing_token) {
-    if (routing_token && overlay_factory_cb_)
-      new_factory = base::Bind(overlay_factory_cb_, *routing_token);
-    else if (surface_id != SurfaceManager::kNoSurfaceID)
-      new_factory = base::Bind(&ContentVideoViewOverlay::Create, surface_id);
+  if (surface_id == previous_info.surface_id &&
+      routing_token == previous_info.routing_token) {
+    return;
   }
 
-  surface_chooser_->UpdateState(new_factory, chooser_state_);
+  AndroidOverlayFactoryCB factory;
+  if (routing_token && overlay_factory_cb_)
+    factory = base::Bind(overlay_factory_cb_, *routing_token);
+  else if (surface_id != SurfaceManager::kNoSurfaceID)
+    factory = base::Bind(&ContentVideoViewOverlay::Create, surface_id);
+
+  surface_chooser_->ReplaceOverlayFactory(std::move(factory));
 }
 
 void AndroidVideoDecodeAccelerator::Destroy() {
@@ -1465,7 +1462,6 @@ void AndroidVideoDecodeAccelerator::OnMediaCryptoReady(
 
   codec_config_->media_crypto = std::move(media_crypto);
   codec_config_->requires_secure_codec = requires_secure_video_codec;
-  chooser_state_.is_secure = requires_secure_video_codec;
 
   // After receiving |media_crypto_| we can start with surface creation.
   StartSurfaceChooser();

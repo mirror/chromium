@@ -1,4 +1,3 @@
-
 Recording started
 Tracing complete
 Error after legit close: undefined

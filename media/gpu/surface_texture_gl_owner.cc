@@ -8,7 +8,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "ui/gl/scoped_binders.h"
 #include "ui/gl/scoped_make_current.h"
 
@@ -29,10 +28,6 @@ struct FrameAvailableEvent
   friend class RefCountedThreadSafe<FrameAvailableEvent>;
   ~FrameAvailableEvent() = default;
 };
-
-SurfaceTextureGLOwner::SurfaceTextureGLOwner()
-    : base::RefCountedDeleteOnSequence<SurfaceTextureGLOwner>(
-          base::ThreadTaskRunnerHandle::Get()) {}
 
 scoped_refptr<SurfaceTextureGLOwner> SurfaceTextureGLOwnerImpl::Create() {
   GLuint texture_id;
@@ -65,16 +60,9 @@ SurfaceTextureGLOwnerImpl::SurfaceTextureGLOwnerImpl(GLuint texture_id)
 }
 
 SurfaceTextureGLOwnerImpl::~SurfaceTextureGLOwnerImpl() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-
+  DCHECK(thread_checker_.CalledOnValidThread());
   // Make sure that the SurfaceTexture isn't using the GL objects.
   surface_texture_ = nullptr;
-
-  if (gl::GLSurface::GetCurrent() == nullptr) {
-    // This happens during GpuCommandBufferStub teardown.  Just leave -- the gpu
-    // process is going away.  crbug.com/718117 .
-    return;
-  }
 
   ui::ScopedMakeCurrent scoped_make_current(context_.get(), surface_.get());
   if (scoped_make_current.Succeeded()) {
@@ -84,57 +72,46 @@ SurfaceTextureGLOwnerImpl::~SurfaceTextureGLOwnerImpl() {
 }
 
 GLuint SurfaceTextureGLOwnerImpl::GetTextureId() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return texture_id_;
 }
 
 gl::ScopedJavaSurface SurfaceTextureGLOwnerImpl::CreateJavaSurface() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return gl::ScopedJavaSurface(surface_texture_.get());
 }
 
 void SurfaceTextureGLOwnerImpl::UpdateTexImage() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   surface_texture_->UpdateTexImage();
 }
 
 void SurfaceTextureGLOwnerImpl::GetTransformMatrix(float mtx[]) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   surface_texture_->GetTransformMatrix(mtx);
 }
 
 void SurfaceTextureGLOwnerImpl::ReleaseBackBuffers() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   surface_texture_->ReleaseBackBuffers();
 }
 
 gl::GLContext* SurfaceTextureGLOwnerImpl::GetContext() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return context_.get();
 }
 
 gl::GLSurface* SurfaceTextureGLOwnerImpl::GetSurface() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return surface_.get();
 }
 
 void SurfaceTextureGLOwnerImpl::SetReleaseTimeToNow() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   release_time_ = base::TimeTicks::Now();
 }
 
 void SurfaceTextureGLOwnerImpl::IgnorePendingRelease() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   release_time_ = base::TimeTicks();
 }
 
 bool SurfaceTextureGLOwnerImpl::IsExpectingFrameAvailable() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return !release_time_.is_null();
 }
 
 void SurfaceTextureGLOwnerImpl::WaitForFrameAvailable() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(!release_time_.is_null());
 
   // 5msec covers >99.9% of cases, so just wait for up to that much before

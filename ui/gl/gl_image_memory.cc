@@ -45,7 +45,6 @@ bool ValidFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
     case gfx::BufferFormat::R_8:
-    case gfx::BufferFormat::R_16:
     case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
@@ -74,7 +73,6 @@ bool IsCompressedFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::ETC1:
       return true;
     case gfx::BufferFormat::R_8:
-    case gfx::BufferFormat::R_16:
     case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
@@ -109,8 +107,6 @@ GLenum TextureFormat(gfx::BufferFormat format) {
       return GL_ETC1_RGB8_OES;
     case gfx::BufferFormat::R_8:
       return GL_RED;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
     case gfx::BufferFormat::RG_88:
       return GL_RG;
     case gfx::BufferFormat::RGBA_4444:
@@ -146,7 +142,6 @@ GLenum DataFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::RGBA_F16:
     case gfx::BufferFormat::R_8:
-    case gfx::BufferFormat::R_16:
     case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::ATC:
     case gfx::BufferFormat::ATCIA:
@@ -178,8 +173,6 @@ GLenum DataType(gfx::BufferFormat format) {
     case gfx::BufferFormat::R_8:
     case gfx::BufferFormat::RG_88:
       return GL_UNSIGNED_BYTE;
-    case gfx::BufferFormat::R_16:
-      return GL_UNSIGNED_SHORT;
     case gfx::BufferFormat::RGBA_F16:
       return GL_HALF_FLOAT_OES;
     case gfx::BufferFormat::ATC:
@@ -201,7 +194,6 @@ GLenum DataType(gfx::BufferFormat format) {
 GLint DataRowLength(size_t stride, gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::RG_88:
-    case gfx::BufferFormat::R_16:
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
       return base::checked_cast<GLint>(stride) / 2;
@@ -327,7 +319,6 @@ std::unique_ptr<uint8_t[]> GLES2Data(const gfx::Size& size,
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::RGBA_F16:
     case gfx::BufferFormat::R_8:
-    case gfx::BufferFormat::R_16:
     case gfx::BufferFormat::RG_88: {
       size_t gles2_data_stride =
           RowSizeForBufferFormat(size.width(), format, 0);

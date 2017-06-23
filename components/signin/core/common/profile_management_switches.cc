@@ -9,13 +9,12 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/metrics/field_trial.h"
-#include "build/build_config.h"
 #include "components/signin/core/common/signin_switches.h"
 
 namespace switches {
 
 AccountConsistencyMethod GetAccountConsistencyMethod() {
-#if BUILDFLAG(ENABLE_MIRROR)
+#if defined(OS_ANDROID) || defined(OS_IOS)
   // Mirror is enabled on Android and iOS.
   return AccountConsistencyMethod::kMirror;
 #else
@@ -23,14 +22,10 @@ AccountConsistencyMethod GetAccountConsistencyMethod() {
   std::string method = cmd->GetSwitchValueASCII(switches::kAccountConsistency);
   if (method == switches::kAccountConsistencyMirror)
     return AccountConsistencyMethod::kMirror;
-
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
   if (method == switches::kAccountConsistencyDice)
     return AccountConsistencyMethod::kDice;
-#endif
-
   return AccountConsistencyMethod::kDisabled;
-#endif  // BUILDFLAG(ENABLE_MIRROR)
+#endif  // defined(OS_ANDROID) || defined(OS_IOS)
 }
 
 bool IsAccountConsistencyMirrorEnabled() {
@@ -54,13 +49,13 @@ bool IsExtensionsMultiAccount() {
 }
 
 void EnableAccountConsistencyMirrorForTesting(base::CommandLine* command_line) {
-#if !BUILDFLAG(ENABLE_MIRROR)
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
   command_line->AppendSwitchASCII(switches::kAccountConsistency,
                                   switches::kAccountConsistencyMirror);
 #endif
 }
 
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
 void EnableAccountConsistencyDiceForTesting(base::CommandLine* command_line) {
   command_line->AppendSwitchASCII(switches::kAccountConsistency,
                                   switches::kAccountConsistencyDice);

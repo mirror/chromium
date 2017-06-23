@@ -70,8 +70,8 @@ class TracingHandler : public DevToolsDomainHandler,
   void OnCategoriesReceived(std::unique_ptr<GetCategoriesCallback> callback,
                             const std::set<std::string>& category_set);
   void OnMemoryDumpFinished(std::unique_ptr<RequestMemoryDumpCallback> callback,
-                            bool success,
-                            uint64_t dump_id);
+                            uint64_t dump_guid,
+                            bool success);
 
   void SetupTimer(double usage_reporting_interval);
   void StopTracing(

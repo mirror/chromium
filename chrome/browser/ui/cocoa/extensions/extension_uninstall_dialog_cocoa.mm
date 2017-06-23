@@ -37,7 +37,8 @@ class ExtensionUninstallDialogCocoa
 ExtensionUninstallDialogCocoa::ExtensionUninstallDialogCocoa(
     Profile* profile,
     extensions::ExtensionUninstallDialog::Delegate* delegate)
-    : extensions::ExtensionUninstallDialog(profile, nullptr, delegate) {}
+    : extensions::ExtensionUninstallDialog(profile, delegate) {
+}
 
 ExtensionUninstallDialogCocoa::~ExtensionUninstallDialogCocoa() {}
 

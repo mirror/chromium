@@ -41,7 +41,6 @@
 #include "cc/layers/painted_scrollbar_layer.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/tiles/frame_viewer_instrumentation.h"
-#include "cc/trees/clip_node.h"
 #include "cc/trees/draw_property_utils.h"
 #include "cc/trees/effect_node.h"
 #include "cc/trees/layer_tree_host_client.h"
@@ -50,7 +49,6 @@
 #include "cc/trees/mutator_host.h"
 #include "cc/trees/property_tree_builder.h"
 #include "cc/trees/proxy_main.h"
-#include "cc/trees/scroll_node.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/swap_promise_manager.h"
 #include "cc/trees/transform_node.h"
@@ -359,20 +357,6 @@ void LayerTreeHost::FinishCommitOnImplThread(
     sync_tree->lifecycle().AdvanceTo(LayerTreeLifecycle::kNotSyncing);
   }
 
-  // Temporary check to debug crbug.com/726423. The property tree indices on the
-  // LayerTree should be valid after the PropertyTree update above.
-  for (auto* layer_impl : *sync_tree) {
-    CHECK(layer_impl);
-    CHECK(sync_tree->property_trees()->transform_tree.Node(
-        layer_impl->transform_tree_index()));
-    CHECK(sync_tree->property_trees()->clip_tree.Node(
-        layer_impl->clip_tree_index()));
-    CHECK(sync_tree->property_trees()->effect_tree.Node(
-        layer_impl->effect_tree_index()));
-    CHECK(sync_tree->property_trees()->scroll_tree.Node(
-        layer_impl->scroll_tree_index()));
-  }
-
   // Transfer image decode requests to the impl thread.
   for (auto& request : queued_image_decodes_)
     host_impl->QueueImageDecode(std::move(request.first), request.second);
@@ -420,42 +404,43 @@ void LayerTreeHost::CommitComplete() {
   }
 }
 
-void LayerTreeHost::SetLayerTreeFrameSink(
-    std::unique_ptr<LayerTreeFrameSink> surface) {
-  TRACE_EVENT0("cc", "LayerTreeHostInProcess::SetLayerTreeFrameSink");
+void LayerTreeHost::SetCompositorFrameSink(
+    std::unique_ptr<CompositorFrameSink> surface) {
+  TRACE_EVENT0("cc", "LayerTreeHostInProcess::SetCompositorFrameSink");
   DCHECK(surface);
 
-  DCHECK(!new_layer_tree_frame_sink_);
-  new_layer_tree_frame_sink_ = std::move(surface);
-  proxy_->SetLayerTreeFrameSink(new_layer_tree_frame_sink_.get());
+  DCHECK(!new_compositor_frame_sink_);
+  new_compositor_frame_sink_ = std::move(surface);
+  proxy_->SetCompositorFrameSink(new_compositor_frame_sink_.get());
 }
 
-std::unique_ptr<LayerTreeFrameSink> LayerTreeHost::ReleaseLayerTreeFrameSink() {
+std::unique_ptr<CompositorFrameSink>
+LayerTreeHost::ReleaseCompositorFrameSink() {
   DCHECK(!visible_);
 
-  DidLoseLayerTreeFrameSink();
-  proxy_->ReleaseLayerTreeFrameSink();
-  return std::move(current_layer_tree_frame_sink_);
+  DidLoseCompositorFrameSink();
+  proxy_->ReleaseCompositorFrameSink();
+  return std::move(current_compositor_frame_sink_);
 }
 
-void LayerTreeHost::RequestNewLayerTreeFrameSink() {
-  client_->RequestNewLayerTreeFrameSink();
+void LayerTreeHost::RequestNewCompositorFrameSink() {
+  client_->RequestNewCompositorFrameSink();
 }
 
-void LayerTreeHost::DidInitializeLayerTreeFrameSink() {
-  DCHECK(new_layer_tree_frame_sink_);
-  current_layer_tree_frame_sink_ = std::move(new_layer_tree_frame_sink_);
-  client_->DidInitializeLayerTreeFrameSink();
+void LayerTreeHost::DidInitializeCompositorFrameSink() {
+  DCHECK(new_compositor_frame_sink_);
+  current_compositor_frame_sink_ = std::move(new_compositor_frame_sink_);
+  client_->DidInitializeCompositorFrameSink();
 }
 
-void LayerTreeHost::DidFailToInitializeLayerTreeFrameSink() {
-  DCHECK(new_layer_tree_frame_sink_);
+void LayerTreeHost::DidFailToInitializeCompositorFrameSink() {
+  DCHECK(new_compositor_frame_sink_);
   // Note: It is safe to drop all output surface references here as
   // LayerTreeHostImpl will not keep a pointer to either the old or
-  // new LayerTreeFrameSink after failing to initialize the new one.
-  current_layer_tree_frame_sink_ = nullptr;
-  new_layer_tree_frame_sink_ = nullptr;
-  client_->DidFailToInitializeLayerTreeFrameSink();
+  // new CompositorFrameSink after failing to initialize the new one.
+  current_compositor_frame_sink_ = nullptr;
+  new_compositor_frame_sink_ = nullptr;
+  client_->DidFailToInitializeCompositorFrameSink();
 }
 
 std::unique_ptr<LayerTreeHostImpl>
@@ -479,8 +464,8 @@ LayerTreeHost::CreateLayerTreeHostImpl(
   return host_impl;
 }
 
-void LayerTreeHost::DidLoseLayerTreeFrameSink() {
-  TRACE_EVENT0("cc", "LayerTreeHostInProcess::DidLoseLayerTreeFrameSink");
+void LayerTreeHost::DidLoseCompositorFrameSink() {
+  TRACE_EVENT0("cc", "LayerTreeHostInProcess::DidLoseCompositorFrameSink");
   DCHECK(task_runner_provider_->IsMainThread());
   SetNeedsCommit();
 }
@@ -658,9 +643,9 @@ void LayerTreeHost::RecordGpuRasterizationHistogram(
     return;
 
   bool gpu_rasterization_enabled = false;
-  if (host_impl->layer_tree_frame_sink()) {
+  if (host_impl->compositor_frame_sink()) {
     ContextProvider* compositor_context_provider =
-        host_impl->layer_tree_frame_sink()->context_provider();
+        host_impl->compositor_frame_sink()->context_provider();
     if (compositor_context_provider) {
       gpu_rasterization_enabled =
           compositor_context_provider->ContextCapabilities().gpu_rasterization;
@@ -744,17 +729,6 @@ bool LayerTreeHost::DoUpdateLayers(Layer* root_layer) {
           TRACE_EVENT_SCOPE_THREAD, "property_trees",
           property_trees->AsTracedValue());
     }
-
-    // Temporary check to debug crbug.com/726423. The property tree indices on
-    // the LayerTreeImpl should be valid after all state synchronization has
-    // finished.
-    for (auto* layer : *this) {
-      CHECK(property_trees_.transform_tree.Node(layer->transform_tree_index()));
-      CHECK(property_trees_.clip_tree.Node(layer->clip_tree_index()));
-      CHECK(property_trees_.effect_tree.Node(layer->effect_tree_index()));
-      CHECK(property_trees_.scroll_tree.Node(layer->scroll_tree_index()));
-    }
-
     draw_property_utils::UpdatePropertyTrees(this, property_trees);
     draw_property_utils::FindLayersThatNeedUpdates(this, property_trees,
                                                    &update_layer_list);

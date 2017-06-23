@@ -24,8 +24,8 @@
 #include "cc/test/begin_frame_args_test.h"
 #include "cc/test/fake_layer_tree_host_client.h"
 #include "cc/test/fake_output_surface.h"
+#include "cc/test/test_compositor_frame_sink.h"
 #include "cc/test/test_context_provider.h"
-#include "cc/test/test_layer_tree_frame_sink.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/trees/layer_tree_host_client.h"
 #include "cc/trees/layer_tree_host_impl.h"
@@ -240,8 +240,8 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
     test_hooks_->DidActivateTreeOnThread(this);
   }
 
-  bool InitializeRenderer(LayerTreeFrameSink* layer_tree_frame_sink) override {
-    bool success = LayerTreeHostImpl::InitializeRenderer(layer_tree_frame_sink);
+  bool InitializeRenderer(CompositorFrameSink* compositor_frame_sink) override {
+    bool success = LayerTreeHostImpl::InitializeRenderer(compositor_frame_sink);
     test_hooks_->InitializedRendererOnThread(this, success);
     return success;
   }
@@ -343,17 +343,17 @@ class LayerTreeHostClientForTesting : public LayerTreeHostClient,
   void RecordWheelAndTouchScrollingCount(bool has_scrolled_by_wheel,
                                          bool has_scrolled_by_touch) override {}
 
-  void RequestNewLayerTreeFrameSink() override {
-    test_hooks_->RequestNewLayerTreeFrameSink();
+  void RequestNewCompositorFrameSink() override {
+    test_hooks_->RequestNewCompositorFrameSink();
   }
 
-  void DidInitializeLayerTreeFrameSink() override {
-    test_hooks_->DidInitializeLayerTreeFrameSink();
+  void DidInitializeCompositorFrameSink() override {
+    test_hooks_->DidInitializeCompositorFrameSink();
   }
 
-  void DidFailToInitializeLayerTreeFrameSink() override {
-    test_hooks_->DidFailToInitializeLayerTreeFrameSink();
-    RequestNewLayerTreeFrameSink();
+  void DidFailToInitializeCompositorFrameSink() override {
+    test_hooks_->DidFailToInitializeCompositorFrameSink();
+    RequestNewCompositorFrameSink();
   }
 
   void WillCommit() override { test_hooks_->WillCommit(); }
@@ -369,7 +369,7 @@ class LayerTreeHostClientForTesting : public LayerTreeHostClient,
   }
 
   void DidSubmitCompositorFrame() override {}
-  void DidLoseLayerTreeFrameSink() override {}
+  void DidLoseCompositorFrameSink() override {}
   void RequestScheduleComposite() override { test_hooks_->ScheduleComposite(); }
   void DidCompletePageScaleAnimation() override {}
   void BeginMainFrameNotExpectedSoon() override {
@@ -466,13 +466,13 @@ class LayerTreeHostForTesting : public LayerTreeHost {
   bool test_started_;
 };
 
-class LayerTreeTestLayerTreeFrameSinkClient
-    : public TestLayerTreeFrameSinkClient {
+class LayerTreeTestCompositorFrameSinkClient
+    : public TestCompositorFrameSinkClient {
  public:
-  explicit LayerTreeTestLayerTreeFrameSinkClient(TestHooks* hooks)
+  explicit LayerTreeTestCompositorFrameSinkClient(TestHooks* hooks)
       : hooks_(hooks) {}
 
-  // TestLayerTreeFrameSinkClient implementation.
+  // TestCompositorFrameSinkClient implementation.
   std::unique_ptr<OutputSurface> CreateDisplayOutputSurface(
       scoped_refptr<ContextProvider> compositor_context_provider) override {
     return hooks_->CreateDisplayOutputSurfaceOnThread(
@@ -498,8 +498,8 @@ class LayerTreeTestLayerTreeFrameSinkClient
 };
 
 LayerTreeTest::LayerTreeTest()
-    : layer_tree_frame_sink_client_(
-          new LayerTreeTestLayerTreeFrameSinkClient(this)),
+    : compositor_frame_sink_client_(
+          new LayerTreeTestCompositorFrameSinkClient(this)),
       weak_factory_(this) {
   main_thread_weak_ptr_ = weak_factory_.GetWeakPtr();
 
@@ -638,9 +638,9 @@ void LayerTreeTest::PostNextCommitWaitsForActivationToMainThread() {
                      main_thread_weak_ptr_));
 }
 
-std::unique_ptr<LayerTreeFrameSink>
-LayerTreeTest::ReleaseLayerTreeFrameSinkOnLayerTreeHost() {
-  return layer_tree_host_->ReleaseLayerTreeFrameSink();
+std::unique_ptr<CompositorFrameSink>
+LayerTreeTest::ReleaseCompositorFrameSinkOnLayerTreeHost() {
+  return layer_tree_host_->ReleaseCompositorFrameSink();
 }
 
 void LayerTreeTest::SetVisibleOnLayerTreeHost(bool visible) {
@@ -855,7 +855,7 @@ void LayerTreeTest::RunTest(CompositorMode mode) {
   AfterTest();
 }
 
-void LayerTreeTest::RequestNewLayerTreeFrameSink() {
+void LayerTreeTest::RequestNewCompositorFrameSink() {
   scoped_refptr<TestContextProvider> shared_context_provider =
       TestContextProvider::Create();
   scoped_refptr<TestContextProvider> worker_context_provider =
@@ -867,14 +867,15 @@ void LayerTreeTest::RequestNewLayerTreeFrameSink() {
   constexpr double refresh_rate = 200.0;
   renderer_settings.resource_settings.buffer_to_texture_target_map =
       DefaultBufferToTextureTargetMapForTesting();
-  auto layer_tree_frame_sink = CreateLayerTreeFrameSink(
+  auto compositor_frame_sink = CreateCompositorFrameSink(
       renderer_settings, refresh_rate, std::move(shared_context_provider),
       std::move(worker_context_provider));
-  layer_tree_frame_sink->SetClient(layer_tree_frame_sink_client_.get());
-  layer_tree_host_->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));
+  compositor_frame_sink->SetClient(compositor_frame_sink_client_.get());
+  layer_tree_host_->SetCompositorFrameSink(std::move(compositor_frame_sink));
 }
 
-std::unique_ptr<TestLayerTreeFrameSink> LayerTreeTest::CreateLayerTreeFrameSink(
+std::unique_ptr<TestCompositorFrameSink>
+LayerTreeTest::CreateCompositorFrameSink(
     const RendererSettings& renderer_settings,
     double refresh_rate,
     scoped_refptr<ContextProvider> compositor_context_provider,
@@ -883,7 +884,7 @@ std::unique_ptr<TestLayerTreeFrameSink> LayerTreeTest::CreateLayerTreeFrameSink(
   bool synchronous_composite =
       !HasImplThread() &&
       !layer_tree_host()->GetSettings().single_thread_proxy_scheduler;
-  return base::MakeUnique<TestLayerTreeFrameSink>(
+  return base::MakeUnique<TestCompositorFrameSink>(
       compositor_context_provider, std::move(worker_context_provider),
       shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
       impl_task_runner_, synchronous_composite, disable_display_vsync,

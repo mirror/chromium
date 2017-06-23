@@ -20,10 +20,6 @@ namespace chrome {
 struct NavigateParams;
 }
 
-namespace content {
-struct OpenURLParams;
-}
-
 class GURL;
 
 // Per-tab class to manage blocked popups.
@@ -36,10 +32,8 @@ class PopupBlockerTabHelper
 
   // Returns true if a popup with |user_gesture| should be considered for
   // blocking from |web_contents|.
-  static bool ConsiderForPopupBlocking(
-      content::WebContents* web_contents,
-      bool user_gesture,
-      const content::OpenURLParams* open_url_params);
+  static bool ConsiderForPopupBlocking(content::WebContents* web_contents,
+                                       bool user_gesture);
 
   ~PopupBlockerTabHelper() override;
 

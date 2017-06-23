@@ -120,7 +120,7 @@ TEST_F(DialogPresenterTest, QueueTest) {
   // showing the dialog for |webState2|.
   [presenter().presentedDialogCoordinator stop];
   [presenter()
-      dialogCoordinatorWasStopped:presenter().presentedDialogCoordinator];
+      buttonWasTappedForCoordinator:presenter().presentedDialogCoordinator];
   EXPECT_EQ(2U, delegate().presentedWebStates.size());
   EXPECT_EQ(&webState1, delegate().presentedWebStates.front());
   EXPECT_EQ(&webState2, delegate().presentedWebStates.back());

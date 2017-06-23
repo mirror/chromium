@@ -3,7 +3,6 @@
 # found in the LICENSE file.
 
 import("//build/config/chromecast_build.gni")
-import("//build/config/compiler/compiler.gni")
 import("//build/toolchain/toolchain.gni")
 import("//build/config/ui.gni")
 import("//build/split_static_library.gni")
@@ -208,14 +207,12 @@ component("core") {
     "//third_party/WebKit/Source/core/xmlhttprequest",
   ]
 
-  if (is_win && is_debug && is_component_build &&
-      (current_cpu == "x64" || is_clang)) {
-    # Incremental linking fails when the .ilk file gets too large.
-    # 64-bit debug builds and Clang builds with full symbols trigger this
-    # problem, so we turn off incremental linking in those configurations.
-    # For fastest builds, use component release builds without debug
-    # information.
-    # VC++ bug filed for 64-bit debug incremental link failures:
+  if (is_win && is_debug && is_component_build && current_cpu == "x64") {
+    # Incremental linking doesn't work on this target in debug mode for
+    # 64-bit builds - the .ilk file gets too large and the incremental
+    # link silently fails. Therefore 32-bit builds or 64-bit release builds
+    # (component either way) should be used for fastest incremental build
+    # performance. VC++ bug filed for 64-bit debug incremental link failures:
     # https://connect.microsoft.com/VisualStudio/feedback/details/2846790
     configs -= [ "//build/config/win:default_incremental_linking" ]
     configs += [ "//build/config/win:no_incremental_linking" ]
@@ -461,12 +458,7 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignItems.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignOrJustifyContent.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignOrJustifySelf.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationDirection.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationFillMode.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationIterationCount.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationName.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationPlayState.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIBackgroundColor.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBaselineShift.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBorderImageOutset.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBorderImageRepeat.h",
@@ -474,7 +466,6 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBorderImageWidth.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBorderRadius.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBorderWidth.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIBoxShadow.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPICaretColor.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIClip.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIClipPath.h",
@@ -501,7 +492,6 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIFontVariantLigatures.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIFontVariantNumeric.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIFontVariationSettings.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIFontWeight.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIFragmentation.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIGridAutoFlow.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIGridAutoLine.h",
@@ -516,7 +506,6 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPILineHeightStep.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIMargin.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIMarker.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIObjectPosition.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIOffsetAnchor.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIOffsetDistance.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIOffsetPath.h",
@@ -532,7 +521,6 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIPaintOrder.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIPaintStroke.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIPerspective.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIPerspectiveOrigin.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIQuotes.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIRadius.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIRotate.h",
@@ -553,13 +541,11 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPITextDecorationLine.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITextDecorationSkip.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITextIndent.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPITextShadow.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITextSizeAdjust.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITextUnderlinePosition.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITouchAction.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITransform.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITransformOrigin.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPITransitionProperty.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITranslate.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIVerticalAlign.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitBorderImage.h",
@@ -567,7 +553,6 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitBorderWidth.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitBoxFlex.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitBoxFlexGroup.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitBoxReflect.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitFontSizeDelta.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitHighlight.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitLineClamp.h",
@@ -588,13 +573,7 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyDescriptor.cpp",
     "$blink_core_output_dir/css/properties/CSSPropertyDescriptor.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderRadius.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderSpacing.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIColumns.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIFlex.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIFont.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIFontVariant.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIOverflow.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIOffset.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPITextDecoration.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMarginCollapse.h",
   ]
@@ -1156,7 +1135,6 @@ source_set("unit_tests") {
     "animation/AnimationClockTest.cpp",
     "animation/AnimationEffectReadOnlyTest.cpp",
     "animation/AnimationInputHelpersTest.cpp",
-    "animation/AnimationSimTest.cpp",
     "animation/AnimationTest.cpp",
     "animation/AnimationTestHelper.cpp",
     "animation/AnimationTestHelper.h",
@@ -1218,7 +1196,6 @@ source_set("unit_tests") {
     "css/threaded/CSSParserThreadedTest.cpp",
     "css/threaded/CSSToLengthConversionDataThreadedTest.cpp",
     "css/threaded/FilterOperationResolverThreadedTest.cpp",
-    "css/threaded/FontObjectThreadedTest.cpp",
     "dom/AttrTest.cpp",
     "dom/CSSSelectorWatchTest.cpp",
     "dom/DOMImplementationTest.cpp",
@@ -1458,6 +1435,7 @@ source_set("unit_tests") {
     "style/BorderValueTest.cpp",
     "style/ComputedStyleTest.cpp",
     "style/FilterOperationsTest.cpp",
+    "style/OutlineValueTest.cpp",
     "style/SVGComputedStyleTest.cpp",
     "style/StyleDifferenceTest.cpp",
     "svg/SVGPathParserTest.cpp",

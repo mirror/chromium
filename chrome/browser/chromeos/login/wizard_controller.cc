@@ -33,7 +33,6 @@
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
 #include "chrome/browser/chromeos/customization/customization_document.h"
-#include "chrome/browser/chromeos/device/input_service_proxy.h"
 #include "chrome/browser/chromeos/login/enrollment/auto_enrollment_check_screen.h"
 #include "chrome/browser/chromeos/login/enrollment/auto_enrollment_controller.h"
 #include "chrome/browser/chromeos/login/enrollment/enrollment_screen.h"
@@ -56,7 +55,6 @@
 #include "chrome/browser/chromeos/login/screens/update_screen.h"
 #include "chrome/browser/chromeos/login/screens/user_image_screen.h"
 #include "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.h"
-#include "chrome/browser/chromeos/login/screens/wait_for_container_ready_screen.h"
 #include "chrome/browser/chromeos/login/screens/wrong_hwid_screen.h"
 #include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
@@ -423,7 +421,7 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
     if (!remora_controller_) {
       remora_controller_.reset(
           new pairing_chromeos::BluetoothHostPairingController(
-              InputServiceProxy::GetInputServiceTaskRunner()));
+              BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE)));
       remora_controller_->StartPairing();
     }
     return new HostPairingScreen(this, this,
@@ -438,9 +436,6 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
   } else if (screen == OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP) {
     return new VoiceInteractionValuePropScreen(
         this, oobe_ui_->GetVoiceInteractionValuePropScreenView());
-  } else if (screen == OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY) {
-    return new WaitForContainerReadyScreen(
-        this, oobe_ui_->GetWaitForContainerReadyScreenView());
   }
 
   return nullptr;
@@ -647,12 +642,6 @@ void WizardController::ShowVoiceInteractionValuePropScreen() {
   } else {
     OnOobeFlowFinished();
   }
-}
-
-void WizardController::ShowWaitForContainerReadyScreen() {
-  UpdateStatusAreaVisibilityForScreen(
-      OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY);
-  SetCurrentScreen(GetScreen(OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY));
 }
 
 void WizardController::SkipToLoginForTesting(
@@ -866,12 +855,8 @@ void WizardController::OnVoiceInteractionValuePropAccepted() {
     ShowArcTermsOfServiceScreen();
     return;
   }
-  ShowWaitForContainerReadyScreen();
-}
-
-void WizardController::OnWaitForContainerReadyFinished() {
-  OnOobeFlowFinished();
   StartVoiceInteractionSetupWizard();
+  OnOobeFlowFinished();
 }
 
 void WizardController::OnControllerPairingFinished() {
@@ -1139,8 +1124,6 @@ void WizardController::AdvanceToScreen(OobeScreen screen) {
     ShowEncryptionMigrationScreen();
   } else if (screen == OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP) {
     ShowVoiceInteractionValuePropScreen();
-  } else if (screen == OobeScreen::SCREEN_WAIT_FOR_CONTAINER_READY) {
-    ShowWaitForContainerReadyScreen();
   } else if (screen != OobeScreen::SCREEN_TEST_NO_WINDOW) {
     if (is_out_of_box_) {
       time_oobe_started_ = base::Time::Now();
@@ -1254,9 +1237,6 @@ void WizardController::OnExit(BaseScreen& /* screen */,
       break;
     case ScreenExitCode::VOICE_INTERACTION_VALUE_PROP_ACCEPTED:
       OnVoiceInteractionValuePropAccepted();
-      break;
-    case ScreenExitCode::WAIT_FOR_CONTAINER_READY_FINISHED:
-      OnWaitForContainerReadyFinished();
       break;
     default:
       NOTREACHED();
@@ -1621,7 +1601,7 @@ void WizardController::MaybeStartListeningForSharkConnection() {
   if (!shark_connection_listener_) {
     shark_connection_listener_.reset(
         new pairing_chromeos::SharkConnectionListener(
-            InputServiceProxy::GetInputServiceTaskRunner(),
+            BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
             base::Bind(&WizardController::OnSharkConnected,
                        weak_factory_.GetWeakPtr())));
   }

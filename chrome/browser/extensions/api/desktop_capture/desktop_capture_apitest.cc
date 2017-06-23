@@ -23,8 +23,6 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capture_types.h"
 
-using content::DesktopMediaID;
-
 namespace extensions {
 
 namespace {
@@ -58,7 +56,9 @@ class FakeDesktopMediaPicker : public DesktopMediaPicker {
             gfx::NativeWindow parent,
             const base::string16& app_name,
             const base::string16& target_name,
-            std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
+            std::unique_ptr<DesktopMediaList> screen_list,
+            std::unique_ptr<DesktopMediaList> window_list,
+            std::unique_ptr<DesktopMediaList> tab_list,
             bool request_audio,
             const DoneCallback& done_callback) override {
     if (!expectation_->cancelled) {
@@ -115,14 +115,11 @@ class FakeDesktopMediaPickerFactory :
     EXPECT_EQ(test_flags_[current_test_].expect_audio, show_audio);
 
     media_lists[0] = std::unique_ptr<DesktopMediaList>(
-        show_screens ? new FakeDesktopMediaList(DesktopMediaID::TYPE_SCREEN)
-                     : nullptr);
+        show_screens ? new FakeDesktopMediaList() : nullptr);
     media_lists[1] = std::unique_ptr<DesktopMediaList>(
-        show_windows ? new FakeDesktopMediaList(DesktopMediaID::TYPE_WINDOW)
-                     : nullptr);
+        show_windows ? new FakeDesktopMediaList() : nullptr);
     media_lists[2] = std::unique_ptr<DesktopMediaList>(
-        show_tabs ? new FakeDesktopMediaList(DesktopMediaID::TYPE_WEB_CONTENTS)
-                  : nullptr);
+        show_tabs ? new FakeDesktopMediaList() : nullptr);
     return media_lists;
   }
 

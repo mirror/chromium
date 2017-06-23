@@ -448,7 +448,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   bool using_synchronous_compositor =
       GetContentClient()->UsingSynchronousCompositing();
 
-  settings.use_stream_video_draw_quad = true;
   settings.using_synchronous_renderer_compositor = using_synchronous_compositor;
   if (using_synchronous_compositor) {
     // Android WebView uses system scrollbars, so make ours invisible.
@@ -972,13 +971,13 @@ void RenderWidgetCompositor::LayoutAndPaintAsync(
   }
 }
 
-void RenderWidgetCompositor::SetLayerTreeFrameSink(
-    std::unique_ptr<cc::LayerTreeFrameSink> layer_tree_frame_sink) {
-  if (!layer_tree_frame_sink) {
-    DidFailToInitializeLayerTreeFrameSink();
+void RenderWidgetCompositor::SetCompositorFrameSink(
+    std::unique_ptr<cc::CompositorFrameSink> compositor_frame_sink) {
+  if (!compositor_frame_sink) {
+    DidFailToInitializeCompositorFrameSink();
     return;
   }
-  layer_tree_host_->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));
+  layer_tree_host_->SetCompositorFrameSink(std::move(compositor_frame_sink));
 }
 
 void RenderWidgetCompositor::LayoutAndUpdateLayers() {
@@ -1152,40 +1151,40 @@ void RenderWidgetCompositor::RecordWheelAndTouchScrollingCount(
                                                has_scrolled_by_touch);
 }
 
-void RenderWidgetCompositor::RequestNewLayerTreeFrameSink() {
+void RenderWidgetCompositor::RequestNewCompositorFrameSink() {
   // If the host is closing, then no more compositing is possible.  This
   // prevents shutdown races between handling the close message and
-  // the CreateLayerTreeFrameSink task.
+  // the CreateCompositorFrameSink task.
   if (delegate_->IsClosing())
     return;
 
   bool fallback = num_failed_recreate_attempts_ >=
-                  LAYER_TREE_FRAME_SINK_RETRIES_BEFORE_FALLBACK;
+                  COMPOSITOR_FRAME_SINK_RETRIES_BEFORE_FALLBACK;
 
 #ifdef OS_ANDROID
   LOG_IF(FATAL, fallback) << "Android does not support fallback frame sinks.";
 #endif
 
-  delegate_->RequestNewLayerTreeFrameSink(
-      fallback, base::Bind(&RenderWidgetCompositor::SetLayerTreeFrameSink,
+  delegate_->RequestNewCompositorFrameSink(
+      fallback, base::Bind(&RenderWidgetCompositor::SetCompositorFrameSink,
                            weak_factory_.GetWeakPtr()));
 }
 
-void RenderWidgetCompositor::DidInitializeLayerTreeFrameSink() {
+void RenderWidgetCompositor::DidInitializeCompositorFrameSink() {
   num_failed_recreate_attempts_ = 0;
 }
 
-void RenderWidgetCompositor::DidFailToInitializeLayerTreeFrameSink() {
+void RenderWidgetCompositor::DidFailToInitializeCompositorFrameSink() {
   ++num_failed_recreate_attempts_;
   // Tolerate a certain number of recreation failures to work around races
   // in the output-surface-lost machinery.
   LOG_IF(FATAL,
-         (num_failed_recreate_attempts_ >= MAX_LAYER_TREE_FRAME_SINK_RETRIES))
-      << "Failed to create a fallback LayerTreeFrameSink.";
+         (num_failed_recreate_attempts_ >= MAX_COMPOSITOR_FRAME_SINK_RETRIES))
+      << "Failed to create a fallback CompositorFrameSink.";
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::Bind(&RenderWidgetCompositor::RequestNewLayerTreeFrameSink,
+      base::Bind(&RenderWidgetCompositor::RequestNewCompositorFrameSink,
                  weak_factory_.GetWeakPtr()));
 }
 
@@ -1220,7 +1219,7 @@ void RenderWidgetCompositor::RequestScheduleAnimation() {
 
 void RenderWidgetCompositor::DidSubmitCompositorFrame() {}
 
-void RenderWidgetCompositor::DidLoseLayerTreeFrameSink() {}
+void RenderWidgetCompositor::DidLoseCompositorFrameSink() {}
 
 void RenderWidgetCompositor::SetFrameSinkId(
     const cc::FrameSinkId& frame_sink_id) {

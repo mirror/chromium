@@ -22,7 +22,10 @@ class StubCompositorMutator : public CompositorMutator {
  public:
   StubCompositorMutator() {}
 
-  bool Mutate(double monotonic_time_now) override { return false; }
+  bool Mutate(double monotonic_time_now,
+              CompositorMutableStateProvider* state_provider) override {
+    return false;
+  }
 };
 
 class MockCompositoMutationsTarget : public CompositorMutationsTarget {

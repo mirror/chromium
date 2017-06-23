@@ -180,19 +180,19 @@ void Scheduler::DidPrepareTiles() {
   state_machine_.DidPrepareTiles();
 }
 
-void Scheduler::DidLoseLayerTreeFrameSink() {
-  TRACE_EVENT0("cc", "Scheduler::DidLoseLayerTreeFrameSink");
-  state_machine_.DidLoseLayerTreeFrameSink();
+void Scheduler::DidLoseCompositorFrameSink() {
+  TRACE_EVENT0("cc", "Scheduler::DidLoseCompositorFrameSink");
+  state_machine_.DidLoseCompositorFrameSink();
   UpdateCompositorTimingHistoryRecordingEnabled();
   ProcessScheduledActions();
 }
 
-void Scheduler::DidCreateAndInitializeLayerTreeFrameSink() {
-  TRACE_EVENT0("cc", "Scheduler::DidCreateAndInitializeLayerTreeFrameSink");
+void Scheduler::DidCreateAndInitializeCompositorFrameSink() {
+  TRACE_EVENT0("cc", "Scheduler::DidCreateAndInitializeCompositorFrameSink");
   DCHECK(!observing_begin_frame_source_);
   DCHECK(begin_impl_frame_deadline_task_.IsCancelled());
-  state_machine_.DidCreateAndInitializeLayerTreeFrameSink();
-  compositor_timing_history_->DidCreateAndInitializeLayerTreeFrameSink();
+  state_machine_.DidCreateAndInitializeCompositorFrameSink();
+  compositor_timing_history_->DidCreateAndInitializeCompositorFrameSink();
   UpdateCompositorTimingHistoryRecordingEnabled();
   ProcessScheduledActions();
 }
@@ -304,7 +304,7 @@ void Scheduler::SetVideoNeedsBeginFrames(bool video_needs_begin_frames) {
   ProcessScheduledActions();
 }
 
-void Scheduler::OnDrawForLayerTreeFrameSink(bool resourceless_software_draw) {
+void Scheduler::OnDrawForCompositorFrameSink(bool resourceless_software_draw) {
   DCHECK(settings_.using_synchronous_renderer_compositor);
   DCHECK_EQ(state_machine_.begin_impl_frame_state(),
             SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_IDLE);
@@ -475,7 +475,7 @@ void Scheduler::BeginImplFrame(const BeginFrameArgs& args,
   DCHECK_EQ(state_machine_.begin_impl_frame_state(),
             SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_IDLE);
   DCHECK(begin_impl_frame_deadline_task_.IsCancelled());
-  DCHECK(state_machine_.HasInitializedLayerTreeFrameSink());
+  DCHECK(state_machine_.HasInitializedCompositorFrameSink());
 
   begin_impl_frame_tracker_.Start(args);
   state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
@@ -684,17 +684,17 @@ void Scheduler::ProcessScheduledActions() {
         compositor_timing_history_->DrawAborted();
         break;
       }
-      case SchedulerStateMachine::ACTION_BEGIN_LAYER_TREE_FRAME_SINK_CREATION:
-        state_machine_.WillBeginLayerTreeFrameSinkCreation();
-        client_->ScheduledActionBeginLayerTreeFrameSinkCreation();
+      case SchedulerStateMachine::ACTION_BEGIN_COMPOSITOR_FRAME_SINK_CREATION:
+        state_machine_.WillBeginCompositorFrameSinkCreation();
+        client_->ScheduledActionBeginCompositorFrameSinkCreation();
         break;
       case SchedulerStateMachine::ACTION_PREPARE_TILES:
         state_machine_.WillPrepareTiles();
         client_->ScheduledActionPrepareTiles();
         break;
-      case SchedulerStateMachine::ACTION_INVALIDATE_LAYER_TREE_FRAME_SINK: {
-        state_machine_.WillInvalidateLayerTreeFrameSink();
-        client_->ScheduledActionInvalidateLayerTreeFrameSink();
+      case SchedulerStateMachine::ACTION_INVALIDATE_COMPOSITOR_FRAME_SINK: {
+        state_machine_.WillInvalidateCompositorFrameSink();
+        client_->ScheduledActionInvalidateCompositorFrameSink();
         break;
       }
     }
@@ -766,7 +766,7 @@ void Scheduler::AsValueInto(base::trace_event::TracedValue* state) const {
 
 void Scheduler::UpdateCompositorTimingHistoryRecordingEnabled() {
   compositor_timing_history_->SetRecordingEnabled(
-      state_machine_.HasInitializedLayerTreeFrameSink() &&
+      state_machine_.HasInitializedCompositorFrameSink() &&
       state_machine_.visible());
 }
 

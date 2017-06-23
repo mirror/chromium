@@ -86,8 +86,7 @@ class TestingHttpServerPropertiesManager : public HttpServerPropertiesManager {
       scoped_refptr<TestMockTimeTaskRunner> net_task_runner)
       : HttpServerPropertiesManager(pref_delegate,
                                     pref_task_runner,
-                                    net_task_runner,
-                                    nullptr),
+                                    net_task_runner),
         pref_task_runner_(std::move(pref_task_runner)),
         net_task_runner_(std::move(net_task_runner)) {
     // This call must run in the context of |net_task_runner_|.

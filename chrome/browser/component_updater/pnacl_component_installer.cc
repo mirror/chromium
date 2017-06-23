@@ -21,9 +21,6 @@
 #include "base/macros.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
-#include "base/task_scheduler/post_task.h"
-#include "base/threading/thread_restrictions.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "base/version.h"
 #include "build/build_config.h"
@@ -334,7 +331,7 @@ void FinishPnaclUpdateRegistration(
 // a hosted version is actually newer.
 void StartPnaclUpdateRegistration(
     const scoped_refptr<PnaclComponentInstaller>& pci) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   base::FilePath path = pci->GetPnaclBaseDirectory();
   if (!base::PathExists(path)) {
     if (!base::CreateDirectory(path)) {
@@ -368,10 +365,12 @@ void StartPnaclUpdateRegistration(
     }
   }
 
-  BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)
-      ->PostTask(FROM_HERE,
-                 base::BindOnce(&FinishPnaclUpdateRegistration, current_version,
-                                current_fingerprint, pci));
+  BrowserThread::PostTask(BrowserThread::UI,
+                          FROM_HERE,
+                          base::Bind(&FinishPnaclUpdateRegistration,
+                                     current_version,
+                                     current_fingerprint,
+                                     pci));
 
   // Remove older versions of PNaCl.
   for (std::vector<base::FilePath>::iterator iter = older_dirs.begin();
@@ -386,9 +385,9 @@ void StartPnaclUpdateRegistration(
 void PnaclComponentInstaller::RegisterPnaclComponent(
     ComponentUpdateService* cus) {
   cus_ = cus;
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
-      base::BindOnce(&StartPnaclUpdateRegistration, make_scoped_refptr(this)));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&StartPnaclUpdateRegistration, make_scoped_refptr(this)));
 }
 
 }  // namespace component_updater

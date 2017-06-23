@@ -1276,7 +1276,7 @@ LayoutSize LayoutInline::OffsetFromContainer(
 PaintLayerType LayoutInline::LayerTypeRequired() const {
   return IsInFlowPositioned() || CreatesGroup() || HasClipPath() ||
                  Style()->ShouldCompositeForCurrentAnimations() ||
-                 Style()->ContainsPaint()
+                 Style()->HasCompositorProxy() || Style()->ContainsPaint()
              ? kNormalPaintLayer
              : kNoPaintLayer;
 }
@@ -1550,7 +1550,7 @@ void LayoutInline::InvalidateDisplayItemClients(
     paint_invalidator.InvalidateDisplayItemClient(*box, invalidation_reason);
 }
 
-// TODO(loonybear): Not to just dump 0, 0 as the x and y here
+// TODO(lunalu): Not to just dump 0, 0 as the x and y here
 LayoutRect LayoutInline::DebugRect() const {
   IntRect lines_box = EnclosingIntRect(LinesBoundingBox());
   return LayoutRect(IntRect(0, 0, lines_box.Width(), lines_box.Height()));

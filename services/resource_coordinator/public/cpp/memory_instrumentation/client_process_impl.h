@@ -29,19 +29,47 @@ namespace memory_instrumentation {
 class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
     : public NON_EXPORTED_BASE(mojom::ClientProcess) {
  public:
-  struct SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT Config {
+  class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT Config {
    public:
     Config(service_manager::Connector* connector,
            const std::string& service_name,
-           mojom::ProcessType process_type);
+           mojom::ProcessType process_type)
+        : connector_(connector),
+          service_name_(service_name),
+          process_type_(process_type),
+          coordinator_(nullptr) {}
+    Config(Coordinator* coordinator, mojom::ProcessType process_type)
+        : connector_(nullptr),
+          process_type_(process_type),
+          coordinator_(coordinator) {}
     ~Config();
 
-    service_manager::Connector* const connector;
-    const std::string service_name;
-    const mojom::ProcessType process_type;
+    service_manager::Connector* connector() const { return connector_; }
+
+    const std::string& service_name() const { return service_name_; }
+
+    mojom::ProcessType process_type() const { return process_type_; }
+
+    Coordinator* coordinator() const { return coordinator_; }
+
+   private:
+    service_manager::Connector* connector_;
+    const std::string service_name_;
+    const mojom::ProcessType process_type_;
+    Coordinator* coordinator_;
+    bool is_test_config_;
   };
 
   static void CreateInstance(const Config& config);
+
+  // Implements base::trace_event::MemoryDumpManager::RequestGlobalDumpCallback.
+  // NOTE: Use MemoryDumpManager::RequestGlobalDump() to request gobal dump.
+  void RequestGlobalMemoryDump(
+      const base::trace_event::MemoryDumpRequestArgs& args,
+      const base::trace_event::GlobalMemoryDumpCallback& callback);
+
+  Config config() { return config_; }
+  void SetAsNonCoordinatorForTesting();
 
  private:
   friend std::default_delete<ClientProcessImpl>;  // For testing
@@ -49,12 +77,6 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
 
   ClientProcessImpl(const Config& config);
   ~ClientProcessImpl() override;
-
-  // Implements base::trace_event::MemoryDumpManager::RequestGlobalDumpCallback.
-  // This function will be called by the MemoryDumpScheduler::OnTick and
-  // MemoryPeakDetector.
-  void RequestGlobalMemoryDump_NoCallback(
-      const base::trace_event::MemoryDumpRequestArgs&);
 
   // mojom::ClientProcess implementation. The Coordinator calls this.
   void RequestProcessMemoryDump(
@@ -68,10 +90,20 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
       bool success,
       const base::Optional<base::trace_event::MemoryDumpCallbackResult>&);
 
+  // A proxy callback for updating |pending_memory_dump_guid_|.
+  void MemoryDumpCallbackProxy(
+      const base::trace_event::GlobalMemoryDumpCallback& callback,
+      uint64_t dump_guid,
+      bool success,
+      mojom::GlobalMemoryDumpPtr global_memory_dump);
+
   mojom::CoordinatorPtr coordinator_;
   mojo::Binding<mojom::ClientProcess> binding_;
-  const mojom::ProcessType process_type_;
+  const Config config_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  uint64_t pending_memory_dump_guid_;
+
+  base::Lock pending_memory_dump_guid_lock_;
 
   DISALLOW_COPY_AND_ASSIGN(ClientProcessImpl);
 };

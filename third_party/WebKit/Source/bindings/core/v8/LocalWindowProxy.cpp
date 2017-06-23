@@ -148,8 +148,7 @@ void LocalWindowProxy::Initialize() {
     ContentSecurityPolicy* csp =
         GetFrame()->GetDocument()->GetContentSecurityPolicy();
     context->AllowCodeGenerationFromStrings(csp->AllowEval(
-        0, SecurityViolationReportingPolicy::kSuppressReporting,
-        ContentSecurityPolicy::kWillNotThrowException, g_empty_string));
+        0, SecurityViolationReportingPolicy::kSuppressReporting));
     context->SetErrorMessageForCodeGenerationFromStrings(
         V8String(GetIsolate(), csp->EvalDisabledErrorMessage()));
   } else {

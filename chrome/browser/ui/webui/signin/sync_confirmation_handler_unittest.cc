@@ -209,9 +209,10 @@ TEST_F(SyncConfirmationHandlerTest, TestSetImageIfPrimaryAccountReady) {
   std::string original_picture_url =
       AccountTrackerServiceFactory::GetForProfile(profile())->
           GetAccountInfo("gaia").picture_url;
-  GURL picture_url_with_size = profiles::GetImageURLWithOptions(
-      GURL(original_picture_url), kExpectedProfileImageSize,
-      false /* no_silhouette */);
+  GURL picture_url_with_size;
+  EXPECT_TRUE(profiles::GetImageURLWithThumbnailSize(GURL(original_picture_url),
+                                                     kExpectedProfileImageSize,
+                                                     &picture_url_with_size));
   EXPECT_EQ(picture_url_with_size.spec(), passed_picture_url);
 }
 
@@ -259,9 +260,10 @@ TEST_F(SyncConfirmationHandlerTest, TestSetImageIfPrimaryAccountReadyLater) {
   std::string original_picture_url =
       AccountTrackerServiceFactory::GetForProfile(profile())->
           GetAccountInfo("gaia").picture_url;
-  GURL picture_url_with_size = profiles::GetImageURLWithOptions(
-      GURL(original_picture_url), kExpectedProfileImageSize,
-      false /* no_silhouette */);
+  GURL picture_url_with_size;
+  EXPECT_TRUE(profiles::GetImageURLWithThumbnailSize(GURL(original_picture_url),
+                                                     kExpectedProfileImageSize,
+                                                     &picture_url_with_size));
   EXPECT_EQ(picture_url_with_size.spec(), passed_picture_url);
 }
 

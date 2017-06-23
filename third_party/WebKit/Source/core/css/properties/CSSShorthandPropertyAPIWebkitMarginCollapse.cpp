@@ -25,14 +25,12 @@ bool CSSShorthandPropertyAPIWebkitMarginCollapse::parseShorthand(
   CSSValue* before_collapse = CSSIdentifierValue::Create(id);
   CSSPropertyParserHelpers::AddProperty(
       CSSPropertyWebkitMarginBeforeCollapse, CSSPropertyWebkitMarginCollapse,
-      *before_collapse, important,
-      CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
+      *before_collapse, important, false /* implicit */, properties);
 
   if (range.AtEnd()) {
     CSSPropertyParserHelpers::AddProperty(
         CSSPropertyWebkitMarginAfterCollapse, CSSPropertyWebkitMarginCollapse,
-        *before_collapse, important,
-        CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
+        *before_collapse, important, false /* implicit */, properties);
     return true;
   }
 
@@ -42,8 +40,8 @@ bool CSSShorthandPropertyAPIWebkitMarginCollapse::parseShorthand(
     return false;
   CSSPropertyParserHelpers::AddProperty(
       CSSPropertyWebkitMarginAfterCollapse, CSSPropertyWebkitMarginCollapse,
-      *CSSIdentifierValue::Create(id), important,
-      CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
+      *CSSIdentifierValue::Create(id), important, false /* implicit */,
+      properties);
   return true;
 }
 

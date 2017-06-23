@@ -10,11 +10,6 @@
           "object": "LayoutSVGRoot svg",
           "rect": [-1, -1, 578, 434],
           "reason": "appeared"
-        },
-        {
-          "object": "LayoutSVGRoot svg",
-          "rect": [-1, -1, 482, 362],
-          "reason": "disappeared"
         }
       ]
     }

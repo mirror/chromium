@@ -33,7 +33,7 @@ DocumentSubresourceFilter::~DocumentSubresourceFilter() = default;
 
 LoadPolicy DocumentSubresourceFilter::GetLoadPolicy(
     const GURL& subresource_url,
-    url_pattern_index::proto::ElementType subresource_type) {
+    proto::ElementType subresource_type) {
   TRACE_EVENT1("loader", "DocumentSubresourceFilter::GetLoadPolicy", "url",
                subresource_url.spec());
 

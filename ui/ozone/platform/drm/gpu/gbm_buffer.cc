@@ -36,53 +36,14 @@ GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
                      const gfx::Size& size,
 
                      const std::vector<gfx::NativePixmapPlane>&& planes)
-    : drm_(gbm),
-      bo_(bo),
+    : GbmBufferBase(gbm, bo, format, flags, modifier, addfb_flags),
       format_(format),
       flags_(flags),
       fds_(std::move(fds)),
       size_(size),
-      planes_(std::move(planes)) {
-  if (flags & GBM_BO_USE_SCANOUT) {
-    DCHECK(bo_);
-    framebuffer_pixel_format_ = format;
-    opaque_framebuffer_pixel_format_ = GetFourCCFormatForOpaqueFramebuffer(
-        GetBufferFormatFromFourCCFormat(format));
-    format_modifier_ = modifier;
-
-    uint32_t handles[4] = {0};
-    uint32_t strides[4] = {0};
-    uint32_t offsets[4] = {0};
-    uint64_t modifiers[4] = {0};
-
-    for (size_t i = 0; i < gbm_bo_get_num_planes(bo); ++i) {
-      handles[i] = gbm_bo_get_plane_handle(bo, i).u32;
-      strides[i] = gbm_bo_get_plane_stride(bo, i);
-      offsets[i] = gbm_bo_get_plane_offset(bo, i);
-      modifiers[i] = modifier;
-    }
-
-    // AddFramebuffer2 only considers the modifiers if addfb_flags has
-    // DRM_MODE_FB_MODIFIERS set. We only set that when we've created
-    // a bo with modifiers, otherwise, we rely on the "no modifiers"
-    // behavior doing the right thing.
-    drm_->AddFramebuffer2(gbm_bo_get_width(bo), gbm_bo_get_height(bo),
-                          framebuffer_pixel_format_, handles, strides, offsets,
-                          modifiers, &framebuffer_, addfb_flags);
-    if (opaque_framebuffer_pixel_format_ != framebuffer_pixel_format_) {
-      drm_->AddFramebuffer2(gbm_bo_get_width(bo), gbm_bo_get_height(bo),
-                            opaque_framebuffer_pixel_format_, handles, strides,
-                            offsets, modifiers, &opaque_framebuffer_,
-                            addfb_flags);
-    }
-  }
-}
+      planes_(std::move(planes)) {}
 
 GbmBuffer::~GbmBuffer() {
-  if (framebuffer_)
-    drm_->RemoveFramebuffer(framebuffer_);
-  if (opaque_framebuffer_)
-    drm_->RemoveFramebuffer(opaque_framebuffer_);
   if (bo())
     gbm_bo_destroy(bo());
 }
@@ -122,45 +83,15 @@ size_t GbmBuffer::GetSize(size_t index) const {
   return planes_[index].size;
 }
 
-uint32_t GbmBuffer::GetFramebufferId() const {
-  return framebuffer_;
-}
-
-uint32_t GbmBuffer::GetOpaqueFramebufferId() const {
-  return opaque_framebuffer_ ? opaque_framebuffer_ : framebuffer_;
-}
-
-uint32_t GbmBuffer::GetHandle() const {
-  return gbm_bo_get_handle(bo_).u32;
+uint64_t GbmBuffer::GetFormatModifier(size_t index) const {
+  DCHECK_LT(index, planes_.size());
+  return planes_[index].modifier;
 }
 
 // TODO(reveman): This should not be needed once crbug.com/597932 is fixed,
 // as the size would be queried directly from the underlying bo.
 gfx::Size GbmBuffer::GetSize() const {
   return size_;
-}
-
-uint32_t GbmBuffer::GetFramebufferPixelFormat() const {
-  DCHECK(framebuffer_);
-  return framebuffer_pixel_format_;
-}
-
-uint32_t GbmBuffer::GetOpaqueFramebufferPixelFormat() const {
-  DCHECK(framebuffer_);
-  return opaque_framebuffer_pixel_format_;
-}
-
-uint64_t GbmBuffer::GetFormatModifier() const {
-  DCHECK(framebuffer_);
-  return format_modifier_;
-}
-
-const DrmDevice* GbmBuffer::GetDrmDevice() const {
-  return drm_.get();
-}
-
-bool GbmBuffer::RequiresGlFinish() const {
-  return !drm_->is_primary_device();
 }
 
 scoped_refptr<GbmBuffer> GbmBuffer::CreateBufferForBO(
@@ -237,8 +168,7 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBuffer(
   gbm_bo* bo =
       gbm_bo_create(gbm->device(), size.width(), size.height(), format, flags);
 
-  return CreateBufferForBO(gbm, bo, format, size, flags,
-                           gbm_bo_get_format_modifier(bo), 0);
+  return CreateBufferForBO(gbm, bo, format, size, flags, 0, 0);
 }
 
 // static
@@ -320,7 +250,7 @@ gfx::NativePixmapHandle GbmPixmap::ExportHandle() {
     }
     handle.planes.emplace_back(buffer_->GetStride(i), buffer_->GetOffset(i),
                                buffer_->GetSize(i),
-                               buffer_->GetFormatModifier());
+                               buffer_->GetFormatModifier(i));
   }
   return handle;
 }
@@ -353,7 +283,7 @@ int GbmPixmap::GetDmaBufOffset(size_t plane) const {
 }
 
 uint64_t GbmPixmap::GetDmaBufModifier(size_t plane) const {
-  return buffer_->GetFormatModifier();
+  return buffer_->GetFormatModifier(plane);
 }
 
 gfx::BufferFormat GbmPixmap::GetBufferFormat() const {

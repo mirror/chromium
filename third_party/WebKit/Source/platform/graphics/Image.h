@@ -116,7 +116,7 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   // Otherwise:
   //   Image loading is completed synchronously.
   //   ImageResourceObserver::AsyncLoadCompleted() is not called.
-  virtual SizeAvailability SetData(RefPtr<SharedBuffer> data,
+  virtual SizeAvailability SetData(PassRefPtr<SharedBuffer> data,
                                    bool all_data_received);
   virtual SizeAvailability DataChanged(bool /*all_data_received*/) {
     return kSizeUnavailable;
@@ -200,7 +200,7 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                                         const FloatSize& image_size);
 
  protected:
-  Image(ImageObserver* = 0, bool is_multipart = false);
+  Image(ImageObserver* = 0);
 
   void DrawTiledBackground(GraphicsContext&,
                            const FloatRect& dst_rect,
@@ -236,7 +236,6 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   // alive, |image_observer_| is cleared by WeakPersistent mechanism.
   WeakPersistent<ImageObserver> image_observer_;
   PaintImage::Id stable_image_id_;
-  const bool is_multipart_;
 };
 
 #define DEFINE_IMAGE_TYPE_CASTS(typeName)                          \

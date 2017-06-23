@@ -51,11 +51,10 @@
 
 namespace blink {
 
-Image::Image(ImageObserver* observer, bool is_multipart)
+Image::Image(ImageObserver* observer)
     : image_observer_disabled_(false),
       image_observer_(observer),
-      stable_image_id_(PaintImage::GetNextId()),
-      is_multipart_(is_multipart) {}
+      stable_image_id_(PaintImage::GetNextId()) {}
 
 Image::~Image() {}
 
@@ -79,7 +78,7 @@ bool Image::SupportsType(const String& type) {
   return MIMETypeRegistry::IsSupportedImageResourceMIMEType(type);
 }
 
-Image::SizeAvailability Image::SetData(RefPtr<SharedBuffer> data,
+Image::SizeAvailability Image::SetData(PassRefPtr<SharedBuffer> data,
                                        bool all_data_received) {
   encoded_image_data_ = std::move(data);
   if (!encoded_image_data_.Get())
@@ -351,7 +350,7 @@ PaintImage Image::PaintImageForCurrentFrame() {
                               ? PaintImage::CompletionState::DONE
                               : PaintImage::CompletionState::PARTIALLY_DONE;
   return PaintImage(stable_image_id_, ImageForCurrentFrame(), animation_type,
-                    completion_state, FrameCount(), is_multipart_);
+                    completion_state, FrameCount());
 }
 
 bool Image::ApplyShader(PaintFlags& flags, const SkMatrix& local_matrix) {

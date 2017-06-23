@@ -39,8 +39,7 @@ bool FaviconSQLHandler::Update(const HistoryAndBookmarkRow& row,
   // icon is already in database, just create a new favicon.
   // TODO(pkotwicz): Pass in real pixel size.
   favicon_base::FaviconID favicon_id = thumbnail_db_->AddFavicon(
-      GURL(), favicon_base::FAVICON, row.favicon(), FaviconBitmapType::ON_VISIT,
-      Time::Now(), gfx::Size());
+      GURL(), favicon_base::FAVICON, row.favicon(), Time::Now(), gfx::Size());
 
   if (!favicon_id)
     return false;
@@ -105,8 +104,7 @@ bool FaviconSQLHandler::Insert(HistoryAndBookmarkRow* row) {
   // Is it a problem to give a empty URL?
   // TODO(pkotwicz): Pass in real pixel size.
   favicon_base::FaviconID id = thumbnail_db_->AddFavicon(
-      GURL(), favicon_base::FAVICON, row->favicon(),
-      FaviconBitmapType::ON_VISIT, Time::Now(), gfx::Size());
+      GURL(), favicon_base::FAVICON, row->favicon(), Time::Now(), gfx::Size());
   if (!id)
     return false;
   return thumbnail_db_->AddIconMapping(row->url(), id);

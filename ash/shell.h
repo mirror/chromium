@@ -60,6 +60,9 @@ class Insets;
 namespace ui {
 class UserActivityDetector;
 class UserActivityPowerManagerNotifier;
+namespace devtools {
+class UiDevToolsServer;
+}
 }
 
 namespace views {
@@ -86,7 +89,7 @@ class AcceleratorController;
 class AccessibilityDelegate;
 class AshDisplayController;
 class AppListDelegateImpl;
-class NativeCursorManagerAsh;
+class AshNativeCursorManager;
 class AshTouchTransformController;
 class AutoclickController;
 class BluetoothNotificationController;
@@ -214,10 +217,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   static RootWindowController* GetRootWindowControllerWithDisplayId(
       int64_t display_id);
 
-  // Returns the root Window for the given display id. If there is no display
-  // for |display_id| null is returned.
-  static aura::Window* GetRootWindowForDisplayId(int64_t display_id);
-
   // Returns all root window controllers.
   // TODO(oshima): move this to |RootWindowController|
   static RootWindowControllerList GetAllRootWindowControllers();
@@ -262,6 +261,13 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // Registers all ash related prefs to the given |registry|.
   static void RegisterPrefs(PrefRegistrySimple* registry);
+
+  // Returns true if simplified display management should be enabled.
+  // TODO(sky): remove this; temporary until http://crbug.com/718860 is done.
+  static bool ShouldEnableSimplifiedDisplayManagement();
+  // Use this variant if you have a Config and the Shell may not have been
+  // initialized yet.
+  static bool ShouldEnableSimplifiedDisplayManagement(ash::Config config);
 
   // Creates a default views::NonClientFrameView for use by windows in the
   // Ash environment.
@@ -712,6 +718,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<::wm::WindowModalityController> window_modality_controller_;
   std::unique_ptr<app_list::AppList> app_list_;
   std::unique_ptr<::PrefService> pref_service_;
+  std::unique_ptr<ui::devtools::UiDevToolsServer> devtools_server_;
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;
   LinkHandlerModelFactory* link_handler_model_factory_;
   std::unique_ptr<PowerButtonController> power_button_controller_;
@@ -795,7 +802,7 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // |native_cursor_manager_| is owned by |cursor_manager_|, but we keep a
   // pointer to vend to test code.
-  NativeCursorManagerAsh* native_cursor_manager_;
+  AshNativeCursorManager* native_cursor_manager_;
 
   // Cursor may be hidden on certain key events in Chrome OS, whereas we never
   // hide the cursor on Windows.

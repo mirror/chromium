@@ -106,7 +106,7 @@ class CORE_EXPORT HistoryItem final
   }
 
   void SetFormInfoFromRequest(const ResourceRequest&);
-  void SetFormData(RefPtr<EncodedFormData>);
+  void SetFormData(PassRefPtr<EncodedFormData>);
   void SetFormContentType(const AtomicString&);
 
   ResourceRequest GenerateResourceRequest(WebCachePolicy);

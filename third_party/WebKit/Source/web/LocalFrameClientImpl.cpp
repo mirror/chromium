@@ -43,7 +43,6 @@
 #include "core/events/UIEventWithKeyState.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
-#include "core/exported/WebDevToolsFrontendImpl.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
@@ -82,6 +81,7 @@
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/HTTPParsers.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/plugins/PluginData.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StringExtras.h"
@@ -108,6 +108,7 @@
 #include "public/web/WebViewClient.h"
 #include "v8/include/v8.h"
 #include "web/WebDevToolsAgentImpl.h"
+#include "web/WebDevToolsFrontendImpl.h"
 
 namespace blink {
 
@@ -538,7 +539,6 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
     NavigationPolicy policy,
     bool replaces_current_history_item,
     bool is_client_redirect,
-    WebTriggeringEventInfo triggering_event_info,
     HTMLFormElement* form,
     ContentSecurityPolicyDisposition
         should_check_main_world_content_security_policy) {
@@ -560,7 +560,6 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
   navigation_info.extra_data = ds ? ds->GetExtraData() : nullptr;
   navigation_info.replaces_current_history_item = replaces_current_history_item;
   navigation_info.is_client_redirect = is_client_redirect;
-  navigation_info.triggering_event_info = triggering_event_info;
   navigation_info.should_check_main_world_content_security_policy =
       should_check_main_world_content_security_policy ==
               kCheckContentSecurityPolicy
@@ -853,6 +852,47 @@ WebRemotePlaybackClient* LocalFrameClientImpl::CreateWebRemotePlaybackClient(
   return HTMLMediaElementRemotePlayback::remote(html_media_element);
 }
 
+ObjectContentType LocalFrameClientImpl::GetObjectContentType(
+    const KURL& url,
+    const String& explicit_mime_type,
+    bool should_prefer_plug_ins_for_images) {
+  // This code is based on Apple's implementation from
+  // WebCoreSupport/WebFrameBridge.mm.
+
+  String mime_type = explicit_mime_type;
+  if (mime_type.IsEmpty()) {
+    // Try to guess the MIME type based off the extension.
+    String filename = url.LastPathComponent();
+    int extension_pos = filename.ReverseFind('.');
+    if (extension_pos >= 0) {
+      String extension = filename.Substring(extension_pos + 1);
+      mime_type = MIMETypeRegistry::GetWellKnownMIMETypeForExtension(extension);
+    }
+
+    if (mime_type.IsEmpty())
+      return kObjectContentFrame;
+  }
+
+  // If Chrome is started with the --disable-plugins switch, pluginData is 0.
+  PluginData* plugin_data = web_frame_->GetFrame()->GetPluginData();
+  bool plug_in_supports_mime_type =
+      plugin_data && plugin_data->SupportsMimeType(mime_type);
+
+  if (MIMETypeRegistry::IsSupportedImageMIMEType(mime_type)) {
+    return should_prefer_plug_ins_for_images && plug_in_supports_mime_type
+               ? kObjectContentNetscapePlugin
+               : kObjectContentImage;
+  }
+
+  if (plug_in_supports_mime_type)
+    return kObjectContentNetscapePlugin;
+
+  if (MIMETypeRegistry::IsSupportedNonImageMIMEType(mime_type))
+    return kObjectContentFrame;
+
+  return kObjectContentNone;
+}
+
 WebCookieJar* LocalFrameClientImpl::CookieJar() const {
   if (!web_frame_->Client())
     return 0;
@@ -988,9 +1028,9 @@ void LocalFrameClientImpl::SuddenTerminationDisablerChanged(
 }
 
 BlameContext* LocalFrameClientImpl::GetFrameBlameContext() {
-  if (WebFrameClient* client = web_frame_->Client())
-    return client->GetFrameBlameContext();
-  return nullptr;
+  if (!web_frame_->Client())
+    return nullptr;
+  return web_frame_->Client()->GetFrameBlameContext();
 }
 
 LinkResource* LocalFrameClientImpl::CreateServiceWorkerLinkResource(

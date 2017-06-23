@@ -17,6 +17,8 @@ class Label;
 
 namespace ash {
 
+enum class LoginStatus;
+
 namespace tray {
 
 // The view displaying information about the user, such as user's avatar, email
@@ -24,7 +26,7 @@ namespace tray {
 // nested inside a UserView. For other users, it's inside the dropdown.
 class UserCardView : public views::View, public MediaCaptureObserver {
  public:
-  explicit UserCardView(int user_index);
+  UserCardView(LoginStatus login_status, int user_index);
   ~UserCardView() override;
 
   // Called to suppress the appearance of the media capture icon. The active
@@ -43,11 +45,11 @@ class UserCardView : public views::View, public MediaCaptureObserver {
   // Creates the content for the public mode.
   void AddPublicModeUserContent();
 
-  void AddUserContent(views::BoxLayout* layout);
+  void AddUserContent(views::BoxLayout* layout, LoginStatus login_status);
 
   bool is_active_user() const { return !user_index_; }
 
-  const int user_index_;
+  int user_index_;
 
   views::Label* user_name_ = nullptr;
   views::ImageView* media_capture_icon_ = nullptr;

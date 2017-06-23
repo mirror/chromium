@@ -10,7 +10,7 @@
 #include "base/macros.h"
 
 namespace ash {
-class NativeCursorManagerAsh;
+class AshNativeCursorManager;
 class DragDropController;
 class MaximizeModeWindowManager;
 class PaletteDelegate;
@@ -30,7 +30,7 @@ class ShellTestApi {
   SystemGestureEventFilter* system_gesture_event_filter();
   WorkspaceController* workspace_controller();
   ScreenPositionController* screen_position_controller();
-  NativeCursorManagerAsh* native_cursor_manager_ash();
+  AshNativeCursorManager* ash_native_cursor_manager();
   DragDropController* drag_drop_controller();
   MaximizeModeWindowManager* maximize_mode_window_manager();
 

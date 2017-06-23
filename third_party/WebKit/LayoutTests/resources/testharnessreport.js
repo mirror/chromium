@@ -78,11 +78,9 @@
 
     function isWPTManualTest() {
         var path = location.pathname;
-        if (location.hostname == 'web-platform.test'
-            && /.*-manual(\.https)?\.html$/.test(path)) {
+        if (location.hostname == 'web-platform.test' && path.endsWith('-manual.html'))
             return true;
-        }
-        return /\/external\/wpt\/.*-manual(\.https)?\.html$/.test(path);
+        return /\/external\/wpt\/.*-manual\.html$/.test(path);
     }
 
     // Returns a directory part relative to WPT root and a basename part of the
@@ -115,10 +113,8 @@
         }
 
         var src;
-        if (pathAndBase.startsWith('/fullscreen/')
-            || pathAndBase.startsWith('/webusb/')) {
-            // Fullscreen tests all use the same automation script and WebUSB
-            // tests borrow it.
+        if (pathAndBase.startsWith('/fullscreen/')) {
+            // Fullscreen tests all use the same automation script.
             src = automationPath + '/fullscreen/auto-click.js';
         } else if (pathAndBase.startsWith('/pointerevents/')
                    || pathAndBase.startsWith('/uievents/')
@@ -272,4 +268,5 @@
             window.addEventListener('load', done);
         }
     });
+
 })();

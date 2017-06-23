@@ -613,9 +613,6 @@ IPC_MESSAGE_ROUTED1(ViewMsg_HandleCompositorProto,
 IPC_MESSAGE_ROUTED1(ViewMsg_SetViewportIntersection,
                     gfx::Rect /* viewport_intersection */)
 
-// Sets the inert bit on an out-of-process iframe.
-IPC_MESSAGE_ROUTED1(ViewMsg_SetIsInert, bool /* inert */)
-
 // -----------------------------------------------------------------------------
 // Messages sent from the renderer to the browser.
 

@@ -20,7 +20,7 @@
 #include "ppapi/shared_impl/file_type_conversion.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
 namespace content {
@@ -132,13 +132,12 @@ int32_t PepperFileSystemHost::OnHostMsgInitIsolatedFileSystem(
   if (!view)
     return PP_ERROR_FAILED;
 
-  url::Origin main_frame_origin(
-      view->GetWebView()->MainFrame()->GetSecurityOrigin());
+  const GURL& url = view->GetWebView()->MainFrame()->GetDocument().Url();
   const std::string root_name = ppapi::IsolatedFileSystemTypeToRootName(type);
   if (root_name.empty())
     return PP_ERROR_BADARGUMENT;
   root_url_ = GURL(storage::GetIsolatedFileSystemRootURIString(
-      main_frame_origin.GetURL(), fsid, root_name));
+      url.GetOrigin(), fsid, root_name));
   opened_ = true;
   return PP_OK;
 }

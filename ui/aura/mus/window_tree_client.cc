@@ -700,7 +700,7 @@ void WindowTreeClient::ScheduleInFlightBoundsChange(
   if (window->window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM ||
       window->window_mus_type() == WindowMusType::EMBED_IN_OWNER ||
       window->window_mus_type() == WindowMusType::DISPLAY_MANUALLY_CREATED ||
-      window->HasLocalLayerTreeFrameSink()) {
+      window->HasLocalCompositorFrameSink()) {
     local_surface_id = window->GetOrAllocateLocalSurfaceId(new_bounds.size());
     synchronizing_with_child_on_next_frame_ = true;
   }
@@ -1357,8 +1357,8 @@ void WindowTreeClient::OnWindowInputEvent(uint32_t event_id,
   if (event->IsKeyEvent()) {
     InputMethodMus* input_method = GetWindowTreeHostMus(window)->input_method();
     if (input_method) {
-      ignore_result(input_method->DispatchKeyEvent(
-          event->AsKeyEvent(), CreateEventResultCallback(event_id)));
+      input_method->DispatchKeyEvent(event->AsKeyEvent(),
+                                     CreateEventResultCallback(event_id));
       return;
     }
   }
@@ -2040,10 +2040,8 @@ void WindowTreeClient::OnWindowTreeHostCreated(
     WindowTreeHostMus* window_tree_host) {
   // All WindowTreeHosts are destroyed before this, so we don't need to unset
   // the DragDropClient.
-  if (install_drag_drop_client_) {
-    client::SetDragDropClient(window_tree_host->window(),
-                              drag_drop_controller_.get());
-  }
+  client::SetDragDropClient(window_tree_host->window(),
+                            drag_drop_controller_.get());
 }
 
 void WindowTreeClient::OnTransientChildWindowAdded(Window* parent,

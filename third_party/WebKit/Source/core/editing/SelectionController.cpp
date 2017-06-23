@@ -48,7 +48,7 @@
 #include "core/page/Page.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/AutoReset.h"
-#include "public/platform/WebMenuSourceType.h"
+#include "public/web/WebMenuSourceType.h"
 
 namespace blink {
 SelectionController* SelectionController::Create(LocalFrame& frame) {
@@ -89,10 +89,10 @@ VisibleSelectionInFlatTree ExpandSelectionToRespectUserSelectAll(
   return CreateVisibleSelection(
       SelectionInFlatTree::Builder(selection.AsSelection())
           .Collapse(MostBackwardCaretPosition(
-              PositionInFlatTree::BeforeNode(*root_user_select_all),
+              PositionInFlatTree::BeforeNode(root_user_select_all),
               kCanCrossEditingBoundary))
           .Extend(MostForwardCaretPosition(
-              PositionInFlatTree::AfterNode(*root_user_select_all),
+              PositionInFlatTree::AfterNode(root_user_select_all),
               kCanCrossEditingBoundary))
           .Build());
 }
@@ -316,9 +316,9 @@ static SelectionInFlatTree ApplySelectAll(
           root_user_select_all_for_target) {
     return SelectionInFlatTree::Builder()
         .SetBaseAndExtent(PositionInFlatTree::BeforeNode(
-                              *root_user_select_all_for_mouse_press_node),
+                              root_user_select_all_for_mouse_press_node),
                           PositionInFlatTree::AfterNode(
-                              *root_user_select_all_for_mouse_press_node))
+                              root_user_select_all_for_mouse_press_node))
         .Build();
   }
 
@@ -329,7 +329,7 @@ static SelectionInFlatTree ApplySelectAll(
       TargetPositionIsBeforeDragStartPosition(
           mouse_press_node, drag_start_point, target, hit_test_point)) {
     builder.Collapse(PositionInFlatTree::AfterNode(
-        *root_user_select_all_for_mouse_press_node));
+        root_user_select_all_for_mouse_press_node));
   } else {
     builder.Collapse(base_position);
   }
@@ -338,12 +338,12 @@ static SelectionInFlatTree ApplySelectAll(
     if (TargetPositionIsBeforeDragStartPosition(
             mouse_press_node, drag_start_point, target, hit_test_point)) {
       builder.Extend(
-          PositionInFlatTree::BeforeNode(*root_user_select_all_for_target));
+          PositionInFlatTree::BeforeNode(root_user_select_all_for_target));
       return builder.Build();
     }
 
     builder.Extend(
-        PositionInFlatTree::AfterNode(*root_user_select_all_for_target));
+        PositionInFlatTree::AfterNode(root_user_select_all_for_target));
     return builder.Build();
   }
 
@@ -527,36 +527,27 @@ void SelectionController::SelectClosestMisspellingFromHitTestResult(
     const HitTestResult& result,
     AppendTrailingWhitespace append_trailing_whitespace) {
   Node* inner_node = result.InnerNode();
+  VisibleSelectionInFlatTree new_selection;
 
   if (!inner_node || !inner_node->GetLayoutObject())
     return;
 
   const VisiblePositionInFlatTree& pos = VisiblePositionOfHitTestResult(result);
-  if (pos.IsNull()) {
-    UpdateSelectionForMouseDownDispatchingSelectStart(
-        inner_node, VisibleSelectionInFlatTree(), kWordGranularity,
-        HandleVisibility::kNotVisible);
-    return;
+  if (pos.IsNotNull()) {
+    const PositionInFlatTree& marker_position =
+        pos.DeepEquivalent().ParentAnchoredEquivalent();
+    const DocumentMarker* const marker =
+        inner_node->GetDocument().Markers().MarkerAtPosition(
+            ToPositionInDOMTree(marker_position),
+            DocumentMarker::MisspellingMarkers());
+    if (marker) {
+      Node* container_node = marker_position.ComputeContainerNode();
+      const PositionInFlatTree start(container_node, marker->StartOffset());
+      const PositionInFlatTree end(container_node, marker->EndOffset());
+      new_selection = CreateVisibleSelection(
+          SelectionInFlatTree::Builder().Collapse(start).Extend(end).Build());
+    }
   }
-
-  const PositionInFlatTree& marker_position =
-      pos.DeepEquivalent().ParentAnchoredEquivalent();
-  const DocumentMarker* const marker =
-      inner_node->GetDocument().Markers().MarkerAtPosition(
-          ToPositionInDOMTree(marker_position),
-          DocumentMarker::MisspellingMarkers());
-  if (!marker) {
-    UpdateSelectionForMouseDownDispatchingSelectStart(
-        inner_node, VisibleSelectionInFlatTree(), kWordGranularity,
-        HandleVisibility::kNotVisible);
-    return;
-  }
-
-  Node* container_node = marker_position.ComputeContainerNode();
-  const PositionInFlatTree start(container_node, marker->StartOffset());
-  const PositionInFlatTree end(container_node, marker->EndOffset());
-  VisibleSelectionInFlatTree new_selection = CreateVisibleSelection(
-      SelectionInFlatTree::Builder().Collapse(start).Extend(end).Build());
 
   if (append_trailing_whitespace == AppendTrailingWhitespace::kShouldAppend)
     new_selection.AppendTrailingWhitespace();
@@ -1110,7 +1101,7 @@ void SelectionController::SendContextMenuEvent(
   AutoReset<bool> mouse_down_may_start_select_change(
       &mouse_down_may_start_select_, true);
 
-  if (mev.Event().menu_source_type != kMenuSourceTouchHandle &&
+  if (!mev.Event().FromTouch() &&
       HitTestResultIsMisspelled(mev.GetHitTestResult()))
     return SelectClosestMisspellingFromMouseEvent(mev);
 

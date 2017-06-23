@@ -38,8 +38,10 @@ NetworkLog.NetworkLog = class extends Common.Object {
     this._requests = [];
     /** @type {!Set<!SDK.NetworkRequest>} */
     this._requestsSet = new Set();
+    /** @type {!Map<!SDK.NetworkManager, !Map<string, !SDK.NetworkRequest>>} */
+    this._requestsByManagerAndId = new Map();
     /** @type {!Map<!SDK.NetworkManager, !NetworkLog.PageLoad>} */
-    this._pageLoadForManager = new Map();
+    this._currentPageLoad = new Map();
     this._isRecording = true;
     SDK.targetManager.observeModels(SDK.NetworkManager, this);
   }
@@ -71,6 +73,7 @@ NetworkLog.NetworkLog = class extends Common.Object {
     }
 
     networkManager[NetworkLog.NetworkLog._events] = eventListeners;
+    this._requestsByManagerAndId.set(networkManager, new Map());
   }
 
   /**
@@ -78,6 +81,7 @@ NetworkLog.NetworkLog = class extends Common.Object {
    * @param {!SDK.NetworkManager} networkManager
    */
   modelRemoved(networkManager) {
+    this._requestsByManagerAndId.delete(networkManager);
     this._removeNetworkManagerListeners(networkManager);
   }
 
@@ -120,17 +124,11 @@ NetworkLog.NetworkLog = class extends Common.Object {
 
   /**
    * @param {!SDK.NetworkManager} networkManager
-   * @param {!Protocol.Network.RequestId} requestId
-   * @return {?SDK.NetworkRequest}
+   * @return {!Array<!SDK.NetworkRequest>}
    */
-  requestByManagerAndId(networkManager, requestId) {
-    // We itterate backwards because the last item will likely be the one needed for console network request lookups.
-    for (var i = this._requests.length - 1; i >= 0; i--) {
-      var request = this._requests[i];
-      if (requestId === request.requestId() && networkManager === SDK.NetworkManager.forRequest(request))
-        return request;
-    }
-    return null;
+  requestsForManager(networkManager) {
+    var map = this._requestsByManagerAndId.get(networkManager);
+    return map ? Array.from(map.values()) : [];
   }
 
   /**
@@ -139,8 +137,11 @@ NetworkLog.NetworkLog = class extends Common.Object {
    * @return {?SDK.NetworkRequest}
    */
   _requestByManagerAndURL(networkManager, url) {
-    for (var request of this._requests) {
-      if (url === request.url() && networkManager === SDK.NetworkManager.forRequest(request))
+    var map = this._requestsByManagerAndId.get(networkManager);
+    if (!map)
+      return null;
+    for (var request of map.values()) {
+      if (request.url() === url)
         return request;
     }
     return null;
@@ -214,11 +215,12 @@ NetworkLog.NetworkLog = class extends Common.Object {
   initiatorGraphForRequest(request) {
     /** @type {!Set<!SDK.NetworkRequest>} */
     var initiated = new Set();
-    var networkManager = SDK.NetworkManager.forRequest(request);
-    for (var otherRequest of this._requests) {
-      var otherRequestManager = SDK.NetworkManager.forRequest(request);
-      if (networkManager === otherRequestManager && this._initiatorChain(otherRequest).has(request))
-        initiated.add(otherRequest);
+    var map = this._requestsByManagerAndId.get(request.networkManager());
+    if (map) {
+      for (var otherRequest of map.values()) {
+        if (this._initiatorChain(otherRequest).has(request))
+          initiated.add(otherRequest);
+      }
     }
     return {initiators: this._initiatorChain(request), initiated: initiated};
   }
@@ -254,9 +256,8 @@ NetworkLog.NetworkLog = class extends Common.Object {
     if (request[NetworkLog.NetworkLog._initiatorDataSymbol].request !== undefined)
       return request[NetworkLog.NetworkLog._initiatorDataSymbol].request;
     var url = this.initiatorInfoForRequest(request).url;
-    var networkManager = SDK.NetworkManager.forRequest(request);
     request[NetworkLog.NetworkLog._initiatorDataSymbol].request =
-        networkManager ? this._requestByManagerAndURL(networkManager, url) : null;
+        this._requestByManagerAndURL(request.networkManager(), url);
     return request[NetworkLog.NetworkLog._initiatorDataSymbol].request;
   }
 
@@ -278,14 +279,18 @@ NetworkLog.NetworkLog = class extends Common.Object {
    */
   _onMainFrameNavigated(event) {
     var mainFrame = /** @type {!SDK.ResourceTreeFrame} */ (event.data);
-    var manager = mainFrame.resourceTreeModel().target().model(SDK.NetworkManager);
-    if (!manager)
+    var networkManager = mainFrame.resourceTreeModel().target().model(SDK.NetworkManager);
+    if (!networkManager)
       return;
 
-    var oldManagerRequests = this._requests.filter(request => SDK.NetworkManager.forRequest(request) === manager);
+    var oldManagerRequests = this.requestsForManager(networkManager);
     var oldRequestsSet = this._requestsSet;
     this._requests = [];
     this._requestsSet = new Set();
+    var idMap = new Map();
+    // TODO(allada) This should be removed in a future patch, but if somewhere else does a request on this in a reset
+    // event it may cause problems.
+    this._requestsByManagerAndId.set(networkManager, idMap);
     this.dispatchEventToListeners(NetworkLog.NetworkLog.Events.Reset);
 
     // Preserve requests from the new session.
@@ -309,6 +314,7 @@ NetworkLog.NetworkLog = class extends Common.Object {
       oldRequestsSet.delete(request);
       this._requests.push(request);
       this._requestsSet.add(request);
+      idMap.set(request.requestId(), request);
       request[NetworkLog.NetworkLog._pageLoadForRequestSymbol] = currentPageLoad;
       this.dispatchEventToListeners(NetworkLog.NetworkLog.Events.RequestAdded, request);
     }
@@ -322,7 +328,7 @@ NetworkLog.NetworkLog = class extends Common.Object {
     }
 
     if (currentPageLoad)
-      this._pageLoadForManager.set(manager, currentPageLoad);
+      this._currentPageLoad.set(networkManager, currentPageLoad);
   }
 
   /**
@@ -332,10 +338,11 @@ NetworkLog.NetworkLog = class extends Common.Object {
     var request = /** @type {!SDK.NetworkRequest} */ (event.data);
     this._requests.push(request);
     this._requestsSet.add(request);
-    var manager = SDK.NetworkManager.forRequest(request);
-    var pageLoad = manager ? this._pageLoadForManager.get(manager) : null;
-    if (pageLoad)
-      request[NetworkLog.NetworkLog._pageLoadForRequestSymbol] = pageLoad;
+    var idMap = this._requestsByManagerAndId.get(request.networkManager());
+    if (idMap)
+      idMap.set(request.requestId(), request);
+    request[NetworkLog.NetworkLog._pageLoadForRequestSymbol] =
+        this._currentPageLoad.get(request.networkManager()) || null;
     this.dispatchEventToListeners(NetworkLog.NetworkLog.Events.RequestAdded, request);
   }
 
@@ -363,7 +370,7 @@ NetworkLog.NetworkLog = class extends Common.Object {
    */
   _onDOMContentLoaded(resourceTreeModel, event) {
     var networkManager = resourceTreeModel.target().model(SDK.NetworkManager);
-    var pageLoad = networkManager ? this._pageLoadForManager.get(networkManager) : null;
+    var pageLoad = networkManager ? this._currentPageLoad.get(networkManager) : null;
     if (pageLoad)
       pageLoad.contentLoadTime = /** @type {number} */ (event.data);
   }
@@ -373,18 +380,29 @@ NetworkLog.NetworkLog = class extends Common.Object {
    */
   _onLoad(event) {
     var networkManager = event.data.resourceTreeModel.target().model(SDK.NetworkManager);
-    var pageLoad = networkManager ? this._pageLoadForManager.get(networkManager) : null;
+    var pageLoad = networkManager ? this._currentPageLoad.get(networkManager) : null;
     if (pageLoad)
       pageLoad.loadTime = /** @type {number} */ (event.data.loadTime);
+  }
+
+  /**
+   * @param {!SDK.NetworkManager} networkManager
+   * @param {!Protocol.Network.RequestId} requestId
+   * @return {?SDK.NetworkRequest}
+   */
+  requestForId(networkManager, requestId) {
+    var map = this._requestsByManagerAndId.get(networkManager);
+    return map ? (map.get(requestId) || null) : null;
   }
 
   reset() {
     this._requests = [];
     this._requestsSet.clear();
-    var managers = new Set(SDK.targetManager.models(SDK.NetworkManager));
-    for (var manager of this._pageLoadForManager.keys()) {
-      if (!managers.has(manager))
-        this._pageLoadForManager.delete(manager);
+    this._requestsByManagerAndId.forEach(map => map.clear());
+    var networkManagers = new Set(SDK.targetManager.models(SDK.NetworkManager));
+    for (var networkManager of this._currentPageLoad.keys()) {
+      if (!networkManagers.has(networkManager))
+        this._currentPageLoad.delete(networkManager);
     }
 
     this.dispatchEventToListeners(NetworkLog.NetworkLog.Events.Reset);

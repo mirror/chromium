@@ -153,7 +153,6 @@ class WizardController : public BaseScreenDelegate,
   void ShowDeviceDisabledScreen();
   void ShowEncryptionMigrationScreen();
   void ShowVoiceInteractionValuePropScreen();
-  void ShowWaitForContainerReadyScreen();
 
   // Shows images login screen.
   void ShowLoginScreen(const LoginScreenContext& context);
@@ -183,7 +182,6 @@ class WizardController : public BaseScreenDelegate,
   void OnVoiceInteractionValuePropAccepted();
   void OnControllerPairingFinished();
   void OnAutoEnrollmentCheckCompleted();
-  void OnWaitForContainerReadyFinished();
   void OnOobeFlowFinished();
 
   // Callback invoked once it has been determined whether the device is disabled

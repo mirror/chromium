@@ -119,21 +119,14 @@ AutocompleteProviderClientImpl::GetEmbedderRepresentationOfAboutScheme() {
 }
 
 std::vector<base::string16> AutocompleteProviderClientImpl::GetBuiltinURLs() {
-  std::vector<std::string> chrome_builtins(
-      kChromeHostURLs, kChromeHostURLs + kNumberOfChromeHostURLs);
-  std::sort(chrome_builtins.begin(), chrome_builtins.end());
-
-  std::vector<base::string16> builtins;
-  for (auto& url : chrome_builtins) {
-    builtins.push_back(base::ASCIIToUTF16(url));
-  }
-  return builtins;
+  // iOS does not supports BuiltinProvider.
+  return std::vector<base::string16>();
 }
 
 std::vector<base::string16>
 AutocompleteProviderClientImpl::GetBuiltinsToProvideAsUserTypes() {
-  return {base::ASCIIToUTF16(kChromeUIChromeURLsURL),
-          base::ASCIIToUTF16(kChromeUIVersionURL)};
+  // iOS does not supports BuiltinProvider.
+  return std::vector<base::string16>();
 }
 
 bool AutocompleteProviderClientImpl::IsOffTheRecord() const {

@@ -2529,7 +2529,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>tbuckley@chromium.org</owner>
   <summary>
     The time taken to extract colors from wallpapers. Recorded each time the
-    wallpaper image changes. It may contain multiple colors extracted.
+    wallpaper image changes.
   </summary>
 </histogram>
 
@@ -2540,29 +2540,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The time taken to extract colors from 'expensive' wallpapers. Recorded each
     time the wallpaper image changes and the color extraction is expected to be
     expensive, e.g. image size &gt; 100 pixels. This includes time spent
-    switching threads. It may contain multiple colors extracted.
+    switching threads.
   </summary>
 </histogram>
 
 <histogram name="Ash.Wallpaper.ColorExtractionResult" enum="BooleanSuccess">
-  <obsolete>
-    Deprecated as of 6/2017.
-  </obsolete>
   <owner>bruthig@chromium.org</owner>
   <owner>tbuckley@chromium.org</owner>
   <summary>
     Tracks the success rate for wallpaper color extraction. Recorded each time
     the wallpaper image changes.
-  </summary>
-</histogram>
-
-<histogram name="Ash.Wallpaper.ColorExtractionResult2"
-    enum="WallpaperColorExtractionResult">
-  <owner>warx@chromium.org</owner>
-  <owner>tbuckley@chromium.org</owner>
-  <summary>
-    Tracks the success rate for wallpaper color extraction. Recorded each time
-    the wallpaper image changes for each extracted wallpaper prominent color.
   </summary>
 </histogram>
 
@@ -4128,25 +4115,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     the page load. So, if a user initially filled with local data and after that
     filled with server, we will only emit &quot;Submitted with server suggestion
     filled (once)&quot;.
-  </details>
-</histogram>
-
-<histogram name="Autofill.FormEvents.CreditCard.BankNameDisplayed"
-    enum="BankNameDisplayedFormEvent">
-  <owner>szhangcs@google.com</owner>
-  <summary>
-    Autofill form events for credit card forms. These are recorded when the user
-    interacts with a form requesting a credit card, a dropdown of suggestions is
-    shown and at least one of the suggestions has a bank name. Form events are
-    logged at most once per page load.
-  </summary>
-  <details>
-    These metrics are used to measure the impact of the bank name experiment.
-    They are used to calculate the CTR of the autofill UI with bank names
-    available. Not all credit cards will have bank names even if we launch the
-    experiment. With these metrics we can run the experiment on 2 groups. For
-    one group, we will show bank names if available. For the other, we won't
-    shown.
   </details>
 </histogram>
 
@@ -27229,22 +27197,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="LocalStorageContext.CachePurgedInKB" units="KB">
-  <owner>mek@chromium.org</owner>
-  <summary>
-    Total size of the HTML5 LocalStorage browser-side cache purged in KB when
-    memory pressure signal was triggered or cache size hit the limits.
-  </summary>
-</histogram>
-
-<histogram name="LocalStorageContext.CacheSizeInKB" units="KB">
-  <owner>mek@chromium.org</owner>
-  <summary>
-    Total size of the HTML5 LocalStorage databases in KB in the browser-side
-    cache. Recorded each time a new database is opened in memory.
-  </summary>
-</histogram>
-
 <histogram name="LocalStorageContext.CommitResult" enum="LevelDBStatus">
   <owner>mek@chromium.org</owner>
   <summary>
@@ -32271,15 +32223,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Android: Records the reason that a download is canceled.</summary>
 </histogram>
 
-<histogram name="MobileDownload.ContextMenu.SaveImage"
-    enum="ContextMenuSaveImage">
-  <owner>qinmin@chromium.org</owner>
-  <summary>
-    Android: Records various counts related to the save image context menu
-    option.
-  </summary>
-</histogram>
-
 <histogram name="MobileDownload.DownloadResumption"
     enum="MobileDownloadResumption">
   <owner>qinmin@chromium.org</owner>
@@ -32292,14 +32235,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>qinmin@chromium.org</owner>
   <summary>
     Android: Records the total time for a download by completion status.
-  </summary>
-</histogram>
-
-<histogram name="MobileDownload.DuplicateInfobar"
-    enum="MobileDownloadDuplicateInfobar">
-  <owner>qinmin@chromium.org</owner>
-  <summary>
-    Android: Records various counts related to the duplicate download infobar.
   </summary>
 </histogram>
 
@@ -32344,14 +32279,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     finished, completed or cancelled. For automatic resumptions, it is also
     recorded when user manually resumes the download to clear the auto retry
     count.
-  </summary>
-</histogram>
-
-<histogram name="MobileDownload.StoragePermission"
-    enum="MobileDownloadStoragePermission">
-  <owner>qinmin@chromium.org</owner>
-  <summary>
-    Android: Records various counts when requesting the storage permission.
   </summary>
 </histogram>
 
@@ -47480,8 +47407,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>fgorski@chromium.org</owner>
   <summary>
     Indicates whether the browser was connected when Open online button was
-    clicked on Page Info popup, which causes a reload of an offline page to
-    online version.
+    clicked on Website Settings popup, which causes a reload of an offline page
+    to online version.
   </summary>
 </histogram>
 
@@ -47489,9 +47416,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="BooleanVisible">
   <owner>fgorski@chromium.org</owner>
   <summary>
-    Indicates whether Open online was visible in Page Info popup, when it was
-    shown for an offline page. (The button is visible only when Chrome is
-    connected when the Page Info popup is opened for offline page.)
+    Indicates whether Open online was visible in Website Settings popup, when it
+    was shown for an offline page. (The button is visible only when Chrome is
+    connected when the Website Settings popup is opened for offline page.)
   </summary>
 </histogram>
 
@@ -65640,20 +65567,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     the pending tree, not just the time to activate it.
 
     The interval is recorded each time a pending tree is activated.
-  </summary>
-</histogram>
-
-<histogram name="Scheduling.PendingTreeRasterDuration" units="microseconds">
-  <owner>khushalsagar@chromium.org</owner>
-  <summary>
-    Time between starting raster work on the pending tree and when it is ready
-    to activate. Unlike PendingTreeDuration which - includes the time to commit
-    to this tree, the raster duration and the time for which the pending
-    tree waits before it can be activated - this only measures the time taken to
-    rasterize tiles required for activation.
-
-    The interval is recorded each time we are notifed that a pending tree is
-    ready for activation.
   </summary>
 </histogram>
 
@@ -87684,7 +87597,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Browser"/>
   <suffix name="Renderer"/>
   <affected-histogram name="Scheduling.PendingTreeDuration"/>
-  <affected-histogram name="Scheduling.PendingTreeRasterDuration"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="CompositorTimingHistoryProcessObsolete" separator="."
@@ -88444,7 +88356,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="SafeBrowsing"/>
   <suffix name="UpdateClient"/>
   <suffix name="WebResourceService"/>
-  <suffix name="LargeIconService"/>
   <affected-histogram name="DataUse.MessageSize"/>
 </histogram_suffixes>
 
@@ -90050,7 +89961,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="Moderate purge was triggered on memory pressure."/>
   <suffix name="SizeLimitExceeded" label="Cache size exceeded limit."/>
   <affected-histogram name="LocalStorage.BrowserLocalStorageCachePurgedInKB"/>
-  <affected-histogram name="LocalStorageContext.CachePurgedInKB"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="LocalStorageSizes" separator="">
@@ -90300,15 +90210,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="AudioVideo.Battery"
       label="Watch time for all media with both an audio and video track on
              battery power."/>
-  <suffix name="AudioVideo.DisplayFullscreen"
-      label="Watch time for all media with both an audio and video track
-             displayed in fullscreen."/>
-  <suffix name="AudioVideo.DisplayInline"
-      label="Watch time for all media with both an audio and video track
-             displayed inline."/>
-  <suffix name="AudioVideo.DisplayPictureInPicture"
-      label="Watch time for all media with both an audio and video track
-             displayed in picture-in-picture."/>
   <suffix name="AudioVideo.MSE"
       label="Watch time for MSE media with both an audio and video track."/>
   <suffix name="AudioVideo.NativeControlsOff"
@@ -91837,9 +91738,21 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="NetHttpContentLengthType" separator=".">
-  <suffix name="Http"/>
-  <suffix name="Https"/>
-  <suffix name="Video"/>
+  <suffix name="Http">
+    <obsolete>
+      Replaced by HttpContentLength Direct/ViaDRP variants.
+    </obsolete>
+  </suffix>
+  <suffix name="Https">
+    <obsolete>
+      Replaced by HttpContentLength Direct/ViaDRP variants.
+    </obsolete>
+  </suffix>
+  <suffix name="Video">
+    <obsolete>
+      Replaced by HttpContentLength Direct/ViaDRP variants.
+    </obsolete>
+  </suffix>
   <affected-histogram name="Net.HttpContentLength"/>
   <affected-histogram name="Net.HttpOriginalContentLength"/>
 </histogram_suffixes>
@@ -92564,10 +92477,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram
       name="PageLoad.Clients.DocWrite.Evaluator.Timing2.ParseDuration"/>
   <affected-histogram
-      name="PageLoad.Clients.MultiTabLoading.DocumentTiming.NavigationToDOMContentLoadedEventFired"/>
-  <affected-histogram
-      name="PageLoad.Clients.MultiTabLoading.DocumentTiming.NavigationToLoadEventFired"/>
-  <affected-histogram
       name="PageLoad.Clients.ServiceWorker.PaintTiming.NavigationToFirstContentfulPaint"/>
   <affected-histogram
       name="PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart"/>
@@ -92688,10 +92597,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram_suffixes name="PageLoadMetricsCacheInfo" separator=".">
   <suffix name="NoStore" label="Main resource had cache-control: no-store"/>
-  <affected-histogram
-      name="PageLoad.Clients.ServiceWorker.PaintTiming.NavigationToFirstContentfulPaint.LoadType.ForwardBackNavigation"/>
-  <affected-histogram
-      name="PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart.LoadType.ForwardBackNavigation"/>
   <affected-histogram
       name="PageLoad.PaintTiming.NavigationToFirstContentfulPaint"/>
   <affected-histogram
@@ -92955,25 +92860,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="PageLoad.Experimental.Bytes.Total"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="PageLoadMetricsClientsMultiTabLoading" separator="."
-    ordering="prefix">
-  <suffix name="Clients.MultiTabLoading"
-      label="PageLoadMetrics for page loads that started while there are
-             other loading tabs."/>
-  <affected-histogram
-      name="PageLoad.DocumentTiming.NavigationToDOMContentLoadedEventFired"/>
-  <affected-histogram
-      name="PageLoad.DocumentTiming.NavigationToLoadEventFired"/>
-  <affected-histogram
-      name="PageLoad.Experimental.PaintTiming.ForegroundToFirstMeaningfulPaint"/>
-  <affected-histogram
-      name="PageLoad.Experimental.PaintTiming.NavigationToFirstMeaningfulPaint"/>
-  <affected-histogram
-      name="PageLoad.PaintTiming.ForegroundToFirstContentfulPaint"/>
-  <affected-histogram
-      name="PageLoad.PaintTiming.NavigationToFirstContentfulPaint"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="PageLoadMetricsClientsNoServiceWorkerSpecialApps"
     separator=".">
   <suffix name="search"
@@ -93172,10 +93058,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="LoadType.NewNavigation"
       label="Restricted to new navigations (link clicks, URLs typed into the
              URL box, etc)."/>
-  <affected-histogram
-      name="PageLoad.Clients.ServiceWorker.PaintTiming.NavigationToFirstContentfulPaint"/>
-  <affected-histogram
-      name="PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart"/>
   <affected-histogram
       name="PageLoad.Clients.SubresourceFilter.ActivationDecision"/>
   <affected-histogram name="PageLoad.Experimental.Bytes.Cache"/>

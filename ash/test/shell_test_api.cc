@@ -29,7 +29,7 @@ ScreenPositionController* ShellTestApi::screen_position_controller() {
   return shell_->screen_position_controller_.get();
 }
 
-NativeCursorManagerAsh* ShellTestApi::native_cursor_manager_ash() {
+AshNativeCursorManager* ShellTestApi::ash_native_cursor_manager() {
   return shell_->native_cursor_manager_;
 }
 

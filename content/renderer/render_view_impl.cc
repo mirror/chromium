@@ -1138,8 +1138,7 @@ bool RenderViewImpl::RenderWidgetWillHandleMouseEvent(
 bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
   WebFrame* main_frame = webview() ? webview()->MainFrame() : NULL;
   if (main_frame && main_frame->IsWebLocalFrame())
-    GetContentClient()->SetActiveURL(
-        main_frame->ToWebLocalFrame()->GetDocument().Url());
+    GetContentClient()->SetActiveURL(main_frame->GetDocument().Url());
 
   // Input IPC messages must not be processed if the RenderView is in
   // swapped out state.
@@ -2239,7 +2238,7 @@ void RenderViewImpl::OnUpdateScreenInfo(const ScreenInfo& screen_info) {
 GURL RenderViewImpl::GetURLForGraphicsContext3D() {
   DCHECK(webview());
   if (webview()->MainFrame()->IsWebLocalFrame())
-    return GURL(webview()->MainFrame()->ToWebLocalFrame()->GetDocument().Url());
+    return GURL(webview()->MainFrame()->GetDocument().Url());
   else
     return GURL("chrome://gpu/RenderViewImpl::CreateGraphicsContext3D");
 }

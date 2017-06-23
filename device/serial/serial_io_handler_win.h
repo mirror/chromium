@@ -38,6 +38,7 @@ class SerialIoHandlerWin : public SerialIoHandler,
   friend class SerialIoHandler;
 
   explicit SerialIoHandlerWin(
+      scoped_refptr<base::SingleThreadTaskRunner> file_thread_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> ui_thread_task_runner);
   ~SerialIoHandlerWin() override;
 

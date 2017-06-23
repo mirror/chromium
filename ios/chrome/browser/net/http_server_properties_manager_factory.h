@@ -11,7 +11,6 @@ class PrefService;
 
 namespace net {
 class HttpServerPropertiesManager;
-class NetLog;
 }
 
 namespace user_prefs {
@@ -23,8 +22,7 @@ class HttpServerPropertiesManagerFactory {
  public:
   // Create an instance of HttpServerPropertiesManager.
   static net::HttpServerPropertiesManager* CreateManager(
-      PrefService* pref_service,
-      net::NetLog* net_log);
+      PrefService* pref_service);
 
   // Register prefs for properties managed by HttpServerPropertiesManager.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);

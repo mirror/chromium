@@ -50,7 +50,8 @@ enum HeapProfilingMode {
 class BASE_EXPORT MemoryDumpManager {
  public:
   using RequestGlobalDumpFunction =
-      RepeatingCallback<void(const MemoryDumpRequestArgs& args)>;
+      RepeatingCallback<void(const MemoryDumpRequestArgs& args,
+                             const GlobalMemoryDumpCallback& callback)>;
 
   static const char* const kTraceCategory;
 
@@ -65,15 +66,12 @@ class BASE_EXPORT MemoryDumpManager {
   // Initialization can happen after (Un)RegisterMemoryDumpProvider() calls
   // and the MemoryDumpManager guarantees to support this.
   // On the other side, the MemoryDumpManager will not be fully operational
-  // (any CreateProcessDump() will return a failure) until initialized.
+  // (i.e. will NACK any RequestGlobalMemoryDump()) until initialized.
   // Arguments:
-  //  is_coordinator: True when current process coordinates the periodic dump
-  //      triggering.
   //  request_dump_function: Function to invoke a global dump. Global dump
   //      involves embedder-specific behaviors like multiprocess handshaking.
-  //      TODO(primiano): this is only required to trigger global dumps from
-  //      the scheduler and the peak detector. Should be removed once they are
-  //      both moved out of base.
+  //  is_coordinator: True when current process coordinates the periodic dump
+  //      triggering.
   void Initialize(RequestGlobalDumpFunction request_dump_function,
                   bool is_coordinator);
 
@@ -114,20 +112,36 @@ class BASE_EXPORT MemoryDumpManager {
   void UnregisterAndDeleteDumpProviderSoon(
       std::unique_ptr<MemoryDumpProvider> mdp);
 
-  // Prepare MemoryDumpManager for CreateProcessDump() calls for tracing-related
-  // modes (i.e. |level_of_detail| != SUMMARY_ONLY).
-  // Also initializes the peak detector, scheduler and heap profiler with the
-  // given config.
+  // Requests a memory dump. The dump might happen or not depending on the
+  // filters and categories specified when enabling tracing.
+  // A SUMMARY_ONLY dump can be requested at any time after initialization and
+  // other type of dumps can be requested only when MDM is enabled.
+  // The optional |callback| is executed asynchronously, on an arbitrary thread,
+  // to notify about the completion of the global dump (i.e. after all the
+  // processes have dumped) and its success (true iff all the dumps were
+  // successful).
+  void RequestGlobalDump(MemoryDumpType,
+                         MemoryDumpLevelOfDetail,
+                         const GlobalMemoryDumpCallback&);
+
+  // Same as above (still asynchronous), but without callback.
+  void RequestGlobalDump(MemoryDumpType, MemoryDumpLevelOfDetail);
+
+  // Prepare MemoryDumpManager for RequestGlobalMemoryDump calls for tracing
+  // related modes (non-SUMMARY_ONLY).
+  // Initializes the peak detector, scheduler and heap profiler with the given
+  // config.
   void SetupForTracing(const TraceConfig::MemoryDumpConfig&);
 
   // Tear-down tracing related state.
   // Non-tracing modes (e.g. SUMMARY_ONLY) will continue to work.
   void TeardownForTracing();
 
-  // Creates a memory dump for the current process and appends it to the trace.
-  // |callback| will be invoked asynchronously upon completion on the same
-  // thread on which CreateProcessDump() was called. This method should only be
-  // used by the memory-infra service while creating a global memory dump.
+  // NOTE: Use RequestGlobalDump() to create memory dumps. Creates a memory dump
+  // for the current process and appends it to the trace. |callback| will be
+  // invoked asynchronously upon completion on the same thread on which
+  // CreateProcessDump() was called. This method should only be used by the
+  // embedder while creating a global memory dump.
   void CreateProcessDump(const MemoryDumpRequestArgs& args,
                          const ProcessMemoryDumpCallback& callback);
 

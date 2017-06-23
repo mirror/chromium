@@ -32,7 +32,6 @@
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 
 namespace blink {
 
@@ -72,11 +71,12 @@ XSLStyleSheetResource* XSLStyleSheetResource::Fetch(FetchParameters& params,
 XSLStyleSheetResource::XSLStyleSheetResource(
     const ResourceRequest& resource_request,
     const ResourceLoaderOptions& options,
-    const TextResourceDecoderOptions& decoder_options)
+    const String& charset)
     : StyleSheetResource(resource_request,
                          kXSLStyleSheet,
                          options,
-                         decoder_options) {}
+                         TextResourceDecoder::kXMLContent,
+                         charset) {}
 
 void XSLStyleSheetResource::DidAddClient(ResourceClient* c) {
   DCHECK(StyleSheetResourceClient::IsExpectedType(c));

@@ -119,7 +119,7 @@ class Setup {
 
   // Fills the python path portion of the command line. On failure, sets
   // it to just "python".
-  bool FillPythonPath(const base::CommandLine& cmdline);
+  void FillPythonPath(const base::CommandLine& cmdline);
 
   // Run config file.
   bool RunConfigFile();

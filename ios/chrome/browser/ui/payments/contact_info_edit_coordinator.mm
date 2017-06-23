@@ -9,7 +9,6 @@
 #include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_country.h"
 #include "components/autofill/core/browser/autofill_profile.h"
-#include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/validation.h"
 #include "components/autofill/core/common/autofill_constants.h"
@@ -137,10 +136,8 @@ using ::AutofillTypeFromAutofillUIType;
                                                autofill::kSettingsOrigin);
 
   for (EditorField* field in fields) {
-    profile.SetInfo(autofill::AutofillType(
-                        AutofillTypeFromAutofillUIType(field.autofillUIType)),
-                    base::SysNSStringToUTF16(field.value),
-                    GetApplicationContext()->GetApplicationLocale());
+    profile.SetRawInfo(AutofillTypeFromAutofillUIType(field.autofillUIType),
+                       base::SysNSStringToUTF16(field.value));
   }
 
   if (!self.profile) {

@@ -6,7 +6,8 @@
 
 #include "components/ui_devtools/devtools_server.h"
 
-namespace ui_devtools {
+namespace ui {
+namespace devtools {
 
 UiDevToolsClient::UiDevToolsClient(const std::string& name,
                                    UiDevToolsServer* server)
@@ -67,4 +68,5 @@ void UiDevToolsClient::flushProtocolNotifications() {
   NOTIMPLEMENTED();
 }
 
-}  // namespace ui_devtools
+}  // namespace devtools
+}  // namespace ui

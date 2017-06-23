@@ -35,7 +35,7 @@ grit("resources") {
     "${root_gen_dir}/ios/web/test/mojo_test.mojom.js",
   ]
   deps = [
-    ":mojo_bindings_js",
+    ":mojo_bindings",
   ]
   outputs = [
     "grit/test_resources.h",
@@ -58,7 +58,6 @@ source_set("test_support") {
     "//ios/web:web",
     "//ios/web/public/test/fakes",
     "//ios/web/public/test/http_server",
-    "//ios/web/test/fakes",
     "//testing/gtest",
     "//third_party/ocmock",
     "//ui/base",

@@ -116,11 +116,14 @@
 // clang-format off
 + (SettingsNavigationController*)newSettingsMainControllerWithMainBrowserState:
     (ios::ChromeBrowserState*)browserState
+                                                           currentBrowserState:
+    (ios::ChromeBrowserState*)currentBrowserState
                                                                       delegate:
     (id<SettingsNavigationControllerDelegate>)delegate {
   // clang-format on
   UIViewController* controller = [[SettingsCollectionViewController alloc]
-      initWithBrowserState:browserState];
+      initWithBrowserState:browserState
+       currentBrowserState:currentBrowserState];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState

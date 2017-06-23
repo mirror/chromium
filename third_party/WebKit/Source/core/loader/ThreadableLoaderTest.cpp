@@ -132,7 +132,8 @@ class DocumentThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
       WebURLRequest::FetchRequestMode fetch_request_mode) override {
     ThreadableLoaderOptions options;
     options.fetch_request_mode = fetch_request_mode;
-    ResourceLoaderOptions resource_loader_options;
+    ResourceLoaderOptions resource_loader_options(
+        kDoNotAllowStoredCredentials, kClientDidNotRequestCredentials);
     loader_ = DocumentThreadableLoader::Create(
         *ThreadableLoadingContext::Create(GetDocument()), client, options,
         resource_loader_options);
@@ -283,7 +284,8 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
 
     ThreadableLoaderOptions options;
     options.fetch_request_mode = fetch_request_mode;
-    ResourceLoaderOptions resource_loader_options;
+    ResourceLoaderOptions resource_loader_options(
+        kDoNotAllowStoredCredentials, kClientDidNotRequestCredentials);
 
     // Ensure that WorkerThreadableLoader is created.
     // ThreadableLoader::create() determines whether it should create
@@ -304,7 +306,6 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
     DCHECK(worker_thread_->IsCurrentThread());
 
     ResourceRequest request(request_data.get());
-    request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
     loader_->Start(request);
     event->Signal();
   }
@@ -346,7 +347,6 @@ class ThreadableLoaderTest
   void StartLoader(const KURL& url) {
     ResourceRequest request(url);
     request.SetRequestContext(WebURLRequest::kRequestContextObject);
-    request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
     helper_->StartLoader(request);
   }
 

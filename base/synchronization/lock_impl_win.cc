@@ -22,5 +22,9 @@ void LockImpl::Lock() {
   ::AcquireSRWLockExclusive(&native_handle_);
 }
 
+void LockImpl::Unlock() {
+  ::ReleaseSRWLockExclusive(&native_handle_);
+}
+
 }  // namespace internal
 }  // namespace base

@@ -8,7 +8,6 @@ import page_sets
 
 from benchmarks import loading_metrics_category
 from telemetry import benchmark
-from telemetry import story
 from telemetry.page import cache_temperature
 from telemetry.web_perf import timeline_based_measurement
 
@@ -52,12 +51,6 @@ class PageCyclerV2BasicOopifIsolated(_OopifBase):
     return page_sets.OopifBasicPageSet(cache_temperatures=[
           cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
 
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # No tests disabled.
-    return StoryExpectations()
-
 
 @benchmark.Disabled('android')
 @benchmark.Owner(emails=['nasko@chromium.org'])
@@ -73,9 +66,3 @@ class PageCyclerV2BasicOopif(_OopifBase):
   def CreateStorySet(self, options):
     return page_sets.OopifBasicPageSet(cache_temperatures=[
           cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
-
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # No tests disabled.
-    return StoryExpectations()

@@ -13,9 +13,9 @@ IconLoader::IconGroup IconLoader::GroupForFilepath(
 }
 
 // static
-scoped_refptr<base::TaskRunner> IconLoader::GetReadIconTaskRunner() {
+content::BrowserThread::ID IconLoader::ReadIconThreadID() {
   NOTIMPLEMENTED();
-  return nullptr;
+  return content::BrowserThread::FILE;
 }
 
 void IconLoader::ReadIcon() {

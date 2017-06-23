@@ -6,10 +6,6 @@
   padding: 64px 64px 0 64px;
 }
 
-#header-container[android] {
-  padding: 48px 48px 0 48px;
-}
-
 .oobe-header {
   min-height: 84px; /* 64 title + 20 subtitle */
 }
@@ -18,7 +14,7 @@
   padding: 44px 64px 0 64px;
 }
 
-#footer-container[noFooterPadding] {
+#footer-container[noFooter] {
   padding: 0;
 }
 
@@ -31,8 +27,4 @@
 
 #oobe-bottom[hideShadow] {
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-}
-
-#oobe-bottom[android] {
-  height: 60px;
 }

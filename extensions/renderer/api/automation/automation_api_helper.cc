@@ -10,7 +10,7 @@
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
 #include "third_party/WebKit/public/web/WebExceptionCode.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebNode.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
@@ -47,15 +47,8 @@ void AutomationApiHelper::OnQuerySelector(int request_id,
         routing_id(), request_id, error, 0));
     return;
   }
-
-  // ExtensionMsg_AutomationQuerySelector should only be sent to an active view.
-  DCHECK(render_view()->GetWebView()->MainFrame()->IsWebLocalFrame());
-
-  blink::WebDocument document = render_view()
-                                    ->GetWebView()
-                                    ->MainFrame()
-                                    ->ToWebLocalFrame()
-                                    ->GetDocument();
+  blink::WebDocument document =
+      render_view()->GetWebView()->MainFrame()->GetDocument();
   if (document.IsNull()) {
     error.value = ExtensionHostMsg_AutomationQuerySelector_Error::kNoDocument;
     Send(new ExtensionHostMsg_AutomationQuerySelector_Result(

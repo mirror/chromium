@@ -25,7 +25,6 @@
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
-using blink::mojom::ScreenAvailability;
 using ::testing::_;
 using ::testing::Eq;
 using ::testing::Mock;
@@ -76,9 +75,8 @@ class MockPresentationServiceDelegate
       int render_process_id,
       int routing_id,
       PresentationScreenAvailabilityListener* listener) override {
-    if (!screen_availability_listening_supported_) {
-      listener->OnScreenAvailabilityChanged(ScreenAvailability::DISABLED);
-    }
+    if (!screen_availability_listening_supported_)
+      listener->OnScreenAvailabilityNotSupported();
 
     return AddScreenAvailabilityListener();
   }
@@ -205,7 +203,8 @@ class MockPresentationServiceClient
     : public blink::mojom::PresentationServiceClient {
  public:
   MOCK_METHOD2(OnScreenAvailabilityUpdated,
-               void(const GURL& url, ScreenAvailability availability));
+               void(const GURL& url,
+                    blink::mojom::ScreenAvailability availability));
   MOCK_METHOD2(OnConnectionStateChanged,
                void(const PresentationInfo& connection,
                     PresentationConnectionState new_state));
@@ -213,6 +212,7 @@ class MockPresentationServiceClient
                void(const PresentationInfo& connection,
                     PresentationConnectionCloseReason reason,
                     const std::string& message));
+  MOCK_METHOD1(OnScreenAvailabilityNotSupported, void(const GURL& url));
   // PresentationConnectionMessage is move-only.
   void OnConnectionMessagesReceived(
       const PresentationInfo& presentation_info,
@@ -294,14 +294,17 @@ class PresentationServiceImplTest : public RenderViewHostImplTestHarness {
     EXPECT_TRUE(Mock::VerifyAndClearExpectations(&mock_delegate_));
   }
 
-  void SimulateScreenAvailabilityChangeAndWait(
-      const GURL& url,
-      ScreenAvailability availability) {
+  void SimulateScreenAvailabilityChangeAndWait(const GURL& url,
+                                               bool available) {
     auto listener_it = service_impl_->screen_availability_listeners_.find(url);
     ASSERT_TRUE(listener_it->second);
 
-    EXPECT_CALL(mock_client_, OnScreenAvailabilityUpdated(url, availability));
-    listener_it->second->OnScreenAvailabilityChanged(availability);
+    blink::mojom::ScreenAvailability expected_availability =
+        available ? blink::mojom::ScreenAvailability::AVAILABLE
+                  : blink::mojom::ScreenAvailability::UNAVAILABLE;
+    EXPECT_CALL(mock_client_,
+                OnScreenAvailabilityUpdated(url, expected_availability));
+    listener_it->second->OnScreenAvailabilityChanged(available);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -334,19 +337,15 @@ class PresentationServiceImplTest : public RenderViewHostImplTestHarness {
 TEST_F(PresentationServiceImplTest, ListenForScreenAvailability) {
   ListenForScreenAvailabilityAndWait(presentation_url1_, true);
 
-  SimulateScreenAvailabilityChangeAndWait(presentation_url1_,
-                                          ScreenAvailability::AVAILABLE);
-  SimulateScreenAvailabilityChangeAndWait(presentation_url1_,
-                                          ScreenAvailability::UNAVAILABLE);
-  SimulateScreenAvailabilityChangeAndWait(presentation_url1_,
-                                          ScreenAvailability::AVAILABLE);
+  SimulateScreenAvailabilityChangeAndWait(presentation_url1_, true);
+  SimulateScreenAvailabilityChangeAndWait(presentation_url1_, false);
+  SimulateScreenAvailabilityChangeAndWait(presentation_url1_, true);
 }
 
 TEST_F(PresentationServiceImplTest, ScreenAvailabilityNotSupported) {
   mock_delegate_.set_screen_availability_listening_supported(false);
   EXPECT_CALL(mock_client_,
-              OnScreenAvailabilityUpdated(presentation_url1_,
-                                          ScreenAvailability::DISABLED));
+              OnScreenAvailabilityNotSupported(presentation_url1_));
   ListenForScreenAvailabilityAndWait(presentation_url1_, false);
   base::RunLoop().RunUntilIdle();
 }
@@ -374,8 +373,7 @@ TEST_F(PresentationServiceImplTest, DidNavigateOtherFrame) {
 
   // Availability is reported and callback is invoked since it was not
   // removed.
-  SimulateScreenAvailabilityChangeAndWait(presentation_url1_,
-                                          ScreenAvailability::AVAILABLE);
+  SimulateScreenAvailabilityChangeAndWait(presentation_url1_, true);
 }
 
 TEST_F(PresentationServiceImplTest, ThisRenderFrameDeleted) {
@@ -400,8 +398,7 @@ TEST_F(PresentationServiceImplTest, OtherRenderFrameDeleted) {
 
   // Availability is reported and callback should be invoked since listener
   // has not been deleted.
-  SimulateScreenAvailabilityChangeAndWait(presentation_url1_,
-                                          ScreenAvailability::AVAILABLE);
+  SimulateScreenAvailabilityChangeAndWait(presentation_url1_, true);
 }
 
 TEST_F(PresentationServiceImplTest, DelegateFails) {
@@ -631,7 +628,10 @@ TEST_F(PresentationServiceImplTest, ReceiverPresentationServiceDelegate) {
   service_impl.SetClient(std::move(client_ptr));
   EXPECT_FALSE(callback.is_null());
 
+  // NO-OP for ControllerPresentationServiceDelegate API functions
   PresentationInfo presentation_info(presentation_url1_, kPresentationId);
+  EXPECT_CALL(mock_delegate_, ListenForConnectionMessages(_, _, _, _)).Times(0);
+  service_impl.ListenForConnectionMessages(presentation_info);
 
   // Client gets notified of receiver connections.
   blink::mojom::PresentationConnectionPtr controller_connection;

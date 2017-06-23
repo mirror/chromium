@@ -107,7 +107,9 @@ class WebDocumentSubresourceFilterTest : public ::testing::Test {
   }
 
   const std::string& BaseURL() const { return base_url_; }
-  WebLocalFrameBase* MainFrame() { return web_view_helper_.LocalMainFrame(); }
+  WebLocalFrameBase* MainFrame() {
+    return web_view_helper_.WebView()->MainFrameImpl();
+  }
   const std::vector<std::string>& QueriedSubresourcePaths() const {
     return client_.SubresourceFilter()->QueriedSubresourcePaths();
   }

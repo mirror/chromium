@@ -20,7 +20,6 @@
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
-#include "content/public/browser/page_navigator.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 
@@ -43,10 +42,8 @@ struct PopupBlockerTabHelper::BlockedRequest {
 
 bool PopupBlockerTabHelper::ConsiderForPopupBlocking(
     content::WebContents* web_contents,
-    bool user_gesture,
-    const content::OpenURLParams* open_url_params) {
+    bool user_gesture) {
   DCHECK(web_contents);
-  CHECK(!open_url_params || open_url_params->user_gesture == user_gesture);
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisablePopupBlocking)) {
     return false;
@@ -60,8 +57,7 @@ bool PopupBlockerTabHelper::ConsiderForPopupBlocking(
   auto* driver_factory = subresource_filter::
       ContentSubresourceFilterDriverFactory::FromWebContents(web_contents);
   return driver_factory &&
-         driver_factory->throttle_manager()->ShouldDisallowNewWindow(
-             open_url_params);
+         driver_factory->throttle_manager()->ShouldDisallowNewWindow();
 }
 
 PopupBlockerTabHelper::PopupBlockerTabHelper(

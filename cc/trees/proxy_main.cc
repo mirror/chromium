@@ -14,7 +14,7 @@
 #include "cc/base/completion_event.h"
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/benchmarks/benchmark_instrumentation.h"
-#include "cc/output/layer_tree_frame_sink.h"
+#include "cc/output/compositor_frame_sink.h"
 #include "cc/output/swap_promise.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/trees/blocking_task_runner.h"
@@ -92,26 +92,26 @@ void ProxyMain::SetAnimationEvents(std::unique_ptr<MutatorEvents> events) {
   layer_tree_host_->SetAnimationEvents(std::move(events));
 }
 
-void ProxyMain::DidLoseLayerTreeFrameSink() {
-  TRACE_EVENT0("cc", "ProxyMain::DidLoseLayerTreeFrameSink");
+void ProxyMain::DidLoseCompositorFrameSink() {
+  TRACE_EVENT0("cc", "ProxyMain::DidLoseCompositorFrameSink");
   DCHECK(IsMainThread());
-  layer_tree_host_->DidLoseLayerTreeFrameSink();
+  layer_tree_host_->DidLoseCompositorFrameSink();
 }
 
-void ProxyMain::RequestNewLayerTreeFrameSink() {
-  TRACE_EVENT0("cc", "ProxyMain::RequestNewLayerTreeFrameSink");
+void ProxyMain::RequestNewCompositorFrameSink() {
+  TRACE_EVENT0("cc", "ProxyMain::RequestNewCompositorFrameSink");
   DCHECK(IsMainThread());
-  layer_tree_host_->RequestNewLayerTreeFrameSink();
+  layer_tree_host_->RequestNewCompositorFrameSink();
 }
 
-void ProxyMain::DidInitializeLayerTreeFrameSink(bool success) {
-  TRACE_EVENT0("cc", "ProxyMain::DidInitializeLayerTreeFrameSink");
+void ProxyMain::DidInitializeCompositorFrameSink(bool success) {
+  TRACE_EVENT0("cc", "ProxyMain::DidInitializeCompositorFrameSink");
   DCHECK(IsMainThread());
 
   if (!success)
-    layer_tree_host_->DidFailToInitializeLayerTreeFrameSink();
+    layer_tree_host_->DidFailToInitializeCompositorFrameSink();
   else
-    layer_tree_host_->DidInitializeLayerTreeFrameSink();
+    layer_tree_host_->DidInitializeCompositorFrameSink();
 }
 
 void ProxyMain::DidCompletePageScaleAnimation() {
@@ -292,12 +292,12 @@ bool ProxyMain::CommitToActiveTree() const {
   return false;
 }
 
-void ProxyMain::SetLayerTreeFrameSink(
-    LayerTreeFrameSink* layer_tree_frame_sink) {
+void ProxyMain::SetCompositorFrameSink(
+    CompositorFrameSink* compositor_frame_sink) {
   ImplThreadTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&ProxyImpl::InitializeLayerTreeFrameSinkOnImpl,
-                     base::Unretained(proxy_impl_.get()), layer_tree_frame_sink,
+      base::BindOnce(&ProxyImpl::InitializeCompositorFrameSinkOnImpl,
+                     base::Unretained(proxy_impl_.get()), compositor_frame_sink,
                      frame_sink_bound_weak_factory_.GetWeakPtr()));
 }
 
@@ -475,14 +475,14 @@ bool ProxyMain::MainFrameWillHappenForTesting() {
   return main_frame_will_happen;
 }
 
-void ProxyMain::ReleaseLayerTreeFrameSink() {
+void ProxyMain::ReleaseCompositorFrameSink() {
   DCHECK(IsMainThread());
   frame_sink_bound_weak_factory_.InvalidateWeakPtrs();
   DebugScopedSetMainThreadBlocked main_thread_blocked(task_runner_provider_);
   CompletionEvent completion;
   ImplThreadTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&ProxyImpl::ReleaseLayerTreeFrameSinkOnImpl,
+      base::BindOnce(&ProxyImpl::ReleaseCompositorFrameSinkOnImpl,
                      base::Unretained(proxy_impl_.get()), &completion));
   completion.Wait();
 }

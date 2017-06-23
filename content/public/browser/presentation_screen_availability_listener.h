@@ -8,7 +8,6 @@
 #include <string>
 
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/platform/modules/presentation/presentation.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -26,9 +25,13 @@ class CONTENT_EXPORT PresentationScreenAvailabilityListener {
   virtual GURL GetAvailabilityUrl() const = 0;
 
   // Called when screen availability for the associated Presentation URL has
-  // changed to |availability|.
-  virtual void OnScreenAvailabilityChanged(
-      blink::mojom::ScreenAvailability availability) = 0;
+  // changed to |available|.
+  virtual void OnScreenAvailabilityChanged(bool available) = 0;
+
+  // Callend when screen availability monitoring is not supported by the
+  // by the implementation because of system limitations like running low on
+  // battery or having resource constraints.
+  virtual void OnScreenAvailabilityNotSupported() = 0;
 };
 
 }  // namespace content

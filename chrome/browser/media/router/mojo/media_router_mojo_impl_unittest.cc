@@ -1427,9 +1427,8 @@ class MediaRouterMojoExtensionTest : public ::testing::Test {
     DCHECK(process_manager_);
 
     // Create MR and its proxy, so that it can be accessed through Mojo.
-    media_router_.reset(new MediaRouterMojoImpl(
-        process_manager_, profile_.get(),
-        MediaRouterMojoImpl::FirewallCheck::SKIP_FOR_TESTING));
+    media_router_.reset(
+        new MediaRouterMojoImpl(process_manager_, profile_.get()));
     ProcessEventLoop();
   }
 
@@ -1571,7 +1570,6 @@ TEST_F(MediaRouterMojoExtensionTest, AttemptedWakeupTooManyTimes) {
       .WillOnce(Return(true));
   EXPECT_CALL(*process_manager_, WakeEventPage(extension_->id(), _))
       .WillOnce(testing::DoAll(media::RunCallback<1>(true), Return(true)));
-  ASSERT_TRUE(media_router_->pending_requests_.empty());
   media_router_->DetachRoute(kRouteId);
   EXPECT_EQ(1u, media_router_->pending_requests_.size());
   ExpectWakeReasonBucketCount(MediaRouteProviderWakeReason::DETACH_ROUTE, 1);

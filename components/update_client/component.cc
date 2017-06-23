@@ -735,8 +735,7 @@ void Component::StateRun::DoHandle() {
 
   const auto& component = State::component();
   action_runner_ = base::MakeUnique<ActionRunner>(
-      component, component.update_context_.blocking_task_runner,
-      component.update_context_.config->GetRunActionKeyHash());
+      component, component.update_context_.blocking_task_runner);
 
   action_runner_->Run(
       base::Bind(&StateRun::ActionRunComplete, base::Unretained(this)));

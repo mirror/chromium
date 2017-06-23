@@ -264,8 +264,10 @@ void VideoCaptureDeviceWin::ScopedMediaType::DeleteMediaType(
 }
 
 VideoCaptureDeviceWin::VideoCaptureDeviceWin(
-    const VideoCaptureDeviceDescriptor& device_descriptor)
+    const VideoCaptureDeviceDescriptor& device_descriptor,
+    bool allow_image_capture_controls)
     : device_descriptor_(device_descriptor),
+      allow_image_capture_controls_(allow_image_capture_controls),
       state_(kIdle),
       white_balance_mode_manual_(false),
       exposure_mode_manual_(false) {
@@ -465,6 +467,49 @@ void VideoCaptureDeviceWin::AllocateAndStart(
 
   client_->OnStarted();
   state_ = kCapturing;
+
+  if (allow_image_capture_controls_)
+    InitializeVideoAndCameraControls();
+}
+
+void VideoCaptureDeviceWin::InitializeVideoAndCameraControls() {
+  base::win::ScopedComPtr<IKsTopologyInfo> info;
+  HRESULT hr = capture_filter_.CopyTo(info.GetAddressOf());
+  if (FAILED(hr)) {
+    SetErrorState(FROM_HERE, "Failed to obtain the topology info.", hr);
+    return;
+  }
+
+  DWORD num_nodes = 0;
+  hr = info->get_NumNodes(&num_nodes);
+  if (FAILED(hr)) {
+    SetErrorState(FROM_HERE, "Failed to obtain the number of nodes.", hr);
+    return;
+  }
+
+  // Every UVC camera is expected to have a single ICameraControl and a single
+  // IVideoProcAmp nodes, and both are needed; ignore any unlikely later ones.
+  GUID node_type;
+  for (size_t i = 0; i < num_nodes; i++) {
+    info->get_NodeType(i, &node_type);
+    if (IsEqualGUID(node_type, KSNODETYPE_VIDEO_CAMERA_TERMINAL)) {
+      hr = info->CreateNodeInstance(i, IID_PPV_ARGS(&camera_control_));
+      if (SUCCEEDED(hr))
+        break;
+      SetErrorState(FROM_HERE, "Failed to retrieve the ICameraControl.", hr);
+      return;
+    }
+  }
+  for (size_t i = 0; i < num_nodes; i++) {
+    info->get_NodeType(i, &node_type);
+    if (IsEqualGUID(node_type, KSNODETYPE_VIDEO_PROCESSING)) {
+      hr = info->CreateNodeInstance(i, IID_PPV_ARGS(&video_control_));
+      if (SUCCEEDED(hr))
+        break;
+      SetErrorState(FROM_HERE, "Failed to retrieve the IVideoProcAmp.", hr);
+      return;
+    }
+  }
 }
 
 void VideoCaptureDeviceWin::StopAndDeAllocate() {
@@ -487,6 +532,10 @@ void VideoCaptureDeviceWin::StopAndDeAllocate() {
 
 void VideoCaptureDeviceWin::TakePhoto(TakePhotoCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (!allow_image_capture_controls_)
+    return;
+
   // DirectShow has other means of capturing still pictures, e.g. connecting a
   // SampleGrabber filter to a PIN_CATEGORY_STILL of |capture_filter_|. This
   // way, however, is not widespread and proves too cumbersome, so we just grab
@@ -497,8 +546,8 @@ void VideoCaptureDeviceWin::TakePhoto(TakePhotoCallback callback) {
 void VideoCaptureDeviceWin::GetPhotoState(GetPhotoStateCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!camera_control_ || !video_control_)
-    InitializeVideoAndCameraControls();
+  if (!camera_control_ || !video_control_ || !allow_image_capture_controls_)
+    return;
 
   auto photo_capabilities = mojom::PhotoState::New();
 
@@ -589,8 +638,8 @@ void VideoCaptureDeviceWin::SetPhotoOptions(
     VideoCaptureDevice::SetPhotoOptionsCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!camera_control_ || !video_control_)
-    InitializeVideoAndCameraControls();
+  if (!camera_control_ || !video_control_ || !allow_image_capture_controls_)
+    return;
 
   HRESULT hr;
 
@@ -672,47 +721,6 @@ void VideoCaptureDeviceWin::SetPhotoOptions(
 
   callback.Run(true);
 }
-
-void VideoCaptureDeviceWin::InitializeVideoAndCameraControls() {
-  base::win::ScopedComPtr<IKsTopologyInfo> info;
-  HRESULT hr = capture_filter_.CopyTo(info.GetAddressOf());
-  if (FAILED(hr)) {
-    SetErrorState(FROM_HERE, "Failed to obtain the topology info.", hr);
-    return;
-  }
-
-  DWORD num_nodes = 0;
-  hr = info->get_NumNodes(&num_nodes);
-  if (FAILED(hr)) {
-    SetErrorState(FROM_HERE, "Failed to obtain the number of nodes.", hr);
-    return;
-  }
-
-  // Every UVC camera is expected to have a single ICameraControl and a single
-  // IVideoProcAmp nodes, and both are needed; ignore any unlikely later ones.
-  GUID node_type;
-  for (size_t i = 0; i < num_nodes; i++) {
-    info->get_NodeType(i, &node_type);
-    if (IsEqualGUID(node_type, KSNODETYPE_VIDEO_CAMERA_TERMINAL)) {
-      hr = info->CreateNodeInstance(i, IID_PPV_ARGS(&camera_control_));
-      if (SUCCEEDED(hr))
-        break;
-      SetErrorState(FROM_HERE, "Failed to retrieve the ICameraControl.", hr);
-      return;
-    }
-  }
-  for (size_t i = 0; i < num_nodes; i++) {
-    info->get_NodeType(i, &node_type);
-    if (IsEqualGUID(node_type, KSNODETYPE_VIDEO_PROCESSING)) {
-      hr = info->CreateNodeInstance(i, IID_PPV_ARGS(&video_control_));
-      if (SUCCEEDED(hr))
-        break;
-      SetErrorState(FROM_HERE, "Failed to retrieve the IVideoProcAmp.", hr);
-      return;
-    }
-  }
-}
-
 // Implements SinkFilterObserver::SinkFilterObserver.
 void VideoCaptureDeviceWin::FrameReceived(const uint8_t* buffer,
                                           int length,

@@ -9,9 +9,10 @@
 #include "core/CoreExport.h"
 #include "core/html/parser/TextResourceDecoder.h"
 #include "platform/loader/fetch/Resource.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 
 namespace blink {
+
+class TextResourceDecoder;
 
 class CORE_EXPORT TextResource : public Resource {
  public:
@@ -27,7 +28,8 @@ class CORE_EXPORT TextResource : public Resource {
   TextResource(const ResourceRequest&,
                Type,
                const ResourceLoaderOptions&,
-               const TextResourceDecoderOptions&);
+               TextResourceDecoder::ContentType,
+               const String& charset);
   ~TextResource() override;
 
   void SetEncoding(const String&) override;

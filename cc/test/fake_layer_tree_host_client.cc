@@ -4,7 +4,7 @@
 
 #include "cc/test/fake_layer_tree_host_client.h"
 
-#include "cc/test/fake_layer_tree_frame_sink.h"
+#include "cc/test/fake_compositor_frame_sink.h"
 #include "cc/trees/layer_tree_host.h"
 
 namespace cc {
@@ -12,13 +12,13 @@ namespace cc {
 FakeLayerTreeHostClient::FakeLayerTreeHostClient() = default;
 FakeLayerTreeHostClient::~FakeLayerTreeHostClient() = default;
 
-void FakeLayerTreeHostClient::RequestNewLayerTreeFrameSink() {
+void FakeLayerTreeHostClient::RequestNewCompositorFrameSink() {
   DCHECK(host_);
-  host_->SetLayerTreeFrameSink(FakeLayerTreeFrameSink::Create3d());
+  host_->SetCompositorFrameSink(FakeCompositorFrameSink::Create3d());
 }
 
-void FakeLayerTreeHostClient::DidFailToInitializeLayerTreeFrameSink() {
-  RequestNewLayerTreeFrameSink();
+void FakeLayerTreeHostClient::DidFailToInitializeCompositorFrameSink() {
+  RequestNewCompositorFrameSink();
 }
 
 }  // namespace cc

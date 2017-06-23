@@ -6,24 +6,14 @@
  * Class to manage user preferences.
  *
  * @constructor
- * @param {SwitchAccessInterface} switchAccess
  */
-function SwitchAccessPrefs(switchAccess) {
-  /**
-   * SwitchAccess reference.
-   *
-   * @private {SwitchAccessInterface}
-   */
-  this.switchAccess_ = switchAccess;
-
+function SwitchAccessPrefs() {
   /**
    * User preferences, initially set to the default preference values.
    *
    * @private
    */
   this.prefs_ = Object.assign({}, this.DEFAULT_PREFS);
-  for (let command of this.switchAccess_.getCommands())
-    this.prefs_[command] = this.switchAccess_.getDefaultKeyCodeFor(command);
 
   this.loadPrefs_();
   chrome.storage.onChanged.addListener(this.handleStorageChange_.bind(this));
@@ -38,7 +28,7 @@ SwitchAccessPrefs.prototype = {
    * @private
    */
   loadPrefs_: function() {
-    let defaultKeys = Object.keys(this.prefs_);
+    let defaultKeys = Object.keys(this.DEFAULT_PREFS);
     chrome.storage.sync.get(defaultKeys, function(loadedPrefs) {
       let updatedPrefs = {};
       for (let key of Object.keys(loadedPrefs)) {
@@ -136,23 +126,8 @@ SwitchAccessPrefs.prototype = {
   },
 
   /**
-   * Returns true if |keyCode| is already used to run a command from the
-   * keyboard.
-   *
-   * @param {number} keyCode
-   * @return {boolean}
-   */
-  keyCodeIsUsed: function(keyCode) {
-    for (let command of this.switchAccess_.getCommands()) {
-      if (keyCode === this.prefs_[command])
-        return true;
-    }
-    return false;
-  },
-
-  /**
-   * The default value of all preferences besides command keyboard bindings.
-   * All preferences should be primitives to prevent changes to default values.
+   * The default value of all preferences. All preferences should be primitives
+   * to prevent changes to default values.
    *
    * @const
    */

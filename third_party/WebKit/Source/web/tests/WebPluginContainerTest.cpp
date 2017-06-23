@@ -166,10 +166,9 @@ void TestPlugin::PrintPage(int page_number, WebCanvas* canvas) {
   test_client_->OnPrintPage();
 }
 
-WebPluginContainer* GetWebPluginContainer(WebViewBase* web_view,
+WebPluginContainer* GetWebPluginContainer(WebView* web_view,
                                           const WebString& id) {
-  WebElement element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(id);
+  WebElement element = web_view->MainFrame()->GetDocument().GetElementById(id);
   return element.PluginContainer();
 }
 
@@ -180,7 +179,7 @@ TEST_F(WebPluginContainerTest, WindowToLocalPointTest) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -219,12 +218,12 @@ TEST_F(WebPluginContainerTest, PluginDocumentPluginIsFocused) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "test.pdf", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->UpdateAllLifecyclePhases();
 
-  WebDocument document = web_view->MainFrameImpl()->GetDocument();
+  WebDocument document = web_view->MainFrame()->GetDocument();
   EXPECT_TRUE(document.IsPluginDocument());
   WebPluginContainer* plugin_container =
       GetWebPluginContainer(web_view, "plugin");
@@ -238,14 +237,13 @@ TEST_F(WebPluginContainerTest, IFramePluginDocumentNotFocused) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "iframe_pdf.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->UpdateAllLifecyclePhases();
 
-  WebDocument document = web_view->MainFrameImpl()->GetDocument();
-  WebLocalFrame* iframe =
-      web_view->MainFrame()->FirstChild()->ToWebLocalFrame();
+  WebDocument document = web_view->MainFrame()->GetDocument();
+  WebFrame* iframe = web_view->MainFrame()->FirstChild();
   EXPECT_TRUE(iframe->GetDocument().IsPluginDocument());
   WebPluginContainer* plugin_container =
       iframe->GetDocument().GetElementById("plugin").PluginContainer();
@@ -307,7 +305,7 @@ TEST_F(WebPluginContainerTest, LocalToWindowPointTest) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -345,7 +343,7 @@ TEST_F(WebPluginContainerTest, Copy) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -353,7 +351,7 @@ TEST_F(WebPluginContainerTest, Copy) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  web_view->MainFrameImpl()
+  web_view->MainFrame()
       ->GetDocument()
       .Unwrap<Document>()
       ->body()
@@ -369,7 +367,7 @@ TEST_F(WebPluginContainerTest, CopyFromContextMenu) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -400,7 +398,7 @@ TEST_F(WebPluginContainerTest, CopyFromContextMenu) {
   web_view->ClearFocusedElement();
   // 3) Copy should still operate on the context node, even though the focus had
   //    shifted.
-  EXPECT_TRUE(web_view->MainFrameImpl()->ExecuteCommand("Copy"));
+  EXPECT_TRUE(web_view->MainFrame()->ToWebLocalFrame()->ExecuteCommand("Copy"));
   EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
                                 WebClipboard::Buffer()));
 }
@@ -412,7 +410,7 @@ TEST_F(WebPluginContainerTest, CopyInsertKeyboardEventsTest) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -421,7 +419,7 @@ TEST_F(WebPluginContainerTest, CopyInsertKeyboardEventsTest) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("translated-plugin"));
   WebInputEvent::Modifiers modifier_key = static_cast<WebInputEvent::Modifiers>(
       WebInputEvent::kControlKey | WebInputEvent::kNumLockOn |
@@ -509,7 +507,7 @@ TEST_F(WebPluginContainerTest, GestureLongPressReachesPlugin) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -518,7 +516,7 @@ TEST_F(WebPluginContainerTest, GestureLongPressReachesPlugin) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("translated-plugin"));
   WebPlugin* plugin = static_cast<WebPluginContainerBase*>(
                           plugin_container_one_element.PluginContainer())
@@ -558,7 +556,7 @@ TEST_F(WebPluginContainerTest, MouseWheelEventTranslated) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -567,7 +565,7 @@ TEST_F(WebPluginContainerTest, MouseWheelEventTranslated) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("translated-plugin"));
   WebPlugin* plugin = static_cast<WebPluginContainerBase*>(
                           plugin_container_one_element.PluginContainer())
@@ -594,7 +592,7 @@ TEST_F(WebPluginContainerTest, TouchEventScrolled) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_scroll.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -606,7 +604,7 @@ TEST_F(WebPluginContainerTest, TouchEventScrolled) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("scrolled-plugin"));
   plugin_container_one_element.PluginContainer()->RequestTouchEventType(
       WebPluginContainer::kTouchEventRequestTypeRaw);
@@ -636,7 +634,7 @@ TEST_F(WebPluginContainerTest, TouchEventScrolledWithCoalescedTouches) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_scroll.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -648,7 +646,7 @@ TEST_F(WebPluginContainerTest, TouchEventScrolledWithCoalescedTouches) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("scrolled-plugin"));
   plugin_container_one_element.PluginContainer()->RequestTouchEventType(
       WebPluginContainer::kTouchEventRequestTypeRawLowLatency);
@@ -657,60 +655,36 @@ TEST_F(WebPluginContainerTest, TouchEventScrolledWithCoalescedTouches) {
                           ->Plugin();
   EventTestPlugin* test_plugin = static_cast<EventTestPlugin*>(plugin);
 
-  {
-    WebTouchEvent event(WebInputEvent::kTouchStart, WebInputEvent::kNoModifiers,
+  WebTouchEvent event(WebInputEvent::kTouchStart, WebInputEvent::kNoModifiers,
+                      WebInputEvent::kTimeStampForTesting);
+  WebRect rect = plugin_container_one_element.BoundsInViewport();
+  event.touches_length = 1;
+  event.touches[0].state = WebTouchPoint::kStatePressed;
+  event.touches[0].SetPositionInWidget(rect.x + rect.width / 2,
+                                       rect.y + rect.height / 2);
+
+  WebCoalescedInputEvent coalesced_event(event);
+
+  WebTouchEvent c_event(WebInputEvent::kTouchMove, WebInputEvent::kNoModifiers,
                         WebInputEvent::kTimeStampForTesting);
-    WebRect rect = plugin_container_one_element.BoundsInViewport();
-    event.touches_length = 1;
-    event.touches[0].state = WebTouchPoint::kStatePressed;
-    event.touches[0].SetPositionInWidget(rect.x + rect.width / 2,
-                                         rect.y + rect.height / 2);
-
-    WebCoalescedInputEvent coalesced_event(event);
-
-    web_view->HandleInputEvent(coalesced_event);
-    RunPendingTasks();
-
-    EXPECT_EQ(static_cast<const size_t>(1),
-              test_plugin->GetCoalescedEventCount());
-    EXPECT_EQ(WebInputEvent::kTouchStart, test_plugin->GetLastInputEventType());
-    EXPECT_EQ(rect.width / 2, test_plugin->GetLastEventLocation().X());
-    EXPECT_EQ(rect.height / 2, test_plugin->GetLastEventLocation().Y());
-  }
-
-  {
-    WebTouchEvent event(WebInputEvent::kTouchMove, WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-    WebRect rect = plugin_container_one_element.BoundsInViewport();
-    event.touches_length = 1;
-    event.touches[0].state = WebTouchPoint::kStateMoved;
-    event.touches[0].SetPositionInWidget(rect.x + rect.width / 2 + 1,
+  c_event.touches_length = 1;
+  c_event.touches[0].state = WebTouchPoint::kStatePressed;
+  c_event.touches[0].SetPositionInWidget(rect.x + rect.width / 2 + 1,
                                          rect.y + rect.height / 2 + 1);
 
-    WebCoalescedInputEvent coalesced_event(event);
+  coalesced_event.AddCoalescedEvent(c_event);
+  c_event.touches[0].SetPositionInWidget(rect.x + rect.width / 2 + 2,
+                                         rect.y + rect.height / 2 + 2);
+  coalesced_event.AddCoalescedEvent(c_event);
 
-    WebTouchEvent c_event(WebInputEvent::kTouchMove,
-                          WebInputEvent::kNoModifiers,
-                          WebInputEvent::kTimeStampForTesting);
-    c_event.touches_length = 1;
-    c_event.touches[0].state = WebTouchPoint::kStateMoved;
-    c_event.touches[0].SetPositionInWidget(rect.x + rect.width / 2 + 2,
-                                           rect.y + rect.height / 2 + 2);
+  web_view->HandleInputEvent(coalesced_event);
+  RunPendingTasks();
 
-    coalesced_event.AddCoalescedEvent(c_event);
-    c_event.touches[0].SetPositionInWidget(rect.x + rect.width / 2 + 3,
-                                           rect.y + rect.height / 2 + 3);
-    coalesced_event.AddCoalescedEvent(c_event);
-
-    web_view->HandleInputEvent(coalesced_event);
-    RunPendingTasks();
-
-    EXPECT_EQ(static_cast<const size_t>(3),
-              test_plugin->GetCoalescedEventCount());
-    EXPECT_EQ(WebInputEvent::kTouchMove, test_plugin->GetLastInputEventType());
-    EXPECT_EQ(rect.width / 2 + 1, test_plugin->GetLastEventLocation().X());
-    EXPECT_EQ(rect.height / 2 + 1, test_plugin->GetLastEventLocation().Y());
-  }
+  EXPECT_EQ(static_cast<const size_t>(3),
+            test_plugin->GetCoalescedEventCount());
+  EXPECT_EQ(WebInputEvent::kTouchStart, test_plugin->GetLastInputEventType());
+  EXPECT_EQ(rect.width / 2, test_plugin->GetLastEventLocation().X());
+  EXPECT_EQ(rect.height / 2, test_plugin->GetLastEventLocation().Y());
 }
 
 TEST_F(WebPluginContainerTest, MouseWheelEventScrolled) {
@@ -718,7 +692,7 @@ TEST_F(WebPluginContainerTest, MouseWheelEventScrolled) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_scroll.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -730,7 +704,7 @@ TEST_F(WebPluginContainerTest, MouseWheelEventScrolled) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("scrolled-plugin"));
   plugin_container_one_element.PluginContainer()->RequestTouchEventType(
       WebPluginContainer::kTouchEventRequestTypeRaw);
@@ -759,7 +733,7 @@ TEST_F(WebPluginContainerTest, MouseEventScrolled) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_scroll.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -771,7 +745,7 @@ TEST_F(WebPluginContainerTest, MouseEventScrolled) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("scrolled-plugin"));
   plugin_container_one_element.PluginContainer()->RequestTouchEventType(
       WebPluginContainer::kTouchEventRequestTypeRaw);
@@ -799,7 +773,7 @@ TEST_F(WebPluginContainerTest, MouseEventZoomed) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_scroll.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -810,7 +784,7 @@ TEST_F(WebPluginContainerTest, MouseEventZoomed) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("scrolled-plugin"));
   plugin_container_one_element.PluginContainer()->RequestTouchEventType(
       WebPluginContainer::kTouchEventRequestTypeRaw);
@@ -840,7 +814,7 @@ TEST_F(WebPluginContainerTest, MouseWheelEventZoomed) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_scroll.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -851,7 +825,7 @@ TEST_F(WebPluginContainerTest, MouseWheelEventZoomed) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("scrolled-plugin"));
   plugin_container_one_element.PluginContainer()->RequestTouchEventType(
       WebPluginContainer::kTouchEventRequestTypeRaw);
@@ -882,7 +856,7 @@ TEST_F(WebPluginContainerTest, TouchEventZoomed) {
   CustomPluginWebFrameClient<EventTestPlugin>
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_scroll.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -893,7 +867,7 @@ TEST_F(WebPluginContainerTest, TouchEventZoomed) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("scrolled-plugin"));
   plugin_container_one_element.PluginContainer()->RequestTouchEventType(
       WebPluginContainer::kTouchEventRequestTypeRaw);
@@ -927,7 +901,7 @@ TEST_F(WebPluginContainerTest, IsRectTopmostTest) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -973,11 +947,9 @@ TEST_F(WebPluginContainerTest, ClippedRectsForIframedElement) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebElement plugin_element = web_view->MainFrame()
-                                  ->FirstChild()
-                                  ->ToWebLocalFrame()
-                                  ->GetDocument()
-                                  .GetElementById("translated-plugin");
+  WebElement plugin_element =
+      web_view->MainFrame()->FirstChild()->GetDocument().GetElementById(
+          "translated-plugin");
   WebPluginContainerBase* plugin_container_impl =
       ToWebPluginContainerBase(plugin_element.PluginContainer());
 
@@ -1000,7 +972,7 @@ TEST_F(WebPluginContainerTest, ClippedRectsForSubpixelPositionedPlugin) {
   TestPluginWebFrameClient
       plugin_web_frame_client;  // Must outlive webViewHelper.
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -1009,7 +981,7 @@ TEST_F(WebPluginContainerTest, ClippedRectsForSubpixelPositionedPlugin) {
   RunPendingTasks();
 
   WebElement plugin_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           "subpixel-positioned-plugin");
   WebPluginContainerBase* plugin_container_impl =
       ToWebPluginContainerBase(plugin_element.PluginContainer());
@@ -1049,7 +1021,7 @@ TEST_F(WebPluginContainerTest, TopmostAfterDetachTest) {
   // The client must outlive WebViewHelper.
   CustomPluginWebFrameClient<TopmostPlugin> plugin_web_frame_client;
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   DCHECK(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -1109,7 +1081,7 @@ TEST_F(WebPluginContainerTest, CompositedPluginSPv2) {
   RegisterMockedURL("plugin.html");
   CustomPluginWebFrameClient<CompositedPlugin> web_frame_client;
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+  WebView* web_view = web_view_helper.InitializeAndLoad(
       base_url_ + "plugin.html", &web_frame_client);
   ASSERT_TRUE(web_view);
   web_view->GetSettings()->SetPluginsEnabled(true);
@@ -1160,7 +1132,7 @@ TEST_F(WebPluginContainerTest, NeedsWheelEvents) {
   RunPendingTasks();
 
   WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
+      web_view->MainFrame()->GetDocument().GetElementById(
           WebString::FromUTF8("translated-plugin"));
   plugin_container_one_element.PluginContainer()->SetWantsWheelEvents(true);
 

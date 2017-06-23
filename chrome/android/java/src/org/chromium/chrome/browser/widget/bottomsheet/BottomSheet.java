@@ -1050,9 +1050,11 @@ public class BottomSheet
     private void setSheetOffsetFromBottom(float offset) {
         if (MathUtils.areFloatsEqual(offset, getSheetOffsetFromBottom())) return;
 
-        if (offset > getMinOffset()) {
+        if (MathUtils.areFloatsEqual(getSheetOffsetFromBottom(), getMinOffset())
+                && offset > getMinOffset()) {
             onSheetOpened();
-        } else if (getSheetOffsetFromBottom() > getMinOffset()) {
+        } else if (MathUtils.areFloatsEqual(offset, getMinOffset())
+                && getSheetOffsetFromBottom() > getMinOffset()) {
             onSheetClosed();
         }
 

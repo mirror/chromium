@@ -87,15 +87,10 @@ PositionTemplate<Strategy> PositionTemplate<Strategy>::EditingPositionOf(
                                     PositionAnchorType::kAfterAnchor);
 }
 
-// TODO(editing-dev): Once we change type of |anchor_node_| to
-// |Member<const Node>|, we should get rid of |const_cast<Node*>()|.
-// See http://crbug.com/735327
 template <typename Strategy>
-PositionTemplate<Strategy>::PositionTemplate(const Node* anchor_node,
+PositionTemplate<Strategy>::PositionTemplate(Node* anchor_node,
                                              PositionAnchorType anchor_type)
-    : anchor_node_(const_cast<Node*>(anchor_node)),
-      offset_(0),
-      anchor_type_(anchor_type) {
+    : anchor_node_(anchor_node), offset_(0), anchor_type_(anchor_type) {
   if (!anchor_node_) {
     anchor_type_ = PositionAnchorType::kOffsetInAnchor;
     return;
@@ -117,13 +112,9 @@ PositionTemplate<Strategy>::PositionTemplate(const Node* anchor_node,
   DCHECK_NE(anchor_type_, PositionAnchorType::kOffsetInAnchor);
 }
 
-// TODO(editing-dev): Once we change type of |anchor_node_| to
-// |Member<const Node>|, we should get rid of |const_cast<Node*>()|.
-// See http://crbug.com/735327
 template <typename Strategy>
-PositionTemplate<Strategy>::PositionTemplate(const Node* anchor_node,
-                                             int offset)
-    : anchor_node_(const_cast<Node*>(anchor_node)),
+PositionTemplate<Strategy>::PositionTemplate(Node* anchor_node, int offset)
+    : anchor_node_(anchor_node),
       offset_(offset),
       anchor_type_(PositionAnchorType::kOffsetInAnchor) {
   if (anchor_node_)
@@ -134,11 +125,6 @@ PositionTemplate<Strategy>::PositionTemplate(const Node* anchor_node,
   DCHECK(CanBeAnchorNode<Strategy>(anchor_node_.Get())) << anchor_node_;
 #endif
 }
-
-template <typename Strategy>
-PositionTemplate<Strategy>::PositionTemplate(const Node& anchor_node,
-                                             int offset)
-    : PositionTemplate(&anchor_node, offset) {}
 
 template <typename Strategy>
 PositionTemplate<Strategy>::PositionTemplate(const PositionTemplate& other)
@@ -466,16 +452,18 @@ PositionTemplate<Strategy> PositionTemplate<Strategy>::InParentAfterNode(
 // static
 template <typename Strategy>
 PositionTemplate<Strategy> PositionTemplate<Strategy>::BeforeNode(
-    const Node& anchor_node) {
-  return PositionTemplate<Strategy>(&anchor_node,
+    Node* anchor_node) {
+  DCHECK(anchor_node);
+  return PositionTemplate<Strategy>(anchor_node,
                                     PositionAnchorType::kBeforeAnchor);
 }
 
 // static
 template <typename Strategy>
 PositionTemplate<Strategy> PositionTemplate<Strategy>::AfterNode(
-    const Node& anchor_node) {
-  return PositionTemplate<Strategy>(&anchor_node,
+    Node* anchor_node) {
+  DCHECK(anchor_node);
+  return PositionTemplate<Strategy>(anchor_node,
                                     PositionAnchorType::kAfterAnchor);
 }
 
@@ -514,7 +502,7 @@ PositionTemplate<Strategy>
 PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(Node* node) {
   if (!node)
     return PositionTemplate<Strategy>();
-  return EditingIgnoresContent(*node) ? BeforeNode(*node)
+  return EditingIgnoresContent(*node) ? BeforeNode(node)
                                       : FirstPositionInNode(node);
 }
 
@@ -524,7 +512,7 @@ PositionTemplate<Strategy>
 PositionTemplate<Strategy>::LastPositionInOrAfterNode(Node* node) {
   if (!node)
     return PositionTemplate<Strategy>();
-  return EditingIgnoresContent(*node) ? AfterNode(*node)
+  return EditingIgnoresContent(*node) ? AfterNode(node)
                                       : LastPositionInNode(node);
 }
 
@@ -596,11 +584,11 @@ Position ToPositionInDOMTree(const PositionInFlatTree& position) {
       // FIXME: When anchorNode is <img>, assertion fails in the constructor.
       return Position(anchor_node, PositionAnchorType::kAfterChildren);
     case PositionAnchorType::kAfterAnchor:
-      return Position::AfterNode(*anchor_node);
+      return Position::AfterNode(anchor_node);
     case PositionAnchorType::kBeforeChildren:
       return Position(anchor_node, PositionAnchorType::kBeforeChildren);
     case PositionAnchorType::kBeforeAnchor:
-      return Position::BeforeNode(*anchor_node);
+      return Position::BeforeNode(anchor_node);
     case PositionAnchorType::kOffsetInAnchor: {
       int offset = position.OffsetInContainerNode();
       if (anchor_node->IsCharacterDataNode())

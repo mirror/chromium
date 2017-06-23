@@ -16,7 +16,6 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/KURL.h"
-#include "platform/wtf/text/TextEncoding.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -83,7 +82,7 @@ TEST_F(CSSPreloadScannerTest, ScanFromResourceClient) {
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
   CSSStyleSheetResource* resource =
-      CSSStyleSheetResource::CreateForTest(url, UTF8Encoding());
+      CSSStyleSheetResource::CreateForTest(url, "utf-8");
   resource->SetStatus(ResourceStatus::kPending);
 
   PreloadRecordingCSSPreloaderResourceClient* resource_client =
@@ -112,7 +111,7 @@ TEST_F(CSSPreloadScannerTest, DestroyClientBeforeDataSent) {
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
   Persistent<CSSStyleSheetResource> resource =
-      CSSStyleSheetResource::CreateForTest(url, UTF8Encoding());
+      CSSStyleSheetResource::CreateForTest(url, "utf-8");
   resource->SetStatus(ResourceStatus::kPending);
 
   new PreloadRecordingCSSPreloaderResourceClient(resource, preloader);
@@ -139,7 +138,7 @@ TEST_F(CSSPreloadScannerTest, DontReadFromClearedData) {
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
   CSSStyleSheetResource* resource =
-      CSSStyleSheetResource::CreateForTest(url, UTF8Encoding());
+      CSSStyleSheetResource::CreateForTest(url, "utf-8");
 
   const char* data = "@import url('http://127.0.0.1/preload.css');";
   resource->AppendData(data, strlen(data));
@@ -167,7 +166,7 @@ TEST_F(CSSPreloadScannerTest, DoNotExpectValidDocument) {
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
   CSSStyleSheetResource* resource =
-      CSSStyleSheetResource::CreateForTest(url, UTF8Encoding());
+      CSSStyleSheetResource::CreateForTest(url, "utf-8");
   resource->SetStatus(ResourceStatus::kPending);
 
   PreloadRecordingCSSPreloaderResourceClient* resource_client =
@@ -198,7 +197,7 @@ TEST_F(CSSPreloadScannerTest, ReferrerPolicyHeader) {
   response.SetHTTPStatusCode(200);
   response.SetHTTPHeaderField("referrer-policy", "unsafe-url");
   CSSStyleSheetResource* resource =
-      CSSStyleSheetResource::CreateForTest(url, UTF8Encoding());
+      CSSStyleSheetResource::CreateForTest(url, "utf-8");
   resource->SetStatus(ResourceStatus::kPending);
   resource->SetResponse(response);
 

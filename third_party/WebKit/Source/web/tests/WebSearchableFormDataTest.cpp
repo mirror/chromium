@@ -30,17 +30,13 @@
 
 #include "public/web/WebSearchableFormData.h"
 
-#include <string>
-
 #include "core/frame/FrameTestHelpers.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebDocument.h"
 #include "public/web/WebFrame.h"
-#include "public/web/WebLocalFrame.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -72,11 +68,11 @@ class WebSearchableFormDataTest : public ::testing::Test {
 TEST_F(WebSearchableFormDataTest, HttpSearchString) {
   std::string base_url("http://www.test.com/");
   RegisterMockedURLLoadFromBaseURL(base_url, "search_form_http.html");
-  WebViewBase* web_view =
+  WebView* web_view =
       web_view_helper_.InitializeAndLoad(base_url + "search_form_http.html");
 
   WebVector<WebFormElement> forms;
-  web_view->MainFrameImpl()->GetDocument().Forms(forms);
+  web_view->MainFrame()->GetDocument().Forms(forms);
 
   EXPECT_EQ(forms.size(), 1U);
 
@@ -88,11 +84,11 @@ TEST_F(WebSearchableFormDataTest, HttpSearchString) {
 TEST_F(WebSearchableFormDataTest, HttpsSearchString) {
   std::string base_url("https://www.test.com/");
   RegisterMockedURLLoadFromBaseURL(base_url, "search_form_https.html");
-  WebViewBase* web_view =
+  WebView* web_view =
       web_view_helper_.InitializeAndLoad(base_url + "search_form_https.html");
 
   WebVector<WebFormElement> forms;
-  web_view->MainFrameImpl()->GetDocument().Forms(forms);
+  web_view->MainFrame()->GetDocument().Forms(forms);
 
   EXPECT_EQ(forms.size(), 1U);
 

@@ -88,10 +88,6 @@ namespace views {
 class ScreenMus;
 }
 
-namespace viz {
-class ServerGpuMemoryBufferManager;
-}
-
 namespace base {
 
 namespace android {
@@ -242,7 +238,6 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::SoftwareOutputDeviceMus;  // Interim non-production code
 #endif
   friend class views::ScreenMus;
-  friend class viz::ServerGpuMemoryBufferManager;
 // END USAGE THAT NEEDS TO BE FIXED.
 
 #if DCHECK_IS_ON()

@@ -114,7 +114,8 @@ class CannedBrowsingDataCookieHelper : public BrowsingDataCookieHelper {
   bool empty() const;
 
   // BrowsingDataCookieHelper methods.
-  void StartFetching(const FetchCallback& callback) override;
+  void StartFetching(
+      const net::CookieMonster::GetCookieListCallback& callback) override;
   void DeleteCookie(const net::CanonicalCookie& cookie) override;
 
   // Returns the number of stored cookies.

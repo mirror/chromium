@@ -10,8 +10,10 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/common/password_form.h"
-#include "components/password_manager/core/browser/hash_password_manager.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
+#include "components/password_manager/core/common/password_manager_pref_names.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/testing_pref_service.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -61,7 +63,7 @@ PasswordStoreChangeList GetChangeList(
 }
 
 TEST(PasswordReuseDetectorTest, TypingPasswordOnDifferentSite) {
-  PasswordReuseDetector reuse_detector;
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(GetTestDomainsPasswords()));
   MockPasswordReuseDetectorConsumer mockConsumer;
 
@@ -92,7 +94,7 @@ TEST(PasswordReuseDetectorTest, TypingPasswordOnDifferentSite) {
 }
 
 TEST(PasswordReuseDetectorTest, PSLMatchNoReuseEvent) {
-  PasswordReuseDetector reuse_detector;
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(GetTestDomainsPasswords()));
   MockPasswordReuseDetectorConsumer mockConsumer;
 
@@ -102,7 +104,7 @@ TEST(PasswordReuseDetectorTest, PSLMatchNoReuseEvent) {
 }
 
 TEST(PasswordReuseDetectorTest, NoPSLMatchReuseEvent) {
-  PasswordReuseDetector reuse_detector;
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(GetTestDomainsPasswords()));
   MockPasswordReuseDetectorConsumer mockConsumer;
 
@@ -115,7 +117,7 @@ TEST(PasswordReuseDetectorTest, NoPSLMatchReuseEvent) {
 }
 
 TEST(PasswordReuseDetectorTest, TooShortPasswordNoReuseEvent) {
-  PasswordReuseDetector reuse_detector;
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(GetTestDomainsPasswords()));
   MockPasswordReuseDetectorConsumer mockConsumer;
 
@@ -124,7 +126,7 @@ TEST(PasswordReuseDetectorTest, TooShortPasswordNoReuseEvent) {
 }
 
 TEST(PasswordReuseDetectorTest, PasswordNotInputSuffixNoReuseEvent) {
-  PasswordReuseDetector reuse_detector;
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(GetTestDomainsPasswords()));
   MockPasswordReuseDetectorConsumer mockConsumer;
 
@@ -139,7 +141,7 @@ TEST(PasswordReuseDetectorTest, OnLoginsChanged) {
   for (PasswordStoreChange::Type type :
        {PasswordStoreChange::ADD, PasswordStoreChange::UPDATE,
         PasswordStoreChange::REMOVE}) {
-    PasswordReuseDetector reuse_detector;
+    PasswordReuseDetector reuse_detector(nullptr);
     PasswordStoreChangeList changes =
         GetChangeList(type, GetForms(GetTestDomainsPasswords()));
     reuse_detector.OnLoginsChanged(changes);
@@ -163,7 +165,7 @@ TEST(PasswordReuseDetectorTest, CheckLongestPasswordMatchReturn) {
       {"https://example3.com", "1234567890"},
   };
 
-  PasswordReuseDetector reuse_detector;
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(domain_passwords));
 
   MockPasswordReuseDetectorConsumer mockConsumer;
@@ -185,15 +187,12 @@ TEST(PasswordReuseDetectorTest, CheckLongestPasswordMatchReturn) {
                             &mockConsumer);
 }
 
-// TODO(crbug.com/657041): Enable when hash calculation is implemented.
-TEST(PasswordReuseDetectorTest, DISABLED_SyncPasswordNoReuse) {
-  PasswordReuseDetector reuse_detector;
+TEST(PasswordReuseDetectorTest, SyncPasswordNoReuse) {
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(GetTestDomainsPasswords()));
   MockPasswordReuseDetectorConsumer mockConsumer;
 
-  // TODO(crbug.com/657041): Pass a password hash when hash calculation is
-  // implemented.
-  reuse_detector.UseSyncPasswordHash(base::Optional<SyncPasswordData>());
+  reuse_detector.SaveSyncPasswordHash(ASCIIToUTF16("sync_password"));
 
   EXPECT_CALL(mockConsumer, OnReuseFound(_, _, _, _)).Times(0);
   reuse_detector.CheckReuse(ASCIIToUTF16("sync_password"),
@@ -203,15 +202,12 @@ TEST(PasswordReuseDetectorTest, DISABLED_SyncPasswordNoReuse) {
                             "https://evil.com", &mockConsumer);
 }
 
-// TODO(crbug.com/657041): Enable when hash calculation is implemented.
-TEST(PasswordReuseDetectorTest, DISABLED_SyncPasswordReuseFound) {
-  PasswordReuseDetector reuse_detector;
+TEST(PasswordReuseDetectorTest, SyncPasswordReuseFound) {
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(GetTestDomainsPasswords()));
   MockPasswordReuseDetectorConsumer mockConsumer;
 
-  // TODO(crbug.com/657041): Pass a password hash when hash calculation is
-  // implemented.
-  reuse_detector.UseSyncPasswordHash(base::Optional<SyncPasswordData>());
+  reuse_detector.SaveSyncPasswordHash(ASCIIToUTF16("sync_password"));
 
   EXPECT_CALL(mockConsumer,
               OnReuseFound(ASCIIToUTF16("sync_password"),
@@ -220,23 +216,29 @@ TEST(PasswordReuseDetectorTest, DISABLED_SyncPasswordReuseFound) {
                             &mockConsumer);
 }
 
-// TODO(crbug.com/657041): Enable when hash calculation is implemented.
-TEST(PasswordReuseDetectorTest,
-     DISABLED_SavedPasswordsReuseSyncPasswordAvailable) {
+TEST(PasswordReuseDetectorTest, SavedPasswordsReuseSyncPasswordAvailable) {
   // Check that reuse of saved passwords is detected also if the sync password
   // hash is saved.
-  PasswordReuseDetector reuse_detector;
+  PasswordReuseDetector reuse_detector(nullptr);
   reuse_detector.OnGetPasswordStoreResults(GetForms(GetTestDomainsPasswords()));
   MockPasswordReuseDetectorConsumer mockConsumer;
 
-  // TODO(crbug.com/657041): Pass a password hash when hash calculation is
-  // implemented.
-  reuse_detector.UseSyncPasswordHash(base::Optional<SyncPasswordData>());
+  reuse_detector.SaveSyncPasswordHash(ASCIIToUTF16("sync_password"));
 
   EXPECT_CALL(mockConsumer,
               OnReuseFound(ASCIIToUTF16("password"), "google.com", 5, 1));
   reuse_detector.CheckReuse(ASCIIToUTF16("password"), "https://evil.com",
                             &mockConsumer);
+}
+
+TEST(PasswordReuseDetectorTest, CheckThatSyncPasswordIsStoredIntoPreferences) {
+  TestingPrefServiceSimple prefs;
+  prefs.registry()->RegisterStringPref(prefs::kSyncPasswordHash, std::string(),
+                                       PrefRegistry::NO_REGISTRATION_FLAGS);
+  ASSERT_FALSE(prefs.HasPrefPath(prefs::kSyncPasswordHash));
+  PasswordReuseDetector reuse_detector(&prefs);
+  reuse_detector.SaveSyncPasswordHash(ASCIIToUTF16("sync_password"));
+  EXPECT_TRUE(prefs.HasPrefPath(prefs::kSyncPasswordHash));
 }
 
 }  // namespace

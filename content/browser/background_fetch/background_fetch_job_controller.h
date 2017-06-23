@@ -44,14 +44,14 @@ class CONTENT_EXPORT BackgroundFetchJobController {
       BackgroundFetchDataManager* data_manager,
       BrowserContext* browser_context,
       scoped_refptr<net::URLRequestContextGetter> request_context,
-      CompletedCallback completed_callback,
-      const net::NetworkTrafficAnnotationTag& traffic_annotation);
+      CompletedCallback completed_callback);
   ~BackgroundFetchJobController();
 
   // Starts fetching the |initial_fetches|. The controller will continue to
   // fetch new content until all requests have been handled.
   void Start(
-      std::vector<scoped_refptr<BackgroundFetchRequestInfo>> initial_requests);
+      std::vector<scoped_refptr<BackgroundFetchRequestInfo>> initial_requests,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Updates the representation of this Background Fetch in the user interface
   // to match the given |title|.
@@ -75,7 +75,8 @@ class CONTENT_EXPORT BackgroundFetchJobController {
   class Core;
 
   // Requests the download manager to start fetching |request|.
-  void StartRequest(scoped_refptr<BackgroundFetchRequestInfo> request);
+  void StartRequest(scoped_refptr<BackgroundFetchRequestInfo> request,
+                    const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Called when the given |request| has started fetching, after having been
   // assigned the |download_guid| by the download system.
@@ -111,9 +112,6 @@ class CONTENT_EXPORT BackgroundFetchJobController {
 
   // Callback for when all fetches have been completed.
   CompletedCallback completed_callback_;
-
-  // Traffic annotation for network request.
-  const net::NetworkTrafficAnnotationTag traffic_annotation_;
 
   base::WeakPtrFactory<BackgroundFetchJobController> weak_ptr_factory_;
 

@@ -28,8 +28,6 @@
                                  atIndexPath:(nonnull NSIndexPath*)indexPath;
 // Dismisses the context menu if it is displayed.
 - (void)dismissContextMenu;
-// Handles the actions following a tap on the promo.
-- (void)handlePromoTapped;
 
 @end
 

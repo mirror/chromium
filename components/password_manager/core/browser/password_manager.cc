@@ -19,7 +19,7 @@
 #include "components/autofill/core/browser/form_structure.h"
 #include "components/autofill/core/common/form_data_predictions.h"
 #include "components/autofill/core/common/password_form_field_prediction_map.h"
-#include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
+#include "components/password_manager/core/browser/affiliation_utils.h"
 #include "components/password_manager/core/browser/browser_save_password_progress_logger.h"
 #include "components/password_manager/core/browser/form_saver_impl.h"
 #include "components/password_manager/core/browser/keychain_migration_status_mac.h"
@@ -197,23 +197,27 @@ void PasswordManager::OnPresaveGeneratedPassword(
   DCHECK(client_->IsSavingAndFillingEnabledForCurrentPage());
   PasswordFormManager* form_manager = GetMatchingPendingManager(form);
   if (form_manager) {
-    form_manager->PresaveGeneratedPassword(form);
-    UMA_HISTOGRAM_BOOLEAN("PasswordManager.GeneratedFormHasNoFormManager",
-                          false);
+    form_manager->form_saver()->PresaveGeneratedPassword(form);
     return;
   }
-
-  UMA_HISTOGRAM_BOOLEAN("PasswordManager.GeneratedFormHasNoFormManager", true);
 }
 
-void PasswordManager::OnPasswordNoLongerGenerated(const PasswordForm& form) {
+void PasswordManager::SetHasGeneratedPasswordForForm(
+    password_manager::PasswordManagerDriver* driver,
+    const PasswordForm& form,
+    bool password_is_generated) {
   DCHECK(client_->IsSavingAndFillingEnabledForCurrentPage());
 
   PasswordFormManager* form_manager = GetMatchingPendingManager(form);
   if (form_manager) {
-    form_manager->PasswordNoLongerGenerated();
+    if (!password_is_generated)
+      form_manager->form_saver()->RemovePresavedPassword();
+    form_manager->SetHasGeneratedPassword(password_is_generated);
     return;
   }
+
+  UMA_HISTOGRAM_BOOLEAN("PasswordManager.GeneratedFormHasNoFormManager",
+                        password_is_generated);
 }
 
 void PasswordManager::SetGenerationElementAndReasonForForm(

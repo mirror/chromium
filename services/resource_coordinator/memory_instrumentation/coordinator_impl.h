@@ -35,12 +35,17 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   // The getter of the unique instance.
   static CoordinatorImpl* GetInstance();
 
-  CoordinatorImpl(service_manager::Connector* connector);
+  CoordinatorImpl(bool initialize_memory_dump_manager,
+                  service_manager::Connector* connector);
 
   // Binds a client library to this coordinator instance.
   void BindCoordinatorRequest(
       const service_manager::BindSourceInfo& source_info,
       mojom::CoordinatorRequest) override;
+
+  bool initialize_memory_dump_manager() const {
+    return initialize_memory_dump_manager_;
+  }
 
   // mojom::Coordinator implementation.
   void RegisterClientProcess(mojom::ClientProcessPtr) override;
@@ -105,10 +110,10 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
 
   int failed_memory_dump_count_;
 
+  const bool initialize_memory_dump_manager_;
+
   // Maintains a map of service_manager::Identity -> pid for registered clients.
   std::unique_ptr<ProcessMap> process_map_;
-
-  uint64_t next_dump_id_;
 
   THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(CoordinatorImpl);

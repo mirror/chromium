@@ -64,8 +64,7 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
    * @return {?SDK.ResourceTreeFrame}
    */
   static frameForRequest(request) {
-    var networkManager = SDK.NetworkManager.forRequest(request);
-    var resourceTreeModel = networkManager ? networkManager.target().model(SDK.ResourceTreeModel) : null;
+    var resourceTreeModel = request.networkManager().target().model(SDK.ResourceTreeModel);
     if (!resourceTreeModel)
       return null;
     return resourceTreeModel.frameForId(request.frameId);

@@ -58,6 +58,9 @@ class CORE_EXPORT TextResourceDecoderBuilder {
   void Clear();
 
  private:
+  std::unique_ptr<TextResourceDecoder> CreateDecoderInstance(Document*);
+  void SetupEncoding(TextResourceDecoder*, Document*);
+
   AtomicString mime_type_;
   AtomicString encoding_;
 };

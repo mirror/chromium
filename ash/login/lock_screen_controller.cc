@@ -23,7 +23,7 @@ void LockScreenController::SetClient(mojom::LockScreenClientPtr client) {
 }
 
 void LockScreenController::ShowLockScreen(ShowLockScreenCallback on_shown) {
-  ash::LockScreen::Show();
+  ::ash::ShowLockScreen();
   std::move(on_shown).Run(true);
 }
 
@@ -48,21 +48,20 @@ void LockScreenController::HideUserPodCustomIcon(const AccountId& account_id) {
   NOTIMPLEMENTED();
 }
 
-void LockScreenController::SetAuthType(
-    const AccountId& account_id,
-    proximity_auth::mojom::AuthType auth_type,
-    const base::string16& initial_value) {
+void LockScreenController::SetAuthType(const AccountId& account_id,
+                                       mojom::AuthType auth_type,
+                                       const base::string16& initial_value) {
   NOTIMPLEMENTED();
 }
 
-void LockScreenController::LoadUsers(std::vector<mojom::LoginUserInfoPtr> users,
+void LockScreenController::LoadUsers(std::unique_ptr<base::ListValue> users,
                                      bool show_guest) {
   NOTIMPLEMENTED();
 }
 
 void LockScreenController::SetPinEnabledForUser(const AccountId& account_id,
                                                 bool is_enabled) {
-  ash::LockScreen::Get()->SetPinEnabledForUser(account_id, is_enabled);
+  NOTIMPLEMENTED();
 }
 
 void LockScreenController::AuthenticateUser(

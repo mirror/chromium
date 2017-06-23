@@ -9,6 +9,7 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/dbus/auth_policy_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "components/policy/core/common/policy_bundle.h"
@@ -20,6 +21,9 @@ namespace {
 // Refresh policy every 90 minutes which matches the Windows default:
 // https://technet.microsoft.com/en-us/library/cc940895.aspx
 constexpr base::TimeDelta kRefreshInterval = base::TimeDelta::FromMinutes(90);
+
+// Retry delay in case of |refresh_in_progress_|.
+constexpr base::TimeDelta kBusyRetryInterval = base::TimeDelta::FromSeconds(1);
 
 }  // namespace
 
@@ -55,12 +59,7 @@ void ActiveDirectoryPolicyManager::Init(SchemaRegistry* registry) {
   // Does nothing if |store_| hasn't yet initialized.
   PublishPolicy();
 
-  scheduler_ = base::MakeUnique<PolicyScheduler>(
-      base::BindRepeating(&ActiveDirectoryPolicyManager::DoRefresh,
-                          weak_ptr_factory_.GetWeakPtr()),
-      base::BindRepeating(&ActiveDirectoryPolicyManager::OnPolicyRefreshed,
-                          weak_ptr_factory_.GetWeakPtr()),
-      kRefreshInterval);
+  ScheduleAutomaticRefresh();
 }
 
 void ActiveDirectoryPolicyManager::Shutdown() {
@@ -77,7 +76,7 @@ bool ActiveDirectoryPolicyManager::IsInitializationComplete(
 }
 
 void ActiveDirectoryPolicyManager::RefreshPolicies() {
-  scheduler_->ScheduleTaskNow();
+  ScheduleRefresh(base::TimeDelta());
 }
 
 void ActiveDirectoryPolicyManager::OnStoreLoaded(
@@ -98,7 +97,9 @@ void ActiveDirectoryPolicyManager::OnStoreError(
 ActiveDirectoryPolicyManager::ActiveDirectoryPolicyManager(
     const AccountId& account_id,
     std::unique_ptr<CloudPolicyStore> store)
-    : account_id_(account_id), store_(std::move(store)) {}
+    : account_id_(account_id),
+      store_(std::move(store)),
+      weak_ptr_factory_(this) {}
 
 void ActiveDirectoryPolicyManager::PublishPolicy() {
   if (!store_->is_initialized()) {
@@ -117,21 +118,6 @@ void ActiveDirectoryPolicyManager::PublishPolicy() {
   UpdatePolicy(std::move(bundle));
 }
 
-void ActiveDirectoryPolicyManager::DoRefresh(
-    base::OnceCallback<void(bool success)> callback) {
-  chromeos::DBusThreadManager* thread_manager =
-      chromeos::DBusThreadManager::Get();
-  DCHECK(thread_manager);
-  chromeos::AuthPolicyClient* auth_policy_client =
-      thread_manager->GetAuthPolicyClient();
-  DCHECK(auth_policy_client);
-  if (account_id_ == EmptyAccountId()) {
-    auth_policy_client->RefreshDevicePolicy(std::move(callback));
-  } else {
-    auth_policy_client->RefreshUserPolicy(account_id_, std::move(callback));
-  }
-}
-
 void ActiveDirectoryPolicyManager::OnPolicyRefreshed(bool success) {
   if (!success) {
     LOG(ERROR) << "Active Directory policy refresh failed.";
@@ -139,6 +125,70 @@ void ActiveDirectoryPolicyManager::OnPolicyRefreshed(bool success) {
   // Load independently of success or failure to keep up to date with whatever
   // has happened on the authpolicyd / session manager side.
   store_->Load();
+
+  refresh_in_progress_ = false;
+  last_refresh_ = base::TimeTicks::Now();
+  ScheduleAutomaticRefresh();
+}
+
+void ActiveDirectoryPolicyManager::ScheduleRefresh(base::TimeDelta delay) {
+  if (refresh_task_) {
+    refresh_task_->Cancel();
+  }
+  refresh_task_ = base::MakeUnique<base::CancelableClosure>(
+      base::Bind(&ActiveDirectoryPolicyManager::RunScheduledRefresh,
+                 weak_ptr_factory_.GetWeakPtr()));
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, refresh_task_->callback(), delay);
+}
+
+void ActiveDirectoryPolicyManager::ScheduleAutomaticRefresh() {
+  base::TimeTicks baseline;
+  base::TimeDelta interval;
+  if (retry_refresh_) {
+    baseline = last_refresh_;
+    interval = kBusyRetryInterval;
+  } else if (last_refresh_ == base::TimeTicks()) {
+    baseline = startup_;
+    interval = base::TimeDelta();
+  } else {
+    baseline = last_refresh_;
+    interval = kRefreshInterval;
+  }
+  base::TimeDelta delay;
+  const base::TimeTicks now(base::TimeTicks::Now());
+  if (now < baseline + interval) {
+    delay = baseline + interval - now;
+  }
+  ScheduleRefresh(delay);
+}
+
+void ActiveDirectoryPolicyManager::RunScheduledRefresh() {
+  // Abort if a refresh is currently in progress (to avoid D-Bus jobs piling up
+  // behind each other).
+  if (refresh_in_progress_) {
+    retry_refresh_ = true;
+    return;
+  }
+
+  retry_refresh_ = false;
+  refresh_in_progress_ = true;
+  chromeos::DBusThreadManager* thread_manager =
+      chromeos::DBusThreadManager::Get();
+  DCHECK(thread_manager);
+  chromeos::AuthPolicyClient* auth_policy_client =
+      thread_manager->GetAuthPolicyClient();
+  DCHECK(auth_policy_client);
+  if (account_id_ == EmptyAccountId()) {
+    auth_policy_client->RefreshDevicePolicy(
+        base::Bind(&ActiveDirectoryPolicyManager::OnPolicyRefreshed,
+                   weak_ptr_factory_.GetWeakPtr()));
+  } else {
+    auth_policy_client->RefreshUserPolicy(
+        account_id_,
+        base::Bind(&ActiveDirectoryPolicyManager::OnPolicyRefreshed,
+                   weak_ptr_factory_.GetWeakPtr()));
+  }
 }
 
 }  // namespace policy

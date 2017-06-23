@@ -10,11 +10,8 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.chromium.base.Callback;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
-import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.omnibox.geo.GeolocationHeader;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.tab.Tab;
@@ -66,14 +63,7 @@ public class ChromeActionModeCallback implements ActionMode.Callback {
         if (!mHelper.isActionModeValid()) return true;
 
         if (item.getItemId() == R.id.select_action_menu_web_search) {
-            final String selectedText = mHelper.getSelectedText();
-            Callback<Boolean> callback = new Callback<Boolean>() {
-                @Override
-                public void onResult(Boolean result) {
-                    if (result != null && result) search(selectedText);
-                }
-            };
-            LocaleManager.getInstance().showSearchEnginePromoIfNeeded(mTab.getActivity(), callback);
+            search();
             mHelper.finishActionMode();
         } else {
             return mHelper.onActionItemClicked(mode, item);
@@ -93,29 +83,21 @@ public class ChromeActionModeCallback implements ActionMode.Callback {
         }
     }
 
-    /**
-     * Generate the LoadUrlParams necessary to load the specified search query.
-     */
-    @VisibleForTesting
-    protected LoadUrlParams generateUrlParamsForSearch(String query) {
+    private void search() {
+        RecordUserAction.record("MobileActionMode.WebSearch");
+        if (mTab.getTabModelSelector() == null) return;
+
+        String query = ActionModeCallbackHelper.sanitizeQuery(mHelper.getSelectedText(),
+                ActionModeCallbackHelper.MAX_SEARCH_QUERY_LENGTH);
+        if (TextUtils.isEmpty(query)) return;
+
         String url = TemplateUrlService.getInstance().getUrlForSearchQuery(query);
         String headers = GeolocationHeader.getGeoHeader(url, mTab);
 
         LoadUrlParams loadUrlParams = new LoadUrlParams(url);
         loadUrlParams.setVerbatimHeaders(headers);
         loadUrlParams.setTransitionType(PageTransition.GENERATED);
-        return loadUrlParams;
-    }
-
-    private void search(String searchText) {
-        RecordUserAction.record("MobileActionMode.WebSearch");
-        if (mTab.getTabModelSelector() == null) return;
-
-        String query = ActionModeCallbackHelper.sanitizeQuery(
-                searchText, ActionModeCallbackHelper.MAX_SEARCH_QUERY_LENGTH);
-        if (TextUtils.isEmpty(query)) return;
-
-        mTab.getTabModelSelector().openNewTab(generateUrlParamsForSearch(query),
+        mTab.getTabModelSelector().openNewTab(loadUrlParams,
                 TabLaunchType.FROM_LONGPRESS_FOREGROUND, mTab, mTab.isIncognito());
     }
 }

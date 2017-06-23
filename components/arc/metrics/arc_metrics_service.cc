@@ -56,9 +56,14 @@ ArcMetricsService::ArcMetricsService(ArcBridgeService* bridge_service)
 }
 
 ArcMetricsService::~ArcMetricsService() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   arc_bridge_service()->process()->RemoveObserver(&process_observer_);
   arc_bridge_service()->metrics()->RemoveObserver(this);
+}
+
+bool ArcMetricsService::CalledOnValidThread() {
+  // Make sure access to the Chrome clipboard is happening in the UI thread.
+  return thread_checker_.CalledOnValidThread();
 }
 
 void ArcMetricsService::OnInstanceReady() {
@@ -72,8 +77,8 @@ void ArcMetricsService::OnInstanceReady() {
 }
 
 void ArcMetricsService::OnInstanceClosed() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   VLOG(2) << "Close metrics service.";
+  DCHECK(CalledOnValidThread());
   if (binding_.is_bound())
     binding_.Unbind();
 }
@@ -128,7 +133,7 @@ void ArcMetricsService::ParseProcessList(
 void ArcMetricsService::OnArcStartTimeRetrieved(
     bool success,
     base::TimeTicks arc_start_time) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (!success) {
     LOG(ERROR) << "Failed to retrieve ARC start timeticks.";
     return;
@@ -153,7 +158,7 @@ void ArcMetricsService::OnArcStartTimeRetrieved(
 void ArcMetricsService::ReportBootProgress(
     std::vector<mojom::BootProgressEventPtr> events,
     mojom::BootType boot_type) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (boot_type == mojom::BootType::UNKNOWN) {
     LOG(WARNING) << "boot_type is unknown. Skip recording UMA.";
     return;

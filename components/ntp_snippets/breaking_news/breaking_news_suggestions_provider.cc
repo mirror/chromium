@@ -7,7 +7,7 @@
 #include "base/bind.h"
 #include "base/json/json_writer.h"
 #include "base/time/clock.h"
-#include "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h"
+#include "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.h"
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/json_to_categories.h"
@@ -17,23 +17,14 @@ namespace ntp_snippets {
 
 BreakingNewsSuggestionsProvider::BreakingNewsSuggestionsProvider(
     ContentSuggestionsProvider::Observer* observer,
-    std::unique_ptr<BreakingNewsGCMAppHandler> gcm_app_handler,
-    std::unique_ptr<base::Clock> clock,
-    std::unique_ptr<RemoteSuggestionsDatabase> database)
+    std::unique_ptr<ContentSuggestionsGCMAppHandler> gcm_app_handler,
+    std::unique_ptr<base::Clock> clock)
     : ContentSuggestionsProvider(observer),
       gcm_app_handler_(std::move(gcm_app_handler)),
       clock_(std::move(clock)),
-      database_(std::move(database)),
       provided_category_(
           Category::FromKnownCategory(KnownCategories::BREAKING_NEWS)),
-      category_status_(CategoryStatus::INITIALIZING) {
-  database_->SetErrorCallback(
-      base::Bind(&BreakingNewsSuggestionsProvider::OnDatabaseError,
-                 base::Unretained(this)));
-  database_->LoadSnippets(
-      base::Bind(&BreakingNewsSuggestionsProvider::OnDatabaseLoaded,
-                 base::Unretained(this)));
-}
+      category_status_(CategoryStatus::INITIALIZING) {}
 
 BreakingNewsSuggestionsProvider::~BreakingNewsSuggestionsProvider() {
   gcm_app_handler_->StopListening();
@@ -57,18 +48,18 @@ void BreakingNewsSuggestionsProvider::OnNewContentSuggestion(
     LOG(WARNING) << "Received invalid breaking news: " << content_json;
     return;
   }
-  DCHECK_EQ(categories.size(), static_cast<size_t>(1));
+  DCHECK_EQ(categories.size(), (size_t)1);
   auto& fetched_category = categories[0];
   Category category = fetched_category.category;
   DCHECK(category.IsKnownCategory(KnownCategories::BREAKING_NEWS));
-  if (database_->IsInitialized()) {
-    database_->SaveSnippets(fetched_category.suggestions);
-  } else {
-    // TODO(mamir): Check how often a breaking news is received before DB is
-    // initialized.
-    LOG(WARNING) << "Cannot store breaking news, database is not initialized.";
+
+  std::vector<ContentSuggestion> suggestions;
+  for (const std::unique_ptr<RemoteSuggestion>& suggestion :
+       fetched_category.suggestions) {
+    suggestions.emplace_back(suggestion->ToContentSuggestion(category));
   }
-  NotifyNewSuggestions(std::move(fetched_category.suggestions));
+
+  observer()->OnNewSuggestions(this, category, std::move(suggestions));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -130,28 +121,6 @@ void BreakingNewsSuggestionsProvider::GetDismissedSuggestionsForDebugging(
 void BreakingNewsSuggestionsProvider::ClearDismissedSuggestionsForDebugging(
     Category category) {
   // TODO(mamir): implement.
-}
-
-void BreakingNewsSuggestionsProvider::OnDatabaseLoaded(
-    std::vector<std::unique_ptr<RemoteSuggestion>> suggestions) {
-  // TODO(mamir): check and update DB status.
-  NotifyNewSuggestions(std::move(suggestions));
-}
-
-void BreakingNewsSuggestionsProvider::OnDatabaseError() {
-  // TODO(mamir): implement.
-}
-
-void BreakingNewsSuggestionsProvider::NotifyNewSuggestions(
-    std::vector<std::unique_ptr<RemoteSuggestion>> suggestions) {
-  std::vector<ContentSuggestion> result;
-  for (const std::unique_ptr<RemoteSuggestion>& suggestion : suggestions) {
-    result.emplace_back(suggestion->ToContentSuggestion(provided_category_));
-  }
-
-  DVLOG(1) << "NotifyNewSuggestions(): " << result.size()
-           << " items in category " << provided_category_;
-  observer()->OnNewSuggestions(this, provided_category_, std::move(result));
 }
 
 }  // namespace ntp_snippets

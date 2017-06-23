@@ -403,12 +403,7 @@ class MediaInternals::MediaInternalsUMAHandler {
     }
   }
 
-  enum class FinalizeType {
-    EVERYTHING,
-    POWER_ONLY,
-    CONTROLS_ONLY,
-    DISPLAY_ONLY
-  };
+  enum class FinalizeType { EVERYTHING, POWER_ONLY, CONTROLS_ONLY };
   void FinalizeWatchTime(bool has_video,
                          const GURL& url,
                          int* underflow_count,
@@ -445,10 +440,6 @@ class MediaInternals::MediaInternalsUMAHandler {
         RecordWatchTimeWithFilter(url, watch_time_info,
                                   watch_time_controls_keys_);
         break;
-      case FinalizeType::DISPLAY_ONLY:
-        RecordWatchTimeWithFilter(url, watch_time_info,
-                                  watch_time_display_keys_);
-        break;
     }
   }
 
@@ -470,9 +461,6 @@ class MediaInternals::MediaInternalsUMAHandler {
   // Set of only the controls related watch time keys.
   const base::flat_set<base::StringPiece> watch_time_controls_keys_;
 
-  // Set of only the display related watch time keys.
-  const base::flat_set<base::StringPiece> watch_time_display_keys_;
-
   // Mapping of WatchTime metric keys to MeanTimeBetweenRebuffers (MTBR) and
   // smooth rate (had zero rebuffers) keys.
   struct RebufferMapping {
@@ -492,7 +480,6 @@ MediaInternals::MediaInternalsUMAHandler::MediaInternalsUMAHandler(
     : watch_time_keys_(media::GetWatchTimeKeys()),
       watch_time_power_keys_(media::GetWatchTimePowerKeys()),
       watch_time_controls_keys_(media::GetWatchTimeControlsKeys()),
-      watch_time_display_keys_(media::GetWatchTimeDisplayKeys()),
       rebuffer_keys_(
           {{media::kWatchTimeAudioSrc, media::kMeanTimeBetweenRebuffersAudioSrc,
             media::kRebuffersCountAudioSrc},
@@ -640,17 +627,6 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
                             &player_info.underflow_count,
                             &player_info.watch_time_info,
                             FinalizeType::CONTROLS_ONLY);
-        }
-
-        if (event.params.HasKey(media::kWatchTimeFinalizeDisplay)) {
-          bool should_finalize;
-          DCHECK(event.params.GetBoolean(media::kWatchTimeFinalizeDisplay,
-                                         &should_finalize) &&
-                 should_finalize);
-          FinalizeWatchTime(player_info.has_video, player_info.origin_url,
-                            &player_info.underflow_count,
-                            &player_info.watch_time_info,
-                            FinalizeType::DISPLAY_ONLY);
         }
       }
       break;

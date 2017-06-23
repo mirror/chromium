@@ -8,12 +8,11 @@
 let geolocationServiceMock = loadMojoModules(
     'geolocationServiceMock',
     ['device/geolocation/public/interfaces/geolocation.mojom',
-     'device/geolocation/public/interfaces/geoposition.mojom',
      'third_party/WebKit/public/platform/modules/permissions/permission.mojom',
      'third_party/WebKit/public/platform/modules/permissions/permission_status.mojom',
      'mojo/public/js/bindings',
     ]).then(mojo => {
-  let [geolocation, geoposition, permission, permissionStatus, bindings] =
+  let [geolocation, permission, permissionStatus, bindings] =
       mojo.modules;
 
   class GeolocationServiceMock {
@@ -102,7 +101,7 @@ let geolocationServiceMock = loadMojoModules(
      */
     setGeolocationPosition(latitude, longitude, accuracy, altitude,
                            altitudeAccuracy, heading, speed) {
-      this.geoposition_ = new geoposition.Geoposition();
+      this.geoposition_ = new geolocation.Geoposition();
       this.geoposition_.latitude = latitude;
       this.geoposition_.longitude = longitude;
       this.geoposition_.accuracy = accuracy;
@@ -121,11 +120,11 @@ let geolocationServiceMock = loadMojoModules(
      * the error set by this call.
      */
     setGeolocationPositionUnavailableError(message) {
-      this.geoposition_ = new geoposition.Geoposition();
+      this.geoposition_ = new geolocation.Geoposition();
       this.geoposition_.valid = false;
       this.geoposition_.error_message = message;
       this.geoposition_.error_code =
-          geoposition.Geoposition.ErrorCode.POSITION_UNAVAILABLE;
+          geolocation.Geoposition.ErrorCode.POSITION_UNAVAILABLE;
     }
 
     /**

@@ -60,13 +60,12 @@ namespace chrome_browser_net {
 
 /* static */
 net::HttpServerPropertiesManager*
-HttpServerPropertiesManagerFactory::CreateManager(PrefService* pref_service,
-                                                  net::NetLog* net_log) {
+HttpServerPropertiesManagerFactory::CreateManager(PrefService* pref_service) {
   using content::BrowserThread;
   return new net::HttpServerPropertiesManager(
       new PrefServiceAdapter(pref_service),  // Transfers ownership.
       base::ThreadTaskRunnerHandle::Get(),
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO), net_log);
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 }
 
 /* static */

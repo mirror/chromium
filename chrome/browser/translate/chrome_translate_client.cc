@@ -7,7 +7,6 @@
 #include <memory>
 #include <vector>
 
-#include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "base/strings/string_split.h"
@@ -32,7 +31,6 @@
 #include "chrome/grit/theme_resources.h"
 #include "components/metrics/proto/translate_event.pb.h"
 #include "components/prefs/pref_service.h"
-#include "components/sync/driver/sync_driver_switches.h"
 #include "components/sync/protocol/user_event_specifics.pb.h"
 #include "components/sync/user_events/user_event_service.h"
 #include "components/translate/core/browser/language_model.h"
@@ -55,7 +53,6 @@
 #include "url/gurl.h"
 
 namespace {
-using base::FeatureList;
 using metrics::TranslateEventProto;
 
 TranslateEventProto::EventType BubbleResultToTranslateEvent(
@@ -77,12 +74,36 @@ TranslateEventProto::EventType BubbleResultToTranslateEvent(
   }
 }
 
+// ========== LOG LANGUAGE DETECTION EVENT ==============
+
+void LogLanguageDetectionEvent(
+    const content::WebContents* const web_contents,
+    const translate::LanguageDetectionDetails& details) {
+  auto* const profile =
+      Profile::FromBrowserContext(web_contents->GetBrowserContext());
+
+  syncer::UserEventService* const user_event_service =
+      browser_sync::UserEventServiceFactory::GetForProfile(profile);
+
+  const auto* const entry =
+      web_contents->GetController().GetLastCommittedEntry();
+
+  // If entry is null, we don't record the page.
+  // The navigation entry can be null in situations like download or initial
+  // blank page.
+  DCHECK(web_contents);
+  if (entry != nullptr &&
+      TranslateService::IsTranslatableURL(entry->GetVirtualURL())) {
+    user_event_service->RecordUserEvent(
+        translate::ConstructLanguageDetectionEvent(
+            entry->GetTimestamp().ToInternalValue(), details));
+  }
+}
+
 // ========== LOG TRANSLATE EVENT ==============
 
 void LogTranslateEvent(const content::WebContents* const web_contents,
                        const metrics::TranslateEventProto& translate_event) {
-  if (!FeatureList::IsEnabled(switches::kSyncUserTranslationEvents))
-    return;
   DCHECK(web_contents);
   auto* const profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
@@ -322,32 +343,6 @@ int ChromeTranslateClient::GetInfobarIconID() const {
 #endif
 }
 
-void ChromeTranslateClient::RecordLanguageDetectionEvent(
-    const translate::LanguageDetectionDetails& details) const {
-  if (!FeatureList::IsEnabled(switches::kSyncUserLanguageDetectionEvents))
-    return;
-
-  DCHECK(web_contents());
-  auto* const profile =
-      Profile::FromBrowserContext(web_contents()->GetBrowserContext());
-
-  syncer::UserEventService* const user_event_service =
-      browser_sync::UserEventServiceFactory::GetForProfile(profile);
-
-  const auto* const entry =
-      web_contents()->GetController().GetLastCommittedEntry();
-
-  // If entry is null, we don't record the page.
-  // The navigation entry can be null in situations like download or initial
-  // blank page.
-  if (entry != nullptr &&
-      TranslateService::IsTranslatableURL(entry->GetVirtualURL())) {
-    user_event_service->RecordUserEvent(
-        translate::ConstructLanguageDetectionEvent(
-            entry->GetTimestamp().ToInternalValue(), details));
-  }
-}
-
 bool ChromeTranslateClient::IsTranslatableURL(const GURL& url) {
   return TranslateService::IsTranslatableURL(url);
 }
@@ -388,7 +383,7 @@ void ChromeTranslateClient::OnLanguageDetermined(
       content::Source<content::WebContents>(web_contents()),
       content::Details<const translate::LanguageDetectionDetails>(&details));
 
-  RecordLanguageDetectionEvent(details);
+  LogLanguageDetectionEvent(web_contents(), details);
   // Unless we have no language model (e.g., in incognito), notify the model
   // about detected language of every page visited.
   if (language_model_ && details.is_cld_reliable)

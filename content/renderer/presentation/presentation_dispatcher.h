@@ -64,8 +64,6 @@ class CONTENT_EXPORT PresentationDispatcher
                            TestReconnectPresentation);
   FRIEND_TEST_ALL_PREFIXES(PresentationDispatcherTest,
                            TestReconnectPresentationError);
-  FRIEND_TEST_ALL_PREFIXES(PresentationDispatcherTest,
-                           TestReconnectPresentationNoConnection);
   FRIEND_TEST_ALL_PREFIXES(PresentationDispatcherTest, TestSendString);
   FRIEND_TEST_ALL_PREFIXES(PresentationDispatcherTest, TestSendArrayBuffer);
   FRIEND_TEST_ALL_PREFIXES(PresentationDispatcherTest, TestSendBlobData);
@@ -160,6 +158,7 @@ class CONTENT_EXPORT PresentationDispatcher
   void WidgetWillClose() override;
 
   // blink::mojom::PresentationServiceClient
+  void OnScreenAvailabilityNotSupported(const GURL& url) override;
   void OnScreenAvailabilityUpdated(
       const GURL& url,
       blink::mojom::ScreenAvailability availability) override;
@@ -168,6 +167,9 @@ class CONTENT_EXPORT PresentationDispatcher
   void OnConnectionClosed(const PresentationInfo& presentation_info,
                           PresentationConnectionCloseReason reason,
                           const std::string& message) override;
+  void OnConnectionMessagesReceived(
+      const PresentationInfo& presentation_info,
+      std::vector<PresentationConnectionMessage> messages) override;
   void OnDefaultPresentationStarted(
       const PresentationInfo& presentation_info) override;
 

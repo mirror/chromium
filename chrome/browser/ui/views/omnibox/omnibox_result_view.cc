@@ -746,14 +746,8 @@ const gfx::FontList& OmniboxResultView::GetAnswerFont() const {
       match_.answer && !match_.answer->second_line().text_fields().empty()
           ? match_.answer->second_line().text_fields()[0].type()
           : SuggestionAnswer::SUGGESTION;
-
-  // When BaseFont is specified, reuse font_list_, which may have had size
-  // adjustments from BaseFont before it was provided to this class. Otherwise,
-  // get the standard font list for the specified style.
-  ui::ResourceBundle::FontStyle font_style = GetTextStyle(text_type).font;
-  return (font_style == ui::ResourceBundle::BaseFont)
-             ? font_list_
-             : ui::ResourceBundle::GetSharedInstance().GetFontList(font_style);
+  return ui::ResourceBundle::GetSharedInstance().GetFontList(
+      GetTextStyle(text_type).font);
 }
 
 int OmniboxResultView::GetAnswerHeight() const {

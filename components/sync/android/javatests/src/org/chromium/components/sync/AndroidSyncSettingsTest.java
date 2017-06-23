@@ -135,8 +135,8 @@ public class AndroidSyncSettingsTest extends InstrumentationTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
         AccountManagerHelper.resetAccountManagerHelperForTests();
+        super.tearDown();
     }
 
     private void enableChromeSyncOnUiThread() {

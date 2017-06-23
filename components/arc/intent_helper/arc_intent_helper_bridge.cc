@@ -35,16 +35,17 @@ ArcIntentHelperBridge::ArcIntentHelperBridge(
     : ArcService(bridge_service),
       binding_(this),
       activity_resolver_(activity_resolver) {
+  DCHECK(thread_checker_.CalledOnValidThread());
   arc_bridge_service()->intent_helper()->AddObserver(this);
 }
 
 ArcIntentHelperBridge::~ArcIntentHelperBridge() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   arc_bridge_service()->intent_helper()->RemoveObserver(this);
 }
 
 void ArcIntentHelperBridge::OnInstanceReady() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   ash::Shell::Get()->set_link_handler_model_factory(this);
   auto* instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->intent_helper(), Init);
@@ -55,17 +56,17 @@ void ArcIntentHelperBridge::OnInstanceReady() {
 }
 
 void ArcIntentHelperBridge::OnInstanceClosed() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   ash::Shell::Get()->set_link_handler_model_factory(nullptr);
 }
 
 void ArcIntentHelperBridge::OnIconInvalidated(const std::string& package_name) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   icon_loader_.InvalidateIcons(package_name);
 }
 
 void ArcIntentHelperBridge::OnOpenDownloads() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   // TODO(607411): If the FileManager is not yet open this will open to
   // downloads by default, which is what we want.  However if it is open it will
   // simply be brought to the forgeground without forcibly being navigated to
@@ -74,18 +75,18 @@ void ArcIntentHelperBridge::OnOpenDownloads() {
 }
 
 void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
 }
 
 void ArcIntentHelperBridge::OpenWallpaperPicker() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   ash::Shell::Get()->wallpaper_controller()->OpenSetWallpaperPage();
 }
 
 void ArcIntentHelperBridge::SetWallpaperDeprecated(
     const std::vector<uint8_t>& jpeg_data) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   LOG(ERROR) << "IntentHelper.SetWallpaper is deprecated";
 }
 
@@ -96,7 +97,7 @@ void ArcIntentHelperBridge::OpenVolumeControl() {
 ArcIntentHelperBridge::GetResult ArcIntentHelperBridge::GetActivityIcons(
     const std::vector<ActivityName>& activities,
     const OnIconsReadyCallback& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   return icon_loader_.GetActivityIcons(activities, callback);
 }
 
@@ -110,7 +111,7 @@ void ArcIntentHelperBridge::RemoveObserver(ArcIntentHelperObserver* observer) {
 
 std::unique_ptr<ash::LinkHandlerModel> ArcIntentHelperBridge::CreateModel(
     const GURL& url) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   auto impl = base::MakeUnique<LinkHandlerModelImpl>();
   if (!impl->Init(url))
     return nullptr;
@@ -138,7 +139,7 @@ ArcIntentHelperBridge::FilterOutIntentHelper(
 
 void ArcIntentHelperBridge::OnIntentFiltersUpdated(
     std::vector<IntentFilter> filters) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   activity_resolver_->UpdateIntentFilters(std::move(filters));
 
   for (auto& observer : observer_list_)

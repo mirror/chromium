@@ -26,8 +26,8 @@
 #include "build/build_config.h"
 #include "cc/animation/animation_host.h"
 #include "cc/input/touch_action.h"
+#include "cc/output/compositor_frame_sink.h"
 #include "cc/output/copy_output_request.h"
-#include "cc/output/layer_tree_frame_sink.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/trees/layer_tree_host.h"
 #include "content/common/content_switches_internal.h"
@@ -625,7 +625,6 @@ bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_UpdateScreenRects, OnUpdateScreenRects)
     IPC_MESSAGE_HANDLER(ViewMsg_SetViewportIntersection,
                         OnSetViewportIntersection)
-    IPC_MESSAGE_HANDLER(ViewMsg_SetIsInert, OnSetIsInert)
     IPC_MESSAGE_HANDLER(ViewMsg_WaitForNextFrameForTests,
                         OnWaitNextFrameForTests)
     IPC_MESSAGE_HANDLER(InputMsg_RequestCompositionUpdates,
@@ -911,14 +910,14 @@ void RenderWidget::BeginMainFrame(double frame_time_sec) {
   GetWebWidget()->BeginFrame(frame_time_sec);
 }
 
-void RenderWidget::RequestNewLayerTreeFrameSink(
+void RenderWidget::RequestNewCompositorFrameSink(
     bool fallback,
-    const LayerTreeFrameSinkCallback& callback) {
+    const CompositorFrameSinkCallback& callback) {
   DCHECK(GetWebWidget());
   // For widgets that are never visible, we don't start the compositor, so we
-  // never get a request for a cc::LayerTreeFrameSink.
+  // never get a request for a cc::CompositorFrameSink.
   DCHECK(!compositor_never_visible_);
-  RenderThreadImpl::current()->RequestNewLayerTreeFrameSink(
+  RenderThreadImpl::current()->RequestNewCompositorFrameSink(
       fallback, routing_id_, frame_swap_message_queue_,
       GetURLForGraphicsContext3D(), callback);
 }
@@ -1321,7 +1320,7 @@ blink::WebLayerTreeView* RenderWidget::InitializeLayerTreeView() {
   compositor_->SetContentSourceId(current_content_source_id_);
   compositor_->SetLocalSurfaceId(local_surface_id_);
   // For background pages and certain tests, we don't want to trigger
-  // LayerTreeFrameSink creation.
+  // CompositorFrameSink creation.
   bool should_generate_frame_sink =
       !compositor_never_visible_ && RenderThreadImpl::current();
   if (!should_generate_frame_sink)
@@ -1604,6 +1603,7 @@ void RenderWidget::SetPendingWindowRect(const WebRect& rect) {
 
 void RenderWidget::OnShowContextMenu(ui::MenuSourceType source_type,
                                      const gfx::Point& location) {
+  input_handler_->set_context_menu_source_type(source_type);
   has_host_context_menu_location_ = true;
   host_context_menu_location_ = location;
   if (GetWebWidget()) {
@@ -1764,13 +1764,6 @@ void RenderWidget::OnSetViewportIntersection(
     DCHECK(popup_type_ == WebPopupType::kWebPopupTypeNone);
     static_cast<WebFrameWidget*>(GetWebWidget())
         ->SetRemoteViewportIntersection(viewport_intersection);
-  }
-}
-
-void RenderWidget::OnSetIsInert(bool inert) {
-  if (GetWebWidget() && GetWebWidget()->IsWebFrameWidget()) {
-    DCHECK(popup_type_ == WebPopupType::kWebPopupTypeNone);
-    static_cast<WebFrameWidget*>(GetWebWidget())->SetIsInert(inert);
   }
 }
 

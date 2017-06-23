@@ -4,8 +4,6 @@
 
 #include "chrome/browser/notifications/notification_channels_provider_android.h"
 
-#include <algorithm>
-
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/logging.h"
@@ -19,7 +17,6 @@
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
-#include "content/public/browser/browser_thread.h"
 #include "jni/NotificationSettingsBridge_jni.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -102,12 +99,13 @@ class ChannelsRuleIterator : public content_settings::RuleIterator {
 
   content_settings::Rule Next() override {
     DCHECK(HasNext());
-    DCHECK_NE(channels_[index_].status, NotificationChannelStatus::UNAVAILABLE);
+    DCHECK_NE(channels_[index_].status_,
+              NotificationChannelStatus::UNAVAILABLE);
     content_settings::Rule rule = content_settings::Rule(
-        ContentSettingsPattern::FromString(channels_[index_].origin),
+        ContentSettingsPattern::FromString(channels_[index_].origin_),
         ContentSettingsPattern::Wildcard(),
         new base::Value(
-            ChannelStatusToContentSetting(channels_[index_].status)));
+            ChannelStatusToContentSetting(channels_[index_].status_)));
     index_++;
     return rule;
   }
@@ -127,8 +125,7 @@ NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid()
 NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid(
     std::unique_ptr<NotificationChannelsBridge> bridge)
     : bridge_(std::move(bridge)),
-      should_use_channels_(bridge_->ShouldUseChannelSettings()),
-      weak_factory_(this) {}
+      should_use_channels_(bridge_->ShouldUseChannelSettings()) {}
 
 NotificationChannelsProviderAndroid::~NotificationChannelsProviderAndroid() =
     default;
@@ -143,21 +140,6 @@ NotificationChannelsProviderAndroid::GetRuleIterator(
     return nullptr;
   }
   std::vector<NotificationChannel> channels = bridge_->GetChannels();
-  std::sort(channels.begin(), channels.end());
-  if (channels != cached_channels_) {
-    // This const_cast is not ideal but tolerated because it doesn't change the
-    // underlying state of NotificationChannelsProviderAndroid, and allows us to
-    // notify observers as soon as we detect changes to channels.
-    auto* provider = const_cast<NotificationChannelsProviderAndroid*>(this);
-    content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
-        ->PostTask(
-            FROM_HERE,
-            base::BindOnce(
-                &NotificationChannelsProviderAndroid::NotifyObservers,
-                provider->weak_factory_.GetWeakPtr(), ContentSettingsPattern(),
-                ContentSettingsPattern(), content_type, std::string()));
-    provider->cached_channels_ = channels;
-  }
   return channels.empty()
              ? nullptr
              : base::MakeUnique<ChannelsRuleIterator>(std::move(channels));
@@ -200,27 +182,13 @@ bool NotificationChannelsProviderAndroid::SetWebsiteSetting(
       NOTREACHED();
       break;
   }
-  // TODO(awdf): Maybe update cached_channels before notifying here, to
-  // avoid notifying observers unnecessarily from GetRuleIterator.
-  NotifyObservers(primary_pattern, secondary_pattern, content_type,
-                  resource_identifier);
   return true;
 }
 
 void NotificationChannelsProviderAndroid::ClearAllContentSettingsRules(
     ContentSettingsType content_type) {
-  if (content_type != CONTENT_SETTINGS_TYPE_NOTIFICATIONS ||
-      !should_use_channels_) {
-    return;
-  }
-  std::vector<NotificationChannel> channels = bridge_->GetChannels();
-  for (auto channel : channels)
-    bridge_->DeleteChannel(channel.origin);
-
-  if (channels.size() > 0) {
-    NotifyObservers(ContentSettingsPattern(), ContentSettingsPattern(),
-                    content_type, std::string());
-  }
+  // TODO(crbug.com/700377): If |content_type| == NOTIFICATIONS, delete
+  // all channels.
 }
 
 void NotificationChannelsProviderAndroid::ShutdownOnUIThread() {

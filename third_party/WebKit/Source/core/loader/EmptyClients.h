@@ -52,7 +52,6 @@
 #include "platform/wtf/Forward.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebFocusType.h"
-#include "public/platform/WebMenuSourceType.h"
 #include "public/platform/WebScreenInfo.h"
 #include "public/platform/WebSpellCheckPanelHostClient.h"
 #include "public/platform/WebURLLoader.h"
@@ -186,7 +185,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
       const DateTimeChooserParameters&) override;
   void OpenTextDataListChooser(HTMLInputElement&) override;
 
-  void OpenFileChooser(LocalFrame*, RefPtr<FileChooser>) override;
+  void OpenFileChooser(LocalFrame*, PassRefPtr<FileChooser>) override;
 
   void SetCursor(const Cursor&, LocalFrame* local_root) override {}
   void SetCursorOverridden(bool) override {}
@@ -285,7 +284,6 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
       NavigationPolicy,
       bool,
       bool,
-      WebTriggeringEventInfo,
       HTMLFormElement*,
       ContentSecurityPolicyDisposition) override;
 
@@ -340,6 +338,12 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
       WebMediaPlayerClient*) override;
   WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
       HTMLMediaElement&) override;
+
+  ObjectContentType GetObjectContentType(const KURL&,
+                                         const String&,
+                                         bool) override {
+    return ObjectContentType();
+  }
 
   void DidCreateNewDocument() override {}
   void DispatchDidClearWindowObjectInMainWorld() override {}
@@ -443,7 +447,7 @@ class EmptyContextMenuClient final : public ContextMenuClient {
  public:
   EmptyContextMenuClient() : ContextMenuClient() {}
   ~EmptyContextMenuClient() override {}
-  bool ShowContextMenu(const ContextMenu*, WebMenuSourceType) override;
+  bool ShowContextMenu(const ContextMenu*, bool) override { return false; }
   void ClearContextMenu() override {}
 };
 
@@ -467,7 +471,6 @@ class CORE_EXPORT EmptyRemoteFrameClient
       const IntRect& viewport_intersection) override {}
   void AdvanceFocus(WebFocusType, LocalFrame* source) override {}
   void VisibilityChanged(bool visible) override {}
-  void SetIsInert(bool) override {}
 
   // FrameClient implementation.
   bool InShadowTree() const override { return false; }

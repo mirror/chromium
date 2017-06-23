@@ -11,8 +11,6 @@
 
 namespace subresource_filter {
 
-namespace proto = url_pattern_index::proto;
-
 // RulesetIndexer --------------------------------------------------------------
 
 // static
@@ -24,7 +22,7 @@ RulesetIndexer::RulesetIndexer()
 RulesetIndexer::~RulesetIndexer() = default;
 
 bool RulesetIndexer::AddUrlRule(const proto::UrlRule& rule) {
-  const auto offset = url_pattern_index::SerializeUrlRule(rule, &builder_);
+  const UrlRuleOffset offset = SerializeUrlRule(rule, &builder_);
   // Note: A zero offset.o means a "nullptr" offset. It is returned when the
   // rule has not been serialized.
   if (!offset.o)

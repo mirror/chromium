@@ -76,7 +76,6 @@ BytesConsumer::Result BlobBytesConsumer::BeginRead(const char** buffer,
 
       ResourceRequest request(blob_url_);
       request.SetRequestContext(WebURLRequest::kRequestContextInternal);
-      request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
       request.SetUseStreamOnResponse(true);
       // We intentionally skip
       // 'setExternalRequestStateFromRequestorAddressSpace', as 'blob:'
@@ -285,7 +284,8 @@ ThreadableLoader* BlobBytesConsumer::CreateLoader() {
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
 
-  ResourceLoaderOptions resource_loader_options;
+  ResourceLoaderOptions resource_loader_options(
+      kDoNotAllowStoredCredentials, kClientDidNotRequestCredentials);
   resource_loader_options.data_buffering_policy = kDoNotBufferData;
   resource_loader_options.initiator_info.name =
       FetchInitiatorTypeNames::internal;

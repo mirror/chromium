@@ -75,7 +75,7 @@ class CookieStoreIOS : public net::CookieStore,
   void SetCookieWithOptionsAsync(const GURL& url,
                                  const std::string& cookie_line,
                                  const net::CookieOptions& options,
-                                 SetCookiesCallback callback) override;
+                                 const SetCookiesCallback& callback) override;
   void SetCookieWithDetailsAsync(const GURL& url,
                                  const std::string& name,
                                  const std::string& value,
@@ -88,33 +88,31 @@ class CookieStoreIOS : public net::CookieStore,
                                  bool http_only,
                                  CookieSameSite same_site,
                                  CookiePriority priority,
-                                 SetCookiesCallback callback) override;
-  void SetCanonicalCookieAsync(std::unique_ptr<CanonicalCookie> cookie,
-                               bool secure_source,
-                               bool modify_http_only,
-                               SetCookiesCallback callback) override;
+                                 const SetCookiesCallback& callback) override;
   void GetCookiesWithOptionsAsync(const GURL& url,
                                   const net::CookieOptions& options,
-                                  GetCookiesCallback callback) override;
-  void GetCookieListWithOptionsAsync(const GURL& url,
-                                     const net::CookieOptions& options,
-                                     GetCookieListCallback callback) override;
-  void GetAllCookiesAsync(GetCookieListCallback callback) override;
+                                  const GetCookiesCallback& callback) override;
+  void GetCookieListWithOptionsAsync(
+      const GURL& url,
+      const net::CookieOptions& options,
+      const GetCookieListCallback& callback) override;
+  void GetAllCookiesAsync(const GetCookieListCallback& callback) override;
   void DeleteCookieAsync(const GURL& url,
                          const std::string& cookie_name,
-                         base::OnceClosure callback) override;
-  void DeleteCanonicalCookieAsync(const CanonicalCookie& cookie,
-                                  DeleteCallback callback) override;
+                         const base::Closure& callback) override;
+  void DeleteCanonicalCookieAsync(
+      const CanonicalCookie& cookie,
+      const DeleteCallback& callback) override;
   void DeleteAllCreatedBetweenAsync(const base::Time& delete_begin,
                                     const base::Time& delete_end,
-                                    DeleteCallback callback) override;
+                                    const DeleteCallback& callback) override;
   void DeleteAllCreatedBetweenWithPredicateAsync(
       const base::Time& delete_begin,
       const base::Time& delete_end,
       const CookiePredicate& predicate,
-      DeleteCallback callback) override;
-  void DeleteSessionCookiesAsync(DeleteCallback callback) override;
-  void FlushStore(base::OnceClosure callback) override;
+      const DeleteCallback& callback) override;
+  void DeleteSessionCookiesAsync(const DeleteCallback& callback) override;
+  void FlushStore(const base::Closure& callback) override;
 
   std::unique_ptr<CookieChangedSubscription> AddCallbackForCookie(
       const GURL& url,
@@ -132,9 +130,9 @@ class CookieStoreIOS : public net::CookieStore,
   // callback that invokes UpdateCachesFromCookieMonster() to schedule an
   // asynchronous synchronization of the cookie cache and then calls the
   // original callback.
-  SetCookiesCallback WrapSetCallback(SetCookiesCallback callback);
-  DeleteCallback WrapDeleteCallback(DeleteCallback callback);
-  base::OnceClosure WrapClosure(base::OnceClosure callback);
+  SetCookiesCallback WrapSetCallback(const SetCookiesCallback& callback);
+  DeleteCallback WrapDeleteCallback(const DeleteCallback& callback);
+  base::Closure WrapClosure(const base::Closure& callback);
 
   bool metrics_enabled() { return metrics_enabled_; }
 
@@ -160,7 +158,7 @@ class CookieStoreIOS : public net::CookieStore,
   void OnSystemCookiesChanged() override;
 
   void DeleteCookiesWithFilter(const CookieFilterFunction& filter,
-                               DeleteCallback callback);
+                               const DeleteCallback& callback);
 
   std::unique_ptr<net::CookieMonster> cookie_monster_;
   base::scoped_nsobject<NSHTTPCookieStorage> system_store_;
@@ -223,7 +221,7 @@ class CookieStoreIOS : public net::CookieStore,
   // cookies are deleted (with the total number of cookies deleted).
   // |num_deleted| contains the number of cookies deleted from
   // NSHTTPCookieStorage.
-  void DidClearNSHTTPCookieStorageCookies(DeleteCallback callback,
+  void DidClearNSHTTPCookieStorageCookies(const DeleteCallback& callback,
                                           int num_deleted);
   // Called after cookies are cleared from .binarycookies files. |callback| is
   // called after all the cookies are deleted with the total number of cookies
@@ -231,7 +229,7 @@ class CookieStoreIOS : public net::CookieStore,
   // |num_deleted_from_nshttp_cookie_storage| contains the number of cookies
   // deleted from NSHTTPCookieStorage.
   void DidClearBinaryCookiesFileCookies(
-      DeleteCallback callback,
+      const DeleteCallback& callback,
       int num_deleted_from_nshttp_cookie_storage);
 
   // Callback-wrapping:
@@ -252,9 +250,9 @@ class CookieStoreIOS : public net::CookieStore,
   // asynchronous cache update (using UpdateCachesFromCookieMonster()) and
   // calling the provided callback.
 
-  void UpdateCachesAfterSet(SetCookiesCallback callback, bool success);
-  void UpdateCachesAfterDelete(DeleteCallback callback, int num_deleted);
-  void UpdateCachesAfterClosure(base::OnceClosure callback);
+  void UpdateCachesAfterSet(const SetCookiesCallback& callback, bool success);
+  void UpdateCachesAfterDelete(const DeleteCallback& callback, int num_deleted);
+  void UpdateCachesAfterClosure(const base::Closure& callback);
 
   // Takes an NSArray of NSHTTPCookies as returns a net::CookieList.
   // The returned cookies are ordered by longest path, then earliest

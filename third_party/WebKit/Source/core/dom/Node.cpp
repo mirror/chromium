@@ -139,25 +139,6 @@ struct SameSizeAsNode : EventTarget {
   void* pointer_;
 };
 
-NodeRenderingData::NodeRenderingData(LayoutObject* layout_object,
-                                     RefPtr<ComputedStyle> non_attached_style)
-    : layout_object_(layout_object), non_attached_style_(non_attached_style) {}
-
-NodeRenderingData::~NodeRenderingData() {
-  CHECK(!layout_object_);
-}
-
-void NodeRenderingData::SetNonAttachedStyle(
-    RefPtr<ComputedStyle> non_attached_style) {
-  DCHECK_NE(&SharedEmptyData(), this);
-  non_attached_style_ = non_attached_style;
-}
-
-NodeRenderingData& NodeRenderingData::SharedEmptyData() {
-  DEFINE_STATIC_LOCAL(NodeRenderingData, shared_empty_data, (nullptr, nullptr));
-  return shared_empty_data;
-}
-
 static_assert(sizeof(Node) <= sizeof(SameSizeAsNode), "Node should stay small");
 
 #if DUMP_NODE_STATISTICS
@@ -889,7 +870,7 @@ bool Node::IsInert() const {
       element = FlatTreeTraversal::ParentElement(*element);
     }
   }
-  return GetDocument().GetFrame() && GetDocument().GetFrame()->IsInert();
+  return GetDocument().LocalOwner() && GetDocument().LocalOwner()->IsInert();
 }
 
 unsigned Node::NodeIndex() const {
@@ -2334,12 +2315,9 @@ void Node::DefaultEventHandler(Event* event) {
     if (DispatchDOMActivateEvent(detail, *event) !=
         DispatchEventResult::kNotCanceled)
       event->SetDefaultHandled();
-  } else if (event_type == EventTypeNames::contextmenu &&
-             event->IsMouseEvent()) {
-    if (Page* page = GetDocument().GetPage()) {
-      page->GetContextMenuController().HandleContextMenuEvent(
-          ToMouseEvent(event));
-    }
+  } else if (event_type == EventTypeNames::contextmenu) {
+    if (Page* page = GetDocument().GetPage())
+      page->GetContextMenuController().HandleContextMenuEvent(event);
   } else if (event_type == EventTypeNames::textInput) {
     if (event->HasInterface(EventNames::TextEvent)) {
       if (LocalFrame* frame = GetDocument().GetFrame())

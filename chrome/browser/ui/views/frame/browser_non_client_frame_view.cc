@@ -47,9 +47,7 @@ BrowserNonClientFrameView::~BrowserNonClientFrameView() {
   }
 }
 
-void BrowserNonClientFrameView::OnBrowserViewInitViewsComplete() {
-  UpdateMinimumSize();
-}
+void BrowserNonClientFrameView::OnBrowserViewInitViewsComplete() {}
 
 gfx::ImageSkia BrowserNonClientFrameView::GetIncognitoAvatarIcon() const {
   const SkColor icon_color = color_utils::PickContrastingColor(
@@ -72,8 +70,6 @@ views::View* BrowserNonClientFrameView::GetProfileSwitcherView() const {
 }
 
 void BrowserNonClientFrameView::UpdateClientArea() {}
-
-void BrowserNonClientFrameView::UpdateMinimumSize() {}
 
 void BrowserNonClientFrameView::ChildPreferredSizeChanged(views::View* child) {
   if (child == GetProfileSwitcherView()) {

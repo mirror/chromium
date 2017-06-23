@@ -11,16 +11,13 @@
 #include "base/guid.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/strings/string_util.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/client_set.h"
 #include "components/download/internal/config.h"
 #include "components/download/internal/entry.h"
-#include "components/download/internal/file_monitor.h"
 #include "components/download/internal/model_impl.h"
 #include "components/download/internal/scheduler/scheduler.h"
-#include "components/download/internal/stats.h"
 #include "components/download/internal/test/entry_utils.h"
 #include "components/download/internal/test/mock_client.h"
 #include "components/download/internal/test/test_device_status_listener.h"
@@ -35,9 +32,6 @@ using testing::Return;
 namespace download {
 
 namespace {
-
-const base::FilePath::CharType kDownloadDirPath[] =
-    FILE_PATH_LITERAL("/test/downloads");
 
 bool GuidInEntryList(const std::vector<Entry>& entries,
                      const std::string& guid) {
@@ -54,8 +48,6 @@ DriverEntry BuildDriverEntry(const Entry& entry, DriverEntry::State state) {
   dentry.state = state;
   return dentry;
 }
-
-void NotifyTaskFinished(bool success) {}
 
 class MockTaskScheduler : public TaskScheduler {
  public:
@@ -76,25 +68,6 @@ class MockScheduler : public Scheduler {
   MOCK_METHOD2(Next, Entry*(const Model::EntryList&, const DeviceStatus&));
 };
 
-class MockFileMonitor : public FileMonitor {
- public:
-  MockFileMonitor() = default;
-  ~MockFileMonitor() override = default;
-
-  void Initialize(const FileMonitor::InitCallback& callback) override;
-  MOCK_METHOD2(DeleteUnknownFiles,
-               void(const Model::EntryList&, const std::vector<DriverEntry>&));
-  MOCK_METHOD1(CleanupFilesForCompletedEntries,
-               std::vector<Entry*>(const Model::EntryList&));
-  MOCK_METHOD2(DeleteFiles,
-               void(const std::vector<base::FilePath>&,
-                    stats::FileCleanupReason));
-};
-
-void MockFileMonitor::Initialize(const FileMonitor::InitCallback& callback) {
-  callback.Run(true);
-}
-
 class DownloadServiceControllerImplTest : public testing::Test {
  public:
   DownloadServiceControllerImplTest()
@@ -106,8 +79,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
         store_(nullptr),
         model_(nullptr),
         device_status_listener_(nullptr),
-        scheduler_(nullptr),
-        file_monitor_(nullptr) {
+        scheduler_(nullptr) {
     start_callback_ =
         base::Bind(&DownloadServiceControllerImplTest::StartCallback,
                    base::Unretained(this));
@@ -120,10 +92,6 @@ class DownloadServiceControllerImplTest : public testing::Test {
     auto driver = base::MakeUnique<test::TestDownloadDriver>();
     auto store = base::MakeUnique<test::TestStore>();
     config_ = base::MakeUnique<Configuration>();
-    config_->file_keep_alive_time = base::TimeDelta::FromMinutes(10);
-    config_->file_cleanup_window = base::TimeDelta::FromMinutes(5);
-    config_->max_concurrent_downloads = 5;
-    config_->max_running_downloads = 5;
 
     client_ = client.get();
     driver_ = driver.get();
@@ -138,20 +106,14 @@ class DownloadServiceControllerImplTest : public testing::Test {
     auto scheduler = base::MakeUnique<MockScheduler>();
     auto task_scheduler = base::MakeUnique<MockTaskScheduler>();
 
-    auto download_file_dir = base::FilePath(kDownloadDirPath);
-    auto file_monitor = base::MakeUnique<MockFileMonitor>();
-
     model_ = model.get();
     device_status_listener_ = device_status_listener.get();
     scheduler_ = scheduler.get();
-    task_scheduler_ = task_scheduler.get();
-    file_monitor_ = file_monitor.get();
 
     controller_ = base::MakeUnique<ControllerImpl>(
         config_.get(), std::move(client_set), std::move(driver),
         std::move(model), std::move(device_status_listener),
-        std::move(scheduler), std::move(task_scheduler),
-        std::move(file_monitor), download_file_dir);
+        std::move(scheduler), std::move(task_scheduler));
   }
 
  protected:
@@ -177,8 +139,6 @@ class DownloadServiceControllerImplTest : public testing::Test {
   ModelImpl* model_;
   test::TestDeviceStatusListener* device_status_listener_;
   MockScheduler* scheduler_;
-  MockTaskScheduler* task_scheduler_;
-  MockFileMonitor* file_monitor_;
 
   DownloadParams::StartCallback start_callback_;
 
@@ -258,50 +218,6 @@ TEST_F(DownloadServiceControllerImplTest, SuccessfulInitWithExistingDownload) {
   task_runner_->RunUntilIdle();
 }
 
-TEST_F(DownloadServiceControllerImplTest, UnknownFileDeletion) {
-  Entry entry1 = test::BuildBasicEntry();
-  Entry entry2 = test::BuildBasicEntry();
-  Entry entry3 = test::BuildBasicEntry();
-
-  std::vector<Entry> entries = {entry1, entry2, entry3};
-
-  DriverEntry dentry1 =
-      BuildDriverEntry(entry1, DriverEntry::State::IN_PROGRESS);
-  DriverEntry dentry3 =
-      BuildDriverEntry(entry3, DriverEntry::State::IN_PROGRESS);
-  std::vector<DriverEntry> dentries = {dentry1, dentry3};
-
-  EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
-  EXPECT_CALL(*file_monitor_, DeleteUnknownFiles(_, _)).Times(1);
-
-  driver_->AddTestData(dentries);
-  controller_->Initialize();
-  driver_->MakeReady();
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-
-  task_runner_->RunUntilIdle();
-}
-
-TEST_F(DownloadServiceControllerImplTest,
-       CleanupFilesForCompletedEntriesCalled) {
-  Entry entry1 = test::BuildBasicEntry();
-  Entry entry2 = test::BuildBasicEntry();
-  Entry entry3 = test::BuildBasicEntry();
-
-  std::vector<Entry> entries = {entry1, entry2, entry3};
-
-  EXPECT_CALL(*file_monitor_, CleanupFilesForCompletedEntries(_)).Times(1);
-
-  controller_->Initialize();
-  driver_->MakeReady();
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-  controller_->OnStartScheduledTask(DownloadTaskType::CLEANUP_TASK,
-                                    base::Bind(&NotifyTaskFinished));
-
-  task_runner_->RunUntilIdle();
-}
-
 TEST_F(DownloadServiceControllerImplTest, FailedInitWithBadModel) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(0);
 
@@ -353,12 +269,6 @@ TEST_F(DownloadServiceControllerImplTest, AddDownloadAccepted) {
 
   // TODO(dtrainor): Compare the full DownloadParams with the full Entry.
   store_->TriggerUpdate(true);
-
-  std::vector<Entry> entries = store_->updated_entries();
-  Entry entry = entries[0];
-  DCHECK_EQ(entry.client, DownloadClient::TEST);
-  EXPECT_TRUE(base::StartsWith(entry.target_file_path.value(), kDownloadDirPath,
-                               base::CompareCase::SENSITIVE));
 
   task_runner_->RunUntilIdle();
 }
@@ -573,7 +483,7 @@ TEST_F(DownloadServiceControllerImplTest, Pause) {
 }
 
 TEST_F(DownloadServiceControllerImplTest, Resume) {
-  // Setup download service test data.
+  // Setupd download service test data.
   Entry entry1 = test::BuildBasicEntry();
   Entry entry2 = test::BuildBasicEntry();
   entry1.state = Entry::State::PAUSED;
@@ -680,42 +590,10 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadSucceeded) {
   DriverEntry driver_entry;
   driver_entry.guid = entry.guid;
   driver_entry.bytes_downloaded = 1024;
-  driver_entry.completion_time = base::Time::Now();
-  driver_entry.current_file_path = base::FilePath::FromUTF8Unsafe("123");
+  base::FilePath path = base::FilePath::FromUTF8Unsafe("123");
 
-  EXPECT_CALL(*task_scheduler_,
-              ScheduleTask(DownloadTaskType::CLEANUP_TASK, _, _, _, _))
-      .Times(1);
-  driver_->NotifyDownloadSucceeded(driver_entry);
+  driver_->NotifyDownloadSucceeded(driver_entry, path);
   EXPECT_EQ(Entry::State::COMPLETE, model_->Get(entry.guid)->state);
-
-  task_runner_->RunUntilIdle();
-}
-
-TEST_F(DownloadServiceControllerImplTest, CleanupTaskScheduledAtEarliestTime) {
-  Entry entry1 = test::BuildBasicEntry();
-  entry1.state = Entry::State::ACTIVE;
-  entry1.completion_time = base::Time::Now() - base::TimeDelta::FromMinutes(1);
-  Entry entry2 = test::BuildBasicEntry();
-  entry2.state = Entry::State::COMPLETE;
-  entry2.completion_time = base::Time::Now() - base::TimeDelta::FromMinutes(2);
-  std::vector<Entry> entries = {entry1, entry2};
-
-  controller_->Initialize();
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-  driver_->MakeReady();
-
-  DriverEntry driver_entry;
-  driver_entry.guid = entry1.guid;
-  driver_entry.bytes_downloaded = 1024;
-  driver_entry.completion_time = base::Time::Now();
-  driver_entry.current_file_path = base::FilePath::FromUTF8Unsafe("123");
-
-  EXPECT_CALL(*task_scheduler_, ScheduleTask(DownloadTaskType::CLEANUP_TASK,
-                                             false, false, 479, 779))
-      .Times(1);
-  driver_->NotifyDownloadSucceeded(driver_entry);
-  EXPECT_EQ(Entry::State::COMPLETE, model_->Get(entry1.guid)->state);
 
   task_runner_->RunUntilIdle();
 }
@@ -747,13 +625,12 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadUpdated) {
 }
 
 TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
+  // TODO(dtrainor): Simulate a TIMEOUT once that is supported.
   // TODO(dtrainor): Simulate a UNKNOWN once that is supported.
 
   Entry entry1 = test::BuildBasicEntry(Entry::State::ACTIVE);
   Entry entry2 = test::BuildBasicEntry(Entry::State::ACTIVE);
   Entry entry3 = test::BuildBasicEntry(Entry::State::ACTIVE);
-  Entry entry4 = test::BuildBasicEntry(Entry::State::ACTIVE);
-  entry4.scheduling_params.cancel_time = base::Time::Now();
 
   DriverEntry dentry1 =
       BuildDriverEntry(entry1, DriverEntry::State::IN_PROGRESS);
@@ -762,15 +639,10 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
   DriverEntry dentry3 =
       BuildDriverEntry(entry3, DriverEntry::State::IN_PROGRESS);
 
-  std::vector<Entry> entries = {entry1, entry2, entry3, entry4};
+  std::vector<Entry> entries = {entry1, entry2, entry3};
   std::vector<DriverEntry> dentries = {dentry1, dentry3};
 
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
-
-  // Test FailureReason::TIMEDOUT.
-  EXPECT_CALL(*client_,
-              OnDownloadFailed(entry4.guid, Client::FailureReason::TIMEDOUT))
-      .Times(1);
 
   // Set up the Controller.
   driver_->AddTestData(dentries);
@@ -792,8 +664,7 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
   EXPECT_CALL(*client_,
               OnDownloadFailed(entry2.guid, Client::FailureReason::ABORTED))
       .Times(1);
-  driver_->Start(RequestParams(), entry2.guid, entry2.target_file_path,
-                 NO_TRAFFIC_ANNOTATION_YET);
+  driver_->Start(RequestParams(), entry2.guid, NO_TRAFFIC_ANNOTATION_YET);
 
   // Test FailureReason::NETWORK.
   EXPECT_CALL(*client_,
@@ -1001,7 +872,7 @@ TEST_F(DownloadServiceControllerImplTest, ExistingExternalDownload) {
   EXPECT_FALSE(driver_->Find(entry3.guid).value().paused);
 
   // Simulate a successful external download.
-  driver_->NotifyDownloadSucceeded(dentry2);
+  driver_->NotifyDownloadSucceeded(dentry2, base::FilePath());
 
   EXPECT_TRUE(driver_->Find(entry1.guid).has_value());
   EXPECT_FALSE(driver_->Find(entry1.guid).value().paused);
@@ -1045,8 +916,7 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
   dentry2.state = DriverEntry::State::IN_PROGRESS;
 
   // Simulate a newly created external download.
-  driver_->Start(RequestParams(), dentry2.guid, dentry2.current_file_path,
-                 NO_TRAFFIC_ANNOTATION_YET);
+  driver_->Start(RequestParams(), dentry2.guid, NO_TRAFFIC_ANNOTATION_YET);
 
   EXPECT_TRUE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);
@@ -1074,103 +944,17 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
 
   // Rebuild the download so we can simulate more.
   dentry2.state = DriverEntry::State::IN_PROGRESS;
-  driver_->Start(RequestParams(), dentry2.guid, dentry2.current_file_path,
-                 NO_TRAFFIC_ANNOTATION_YET);
+  driver_->Start(RequestParams(), dentry2.guid, NO_TRAFFIC_ANNOTATION_YET);
 
   EXPECT_TRUE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);
 
   // Simulate a successful external download.
   dentry2.state = DriverEntry::State::COMPLETE;
-  driver_->NotifyDownloadSucceeded(dentry2);
+  driver_->NotifyDownloadSucceeded(dentry2, base::FilePath());
 
   EXPECT_FALSE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);
-}
-
-TEST_F(DownloadServiceControllerImplTest, CancelTimeTest) {
-  Entry entry1 = test::BuildBasicEntry();
-  entry1.state = Entry::State::ACTIVE;
-  entry1.create_time = base::Time::Now() - base::TimeDelta::FromSeconds(10);
-  entry1.scheduling_params.cancel_time =
-      base::Time::Now() - base::TimeDelta::FromSeconds(5);
-
-  Entry entry2 = test::BuildBasicEntry();
-  entry2.state = Entry::State::COMPLETE;
-  entry2.create_time = base::Time::Now() - base::TimeDelta::FromSeconds(10);
-  entry2.scheduling_params.cancel_time =
-      base::Time::Now() - base::TimeDelta::FromSeconds(2);
-  std::vector<Entry> entries = {entry1, entry2};
-
-  EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
-
-  controller_->Initialize();
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-  driver_->MakeReady();
-  task_runner_->RunUntilIdle();
-
-  // At startup, timed out entries should be killed.
-  std::vector<Entry*> updated_entries = model_->PeekEntries();
-  EXPECT_EQ(1u, updated_entries.size());
-}
-
-// Ensures no more downloads are activated if the number of downloads exceeds
-// the max running download configuration.
-TEST_F(DownloadServiceControllerImplTest, ThrottlingConfigMaxRunning) {
-  Entry entry1 = test::BuildBasicEntry(Entry::State::AVAILABLE);
-  Entry entry2 = test::BuildBasicEntry(Entry::State::ACTIVE);
-  std::vector<Entry> entries = {entry1, entry2};
-
-  EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
-
-  // Setup the Configuration.
-  config_->max_concurrent_downloads = 1u;
-  config_->max_running_downloads = 1u;
-
-  // Setup the controller.
-  controller_->Initialize();
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-  store_->AutomaticallyTriggerAllFutureCallbacks(true);
-
-  // Hit the max running configuration threshold, nothing should be called.
-  EXPECT_CALL(*scheduler_, Next(_, _)).Times(0);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(0);
-  driver_->MakeReady();
-  task_runner_->RunUntilIdle();
-
-  EXPECT_EQ(Entry::State::AVAILABLE, model_->Get(entry1.guid)->state);
-}
-
-// Ensures max concurrent download configuration considers both active and
-// paused downloads.
-TEST_F(DownloadServiceControllerImplTest, ThrottlingConfigMaxConcurrent) {
-  Entry entry1 = test::BuildBasicEntry(Entry::State::AVAILABLE);
-  Entry entry2 = test::BuildBasicEntry(Entry::State::PAUSED);
-  std::vector<Entry> entries = {entry1, entry2};
-
-  EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
-
-  // Setup the Configuration.
-  config_->max_concurrent_downloads = 2u;
-  config_->max_running_downloads = 1u;
-
-  // Setup the controller.
-  controller_->Initialize();
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-  store_->AutomaticallyTriggerAllFutureCallbacks(true);
-
-  // Can have one more download due to max concurrent configuration.
-  testing::InSequence seq;
-  EXPECT_CALL(*scheduler_, Next(_, _))
-      .Times(1)
-      .WillOnce(Return(model_->Get(entry1.guid)))
-      .RetiresOnSaturation();
-  EXPECT_CALL(*scheduler_, Next(_, _)).Times(1).RetiresOnSaturation();
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
-  driver_->MakeReady();
-  task_runner_->RunUntilIdle();
-
-  EXPECT_EQ(Entry::State::ACTIVE, model_->Get(entry1.guid)->state);
 }
 
 }  // namespace download

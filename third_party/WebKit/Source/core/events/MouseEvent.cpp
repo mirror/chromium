@@ -178,8 +178,7 @@ MouseEvent::MouseEvent(const AtomicString& event_type,
       related_target_(related_target),
       synthetic_event_type_(event.FromTouch() ? kFromTouch
                                               : kRealOrIndistinguishable),
-      region_(region),
-      menu_source_type_(event.menu_source_type) {
+      region_(region) {
   IntPoint root_frame_coordinates =
       FlooredIntPoint(event.PositionInRootFrame());
   InitCoordinatesFromRootFrame(root_frame_coordinates.X(),

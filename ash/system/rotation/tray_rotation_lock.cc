@@ -19,7 +19,6 @@
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
-#include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/controls/image_view.h"
@@ -42,8 +41,7 @@ bool IsUserRotationLocked() {
 
 bool IsCurrentRotationPortrait() {
   display::Display::Rotation current_rotation =
-      Shell::Get()
-          ->display_manager()
+      ShellPort::Get()
           ->GetDisplayInfo(display::Display::InternalDisplayId())
           .GetActiveRotation();
   return current_rotation == display::Display::ROTATE_90 ||

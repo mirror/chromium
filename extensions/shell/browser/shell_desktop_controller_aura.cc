@@ -97,7 +97,7 @@ class FillLayout : public aura::LayoutManager {
 };
 
 // A class that bridges the gap between CursorManager and Aura. It borrows
-// heavily from NativeCursorManagerAsh.
+// heavily from AshNativeCursorManager.
 class ShellNativeCursorManager : public wm::NativeCursorManager {
  public:
   explicit ShellNativeCursorManager(aura::WindowTreeHost* host)

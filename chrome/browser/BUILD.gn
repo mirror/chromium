@@ -10,7 +10,6 @@ import("//build/split_static_library.gni")
 import("//chrome/common/features.gni")
 import("//components/offline_pages/features/features.gni")
 import("//components/os_crypt/features.gni")
-import("//components/signin/features.gni")
 import("//components/spellcheck/spellcheck_build_features.gni")
 import("//device/vr/features/features.gni")
 import("//extensions/features/features.gni")
@@ -335,6 +334,8 @@ split_static_library("browser") {
     "domain_reliability/service_factory.h",
     "doodle/doodle_service_factory.cc",
     "doodle/doodle_service_factory.h",
+    "download/all_download_item_notifier.cc",
+    "download/all_download_item_notifier.h",
     "download/chrome_download_manager_delegate.cc",
     "download/chrome_download_manager_delegate.h",
     "download/download_confirmation_reason.h",
@@ -847,8 +848,6 @@ split_static_library("browser") {
     "page_load_metrics/observers/lofi_page_load_metrics_observer.h",
     "page_load_metrics/observers/media_page_load_metrics_observer.cc",
     "page_load_metrics/observers/media_page_load_metrics_observer.h",
-    "page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.cc",
-    "page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.h",
     "page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.cc",
     "page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.h",
     "page_load_metrics/observers/omnibox_suggestion_used_page_load_metrics_observer.cc",
@@ -1572,8 +1571,6 @@ split_static_library("browser") {
     "//components/security_state/core",
     "//components/sessions",
     "//components/signin/core/browser",
-    "//components/signin/core/common",
-    "//components/signin/core/common:signin_features",
     "//components/spellcheck:build_features",
     "//components/ssl_config",
     "//components/ssl_errors",
@@ -2002,12 +1999,6 @@ split_static_library("browser") {
     if (!use_aura || is_win || is_chromeos) {
       sources -= [ "background/background_mode_manager_aura.cc" ]
     }
-  }
-  if (enable_dice_support) {
-    sources += [
-      "signin/dice_response_handler.cc",
-      "signin/dice_response_handler.h",
-    ]
   }
   if (enable_spellcheck) {
     sources += [
@@ -4243,14 +4234,17 @@ grit("resources") {
 
   deps = [
     ":chrome_internal_resources_gen",
+
+    # Depend only on the generated mojo bindings since we read the .mojom.js
+    # file, rather than the whole mojo target which will link the C++ bindings.
     "//chrome/app:chrome_content_manifest_overlays",
-    "//chrome/browser/engagement:mojo_bindings_js",
-    "//chrome/browser/ui/webui/omnibox:mojo_bindings_js",
-    "//chrome/browser/ui/webui/usb_internals:mojo_bindings_js",
-    "//device/bluetooth/public/interfaces:experimental_interfaces_js",
-    "//device/bluetooth/public/interfaces:interfaces_js",
-    "//url/mojo:url_mojom_gurl_js",
-    "//url/mojo:url_mojom_origin_js",
+    "//chrome/browser/engagement:mojo_bindings__generator",
+    "//chrome/browser/ui/webui/omnibox:mojo_bindings__generator",
+    "//chrome/browser/ui/webui/usb_internals:mojo_bindings__generator",
+    "//device/bluetooth/public/interfaces:experimental_interfaces__generator",
+    "//device/bluetooth/public/interfaces:interfaces__generator",
+    "//url/mojo:url_mojom_gurl__generator",
+    "//url/mojo:url_mojom_origin__generator",
   ]
 
   if (use_vulcanize) {

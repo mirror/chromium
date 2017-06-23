@@ -52,7 +52,7 @@ class CC_EXPORT CompositorTimingHistory {
 
   // State that affects when events should be expected/recorded/reported.
   void SetRecordingEnabled(bool enabled);
-  void DidCreateAndInitializeLayerTreeFrameSink();
+  void DidCreateAndInitializeCompositorFrameSink();
 
   // Events to be timed.
   void WillBeginImplFrame(bool new_active_tree_is_likely,

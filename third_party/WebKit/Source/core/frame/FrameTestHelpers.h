@@ -266,8 +266,8 @@ class WebViewHelper {
 
   WebViewBase* WebView() const { return web_view_; }
 
-  WebLocalFrameBase* LocalMainFrame() const;
-  WebRemoteFrameBase* RemoteMainFrame() const;
+  WebLocalFrameBase* LocalMainFrame();
+  WebRemoteFrameBase* RemoteMainFrame();
 
  private:
   void InitializeWebView(TestWebViewClient*);

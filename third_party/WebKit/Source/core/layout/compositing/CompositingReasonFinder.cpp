@@ -10,7 +10,6 @@
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
-#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/paint/PaintLayer.h"
 
 namespace blink {
@@ -98,6 +97,9 @@ CompositingReasonFinder::PotentialCompositingReasonsFromStyle(
   if (style.HasPerspective())
     reasons |= kCompositingReasonPerspectiveWith3DDescendants;
 
+  if (style.HasCompositorProxy())
+    reasons |= kCompositingReasonCompositorProxy;
+
   // If the implementation of createsGroup changes, we need to be aware of that
   // in this part of code.
   DCHECK((layout_object.IsTransparent() || layout_object.HasMask() ||
@@ -150,12 +152,6 @@ CompositingReasons CompositingReasonFinder::NonStyleDeterminedDirectReasons(
 
   if (layer->NeedsCompositedScrolling())
     direct_reasons |= kCompositingReasonOverflowScrollingTouch;
-
-  // When RLS is disabled, the root layer may be the root scroller but
-  // the FrameView/Compositor handles its scrolling so there's no need to
-  // composite it.
-  if (RootScrollerUtil::IsGlobal(*layer) && !layer->IsScrolledByFrameView())
-    direct_reasons |= kCompositingReasonRootScroller;
 
   // Composite |layer| if it is inside of an ancestor scrolling layer, but that
   // scrolling layer is not on the stacking context ancestor chain of |layer|.
@@ -220,8 +216,8 @@ bool CompositingReasonFinder::RequiresCompositingForTransformAnimation(
 bool CompositingReasonFinder::RequiresCompositingForScrollDependentPosition(
     const PaintLayer* layer,
     bool ignore_lcd_text) const {
-  if (!layer->GetLayoutObject().Style()->HasViewportConstrainedPosition() &&
-      !layer->GetLayoutObject().Style()->HasStickyConstrainedPosition())
+  if (layer->GetLayoutObject().Style()->GetPosition() != EPosition::kFixed &&
+      layer->GetLayoutObject().Style()->GetPosition() != EPosition::kSticky)
     return false;
 
   if (!(ignore_lcd_text ||

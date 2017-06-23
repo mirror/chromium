@@ -1595,13 +1595,11 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled-ClickBasedRanker-InitialOrderGeneral",
+                    "name": "Enabled-ClickBasedRanker",
                     "params": {
-                        "category_order": "general",
                         "category_ranker": "click_based"
                     },
                     "enable_features": [
-                        "ContentSuggestionsCategoryOrder",
                         "ContentSuggestionsCategoryRanker"
                     ]
                 }
@@ -2767,22 +2765,6 @@
             ]
         }
     ],
-    "SearchEnginePromo": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "SearchEnginePromo.ExistingDevice",
-                        "SearchEnginePromo.NewDevice"
-                    ]
-                }
-            ]
-        }
-    ],
     "SearchGeolocationConsistency": [
         {
             "platforms": [
@@ -2990,21 +2972,6 @@
                 {
                     "name": "VerifyFeatureIsStillDisabledByDefault",
                     "forcing_flag": "suppress-enabling-subresource-filter-from-fieldtrial-testing-config"
-                }
-            ]
-        }
-    ],
-    "SuperfishInterstitial": [
-        {
-            "platforms": [
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "SuperfishInterstitial"
-                    ]
                 }
             ]
         }
@@ -3295,24 +3262,6 @@
                     "name": "Future",
                     "enable_features": [
                         "V8Future"
-                    ]
-                }
-            ]
-        }
-    ],
-    "VideoCaptureService": [
-        {
-            "platforms": [
-                "linux",
-                "mac",
-                "win",
-                "ios"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "MojoVideoCapture"
                     ]
                 }
             ]

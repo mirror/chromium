@@ -270,7 +270,7 @@ bool WebMediaPlayerMSCompositor::UpdateCurrentFrame(
     base::TimeTicks deadline_max) {
   DCHECK(compositor_task_runner_->BelongsToCurrentThread());
 
-  TRACE_EVENT_BEGIN2("webmediaplayerms", "UpdateCurrentFrame",
+  TRACE_EVENT_BEGIN2("webrtc", "WebMediaPlayerMS::UpdateCurrentFrame",
                      "Actual Render Begin", deadline_min.ToInternalValue(),
                      "Actual Render End", deadline_max.ToInternalValue());
   if (stopped_)
@@ -290,7 +290,7 @@ bool WebMediaPlayerMSCompositor::UpdateCurrentFrame(
            "sophisticated video rendering algorithm.";
   }
 
-  TRACE_EVENT_END2("webmediaplayerms", "UpdateCurrentFrame",
+  TRACE_EVENT_END2("webrtc", "WebMediaPlayerMS::UpdateCurrentFrame",
                    "Ideal Render Instant", render_time.ToInternalValue(),
                    "Serial", serial_);
 

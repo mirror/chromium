@@ -121,7 +121,7 @@ TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
   EXPECT_TRUE(resource->GetResourceError().IsAccessCheck());
   EXPECT_FALSE(GetMemoryCache()->ResourceForURL(secure_url));
 
-  // Start by calling StartLoad() directly, rather than via RequestResource().
+  // Start by calling startLoad() directly, rather than via requestResource().
   // This shouldn't crash.
   fetcher->StartLoad(RawResource::CreateForTest(secure_url, Resource::kRaw));
 }
@@ -322,8 +322,8 @@ TEST_F(ResourceFetcherTest, DontReuseMediaDataUrl) {
       ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
   ResourceRequest request(KURL(kParsedURLString, "data:text/html,foo"));
   request.SetRequestContext(WebURLRequest::kRequestContextVideo);
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
-  ResourceLoaderOptions options;
+  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
+                                kClientDidNotRequestCredentials);
   options.data_buffering_policy = kDoNotBufferData;
   options.initiator_info.name = FetchInitiatorTypeNames::internal;
   FetchParameters fetch_params(request, options);
@@ -342,8 +342,8 @@ class ServeRequestsOnCompleteClient final
     Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   }
 
-  // No callbacks should be received except for the NotifyFinished() triggered
-  // by ResourceLoader::Cancel().
+  // No callbacks should be received except for the notifyFinished() triggered
+  // by ResourceLoader::cancel().
   void DataSent(Resource*, unsigned long long, unsigned long long) override {
     ASSERT_TRUE(false);
   }
@@ -376,7 +376,7 @@ class ServeRequestsOnCompleteClient final
 
 // Regression test for http://crbug.com/594072.
 // This emulates a modal dialog triggering a nested run loop inside
-// ResourceLoader::Cancel(). If the ResourceLoader doesn't promptly cancel its
+// ResourceLoader::cancel(). If the ResourceLoader doesn't promptly cancel its
 // WebURLLoader before notifying its clients, a nested run loop  may send a
 // network response, leading to an invalid state transition in ResourceLoader.
 TEST_F(ResourceFetcherTest, ResponseOnCancel) {

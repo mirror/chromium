@@ -17,7 +17,8 @@ std::unique_ptr<net::ProxyConfigService>
 ProxyServiceFactory::CreateProxyConfigService(PrefProxyConfigTracker* tracker) {
   std::unique_ptr<net::ProxyConfigService> base_service(
       net::ProxyService::CreateSystemProxyConfigService(
-          web::WebThread::GetTaskRunnerForThread(web::WebThread::IO)));
+          web::WebThread::GetTaskRunnerForThread(web::WebThread::IO),
+          web::WebThread::GetTaskRunnerForThread(web::WebThread::FILE)));
   return tracker->CreateTrackingProxyConfigService(std::move(base_service));
 }
 

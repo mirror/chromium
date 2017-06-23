@@ -295,21 +295,13 @@ static void FailedAccessCheckCallbackInMainThread(v8::Local<v8::Object> holder,
 }
 
 static bool CodeGenerationCheckCallbackInMainThread(
-    v8::Local<v8::Context> context,
-    v8::Local<v8::String> source) {
+    v8::Local<v8::Context> context) {
   if (ExecutionContext* execution_context = ToExecutionContext(context)) {
     if (ContentSecurityPolicy* policy =
-            ToDocument(execution_context)->GetContentSecurityPolicy()) {
-      v8::String::Value source_str(source);
-      UChar snippet[ContentSecurityPolicy::kMaxSampleLength + 1];
-      size_t len = std::min((sizeof(snippet) / sizeof(UChar)) - 1,
-                            static_cast<size_t>(source_str.length()));
-      memcpy(snippet, *source_str, len * sizeof(UChar));
-      snippet[len] = 0;
-      return policy->AllowEval(
-          ScriptState::From(context), SecurityViolationReportingPolicy::kReport,
-          ContentSecurityPolicy::kWillThrowException, snippet);
-    }
+            ToDocument(execution_context)->GetContentSecurityPolicy())
+      return policy->AllowEval(ScriptState::From(context),
+                               SecurityViolationReportingPolicy::kReport,
+                               ContentSecurityPolicy::kWillThrowException);
   }
   return false;
 }

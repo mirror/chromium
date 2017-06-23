@@ -52,7 +52,7 @@
 #include "cc/test/push_properties_counting_layer_impl.h"
 #include "cc/test/render_pass_test_utils.h"
 #include "cc/test/skia_common.h"
-#include "cc/test/test_layer_tree_frame_sink.h"
+#include "cc/test/test_compositor_frame_sink.h"
 #include "cc/test/test_web_graphics_context_3d.h"
 #include "cc/trees/clip_node.h"
 #include "cc/trees/effect_node.h"
@@ -441,7 +441,7 @@ SINGLE_THREAD_TEST_F(LayerTreeHostTestReadyToDrawVisibility);
 
 class LayerTreeHostContextCacheTest : public LayerTreeHostTest {
  public:
-  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -466,7 +466,7 @@ class LayerTreeHostContextCacheTest : public LayerTreeHostTest {
     EXPECT_CALL(*mock_worker_context_support_,
                 SetAggressivelyFreeResources(false));
 
-    return LayerTreeHostTest::CreateLayerTreeFrameSink(
+    return LayerTreeHostTest::CreateCompositorFrameSink(
         renderer_settings, refresh_rate, std::move(test_main_context_provider),
         std::move(test_worker_context_provider));
   }
@@ -579,13 +579,13 @@ class LayerTreeHostFreeContextResourcesOnDestroy
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostFreeContextResourcesOnDestroy);
 
 // Test if the LTH successfully frees and stops freeing context resources
-// when the LayerTreeFrameSink is lost and recreated.
-class LayerTreeHostCacheBehaviorOnLayerTreeFrameSinkRecreated
+// when the CompositorFrameSink is lost and recreated.
+class LayerTreeHostCacheBehaviorOnCompositorFrameSinkRecreated
     : public LayerTreeHostContextCacheTest {
  public:
   void WillBeginImplFrameOnThread(LayerTreeHostImpl* host_impl,
                                   const BeginFrameArgs& args) override {
-    // This code is run once, to trigger recreation of our LayerTreeFrameSink.
+    // This code is run once, to trigger recreation of our CompositorFrameSink.
     if (test_state_ != TestState::INIT)
       return;
 
@@ -593,18 +593,18 @@ class LayerTreeHostCacheBehaviorOnLayerTreeFrameSinkRecreated
     Mock::VerifyAndClearExpectations(mock_main_context_support_);
     Mock::VerifyAndClearExpectations(mock_worker_context_support_);
 
-    // LayerTreeFrameSink lost expectations.
+    // CompositorFrameSink lost expectations.
     EXPECT_CALL(*mock_worker_context_support_,
                 SetAggressivelyFreeResources(true));
     EXPECT_CALL(*mock_main_context_support_,
                 SetAggressivelyFreeResources(true));
-    host_impl->DidLoseLayerTreeFrameSink();
+    host_impl->DidLoseCompositorFrameSink();
     test_state_ = TestState::RECREATED;
   }
 
   void InitializedRendererOnThread(LayerTreeHostImpl* host_impl,
                                    bool success) override {
-    // This is run after we have recreated our LayerTreeFrameSink.
+    // This is run after we have recreated our CompositorFrameSink.
     if (test_state_ != TestState::RECREATED)
       return;
 
@@ -627,7 +627,7 @@ class LayerTreeHostCacheBehaviorOnLayerTreeFrameSinkRecreated
 };
 
 SINGLE_AND_MULTI_THREAD_TEST_F(
-    LayerTreeHostCacheBehaviorOnLayerTreeFrameSinkRecreated);
+    LayerTreeHostCacheBehaviorOnCompositorFrameSinkRecreated);
 
 // Two setNeedsCommits in a row should lead to at least 1 commit and at least 1
 // draw with frame 0.
@@ -3359,9 +3359,9 @@ class LayerTreeHostTestAbortedCommitDoesntStall : public LayerTreeHostTest {
   int commit_complete_count_;
 };
 
-class OnDrawLayerTreeFrameSink : public TestLayerTreeFrameSink {
+class OnDrawCompositorFrameSink : public TestCompositorFrameSink {
  public:
-  explicit OnDrawLayerTreeFrameSink(
+  explicit OnDrawCompositorFrameSink(
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider,
       SharedBitmapManager* shared_bitmap_manager,
@@ -3371,18 +3371,18 @@ class OnDrawLayerTreeFrameSink : public TestLayerTreeFrameSink {
       bool synchronous_composite,
       double refresh_rate,
       base::Closure invalidate_callback)
-      : TestLayerTreeFrameSink(std::move(compositor_context_provider),
-                               std::move(worker_context_provider),
-                               shared_bitmap_manager,
-                               gpu_memory_buffer_manager,
-                               renderer_settings,
-                               task_runner,
-                               synchronous_composite,
-                               false /* disable_display_vsync */,
-                               refresh_rate),
+      : TestCompositorFrameSink(std::move(compositor_context_provider),
+                                std::move(worker_context_provider),
+                                shared_bitmap_manager,
+                                gpu_memory_buffer_manager,
+                                renderer_settings,
+                                task_runner,
+                                synchronous_composite,
+                                false /* disable_display_vsync */,
+                                refresh_rate),
         invalidate_callback_(std::move(invalidate_callback)) {}
 
-  // TestLayerTreeFrameSink overrides.
+  // TestCompositorFrameSink overrides.
   void Invalidate() override { invalidate_callback_.Run(); }
 
   void OnDraw(bool resourceless_software_draw) {
@@ -3403,7 +3403,7 @@ class LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor
     settings->using_synchronous_renderer_compositor = true;
   }
 
-  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -3412,12 +3412,12 @@ class LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor
         &LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor::
             CallOnDraw,
         base::Unretained(this));
-    auto frame_sink = base::MakeUnique<OnDrawLayerTreeFrameSink>(
+    auto frame_sink = base::MakeUnique<OnDrawCompositorFrameSink>(
         compositor_context_provider, std::move(worker_context_provider),
         shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
         ImplThreadTaskRunner(), false /* synchronous_composite */, refresh_rate,
         std::move(on_draw_callback));
-    layer_tree_frame_sink_ = frame_sink.get();
+    compositor_frame_sink_ = frame_sink.get();
     return std::move(frame_sink);
   }
 
@@ -3427,13 +3427,13 @@ class LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor
       // surface. But it needs to be done on a new stack frame.
       bool resourceless_software_draw = false;
       ImplThreadTaskRunner()->PostTask(
-          FROM_HERE, base::BindOnce(&OnDrawLayerTreeFrameSink::OnDraw,
-                                    base::Unretained(layer_tree_frame_sink_),
+          FROM_HERE, base::BindOnce(&OnDrawCompositorFrameSink::OnDraw,
+                                    base::Unretained(compositor_frame_sink_),
                                     resourceless_software_draw));
     }
   }
 
-  OnDrawLayerTreeFrameSink* layer_tree_frame_sink_ = nullptr;
+  OnDrawCompositorFrameSink* compositor_frame_sink_ = nullptr;
 };
 
 MULTI_THREAD_TEST_F(
@@ -3561,7 +3561,7 @@ class LayerTreeHostTestUIResource : public LayerTreeHostTest {
 
   void DidActivateTreeOnThread(LayerTreeHostImpl* impl) override {
     auto* context = static_cast<TestContextProvider*>(
-                        impl->layer_tree_frame_sink()->context_provider())
+                        impl->compositor_frame_sink()->context_provider())
                         ->TestContext3d();
 
     int frame = impl->active_tree()->source_frame_number();
@@ -5534,7 +5534,7 @@ MULTI_THREAD_TEST_F(LayerTreeHostTestEmptyLayerGpuRasterization);
 
 class LayerTreeHostWithGpuRasterizationTest : public LayerTreeHostTest {
  protected:
-  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -5542,7 +5542,7 @@ class LayerTreeHostWithGpuRasterizationTest : public LayerTreeHostTest {
     auto context = TestWebGraphicsContext3D::Create();
     context->set_gpu_rasterization(true);
     auto context_provider = TestContextProvider::Create(std::move(context));
-    return LayerTreeHostTest::CreateLayerTreeFrameSink(
+    return LayerTreeHostTest::CreateCompositorFrameSink(
         renderer_settings, refresh_rate, std::move(context_provider),
         std::move(worker_context_provider));
   }
@@ -5619,7 +5619,7 @@ class LayerTreeHostTestGpuRasterizationReenabled
     settings->gpu_rasterization_msaa_sample_count = 4;
   }
 
-  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -5630,7 +5630,7 @@ class LayerTreeHostTestGpuRasterizationReenabled
     context->set_gpu_rasterization(true);
     compositor_context_provider =
         TestContextProvider::Create(std::move(context));
-    return LayerTreeTest::CreateLayerTreeFrameSink(
+    return LayerTreeTest::CreateCompositorFrameSink(
         renderer_settings, refresh_rate, compositor_context_provider,
         worker_context_provider);
   }
@@ -6044,7 +6044,7 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
     settings->use_zero_copy = true;
   }
 
-  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -6053,7 +6053,7 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
     bool synchronous_composite =
         !HasImplThread() &&
         !layer_tree_host()->GetSettings().single_thread_proxy_scheduler;
-    return base::MakeUnique<TestLayerTreeFrameSink>(
+    return base::MakeUnique<TestCompositorFrameSink>(
         compositor_context_provider, std::move(worker_context_provider),
         shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
         ImplThreadTaskRunner(), synchronous_composite, disable_display_vsync,
@@ -7322,93 +7322,6 @@ class LayerTreeTestMaskWithNonExactTextureSize : public LayerTreeTest {
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeTestMaskWithNonExactTextureSize);
 
-class LayerTreeTestSolidColorMaskLayer : public LayerTreeTest {
- protected:
-  void SetupTree() override {
-    // Root
-    //  |
-    //  +-- Content Layer
-    //        +--Mask
-    scoped_refptr<Layer> root = Layer::Create();
-    scoped_refptr<FakePictureLayer> content_layer =
-        FakePictureLayer::Create(&client_);
-    root->AddChild(content_layer);
-    gfx::Size content_size(100, 100);
-    std::unique_ptr<RecordingSource> recording_source =
-        FakeRecordingSource::CreateFilledRecordingSource(content_size);
-    PaintFlags paint;
-    static_cast<FakeRecordingSource*>(recording_source.get())
-        ->add_draw_rect_with_flags(gfx::Rect(content_size), paint);
-
-    client_.set_fill_with_nonsolid_color(true);
-    static_cast<FakeRecordingSource*>(recording_source.get())->Rerecord();
-    scoped_refptr<FakePictureLayer> mask_layer =
-        FakePictureLayer::CreateWithRecordingSource(
-            &client_, std::move(recording_source));
-    content_layer->SetMaskLayer(mask_layer.get());
-    gfx::Size root_size(100, 100);
-    root->SetBounds(root_size);
-    content_layer->SetBounds(content_size);
-
-    mask_layer->SetBounds(content_size);
-    mask_layer->SetLayerMaskType(Layer::LayerMaskType::MULTI_TEXTURE_MASK);
-
-    layer_tree_host()->SetRootLayer(root);
-    LayerTreeTest::SetupTree();
-    client_.set_bounds(root->bounds());
-  }
-
-  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
-
-  DrawResult PrepareToDrawOnThread(LayerTreeHostImpl* host_impl,
-                                   LayerTreeHostImpl::FrameData* frame_data,
-                                   DrawResult draw_result) override {
-    EXPECT_EQ(2u, frame_data->render_passes.size());
-    RenderPass* root_pass = frame_data->render_passes.back().get();
-    EXPECT_EQ(2u, root_pass->quad_list.size());
-
-    // There's a solid color quad under everything.
-    EXPECT_EQ(DrawQuad::SOLID_COLOR, root_pass->quad_list.back()->material);
-
-    // Mask layer tiles should not be skipped even if the mask layer is solid
-    // color.
-    EXPECT_EQ(DrawQuad::RENDER_PASS, root_pass->quad_list.front()->material);
-    const RenderPassDrawQuad* render_pass_quad =
-        RenderPassDrawQuad::MaterialCast(root_pass->quad_list.front());
-    EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
-              render_pass_quad->rect.ToString());
-    EXPECT_EQ(gfx::RectF().ToString(),
-
-              render_pass_quad->mask_uv_rect.ToString());
-    EndTest();
-    return draw_result;
-  }
-
-  void AfterTest() override {}
-
-  FakeContentLayerClient client_;
-};
-
-class LayerTreeTestSingleTextureSolidColorMaskLayer
-    : public LayerTreeTestSolidColorMaskLayer {
- public:
-  void InitializeSettings(LayerTreeSettings* settings) override {
-    settings->enable_mask_tiling = false;
-  }
-};
-
-SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeTestSingleTextureSolidColorMaskLayer);
-
-class LayerTreeTestMultiTextureSolidColorMaskLayer
-    : public LayerTreeTestSolidColorMaskLayer {
- public:
-  void InitializeSettings(LayerTreeSettings* settings) override {
-    settings->enable_mask_tiling = true;
-  }
-};
-
-SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeTestMultiTextureSolidColorMaskLayer);
-
 class LayerTreeTestPageScaleFlags : public LayerTreeTest {
  protected:
   void SetupTree() override {
@@ -7521,7 +7434,7 @@ class LayerTreeHostTestPaintedDeviceScaleFactor : public LayerTreeHostTest {
 };
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestPaintedDeviceScaleFactor);
 
-// Makes sure that LocalSurfaceId is propagated to the LayerTreeFrameSink.
+// Makes sure that LocalSurfaceId is propagated to the CompositorFrameSink.
 class LayerTreeHostTestLocalSurfaceId : public LayerTreeHostTest {
  protected:
   void InitializeSettings(LayerTreeSettings* settings) override {
@@ -7608,7 +7521,7 @@ class GpuRasterizationSucceedsWithLargeImage : public LayerTreeHostTest {
 
     // Retrieve max texture size from Skia.
     ContextProvider* context_provider =
-        host_impl->layer_tree_frame_sink()->context_provider();
+        host_impl->compositor_frame_sink()->context_provider();
     ASSERT_TRUE(context_provider);
     ContextProvider::ScopedContextLock context_lock(context_provider);
 
@@ -7952,7 +7865,7 @@ class LayerTreeHostTestHudLayerWithLayerLists : public LayerTreeHostTest {
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestHudLayerWithLayerLists);
 
 // Verifies that LayerTreeHostClient does not receive frame acks from a released
-// LayerTreeFrameSink.
+// CompositorFrameSink.
 class LayerTreeHostTestDiscardAckAfterRelease : public LayerTreeHostTest {
  protected:
   void SetupTree() override {
@@ -7978,14 +7891,14 @@ class LayerTreeHostTestDiscardAckAfterRelease : public LayerTreeHostTest {
   void WillReceiveCompositorFrameAck() {
     switch (layer_tree_host()->SourceFrameNumber()) {
       case 1:
-        // For the first commit, don't release the LayerTreeFrameSink. We must
+        // For the first commit, don't release the CompositorFrameSink. We must
         // receive the ack later on.
         break;
       case 2:
-        // Release the LayerTreeFrameSink for the second commit. We'll later
+        // Release the CompositorFrameSink for the second commit. We'll later
         // check that the ack is discarded.
         layer_tree_host()->SetVisible(false);
-        layer_tree_host()->ReleaseLayerTreeFrameSink();
+        layer_tree_host()->ReleaseCompositorFrameSink();
         break;
       default:
         NOTREACHED();
@@ -8008,13 +7921,13 @@ class LayerTreeHostTestDiscardAckAfterRelease : public LayerTreeHostTest {
   void CheckFrameAck() {
     switch (layer_tree_host()->SourceFrameNumber()) {
       case 1:
-        // LayerTreeFrameSink was not released. We must receive the ack.
+        // CompositorFrameSink was not released. We must receive the ack.
         EXPECT_TRUE(received_ack_);
         // Cause damage so that we draw and swap.
         layer_tree_host()->root_layer()->SetBackgroundColor(SK_ColorGREEN);
         break;
       case 2:
-        // LayerTreeFrameSink was released. The ack must be discarded.
+        // CompositorFrameSink was released. The ack must be discarded.
         EXPECT_FALSE(received_ack_);
         EndTest();
         break;

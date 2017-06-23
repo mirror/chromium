@@ -58,19 +58,16 @@ const char* WebData::Data() const {
   return private_->Data();
 }
 
-WebData::WebData(RefPtr<SharedBuffer> buffer) : private_(std::move(buffer)) {}
+WebData::WebData(PassRefPtr<SharedBuffer> buffer)
+    : private_(std::move(buffer)) {}
 
-WebData& WebData::operator=(RefPtr<SharedBuffer> buffer) {
+WebData& WebData::operator=(PassRefPtr<SharedBuffer> buffer) {
   private_ = std::move(buffer);
   return *this;
 }
 
-WebData::operator RefPtr<SharedBuffer>() const {
-  return RefPtr<SharedBuffer>(private_.Get());
-}
-
-WebData::operator const SharedBuffer&() const {
-  return *private_;
+WebData::operator PassRefPtr<SharedBuffer>() const {
+  return PassRefPtr<SharedBuffer>(private_.Get());
 }
 
 }  // namespace blink

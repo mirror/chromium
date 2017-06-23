@@ -1,7 +1,6 @@
 // Copyright 2015 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
 /**
  * @interface
  */
@@ -10,15 +9,16 @@ Common.OutputStream = function() {};
 Common.OutputStream.prototype = {
   /**
    * @param {string} data
-   * @return {!Promise}
+   * @param {function(!Common.OutputStream)=} callback
    */
-  write(data) {},
+  write(data, callback) {},
 
   close() {}
 };
 
 /**
  * @implements {Common.OutputStream}
+ * @unrestricted
  */
 Common.StringOutputStream = class {
   constructor() {
@@ -28,9 +28,9 @@ Common.StringOutputStream = class {
   /**
    * @override
    * @param {string} chunk
-   * @return {!Promise}
+   * @param {function(!Common.OutputStream)=} callback
    */
-  async write(chunk) {
+  write(chunk, callback) {
     this._data += chunk;
   }
 

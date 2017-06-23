@@ -41,9 +41,8 @@ class WebrtcVideoEncoderVpx : public WebrtcVideoEncoder {
   void SetLosslessColor(bool want_lossless);
 
   // WebrtcVideoEncoder interface.
-  void Encode(std::unique_ptr<webrtc::DesktopFrame> frame,
-              const FrameParams& params,
-              EncodeCallback done) override;
+  std::unique_ptr<EncodedFrame> Encode(const webrtc::DesktopFrame* frame,
+                                       const FrameParams& params) override;
 
  private:
   explicit WebrtcVideoEncoderVpx(bool use_vp9);

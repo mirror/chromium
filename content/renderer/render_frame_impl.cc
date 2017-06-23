@@ -4,7 +4,6 @@
 
 #include "content/renderer/render_frame_impl.h"
 
-#include <algorithm>
 #include <map>
 #include <string>
 #include <utility>
@@ -994,6 +993,7 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
       blink::WebTreeScopeType::kDocument, render_frame,
       render_frame->blink_interface_provider_.get(),
       render_frame->blink_interface_registry_.get(), opener);
+  render_frame->BindToWebFrame(web_frame);
   render_view->webview()->SetMainFrame(web_frame);
   render_frame->render_widget_ = RenderWidget::CreateForFrame(
       widget_routing_id, hidden, screen_info, compositor_deps, web_frame);
@@ -1070,6 +1070,7 @@ void RenderFrameImpl::CreateFrame(
         render_frame->blink_interface_registry_.get(), proxy->web_frame(),
         replicated_state.sandbox_flags);
   }
+  render_frame->BindToWebFrame(web_frame);
   CHECK(parent_routing_id != MSG_ROUTING_NONE || !web_frame->Parent());
 
   if (widget_params.routing_id != MSG_ROUTING_NONE) {
@@ -1277,6 +1278,16 @@ RenderFrameImpl::~RenderFrameImpl() {
   render_view_->UnregisterRenderFrame(this);
   g_routing_id_frame_map.Get().erase(routing_id_);
   RenderThread::Get()->RemoveRoute(routing_id_);
+}
+
+void RenderFrameImpl::BindToWebFrame(blink::WebLocalFrame* web_frame) {
+  DCHECK(!frame_);
+
+  std::pair<FrameMap::iterator, bool> result = g_frame_map.Get().insert(
+      std::make_pair(web_frame, this));
+  CHECK(result.second) << "Inserting a duplicate item.";
+
+  frame_ = web_frame;
 }
 
 void RenderFrameImpl::Initialize() {
@@ -2260,11 +2271,8 @@ void RenderFrameImpl::OnAdvanceFocus(blink::WebFocusType type,
                                      int32_t source_routing_id) {
   RenderFrameProxy* source_frame =
       RenderFrameProxy::FromRoutingID(source_routing_id);
-  if (!source_frame) {
-    render_view_->webview()->SetInitialFocus(type ==
-                                             blink::kWebFocusTypeBackward);
+  if (!source_frame)
     return;
-  }
 
   render_view_->webview()->AdvanceFocusAcrossFrames(
       type, source_frame->web_frame(), frame_);
@@ -2544,16 +2552,6 @@ int RenderFrameImpl::ShowContextMenu(ContextMenuClient* client,
 void RenderFrameImpl::CancelContextMenu(int request_id) {
   DCHECK(pending_context_menus_.Lookup(request_id));
   pending_context_menus_.Remove(request_id);
-}
-
-void RenderFrameImpl::BindToFrame(WebLocalFrame* web_frame) {
-  DCHECK(!frame_);
-
-  std::pair<FrameMap::iterator, bool> result =
-      g_frame_map.Get().emplace(web_frame, this);
-  CHECK(result.second) << "Inserting a duplicate item.";
-
-  frame_ = web_frame;
 }
 
 blink::WebPlugin* RenderFrameImpl::CreatePlugin(
@@ -2900,9 +2898,9 @@ RenderFrameImpl::CreateApplicationCacheHost(
 std::unique_ptr<blink::WebContentSettingsClient>
 RenderFrameImpl::CreateWorkerContentSettingsClient() {
   if (!frame_ || !frame_->View())
-    return nullptr;
+    return NULL;
   return GetContentClient()->renderer()->CreateWorkerContentSettingsClient(
-      this);
+      this, frame_);
 }
 
 std::unique_ptr<blink::WebWorkerFetchContext>
@@ -3078,6 +3076,7 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
       scope, child_render_frame,
       child_render_frame->blink_interface_provider_.get(),
       child_render_frame->blink_interface_registry_.get());
+  child_render_frame->BindToWebFrame(web_frame);
 
   child_render_frame->in_frame_tree_ = true;
   child_render_frame->Initialize();
@@ -3301,12 +3300,10 @@ void RenderFrameImpl::LoadURLExternally(const blink::WebURLRequest& request,
 
     Send(new FrameHostMsg_DownloadUrl(params));
   } else {
-    // TODO(csharrison): Plumb triggering_event_info through Blink.
     OpenURL(request.Url(), IsHttpPost(request),
             GetRequestBodyForWebURLRequest(request),
             GetWebURLRequestHeaders(request), referrer, policy,
-            should_replace_current_entry, false,
-            blink::WebTriggeringEventInfo::kUnknown);
+            should_replace_current_entry, false);
   }
 }
 
@@ -3459,8 +3456,6 @@ void RenderFrameImpl::DidStartProvisionalLoad(blink::WebDataSource* data_source,
     info.is_history_navigation_in_new_child_frame =
         pending_navigation_info_->history_navigation_in_new_child_frame;
     info.is_client_redirect = pending_navigation_info_->client_redirect;
-    info.triggering_event_info =
-        pending_navigation_info_->triggering_event_info;
     info.is_cache_disabled = pending_navigation_info_->cache_disabled;
     info.form = pending_navigation_info_->form;
     info.source_location = pending_navigation_info_->source_location;
@@ -3764,7 +3759,7 @@ void RenderFrameImpl::DidCreateDocumentElement(blink::WebLocalFrame* frame) {
       // them different).
       render_view_->Send(new ViewHostMsg_DocumentAvailableInMainFrame(
           render_view_->GetRoutingID(),
-          frame->GetDocument().IsPluginDocument()));
+          main_frame->GetDocument().IsPluginDocument()));
     }
   }
 
@@ -4192,6 +4187,8 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
   GetRenderWidget()->ConvertViewportToWindow(&position_in_window);
   params.x = position_in_window.x;
   params.y = position_in_window.y;
+  params.source_type =
+      GetRenderWidget()->input_handler().context_menu_source_type();
   GetRenderWidget()->OnShowHostContextMenu(&params);
   if (GetRenderWidget()->has_host_context_menu_location()) {
     params.x = GetRenderWidget()->host_context_menu_location().x();
@@ -4908,7 +4905,6 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     if (render_view_->webview()->MainFrame()->IsWebLocalFrame() &&
         render_view_->webview()
             ->MainFrame()
-            ->ToWebLocalFrame()
             ->GetDocument()
             .IsPluginDocument()) {
       // Reset the zoom levels for plugins.
@@ -5317,8 +5313,7 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
     OpenURL(url, IsHttpPost(info.url_request),
             GetRequestBodyForWebURLRequest(info.url_request),
             GetWebURLRequestHeaders(info.url_request), referrer,
-            info.default_policy, info.replaces_current_history_item, false,
-            info.triggering_event_info);
+            info.default_policy, info.replaces_current_history_item, false);
     return blink::kWebNavigationPolicyIgnore;  // Suppress the load here.
   }
 
@@ -5351,8 +5346,7 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
         OpenURL(url, IsHttpPost(info.url_request),
                 GetRequestBodyForWebURLRequest(info.url_request),
                 GetWebURLRequestHeaders(info.url_request), referrer,
-                info.default_policy, info.replaces_current_history_item, true,
-                info.triggering_event_info);
+                info.default_policy, info.replaces_current_history_item, true);
         // Suppress the load in Blink but mark the frame as loading.
         return blink::kWebNavigationPolicyHandledByClientForInitialHistory;
       } else {
@@ -5417,8 +5411,7 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
               GetRequestBodyForWebURLRequest(info.url_request),
               GetWebURLRequestHeaders(info.url_request),
               send_referrer ? referrer : Referrer(), info.default_policy,
-              info.replaces_current_history_item, false,
-              info.triggering_event_info);
+              info.replaces_current_history_item, false);
       return blink::kWebNavigationPolicyIgnore;  // Suppress the load here.
     }
   }
@@ -5460,8 +5453,7 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
     OpenURL(url, IsHttpPost(info.url_request),
             GetRequestBodyForWebURLRequest(info.url_request),
             GetWebURLRequestHeaders(info.url_request), Referrer(),
-            info.default_policy, info.replaces_current_history_item, false,
-            info.triggering_event_info);
+            info.default_policy, info.replaces_current_history_item, false);
     return blink::kWebNavigationPolicyIgnore;
   }
 
@@ -5880,8 +5872,7 @@ void RenderFrameImpl::OpenURL(
     const Referrer& referrer,
     WebNavigationPolicy policy,
     bool should_replace_current_entry,
-    bool is_history_navigation_in_new_child,
-    blink::WebTriggeringEventInfo triggering_event_info) {
+    bool is_history_navigation_in_new_child) {
   FrameHostMsg_OpenURL_Params params;
   params.url = url;
   params.uses_post = uses_post;
@@ -5889,7 +5880,6 @@ void RenderFrameImpl::OpenURL(
   params.extra_headers = extra_headers;
   params.referrer = referrer;
   params.disposition = RenderViewImpl::NavigationPolicyToDisposition(policy);
-  params.triggering_event_info = triggering_event_info;
 
   if (IsBrowserInitiated(pending_navigation_params_.get())) {
     // This is necessary to preserve the should_replace_current_entry value on
@@ -6751,7 +6741,7 @@ void RenderFrameImpl::SendFindReply(int request_id,
                                     int ordinal,
                                     const WebRect& selection_rect,
                                     bool final_status_update) {
-  DCHECK_GE(ordinal, -1);
+  DCHECK(ordinal >= -1);
 
   Send(new FrameHostMsg_Find_Reply(routing_id_,
                                    request_id,
@@ -6876,7 +6866,6 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       history_navigation_in_new_child_frame(
           info.is_history_navigation_in_new_child_frame),
       client_redirect(info.is_client_redirect),
-      triggering_event_info(info.triggering_event_info),
       cache_disabled(info.is_cache_disabled),
       form(info.form),
       source_location(info.source_location) {}

@@ -7,16 +7,16 @@
 
 
 namespace content {
-class SynchronousLayerTreeFrameSink;
+class SynchronousCompositorFrameSink;
 
 class SynchronousCompositorRegistry {
  public:
-  virtual void RegisterLayerTreeFrameSink(
+  virtual void RegisterCompositorFrameSink(
       int routing_id,
-      SynchronousLayerTreeFrameSink* layer_tree_frame_sink) = 0;
-  virtual void UnregisterLayerTreeFrameSink(
+      SynchronousCompositorFrameSink* compositor_frame_sink) = 0;
+  virtual void UnregisterCompositorFrameSink(
       int routing_id,
-      SynchronousLayerTreeFrameSink* layer_tree_frame_sink) = 0;
+      SynchronousCompositorFrameSink* compositor_frame_sink) = 0;
 
  protected:
   virtual ~SynchronousCompositorRegistry() {}

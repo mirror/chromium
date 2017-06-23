@@ -89,7 +89,7 @@ void ResourceLoader::Start(const ResourceRequest& request) {
 
   if (is_cache_aware_loading_activated_) {
     // Override cache policy for cache-aware loading. If this request fails, a
-    // reload with original request will be triggered in DidFail().
+    // reload with original request will be triggered in didFail().
     ResourceRequest cache_aware_request(request);
     cache_aware_request.SetCachePolicy(WebCachePolicy::kReturnCacheDataIfValid);
     loader_->LoadAsynchronously(WrappedResourceRequest(cache_aware_request),
@@ -183,19 +183,19 @@ bool ResourceLoader::WillFollowRedirect(
       return false;
     }
 
-    if (resource_->Options().cors_handling_by_resource_fetcher ==
-            kEnableCORSHandlingByResourceFetcher &&
-        resource_->GetResourceRequest().GetFetchRequestMode() ==
-            WebURLRequest::kFetchRequestModeCORS) {
+    if (resource_->Options().cors_enabled == kIsCORSEnabled) {
       RefPtr<SecurityOrigin> source_origin =
           resource_->Options().security_origin;
       if (!source_origin.Get())
         source_origin = Context().GetSecurityOrigin();
 
       String error_message;
+      StoredCredentials with_credentials =
+          resource_->LastResourceRequest().AllowStoredCredentials()
+              ? kAllowStoredCredentials
+              : kDoNotAllowStoredCredentials;
       if (!CrossOriginAccessControl::HandleRedirect(
-              source_origin, new_request, redirect_response,
-              resource_->GetResourceRequest().GetFetchCredentialsMode(),
+              source_origin, new_request, redirect_response, with_credentials,
               resource_->MutableOptions(), error_message)) {
         resource_->SetCORSFailed();
         Context().AddConsoleMessage(error_message);
@@ -217,35 +217,18 @@ bool ResourceLoader::WillFollowRedirect(
   fetcher_->RecordResourceTimingOnRedirect(resource_.Get(), redirect_response,
                                            cross_origin);
 
-  if (resource_->Options().cors_handling_by_resource_fetcher ==
-          kEnableCORSHandlingByResourceFetcher &&
-      resource_->GetResourceRequest().GetFetchRequestMode() ==
-          WebURLRequest::kFetchRequestModeCORS) {
-    bool allow_stored_credentials = false;
-    switch (new_request.GetFetchCredentialsMode()) {
-      case WebURLRequest::kFetchCredentialsModeOmit:
-        break;
-      case WebURLRequest::kFetchCredentialsModeSameOrigin:
-        allow_stored_credentials = !resource_->Options().cors_flag;
-        break;
-      case WebURLRequest::kFetchCredentialsModeInclude:
-      case WebURLRequest::kFetchCredentialsModePassword:
-        allow_stored_credentials = true;
-        break;
-    }
-    new_request.SetAllowStoredCredentials(allow_stored_credentials);
-  }
-
+  new_request.SetAllowStoredCredentials(
+      resource_->Options().allow_credentials == kAllowStoredCredentials);
   Context().PrepareRequest(new_request,
                            FetchContext::RedirectType::kForRedirect);
   Context().DispatchWillSendRequest(resource_->Identifier(), new_request,
                                     redirect_response,
                                     resource_->Options().initiator_info);
 
-  // ResourceFetcher::WillFollowRedirect() may rewrite the URL to
+  // ResourceFetcher::willFollowRedirect() may rewrite the URL to
   // something else not for rejecting redirect but for other reasons.
-  // E.g. WebFrameTestClient::WillSendRequest() and
-  // RenderFrameImpl::WillSendRequest(). We should reflect the
+  // E.g. WebFrameTestClient::willSendRequest() and
+  // RenderFrameImpl::willSendRequest(). We should reflect the
   // rewriting but currently we cannot. So, return false to make the
   // redirect fail.
   if (new_request.Url() != original_url) {
@@ -307,8 +290,7 @@ ResourceRequestBlockedReason ResourceLoader::CanAccessResponse(
 
   CrossOriginAccessControl::AccessStatus cors_status =
       CrossOriginAccessControl::CheckAccess(
-          response_for_access_control,
-          resource->GetResourceRequest().GetFetchCredentialsMode(),
+          response_for_access_control, resource->Options().allow_credentials,
           source_origin);
   if (cors_status != CrossOriginAccessControl::kAccessAllowed) {
     resource->SetCORSFailed();
@@ -341,10 +323,7 @@ void ResourceLoader::DidReceiveResponse(
   const ResourceResponse& response = web_url_response.ToResourceResponse();
 
   if (response.WasFetchedViaServiceWorker()) {
-    if (resource_->Options().cors_handling_by_resource_fetcher ==
-            kEnableCORSHandlingByResourceFetcher &&
-        resource_->GetResourceRequest().GetFetchRequestMode() ==
-            WebURLRequest::kFetchRequestModeCORS &&
+    if (resource_->Options().cors_enabled == kIsCORSEnabled &&
         response.WasFallbackRequiredByServiceWorker()) {
       ResourceRequest request = resource_->LastResourceRequest();
       DCHECK_EQ(request.GetServiceWorkerMode(),
@@ -381,10 +360,7 @@ void ResourceLoader::DidReceiveResponse(
         return;
       }
     }
-  } else if (resource_->Options().cors_handling_by_resource_fetcher ==
-                 kEnableCORSHandlingByResourceFetcher &&
-             resource_->GetResourceRequest().GetFetchRequestMode() ==
-                 WebURLRequest::kFetchRequestModeCORS) {
+  } else if (resource_->Options().cors_enabled == kIsCORSEnabled) {
     ResourceRequestBlockedReason blocked_reason =
         CanAccessResponse(resource_, response);
     if (blocked_reason != ResourceRequestBlockedReason::kNone) {
@@ -516,7 +492,7 @@ void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
     return;
   DCHECK_GE(response_out.ToResourceResponse().EncodedBodyLength(), 0);
 
-  // Follow the async case convention of not calling DidReceiveData or
+  // Follow the async case convention of not calling didReceiveData or
   // appending data to m_resource if the response body is empty. Copying the
   // empty buffer is a noop in most cases, but is destructive in the case of
   // a 304, where it will overwrite the cached data we should be reusing.

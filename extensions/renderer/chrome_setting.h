@@ -24,7 +24,6 @@ class Arguments;
 namespace extensions {
 class APIEventHandler;
 class APIRequestHandler;
-class BindingAccessChecker;
 
 // The custom implementation of the ChromeSetting type exposed to APIs.
 class ChromeSetting final : public gin::Wrappable<ChromeSetting> {
@@ -32,14 +31,12 @@ class ChromeSetting final : public gin::Wrappable<ChromeSetting> {
   ~ChromeSetting() override;
 
   // Creates a ChromeSetting object for the given property.
-  static v8::Local<v8::Object> Create(
-      v8::Isolate* isolate,
-      const std::string& property_name,
-      const base::ListValue* property_values,
-      APIRequestHandler* request_handler,
-      APIEventHandler* event_handler,
-      APITypeReferenceMap* type_refs,
-      const BindingAccessChecker* access_checker);
+  static v8::Local<v8::Object> Create(v8::Isolate* isolate,
+                                      const std::string& property_name,
+                                      const base::ListValue* property_values,
+                                      APIRequestHandler* request_handler,
+                                      APIEventHandler* event_handler,
+                                      APITypeReferenceMap* type_refs);
 
   static gin::WrapperInfo kWrapperInfo;
 
@@ -50,7 +47,6 @@ class ChromeSetting final : public gin::Wrappable<ChromeSetting> {
   ChromeSetting(APIRequestHandler* request_handler,
                 APIEventHandler* event_handler,
                 const APITypeReferenceMap* type_refs,
-                const BindingAccessChecker* access_checker,
                 const std::string& pref_name,
                 const base::DictionaryValue& argument_spec);
 
@@ -71,8 +67,6 @@ class ChromeSetting final : public gin::Wrappable<ChromeSetting> {
   APIEventHandler* event_handler_;
 
   const APITypeReferenceMap* type_refs_;
-
-  const BindingAccessChecker* const access_checker_;
 
   // The name of the preference this ChromeSetting is managing.
   std::string pref_name_;

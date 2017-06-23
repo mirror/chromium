@@ -107,7 +107,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
     private ChromeActivity mActivity;
     private NewTabPageManager mManager;
-    private LogoDelegateImpl mLogoDelegate;
+    private LogoView.Delegate mLogoDelegate;
     private TileGroup.Delegate mTileGroupDelegate;
     private TileGroup mTileGroup;
     private UiConfig mUiConfig;
@@ -276,7 +276,6 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         initializeVoiceSearchButton();
         initializeLayoutChangeListeners();
         setSearchProviderHasLogo(searchProviderHasLogo);
-        mSearchProviderLogoView.showSearchProviderInitialView();
 
         mTileGroup.startObserving(getMaxTileRows(searchProviderHasLogo) * getMaxTileColumns());
 
@@ -561,16 +560,11 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     /**
      * Loads the search provider logo (e.g. Google doodle), if any.
      */
-    public void loadSearchProviderLogo() {
-        if (!mSearchProviderHasLogo) return;
-
-        mSearchProviderLogoView.showSearchProviderInitialView();
-
+    private void loadSearchProviderLogo() {
         mLogoDelegate.getSearchProviderLogo(new LogoObserver() {
             @Override
             public void onLogoAvailable(Logo logo, boolean fromCache) {
                 if (logo == null && fromCache) return;
-
                 mSearchProviderLogoView.setDelegate(mLogoDelegate);
                 mSearchProviderLogoView.updateLogo(logo);
                 mSnapshotTileGridChanged = true;

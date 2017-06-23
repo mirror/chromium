@@ -218,6 +218,10 @@ struct DefaultCommandLineSwitch {
 
 DefaultCommandLineSwitch g_default_switches[] = {
 #if defined(OS_ANDROID)
+#if !BUILDFLAG(IS_CAST_AUDIO_ONLY)
+    // Disables Chromecast-specific WiFi-related features on ATV for now.
+    {switches::kNoWifi, ""},
+#endif  // !BUILDFLAG(IS_CAST_AUDIO_ONLY)
     // TODO(714676): this should probably set the no restrictions autoplay
     // policy instead.
     {switches::kIgnoreAutoplayRestrictionsForTests, ""},
@@ -477,11 +481,13 @@ void CastBrowserMainParts::PreMainMessageLoopRun() {
   cast_browser_process_->SetBrowserContext(
       base::MakeUnique<CastBrowserContext>(url_request_context_factory_));
   cast_browser_process_->SetMetricsServiceClient(
-      base::MakeUnique<metrics::CastMetricsServiceClient>(
+      metrics::CastMetricsServiceClient::Create(
+          content::BrowserThread::GetBlockingPool(),
           cast_browser_process_->pref_service(),
           content::BrowserContext::GetDefaultStoragePartition(
-              cast_browser_process_->browser_context())
-              ->GetURLRequestContext()));
+              cast_browser_process_->browser_context())->
+                  GetURLRequestContext()));
+
   cast_browser_process_->SetRemoteDebuggingServer(
       base::MakeUnique<RemoteDebuggingServer>(
           cast_browser_process_->browser_client()

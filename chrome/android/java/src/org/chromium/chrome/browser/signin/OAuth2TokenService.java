@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.signin;
 import android.accounts.Account;
 import android.content.Context;
 import android.os.StrictMode;
-import android.support.annotation.MainThread;
 import android.util.Log;
 
 import org.chromium.base.ContextUtils;
@@ -130,7 +129,6 @@ public final class OAuth2TokenService
      * @param scope The scope to get an auth token for (without Android-style 'oauth2:' prefix).
      * @param nativeCallback The pointer to the native callback that should be run upon completion.
      */
-    @MainThread
     @CalledByNative
     public static void getOAuth2AuthToken(
             String username, String scope, final long nativeCallback) {
@@ -168,7 +166,6 @@ public final class OAuth2TokenService
      * @param scope The scope to get an auth token for (without Android-style 'oauth2:' prefix).
      * @param callback called on successful and unsuccessful fetching of auth token.
      */
-    @MainThread
     public static void getOAuth2AccessToken(Context context, Account account, String scope,
             AccountManagerHelper.GetAuthTokenCallback callback) {
         String oauth2Scope = OAUTH2_SCOPE_PREFIX + scope;

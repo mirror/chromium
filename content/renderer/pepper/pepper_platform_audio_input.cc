@@ -112,8 +112,6 @@ void PepperPlatformAudioInput::OnStreamCreated(
 
 void PepperPlatformAudioInput::OnError() {}
 
-void PepperPlatformAudioInput::OnMuted(bool is_muted) {}
-
 void PepperPlatformAudioInput::OnIPCClosed() { ipc_.reset(); }
 
 PepperPlatformAudioInput::~PepperPlatformAudioInput() {

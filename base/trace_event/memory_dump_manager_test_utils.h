@@ -12,9 +12,20 @@
 namespace base {
 namespace trace_event {
 
-void RequestGlobalDumpForInProcessTesting(const MemoryDumpRequestArgs& args) {
+// Short-circuit the RequestGlobalDump() calls to CreateProcessDump().
+// Rationale: only the in-process logic is required for unittests.
+void RequestGlobalDumpForInProcessTesting(
+    const MemoryDumpRequestArgs& args,
+    const GlobalMemoryDumpCallback& global_callback) {
+  // Turns a ProcessMemoryDumpCallback into a GlobalMemoryDumpCallback.
+  auto callback_adapter = [](const GlobalMemoryDumpCallback& global_callback,
+                             uint64_t dump_guid, bool success,
+                             const Optional<MemoryDumpCallbackResult>& result) {
+    if (!global_callback.is_null())
+      global_callback.Run(dump_guid, success);
+  };
   MemoryDumpManager::GetInstance()->CreateProcessDump(
-      args, ProcessMemoryDumpCallback());
+      args, Bind(callback_adapter, global_callback));
 };
 
 // Short circuits the RequestGlobalDumpFunction() to CreateProcessDump(),

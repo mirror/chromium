@@ -90,6 +90,7 @@
 #include "public/platform/WebString.h"
 #include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebSettings.h"
+#include "web/WebFrameWidgetImpl.h"
 
 namespace blink {
 
@@ -236,7 +237,8 @@ WebDevToolsAgentImpl* WebDevToolsAgentImpl::Create(
     WebDevToolsAgentImpl* agent =
         new WebDevToolsAgentImpl(frame, client, false);
     if (frame->FrameWidget())
-      agent->LayerTreeViewChanged(frame->FrameWidget()->GetLayerTreeView());
+      agent->LayerTreeViewChanged(
+          ToWebFrameWidgetImpl(frame->FrameWidget())->LayerTreeView());
     return agent;
   }
 

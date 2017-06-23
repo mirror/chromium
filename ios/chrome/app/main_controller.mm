@@ -1931,6 +1931,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   DCHECK(_localStatePrefObserverBridge);
   _settingsNavigationController = [SettingsNavigationController
       newSettingsMainControllerWithMainBrowserState:_mainBrowserState
+                                currentBrowserState:self.currentBrowserState
                                            delegate:self];
   [[self topPresentedViewController]
       presentViewController:_settingsNavigationController

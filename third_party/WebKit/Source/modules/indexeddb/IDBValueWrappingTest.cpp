@@ -5,7 +5,6 @@
 #include "modules/indexeddb/IDBValueWrapping.h"
 
 #include "bindings/core/v8/V8BindingForTesting.h"
-#include "core/fileapi/Blob.h"
 #include "modules/indexeddb/IDBValue.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"

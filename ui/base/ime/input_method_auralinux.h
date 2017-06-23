@@ -29,7 +29,7 @@ class UI_BASE_IME_EXPORT InputMethodAuraLinux
   // Overriden from InputMethod.
   bool OnUntranslatedIMEMessage(const base::NativeEvent& event,
                                 NativeEventResult* result) override;
-  ui::EventDispatchDetails DispatchKeyEvent(ui::KeyEvent* event) override;
+  void DispatchKeyEvent(ui::KeyEvent* event) override;
   void OnTextInputTypeChanged(const TextInputClient* client) override;
   void OnCaretBoundsChanged(const TextInputClient* client) override;
   void CancelComposition(const TextInputClient* client) override;
@@ -51,18 +51,14 @@ class UI_BASE_IME_EXPORT InputMethodAuraLinux
  private:
   bool HasInputMethodResult();
   bool NeedInsertChar() const;
-  ui::EventDispatchDetails SendFakeProcessKeyEvent(ui::KeyEvent* event) const
-      WARN_UNUSED_RESULT;
+  ui::EventDispatchDetails SendFakeProcessKeyEvent(ui::KeyEvent* event) const;
   void ConfirmCompositionText();
   void UpdateContextFocusState();
   void ResetContext();
 
   // Processes the key event after the event is processed by the system IME or
   // the extension.
-  ui::EventDispatchDetails ProcessKeyEventDone(ui::KeyEvent* event,
-                                               bool filtered,
-                                               bool is_handled)
-      WARN_UNUSED_RESULT;
+  void ProcessKeyEventDone(ui::KeyEvent* event, bool filtered, bool is_handled);
 
   // Callback function for IMEEngineHandlerInterface::ProcessKeyEvent().
   // It recovers the context when the event is being passed to the extension and

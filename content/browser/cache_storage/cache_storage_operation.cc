@@ -13,10 +13,10 @@ const int kNumSecondsForSlowOperation = 10;
 }
 
 CacheStorageOperation::CacheStorageOperation(
-    base::OnceClosure closure,
+    const base::Closure& closure,
     CacheStorageSchedulerClient client_type,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-    : closure_(std::move(closure)),
+    : closure_(closure),
       creation_ticks_(base::TimeTicks::Now()),
       client_type_(client_type),
       task_runner_(std::move(task_runner)),
@@ -35,11 +35,10 @@ void CacheStorageOperation::Run() {
   start_ticks_ = base::TimeTicks::Now();
 
   task_runner_->PostDelayedTask(
-      FROM_HERE,
-      base::BindOnce(&CacheStorageOperation::NotifyOperationSlow,
-                     weak_ptr_factory_.GetWeakPtr()),
+      FROM_HERE, base::Bind(&CacheStorageOperation::NotifyOperationSlow,
+                            weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromSeconds(kNumSecondsForSlowOperation));
-  std::move(closure_).Run();
+  closure_.Run();
 }
 
 void CacheStorageOperation::NotifyOperationSlow() {

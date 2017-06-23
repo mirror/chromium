@@ -10,6 +10,7 @@
 #include <map>
 #include <memory>
 
+#include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/public/interfaces/ime/ime.mojom.h"
 
 namespace ui {
@@ -22,7 +23,12 @@ class TestIMEDriver : public ui::mojom::IMEDriver {
 
  private:
   // ui::mojom::IMEDriver:
-  void StartSession(ui::mojom::StartSessionDetailsPtr details) override;
+  void StartSession(int32_t session_id,
+                    ui::mojom::StartSessionDetailsPtr details) override;
+  void CancelSession(int32_t session_id) override;
+
+  std::map<int32_t, std::unique_ptr<mojo::Binding<mojom::InputMethod>>>
+      input_method_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(TestIMEDriver);
 };

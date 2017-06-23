@@ -66,7 +66,6 @@ class ChromeRenderFrameObserver
       chrome::mojom::ThumbnailCapturerRequest request);
 
   // IPC handlers
-  void OnGetWebApplicationInfo();
   void OnSetIsPrerendering(prerender::PrerenderMode mode);
   void OnRequestThumbnailForContextNode(
       int thumbnail_min_area_pixels,

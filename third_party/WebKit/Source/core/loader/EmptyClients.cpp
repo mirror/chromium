@@ -117,7 +117,7 @@ DateTimeChooser* EmptyChromeClient::OpenDateTimeChooser(
 
 void EmptyChromeClient::OpenTextDataListChooser(HTMLInputElement&) {}
 
-void EmptyChromeClient::OpenFileChooser(LocalFrame*, RefPtr<FileChooser>) {}
+void EmptyChromeClient::OpenFileChooser(LocalFrame*, PassRefPtr<FileChooser>) {}
 
 void EmptyChromeClient::AttachRootGraphicsLayer(GraphicsLayer* layer,
                                                 LocalFrame* local_root) {
@@ -144,7 +144,6 @@ NavigationPolicy EmptyLocalFrameClient::DecidePolicyForNavigation(
     NavigationPolicy,
     bool,
     bool,
-    WebTriggeringEventInfo,
     HTMLFormElement*,
     ContentSecurityPolicyDisposition) {
   return kNavigationPolicyIgnore;
@@ -217,10 +216,5 @@ EmptyLocalFrameClient::CreateApplicationCacheHost(
 }
 
 EmptyRemoteFrameClient::EmptyRemoteFrameClient() = default;
-
-bool EmptyContextMenuClient::ShowContextMenu(const ContextMenu*,
-                                             WebMenuSourceType source_type) {
-  return false;
-}
 
 }  // namespace blink

@@ -16,8 +16,8 @@ namespace android_webview {
 namespace {
 
 // Posts |task| to the thread that the global CookieStore lives on.
-void PostTaskToCookieStoreTaskRunner(base::OnceClosure task) {
-  GetCookieStoreTaskRunner()->PostTask(FROM_HERE, std::move(task));
+void PostTaskToCookieStoreTaskRunner(const base::Closure& task) {
+  GetCookieStoreTaskRunner()->PostTask(FROM_HERE, task);
 }
 
 // Wraps a subscription to cookie change notifications for the global
@@ -104,9 +104,9 @@ void SetCookieWithOptionsAsyncOnCookieThread(
     const GURL& url,
     const std::string& cookie_line,
     const net::CookieOptions& options,
-    net::CookieStore::SetCookiesCallback callback) {
+    const net::CookieStore::SetCookiesCallback& callback) {
   GetCookieStore()->SetCookieWithOptionsAsync(url, cookie_line, options,
-                                              std::move(callback));
+                                              callback);
 }
 
 void SetCookieWithDetailsAsyncOnCookieThread(
@@ -122,79 +122,67 @@ void SetCookieWithDetailsAsyncOnCookieThread(
     bool http_only,
     net::CookieSameSite same_site,
     net::CookiePriority priority,
-    net::CookieStore::SetCookiesCallback callback) {
+    const net::CookieStore::SetCookiesCallback& callback) {
   GetCookieStore()->SetCookieWithDetailsAsync(
       url, name, value, domain, path, creation_time, expiration_time,
-      last_access_time, secure, http_only, same_site, priority,
-      std::move(callback));
-}
-
-void SetCanonicalCookieAsyncOnCookieThread(
-    std::unique_ptr<net::CanonicalCookie> cookie,
-    bool secure_source,
-    bool modify_http_only,
-    net::CookieStore::SetCookiesCallback callback) {
-  GetCookieStore()->SetCanonicalCookieAsync(
-      std::move(cookie), secure_source, modify_http_only, std::move(callback));
+      last_access_time, secure, http_only, same_site, priority, callback);
 }
 
 void GetCookiesWithOptionsAsyncOnCookieThread(
     const GURL& url,
     const net::CookieOptions& options,
-    net::CookieStore::GetCookiesCallback callback) {
-  GetCookieStore()->GetCookiesWithOptionsAsync(url, options,
-                                               std::move(callback));
+    const net::CookieStore::GetCookiesCallback& callback) {
+  GetCookieStore()->GetCookiesWithOptionsAsync(url, options, callback);
 }
 
 void GetCookieListWithOptionsAsyncOnCookieThread(
     const GURL& url,
     const net::CookieOptions& options,
-    net::CookieStore::GetCookieListCallback callback) {
-  GetCookieStore()->GetCookieListWithOptionsAsync(url, options,
-                                                  std::move(callback));
+    const net::CookieStore::GetCookieListCallback& callback) {
+  GetCookieStore()->GetCookieListWithOptionsAsync(url, options, callback);
 }
 
 void GetAllCookiesAsyncOnCookieThread(
-    net::CookieStore::GetCookieListCallback callback) {
-  GetCookieStore()->GetAllCookiesAsync(std::move(callback));
+    const net::CookieStore::GetCookieListCallback& callback) {
+  GetCookieStore()->GetAllCookiesAsync(callback);
 }
 
 void DeleteCookieAsyncOnCookieThread(const GURL& url,
                                      const std::string& cookie_name,
-                                     base::OnceClosure callback) {
-  GetCookieStore()->DeleteCookieAsync(url, cookie_name, std::move(callback));
+                                     const base::Closure& callback) {
+  GetCookieStore()->DeleteCookieAsync(url, cookie_name, callback);
 }
 
 void DeleteCanonicalCookieAsyncOnCookieThread(
     const net::CanonicalCookie& cookie,
-    net::CookieStore::DeleteCallback callback) {
-  GetCookieStore()->DeleteCanonicalCookieAsync(cookie, std::move(callback));
+    const net::CookieStore::DeleteCallback& callback) {
+  GetCookieStore()->DeleteCanonicalCookieAsync(cookie, callback);
 }
 
 void DeleteAllCreatedBetweenAsyncOnCookieThread(
     const base::Time& delete_begin,
     const base::Time& delete_end,
-    net::CookieStore::DeleteCallback callback) {
+    const net::CookieStore::DeleteCallback& callback) {
   GetCookieStore()->DeleteAllCreatedBetweenAsync(delete_begin, delete_end,
-                                                 std::move(callback));
+                                                 callback);
 }
 
 void DeleteAllCreatedBetweenWithPredicateAsyncOnCookieThread(
     const base::Time& delete_begin,
     const base::Time& delete_end,
     const net::CookieStore::CookiePredicate& predicate,
-    net::CookieStore::DeleteCallback callback) {
+    const net::CookieStore::DeleteCallback& callback) {
   GetCookieStore()->DeleteAllCreatedBetweenWithPredicateAsync(
-      delete_begin, delete_end, predicate, std::move(callback));
+      delete_begin, delete_end, predicate, callback);
 }
 
 void DeleteSessionCookiesAsyncOnCookieThread(
-    net::CookieStore::DeleteCallback callback) {
-  GetCookieStore()->DeleteSessionCookiesAsync(std::move(callback));
+    const net::CookieStore::DeleteCallback& callback) {
+  GetCookieStore()->DeleteSessionCookiesAsync(callback);
 }
 
-void FlushStoreOnCookieThread(base::OnceClosure callback) {
-  GetCookieStore()->FlushStore(std::move(callback));
+void FlushStoreOnCookieThread(const base::Closure& callback) {
+  GetCookieStore()->FlushStore(callback);
 }
 
 void SetForceKeepSessionStateOnCookieThread() {
@@ -213,11 +201,11 @@ void AwCookieStoreWrapper::SetCookieWithOptionsAsync(
     const GURL& url,
     const std::string& cookie_line,
     const net::CookieOptions& options,
-    net::CookieStore::SetCookiesCallback callback) {
+    const net::CookieStore::SetCookiesCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  PostTaskToCookieStoreTaskRunner(base::BindOnce(
-      &SetCookieWithOptionsAsyncOnCookieThread, url, cookie_line, options,
-      CreateWrappedCallback<bool>(std::move(callback))));
+  PostTaskToCookieStoreTaskRunner(
+      base::Bind(&SetCookieWithOptionsAsyncOnCookieThread, url, cookie_line,
+                 options, CreateWrappedCallback<bool>(callback)));
 }
 
 void AwCookieStoreWrapper::SetCookieWithDetailsAsync(
@@ -233,103 +221,94 @@ void AwCookieStoreWrapper::SetCookieWithDetailsAsync(
     bool http_only,
     net::CookieSameSite same_site,
     net::CookiePriority priority,
-    SetCookiesCallback callback) {
+    const SetCookiesCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  PostTaskToCookieStoreTaskRunner(base::BindOnce(
-      &SetCookieWithDetailsAsyncOnCookieThread, url, name, value, domain, path,
-      creation_time, expiration_time, last_access_time, secure, http_only,
-      same_site, priority, CreateWrappedCallback<bool>(std::move(callback))));
-}
-
-void AwCookieStoreWrapper::SetCanonicalCookieAsync(
-    std::unique_ptr<net::CanonicalCookie> cookie,
-    bool secure_source,
-    bool modify_http_only,
-    SetCookiesCallback callback) {
-  DCHECK(client_task_runner_->RunsTasksOnCurrentThread());
-  PostTaskToCookieStoreTaskRunner(base::BindOnce(
-      &SetCanonicalCookieAsyncOnCookieThread, std::move(cookie), secure_source,
-      modify_http_only, CreateWrappedCallback<bool>(std::move(callback))));
+  PostTaskToCookieStoreTaskRunner(
+      base::Bind(&SetCookieWithDetailsAsyncOnCookieThread, url, name, value,
+                 domain, path, creation_time, expiration_time, last_access_time,
+                 secure, http_only, same_site, priority,
+                 CreateWrappedCallback<bool>(callback)));
 }
 
 void AwCookieStoreWrapper::GetCookiesWithOptionsAsync(
     const GURL& url,
     const net::CookieOptions& options,
-    GetCookiesCallback callback) {
+    const GetCookiesCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  PostTaskToCookieStoreTaskRunner(base::BindOnce(
-      &GetCookiesWithOptionsAsyncOnCookieThread, url, options,
-      CreateWrappedCallback<const std::string&>(std::move(callback))));
+  PostTaskToCookieStoreTaskRunner(
+      base::Bind(&GetCookiesWithOptionsAsyncOnCookieThread, url, options,
+                 CreateWrappedCallback<const std::string&>(callback)));
 }
 
 void AwCookieStoreWrapper::GetCookieListWithOptionsAsync(
     const GURL& url,
     const net::CookieOptions& options,
-    GetCookieListCallback callback) {
+    const GetCookieListCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  PostTaskToCookieStoreTaskRunner(base::BindOnce(
-      &GetCookieListWithOptionsAsyncOnCookieThread, url, options,
-      CreateWrappedCallback<const net::CookieList&>(std::move(callback))));
+  PostTaskToCookieStoreTaskRunner(
+      base::Bind(&GetCookieListWithOptionsAsyncOnCookieThread, url, options,
+                 CreateWrappedCallback<const net::CookieList&>(callback)));
 }
 
-void AwCookieStoreWrapper::GetAllCookiesAsync(GetCookieListCallback callback) {
+void AwCookieStoreWrapper::GetAllCookiesAsync(
+    const GetCookieListCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  PostTaskToCookieStoreTaskRunner(base::BindOnce(
-      &GetAllCookiesAsyncOnCookieThread,
-      CreateWrappedCallback<const net::CookieList&>(std::move(callback))));
+  PostTaskToCookieStoreTaskRunner(
+      base::Bind(&GetAllCookiesAsyncOnCookieThread,
+                 CreateWrappedCallback<const net::CookieList&>(callback)));
 }
 
 void AwCookieStoreWrapper::DeleteCookieAsync(const GURL& url,
                                              const std::string& cookie_name,
-                                             base::OnceClosure callback) {
+                                             const base::Closure& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
   PostTaskToCookieStoreTaskRunner(
-      base::BindOnce(&DeleteCookieAsyncOnCookieThread, url, cookie_name,
-                     CreateWrappedClosureCallback(std::move(callback))));
+      base::Bind(&DeleteCookieAsyncOnCookieThread, url, cookie_name,
+                 CreateWrappedClosureCallback(callback)));
 }
 
 void AwCookieStoreWrapper::DeleteCanonicalCookieAsync(
     const net::CanonicalCookie& cookie,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
   PostTaskToCookieStoreTaskRunner(
-      base::BindOnce(&DeleteCanonicalCookieAsyncOnCookieThread, cookie,
-                     CreateWrappedCallback<int>(std::move(callback))));
+      base::Bind(&DeleteCanonicalCookieAsyncOnCookieThread, cookie,
+                 CreateWrappedCallback<int>(callback)));
 }
 
 void AwCookieStoreWrapper::DeleteAllCreatedBetweenAsync(
     const base::Time& delete_begin,
     const base::Time& delete_end,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  PostTaskToCookieStoreTaskRunner(base::BindOnce(
-      &DeleteAllCreatedBetweenAsyncOnCookieThread, delete_begin, delete_end,
-      CreateWrappedCallback<int>(std::move(callback))));
+  PostTaskToCookieStoreTaskRunner(
+      base::Bind(&DeleteAllCreatedBetweenAsyncOnCookieThread, delete_begin,
+                 delete_end, CreateWrappedCallback<int>(callback)));
 }
 
 void AwCookieStoreWrapper::DeleteAllCreatedBetweenWithPredicateAsync(
     const base::Time& delete_begin,
     const base::Time& delete_end,
     const CookiePredicate& predicate,
-    DeleteCallback callback) {
+    const DeleteCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  PostTaskToCookieStoreTaskRunner(base::BindOnce(
+  PostTaskToCookieStoreTaskRunner(base::Bind(
       &DeleteAllCreatedBetweenWithPredicateAsyncOnCookieThread, delete_begin,
-      delete_end, predicate, CreateWrappedCallback<int>(std::move(callback))));
+      delete_end, predicate, CreateWrappedCallback<int>(callback)));
 }
 
-void AwCookieStoreWrapper::DeleteSessionCookiesAsync(DeleteCallback callback) {
+void AwCookieStoreWrapper::DeleteSessionCookiesAsync(
+    const DeleteCallback& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
   PostTaskToCookieStoreTaskRunner(
-      base::BindOnce(&DeleteSessionCookiesAsyncOnCookieThread,
-                     CreateWrappedCallback<int>(std::move(callback))));
+      base::Bind(&DeleteSessionCookiesAsyncOnCookieThread,
+                 CreateWrappedCallback<int>(callback)));
 }
 
-void AwCookieStoreWrapper::FlushStore(base::OnceClosure callback) {
+void AwCookieStoreWrapper::FlushStore(const base::Closure& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  PostTaskToCookieStoreTaskRunner(
-      base::BindOnce(&FlushStoreOnCookieThread,
-                     CreateWrappedClosureCallback(std::move(callback))));
+  PostTaskToCookieStoreTaskRunner(base::Bind(
+      &FlushStoreOnCookieThread, CreateWrappedClosureCallback(callback)));
 }
 
 void AwCookieStoreWrapper::SetForceKeepSessionState() {
@@ -359,20 +338,19 @@ bool AwCookieStoreWrapper::IsEphemeral() {
   return GetCookieStore()->IsEphemeral();
 }
 
-base::OnceClosure AwCookieStoreWrapper::CreateWrappedClosureCallback(
-    base::OnceClosure callback) {
+base::Closure AwCookieStoreWrapper::CreateWrappedClosureCallback(
+    const base::Closure& callback) {
   if (callback.is_null())
     return callback;
-  return base::BindOnce(
-      base::IgnoreResult(&base::TaskRunner::PostTask), client_task_runner_,
-      FROM_HERE,
-      base::BindOnce(&AwCookieStoreWrapper::RunClosureCallback,
-                     weak_factory_.GetWeakPtr(), std::move(callback)));
+  return base::Bind(base::IgnoreResult(&base::TaskRunner::PostTask),
+                    client_task_runner_, FROM_HERE,
+                    base::Bind(&AwCookieStoreWrapper::RunClosureCallback,
+                               weak_factory_.GetWeakPtr(), callback));
 }
 
-void AwCookieStoreWrapper::RunClosureCallback(base::OnceClosure callback) {
+void AwCookieStoreWrapper::RunClosureCallback(const base::Closure& callback) {
   DCHECK(client_task_runner_->RunsTasksInCurrentSequence());
-  std::move(callback).Run();
+  callback.Run();
 }
 
 }  // namespace android_webview

@@ -114,7 +114,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
       NavigationPolicy,
       bool should_replace_current_entry,
       bool is_client_redirect,
-      WebTriggeringEventInfo,
       HTMLFormElement*,
       ContentSecurityPolicyDisposition should_bypass_main_world_csp) override;
   void DispatchWillSendSubmitEvent(HTMLFormElement*) override;
@@ -169,6 +168,10 @@ class LocalFrameClientImpl final : public LocalFrameClient {
       WebMediaPlayerClient*) override;
   WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
       HTMLMediaElement&) override;
+  ObjectContentType GetObjectContentType(
+      const KURL&,
+      const WTF::String& mime_type,
+      bool should_prefer_plug_ins_for_images) override;
   void DidChangeScrollOffset() override;
   void DidUpdateCurrentHistoryItem() override;
 

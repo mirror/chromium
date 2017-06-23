@@ -633,9 +633,7 @@ public class AccountManagementFragment extends PreferenceFragment
             Context context, String accountId, String fullName, Bitmap bitmap) {
         sChildAccountId = null;
         sCachedBadgedPicture = null;
-        Drawable userPicture = bitmap != null ? makeRoundUserPicture(context, bitmap)
-                                              : getAvatarPlaceholder(context);
-        sToNamePicture.put(accountId, new Pair<>(fullName, userPicture));
+        sToNamePicture.put(accountId, new Pair<>(fullName, makeRoundUserPicture(context, bitmap)));
     }
 
     /**

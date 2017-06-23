@@ -214,7 +214,6 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       needs_scrollbars_update_(false),
       suppress_adjust_view_size_(false),
       allows_layout_invalidation_after_layout_clean_(true),
-      forcing_layout_parent_view_(false),
       main_thread_scrolling_reasons_(0) {
   Init();
 }
@@ -896,7 +895,6 @@ void LocalFrameView::CountObjectsNeedingLayout(unsigned& needs_layout_objects,
 }
 
 inline void LocalFrameView::ForceLayoutParentViewIfNeeded() {
-  AutoReset<bool> prevent_update_layout(&forcing_layout_parent_view_, true);
   LayoutEmbeddedContentItem owner_layout_item = frame_->OwnerLayoutItem();
   if (owner_layout_item.IsNull() || !owner_layout_item.GetFrame())
     return;
@@ -1023,7 +1021,7 @@ std::unique_ptr<TracedValue> LocalFrameView::AnalyzerCounters() {
 #define PERFORM_LAYOUT_TRACE_CATEGORIES \
   "blink,benchmark,rail," TRACE_DISABLED_BY_DEFAULT("blink.debug.layout")
 
-bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
+void LocalFrameView::PerformLayout(bool in_subtree_layout) {
   DCHECK(in_subtree_layout || layout_subtree_root_list_.IsEmpty());
 
   int contents_height_before_layout =
@@ -1045,13 +1043,6 @@ bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
     ScheduleOrthogonalWritingModeRootsForLayout();
   }
 
-  // ForceLayoutParentViewIfNeeded can cause this view to become detached.  If
-  // that happens, abandon layout.
-  bool was_attached = is_attached_;
-  ForceLayoutParentViewIfNeeded();
-  if (was_attached && !is_attached_)
-    return false;
-
   DCHECK(!IsInPerformLayout());
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPerformLayout);
 
@@ -1060,28 +1051,38 @@ bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
   // functions so that a single human could understand what layout() is actually
   // doing.
 
-  if (in_subtree_layout) {
-    if (analyzer_) {
-      analyzer_->Increment(LayoutAnalyzer::kPerformLayoutRootLayoutObjects,
-                           layout_subtree_root_list_.size());
-    }
-    for (auto& root : layout_subtree_root_list_.Ordered()) {
-      if (!root->NeedsLayout())
-        continue;
-      LayoutFromRootObject(*root);
+  // FIXME: ForceLayoutParentViewIfNeeded can cause this document's lifecycle
+  // to change, which should not happen.
+  ForceLayoutParentViewIfNeeded();
+  CHECK(IsInPerformLayout() ||
+        Lifecycle().GetState() >= DocumentLifecycle::kLayoutClean);
 
-      // We need to ensure that we mark up all layoutObjects up to the
-      // LayoutView for paint invalidation. This simplifies our code as we
-      // just always do a full tree walk.
-      if (LayoutItem container = LayoutItem(root->Container()))
-        container.SetMayNeedPaintInvalidation();
+  if (IsInPerformLayout()) {
+    if (in_subtree_layout) {
+      if (analyzer_) {
+        analyzer_->Increment(LayoutAnalyzer::kPerformLayoutRootLayoutObjects,
+                             layout_subtree_root_list_.size());
+      }
+      for (auto& root : layout_subtree_root_list_.Ordered()) {
+        if (!root->NeedsLayout())
+          continue;
+        LayoutFromRootObject(*root);
+
+        // We need to ensure that we mark up all layoutObjects up to the
+        // LayoutView for paint invalidation. This simplifies our code as we
+        // just always do a full tree walk.
+        if (LayoutItem container = LayoutItem(root->Container()))
+          container.SetMayNeedPaintInvalidation();
+      }
+      layout_subtree_root_list_.Clear();
+    } else {
+      if (HasOrthogonalWritingModeRoots() &&
+          !RuntimeEnabledFeatures::LayoutNGEnabled())
+        LayoutOrthogonalWritingModeRoots();
+      GetLayoutView()->UpdateLayout();
     }
-    layout_subtree_root_list_.Clear();
   } else {
-    if (HasOrthogonalWritingModeRoots() &&
-        !RuntimeEnabledFeatures::LayoutNGEnabled())
-      LayoutOrthogonalWritingModeRoots();
-    GetLayoutView()->UpdateLayout();
+    DCHECK(!NeedsLayout());
   }
 
   frame_->GetDocument()->Fetcher()->UpdateAllImageResourcePriorities();
@@ -1095,7 +1096,6 @@ bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
       .MarkNextPaintAsMeaningfulIfNeeded(
           layout_object_counter_, contents_height_before_layout,
           GetLayoutViewItem().DocumentRect().Height(), VisibleHeight());
-  return true;
 }
 
 void LocalFrameView::ScheduleOrPerformPostLayoutTasks() {
@@ -1130,12 +1130,8 @@ void LocalFrameView::UpdateLayout() {
 
   ScriptForbiddenScope forbid_script;
 
-  // forcing_layout_parent_view_ means that we got here recursively via a call
-  // to ForceLayoutParentViewIfNeeded.  In that case, we don't do anything
-  // here, since the original call to UpdateLayout will do its work.  This is
-  // not just an optimization: SVG document size negotiation relies on this.
   if (IsInPerformLayout() || ShouldThrottleRendering() ||
-      forcing_layout_parent_view_ || !frame_->GetDocument()->IsActive())
+      !frame_->GetDocument()->IsActive())
     return;
 
   TRACE_EVENT0("blink,benchmark", "LocalFrameView::layout");
@@ -1148,6 +1144,8 @@ void LocalFrameView::UpdateLayout() {
     auto_size_info_->AutoSizeIfNeeded();
 
   has_pending_layout_ = false;
+  DocumentLifecycle::Scope lifecycle_scope(Lifecycle(),
+                                           DocumentLifecycle::kLayoutClean);
 
   Document* document = frame_->GetDocument();
   TRACE_EVENT_BEGIN1("devtools.timeline", "Layout", "beginData",
@@ -1265,11 +1263,7 @@ void LocalFrameView::UpdateLayout() {
 
     IntSize old_size(Size());
 
-    if (!PerformLayout(in_subtree_layout)) {
-      TRACE_EVENT_END0("devtools.timeline", "Layout");
-      return;
-    }
-
+    PerformLayout(in_subtree_layout);
     UpdateScrollbars();
     UpdateParentScrollableAreaSet();
 
@@ -1290,9 +1284,6 @@ void LocalFrameView::UpdateLayout() {
     DCHECK(layout_subtree_root_list_.IsEmpty());
   }  // Reset m_layoutSchedulingEnabled to its previous value.
   CheckDoesNotNeedLayout();
-
-  DocumentLifecycle::Scope lifecycle_scope(Lifecycle(),
-                                           DocumentLifecycle::kLayoutClean);
 
   frame_timing_requests_dirty_ = true;
 
@@ -1781,8 +1772,7 @@ bool LocalFrameView::InvalidateViewportConstrainedObjects() {
        *viewport_constrained_objects_) {
     LayoutObject* layout_object = viewport_constrained_object;
     LayoutItem layout_item = LayoutItem(layout_object);
-    DCHECK(layout_item.Style()->HasViewportConstrainedPosition() ||
-           layout_item.Style()->HasStickyConstrainedPosition());
+    DCHECK(layout_item.Style()->HasViewportConstrainedPosition());
     DCHECK(layout_item.HasLayer());
     PaintLayer* layer = LayoutBoxModel(layout_item).Layer();
 
@@ -3803,10 +3793,8 @@ void LocalFrameView::SetTracksPaintInvalidations(
           paint_controller_ = PaintController::Create();
         paint_controller_->SetTracksRasterInvalidations(
             track_paint_invalidations);
-        if (paint_artifact_compositor_) {
-          paint_artifact_compositor_->SetTracksRasterInvalidations(
-              track_paint_invalidations);
-        }
+        if (paint_artifact_compositor_)
+          paint_artifact_compositor_->ResetTrackedRasterInvalidations();
       } else {
         layout_view.Compositor()->SetTracksRasterInvalidations(
             track_paint_invalidations);
@@ -4718,8 +4706,6 @@ LayoutRect LocalFrameView::ScrollIntoView(const LayoutRect& rect_in_content,
 
   // Scrolling the LocalFrameView cannot change the input rect's location
   // relative to the document.
-  // TODO(szager): PaintLayerScrollableArea::ScrollIntoView clips the return
-  // value to the visible content rect, but this does not.
   return rect_in_content;
 }
 

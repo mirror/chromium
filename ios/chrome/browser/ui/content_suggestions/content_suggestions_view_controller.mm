@@ -203,11 +203,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
       [self.suggestionCommandHandler openMostVisitedItem:item
                                                  atIndex:indexPath.item];
       break;
-    case ContentSuggestionTypePromo:
-      [self unfocusOmnibox];
-      [self dismissEntryAtIndexPath:indexPath];
-      [self.suggestionCommandHandler handlePromoTapped];
-      [self.collectionViewLayout invalidateLayout];
     case ContentSuggestionTypeEmpty:
       break;
   }
@@ -220,13 +215,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
     sizeForItemAtIndexPath:(NSIndexPath*)indexPath {
   if ([self.collectionUpdater isMostVisitedSection:indexPath.section]) {
     return [ContentSuggestionsMostVisitedCell defaultSize];
-  } else if ([self.collectionUpdater isHeaderSection:indexPath.section]) {
-    CGFloat height =
-        [self collectionView:collectionView cellHeightAtIndexPath:indexPath];
-    CGFloat width = collectionView.frame.size.width -
-                    2 * content_suggestions::centeredTilesMarginForWidth(
-                            collectionView.frame.size.width);
-    return CGSizeMake(width, height);
   }
   return [super collectionView:collectionView
                         layout:collectionViewLayout
@@ -236,17 +224,14 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 - (UIEdgeInsets)collectionView:(UICollectionView*)collectionView
                         layout:(UICollectionViewLayout*)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section {
-  UIEdgeInsets parentInset = [super collectionView:collectionView
-                                            layout:collectionViewLayout
-                            insetForSectionAtIndex:section];
-  if ([self.collectionUpdater isMostVisitedSection:section] ||
-      [self.collectionUpdater isHeaderSection:section]) {
+  if ([self.collectionUpdater isMostVisitedSection:section]) {
     CGFloat margin = content_suggestions::centeredTilesMarginForWidth(
         collectionView.frame.size.width - 2 * collectionView.contentInset.left);
-    parentInset.left = margin;
-    parentInset.right = margin;
+    return UIEdgeInsetsMake(0, margin, 0, margin);
   }
-  return parentInset;
+  return [super collectionView:collectionView
+                        layout:collectionViewLayout
+        insetForSectionAtIndex:section];
 }
 
 - (CGFloat)collectionView:(UICollectionView*)collectionView
@@ -270,7 +255,8 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   ContentSuggestionType itemType = [self.collectionUpdater
       contentSuggestionTypeForItem:[self.collectionViewModel
                                        itemAtIndexPath:indexPath]];
-  if ([self.collectionUpdater isMostVisitedSection:indexPath.section] ||
+  if ([self.collectionUpdater
+          shouldUseCustomStyleForSection:indexPath.section] ||
       itemType == ContentSuggestionTypeEmpty) {
     return [UIColor clearColor];
   }
@@ -284,19 +270,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
     return [UIColor clearColor];
   }
   return [UIColor whiteColor];
-}
-
-- (CGSize)collectionView:(UICollectionView*)collectionView
-                             layout:
-                                 (UICollectionViewLayout*)collectionViewLayout
-    referenceSizeForHeaderInSection:(NSInteger)section {
-  // TODO(crbug.com/635604): Once the headers support dynamic sizing, use it
-  // instead of this.
-  if ([self.collectionUpdater isHeaderSection:section])
-    return CGSizeMake(0, 270);
-  return [super collectionView:collectionView
-                               layout:collectionViewLayout
-      referenceSizeForHeaderInSection:section];
 }
 
 - (BOOL)collectionView:(nonnull UICollectionView*)collectionView
@@ -338,7 +311,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   CollectionViewItem* item =
       [self.collectionViewModel itemAtIndexPath:indexPath];
   return ![self.collectionUpdater isMostVisitedSection:indexPath.section] &&
-         ![self.collectionUpdater isHeaderSection:indexPath.section] &&
          [self.collectionUpdater contentSuggestionTypeForItem:item] !=
              ContentSuggestionTypeEmpty;
 }
@@ -399,8 +371,7 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 
   NSIndexPath* emptyItem =
       [self.collectionUpdater addEmptyItemForSection:section];
-  if (emptyItem)
-    [self.collectionView insertItemsAtIndexPaths:@[ emptyItem ]];
+  [self.collectionView insertItemsAtIndexPaths:@[ emptyItem ]];
 }
 
 // Tells WebToolbarController to resign focus to the omnibox.

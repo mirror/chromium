@@ -1,24 +1,31 @@
 'use strict';
 promise_test(() => {
-  return getHealthThermometerService()
-    .then(({service}) => Promise.all([
+  return setBluetoothFakeAdapter('HeartRateAdapter')
+    .then(() => requestDeviceWithKeyDown({
+      filters: [{services: ['heart_rate']}]}))
+    .then(device => device.gatt.connect())
+    .then(gattServer => gattServer.getPrimaryService('heart_rate'))
+    .then(service => Promise.all([
       service.CALLS([
-        getCharacteristic('measurement_interval')|
+        getCharacteristic('body_sensor_location')|
         getCharacteristics()|
-        getCharacteristics('measurement_interval')[UUID]]),
+        getCharacteristics('body_sensor_location')[UUID]]),
       service.PREVIOUS_CALL]))
-    .then(([characteristics_first_call, characteristics_second_call]) => {
+    .then(characteristics_arrays => {
       // Convert to arrays if necessary.
-      characteristics_first_call = [].concat(characteristics_first_call);
-      characteristics_second_call = [].concat(characteristics_second_call);
+      for (let i = 0; i < characteristics_arrays.length; i++) {
+        characteristics_arrays[i] = [].concat(characteristics_arrays[i]);
+      }
 
-      let first_call_set = new Set(characteristics_first_call);
-      assert_equals(characteristics_first_call.length, first_call_set.size);
-      let second_call_set = new Set(characteristics_second_call);
-      assert_equals(characteristics_second_call.length, second_call_set.size);
+      for (let i = 1; i < characteristics_arrays.length; i++) {
+        assert_equals(characteristics_arrays[0].length,
+                      characteristics_arrays[i].length);
+      }
 
-      characteristics_first_call.forEach(characteristic => {
-        assert_true(second_call_set.has(characteristic));
-      });
+      let base_set = new Set(characteristics_arrays[0]);
+      for (let characteristics of characteristics_arrays) {
+        characteristics.forEach(
+          characteristic => assert_true(base_set.has(characteristic)));
+      }
     });
 }, 'Calls to FUNCTION_NAME should return the same object.');

@@ -21,6 +21,8 @@ class TaskRunner;
 class Version;
 }
 
+class Browser;
+
 namespace safe_browsing {
 
 // A special exit code identifying a failure to run the reporter.
@@ -106,7 +108,8 @@ class SwReporterTestingDelegate {
 
   // Invoked by tests in place of the actual prompting logic.
   // See MaybeFetchSRT().
-  virtual void TriggerPrompt() = 0;
+  virtual void TriggerPrompt(Browser* browser,
+                             const std::string& reporter_version) = 0;
 
   // Invoked by tests to override the current time.
   // See Now() in reporter_runner_win.cc.

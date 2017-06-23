@@ -213,9 +213,6 @@ const base::Feature kBackgroundVideoTrackOptimization{
 const base::Feature kBackgroundVideoPauseOptimization{
     "BackgroundVideoPauseOptimization", base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kComplexityBasedVideoBuffering{
-    "ComplexityBasedVideoBuffering", base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Make MSE garbage collection algorithm more aggressive when we are under
 // moderate or critical memory pressure. This will relieve memory pressure by
 // releasing stale data from MSE buffers.
@@ -290,6 +287,15 @@ const base::Feature kD3D11VideoDecoding{"D3D11VideoDecoding",
 // used by GL.
 const base::Feature kDelayCopyNV12Textures{"DelayCopyNV12Textures",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables code paths accessing controls exposed by video capture devices in the
+// context of capturing still images. Note that several webcam drivers have
+// shown issues when accessing these controls, resulting in symptoms such as
+// video capture outputting blank images or images with incorrect settings for
+// things like zoom, white balance, contrast, focus, etc, see
+// https://crbug.com/722038.
+const base::Feature kImageCaptureControls{"ImageCaptureControls",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables H264 HW encode acceleration using Media Foundation for Windows.
 const base::Feature kMediaFoundationH264Encoding{

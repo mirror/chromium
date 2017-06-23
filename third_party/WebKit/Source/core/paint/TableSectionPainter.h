@@ -12,6 +12,7 @@
 namespace blink {
 
 class CellSpan;
+class CollapsedBorderValue;
 class LayoutPoint;
 class LayoutTableCell;
 class LayoutTableSection;
@@ -25,7 +26,9 @@ class TableSectionPainter {
       : layout_table_section_(layout_table_section) {}
 
   void Paint(const PaintInfo&, const LayoutPoint&);
-  void PaintCollapsedBorders(const PaintInfo&, const LayoutPoint&);
+  void PaintCollapsedBorders(const PaintInfo&,
+                             const LayoutPoint&,
+                             const CollapsedBorderValue&);
 
  private:
   void PaintObject(const PaintInfo&, const LayoutPoint&);
@@ -43,9 +46,12 @@ class TableSectionPainter {
   void PaintRepeatingHeaderGroup(
       const PaintInfo&,
       const LayoutPoint& paint_offset,
+      const CollapsedBorderValue& current_border_value,
       ItemToPaint);
   void PaintSection(const PaintInfo&, const LayoutPoint&);
-  void PaintCollapsedSectionBorders(const PaintInfo&, const LayoutPoint&);
+  void PaintCollapsedSectionBorders(const PaintInfo&,
+                                    const LayoutPoint&,
+                                    const CollapsedBorderValue&);
 
   const LayoutTableSection& layout_table_section_;
 };

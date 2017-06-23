@@ -1287,7 +1287,7 @@ void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {
       this, validated_url, params.uses_post, params.resource_request_body,
       params.extra_headers, params.referrer, params.disposition,
       kForceNewProcessForNewContents, params.should_replace_current_entry,
-      params.user_gesture, params.triggering_event_info);
+      params.user_gesture);
 }
 
 void RenderFrameHostImpl::OnCancelInitialHistoryLoad() {
@@ -3749,6 +3749,13 @@ ui::AXTreeIDRegistry::AXTreeID RenderFrameHostImpl::RoutingIDToAXTreeID(
   if (!rfh)
     return ui::AXTreeIDRegistry::kNoAXTreeID;
 
+  // As a sanity check, make sure we're within the same frame tree and
+  // crash the renderer if not.
+  if (rfh->frame_tree_node()->frame_tree() != frame_tree_node()->frame_tree()) {
+    AccessibilityFatalError();
+    return ui::AXTreeIDRegistry::kNoAXTreeID;
+  }
+
   return rfh->GetAXTreeID();
 }
 
@@ -3816,10 +3823,14 @@ void RenderFrameHostImpl::AXContentTreeDataToAXTreeData(
     return;
 
   // For the root frame tree node, also store the AXTreeID of the focused frame.
-  auto* focused_frame = static_cast<RenderFrameHostImpl*>(
-      delegate_->GetFocusedFrameIncludingInnerWebContents());
-  if (!focused_frame)
+  // TODO(avallee): https://crbug.com/610795: No focus ax events.
+  // This is probably where we need to fix the bug to enable the test.
+  FrameTreeNode* focused_frame_tree_node = frame_tree_->GetFocusedFrame();
+  if (!focused_frame_tree_node)
     return;
+  RenderFrameHostImpl* focused_frame =
+      focused_frame_tree_node->current_frame_host();
+  DCHECK(focused_frame);
   dst->focused_tree_id = focused_frame->GetAXTreeID();
 }
 

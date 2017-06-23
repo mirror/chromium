@@ -299,7 +299,6 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
             @Override
             public void pendingTabAdd(boolean isPendingTabAdd) {
-                if (isPendingTabAdd) mPreselectedTabId = Tab.INVALID_TAB_ID;
                 refreshSelectedTab();
             }
         };
@@ -1334,10 +1333,5 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         public void cancel() {
             mHandler.removeMessages(MSG_ID_UPDATE_PROGRESS);
         }
-    }
-
-    @VisibleForTesting
-    public ToolbarDataProvider getToolbarDataProviderForTests() {
-        return mToolbarModel;
     }
 }

@@ -273,6 +273,11 @@ bool MemoryCoordinatorImpl::TryToPurgeMemoryFromChild(int render_process_id) {
   return true;
 }
 
+void MemoryCoordinatorImpl::RecordMemoryPressure(
+    base::MemoryPressureMonitor::MemoryPressureLevel level) {
+  // TODO(bashi): Record memory pressure level.
+}
+
 MemoryState MemoryCoordinatorImpl::GetCurrentMemoryState() const {
   return browser_memory_state_;
 }
@@ -344,11 +349,6 @@ void MemoryCoordinatorImpl::SetDelegateForTesting(
     std::unique_ptr<MemoryCoordinatorDelegate> delegate) {
   CHECK(!delegate_);
   delegate_ = std::move(delegate);
-}
-
-void MemoryCoordinatorImpl::SetPolicyForTesting(
-    std::unique_ptr<Policy> policy) {
-  policy_ = std::move(policy);
 }
 
 void MemoryCoordinatorImpl::AddChildForTesting(

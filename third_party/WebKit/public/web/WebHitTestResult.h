@@ -70,8 +70,8 @@ class WebHitTestResult {
   BLINK_EXPORT bool IsContentEditable() const;
 
 #if BLINK_IMPLEMENTATION
-  BLINK_EXPORT WebHitTestResult(const HitTestResult&);
-  BLINK_EXPORT WebHitTestResult& operator=(const HitTestResult&);
+  WebHitTestResult(const HitTestResult&);
+  WebHitTestResult& operator=(const HitTestResult&);
 #endif
 
  protected:

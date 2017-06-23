@@ -145,9 +145,7 @@ class MockInputMethodBase : public InputMethodBase {
       InputMethod::NativeEventResult* result) override {
     return false;
   }
-  ui::EventDispatchDetails DispatchKeyEvent(ui::KeyEvent*) override {
-    return ui::EventDispatchDetails();
-  }
+  void DispatchKeyEvent(ui::KeyEvent*) override {}
   void OnCaretBoundsChanged(const TextInputClient* client) override {}
   void CancelComposition(const TextInputClient* client) override {}
   void OnInputLocaleChanged() override {}

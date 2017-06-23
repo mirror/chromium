@@ -349,7 +349,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
     contextMenu.show();
   }
 
-  async _saveToFile() {
+  _saveToFile() {
     if (this._state !== Timeline.TimelinePanel.State.Idle)
       return;
     var performanceModel = this._performanceModel;
@@ -359,12 +359,16 @@ Timeline.TimelinePanel = class extends UI.Panel {
     var now = new Date();
     var fileName = 'Profile-' + now.toISO8601Compact() + '.json';
     var stream = new Bindings.FileOutputStream();
+    stream.open(fileName, callback);
 
-    var accepted = await stream.open(fileName);
-    if (!accepted)
-      return;
-
-    performanceModel.save(stream, new Timeline.TracingTimelineSaver());
+    /**
+     * @param {boolean} accepted
+     */
+    function callback(accepted) {
+      if (!accepted)
+        return;
+      performanceModel.save(stream, new Timeline.TracingTimelineSaver());
+    }
   }
 
   async _showHistory() {

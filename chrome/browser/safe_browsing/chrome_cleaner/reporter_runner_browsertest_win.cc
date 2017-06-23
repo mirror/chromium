@@ -96,7 +96,9 @@ class ReporterRunnerTest : public InProcessBrowserTest,
   }
 
   // Records that the prompt was shown.
-  void TriggerPrompt() override { prompt_trigger_called_ = true; }
+  void TriggerPrompt(Browser* browser, const std::string& version) override {
+    prompt_trigger_called_ = true;
+  }
 
   // Records that the reporter was launched with the parameters given in
   // |invocation|

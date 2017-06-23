@@ -15,6 +15,7 @@
 
 namespace gpu {
 class GpuMemoryBufferFactory;
+class ImageFactory;
 }
 
 namespace viz {
@@ -54,12 +55,15 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
       cc::mojom::FrameSinkManagerRequest request,
       cc::mojom::FrameSinkManagerClientPtrInfo client_info);
   void CreateFrameSinkManagerOnCompositorThread(
+      gpu::ImageFactory* image_factory,
+      mojom::GpuServicePtrInfo gpu_service_info,
       cc::mojom::FrameSinkManagerRequest request,
       cc::mojom::FrameSinkManagerClientPtrInfo client_info);
   void CreateGpuServiceOnGpuThread(mojom::GpuServiceRequest request,
                                    mojom::GpuHostPtr gpu_host,
                                    const gpu::GpuPreferences& preferences,
                                    gpu::GpuProcessActivityFlags activity_flags);
+  void BindGpuInternalOnGpuThread(mojom::GpuServiceRequest request);
 
   void TearDownOnCompositorThread();
   void TearDownOnGpuThread();
@@ -71,6 +75,10 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
 
   std::unique_ptr<gpu::GpuInit> gpu_init_;
   std::unique_ptr<GpuService> gpu_service_;
+
+  // The message-pipe used by the FrameSinkManager to request gpu memory
+  // buffers.
+  mojom::GpuServicePtr gpu_internal_;
 
   // The InCommandCommandBuffer::Service used by the frame sink manager.
   scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_command_service_;

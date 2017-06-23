@@ -20,7 +20,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
-#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -31,8 +30,8 @@ using tracing::BeginTracingWithTraceConfig;
 using tracing::EndTracing;
 
 void RequestGlobalDumpCallback(base::Closure quit_closure,
-                               bool success,
-                               uint64_t) {
+                               uint64_t,
+                               bool success) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure);
   ASSERT_TRUE(success);
 }
@@ -40,10 +39,9 @@ void RequestGlobalDumpCallback(base::Closure quit_closure,
 void OnStartTracingDoneCallback(
     base::trace_event::MemoryDumpLevelOfDetail explicit_dump_type,
     base::Closure quit_closure) {
-  memory_instrumentation::MemoryInstrumentation::GetInstance()
-      ->RequestGlobalDumpAndAppendToTrace(
-          MemoryDumpType::EXPLICITLY_TRIGGERED, explicit_dump_type,
-          Bind(&RequestGlobalDumpCallback, quit_closure));
+  base::trace_event::MemoryDumpManager::GetInstance()->RequestGlobalDump(
+      MemoryDumpType::EXPLICITLY_TRIGGERED, explicit_dump_type,
+      Bind(&RequestGlobalDumpCallback, quit_closure));
 }
 
 class TracingBrowserTest : public InProcessBrowserTest {

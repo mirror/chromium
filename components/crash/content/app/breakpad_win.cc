@@ -547,7 +547,7 @@ void InitCrashReporter(const std::string& process_type_switch) {
   if (process_type == L"browser") {
     callback = &DumpDoneCallback;
     default_filter = &ChromeExceptionFilter;
-  } else if (process_type == L"service") {
+  } else if (process_type == L"cloud-print-service") {
     callback = &DumpDoneCallback;
     default_filter = &CloudPrintServiceExceptionFilter;
   }

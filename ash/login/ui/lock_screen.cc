@@ -6,70 +6,35 @@
 
 #include "ash/login/ui/lock_contents_view.h"
 #include "ash/login/ui/lock_window.h"
-#include "ash/login/ui/login_data_dispatcher.h"
-#include "ash/public/interfaces/session_controller.mojom.h"
-#include "ash/session/session_controller.h"
-#include "ash/shell.h"
-#include "base/memory/ptr_util.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/views/widget/widget.h"
 
 namespace ash {
+
 namespace {
-
-// Global lock screen instance. There can only ever be on lock screen at a
-// time.
-LockScreen* instance_ = nullptr;
-
+// Reference to global lock screen instance. There can only ever be one lock
+// screen display at the same time.
+LockWindow* g_window = nullptr;
 }  // namespace
 
-LockScreen::LockScreen() = default;
+bool ShowLockScreen() {
+  CHECK(!g_window);
+  g_window = new LockWindow();
+  g_window->SetBounds(
+      display::Screen::GetScreen()->GetPrimaryDisplay().bounds());
 
-LockScreen::~LockScreen() = default;
+  auto* contents = new LockContentsView();
+  g_window->SetContentsView(contents);
+  g_window->Show();
 
-// static
-LockScreen* LockScreen::Get() {
-  CHECK(instance_);
-  return instance_;
+  return true;
 }
 
-// static
-void LockScreen::Show() {
-  CHECK(!instance_);
-  instance_ = new LockScreen();
-
-  auto data_dispatcher = base::MakeUnique<LoginDataDispatcher>();
-  auto* contents = new LockContentsView(data_dispatcher.get());
-
-  // TODO(jdufault|crbug.com/731191): Call NotifyUsers via
-  // LockScreenController::LoadUsers once it uses a mojom specific type.
-  std::vector<mojom::UserInfoPtr> users;
-  for (const mojom::UserSessionPtr& session :
-       Shell::Get()->session_controller()->GetUserSessions()) {
-    users.push_back(session->user_info->Clone());
-  }
-  data_dispatcher->NotifyUsers(users);
-
-  auto* window = instance_->window_ = new LockWindow();
-  window->SetBounds(display::Screen::GetScreen()->GetPrimaryDisplay().bounds());
-  window->SetContentsView(contents);
-  window->set_data_dispatcher(std::move(data_dispatcher));
-  window->Show();
-
-  // TODO(jdufault): Use correct blur amount.
-  window->GetLayer()->SetBackgroundBlur(20);
-}
-
-void LockScreen::Destroy() {
-  CHECK_EQ(instance_, this);
-  window_->Close();
-  delete instance_;
-  instance_ = nullptr;
-}
-
-void LockScreen::SetPinEnabledForUser(const AccountId& account_id,
-                                      bool is_enabled) {
-  window_->data_dispatcher()->SetPinEnabledForUser(account_id, is_enabled);
+void DestroyLockScreen() {
+  CHECK(g_window);
+  g_window->Close();
+  g_window = nullptr;
 }
 
 }  // namespace ash

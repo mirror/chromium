@@ -35,10 +35,7 @@ Entry BuildEntry(DownloadClient client,
                  SchedulingParams::Priority priority,
                  const GURL& url,
                  const std::string& request_method,
-                 Entry::State state,
-                 const base::FilePath& file_path,
-                 base::Time create_time,
-                 base::Time completion_time);
+                 Entry::State state);
 
 }  // namespace test
 }  // namespace download

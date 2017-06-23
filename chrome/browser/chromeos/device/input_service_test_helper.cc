@@ -8,9 +8,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "chrome/browser/chromeos/device/input_service_proxy.h"
+#include "content/public/browser/browser_thread.h"
 #include "device/hid/fake_input_service_linux.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using content::BrowserThread;
 using device::InputServiceLinux;
 using device::FakeInputServiceLinux;
 
@@ -18,17 +20,17 @@ namespace chromeos {
 
 namespace {
 
-void InitInputServiceOnInputServiceSequence() {
+void InitInputServiceOnFileThread() {
   InputServiceLinux::SetForTesting(base::MakeUnique<FakeInputServiceLinux>());
 }
 
-void AddDeviceOnInputServiceSequence(const InputDeviceInfo& device) {
+void AddDeviceOnFileThread(const InputDeviceInfo& device) {
   FakeInputServiceLinux* service =
       static_cast<FakeInputServiceLinux*>(InputServiceLinux::GetInstance());
   service->AddDeviceForTesting(device);
 }
 
-void RemoveDeviceOnInputServiceSequence(const std::string& id) {
+void RemoveDeviceOnFileThread(const std::string& id) {
   FakeInputServiceLinux* service =
       static_cast<FakeInputServiceLinux*>(InputServiceLinux::GetInstance());
   service->RemoveDeviceForTesting(id);
@@ -116,8 +118,8 @@ const char InputServiceTestHelper::kKeyboardId[] = "keyboard";
 const char InputServiceTestHelper::kMouseId[] = "mouse";
 
 InputServiceTestHelper::InputServiceTestHelper() : observer_(new TestObserver) {
-  InputServiceProxy::GetInputServiceTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&InitInputServiceOnInputServiceSequence));
+  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
+                          base::Bind(&InitInputServiceOnFileThread));
 }
 
 InputServiceTestHelper::~InputServiceTestHelper() {}
@@ -140,15 +142,15 @@ void InputServiceTestHelper::AddDeviceToService(bool is_mouse,
   device.type = type;
   device.is_mouse = is_mouse;
   device.is_keyboard = !is_mouse;
-  InputServiceProxy::GetInputServiceTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&AddDeviceOnInputServiceSequence, device));
+  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
+                          base::Bind(&AddDeviceOnFileThread, device));
   observer_->WaitForDeviceAddition(device);
 }
 
 void InputServiceTestHelper::RemoveDeviceFromService(bool is_mouse) {
   std::string id = is_mouse ? kMouseId : kKeyboardId;
-  InputServiceProxy::GetInputServiceTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&RemoveDeviceOnInputServiceSequence, id));
+  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
+                          base::Bind(&RemoveDeviceOnFileThread, id));
   observer_->WaitForDeviceRemoval(id);
 }
 

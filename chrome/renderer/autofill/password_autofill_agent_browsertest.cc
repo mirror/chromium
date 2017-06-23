@@ -717,53 +717,6 @@ TEST_F(PasswordAutofillAgentTest,
                        UTF16ToUTF8(password3_), true);
 }
 
-// Fill a password field if the stored username is a prefix of username in
-// read-only field.
-TEST_F(PasswordAutofillAgentTest,
-       AutocompletePasswordForReadonlyUsernamePrefixMatched) {
-  base::string16 username_at = username3_ + base::UTF8ToUTF16("@example.com");
-  username_element_.SetValue(WebString::FromUTF16(username_at));
-  SetElementReadOnly(username_element_, true);
-
-  // Filled even though the username in the form is only a proper prefix of the
-  // stored username.
-  SimulateOnFillPasswordForm(fill_data_);
-  CheckTextFieldsState(UTF16ToUTF8(username_at), false, UTF16ToUTF8(password3_),
-                       true);
-}
-
-// Do not fill a password field if the stored username is a prefix without @
-// of username in read-only field.
-TEST_F(PasswordAutofillAgentTest,
-       DontAutocompletePasswordForReadonlyUsernamePrefixMatched) {
-  base::string16 prefilled_username =
-      username3_ + base::UTF8ToUTF16("example.com");
-  username_element_.SetValue(WebString::FromUTF16(prefilled_username));
-  SetElementReadOnly(username_element_, true);
-
-  // Filled even though the username in the form is only a proper prefix of the
-  // stored username.
-  SimulateOnFillPasswordForm(fill_data_);
-  CheckTextFieldsState(UTF16ToUTF8(prefilled_username), false, std::string(),
-                       false);
-}
-
-// Do not fill a password field if the field isn't readonly despite the stored
-// username is a prefix without @ of username in read-only field.
-TEST_F(
-    PasswordAutofillAgentTest,
-    DontAutocompletePasswordForNotReadonlyUsernameFieldEvenWhenPrefixMatched) {
-  base::string16 prefilled_username =
-      username3_ + base::UTF8ToUTF16("@example.com");
-  username_element_.SetValue(WebString::FromUTF16(prefilled_username));
-
-  // Filled even though the username in the form is only a proper prefix of the
-  // stored username.
-  SimulateOnFillPasswordForm(fill_data_);
-  CheckTextFieldsState(UTF16ToUTF8(prefilled_username), false, std::string(),
-                       false);
-}
-
 // If a username field is empty and readonly, don't autofill.
 TEST_F(PasswordAutofillAgentTest,
        NoAutocompletePasswordForReadonlyUsernameUnmatched) {
@@ -895,7 +848,7 @@ TEST_F(PasswordAutofillAgentTest, WaitUsername) {
 TEST_F(PasswordAutofillAgentTest, IsWebElementVisibleTest) {
   blink::WebVector<WebFormElement> forms1, forms2, forms3;
   blink::WebVector<blink::WebFormControlElement> web_control_elements;
-  blink::WebLocalFrame* frame;
+  blink::WebFrame* frame;
 
   LoadHTML(kVisibleFormWithNoUsernameHTML);
   frame = GetMainFrame();
@@ -3007,25 +2960,4 @@ TEST_F(PasswordAutofillAgentTest, AutocompleteWhenPageUrlIsChanged) {
   // The username and password should have been autocompleted.
   CheckTextFieldsState(kAliceUsername, true, kAlicePassword, true);
 }
-
-// Regression test for https://crbug.com/728028.
-TEST_F(PasswordAutofillAgentTest, NoForm_MultipleAJAXEventsWithoutSubmission) {
-  LoadHTML(kNoFormHTML);
-  UpdateUsernameAndPasswordElements();
-
-  SimulateUsernameChange("Bob");
-  SimulatePasswordChange("mypassword");
-
-  password_autofill_agent_->AJAXSucceeded();
-  base::RunLoop().RunUntilIdle();
-
-  // Repeatedly occurring AJAX events without removing the input elements
-  // shouldn't be treated as a password submission.
-  password_autofill_agent_->AJAXSucceeded();
-  base::RunLoop().RunUntilIdle();
-
-  ASSERT_FALSE(fake_driver_.called_password_form_submitted());
-  ASSERT_FALSE(static_cast<bool>(fake_driver_.password_form_submitted()));
-}
-
 }  // namespace autofill

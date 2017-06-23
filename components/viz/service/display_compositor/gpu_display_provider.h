@@ -18,7 +18,6 @@
 #include "gpu/ipc/in_process_command_buffer.h"
 
 namespace gpu {
-class GpuChannelManager;
 class ImageFactory;
 }
 
@@ -30,7 +29,8 @@ class VIZ_SERVICE_EXPORT GpuDisplayProvider
  public:
   GpuDisplayProvider(
       scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service,
-      gpu::GpuChannelManager* gpu_channel_manager);
+      std::unique_ptr<gpu::GpuMemoryBufferManager> gpu_memory_buffer_manager,
+      gpu::ImageFactory* image_factory);
   ~GpuDisplayProvider() override;
 
   // DisplayProvider:

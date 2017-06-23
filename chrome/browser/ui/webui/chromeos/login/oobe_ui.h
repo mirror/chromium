@@ -32,6 +32,7 @@ namespace chromeos {
 class AppLaunchSplashScreenView;
 class ArcKioskSplashScreenView;
 class ArcTermsOfServiceScreenView;
+class VoiceInteractionValuePropScreenView;
 class AutoEnrollmentCheckScreenView;
 class BaseScreenHandler;
 class ControllerPairingScreenView;
@@ -62,8 +63,6 @@ class TermsOfServiceScreenView;
 class UserBoardView;
 class UserImageView;
 class UpdateView;
-class VoiceInteractionValuePropScreenView;
-class WaitForContainerReadyScreenView;
 class WrongHWIDScreenView;
 
 // A custom WebUI that defines datasource for out-of-box-experience (OOBE) UI:
@@ -120,7 +119,6 @@ class OobeUI : public content::WebUIController,
   DeviceDisabledScreenView* GetDeviceDisabledScreenView();
   EncryptionMigrationScreenView* GetEncryptionMigrationScreenView();
   VoiceInteractionValuePropScreenView* GetVoiceInteractionValuePropScreenView();
-  WaitForContainerReadyScreenView* GetWaitForContainerReadyScreenView();
   GaiaView* GetGaiaScreenView();
   UserBoardView* GetUserBoardView();
 

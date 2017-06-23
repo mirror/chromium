@@ -433,11 +433,7 @@ void DevToolsEmulator::ApplyViewportOverride(TransformationMatrix* transform) {
   transform->Scale(viewport_override_->scale);
 
   // Translate while taking into account current scroll offset.
-  // TODO(lukasza): https://crbug.com/734201: Add OOPIF support.
-  WebSize scroll_offset =
-      web_view_->MainFrame()->IsWebLocalFrame()
-          ? web_view_->MainFrame()->ToWebLocalFrame()->GetScrollOffset()
-          : WebSize();
+  WebSize scroll_offset = web_view_->MainFrame()->GetScrollOffset();
   WebFloatPoint visual_offset = web_view_->VisualViewportOffset();
   float scroll_x = scroll_offset.width + visual_offset.x;
   float scroll_y = scroll_offset.height + visual_offset.y;
@@ -526,7 +522,6 @@ bool DevToolsEmulator::HandleInputEvent(const WebInputEvent& input_event) {
 
   // FIXME: This workaround is required for touch emulation on Mac, where
   // compositor-side pinch handling is not enabled. See http://crbug.com/138003.
-  // TODO(lukasza): https://crbug.com/734201: Add OOPIF support.
   LocalFrameView* frame_view = page->DeprecatedLocalMainFrame()->View();
   WebGestureEvent scaled_event = TransformWebGestureEvent(
       frame_view, static_cast<const WebGestureEvent&>(input_event));
@@ -545,11 +540,8 @@ bool DevToolsEmulator::HandleInputEvent(const WebInputEvent& input_event) {
     IntPoint anchor_css(*last_pinch_anchor_dip_.get());
     anchor_css.Scale(1.f / new_page_scale_factor, 1.f / new_page_scale_factor);
     web_view_->SetPageScaleFactor(new_page_scale_factor);
-    // TODO(lukasza): https://crbug.com/734201: Add OOPIF support.
-    if (web_view_->MainFrame()->IsWebLocalFrame()) {
-      web_view_->MainFrame()->ToWebLocalFrame()->SetScrollOffset(
-          ToIntSize(*last_pinch_anchor_css_.get() - ToIntSize(anchor_css)));
-    }
+    web_view_->MainFrame()->SetScrollOffset(
+        ToIntSize(*last_pinch_anchor_css_.get() - ToIntSize(anchor_css)));
   }
   if (scaled_event.GetType() == WebInputEvent::kGesturePinchEnd) {
     last_pinch_anchor_css_.reset();

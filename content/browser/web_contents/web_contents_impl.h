@@ -536,7 +536,6 @@ class CONTENT_EXPORT WebContentsImpl
   std::unique_ptr<WebUIImpl> CreateWebUIForRenderFrameHost(
       const GURL& url) override;
   void SetFocusedFrame(FrameTreeNode* node, SiteInstance* source) override;
-  RenderFrameHost* GetFocusedFrameIncludingInnerWebContents() override;
   void OnFocusedElementChangedInFrame(
       RenderFrameHostImpl* frame,
       const gfx::Rect& bounds_in_root_view) override;
@@ -1169,10 +1168,6 @@ class CONTENT_EXPORT WebContentsImpl
 
   // Returns the root of the WebContents tree.
   WebContentsImpl* GetOutermostWebContents();
-
-  // Walks up the outer WebContents chain and focuses the FrameTreeNode where
-  // each inner WebContents is attached.
-  void FocusOuterAttachmentFrameChain();
 
   // Navigation helpers --------------------------------------------------------
   //

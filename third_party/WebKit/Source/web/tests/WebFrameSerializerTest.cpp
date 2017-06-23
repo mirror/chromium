@@ -124,7 +124,9 @@ class WebFrameSerializerTest : public ::testing::Test {
     return serializer_client.ToString();
   }
 
-  WebLocalFrameBase* MainFrameImpl() { return helper_.LocalMainFrame(); }
+  WebLocalFrameBase* MainFrameImpl() {
+    return helper_.WebView()->MainFrameImpl();
+  }
 
  private:
   FrameTestHelpers::WebViewHelper helper_;

@@ -9,7 +9,6 @@
 #include <memory>
 #include <set>
 
-#include "base/cancelable_callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
@@ -28,7 +27,6 @@ namespace download {
 
 class ClientSet;
 class DownloadDriver;
-class FileMonitor;
 class Model;
 class Scheduler;
 
@@ -49,9 +47,7 @@ class ControllerImpl : public Controller,
                  std::unique_ptr<Model> model,
                  std::unique_ptr<DeviceStatusListener> device_status_listener,
                  std::unique_ptr<Scheduler> scheduler,
-                 std::unique_ptr<TaskScheduler> task_scheduler,
-                 std::unique_ptr<FileMonitor> file_monitor,
-                 const base::FilePath& download_file_dir);
+                 std::unique_ptr<TaskScheduler> task_scheduler);
   ~ControllerImpl() override;
 
   // Controller implementation.
@@ -73,7 +69,8 @@ class ControllerImpl : public Controller,
   void OnDriverReady(bool success) override;
   void OnDownloadCreated(const DriverEntry& download) override;
   void OnDownloadFailed(const DriverEntry& download, int reason) override;
-  void OnDownloadSucceeded(const DriverEntry& download) override;
+  void OnDownloadSucceeded(const DriverEntry& download,
+                           const base::FilePath& path) override;
   void OnDownloadUpdated(const DriverEntry& download) override;
 
   // Model::Client implementation.
@@ -87,9 +84,6 @@ class ControllerImpl : public Controller,
   void OnItemRemoved(bool success,
                      DownloadClient client,
                      const std::string& guid) override;
-
-  // Called when the file monitor and download file directory are initialized.
-  void OnFileMonitorReady(bool success);
 
   // DeviceStatusListener::Observer implementation.
   void OnDeviceStatusChanged(const DeviceStatus& device_status) override;
@@ -105,9 +99,6 @@ class ControllerImpl : public Controller,
   // Cancels and cleans upany requests that are no longer associated with a
   // Client in |clients_|.
   void CancelOrphanedRequests();
-
-  // Cleans up any files that are left on the disk without any entries.
-  void CleanupUnknownFiles();
 
   // Fixes any discrepancies in state between |model_| and |driver_|.  Meant to
   // resolve state issues during startup.
@@ -164,21 +155,7 @@ class ControllerImpl : public Controller,
                             const std::string& guid,
                             download::Client::FailureReason reason);
 
-  // Schedules a cleanup task in future based on status of entries.
-  void ScheduleCleanupTask();
-
-  // Posts a task to cancel the downloads in future based on the cancel_after
-  // time of the entries. If cancel time for an entry is already surpassed, the
-  // task will be posted right away which will clean the entry.
-  void ScheduleKillDownloadTaskIfNecessary();
-
-  // Kills the downloads which have surpassed their cancel_after time.
-  void KillTimedOutDownloads();
-
   Configuration* config_;
-
-  // The directory in which the downloaded files are stored.
-  const base::FilePath download_file_dir_;
 
   // Owned Dependencies.
   std::unique_ptr<ClientSet> clients_;
@@ -187,7 +164,6 @@ class ControllerImpl : public Controller,
   std::unique_ptr<DeviceStatusListener> device_status_listener_;
   std::unique_ptr<Scheduler> scheduler_;
   std::unique_ptr<TaskScheduler> task_scheduler_;
-  std::unique_ptr<FileMonitor> file_monitor_;
 
   // Internal state.
   // Is set to true if this class is currently in the process of initializing
@@ -199,7 +175,6 @@ class ControllerImpl : public Controller,
   std::set<std::string> externally_active_downloads_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;
   std::map<DownloadTaskType, TaskFinishedCallback> task_finished_callbacks_;
-  base::CancelableClosure cancel_downloads_callback_;
 
   // Only used to post tasks on the same thread.
   base::WeakPtrFactory<ControllerImpl> weak_ptr_factory_;

@@ -24,14 +24,15 @@ class DesktopMediaPickerViews;
 class DesktopMediaPickerDialogView : public views::DialogDelegateView,
                                      public views::TabbedPaneListener {
  public:
-  DesktopMediaPickerDialogView(
-      content::WebContents* parent_web_contents,
-      gfx::NativeWindow context,
-      DesktopMediaPickerViews* parent,
-      const base::string16& app_name,
-      const base::string16& target_name,
-      std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
-      bool request_audio);
+  DesktopMediaPickerDialogView(content::WebContents* parent_web_contents,
+                               gfx::NativeWindow context,
+                               DesktopMediaPickerViews* parent,
+                               const base::string16& app_name,
+                               const base::string16& target_name,
+                               std::unique_ptr<DesktopMediaList> screen_list,
+                               std::unique_ptr<DesktopMediaList> window_list,
+                               std::unique_ptr<DesktopMediaList> tab_list,
+                               bool request_audio);
   ~DesktopMediaPickerDialogView() override;
 
   // Called by parent (DesktopMediaPickerViews) when it's destroyed.
@@ -96,7 +97,9 @@ class DesktopMediaPickerViews : public DesktopMediaPicker {
             gfx::NativeWindow parent,
             const base::string16& app_name,
             const base::string16& target_name,
-            std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
+            std::unique_ptr<DesktopMediaList> screen_list,
+            std::unique_ptr<DesktopMediaList> window_list,
+            std::unique_ptr<DesktopMediaList> tab_list,
             bool request_audio,
             const DoneCallback& done_callback) override;
 

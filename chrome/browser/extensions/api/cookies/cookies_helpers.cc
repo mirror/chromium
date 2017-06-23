@@ -121,13 +121,13 @@ CookieStore CreateCookieStore(Profile* profile,
 void GetCookieListFromStore(
     net::CookieStore* cookie_store,
     const GURL& url,
-    net::CookieMonster::GetCookieListCallback callback) {
+    const net::CookieMonster::GetCookieListCallback& callback) {
   DCHECK(cookie_store);
   if (!url.is_empty()) {
     DCHECK(url.is_valid());
-    cookie_store->GetAllCookiesForURLAsync(url, std::move(callback));
+    cookie_store->GetAllCookiesForURLAsync(url, callback);
   } else {
-    cookie_store->GetAllCookiesAsync(std::move(callback));
+    cookie_store->GetAllCookiesAsync(callback);
   }
 }
 

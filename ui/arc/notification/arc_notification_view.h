@@ -57,7 +57,6 @@ class ArcNotificationView : public message_center::MessageView {
   bool HandleAccessibleAction(const ui::AXActionData& action) override;
 
  private:
-  friend class ArcNotificationContentViewTest;
   friend class ArcNotificationViewTest;
 
   // The view for the custom content. Owned by view hierarchy.

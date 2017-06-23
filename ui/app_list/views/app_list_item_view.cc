@@ -10,7 +10,6 @@
 #include "build/build_config.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/app_list_constants.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_folder_item.h"
 #include "ui/app_list/app_list_item.h"
 #include "ui/app_list/app_list_switches.h"
@@ -39,16 +38,16 @@ namespace app_list {
 
 namespace {
 
-constexpr int kTopPadding = 18;
-constexpr int kIconTitleSpacing = 6;
+const int kTopPadding = 18;
+const int kIconTitleSpacing = 6;
 
 // Radius of the folder dropping preview circle.
-constexpr int kFolderPreviewRadius = 40;
+const int kFolderPreviewRadius = 40;
 
-constexpr int kLeftRightPaddingChars = 1;
+const int kLeftRightPaddingChars = 1;
 
 // Delay in milliseconds of when the dragging UI should be shown for mouse drag.
-constexpr int kMouseDragUIDelayInMs = 200;
+const int kMouseDragUIDelayInMs = 200;
 
 gfx::FontList GetFontList() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
@@ -70,31 +69,25 @@ AppListItemView::AppListItemView(AppsGridView* apps_grid_view,
       icon_(new views::ImageView),
       title_(new views::Label),
       progress_bar_(new views::ProgressBar),
+      ui_state_(UI_STATE_NORMAL),
+      touch_dragging_(false),
       shadow_animator_(this),
-      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
+      is_installing_(false),
+      is_highlighted_(false) {
   shadow_animator_.animation()->SetTweenType(gfx::Tween::FAST_OUT_SLOW_IN);
   shadow_animator_.SetStartAndEndShadows(IconStartShadows(), IconEndShadows());
 
   icon_->set_can_process_events_within_subtree(false);
   icon_->SetVerticalAlignment(views::ImageView::LEADING);
 
-  title_->SetBackgroundColor(SK_ColorTRANSPARENT);
+  title_->SetBackgroundColor(0);
   title_->SetAutoColorReadabilityEnabled(false);
+  title_->SetEnabledColor(kGridTitleColor);
   title_->SetHandlesTooltips(false);
 
-  if (is_fullscreen_app_list_enabled_) {
-    const gfx::FontList& base_font =
-        ui::ResourceBundle::GetSharedInstance().GetFontList(
-            ui::ResourceBundle::BaseFont);
-    title_->SetFontList(base_font.DeriveWithSizeDelta(1));
-    title_->SetHorizontalAlignment(gfx::ALIGN_CENTER);
-    title_->SetEnabledColor(kGridTitleColorFullscreen);
-  } else {
-    const gfx::FontList& font_list = GetFontList();
-    title_->SetFontList(font_list);
-    title_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    title_->SetEnabledColor(kGridTitleColor);
-  }
+  static const gfx::FontList font_list = GetFontList();
+  title_->SetFontList(font_list);
+  title_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   SetTitleSubpixelAA();
 
   AddChildView(icon_);
@@ -320,54 +313,27 @@ const char* AppListItemView::GetClassName() const {
 
 void AppListItemView::Layout() {
   gfx::Rect rect(GetContentsBounds());
-  if (rect.IsEmpty())
-    return;
 
-  if (is_fullscreen_app_list_enabled_) {
-    icon_->SetBoundsRect(GetIconBoundsForTargetViewBounds(GetContentsBounds()));
+  const int left_right_padding =
+      title_->font_list().GetExpectedTextWidth(kLeftRightPaddingChars);
+  rect.Inset(left_right_padding, kTopPadding, left_right_padding, 0);
+  const int y = rect.y();
 
-    rect.Inset(kGridTitleHorizontalPadding,
-               kGridIconTopPadding + kGridIconDimension + kGridTitleSpacing,
-               kGridTitleHorizontalPadding, 0);
-    rect.set_height(title_->GetPreferredSize().height());
-    title_->SetBoundsRect(rect);
-    SetTitleSubpixelAA();
+  icon_->SetBoundsRect(GetIconBoundsForTargetViewBounds(GetContentsBounds()));
 
-    gfx::Rect progress_bar_bounds(progress_bar_->GetPreferredSize());
-    progress_bar_bounds.set_x(
-        (GetContentsBounds().width() - progress_bar_bounds.width()) / 2);
-    progress_bar_bounds.set_y(rect.y());
-    progress_bar_->SetBoundsRect(progress_bar_bounds);
-  } else {
-    icon_->SetBoundsRect(GetIconBoundsForTargetViewBounds(GetContentsBounds()));
+  const gfx::Size title_size = title_->GetPreferredSize();
+  gfx::Rect title_bounds(rect.x() + (rect.width() - title_size.width()) / 2,
+                         y + kGridIconDimension + kIconTitleSpacing,
+                         title_size.width(), title_size.height());
+  title_bounds.Intersect(rect);
+  title_->SetBoundsRect(title_bounds);
+  SetTitleSubpixelAA();
 
-    const int left_right_padding =
-        title_->font_list().GetExpectedTextWidth(kLeftRightPaddingChars);
-    rect.Inset(left_right_padding, kTopPadding, left_right_padding, 0);
-    const int y = rect.y();
-
-    const gfx::Size title_size = title_->GetPreferredSize();
-    gfx::Rect title_bounds(rect.x() + (rect.width() - title_size.width()) / 2,
-                           y + kGridIconDimension + kIconTitleSpacing,
-                           title_size.width(), title_size.height());
-    title_bounds.Intersect(rect);
-    title_->SetBoundsRect(title_bounds);
-    SetTitleSubpixelAA();
-
-    gfx::Rect progress_bar_bounds(progress_bar_->GetPreferredSize());
-    progress_bar_bounds.set_x(
-        (GetContentsBounds().width() - progress_bar_bounds.width()) / 2);
-    progress_bar_bounds.set_y(title_bounds.y());
-    progress_bar_->SetBoundsRect(progress_bar_bounds);
-  }
-}
-
-gfx::Size AppListItemView::CalculatePreferredSize() const {
-  if (is_fullscreen_app_list_enabled_) {
-    return gfx::Size(kGridTileWidth, kGridTileHeight);
-  }
-
-  return views::View::CalculatePreferredSize();
+  gfx::Rect progress_bar_bounds(progress_bar_->GetPreferredSize());
+  progress_bar_bounds.set_x(
+      (GetContentsBounds().width() - progress_bar_bounds.width()) / 2);
+  progress_bar_bounds.set_y(title_bounds.y());
+  progress_bar_->SetBoundsRect(progress_bar_bounds);
 }
 
 bool AppListItemView::OnKeyPressed(const ui::KeyEvent& event) {
@@ -494,9 +460,7 @@ void AppListItemView::SetDragUIState() {
 gfx::Rect AppListItemView::GetIconBoundsForTargetViewBounds(
     const gfx::Rect& target_bounds) {
   gfx::Rect rect(target_bounds);
-  rect.Inset(
-      0, is_fullscreen_app_list_enabled_ ? kGridIconTopPadding : kTopPadding, 0,
-      0);
+  rect.Inset(0, kTopPadding, 0, 0);
   rect.set_height(icon_->GetImage().height());
   rect.ClampToCenteredSize(icon_->GetImage().size());
   return rect;

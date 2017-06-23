@@ -22,9 +22,9 @@
 #include "cc/quads/draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/test/begin_frame_args_test.h"
+#include "cc/test/fake_compositor_frame_sink.h"
 #include "cc/test/fake_content_layer_client.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
-#include "cc/test/fake_layer_tree_frame_sink.h"
 #include "cc/test/fake_layer_tree_host.h"
 #include "cc/test/fake_layer_tree_host_client.h"
 #include "cc/test/fake_layer_tree_host_impl.h"
@@ -86,8 +86,8 @@ class PictureLayerImplTest : public TestLayerTreeHostBase {
     return settings;
   }
 
-  std::unique_ptr<LayerTreeFrameSink> CreateLayerTreeFrameSink() override {
-    return FakeLayerTreeFrameSink::Create3dForGpuRasterization();
+  std::unique_ptr<CompositorFrameSink> CreateCompositorFrameSink() override {
+    return FakeCompositorFrameSink::Create3dForGpuRasterization();
   }
 
   void SetupDefaultTreesWithFixedTileSize(const gfx::Size& layer_bounds,
@@ -1445,7 +1445,8 @@ TEST_F(PictureLayerImplTest, ClampTilesToMaxTileSize) {
   std::unique_ptr<TestWebGraphicsContext3D> context =
       TestWebGraphicsContext3D::Create();
   context->set_max_texture_size(140);
-  ResetLayerTreeFrameSink(FakeLayerTreeFrameSink::Create3d(std::move(context)));
+  ResetCompositorFrameSink(
+      FakeCompositorFrameSink::Create3d(std::move(context)));
 
   SetupDrawPropertiesAndUpdateTiles(pending_layer(), 1.f, 1.f, 1.f, 1.f, 0.f,
                                     false);
@@ -1480,7 +1481,8 @@ TEST_F(PictureLayerImplTest, ClampSingleTileToToMaxTileSize) {
   std::unique_ptr<TestWebGraphicsContext3D> context =
       TestWebGraphicsContext3D::Create();
   context->set_max_texture_size(140);
-  ResetLayerTreeFrameSink(FakeLayerTreeFrameSink::Create3d(std::move(context)));
+  ResetCompositorFrameSink(
+      FakeCompositorFrameSink::Create3d(std::move(context)));
 
   SetupDrawPropertiesAndUpdateTiles(active_layer(), 1.f, 1.f, 1.f, 1.f, 0.f,
                                     false);
@@ -2339,7 +2341,6 @@ TEST_F(PictureLayerImplTest, SyncTilingAfterGpuRasterizationToggles) {
   EXPECT_TRUE(pending_layer()->tilings()->FindTilingWithScaleKey(1.f));
   EXPECT_EQ(0u, active_layer()->tilings()->num_tilings());
 
-  host_impl()->NotifyReadyToActivate();
   ActivateTree();
   EXPECT_TRUE(active_layer()->tilings()->FindTilingWithScaleKey(1.f));
 
@@ -2356,7 +2357,6 @@ TEST_F(PictureLayerImplTest, SyncTilingAfterGpuRasterizationToggles) {
   EXPECT_EQ(2u, active_layer()->release_tile_resources_count());
   EXPECT_EQ(2u, pending_layer()->release_resources_count());
   EXPECT_EQ(2u, active_layer()->release_resources_count());
-  host_impl()->NotifyReadyToActivate();
 
   host_impl()->SetHasGpuRasterizationTrigger(true);
   host_impl()->SetContentIsSuitableForGpuRasterization(false);
@@ -3593,8 +3593,8 @@ TEST_F(PictureLayerImplTest, SharedQuadStateContainsMaxTilingScale) {
 
 class PictureLayerImplTestWithDelegatingRenderer : public PictureLayerImplTest {
  public:
-  std::unique_ptr<LayerTreeFrameSink> CreateLayerTreeFrameSink() override {
-    return FakeLayerTreeFrameSink::Create3d();
+  std::unique_ptr<CompositorFrameSink> CreateCompositorFrameSink() override {
+    return FakeCompositorFrameSink::Create3d();
   }
 };
 
@@ -4740,7 +4740,6 @@ TEST_F(TileSizeTest, TileSizes) {
   host_impl()->CommitComplete();
   EXPECT_EQ(host_impl()->gpu_rasterization_status(),
             GpuRasterizationStatus::OFF_VIEWPORT);
-  host_impl()->NotifyReadyToActivate();
 
   // Default tile-size for large layers.
   result = layer->CalculateTileSize(gfx::Size(10000, 10000));
@@ -4764,7 +4763,6 @@ TEST_F(TileSizeTest, TileSizes) {
   EXPECT_EQ(host_impl()->gpu_rasterization_status(),
             GpuRasterizationStatus::ON);
   host_impl()->SetViewportSize(gfx::Size(2000, 2000));
-  host_impl()->NotifyReadyToActivate();
 
   layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
   result = layer->CalculateTileSize(gfx::Size(10000, 10000));

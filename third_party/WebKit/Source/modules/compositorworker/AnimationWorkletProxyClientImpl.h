@@ -6,6 +6,7 @@
 #define AnimationWorkletProxyClientImpl_h
 
 #include "core/animation/CompositorAnimator.h"
+#include "core/animation/CompositorProxyClientImpl.h"
 #include "core/dom/AnimationWorkletProxyClient.h"
 #include "modules/ModulesExport.h"
 #include "modules/compositorworker/AnimationWorkletGlobalScope.h"
@@ -40,10 +41,17 @@ class MODULES_EXPORT AnimationWorkletProxyClientImpl final
 
   // CompositorAnimator:
   // This method is invoked in compositor thread
-  bool Mutate(double monotonic_time_now) override;
+  bool Mutate(double monotonic_time_now,
+              CompositorMutableStateProvider*) override;
+
+  CompositorProxyClient* GetCompositorProxyClient() override {
+    return compositor_proxy_client_.Get();
+  }
 
  private:
   CrossThreadPersistent<CompositorMutatorImpl> mutator_;
+
+  CrossThreadPersistent<CompositorProxyClientImpl> compositor_proxy_client_;
 
   CrossThreadPersistent<AnimationWorkletGlobalScope> global_scope_;
 };

@@ -4,7 +4,6 @@
 
 #include "media/audio/fake_audio_input_stream.h"
 
-#include "base/atomicops.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
@@ -19,10 +18,6 @@
 #include "media/base/media_switches.h"
 
 namespace media {
-
-namespace {
-base::subtle::AtomicWord g_fake_input_streams_are_muted = 0;
-}
 
 AudioInputStream* FakeAudioInputStream::MakeFakeStream(
     AudioManagerBase* manager,
@@ -86,7 +81,7 @@ double FakeAudioInputStream::GetVolume() {
 
 bool FakeAudioInputStream::IsMuted() {
   DCHECK(audio_manager_->GetTaskRunner()->BelongsToCurrentThread());
-  return base::subtle::NoBarrier_Load(&g_fake_input_streams_are_muted) != 0;
+  return false;
 }
 
 bool FakeAudioInputStream::SetAutomaticGainControl(bool enabled) {
@@ -139,11 +134,6 @@ std::unique_ptr<AudioSourceCallback> FakeAudioInputStream::ChooseSource() {
 
 void FakeAudioInputStream::BeepOnce() {
   BeepingSource::BeepOnce();
-}
-
-void FakeAudioInputStream::SetGlobalMutedState(bool is_muted) {
-  base::subtle::NoBarrier_Store(&g_fake_input_streams_are_muted,
-                                (is_muted ? 1 : 0));
 }
 
 }  // namespace media

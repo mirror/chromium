@@ -257,15 +257,11 @@ TEST_F(BaseFetchContextTest, RedirectChecksReportedAndEnforcedCSP) {
   policy->DidReceiveHeader("script-src https://bar.test",
                            kContentSecurityPolicyHeaderTypeReport,
                            kContentSecurityPolicyHeaderSourceHTTP);
-
   KURL url(KURL(), "http://baz.test");
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
-  resource_request.SetFetchCredentialsMode(
-      WebURLRequest::kFetchCredentialsModeOmit);
-
-  ResourceLoaderOptions options;
-
+  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
+                                kClientDidNotRequestCredentials);
   EXPECT_EQ(ResourceRequestBlockedReason::CSP,
             fetch_context_->CanFollowRedirect(
                 Resource::kScript, resource_request, url, options,
@@ -284,15 +280,11 @@ TEST_F(BaseFetchContextTest, AllowResponseChecksReportedAndEnforcedCSP) {
   policy->DidReceiveHeader("script-src https://bar.test",
                            kContentSecurityPolicyHeaderTypeReport,
                            kContentSecurityPolicyHeaderSourceHTTP);
-
   KURL url(KURL(), "http://baz.test");
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
-  resource_request.SetFetchCredentialsMode(
-      WebURLRequest::kFetchCredentialsModeOmit);
-
-  ResourceLoaderOptions options;
-
+  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
+                                kClientDidNotRequestCredentials);
   EXPECT_EQ(ResourceRequestBlockedReason::CSP,
             fetch_context_->AllowResponse(Resource::kScript, resource_request,
                                           url, options));

@@ -96,7 +96,7 @@ TEST(ComputedStyleTest,
      UpdatePropertySpecificDifferencesRespectsTransformAnimation) {
   RefPtr<ComputedStyle> style = ComputedStyle::Create();
   RefPtr<ComputedStyle> other = ComputedStyle::Clone(*style);
-  other->SetHasCurrentTransformAnimation(true);
+  other->SetHasCurrentTransformAnimation();
   StyleDifference diff;
   style->UpdatePropertySpecificDifferences(*other, diff);
   EXPECT_TRUE(diff.TransformChanged());

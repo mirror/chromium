@@ -4,8 +4,6 @@
 
 #include "ios/chrome/browser/component_updater/ios_component_updater_configurator.h"
 
-#include <stdint.h>
-
 #include <string>
 #include <vector>
 
@@ -53,7 +51,6 @@ class IOSConfigurator : public update_client::Configurator {
       const override;
   PrefService* GetPrefService() const override;
   bool IsPerUserInstall() const override;
-  std::vector<uint8_t> GetRunActionKeyHash() const override;
 
  private:
   friend class base::RefCountedThreadSafe<IOSConfigurator>;
@@ -168,10 +165,6 @@ PrefService* IOSConfigurator::GetPrefService() const {
 
 bool IOSConfigurator::IsPerUserInstall() const {
   return true;
-}
-
-std::vector<uint8_t> IOSConfigurator::GetRunActionKeyHash() const {
-  return configurator_impl_.GetRunActionKeyHash();
 }
 
 }  // namespace

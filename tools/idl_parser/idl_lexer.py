@@ -3,12 +3,12 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-""" Lexer for Web IDL
+""" Lexer for PPAPI IDL
 
-The lexer uses the PLY library to build a tokenizer which understands
-Web IDL tokens.
+The lexer uses the PLY library to build a tokenizer which understands both
+WebIDL and Pepper tokens.
 
-Web IDL, and Web IDL regular expressions can be found at:
+WebIDL, and WebIDL regular expressions can be found at:
    http://heycam.github.io/webidl/
 PLY can be found at:
    http://www.dabeaz.com/ply/

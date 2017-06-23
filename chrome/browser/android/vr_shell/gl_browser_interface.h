@@ -19,9 +19,8 @@ class WebInputEvent;
 
 namespace vr_shell {
 
-// An interface for the GL thread to communicate with the rest of the system
-// (UI, VrShell, etc). Many of the functions in this interface are proxies to
-// methods on VrShell.
+// An interface for the GL thread to communicate with VrShell. Many of the
+// functions in this interface are proxies to methods on VrShell.
 class GlBrowserInterface {
  public:
   virtual ~GlBrowserInterface() = default;
@@ -39,7 +38,6 @@ class GlBrowserInterface {
       device::mojom::VRDisplayInfoPtr* info) = 0;
   virtual void OnContentPaused(bool enabled) = 0;
   virtual void ToggleCardboardGamepad(bool enabled) = 0;
-  virtual void OnGLInitialized() = 0;
 };
 
 }  // namespace vr_shell

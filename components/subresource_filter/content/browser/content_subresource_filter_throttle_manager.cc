@@ -21,7 +21,6 @@
 #include "components/subresource_filter/core/browser/subresource_filter_constants.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/navigation_throttle.h"
-#include "content/public/browser/page_navigator.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/console_message_level.h"
@@ -212,30 +211,17 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
   }
 }
 
-// Blocking popups here should trigger the standard popup blocking UI, so don't
-// force the subresource filter specific UI.
-bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow(
-    const content::OpenURLParams* open_url_params) {
+bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow() {
   auto it = activated_frame_hosts_.find(web_contents()->GetMainFrame());
   if (it == activated_frame_hosts_.end())
     return false;
   const ActivationState state = it->second->activation_state();
-  if (state.activation_level != ActivationLevel::ENABLED ||
-      state.filtering_disabled_for_document ||
-      state.generic_blocking_rules_disabled ||
-      !delegate_->AllowStrongPopupBlocking()) {
-    return false;
-  }
-
-  // Block new windows from navigations whose triggering JS Event has an
-  // isTrusted bit set to false. This bit is set to true if the event is
-  // generated via a user action. See docs:
-  // https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted
-  if (open_url_params) {
-    return open_url_params->triggering_event_info ==
-           blink::WebTriggeringEventInfo::kFromUntrustedEvent;
-  }
-  return true;
+  // This should trigger the standard popup blocking UI, so don't force the
+  // subresource filter specific UI here.
+  return state.activation_level == ActivationLevel::ENABLED &&
+         !state.filtering_disabled_for_document &&
+         !state.generic_blocking_rules_disabled &&
+         delegate_->AllowStrongPopupBlocking();
 }
 
 std::unique_ptr<SubframeNavigationFilteringThrottle>

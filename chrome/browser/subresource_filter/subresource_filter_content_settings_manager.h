@@ -55,9 +55,6 @@ class SubresourceFilterContentSettingsManager
   void OnDidShowUI(const GURL& url);
   bool ShouldShowUIForSite(const GURL& url) const;
   bool should_use_smart_ui() const { return should_use_smart_ui_; }
-  void set_should_use_smart_ui_for_testing(bool should_use_smart_ui) {
-    should_use_smart_ui_ = should_use_smart_ui;
-  }
 
   void ClearSiteMetadata(const GURL& url);
 
@@ -68,7 +65,7 @@ class SubresourceFilterContentSettingsManager
   // Time before showing the UI again on a domain.
   // TODO(csharrison): Consider setting this via a finch param.
   static constexpr base::TimeDelta kDelayBeforeShowingInfobarAgain =
-      base::TimeDelta::FromHours(24);
+      base::TimeDelta::FromMinutes(30);
 
  private:
   // content_settings::Observer:
@@ -104,7 +101,7 @@ class SubresourceFilterContentSettingsManager
   // user initiated through the settings UI.
   bool ignore_settings_changes_ = false;
 
-  bool should_use_smart_ui_ = false;
+  const bool should_use_smart_ui_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterContentSettingsManager);
 };

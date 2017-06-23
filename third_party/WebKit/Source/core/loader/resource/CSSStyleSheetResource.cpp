@@ -35,10 +35,8 @@
 #include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/CurrentTime.h"
-#include "platform/wtf/text/TextEncoding.h"
 
 namespace blink {
 
@@ -57,23 +55,22 @@ CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
 
 CSSStyleSheetResource* CSSStyleSheetResource::CreateForTest(
     const KURL& url,
-    const WTF::TextEncoding& encoding) {
+    const String& charset) {
   ResourceRequest request(url);
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
-  ResourceLoaderOptions options;
-  TextResourceDecoderOptions decoder_options(
-      TextResourceDecoderOptions::kCSSContent, encoding);
-  return new CSSStyleSheetResource(request, options, decoder_options);
+  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
+                                kClientDidNotRequestCredentials);
+  return new CSSStyleSheetResource(request, options, charset);
 }
 
 CSSStyleSheetResource::CSSStyleSheetResource(
     const ResourceRequest& resource_request,
     const ResourceLoaderOptions& options,
-    const TextResourceDecoderOptions& decoder_options)
+    const String& charset)
     : StyleSheetResource(resource_request,
                          kCSSStyleSheet,
                          options,
-                         decoder_options),
+                         TextResourceDecoder::kCSSContent,
+                         charset),
       did_notify_first_data_(false) {}
 
 CSSStyleSheetResource::~CSSStyleSheetResource() {}

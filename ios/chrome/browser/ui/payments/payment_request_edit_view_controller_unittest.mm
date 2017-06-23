@@ -42,9 +42,6 @@
   return NO;
 }
 
-- (void)formatValueForEditorField:(EditorField*)field {
-}
-
 - (UIImage*)iconIdentifyingEditorField:(EditorField*)field {
   return nil;
 }

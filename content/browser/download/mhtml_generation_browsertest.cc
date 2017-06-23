@@ -376,13 +376,7 @@ IN_PROC_BROWSER_TEST_F(MHTMLGenerationTest, GenerateMHTMLAndExitRenderer) {
   EXPECT_GT(ReadFileSizeFromDisk(path), 100);  // Verify the actual file size.
 }
 
-// TODO(crbug.com/672313): Flaky on Windows.
-#if defined(OS_WIN)
-#define MAYBE_InvalidPath DISABLED_InvalidPath
-#else
-#define MAYBE_InvalidPath InvalidPath
-#endif
-IN_PROC_BROWSER_TEST_F(MHTMLGenerationTest, MAYBE_InvalidPath) {
+IN_PROC_BROWSER_TEST_F(MHTMLGenerationTest, InvalidPath) {
   base::FilePath path(FILE_PATH_LITERAL("/invalid/file/path"));
 
   GenerateMHTML(path, embedded_test_server()->GetURL(

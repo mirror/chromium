@@ -14,7 +14,8 @@
 
 #import "remoting/ios/app/app_view_controller.h"
 #import "remoting/ios/app/remoting_view_controller.h"
-#import "remoting/ios/facade/remoting_oauth_authentication.h"
+#import "remoting/ios/facade/remoting_authentication.h"
+#import "remoting/ios/facade/remoting_service.h"
 
 @interface AppDelegate () {
   AppViewController* _appViewController;
@@ -39,11 +40,7 @@
   return YES;
 }
 
-#ifndef NDEBUG
 - (BOOL)application:(UIApplication*)application handleOpenURL:(NSURL*)url {
-  DCHECK([RemotingService.instance.authentication
-      isKindOfClass:[RemotingOAuthAuthentication class]]);
-
   NSMutableDictionary* components = [[NSMutableDictionary alloc] init];
   NSArray* urlComponents = [[url query] componentsSeparatedByString:@"&"];
 
@@ -55,13 +52,12 @@
   }
   NSString* authorizationCode = [components objectForKey:@"code"];
 
-  [(RemotingOAuthAuthentication*)RemotingService.instance.authentication
+  [[RemotingService SharedInstance].authentication
       authenticateWithAuthorizationCode:authorizationCode];
 
   [self launchRemotingViewController];
   return YES;
 }
-#endif  // ifndef NDEBUG
 
 #pragma mark - Public
 - (void)showMenuAnimated:(BOOL)animated {
@@ -92,6 +88,7 @@
   UINavigationController* navController =
       [[UINavigationController alloc] initWithRootViewController:vc];
   navController.navigationBarHidden = true;
+
   _appViewController =
       [[AppViewController alloc] initWithMainViewController:navController];
   self.window.rootViewController = _appViewController;

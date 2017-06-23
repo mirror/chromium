@@ -53,13 +53,11 @@ class MEDIA_EXPORT NullVideoSink : public VideoRendererSink {
     background_render_ = is_background_rendering;
   }
 
-  void set_clockless(bool clockless) { clockless_ = clockless; }
-
  private:
   // Task that periodically calls Render() to consume video data.
   void CallRender();
 
-  bool clockless_;
+  const bool clockless_;
   const base::TimeDelta interval_;
   const NewFrameCB new_frame_cb_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;

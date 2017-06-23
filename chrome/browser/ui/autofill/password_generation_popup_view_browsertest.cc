@@ -28,6 +28,7 @@ class TestPasswordGenerationPopupController :
             gfx::RectF(0, 0, 10, 10),
             PasswordForm(),
             10,
+            nullptr /* PasswordManager*/,
             password_manager::ContentPasswordManagerDriverFactory::
                 FromWebContents(web_contents)
                     ->GetDriverForFrame(web_contents->GetMainFrame()),

@@ -31,6 +31,8 @@ namespace blink {
 
 static const size_t kInitialDisplayItemListCapacityBytes = 512;
 
+template class RasterInvalidationTrackingMap<const PaintChunk>;
+
 // FrameFirstPaint stores first-paint, text or image painted for the
 // corresponding frame. They are never reset to false. First-paint is defined in
 // https://github.com/WICG/paint-timing. It excludes default background paint.
@@ -74,7 +76,7 @@ class PLATFORM_EXPORT PaintController {
   void UpdateCurrentPaintChunkProperties(
       const PaintChunk::Id*,
       const PaintChunkProperties&,
-      NewChunkForceState force_new_chunk = kDontForceNewChunk);
+      NewChunkForceState force_new_chunk = DontForceNewChunk);
 
   // Retrieve the current paint properties.
   const PaintChunkProperties& CurrentPaintChunkProperties() const;
@@ -196,7 +198,7 @@ class PLATFORM_EXPORT PaintController {
   }
 #endif
 
-  void SetTracksRasterInvalidations(bool);
+  void SetTracksRasterInvalidations(bool value);
   void SetupRasterUnderInvalidationChecking();
 
   bool LastDisplayItemIsSubsequenceEnd() const;

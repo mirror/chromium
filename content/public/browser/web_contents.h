@@ -562,12 +562,8 @@ class WebContents : public PageNavigator,
   // Various other systems need to know about our interstitials.
   virtual bool ShowingInterstitialPage() const = 0;
 
-  // Returns the currently visible interstitial, nullptr if no interstitial is
-  // visible. Note: This returns nullptr from the time the interstitial page has
-  // Show() called on it until the interstitial content is ready and the
-  // interstitial is displayed.
-  //
-  // Compare to InterstitialPage::GetInterstitialPage.
+  // Returns the currently showing interstitial, nullptr if no interstitial is
+  // showing.
   virtual InterstitialPage* GetInterstitialPage() const = 0;
 
   // Misc state & callbacks ----------------------------------------------------

@@ -37,9 +37,7 @@ TextInputClient* DummyInputMethod::GetTextInputClient() const {
   return NULL;
 }
 
-ui::EventDispatchDetails DummyInputMethod::DispatchKeyEvent(
-    ui::KeyEvent* event) {
-  return ui::EventDispatchDetails();
+void DummyInputMethod::DispatchKeyEvent(ui::KeyEvent* event) {
 }
 
 void DummyInputMethod::OnTextInputTypeChanged(const TextInputClient* client) {

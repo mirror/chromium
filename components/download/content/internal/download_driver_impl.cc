@@ -49,18 +49,14 @@ DriverEntry DownloadDriverImpl::CreateDriverEntry(
   entry.paused = item->IsPaused();
   entry.bytes_downloaded = item->GetReceivedBytes();
   entry.expected_total_size = item->GetTotalBytes();
-  entry.current_file_path =
-      item->GetState() == content::DownloadItem::DownloadState::COMPLETE
-          ? item->GetTargetFilePath()
-          : item->GetFullPath();
-  entry.completion_time = item->GetEndTime();
   entry.response_headers = item->GetResponseHeaders();
   entry.url_chain = item->GetUrlChain();
   return entry;
 }
 
-DownloadDriverImpl::DownloadDriverImpl(content::DownloadManager* manager)
-    : download_manager_(manager), client_(nullptr) {
+DownloadDriverImpl::DownloadDriverImpl(content::DownloadManager* manager,
+                                       const base::FilePath& dir)
+    : download_manager_(manager), file_dir_(dir), client_(nullptr) {
   DCHECK(download_manager_);
 }
 
@@ -93,7 +89,6 @@ bool DownloadDriverImpl::IsReady() const {
 void DownloadDriverImpl::Start(
     const RequestParams& request_params,
     const std::string& guid,
-    const base::FilePath& file_path,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!request_params.url.is_empty());
   DCHECK(!guid.empty());
@@ -119,7 +114,7 @@ void DownloadDriverImpl::Start(
   download_url_params->set_guid(guid);
   download_url_params->set_transient(true);
   download_url_params->set_method(request_params.method);
-  download_url_params->set_file_path(file_path);
+  download_url_params->set_file_path(file_dir_.AppendASCII(guid));
 
   download_manager_->DownloadUrl(std::move(download_url_params));
 }
@@ -186,7 +181,7 @@ void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
   DriverEntry entry = CreateDriverEntry(item);
 
   if (state == DownloadState::COMPLETE) {
-    client_->OnDownloadSucceeded(entry);
+    client_->OnDownloadSucceeded(entry, item->GetTargetFilePath());
     item->RemoveObserver(this);
   } else if (state == DownloadState::IN_PROGRESS) {
     client_->OnDownloadUpdated(entry);

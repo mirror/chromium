@@ -50,22 +50,27 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
  private:
   bool IsHorizontalWritingMode() const { return is_horizontal_writing_mode_; }
 
+  LayoutUnit LogicalLeftOffset(const NGLayoutOpportunity&) const;
+
   void BidiReorder(NGInlineItemResults*);
 
   bool PlaceItems(NGLineInfo*, RefPtr<NGInlineBreakToken>);
   NGInlineBoxState* PlaceAtomicInline(const NGInlineItem&,
                                       NGInlineItemResult*,
-                                      const NGLineInfo&,
+                                      bool is_first_line,
                                       LayoutUnit position,
                                       NGLineBoxFragmentBuilder*,
                                       NGTextFragmentBuilder*);
 
-  void ApplyTextAlign(ETextAlign,
+  void ApplyTextAlign(const ComputedStyle&,
+                      ETextAlign,
                       LayoutUnit* line_left,
                       LayoutUnit inline_size,
                       LayoutUnit available_width);
 
   LayoutUnit ComputeContentSize(const NGLineInfo&, LayoutUnit line_bottom);
+
+  NGLayoutOpportunity FindLayoutOpportunityForLine();
 
   NGInlineLayoutStateStack box_states_;
   LayoutUnit content_size_;

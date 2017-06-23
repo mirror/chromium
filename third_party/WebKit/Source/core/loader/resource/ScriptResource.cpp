@@ -33,7 +33,6 @@
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 
 namespace blink {
@@ -50,11 +49,14 @@ ScriptResource* ScriptResource::Fetch(FetchParameters& params,
   return resource;
 }
 
-ScriptResource::ScriptResource(
-    const ResourceRequest& resource_request,
-    const ResourceLoaderOptions& options,
-    const TextResourceDecoderOptions& decoder_options)
-    : TextResource(resource_request, kScript, options, decoder_options) {}
+ScriptResource::ScriptResource(const ResourceRequest& resource_request,
+                               const ResourceLoaderOptions& options,
+                               const String& charset)
+    : TextResource(resource_request,
+                   kScript,
+                   options,
+                   TextResourceDecoder::kPlainTextContent,
+                   charset) {}
 
 ScriptResource::~ScriptResource() {}
 

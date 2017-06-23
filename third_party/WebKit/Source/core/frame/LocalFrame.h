@@ -122,9 +122,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void PrintNavigationWarning(const String&) override;
   bool PrepareForCommit() override;
   void DidChangeVisibilityState() override;
-  // This sets the is_inert_ flag and also recurses through this frame's
-  // subtree, updating the inert bit on all descendant frames.
-  void SetIsInert(bool) override;
 
   void DetachChildren();
   void DocumentAttached();
@@ -250,8 +247,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   std::unique_ptr<WebURLLoader> CreateURLLoader();
 
-  bool IsInert() const { return is_inert_; }
-
   using FrameInitCallback = void (*)(LocalFrame*);
   // Allows for the registration of a callback that is invoked whenever a new
   // LocalFrame is initialized. Callbacks are executed in the order that they
@@ -291,8 +286,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void DisableNavigation() { ++navigation_disable_count_; }
 
   bool CanNavigateWithoutFramebusting(const Frame&, String& error_reason);
-
-  void PropagateInertToChildFrames();
 
   std::unique_ptr<WebFrameScheduler> frame_scheduler_;
 
@@ -414,24 +407,15 @@ class FrameNavigationDisabler {
 // In Trace Viewer, we can find the cost of slice |foo| attributed to |frame|.
 // Design doc:
 // https://docs.google.com/document/d/15BB-suCb9j-nFt55yCFJBJCGzLg2qUm3WaSOPb8APtI/edit?usp=sharing
-//
-// This class is used in performance-sensitive code (like V8 entry), so care
-// should be taken to ensure that it has an efficient fast path (for the common
-// case where we are not tracking this).
 class ScopedFrameBlamer {
   WTF_MAKE_NONCOPYABLE(ScopedFrameBlamer);
   STACK_ALLOCATED();
 
  public:
   explicit ScopedFrameBlamer(LocalFrame*);
-  ~ScopedFrameBlamer() {
-    if (UNLIKELY(frame_))
-      LeaveContext();
-  }
+  ~ScopedFrameBlamer();
 
  private:
-  void LeaveContext();
-
   Member<LocalFrame> frame_;
 };
 

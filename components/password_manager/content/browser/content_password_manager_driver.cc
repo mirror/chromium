@@ -272,7 +272,8 @@ void ContentPasswordManagerDriver::PasswordNoLongerGenerated(
           password_form.origin,
           BadMessageReason::CPMD_BAD_ORIGIN_PASSWORD_NO_LONGER_GENERATED))
     return;
-  GetPasswordManager()->OnPasswordNoLongerGenerated(password_form);
+  GetPasswordManager()->SetHasGeneratedPasswordForForm(this, password_form,
+                                                       false);
 }
 
 void ContentPasswordManagerDriver::SaveGenerationFieldDetectedByClassifier(

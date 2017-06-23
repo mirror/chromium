@@ -71,7 +71,6 @@
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/NetworkLog.h"
 #include "platform/network/ParsedContentType.h"
@@ -671,10 +670,7 @@ void XMLHttpRequest::open(const AtomicString& method,
 }
 
 bool XMLHttpRequest::InitSend(ExceptionState& exception_state) {
-  // We need to check ContextDestroyed because it is possible to create a
-  // XMLHttpRequest with already detached document.
-  // TODO(yhirano): Fix this.
-  if (!GetExecutionContext() || GetExecutionContext()->IsContextDestroyed()) {
+  if (!GetExecutionContext()) {
     HandleNetworkError();
     ThrowForLoadFailureIfNeeded(exception_state,
                                 "Document is already detached.");
@@ -970,7 +966,15 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
 
   same_origin_request_ = GetSecurityOrigin()->CanRequestNoSuborigin(url_);
 
-  if (!same_origin_request_ && with_credentials_) {
+  // Per https://w3c.github.io/webappsec-suborigins/#security-model-opt-outs,
+  // credentials are forced when credentials mode is "same-origin", the
+  // 'unsafe-credentials' option is set, and the request's physical origin is
+  // the same as the URL's.
+  bool include_credentials =
+      GetSecurityOrigin()->HasSuboriginAndShouldAllowCredentialsFor(url_) ||
+      with_credentials_;
+
+  if (!same_origin_request_ && include_credentials) {
     UseCounter::Count(&execution_context,
                       WebFeature::kXMLHttpRequestCrossOriginWithCredentials);
   }
@@ -1017,7 +1021,15 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
           : kEnforceContentSecurityPolicy;
   options.timeout_milliseconds = timeout_milliseconds_;
 
-  ResourceLoaderOptions resource_loader_options;
+  StoredCredentials allow_credentials =
+      (same_origin_request_ || include_credentials)
+          ? kAllowStoredCredentials
+          : kDoNotAllowStoredCredentials;
+  CredentialRequest credentials_requested =
+      with_credentials_ ? kClientRequestedCredentials
+                        : kClientDidNotRequestCredentials;
+  ResourceLoaderOptions resource_loader_options(allow_credentials,
+                                                credentials_requested);
   resource_loader_options.security_origin = GetSecurityOrigin();
   resource_loader_options.initiator_info.name =
       FetchInitiatorTypeNames::xmlhttprequest;
@@ -1698,35 +1710,35 @@ void XMLHttpRequest::ParseDocumentChunk(const char* data, unsigned len) {
 
 std::unique_ptr<TextResourceDecoder> XMLHttpRequest::CreateDecoder() const {
   if (response_type_code_ == kResponseTypeJSON) {
-    return TextResourceDecoder::Create(TextResourceDecoderOptions(
-        TextResourceDecoderOptions::kPlainTextContent, UTF8Encoding()));
+    return TextResourceDecoder::Create(TextResourceDecoder::kPlainTextContent,
+                                       UTF8Encoding());
   }
 
   if (!final_response_charset_.IsEmpty()) {
-    return TextResourceDecoder::Create(TextResourceDecoderOptions(
-        TextResourceDecoderOptions::kPlainTextContent,
-        WTF::TextEncoding(final_response_charset_)));
+    return TextResourceDecoder::Create(
+        TextResourceDecoder::kPlainTextContent,
+        WTF::TextEncoding(final_response_charset_));
   }
 
   // allow TextResourceDecoder to look inside the m_response if it's XML or HTML
   if (ResponseIsXML()) {
-    TextResourceDecoderOptions options(TextResourceDecoderOptions::kXMLContent);
-
+    std::unique_ptr<TextResourceDecoder> decoder =
+        TextResourceDecoder::Create(TextResourceDecoder::kXMLContent);
     // Don't stop on encoding errors, unlike it is done for other kinds
     // of XML resources. This matches the behavior of previous WebKit
     // versions, Firefox and Opera.
-    options.SetUseLenientXMLDecoding();
+    decoder->UseLenientXMLDecoding();
 
-    return TextResourceDecoder::Create(options);
+    return decoder;
   }
 
   if (ResponseIsHTML()) {
-    return TextResourceDecoder::Create(TextResourceDecoderOptions(
-        TextResourceDecoderOptions::kHTMLContent, UTF8Encoding()));
+    return TextResourceDecoder::Create(TextResourceDecoder::kHTMLContent,
+                                       UTF8Encoding());
   }
 
-  return TextResourceDecoder::Create(TextResourceDecoderOptions(
-      TextResourceDecoderOptions::kPlainTextContent, UTF8Encoding()));
+  return TextResourceDecoder::Create(TextResourceDecoder::kPlainTextContent,
+                                     UTF8Encoding());
 }
 
 void XMLHttpRequest::DidReceiveData(const char* data, unsigned len) {

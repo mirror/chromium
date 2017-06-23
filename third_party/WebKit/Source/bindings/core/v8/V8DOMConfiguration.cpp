@@ -93,7 +93,6 @@ void InstallAttributeInternal(
     v8::Local<v8::Object> prototype,
     const V8DOMConfiguration::AttributeConfiguration& config,
     const DOMWrapperWorld& world) {
-  DCHECK(!instance.IsEmpty() || !prototype.IsEmpty());
   if (!WorldConfigurationApplies(config, world))
     return;
 
@@ -104,16 +103,16 @@ void InstallAttributeInternal(
       v8::External::New(isolate, const_cast<WrapperTypeInfo*>(config.data));
   v8::PropertyAttribute attribute =
       static_cast<v8::PropertyAttribute>(config.attribute);
-  const unsigned location = config.property_location_configuration;
-  DCHECK(location);
+  unsigned location = config.property_location_configuration;
 
+  DCHECK(location);
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
-  if (location & V8DOMConfiguration::kOnInstance && !instance.IsEmpty()) {
+  if (location & V8DOMConfiguration::kOnInstance) {
     instance
         ->SetNativeDataProperty(context, name, getter, setter, data, attribute)
         .ToChecked();
   }
-  if (location & V8DOMConfiguration::kOnPrototype && !prototype.IsEmpty()) {
+  if (location & V8DOMConfiguration::kOnPrototype) {
     prototype
         ->SetNativeDataProperty(context, name, getter, setter, data, attribute)
         .ToChecked();
@@ -214,24 +213,6 @@ v8::Local<v8::Function> CreateAccessorFunctionOrTemplate<v8::Function>(
   return function;
 }
 
-// Returns true iff |target| is the empty handle to v8::Object.
-// Returns false especially when |target| is a handle to v8::ObjectTemplate.
-bool IsObjectAndEmpty(v8::Local<v8::Object> target) {
-  return target.IsEmpty();
-}
-
-bool IsObjectAndEmpty(v8::Local<v8::Function> target) {
-  return target.IsEmpty();
-}
-
-bool IsObjectAndEmpty(v8::Local<v8::ObjectTemplate> target) {
-  return false;
-}
-
-bool IsObjectAndEmpty(v8::Local<v8::FunctionTemplate> target) {
-  return false;
-}
-
 template <class ObjectOrTemplate, class FunctionOrTemplate>
 void InstallAccessorInternal(
     v8::Isolate* isolate,
@@ -239,34 +220,29 @@ void InstallAccessorInternal(
     v8::Local<ObjectOrTemplate> prototype_or_template,
     v8::Local<FunctionOrTemplate> interface_or_template,
     v8::Local<v8::Signature> signature,
-    const V8DOMConfiguration::AccessorConfiguration& config,
+    const V8DOMConfiguration::AccessorConfiguration& accessor,
     const DOMWrapperWorld& world) {
-  DCHECK(!IsObjectAndEmpty(instance_or_template) ||
-         !IsObjectAndEmpty(prototype_or_template) ||
-         !IsObjectAndEmpty(interface_or_template));
-  if (!WorldConfigurationApplies(config, world))
+  if (!WorldConfigurationApplies(accessor, world))
     return;
-
-  v8::Local<v8::Name> name = V8AtomicString(isolate, config.name);
-  v8::FunctionCallback getter_callback = config.getter;
-  v8::FunctionCallback setter_callback = config.setter;
+  v8::Local<v8::Name> name = V8AtomicString(isolate, accessor.name);
+  v8::FunctionCallback getter_callback = accessor.getter;
+  v8::FunctionCallback setter_callback = accessor.setter;
   V8DOMConfiguration::CachedPropertyKey cached_property_key = nullptr;
   if (world.IsMainWorld()) {
-    cached_property_key = config.cached_property_key;
+    cached_property_key = accessor.cached_property_key;
   }
 
   // Support [LenientThis] by not specifying the signature.  V8 does not do
   // the type checking against holder if no signature is specified.  Note that
   // info.Holder() passed to callbacks will be *unsafe*.
-  if (config.holder_check_configuration ==
+  if (accessor.holder_check_configuration ==
       V8DOMConfiguration::kDoNotCheckHolder)
     signature = v8::Local<v8::Signature>();
   v8::Local<v8::Value> data =
-      v8::External::New(isolate, const_cast<WrapperTypeInfo*>(config.data));
+      v8::External::New(isolate, const_cast<WrapperTypeInfo*>(accessor.data));
 
-  const unsigned location = config.property_location_configuration;
-  DCHECK(location);
-  if (location &
+  DCHECK(accessor.property_location_configuration);
+  if (accessor.property_location_configuration &
       (V8DOMConfiguration::kOnInstance | V8DOMConfiguration::kOnPrototype)) {
     v8::Local<FunctionOrTemplate> getter =
         CreateAccessorFunctionOrTemplate<FunctionOrTemplate>(
@@ -274,21 +250,21 @@ void InstallAccessorInternal(
     v8::Local<FunctionOrTemplate> setter =
         CreateAccessorFunctionOrTemplate<FunctionOrTemplate>(
             isolate, setter_callback, nullptr, data, signature, 1);
-    if (location & V8DOMConfiguration::kOnInstance &&
-        !IsObjectAndEmpty(instance_or_template)) {
+    if (accessor.property_location_configuration &
+        V8DOMConfiguration::kOnInstance) {
       instance_or_template->SetAccessorProperty(
           name, getter, setter,
-          static_cast<v8::PropertyAttribute>(config.attribute));
+          static_cast<v8::PropertyAttribute>(accessor.attribute));
     }
-    if (location & V8DOMConfiguration::kOnPrototype &&
-        !IsObjectAndEmpty(prototype_or_template)) {
+    if (accessor.property_location_configuration &
+        V8DOMConfiguration::kOnPrototype) {
       prototype_or_template->SetAccessorProperty(
           name, getter, setter,
-          static_cast<v8::PropertyAttribute>(config.attribute));
+          static_cast<v8::PropertyAttribute>(accessor.attribute));
     }
   }
-  if (location & V8DOMConfiguration::kOnInterface &&
-      !IsObjectAndEmpty(interface_or_template)) {
+  if (accessor.property_location_configuration &
+      V8DOMConfiguration::kOnInterface) {
     // Attributes installed on the interface object must be static
     // attributes, so no need to specify a signature, i.e. no need to do
     // type check against a holder.
@@ -302,7 +278,7 @@ void InstallAccessorInternal(
             1);
     interface_or_template->SetAccessorProperty(
         name, getter, setter,
-        static_cast<v8::PropertyAttribute>(config.attribute));
+        static_cast<v8::PropertyAttribute>(accessor.attribute));
   }
 }
 
@@ -445,61 +421,62 @@ void InstallMethodInternal(
     v8::Local<v8::Object> prototype,
     v8::Local<v8::Function> interface,
     v8::Local<v8::Signature> signature,
-    const V8DOMConfiguration::MethodConfiguration& config,
+    const V8DOMConfiguration::MethodConfiguration& method,
     const DOMWrapperWorld& world) {
-  DCHECK(!instance.IsEmpty() || !prototype.IsEmpty() || !interface.IsEmpty());
-  if (!WorldConfigurationApplies(config, world))
+  if (!WorldConfigurationApplies(method, world))
     return;
 
-  v8::Local<v8::Name> name = config.MethodName(isolate);
-  v8::FunctionCallback callback = config.callback;
+  v8::Local<v8::Name> name = method.MethodName(isolate);
+  v8::FunctionCallback callback = method.callback;
   // Promise-returning functions need to return a reject promise when
   // an exception occurs.  This includes a case that the receiver object is not
   // of the type.  So, we disable the type check of the receiver object on V8
   // side so that V8 won't throw.  Instead, we do the check on Blink side and
   // convert an exception to a reject promise.
-  if (config.holder_check_configuration ==
+  if (method.holder_check_configuration ==
       V8DOMConfiguration::kDoNotCheckHolder)
     signature = v8::Local<v8::Signature>();
 
-  const unsigned location = config.property_location_configuration;
-  DCHECK(location);
-  if (location &
+  DCHECK(method.property_location_configuration);
+  if (method.property_location_configuration &
       (V8DOMConfiguration::kOnInstance | V8DOMConfiguration::kOnPrototype)) {
     v8::Local<v8::FunctionTemplate> function_template =
         v8::FunctionTemplate::New(isolate, callback, v8::Local<v8::Value>(),
-                                  signature, config.length);
+                                  signature, method.length);
     function_template->RemovePrototype();
-    if (config.access_check_configuration == V8DOMConfiguration::kCheckAccess)
+    if (method.access_check_configuration == V8DOMConfiguration::kCheckAccess)
       function_template->SetAcceptAnyReceiver(false);
     v8::Local<v8::Function> function =
         function_template->GetFunction(isolate->GetCurrentContext())
             .ToLocalChecked();
-    if (location & V8DOMConfiguration::kOnInstance && !instance.IsEmpty())
+    if (method.property_location_configuration &
+        V8DOMConfiguration::kOnInstance)
       instance
           ->DefineOwnProperty(
               isolate->GetCurrentContext(), name, function,
-              static_cast<v8::PropertyAttribute>(config.attribute))
+              static_cast<v8::PropertyAttribute>(method.attribute))
           .ToChecked();
-    if (location & V8DOMConfiguration::kOnPrototype && !prototype.IsEmpty())
+    if (method.property_location_configuration &
+        V8DOMConfiguration::kOnPrototype)
       prototype
           ->DefineOwnProperty(
               isolate->GetCurrentContext(), name, function,
-              static_cast<v8::PropertyAttribute>(config.attribute))
+              static_cast<v8::PropertyAttribute>(method.attribute))
           .ToChecked();
   }
-  if (location & V8DOMConfiguration::kOnInterface && !interface.IsEmpty()) {
+  if (method.property_location_configuration &
+      V8DOMConfiguration::kOnInterface) {
     // Operations installed on the interface object must be static
     // operations, so no need to specify a signature, i.e. no need to do
     // type check against a holder.
     v8::Local<v8::FunctionTemplate> function_template =
         v8::FunctionTemplate::New(isolate, callback, v8::Local<v8::Value>(),
-                                  v8::Local<v8::Signature>(), config.length);
+                                  v8::Local<v8::Signature>(), method.length);
     function_template->RemovePrototype();
     v8::Local<v8::Function> function =
         function_template->GetFunction(isolate->GetCurrentContext())
             .ToLocalChecked();
-    interface->DefineOwnProperty(isolate->GetCurrentContext(), name, function, static_cast<v8::PropertyAttribute>(config.attribute)).ToChecked();
+    interface->DefineOwnProperty(isolate->GetCurrentContext(), name, function, static_cast<v8::PropertyAttribute>(method.attribute)).ToChecked();
   }
 }
 

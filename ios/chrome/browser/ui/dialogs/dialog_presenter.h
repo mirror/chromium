@@ -86,8 +86,8 @@ class WebState;
 // The dialog currently being shown.
 @property(nonatomic, readonly) AlertCoordinator* presentedDialogCoordinator;
 
-// Called when |coordinator| is stopped.
-- (void)dialogCoordinatorWasStopped:(AlertCoordinator*)coordinator;
+// Called when a button in |dialog| is tapped.
+- (void)buttonWasTappedForCoordinator:(AlertCoordinator*)coordinator;
 
 @end
 

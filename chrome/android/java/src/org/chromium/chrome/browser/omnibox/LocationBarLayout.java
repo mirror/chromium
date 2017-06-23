@@ -394,7 +394,7 @@ public class LocationBarLayout extends FrameLayout
                 // user tapped the URL bar to dismiss the suggestions, then pressed enter. This can
                 // also happen if the user presses enter before any suggestions have been received
                 // from the autocomplete controller.
-                suggestionMatch = mAutocomplete.classify(urlText, mUrlFocusedFromFakebox);
+                suggestionMatch = mAutocomplete.classify(urlText);
                 suggestionMatchPosition = 0;
                 // Classify matches don't propagate to java, so skip the OOB check.
                 skipOutOfBoundsCheck = true;
@@ -624,6 +624,12 @@ public class LocationBarLayout extends FrameLayout
 
         private int getDesiredWidth() {
             return mAnchorView.getWidth();
+        }
+
+        @Override
+        public void onWindowFocusChanged(boolean hasWindowFocus) {
+            super.onWindowFocusChanged(hasWindowFocus);
+            if (!hasWindowFocus && !mSuggestionModalShown) hideSuggestions();
         }
 
         @Override
@@ -1126,7 +1132,7 @@ public class LocationBarLayout extends FrameLayout
     }
 
     @Override
-    public void onTextChangedForAutocomplete() {
+    public void onTextChangedForAutocomplete(final boolean textDeleted) {
         cancelPendingAutocompleteStart();
 
         updateButtonVisibility();
@@ -1152,7 +1158,8 @@ public class LocationBarLayout extends FrameLayout
                 @Override
                 public void run() {
                     String textWithoutAutocomplete = mUrlBar.getTextWithoutAutocomplete();
-                    boolean preventAutocomplete = !mUrlBar.shouldAutocomplete();
+
+                    boolean preventAutocomplete = textDeleted || !mUrlBar.shouldAutocomplete();
                     mRequestSuggestions = null;
 
                     if (getCurrentTab() == null
@@ -1163,8 +1170,7 @@ public class LocationBarLayout extends FrameLayout
                     Profile profile = getToolbarDataProvider().getProfile();
                     String url = getCurrentTab() != null ? getCurrentTab().getUrl()
                                                          : UrlConstants.NTP_URL;
-                    mAutocomplete.start(profile, url, textWithoutAutocomplete, preventAutocomplete,
-                            mUrlFocusedFromFakebox);
+                    mAutocomplete.start(profile, url, textWithoutAutocomplete, preventAutocomplete);
                 }
             };
             if (mNativeInitialized) {
@@ -1173,6 +1179,11 @@ public class LocationBarLayout extends FrameLayout
                 mDeferredNativeRunnables.add(mRequestSuggestions);
             }
         }
+
+        // Occasionally, was seeing the selection in the URL not being cleared during
+        // very rapid editing.  This is here to hopefully force a selection reset during
+        // deletes.
+        if (textDeleted) mUrlBar.setSelection(mUrlBar.getSelectionStart());
     }
 
     @Override
@@ -1878,10 +1889,10 @@ public class LocationBarLayout extends FrameLayout
         stopAutocomplete(false);
         if (getCurrentTab() != null) {
             mAutocomplete.start(
-                    getCurrentTab().getProfile(), getCurrentTab().getUrl(), query, false, false);
+                    getCurrentTab().getProfile(), getCurrentTab().getUrl(), query, false);
         } else if (mBottomSheet != null) {
             mAutocomplete.start(
-                    mToolbarDataProvider.getProfile(), UrlConstants.NTP_URL, query, false, false);
+                    mToolbarDataProvider.getProfile(), UrlConstants.NTP_URL, query, false);
         }
         post(new Runnable() {
             @Override
@@ -2359,16 +2370,6 @@ public class LocationBarLayout extends FrameLayout
         }
 
         return FeatureUtilities.isRecognitionIntentPresent(getContext(), true);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        if (!hasWindowFocus && !mSuggestionModalShown) {
-            hideSuggestions();
-        } else if (hasWindowFocus && mUrlHasFocus && mNativeInitialized) {
-            onTextChangedForAutocomplete();
-        }
     }
 
     @Override

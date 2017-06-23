@@ -75,11 +75,10 @@ Timeline.TimelineLoader = class {
   /**
    * @override
    * @param {string} chunk
-   * @return {!Promise}
    */
   write(chunk) {
     if (!this._client)
-      return Promise.resolve();
+      return;
     this._loadedBytes += chunk.length;
     if (this._firstRawChunk)
       this._client.loadingStarted();
@@ -96,13 +95,13 @@ Timeline.TimelineLoader = class {
         this._state = Timeline.TimelineLoader.State.ReadingEvents;
       } else {
         this._reportErrorAndCancelLoading(Common.UIString('Malformed timeline data: Unknown JSON format'));
-        return Promise.resolve();
+        return;
       }
     }
 
     if (this._state === Timeline.TimelineLoader.State.LoadingCPUProfileFormat) {
       this._buffer += chunk;
-      return Promise.resolve();
+      return;
     }
 
     if (this._state === Timeline.TimelineLoader.State.LookingForEvents) {
@@ -111,19 +110,20 @@ Timeline.TimelineLoader = class {
       this._buffer += chunk;
       var pos = this._buffer.indexOf(objectName, startPos);
       if (pos === -1)
-        return Promise.resolve();
+        return;
       chunk = this._buffer.slice(pos + objectName.length);
       this._state = Timeline.TimelineLoader.State.ReadingEvents;
     }
 
     if (this._state !== Timeline.TimelineLoader.State.ReadingEvents)
-      return Promise.resolve();
+      return;
     if (this._jsonTokenizer.write(chunk))
-      return Promise.resolve();
+      return;
     this._state = Timeline.TimelineLoader.State.SkippingTail;
-    if (this._firstChunk)
+    if (this._firstChunk) {
       this._reportErrorAndCancelLoading(Common.UIString('Malformed timeline input, wrong JSON brackets balance'));
-    return Promise.resolve();
+      return;
+    }
   }
 
   /**

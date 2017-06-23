@@ -1,7 +1,10 @@
 'use strict';
 promise_test(() => {
-  return getHIDDevice({filters: [{services: ['device_information']}]})
-    .then(({device}) => device.gatt.getPrimaryService('device_information'))
+  return setBluetoothFakeAdapter('BlocklistTestAdapter')
+    .then(() => requestDeviceWithKeyDown({
+      filters: [{services: ['device_information']}]}))
+    .then(device => device.gatt.connect())
+    .then(gatt => gatt.getPrimaryService('device_information'))
     .then(service => {
       return assert_promise_rejects_with_message(
         service.CALLS([

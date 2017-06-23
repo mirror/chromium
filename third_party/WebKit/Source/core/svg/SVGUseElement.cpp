@@ -211,8 +211,8 @@ void SVGUseElement::UpdateTargetReference() {
       (resource_ &&
        EqualIgnoringFragmentIdentifier(resolved_url, resource_->Url())))
     return;
-
-  ResourceLoaderOptions options;
+  ResourceLoaderOptions options(kAllowStoredCredentials,
+                                kClientRequestedCredentials);
   options.initiator_info.name = localName();
   FetchParameters params(ResourceRequest(resolved_url), options);
   SetDocumentResource(

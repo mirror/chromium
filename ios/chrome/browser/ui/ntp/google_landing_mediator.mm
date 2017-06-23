@@ -171,6 +171,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 }
 
 - (void)setUp {
+  [_consumer setIsOffTheRecord:_browserState->IsOffTheRecord()];
   [_consumer setVoiceSearchIsEnabled:ios::GetChromeBrowserProvider()
                                          ->GetVoiceSearchProvider()
                                          ->IsVoiceSearchEnabled()];

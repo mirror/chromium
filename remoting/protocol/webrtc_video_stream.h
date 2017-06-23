@@ -42,7 +42,7 @@ class WebrtcVideoStream : public VideoStream,
 
   void Start(std::unique_ptr<webrtc::DesktopCapturer> desktop_capturer,
              WebrtcTransport* webrtc_transport,
-             scoped_refptr<base::SequencedTaskRunner> encode_task_runner);
+             scoped_refptr<base::SingleThreadTaskRunner> encode_task_runner);
 
   // VideoStream interface.
   void SetEventTimestampsSource(scoped_refptr<InputEventTimestampsSource>
@@ -54,6 +54,7 @@ class WebrtcVideoStream : public VideoStream,
 
  private:
   struct FrameStats;
+  struct EncodedFrameWithStats;
 
   // webrtc::DesktopCapturer::Callback interface.
   void OnCaptureResult(webrtc::DesktopCapturer::Result result,
@@ -66,7 +67,13 @@ class WebrtcVideoStream : public VideoStream,
   // Called by the |scheduler_|.
   void CaptureNextFrame();
 
-  void OnFrameEncoded(std::unique_ptr<WebrtcVideoEncoder::EncodedFrame> frame);
+  // Task running on the encoder thread to encode the |frame|.
+  static EncodedFrameWithStats EncodeFrame(
+      WebrtcVideoEncoder* encoder,
+      std::unique_ptr<webrtc::DesktopFrame> frame,
+      WebrtcVideoEncoder::FrameParams params,
+      std::unique_ptr<WebrtcVideoStream::FrameStats> stats);
+  void OnFrameEncoded(EncodedFrameWithStats frame);
 
   void OnEncoderCreated(webrtc::VideoCodecType codec_type);
 
@@ -75,7 +82,7 @@ class WebrtcVideoStream : public VideoStream,
   // Used to send across encoded frames.
   WebrtcTransport* webrtc_transport_ = nullptr;
   // Task runner used to run |encoder_|.
-  scoped_refptr<base::SequencedTaskRunner> encode_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> encode_task_runner_;
   // Used to encode captured frames. Always accessed on the encode thread.
   std::unique_ptr<WebrtcVideoEncoder> encoder_;
 
@@ -87,7 +94,7 @@ class WebrtcVideoStream : public VideoStream,
   HostVideoStatsDispatcher video_stats_dispatcher_;
 
   // Stats of the frame that's being captured.
-  std::unique_ptr<FrameStats> current_frame_stats_;
+  std::unique_ptr<FrameStats> captured_frame_stats_;
 
   std::unique_ptr<WebrtcFrameScheduler> scheduler_;
 

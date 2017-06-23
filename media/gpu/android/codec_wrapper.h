@@ -23,11 +23,7 @@
 namespace media {
 class CodecWrapperImpl;
 
-// A MediaCodec output buffer that can be released on any thread. Releasing a
-// CodecOutputBuffer implicitly discards all CodecOutputBuffers that
-// precede it in presentation order; i.e., the only supported use case is to
-// render output buffers in order. This lets us return buffers to the codec as
-// soon as we know we no longer need them.
+// A MediaCodec output buffer that can be released on any thread.
 class MEDIA_GPU_EXPORT CodecOutputBuffer {
  public:
   // Releases the buffer without rendering it.

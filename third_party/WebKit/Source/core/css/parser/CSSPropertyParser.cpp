@@ -10,6 +10,7 @@
 #include "core/css/CSSContentDistributionValue.h"
 #include "core/css/CSSCursorImageValue.h"
 #include "core/css/CSSFontFaceSrcValue.h"
+#include "core/css/CSSFontFamilyValue.h"
 #include "core/css/CSSFunctionValue.h"
 #include "core/css/CSSGridAutoRepeatValue.h"
 #include "core/css/CSSGridLineNamesValue.h"
@@ -34,16 +35,21 @@
 #include "core/css/parser/CSSParserLocalContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/parser/CSSVariableParser.h"
+#include "core/css/parser/FontVariantLigaturesParser.h"
+#include "core/css/parser/FontVariantNumericParser.h"
+#include "core/css/properties/CSSPropertyAPIOffsetAnchor.h"
+#include "core/css/properties/CSSPropertyAPIOffsetPosition.h"
 #include "core/css/properties/CSSPropertyAlignmentUtils.h"
 #include "core/css/properties/CSSPropertyAnimationIterationCountUtils.h"
 #include "core/css/properties/CSSPropertyAnimationNameUtils.h"
 #include "core/css/properties/CSSPropertyBorderImageUtils.h"
 #include "core/css/properties/CSSPropertyBoxShadowUtils.h"
+#include "core/css/properties/CSSPropertyColumnUtils.h"
 #include "core/css/properties/CSSPropertyDescriptor.h"
 #include "core/css/properties/CSSPropertyFontUtils.h"
 #include "core/css/properties/CSSPropertyLengthUtils.h"
 #include "core/css/properties/CSSPropertyMarginUtils.h"
-#include "core/css/properties/CSSPropertyOffsetRotateUtils.h"
+#include "core/css/properties/CSSPropertyOffsetPathUtils.h"
 #include "core/css/properties/CSSPropertyPositionUtils.h"
 #include "core/css/properties/CSSPropertyTransitionPropertyUtils.h"
 #include "core/css/properties/CSSPropertyWebkitBorderWidthUtils.h"
@@ -65,17 +71,12 @@ CSSPropertyParser::CSSPropertyParser(
   range_.ConsumeWhitespace();
 }
 
-// AddProperty takes implicit as an enum, below we're using a bool because
-// AddParsedProperty will be removed after we finish implemenation of property
-// APIs.
 void CSSPropertyParser::AddParsedProperty(CSSPropertyID resolved_property,
                                           CSSPropertyID current_shorthand,
                                           const CSSValue& value,
                                           bool important,
                                           bool implicit) {
-  AddProperty(resolved_property, current_shorthand, value, important,
-              implicit ? IsImplicitProperty::kImplicit
-                       : IsImplicitProperty::kNotImplicit,
+  AddProperty(resolved_property, current_shorthand, value, important, implicit,
               *parsed_properties_);
 }
 
@@ -281,6 +282,10 @@ bool CSSPropertyParser::ConsumeCSSWideKeyword(CSSPropertyID unresolved_property,
   return true;
 }
 
+static CSSIdentifierValue* ConsumeFontVariantCSS21(CSSParserTokenRange& range) {
+  return ConsumeIdent<CSSValueNormal, CSSValueSmallCaps>(range);
+}
+
 static CSSValue* ConsumeFontVariantList(CSSParserTokenRange& range) {
   CSSValueList* values = CSSValueList::CreateCommaSeparated();
   do {
@@ -293,8 +298,7 @@ static CSSValue* ConsumeFontVariantList(CSSParserTokenRange& range) {
         return nullptr;
       return ConsumeIdent(range);
     }
-    CSSIdentifierValue* font_variant =
-        CSSPropertyFontUtils::ConsumeFontVariantCSS21(range);
+    CSSIdentifierValue* font_variant = ConsumeFontVariantCSS21(range);
     if (font_variant)
       values->Append(*font_variant);
   } while (ConsumeCommaIncludingWhitespace(range));
@@ -588,6 +592,100 @@ static CSSValue* ConsumeTextDecorationLine(CSSParserTokenRange& range) {
   return list;
 }
 
+static CSSValue* ConsumeOffsetRotate(CSSParserTokenRange& range,
+                                     const CSSParserContext& context) {
+  CSSValue* angle = ConsumeAngle(range, context, Optional<WebFeature>());
+  CSSValue* keyword = ConsumeIdent<CSSValueAuto, CSSValueReverse>(range);
+  if (!angle && !keyword)
+    return nullptr;
+
+  if (!angle) {
+    angle = ConsumeAngle(range, context, Optional<WebFeature>());
+  }
+
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  if (keyword)
+    list->Append(*keyword);
+  if (angle)
+    list->Append(*angle);
+  return list;
+}
+
+bool CSSPropertyParser::ConsumeOffsetShorthand(bool important) {
+  DCHECK(context_);
+  const CSSValue* offset_position =
+      CSSPropertyAPIOffsetPosition::parseSingleValue(range_, *context_,
+                                                     CSSParserLocalContext());
+  const CSSValue* offset_path =
+      CSSPropertyOffsetPathUtils::ConsumeOffsetPath(range_, *context_);
+  const CSSValue* offset_distance = nullptr;
+  const CSSValue* offset_rotate = nullptr;
+  if (offset_path) {
+    offset_distance =
+        ConsumeLengthOrPercent(range_, context_->Mode(), kValueRangeAll);
+    offset_rotate = ConsumeOffsetRotate(range_, *context_);
+    if (offset_rotate && !offset_distance) {
+      offset_distance =
+          ConsumeLengthOrPercent(range_, context_->Mode(), kValueRangeAll);
+    }
+  }
+  const CSSValue* offset_anchor = nullptr;
+  if (ConsumeSlashIncludingWhitespace(range_)) {
+    offset_anchor = CSSPropertyAPIOffsetAnchor::parseSingleValue(
+        range_, *context_, CSSParserLocalContext());
+    if (!offset_anchor)
+      return false;
+  }
+  if ((!offset_position && !offset_path) || !range_.AtEnd())
+    return false;
+
+  if ((offset_position || offset_anchor) &&
+      !RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled())
+    return false;
+
+  if (offset_position) {
+    AddParsedProperty(CSSPropertyOffsetPosition, CSSPropertyOffset,
+                      *offset_position, important);
+  } else if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    AddParsedProperty(CSSPropertyOffsetPosition, CSSPropertyOffset,
+                      *CSSInitialValue::Create(), important);
+  }
+
+  if (offset_path) {
+    AddParsedProperty(CSSPropertyOffsetPath, CSSPropertyOffset, *offset_path,
+                      important);
+  } else {
+    AddParsedProperty(CSSPropertyOffsetPath, CSSPropertyOffset,
+                      *CSSInitialValue::Create(), important);
+  }
+
+  if (offset_distance) {
+    AddParsedProperty(CSSPropertyOffsetDistance, CSSPropertyOffset,
+                      *offset_distance, important);
+  } else {
+    AddParsedProperty(CSSPropertyOffsetDistance, CSSPropertyOffset,
+                      *CSSInitialValue::Create(), important);
+  }
+
+  if (offset_rotate) {
+    AddParsedProperty(CSSPropertyOffsetRotate, CSSPropertyOffset,
+                      *offset_rotate, important);
+  } else {
+    AddParsedProperty(CSSPropertyOffsetRotate, CSSPropertyOffset,
+                      *CSSInitialValue::Create(), important);
+  }
+
+  if (offset_anchor) {
+    AddParsedProperty(CSSPropertyOffsetAnchor, CSSPropertyOffset,
+                      *offset_anchor, important);
+  } else if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    AddParsedProperty(CSSPropertyOffsetAnchor, CSSPropertyOffset,
+                      *CSSInitialValue::Create(), important);
+  }
+
+  return true;
+}
+
 static CSSValue* ConsumeNoneOrURI(CSSParserTokenRange& range,
                                   const CSSParserContext* context) {
   if (range.Peek().Id() == CSSValueNone)
@@ -614,6 +712,34 @@ static CSSValue* ConsumePerspective(CSSParserTokenRange& range,
       (parsed_value->IsCalculated() || parsed_value->GetDoubleValue() > 0))
     return parsed_value;
   return nullptr;
+}
+
+static CSSValue* ConsumeReflect(CSSParserTokenRange& range,
+                                const CSSParserContext* context) {
+  CSSIdentifierValue* direction =
+      ConsumeIdent<CSSValueAbove, CSSValueBelow, CSSValueLeft, CSSValueRight>(
+          range);
+  if (!direction)
+    return nullptr;
+
+  CSSPrimitiveValue* offset = nullptr;
+  if (range.AtEnd()) {
+    offset = CSSPrimitiveValue::Create(0, CSSPrimitiveValue::UnitType::kPixels);
+  } else {
+    offset = ConsumeLengthOrPercent(range, context->Mode(), kValueRangeAll,
+                                    UnitlessQuirk::kForbid);
+    if (!offset)
+      return nullptr;
+  }
+
+  CSSValue* mask = nullptr;
+  if (!range.AtEnd()) {
+    mask =
+        CSSPropertyBorderImageUtils::ConsumeWebkitBorderImage(range, context);
+    if (!mask)
+      return nullptr;
+  }
+  return CSSReflectValue::Create(direction, offset, mask);
 }
 
 static CSSValue* ConsumeBackgroundBlendMode(CSSParserTokenRange& range) {
@@ -1276,6 +1402,8 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
   }
 
   switch (property) {
+    case CSSPropertyFontWeight:
+      return CSSPropertyFontUtils::ConsumeFontWeight(range_);
     case CSSPropertyMaxWidth:
     case CSSPropertyMaxHeight:
       return CSSPropertyLengthUtils::ConsumeMaxWidthOrHeight(
@@ -1295,16 +1423,48 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyWebkitLogicalWidth:
     case CSSPropertyWebkitLogicalHeight:
       return CSSPropertyLengthUtils::ConsumeWidthOrHeight(range_, *context_);
+    case CSSPropertyObjectPosition:
+      return ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
+                             WebFeature::kThreeValuedPositionObjectPosition);
+    case CSSPropertyPerspectiveOrigin:
+      return ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
+                             WebFeature::kThreeValuedPositionPerspectiveOrigin);
     case CSSPropertyWebkitHyphenateCharacter:
     case CSSPropertyWebkitLocale:
       return ConsumeLocale(range_);
     case CSSPropertyAnimationDelay:
     case CSSPropertyTransitionDelay:
       return ConsumeCommaSeparatedList(ConsumeTime, range_, kValueRangeAll);
+    case CSSPropertyAnimationDirection:
+      return ConsumeCommaSeparatedList(
+          ConsumeIdent<CSSValueNormal, CSSValueAlternate, CSSValueReverse,
+                       CSSValueAlternateReverse>,
+          range_);
     case CSSPropertyAnimationDuration:
     case CSSPropertyTransitionDuration:
       return ConsumeCommaSeparatedList(ConsumeTime, range_,
                                        kValueRangeNonNegative);
+    case CSSPropertyAnimationFillMode:
+      return ConsumeCommaSeparatedList(
+          ConsumeIdent<CSSValueNone, CSSValueForwards, CSSValueBackwards,
+                       CSSValueBoth>,
+          range_);
+    case CSSPropertyAnimationIterationCount:
+      return ConsumeCommaSeparatedList(CSSPropertyAnimationIterationCountUtils::
+                                           ConsumeAnimationIterationCount,
+                                       range_);
+    case CSSPropertyAnimationPlayState:
+      return ConsumeCommaSeparatedList(
+          ConsumeIdent<CSSValueRunning, CSSValuePaused>, range_);
+    case CSSPropertyTransitionProperty: {
+      CSSValueList* list = ConsumeCommaSeparatedList(
+          CSSPropertyTransitionPropertyUtils::ConsumeTransitionProperty,
+          range_);
+      if (!list ||
+          !CSSPropertyTransitionPropertyUtils::IsValidPropertyList(*list))
+        return nullptr;
+      return list;
+    }
     case CSSPropertyAnimationTimingFunction:
     case CSSPropertyTransitionTimingFunction:
       return ConsumeCommaSeparatedList(ConsumeAnimationTimingFunction, range_);
@@ -1313,6 +1473,8 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
       return ConsumeLengthOrPercent(range_, context_->Mode(),
                                     kValueRangeNonNegative);
     case CSSPropertyColor:
+    case CSSPropertyBackgroundColor:
+      return ConsumeColor(range_, context_->Mode(), InQuirksMode());
     case CSSPropertyBorderBottomColor:
     case CSSPropertyBorderLeftColor:
     case CSSPropertyBorderRightColor:
@@ -1334,6 +1496,12 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
       return CSSPropertyWebkitBorderWidthUtils::ConsumeBorderWidth(
           range_, context_->Mode(), unitless);
     }
+    case CSSPropertyTextShadow:
+      return CSSPropertyBoxShadowUtils::ConsumeShadow(
+          range_, context_->Mode(), AllowInsetAndSpread::kForbid);
+    case CSSPropertyBoxShadow:
+      return CSSPropertyBoxShadowUtils::ConsumeShadow(
+          range_, context_->Mode(), AllowInsetAndSpread::kAllow);
     case CSSPropertyFilter:
     case CSSPropertyBackdropFilter:
       return ConsumeFilter(range_, context_);
@@ -1346,8 +1514,7 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyOffsetDistance:
       return ConsumeLengthOrPercent(range_, context_->Mode(), kValueRangeAll);
     case CSSPropertyOffsetRotate:
-      return CSSPropertyOffsetRotateUtils::ConsumeOffsetRotate(range_,
-                                                               *context_);
+      return ConsumeOffsetRotate(range_, *context_);
     case CSSPropertyWebkitTransformOriginX:
     case CSSPropertyWebkitPerspectiveOriginX:
       return CSSPropertyPositionUtils::ConsumePositionLonghand<CSSValueLeft,
@@ -1394,6 +1561,8 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyWebkitBorderImage:
       return CSSPropertyBorderImageUtils::ConsumeWebkitBorderImage(range_,
                                                                    context_);
+    case CSSPropertyWebkitBoxReflect:
+      return ConsumeReflect(range_, context_);
     case CSSPropertyBackgroundAttachment:
     case CSSPropertyBackgroundBlendMode:
     case CSSPropertyBackgroundClip:
@@ -1571,6 +1740,231 @@ bool CSSPropertyParser::ParseFontFaceDescriptor(CSSPropertyID prop_id) {
   return true;
 }
 
+bool CSSPropertyParser::ConsumeSystemFont(bool important) {
+  CSSValueID system_font_id = range_.ConsumeIncludingWhitespace().Id();
+  DCHECK_GE(system_font_id, CSSValueCaption);
+  DCHECK_LE(system_font_id, CSSValueStatusBar);
+  if (!range_.AtEnd())
+    return false;
+
+  FontStyle font_style = kFontStyleNormal;
+  FontWeight font_weight = kFontWeightNormal;
+  float font_size = 0;
+  AtomicString font_family;
+  LayoutTheme::GetTheme().SystemFont(system_font_id, font_style, font_weight,
+                                     font_size, font_family);
+
+  AddParsedProperty(CSSPropertyFontStyle, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(font_style == kFontStyleItalic
+                                                    ? CSSValueItalic
+                                                    : CSSValueNormal),
+                    important);
+  AddParsedProperty(CSSPropertyFontWeight, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(font_weight), important);
+  AddParsedProperty(CSSPropertyFontSize, CSSPropertyFont,
+                    *CSSPrimitiveValue::Create(
+                        font_size, CSSPrimitiveValue::UnitType::kPixels),
+                    important);
+  CSSValueList* font_family_list = CSSValueList::CreateCommaSeparated();
+  font_family_list->Append(*CSSFontFamilyValue::Create(font_family));
+  AddParsedProperty(CSSPropertyFontFamily, CSSPropertyFont, *font_family_list,
+                    important);
+
+  AddParsedProperty(CSSPropertyFontStretch, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(CSSValueNormal), important);
+  AddParsedProperty(CSSPropertyFontVariantCaps, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(CSSValueNormal), important);
+  AddParsedProperty(CSSPropertyFontVariantLigatures, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(CSSValueNormal), important);
+  AddParsedProperty(CSSPropertyFontVariantNumeric, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(CSSValueNormal), important);
+  AddParsedProperty(CSSPropertyLineHeight, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(CSSValueNormal), important);
+  return true;
+}
+
+bool CSSPropertyParser::ConsumeFont(bool important) {
+  // Let's check if there is an inherit or initial somewhere in the shorthand.
+  CSSParserTokenRange range = range_;
+  while (!range.AtEnd()) {
+    CSSValueID id = range.ConsumeIncludingWhitespace().Id();
+    if (id == CSSValueInherit || id == CSSValueInitial)
+      return false;
+  }
+  // Optional font-style, font-variant, font-stretch and font-weight.
+  CSSIdentifierValue* font_style = nullptr;
+  CSSIdentifierValue* font_variant_caps = nullptr;
+  CSSIdentifierValue* font_weight = nullptr;
+  CSSIdentifierValue* font_stretch = nullptr;
+  while (!range_.AtEnd()) {
+    CSSValueID id = range_.Peek().Id();
+    if (!font_style && CSSParserFastPaths::IsValidKeywordPropertyAndValue(
+                           CSSPropertyFontStyle, id, context_->Mode())) {
+      font_style = ConsumeIdent(range_);
+      continue;
+    }
+    if (!font_variant_caps &&
+        (id == CSSValueNormal || id == CSSValueSmallCaps)) {
+      // Font variant in the shorthand is particular, it only accepts normal or
+      // small-caps.
+      // See https://drafts.csswg.org/css-fonts/#propdef-font
+      font_variant_caps = ConsumeFontVariantCSS21(range_);
+      if (font_variant_caps)
+        continue;
+    }
+    if (!font_weight) {
+      font_weight = CSSPropertyFontUtils::ConsumeFontWeight(range_);
+      if (font_weight)
+        continue;
+    }
+    if (!font_stretch && CSSParserFastPaths::IsValidKeywordPropertyAndValue(
+                             CSSPropertyFontStretch, id, context_->Mode()))
+      font_stretch = ConsumeIdent(range_);
+    else
+      break;
+  }
+
+  if (range_.AtEnd())
+    return false;
+
+  AddParsedProperty(
+      CSSPropertyFontStyle, CSSPropertyFont,
+      font_style ? *font_style : *CSSIdentifierValue::Create(CSSValueNormal),
+      important);
+  AddParsedProperty(CSSPropertyFontVariantCaps, CSSPropertyFont,
+                    font_variant_caps
+                        ? *font_variant_caps
+                        : *CSSIdentifierValue::Create(CSSValueNormal),
+                    important);
+  AddParsedProperty(CSSPropertyFontVariantLigatures, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(CSSValueNormal), important);
+  AddParsedProperty(CSSPropertyFontVariantNumeric, CSSPropertyFont,
+                    *CSSIdentifierValue::Create(CSSValueNormal), important);
+
+  AddParsedProperty(
+      CSSPropertyFontWeight, CSSPropertyFont,
+      font_weight ? *font_weight : *CSSIdentifierValue::Create(CSSValueNormal),
+      important);
+  AddParsedProperty(CSSPropertyFontStretch, CSSPropertyFont,
+                    font_stretch ? *font_stretch
+                                 : *CSSIdentifierValue::Create(CSSValueNormal),
+                    important);
+
+  // Now a font size _must_ come.
+  CSSValue* font_size =
+      CSSPropertyFontUtils::ConsumeFontSize(range_, context_->Mode());
+  if (!font_size || range_.AtEnd())
+    return false;
+
+  AddParsedProperty(CSSPropertyFontSize, CSSPropertyFont, *font_size,
+                    important);
+
+  if (ConsumeSlashIncludingWhitespace(range_)) {
+    CSSValue* line_height =
+        CSSPropertyFontUtils::ConsumeLineHeight(range_, context_->Mode());
+    if (!line_height)
+      return false;
+    AddParsedProperty(CSSPropertyLineHeight, CSSPropertyFont, *line_height,
+                      important);
+  } else {
+    AddParsedProperty(CSSPropertyLineHeight, CSSPropertyFont,
+                      *CSSIdentifierValue::Create(CSSValueNormal), important);
+  }
+
+  // Font family must come now.
+  CSSValue* parsed_family_value =
+      CSSPropertyFontUtils::ConsumeFontFamily(range_);
+  if (!parsed_family_value)
+    return false;
+
+  AddParsedProperty(CSSPropertyFontFamily, CSSPropertyFont,
+                    *parsed_family_value, important);
+
+  // FIXME: http://www.w3.org/TR/2011/WD-css3-fonts-20110324/#font-prop requires
+  // that "font-stretch", "font-size-adjust", and "font-kerning" be reset to
+  // their initial values but we don't seem to support them at the moment. They
+  // should also be added here once implemented.
+  return range_.AtEnd();
+}
+
+bool CSSPropertyParser::ConsumeFontVariantShorthand(bool important) {
+  if (IdentMatches<CSSValueNormal, CSSValueNone>(range_.Peek().Id())) {
+    AddParsedProperty(CSSPropertyFontVariantLigatures, CSSPropertyFontVariant,
+                      *ConsumeIdent(range_), important);
+    AddParsedProperty(CSSPropertyFontVariantCaps, CSSPropertyFontVariant,
+                      *CSSIdentifierValue::Create(CSSValueNormal), important);
+    return range_.AtEnd();
+  }
+
+  CSSIdentifierValue* caps_value = nullptr;
+  FontVariantLigaturesParser ligatures_parser;
+  FontVariantNumericParser numeric_parser;
+  do {
+    FontVariantLigaturesParser::ParseResult ligatures_parse_result =
+        ligatures_parser.ConsumeLigature(range_);
+    FontVariantNumericParser::ParseResult numeric_parse_result =
+        numeric_parser.ConsumeNumeric(range_);
+    if (ligatures_parse_result ==
+            FontVariantLigaturesParser::ParseResult::kConsumedValue ||
+        numeric_parse_result ==
+            FontVariantNumericParser::ParseResult::kConsumedValue)
+      continue;
+
+    if (ligatures_parse_result ==
+            FontVariantLigaturesParser::ParseResult::kDisallowedValue ||
+        numeric_parse_result ==
+            FontVariantNumericParser::ParseResult::kDisallowedValue)
+      return false;
+
+    CSSValueID id = range_.Peek().Id();
+    switch (id) {
+      case CSSValueSmallCaps:
+      case CSSValueAllSmallCaps:
+      case CSSValuePetiteCaps:
+      case CSSValueAllPetiteCaps:
+      case CSSValueUnicase:
+      case CSSValueTitlingCaps:
+        // Only one caps value permitted in font-variant grammar.
+        if (caps_value)
+          return false;
+        caps_value = ConsumeIdent(range_);
+        break;
+      default:
+        return false;
+    }
+  } while (!range_.AtEnd());
+
+  AddParsedProperty(CSSPropertyFontVariantLigatures, CSSPropertyFontVariant,
+                    *ligatures_parser.FinalizeValue(), important);
+  AddParsedProperty(CSSPropertyFontVariantNumeric, CSSPropertyFontVariant,
+                    *numeric_parser.FinalizeValue(), important);
+  AddParsedProperty(
+      CSSPropertyFontVariantCaps, CSSPropertyFontVariant,
+      caps_value ? *caps_value : *CSSIdentifierValue::Create(CSSValueNormal),
+      important);
+  return true;
+}
+
+bool CSSPropertyParser::ConsumeBorderSpacing(bool important) {
+  CSSValue* horizontal_spacing = ConsumeLength(
+      range_, context_->Mode(), kValueRangeNonNegative, UnitlessQuirk::kAllow);
+  if (!horizontal_spacing)
+    return false;
+  CSSValue* vertical_spacing = horizontal_spacing;
+  if (!range_.AtEnd()) {
+    vertical_spacing =
+        ConsumeLength(range_, context_->Mode(), kValueRangeNonNegative,
+                      UnitlessQuirk::kAllow);
+  }
+  if (!vertical_spacing || !range_.AtEnd())
+    return false;
+  AddParsedProperty(CSSPropertyWebkitBorderHorizontalSpacing,
+                    CSSPropertyBorderSpacing, *horizontal_spacing, important);
+  AddParsedProperty(CSSPropertyWebkitBorderVerticalSpacing,
+                    CSSPropertyBorderSpacing, *vertical_spacing, important);
+  return true;
+}
+
 static CSSValue* ConsumeSingleViewportDescriptor(
     CSSParserTokenRange& range,
     CSSPropertyID prop_id,
@@ -1672,6 +2066,27 @@ bool CSSPropertyParser::ParseViewportDescriptor(CSSPropertyID prop_id,
   }
 }
 
+bool CSSPropertyParser::ConsumeColumns(bool important) {
+  CSSValue* column_width = nullptr;
+  CSSValue* column_count = nullptr;
+  if (!CSSPropertyColumnUtils::ConsumeColumnWidthOrCount(range_, column_width,
+                                                         column_count))
+    return false;
+  CSSPropertyColumnUtils::ConsumeColumnWidthOrCount(range_, column_width,
+                                                    column_count);
+  if (!range_.AtEnd())
+    return false;
+  if (!column_width)
+    column_width = CSSIdentifierValue::Create(CSSValueAuto);
+  if (!column_count)
+    column_count = CSSIdentifierValue::Create(CSSValueAuto);
+  AddParsedProperty(CSSPropertyColumnWidth, CSSPropertyInvalid, *column_width,
+                    important);
+  AddParsedProperty(CSSPropertyColumnCount, CSSPropertyInvalid, *column_count,
+                    important);
+  return true;
+}
+
 bool CSSPropertyParser::ConsumeShorthandGreedily(
     const StylePropertyShorthand& shorthand,
     bool important) {
@@ -1702,6 +2117,73 @@ bool CSSPropertyParser::ConsumeShorthandGreedily(
                         *CSSInitialValue::Create(), important);
     }
   }
+  return true;
+}
+
+bool CSSPropertyParser::ConsumeFlex(bool important) {
+  static const double kUnsetValue = -1;
+  double flex_grow = kUnsetValue;
+  double flex_shrink = kUnsetValue;
+  CSSValue* flex_basis = nullptr;
+
+  if (range_.Peek().Id() == CSSValueNone) {
+    flex_grow = 0;
+    flex_shrink = 0;
+    flex_basis = CSSIdentifierValue::Create(CSSValueAuto);
+    range_.ConsumeIncludingWhitespace();
+  } else {
+    unsigned index = 0;
+    while (!range_.AtEnd() && index++ < 3) {
+      double num;
+      if (ConsumeNumberRaw(range_, num)) {
+        if (num < 0)
+          return false;
+        if (flex_grow == kUnsetValue)
+          flex_grow = num;
+        else if (flex_shrink == kUnsetValue)
+          flex_shrink = num;
+        else if (!num)  // flex only allows a basis of 0 (sans units) if
+                        // flex-grow and flex-shrink values have already been
+                        // set.
+          flex_basis = CSSPrimitiveValue::Create(
+              0, CSSPrimitiveValue::UnitType::kPixels);
+        else
+          return false;
+      } else if (!flex_basis) {
+        if (range_.Peek().Id() == CSSValueAuto)
+          flex_basis = ConsumeIdent(range_);
+        if (!flex_basis)
+          flex_basis = ConsumeLengthOrPercent(range_, context_->Mode(),
+                                              kValueRangeNonNegative);
+        if (index == 2 && !range_.AtEnd())
+          return false;
+      }
+    }
+    if (index == 0)
+      return false;
+    if (flex_grow == kUnsetValue)
+      flex_grow = 1;
+    if (flex_shrink == kUnsetValue)
+      flex_shrink = 1;
+    if (!flex_basis)
+      flex_basis = CSSPrimitiveValue::Create(
+          0, CSSPrimitiveValue::UnitType::kPercentage);
+  }
+
+  if (!range_.AtEnd())
+    return false;
+  AddParsedProperty(
+      CSSPropertyFlexGrow, CSSPropertyFlex,
+      *CSSPrimitiveValue::Create(clampTo<float>(flex_grow),
+                                 CSSPrimitiveValue::UnitType::kNumber),
+      important);
+  AddParsedProperty(
+      CSSPropertyFlexShrink, CSSPropertyFlex,
+      *CSSPrimitiveValue::Create(clampTo<float>(flex_shrink),
+                                 CSSPrimitiveValue::UnitType::kNumber),
+      important);
+  AddParsedProperty(CSSPropertyFlexBasis, CSSPropertyFlex, *flex_basis,
+                    important);
   return true;
 }
 
@@ -2498,6 +2980,47 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
   }
 
   switch (property) {
+    case CSSPropertyOverflow: {
+      CSSValueID id = range_.ConsumeIncludingWhitespace().Id();
+      if (!CSSParserFastPaths::IsValidKeywordPropertyAndValue(
+              CSSPropertyOverflowY, id, context_->Mode()))
+        return false;
+      if (!range_.AtEnd())
+        return false;
+      CSSValue* overflow_y_value = CSSIdentifierValue::Create(id);
+
+      CSSValue* overflow_x_value = nullptr;
+
+      // FIXME: -webkit-paged-x or -webkit-paged-y only apply to overflow-y.
+      // If
+      // this value has been set using the shorthand, then for now overflow-x
+      // will default to auto, but once we implement pagination controls, it
+      // should default to hidden. If the overflow-y value is anything but
+      // paged-x or paged-y, then overflow-x and overflow-y should have the
+      // same
+      // value.
+      if (id == CSSValueWebkitPagedX || id == CSSValueWebkitPagedY)
+        overflow_x_value = CSSIdentifierValue::Create(CSSValueAuto);
+      else
+        overflow_x_value = overflow_y_value;
+      AddParsedProperty(CSSPropertyOverflowX, CSSPropertyOverflow,
+                        *overflow_x_value, important);
+      AddParsedProperty(CSSPropertyOverflowY, CSSPropertyOverflow,
+                        *overflow_y_value, important);
+      return true;
+    }
+    case CSSPropertyFont: {
+      const CSSParserToken& token = range_.Peek();
+      if (token.Id() >= CSSValueCaption && token.Id() <= CSSValueStatusBar)
+        return ConsumeSystemFont(important);
+      return ConsumeFont(important);
+    }
+    case CSSPropertyFontVariant:
+      return ConsumeFontVariantShorthand(important);
+    case CSSPropertyBorderSpacing:
+      return ConsumeBorderSpacing(important);
+    case CSSPropertyColumns:
+      return ConsumeColumns(important);
     case CSSPropertyAnimation:
       return ConsumeAnimationShorthand(
           animationShorthandForParsing(),
@@ -2512,6 +3035,8 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
       return Consume4Values(marginShorthand(), important);
     case CSSPropertyPadding:
       return Consume4Values(paddingShorthand(), important);
+    case CSSPropertyOffset:
+      return ConsumeOffsetShorthand(important);
     case CSSPropertyWebkitTextEmphasis:
       return ConsumeShorthandGreedily(webkitTextEmphasisShorthand(), important);
     case CSSPropertyOutline:

@@ -51,7 +51,6 @@
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/page_importance_signals.h"
 
 #if defined(OS_CHROMEOS)
@@ -191,11 +190,9 @@ void TabManager::Start() {
         this, &TabManager::RecordRecentTabDiscard);
   }
   start_time_ = NowTicks();
-  // Create a |MemoryPressureListener| to listen for memory events when
-  // MemoryCoordinator is disabled. When MemoryCoordinator is enabled
-  // it asks TabManager to do tab discarding.
+  // Create a |MemoryPressureListener| to listen for memory events.
   base::MemoryPressureMonitor* monitor = base::MemoryPressureMonitor::Get();
-  if (monitor && !base::FeatureList::IsEnabled(features::kMemoryCoordinator)) {
+  if (monitor) {
     memory_pressure_listener_.reset(new base::MemoryPressureListener(
         base::Bind(&TabManager::OnMemoryPressure, base::Unretained(this))));
     base::MemoryPressureListener::MemoryPressureLevel level =
@@ -717,8 +714,7 @@ WebContents* TabManager::DiscardWebContentsAt(int index, TabStripModel* model) {
       WebContents::Create(WebContents::CreateParams(model->profile()));
   // Copy over the state from the navigation controller to preserve the
   // back/forward history and to continue to display the correct title/favicon.
-  null_contents->GetController().CopyStateFrom(old_contents->GetController(),
-                                               /* needs_reload */ true);
+  null_contents->GetController().CopyStateFrom(old_contents->GetController());
 
   // Make sure to persist the last active time property.
   null_contents->SetLastActiveTime(old_contents->GetLastActiveTime());

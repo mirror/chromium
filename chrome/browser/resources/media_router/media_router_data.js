@@ -86,16 +86,6 @@ media_router.MediaRouterView = {
 media_router.MINIMUM_SINKS_FOR_SEARCH = 20;
 
 /**
- * The states that media can be in.
- * @enum {number}
- */
-media_router.PlayState = {
-  PLAYING: 0,
-  PAUSED: 1,
-  BUFFERING: 2,
-};
-
-/**
  * This corresponds to the C++ MediaSink IconType, and the order must stay in
  * sync.
  * @enum {number}
@@ -253,10 +243,8 @@ cr.define('media_router', function() {
    * @struct
    */
   var RouteStatus = function(
-      title = '', description = '', canPlayPause = false, canMute = false,
-      canSetVolume = false, canSeek = false,
-      playState = media_router.PlayState.PLAYING, isPaused = false,
-      isMuted = false, volume = 0, duration = 0, currentTime = 0) {
+      title, description, canPlayPause, canMute, canSetVolume, canSeek,
+      isPaused, isMuted, volume, duration, currentTime) {
 
     /** @type {string} */
     this.title = title;
@@ -276,8 +264,8 @@ cr.define('media_router', function() {
     /** @type {boolean} */
     this.canSeek = canSeek;
 
-    /** @type {media_router.PlayState} */
-    this.playState = playState;
+    /** @type {boolean} */
+    this.isPaused = isPaused;
 
     /** @type {boolean} */
     this.isMuted = isMuted;

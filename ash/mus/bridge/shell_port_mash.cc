@@ -10,6 +10,7 @@
 #include "ash/accelerators/accelerator_controller_delegate_aura.h"
 #include "ash/aura/key_event_watcher_aura.h"
 #include "ash/aura/pointer_watcher_adapter.h"
+#include "ash/display/window_tree_host_manager.h"
 #include "ash/host/ash_window_tree_host_init_params.h"
 #include "ash/key_event_watcher.h"
 #include "ash/laser/laser_pointer_controller.h"
@@ -22,6 +23,7 @@
 #include "ash/mus/display_synchronizer.h"
 #include "ash/mus/drag_window_resizer.h"
 #include "ash/mus/keyboard_ui_mus.h"
+#include "ash/mus/screen_mus.h"
 #include "ash/mus/touch_transform_setter_mus.h"
 #include "ash/mus/window_manager.h"
 #include "ash/public/cpp/config.h"
@@ -30,6 +32,9 @@
 #include "ash/root_window_settings.h"
 #include "ash/shared/immersive_fullscreen_controller.h"
 #include "ash/shell.h"
+#include "ash/shell_delegate.h"
+#include "ash/shell_init_params.h"
+#include "ash/shell_observer.h"
 #include "ash/system/tray/system_tray_delegate.h"
 #include "ash/touch/touch_uma.h"
 #include "ash/virtual_keyboard_controller.h"
@@ -43,6 +48,7 @@
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace/workspace_event_handler_aura.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "components/user_manager/user_info_impl.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
@@ -53,6 +59,8 @@
 #include "ui/aura/mus/window_tree_host_mus_init_params.h"
 #include "ui/aura/window.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/display/manager/managed_display_info.h"
+#include "ui/display/screen.h"
 #include "ui/display/types/native_display_delegate.h"
 #include "ui/views/mus/pointer_watcher_event_router.h"
 
@@ -72,9 +80,11 @@ ShellPortMash::MusSpecificState::MusSpecificState() = default;
 ShellPortMash::MusSpecificState::~MusSpecificState() = default;
 
 ShellPortMash::ShellPortMash(
+    aura::Window* primary_root_window,
     WindowManager* window_manager,
     views::PointerWatcherEventRouter* pointer_watcher_event_router)
-    : window_manager_(window_manager) {
+    : window_manager_(window_manager),
+      primary_root_window_(primary_root_window) {
   if (GetAshConfig() == Config::MASH) {
     mash_state_ = base::MakeUnique<MashSpecificState>();
     mash_state_->pointer_watcher_event_router = pointer_watcher_event_router;
@@ -119,10 +129,99 @@ void ShellPortMash::Shutdown() {
     mus_state_->pointer_watcher_adapter.reset();
 
   ShellPort::Shutdown();
+
+  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+    Shell::Get()->window_tree_host_manager()->Shutdown();
+  else
+    window_manager_->DeleteAllRootWindowControllers();
 }
 
 Config ShellPortMash::GetAshConfig() const {
   return window_manager_->config();
+}
+
+aura::Window* ShellPortMash::GetPrimaryRootWindow() {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+    return Shell::Get()->window_tree_host_manager()->GetPrimaryRootWindow();
+  // NOTE: This is called before the RootWindowController has been created, so
+  // it can't call through to RootWindowController to get all windows.
+  return primary_root_window_;
+}
+
+aura::Window* ShellPortMash::GetRootWindowForDisplayId(int64_t display_id) {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+    return Shell::Get()->window_tree_host_manager()->GetRootWindowForDisplayId(
+        display_id);
+  }
+  RootWindowController* root_window_controller =
+      GetRootWindowControllerWithDisplayId(display_id);
+  return root_window_controller ? root_window_controller->GetRootWindow()
+                                : nullptr;
+}
+
+const display::ManagedDisplayInfo& ShellPortMash::GetDisplayInfo(
+    int64_t display_id) const {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+    return Shell::Get()->display_manager()->GetDisplayInfo(display_id);
+
+  // TODO(mash): implement http://crbug.com/622480.
+  NOTIMPLEMENTED();
+  static display::ManagedDisplayInfo fake_info;
+  return fake_info;
+}
+
+bool ShellPortMash::IsActiveDisplayId(int64_t display_id) const {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+    return Shell::Get()->display_manager()->IsActiveDisplayId(display_id);
+
+  // TODO(mash): implement http://crbug.com/622480.
+  NOTIMPLEMENTED();
+  return true;
+}
+
+display::Display ShellPortMash::GetFirstDisplay() const {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+    return Shell::Get()
+        ->display_manager()
+        ->software_mirroring_display_list()[0];
+  }
+
+  // TODO(mash): implement http://crbug.com/622480.
+  NOTIMPLEMENTED();
+  return display::Screen::GetScreen()->GetPrimaryDisplay();
+}
+
+bool ShellPortMash::IsInUnifiedMode() const {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+    return Shell::Get()->display_manager()->IsInUnifiedMode();
+
+  // TODO(mash): implement http://crbug.com/622480.
+  NOTIMPLEMENTED();
+  return false;
+}
+
+bool ShellPortMash::IsInUnifiedModeIgnoreMirroring() const {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+    return Shell::Get()
+               ->display_manager()
+               ->current_default_multi_display_mode() ==
+           display::DisplayManager::UNIFIED;
+  }
+
+  // TODO(mash): implement http://crbug.com/622480.
+  NOTIMPLEMENTED();
+  return false;
+}
+
+void ShellPortMash::SetDisplayWorkAreaInsets(aura::Window* window,
+                                             const gfx::Insets& insets) {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+    Shell::Get()
+        ->window_tree_host_manager()
+        ->UpdateWorkAreaOfDisplayNearestWindow(window, insets);
+    return;
+  }
+  window_manager_->screen()->SetWorkAreaInsets(window, insets);
 }
 
 std::unique_ptr<display::TouchTransformSetter>
@@ -157,6 +256,18 @@ bool ShellPortMash::IsMouseEventsEnabled() {
   // TODO: http://crbug.com/637853
   NOTIMPLEMENTED();
   return true;
+}
+
+std::vector<aura::Window*> ShellPortMash::GetAllRootWindows() {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+    return Shell::Get()->window_tree_host_manager()->GetAllRootWindows();
+
+  aura::Window::Windows root_windows;
+  for (RootWindowController* root_window_controller :
+       RootWindowController::root_window_controllers()) {
+    root_windows.push_back(root_window_controller->GetRootWindow());
+  }
+  return root_windows;
 }
 
 void ShellPortMash::RecordGestureAction(GestureActionType action) {
@@ -316,6 +427,9 @@ void ShellPortMash::CreatePointerWatcherAdapter() {
 
 std::unique_ptr<AshWindowTreeHost> ShellPortMash::CreateAshWindowTreeHost(
     const AshWindowTreeHostInitParams& init_params) {
+  if (!Shell::ShouldEnableSimplifiedDisplayManagement())
+    return nullptr;
+
   std::unique_ptr<aura::DisplayInitParams> display_params =
       base::MakeUnique<aura::DisplayInitParams>();
   display_params->viewport_metrics.bounds_in_pixels =
@@ -351,9 +465,24 @@ void ShellPortMash::OnCreatedRootWindowContainers(
   }
 }
 
-void ShellPortMash::OnHostsInitialized() {
-  display_synchronizer_ = base::MakeUnique<DisplaySynchronizer>(
-      window_manager_->window_manager_client());
+void ShellPortMash::CreatePrimaryHost() {
+  if (!Shell::ShouldEnableSimplifiedDisplayManagement())
+    return;
+
+  Shell::Get()->window_tree_host_manager()->Start();
+  AshWindowTreeHostInitParams ash_init_params;
+  Shell::Get()->window_tree_host_manager()->CreatePrimaryHost(ash_init_params);
+}
+
+void ShellPortMash::InitHosts(const ShellInitParams& init_params) {
+  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+    Shell::Get()->window_tree_host_manager()->InitHosts();
+    display_synchronizer_ = base::MakeUnique<DisplaySynchronizer>(
+        window_manager_->window_manager_client());
+  } else {
+    window_manager_->CreatePrimaryRootWindowController(
+        base::WrapUnique(init_params.primary_window_tree_host));
+  }
 }
 
 std::unique_ptr<display::NativeDisplayDelegate>

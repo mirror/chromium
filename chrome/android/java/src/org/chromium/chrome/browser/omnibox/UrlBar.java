@@ -155,8 +155,10 @@ public class UrlBar extends AutocompleteEditText {
         /**
          * Called when the text state has changed and the autocomplete suggestions should be
          * refreshed.
+         *
+         * @param textDeleted Whether this change was as a result of text being deleted.
          */
-        void onTextChangedForAutocomplete();
+        void onTextChangedForAutocomplete(boolean textDeleted);
 
         /**
          * @return Whether the light security theme should be used.
@@ -782,14 +784,15 @@ public class UrlBar extends AutocompleteEditText {
     }
 
     @Override
-    public void onAutocompleteTextStateChanged(boolean updateDisplay) {
+    public void onAutocompleteTextStateChanged(boolean textDeleted, boolean updateDisplay) {
         if (DEBUG) {
-            Log.i(TAG, "onAutocompleteTextStateChanged: DIS[%b]", updateDisplay);
+            Log.i(TAG, "onAutocompleteTextStateChanged: DEL[%b], DIS[%b]", textDeleted,
+                    updateDisplay);
         }
         if (mUrlBarDelegate == null) return;
         if (updateDisplay) limitDisplayableLength();
 
-        mUrlBarDelegate.onTextChangedForAutocomplete();
+        mUrlBarDelegate.onTextChangedForAutocomplete(textDeleted);
     }
 
     /**

@@ -78,7 +78,8 @@ AwBrowserContext* g_browser_context = NULL;
 std::unique_ptr<net::ProxyConfigService> CreateProxyConfigService() {
   std::unique_ptr<net::ProxyConfigService> config_service =
       net::ProxyService::CreateSystemProxyConfigService(
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+          nullptr /* Ignored on Android */);
 
   // TODO(csharrison) Architect the wrapper better so we don't need a cast for
   // android ProxyConfigServices.

@@ -40,11 +40,7 @@ class BASE_EXPORT BucketRanges {
 
   size_t size() const { return ranges_.size(); }
   HistogramBase::Sample range(size_t i) const { return ranges_[i]; }
-  void set_range(size_t i, HistogramBase::Sample value) {
-    DCHECK_LT(i, ranges_.size());
-    DCHECK_GE(value, 0);
-    ranges_[i] = value;
-  }
+  void set_range(size_t i, HistogramBase::Sample value);
   uint32_t checksum() const { return checksum_; }
   void set_checksum(uint32_t checksum) { checksum_ = checksum; }
 

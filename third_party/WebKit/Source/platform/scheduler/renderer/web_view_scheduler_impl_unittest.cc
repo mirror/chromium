@@ -127,6 +127,50 @@ TEST_F(WebViewSchedulerImplTest,
       TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
+  EXPECT_EQ(1000, run_count);
+
+  // The task queue isn't throttled at all until it's been in the background for
+  // a 10 second grace period.
+  clock_->Advance(base::TimeDelta::FromSeconds(10));
+
+  run_count = 0;
+  mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
+  EXPECT_EQ(1, run_count);
+
+  // Make sure there's no delay in throttling being removed for pages that have
+  // become visible.
+  web_view_scheduler_->SetPageVisible(true);
+
+  run_count = 0;
+  mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
+  EXPECT_EQ(1001, run_count);  // Note we end up running 1001 here because the
+  // task was posted while throttled with a delay of 1ms so the first task was
+  // due to run before the 1s period started.
+}
+
+TEST_F(WebViewSchedulerImplTest, GracePeriodAppliesToNewBackgroundFrames) {
+  web_view_scheduler_->SetPageVisible(false);
+
+  std::unique_ptr<WebFrameSchedulerImpl> web_frame_scheduler =
+      web_view_scheduler_->CreateWebFrameSchedulerImpl(nullptr);
+  blink::WebTaskRunner* timer_task_runner =
+      web_frame_scheduler->TimerTaskRunner().Get();
+
+  int run_count = 0;
+  timer_task_runner->PostDelayedTask(
+      BLINK_FROM_HERE,
+      MakeRepeatingTask(web_frame_scheduler->TimerTaskRunner(), &run_count),
+      TimeDelta::FromMilliseconds(1));
+
+  mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
+  EXPECT_EQ(1000, run_count);
+
+  // The task queue isn't throttled at all until it's been in the background for
+  // a 10 second grace period.
+  clock_->Advance(base::TimeDelta::FromSeconds(10));
+
+  run_count = 0;
+  mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(1));
   EXPECT_EQ(1, run_count);
 
   // Make sure there's no delay in throttling being removed for pages that have
@@ -161,6 +205,9 @@ TEST_F(WebViewSchedulerImplTest, RepeatingTimers_OneBackgroundOneForeground) {
 
   web_view_scheduler_->SetPageVisible(true);
   web_view_scheduler2->SetPageVisible(false);
+
+  // Advance past the no-throttling grace period.
+  clock_->Advance(base::TimeDelta::FromSeconds(10));
 
   int run_count1 = 0;
   int run_count2 = 0;
@@ -453,6 +500,10 @@ TEST_F(WebViewSchedulerImplTest, DeleteWebViewScheduler_InTask) {
 TEST_F(WebViewSchedulerImplTest, DeleteThrottledQueue_InTask) {
   web_view_scheduler_->SetPageVisible(false);
 
+  // The task queue isn't throttled at all until it's been in the background for
+  // a 10 second grace period.
+  clock_->Advance(base::TimeDelta::FromSeconds(10));
+
   WebFrameSchedulerImpl* web_frame_scheduler =
       web_view_scheduler_->CreateWebFrameSchedulerImpl(nullptr).release();
   RefPtr<blink::WebTaskRunner> timer_task_runner =
@@ -718,7 +769,7 @@ void InitializeTrialParams() {
 
 }  // namespace
 
-TEST_F(WebViewSchedulerImplTest, BackgroundTimerThrottling) {
+TEST_F(WebViewSchedulerImplTest, BackgroundThrottlingGracePeriod) {
   ScopedExpensiveBackgroundTimerThrottlingForTest
       budget_background_throttling_enabler(true);
 
@@ -731,7 +782,7 @@ TEST_F(WebViewSchedulerImplTest, BackgroundTimerThrottling) {
   std::vector<base::TimeTicks> run_times;
   web_frame_scheduler_ =
       web_view_scheduler_->CreateWebFrameSchedulerImpl(nullptr);
-  web_view_scheduler_->SetPageVisible(true);
+  web_view_scheduler_->SetPageVisible(false);
 
   mock_task_runner_->RunUntilTime(base::TimeTicks() +
                                   base::TimeDelta::FromMilliseconds(2500));
@@ -752,35 +803,36 @@ TEST_F(WebViewSchedulerImplTest, BackgroundTimerThrottling) {
   mock_task_runner_->RunUntilTime(base::TimeTicks() +
                                   base::TimeDelta::FromMilliseconds(3500));
 
-  // Check that these tasks are aligned, but are not subject to budget-based
-  // throttling.
+  // Check that these tasks are initially unthrottled.
   EXPECT_THAT(
       run_times,
       ElementsAre(base::TimeTicks() + base::TimeDelta::FromMilliseconds(2501),
                   base::TimeTicks() + base::TimeDelta::FromMilliseconds(2751)));
   run_times.clear();
 
-  web_view_scheduler_->SetPageVisible(false);
+  mock_task_runner_->RunUntilTime(base::TimeTicks() +
+                                  base::TimeDelta::FromMilliseconds(11500));
 
   web_frame_scheduler_->TimerTaskRunner()
       ->ToSingleThreadTaskRunner()
       ->PostDelayedTask(
           BLINK_FROM_HERE,
           base::Bind(&ExpensiveTestTask, clock_.get(), &run_times),
-          TimeDelta::FromMicroseconds(1));
+          TimeDelta::FromMilliseconds(1));
   web_frame_scheduler_->TimerTaskRunner()
       ->ToSingleThreadTaskRunner()
       ->PostDelayedTask(
           BLINK_FROM_HERE,
           base::Bind(&ExpensiveTestTask, clock_.get(), &run_times),
-          TimeDelta::FromMicroseconds(1));
+          TimeDelta::FromMilliseconds(1));
 
   mock_task_runner_->RunUntilIdle();
 
-  // Check that tasks are aligned and throttled.
+  // After the grace period has passed, tasks should be aligned and have budget
+  // based throttling.
   EXPECT_THAT(
       run_times,
-      ElementsAre(base::TimeTicks() + base::TimeDelta::FromSeconds(4),
+      ElementsAre(base::TimeTicks() + base::TimeDelta::FromSeconds(12),
                   base::TimeTicks() + base::TimeDelta::FromSeconds(26)));
 
   variations::testing::ClearAllVariationParams();

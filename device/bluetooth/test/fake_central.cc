@@ -14,8 +14,6 @@
 #include "device/bluetooth/bluetooth_uuid.h"
 #include "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom.h"
 #include "device/bluetooth/test/fake_peripheral.h"
-#include "device/bluetooth/test/fake_remote_gatt_characteristic.h"
-#include "device/bluetooth/test/fake_remote_gatt_service.h"
 
 namespace bluetooth {
 
@@ -89,63 +87,6 @@ void FakeCentral::AddFakeService(const std::string& peripheral_address,
   FakePeripheral* fake_peripheral =
       static_cast<FakePeripheral*>(device_iter->second.get());
   std::move(callback).Run(fake_peripheral->AddFakeService(service_uuid));
-}
-
-void FakeCentral::AddFakeCharacteristic(
-    const device::BluetoothUUID& characteristic_uuid,
-    mojom::CharacteristicPropertiesPtr properties,
-    const std::string& service_id,
-    const std::string& peripheral_address,
-    AddFakeCharacteristicCallback callback) {
-  auto device_iter = devices_.find(peripheral_address);
-  if (device_iter == devices_.end()) {
-    std::move(callback).Run(base::nullopt);
-  }
-
-  FakeRemoteGattService* fake_remote_gatt_service =
-      static_cast<FakeRemoteGattService*>(
-          device_iter->second.get()->GetGattService(service_id));
-  if (fake_remote_gatt_service == nullptr) {
-    std::move(callback).Run(base::nullopt);
-  }
-
-  std::move(callback).Run(fake_remote_gatt_service->AddFakeCharacteristic(
-      characteristic_uuid, std::move(properties)));
-}
-
-void FakeCentral::AddFakeDescriptor(
-    const device::BluetoothUUID& descriptor_uuid,
-    const std::string& characteristic_id,
-    const std::string& service_id,
-    const std::string& peripheral_address,
-    AddFakeDescriptorCallback callback) {
-  FakeRemoteGattCharacteristic* fake_remote_gatt_characteristic =
-      GetFakeRemoteGattCharacteristic(peripheral_address, service_id,
-                                      characteristic_id);
-  if (fake_remote_gatt_characteristic == nullptr) {
-    std::move(callback).Run(base::nullopt);
-  }
-
-  std::move(callback).Run(
-      fake_remote_gatt_characteristic->AddFakeDescriptor(descriptor_uuid));
-}
-
-void FakeCentral::SetNextReadCharacteristicResponse(
-    uint16_t gatt_code,
-    const base::Optional<std::vector<uint8_t>>& value,
-    const std::string& characteristic_id,
-    const std::string& service_id,
-    const std::string& peripheral_address,
-    SetNextReadCharacteristicResponseCallback callback) {
-  FakeRemoteGattCharacteristic* fake_remote_gatt_characteristic =
-      GetFakeRemoteGattCharacteristic(peripheral_address, service_id,
-                                      characteristic_id);
-  if (fake_remote_gatt_characteristic == nullptr) {
-    std::move(callback).Run(false);
-  }
-
-  fake_remote_gatt_characteristic->SetNextReadResponse(gatt_code, value);
-  std::move(callback).Run(true);
 }
 
 std::string FakeCentral::GetAddress() const {
@@ -288,25 +229,5 @@ void FakeCentral::RemovePairingDelegateInternal(
 }
 
 FakeCentral::~FakeCentral() {}
-
-FakeRemoteGattCharacteristic* FakeCentral::GetFakeRemoteGattCharacteristic(
-    const std::string& peripheral_address,
-    const std::string& service_id,
-    const std::string& characteristic_id) const {
-  auto device_iter = devices_.find(peripheral_address);
-  if (device_iter == devices_.end()) {
-    return nullptr;
-  }
-
-  FakeRemoteGattService* fake_remote_gatt_service =
-      static_cast<FakeRemoteGattService*>(
-          device_iter->second.get()->GetGattService(service_id));
-  if (fake_remote_gatt_service == nullptr) {
-    return nullptr;
-  }
-
-  return static_cast<FakeRemoteGattCharacteristic*>(
-      fake_remote_gatt_service->GetCharacteristic(characteristic_id));
-}
 
 }  // namespace bluetooth

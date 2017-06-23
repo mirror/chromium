@@ -3,15 +3,15 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-""" Parser for Web IDL """
+""" Parser for PPAPI IDL """
 
 #
 # IDL Parser
 #
 # The parser is uses the PLY yacc library to build a set of parsing rules based
-# on Web IDL.
+# on WebIDL.
 #
-# Web IDL, and Web IDL grammar can be found at:
+# WebIDL, and WebIDL grammar can be found at:
 #   http://heycam.github.io/webidl/
 # PLY can be found at:
 #   http://www.dabeaz.com/ply/
@@ -718,38 +718,21 @@ class IDLParser(object):
       p[0] = self.BuildNamed('Argument', p, 1)
       p[0].AddChildren(self.BuildTrue('ELLIPSIS'))
 
-  # Not specified
+  # [] Unspecified
   def p_ExceptionMember(self, p):
     """ExceptionMember : Const
-                       | ExceptionField
-                       | ExceptionAttribute
-                       | ExceptionOperation"""
+                       | ExceptionField"""
     p[0] = p[1]
 
-  # Not specified
+  # [] Unspecified
   def p_ExceptionField(self, p):
     """ExceptionField : Type identifier ';'"""
     p[0] = self.BuildNamed('ExceptionField', p, 2, p[1])
 
-  # Error recovery for ExceptionMembers - Not specified
+  # [] Error recovery for ExceptionMembers - Unspecified
   def p_ExceptionFieldError(self, p):
     """ExceptionField : error"""
     p[0] = self.BuildError(p, 'ExceptionField')
-
-  # Not specified
-  def p_ExceptionAttribute(self, p):
-    """ExceptionAttribute : ReadOnly ATTRIBUTE Type identifier ';'"""
-    p[0] = self.BuildNamed('Attribute', p, 4,
-                           ListFromConcat(p[1], p[3]))
-
-  # Not specified
-  def p_ExceptionOperation(self, p):
-    """ExceptionOperation : Type identifier '(' ')' ';'"""
-    # Needed to handle one case in DOMException.idl:
-    # // Override in a Mozilla compatible format
-    # [NotEnumerable] DOMString toString();
-    # Limited form of Operation to prevent others from being added.
-    p[0] = self.BuildNamed('ExceptionOperation', p, 2, p[1])
 
   # [59]
   def p_Iterable(self, p):
@@ -811,25 +794,20 @@ class IDLParser(object):
     if len(p) > 1:
       p[0] = ListFromConcat(p[2], p[3])
 
-  # https://heycam.github.io/webidl/#idl-extended-attributes
-  # The ExtendedAttribute symbol in Web IDL grammar is very flexible but we
-  # only support following patterns:
+  # We only support:
   #    [ identifier ]
   #    [ identifier ( ArgumentList ) ]
   #    [ identifier = identifier ]
   #    [ identifier = ( IdentifierList ) ]
   #    [ identifier = identifier ( ArgumentList ) ]
-  #    [ identifier = ( StringList ) ]
-  # The first five patterns are specified in the Web IDL spec and the last
-  # pattern is Blink's custom extension to support [ReflectOnly].
+  # [66] map directly to [91-93, 95]
+  # [67-69, 71] are unsupported
   def p_ExtendedAttribute(self, p):
     """ExtendedAttribute : ExtendedAttributeNoArgs
                          | ExtendedAttributeArgList
                          | ExtendedAttributeIdent
                          | ExtendedAttributeIdentList
-                         | ExtendedAttributeNamedArgList
-                         | ExtendedAttributeStringLiteral
-                         | ExtendedAttributeStringLiteralList"""
+                         | ExtendedAttributeNamedArgList"""
     p[0] = p[1]
 
   # [71]
@@ -1093,44 +1071,6 @@ class IDLParser(object):
     args = self.BuildProduction('Arguments', p, 4, p[5])
     value = self.BuildNamed('Call', p, 3, args)
     p[0] = self.BuildNamed('ExtAttribute', p, 1, value)
-
-  # Blink extension: Add support for string literal Extended Attribute values
-  def p_ExtendedAttributeStringLiteral(self, p):
-    """ExtendedAttributeStringLiteral : identifier '=' StringLiteral"""
-    def UnwrapString(ls):
-      """Reach in and grab the string literal's "NAME"."""
-      return ls[1].value
-
-    value = self.BuildAttribute('VALUE', UnwrapString(p[3]))
-    p[0] = self.BuildNamed('ExtAttribute', p, 1, value)
-
-  # Blink extension: Add support for compound Extended Attribute values over
-  # string literals ("A","B")
-  def p_ExtendedAttributeStringLiteralList(self, p):
-    """ExtendedAttributeStringLiteralList : identifier '=' '(' StringLiteralList ')'"""
-    value = self.BuildAttribute('VALUE', p[4])
-    p[0] = self.BuildNamed('ExtAttribute', p, 1, value)
-
-  # Blink extension: One or more string literals. The values aren't propagated
-  # as literals, but their by their value only.
-  def p_StringLiteralList(self, p):
-    """StringLiteralList : StringLiteral ',' StringLiteralList
-                         | StringLiteral"""
-    def UnwrapString(ls):
-      """Reach in and grab the string literal's "NAME"."""
-      return ls[1].value
-
-    if len(p) > 3:
-      p[0] = ListFromConcat(UnwrapString(p[1]), p[3])
-    else:
-      p[0] = ListFromConcat(UnwrapString(p[1]))
-
-  # Blink extension: Wrap string literal.
-  def p_StringLiteral(self, p):
-    """StringLiteral : string"""
-    p[0] = ListFromConcat(self.BuildAttribute('TYPE', 'DOMString'),
-                          self.BuildAttribute('NAME', p[1]))
-
 
   # [99]
   def p_StringType(self, p):

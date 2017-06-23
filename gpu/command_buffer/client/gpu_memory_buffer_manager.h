@@ -21,16 +21,14 @@ class GPU_EXPORT GpuMemoryBufferManager {
   GpuMemoryBufferManager();
   virtual ~GpuMemoryBufferManager();
 
-  // Creates a GpuMemoryBuffer that can be shared with another process. It can
-  // be called on any thread.
+  // Creates a GpuMemoryBuffer that can be shared with another process.
   virtual std::unique_ptr<gfx::GpuMemoryBuffer> CreateGpuMemoryBuffer(
       const gfx::Size& size,
       gfx::BufferFormat format,
       gfx::BufferUsage usage,
       gpu::SurfaceHandle surface_handle) = 0;
 
-  // Associates destruction sync point with |buffer|. It can be called on any
-  // thread.
+  // Associates destruction sync point with |buffer|.
   virtual void SetDestructionSyncToken(gfx::GpuMemoryBuffer* buffer,
                                        const gpu::SyncToken& sync_token) = 0;
 };

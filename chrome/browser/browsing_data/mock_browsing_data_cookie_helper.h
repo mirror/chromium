@@ -20,7 +20,8 @@ class MockBrowsingDataCookieHelper : public BrowsingDataCookieHelper {
       net::URLRequestContextGetter* request_context_getter);
 
   // BrowsingDataCookieHelper methods.
-  void StartFetching(const FetchCallback& callback) override;
+  void StartFetching(
+      const net::CookieStore::GetCookieListCallback& callback) override;
   void DeleteCookie(const net::CanonicalCookie& cookie) override;
 
   // Adds some cookie samples.
@@ -39,7 +40,7 @@ class MockBrowsingDataCookieHelper : public BrowsingDataCookieHelper {
  private:
   ~MockBrowsingDataCookieHelper() override;
 
-  FetchCallback callback_;
+  net::CookieStore::GetCookieListCallback callback_;
 
   net::CookieList cookie_list_;
 

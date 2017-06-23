@@ -4,19 +4,19 @@
 
 function toggleHelpBox() {
   var helpBoxOuter = document.getElementById('details');
-  helpBoxOuter.classList.toggle(HIDDEN_CLASS);
+  helpBoxOuter.classList.toggle('hidden');
   var detailsButton = document.getElementById('details-button');
-  if (helpBoxOuter.classList.contains(HIDDEN_CLASS))
+  if (helpBoxOuter.classList.contains('hidden'))
     detailsButton.innerText = detailsButton.detailsText;
   else
     detailsButton.innerText = detailsButton.hideDetailsText;
 
   // Details appears over the main content on small screens.
   if (mobileNav) {
-    document.getElementById('main-content').classList.toggle(HIDDEN_CLASS);
+    document.getElementById('main-content').classList.toggle('hidden');
     var runnerContainer = document.querySelector('.runner-container');
     if (runnerContainer) {
-      runnerContainer.classList.toggle(HIDDEN_CLASS);
+      runnerContainer.classList.toggle('hidden');
     }
   }
 }

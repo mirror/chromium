@@ -172,14 +172,13 @@ void CSPDirectiveList::ReportViolationWithLocation(
                            RedirectStatus::kNoRedirect, element, source);
 }
 
-void CSPDirectiveList::ReportEvalViolation(
+void CSPDirectiveList::ReportViolationWithState(
     const String& directive_text,
     const ContentSecurityPolicy::DirectiveType& effective_type,
     const String& message,
     const KURL& blocked_url,
     ScriptState* script_state,
-    const ContentSecurityPolicy::ExceptionStatus exception_status,
-    const String& content) const {
+    const ContentSecurityPolicy::ExceptionStatus exception_status) const {
   String report_message = IsReportOnly() ? "[Report Only] " + message : message;
   // Print a console message if it won't be redundant with a
   // JavaScript exception that the caller will throw. (Exceptions will
@@ -194,8 +193,7 @@ void CSPDirectiveList::ReportEvalViolation(
   policy_->ReportViolation(directive_text, effective_type, message, blocked_url,
                            report_endpoints_, header_, header_type_,
                            ContentSecurityPolicy::kEvalViolation,
-                           std::unique_ptr<SourceLocation>(), nullptr,
-                           RedirectStatus::kFollowedRedirect, nullptr, content);
+                           std::unique_ptr<SourceLocation>());
 }
 
 bool CSPDirectiveList::CheckEval(SourceListDirective* directive) const {
@@ -384,8 +382,7 @@ bool CSPDirectiveList::CheckEvalAndReportViolation(
     SourceListDirective* directive,
     const String& console_message,
     ScriptState* script_state,
-    ContentSecurityPolicy::ExceptionStatus exception_status,
-    const String& content) const {
+    ContentSecurityPolicy::ExceptionStatus exception_status) const {
   if (CheckEval(directive))
     return true;
 
@@ -395,11 +392,10 @@ bool CSPDirectiveList::CheckEvalAndReportViolation(
         " Note that 'script-src' was not explicitly set, so 'default-src' is "
         "used as a fallback.";
 
-  ReportEvalViolation(
+  ReportViolationWithState(
       directive->GetText(), ContentSecurityPolicy::DirectiveType::kScriptSrc,
       console_message + "\"" + directive->GetText() + "\"." + suffix + "\n",
-      KURL(), script_state, exception_status,
-      directive->AllowReportSample() ? content : g_empty_string);
+      KURL(), script_state, exception_status);
   if (!IsReportOnly()) {
     policy_->ReportBlockedScriptExecutionToInspector(directive->GetText());
     return false;
@@ -652,15 +648,14 @@ bool CSPDirectiveList::AllowInlineStyle(
 bool CSPDirectiveList::AllowEval(
     ScriptState* script_state,
     SecurityViolationReportingPolicy reporting_policy,
-    ContentSecurityPolicy::ExceptionStatus exception_status,
-    const String& content) const {
+    ContentSecurityPolicy::ExceptionStatus exception_status) const {
   if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
     return CheckEvalAndReportViolation(
         OperativeDirective(script_src_.Get()),
         "Refused to evaluate a string as JavaScript because 'unsafe-eval' is "
         "not an allowed source of script in the following Content Security "
         "Policy directive: ",
-        script_state, exception_status, content);
+        script_state, exception_status);
   }
   return CheckEval(OperativeDirective(script_src_.Get()));
 }

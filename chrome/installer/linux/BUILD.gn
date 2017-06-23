@@ -2,7 +2,6 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//build/config/c++/c++.gni")
 import("//build/config/chrome_build.gni")
 import("//build/config/features.gni")
 import("//build/config/sanitizers/sanitizers.gni")
@@ -85,7 +84,11 @@ copy("common_packaging_files") {
     ]
   }
 
-  sources += [ "//third_party/eu-strip/bin/eu-strip" ]
+  if (current_cpu == "x86") {
+    sources += [ "//build/linux/bin/eu-strip" ]
+  } else if (current_cpu == "x64") {
+    sources += [ "/usr/bin/eu-strip" ]
+  }
 
   outputs = [
     "$root_out_dir/installer/common/{{source_file_part}}",
@@ -190,6 +193,9 @@ group("installer_deps") {
   if (!is_chromeos) {
     public_deps += [ ":rpm_packaging_files" ]
   }
+  if (use_custom_libcxx) {
+    public_deps += [ "//buildtools/third_party/libc++" ]
+  }
 }
 
 # Creates .deb and .rpm (RPM for non-ChromeOS only) installer packages.
@@ -236,11 +242,7 @@ template("linux_package") {
     ]
   }
 
-  # TODO(thomasanderson): Move this variable into a .gni file
-  # somewhere.  It is currently copied from
-  # buildtools/third_party/libc++/BUILD.gn.
-  libcpp_is_static = !is_component_build && !using_sanitizer
-  if (!libcpp_is_static && use_custom_libcxx) {
+  if (use_custom_libcxx) {
     packaging_files_binaries += [ "$root_out_dir/libc++.so" ]
   }
 

@@ -4,6 +4,14 @@
 -ActivityTrackerTest.CreateWithFileTest
 -ActivityTrackerTest.ProcessDeathTest
 -ActivityTrackerTest.ThreadDeathTest
+-AllocationRegisterTest.ChangeContextAfterInsertion
+-AllocationRegisterTest.DoubleFreeIsAllowed
+-AllocationRegisterTest.DoubleInsertOverwrites
+-AllocationRegisterTest.InsertRemove
+-AllocationRegisterTest.InsertRemoveCollisions
+-AllocationRegisterTest.InsertRemoveRandomOrder
+-AllocationRegisterTest.OverflowAllocationTest
+-AllocationRegisterTest.OverflowBacktraceTest
 -CrashLoggingTest.ChunkValue
 -CrashLoggingTest.InitSize
 -CrashLoggingTest.ScopedCrashKey
@@ -20,6 +28,9 @@
 -DiscardableSharedMemoryTest.MappedSize
 -DiscardableSharedMemoryTest.Purge
 -DiscardableSharedMemoryTest.ZeroSize
+-EventWriterTest.HeapDumpAggregation
+-EventWriterTest.HeapDumpNoBacktraceNoType
+-EventWriterTest.SerializeHeapProfileEventData
 -FeatureListTest.StoreAndRetrieveAssociatedFeaturesFromSharedMemory
 -FeatureListTest.StoreAndRetrieveFeaturesFromSharedMemory
 -FieldTrialListTest.AddTrialsToAllocator
@@ -66,6 +77,9 @@
 -FileUtilTest.ExecutableExistsInPath
 -FileUtilTest.FileToFILE
 -FileUtilTest.NormalizeFilePathSymlinks
+-FileUtilTest.TouchFile
+-HeapDumpWriterTest.BacktraceIndex
+-HeapDumpWriterTest.TypeId
 -LoggingTest.CheckCausesDistinctBreakpoints
 -MemoryMappedFileTest.ExtendableFile
 -MemoryMappedFileTest.MapLargePartialRegionInTheMiddle
@@ -135,6 +149,7 @@
 -ProcessTest.TerminateCurrentProcessImmediatelyWithNonZeroExitCode
 -ProcessTest.TerminateCurrentProcessImmediatelyWithZeroExitCode
 -ProcessTest.WaitForExitWithTimeout
+-ProcessUtilTest.CurrentDirectory
 -ProcessUtilTest.DelayedTermination
 -ProcessUtilTest.FDRemapping
 -ProcessUtilTest.GetAppOutput
@@ -147,6 +162,7 @@
 -ProcessUtilTest.LaunchProcess
 -ProcessUtilTest.PreExecHook
 -ProcessUtilTest.SpawnChild
+-RTLTest.WrapPathWithLTRFormatting
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.AvoidsDeadlockOnShutdown/0
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.AvoidsDeadlockOnShutdownWithSequencedBlockingTasks/0
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.ContinueOnShutdown/0
@@ -185,6 +201,7 @@
 -TaskSchedulerWorkerPoolImplPostTaskBeforeStartTest.PostTasksBeforeStart
 -TaskSchedulerWorkerPoolStandbyPolicyTest.InitLazy
 -TaskSchedulerWorkerPoolStandbyPolicyTest.InitOne
+-TraceEventTestFixture.TestTraceFlush
 -TrackedObjectsTest.ReuseRetiredThreadData
 -TrackedTimeTest.TrackedTimerDuration
 -VerifyPathControlledByUserTest.BadPaths
@@ -192,3 +209,10 @@
 -VerifyPathControlledByUserTest.OwnershipChecks
 -VerifyPathControlledByUserTest.Symlinks
 -VerifyPathControlledByUserTest.WriteBitChecks
+
+
+# https://crbug.com/734216
+-MemoryDumpSchedulerTest.StartStopQuickly
+
+# https://crbug.com/734218
+-MemoryPeakDetectorTest.StartStopQuickly

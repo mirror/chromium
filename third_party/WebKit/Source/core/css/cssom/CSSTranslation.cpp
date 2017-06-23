@@ -14,19 +14,7 @@ CSSTranslation* CSSTranslation::Create(CSSNumericValue* x,
                                        CSSNumericValue* y,
                                        CSSNumericValue* z,
                                        ExceptionState& exception_state) {
-  if ((x->GetType() != CSSStyleValue::StyleValueType::kLengthType &&
-       x->GetType() != CSSStyleValue::StyleValueType::kPercentType) ||
-      (y->GetType() != CSSStyleValue::StyleValueType::kLengthType &&
-       y->GetType() != CSSStyleValue::StyleValueType::kPercentType)) {
-    exception_state.ThrowTypeError(
-        "Must pass length or percentage to X and Y of CSSTranslation");
-    return nullptr;
-  }
-  if (z && z->GetType() != CSSStyleValue::StyleValueType::kLengthType) {
-    exception_state.ThrowTypeError("Must pass length to Z of CSSTranslation");
-    return nullptr;
-  }
-  if (z && z->ContainsPercent()) {
+  if (z->ContainsPercent()) {
     exception_state.ThrowTypeError(
         "CSSTranslation does not support z CSSNumericValue with percent units");
     return nullptr;

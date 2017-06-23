@@ -104,8 +104,8 @@ class ScreenWakeLockTest : public ::testing::Test {
 
   LocalFrame* GetFrame() {
     DCHECK(web_view_helper_.WebView());
-    DCHECK(web_view_helper_.LocalMainFrame());
-    return web_view_helper_.LocalMainFrame()->GetFrame();
+    DCHECK(web_view_helper_.WebView()->MainFrameImpl());
+    return web_view_helper_.WebView()->MainFrameImpl()->GetFrame();
   }
 
   Screen* GetScreen() {

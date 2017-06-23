@@ -854,9 +854,7 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
       this._nameBadgeElement.classList.add('network-badge');
     }
     cell.appendChild(this._nameBadgeElement);
-    var name = this._request.name().trimMiddle(100);
-    var networkManager = SDK.NetworkManager.forRequest(this._request);
-    cell.createTextChild(networkManager ? networkManager.target().decorateLabel(name) : name);
+    cell.createTextChild(this._request.networkManager().target().decorateLabel(this._request.name().trimMiddle(100)));
     this._appendSubtitle(cell, this._request.path());
     cell.title = this._request.url();
   }
@@ -948,9 +946,8 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
         break;
 
       case SDK.NetworkRequest.InitiatorType.Script:
-        var networkManager = SDK.NetworkManager.forRequest(request);
         this._linkifiedInitiatorAnchor = this.parentView().linkifier.linkifyScriptLocation(
-            networkManager ? networkManager.target() : null, initiator.scriptId, initiator.url, initiator.lineNumber,
+            request.networkManager().target(), initiator.scriptId, initiator.url, initiator.lineNumber,
             initiator.columnNumber);
         this._linkifiedInitiatorAnchor.title = '';
         cell.appendChild(this._linkifiedInitiatorAnchor);

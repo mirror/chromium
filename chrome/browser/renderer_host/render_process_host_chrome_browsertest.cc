@@ -12,7 +12,6 @@
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/devtools/devtools_window.h"
-#include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -91,7 +90,7 @@ base::Process ProcessFromHandle(base::ProcessHandle handle) {
 
 }  // namespace
 
-class ChromeRenderProcessHostTest : public ExtensionBrowserTest {
+class ChromeRenderProcessHostTest : public InProcessBrowserTest {
  public:
   ChromeRenderProcessHostTest() {}
 
@@ -156,9 +155,6 @@ class ChromeRenderProcessHostTest : public ExtensionBrowserTest {
     content::RenderProcessHost* rph2 = NULL;
     content::RenderProcessHost* rph3 = NULL;
 
-    const extensions::Extension* extension =
-        LoadExtension(test_data_dir_.AppendASCII("options_page"));
-
     // Change the first tab to be the omnibox page (TYPE_WEBUI).
     GURL omnibox(chrome::kChromeUIOmniboxURL);
     ui_test_utils::NavigateToURL(browser(), omnibox);
@@ -215,18 +211,18 @@ class ChromeRenderProcessHostTest : public ExtensionBrowserTest {
     EXPECT_EQ(tab2->GetRenderProcessHost(), rph1);
 
     // Create a TYPE_EXTENSION tab.  It should be in its own process.
-    GURL extension_url("chrome-extension://" + extension->id());
+    // (the bookmark manager is implemented as an extension)
+    GURL bookmarks(chrome::kChromeUIBookmarksURL);
     ui_test_utils::WindowedTabAddedNotificationObserver observer4(
         content::NotificationService::AllSources());
-    chrome::ShowSingletonTab(browser(), extension_url);
-
+    chrome::ShowSingletonTab(browser(), bookmarks);
     observer4.Wait();
     tab_count++;
     host_count++;
     EXPECT_EQ(tab_count, browser()->tab_strip_model()->count());
     tab1 = browser()->tab_strip_model()->GetWebContentsAt(tab_count - 1);
     rph3 = tab1->GetRenderProcessHost();
-    EXPECT_EQ(tab1->GetURL(), extension_url);
+    EXPECT_EQ(tab1->GetURL(), bookmarks);
     EXPECT_EQ(host_count, RenderProcessHostCount());
     EXPECT_NE(rph1, rph3);
     EXPECT_NE(rph2, rph3);
@@ -237,7 +233,6 @@ class ChromeRenderProcessHostTestWithCommandLine
     : public ChromeRenderProcessHostTest {
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    ChromeRenderProcessHostTest::SetUpCommandLine(command_line);
     command_line->AppendSwitchASCII(switches::kRendererProcessLimit, "1");
   }
 };
@@ -601,12 +596,10 @@ class ChromeRenderProcessHostBackgroundingTest
   ChromeRenderProcessHostBackgroundingTest() {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    ChromeRenderProcessHostTest::SetUpCommandLine(command_line);
     command_line->AppendSwitch(switches::kProcessPerTab);
   }
 
   void SetUpOnMainThread() override {
-    ChromeRenderProcessHostTest::SetUpOnMainThread();
     ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
 
     // Set up the server and get the test pages.

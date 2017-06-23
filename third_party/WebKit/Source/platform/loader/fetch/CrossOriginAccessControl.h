@@ -33,6 +33,7 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -94,7 +95,7 @@ class PLATFORM_EXPORT CrossOriginAccessControl {
   // access is allowed. Use |accessControlErrorString()| to construct a
   // user-friendly error message for any of the other (error) conditions.
   static AccessStatus CheckAccess(const ResourceResponse&,
-                                  WebURLRequest::FetchCredentialsMode,
+                                  StoredCredentials,
                                   const SecurityOrigin*);
 
   // Perform the required CORS checks on the response to a preflight request.
@@ -121,7 +122,7 @@ class PLATFORM_EXPORT CrossOriginAccessControl {
   static bool HandleRedirect(RefPtr<SecurityOrigin>,
                              ResourceRequest&,
                              const ResourceResponse&,
-                             WebURLRequest::FetchCredentialsMode,
+                             StoredCredentials,
                              ResourceLoaderOptions&,
                              String&);
 

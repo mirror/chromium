@@ -241,7 +241,7 @@ class ArcSessionImpl : public ArcSession,
 
   // Checks whether a function runs on the thread where the instance is
   // created.
-  THREAD_CHECKER(thread_checker_);
+  base::ThreadChecker thread_checker_;
 
   // Owned by ArcServiceManager.
   ArcBridgeService* const arc_bridge_service_;
@@ -286,7 +286,7 @@ ArcSessionImpl::ArcSessionImpl(
 }
 
 ArcSessionImpl::~ArcSessionImpl() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(state_ == State::NOT_STARTED || state_ == State::STOPPED);
   chromeos::SessionManagerClient* client = GetSessionManagerClient();
   if (client == nullptr)
@@ -295,7 +295,7 @@ ArcSessionImpl::~ArcSessionImpl() {
 }
 
 void ArcSessionImpl::Start() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::NOT_STARTED);
   VLOG(2) << "Starting ARC session.";
   VLOG(2) << "Creating socket...";
@@ -347,7 +347,7 @@ mojo::edk::ScopedPlatformHandle ArcSessionImpl::CreateSocket() {
 
 void ArcSessionImpl::OnSocketCreated(
     mojo::edk::ScopedPlatformHandle socket_fd) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::CREATING_SOCKET);
 
   if (stop_requested_) {
@@ -390,7 +390,7 @@ void ArcSessionImpl::OnInstanceStarted(
     mojo::edk::ScopedPlatformHandle socket_fd,
     StartArcInstanceResult result,
     const std::string& container_instance_id) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::STARTING_INSTANCE);
   container_instance_id_ = container_instance_id;
 
@@ -482,7 +482,7 @@ mojo::ScopedMessagePipeHandle ArcSessionImpl::ConnectMojo(
 
 void ArcSessionImpl::OnMojoConnected(
     mojo::ScopedMessagePipeHandle server_pipe) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::CONNECTING_MOJO);
   accept_cancel_pipe_.reset();
 
@@ -510,7 +510,7 @@ void ArcSessionImpl::OnMojoConnected(
 }
 
 void ArcSessionImpl::Stop() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   VLOG(2) << "Stopping ARC session is requested.";
 
   // For second time or later, just do nothing.
@@ -558,7 +558,7 @@ void ArcSessionImpl::Stop() {
 }
 
 void ArcSessionImpl::StopArcInstance() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(state_ == State::STARTING_INSTANCE ||
          state_ == State::CONNECTING_MOJO || state_ == State::RUNNING);
 
@@ -573,7 +573,7 @@ void ArcSessionImpl::StopArcInstance() {
 void ArcSessionImpl::ArcInstanceStopped(
     bool clean,
     const std::string& container_instance_id) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   VLOG(1) << "Notified that ARC instance is stopped "
           << (clean ? "cleanly" : "uncleanly");
 
@@ -608,7 +608,7 @@ void ArcSessionImpl::ArcInstanceStopped(
 }
 
 void ArcSessionImpl::OnStopped(ArcStopReason reason) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   // OnStopped() should be called once per instance.
   DCHECK_NE(state_, State::STOPPED);
   VLOG(2) << "ARC session is stopped.";
@@ -619,7 +619,7 @@ void ArcSessionImpl::OnStopped(ArcStopReason reason) {
 }
 
 void ArcSessionImpl::OnShutdown() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   stop_requested_ = true;
   if (state_ == State::STOPPED)
     return;

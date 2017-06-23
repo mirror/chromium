@@ -103,10 +103,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
 // The list of field definitions for the editor.
 @property(nonatomic, strong) NSArray<EditorField*>* fields;
 
-// The map of autofill types to UIPickerView options which are arrays of columns
-// which themselves are arrays of string rows used for display in UIPickerView.
+// The map of autofill types to lists of UIPickerView options.
 @property(nonatomic, strong)
-    NSMutableDictionary<NSNumber*, NSArray<NSArray<NSString*>*>*>* options;
+    NSMutableDictionary<NSNumber*, NSArray<NSString*>*>* options;
 
 // The map of autofill types to UIPickerView views.
 @property(nonatomic, strong)
@@ -140,10 +139,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
 // Returns the index path for the cell associated with the currently focused
 // text field.
 - (NSIndexPath*)indexPathForCurrentTextField;
-
-// Returns the associated options for the given UIPickerView.
-- (NSArray<NSArray<NSString*>*>*)pickerViewOptionsForPickerView:
-    (UIPickerView*)pickerView;
 
 @end
 
@@ -250,9 +245,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
         item.textFieldValue = field.value;
         item.required = field.isRequired;
         item.autofillUIType = field.autofillUIType;
-        item.returnKeyType = field.returnKeyType;
-        item.keyboardType = field.keyboardType;
-        item.autoCapitalizationType = field.autoCapitalizationType;
         item.identifyingIcon = [_dataSource iconIdentifyingEditorField:field];
         [model addItem:item toSectionWithIdentifier:sectionIdentifier];
         field.item = item;
@@ -314,7 +306,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   self.fields = fields;
 }
 
-- (void)setOptions:(NSArray<NSArray<NSString*>*>*)options
+- (void)setOptions:(NSArray<NSString*>*)options
     forEditorField:(EditorField*)field {
   DCHECK(field.fieldType == EditorFieldTypeTextField);
   AutofillEditItem* item =
@@ -335,19 +327,11 @@ typedef NS_ENUM(NSInteger, ItemType) {
     [self.pickerViews setObject:pickerView forKey:key];
     item.inputView = pickerView;
 
+    // Set UIPickerView's default selected row, if possible.
     [pickerView reloadAllComponents];
-    // Set UIPickerView's default selected rows, if possible.
-    if (field.value) {
-      NSArray<NSString*>* fieldComponents =
-          [field.value componentsSeparatedByString:@" / "];
-      [options enumerateObjectsUsingBlock:^(NSArray<NSString*>* column,
-                                            NSUInteger component, BOOL* stop) {
-        DCHECK(component < fieldComponents.count);
-        NSUInteger row = [column indexOfObject:fieldComponents[component]];
-        if (row != NSNotFound) {
-          [pickerView selectRow:row inComponent:component animated:NO];
-        }
-      }];
+    NSUInteger indexOfRow = [options indexOfObject:field.value];
+    if (indexOfRow != NSNotFound) {
+      [pickerView selectRow:indexOfRow inComponent:0 animated:NO];
     }
   }
 
@@ -400,7 +384,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 }
 
 // This method is called as the text is being typed in, pasted, or deleted. Asks
-// the delegate if the text should be changed. Should always return NO. During
+// the delegate if the text should be changed. Should always return YES. During
 // typing/pasting text, |newText| contains one or more new characters. When user
 // deletes text, |newText| is empty. |range| is the range of characters to be
 // replaced.
@@ -417,29 +401,24 @@ typedef NS_ENUM(NSInteger, ItemType) {
   AutofillEditItem* item = base::mac::ObjCCastStrict<AutofillEditItem>(
       [model itemAtIndexPath:indexPath]);
 
-  // Find the respective editor field and update its value to the proposed text.
+  // Find the respective editor field and update its value.
   NSNumber* key = [NSNumber numberWithInt:sectionIdentifier];
   EditorField* field = self.fieldsMap[key];
   DCHECK(field);
-  field.value = [textField.text stringByReplacingCharactersInRange:range
-                                                        withString:newText];
-
-  // Format the proposed text if necessary.
-  [_dataSource formatValueForEditorField:field];
-
-  // Since this method is returning NO, update the text field's value now.
-  textField.text = field.value;
+  // Obtain the text being typed.
+  NSString* updatedText =
+      [textField.text stringByReplacingCharactersInRange:range
+                                              withString:newText];
+  field.value = updatedText;
 
   // Get the icon that identifies the field value and reload the cell if the
   // icon changes.
   UIImage* oldIcon = item.identifyingIcon;
   item.identifyingIcon = [_dataSource iconIdentifyingEditorField:field];
-  if (item.identifyingIcon != oldIcon) {
-    item.textFieldValue = field.value;
+  if (item.identifyingIcon != oldIcon)
     [self reconfigureCellsForItems:@[ item ]];
-  }
 
-  return NO;
+  return YES;
 }
 
 #pragma mark - AutofillEditAccessoryDelegate
@@ -462,50 +441,38 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 #pragma mark - UIPickerViewDataSource methods
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView {
-  NSArray<NSArray<NSString*>*>* options =
-      [self pickerViewOptionsForPickerView:pickerView];
-  return options.count;
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView*)thePickerView {
+  return 1;
 }
 
-- (NSInteger)pickerView:(UIPickerView*)pickerView
+- (NSInteger)pickerView:(UIPickerView*)thePickerView
     numberOfRowsInComponent:(NSInteger)component {
-  NSArray<NSArray<NSString*>*>* options =
-      [self pickerViewOptionsForPickerView:pickerView];
-  DCHECK(component < static_cast<NSInteger>(options.count));
-  NSArray<NSString*>* column = options[component];
-  return column.count;
+  NSArray<NSNumber*>* indices =
+      [self.pickerViews allKeysForObject:thePickerView];
+  DCHECK(indices.count == 1);
+  NSArray<NSString*>* options = self.options[indices[0]];
+  return options.count;
 }
 
 #pragma mark - UIPickerViewDelegate methods
 
-- (NSString*)pickerView:(UIPickerView*)pickerView
+- (NSString*)pickerView:(UIPickerView*)thePickerView
             titleForRow:(NSInteger)row
            forComponent:(NSInteger)component {
-  NSArray<NSArray<NSString*>*>* options =
-      [self pickerViewOptionsForPickerView:pickerView];
-  DCHECK(component < static_cast<NSInteger>(options.count));
-  NSArray<NSString*>* column = options[component];
-  DCHECK(row < static_cast<NSInteger>(column.count));
-  return column[row];
+  NSArray<NSNumber*>* indices =
+      [self.pickerViews allKeysForObject:thePickerView];
+  DCHECK(indices.count == 1);
+  NSArray<NSString*>* options = self.options[indices[0]];
+  DCHECK(row < static_cast<NSInteger>(options.count));
+  return options[row];
 }
 
-- (void)pickerView:(UIPickerView*)pickerView
+- (void)pickerView:(UIPickerView*)thePickerView
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component {
   DCHECK(_currentEditingCell);
-
-  // Break the current text field value into its components, replace the
-  // respective component with the value of the selected row, combine the
-  // components, and update the value of the text field.
-  NSMutableArray<NSString*>* fieldComponents =
-      [[_currentEditingCell.textField.text componentsSeparatedByString:@" / "]
-          mutableCopy];
-  DCHECK(component < static_cast<NSInteger>(fieldComponents.count));
-  fieldComponents[component] =
-      [self pickerView:pickerView titleForRow:row forComponent:component];
   _currentEditingCell.textField.text =
-      [fieldComponents componentsJoinedByString:@" / "];
+      [self pickerView:thePickerView titleForRow:row forComponent:component];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -725,13 +692,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
       [[self collectionView] indexPathForCell:_currentEditingCell];
   DCHECK(indexPath);
   return indexPath;
-}
-
-- (NSArray<NSArray<NSString*>*>*)pickerViewOptionsForPickerView:
-    (UIPickerView*)pickerView {
-  NSArray<NSNumber*>* keys = [self.pickerViews allKeysForObject:pickerView];
-  DCHECK(keys.count == 1);
-  return self.options[keys[0]];
 }
 
 #pragma mark - Keyboard handling

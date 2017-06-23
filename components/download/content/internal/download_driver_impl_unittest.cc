@@ -35,8 +35,7 @@ const char kFakeGuid[] = "fake_guid";
 // driver entry.
 MATCHER_P(DriverEntryEuqual, entry, "") {
   return entry.guid == arg.guid && entry.state == arg.state &&
-         entry.bytes_downloaded == arg.bytes_downloaded &&
-         entry.current_file_path.value() == arg.current_file_path.value();
+         entry.bytes_downloaded == arg.bytes_downloaded;
 }
 
 }  // namespace
@@ -46,7 +45,8 @@ class MockDriverClient : public DownloadDriver::Client {
   MOCK_METHOD1(OnDriverReady, void(bool));
   MOCK_METHOD1(OnDownloadCreated, void(const DriverEntry&));
   MOCK_METHOD2(OnDownloadFailed, void(const DriverEntry&, int));
-  MOCK_METHOD1(OnDownloadSucceeded, void(const DriverEntry&));
+  MOCK_METHOD2(OnDownloadSucceeded,
+               void(const DriverEntry&, const base::FilePath&));
   MOCK_METHOD1(OnDownloadUpdated, void(const DriverEntry&));
 };
 
@@ -56,7 +56,8 @@ class DownloadDriverImplTest : public testing::Test {
   ~DownloadDriverImplTest() override = default;
 
   void SetUp() override {
-    driver_ = base::MakeUnique<DownloadDriverImpl>(&mock_manager_);
+    driver_ =
+        base::MakeUnique<DownloadDriverImpl>(&mock_manager_, base::FilePath());
   }
 
   // TODO(xingliu): implements test download manager for embedders to test.
@@ -112,7 +113,7 @@ TEST_F(DownloadDriverImplTest, DownloadItemUpdateEvents) {
   fake_item.SetReceivedBytes(1024);
   fake_item.SetState(DownloadState::COMPLETE);
   entry = DownloadDriverImpl::CreateDriverEntry(&fake_item);
-  EXPECT_CALL(mock_client_, OnDownloadSucceeded(DriverEntryEuqual(entry)))
+  EXPECT_CALL(mock_client_, OnDownloadSucceeded(DriverEntryEuqual(entry), _))
       .Times(1)
       .RetiresOnSaturation();
   static_cast<content::DownloadItem::Observer*>(driver_.get())

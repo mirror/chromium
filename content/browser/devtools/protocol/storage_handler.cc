@@ -12,7 +12,6 @@
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
-#include "storage/browser/quota/quota_client.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/common/quota/quota_status_code.h"
 
@@ -20,61 +19,40 @@ namespace content {
 namespace protocol {
 
 namespace {
-Storage::StorageType GetTypeName(storage::QuotaClient::ID id) {
-  switch (id) {
-    case storage::QuotaClient::kFileSystem:
-      return Storage::StorageTypeEnum::File_systems;
-    case storage::QuotaClient::kDatabase:
-      return Storage::StorageTypeEnum::Websql;
-    case storage::QuotaClient::kAppcache:
-      return Storage::StorageTypeEnum::Appcache;
-    case storage::QuotaClient::kIndexedDatabase:
-      return Storage::StorageTypeEnum::Indexeddb;
-    case storage::QuotaClient::kServiceWorkerCache:
-      return Storage::StorageTypeEnum::Cache_storage;
-    case storage::QuotaClient::kServiceWorker:
-      return Storage::StorageTypeEnum::Service_workers;
-    default:
-      return Storage::StorageTypeEnum::Other;
-  }
-}
+static const char kAppCache[] = "appcache";
+static const char kCookies[] = "cookies";
+static const char kFileSystems[] = "filesystems";
+static const char kIndexedDB[] = "indexeddb";
+static const char kLocalStorage[] = "local_storage";
+static const char kShaderCache[] = "shader_cache";
+static const char kWebSQL[] = "websql";
+static const char kServiceWorkers[] = "service_workers";
+static const char kCacheStorage[] = "cache_storage";
+static const char kAll[] = "all";
 
 void ReportUsageAndQuotaDataOnUIThread(
     std::unique_ptr<StorageHandler::GetUsageAndQuotaCallback> callback,
     storage::QuotaStatusCode code,
     int64_t usage,
-    int64_t quota,
-    base::flat_map<storage::QuotaClient::ID, int64_t> usage_breakdown) {
+    int64_t quota) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (code != storage::kQuotaStatusOk) {
     return callback->sendFailure(
         Response::Error("Quota information is not available"));
   }
-
-  std::unique_ptr<Array<Storage::UsageForType>> usageList =
-      Array<Storage::UsageForType>::create();
-  for (const auto& usage : usage_breakdown) {
-    std::unique_ptr<Storage::UsageForType> entry =
-        Storage::UsageForType::Create()
-            .SetStorageType(GetTypeName(usage.first))
-            .SetUsage(usage.second)
-            .Build();
-    usageList->addItem(std::move(entry));
-  }
-  callback->sendSuccess(usage, quota, std::move(usageList));
+  callback->sendSuccess(usage, quota);
 }
 
 void GotUsageAndQuotaDataCallback(
     std::unique_ptr<StorageHandler::GetUsageAndQuotaCallback> callback,
     storage::QuotaStatusCode code,
     int64_t usage,
-    int64_t quota,
-    base::flat_map<storage::QuotaClient::ID, int64_t> usage_breakdown) {
+    int64_t quota) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::Bind(ReportUsageAndQuotaDataOnUIThread,
-                                     base::Passed(std::move(callback)), code,
-                                     usage, quota, std::move(usage_breakdown)));
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(ReportUsageAndQuotaDataOnUIThread,
+                 base::Passed(std::move(callback)), code, usage, quota));
 }
 
 void GetUsageAndQuotaOnIOThread(
@@ -82,7 +60,7 @@ void GetUsageAndQuotaOnIOThread(
     const GURL& url,
     std::unique_ptr<StorageHandler::GetUsageAndQuotaCallback> callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  manager->GetUsageAndQuotaWithBreakdown(
+  manager->GetUsageAndQuotaForWebApps(
       url, storage::kStorageTypeTemporary,
       base::Bind(&GotUsageAndQuotaDataCallback,
                  base::Passed(std::move(callback))));
@@ -115,25 +93,25 @@ Response StorageHandler::ClearDataForOrigin(
       storage_types, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
   std::unordered_set<std::string> set(types.begin(), types.end());
   uint32_t remove_mask = 0;
-  if (set.count(Storage::StorageTypeEnum::Appcache))
+  if (set.count(kAppCache))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_APPCACHE;
-  if (set.count(Storage::StorageTypeEnum::Cookies))
+  if (set.count(kCookies))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_COOKIES;
-  if (set.count(Storage::StorageTypeEnum::File_systems))
+  if (set.count(kFileSystems))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_FILE_SYSTEMS;
-  if (set.count(Storage::StorageTypeEnum::Indexeddb))
+  if (set.count(kIndexedDB))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_INDEXEDDB;
-  if (set.count(Storage::StorageTypeEnum::Local_storage))
+  if (set.count(kLocalStorage))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_LOCAL_STORAGE;
-  if (set.count(Storage::StorageTypeEnum::Shader_cache))
+  if (set.count(kShaderCache))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_SHADER_CACHE;
-  if (set.count(Storage::StorageTypeEnum::Websql))
+  if (set.count(kWebSQL))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_WEBSQL;
-  if (set.count(Storage::StorageTypeEnum::Service_workers))
+  if (set.count(kServiceWorkers))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_SERVICE_WORKERS;
-  if (set.count(Storage::StorageTypeEnum::Cache_storage))
+  if (set.count(kCacheStorage))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_CACHE_STORAGE;
-  if (set.count(Storage::StorageTypeEnum::All))
+  if (set.count(kAll))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_ALL;
 
   if (!remove_mask)

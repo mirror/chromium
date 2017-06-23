@@ -16,7 +16,7 @@
 #include "base/stl_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/autofill/core/common/password_form.h"
-#include "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.h"
+#include "components/password_manager/core/browser/affiliated_match_helper.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/browser/password_syncable_service.h"
@@ -113,13 +113,8 @@ PasswordStore::PasswordStore(
 
 bool PasswordStore::Init(const syncer::SyncableService::StartSyncFlare& flare,
                          PrefService* prefs) {
-  ScheduleTask(base::Bind(&PasswordStore::InitOnBackgroundThread, this, flare));
-#if !defined(OS_ANDROID) && !defined(OS_IOS)
-  hash_password_manager_.set_prefs(prefs);
   ScheduleTask(
-      base::Bind(&PasswordStore::SaveSyncPasswordHashImpl, this,
-                 base::Passed(hash_password_manager_.RetrievePasswordHash())));
-#endif
+      base::Bind(&PasswordStore::InitOnBackgroundThread, this, flare, prefs));
   return true;
 }
 
@@ -334,15 +329,11 @@ void PasswordStore::CheckReuse(const base::string16& input,
 }
 
 void PasswordStore::SaveSyncPasswordHash(const base::string16& password) {
-  hash_password_manager_.SavePasswordHash(password);
-  base::Optional<SyncPasswordData> sync_password_data =
-      hash_password_manager_.RetrievePasswordHash();
-  ScheduleTask(base::Bind(&PasswordStore::SaveSyncPasswordHashImpl, this,
-                          std::move(sync_password_data)));
+  ScheduleTask(
+      base::Bind(&PasswordStore::SaveSyncPasswordHashImpl, this, password));
 }
 
 void PasswordStore::ClearSyncPasswordHash() {
-  hash_password_manager_.ClearSavedPasswordHash();
   ScheduleTask(base::Bind(&PasswordStore::ClearSyncPasswordHashImpl, this));
 }
 #endif
@@ -428,10 +419,9 @@ void PasswordStore::CheckReuseImpl(std::unique_ptr<CheckReuseRequest> request,
     reuse_detector_->CheckReuse(input, domain, request.get());
 }
 
-void PasswordStore::SaveSyncPasswordHashImpl(
-    base::Optional<SyncPasswordData> sync_password_data) {
+void PasswordStore::SaveSyncPasswordHashImpl(const base::string16& password) {
   if (reuse_detector_)
-    reuse_detector_->UseSyncPasswordHash(std::move(sync_password_data));
+    reuse_detector_->SaveSyncPasswordHash(password);
 }
 
 void PasswordStore::ClearSyncPasswordHashImpl() {
@@ -754,14 +744,15 @@ void PasswordStore::ScheduleUpdateAffiliatedWebLoginsImpl(
 }
 
 void PasswordStore::InitOnBackgroundThread(
-    const syncer::SyncableService::StartSyncFlare& flare) {
+    const syncer::SyncableService::StartSyncFlare& flare,
+    PrefService* prefs) {
   DCHECK(GetBackgroundTaskRunner()->BelongsToCurrentThread());
   DCHECK(!syncable_service_);
   syncable_service_.reset(new PasswordSyncableService(this));
   syncable_service_->InjectStartSyncFlare(flare);
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-  reuse_detector_ = base::MakeUnique<PasswordReuseDetector>();
+  reuse_detector_ = base::MakeUnique<PasswordReuseDetector>(prefs);
   GetAutofillableLoginsImpl(
       base::MakeUnique<GetLoginsRequest>(reuse_detector_.get()));
 #endif

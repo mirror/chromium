@@ -19,7 +19,7 @@ namespace {
 const uint32_t kDefaultMaxConcurrentDownloads = 4;
 
 // Default value for maximum running downloads of the download service.
-const uint32_t kDefaultMaxRunningDownloads = 2;
+const uint32_t kDefaultMaxRunningDownloads = 1;
 
 // Default value for maximum scheduled downloads.
 const uint32_t kDefaultMaxScheduledDownloads = 15;
@@ -30,10 +30,6 @@ const uint32_t kDefaultMaxRetryCount = 5;
 // Default value for file keep alive time in minutes, keep the file alive for
 // 12 hours by default.
 const uint32_t kDefaultFileKeepAliveTimeMinutes = 12 * 60;
-
-// Default value for file cleanup window in minutes, the system will schedule a
-// cleanup task within this window.
-const uint32_t kDefaultFileCleanupWindowMinutes = 24 * 60;
 
 // Default value for the start window time for OS to schedule background task.
 const uint32_t kDefaultWindowStartTimeSeconds = 300; /* 5 minutes. */
@@ -67,9 +63,6 @@ std::unique_ptr<Configuration> Configuration::CreateFromFinch() {
   config->file_keep_alive_time =
       base::TimeDelta::FromMinutes(base::saturated_cast<int>(GetFinchConfigUInt(
           kFileKeepAliveTimeMinutesConfig, kDefaultFileKeepAliveTimeMinutes)));
-  config->file_cleanup_window =
-      base::TimeDelta::FromMinutes(base::saturated_cast<int>(GetFinchConfigUInt(
-          kFileCleanupWindowMinutesConfig, kDefaultFileCleanupWindowMinutes)));
   config->window_start_time_seconds = GetFinchConfigUInt(
       kWindowStartTimeConfig, kDefaultWindowStartTimeSeconds);
   config->window_end_time_seconds =
@@ -84,8 +77,6 @@ Configuration::Configuration()
       max_retry_count(kDefaultMaxRetryCount),
       file_keep_alive_time(base::TimeDelta::FromMinutes(
           base::saturated_cast<int>(kDefaultFileKeepAliveTimeMinutes))),
-      file_cleanup_window(base::TimeDelta::FromMinutes(
-          base::saturated_cast<int>(kDefaultFileCleanupWindowMinutes))),
       window_start_time_seconds(kDefaultWindowStartTimeSeconds),
       window_end_time_seconds(kDefaultWindowEndTimeSeconds) {}
 

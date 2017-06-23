@@ -354,12 +354,23 @@ crbug.com/723135 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-zero-heig
 crbug.com/723135 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-zero-height-wrap-002.xht [ Failure ]
 
 ### virtual/layout_ng/external/wpt/css/CSS2/floats-clear
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-001.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-002.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-003.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-004.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-005.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-006.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-007.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-008.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-012.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-015.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-008.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-012.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-non-replaced-width-002.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-non-replaced-width-004.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-replaced-height-001.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-replaced-width-002.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-replaced-width-004.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floating-replaced-height-008.xht [ Skip ]
 crbug.com/719615 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-001.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-005.xht [ Failure ]
@@ -369,10 +380,13 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-027
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-028.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-029.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-036.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-038.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-039.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-101.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-108.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-109.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-110.xht [ Skip ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-113.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-126.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-127.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-128.xht [ Skip ]
@@ -409,6 +423,7 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-col
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-clear-014.xht [ Failure ]
 
 ### virtual/layout_ng/external/wpt/css/CSS2/linebox
+crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/empty-inline-002.xht [ Failure Crash ]
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/inline-formatting-context-001.xht [ Failure ]
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/inline-formatting-context-002.xht [ Failure ]
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/inline-formatting-context-003.xht [ Failure ]
@@ -420,6 +435,7 @@ crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/inline-formatti
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/inline-formatting-context-012.xht [ Failure ]
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/inline-formatting-context-023.xht [ Failure ]
 crbug.com/636993 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/linebox/line-height-129.xht [ Failure ]
+crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-121.xht [ Failure ]
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-baseline-004a.xht [ Failure ]
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-baseline-005a.xht [ Failure ]
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-sub-001.xht [ Failure ]
@@ -478,6 +494,11 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/table-in-in
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/width-applies-to-012.xht [ Failure ]
 
 ### virtual/layout_ng/external/wpt/css/CSS2/positioning
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-015.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-021.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-022.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-023.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-024.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-025.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-026.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-004.xht [ Failure ]
@@ -498,14 +519,10 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-re
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-030.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-031.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-032.xht [ Failure ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-036.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-037.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-038.xht [ Failure ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-043.xht [ Failure ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-050.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-051.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-052.xht [ Failure ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-057.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-064.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-065.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-066.xht [ Failure ]
@@ -516,6 +533,7 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-011.
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-012.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-019.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-020.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-024.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-001.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-002.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-007.xht [ Failure ]
@@ -527,6 +545,8 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-inli
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-inline-006.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-paged-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-paged-002.xht [ Skip ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/left-offset-003.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/left-offset-percentage-001.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-004.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-fixed-003.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-fixed-004.xht [ Skip ]
@@ -587,8 +607,10 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/003.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/008.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/010.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/012.html [ Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/float/013.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/014.html [ Failure Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/015.html [ Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/float/016.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/017.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/018.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/019.html [ Failure ]
@@ -605,7 +627,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/029.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/030.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/031.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/032.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/034.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/035.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/add-float-back-to-anonymous-block.html [ Failure ]
 crbug.com/719615 virtual/layout_ng/fast/block/float/add-inlines-in-block-children-block.html [ Failure ]
@@ -616,13 +637,17 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/avoid-floats-when-negative-m
 crbug.com/635619 virtual/layout_ng/fast/block/float/avoid-floats-when-negative-margin-top-5.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/avoid-floats-when-negative-margin-top-6.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/avoid-floats-when-negative-margin-top.html [ Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/float/avoidance-percent-width-compat.html [ Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/float/avoidance-percent-width-strict.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/avoidance-rtl.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/avoiding-float-centered.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/block-with-negative-margin-clears-float.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/br-with-clear-2.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/centered-float-avoidance-complexity.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/checkbox-and-radio-avoid-floats.html [ Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/float/clear-element-too-wide-for-containing-block.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/clear-intruding-floats-when-moving-to-inline-parent-3.html [ Failure Crash ]
+crbug.com/635619 virtual/layout_ng/fast/block/float/clear-to-fit.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/containing-block-change-compositing.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/crash-on-absolute-positioning.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/crash-replaced-display-block.html [ Failure ]
@@ -638,7 +663,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/float-in-float-hit-testing.h
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-in-float-painting.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-inserted-into-clean-line.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-list-changed-before-layout-crash.html [ Crash ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-first-letter.html [ Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-next-sibling-crash.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-next-sibling3.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-next-sibling5.html [ Failure ]
@@ -715,9 +739,9 @@ crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/043.html [ Failure
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/044.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/057.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/101.html [ Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/102.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/103.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/bfc-beside-float-complex-margin-collapsing.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-creates-block-formatting-context.html [ Failure ]
 
 ### virtual/layout_ng/fast/block/margin-collapse/block-inside-inline
 crbug.com/719646 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/002.html [ Failure ]
@@ -735,6 +759,7 @@ crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inlin
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/clear-nested-float-more-than-one-previous-sibling-away.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/empty-clear-blocks.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/line-beside-float-complex-margin-collapsing.html [ Failure Crash ]
+crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-creates-block-formatting-context.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-with-float-descendants.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-with-overflow-hidden-and-float-child.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-cols-creates-block-formatting-context.html [ Failure ]
@@ -749,8 +774,9 @@ crbug.com/728378 virtual/layout_ng/overflow/overflow-basic-003.html [ Failure ]
 crbug.com/724701 virtual/layout_ng/overflow/overflow-basic-004.html [ Failure ]
 crbug.com/728378 virtual/layout_ng/overflow/overflow-bug-chrome-ng-001.html [ Failure ]
 crbug.com/728378 virtual/layout_ng/overflow/overflow-transform-002.html [ Failure ]
+crbug.com/728378 virtual/layout_ng/overflow/overflow-position-001.html [ Failure ]
+crbug.com/728378 virtual/layout_ng/overflow/overflow-position-002.html [ Failure ]
 crbug.com/728378 virtual/layout_ng/overflow/overflow-position-003.html [ Failure ]
-crbug.com/728378 virtual/layout_ng/overflow/overflow-position-004.html [ Failure ]
 
 # ====== LayoutNG-only failures until here ======
 
@@ -769,7 +795,7 @@ crbug.com/538697 [ Win7 Debug ] virtual/threaded/printing/webgl-oversized-printi
 crbug.com/538697 [ Win7 Debug ] printing/webgl-oversized-printing.html [ Failure Crash ]
 
 # ====== Fullscreen tests failing with feature policy ======
-# TODO(loonybear): Turn tests on once feature policy implements allowfullscreen.
+# TODO(lunalu): Turn tests on once feature policy implements allowfullscreen.
 crbug.com/666761 virtual/feature-policy/http/tests/feature-policy/fullscreen-allowed-by-container-policy-relocate.html [ Failure ]
 crbug.com/666761 virtual/feature-policy/http/tests/feature-policy/fullscreen-allowed-by-container-policy.html [ Failure ]
 crbug.com/666761 virtual/feature-policy/http/tests/feature-policy/fullscreen-disabled.php [ Failure ]
@@ -797,7 +823,6 @@ crbug.com/522648 fast/events/touch/compositor-touch-hit-rects-iframes.html [ Cra
 crbug.com/521858 [ Win7 ] http/tests/security/media-element-audio-source-node-same-origin.html [ Failure Pass ]
 crbug.com/521858 [ Win7 ] virtual/mojo-loading/http/tests/security/media-element-audio-source-node-same-origin.html [ Failure Pass ]
 crbug.com/521853 [ Win ] http/tests/inspector/search/sources-search-scope.html [ Failure Pass ]
-crbug.com/520170 [ Win ] fast/dom/timer-throttling-hidden-page.html [ Failure Pass ]
 crbug.com/652536 fast/events/mouse-cursor-change-after-image-load.html [ Failure Pass ]
 crbug.com/520188 [ Win ] http/tests/local/fileapi/file-last-modified-after-delete.html [ Failure Pass ]
 crbug.com/520188 [ Win ] virtual/mojo-loading/http/tests/local/fileapi/file-last-modified-after-delete.html [ Failure Pass ]
@@ -880,9 +905,6 @@ crbug.com/498539 [ Win7 ] inspector/elements/styles-4/styles-update-from-js.html
 
 crbug.com/596968 [ Win ] inspector-protocol/input/eventTimestamp.html [ Failure Pass ]
 
-crbug.com/734762 [ Linux ] inspector-protocol/stylesheet-tracking-restart.js [ Failure Pass ]
-crbug.com/734762 [ Mac10.9 ] inspector-protocol/accessibility/accessibility-nameSources-input.js [ Failure ]
-
 crbug.com/487281 [ Mac ] fast/forms/select/menulist-narrow-width.html [ Failure ]
 
 crbug.com/543110 [ Mac ] fast/text/international/text-shaping-arabic.html [ Failure ]
@@ -894,9 +916,6 @@ crbug.com/734744 virtual/mojo-loading/http/tests/inspector/indexeddb/resources-p
 
 crbug.com/734793 http/tests/inspector/indexeddb/database-names.html [ Pass Failure Timeout ]
 crbug.com/734793 virtual/mojo-loading/http/tests/inspector/indexeddb/database-names.html [ Pass Failure Timeout ]
-
-crbug.com/735259 http/tests/inspector/indexeddb/upgrade-events.html [ Pass Failure ]
-crbug.com/735259 virtual/mojo-loading/http/tests/inspector/indexeddb/upgrade-events.html [ Pass Failure ]
 
 # Will be re-enabled and rebaselined once we remove the '--enable-file-cookies' flag.
 crbug.com/470482 fast/cookies/local-file-can-set-cookies.html [ Skip ]
@@ -1230,7 +1249,7 @@ crbug.com/636239 [ Win7 ] media/video-zoom-controls.html [ Failure ]
 crbug.com/377696 printing/setPrinting.html [ Skip ]
 crbug.com/377696 printing/width-overflow.html [ Skip ]
 
-crbug.com/474987 [ Win Mac ] external/wpt/css/css-flexbox-1/auto-margins-001.html [ Failure ]
+crbug.com/474987 [ Win Mac ] css3/flexbox/auto-margins.html [ Failure ]
 
 crbug.com/658305 css3/filters/buffer-offset.html [ Failure Pass ]
 crbug.com/658305 css3/filters/effect-all-on-background-hw.html [ Failure Pass ]
@@ -1258,6 +1277,8 @@ crbug.com/658305 css3/filters/effect-reference-tile-hw.html [ Failure Pass ]
 crbug.com/658305 css3/filters/effect-reference-zoom.html [ Failure Pass ]
 crbug.com/658305 css3/filters/effect-reference-zoom-hw.html [ Failure Pass ]
 crbug.com/658305 css3/filters/filter-effect-removed.html [ Failure Pass ]
+
+crbug.com/734733 css3/blending/background-blend-mode-gif-color-2.html [ Failure Pass ]
 
 crbug.com/267206 [ Mac ] fast/scrolling/scrollbar-tickmarks-hittest.html [ Timeout ]
 crbug.com/267206 [ Mac ] virtual/scroll_customization/fast/scrolling/scrollbar-tickmarks-hittest.html [ Timeout ]
@@ -2314,8 +2335,8 @@ crbug.com/435547 virtual/mojo-loading/http/tests/cachestorage/serviceworker/igno
 
 crbug.com/697971 [ Mac10.12 ] fast/text/flexbox-selection-nested.html [ Skip ]
 crbug.com/697971 [ Mac10.12 ] fast/text/flexbox-selection.html [ Skip ]
-crbug.com/678481 http/tests/inspector/appcache/appcache-manifest-with-non-existing-file.html [ Skip ]
-crbug.com/678481 virtual/mojo-loading/http/tests/inspector/appcache/appcache-iframe-manifests.html [ Skip ]
+crbug.com/678481 http/tests/inspector/appcache/appcache-manifest-with-non-existing-file.html [ Timeout ]
+crbug.com/678481 virtual/mojo-loading/http/tests/inspector/appcache/appcache-iframe-manifests.html [ Timeout ]
 
 crbug.com/701047 [ Mac10.12 ] editing/caret/caret-color.html [ Failure ]
 crbug.com/701047 [ Mac10.12 ] editing/deleting/delete-at-paragraph-boundaries-011.html [ Failure ]
@@ -2364,8 +2385,6 @@ crbug.com/664873 virtual/mojo-loading/http/tests/xmlhttprequest/small-chunks-res
 crbug.com/443374 virtual/off-main-thread-fetch/http/tests/inspector/service-workers/user-agent-override.html [ Failure ]
 
 crbug.com/660295 inspector/elements/elements-panel-restore-selection-when-node-comes-later.html [ Pass Failure ]
-crbug.com/735245 http/tests/inspector/application-panel/storage-view-reports-quota.html [ Pass Timeout ]
-crbug.com/735245 virtual/mojo-loading/http/tests/inspector/application-panel/storage-view-reports-quota.html [ Pass Timeout ]
 
 # [css-grid]
 crbug.com/659610 fast/css-grid-layout/grid-baseline.html [ Failure ]
@@ -2466,8 +2485,6 @@ crbug.com/595993 virtual/off-main-thread-fetch/external/wpt/service-workers/serv
 crbug.com/595993 external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 crbug.com/595993 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 
-crbug.com/735883 [ Win10 ] external/wpt/service-workers/service-worker/fetch-canvas-tainting-cache.https.html [ Pass Failure ]
-
 crbug.com/619427 [ Mac Linux ] fast/overflow/overflow-height-float-not-removed-crash3.html [ Pass Failure ]
 
 crbug.com/667371 inspector/elements/styles-1/color-aware-property-value-edit.html [ Pass Failure ]
@@ -2566,7 +2583,7 @@ crbug.com/657748 external/wpt/css/css-display-3/display-contents-flex-003.html [
 
 # ====== End of display: contents tests ======
 
-crbug.com/676229 [ Win7 Linux ] plugins/mouse-click-plugin-clears-selection.html [ Failure Pass ]
+crbug.com/676229 [ Linux ] plugins/mouse-click-plugin-clears-selection.html [ Failure Pass ]
 
 crbug.com/678346 [ Debug ] fast/dom/shadow/selections-in-shadow.html [ Pass Timeout ]
 crbug.com/678346 [ Win7 Debug ] storage/indexeddb/index-cursor.html [ Pass Timeout ]
@@ -2718,13 +2735,12 @@ crbug.com/725455 [ Linux ] nfc/watch.html [ Failure Pass Timeout ]
 # Sheriff failures 2017-05-29
 crbug.com/727252 [ Win7 ] external/wpt/media-source/mediasource-endofstream.html [ Pass Timeout ]
 
-# Failures when using libc++.  Rebaseline after landing https://codereview.chromium.org/2933573002/
-crbug.com/734873 [ Linux ] fast/backgrounds/size/contain-and-cover.html [ Pass Failure ]
-
 # Compositor worker tests are flaky, crashing and timing out
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/basic-plumbing-main-to-worker.html [ Pass Failure Timeout Crash ]
+crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/basic-plumbing-worker-to-main.html [ Pass Failure Timeout Crash ]
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/request-animation-frame.html [ Pass Failure Timeout Crash ]
 crbug.com/727991 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/visual-update.html [ Pass Failure Timeout Crash ]
+crbug.com/728036 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/compositor-proxy-supports.html [ Pass Failure Timeout Crash ]
 
 crbug.com/729836 [ Win ] fast/workers/worker-document-leak.html [ Pass Failure ]
 
@@ -2732,11 +2748,11 @@ crbug.com/729836 [ Win ] fast/workers/worker-document-leak.html [ Pass Failure ]
 crbug.com/727014 [ Linux ] external/wpt/IndexedDB/large-nested-cloning.html [ Pass Timeout ]
 
 # Sensor tests fail on Mac swarming
-crbug.com/731018 [ Mac ] sensor/accelerometer.html [ Failure Pass Crash ]
-crbug.com/731018 [ Mac ] sensor/ambient-light-sensor.html [ Failure Pass Crash ]
-crbug.com/731018 [ Mac ] sensor/gyroscope.html [ Failure Pass Crash ]
-crbug.com/731018 [ Mac ] sensor/magnetometer.html [ Failure Pass Crash ]
-crbug.com/731018 [ Mac ] sensor/orientation-sensor.html [ Failure Pass Crash ]
+crbug.com/731018 [ Mac ] sensor/accelerometer.html [ Failure Pass ]
+crbug.com/731018 [ Mac ] sensor/ambient-light-sensor.html [ Failure Pass ]
+crbug.com/731018 [ Mac ] sensor/gyroscope.html [ Failure Pass ]
+crbug.com/731018 [ Mac ] sensor/magnetometer.html [ Failure Pass ]
+crbug.com/731018 [ Mac ] sensor/orientation-sensor.html [ Failure Pass ]
 
 # More flaky tests on Mac
 crbug.com/731111 [ Mac ] http/tests/media/progress-events-generated-correctly.html [ Failure Pass Timeout ]
@@ -2761,6 +2777,3 @@ crbug.com/733357 [ Win Mac ] inspector/elements/styles-4/styles-history.html [ F
 crbug.com/733448 virtual/mojo-loading/http/tests/inspector/extensions/extensions-network.html [ Failure Pass ]
 crbug.com/733448 http/tests/inspector/extensions/extensions-network.html [ Failure Pass ]
 crbug.com/733524 [ Mac ] virtual/mojo-loading/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies.php [ Timeout Pass ]
-
-# Rebaselining a newly-passing test fixed by v8
-crbug.com/v8/6504 fast/js/mozilla/strict/B.1.2.html [ NeedsManualRebaseline ]

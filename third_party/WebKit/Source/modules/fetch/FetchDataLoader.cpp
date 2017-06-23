@@ -12,7 +12,6 @@
 #include "modules/fetch/MultipartParser.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "platform/HTTPNames.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/ParsedContentDisposition.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
@@ -345,10 +344,8 @@ class FetchDataLoaderAsFormData final : public FetchDataLoader,
         blob_data_->SetContentType(content_type.IsNull() ? "text/plain"
                                                          : content_type);
       } else {
-        if (!string_decoder_) {
-          string_decoder_ = TextResourceDecoder::Create(
-              TextResourceDecoderOptions::CreateAlwaysUseUTF8ForText());
-        }
+        if (!string_decoder_)
+          string_decoder_ = TextResourceDecoder::CreateAlwaysUseUTF8ForText();
         string_builder_.reset(new StringBuilder);
       }
       return true;
@@ -412,8 +409,7 @@ class FetchDataLoaderAsString final : public FetchDataLoader,
     DCHECK(!decoder_);
     DCHECK(!consumer_);
     client_ = client;
-    decoder_ = TextResourceDecoder::Create(
-        TextResourceDecoderOptions::CreateAlwaysUseUTF8ForText());
+    decoder_ = TextResourceDecoder::CreateAlwaysUseUTF8ForText();
     consumer_ = consumer;
     consumer_->SetClient(this);
     OnStateChange();

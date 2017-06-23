@@ -6,6 +6,7 @@
 
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/presenter/app_list.h"
 
@@ -23,7 +24,7 @@ void AppListDelegateImpl::OnAppListVisibilityChanged(bool visible,
                                                      int64_t display_id) {
   if (app_list::features::IsFullscreenAppListEnabled()) {
     aura::Window* root_window =
-        Shell::Get()->GetRootWindowForDisplayId(display_id);
+        ShellPort::Get()->GetRootWindowForDisplayId(display_id);
     Shell::Get()->OnAppListVisibilityChanged(visible, root_window);
   }
 }

@@ -37,13 +37,6 @@ const SkColor kResultDimmedTextColor = SkColorSetRGB(0x84, 0x84, 0x84);
 const SkColor kResultURLTextColor = SkColorSetRGB(0x00, 0x99, 0x33);
 
 const SkColor kGridTitleColor = SkColorSetRGB(0x33, 0x33, 0x33);
-const SkColor kGridTitleColorFullscreen = SK_ColorWHITE;
-
-const int kGridTileWidth = 96;
-const int kGridTileHeight = 99;
-const int kGridIconTopPadding = 24;
-const int kGridTitleSpacing = 10;
-const int kGridTitleHorizontalPadding = 8;
 
 const SkColor kFolderTitleColor = SkColorSetRGB(0x33, 0x33, 0x33);
 const SkColor kFolderTitleHintTextColor = SkColorSetRGB(0xA0, 0xA0, 0xA0);
@@ -89,8 +82,6 @@ const int kGridIconDimension = 48;
 
 // The preferred app badge icon size.
 const int kAppBadgeIconSize = 12;
-// The preferred badge background(circle) radius.
-const int kBadgeBackgroundRadius = 10;
 
 // Preferred search result icon sizes.
 const int kListIconSize = 24;

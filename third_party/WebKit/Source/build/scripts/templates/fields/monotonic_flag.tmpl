@@ -1,10 +1,9 @@
 {% import 'fields/base.tmpl' as base %}
 {% from 'fields/field.tmpl' import encode, set_if_changed %}
-{% from 'macros.tmpl' import print_if %}
 
 {% macro decl_public_methods(field) %}
 {{base.decl_getter_method(field)}}
-void {{field.setter_method_name}}() {{print_if(field.mutable, "const ")}}{
+void {{field.setter_method_name}}() {
   {{set_if_changed(field, encode(field, "true"))|indent(2)}}
 }
 {% endmacro %}

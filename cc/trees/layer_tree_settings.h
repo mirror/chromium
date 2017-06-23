@@ -44,7 +44,6 @@ class CC_EXPORT LayerTreeSettings {
   int gpu_rasterization_msaa_sample_count = 0;
   float gpu_rasterization_skewport_target_time_in_seconds = 0.2f;
   bool create_low_res_tiling = false;
-  bool use_stream_video_draw_quad = false;
 
   enum ScrollbarAnimator {
     NO_ANIMATOR,
@@ -94,7 +93,7 @@ class CC_EXPORT LayerTreeSettings {
 
   // TODO(sunxd): remove this flag when filter demoting and aa of mask layers
   // are implemented.
-  bool enable_mask_tiling = true;
+  bool enable_mask_tiling = false;
 
   // If set to true, the compositor may selectively defer image decodes to the
   // Image Decode Service and raster tiles without images until the decode is

@@ -67,7 +67,6 @@ class MODULES_EXPORT IDBValueWrapper {
       v8::Local<v8::Value>,
       SerializedScriptValue::SerializeOptions::WasmSerializationPolicy,
       ExceptionState&);
-  ~IDBValueWrapper();
 
   // Creates a clone of the serialized value.
   //
@@ -191,7 +190,14 @@ class MODULES_EXPORT IDBValueUnwrapper {
   bool ReadVarint(unsigned& value);
 
   // Resets the parsing state.
-  bool Reset();
+  inline bool Reset() {
+#if DCHECK_IS_ON()
+    blob_handle_.Clear();
+    current_ = nullptr;
+    end_ = nullptr;
+#endif  // DCHECK_IS_ON()
+    return false;
+  }
 
   // Deserialization cursor in the SharedBuffer of the IDBValue being unwrapped.
   const uint8_t* current_;

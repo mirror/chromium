@@ -196,13 +196,12 @@ ImeListView::~ImeListView() {}
 void ImeListView::Init(bool show_keyboard_toggle,
                        SingleImeBehavior single_ime_behavior) {
   ImeController* ime_controller = Shell::Get()->ime_controller();
-  Update(ime_controller->current_ime().id, ime_controller->available_imes(),
+  Update(ime_controller->available_imes(),
          ime_controller->current_ime_menu_items(), show_keyboard_toggle,
          single_ime_behavior);
 }
 
-void ImeListView::Update(const std::string& current_ime_id,
-                         const std::vector<mojom::ImeInfo>& list,
+void ImeListView::Update(const std::vector<mojom::ImeInfo>& list,
                          const std::vector<mojom::ImeMenuItem>& property_items,
                          bool show_keyboard_toggle,
                          SingleImeBehavior single_ime_behavior) {
@@ -212,7 +211,7 @@ void ImeListView::Update(const std::string& current_ime_id,
   CreateScrollableList();
 
   if (single_ime_behavior == ImeListView::SHOW_SINGLE_IME || list.size() > 1)
-    AppendImeListAndProperties(current_ime_id, list, property_items);
+    AppendImeListAndProperties(list, property_items);
 
   if (show_keyboard_toggle)
     PrependKeyboardStatusRow();
@@ -248,23 +247,21 @@ void ImeListView::CloseImeListView() {
 }
 
 void ImeListView::AppendImeListAndProperties(
-    const std::string& current_ime_id,
     const std::vector<mojom::ImeInfo>& list,
     const std::vector<mojom::ImeMenuItem>& property_list) {
   DCHECK(ime_map_.empty());
   for (size_t i = 0; i < list.size(); i++) {
-    const bool selected = current_ime_id == list[i].id;
     views::View* ime_view =
         new ImeListItemView(owner(), this, list[i].short_name, list[i].name,
-                            selected, gfx::kGoogleGreen700);
+                            list[i].selected, gfx::kGoogleGreen700);
     scroll_content()->AddChildView(ime_view);
     ime_map_[ime_view] = list[i].id;
 
-    if (selected)
+    if (list[i].selected)
       current_ime_view_ = ime_view;
 
     // Add the properties, if any, of the currently-selected IME.
-    if (selected && !property_list.empty()) {
+    if (list[i].selected && !property_list.empty()) {
       // Adds a separator on the top of property items.
       scroll_content()->AddChildView(
           TrayPopupUtils::CreateListItemSeparator(true));

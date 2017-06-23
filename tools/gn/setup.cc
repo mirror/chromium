@@ -98,11 +98,6 @@ Variables
       build file containing this target name. This defaults to "//:" which will
       cause the file //BUILD.gn to be loaded.
 
-  script_executable [optional]
-      Path to specific Python executable or potentially a different language
-      interpreter that is used to execute scripts in action targets and
-      exec_script calls.
-
   secondary_source [optional]
       Label of an alternate directory tree to find input files. When searching
       for a BUILD.gn file (or the build config file discussed above), the file
@@ -319,6 +314,13 @@ bool Setup::DoSetup(const std::string& build_dir, bool force_create) {
   if (!FillBuildDir(build_dir, !force_create))
     return false;
 
+  // Check for unused variables in the .gn file.
+  Err err;
+  if (!dotfile_scope_.CheckForUnusedVars(&err)) {
+    err.PrintToStdout();
+    return false;
+  }
+
   // Apply project-specific default (if specified).
   // Must happen before FillArguments().
   if (default_args_) {
@@ -331,15 +333,7 @@ bool Setup::DoSetup(const std::string& build_dir, bool force_create) {
     if (!FillArguments(*cmdline))
       return false;
   }
-  if (!FillPythonPath(*cmdline))
-    return false;
-
-  // Check for unused variables in the .gn file.
-  Err err;
-  if (!dotfile_scope_.CheckForUnusedVars(&err)) {
-    err.PrintToStdout();
-    return false;
-  }
+  FillPythonPath(*cmdline);
 
   return true;
 }
@@ -632,21 +626,12 @@ bool Setup::FillBuildDir(const std::string& build_dir, bool require_exists) {
   return true;
 }
 
-bool Setup::FillPythonPath(const base::CommandLine& cmdline) {
+void Setup::FillPythonPath(const base::CommandLine& cmdline) {
   // Trace this since it tends to be a bit slow on Windows.
   ScopedTrace setup_trace(TraceItem::TRACE_SETUP, "Fill Python Path");
-  const Value* value = dotfile_scope_.GetValue("script_executable", true);
   if (cmdline.HasSwitch(switches::kScriptExecutable)) {
     build_settings_.set_python_path(
         cmdline.GetSwitchValuePath(switches::kScriptExecutable));
-  } else if (value) {
-    Err err;
-    if (!value->VerifyTypeIs(Value::STRING, &err)) {
-      err.PrintToStdout();
-      return false;
-    }
-    build_settings_.set_python_path(
-        base::FilePath(UTF8ToFilePath(value->string_value())));
   } else {
 #if defined(OS_WIN)
     base::FilePath python_path = FindWindowsPython();
@@ -660,7 +645,6 @@ bool Setup::FillPythonPath(const base::CommandLine& cmdline) {
     build_settings_.set_python_path(base::FilePath("python"));
 #endif
   }
-  return true;
 }
 
 bool Setup::RunConfigFile() {

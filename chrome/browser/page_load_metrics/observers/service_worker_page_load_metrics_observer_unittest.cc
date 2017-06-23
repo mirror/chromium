@@ -36,11 +36,6 @@ class ServiceWorkerPageLoadMetricsObserverTest
     histogram_tester().ExpectTotalCount(
         internal::kBackgroundHistogramServiceWorkerFirstContentfulPaint, 0);
     histogram_tester().ExpectTotalCount(
-        internal::kHistogramServiceWorkerFirstContentfulPaintForwardBack, 0);
-    histogram_tester().ExpectTotalCount(
-        internal::kHistogramServiceWorkerFirstContentfulPaintForwardBackNoStore,
-        0);
-    histogram_tester().ExpectTotalCount(
         internal::kHistogramServiceWorkerParseStartToFirstContentfulPaint, 0);
     histogram_tester().ExpectTotalCount(
         internal::kHistogramServiceWorkerFirstMeaningfulPaint, 0);
@@ -189,13 +184,6 @@ TEST_F(ServiceWorkerPageLoadMetricsObserverTest, WithServiceWorker) {
 
   histogram_tester().ExpectTotalCount(
       internal::kHistogramServiceWorkerParseStart, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramServiceWorkerParseStart,
-      timing.parse_timing->parse_start.value().InMilliseconds(), 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramServiceWorkerParseStartForwardBack, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramServiceWorkerParseStartForwardBackNoStore, 0);
 
   AssertNoInboxHistogramsLogged();
   AssertNoSearchHistogramsLogged();
@@ -344,9 +332,6 @@ TEST_F(ServiceWorkerPageLoadMetricsObserverTest, InboxSite) {
       timing.document_timing->load_event_start.value().InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramServiceWorkerParseStart, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramServiceWorkerParseStart,
-      timing.parse_timing->parse_start.value().InMilliseconds(), 1);
 
   AssertNoSearchHistogramsLogged();
   AssertNoSearchNoSWHistogramsLogged();
@@ -449,9 +434,6 @@ TEST_F(ServiceWorkerPageLoadMetricsObserverTest, SearchSite) {
       timing.document_timing->load_event_start.value().InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramServiceWorkerParseStart, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramServiceWorkerParseStart,
-      timing.parse_timing->parse_start.value().InMilliseconds(), 1);
 
   AssertNoInboxHistogramsLogged();
   AssertNoSearchNoSWHistogramsLogged();
@@ -514,45 +496,4 @@ TEST_F(ServiceWorkerPageLoadMetricsObserverTest, SearchNoSWSite) {
   AssertNoServiceWorkerHistogramsLogged();
   AssertNoInboxHistogramsLogged();
   AssertNoSearchHistogramsLogged();
-}
-
-TEST_F(ServiceWorkerPageLoadMetricsObserverTest,
-       WithServiceWorker_ForwardBack) {
-  page_load_metrics::mojom::PageLoadTiming timing;
-  InitializeTestPageLoadTiming(&timing);
-
-  // Back navigations to a page that was reloaded report a main transition type
-  // of PAGE_TRANSITION_RELOAD with a PAGE_TRANSITION_FORWARD_BACK
-  // modifier. This test verifies that when we encounter such a page, we log it
-  // as a forward/back navigation.
-  NavigateWithPageTransitionAndCommit(
-      GURL(kDefaultTestUrl),
-      ui::PageTransitionFromInt(ui::PAGE_TRANSITION_RELOAD |
-                                ui::PAGE_TRANSITION_FORWARD_BACK));
-  page_load_metrics::mojom::PageLoadMetadata metadata;
-  metadata.behavior_flags |=
-      blink::WebLoadingBehaviorFlag::kWebLoadingBehaviorServiceWorkerControlled;
-  SimulateTimingAndMetadataUpdate(timing, metadata);
-
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramServiceWorkerFirstContentfulPaint, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramServiceWorkerFirstContentfulPaint,
-      timing.paint_timing->first_contentful_paint.value().InMilliseconds(), 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramServiceWorkerFirstContentfulPaintForwardBack, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramServiceWorkerFirstContentfulPaintForwardBack,
-      timing.paint_timing->first_contentful_paint.value().InMilliseconds(), 1);
-
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramServiceWorkerParseStart, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramServiceWorkerParseStart,
-      timing.parse_timing->parse_start.value().InMilliseconds(), 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramServiceWorkerParseStartForwardBack, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramServiceWorkerParseStartForwardBack,
-      timing.parse_timing->parse_start.value().InMilliseconds(), 1);
 }

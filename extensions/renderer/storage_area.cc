@@ -10,7 +10,6 @@
 #include "extensions/renderer/api_request_handler.h"
 #include "extensions/renderer/api_signature.h"
 #include "extensions/renderer/api_type_reference_map.h"
-#include "extensions/renderer/binding_access_checker.h"
 #include "gin/arguments.h"
 #include "gin/handle.h"
 #include "gin/object_template_builder.h"
@@ -43,9 +42,8 @@ namespace {
 class LocalStorageArea final : public gin::Wrappable<LocalStorageArea> {
  public:
   LocalStorageArea(APIRequestHandler* request_handler,
-                   const APITypeReferenceMap* type_refs,
-                   const BindingAccessChecker* access_checker)
-      : storage_area_(request_handler, type_refs, "local", access_checker) {}
+                   const APITypeReferenceMap* type_refs)
+      : storage_area_(request_handler, type_refs, "local") {}
   ~LocalStorageArea() override = default;
 
   static gin::WrapperInfo kWrapperInfo;
@@ -74,9 +72,8 @@ gin::WrapperInfo LocalStorageArea::kWrapperInfo = {gin::kEmbedderNativeGin};
 class SyncStorageArea final : public gin::Wrappable<SyncStorageArea> {
  public:
   SyncStorageArea(APIRequestHandler* request_handler,
-                  const APITypeReferenceMap* type_refs,
-                  const BindingAccessChecker* access_checker)
-      : storage_area_(request_handler, type_refs, "sync", access_checker) {}
+                  const APITypeReferenceMap* type_refs)
+      : storage_area_(request_handler, type_refs, "sync") {}
   ~SyncStorageArea() override = default;
 
   static gin::WrapperInfo kWrapperInfo;
@@ -115,9 +112,8 @@ gin::WrapperInfo SyncStorageArea::kWrapperInfo = {gin::kEmbedderNativeGin};
 class ManagedStorageArea final : public gin::Wrappable<ManagedStorageArea> {
  public:
   ManagedStorageArea(APIRequestHandler* request_handler,
-                     const APITypeReferenceMap* type_refs,
-                     const BindingAccessChecker* access_checker)
-      : storage_area_(request_handler, type_refs, "managed", access_checker) {}
+                     const APITypeReferenceMap* type_refs)
+      : storage_area_(request_handler, type_refs, "managed") {}
   ~ManagedStorageArea() override = default;
 
   static gin::WrapperInfo kWrapperInfo;
@@ -148,12 +144,8 @@ gin::WrapperInfo ManagedStorageArea::kWrapperInfo = {gin::kEmbedderNativeGin};
 
 StorageArea::StorageArea(APIRequestHandler* request_handler,
                          const APITypeReferenceMap* type_refs,
-                         const std::string& name,
-                         const BindingAccessChecker* access_checker)
-    : request_handler_(request_handler),
-      type_refs_(type_refs),
-      name_(name),
-      access_checker_(access_checker) {}
+                         const std::string& name)
+    : request_handler_(request_handler), type_refs_(type_refs), name_(name) {}
 StorageArea::~StorageArea() = default;
 
 // static
@@ -163,24 +155,20 @@ v8::Local<v8::Object> StorageArea::CreateStorageArea(
     const base::ListValue* property_values,
     APIRequestHandler* request_handler,
     APIEventHandler* event_handler,
-    APITypeReferenceMap* type_refs,
-    const BindingAccessChecker* access_checker) {
+    APITypeReferenceMap* type_refs) {
   v8::Local<v8::Object> object;
   if (property_name == "local") {
     gin::Handle<LocalStorageArea> handle = gin::CreateHandle(
-        isolate,
-        new LocalStorageArea(request_handler, type_refs, access_checker));
+        isolate, new LocalStorageArea(request_handler, type_refs));
     object = handle.ToV8().As<v8::Object>();
   } else if (property_name == "sync") {
     gin::Handle<SyncStorageArea> handle = gin::CreateHandle(
-        isolate,
-        new SyncStorageArea(request_handler, type_refs, access_checker));
+        isolate, new SyncStorageArea(request_handler, type_refs));
     object = handle.ToV8().As<v8::Object>();
   } else {
     CHECK_EQ("managed", property_name);
     gin::Handle<ManagedStorageArea> handle = gin::CreateHandle(
-        isolate,
-        new ManagedStorageArea(request_handler, type_refs, access_checker));
+        isolate, new ManagedStorageArea(request_handler, type_refs));
     object = handle.ToV8().As<v8::Object>();
   }
   return object;
@@ -191,10 +179,6 @@ void StorageArea::HandleFunctionCall(const std::string& method_name,
   v8::Isolate* isolate = arguments->isolate();
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context = arguments->GetHolderCreationContext();
-
-  std::string full_method_name = "storage." + method_name;
-  if (!access_checker_->HasAccessOrThrowError(context, full_method_name))
-    return;
 
   std::vector<v8::Local<v8::Value>> argument_list = arguments->GetAll();
 
@@ -213,8 +197,8 @@ void StorageArea::HandleFunctionCall(const std::string& method_name,
 
   converted_arguments->Insert(0u, base::MakeUnique<base::Value>(name_));
   request_handler_->StartRequest(
-      context, full_method_name, std::move(converted_arguments), callback,
-      v8::Local<v8::Function>(), binding::RequestThread::UI);
+      context, "storage." + method_name, std::move(converted_arguments),
+      callback, v8::Local<v8::Function>(), binding::RequestThread::UI);
 }
 
 }  // namespace extensions

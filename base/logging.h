@@ -306,9 +306,6 @@ BASE_EXPORT LogMessageHandlerFunction GetLogMessageHandler();
 // to Clang which control what code paths are statically analyzed,
 // and is meant to be used in conjunction with assert & assert-like functions.
 // The expression is passed straight through if analysis isn't enabled.
-//
-// ANALYZER_SKIP_THIS_PATH() suppresses static analysis for the current
-// codepath and any other branching codepaths that might follow.
 #if defined(__clang_analyzer__)
 
 inline constexpr bool AnalyzerNoReturn() __attribute__((analyzer_noreturn)) {
@@ -321,14 +318,11 @@ inline constexpr bool AnalyzerAssumeTrue(bool arg) {
   return arg || AnalyzerNoReturn();
 }
 
-#define ANALYZER_ASSUME_TRUE(arg) logging::AnalyzerAssumeTrue(!!(arg))
-#define ANALYZER_SKIP_THIS_PATH() \
-  static_cast<void>(::logging::AnalyzerNoReturn())
+#define ANALYZER_ASSUME_TRUE(arg) ::logging::AnalyzerAssumeTrue(!!(arg))
 
 #else  // !defined(__clang_analyzer__)
 
 #define ANALYZER_ASSUME_TRUE(arg) (arg)
-#define ANALYZER_SKIP_THIS_PATH()
 
 #endif  // defined(__clang_analyzer__)
 

@@ -10,7 +10,6 @@
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/ios/device_util.h"
-#include "base/ios/ios_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
@@ -149,6 +148,14 @@ UIColor* IncognitoSecureTextColor() {
   return editView_->OnCopy();
 }
 
+- (BOOL)onCopyURL {
+  return editView_->OnCopyURL();
+}
+
+- (BOOL)canCopyURL {
+  return editView_->CanCopyURL();
+}
+
 - (void)willPaste {
   editView_->WillPaste();
 }
@@ -181,7 +188,6 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
   [field_ addTarget:field_delegate_
                 action:@selector(textFieldDidChange:)
       forControlEvents:UIControlEventEditingChanged];
-  use_strikethrough_workaround_ = base::ios::IsRunningOnOrLater(10, 3, 0);
 }
 
 OmniboxViewIOS::~OmniboxViewIOS() {
@@ -584,8 +590,12 @@ bool OmniboxViewIOS::OnCopy() {
 
   GURL url;
   bool write_url = false;
-  model()->AdjustTextForCopy(start_location, is_select_all, &text, &url,
-                             &write_url);
+  // Don't adjust the text (e.g. add http://) if the omnibox is currently
+  // showing non-URL text (e.g. search terms instead of the URL).
+  if (!CanCopyURL()) {
+    model()->AdjustTextForCopy(start_location, is_select_all, &text, &url,
+                               &write_url);
+  }
 
   // Create the pasteboard item manually because the pasteboard expects a single
   // item with multiple representations.  This is expressed as a single
@@ -599,6 +609,23 @@ bool OmniboxViewIOS::OnCopy() {
 
   board.items = [NSArray arrayWithObject:item];
   return true;
+}
+
+bool OmniboxViewIOS::OnCopyURL() {
+  // Create the pasteboard item manually because the pasteboard expects a single
+  // item with multiple representations.  This is expressed as a single
+  // NSDictionary with multiple keys, one for each representation.
+  GURL url = controller_->GetToolbarModel()->GetURL();
+  NSDictionary* item = @{
+    (NSString*)kUTTypePlainText : base::SysUTF8ToNSString(url.spec()),
+    (NSString*)kUTTypeURL : net::NSURLWithGURL(url)
+  };
+  [UIPasteboard generalPasteboard].items = [NSArray arrayWithObject:item];
+  return true;
+}
+
+bool OmniboxViewIOS::CanCopyURL() {
+  return false;
 }
 
 void OmniboxViewIOS::WillPaste() {
@@ -648,15 +675,6 @@ void OmniboxViewIOS::UpdateSchemeStyle(const gfx::Range& range) {
   DCHECK_NE(security_state::SECURE_WITH_POLICY_INSTALLED_CERT, security_level);
 
   if (security_level == security_state::DANGEROUS) {
-    if (use_strikethrough_workaround_) {
-      // Workaround: Add extra attribute to allow strikethough to apply on iOS
-      // 10.3+. See https://crbug.com/699702 for discussion.
-      [attributing_display_string_
-          addAttribute:NSBaselineOffsetAttributeName
-                 value:@0
-                 range:NSMakeRange(0, [attributing_display_string_ length])];
-    }
-
     // Add a strikethrough through the scheme.
     [attributing_display_string_
         addAttribute:NSStrikethroughStyleAttributeName

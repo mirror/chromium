@@ -176,7 +176,7 @@ void ProfileImplIOData::Handle::Init(
   PrefService* pref_service = profile_->GetPrefs();
   lazy_params->http_server_properties_manager.reset(
       chrome_browser_net::HttpServerPropertiesManagerFactory::CreateManager(
-          pref_service, g_browser_process->io_thread()->net_log()));
+          pref_service));
   io_data_->http_server_properties_manager_ =
       lazy_params->http_server_properties_manager.get();
 
@@ -555,6 +555,8 @@ void ProfileImplIOData::InitializeInternal(
       std::move(profile_params->protocol_handler_interceptor),
       main_context->network_delegate(),
       io_thread_globals->system_request_context->host_resolver()));
+  main_context->set_network_quality_estimator(
+      io_thread_globals->network_quality_estimator.get());
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   InitializeExtensionsRequestContext(profile_params);

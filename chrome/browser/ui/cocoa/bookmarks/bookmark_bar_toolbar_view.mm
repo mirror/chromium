@@ -86,6 +86,7 @@
         tp.GetNSColor(ThemeProperties::COLOR_DETACHED_BOOKMARK_BAR_SEPARATOR);
     strokeColor = [[self strokeColor] blendedColorWithFraction:morph
                                                        ofColor:strokeColor];
+    strokeColor = [strokeColor colorWithAlphaComponent:0.5];
     [strokeColor set];
     NSRectFillUsingOperation(NSIntersectionRect(strokeRect, dirtyRect),
                              NSCompositeSourceOver);

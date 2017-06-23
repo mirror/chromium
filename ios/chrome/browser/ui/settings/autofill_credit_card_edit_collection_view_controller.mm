@@ -164,7 +164,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
           : base::SysUTF16ToNSString(_creditCard.LastFourDigits());
   cardNumberitem.textFieldEnabled = isEditing;
   cardNumberitem.autofillUIType = AutofillUITypeCreditCardNumber;
-  cardNumberitem.keyboardType = UIKeyboardTypeNumberPad;
   cardNumberitem.identifyingIcon =
       [self cardTypeIconFromCardNumber:cardNumberitem.textFieldValue];
   [model addItem:cardNumberitem
@@ -179,7 +178,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
       [NSString stringWithFormat:@"%02d", _creditCard.expiration_month()];
   expirationMonthItem.textFieldEnabled = isEditing;
   expirationMonthItem.autofillUIType = AutofillUITypeCreditCardExpMonth;
-  expirationMonthItem.keyboardType = UIKeyboardTypeNumberPad;
   [model addItem:expirationMonthItem
       toSectionWithIdentifier:SectionIdentifierFields];
 
@@ -192,8 +190,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
       [NSString stringWithFormat:@"%04d", _creditCard.expiration_year()];
   expirationYearItem.textFieldEnabled = isEditing;
   expirationYearItem.autofillUIType = AutofillUITypeCreditCardExpYear;
-  expirationYearItem.keyboardType = UIKeyboardTypeNumberPad;
-  expirationYearItem.returnKeyType = UIReturnKeyDone;
   [model addItem:expirationYearItem
       toSectionWithIdentifier:SectionIdentifierFields];
 
@@ -266,9 +262,28 @@ typedef NS_ENUM(NSInteger, ItemType) {
   textFieldCell.textField.delegate = self;
   switch (itemType) {
     case ItemTypeCardholderName:
+      textFieldCell.textField.autocapitalizationType =
+          UITextAutocapitalizationTypeWords;
+      textFieldCell.textField.keyboardType = UIKeyboardTypeDefault;
+      textFieldCell.textField.returnKeyType = UIReturnKeyNext;
+      break;
     case ItemTypeCardNumber:
+      textFieldCell.textField.autocapitalizationType =
+          UITextAutocapitalizationTypeSentences;
+      textFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
+      textFieldCell.textField.returnKeyType = UIReturnKeyNext;
+      break;
     case ItemTypeExpirationMonth:
+      textFieldCell.textField.autocapitalizationType =
+          UITextAutocapitalizationTypeSentences;
+      textFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
+      textFieldCell.textField.returnKeyType = UIReturnKeyNext;
+      break;
     case ItemTypeExpirationYear:
+      textFieldCell.textField.autocapitalizationType =
+          UITextAutocapitalizationTypeSentences;
+      textFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
+      textFieldCell.textField.returnKeyType = UIReturnKeyDone;
       break;
     case ItemTypeCopiedToChrome: {
       CopiedToChromeCell* copiedToChromeCell =

@@ -281,6 +281,11 @@ bool IsBookmarkReorderingEnabled() {
   return false;
 }
 
+bool IsNativeAppLauncherEnabled() {
+  return [[NSUserDefaults standardUserDefaults]
+      boolForKey:@"NativeAppLauncherEnabled"];
+}
+
 bool IsNewFeedbackKitEnabled() {
   return [[NSUserDefaults standardUserDefaults]
       boolForKey:@"NewFeedbackKitEnabled"];

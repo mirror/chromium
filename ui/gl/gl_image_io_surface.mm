@@ -32,7 +32,6 @@ namespace {
 bool ValidInternalFormat(unsigned internalformat) {
   switch (internalformat) {
     case GL_RED:
-    case GL_R16_EXT:
     case GL_RG:
     case GL_BGRA_EXT:
     case GL_RGB:
@@ -55,7 +54,6 @@ bool ValidFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::UYVY_422:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
       return true;
-    case gfx::BufferFormat::R_16:
     case gfx::BufferFormat::RG_88:
     case gfx::BufferFormat::ATC:
     case gfx::BufferFormat::ATCIA:
@@ -77,8 +75,6 @@ GLenum TextureFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::R_8:
       return GL_RED;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
     case gfx::BufferFormat::RG_88:
       return GL_RG;
     case gfx::BufferFormat::BGRA_8888:
@@ -111,8 +107,6 @@ GLenum DataFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::R_8:
       return GL_RED;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
     case gfx::BufferFormat::RG_88:
       return GL_RG;
     case gfx::BufferFormat::BGRA_8888:
@@ -146,8 +140,6 @@ GLenum DataType(gfx::BufferFormat format) {
     case gfx::BufferFormat::R_8:
     case gfx::BufferFormat::RG_88:
       return GL_UNSIGNED_BYTE;
-    case gfx::BufferFormat::R_16:
-      return GL_UNSIGNED_SHORT;
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::RGBA_8888:

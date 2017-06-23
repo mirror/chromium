@@ -13,7 +13,7 @@
 
 namespace cc {
 class CopyOutputRequest;
-class LayerTreeFrameSink;
+class CompositorFrameSink;
 class SwapPromise;
 }
 
@@ -23,8 +23,8 @@ class Vector2dF;
 
 namespace content {
 
-using LayerTreeFrameSinkCallback =
-    base::Callback<void(std::unique_ptr<cc::LayerTreeFrameSink>)>;
+using CompositorFrameSinkCallback =
+    base::Callback<void(std::unique_ptr<cc::CompositorFrameSink>)>;
 
 // Consumers of RenderWidgetCompositor implement this delegate in order to
 // transport compositing information across processes.
@@ -48,10 +48,10 @@ class CONTENT_EXPORT RenderWidgetCompositorDelegate {
   // Notifies that the compositor has issed a BeginMainFrame.
   virtual void BeginMainFrame(double frame_time_sec) = 0;
 
-  // Requests a LayerTreeFrameSink to submit CompositorFrames to.
-  virtual void RequestNewLayerTreeFrameSink(
+  // Requests a CompositorFrameSink to submit CompositorFrames to.
+  virtual void RequestNewCompositorFrameSink(
       bool fallback,
-      const LayerTreeFrameSinkCallback& callback) = 0;
+      const CompositorFrameSinkCallback& callback) = 0;
 
   // Notifies that the draw commands for a committed frame have been issued.
   virtual void DidCommitAndDrawCompositorFrame() = 0;

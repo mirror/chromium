@@ -24,7 +24,7 @@
 #include "cc/output/context_provider.h"
 #include "cc/resources/single_release_callback.h"
 #include "cc/resources/texture_mailbox.h"
-#include "components/exo/layer_tree_frame_sink_holder.h"
+#include "components/exo/compositor_frame_sink_holder.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "ui/aura/env.h"
@@ -46,7 +46,6 @@ GLenum GLInternalFormat(gfx::BufferFormat format) {
       GL_COMPRESSED_RGBA_S3TC_DXT5_EXT,    // DXT5
       GL_ETC1_RGB8_OES,                    // ETC1
       GL_R8_EXT,                           // R_8
-      GL_R16_EXT,                          // R_16
       GL_RG8_EXT,                          // RG_88
       GL_RGB,                              // BGR_565
       GL_RGBA,                             // RGBA_4444
@@ -409,7 +408,7 @@ Buffer::Buffer(std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer,
 Buffer::~Buffer() {}
 
 bool Buffer::ProduceTransferableResource(
-    LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder,
+    CompositorFrameSinkHolder* compositor_frame_sink_holder,
     cc::ResourceId resource_id,
     bool secure_output_only,
     bool client_usage,
@@ -471,7 +470,7 @@ bool Buffer::ProduceTransferableResource(
 
     // The contents texture will be released when no longer used by the
     // compositor.
-    layer_tree_frame_sink_holder->SetResourceReleaseCallback(
+    compositor_frame_sink_holder->SetResourceReleaseCallback(
         resource_id,
         base::Bind(&Buffer::Texture::ReleaseTexImage,
                    base::Unretained(contents_texture),
@@ -501,7 +500,7 @@ bool Buffer::ProduceTransferableResource(
 
   // The mailbox texture will be released when no longer used by the
   // compositor.
-  layer_tree_frame_sink_holder->SetResourceReleaseCallback(
+  compositor_frame_sink_holder->SetResourceReleaseCallback(
       resource_id,
       base::Bind(&Buffer::Texture::Release, base::Unretained(texture),
                  base::Bind(&Buffer::ReleaseTexture, AsWeakPtr(),

@@ -71,14 +71,14 @@ Element* AXMenuListOption::ActionElement() const {
   return element_;
 }
 
-AXObject* AXMenuListOption::ComputeParent() const {
+AXObjectImpl* AXMenuListOption::ComputeParent() const {
   Node* node = GetNode();
   if (!node)
     return nullptr;
   HTMLSelectElement* select = toHTMLOptionElement(node)->OwnerSelectElement();
   if (!select)
     return nullptr;
-  AXObject* select_ax_object = AxObjectCache().GetOrCreate(select);
+  AXObjectImpl* select_ax_object = AxObjectCache().GetOrCreate(select);
 
   // This happens if the <select> is not rendered. Return it and move on.
   if (!select_ax_object->IsMenuList())
@@ -156,19 +156,19 @@ bool AXMenuListOption::ComputeAccessibilityIsIgnored(
 }
 
 void AXMenuListOption::GetRelativeBounds(
-    AXObject** out_container,
+    AXObjectImpl** out_container,
     FloatRect& out_bounds_in_container,
     SkMatrix44& out_container_transform) const {
   *out_container = nullptr;
   out_bounds_in_container = FloatRect();
   out_container_transform.setIdentity();
 
-  AXObject* parent = ParentObject();
+  AXObjectImpl* parent = ParentObject();
   if (!parent)
     return;
   DCHECK(parent->IsMenuListPopup());
 
-  AXObject* grandparent = parent->ParentObject();
+  AXObjectImpl* grandparent = parent->ParentObject();
   if (!grandparent)
     return;
   DCHECK(grandparent->IsMenuList());

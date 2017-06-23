@@ -14,7 +14,6 @@ import android.os.StrictMode;
 
 import org.chromium.base.Callback;
 import org.chromium.base.ObserverList;
-import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.components.signin.AccountManagerHelper;
 import org.chromium.components.signin.ChromeSigninController;
@@ -249,29 +248,24 @@ public class AndroidSyncSettings {
         StrictMode.setThreadPolicy(oldPolicy);
 
         // Disable the syncability of Chrome for all other accounts.
-        ThreadUtils.postOnUiThread(new Runnable() {
+        AccountManagerHelper.get().getGoogleAccounts(new Callback<Account[]>() {
             @Override
-            public void run() {
-                AccountManagerHelper.get().getGoogleAccounts(new Callback<Account[]>() {
-                    @Override
-                    public void onResult(Account[] accounts) {
-                        synchronized (mLock) {
-                            StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
-                            for (Account account : accounts) {
-                                if (!account.equals(mAccount)
-                                        && mSyncContentResolverDelegate.getIsSyncable(
-                                                   account, mContractAuthority)
-                                                > 0) {
-                                    mSyncContentResolverDelegate.setIsSyncable(
-                                            account, mContractAuthority, 0);
-                                }
-                            }
-                            StrictMode.setThreadPolicy(oldPolicy);
+            public void onResult(Account[] accounts) {
+                synchronized (mLock) {
+                    StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
+                    for (Account account : accounts) {
+                        if (!account.equals(mAccount)
+                                && mSyncContentResolverDelegate.getIsSyncable(
+                                           account, mContractAuthority)
+                                        > 0) {
+                            mSyncContentResolverDelegate.setIsSyncable(
+                                    account, mContractAuthority, 0);
                         }
-
-                        if (callback != null) callback.onResult(true);
                     }
-                });
+                    StrictMode.setThreadPolicy(oldPolicy);
+                }
+
+                if (callback != null) callback.onResult(true);
             }
         });
     }

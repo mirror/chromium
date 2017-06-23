@@ -8,7 +8,6 @@
 #include "core/CoreExport.h"
 #include "core/layout/ng/inline/ng_inline_item_result.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
-#include "core/layout/ng/ng_layout_opportunity_iterator.h"
 #include "platform/fonts/shaping/HarfBuzzShaper.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
 #include "platform/heap/Handle.h"
@@ -44,14 +43,10 @@ class CORE_EXPORT NGLineBreaker {
   RefPtr<NGInlineBreakToken> CreateBreakToken() const;
 
  private:
-  void BreakLine(NGLineInfo*);
+  void BreakLine(NGLineInfo*, const NGLogicalOffset&);
 
-  bool HasAvailableWidth() const { return opportunity_.has_value(); }
-  LayoutUnit AvailableWidth() const {
-    return opportunity_.value().InlineSize();
-  }
-  void UpdateAvailableWidth();
-  void ComputeLineLocation(NGLineInfo*) const;
+  void ResolveBFCOffset();
+  LayoutUnit ComputeAvailableWidth(const NGLogicalOffset&) const;
 
   enum class LineBreakState {
     // The current position is not breakable.
@@ -65,6 +60,7 @@ class CORE_EXPORT NGLineBreaker {
   };
 
   LineBreakState HandleText(const NGInlineItem&,
+                            LayoutUnit available_width,
                             NGInlineItemResult*);
   void BreakText(NGInlineItemResult*,
                  const NGInlineItem&,
@@ -73,23 +69,21 @@ class CORE_EXPORT NGLineBreaker {
   LineBreakState HandleControlItem(const NGInlineItem&, NGInlineItemResult*);
   LineBreakState HandleAtomicInline(const NGInlineItem&, NGInlineItemResult*);
   void HandleFloat(const NGInlineItem&,
+                   const NGLogicalOffset&,
+                   WTF::Optional<LayoutUnit>* available_width,
                    NGInlineItemResults*);
 
   void HandleOpenTag(const NGInlineItem&, NGInlineItemResult*);
   void HandleCloseTag(const NGInlineItem&, NGInlineItemResult*);
 
-  void HandleOverflow(NGLineInfo*);
+  void HandleOverflow(LayoutUnit available_width, NGLineInfo*);
   void Rewind(NGLineInfo*, unsigned new_end);
-
-  void SetShouldCreateLineBox();
 
   void SetCurrentStyle(const ComputedStyle&);
 
   void MoveToNextOf(const NGInlineItem&);
   void MoveToNextOf(const NGInlineItemResult&);
   void SkipCollapsibleWhitespaces();
-
-  bool IsFirstFormattedLine() const;
 
   NGInlineNode node_;
   NGConstraintSpace* constraint_space_;
@@ -98,15 +92,11 @@ class CORE_EXPORT NGLineBreaker {
   unsigned item_index_;
   unsigned offset_;
   LayoutUnit position_;
-  WTF::Optional<NGLayoutOpportunity> opportunity_;
-  NGLogicalOffset content_offset_;
   LazyLineBreakIterator break_iterator_;
   HarfBuzzShaper shaper_;
   ShapeResultSpacing<String> spacing_;
 
-  bool auto_wrap_;
-  bool should_create_line_box_;
-  bool is_after_forced_break_;
+  unsigned auto_wrap_ : 1;
 };
 
 }  // namespace blink

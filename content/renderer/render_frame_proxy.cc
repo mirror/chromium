@@ -34,7 +34,6 @@
 #include "third_party/WebKit/public/platform/WebRect.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
-#include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
 #include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
@@ -498,7 +497,6 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
   params.disposition = WindowOpenDisposition::CURRENT_TAB;
   params.should_replace_current_entry = should_replace_current_entry;
   params.user_gesture = request.HasUserGesture();
-  params.triggering_event_info = blink::WebTriggeringEventInfo::kUnknown;
   Send(new FrameHostMsg_OpenURL(routing_id_, params));
 }
 
@@ -519,10 +517,6 @@ void RenderFrameProxy::UpdateRemoteViewportIntersection(
 
 void RenderFrameProxy::VisibilityChanged(bool visible) {
   Send(new FrameHostMsg_VisibilityChanged(routing_id_, visible));
-}
-
-void RenderFrameProxy::SetIsInert(bool inert) {
-  Send(new FrameHostMsg_SetIsInert(routing_id_, inert));
 }
 
 void RenderFrameProxy::DidChangeOpener(blink::WebFrame* opener) {

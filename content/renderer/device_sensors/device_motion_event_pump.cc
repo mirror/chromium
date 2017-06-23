@@ -118,8 +118,7 @@ void DeviceMotionEventPump::SendStartMessage() {
     if (gyroscope_.sensor)
       gyroscope_.sensor->Resume();
 
-    if (CanStart())
-      DidStart();
+    DidStart();
   }
 }
 
@@ -224,7 +223,7 @@ void DeviceMotionEventPump::SensorEntry::HandleSensorError() {
 }
 
 bool DeviceMotionEventPump::SensorEntry::SensorReadingCouldBeRead() {
-  if (!sensor || !shared_buffer)
+  if (!sensor)
     return false;
 
   const device::SensorReadingSharedBuffer* buffer =

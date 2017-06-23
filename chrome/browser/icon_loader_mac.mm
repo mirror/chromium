@@ -11,7 +11,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/sys_string_conversions.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
@@ -23,9 +22,8 @@ IconLoader::IconGroup IconLoader::GroupForFilepath(
 }
 
 // static
-scoped_refptr<base::TaskRunner> IconLoader::GetReadIconTaskRunner() {
-  // NSWorkspace is thread-safe.
-  return base::CreateTaskRunnerWithTraits(traits());
+content::BrowserThread::ID IconLoader::ReadIconThreadID() {
+  return content::BrowserThread::FILE;
 }
 
 void IconLoader::ReadIcon() {

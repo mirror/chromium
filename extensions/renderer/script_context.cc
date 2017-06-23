@@ -300,7 +300,7 @@ GURL ScriptContext::GetAccessCheckedFrameURL(
 }
 
 // static
-GURL ScriptContext::GetEffectiveDocumentURL(blink::WebLocalFrame* frame,
+GURL ScriptContext::GetEffectiveDocumentURL(const blink::WebLocalFrame* frame,
                                             const GURL& document_url,
                                             bool match_about_blank) {
   // Common scenario. If |match_about_blank| is false (as is the case in most
@@ -312,8 +312,7 @@ GURL ScriptContext::GetEffectiveDocumentURL(blink::WebLocalFrame* frame,
   // Non-sandboxed about:blank and about:srcdoc pages inherit their security
   // origin from their parent frame/window. So, traverse the frame/window
   // hierarchy to find the closest non-about:-page and return its URL.
-  blink::WebFrame* parent = frame;
-  blink::WebDocument parent_document;
+  const blink::WebFrame* parent = frame;
   do {
     if (parent->Parent())
       parent = parent->Parent();
@@ -321,15 +320,12 @@ GURL ScriptContext::GetEffectiveDocumentURL(blink::WebLocalFrame* frame,
       parent = parent->Opener();
     else
       parent = nullptr;
+  } while (parent && !parent->GetDocument().IsNull() &&
+           GURL(parent->GetDocument().Url()).SchemeIs(url::kAboutScheme));
 
-    parent_document = parent && parent->IsWebLocalFrame()
-                          ? parent->ToWebLocalFrame()->GetDocument()
-                          : blink::WebDocument();
-  } while (!parent_document.IsNull() &&
-           GURL(parent_document.Url()).SchemeIs(url::kAboutScheme));
-
-  if (!parent_document.IsNull()) {
+  if (parent && !parent->GetDocument().IsNull()) {
     // Only return the parent URL if the frame can access it.
+    const blink::WebDocument& parent_document = parent->GetDocument();
     if (frame->GetDocument().GetSecurityOrigin().CanAccess(
             parent_document.GetSecurityOrigin())) {
       return parent_document.Url();

@@ -783,12 +783,6 @@ void WebFrameWidgetImpl::SetRemoteViewportIntersection(
       viewport_intersection);
 }
 
-void WebFrameWidgetImpl::SetIsInert(bool inert) {
-  DCHECK(local_root_->Parent());
-  DCHECK(local_root_->Parent()->IsWebRemoteFrame());
-  local_root_->GetFrame()->SetIsInert(inert);
-}
-
 void WebFrameWidgetImpl::HandleMouseLeave(LocalFrame& main_frame,
                                           const WebMouseEvent& event) {
   // FIXME: WebWidget doesn't have the method below.
@@ -859,7 +853,6 @@ void WebFrameWidgetImpl::MouseContextMenu(const WebMouseEvent& event) {
 
   WebMouseEvent transformed_event =
       TransformWebMouseEvent(local_root_->GetFrameView(), event);
-  transformed_event.menu_source_type = kMenuSourceMouse;
   IntPoint position_in_root_frame =
       FlooredIntPoint(transformed_event.PositionInRootFrame());
 

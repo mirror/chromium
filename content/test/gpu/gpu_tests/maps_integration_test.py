@@ -10,7 +10,6 @@ from gpu_tests import gpu_integration_test
 from gpu_tests import cloud_storage_integration_test_base
 from gpu_tests import maps_expectations
 from gpu_tests import path_util
-from gpu_tests import color_profile_manager
 
 from py_utils import cloud_storage
 
@@ -62,9 +61,8 @@ class MapsIntegrationTest(
 
   @classmethod
   def SetUpProcess(cls):
-    color_profile_manager.ForceUntilExitSRGB()
     super(MapsIntegrationTest, cls).SetUpProcess()
-    cls.CustomizeBrowserArgs(['--force-color-profile=srgb'])
+    cls.CustomizeBrowserArgs([])
     cls.StartWPRServer(os.path.join(data_path, 'maps_004.wpr.updated'),
                        cloud_storage.PUBLIC_BUCKET)
     cls.StartBrowser()

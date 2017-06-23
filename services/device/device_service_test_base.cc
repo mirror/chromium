@@ -7,7 +7,7 @@
 #include <memory>
 
 #include "base/memory/ptr_util.h"
-#include "base/memory/ref_counted.h"
+#include "base/threading/thread.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/device/device_service.h"
 #include "services/device/public/interfaces/constants.mojom.h"
@@ -25,13 +25,10 @@ const char kTestServiceName[] = "device_unittests";
 class ServiceTestClient : public service_manager::test::ServiceTestClient,
                           public service_manager::mojom::ServiceFactory {
  public:
-  explicit ServiceTestClient(
-      service_manager::test::ServiceTest* test,
-      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
+  explicit ServiceTestClient(service_manager::test::ServiceTest* test)
       : service_manager::test::ServiceTestClient(test),
-        file_task_runner_(std::move(file_task_runner)),
-        io_task_runner_(std::move(io_task_runner)) {
+        io_thread_("DeviceServiceTestIOThread"),
+        file_thread_("DeviceServiceTestFileThread") {
     registry_.AddInterface<service_manager::mojom::ServiceFactory>(
         base::Bind(&ServiceTestClient::Create, base::Unretained(this)));
   }
@@ -48,14 +45,18 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   void CreateService(service_manager::mojom::ServiceRequest request,
                      const std::string& name) override {
     if (name == device::mojom::kServiceName) {
+      io_thread_.Start();
+      file_thread_.Start();
 #if defined(OS_ANDROID)
       device_service_context_.reset(new service_manager::ServiceContext(
-          CreateDeviceService(file_task_runner_, io_task_runner_,
+          CreateDeviceService(file_thread_.task_runner(),
+                              io_thread_.task_runner(),
                               wake_lock_context_callback_, nullptr),
           std::move(request)));
 #else
       device_service_context_.reset(new service_manager::ServiceContext(
-          CreateDeviceService(file_task_runner_, io_task_runner_),
+          CreateDeviceService(file_thread_.task_runner(),
+                              io_thread_.task_runner()),
           std::move(request)));
 #endif
     }
@@ -67,12 +68,12 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   }
 
  private:
+  base::Thread io_thread_;
+  base::Thread file_thread_;
   service_manager::BinderRegistry registry_;
   mojo::BindingSet<service_manager::mojom::ServiceFactory>
       service_factory_bindings_;
   std::unique_ptr<service_manager::ServiceContext> device_service_context_;
-  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
-  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   WakeLockContextCallback wake_lock_context_callback_;
 };
@@ -80,19 +81,13 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
 }  // namespace
 
 DeviceServiceTestBase::DeviceServiceTestBase()
-    : ServiceTest(kTestServiceName),
-      file_thread_("DeviceServiceTestFileThread"),
-      io_thread_("DeviceServiceTestIOThread") {
-  file_thread_.Start();
-  io_thread_.Start();
-}
+    : ServiceTest(kTestServiceName) {}
 
 DeviceServiceTestBase::~DeviceServiceTestBase() {}
 
 std::unique_ptr<service_manager::Service>
 DeviceServiceTestBase::CreateService() {
-  return base::MakeUnique<ServiceTestClient>(this, file_thread_.task_runner(),
-                                             io_thread_.task_runner());
+  return base::MakeUnique<ServiceTestClient>(this);
 }
 
 }  // namespace device

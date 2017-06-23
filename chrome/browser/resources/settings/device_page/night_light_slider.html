@@ -1,7 +1,7 @@
 <html><head>
 <link rel="import" href="chrome://resources/html/polymer.html">
+<link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
-<link rel="import" href="chrome://resources/polymer/v1_0/paper-behaviors/paper-inky-focus-behavior.html">
 <link rel="import" href="../prefs/prefs_behavior.html">
 </head><body><dom-module id="night-light-slider">
   <template>
@@ -29,27 +29,20 @@
       }
 
       .knob {
-        height: 32px;
-        margin-left: -16px;
-        margin-top: -15px;
-        position: absolute;
-        width: 32px;
-      }
-
-      .knob:focus {
-        outline: none;
-      }
-
-      .knob-inner {
-        background: var(--google-blue-700);
+        background: rgb(51, 103, 214);
         border-radius: 6px;
         height: 12px;
         left: 0;
-        margin-left: 10px;
-        margin-top: 10px;
+        margin-left: -6px;
+        margin-top: -5px;
         position: absolute;
         width: 12px;
         z-index: 3;
+      }
+
+      .knob:focus {
+        box-shadow: 0 0 5pt 5pt rgb(204, 217, 245);
+        outline: none;
       }
 
       .expanded-knob {
@@ -65,7 +58,7 @@
       }
 
       .progress {
-        background: var(--google-blue-700);
+        background: rgb(51, 103, 214);
         height: 100%;
         position: absolute;
         z-index: 1;
@@ -76,7 +69,7 @@
       }
 
       .label {
-        background: var(--google-blue-700);
+        background: rgb(51, 103, 214);
         border-radius: 14px;
         color: white;
         font-family: Roboto-Bold;
@@ -130,10 +123,6 @@
         top: 5px;
         width: 5em;
       }
-
-      paper-ripple {
-        color: var(--google-blue-700);
-      }
     </style>
 
     <div id="sliderContainer">
@@ -155,34 +144,17 @@
         <div id="markersContainer">
         </div>
         <div id="startKnob" class="knob" tabindex="1" on-down="startDrag_"
-            on-up="endDrag_" on-track="continueDrag_" on-focus="onFocus_"
-            on-blur="onBlur_">
-          <div class="knob-inner" tabindex="-1"></div>
-        </div>
+            on-up="endDrag_" on-track="continueDrag_"></div>
         <div id="endKnob" class="knob" tabindex="2" on-down="startDrag_"
-            on-up="endDrag_" on-track="continueDrag_" on-focus="onFocus_"
-            on-blur="onBlur_">
-          <div class="knob-inner" tabindex="-1"></div>
-        </div>
+            on-up="endDrag_" on-track="continueDrag_"></div>
       </div>
       <div id="legendContainer">
-        <div style="[[getLegendStyle_(0, isRTL_)]]">
-          [[getLocaleTimeString_(18, 0)]]
-        </div>
-        <div style="[[getLegendStyle_(25, isRTL_)]]">
-          [[getLocaleTimeString_(0, 0)]]
-        </div>
-        <div style="[[getLegendStyle_(50, isRTL_)]]">
-          [[getLocaleTimeString_(6, 0)]]
-        </div>
-        <div style="[[getLegendStyle_(75, isRTL_)]]">
-          [[getLocaleTimeString_(12, 0)]]
-        </div>
-        <div style="[[getLegendStyle_(100, isRTL_)]]">
-          [[getLocaleTimeString_(18, 0)]]
-        </div>
+        <div style="left: 0%;">[[getLocaleTimeString_(18, 0)]]</div>
+        <div style="left: 25%;">[[getLocaleTimeString_(0, 0)]]</div>
+        <div style="left: 50%;">[[getLocaleTimeString_(6, 0)]]</div>
+        <div style="left: 75%;">[[getLocaleTimeString_(12, 0)]]</div>
+        <div style="left: 100%;">[[getLocaleTimeString_(18, 0)]]</div>
       </div>
-      <div id="dummyRippleContainer" hidden></div>
     </div>
 
   </template>

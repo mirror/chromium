@@ -347,10 +347,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   void CreateOverscrollControllerIfPossible();
 
-  void UpdateLeftClickCount(int action_button,
-                            float mousedown_x,
-                            float mouse_down_y);
-
   WebContentsAccessibilityAndroid* GetWebContentsAccessibilityAndroid() const;
 
   // The model object.
@@ -431,10 +427,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   float prev_top_shown_pix_;
   float prev_bottom_shown_pix_;
-
-  base::TimeTicks prev_mousedown_timestamp_;
-  gfx::Point prev_mousedown_point_;
-  int left_click_count_ = 0;
 
   cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink_ =
       nullptr;

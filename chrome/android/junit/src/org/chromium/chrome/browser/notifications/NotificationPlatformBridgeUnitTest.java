@@ -20,8 +20,6 @@ import org.robolectric.annotation.Config;
 import org.chromium.base.CommandLine;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.ChromeSwitches;
-import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
-import org.chromium.chrome.browser.notifications.channels.SiteChannelsManager;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 import java.util.Arrays;
@@ -84,52 +82,28 @@ public class NotificationPlatformBridgeUnitTest {
      */
     @Test
     @Feature({"Browser", "Notifications"})
-    public void testGetOriginFromNotificationTag() throws Exception {
+    public void testGetOriginFromTag() throws Exception {
         // The common case.
-        assertEquals("https://example.com",
-                NotificationPlatformBridge.getOriginFromNotificationTag(
-                        "NotificationPlatformBridge;https://example.com;42"));
+        assertEquals(
+                "https://example.com", NotificationPlatformBridge.getOriginFromTag(
+                                               "NotificationPlatformBridge;https://example.com;42"));
 
         // An tag that includes the separator. Probably a bit unusual, but valid.
-        assertEquals("https://example.com",
-                NotificationPlatformBridge.getOriginFromNotificationTag(
-                        "NotificationPlatformBridge;https://example.com;this;tag;contains;the;separator"));
+        assertEquals("https://example.com", NotificationPlatformBridge.getOriginFromTag(
+                "NotificationPlatformBridge;https://example.com;this;tag;contains;the;separator"));
 
         // Some invalid input.
-        assertNull(
-                NotificationPlatformBridge.getOriginFromNotificationTag("SystemDownloadNotifier"));
-        assertNull(NotificationPlatformBridge.getOriginFromNotificationTag(null));
-        assertNull(NotificationPlatformBridge.getOriginFromNotificationTag(""));
-        assertNull(NotificationPlatformBridge.getOriginFromNotificationTag(";"));
-        assertNull(NotificationPlatformBridge.getOriginFromNotificationTag(";;;;;;;"));
-        assertNull(NotificationPlatformBridge.getOriginFromNotificationTag(
+        assertNull(NotificationPlatformBridge.getOriginFromTag("SystemDownloadNotifier"));
+        assertNull(NotificationPlatformBridge.getOriginFromTag(null));
+        assertNull(NotificationPlatformBridge.getOriginFromTag(""));
+        assertNull(NotificationPlatformBridge.getOriginFromTag(";"));
+        assertNull(NotificationPlatformBridge.getOriginFromTag(";;;;;;;"));
+        assertNull(NotificationPlatformBridge.getOriginFromTag(
                 "SystemDownloadNotifier;NotificationPlatformBridge;42"));
-        assertNull(NotificationPlatformBridge.getOriginFromNotificationTag(
+        assertNull(NotificationPlatformBridge.getOriginFromTag(
                 "SystemDownloadNotifier;https://example.com;42"));
-        assertNull(NotificationPlatformBridge.getOriginFromNotificationTag(
+        assertNull(NotificationPlatformBridge.getOriginFromTag(
                 "NotificationPlatformBridge;SystemDownloadNotifier;42"));
-    }
-
-    /**
-     * Verifies that the getOriginFromChannelId method returns the origin for a site channel,
-     * and null for any other channel or a null channel id.
-     */
-    @Test
-    @Feature({"Browser", "Notifications"})
-    public void testGetOriginFromChannelId() throws Exception {
-        // Returns the expected origin for a channel id associated with a particular origin.
-        assertEquals("https://example.com",
-                NotificationPlatformBridge.getOriginFromChannelId(
-                        SiteChannelsManager.toChannelId("https://example.com")));
-
-        // Returns null for a channel id that is not associated with a particular origin.
-        assertNull(NotificationPlatformBridge.getOriginFromChannelId(
-                ChannelDefinitions.CHANNEL_ID_BROWSER));
-        assertNull(NotificationPlatformBridge.getOriginFromChannelId(
-                ChannelDefinitions.CHANNEL_ID_SITES));
-
-        // Returns null if channel id is null.
-        assertNull(NotificationPlatformBridge.getOriginFromChannelId(null));
     }
 
     /**

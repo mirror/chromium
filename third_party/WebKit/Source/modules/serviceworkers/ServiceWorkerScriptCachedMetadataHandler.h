@@ -32,7 +32,7 @@ class ServiceWorkerScriptCachedMetadataHandler : public CachedMetadataHandler {
                          size_t,
                          CacheType) override;
   void ClearCachedMetadata(CacheType) override;
-  RefPtr<CachedMetadata> GetCachedMetadata(
+  PassRefPtr<CachedMetadata> GetCachedMetadata(
       uint32_t data_type_id) const override;
   String Encoding() const override;
 

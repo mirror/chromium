@@ -137,13 +137,8 @@ void ShellDevToolsBindings::ReadyToCommitNavigation(
     NavigationHandle* navigation_handle) {
 #if !defined(OS_ANDROID)
   content::RenderFrameHost* frame = navigation_handle->GetRenderFrameHost();
-  if (navigation_handle->IsInMainFrame()) {
-    frontend_host_.reset(DevToolsFrontendHost::Create(
-        frame,
-        base::Bind(&ShellDevToolsBindings::HandleMessageFromDevToolsFrontend,
-                   base::Unretained(this))));
+  if (!frame->GetParent())
     return;
-  }
   std::string origin = navigation_handle->GetURL().GetOrigin().spec();
   auto it = extensions_api_.find(origin);
   if (it == extensions_api_.end())
@@ -153,6 +148,26 @@ void ShellDevToolsBindings::ReadyToCommitNavigation(
   DevToolsFrontendHost::SetupExtensionsAPI(frame, script);
 #endif
 }
+
+void ShellDevToolsBindings::RenderViewCreated(
+    RenderViewHost* render_view_host) {
+  CreateFrontendHost();
+}
+
+#if !defined(OS_ANDROID)
+void ShellDevToolsBindings::CreateFrontendHost() {
+  if (!frontend_host_) {
+    frontend_host_.reset(DevToolsFrontendHost::Create(
+        web_contents()->GetMainFrame(),
+        base::Bind(&ShellDevToolsBindings::HandleMessageFromDevToolsFrontend,
+                   base::Unretained(this))));
+  }
+}
+#endif
+
+#if defined(OS_ANDROID)
+void ShellDevToolsBindings::CreateFrontendHost() {}
+#endif
 
 void ShellDevToolsBindings::DocumentAvailableInMainFrame() {
   agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);

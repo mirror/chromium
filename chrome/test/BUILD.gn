@@ -217,7 +217,6 @@ static_library("test_support") {
     public_deps += [
       "//chrome/install_static/test:test_support",
       "//components/crash/content/app",
-      "//gpu/config:crash_keys",
       "//third_party/wtl",
     ]
   }
@@ -822,7 +821,7 @@ if (!is_android) {
         "../browser/ui/views/ash/tab_scrubber_browsertest.cc",
         "../browser/ui/window_sizer/window_sizer_ash_uitest.cc",
         "//ash/drag_drop/drag_drop_interactive_uitest.cc",
-        "//ash/wm/native_cursor_manager_ash_interactive_uitest.cc",
+        "//ash/wm/ash_native_cursor_manager_interactive_uitest.cc",
       ]
       sources -= [
         # Use only the _chromeos version on Ash / Chrome OS.
@@ -1348,7 +1347,6 @@ test("browser_tests") {
       "../browser/ntp_snippets/content_suggestions_service_factory_browsertest.cc",
       "../browser/page_load_metrics/observers/ads_page_load_metrics_observer_browsertest.cc",
       "../browser/page_load_metrics/observers/https_engagement_metrics/https_engagement_page_load_metrics_observer_browsertest.cc",
-      "../browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer_browsertest.cc",
       "../browser/page_load_metrics/page_load_metrics_browsertest.cc",
       "../browser/password_manager/credential_manager_browsertest.cc",
       "../browser/password_manager/password_manager_browsertest.cc",
@@ -1387,7 +1385,6 @@ test("browser_tests") {
       "../browser/previews/previews_service_browser_test.cc",
       "../browser/printing/cloud_print/test/cloud_print_policy_browsertest.cc",
       "../browser/printing/cloud_print/test/cloud_print_proxy_process_browsertest.cc",
-      "../browser/printing/print_browsertest.cc",
       "../browser/printing/print_preview_dialog_controller_browsertest.cc",
       "../browser/printing/print_preview_pdf_generated_browsertest.cc",
       "../browser/process_singleton_browsertest.cc",
@@ -1973,7 +1970,6 @@ test("browser_tests") {
         "../browser/extensions/subscribe_page_action_browsertest.cc",
         "../browser/extensions/updater/extension_cache_fake.cc",
         "../browser/extensions/updater/extension_cache_fake.h",
-        "../browser/extensions/view_extension_source_browsertest.cc",
         "../browser/extensions/wake_event_page_apitest.cc",
         "../browser/extensions/web_contents_browsertest.cc",
         "../browser/extensions/webstore_inline_installer_browsertest.cc",
@@ -2102,7 +2098,6 @@ test("browser_tests") {
           "../browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
           "../browser/ui/views/extensions/extension_message_bubble_view_browsertest_nonmac.cc",
           "../browser/ui/views/extensions/extension_uninstall_dialog_view_browsertest.cc",
-          "../browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
           "../browser/ui/views/frame/browser_non_client_frame_view_browsertest.cc",
           "../browser/ui/views/frame/browser_view_browsertest.cc",
           "../browser/ui/views/location_bar/zoom_bubble_view_browsertest.cc",
@@ -2557,7 +2552,6 @@ test("browser_tests") {
     if (!enable_print_preview) {
       sources -= [
         "../browser/extensions/api/cloud_print_private/cloud_print_private_apitest.cc",
-        "../browser/printing/print_browsertest.cc",
         "../browser/printing/print_preview_dialog_controller_browsertest.cc",
         "../browser/printing/print_preview_pdf_generated_browsertest.cc",
         "../browser/service_process/service_process_control_browsertest.cc",
@@ -3056,6 +3050,7 @@ test("unit_tests") {
     "../browser/data_use_measurement/chrome_data_use_ascriber_service_unittest.cc",
     "../browser/data_use_measurement/chrome_data_use_ascriber_unittest.cc",
     "../browser/devtools/devtools_network_controller_unittest.cc",
+    "../browser/download/all_download_item_notifier_unittest.cc",
     "../browser/download/chrome_download_manager_delegate_unittest.cc",
     "../browser/download/download_history_unittest.cc",
     "../browser/download/download_item_model_unittest.cc",
@@ -3168,7 +3163,6 @@ test("unit_tests") {
     "../browser/page_load_metrics/observers/loading_predictor_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/lofi_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/media_page_load_metrics_observer_unittest.cc",
-    "../browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
     "../browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
     "../browser/page_load_metrics/observers/previews_page_load_metrics_observer_unittest.cc",
@@ -3721,7 +3715,6 @@ test("unit_tests") {
     sources -=
         [ "../browser/download/download_request_infobar_delegate_unittest.cc" ]
     deps += [
-      "//components/signin/core/common:signin_features",
       "//ipc",
       "//third_party/libaddressinput",
     ]
@@ -3729,7 +3722,6 @@ test("unit_tests") {
 
   if (!is_android) {
     sources += [
-      "../browser/devtools/devtools_file_watcher_unittest.cc",
       "../browser/devtools/devtools_ui_bindings_unittest.cc",
       "../browser/devtools/serialize_host_descriptions_unittest.cc",
       "../browser/download/download_dir_policy_handler_unittest.cc",

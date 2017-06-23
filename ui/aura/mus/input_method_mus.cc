@@ -40,10 +40,10 @@ InputMethodMus::~InputMethodMus() {
 
 void InputMethodMus::Init(service_manager::Connector* connector) {
   if (connector)
-    connector->BindInterface(ui::mojom::kServiceName, &ime_driver_);
+    connector->BindInterface(ui::mojom::kServiceName, &ime_server_);
 }
 
-ui::EventDispatchDetails InputMethodMus::DispatchKeyEvent(
+void InputMethodMus::DispatchKeyEvent(
     ui::KeyEvent* event,
     std::unique_ptr<EventResultCallback> ack_callback) {
   DCHECK(event->type() == ui::ET_KEY_PRESSED ||
@@ -51,15 +51,15 @@ ui::EventDispatchDetails InputMethodMus::DispatchKeyEvent(
 
   // If no text input client, do nothing.
   if (!GetTextInputClient()) {
-    ui::EventDispatchDetails dispatch_details = DispatchKeyEventPostIME(event);
+    DispatchKeyEventPostIME(event);
     if (ack_callback) {
       ack_callback->Run(event->handled() ? EventResult::HANDLED
                                          : EventResult::UNHANDLED);
     }
-    return dispatch_details;
+    return;
   }
 
-  return SendKeyEventToInputMethod(*event, std::move(ack_callback));
+  SendKeyEventToInputMethod(*event, std::move(ack_callback));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -82,12 +82,11 @@ bool InputMethodMus::OnUntranslatedIMEMessage(const base::NativeEvent& event,
   return false;
 }
 
-ui::EventDispatchDetails InputMethodMus::DispatchKeyEvent(ui::KeyEvent* event) {
-  ui::EventDispatchDetails dispatch_details = DispatchKeyEvent(event, nullptr);
+void InputMethodMus::DispatchKeyEvent(ui::KeyEvent* event) {
+  DispatchKeyEvent(event, nullptr);
   // Mark the event as handled so that EventGenerator doesn't attempt to
   // deliver event as well.
   event->SetHandled();
-  return dispatch_details;
 }
 
 void InputMethodMus::OnTextInputTypeChanged(const ui::TextInputClient* client) {
@@ -120,14 +119,15 @@ bool InputMethodMus::IsCandidatePopupOpen() const {
   return false;
 }
 
-ui::EventDispatchDetails InputMethodMus::SendKeyEventToInputMethod(
+void InputMethodMus::SendKeyEventToInputMethod(
     const ui::KeyEvent& event,
     std::unique_ptr<EventResultCallback> ack_callback) {
   if (!input_method_) {
     // This code path is hit in tests that don't connect to the server.
     DCHECK(!ack_callback);
     std::unique_ptr<ui::Event> event_clone = ui::Event::Clone(event);
-    return DispatchKeyEventPostIME(event_clone->AsKeyEvent());
+    DispatchKeyEventPostIME(event_clone->AsKeyEvent());
+    return;
   }
   // IME driver will notify us whether it handled the event or not by calling
   // ProcessKeyEventCallback(), in which we will run the |ack_callback| to tell
@@ -137,8 +137,6 @@ ui::EventDispatchDetails InputMethodMus::SendKeyEventToInputMethod(
       ui::Event::Clone(event),
       base::Bind(&InputMethodMus::ProcessKeyEventCallback,
                  base::Unretained(this), event));
-
-  return ui::EventDispatchDetails();
 }
 
 void InputMethodMus::OnDidChangeFocusedClient(
@@ -158,7 +156,7 @@ void InputMethodMus::OnDidChangeFocusedClient(
   // else mus won't process the next event immediately.
   AckPendingCallbacksUnhandled();
 
-  if (ime_driver_) {
+  if (ime_server_) {
     ui::mojom::StartSessionDetailsPtr details =
         ui::mojom::StartSessionDetails::New();
     details->client = text_input_client_->CreateInterfacePtrAndBind();
@@ -169,7 +167,7 @@ void InputMethodMus::OnDidChangeFocusedClient(
     details->text_direction = focused->GetTextDirection();
     details->text_input_flags = focused->GetTextInputFlags();
     details->caret_bounds = focused->GetCaretBounds();
-    ime_driver_->StartSession(std::move(details));
+    ime_server_->StartSession(std::move(details));
   }
 }
 
@@ -209,7 +207,7 @@ void InputMethodMus::ProcessKeyEventCallback(
     // any client-side post-ime processing needs to be done. This includes cases
     // like backspace, return key, etc.
     std::unique_ptr<ui::Event> event_clone = ui::Event::Clone(event);
-    ignore_result(DispatchKeyEventPostIME(event_clone->AsKeyEvent()));
+    DispatchKeyEventPostIME(event_clone->AsKeyEvent());
     event_result =
         event_clone->handled() ? EventResult::HANDLED : EventResult::UNHANDLED;
   } else {

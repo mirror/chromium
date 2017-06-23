@@ -12,6 +12,8 @@ namespace chromeos {
 
 namespace tether {
 
+class TetherHostResponseRecorder;
+
 // Prioritizes the order of devices when performing a host scan. To optimize for
 // the most common tethering operations, this class uses the following rules:
 //   * The device which has most recently sent a successful
@@ -22,14 +24,17 @@ namespace tether {
 //   * All other devices are left in the order they are passed.
 class HostScanDevicePrioritizer {
  public:
-  HostScanDevicePrioritizer() {}
-  virtual ~HostScanDevicePrioritizer() {}
+  HostScanDevicePrioritizer(
+      TetherHostResponseRecorder* tether_host_response_recorder);
+  virtual ~HostScanDevicePrioritizer();
 
   // Prioritizes |remote_devices| using the rules described above.
   virtual void SortByHostScanOrder(
-      std::vector<cryptauth::RemoteDevice>* remote_devices) const = 0;
+      std::vector<cryptauth::RemoteDevice>* remote_devices) const;
 
  private:
+  TetherHostResponseRecorder* tether_host_response_recorder_;
+
   DISALLOW_COPY_AND_ASSIGN(HostScanDevicePrioritizer);
 };
 

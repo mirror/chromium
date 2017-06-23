@@ -56,7 +56,6 @@ static_library("utility") {
     "//skia",
     "//sql",
     "//third_party/libxml",
-    "//third_party/zlib/google:zip",
   ]
 
   if (!is_android) {

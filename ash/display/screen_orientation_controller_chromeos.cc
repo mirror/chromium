@@ -8,6 +8,7 @@
 #include "ash/display/display_configuration_controller.h"
 #include "ash/shared/app_types.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/window_state.h"
@@ -43,8 +44,7 @@ blink::WebScreenOrientationLockType GetDisplayNaturalOrientation() {
     return blink::kWebScreenOrientationLockLandscape;
 
   display::ManagedDisplayInfo info =
-      Shell::Get()->display_manager()->GetDisplayInfo(
-          display::Display::InternalDisplayId());
+      ShellPort::Get()->GetDisplayInfo(display::Display::InternalDisplayId());
   gfx::Size size = info.size_in_pixel();
   switch (info.GetActiveRotation()) {
     case display::Display::ROTATE_0:
@@ -228,8 +228,7 @@ void ScreenOrientationController::ToggleUserRotationLock() {
     SetLockToOrientation(blink::kWebScreenOrientationLockAny);
   } else {
     display::Display::Rotation current_rotation =
-        Shell::Get()
-            ->display_manager()
+        ShellPort::Get()
             ->GetDisplayInfo(display::Display::InternalDisplayId())
             .GetActiveRotation();
     SetLockToRotation(current_rotation);
@@ -289,18 +288,20 @@ void ScreenOrientationController::OnDisplayConfigurationChanged() {
     return;
   if (!display::Display::HasInternalDisplay())
     return;
-  if (!Shell::Get()->display_manager()->IsActiveDisplayId(
-          display::Display::InternalDisplayId())) {
-    return;
-  }
-
-  // TODO(oshima): We should disable the orientation change in settings
-  // because application may not work correctly.
-  current_rotation_ =
-      Shell::Get()
-          ->display_manager()
+  display::Display::Rotation user_rotation =
+      ShellPort::Get()
           ->GetDisplayInfo(display::Display::InternalDisplayId())
           .GetActiveRotation();
+  if (user_rotation != current_rotation_) {
+    // TODO(oshima): We should disable the orientation change in settings
+    // because application may not work correctly.
+
+    // A user may change other display configuration settings. When the user
+    // does change the rotation setting, then lock rotation to prevent the
+    // accelerometer from erasing their change.
+    SetRotationLockedInternal(true);
+    user_rotation_ = current_rotation_ = user_rotation;
+  }
 }
 
 void ScreenOrientationController::OnMaximizeModeStarted() {
@@ -309,8 +310,7 @@ void ScreenOrientationController::OnMaximizeModeStarted() {
   // Always start observing.
   if (display::Display::HasInternalDisplay()) {
     current_rotation_ = user_rotation_ =
-        Shell::Get()
-            ->display_manager()
+        ShellPort::Get()
             ->GetDisplayInfo(display::Display::InternalDisplayId())
             .GetActiveRotation();
   }
@@ -441,8 +441,7 @@ void ScreenOrientationController::LockToRotationMatchingOrientation(
     return;
 
   display::Display::Rotation rotation =
-      Shell::Get()
-          ->display_manager()
+      ShellPort::Get()
           ->GetDisplayInfo(display::Display::InternalDisplayId())
           .GetActiveRotation();
   if (natural_orientation_ == lock_orientation) {

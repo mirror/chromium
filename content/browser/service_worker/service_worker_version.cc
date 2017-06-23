@@ -201,21 +201,6 @@ void OnEventDispatcherConnectionError(
   }
 }
 
-mojom::ServiceWorkerProviderInfoForStartWorkerPtr
-CompleteProviderHostPreparation(
-    ServiceWorkerVersion* version,
-    std::unique_ptr<ServiceWorkerProviderHost> provider_host,
-    base::WeakPtr<ServiceWorkerContextCore> context,
-    int process_id) {
-  // Caller should ensure |context| is alive when completing StartWorker
-  // preparation.
-  DCHECK(context);
-  auto info =
-      provider_host->CompleteStartWorkerPreparation(process_id, version);
-  context->AddProviderHost(std::move(provider_host));
-  return info;
-}
-
 }  // namespace
 
 constexpr base::TimeDelta ServiceWorkerVersion::kTimeoutTimerDelay;
@@ -855,9 +840,6 @@ ServiceWorkerVersion::PendingRequest::~PendingRequest() {}
 
 void ServiceWorkerVersion::OnThreadStarted() {
   DCHECK_EQ(EmbeddedWorkerStatus::STARTING, running_status());
-  DCHECK(provider_host_);
-  provider_host_->SetReadyToSendMessagesToWorker(
-      embedded_worker()->thread_id());
   // Activate ping/pong now that JavaScript execution will start.
   ping_controller_->Activate();
 }
@@ -914,7 +896,14 @@ void ServiceWorkerVersion::OnDetached(EmbeddedWorkerStatus old_status) {
 }
 
 void ServiceWorkerVersion::OnScriptLoaded() {
-  DCHECK(GetMainScriptHttpResponseInfo());
+  DCHECK(GetMainScriptHttpResponseInfo() ||
+         // TODO(scottmg|falken): This DCHECK is currently triggered in
+         // --network-service because ServiceWorkerReadFromCacheJob isn't being
+         // used to retrieve the service worker js. This should be removed once
+         // that's done.
+         (IsBrowserSideNavigationEnabled() &&
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              switches::kEnableNetworkService)));
   if (IsInstalled(status()))
     UMA_HISTOGRAM_BOOLEAN("ServiceWorker.ScriptLoadSuccess", true);
 }
@@ -1469,10 +1458,6 @@ void ServiceWorkerVersion::StartWorkerInternal() {
 
   StartTimeoutTimer();
 
-  std::unique_ptr<ServiceWorkerProviderHost> pending_provider_host =
-      ServiceWorkerProviderHost::PreCreateForController(context());
-  provider_host_ = pending_provider_host->AsWeakPtr();
-
   auto params = base::MakeUnique<EmbeddedWorkerStartParams>();
   params->service_worker_version_id = version_id_;
   params->scope = scope_;
@@ -1481,12 +1466,7 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   params->pause_after_download = pause_after_download_;
 
   embedded_worker_->Start(
-      std::move(params),
-      // Unretained is used here because the callback will be owned by
-      // |embedded_worker_| whose owner is |this|.
-      base::BindOnce(&CompleteProviderHostPreparation, base::Unretained(this),
-                     base::Passed(&pending_provider_host), context()),
-      mojo::MakeRequest(&event_dispatcher_),
+      std::move(params), mojo::MakeRequest(&event_dispatcher_),
       base::Bind(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                  weak_factory_.GetWeakPtr()));
   event_dispatcher_.set_connection_error_handler(base::Bind(
@@ -1800,21 +1780,9 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
 
   event_recorder_.reset();
 
-  // |start_callbacks_| can be non-empty if a start worker request arrived while
-  // the worker was stopping. The worker must be restarted to fulfill the
-  // request.
-  bool should_restart = !start_callbacks_.empty();
-  if (is_redundant() || in_dtor_) {
-    // This worker will be destroyed soon.
-    should_restart = false;
-  } else if (ping_controller_->IsTimedOut()) {
-    // This worker is unresponsive and restart may fail.
-    should_restart = false;
-  } else if (old_status == EmbeddedWorkerStatus::STARTING) {
-    // This worker unexpectedly stopped because of start failure (e.g., process
-    // allocation failure) and restart is likely to fail again.
-    should_restart = false;
-  }
+  bool should_restart = !is_redundant() && !start_callbacks_.empty() &&
+                        (old_status != EmbeddedWorkerStatus::STARTING) &&
+                        !in_dtor_ && !ping_controller_->IsTimedOut();
 
   if (!stop_time_.is_null()) {
     TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::StopWorker",

@@ -11,24 +11,17 @@ FakeSurfaceChooser::~FakeSurfaceChooser() = default;
 
 void FakeSurfaceChooser::Initialize(UseOverlayCB use_overlay_cb,
                                     UseSurfaceTextureCB use_surface_texture_cb,
-                                    AndroidOverlayFactoryCB initial_factory,
-                                    const State& initial_state) {
+                                    AndroidOverlayFactoryCB initial_factory) {
   MockInitialize();
   use_overlay_cb_ = std::move(use_overlay_cb);
   use_surface_texture_cb_ = std::move(use_surface_texture_cb);
   factory_ = std::move(initial_factory);
-  current_state_ = initial_state;
 }
 
-void FakeSurfaceChooser::UpdateState(
-    base::Optional<AndroidOverlayFactoryCB> factory,
-    const State& new_state) {
-  MockUpdateState();
-  if (factory) {
-    factory_ = std::move(*factory);
-    MockReplaceOverlayFactory(!factory_.is_null());
-  }
-  current_state_ = new_state;
+void FakeSurfaceChooser::ReplaceOverlayFactory(
+    AndroidOverlayFactoryCB factory) {
+  MockReplaceOverlayFactory();
+  factory_ = std::move(factory);
 }
 
 void FakeSurfaceChooser::ProvideSurfaceTexture() {

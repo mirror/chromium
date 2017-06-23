@@ -45,8 +45,8 @@ public class AddressEditor
     private EditorFieldModel mCountryField;
     @Nullable
     private EditorFieldModel mPhoneField;
-    private PhoneNumberUtil.CountryAwareFormatTextWatcher mPhoneFormatter;
-    private CountryAwarePhoneNumberValidator mPhoneValidator;
+    @Nullable
+    private EditorFieldValidator mPhoneValidator;
     @Nullable
     private List<AddressUiComponent> mAddressUiComponents;
     private boolean mAdminAreasLoaded;
@@ -56,21 +56,13 @@ public class AddressEditor
     private EditorModel mEditor;
     private ProgressDialog mProgressDialog;
 
-    /** Builds an address editor. */
-    public AddressEditor() {
-        mPhoneFormatter = new PhoneNumberUtil.CountryAwareFormatTextWatcher();
-        mPhoneValidator = new CountryAwarePhoneNumberValidator();
-    }
-
     /**
      * Adds the given phone number to the autocomplete set, if it's valid.
-     * Note that here we consider all non-null and non-empty numbers as valid
-     * since we are doing strict validation of Autofill data.
      *
      * @param phoneNumber The phone number to possibly add.
      */
     public void addPhoneNumberIfValid(@Nullable CharSequence phoneNumber) {
-        if (!TextUtils.isEmpty(phoneNumber)) mPhoneNumbers.add(phoneNumber.toString());
+        if (getPhoneValidator().isValid(phoneNumber)) mPhoneNumbers.add(phoneNumber);
     }
 
     /**
@@ -132,8 +124,6 @@ public class AddressEditor
                 mEditor.removeAllFields();
                 showProgressDialog();
                 mRecentlySelectedCountry = eventData.first;
-                mPhoneFormatter.setCountryCode(mRecentlySelectedCountry);
-                mPhoneValidator.setCountryCode(mRecentlySelectedCountry);
                 mCountryChangeCallback = eventData.second;
                 loadAdminAreasForCountry(mRecentlySelectedCountry);
             }
@@ -142,12 +132,6 @@ public class AddressEditor
         // Country dropdown is cached, so the selected item needs to be updated for the new profile
         // that's being edited. This will not fire the dropdown callback.
         mCountryField.setValue(AutofillAddress.getCountryCode(mProfile));
-
-        // Phone number validator and formatter are cached, so their contry code needs to be updated
-        // for the new profile that's being edited.
-        assert mCountryField.getValue() != null;
-        mPhoneValidator.setCountryCode(mCountryField.getValue().toString());
-        mPhoneFormatter.setCountryCode(mCountryField.getValue().toString());
 
         // There's a finite number of fields for address editing. Changing the country will re-order
         // and relabel the fields. The meaning of each field remains the same.
@@ -178,7 +162,7 @@ public class AddressEditor
         if (mPhoneField == null) {
             mPhoneField = EditorFieldModel.createTextInput(EditorFieldModel.INPUT_TYPE_HINT_PHONE,
                     mContext.getString(R.string.autofill_profile_editor_phone_number),
-                    mPhoneNumbers, mPhoneFormatter, mPhoneValidator, null,
+                    mPhoneNumbers, getPhoneValidator(), null,
                     mContext.getString(R.string.payments_field_required_validation_message),
                     mContext.getString(R.string.payments_phone_invalid_validation_message), null);
         }
@@ -413,28 +397,20 @@ public class AddressEditor
         mEditor.addField(mPhoneField);
     }
 
-    /** Country based phone number validator. */
-    private static class CountryAwarePhoneNumberValidator implements EditorFieldValidator {
-        @Nullable
-        private String mCountryCode;
+    private EditorFieldValidator getPhoneValidator() {
+        if (mPhoneValidator == null) {
+            mPhoneValidator = new EditorFieldValidator() {
+                @Override
+                public boolean isValid(@Nullable CharSequence value) {
+                    return value != null && PhoneNumberUtil.isValidNumber(value.toString());
+                }
 
-        /**
-         * Sets the country code used to validate the phone number.
-         *
-         * @param countryCode The given country code.
-         */
-        public void setCountryCode(@Nullable String countryCode) {
-            mCountryCode = countryCode;
+                @Override
+                public boolean isLengthMaximum(@Nullable CharSequence value) {
+                    return false;
+                }
+            };
         }
-
-        @Override
-        public boolean isValid(@Nullable CharSequence value) {
-            return value != null && PhoneNumberUtil.isValidNumber(value.toString(), mCountryCode);
-        }
-
-        @Override
-        public boolean isLengthMaximum(@Nullable CharSequence value) {
-            return false;
-        }
+        return mPhoneValidator;
     }
 }

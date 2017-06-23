@@ -17,11 +17,10 @@ IconLoader::IconGroup IconLoader::GroupForFilepath(
 }
 
 // static
-scoped_refptr<base::TaskRunner> IconLoader::GetReadIconTaskRunner() {
+content::BrowserThread::ID IconLoader::ReadIconThreadID() {
   // ReadIcon() calls into views::LinuxUI and GTK2 code, so it must be on the UI
   // thread.
-  return content::BrowserThread::GetTaskRunnerForThread(
-      content::BrowserThread::UI);
+  return content::BrowserThread::UI;
 }
 
 void IconLoader::ReadIcon() {

@@ -794,11 +794,8 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     }
 
     if (src.IsEditable()) {
-      if (src.IsControl() && !src.IsRichlyEditable()) {
-        // Only for simple input controls -- rich editable areas use AXTreeData
-        dst->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_START, src.SelectionStart());
-        dst->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END, src.SelectionEnd());
-      }
+      dst->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_START, src.SelectionStart());
+      dst->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END, src.SelectionEnd());
 
 #if defined(OS_CHROMEOS)
       // This attribute will soon be deprecated; see crbug.com/669134.

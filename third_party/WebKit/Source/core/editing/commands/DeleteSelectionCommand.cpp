@@ -127,9 +127,9 @@ void DeleteSelectionCommand::InitializeStartEnd(Position& start,
   // beginning of the previous line, or (HR,0) when forward deleting, but in
   // these cases, we want to delete it, so manually expand the selection
   if (isHTMLHRElement(*start.AnchorNode()))
-    start = Position::BeforeNode(*start.AnchorNode());
+    start = Position::BeforeNode(start.AnchorNode());
   else if (isHTMLHRElement(*end.AnchorNode()))
-    end = Position::AfterNode(*end.AnchorNode());
+    end = Position::AfterNode(end.AnchorNode());
 
   // FIXME: This is only used so that moveParagraphs can avoid the bugs in
   // special element expansion.
@@ -433,7 +433,7 @@ bool DeleteSelectionCommand::HandleSpecialCaseBRDelete(
     if (!(IsStartOfBlock(
               VisiblePosition::BeforeNode(node_after_upstream_start)) &&
           IsEndOfBlock(
-              VisiblePosition::AfterNode(*node_after_upstream_start)))) {
+              VisiblePosition::AfterNode(node_after_upstream_start)))) {
       starts_at_empty_line_ = true;
       ending_position_ = downstream_end_;
     }

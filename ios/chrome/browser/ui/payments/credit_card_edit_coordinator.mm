@@ -8,15 +8,12 @@
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/validation.h"
-#include "components/autofill/core/common/autofill_clock.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #import "components/autofill/ios/browser/credit_card_util.h"
 #include "components/strings/grit/components_strings.h"
-#include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type_util.h"
 #import "ios/chrome/browser/ui/payments/credit_card_edit_mediator.h"
@@ -141,16 +138,6 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
     if (field.autofillUIType == AutofillUITypeCreditCardNumber) {
       ::IsValidCreditCardNumber(valueString, _paymentRequest, _creditCard,
                                 &errorMessage);
-    } else if (field.autofillUIType == AutofillUITypeCreditCardExpDate) {
-      NSArray<NSString*>* fieldComponents =
-          [field.value componentsSeparatedByString:@" / "];
-      int expMonth = [fieldComponents[0] intValue];
-      int expYear = [fieldComponents[1] intValue];
-      if (!autofill::IsValidCreditCardExpirationDate(
-              expYear, expMonth, autofill::AutofillClock::Now())) {
-        errorMessage = l10n_util::GetStringUTF16(
-            IDS_PAYMENTS_VALIDATION_INVALID_CREDIT_CARD_EXPIRED);
-      }
     } else if (field.autofillUIType != AutofillUITypeCreditCardBillingAddress &&
                field.autofillUIType != AutofillUITypeCreditCardSaveToChrome) {
       autofill::IsValidForType(
@@ -195,28 +182,14 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
                                          autofill::kSettingsOrigin);
 
   for (EditorField* field in fields) {
-    if (field.autofillUIType == AutofillUITypeCreditCardExpDate) {
-      NSArray<NSString*>* fieldComponents =
-          [field.value componentsSeparatedByString:@" / "];
-      NSString* expMonth = fieldComponents[0];
-      creditCard.SetInfo(
-          autofill::AutofillType(autofill::CREDIT_CARD_EXP_MONTH),
-          base::SysNSStringToUTF16(expMonth),
-          GetApplicationContext()->GetApplicationLocale());
-      NSString* expYear = fieldComponents[1];
-      creditCard.SetInfo(
-          autofill::AutofillType(autofill::CREDIT_CARD_EXP_4_DIGIT_YEAR),
-          base::SysNSStringToUTF16(expYear),
-          GetApplicationContext()->GetApplicationLocale());
-    } else if (field.autofillUIType == AutofillUITypeCreditCardSaveToChrome) {
+    if (field.autofillUIType == AutofillUITypeCreditCardSaveToChrome) {
       saveCreditCard = [field.value boolValue];
     } else if (field.autofillUIType == AutofillUITypeCreditCardBillingAddress) {
       creditCard.set_billing_address_id(base::SysNSStringToUTF8(field.value));
     } else {
-      creditCard.SetInfo(autofill::AutofillType(AutofillTypeFromAutofillUIType(
-                             field.autofillUIType)),
-                         base::SysNSStringToUTF16(field.value),
-                         GetApplicationContext()->GetApplicationLocale());
+      creditCard.SetRawInfo(
+          AutofillTypeFromAutofillUIType(field.autofillUIType),
+          base::SysNSStringToUTF16(field.value));
     }
   }
 

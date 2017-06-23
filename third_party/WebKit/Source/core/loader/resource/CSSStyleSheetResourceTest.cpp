@@ -31,7 +31,6 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
-#include "platform/wtf/text/TextEncoding.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLResponse.h"
@@ -75,7 +74,7 @@ TEST_F(CSSStyleSheetResourceTest, DuplicateResourceNotCached) {
   ASSERT_TRUE(GetMemoryCache()->Contains(image_resource));
 
   CSSStyleSheetResource* css_resource =
-      CSSStyleSheetResource::CreateForTest(css_url, UTF8Encoding());
+      CSSStyleSheetResource::CreateForTest(css_url, "utf-8");
   css_resource->ResponseReceived(
       ResourceResponse(css_url, "style/css", 0, g_null_atom), nullptr);
   css_resource->Finish();

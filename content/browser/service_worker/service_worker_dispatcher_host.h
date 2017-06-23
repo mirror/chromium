@@ -20,7 +20,6 @@
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
-#include "mojo/public/cpp/bindings/strong_associated_binding_set.h"
 
 class GURL;
 
@@ -45,8 +44,7 @@ struct ServiceWorkerVersionAttributes;
 
 // This class is bound with mojom::ServiceWorkerDispatcherHost. All
 // InterfacePtrs on the same render process are bound to the same
-// content::ServiceWorkerDispatcherHost. This can be overridden only for
-// testing.
+// content::ServiceWorkerDispatcherHost.
 class CONTENT_EXPORT ServiceWorkerDispatcherHost
     : public mojom::ServiceWorkerDispatcherHost,
       public BrowserMessageFilter {
@@ -55,8 +53,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       int render_process_id,
       ResourceContext* resource_context);
 
-  // |blob_storage_context| and |loader_factory_getter| are used only
-  // if IsServicificationEnabled is true.
   void Init(ServiceWorkerContextWrapper* context_wrapper);
 
   // BrowserMessageFilter implementation
@@ -73,24 +69,12 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   // be destroyed.
   bool Send(IPC::Message* message) override;
 
-  // Virtual for testing.
-  virtual void RegisterServiceWorkerHandle(
-      std::unique_ptr<ServiceWorkerHandle> handle);
-  // Virtual for testing.
-  virtual void RegisterServiceWorkerRegistrationHandle(
+  void RegisterServiceWorkerHandle(std::unique_ptr<ServiceWorkerHandle> handle);
+  void RegisterServiceWorkerRegistrationHandle(
       std::unique_ptr<ServiceWorkerRegistrationHandle> handle);
 
   ServiceWorkerHandle* FindServiceWorkerHandle(int provider_id,
                                                int64_t version_id);
-
-  // Gets or creates the registration and version handles appropriate for
-  // representing |registration| inside of |provider_host|. Sets |out_info| and
-  // |out_attrs| accordingly for these handles.
-  void GetRegistrationObjectInfoAndVersionAttributes(
-      base::WeakPtr<ServiceWorkerProviderHost> provider_host,
-      ServiceWorkerRegistration* registration,
-      ServiceWorkerRegistrationObjectInfo* out_info,
-      ServiceWorkerVersionAttributes* out_attrs);
 
   // Returns the existing registration handle whose reference count is
   // incremented or a newly created one if it doesn't exist.
@@ -110,8 +94,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
                            ProviderCreatedAndDestroyed);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerDispatcherHostTest,
                            CleanupOnRendererCrash);
-  FRIEND_TEST_ALL_PREFIXES(BackgroundSyncManagerTest,
-                           RegisterWithoutLiveSWRegistration);
 
   using StatusCallback = base::Callback<void(ServiceWorkerStatusCode status)>;
   enum class ProviderStatus { OK, NO_CONTEXT, DEAD_HOST, NO_HOST, NO_URL };
@@ -122,6 +104,9 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
 
   // mojom::ServiceWorkerDispatcherHost implementation
   void OnProviderCreated(ServiceWorkerProviderHostInfo info) override;
+  void OnSetHostedVersionId(int provider_id,
+                            int64_t version_id,
+                            int embedded_worker_id) override;
 
   // IPC Message handlers
   void OnRegisterServiceWorker(int thread_id,
@@ -209,6 +194,12 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   ServiceWorkerRegistrationHandle* FindRegistrationHandle(
       int provider_id,
       int64_t registration_handle_id);
+
+  void GetRegistrationObjectInfoAndVersionAttributes(
+      base::WeakPtr<ServiceWorkerProviderHost> provider_host,
+      ServiceWorkerRegistration* registration,
+      ServiceWorkerRegistrationObjectInfo* info,
+      ServiceWorkerVersionAttributes* attrs);
 
   // Callbacks from ServiceWorkerContextCore
   void RegistrationComplete(int thread_id,

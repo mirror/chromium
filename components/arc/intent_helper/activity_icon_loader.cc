@@ -160,7 +160,7 @@ ActivityIconLoader::ActivityIconLoader()
 ActivityIconLoader::~ActivityIconLoader() = default;
 
 void ActivityIconLoader::InvalidateIcons(const std::string& package_name) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   for (auto it = cached_icons_.begin(); it != cached_icons_.end();) {
     if (it->first.package_name == package_name)
       it = cached_icons_.erase(it);
@@ -172,7 +172,7 @@ void ActivityIconLoader::InvalidateIcons(const std::string& package_name) {
 ActivityIconLoader::GetResult ActivityIconLoader::GetActivityIcons(
     const std::vector<ActivityName>& activities,
     const OnIconsReadyCallback& cb) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   std::unique_ptr<ActivityToIconsMap> result(new ActivityToIconsMap);
   std::vector<mojom::ActivityNamePtr> activities_to_fetch;
 
@@ -239,7 +239,7 @@ void ActivityIconLoader::OnIconsReady(
     std::unique_ptr<ActivityToIconsMap> cached_result,
     const OnIconsReadyCallback& cb,
     std::vector<mojom::ActivityIconPtr> icons) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   ArcServiceManager* manager = ArcServiceManager::Get();
   base::PostTaskAndReplyWithResult(
       manager->blocking_task_runner().get(), FROM_HERE,
@@ -253,7 +253,7 @@ void ActivityIconLoader::OnIconsResized(
     std::unique_ptr<ActivityToIconsMap> cached_result,
     const OnIconsReadyCallback& cb,
     std::unique_ptr<ActivityToIconsMap> result) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   // Update |cached_icons_|.
   for (const auto& kv : *result) {
     cached_icons_.erase(kv.first);

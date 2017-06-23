@@ -65,12 +65,6 @@ AutofillProfile GetFullProfile();
 // Returns a profile full of dummy info, different to the above.
 AutofillProfile GetFullProfile2();
 
-// Returns an incomplete profile of dummy info.
-AutofillProfile GetIncompleteProfile1();
-
-// Returns an incomplete profile of dummy info, different to the above.
-AutofillProfile GetIncompleteProfile2();
-
 // Returns a verified profile full of dummy info.
 AutofillProfile GetVerifiedProfile();
 

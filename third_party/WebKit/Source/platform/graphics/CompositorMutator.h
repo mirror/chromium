@@ -10,6 +10,8 @@
 
 namespace blink {
 
+class CompositorMutableStateProvider;
+
 class PLATFORM_EXPORT CompositorMutator
     : public GarbageCollectedFinalized<CompositorMutator> {
  public:
@@ -21,7 +23,8 @@ class PLATFORM_EXPORT CompositorMutator
   // connected CompositorWorkers and AnimationWorklets.
   // Returns true if any animation callbacks requested an animation frame
   // (i.e. should be reinvoked next frame).
-  virtual bool Mutate(double monotonic_time_now) = 0;
+  virtual bool Mutate(double monotonic_time_now,
+                      CompositorMutableStateProvider*) = 0;
 };
 
 }  // namespace blink

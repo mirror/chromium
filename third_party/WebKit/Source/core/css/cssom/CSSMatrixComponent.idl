@@ -9,7 +9,8 @@
 [
     Constructor(DOMMatrixReadOnly matrix),
     Exposed=(Window,PaintWorklet),
-    RuntimeEnabled=CSSTypedOM
+    RuntimeEnabled=CSSTypedOM,
+    RuntimeEnabled=GeometryInterfaces
 ] interface CSSMatrixComponent : CSSTransformComponent {
     attribute DOMMatrix matrix;
 };

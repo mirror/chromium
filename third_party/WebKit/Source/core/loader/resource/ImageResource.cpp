@@ -126,16 +126,16 @@ class ImageResource::ImageResourceInfoImpl final
   const Member<ImageResource> resource_;
 };
 
-class ImageResource::ImageResourceFactory : public NonTextResourceFactory {
+class ImageResource::ImageResourceFactory : public ResourceFactory {
   STACK_ALLOCATED();
 
  public:
   ImageResourceFactory(const FetchParameters& fetch_params)
-      : NonTextResourceFactory(Resource::kImage),
-        fetch_params_(&fetch_params) {}
+      : ResourceFactory(Resource::kImage), fetch_params_(&fetch_params) {}
 
   Resource* Create(const ResourceRequest& request,
-                   const ResourceLoaderOptions& options) const override {
+                   const ResourceLoaderOptions& options,
+                   const String&) const override {
     return new ImageResource(request, options,
                              ImageResourceContent::CreateNotStarted(),
                              fetch_params_->GetPlaceholderImageRequestType() ==
@@ -195,7 +195,8 @@ bool ImageResource::CanUseCacheValidator() const {
 }
 
 ImageResource* ImageResource::Create(const ResourceRequest& request) {
-  ResourceLoaderOptions options;
+  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
+                                kClientDidNotRequestCredentials);
   return new ImageResource(request, options,
                            ImageResourceContent::CreateNotStarted(), false);
 }
@@ -292,7 +293,7 @@ void ImageResource::AllClientsAndObserversRemoved() {
   Resource::AllClientsAndObserversRemoved();
 }
 
-RefPtr<const SharedBuffer> ImageResource::ResourceBuffer() const {
+PassRefPtr<const SharedBuffer> ImageResource::ResourceBuffer() const {
   if (Data())
     return Data();
   return GetContent()->ResourceBuffer();
@@ -347,7 +348,6 @@ void ImageResource::DecodeError(bool all_data_received) {
   if (!ErrorOccurred())
     SetStatus(ResourceStatus::kDecodeError);
 
-  bool is_multipart = !!multipart_parser_;
   // Finishes loading if needed, and notifies observers.
   if (!all_data_received && Loader()) {
     // Observers are notified via ImageResource::finish().
@@ -356,8 +356,7 @@ void ImageResource::DecodeError(bool all_data_received) {
   } else {
     auto result = GetContent()->UpdateImage(
         nullptr, GetStatus(),
-        ImageResourceContent::kClearImageAndNotifyObservers, all_data_received,
-        is_multipart);
+        ImageResourceContent::kClearImageAndNotifyObservers, all_data_received);
     DCHECK_EQ(result, ImageResourceContent::UpdateImageResult::kNoDecodeError);
   }
 
@@ -617,10 +616,9 @@ void ImageResource::UpdateImage(
     PassRefPtr<SharedBuffer> shared_buffer,
     ImageResourceContent::UpdateImageOption update_image_option,
     bool all_data_received) {
-  bool is_multipart = !!multipart_parser_;
-  auto result = GetContent()->UpdateImage(std::move(shared_buffer), GetStatus(),
-                                          update_image_option,
-                                          all_data_received, is_multipart);
+  auto result =
+      GetContent()->UpdateImage(std::move(shared_buffer), GetStatus(),
+                                update_image_option, all_data_received);
   if (result == ImageResourceContent::UpdateImageResult::kShouldDecodeError) {
     // In case of decode error, we call imageNotifyFinished() iff we don't
     // initiate reloading:

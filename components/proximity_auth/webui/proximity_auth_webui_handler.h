@@ -120,17 +120,14 @@ class ProximityAuthWebUIHandler
   // MessengerObserver:
   void OnRemoteStatusUpdate(const RemoteStatusUpdate& status_update) override;
 
-  // Returns the truncated device ID of the local device.
-  std::unique_ptr<base::Value> GetTruncatedLocalDeviceId();
-
   // Returns the current enrollment state that can be used as a JSON object.
   std::unique_ptr<base::DictionaryValue> GetEnrollmentStateDictionary();
 
   // Returns the current device sync state that can be used as a JSON object.
   std::unique_ptr<base::DictionaryValue> GetDeviceSyncStateDictionary();
 
-  // Returns the current remote devices that can be used as a JSON object.
-  std::unique_ptr<base::ListValue> GetRemoteDevicesList();
+  // Returns the current unlock keys that can be used as a JSON object.
+  std::unique_ptr<base::ListValue> GetUnlockKeysList();
 
   // The delegate used to fetch dependencies. Must outlive this instance.
   ProximityAuthClient* proximity_auth_client_;

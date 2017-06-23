@@ -147,10 +147,4 @@ void MediaStreamAudioSource::StopSourceOnError(const std::string& why) {
       FROM_HERE, base::Bind(&MediaStreamSource::StopSource, GetWeakPtr()));
 }
 
-void MediaStreamAudioSource::SetMutedState(bool muted_state) {
-  // TODO(ossu): Propagate this muted state into blink.
-  DVLOG(3) << "MediaStreamAudioSource::SetMutedState state=" << muted_state
-           << " (not implemented)";
-}
-
 }  // namespace content

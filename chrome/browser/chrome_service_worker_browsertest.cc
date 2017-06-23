@@ -387,7 +387,7 @@ class ChromeServiceWorkerManifestFetchTest
 
 IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerManifestFetchTest, SameOrigin) {
   // <link rel="manifest" href="manifest.json">
-  EXPECT_EQ(RequestString(GetURL("/manifest.json"), "cors", "omit"),
+  EXPECT_EQ(RequestString(GetURL("/manifest.json"), "cors", "same-origin"),
             ExecuteManifestFetchTest("manifest.json", ""));
 }
 
@@ -401,7 +401,8 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerManifestFetchTest,
 IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerManifestFetchTest, OtherOrigin) {
   // <link rel="manifest" href="https://www.example.com/manifest.json">
   EXPECT_EQ(
-      RequestString("https://www.example.com/manifest.json", "cors", "omit"),
+      RequestString("https://www.example.com/manifest.json", "cors",
+                    "same-origin"),
       ExecuteManifestFetchTest("https://www.example.com/manifest.json", ""));
 }
 
@@ -433,9 +434,9 @@ class ChromeServiceWorkerFetchPPAPITest : public ChromeServiceWorkerFetchTest {
   std::string GetRequestStringForPNACL(const std::string& fragment) const {
     return RequestString(test_page_url_ + fragment, "navigate", "include") +
            RequestString(GetURL("/pnacl_url_loader.nmf"), "same-origin",
-                         "same-origin") +
+                         "include") +
            RequestString(GetURL("/pnacl_url_loader_newlib_pnacl.pexe"),
-                         "same-origin", "same-origin");
+                         "same-origin", "include");
   }
 
   std::string ExecutePNACLUrlLoaderTest(const std::string& mode) {
@@ -470,7 +471,7 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerFetchPPAPITest, SameOriginCORS) {
   //   request.SetURL("/echo");
   //   request.SetAllowCrossOriginRequests(true);
   EXPECT_EQ(GetRequestStringForPNACL("#SameCORS") +
-                RequestString(GetURL("/echo"), "cors", "omit"),
+                RequestString(GetURL("/echo"), "cors", "same-origin"),
             ExecutePNACLUrlLoaderTest("SameCORS"));
 }
 
@@ -511,9 +512,10 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerFetchPPAPITest, OtherOriginCORS) {
   //   request.SetMethod("GET");
   //   request.SetURL("https://www.example.com/echo");
   //   request.SetAllowCrossOriginRequests(true);
-  EXPECT_EQ(GetRequestStringForPNACL("#OtherCORS") +
-                RequestString("https://www.example.com/echo", "cors", "omit"),
-            ExecutePNACLUrlLoaderTest("OtherCORS"));
+  EXPECT_EQ(
+      GetRequestStringForPNACL("#OtherCORS") +
+          RequestString("https://www.example.com/echo", "cors", "same-origin"),
+      ExecutePNACLUrlLoaderTest("OtherCORS"));
 }
 
 IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerFetchPPAPITest,
@@ -610,6 +612,7 @@ class ChromeServiceWorkerNavigationHintTest : public ChromeServiceWorkerTest {
       const char* scope,
       content::StartServiceWorkerForNavigationHintResult expeced_requst,
       bool expected_started) {
+    base::HistogramTester histogram_tester;
     base::RunLoop run_loop;
     GetServiceWorkerContext()->StartServiceWorkerForNavigationHint(
         embedded_test_server()->GetURL(scope),
@@ -618,21 +621,18 @@ class ChromeServiceWorkerNavigationHintTest : public ChromeServiceWorkerTest {
                    expeced_requst, run_loop.QuitClosure()));
     run_loop.Run();
     if (expected_started) {
-      histogram_tester_.ExpectBucketCount(
+      histogram_tester.ExpectBucketCount(
           "ServiceWorker.StartWorker.Purpose",
           27 /* ServiceWorkerMetrics::EventType::NAVIGATION_HINT  */, 1);
-      histogram_tester_.ExpectBucketCount(
+      histogram_tester.ExpectBucketCount(
           "ServiceWorker.StartWorker.StatusByPurpose_NAVIGATION_HINT",
           0 /* SERVICE_WORKER_OK  */, 1);
     } else {
-      histogram_tester_.ExpectTotalCount("ServiceWorker.StartWorker.Purpose",
-                                         0);
-      histogram_tester_.ExpectTotalCount(
+      histogram_tester.ExpectTotalCount("ServiceWorker.StartWorker.Purpose", 0);
+      histogram_tester.ExpectTotalCount(
           "ServiceWorker.StartWorker.StatusByPurpose_NAVIGATION_HINT", 0);
     }
   }
-
-  base::HistogramTester histogram_tester_;
 };
 
 IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerNavigationHintTest, Started) {

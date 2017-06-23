@@ -6,6 +6,6 @@
 
 dictionary RTCPeerConnectionIceEventInit : EventInit {
     RTCIceCandidate? candidate;
-    // TODO(loonybear): add url attribute.
+    // TODO(lunalu): add url attribute.
     // DOMString? url;
 };

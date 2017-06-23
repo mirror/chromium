@@ -59,8 +59,8 @@ PassRefPtr<BitmapImage> BitmapImage::CreateWithOrientationForTesting(
   return result.Release();
 }
 
-BitmapImage::BitmapImage(ImageObserver* observer, bool is_multipart)
-    : Image(observer, is_multipart),
+BitmapImage::BitmapImage(ImageObserver* observer)
+    : Image(observer),
       current_frame_(0),
       cached_frame_index_(0),
       animation_policy_(kImageAnimationPolicyAllowed),
@@ -187,9 +187,9 @@ bool BitmapImage::GetHotSpot(IntPoint& hot_spot) const {
   return source_.GetHotSpot(hot_spot);
 }
 
-Image::SizeAvailability BitmapImage::SetData(RefPtr<SharedBuffer> data,
+Image::SizeAvailability BitmapImage::SetData(PassRefPtr<SharedBuffer> data,
                                              bool all_data_received) {
-  if (!data)
+  if (!data.Get())
     return kSizeAvailable;
 
   int length = data->size();

@@ -33,16 +33,7 @@ cr.define('bookmarks', function() {
       },
 
       /** @private {Set<string>} */
-      menuIds_: {
-        type: Object,
-        observer: 'onMenuIdsChanged_',
-      },
-
-      /** @private */
-      hasAnySublabel_: {
-        type: Boolean,
-        reflectToAttribute: true,
-      },
+      menuIds_: Object,
 
       /** @private */
       globalCanEdit_: Boolean,
@@ -106,11 +97,8 @@ cr.define('bookmarks', function() {
      */
     openCommandMenuAtPosition: function(x, y, items) {
       this.menuIds_ = items || this.getState().selection.items;
-      var dropdown =
-          /** @type {!CrActionMenuElement} */ (this.$.dropdown.get());
-      // Ensure that the menu is fully rendered before trying to position it.
-      Polymer.dom.flush();
-      dropdown.showAtPosition({top: y, left: x});
+      /** @type {!CrActionMenuElement} */ (this.$.dropdown)
+          .showAtPosition({top: y, left: x});
     },
 
     /**
@@ -120,16 +108,12 @@ cr.define('bookmarks', function() {
      */
     openCommandMenuAtElement: function(target) {
       this.menuIds_ = this.getState().selection.items;
-      var dropdown =
-          /** @type {!CrActionMenuElement} */ (this.$.dropdown.get());
-      // Ensure that the menu is fully rendered before trying to position it.
-      Polymer.dom.flush();
-      dropdown.showAt(target);
+      /** @type {!CrActionMenuElement} */ (this.$.dropdown).showAt(target);
     },
 
     closeCommandMenu: function() {
       this.menuIds_ = new Set();
-      /** @type {!CrActionMenuElement} */ (this.$.dropdown.get()).close();
+      /** @type {!CrActionMenuElement} */ (this.$.dropdown).close();
     },
 
     ////////////////////////////////////////////////////////////////////////////
@@ -441,8 +425,7 @@ cr.define('bookmarks', function() {
      * @private
      */
     onCommandClick_: function(e) {
-      this.handle(
-          e.currentTarget.getAttribute('command'), assert(this.menuIds_));
+      this.handle(e.target.getAttribute('command'), assert(this.menuIds_));
       this.closeCommandMenu();
     },
 
@@ -464,7 +447,7 @@ cr.define('bookmarks', function() {
      * @private
      */
     onMenuMousedown_: function(e) {
-      if (e.path[0] != this.$.dropdown.getIfExists())
+      if (e.path[0] != this.$.dropdown)
         return;
 
       this.closeCommandMenu();
@@ -508,35 +491,6 @@ cr.define('bookmarks', function() {
       }
 
       return loadTimeData.getString(assert(label));
-    },
-
-    /**
-     * @param {Command} command
-     * @return {string}
-     * @private
-     */
-    getCommandSublabel_: function(command) {
-      var multipleNodes = this.menuIds_.size > 1 ||
-          this.containsMatchingNode_(this.menuIds_, function(node) {
-            return !node.url;
-          });
-      switch (command) {
-        case Command.OPEN_NEW_TAB:
-          var urls = this.expandUrls_(this.menuIds_);
-          return multipleNodes && urls.length > 0 ? String(urls.length) : '';
-        default:
-          return '';
-      }
-    },
-
-    /** @private */
-    onMenuIdsChanged_: function() {
-      if (!this.menuIds_)
-        return;
-
-      this.hasAnySublabel_ = this.menuCommands_.some(function(command) {
-        return this.getCommandSublabel_(command) != '';
-      }.bind(this));
     },
 
     /**

@@ -250,12 +250,13 @@ import org.chromium.content_public.common.ResourceRequestBody;
     }
 
     @Override
-    public void copyStateFrom(NavigationController source, boolean needsReload) {
+    public void copyStateFrom(NavigationController source) {
         if (mNativeNavigationControllerAndroid == 0) return;
         NavigationControllerImpl sourceImpl = (NavigationControllerImpl) source;
         if (sourceImpl.mNativeNavigationControllerAndroid == 0) return;
-        nativeCopyStateFrom(mNativeNavigationControllerAndroid,
-                sourceImpl.mNativeNavigationControllerAndroid, needsReload);
+        nativeCopyStateFrom(
+                mNativeNavigationControllerAndroid,
+                sourceImpl.mNativeNavigationControllerAndroid);
     }
 
     @Override
@@ -337,7 +338,7 @@ import org.chromium.content_public.common.ResourceRequestBody;
     private native boolean nativeCanPruneAllButLastCommitted(
             long nativeNavigationControllerAndroid);
     private native void nativeCopyStateFrom(long nativeNavigationControllerAndroid,
-            long sourceNavigationControllerAndroid, boolean needsReload);
+            long sourceNavigationControllerAndroid);
     private native void nativeCopyStateFromAndPrune(long nativeNavigationControllerAndroid,
             long sourceNavigationControllerAndroid, boolean replaceEntry);
     private native String nativeGetEntryExtraData(

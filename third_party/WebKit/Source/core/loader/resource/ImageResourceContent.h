@@ -163,8 +163,7 @@ class CORE_EXPORT ImageResourceContent final
   WARN_UNUSED_RESULT UpdateImageResult UpdateImage(PassRefPtr<SharedBuffer>,
                                                    ResourceStatus,
                                                    UpdateImageOption,
-                                                   bool all_data_received,
-                                                   bool is_multipart);
+                                                   bool all_data_received);
 
   void NotifyStartLoad();
   void DestroyDecodedData();
@@ -192,7 +191,7 @@ class CORE_EXPORT ImageResourceContent final
   void ChangedInRect(const blink::Image*, const IntRect&) override;
   void AsyncLoadCompleted(const blink::Image*) override;
 
-  PassRefPtr<Image> CreateImage(bool is_multipart);
+  PassRefPtr<Image> CreateImage();
   void ClearImage();
 
   enum NotifyFinishOption { kShouldNotifyFinish, kDoNotNotifyFinish };

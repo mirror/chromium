@@ -62,8 +62,7 @@ MediaRouterMojoImpl::MediaSinksQuery::~MediaSinksQuery() = default;
 
 MediaRouterMojoImpl::MediaRouterMojoImpl(
     extensions::EventPageTracker* event_page_tracker,
-    content::BrowserContext* context,
-    FirewallCheck check_firewall)
+    content::BrowserContext* context)
     : event_page_tracker_(event_page_tracker),
       instance_id_(base::GenerateGUID()),
       availability_(mojom::MediaRouter::SinkAvailability::UNAVAILABLE),
@@ -73,11 +72,9 @@ MediaRouterMojoImpl::MediaRouterMojoImpl(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(event_page_tracker_);
 #if defined(OS_WIN)
-  if (check_firewall == FirewallCheck::RUN) {
-    CanFirewallUseLocalPorts(
-        base::Bind(&MediaRouterMojoImpl::OnFirewallCheckComplete,
-                   weak_factory_.GetWeakPtr()));
-  }
+  CanFirewallUseLocalPorts(
+      base::Bind(&MediaRouterMojoImpl::OnFirewallCheckComplete,
+                 weak_factory_.GetWeakPtr()));
 #endif
 }
 

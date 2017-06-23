@@ -4,15 +4,12 @@
 
 #include "public/web/WebDocument.h"
 
-#include <string>
-
 #include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/StyleEngine.h"
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLLinkElement.h"
 #include "core/page/Page.h"
@@ -60,7 +57,7 @@ Document* WebDocumentTest::TopDocument() const {
 }
 
 WebDocument WebDocumentTest::TopWebDocument() const {
-  return web_view_helper_.LocalMainFrame()->GetDocument();
+  return web_view_helper_.WebView()->MainFrame()->GetDocument();
 }
 
 TEST_F(WebDocumentTest, InsertAndRemoveStyleSheet) {

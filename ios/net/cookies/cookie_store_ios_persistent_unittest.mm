@@ -67,11 +67,10 @@ class CookieStoreIOSPersistentTest : public testing::Test {
   ~CookieStoreIOSPersistentTest() override {}
 
   // Gets the cookies. |callback| will be called on completion.
-  void GetCookies(net::CookieStore::GetCookiesCallback callback) {
+  void GetCookies(const net::CookieStore::GetCookiesCallback& callback) {
     net::CookieOptions options;
     options.set_include_httponly();
-    store_->GetCookiesWithOptionsAsync(kTestCookieURL, options,
-                                       std::move(callback));
+    store_->GetCookiesWithOptionsAsync(kTestCookieURL, options, callback);
   }
 
   // Sets a cookie.
@@ -124,8 +123,7 @@ TEST_F(CookieStoreIOSPersistentTest, SetCookieCallsHook) {
 TEST_F(CookieStoreIOSPersistentTest, NotSynchronized) {
   // Start fetching the cookie.
   GetCookieCallback callback;
-  GetCookies(
-      base::BindOnce(&GetCookieCallback::Run, base::Unretained(&callback)));
+  GetCookies(base::Bind(&GetCookieCallback::Run, base::Unretained(&callback)));
   // Backend loading completes.
   backend_->RunLoadedCallback();
   EXPECT_TRUE(callback.did_run());

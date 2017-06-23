@@ -41,8 +41,8 @@ class ContextMenuClient;
 class ContextMenuItem;
 class ContextMenuProvider;
 class Document;
+class Event;
 class LocalFrame;
-class MouseEvent;
 class Page;
 
 class CORE_EXPORT ContextMenuController final
@@ -59,7 +59,7 @@ class CORE_EXPORT ContextMenuController final
 
   void DocumentDetached(Document*);
 
-  void HandleContextMenuEvent(MouseEvent*);
+  void HandleContextMenuEvent(Event*);
   void ShowContextMenuAtPoint(LocalFrame*,
                               float x,
                               float y,
@@ -72,10 +72,10 @@ class CORE_EXPORT ContextMenuController final
  private:
   ContextMenuController(Page*, ContextMenuClient*);
 
-  std::unique_ptr<ContextMenu> CreateContextMenu(MouseEvent*);
+  std::unique_ptr<ContextMenu> CreateContextMenu(Event*);
   std::unique_ptr<ContextMenu> CreateContextMenu(LocalFrame*,
                                                  const LayoutPoint&);
-  void ShowContextMenu(MouseEvent*);
+  void ShowContextMenu(Event*);
 
   ContextMenuClient* client_;
   std::unique_ptr<ContextMenu> context_menu_;

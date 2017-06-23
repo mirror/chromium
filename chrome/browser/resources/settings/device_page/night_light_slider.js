@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-(function() {
-
 /**
  * @fileoverview
  * night-light-slider is used to set the custom automatic schedule of the
@@ -20,29 +18,37 @@ Polymer({
   is: 'night-light-slider',
 
   behaviors: [
+    I18nBehavior,
     PrefsBehavior,
     Polymer.IronA11yKeysBehavior,
-    Polymer.PaperInkyFocusBehavior,
   ],
 
   properties: {
     /**
+     * The object currently being dragged. Either the start or end knobs.
+     * @type {?Object}
+     * @private
+     */
+    dragObject_: {
+      type: Object,
+      value: null,
+    },
+
+    /**
      * The start knob time as a string to be shown on the start label bubble.
      * @private
      */
-    startTime_: String,
+    startTime_: {
+      type: String,
+    },
 
     /**
      * The end knob time as a string to be shown on the end label bubble.
      * @private
      */
-    endTime_: String,
-
-    /**
-     * Whether the window is in RTL locales.
-     * @private
-     */
-    isRTL_: Boolean,
+    endTime_: {
+      type: String,
+    },
   },
 
   observers: [
@@ -55,19 +61,6 @@ Polymer({
     'right': 'onRightKey_',
   },
 
-  /**
-   * The object currently being dragged. Either the start or end knobs.
-   * @type {?Object}
-   * @private
-   */
-  dragObject_: null,
-
-  /** @override */
-  attached: function() {
-    this.isRTL_ = window.getComputedStyle(this).direction == 'rtl';
-  },
-
-  /** @override */
   ready: function() {
     // Build the legend markers.
     var markersContainer = this.$.markersContainer;
@@ -78,23 +71,10 @@ Polymer({
       markersContainer.appendChild(marker);
       marker.style.left = (i * 100 / HOURS_PER_DAY) + '%';
     }
-
     this.async(function() {
       // Read the initial prefs values and refresh the slider.
       this.customTimesChanged_();
     });
-  },
-
-  /**
-   * Gets the style of legend div determining its absolute left position.
-   * @param {number} percent The value of the div's left as a percent (0 - 100).
-   * @param {boolean} isRTL whether window is in RTL locale.
-   * @return {string} The CSS style of the legend div.
-   * @private
-   */
-  getLegendStyle_: function(percent, isRTL) {
-    percent = isRTL ? 100 - percent : percent;
-    return 'left: ' + percent + '%';
   },
 
   /**
@@ -131,19 +111,7 @@ Polymer({
    */
   startDrag_: function(event) {
     event.preventDefault();
-
-    // Only handle start or end knobs. Use the "knob-inner" divs just to display
-    // the knobs.
-    if (event.target == this.$.startKnob ||
-        event.target == this.$.startKnob.firstElementChild) {
-      this.dragObject_ = this.$.startKnob;
-    } else if (event.target == this.$.endKnob ||
-               event.target == this.$.endKnob.firstElementChild) {
-      this.dragObject_ = this.$.endKnob;
-    } else {
-      return;
-    }
-
+    this.dragObject_ = event.target;
     this.setExpanded_(true);
 
     // Focus is only given to the knobs by means of keyboard tab navigations.
@@ -193,8 +161,7 @@ Polymer({
         'ash.night_light.custom_start_time' :
         'ash.night_light.custom_end_time';
 
-    var ddx = this.isRTL_ ? event.detail.ddx * -1 : event.detail.ddx;
-    if (ddx > 0) {
+    if (event.detail.ddx > 0) {
       // Increment the knob's pref by the amount of deltaMinutes.
       this.incrementPref_(knobPref, deltaMinutes);
     } else {
@@ -295,7 +262,7 @@ Polymer({
       var currentKnobRatio = this.getKnobRatio_(knob);
       ratio = currentKnobRatio > 0.5 ? 1.0 : 0.0;
     }
-    ratio = this.isRTL_ ? (1.0 - ratio) : ratio;
+
     knob.style.left = (ratio * this.$.sliderBar.offsetWidth) + 'px';
   },
 
@@ -305,18 +272,17 @@ Polymer({
    * @private
    */
   refresh_: function() {
+    var endKnob = this.$.endKnob;
+    var startKnob = this.$.startKnob;
+    var startProgress = this.$.startProgress;
+    var endProgress = this.$.endProgress;
+    var startLabel = this.$.startLabel;
+    var endLabel = this.$.endLabel;
+
     // The label bubbles have the same left coordinates as their corresponding
     // knobs.
-    this.$.startLabel.style.left = this.$.startKnob.style.left;
-    this.$.endLabel.style.left = this.$.endKnob.style.left;
-
-    // In RTL locales, the relative positions of the knobs are flipped for the
-    // purpose of calculating the styles of the progress bars below.
-    var rtl = this.isRTL_;
-    var endKnob = rtl ? this.$.startKnob : this.$.endKnob;
-    var startKnob = rtl ? this.$.endKnob : this.$.startKnob;
-    var startProgress = rtl ? this.$.endProgress : this.$.startProgress;
-    var endProgress = rtl ? this.$.startProgress : this.$.endProgress;
+    startLabel.style.left = startKnob.style.left;
+    endLabel.style.left = endKnob.style.left;
 
     // The end progress bar starts from either the start knob or the start of
     // the slider (whichever is to its left) and ends at the end knob.
@@ -468,10 +434,7 @@ Polymer({
     if (!knobPref)
       return;
 
-    if (this.isRTL_)
-      this.incrementPref_(knobPref, 1);
-    else
-      this.decrementPref_(knobPref, 1);
+    this.decrementPref_(knobPref, 1);
   },
 
   /**
@@ -484,73 +447,6 @@ Polymer({
     if (!knobPref)
       return;
 
-    if (this.isRTL_)
-      this.decrementPref_(knobPref, 1);
-    else
-      this.incrementPref_(knobPref, 1);
+    this.incrementPref_(knobPref, 1);
   },
-
-  /**
-   * @return {boolean} Whether either of the two knobs is focused.
-   * @private
-   */
-  isEitherKnobFocused_: function() {
-    var activeElement = this.shadowRoot.activeElement;
-    return activeElement == this.$.startKnob || activeElement == this.$.endKnob;
-  },
-
-  /**
-   * Overrides _createRipple() from PaperInkyFocusBehavior to create the ripple
-   * only on a knob if it's focused, or on a dummy hidden element so that it
-   * doesn't show.
-   * @private
-   */
-  _createRipple: function() {
-    if (this.isEitherKnobFocused_()) {
-      this._rippleContainer = this.shadowRoot.activeElement;
-    } else {
-      // We can't just skip the ripple creation and return early with null here.
-      // The code inherited from PaperInkyFocusBehavior expects that this
-      // function returns a ripple element. So to avoid crashes, we'll setup the
-      // ripple to be created under a hidden element.
-      this._rippleContainer = this.$.dummyRippleContainer;
-    }
-
-    return Polymer.PaperInkyFocusBehaviorImpl._createRipple.call(this);
-  },
-
-  /**
-   * Handles focus events on the start and end knobs.
-   * @private
-   */
-  onFocus_: function() {
-    this.ensureRipple();
-
-    if (this.hasRipple()) {
-      this._ripple.style.display = '';
-      this._ripple.holdDown = true;
-    }
-  },
-
-  /**
-   * Handles blur events on the start and end knobs.
-   * @private
-   */
-  onBlur_: function() {
-    if (this.hasRipple()) {
-      this._ripple.remove();
-      this._ripple = null;
-    }
-  },
-
-  /** @private */
-  _focusedChanged: function(receivedFocusFromKeyboard) {
-    // Overrides the _focusedChanged() from the PaperInkyFocusBehavior so that
-    // it does nothing. This function is called only once for the entire
-    // night-light-slider element even when focus is moved between the two
-    // knobs. This doesn't allow us to decide on which knob the ripple will be
-    // created. Hence we handle focus and blur explicitly above.
-  }
 });
-
-})();

@@ -41,10 +41,8 @@ namespace blink {
 // crbug.com/508283
 class WebTouchPoint : public WebPointerProperties {
  public:
-  WebTouchPoint() : WebTouchPoint(WebPointerProperties(0)) {}
-
-  WebTouchPoint(WebPointerProperties web_pointer_properties)
-      : WebPointerProperties(web_pointer_properties),
+  WebTouchPoint()
+      : WebPointerProperties(0),
         state(kStateUndefined),
         radius_x(0),
         radius_y(0),

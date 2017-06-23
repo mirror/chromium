@@ -43,26 +43,21 @@ struct WebAssociatedURLLoaderOptions {
 
   WebAssociatedURLLoaderOptions()
       : untrusted_http(false),
-        fetch_request_mode(WebURLRequest::kFetchRequestModeSameOrigin),
-        fetch_credentials_mode(WebURLRequest::kFetchCredentialsModeOmit),
+        allow_credentials(false),
         expose_all_response_headers(false),
-        preflight_policy(kConsiderPreflight) {}
+        preflight_policy(kConsiderPreflight),
+        fetch_request_mode(WebURLRequest::kFetchRequestModeSameOrigin) {}
 
   // Whether to validate the method and headers as if this was an
   // XMLHttpRequest.
   bool untrusted_http;
-
-  // The mode to use. See https://fetch.spec.whatwg.org/#concept-request-mode.
-  WebURLRequest::FetchRequestMode fetch_request_mode;
-  // The credentials mode to use.
-  // See https://fetch.spec.whatwg.org/#concept-request-credentials-mode
-  WebURLRequest::FetchCredentialsMode fetch_credentials_mode;
-
+  // Whether to send HTTP credentials and cookies with the request.
+  bool allow_credentials;
   // If policy is to use access control, whether to expose non-whitelisted
   // response headers to the client.
   bool expose_all_response_headers;
-
   PreflightPolicy preflight_policy;
+  WebURLRequest::FetchRequestMode fetch_request_mode;
 };
 
 }  // namespace blink

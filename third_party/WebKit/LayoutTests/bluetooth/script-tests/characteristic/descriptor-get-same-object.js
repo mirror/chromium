@@ -1,14 +1,17 @@
 'use strict';
 promise_test(() => {
-  return getMeasurementIntervalCharacteristic()
-    .then(({characteristic}) => Promise.all([
+  return setBluetoothFakeAdapter('DisconnectingHealthThermometerAdapter')
+    .then(() => requestDeviceWithKeyDown({
+      filters: [{services: ['health_thermometer']}]}))
+    .then(device => device.gatt.connect())
+    .then(gattServer => gattServer.getPrimaryService('health_thermometer'))
+    .then(service => service.getCharacteristic('measurement_interval'))
+    .then(characteristic => Promise.all([
       characteristic.CALLS([
-        getDescriptor(user_description.alias)|
-        getDescriptors(user_description.alias)
-      ]),
-      characteristic.FUNCTION_NAME(user_description.name),
-      characteristic.FUNCTION_NAME(user_description.uuid)
-    ]))
+        getDescriptor(user_description.alias),
+        getDescriptor(user_description.name),
+        getDescriptor(user_description.uuid)]),
+      characteristic.PREVIOUS_CALL]))
     .then(descriptors_arrays => {
 
       assert_true(descriptors_arrays.length > 0)

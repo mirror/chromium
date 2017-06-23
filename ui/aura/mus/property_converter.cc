@@ -87,8 +87,6 @@ PropertyConverter::PropertyConverter() {
                        ui::mojom::WindowManager::kRestoreBounds_Property);
   RegisterSizeProperty(client::kPreferredSize,
                        ui::mojom::WindowManager::kPreferredSize_Property);
-  RegisterSizeProperty(client::kMinimumSize,
-                       ui::mojom::WindowManager::kMinimumSize_Property);
   RegisterStringProperty(client::kNameKey,
                          ui::mojom::WindowManager::kName_Property);
   RegisterString16Property(client::kTitleKey,

@@ -51,9 +51,8 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   friend class GraphicsContext;
 
  public:
-  static PassRefPtr<BitmapImage> Create(ImageObserver* observer = 0,
-                                        bool is_multipart = false) {
-    return AdoptRef(new BitmapImage(observer, is_multipart));
+  static PassRefPtr<BitmapImage> Create(ImageObserver* observer = 0) {
+    return AdoptRef(new BitmapImage(observer));
   }
 
   ~BitmapImage() override;
@@ -67,7 +66,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   bool GetHotSpot(IntPoint&) const override;
   String FilenameExtension() const override;
 
-  SizeAvailability SetData(RefPtr<SharedBuffer> data,
+  SizeAvailability SetData(PassRefPtr<SharedBuffer> data,
                            bool all_data_received) override;
   SizeAvailability DataChanged(bool all_data_received) override;
 
@@ -110,7 +109,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   };
 
   BitmapImage(const SkBitmap&, ImageObserver* = 0);
-  BitmapImage(ImageObserver* = 0, bool is_multi_part = false);
+  BitmapImage(ImageObserver* = 0);
 
   void Draw(PaintCanvas*,
             const PaintFlags&,

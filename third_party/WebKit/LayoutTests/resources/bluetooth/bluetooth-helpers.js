@@ -6,11 +6,6 @@
 const HCI_SUCCESS = 0x0000;
 const HCI_CONNECTION_TIMEOUT = 0x0008;
 
-// GATT Error codes. Used for GATT operations responses.
-// BT 4.2 Vol 3 Part F 3.4.1.1 Error Response
-const GATT_SUCCESS        = 0x0000;
-const GATT_INVALID_HANDLE = 0x0001;
-
 // Bluetooth UUID constants:
 // Services:
 var blocklist_test_service_uuid = "611c954a-263b-4f4a-aab6-01ddb953f985";
@@ -359,25 +354,16 @@ function assert_no_events(object, event_name) {
 }
 
 class TestCharacteristicProperties {
-  // |properties| is an array of strings for property bits to be set
-  // as true.
   constructor(properties) {
-    this.broadcast                 = false;
-    this.read                      = false;
-    this.writeWithoutResponse      = false;
-    this.write                     = false;
-    this.notify                    = false;
-    this.indicate                  = false;
-    this.authenticatedSignedWrites = false;
-    this.reliableWrite             = false;
-    this.writableAuxiliaries       = false;
-
-    properties.forEach(val => {
-      if (this.hasOwnProperty(val))
-        this[val] = true;
-      else
-        throw `Invalid member '${val}'`;
-    });
+    this.broadcast = properties.broadcast || false;
+    this.read = properties.read || false;
+    this.writeWithoutResponse = properties.writeWithoutResponse || false;
+    this.write = properties.write || false;
+    this.notify = properties.notify || false;
+    this.indicate = properties.indicate || false;
+    this.authenticatedSignedWrites = properties.authenticatedSignedWrites || false;
+    this.reliableWrite = properties.reliableWrite || false;
+    this.writableAuxiliaries = properties.writableAuxiliaries || false;
   }
 }
 
@@ -474,20 +460,15 @@ function setUpHealthThermometerAndHeartRateDevices() {
 // its corresponding FakePeripheral and FakeRemoteGATTServices.
 // The simulated device is called 'Health Thermometer' it has two known service
 // UUIDs: 'generic_access' and 'health_thermometer' which correspond to two
-// services with the same UUIDs. The 'health thermometer' service contains three
-// characteristics:
-//  - 'temperature_measurement' (indicate),
-//  - 'temperature_type' (read),
-//  - 'measurement_interval' (read, write, indicate)
-// The device has been connected to and its attributes are ready to be
-// discovered.
-// TODO(crbug.com/719816): Add descriptors.
+// services with the same UUIDs. The device has been connected to and its
+// services are ready to be discovered.
+// TODO(crbug.com/719816): Add characteristics and descriptors.
 function getHealthThermometerDevice(options) {
   let device;
   let fake_peripheral;
   let fake_generic_access;
   let fake_health_thermometer;
-  let fake_measurement_interval;
+
   return getConnectedHealthThermometerDevice(options)
     .then(result => {
       ({
@@ -495,7 +476,6 @@ function getHealthThermometerDevice(options) {
         fake_peripheral,
         fake_generic_access,
         fake_health_thermometer,
-        fake_measurement_interval,
       } = result);
     })
     .then(() => fake_peripheral.setNextGATTDiscoveryResponse({
@@ -504,8 +484,7 @@ function getHealthThermometerDevice(options) {
       device: device,
       fake_peripheral: fake_peripheral,
       fake_generic_access: fake_generic_access,
-      fake_health_thermometer: fake_health_thermometer,
-      fake_measurement_interval: fake_measurement_interval,
+      fake_health_thermometer1: fake_health_thermometer,
     }));
 }
 
@@ -540,34 +519,6 @@ function getTwoHealthThermometerServicesDevice(options) {
     }));
 }
 
-// Returns an object containing a Health Thermometer BluetoothRemoteGattService
-// and its corresponding FakeRemoteGATTService.
-function getHealthThermometerService() {
-  return getHealthThermometerDevice()
-    .then(result => {
-      return result.device.gatt.getPrimaryService('health_thermometer')
-        .then(service => ({
-          service: service,
-          fake_service: result.fake_health_thermometer
-        }));
-    });
-}
-
-// Returns an object containing a Measurement Interval
-// BluetoothRemoteGATTCharacteristic and its corresponding
-// FakeRemoteGATTCharacteristic.
-function getMeasurementIntervalCharacteristic() {
-  return getHealthThermometerDevice()
-    .then(result => {
-      return result.device.gatt.getPrimaryService('health_thermometer')
-        .then(service => service.getCharacteristic('measurement_interval'))
-        .then(characteristic => ({
-          characteristic: characteristic,
-          fake_characteristic: result.fake_measurement_interval
-        }));
-    });
-}
-
 // Similar to getHealthThermometerDevice except the GATT discovery
 // response has not been set yet so more attributes can still be added.
 function getConnectedHealthThermometerDevice(options) {
@@ -575,9 +526,6 @@ function getConnectedHealthThermometerDevice(options) {
   let fake_peripheral;
   let fake_generic_access;
   let fake_health_thermometer;
-  let fake_measurement_interval;
-  let fake_temperature_measurement;
-  let fake_temperature_type;
   return getDiscoveredHealthThermometerDevice(options)
     .then(result => {
       ({device, fake_peripheral} = result);
@@ -590,25 +538,11 @@ function getConnectedHealthThermometerDevice(options) {
     .then(() => fake_peripheral.addFakeService({
       uuid: 'health_thermometer'}))
     .then(s => fake_health_thermometer = s)
-    .then(() => fake_health_thermometer.addFakeCharacteristic({
-      uuid: 'measurement_interval', properties: ['read', 'write', 'indicate']}))
-    .then(c => fake_measurement_interval = c)
-    .then(() => fake_measurement_interval.addFakeDescriptor({
-      uuid: 'gatt.characteristic_user_description'}))
-    .then(() => fake_health_thermometer.addFakeCharacteristic({
-      uuid: 'temperature_measurement', properties: ['indicate']}))
-    .then(c => fake_temperature_measurement = c)
-    .then(() => fake_health_thermometer.addFakeCharacteristic({
-      uuid: 'temperature_type', properties: ['read']}))
-    .then(c => fake_temperature_type = c)
     .then(() => ({
       device: device,
       fake_peripheral: fake_peripheral,
       fake_generic_access: fake_generic_access,
       fake_health_thermometer: fake_health_thermometer,
-      fake_measurement_interval: fake_measurement_interval,
-      fake_temperature_measurement: fake_temperature_measurement,
-      fake_temperature_type: fake_temperature_type,
     }));
 }
 
@@ -670,61 +604,32 @@ function getEmptyHealthThermometerDevice(options) {
     });
 }
 
-// Similar to getHealthThermometerService() except the service has no
-// characteristics or included services.
-function getEmptyHealthThermometerService(options) {
-  let device;
-  let fake_peripheral;
-  let fake_health_thermometer;
-  return getDiscoveredHealthThermometerDevice(options)
-    .then(result => ({device, fake_peripheral} = result))
-    .then(() => fake_peripheral.setNextGATTConnectionResponse({
-      code: HCI_SUCCESS}))
-    .then(() => device.gatt.connect())
-    .then(() => fake_peripheral.addFakeService({uuid: 'health_thermometer'}))
-    .then(s => fake_health_thermometer = s)
-    .then(() => fake_peripheral.setNextGATTDiscoveryResponse({
-      code: HCI_SUCCESS}))
-    .then(() => device.gatt.getPrimaryService('health_thermometer'))
-    .then(service => ({
-      service: service,
-      fake_health_thermometer: fake_health_thermometer,
-    }));
-}
-
 // Returns a BluetoothDevice discovered using |options| and its
 // corresponding FakePeripheral.
 // The simulated device is called 'HID Device' it has three known service
-// UUIDs: 'generic_access', 'device_information', 'human_interface_device'.
-// The primary service with 'device_information' UUID has a characteristics
-// with UUID 'serial_number_string'. The device has been connected to and its
-// attributes are ready to be discovered.
-// TODO(crbug.com/719816): Add descriptors.
+// UUIDs: 'generic_access', 'battery_service', 'human_interface_device'. The
+// device has been connected to and its services are ready to be discovered.
+// TODO(crbug.com/719816): Add characteristics and descriptors.
 function getHIDDevice(options) {
   return setUpPreconnectedDevice({
       address: '10:10:10:10:10:10',
       name: 'HID Device',
       knownServiceUUIDs: [
         'generic_access',
-        'device_information',
+        'battery_service',
         'human_interface_device'
       ],
     })
     .then(fake_peripheral => {
       return requestDeviceWithKeyDown(options)
         .then(device => {
-          return fake_peripheral
-            .setNextGATTConnectionResponse({
+          return fake_peripheral.setNextGATTConnectionResponse({
               code: HCI_SUCCESS})
             .then(() => device.gatt.connect())
             .then(() => fake_peripheral.addFakeService({
               uuid: 'generic_access'}))
             .then(() => fake_peripheral.addFakeService({
-              uuid: 'device_information'}))
-            // Blocklisted Characteristic:
-            // https://github.com/WebBluetoothCG/registries/blob/master/gatt_blocklist.txt
-            .then(dev_info => dev_info.addFakeCharacteristic({
-              uuid: 'serial_number_string', properties: ['read']}))
+              uuid: 'battery_service'}))
             .then(() => fake_peripheral.addFakeService({
               uuid: 'human_interface_device'}))
             .then(() => fake_peripheral.setNextGATTDiscoveryResponse({

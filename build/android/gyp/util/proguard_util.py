@@ -150,21 +150,15 @@ class ProguardCmdBuilder(object):
     self._cmd = cmd
     return self._cmd
 
-  def GetDepfileDeps(self):
-    # The list of inputs that the GN target does not directly know about.
+  def GetInputs(self):
     self.build()
-    inputs = self._configs + self._injars
+    inputs = [self._proguard_jar_path] + self._configs + self._injars
+    if self._mapping:
+      inputs.append(self._mapping)
     if self._libraries:
       inputs += self._libraries
     if self._tested_apk_info_path:
       inputs += [self._tested_apk_info_path]
-    return inputs
-
-  def GetInputs(self):
-    inputs = self.GetDepfileDeps()
-    inputs += [self._proguard_jar_path]
-    if self._mapping:
-      inputs.append(self._mapping)
     return inputs
 
   def _WriteFlagsFile(self, out):

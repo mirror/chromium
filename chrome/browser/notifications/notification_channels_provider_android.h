@@ -6,11 +6,8 @@
 #define CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_CHANNELS_PROVIDER_ANDROID_H_
 
 #include <string>
-#include <tuple>
-#include <vector>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "components/content_settings/core/browser/content_settings_observable_provider.h"
 #include "components/content_settings/core/browser/content_settings_observer.h"
 #include "components/content_settings/core/browser/content_settings_rule.h"
@@ -24,15 +21,9 @@ enum NotificationChannelStatus { ENABLED, BLOCKED, UNAVAILABLE };
 
 struct NotificationChannel {
   NotificationChannel(std::string origin, NotificationChannelStatus status)
-      : origin(origin), status(status) {}
-  bool operator==(const NotificationChannel& other) const {
-    return origin == other.origin && status == other.status;
-  }
-  bool operator<(const NotificationChannel& other) const {
-    return std::tie(origin, status) < std::tie(other.origin, other.status);
-  }
-  std::string origin;
-  NotificationChannelStatus status = NotificationChannelStatus::UNAVAILABLE;
+      : origin_(origin), status_(status) {}
+  std::string origin_;
+  NotificationChannelStatus status_ = NotificationChannelStatus::UNAVAILABLE;
 };
 
 // This class provides notification content settings from system notification
@@ -81,14 +72,6 @@ class NotificationChannelsProviderAndroid
 
   std::unique_ptr<NotificationChannelsBridge> bridge_;
   bool should_use_channels_;
-
-  // This cache is updated every time GetRuleIterator is called. It is used to
-  // check if any channels have changed their status since the previous call,
-  // in order to notify observers. This is necessary to detect channels getting
-  // blocked/enabled by the user, in the absence of a callback for this event.
-  std::vector<NotificationChannel> cached_channels_;
-
-  base::WeakPtrFactory<NotificationChannelsProviderAndroid> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationChannelsProviderAndroid);
 };

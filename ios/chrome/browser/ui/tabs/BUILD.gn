@@ -38,7 +38,6 @@ bundle_data("resources") {
 }
 
 source_set("tabs") {
-  configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
     "tab_strip_controller+tab_switcher_animation.h",
     "tab_strip_controller.h",

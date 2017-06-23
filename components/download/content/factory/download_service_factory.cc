@@ -10,7 +10,6 @@
 #include "components/download/internal/controller_impl.h"
 #include "components/download/internal/download_service_impl.h"
 #include "components/download/internal/download_store.h"
-#include "components/download/internal/file_monitor_impl.h"
 #include "components/download/internal/model_impl.h"
 #include "components/download/internal/proto/entry.pb.h"
 #include "components/download/internal/scheduler/scheduler_impl.h"
@@ -33,7 +32,8 @@ DownloadService* CreateDownloadService(
   auto config = Configuration::CreateFromFinch();
 
   auto files_storage_dir = storage_dir.Append(kFilesStorageDir);
-  auto driver = base::MakeUnique<DownloadDriverImpl>(download_manager);
+  auto driver =
+      base::MakeUnique<DownloadDriverImpl>(download_manager, files_storage_dir);
 
   auto entry_db_storage_dir = storage_dir.Append(kEntryDBStorageDir);
   auto entry_db =
@@ -45,12 +45,11 @@ DownloadService* CreateDownloadService(
   auto device_status_listener = base::MakeUnique<DeviceStatusListener>();
   auto scheduler = base::MakeUnique<SchedulerImpl>(
       task_scheduler.get(), config.get(), client_set.get());
-  auto file_monitor = base::MakeUnique<FileMonitorImpl>(
-      files_storage_dir, background_task_runner, config->file_keep_alive_time);
+
   auto controller = base::MakeUnique<ControllerImpl>(
       config.get(), std::move(client_set), std::move(driver), std::move(model),
       std::move(device_status_listener), std::move(scheduler),
-      std::move(task_scheduler), std::move(file_monitor), files_storage_dir);
+      std::move(task_scheduler));
   return new DownloadServiceImpl(std::move(config), std::move(controller));
 }
 
