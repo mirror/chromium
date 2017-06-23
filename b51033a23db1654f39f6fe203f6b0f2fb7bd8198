@@ -70,6 +70,24 @@
       "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b1f85f_402fea32",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-23T14:06:53Z",
+      "side": 1,
+      "message": "You can use gfx::NativeWindow instead.\n\nviews can depend on aura, and when aura is used, gfx::NativeWindow \u003d\u003d aura::Window. On mac, we use views without aura, and gfx::NativeWindow is defined as something else.",
+      "parentUuid": "63297c29_4f5a27cb",
+      "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
