@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7baa38b9_ceeb8218",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-23T17:30:32Z",
+      "side": 1,
+      "message": "Can you add a TODO here (assign to you or me) to experiment w/ making this moveable after better metrics are created?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d476b0_cd1bd1fd",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-23T17:30:32Z",
+      "side": 1,
+      "message": "same",
+      "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64de3057_335dbe5d",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-23T17:30:32Z",
+      "side": 1,
+      "message": "make bug?",
+      "range": {
+        "startLine": 332,
+        "startChar": 20,
+        "endLine": 332,
+        "endChar": 23
+      },
+      "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
