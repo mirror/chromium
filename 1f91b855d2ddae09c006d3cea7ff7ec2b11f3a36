@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9697de6d_384cd86b",
+        "filename": "chrome/common/extensions/api/tabs.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-23T23:53:32Z",
+      "side": 1,
+      "message": "Will remove the white space in the next patch.",
+      "revId": "1f91b855d2ddae09c006d3cea7ff7ec2b11f3a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
