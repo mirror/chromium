@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2347602a_3522a027",
+        "filename": "chrome/browser/devtools/devtools_file_system_indexer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-23T23:34:58Z",
+      "side": 1,
+      "message": "Nice one :)",
+      "range": {
+        "startLine": 399,
+        "startChar": 24,
+        "endLine": 399,
+        "endChar": 57
+      },
+      "revId": "1dd8214bc926603bb85b80a7a11575ea77b0ab37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec40198_b8a9dae0",
+        "filename": "chrome/browser/devtools/devtools_file_system_indexer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-23T23:34:58Z",
+      "side": 1,
+      "message": "Nice one!",
+      "range": {
+        "startLine": 464,
+        "startChar": 45,
+        "endLine": 464,
+        "endChar": 62
+      },
+      "revId": "1dd8214bc926603bb85b80a7a11575ea77b0ab37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
