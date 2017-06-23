@@ -429,8 +429,24 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     dst->AddStringAttribute(ui::AX_ATTR_VALUE, src.StringValue().Utf8());
   }
 
-  if (src.CanSetValueAttribute())
-    dst->AddAction(ui::AX_ACTION_SET_VALUE);
+  switch (src.ControlMode()) {
+    case blink::kWebAXControlModeEnabled:
+      dst->AddIntAttribute(ui::AX_ATTR_CONTROL_MODE,
+                           ui::AX_CONTROL_MODE_ENABLED);
+      if (src.CanSetValueAttribute())
+        dst->AddAction(ui::AX_ACTION_SET_VALUE);
+      break;
+    case blink::kWebAXControlModeReadOnly:
+      dst->AddIntAttribute(ui::AX_ATTR_CONTROL_MODE,
+                           ui::AX_CONTROL_MODE_READ_ONLY);
+      break;
+    case blink::kWebAXControlModeDisabled:
+      dst->AddIntAttribute(ui::AX_ATTR_CONTROL_MODE,
+                           ui::AX_CONTROL_MODE_DISABLED);
+      break;
+    default:
+      break;
+  }
 
   if (!src.Url().IsEmpty())
     dst->AddStringAttribute(ui::AX_ATTR_URL, src.Url().GetString().Utf8());
@@ -545,9 +561,6 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
       dst->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
                            AXDefaultActionVerbFromBlink(src.Action()));
     }
-
-    if (src.IsAriaReadOnly())
-      dst->AddBoolAttribute(ui::AX_ATTR_ARIA_READONLY, true);
 
     if (src.HasComputedStyle()) {
       dst->AddStringAttribute(ui::AX_ATTR_DISPLAY,
@@ -794,12 +807,12 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     }
 
     if (src.IsEditable()) {
-      if (src.IsControl() && !src.IsRichlyEditable()) {
+      if (src.ControlMode() != blink::kWebAXControlModeNotAControl &&
+          !src.IsRichlyEditable()) {
         // Only for simple input controls -- rich editable areas use AXTreeData
         dst->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_START, src.SelectionStart());
         dst->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END, src.SelectionEnd());
       }
-
 #if defined(OS_CHROMEOS)
       // This attribute will soon be deprecated; see crbug.com/669134.
       WebVector<int> src_line_breaks;

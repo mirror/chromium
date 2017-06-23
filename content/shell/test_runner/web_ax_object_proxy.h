@@ -114,6 +114,7 @@ class WebAXObjectProxy : public gin::Wrappable<WebAXObjectProxy> {
   bool HasPopup();
   bool IsValid();
   bool IsReadOnly();
+  std::string ControlMode();
   unsigned int BackgroundColor();
   unsigned int Color();
   // For input elements of type color.
