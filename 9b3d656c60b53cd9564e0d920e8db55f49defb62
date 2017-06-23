@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e37d0fd4_ecd9f455",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-23T00:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0053597a_4a172ed0",
+      "revId": "9b3d656c60b53cd9564e0d920e8db55f49defb62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afee4a5b_c4f753cc",
         "filename": "chromeos/dbus/fake_power_manager_client.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "66313837_4ad3902b",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-23T00:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afee4a5b_c4f753cc",
+      "revId": "9b3d656c60b53cd9564e0d920e8db55f49defb62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "520ba5f8_f18c8ebf",
         "filename": "extensions/browser/api/power/power_api.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "9b3d656c60b53cd9564e0d920e8db55f49defb62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123283bd_150ea4fe",
+        "filename": "extensions/browser/api/power/power_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-23T00:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "520ba5f8_f18c8ebf",
+      "revId": "9b3d656c60b53cd9564e0d920e8db55f49defb62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
