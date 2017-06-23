@@ -198,6 +198,9 @@ class InterfacePtr {
   internal::InterfacePtrState<Interface>* internal_state() {
     return &internal_state_;
   }
+  const internal::InterfacePtrState<Interface>* internal_state() const {
+    return &internal_state_;
+  }
 
   // Allow InterfacePtr<> to be used in boolean expressions.
   explicit operator bool() const { return internal_state_.is_bound(); }
