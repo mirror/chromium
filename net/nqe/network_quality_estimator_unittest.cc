@@ -320,6 +320,9 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
   histogram_tester.ExpectTotalCount("NQE.MainFrame.Kbps.Percentile50", 1);
   histogram_tester.ExpectTotalCount("NQE.MainFrame.Kbps.Percentile50.Unknown",
                                     1);
+  histogram_tester.ExpectTotalCount("NQE.RTT.OnBDPComputation", 1);
+  histogram_tester.ExpectTotalCount("NQE.Kbps.OnBDPComputation", 1);
+  histogram_tester.ExpectTotalCount("NQE.BDPKbits.OnBDPComputation", 1);
 
   estimator.SimulateNetworkChange(
       NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, std::string());
@@ -2196,6 +2199,9 @@ TEST(NetworkQualityEstimatorTest, MAYBE_TestTCPSocketRTT) {
                                       num_requests);
   histogram_tester.ExpectUniqueSample(
       "NQE.EstimateAvailable.MainFrame.TransportRTT", 1, num_requests);
+  histogram_tester.ExpectTotalCount("NQE.RTT.OnBDPComputation", 1);
+  histogram_tester.ExpectTotalCount("NQE.Kbps.OnBDPComputation", 1);
+  histogram_tester.ExpectTotalCount("NQE.BDPKbits.OnBDPComputation", 1);
   histogram_tester.ExpectUniqueSample("NQE.EstimateAvailable.MainFrame.Kbps", 1,
                                       num_requests);
 
@@ -3071,6 +3077,28 @@ TEST(NetworkQualityEstimatorTest, OnPrefsReadWithReadingDisabled) {
   estimator.RemoveRTTAndThroughputEstimatesObserver(&rtt_throughput_observer);
   estimator.RemoveEffectiveConnectionTypeObserver(
       &effective_connection_type_observer);
+}
+
+// Tests that |ComputeBandwidthDelayProductOnMainFrameRequest| calculates the
+// BDP correctly on a main-frame request.
+TEST(NetworkQualityEstimatorTest, ComputeBDPOnMainFrame) {
+  TestNetworkQualityEstimator estimator;
+  base::TimeTicks now = base::TimeTicks::Now();
+  for (int i = 1; i <= std::pow(2, 10); i *= 2) {
+    estimator.rtt_observations_.AddObservation(
+        NetworkQualityEstimator::RttObservation(
+            base::TimeDelta::FromMilliseconds(i), now, INT32_MIN,
+            NETWORK_QUALITY_OBSERVATION_SOURCE_TCP));
+  }
+  for (int i = 1; i <= std::pow(3, 10); i *= 3) {
+    estimator.downstream_throughput_kbps_observations_.AddObservation(
+        NetworkQualityEstimator::ThroughputObservation(
+            i, now, INT32_MIN, NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP));
+  }
+  estimator.RunOneRequest();
+  EXPECT_TRUE(estimator.GetBandwidthDelayProductKBits().has_value());
+  EXPECT_EQ(estimator.GetBandwidthDelayProductKBits().value(),
+            (int32_t)(std::pow(2, 2) * std::pow(3, 8) / 1000));
 }
 
 }  // namespace net
