@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4208a50e_e0240737",
+        "filename": "components/printing/renderer/print_web_view_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T08:43:12Z",
+      "side": 1,
+      "message": "It\u0027s not particularly common:\nhttps://cs.chromium.org/search/?q\u003d%22++class+%22+package:%5Echromium$+lang:C%2B%2B\u0026type\u003dcs\n\nbut not outright banned.\n\nIn any case, I plan on removing this code soon, so I just want to keep the code nearby, if that\u0027s OK.",
+      "parentUuid": "bb4877b9_ed9f0b1a",
+      "revId": "fe73abe6dad4a6a58acd9d28d69dee5917d1ae57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edcbcb97_0d4cb5a3",
         "filename": "components/printing/renderer/print_web_view_helper.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-23T08:34:20Z",
       "side": 1,
       "message": "I think for Clang (plugin?) to actually check this, we need to add an override dtor.",
+      "range": {
+        "startLine": 587,
+        "startChar": 47,
+        "endLine": 587,
+        "endChar": 55
+      },
+      "revId": "fe73abe6dad4a6a58acd9d28d69dee5917d1ae57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ccfcf6_0bce61d2",
+        "filename": "components/printing/renderer/print_web_view_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-23T08:43:12Z",
+      "side": 1,
+      "message": "The plugin checks it with or without an explicit override dtor.",
+      "parentUuid": "edcbcb97_0d4cb5a3",
       "range": {
         "startLine": 587,
         "startChar": 47,
