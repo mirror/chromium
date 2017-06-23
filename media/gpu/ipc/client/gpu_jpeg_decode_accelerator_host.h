@@ -42,7 +42,8 @@ class GpuJpegDecodeAcceleratorHost : public JpegDecodeAccelerator {
   void OnInitializeDone(InitCB init_cb,
                         JpegDecodeAccelerator::Client* client,
                         bool success);
-  void OnDecodeAck(int32_t bitstream_buffer_id, mojom::Error error);
+  void OnDecodeAck(int32_t bitstream_buffer_id,
+                   JpegDecodeAccelerator::Error error);
   void OnLostConnectionToJpegDecoder();
 
   // Browser IO task runner.

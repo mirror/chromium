@@ -72,15 +72,14 @@ GpuJpegDecodeAccelerator::~GpuJpegDecodeAccelerator() {
 
 void GpuJpegDecodeAccelerator::VideoFrameReady(int32_t bitstream_buffer_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  NotifyDecodeStatus(bitstream_buffer_id, mojom::Error::NO_ERRORS);
+  NotifyDecodeStatus(bitstream_buffer_id,
+                     JpegDecodeAccelerator::Error::NO_ERRORS);
 }
 
 void GpuJpegDecodeAccelerator::NotifyError(int32_t bitstream_buffer_id,
                                            JpegDecodeAccelerator::Error error) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  // TODO(c.padhi): Add EnumTraits for JpegDecodeAccelerator::Error, see
-  // http://crbug.com/732253.
-  NotifyDecodeStatus(bitstream_buffer_id, static_cast<mojom::Error>(error));
+  NotifyDecodeStatus(bitstream_buffer_id, error);
 }
 
 void GpuJpegDecodeAccelerator::Initialize(InitializeCallback callback) {
@@ -122,7 +121,8 @@ void GpuJpegDecodeAccelerator::Decode(
   decode_cb_ = std::move(callback);
 
   if (!VerifyDecodeParams(coded_size, &output_handle, output_buffer_size)) {
-    NotifyDecodeStatus(input_buffer->id, mojom::Error::INVALID_ARGUMENT);
+    NotifyDecodeStatus(input_buffer->id,
+                       JpegDecodeAccelerator::Error::INVALID_ARGUMENT);
     return;
   }
 
@@ -139,7 +139,8 @@ void GpuJpegDecodeAccelerator::Decode(
   if (!output_shm->Map(output_buffer_size)) {
     LOG(ERROR) << "Could not map output shared memory for input buffer id "
                << input_buffer->id;
-    NotifyDecodeStatus(input_buffer->id, mojom::Error::PLATFORM_FAILURE);
+    NotifyDecodeStatus(input_buffer->id,
+                       JpegDecodeAccelerator::Error::PLATFORM_FAILURE);
     return;
   }
 
@@ -157,7 +158,8 @@ void GpuJpegDecodeAccelerator::Decode(
   if (!frame.get()) {
     LOG(ERROR) << "Could not create VideoFrame for input buffer id "
                << input_buffer->id;
-    NotifyDecodeStatus(input_buffer->id, mojom::Error::PLATFORM_FAILURE);
+    NotifyDecodeStatus(input_buffer->id,
+                       JpegDecodeAccelerator::Error::PLATFORM_FAILURE);
     return;
   }
   frame->AddDestructionObserver(
@@ -184,8 +186,9 @@ void GpuJpegDecodeAccelerator::Uninitialize() {
   NOTIMPLEMENTED();
 }
 
-void GpuJpegDecodeAccelerator::NotifyDecodeStatus(int32_t bitstream_buffer_id,
-                                                  mojom::Error error) {
+void GpuJpegDecodeAccelerator::NotifyDecodeStatus(
+    int32_t bitstream_buffer_id,
+    JpegDecodeAccelerator::Error error) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(decode_cb_);
   std::move(decode_cb_).Run(bitstream_buffer_id, error);

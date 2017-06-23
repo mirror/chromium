@@ -123,14 +123,15 @@ void GpuJpegDecodeAcceleratorHost::OnInitializeDone(
   std::move(init_cb).Run(success);
 }
 
-void GpuJpegDecodeAcceleratorHost::OnDecodeAck(int32_t bitstream_buffer_id,
-                                               mojom::Error error) {
+void GpuJpegDecodeAcceleratorHost::OnDecodeAck(
+    int32_t bitstream_buffer_id,
+    JpegDecodeAccelerator::Error error) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
 
   if (!client_)
     return;
 
-  if (error == mojom::Error::NO_ERRORS) {
+  if (error == JpegDecodeAccelerator::Error::NO_ERRORS) {
     client_->VideoFrameReady(bitstream_buffer_id);
     return;
   }
@@ -140,15 +141,13 @@ void GpuJpegDecodeAcceleratorHost::OnDecodeAck(int32_t bitstream_buffer_id,
   // to be the last thing done on this stack!
   Client* client = nullptr;
   std::swap(client, client_);
-  // TODO(c.padhi): Add EnumTraits for JpegDecodeAccelerator::Error, see
-  // http://crbug.com/732253.
-  client->NotifyError(bitstream_buffer_id,
-                      static_cast<JpegDecodeAccelerator::Error>(error));
+  client->NotifyError(bitstream_buffer_id, error);
 }
 
 void GpuJpegDecodeAcceleratorHost::OnLostConnectionToJpegDecoder() {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
-  OnDecodeAck(kInvalidBitstreamBufferId, mojom::Error::PLATFORM_FAILURE);
+  OnDecodeAck(kInvalidBitstreamBufferId,
+              JpegDecodeAccelerator::Error::PLATFORM_FAILURE);
 }
 
 }  // namespace media

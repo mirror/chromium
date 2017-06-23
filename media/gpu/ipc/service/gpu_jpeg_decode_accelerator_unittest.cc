@@ -37,7 +37,7 @@ class GpuJpegDecodeAcceleratorTest : public ::testing::Test {
 
   void OnDecodeAck(const base::Closure& continuation,
                    int32_t bitstream_buffer_id,
-                   mojom::Error error) {
+                   JpegDecodeAccelerator::Error error) {
     EXPECT_EQ(kArbitraryBitstreamBufferId, bitstream_buffer_id);
     continuation.Run();
   }
