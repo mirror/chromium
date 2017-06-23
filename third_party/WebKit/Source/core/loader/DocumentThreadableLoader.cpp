@@ -628,29 +628,29 @@ bool DocumentThreadableLoader::RedirectReceived(
         redirect_response, resource);
   }
 
-  String access_control_error_description;
-
   CrossOriginAccessControl::RedirectStatus redirect_status =
       CrossOriginAccessControl::CheckRedirectLocation(request.Url());
-  bool allow_redirect =
-      redirect_status == CrossOriginAccessControl::kRedirectSuccess;
-  if (!allow_redirect) {
+  if (redirect_status != CrossOriginAccessControl::kRedirectSuccess) {
     StringBuilder builder;
     builder.Append("Redirect from '");
     builder.Append(redirect_response.Url().GetString());
     builder.Append("' has been blocked by CORS policy: ");
     CrossOriginAccessControl::RedirectErrorString(builder, redirect_status,
                                                   request.Url());
-    access_control_error_description = builder.ToString();
-  } else if (cors_flag_) {
+    DispatchDidFailAccessControlCheck(
+        ResourceError(kErrorDomainBlinkInternal, 0,
+                      redirect_response.Url().GetString(), builder.ToString()));
+    return false;
+  }
+
+  if (cors_flag_) {
     // The redirect response must pass the access control check if the CORS
     // flag is set.
     CrossOriginAccessControl::AccessStatus cors_status =
         CrossOriginAccessControl::CheckAccess(redirect_response,
                                               request.GetFetchCredentialsMode(),
                                               GetSecurityOrigin());
-    allow_redirect = cors_status == CrossOriginAccessControl::kAccessAllowed;
-    if (!allow_redirect) {
+    if (cors_status != CrossOriginAccessControl::kAccessAllowed) {
       StringBuilder builder;
       builder.Append("Redirect from '");
       builder.Append(redirect_response.Url().GetString());
@@ -660,15 +660,11 @@ bool DocumentThreadableLoader::RedirectReceived(
       CrossOriginAccessControl::AccessControlErrorString(
           builder, cors_status, redirect_response, GetSecurityOrigin(),
           request_context_);
-      access_control_error_description = builder.ToString();
+      DispatchDidFailAccessControlCheck(ResourceError(
+          kErrorDomainBlinkInternal, 0, redirect_response.Url().GetString(),
+          builder.ToString()));
+      return false;
     }
-  }
-
-  if (!allow_redirect) {
-    DispatchDidFailAccessControlCheck(ResourceError(
-        kErrorDomainBlinkInternal, 0, redirect_response.Url().GetString(),
-        access_control_error_description));
-    return false;
   }
 
   client_->DidReceiveRedirectTo(request.Url());
