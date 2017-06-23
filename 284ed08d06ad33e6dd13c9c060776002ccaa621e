@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e79b94fb_8da3c3e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T16:48:23Z",
+      "side": 1,
+      "message": "Can you forward to the constructor below?",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "284ed08d06ad33e6dd13c9c060776002ccaa621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e7ff9c_0659855e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T16:48:23Z",
+      "side": 1,
+      "message": "Nit: the native image decoder _scales the image down_, it doesn\u0027t crop it. What I meant with my comment was that the SnippetArticleViewHolder will crop the returned thumbnail if it\u0027s still too big, but ThumbnailProvider guarantees that it will only be too big in at most one dimension.",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "284ed08d06ad33e6dd13c9c060776002ccaa621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26cf3407_58dee0d5",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-23T16:48:23Z",
+      "side": 1,
+      "message": "Sorry, I find this all a bit strange. You\u0027re not actually testing the contract of the class, but instead verifying that it enforces an internal invariant, and you\u0027re not even exercising the full system, because the native part is missing. I think you might have to write an instrumentation test instead (so it can use the native part), and then verify that the returned bitmap never is bigger than the requested size in both dimensions. Sorry to make things more complicated at this stage, but I think that will result in a less brittle test :-/",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "284ed08d06ad33e6dd13c9c060776002ccaa621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
