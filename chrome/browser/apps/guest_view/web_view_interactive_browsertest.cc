@@ -1787,10 +1787,12 @@ IN_PROC_BROWSER_TEST_P(WebViewImeInteractiveTest, CompositionRangeUpdates) {
 
   // Now set some composition text which should lead to an update in composition
   // range information.
-  CompositionRangeUpdateObserver observer(embedder_web_contents);
+  std::unique_ptr<CompositionRangeUpdateObserver> observer =
+      base::MakeUnique<CompositionRangeUpdateObserver>(embedder_web_contents);
   content::SendImeSetCompositionTextToWidget(
       target_web_contents->GetRenderWidgetHostView()->GetRenderWidgetHost(),
       base::UTF8ToUTF16("ABC"), std::vector<ui::CompositionUnderline>(),
       gfx::Range::InvalidRange(), 0, 3);
-  observer.WaitForCompositionRangeLength(3U);
+  observer->WaitForCompositionRangeLength(3U);
+  observer.reset(nullptr);
 }
