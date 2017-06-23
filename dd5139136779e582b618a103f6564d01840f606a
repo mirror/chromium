@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "954565c6_f697e30a",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-23T16:47:50Z",
+      "side": 1,
+      "message": "Maybe the earlier exit can be in SurfaceManager? That way, you touch fewer files so\n\nmanager-\u003eRequireSequence becomes a no-op if surface references are enabled?",
+      "range": {
+        "startLine": 452,
+        "startChar": 16,
+        "endLine": 452,
+        "endChar": 40
+      },
+      "revId": "dd5139136779e582b618a103f6564d01840f606a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
