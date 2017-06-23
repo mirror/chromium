@@ -221,8 +221,9 @@ void MHTMLArchive::GenerateMHTMLPart(const String& boundary,
   } else {
     // FIXME: ideally we would encode the content as a stream without having to
     // fetch it all.
-    const char* data = resource.data->Data();
-    size_t data_length = resource.data->size();
+    const SharedBuffer::FlatData flat_data(resource.data);
+    const char* data = flat_data.Data();
+    size_t data_length = flat_data.size();
     Vector<char> encoded_data;
     if (!strcmp(content_encoding, kQuotedPrintable)) {
       QuotedPrintableEncode(data, data_length, encoded_data);
