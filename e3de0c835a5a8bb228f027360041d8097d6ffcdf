@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d1b9c33_07c97af2",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-06-24T00:07:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b8a3e7f_5a4affbd",
+      "range": {
+        "startLine": 119,
+        "startChar": 14,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "e3de0c835a5a8bb228f027360041d8097d6ffcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c3f9427_156f51e4",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T21:58:16Z",
       "side": 1,
       "message": "I don\u0027t see this being used?",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "e3de0c835a5a8bb228f027360041d8097d6ffcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5e19a3_990c7657",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-06-24T00:07:41Z",
+      "side": 1,
+      "message": "Ah, so it isn\u0027t.  Removed.",
+      "parentUuid": "7c3f9427_156f51e4",
       "range": {
         "startLine": 29,
         "startChar": 7,
