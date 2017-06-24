@@ -57,7 +57,7 @@ class PaymentRequestMediatorTest : public PlatformTest {
 
     payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
 
     TestChromeBrowserState::Builder test_cbs_builder;
     test_cbs_builder.AddTestingFactory(ios::SigninManagerFactory::GetInstance(),
@@ -75,6 +75,7 @@ class PaymentRequestMediatorTest : public PlatformTest {
   autofill::AutofillProfile autofill_profile_;
   autofill::CreditCard credit_card_;
   autofill::TestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<TestPaymentRequest> payment_request_;
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
   PaymentRequestMediator* mediator_;

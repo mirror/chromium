@@ -147,7 +147,7 @@ class PaymentRequestViewControllerTest : public CollectionViewControllerTest {
 
     payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
 
     mediator_ = [[TestPaymentRequestMediator alloc] init];
   }
@@ -167,6 +167,7 @@ class PaymentRequestViewControllerTest : public CollectionViewControllerTest {
   autofill::AutofillProfile autofill_profile_;
   autofill::CreditCard credit_card_;
   autofill::TestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<TestPaymentRequest> payment_request_;
   TestPaymentRequestMediator* mediator_;
 };

@@ -52,7 +52,7 @@ class PaymentRequestBillingAddressSelectionMediatorTest : public PlatformTest {
     personal_data_manager_.AddTestingProfile(&autofill_profile_4_);
     payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
     profile_comparator_ = base::MakeUnique<FakePaymentsProfileComparator>(
         GetApplicationContext()->GetApplicationLocale(),
         *payment_request_.get());
@@ -74,6 +74,7 @@ class PaymentRequestBillingAddressSelectionMediatorTest : public PlatformTest {
   autofill::AutofillProfile autofill_profile_3_;
   autofill::AutofillProfile autofill_profile_4_;
   autofill::TestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<TestPaymentRequest> payment_request_;
   std::unique_ptr<FakePaymentsProfileComparator> profile_comparator_;
 };

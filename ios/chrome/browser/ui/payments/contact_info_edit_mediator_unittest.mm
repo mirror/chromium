@@ -30,9 +30,11 @@ class PaymentRequestContactInfoEditMediatorTest : public PlatformTest {
   PaymentRequestContactInfoEditMediatorTest()
       : payment_request_(base::MakeUnique<TestPaymentRequest>(
             payment_request_test_util::CreateTestWebPaymentRequest(),
-            &personal_data_manager_)) {}
+            &personal_data_manager_,
+            payment_request_delegate_)) {}
 
   autofill::TestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<TestPaymentRequest> payment_request_;
 };
 
