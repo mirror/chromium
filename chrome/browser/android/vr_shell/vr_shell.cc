@@ -51,7 +51,6 @@
 #include "gpu/command_buffer/common/mailbox.h"
 #include "jni/VrShellImpl_jni.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
-#include "ui/android/view_android.h"
 #include "ui/android/window_android.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/display/display.h"
@@ -62,7 +61,6 @@
 #include "url/gurl.h"
 
 using base::android::JavaParamRef;
-using base::android::JavaRef;
 
 namespace vr_shell {
 
@@ -91,7 +89,8 @@ void SetIsInVR(content::WebContents* contents, bool is_in_vr) {
 }  // namespace
 
 VrShell::VrShell(JNIEnv* env,
-                 jobject obj,
+                 const JavaParamRef<jobject>& obj,
+                 const JavaParamRef<jobject>& view_delegate,
                  ui::WindowAndroid* window,
                  bool for_web_vr,
                  bool web_vr_autopresented,
@@ -111,6 +110,9 @@ VrShell::VrShell(JNIEnv* env,
   g_instance = this;
   j_vr_shell_.Reset(env, obj);
 
+  window->AddChild(&view_android_);
+  view_android_.SetDelegate(view_delegate);
+
   gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
       for_web_vr, web_vr_autopresented, in_cct, reprojected_rendering_,
@@ -126,19 +128,15 @@ void VrShell::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   delete this;
 }
 
-void VrShell::SwapContents(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& web_contents,
-    const JavaParamRef<jobject>& touch_event_synthesizer) {
+void VrShell::SwapContents(JNIEnv* env,
+                           const JavaParamRef<jobject>& obj,
+                           const JavaParamRef<jobject>& web_contents) {
   content::WebContents* contents =
       content::WebContents::FromJavaWebContents(web_contents);
-  if (contents == web_contents_ &&
-      touch_event_synthesizer.obj() == j_motion_event_synthesizer_.obj())
+  if (contents == web_contents_)
     return;
 
   SetIsInVR(web_contents_, false);
-  j_motion_event_synthesizer_.Reset(env, touch_event_synthesizer);
   web_contents_ = contents;
   compositor_->SetLayer(web_contents_);
   SetIsInVR(web_contents_, true);
@@ -147,7 +145,7 @@ void VrShell::SwapContents(
 
   if (!web_contents_) {
     android_ui_gesture_target_ = base::MakeUnique<AndroidUiGestureTarget>(
-        j_motion_event_synthesizer_.obj(),
+        &view_android_,
         Java_VrShellImpl_getNativePageScrollRatio(env, j_vr_shell_.obj()));
     input_manager_ = nullptr;
     vr_web_contents_observer_ = nullptr;
@@ -706,6 +704,7 @@ bool VrShell::HasDaydreamSupport(JNIEnv* env) {
 jlong Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& delegate,
+           const JavaParamRef<jobject>& view_delegate,
            jlong window_android,
            jboolean for_web_vr,
            jboolean web_vr_autopresented,
@@ -713,8 +712,9 @@ jlong Init(JNIEnv* env,
            jlong gvr_api,
            jboolean reprojected_rendering) {
   return reinterpret_cast<intptr_t>(new VrShell(
-      env, obj, reinterpret_cast<ui::WindowAndroid*>(window_android),
-      for_web_vr, web_vr_autopresented, in_cct,
+      env, obj, view_delegate,
+      reinterpret_cast<ui::WindowAndroid*>(window_android), for_web_vr,
+      web_vr_autopresented, in_cct,
       VrShellDelegate::GetNativeVrShellDelegate(env, delegate),
       reinterpret_cast<gvr_context*>(gvr_api), reprojected_rendering));
 }

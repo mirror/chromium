@@ -9,7 +9,6 @@
 
 #include <memory>
 
-#include "base/android/jni_weak_ref.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -23,6 +22,7 @@
 #include "device/vr/android/gvr/gvr_gamepad_data_provider.h"
 #include "device/vr/vr_service.mojom.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"
+#include "ui/android/view_android.h"
 
 namespace blink {
 class WebInputEvent;
@@ -65,7 +65,8 @@ class VrShell : public device::GvrDelegate,
                 device::CardboardGamepadDataProvider {
  public:
   VrShell(JNIEnv* env,
-          jobject obj,
+          const base::android::JavaParamRef<jobject>& obj,
+          const base::android::JavaParamRef<jobject>& view_delegate,
           ui::WindowAndroid* window,
           bool for_web_vr,
           bool web_vr_autopresented,
@@ -73,11 +74,9 @@ class VrShell : public device::GvrDelegate,
           VrShellDelegate* delegate,
           gvr_context* gvr_api,
           bool reprojected_rendering);
-  void SwapContents(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj,
-      const base::android::JavaParamRef<jobject>& web_contents,
-      const base::android::JavaParamRef<jobject>& touch_event_synthesizer);
+  void SwapContents(JNIEnv* env,
+                    const base::android::JavaParamRef<jobject>& obj,
+                    const base::android::JavaParamRef<jobject>& web_contents);
   void LoadUIContent(JNIEnv* env,
                      const base::android::JavaParamRef<jobject>& obj);
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
@@ -239,6 +238,7 @@ class VrShell : public device::GvrDelegate,
   device::CardboardGamepadDataFetcher* cardboard_gamepad_data_fetcher_ =
       nullptr;
   int64_t cardboard_gamepad_timer_ = 0;
+  ui::ViewAndroid view_android_;
 
   base::WeakPtrFactory<VrShell> weak_ptr_factory_;
 
