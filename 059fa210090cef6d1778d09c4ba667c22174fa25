@@ -22,6 +22,30 @@
       "revId": "059fa210090cef6d1778d09c4ba667c22174fa25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2762b36_c61f6b2f",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-24T00:54:40Z",
+      "side": 0,
+      "message": "SxS installs of regular release channels on Linux wasn\u0027t supported at that time. So this code was only used for more uncommon channels. Then we decided to do SxS for regular channels and this code was reused.",
+      "parentUuid": "f319aae9_539751c7",
+      "range": {
+        "startLine": 59,
+        "startChar": 49,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "059fa210090cef6d1778d09c4ba667c22174fa25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
