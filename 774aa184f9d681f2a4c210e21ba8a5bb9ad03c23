@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6d4e1b1d_d769113d",
+        "filename": "base/memory/shared_memory_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1131524
+      },
+      "writtenOn": "2017-06-24T00:37:00Z",
+      "side": 1,
+      "message": "To record this here:\n\nProperties are different from rights. Rights can\u0027t be changed on a handle. You can a mint a new handle to an existing object that has the same or strictly fewer rights than the original object. This is done by the mx_handle_duplicate call, which makes a 2nd handle, or the mx_handle_replace call, which atomically removes the original handle and gives you a new handle.",
+      "parentUuid": "ddde23aa_8fbefb24",
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b30fc1e3_75fb6433",
         "filename": "base/memory/shared_memory_fuchsia.cc",
         "patchSetId": 11
