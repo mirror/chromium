@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d90cb2db_66d907cb",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-24T02:40:09Z",
+      "side": 1,
+      "message": "Hmm... actually, taking a look at this again, I realize it\u0027s not quite this easy.  In particular, window_id may be set to kCurrentWindowId, but that could still be acceptable, and |browser| may be changed below.  A slight modification to this: we should still be grabbing opener_browser as we are now, but we should check opener_browser against browser below.",
+      "revId": "baf1471c965586c1fc40eab25eb565196801063f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a838b44_1dadf42f",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-24T02:40:09Z",
+      "side": 1,
+      "message": "|browser| should be constant after this point, we should be able to do:\nif (opener_browser \u0026\u0026 browser !\u003d opener_browser) {\n  // set error, return null\n}",
+      "revId": "baf1471c965586c1fc40eab25eb565196801063f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
