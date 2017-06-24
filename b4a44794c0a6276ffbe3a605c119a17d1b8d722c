@@ -16,6 +16,24 @@
       "revId": "b4a44794c0a6276ffbe3a605c119a17d1b8d722c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcb0093_e6d82118",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-06-24T00:08:24Z",
+      "side": 1,
+      "message": "The build system defines use_atk as \"desktop linux \u0026\u0026 x11\"\n(https://cs.chromium.org/chromium/src/build/config/ui.gni?rcl\u003d2f1b767b58201b9e51e71f32eb57c57e17bd4793\u0026l\u003d68).\n\nIn the code, OS_LINUX \u0026\u0026 !OS_CHROMEOS \u003d\u003d desktop linux. Therefore, I\u0027ve passed use_atk as a buildflag and use it here (and the few other places in accessibility) and it _should_ be a NOP for chromecast etc (from my understanding).",
+      "parentUuid": "6ea59e9b_478c6a04",
+      "revId": "b4a44794c0a6276ffbe3a605c119a17d1b8d722c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
