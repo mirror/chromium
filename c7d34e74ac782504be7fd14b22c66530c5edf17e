@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab817751_043c036f",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-24T00:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91c014ca_bda7c70a",
+      "range": {
+        "startLine": 1885,
+        "startChar": 20,
+        "endLine": 1885,
+        "endChar": 32
+      },
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb4edb9a_5cf0b873",
         "filename": "chrome/browser/ui/views/tabs/newtab_promo.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1de59f8e_ebdf5bdd",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-24T00:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb4edb9a_5cf0b873",
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40465694_9d219d06",
         "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c70ad6_6441449b",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-24T00:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40465694_9d219d06",
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "5c3bc146_525444de",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-24T00:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e296dd_66ed1c57",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4415c3_13aa09bb",
         "filename": "chrome/browser/ui/views/tabs/newtab_promo_dialog_browsertest.cc",
         "patchSetId": 1
@@ -93,6 +177,30 @@
       "writtenOn": "2017-06-23T23:26:04Z",
       "side": 1,
       "message": "What is the test? Usually there\u0027s something to verify that the test has functionally correctly. :)",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "c7d34e74ac782504be7fd14b22c66530c5edf17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b843497_dfb9713c",
+        "filename": "chrome/browser/ui/views/tabs/newtab_promo_dialog_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-24T00:43:19Z",
+      "side": 1,
+      "message": "This test will allow for the promo to be invoked from command line. It allows for easy viewing without having to meet the triggering conditions. I based this off of a template that was linked so I am not sure if there needs to be a verification like you\u0027re describing. I still don\u0027t have this working and am going to follow up with Peter.\n\nRelevant Link: \nhttps://chromium.googlesource.com/chromium/src/+/master/docs/testing/test_browser_dialog.md",
+      "parentUuid": "0d4415c3_13aa09bb",
       "range": {
         "startLine": 17,
         "startChar": 26,
