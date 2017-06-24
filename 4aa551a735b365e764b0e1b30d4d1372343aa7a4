@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f81eb8e_435fcd8d",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-24T00:19:11Z",
+      "side": 1,
+      "message": "Can you add one line to the MemoryAllocatorDumpTest.GuidGeneration that checks if this functions returns the same guid as the guid of the created dump.",
+      "revId": "4aa551a735b365e764b0e1b30d4d1372343aa7a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
