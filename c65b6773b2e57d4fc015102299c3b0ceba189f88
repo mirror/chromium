@@ -141,6 +141,30 @@
       "revId": "c65b6773b2e57d4fc015102299c3b0ceba189f88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52293cfe_cc5eb59d",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 11898,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-24T00:10:33Z",
+      "side": 1,
+      "message": "Brain-dumping my thoughts after today\u0027s discussion:\n\n- cc::Layer::Inputs has two different fields: position and scroll_offset\n\n- both are exposed to blink via WebLayer:\n- GetPosition() / SetPosition() \u003c\u003d\u003d\u003e cc::Layer::Inputs::position\n- ScrollPosition() / SetScrollPosition() \u003c\u003d\u003d\u003e cc::Layer::Inputs::scroll_offset\n\n- in addition there is GraphicsLayer::position_, this should be in sync with cc::Layer::Inputs::position (assuming no one is doing WebLayer::SetPosition behind the GraphicsLayer\u0027s back)\n\n- one can imagine two possible strategies for scroll origin:\n\n- (A) Propagate scroll origin into cc::Layer::Inputs::position, let cc::Layer::Inputs::scroll_offset be the offset relative to the scroll origin.  In this case scroll_offset really is the \"scroll offset\" as we have defined it in core/layout/README.md, and the WebLayer methods should be renamed (s/ScrollPosition/ScrollOffset/).\n\n- (B) Let the scroll layer\u0027s cc::Layer::Inputs::position be (0, 0), and include the scroll origin in the value stored in cc::Layer::Inputs::scroll_offset.  In this case scroll_offset is actually \"scroll position\" and should be renamed as per the TODO in ui/gfx/geometry/scroll_offset.h.\n\n- it looks like PLC::FrameViewDidScroll is using strategy (A) but CLM::UpdateScrollingLayerGeometry is using strategy (B)?\n\n- I don\u0027t know which strategy is better.  I don\u0027t care which we use as long as CLM treats root layer the same as non-root layers.\n\n- It would be good to assert as much as possible in the test - i.e. check both WebLayer::GetPosition() and WebLayer::ScrollPosition().  And maybe GraphicsLayer::GetPosition() too just for fun.",
+      "parentUuid": "6bf666f8_0e48cdbc",
+      "range": {
+        "startLine": 11898,
+        "startChar": 21,
+        "endLine": 11898,
+        "endChar": 29
+      },
+      "revId": "c65b6773b2e57d4fc015102299c3b0ceba189f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
