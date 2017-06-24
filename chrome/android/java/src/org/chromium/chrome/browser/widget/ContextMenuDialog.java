@@ -20,9 +20,6 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.ScaleAnimation;
 
 import org.chromium.chrome.browser.contextmenu.TabularContextMenuViewPager;
-import org.chromium.content.browser.RenderCoordinates;
-
-import javax.annotation.Nullable;
 
 /**
  * ContextMenuDialog is a subclass of AlwaysDismissedDialog that ensures that the proper scale
@@ -37,7 +34,7 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
     private final View mContentView;
     private final float mTouchPointXPx;
     private final float mTouchPointYPx;
-    private final RenderCoordinates mRenderCoordinates;
+    private final float mTopContentOffsetYPx;
 
     private float mContextMenuSourceXPx;
     private float mContextMenuSourceYPx;
@@ -50,18 +47,17 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
      *              the default dialog theme
      * @param touchPointXPx The x-coordinate of the touch that triggered the context menu.
      * @param touchPointYPx The y-coordinate of the touch that triggered the context menu.
+     * @param topContentOffsetYPx The offset of the content from the top.
      * @param contentView The The {@link TabularContextMenuViewPager} to display on the dialog.
-     * @param renderCoordinates The render coordinates to get the y offset of the window. This could
-     *                          be null if ContentViewCore is not available.
      */
     public ContextMenuDialog(Activity ownerActivity, int theme, float touchPointXPx,
-            float touchPointYPx, View contentView, @Nullable RenderCoordinates renderCoordinates) {
+            float touchPointYPx, float topContentOffsetYPx, View contentView) {
         super(ownerActivity, theme);
         mActivity = ownerActivity;
         mTouchPointXPx = touchPointXPx;
         mTouchPointYPx = touchPointYPx;
+        mTopContentOffsetYPx = topContentOffsetYPx;
         mContentView = contentView;
-        mRenderCoordinates = renderCoordinates;
     }
 
     @Override
@@ -98,9 +94,7 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
         window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
 
         float xOffsetPx = rectangle.left;
-        float contentOffsetYPx =
-                mRenderCoordinates != null ? mRenderCoordinates.getContentOffsetYPix() : 0;
-        float yOffsetPx = rectangle.top + contentOffsetYPx;
+        float yOffsetPx = rectangle.top + mTopContentOffsetYPx;
 
         int[] currentLocationOnScreenPx = new int[2];
         mContentView.getLocationOnScreen(currentLocationOnScreenPx);
@@ -164,14 +158,8 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
         float fromY = fromX;
         float toY = toX;
 
-        ScaleAnimation animation;
-        if (mRenderCoordinates == null) {
-            animation = new ScaleAnimation(fromX, toX, fromY, toY, Animation.RELATIVE_TO_SELF, 0.5f,
-                    Animation.RELATIVE_TO_SELF, 0.5f);
-        } else {
-            animation = new ScaleAnimation(
-                    fromX, toX, fromY, toY, Animation.ABSOLUTE, pivotX, Animation.ABSOLUTE, pivotY);
-        }
+        ScaleAnimation animation = new ScaleAnimation(
+                fromX, toX, fromY, toY, Animation.ABSOLUTE, pivotX, Animation.ABSOLUTE, pivotY);
 
         long duration = isEnterAnimation ? ENTER_ANIMATION_DURATION_MS : EXIT_ANIMATION_DURATION_MS;
 
