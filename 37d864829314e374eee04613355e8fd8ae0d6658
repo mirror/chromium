@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbb6675b_302899cb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-24T01:14:16Z",
+      "side": 1,
+      "message": "ShouldPaintAllCollapsedBorders()",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9ee66a_1a476427",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-24T01:14:16Z",
+      "side": 1,
+      "message": "Are the invalidation changes here orthogonal to the main purpose\nof this CL?",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f16698_b01c58db",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-24T01:14:16Z",
+      "side": 1,
+      "message": "Is this an optimization that is of independent value?",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c18f440_3fe81bb8",
+        "filename": "third_party/WebKit/Source/core/paint/TableCellPaintInvalidator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-24T01:14:16Z",
+      "side": 1,
+      "message": "?\n\nAlso DCHECK(!SPv2)?",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597c24dd_fd1348a4",
+        "filename": "third_party/WebKit/Source/core/paint/TableRowPainter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-24T01:14:16Z",
+      "side": 1,
+      "message": "Why would this be called if ShouldPaintCollapsedBordersInWhole\nis true?",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

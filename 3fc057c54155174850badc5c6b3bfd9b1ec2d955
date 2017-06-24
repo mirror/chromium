@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df33a549_30a13367",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCellTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-24T01:14:16Z",
+      "side": 0,
+      "message": "This stuff is no longer relevant?",
+      "revId": "3fc057c54155174850badc5c6b3bfd9b1ec2d955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
