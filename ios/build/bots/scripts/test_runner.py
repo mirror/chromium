@@ -6,6 +6,7 @@
 
 import argparse
 import collections
+from datetime import datetime
 import errno
 import os
 import plistlib
@@ -266,6 +267,7 @@ class TestRunner(object):
     """
     print ' '.join(cmd)
     print
+    print self.get_launch_env
 
     result = gtest_utils.GTestResult(cmd)
     if self.xctest_path:
@@ -273,24 +275,14 @@ class TestRunner(object):
     else:
       parser = gtest_utils.GTestLogParser()
 
-    proc = subprocess.Popen(
-        cmd,
-        env=self.get_launch_env(),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    out = subprocess.check_output(cmd)
+    out = ''.join(out)
+    out = out.split('\n')
 
-    while True:
-      line = proc.stdout.readline()
-      if not line:
-        break
+    for line in out:
       line = line.rstrip()
       parser.ProcessLine(line)
       print line
-      sys.stdout.flush()
-
-    proc.wait()
-    sys.stdout.flush()
 
     for test in parser.FailedTests(include_flaky=True):
       # Test cases are named as <test group>.<test case>. If the test case
@@ -302,12 +294,9 @@ class TestRunner(object):
 
     result.passed_tests.extend(parser.PassedTests(include_flaky=True))
 
-    print '%s returned %s' % (cmd[0], proc.returncode)
-    print
-
     # iossim can return 5 if it exits noncleanly even if all tests passed.
     # Therefore we cannot rely on process exit code to determine success.
-    result.finalize(proc.returncode, parser.CompletedWithoutFailure())
+    result.finalize(0, parser.CompletedWithoutFailure())
     return result
 
   def launch(self):
