@@ -77,6 +77,11 @@ class InputMethodManagerImpl : public InputMethodManager,
     // Returns true if given input method requires pending extension.
     bool MethodAwaitsExtensionLoad(const std::string& input_method_id) const;
 
+    // Returns whether the input method (or keyboard layout) can be switched
+    // to the next or previous one. Returns false if only one input method is
+    // enabled.
+    bool CanCycleInputMethod() const;
+
     // InputMethodManager::State overrides.
     scoped_refptr<InputMethodManager::State> Clone() const override;
     void AddInputMethodExtension(
@@ -103,11 +108,8 @@ class InputMethodManagerImpl : public InputMethodManager,
     void SetInputMethodLoginDefault() override;
     void SetInputMethodLoginDefaultFromVPD(const std::string& locale,
                                            const std::string& layout) override;
-    bool CanCycleInputMethod() override;
     void SwitchToNextInputMethod() override;
     void SwitchToPreviousInputMethod() override;
-    bool CanSwitchInputMethod(const ui::Accelerator& accelerator) override;
-    void SwitchInputMethod(const ui::Accelerator& accelerator) override;
     InputMethodDescriptor GetCurrentInputMethod() const override;
     bool ReplaceEnabledInputMethods(
         const std::vector<std::string>& new_active_input_method_ids) override;
