@@ -11,10 +11,17 @@
 
 namespace mojo {
 
-StructTraits<gfx::mojom::SharedBufferSkBitmapDataView,
-             SkBitmap>::Context::Context() = default;
-StructTraits<gfx::mojom::SharedBufferSkBitmapDataView,
-             SkBitmap>::Context::~Context() = default;
+namespace {
+
+struct Context {
+  Context() = default;
+  ~Context() = default;
+
+  mojo::ScopedSharedBufferHandle read_only_shared_buffer_handle;
+  uint64_t buffer_byte_size = 0;
+};
+
+}  // namespace
 
 // static
 void* StructTraits<gfx::mojom::SharedBufferSkBitmapDataView,
@@ -28,11 +35,13 @@ void* StructTraits<gfx::mojom::SharedBufferSkBitmapDataView,
   // Use a context to serialize the bitmap to a shared buffer only once.
   Context* context = new Context;
   context->buffer_byte_size = serialized_sk_bitmap.size();
-  context->shared_buffer_handle =
+  mojo::ScopedSharedBufferHandle shared_buffer_handle =
       mojo::SharedBufferHandle::Create(context->buffer_byte_size);
   mojo::ScopedSharedBufferMapping mapping =
-      context->shared_buffer_handle->Map(context->buffer_byte_size);
+      shared_buffer_handle->Map(context->buffer_byte_size);
   memcpy(mapping.get(), serialized_sk_bitmap.data(), context->buffer_byte_size);
+  context->read_only_shared_buffer_handle = shared_buffer_handle->Clone(
+      mojo::SharedBufferHandle::AccessMode::READ_ONLY);
   return context;
 }
 
@@ -44,13 +53,11 @@ void StructTraits<gfx::mojom::SharedBufferSkBitmapDataView,
 }
 
 // static
-mojo::ScopedSharedBufferHandle
+mojo::ScopedSharedBufferHandle&
 StructTraits<gfx::mojom::SharedBufferSkBitmapDataView,
              SkBitmap>::shared_buffer_handle(const SkBitmap& input,
                                              void* context) {
-  return (static_cast<Context*>(context))
-      ->shared_buffer_handle->Clone(
-          mojo::SharedBufferHandle::AccessMode::READ_ONLY);
+  return (static_cast<Context*>(context))->read_only_shared_buffer_handle;
 }
 
 // static

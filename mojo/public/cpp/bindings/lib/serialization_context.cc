@@ -4,6 +4,7 @@
 
 #include "mojo/public/cpp/bindings/lib/serialization_context.h"
 
+#include <algorithm>
 #include <limits>
 
 #include "base/logging.h"
@@ -17,12 +18,18 @@ SerializedHandleVector::SerializedHandleVector() = default;
 
 SerializedHandleVector::~SerializedHandleVector() = default;
 
+void SerializedHandleVector::TrackHandle(mojo::Handle handle) {
+  tracked_handles_.emplace_back(handle);
+}
+
 Handle_Data SerializedHandleVector::AddHandle(mojo::ScopedHandle handle) {
   Handle_Data data;
   if (!handle.is_valid()) {
     data.value = kEncodedInvalidHandleValue;
   } else {
     DCHECK_LT(handles_.size(), std::numeric_limits<uint32_t>::max());
+    DCHECK_GE(tracked_handles_.size(), handles_.size() + 1);
+    DCHECK_EQ(tracked_handles_[handles_.size()].value(), handle->value());
     data.value = static_cast<uint32_t>(handles_.size());
     handles_.emplace_back(std::move(handle));
   }
@@ -50,7 +57,13 @@ SerializationContext::~SerializationContext() {
 void SerializationContext::AttachHandlesToMessage(Message* message) {
   associated_endpoint_handles.swap(
       *message->mutable_associated_endpoint_handles());
-  message->AttachHandles(handles.mutable_handles());
+
+  // The attached handles must have already been serialized into |*message|, so
+  // this just releases the context's ownership.
+  std::vector<mojo::ScopedHandle> serialized_handles;
+  handles.Swap(&serialized_handles);
+  std::for_each(serialized_handles.begin(), serialized_handles.end(),
+                [](ScopedHandle& handle) { ignore_result(handle.release()); });
 }
 
 }  // namespace internal

@@ -500,26 +500,29 @@ TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
 }
 
 TEST_F(StructTraitsTest, CopyOutputRequest_CallbackRunsOnce) {
+  using Traits = mojo::StructTraits<mojom::CopyOutputRequestDataView,
+                                    std::unique_ptr<CopyOutputRequest>>;
   int n_called = 0;
   auto request = CopyOutputRequest::CreateRequest(
       base::Bind(CopyOutputRequestCallbackRunsOnceCallback, &n_called));
-  auto result_sender = mojo::StructTraits<
-      mojom::CopyOutputRequestDataView,
-      std::unique_ptr<CopyOutputRequest>>::result_sender(request);
+  auto* context = Traits::SetUpContext(request);
+  auto& result_sender = Traits::result_sender(request, context);
   for (int i = 0; i < 10; i++)
     result_sender->SendResult(CopyOutputResult::CreateEmptyResult());
   EXPECT_EQ(0, n_called);
   result_sender.FlushForTesting();
   EXPECT_EQ(1, n_called);
+  Traits::TearDownContext(request, context);
 }
 
 TEST_F(StructTraitsTest, CopyOutputRequest_MessagePipeBroken) {
+  using Traits = mojo::StructTraits<mojom::CopyOutputRequestDataView,
+                                    std::unique_ptr<CopyOutputRequest>>;
   base::RunLoop run_loop;
   auto request = CopyOutputRequest::CreateRequest(base::Bind(
       CopyOutputRequestMessagePipeBrokenCallback, run_loop.QuitClosure()));
-  auto result_sender = mojo::StructTraits<
-      mojom::CopyOutputRequestDataView,
-      std::unique_ptr<CopyOutputRequest>>::result_sender(request);
+  auto* context = Traits::SetUpContext(request);
+  auto& result_sender = Traits::result_sender(request, context);
   result_sender.reset();
   // The callback must be called with an empty CopyOutputResult. If it's never
   // called, this will never end and the test times out.

@@ -124,8 +124,8 @@ struct StructTraits<test::MoveOnlyStructWithTraitsDataView,
 
   // Fields in test::MoveOnlyStructWithTraits.
   // See src/mojo/public/interfaces/bindings/tests/struct_with_traits.mojom.
-  static ScopedHandle f_handle(test::MoveOnlyStructWithTraitsImpl& value) {
-    return std::move(value.get_mutable_handle());
+  static ScopedHandle& f_handle(test::MoveOnlyStructWithTraitsImpl& value) {
+    return value.get_mutable_handle();
   }
 };
 
