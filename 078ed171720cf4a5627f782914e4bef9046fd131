@@ -34,6 +34,24 @@
       "revId": "078ed171720cf4a5627f782914e4bef9046fd131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2de475_8c17b3a3",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-24T16:06:48Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "dfb174d0_e29c5e3e",
+      "revId": "078ed171720cf4a5627f782914e4bef9046fd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
