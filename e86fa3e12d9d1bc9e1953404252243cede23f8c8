@@ -16,6 +16,24 @@
       "revId": "e86fa3e12d9d1bc9e1953404252243cede23f8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c1ac9a_6bfc9f21",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-24T02:17:38Z",
+      "side": 1,
+      "message": "We figured that LOG and DCHECK was better as it would allow us to detect this on real devices as well. I can make this have a return value as well for test in a follow up patch if you think that would still be useful. Let me know.",
+      "parentUuid": "e44a70ee_a784a7d5",
+      "revId": "e86fa3e12d9d1bc9e1953404252243cede23f8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
