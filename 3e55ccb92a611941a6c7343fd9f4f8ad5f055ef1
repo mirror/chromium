@@ -45,6 +45,29 @@
       "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60bdd3e0_afc580f4",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115582
+      },
+      "writtenOn": "2017-06-24T01:37:29Z",
+      "side": 1,
+      "message": "This looks like an abstract base class. Use \u003d0 to make this a pure virtual function. Please also add comments for both the class {Observer} and this function to describe what they\u0027re supposed to do.\n\nhttps://stackoverflow.com/questions/2652198/difference-between-a-virtual-function-and-a-pure-virtual-function",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
