@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "3e2eae0d_8a4204a2",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-24T00:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9f5fcf3_7047e7fd",
+      "revId": "8d9d79a9f191fe26d90e10fd9bc4e43d08f0e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e662ee5_4f8a99ad",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
         "patchSetId": 2
