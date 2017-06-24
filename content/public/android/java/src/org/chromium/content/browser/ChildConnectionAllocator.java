@@ -26,8 +26,13 @@ import java.util.List;
 public class ChildConnectionAllocator {
     private static final String TAG = "ChildConnAllocator";
 
-    /** Listener that clients can use to get notified when connections get freed. */
+    /** Listener that clients can use to get notified when connections get allocated/freed. */
     public interface Listener {
+        /** Called when a connection has been allocated, before it gets bound. */
+        void onConnectionAllocated(
+                ChildConnectionAllocator allocator, ChildProcessConnection connection);
+
+        /** Called when a connection has been freed. */
         void onConnectionFreed(
                 ChildConnectionAllocator allocator, ChildProcessConnection connection);
     }
@@ -212,6 +217,12 @@ public class ChildConnectionAllocator {
         ChildProcessConnection connection = mConnectionFactory.createConnection(
                 context, serviceName, mBindAsExternalService, serviceBundle, mCreationParams);
         mChildProcessConnections[slot] = connection;
+
+        List<Listener> listeners = new ArrayList<>(mListeners);
+        for (Listener listener : listeners) {
+            listener.onConnectionAllocated(this, connection);
+        }
+
         connection.start(mUseStrongBinding, serviceCallbackWrapper);
         Log.d(TAG, "Allocator allocated and bound a connection, name: %s, slot: %d",
                 mServiceClassName, slot);
