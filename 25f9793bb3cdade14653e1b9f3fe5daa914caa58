@@ -16,6 +16,24 @@
       "revId": "25f9793bb3cdade14653e1b9f3fe5daa914caa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519a2fb4_eb7e1d36",
+        "filename": "tools/gn/visual_studio_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1219010
+      },
+      "writtenOn": "2017-06-24T05:31:31Z",
+      "side": 1,
+      "message": "Well, I\u0027ve done that on purpose to avoid char[] to std::string conversion in each call to UnicodeTarget. But, I didn\u0027t know about special operator\u003d\u003d overload for std::string and const char*. Fixed.",
+      "parentUuid": "a66b4672_e2af967a",
+      "revId": "25f9793bb3cdade14653e1b9f3fe5daa914caa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
