@@ -5,49 +5,39 @@
 #include "components/web_contents_delegate_android/validation_message_bubble_android.h"
 
 #include "base/android/jni_string.h"
-#include "content/public/browser/android/content_view_core.h"
-#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/ValidationMessageBubble_jni.h"
-#include "ui/gfx/geometry/rect.h"
+#include "ui/android/view_android.h"
+#include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/geometry/size_conversions.h"
 
 using base::android::ConvertUTF16ToJavaString;
-using content::ContentViewCore;
-using content::RenderWidgetHost;
+using content::WebContents;
 
 namespace {
 
-base::android::ScopedJavaLocalRef<jobject> GetJavaContentViewCoreFrom(
-    RenderWidgetHost* widget_host) {
-  ContentViewCore* content_view_core =
-      ContentViewCore::FromWebContents(content::WebContents::FromRenderViewHost(
-          content::RenderViewHost::From(widget_host)));
-  if (!content_view_core)
-    return base::android::ScopedJavaLocalRef<jobject>();
-  return content_view_core->GetJavaObject();
+gfx::Rect ScaleToRoundedRect(const gfx::Rect& rect, float scale) {
+  gfx::RectF scaledRect(rect);
+  scaledRect.Scale(scale);
+  return ToNearestRect(scaledRect);
 }
+
+gfx::Size ScaleToRoundedSize(const gfx::SizeF& size, float scale) {
+  return gfx::ToRoundedSize(gfx::ScaleSize(size, scale));
 }
+}  // namespace
 
 namespace web_contents_delegate_android {
 
 ValidationMessageBubbleAndroid::ValidationMessageBubbleAndroid(
-    RenderWidgetHost* widget_host,
-    const gfx::Rect& anchor_in_root_view,
+    content::WebContents* web_contents,
+    const gfx::Rect& anchor_in_screen,
     const base::string16& main_text,
-    const base::string16& sub_text) {
-  base::android::ScopedJavaLocalRef<jobject> java_content_view_core =
-      GetJavaContentViewCoreFrom(widget_host);
-  if (java_content_view_core.is_null())
-    return;
-
-  JNIEnv* env = base::android::AttachCurrentThread();
-  java_validation_message_bubble_.Reset(
-      Java_ValidationMessageBubble_createAndShowIfApplicable(
-          env, java_content_view_core, anchor_in_root_view.x(),
-          anchor_in_root_view.y(), anchor_in_root_view.width(),
-          anchor_in_root_view.height(),
-          ConvertUTF16ToJavaString(env, main_text),
-          ConvertUTF16ToJavaString(env, sub_text)));
+    const base::string16& sub_text)
+    : initialized_(false) {
+  Show(web_contents->GetNativeView(), anchor_in_screen, main_text, sub_text);
+  initialized_ = true;
 }
 
 ValidationMessageBubbleAndroid::~ValidationMessageBubbleAndroid() {
@@ -58,18 +48,37 @@ ValidationMessageBubbleAndroid::~ValidationMessageBubbleAndroid() {
 }
 
 void ValidationMessageBubbleAndroid::SetPositionRelativeToAnchor(
-    RenderWidgetHost* widget_host, const gfx::Rect& anchor_in_root_view) {
-  base::android::ScopedJavaLocalRef<jobject> java_content_view_core =
-      GetJavaContentViewCoreFrom(widget_host);
-  if (java_content_view_core.is_null() ||
-      java_validation_message_bubble_.is_null()) {
+    WebContents* web_contents,
+    const gfx::Rect& anchor_in_screen) {
+  if (java_validation_message_bubble_.is_null())
     return;
-  }
+  base::string16 unused;
+  Show(web_contents->GetNativeView(), anchor_in_screen, unused, unused);
+}
 
-  Java_ValidationMessageBubble_setPositionRelativeToAnchor(
-      base::android::AttachCurrentThread(), java_validation_message_bubble_,
-      java_content_view_core, anchor_in_root_view.x(), anchor_in_root_view.y(),
-      anchor_in_root_view.width(), anchor_in_root_view.height());
+void ValidationMessageBubbleAndroid::Show(gfx::NativeView view,
+                                          const gfx::Rect& anchor_in_screen,
+                                          const base::string16& main_text,
+                                          const base::string16& sub_text) {
+  // Convert to physical pixel unit before passing to Java.
+  float scale = view->GetDipScale();
+  gfx::Rect anchor = ScaleToRoundedRect(anchor_in_screen, scale);
+  gfx::Size viewport = ScaleToRoundedSize(view->viewport_size(), scale);
+  JNIEnv* env = base::android::AttachCurrentThread();
+  if (!initialized_) {
+    java_validation_message_bubble_.Reset(
+        Java_ValidationMessageBubble_createAndShowIfApplicable(
+            env, view->GetContainerView(), viewport.width(), viewport.height(),
+            view->content_offset() * scale, anchor.x(), anchor.y(),
+            anchor.width(), anchor.height(),
+            ConvertUTF16ToJavaString(env, main_text),
+            ConvertUTF16ToJavaString(env, sub_text)));
+  } else {
+    Java_ValidationMessageBubble_setPositionRelativeToAnchor(
+        env, java_validation_message_bubble_, viewport.width(),
+        viewport.height(), view->content_offset() * scale, anchor.x(),
+        anchor.y(), anchor.width(), anchor.height());
+  }
 }
 
 }  // namespace web_contents_delegate_android
