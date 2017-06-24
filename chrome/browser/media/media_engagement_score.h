@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/time/clock.h"
 #include "base/values.h"
+#include "chrome/browser/media/media_engagement_details.mojom.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "url/gurl.h"
 
@@ -51,6 +52,9 @@ class MediaEngagementScore {
 
   // Calculate the score as per the formula in the design doc.
   static double CalculateScore(int visits, int media_playbacks);
+
+  // Get a breakdown of the score that can be serialized by Mojo.
+  mojom::MediaEngagementDetails GetDetails() const;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(MediaEngagementScoreTest, PartiallyEmptyDictionary);

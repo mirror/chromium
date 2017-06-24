@@ -111,11 +111,22 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
 
   base::Time TimeNotSet() const { return base::Time(); }
 
+  std::vector<mojom::MediaEngagementDetails> GetAllDetails() const {
+    return service_->GetAllDetails();
+  }
+
  private:
   base::SimpleTestClock* test_clock_ = nullptr;
   std::unique_ptr<MediaEngagementService> service_;
   base::test::ScopedFeatureList scoped_feature_list_;
 };
+
+TEST_F(MediaEngagementServiceTest, MojoSerialization) {
+  EXPECT_EQ(0u, GetAllDetails().size());
+
+  NavigateAndInteract(GURL("https://www.google.com"));
+  EXPECT_EQ(1u, GetAllDetails().size());
+}
 
 TEST_F(MediaEngagementServiceTest, RestrictedToHTTPAndHTTPS) {
   // The https and http versions of www.google.com should be separate.

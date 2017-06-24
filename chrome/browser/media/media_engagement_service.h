@@ -8,6 +8,7 @@
 #include <set>
 
 #include "base/macros.h"
+#include "chrome/browser/media/media_engagement_details.mojom.h"
 #include "chrome/browser/media/media_engagement_score.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "url/gurl.h"
@@ -43,6 +44,10 @@ class MediaEngagementService : public KeyedService {
 
   // Returns a map of all stored origins and their engagement levels.
   std::map<GURL, double> GetScoreMap() const;
+
+  // Returns an array of engagement score details for all origins which
+  // have a score.
+  std::vector<mojom::MediaEngagementDetails> GetAllDetails() const;
 
   enum InteractionTypes {
     INTERACTION_VISIT = 1 << 0,         // The URL was visited.

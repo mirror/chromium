@@ -671,6 +671,9 @@
         <include name="IDR_SANDBOX_INTERNALS_HTML" file="resources\sandbox_internals\sandbox_internals.html" flattenhtml="true" allowexternalscript="true" type="BINDATA" compress="gzip" />
         <include name="IDR_SANDBOX_INTERNALS_JS" file="resources\sandbox_internals\sandbox_internals.js" type="BINDATA" compress="gzip" />
       </if>
+      <include name="IDR_MEDIA_ENGAGEMENT_HTML" file="resources\media\media_engagement.html" flattenhtml="true" type="BINDATA" compress="gzip" />
+      <include name="IDR_MEDIA_ENGAGEMENT_JS" file="resources\media\media_engagement.js" flattenhtml="true" type="BINDATA" compress="gzip" />
+      <include name="IDR_MEDIA_ENGAGEMENT_MOJO_JS" file="${root_gen_dir}\chrome\browser\media\media_engagement_details.mojom.js" use_base_dir="false" type="BIND    ATA" compress="gzip" />
     </includes>
   </release>
 </grit>

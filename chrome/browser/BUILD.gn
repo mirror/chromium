@@ -4456,6 +4456,7 @@ grit("resources") {
     # file, rather than the whole mojo target which will link the C++ bindings.
     "//chrome/app:chrome_content_manifest_overlays",
     "//chrome/browser/engagement:mojo_bindings__generator",
+    "//chrome/browser/media:mojo_bindings__generator",
     "//chrome/browser/ui/webui/omnibox:mojo_bindings__generator",
     "//chrome/browser/ui/webui/usb_internals:mojo_bindings__generator",
     "//device/bluetooth/public/interfaces:experimental_interfaces__generator",
