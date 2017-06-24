@@ -295,6 +295,8 @@ bool HasDataReductionProxyViaHeader(const net::HttpResponseHeaders& headers,
   size_t iter = 0;
   std::string value;
 
+  LOG(INFO) << headers.raw_headers();
+
   // Case-sensitive comparison of |value|. Assumes the received protocol and the
   // space following it are always |kVersionSize| characters. E.g.,
   // 'Via: 1.1 Chrome-Compression-Proxy'
@@ -306,9 +308,11 @@ bool HasDataReductionProxyViaHeader(const net::HttpResponseHeaders& headers,
         // We assume intermediary exists if there is another Via header after
         // the data reduction proxy's Via header.
         *has_intermediary = !(headers.EnumerateHeader(&iter, "via", &value));
+      LOG(INFO) << "Has header";
       return true;
     }
   }
+  LOG(INFO) << "No header";
 
   return false;
 }
