@@ -70,6 +70,7 @@ void RecordNewContentLengthHistograms(
       suffix = ".ViaDRP";
       break;
     case HTTPS:
+    case DIRECT_HTTP:
       suffix = ".Direct";
       break;
     case SHORT_BYPASS:
