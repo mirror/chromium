@@ -24,7 +24,7 @@ class WebState;
 // Implements the app-side of the Payment Request JavaScript API. Injects and
 // listens to the injected JavaScript and invokes the creation of the user
 // interface.
-@interface PaymentRequestManager : NSObject<PaymentRequestUIDelegate>
+@interface PaymentRequestManager : NSObject
 
 // YES if Payment Request is enabled on the current web state.
 @property(readonly) BOOL enabled;
