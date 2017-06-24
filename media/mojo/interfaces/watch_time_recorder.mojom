@@ -1,0 +1,26 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+import "media/mojo/interfaces/media_types.mojom";
+import "mojo/common/time.mojom";
+import "url/mojo/origin.mojom";
+
+interface WatchTimeRecorder {
+  RecordWatchTime(string key, mojo.common.mojom.TimeDelta value);
+
+  FinalizeWatchTime();
+  FinalizePowerWatchTime();
+  FinalizeControlsWatchTime();
+  FinalizeDisplayWatchTime();
+
+  UpdateUnderflowCount(int32 count);
+};
+
+interface WatchTimeRecorderProvider {
+  AcquireWatchTimeRecorder(AudioCodec audio_codec, VideoCodec video_codec,
+                           bool is_mse, bool is_eme, url.mojom.Origin origin,
+                           WatchTimeRecorder& recorder);
+};

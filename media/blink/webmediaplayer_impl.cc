@@ -338,8 +338,9 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
   // Only URL or MSE blob URL is supported.
   DCHECK(source.IsURL());
   blink::WebURL url = source.GetAsURL();
-  DVLOG(1) << __func__ << "(" << load_type << ", " << url << ", " << cors_mode
-           << ")";
+  // DVLOG(1) << __func__ << "(" << load_type << ", " << url << ", " <<
+  // cors_mode
+  //          << ")";
   if (!defer_load_cb_.is_null()) {
     defer_load_cb_.Run(base::Bind(&WebMediaPlayerImpl::DoLoad, AsWeakPtr(),
                                   load_type, url, cors_mode));
@@ -2336,7 +2337,7 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
   watch_time_reporter_.reset(
       new WatchTimeReporter(HasAudio(), HasVideo(), !!chunk_demuxer_,
                             is_encrypted_, embedded_media_experience_enabled_,
-                            media_log_.get(), pipeline_metadata_.natural_size,
+                            nullptr, pipeline_metadata_.natural_size,
                             base::Bind(&GetCurrentTimeInternal, this)));
   watch_time_reporter_->OnVolumeChange(volume_);
 

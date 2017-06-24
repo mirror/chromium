@@ -29,7 +29,7 @@ WatchTimeReporter::WatchTimeReporter(bool has_audio,
                                      bool is_mse,
                                      bool is_encrypted,
                                      bool is_embedded_media_experience_enabled,
-                                     MediaLog* media_log,
+                                     mojom::WatchTimeRecorderPtr recorder,
                                      const gfx::Size& initial_video_size,
                                      const GetMediaTimeCB& get_media_time_cb)
     : WatchTimeReporter(has_audio,
@@ -37,7 +37,7 @@ WatchTimeReporter::WatchTimeReporter(bool has_audio,
                         is_mse,
                         is_encrypted,
                         is_embedded_media_experience_enabled,
-                        media_log,
+                        std::move(recorder),
                         initial_video_size,
                         get_media_time_cb,
                         false) {}
@@ -47,7 +47,7 @@ WatchTimeReporter::WatchTimeReporter(bool has_audio,
                                      bool is_mse,
                                      bool is_encrypted,
                                      bool is_embedded_media_experience_enabled,
-                                     MediaLog* media_log,
+                                     mojom::WatchTimeRecorderPtr recorder,
                                      const gfx::Size& initial_video_size,
                                      const GetMediaTimeCB& get_media_time_cb,
                                      bool is_background)
@@ -57,7 +57,7 @@ WatchTimeReporter::WatchTimeReporter(bool has_audio,
       is_encrypted_(is_encrypted),
       is_embedded_media_experience_enabled_(
           is_embedded_media_experience_enabled),
-      media_log_(media_log),
+      recorder_(std::move(recorder)),
       initial_video_size_(initial_video_size),
       get_media_time_cb_(get_media_time_cb),
       is_background_(is_background) {
@@ -77,9 +77,10 @@ WatchTimeReporter::WatchTimeReporter(bool has_audio,
   // reporter which receives play when hidden and pause when shown. This avoids
   // unnecessary complexity inside the UpdateWatchTime() for handling this case.
   if (has_video_ && has_audio_ && ShouldReportWatchTime()) {
+    // TODO(dalecurtis): How to share |reporter_| with inner reporter?
     background_reporter_.reset(
         new WatchTimeReporter(has_audio_, false, is_mse_, is_encrypted_,
-                              is_embedded_media_experience_enabled_, media_log_,
+                              is_embedded_media_experience_enabled_, nullptr,
                               initial_video_size_, get_media_time_cb_, true));
   }
 }
@@ -323,25 +324,21 @@ void WatchTimeReporter::UpdateWatchTime() {
       is_finalizing ? end_timestamp_ : get_media_time_cb_.Run();
   const base::TimeDelta elapsed = current_timestamp - start_timestamp_;
 
-  std::unique_ptr<MediaLogEvent> log_event =
-      media_log_->CreateEvent(MediaLogEvent::Type::WATCH_TIME_UPDATE);
-
 #define RECORD_WATCH_TIME(key, value)                                      \
   do {                                                                     \
-    log_event->params.SetDoubleWithoutPathExpansion(                       \
+    recorder_->RecordWatchTime(                                            \
         has_video_ ? kWatchTimeAudioVideo##key                             \
                    : (is_background_ ? kWatchTimeAudioVideoBackground##key \
                                      : kWatchTimeAudio##key),              \
-        value.InSecondsF());                                               \
+        value);                                                            \
   } while (0)
 
 // Similar to RECORD_WATCH_TIME but ignores background watch time.
-#define RECORD_FOREGROUND_WATCH_TIME(key, value)                       \
-  do {                                                                 \
-    DCHECK(!is_background_);                                           \
-    log_event->params.SetDoubleWithoutPathExpansion(                   \
-        has_video_ ? kWatchTimeAudioVideo##key : kWatchTimeAudio##key, \
-        value.InSecondsF());                                           \
+#define RECORD_FOREGROUND_WATCH_TIME(key, value)                               \
+  do {                                                                         \
+    DCHECK(!is_background_);                                                   \
+    recorder_->RecordWatchTime(                                                \
+        has_video_ ? kWatchTimeAudioVideo##key : kWatchTimeAudio##key, value); \
   } while (0)
 
   // Only report watch time after some minimum amount has elapsed. Don't update
@@ -447,25 +444,22 @@ void WatchTimeReporter::UpdateWatchTime() {
       }
     }
 
-    log_event->params.SetInteger(kWatchTimeUnderflowCount, underflow_count_);
+    recorder_->UpdateUnderflowCount(underflow_count_);
     pending_underflow_events_.clear();
   }
 
   // Always send finalize, even if we don't currently have any data, it's
   // harmless to send since nothing will be logged if we've already finalized.
   if (is_finalizing) {
-    log_event->params.SetBoolean(kWatchTimeFinalize, true);
+    recorder_->FinalizeWatchTime();
   } else {
     if (is_power_change_pending)
-      log_event->params.SetBoolean(kWatchTimeFinalizePower, true);
+      recorder_->FinalizePowerWatchTime();
     if (is_controls_change_pending)
-      log_event->params.SetBoolean(kWatchTimeFinalizeControls, true);
+      recorder_->FinalizeControlsWatchTime();
     if (is_display_type_change_pending)
-      log_event->params.SetBoolean(kWatchTimeFinalizeDisplay, true);
+      recorder_->FinalizeDisplayWatchTime();
   }
-
-  if (!log_event->params.empty())
-    media_log_->AddEvent(std::move(log_event));
 
   if (is_power_change_pending) {
     // Invert battery power status here instead of using the value returned by

@@ -14,6 +14,7 @@
 #include "media/base/media_log.h"
 #include "media/base/timestamp_constants.h"
 #include "media/blink/media_blink_export.h"
+#include "media/mojo/interfaces/watch_time_recorder.mojom.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -69,7 +70,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
                     bool is_mse,
                     bool is_encrypted,
                     bool is_embedded_media_experience_enabled,
-                    MediaLog* media_log,
+                    mojom::WatchTimeRecorderPtr recorder,
                     const gfx::Size& initial_video_size,
                     const GetMediaTimeCB& get_media_time_cb);
   ~WatchTimeReporter() override;
@@ -149,7 +150,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
                     bool is_mse,
                     bool is_encrypted,
                     bool is_embedded_media_experience_enabled,
-                    MediaLog* media_log,
+                    mojom::WatchTimeRecorderPtr recorder,
                     const gfx::Size& initial_video_size,
                     const GetMediaTimeCB& get_media_time_cb,
                     bool is_background);
@@ -174,7 +175,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   const bool is_mse_;
   const bool is_encrypted_;
   const bool is_embedded_media_experience_enabled_;
-  MediaLog* media_log_;
+  mojom::WatchTimeRecorderPtr recorder_;
   const gfx::Size initial_video_size_;
   const GetMediaTimeCB get_media_time_cb_;
   const bool is_background_;
