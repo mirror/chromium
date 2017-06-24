@@ -7,13 +7,18 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutTableRow TR id='row'",
-          "rect": [8, 8, 60, 54],
+          "object": "LayoutTableRow TR",
+          "rect": [8, 108, 114, 53],
           "reason": "style change"
         },
         {
           "object": "LayoutTableRow TR",
-          "rect": [8, 58, 60, 53],
+          "rect": [8, 59, 114, 53],
+          "reason": "style change"
+        },
+        {
+          "object": "LayoutTableRow TR",
+          "rect": [8, 8, 114, 53],
           "reason": "style change"
         }
       ]
@@ -21,7 +26,15 @@
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutTableRow TR id='row'",
+      "object": "LayoutTableSection TBODY id='tbody'",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableRow TR",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableRow TR",
       "reason": "style change"
     },
     {
