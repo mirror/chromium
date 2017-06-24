@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7d1b82c9_e8088377",
+        "filename": "base/memory/shared_memory_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-24T01:54:14Z",
+      "side": 1,
+      "message": "Thanks, switched to _replace and MX_DEFAULT_VMO_RIGHTS \u0026 ~MX_RIGHT_EXECUTE.",
+      "parentUuid": "6d4e1b1d_d769113d",
+      "revId": "774aa184f9d681f2a4c210e21ba8a5bb9ad03c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b30fc1e3_75fb6433",
         "filename": "base/memory/shared_memory_fuchsia.cc",
         "patchSetId": 11
