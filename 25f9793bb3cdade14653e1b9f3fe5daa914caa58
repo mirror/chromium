@@ -34,6 +34,24 @@
       "revId": "25f9793bb3cdade14653e1b9f3fe5daa914caa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb6b4c0_3919c84b",
+        "filename": "tools/gn/visual_studio_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1219010
+      },
+      "writtenOn": "2017-06-24T05:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "519a2fb4_eb7e1d36",
+      "revId": "25f9793bb3cdade14653e1b9f3fe5daa914caa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
