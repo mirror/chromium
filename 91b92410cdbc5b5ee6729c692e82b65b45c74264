@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e51d7bf4_49c10531",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-24T22:58:46Z",
+      "side": 1,
+      "message": "Done, but I removed this line, has a discussion with Tommy and Shakti, all download code seems to be lazy initialized. So we probably can also be lazy initialized? \n\nAlso there is an issue that if unit tests can create real version of this class, and it will also create a real download service.",
+      "parentUuid": "195c8a8e_88c85d24",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 223,
+        "endChar": 31
+      },
+      "revId": "91b92410cdbc5b5ee6729c692e82b65b45c74264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0dfa0fe_d6bfe464",
         "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
         "patchSetId": 1
