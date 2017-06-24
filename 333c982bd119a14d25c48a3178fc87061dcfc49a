@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85105682_12b9b58e",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-24T00:37:24Z",
+      "side": 1,
+      "message": "We could just make this String(address).",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "333c982bd119a14d25c48a3178fc87061dcfc49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebf6a2a_ae8628a5",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-24T00:37:24Z",
+      "side": 1,
+      "message": "This should remain \"shared_memory/\" + id.ToString();",
+      "revId": "333c982bd119a14d25c48a3178fc87061dcfc49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b22f832_d6a60721",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-24T00:37:24Z",
+      "side": 1,
+      "message": "What would happen if we get rid of this code and always use dump_name \u003d \"shared_memory/\" + String(address);.\n\nThis way we ensure that we create dumps with different names for all the shared memory segments and we also add the right global dump edges using shm tokens to not double count.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 5
+      },
+      "revId": "333c982bd119a14d25c48a3178fc87061dcfc49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0156fce5_05b970a7",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-24T00:37:24Z",
+      "side": 1,
+      "message": "This is not true anymore with your other CL. The PMD::CSMOE does not create memory dumps.",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "333c982bd119a14d25c48a3178fc87061dcfc49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e094b0d_5282dc79",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-24T00:37:24Z",
+      "side": 1,
+      "message": "primiano says it is harmful",
+      "range": {
+        "startLine": 78,
+        "startChar": 64,
+        "endLine": 79,
+        "endChar": 62
+      },
+      "revId": "333c982bd119a14d25c48a3178fc87061dcfc49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1712e8f_0286eae7",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-24T00:37:24Z",
+      "side": 1,
+      "message": "Now this looks like a real problem. I think the right solution is to use the SharedMemory\u0027s address instead of token to create local dump names.",
+      "range": {
+        "startLine": 437,
+        "startChar": 0,
+        "endLine": 438,
+        "endChar": 64
+      },
+      "revId": "333c982bd119a14d25c48a3178fc87061dcfc49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
