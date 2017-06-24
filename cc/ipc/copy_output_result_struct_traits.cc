@@ -47,9 +47,43 @@ void Release(cc::mojom::TextureMailboxReleaserPtr ptr,
   ptr->Release(sync_token, is_lost);
 }
 
+class CopyOutputResultContext {
+ public:
+  explicit CopyOutputResultContext(
+      std::unique_ptr<cc::SingleReleaseCallback> release_callback) {
+    if (!release_callback)
+      return;
+    auto impl = base::MakeUnique<TextureMailboxReleaserImpl>(
+        std::move(release_callback));
+    MakeStrongBinding(std::move(impl), MakeRequest(&releaser_));
+  }
+  ~CopyOutputResultContext() = default;
+
+  cc::mojom::TextureMailboxReleaserPtr& releaser() { return releaser_; }
+
+ private:
+  cc::mojom::TextureMailboxReleaserPtr releaser_;
+
+  DISALLOW_COPY_AND_ASSIGN(CopyOutputResultContext);
+};
+
 }  // namespace
 
 namespace mojo {
+
+// static
+void* StructTraits<cc::mojom::CopyOutputResultDataView,
+                   std::unique_ptr<cc::CopyOutputResult>>::
+    SetUpContext(std::unique_ptr<cc::CopyOutputResult>& result) {
+  return new CopyOutputResultContext(std::move(result->release_callback_));
+}
+// static
+void StructTraits<cc::mojom::CopyOutputResultDataView,
+                  std::unique_ptr<cc::CopyOutputResult>>::
+    TearDownContext(const std::unique_ptr<cc::CopyOutputResult>& result,
+                    void* context) {
+  delete static_cast<CopyOutputResultContext*>(context);
+}
 
 // static
 const SkBitmap& StructTraits<cc::mojom::CopyOutputResultDataView,
@@ -62,17 +96,12 @@ const SkBitmap& StructTraits<cc::mojom::CopyOutputResultDataView,
 }
 
 // static
-cc::mojom::TextureMailboxReleaserPtr
+cc::mojom::TextureMailboxReleaserPtr&
 StructTraits<cc::mojom::CopyOutputResultDataView,
              std::unique_ptr<cc::CopyOutputResult>>::
-    releaser(const std::unique_ptr<cc::CopyOutputResult>& result) {
-  if (!result->release_callback_)
-    return {};
-  cc::mojom::TextureMailboxReleaserPtr releaser;
-  auto impl = base::MakeUnique<TextureMailboxReleaserImpl>(
-      std::move(result->release_callback_));
-  MakeStrongBinding(std::move(impl), MakeRequest(&releaser));
-  return releaser;
+    releaser(const std::unique_ptr<cc::CopyOutputResult>& result,
+             void* context) {
+  return static_cast<CopyOutputResultContext*>(context)->releaser();
 }
 
 // static

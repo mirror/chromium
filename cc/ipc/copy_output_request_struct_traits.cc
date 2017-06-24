@@ -41,20 +41,51 @@ void SendResult(cc::mojom::CopyOutputResultSenderPtr ptr,
   ptr->SendResult(std::move(result));
 }
 
+class CopyOutputRequestContext {
+ public:
+  explicit CopyOutputRequestContext(
+      const cc::CopyOutputRequest::CopyOutputRequestCallback& callback) {
+    auto impl =
+        base::MakeUnique<CopyOutputResultSenderImpl>(std::move(callback));
+    MakeStrongBinding(std::move(impl), MakeRequest(&result_sender_));
+  }
+  ~CopyOutputRequestContext() = default;
+
+  cc::mojom::CopyOutputResultSenderPtr& result_sender() {
+    return result_sender_;
+  }
+
+ private:
+  cc::mojom::CopyOutputResultSenderPtr result_sender_;
+
+  DISALLOW_COPY_AND_ASSIGN(CopyOutputRequestContext);
+};
+
 }  // namespace
 
 namespace mojo {
 
 // static
-cc::mojom::CopyOutputResultSenderPtr
+void* StructTraits<cc::mojom::CopyOutputRequestDataView,
+                   std::unique_ptr<cc::CopyOutputRequest>>::
+    SetUpContext(const std::unique_ptr<cc::CopyOutputRequest>& request) {
+  return new CopyOutputRequestContext(request->result_callback_);
+}
+// static
+void StructTraits<cc::mojom::CopyOutputRequestDataView,
+                  std::unique_ptr<cc::CopyOutputRequest>>::
+    TearDownContext(const std::unique_ptr<cc::CopyOutputRequest>& request,
+                    void* context) {
+  delete static_cast<CopyOutputRequestContext*>(context);
+}
+
+// static
+cc::mojom::CopyOutputResultSenderPtr&
 StructTraits<cc::mojom::CopyOutputRequestDataView,
              std::unique_ptr<cc::CopyOutputRequest>>::
-    result_sender(const std::unique_ptr<cc::CopyOutputRequest>& request) {
-  cc::mojom::CopyOutputResultSenderPtr result_sender;
-  auto impl = base::MakeUnique<CopyOutputResultSenderImpl>(
-      std::move(request->result_callback_));
-  MakeStrongBinding(std::move(impl), MakeRequest(&result_sender));
-  return result_sender;
+    result_sender(const std::unique_ptr<cc::CopyOutputRequest>& request,
+                  void* context) {
+  return static_cast<CopyOutputRequestContext*>(context)->result_sender();
 }
 
 // static
