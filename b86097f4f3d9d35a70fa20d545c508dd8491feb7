@@ -22,6 +22,30 @@
       "revId": "b86097f4f3d9d35a70fa20d545c508dd8491feb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1744bf9_88f5a079",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-24T03:51:56Z",
+      "side": 1,
+      "message": "1. I was hoping to have this generically apply to all of them. I guess I\u0027ll rephase it.\n2. It\u0027s up for debate. It\u0027s much less common than within Blink though, so for consistency, I\u0027m using a pointer.",
+      "parentUuid": "0a6a3d97_f37793bc",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "b86097f4f3d9d35a70fa20d545c508dd8491feb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
