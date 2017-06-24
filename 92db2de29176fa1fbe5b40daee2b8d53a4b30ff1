@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "282a6ec9_68e07ca5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000336
+      },
+      "writtenOn": "2017-06-24T02:24:09Z",
+      "side": 1,
+      "message": "I see.  It certainly merits some additions to the documentation for \u0027template\u0027 talking about the case of redefining built-in target types.",
+      "parentUuid": "0142f6c6_32f2a256",
+      "range": {
+        "startLine": 11,
+        "startChar": 58,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "92db2de29176fa1fbe5b40daee2b8d53a4b30ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9bc4cb7_989a2f65",
         "filename": "tools/gn/functions.cc",
         "patchSetId": 1
