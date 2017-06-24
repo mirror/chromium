@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "efd2a808_be0f8a32",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-24T22:49:21Z",
+      "side": 1,
+      "message": "Move CanActiveMoreDownloads to while(), so temporary keep this name.\n\nPreviously I considered to use ShouldNotActiveMoreDownload to avoid flipping the bit, but feel like it\u0027s even worse than flipping the bit...",
+      "parentUuid": "36c9c109_5c1ab7a2",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2aba4330_4ea1794b",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "0f2d9144_a9c884ea",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-24T22:49:21Z",
+      "side": 1,
+      "message": "These are different configs, follow the design doc here.",
+      "parentUuid": "c57d9129_41237879",
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad1c8ed9_85a7df6b",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -95,6 +137,30 @@
       "writtenOn": "2017-06-23T22:57:58Z",
       "side": 1,
       "message": "Should we just get rid of the if check above and below and make this:\n\nwhile (CanActiveMoreDownloads(...) \u0026\u0026 next) {\n  // ...\n}",
+      "range": {
+        "startLine": 826,
+        "startChar": 2,
+        "endLine": 826,
+        "endChar": 16
+      },
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64158fd2_d9e8e34c",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-24T22:49:21Z",
+      "side": 1,
+      "message": "Done. This changed the function behavior a little bit. An unnecessary Next/Reschedule might be called if the first one should be blocked.",
+      "parentUuid": "ad1c8ed9_85a7df6b",
       "range": {
         "startLine": 826,
         "startChar": 2,
