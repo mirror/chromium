@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0142f6c6_32f2a256",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2017-06-24T02:21:06Z",
+      "side": 1,
+      "message": "It is actually even possible to still refer to the original target type from within the template because of the evaluation order. However, in our case it is not needed. I tried this in Fuchsia and it allows us to use this:\n\nif (is_fuchsia \u0026\u0026 !is_pic_default) {\n  template(\"shared_library\") {\n    group(target_name) {\n      not_needed(invoker, \"*\")\n      public_deps \u003d [ \":$target_name($shared_toolchain)\" ]\n    }\n  }\n}",
+      "parentUuid": "69a042f8_28784e55",
+      "range": {
+        "startLine": 11,
+        "startChar": 58,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "92db2de29176fa1fbe5b40daee2b8d53a4b30ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9bc4cb7_989a2f65",
         "filename": "tools/gn/functions.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4e5d3f6f_562df3b9",
+        "filename": "tools/gn/functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2017-06-24T02:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9bc4cb7_989a2f65",
+      "range": {
+        "startLine": 1073,
+        "startChar": 17,
+        "endLine": 1073,
+        "endChar": 25
+      },
+      "revId": "92db2de29176fa1fbe5b40daee2b8d53a4b30ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b1c8fc_57ef58db",
         "filename": "tools/gn/functions.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "92db2de29176fa1fbe5b40daee2b8d53a4b30ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc70278_4b3e1a31",
+        "filename": "tools/gn/functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2017-06-24T02:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78b1c8fc_57ef58db",
+      "range": {
+        "startLine": 1084,
+        "startChar": 2,
+        "endLine": 1084,
+        "endChar": 7
+      },
+      "revId": "92db2de29176fa1fbe5b40daee2b8d53a4b30ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
