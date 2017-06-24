@@ -35,6 +35,9 @@ Polymer({
      */
     lidClosedControlled_: Boolean,
 
+    /** @private {settings.LidClosedBehavior} Current lid-closed behavior. */
+    lidClosedBehavior_: Number,
+
     /** @private {boolean} Whether the system posesses a lid. */
     hasLid_: Boolean,
 
@@ -74,9 +77,15 @@ Polymer({
     },
 
     /** @private */
-    lidClosedOptions_: {
-      type: Array,
-      computed: 'computeLidClosedOptions_(lidClosedControlled_)',
+    lidClosedLabel_: {
+      type: String,
+      computed: 'computeLidClosedLabel_(lidClosedBehavior_)',
+    },
+
+    /** @private */
+    lidClosedChecked_: {
+      type: Boolean,
+      computed: 'computeLidClosedChecked_(lidClosedBehavior_)',
     },
   },
 
@@ -173,33 +182,43 @@ Polymer({
   },
 
   /**
-   * @param {boolean} lidClosedControlled
-   * @return {!Array<!{value: settings.LidClosedBehavior, name: string}>}
-   *     Options to display in lid-closed-behavior select.
+   * @param {settings.LidClosedBehavior} lidClosedBehavior
+   * @return {string} Label for lid-closed behavior.
    * @private
    */
-  computeLidClosedOptions_: function(lidClosedControlled) {
-    var options = [
-      {
-        value: settings.LidClosedBehavior.SUSPEND,
-        name: loadTimeData.getString('powerLidClosedSleep'),
-      },
-      {
-        value: settings.LidClosedBehavior.DO_NOTHING,
-        name: loadTimeData.getString('powerLidClosedStayAwake'),
-      },
-    ];
-    if (lidClosedControlled) {
-      // Some options are only settable via policy.
-      options.push({
-        value: settings.LidClosedBehavior.STOP_SESSION,
-        name: loadTimeData.getString('powerLidClosedSignOut'),
-      }, {
-        value: settings.LidClosedBehavior.SHUT_DOWN,
-        name: loadTimeData.getString('powerLidClosedShutDown'),
-      });
+  computeLidClosedLabel_: function(lidClosedBehavior) {
+    switch (lidClosedBehavior) {
+      case settings.LidClosedBehavior.SUSPEND:
+      case settings.LidClosedBehavior.DO_NOTHING:
+        // "Suspend" and "do nothing" share the "sleep" label and communicate
+        // their state via the toggle state.
+        return loadTimeData.getString('powerLidSleepLabel');
+      case settings.LidClosedBehavior.STOP_SESSION:
+        return loadTimeData.getString('powerLidSignOutLabel');
+      case settings.LidClosedBehavior.SHUT_DOWN:
+        return loadTimeData.getString('powerLidShutDownLabel');
+      default:
+        return '';
     }
-    return options;
+  },
+
+  /**
+   * @param {settings.LidClosedBehavior} lidClosedBehavior
+   * @return {boolean} Checkbox state for lid-closed behavior.
+   * @private
+   */
+  computeLidClosedChecked_: function(lidClosedBehavior) {
+    switch (lidClosedBehavior) {
+      case settings.LidClosedBehavior.SUSPEND:
+      case settings.LidClosedBehavior.STOP_SESSION:
+      case settings.LidClosedBehavior.SHUT_DOWN:
+        // Most behaviors get a dedicated label and appear as checked.
+        return true;
+      default:
+        // For DO_NOTHING, display the "sleep" label and leave the toggle
+        // unchecked.
+        return false;
+    }
   },
 
   /** @private */
@@ -216,11 +235,15 @@ Polymer({
   },
 
   /** @private */
-  onLidClosedSelectChange_: function() {
-    var behavior = /** @type {settings.LidClosedBehavior} */
-        (parseInt(this.$.lidClosedSelect.value, 10));
-    settings.DevicePageBrowserProxyImpl.getInstance().setLidClosedBehavior(
-        behavior);
+  onLidClosedToggleChange_: function() {
+    if (!this.lidClosedControlled_) {
+      // Other behaviors are only displayed when the setting is controlled, in
+      // which case the toggle can't be changed by the user.
+      settings.DevicePageBrowserProxyImpl.getInstance().setLidClosedBehavior(
+          this.lidClosedBehavior_ == settings.LidClosedBehavior.SUSPEND ?
+              settings.LidClosedBehavior.DO_NOTHING :
+              settings.LidClosedBehavior.SUSPEND);
+    }
   },
 
   /**
@@ -237,21 +260,21 @@ Polymer({
   },
 
   /**
-   * @param {!settings.PowerManagementSettings} settings Current power
+   * @param {!settings.PowerManagementSettings} browserSettings Current power
    *     management settings.
    * @private
    */
-  powerManagementSettingsChanged_: function(settings) {
-    this.idleControlled_ = settings.idleControlled;
-    this.lidClosedControlled_ = settings.lidClosedControlled;
-    this.hasLid_ = settings.hasLid;
+  powerManagementSettingsChanged_: function(browserSettings) {
+    this.idleControlled_ = browserSettings.idleControlled;
+    this.lidClosedControlled_ = browserSettings.lidClosedControlled;
+    this.hasLid_ = browserSettings.hasLid;
+    this.lidClosedBehavior_ = browserSettings.lidClosedBehavior;
 
-    // The select elements include "Other" options when controlled but omit them
-    // otherwise. Make sure that the options are there before we potentially try
-    // to select them.
+    // The idle behavior select element includes an "Other" option when
+    // controlled but omits it otherwise. Make sure that the option is there
+    // before we potentially try to select it.
     this.async(function() {
-      this.$.idleSelect.value = settings.idleBehavior;
-      this.$.lidClosedSelect.value = settings.lidClosedBehavior;
+      this.$.idleSelect.value = browserSettings.idleBehavior;
     });
   },
 
