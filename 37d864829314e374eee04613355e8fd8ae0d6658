@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "663af5e4_af7e78c3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-24T18:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb6675b_302899cb",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d9ee66a_1a476427",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-24T01:14:16Z",
       "side": 1,
       "message": "Are the invalidation changes here orthogonal to the main purpose\nof this CL?",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b17c8fa_82b8222a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-24T18:05:52Z",
+      "side": 1,
+      "message": "No. This is required because the display item clients of collapsed borders are now rows or table instead of cells. We need to invalidate different things. Simplification of paint invalidation of collapsed borders is also a purpose of this CL.",
+      "parentUuid": "5d9ee66a_1a476427",
       "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3de41f86_10261b89",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-24T18:05:52Z",
+      "side": 1,
+      "message": "This is required to avoid wrong optimization. For the following table\n\u003ctable style\u003d\"border-collapse: collapse\"\u003e\n  \u003ctr\u003e\u003ctd style\u003d\"border: ...\"\u003e\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e,\nwithout this change, the row\u0027s PaintedOutputOfObjectHasNoEffectRegardlessOfSize() would return true while it paints collapsed borders, which would trigger DCHECK failure in DrawingRecorder and may cause under-invalidations.",
+      "parentUuid": "b5f16698_b01c58db",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c18f440_3fe81bb8",
         "filename": "third_party/WebKit/Source/core/paint/TableCellPaintInvalidator.cpp",
         "patchSetId": 8
@@ -70,6 +124,41 @@
     },
     {
       "key": {
+        "uuid": "256676bd_820a19cd",
+        "filename": "third_party/WebKit/Source/core/paint/TableCellPaintInvalidator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-24T18:05:52Z",
+      "side": 1,
+      "message": "The invalidation is only needed if the container has not been invalidated. The callsites have checked condition.\n\nIn the latest patch, this condition is changed to !IsImmediateFullPaintInvaldationReason(container.GetPaintInvalidationReason()) to be safer in case the container did only incremental invalidation.\n\nThis is for both SPv1 and v2. It handles cases is like:\n\u003ctable style\u003d\"width: 200px; border-collapse: collapse\"\u003e\n  \u003ctr\u003e\u003ctd\u003e\u003c/td\u003e\u003ctd\u003e\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\nWhen one of the td changes width, the geometry of tr and table may not be affected so their paint invalidation won\u0027t see the change when PrePaintTreeWalk walked them. When we walk a cells and find that its geometry has changed and the row has not been invalidated, we need to invalidate the row immediately here.",
+      "parentUuid": "3c18f440_3fe81bb8",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305209ea_0c7fdeea",
+        "filename": "third_party/WebKit/Source/core/paint/TableCellPaintInvalidator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-24T18:05:52Z",
+      "side": 1,
+      "message": "The above line is new in this CL. Previously for the background case, we invalidate the display item client only, assuming that cell\u0027s raster invalidation will cover the changed area of the container, but that fails if the cell and the container are not on the same backing.\n\nThe line 35 condition implies !SPv2. Added !SPv2 here to make it explicit.",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "597c24dd_fd1348a4",
         "filename": "third_party/WebKit/Source/core/paint/TableRowPainter.cpp",
         "patchSetId": 8
@@ -81,6 +170,24 @@
       "writtenOn": "2017-06-24T01:14:16Z",
       "side": 1,
       "message": "Why would this be called if ShouldPaintCollapsedBordersInWhole\nis true?",
+      "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3ca104_e06f54d6",
+        "filename": "third_party/WebKit/Source/core/paint/TableRowPainter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-24T18:05:52Z",
+      "side": 1,
+      "message": "ShouldPaintCollapsedBorderInWhole affects which of table and rows should create display items for collapsed borders. No matter who create the display items, collapsed borders are always painted in the call path of\n  TablePainter::PaintCollapsedBorders\n\u003d\u003eTableSectionPainter::PaintCollapsedBorders\n\u003d\u003eTableRowPainter::PaintCollapsedBorders\n\u003d\u003eCollapsedBorderPainter::PaintCollapsedBorders.",
+      "parentUuid": "597c24dd_fd1348a4",
       "revId": "37d864829314e374eee04613355e8fd8ae0d6658",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

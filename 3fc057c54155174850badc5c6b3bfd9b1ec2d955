@@ -16,6 +16,24 @@
       "revId": "3fc057c54155174850badc5c6b3bfd9b1ec2d955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640e970f_b8b334dc",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCellTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-24T18:05:52Z",
+      "side": 0,
+      "message": "Right. Now cell\u0027s visual rect doesn\u0027t have anything special to test.",
+      "parentUuid": "df33a549_30a13367",
+      "revId": "3fc057c54155174850badc5c6b3bfd9b1ec2d955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
