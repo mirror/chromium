@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8545b059_d21586c7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Nit: \"It is\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 48,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998ba4a3_1833e5e9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Nit: It is the number of \"concurrent\" watchings it counts maybe? Poor wording on my part, but I guess you want to see that startWatching() and stopWatching() being called an appropriate amount of times?",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986d6844_169f31a4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Nit: public final. You never change the reference.",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4909819d_94a6710c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Nit: public final. You never change the reference.",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd579267_3fcb9e51",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Nit: Just screenshotShowUiCount for public members.",
+      "range": {
+        "startLine": 61,
+        "startChar": 29,
+        "endLine": 61,
+        "endChar": 31
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4f4fc1_3acfc5b7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Now that you have this great infrastructure to write tests in, could you add a test where you do start, onevent, stop, start, onevent?\n\nJust to ensure that onEvent() keeps working across a restart?",
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f3f4a4_095d6d92",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "You want this to be 0.",
+      "range": {
+        "startLine": 220,
+        "startChar": 50,
+        "endLine": 220,
+        "endChar": 51
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f71718_fc3d6b00",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Remove this block.",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 9
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c949654_05d17b8d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "0",
+      "range": {
+        "startLine": 243,
+        "startChar": 50,
+        "endLine": 243,
+        "endChar": 51
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5851047c_cd0f2204",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Remove this whole block.",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 9
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9dfd92d_c98f2236",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "0",
+      "range": {
+        "startLine": 268,
+        "startChar": 50,
+        "endLine": 268,
+        "endChar": 51
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4120c610_ea2aba7a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Remove this whole block.",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 9
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8bc6473_46e1aff2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "0",
+      "range": {
+        "startLine": 296,
+        "startChar": 50,
+        "endLine": 296,
+        "endChar": 51
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56843ae9_307777c6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Remove this whole block.",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 9
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb31980_8a06a64f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "0",
+      "range": {
+        "startLine": 323,
+        "startChar": 50,
+        "endLine": 323,
+        "endChar": 51
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c603fb_f691e5f6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "Remove this whole block.",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 9
+      },
+      "revId": "d227e75c2bb0f8d09a8338f07955913bc5928c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

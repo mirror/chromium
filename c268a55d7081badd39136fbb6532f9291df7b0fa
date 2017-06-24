@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4cfc772_1a49ef23",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-24T00:46:39Z",
+      "side": 1,
+      "message": "I don\u0027t think you want this try/catch block at all. Just set the semaphore to 0 instead.",
+      "revId": "c268a55d7081badd39136fbb6532f9291df7b0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
