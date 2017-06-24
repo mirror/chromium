@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f319aae9_539751c7",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-24T00:23:30Z",
+      "side": 0,
+      "message": "Interestingly, at the time this comment about \"limited use channels\" was written, the check above it said:\n\n  if [ \"$CHANNEL\" \u003d \"trunk\" ] || [ \"$CHANNEL\" \u003d \"asan\" ]; then\n\n(https://codereview.chromium.org/16226025/diff/12002/chrome/installer/linux/debian/build.sh)\n\nThe beta and dev channels which trigger this codepath today aren\u0027t quite so \"limited\".",
+      "range": {
+        "startLine": 59,
+        "startChar": 49,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "059fa210090cef6d1778d09c4ba667c22174fa25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
