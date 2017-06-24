@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43645342_e1eb3649",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "In general, along with ownership semantics are also interface semantics.\ne.g. if A owns B, A will call public methods of B, but B doesn\u0027t know about A. \n\nIf B really has to know about A, we use a design pattern called delegation.\n\ne.g.\n\nA inherits from B::Delegate, which defines the methods B wants to call on A.\n\nIn this case, however, we can be much simpler. There are exactly 2 invocations of tab_strip_ from NewTabPromo: here and line 88.\n\n  1) We can pass the AnchorRect as a parameter to the constructor.\n  2) Instead of having a timer here, which fires to tell the TabStrip to dismiss this class, why dont\u0027 we just have a timer in the TabStrip, that fires to dismiss this class?",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503a265e_47f0f840",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "What are the ownership semantics of the newly created widget?",
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9b8a65_c4571f97",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "as I mentioned in a previous round, please remove all instances of this-\u003e",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cfd852_994711f1",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "Okay. So apparently the ownership semantics in Views are totally busted. But we will do our best to be good citizens.\n\nSetLayoutManager takes ownership of box_layout. But until then, box_layout is unowned. That means that if someone came along and added a return to line 66, this object would leak.\n\nLet\u0027s wrap this in a std::unique_ptr, and then use release() on line 71 to pass ownership into setlayoutmanager.\n\nThe real of thumb: Every time you use \"new\", place the results in a std::unique_ptr.",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3c4b9d_5965961e",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "Any time tab_strip_-\u003eIsShowingPromo() would return a different value, NewTabButton::PaintButtonContents must be called. \n\nThis should be very explicitly commented, and enforced. [How are you enforcing this now?]",
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5f039c_8658d66a",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "Why is a getter method changing the flag color?",
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4159cf49_51cf0845",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "std::unique_ptr",
+      "range": {
+        "startLine": 1391,
+        "startChar": 22,
+        "endLine": 1391,
+        "endChar": 33
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd38f31_4c8dcdd4",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "Getters should return internal state, not change internal state.\n\nThat means that line 1412 belongs somewhere else.",
+      "range": {
+        "startLine": 1407,
+        "startChar": 15,
+        "endLine": 1407,
+        "endChar": 29
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aaa356d_32a744f6",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-24T01:31:48Z",
+      "side": 1,
+      "message": "Use the minimum visibility necessary. Do these need to be public? Also, comments for all methods please.",
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
