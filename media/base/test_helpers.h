@@ -165,6 +165,12 @@ MATCHER_P(SegmentMissingFrames, track_id, "") {
                std::string(track_id));
 }
 
+MATCHER(MuxedSequenceModeWarning, "") {
+  return CONTAINS_STRING(arg,
+                         "Detected attempt to use MSE 'sequence' AppendMode "
+                         "with a multitrack bytestream.");
+}
+
 MATCHER(StreamParsingFailed, "") {
   return CONTAINS_STRING(arg, "Append: stream parsing failed.");
 }
