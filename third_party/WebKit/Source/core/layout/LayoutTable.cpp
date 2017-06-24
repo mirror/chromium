@@ -1435,28 +1435,6 @@ LayoutTable* LayoutTable::CreateAnonymousWithParent(
   return new_table;
 }
 
-BorderValue LayoutTable::TableStartBorderAdjoiningCell(
-    const LayoutTableCell* cell) const {
-#if DCHECK_IS_ON()
-  DCHECK(cell->IsFirstOrLastCellInRow());
-#endif
-  if (HasSameDirectionAs(cell->Row()))
-    return Style()->BorderStart();
-
-  return Style()->BorderEnd();
-}
-
-BorderValue LayoutTable::TableEndBorderAdjoiningCell(
-    const LayoutTableCell* cell) const {
-#if DCHECK_IS_ON()
-  DCHECK(cell->IsFirstOrLastCellInRow());
-#endif
-  if (HasSameDirectionAs(cell->Row()))
-    return Style()->BorderEnd();
-
-  return Style()->BorderStart();
-}
-
 void LayoutTable::EnsureIsReadyForPaintInvalidation() {
   LayoutBlock::EnsureIsReadyForPaintInvalidation();
 
@@ -1591,12 +1569,11 @@ unsigned LayoutTable::ComputeCollapsedOuterBorderStart() const {
   // of the first and last cells in the first row. See the CSS 2.1 spec,
   // section 17.6.2.
   if (const auto* section = TopNonEmptySection()) {
+    DCHECK(HasSameDirectionAs(section));
     if (const auto* row = section->FirstRow()) {
-      if (const auto* cell = HasSameDirectionAs(section) ? row->FirstCell()
-                                                         : row->LastCell()) {
-        return HasSameDirectionAs(row) ? cell->CollapsedOuterBorderStart()
-                                       : cell->CollapsedOuterBorderEnd();
-      }
+      DCHECK(HasSameDirectionAs(row));
+      if (const auto* cell = row->FirstCell())
+        return cell->CollapsedOuterBorderStart();
     }
   }
   return 0;
@@ -1609,12 +1586,11 @@ unsigned LayoutTable::ComputeCollapsedOuterBorderEnd() const {
   // of the first and last cells in the first row. See the CSS 2.1 spec,
   // section 17.6.2.
   if (const auto* section = TopNonEmptySection()) {
+    DCHECK(HasSameDirectionAs(section));
     if (const auto* row = section->FirstRow()) {
-      if (const auto* cell = HasSameDirectionAs(section) ? row->LastCell()
-                                                         : row->FirstCell()) {
-        return HasSameDirectionAs(row) ? cell->CollapsedOuterBorderEnd()
-                                       : cell->CollapsedOuterBorderStart();
-      }
+      DCHECK(HasSameDirectionAs(row));
+      if (const auto* cell = row->LastCell())
+        return cell->CollapsedOuterBorderEnd();
     }
   }
   return 0;
