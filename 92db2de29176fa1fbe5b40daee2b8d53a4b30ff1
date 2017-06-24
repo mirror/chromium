@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69a042f8_28784e55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000336
+      },
+      "writtenOn": "2017-06-24T01:39:55Z",
+      "side": 1,
+      "message": "Perhaps clarify that it makes the original built-in target type inaccessible.\nSo it\u0027s only of use in cases where you want to completely replace a given target type within a given toolchain context.  This is what we want for our use in Fuchsia, which will look like:\n\ntemplate(shared_library) {\n  group(target_name) {\n    deps \u003d [ \"$target_name($shared_toolchain)\" ]\n  }\n}",
+      "range": {
+        "startLine": 11,
+        "startChar": 58,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "92db2de29176fa1fbe5b40daee2b8d53a4b30ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bc4cb7_989a2f65",
+        "filename": "tools/gn/functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1000336
+      },
+      "writtenOn": "2017-06-24T01:39:55Z",
+      "side": 1,
+      "message": "Fix the comment: // Check for a template before checking for built-in functions.",
+      "range": {
+        "startLine": 1073,
+        "startChar": 17,
+        "endLine": 1073,
+        "endChar": 25
+      },
+      "revId": "92db2de29176fa1fbe5b40daee2b8d53a4b30ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b1c8fc_57ef58db",
+        "filename": "tools/gn/functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1000336
+      },
+      "writtenOn": "2017-06-24T01:39:55Z",
+      "side": 1,
+      "message": "Comment here: // No template matching this, check for a built-in function.",
+      "range": {
+        "startLine": 1084,
+        "startChar": 2,
+        "endLine": 1084,
+        "endChar": 7
+      },
+      "revId": "92db2de29176fa1fbe5b40daee2b8d53a4b30ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
