@@ -69,7 +69,7 @@ def ProvisionDevices(args):
   devices = [d for d in device_utils.DeviceUtils.HealthyDevices(blacklist)
              if not args.emulators or d.adb.is_emulator]
   if args.device:
-    devices = [d for d in devices if d == args.device]
+    devices = [d for d in devices if d in args.device]
   if not devices:
     raise device_errors.DeviceUnreachableError(args.device)
   parallel_devices = device_utils.DeviceUtils.parallel(devices)
