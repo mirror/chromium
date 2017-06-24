@@ -24,6 +24,9 @@ Transform3DRecorder::Transform3DRecorder(GraphicsContext& context,
   if (skip_recording_for_identity_transform_)
     return;
 
+  // Content under a software transform is not culled, even if clipped out.
+  // This may lead to under-invalidation false positives.
+  context_.GetPaintController().BeginSkippingUnderInvalidationCheckig();
   context_.GetPaintController().CreateAndAppend<BeginTransform3DDisplayItem>(
       client_, type_, transform, transform_origin);
 }
@@ -34,6 +37,7 @@ Transform3DRecorder::~Transform3DRecorder() {
   if (skip_recording_for_identity_transform_)
     return;
 
+  context_.GetPaintController().EndSkippingUnderInvalidationChecking();
   context_.GetPaintController().EndItem<EndTransform3DDisplayItem>(
       client_, DisplayItem::Transform3DTypeToEndTransform3DType(type_));
 }

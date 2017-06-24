@@ -137,6 +137,14 @@ class PLATFORM_EXPORT PaintController {
   }
   bool IsSkippingCache() const { return skipping_cache_count_; }
 
+  void BeginSkippingUnderInvalidationCheckig() {
+    skip_under_invalidation_checking_count_++;
+  }
+  void EndSkippingUnderInvalidationChecking() {
+    DCHECK_GT(skip_under_invalidation_checking_count_, 0);
+    skip_under_invalidation_checking_count_--;
+  }
+
   // Must be called when a painting is finished.
   void CommitNewDisplayItems();
 
@@ -219,6 +227,7 @@ class PLATFORM_EXPORT PaintController {
 #endif
         under_invalidation_checking_begin_(0),
         under_invalidation_checking_end_(0),
+        skip_under_invalidation_checking_count_(0),
         last_cached_subsequence_end_(0) {
     ResetCurrentListIndices();
     // frame_first_paints_ should have one null frame since the beginning, so
@@ -412,6 +421,8 @@ class PLATFORM_EXPORT PaintController {
   // of no-op pairs or compositing folding.
   int skipped_probable_under_invalidation_count_;
   String under_invalidation_message_prefix_;
+
+  int skip_under_invalidation_checking_count_;
 
   struct RasterInvalidationTrackingInfo {
     using ClientDebugNamesMap = HashMap<const DisplayItemClient*, String>;
