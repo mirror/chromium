@@ -48,7 +48,6 @@ class TetheringHandler : public DevToolsDomainHandler,
   std::unique_ptr<Tethering::Frontend> frontend_;
   CreateServerSocketCallback socket_callback_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-  bool is_active_;
   base::WeakPtrFactory<TetheringHandler> weak_factory_;
 
   static TetheringImpl* impl_;

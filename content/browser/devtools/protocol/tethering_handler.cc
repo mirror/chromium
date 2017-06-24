@@ -323,15 +323,12 @@ TetheringHandler::TetheringHandler(
     : DevToolsDomainHandler(Tethering::Metainfo::domainName),
       socket_callback_(socket_callback),
       task_runner_(task_runner),
-      is_active_(false),
       weak_factory_(this) {
 }
 
 TetheringHandler::~TetheringHandler() {
-  if (is_active_) {
+  if (impl_)
     task_runner_->DeleteSoon(FROM_HERE, impl_);
-    impl_ = nullptr;
-  }
 }
 
 void TetheringHandler::Wire(UberDispatcher* dispatcher) {
@@ -343,16 +340,6 @@ void TetheringHandler::Accepted(uint16_t port, const std::string& name) {
   frontend_->Accepted(port, name);
 }
 
-bool TetheringHandler::Activate() {
-  if (is_active_)
-    return true;
-  if (impl_)
-    return false;
-  is_active_ = true;
-  impl_ = new TetheringImpl(weak_factory_.GetWeakPtr(), socket_callback_);
-  return true;
-}
-
 void TetheringHandler::Bind(
     int port, std::unique_ptr<BindCallback> callback) {
   if (port < kMinTetheringPort || port > kMaxTetheringPort) {
@@ -360,13 +347,9 @@ void TetheringHandler::Bind(
     return;
   }
 
-  if (!Activate()) {
-    callback->sendFailure(
-        Response::Error("Tethering is used by another connection"));
-    return;
-  }
+  if (!impl_)
+    impl_ = new TetheringImpl(weak_factory_.GetWeakPtr(), socket_callback_);
 
-  DCHECK(impl_);
   task_runner_->PostTask(
       FROM_HERE, base::Bind(&TetheringImpl::Bind, base::Unretained(impl_),
                             port, base::Passed(std::move(callback))));
@@ -374,13 +357,11 @@ void TetheringHandler::Bind(
 
 void TetheringHandler::Unbind(
     int port, std::unique_ptr<UnbindCallback> callback) {
-  if (!Activate()) {
-    callback->sendFailure(
-        Response::Error("Tethering is used by another connection"));
+  if (!impl_) {
+    callback->sendFailure(Response::InvalidParams("Port is not bound"));
     return;
   }
 
-  DCHECK(impl_);
   task_runner_->PostTask(
       FROM_HERE, base::Bind(&TetheringImpl::Unbind, base::Unretained(impl_),
                             port, base::Passed(std::move(callback))));
