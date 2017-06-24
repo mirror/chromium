@@ -26,6 +26,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/tabs/new_tab_promo.h"
 #include "chrome/browser/ui/views/tabs/stacked_tab_strip_layout.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/tabs/tab_drag_controller.h"
@@ -55,6 +56,7 @@
 #include "ui/gfx/animation/throb_animation.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -278,6 +280,10 @@ class NewTabButton : public views::ImageButton,
     background_offset_ = offset;
   }
 
+  // Returns the bounds of the visible portion of the Newtab Button. Used for
+  // Newtab Promo.
+  const gfx::Rect GetNewTabVisibleBounds();
+
  private:
   // views::ImageButton:
 #if defined(OS_WIN)
@@ -332,6 +338,19 @@ NewTabButton::NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener)
 NewTabButton::~NewTabButton() {
   if (destroyed_)
     *destroyed_ = true;
+}
+
+const gfx::Rect NewTabButton::GetNewTabVisibleBounds() {
+  const float scale = GetWidget()->GetCompositor()->device_scale_factor();
+  SkPath border;
+  GetBorderPath(GetNewTabButtonTopOffset() * scale, scale, false, &border);
+  SkRect rect_sk = border.getBounds();
+  gfx::Point* top_left_point_ = new gfx::Point(rect_sk.left(), rect_sk.top());
+  gfx::Size* newtab_button_size_ =
+      new gfx::Size(rect_sk.width(), rect_sk.height());
+  View::ConvertPointToScreen(this, top_left_point_);
+  const gfx::Rect visible_rect_(*top_left_point_, *newtab_button_size_);
+  return visible_rect_;
 }
 
 #if defined(OS_WIN)
@@ -411,7 +430,11 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
       CreateShadowDrawLooper(SkColorSetA(stroke_color, shadow_alpha)));
   const SkAlpha path_alpha = static_cast<SkAlpha>(
       std::round((pressed ? 0.875f : 0.609375f) * alpha));
-  flags.setColor(SkColorSetA(stroke_color, path_alpha));
+  // TODO: UX review on appearance
+  flags.setColor(tab_strip_->IsShowingPromo()
+                     ? GetNativeTheme()->GetSystemColor(
+                           ui::NativeTheme::kColorId_ProminentButtonColor)
+                     : SkColorSetA(stroke_color, path_alpha));
   canvas->DrawPath(stroke, flags);
 }
 
@@ -479,6 +502,7 @@ void NewTabButton::PaintFill(bool pressed,
     // First we compute the background image coordinates and scale, in case we
     // need to draw a custom background image.
     const ui::ThemeProvider* tp = GetThemeProvider();
+    // TODO: decide how newtab button should look when a theme is being used
     bool custom_image;
     const int bg_id = tab_strip_->GetBackgroundResourceId(&custom_image);
     if (custom_image) {
@@ -504,7 +528,11 @@ void NewTabButton::PaintFill(bool pressed,
                                           x_scale * scale, scale, 0, 0, &flags);
       DCHECK(succeeded);
     } else {
-      flags.setColor(tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB));
+      // TODO: UX review
+      flags.setColor(tab_strip_->IsShowingPromo()
+                         ? GetNativeTheme()->GetSystemColor(
+                               ui::NativeTheme::kColorId_ProminentButtonColor)
+                         : tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB));
     }
     const SkColor stroke_color = tab_strip_->GetToolbarTopSeparatorColor();
     const SkAlpha alpha = static_cast<SkAlpha>(
@@ -584,6 +612,7 @@ void TabStrip::RemoveTabDelegate::AnimationCanceled(
 TabStrip::TabStrip(TabStripController* controller)
     : controller_(controller),
       newtab_button_(NULL),
+      newtab_promo_(nullptr),
       current_inactive_width_(Tab::GetStandardSize().width()),
       current_active_width_(Tab::GetStandardSize().width()),
       available_width_for_tabs_(-1),
@@ -1354,6 +1383,38 @@ void TabStrip::MouseMovedOutOfHost() {
     SetStackedLayout(false);
     controller_->StackedLayoutMaybeChanged();
   }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// NewTabPromo
+void TabStrip::ShowPromo() {
+  newtab_promo_ = new NewTabPromo(this);
+}
+
+void TabStrip::ClosePromo() {
+  newtab_promo_->CloseBubble();
+  newtab_promo_ = NULL;
+}
+
+const gfx::Rect TabStrip::GetPromoAnchorRect() {
+  // The newtab button view extends above the visible button to the top of the
+  // tabstrip. Anchoring to the full view puts part of the promo off screen in
+  // a fully expanded window. Instead we anchor to the rect surronding the
+  // visible portion of the newtab button.
+  return newtab_button_->GetNewTabVisibleBounds();
+}
+
+bool TabStrip::IsShowingPromo() {
+  // When the promo is dismissed via click, the widget is removed but the promo
+  // is not destroyed. This checks to see if the widget has been removed and
+  // then destroys the promo if it has been.
+  if (newtab_promo_ && !newtab_promo_->has_children())
+    TabStrip::ClosePromo();
+  // If the the promo and its widget exist, then the promo is showing and true
+  // is  returned.
+  if (newtab_promo_)
+    return true;
+  return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2662,6 +2723,7 @@ void TabStrip::ButtonPressed(views::Button* sender, const ui::Event& event) {
     }
 
     controller_->CreateNewTab();
+
     if (event.type() == ui::ET_GESTURE_TAP)
       TouchUMA::RecordGestureAction(TouchUMA::GESTURE_NEWTAB_TAP);
   }
