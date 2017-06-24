@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd260882_def76626",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-24T05:11:11Z",
+      "side": 1,
+      "message": "In segments mode, this line previously caused the following DCHECK failure:\nFATAL:source_buffer_stream.cc(216)] Check failed: coded_frame_group_start_time_ \u003c\u003d buffers.front()-\u003eGetDecodeTimestamp().",
+      "range": {
+        "startLine": 760,
+        "startChar": 2,
+        "endLine": 760,
+        "endChar": 15
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b8cf58_bf130417",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-24T05:11:11Z",
+      "side": 1,
+      "message": "In sequence mode, this line previously caused the following CHECK failure:\nFATAL:source_buffer_stream.cc(226)] Check failed: !new_coded_frame_group_ || buffers.front()-\u003eis_key_frame().",
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
