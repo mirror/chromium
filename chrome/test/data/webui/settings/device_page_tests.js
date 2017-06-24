@@ -682,7 +682,8 @@ cr.define('device_page_tests', function() {
         var powerSourceWrapper;
         var powerSourceSelect;
         var idleSelect;
-        var lidClosedSelect;
+        var lidClosedLabel;
+        var lidClosedToggle;
 
         suiteSetup(function() {
           // Always show power settings.
@@ -705,7 +706,8 @@ cr.define('device_page_tests', function() {
                         .updatePowerStatusCalled_);
 
                 idleSelect = assert(powerPage.$$('#idleSelect'));
-                lidClosedSelect = assert(powerPage.$$('#lidClosedSelect'));
+                lidClosedLabel = assert(powerPage.$$('#lidClosedLabel'));
+                lidClosedToggle = assert(powerPage.$$('#lidClosedToggle'));
 
                 assertEquals(
                     1,
@@ -802,17 +804,48 @@ cr.define('device_page_tests', function() {
         });
 
         test('set lid behavior', function() {
-          selectValue(lidClosedSelect, settings.LidClosedBehavior.DO_NOTHING);
+          var sendLid = function(lidBehavior) {
+            sendPowerManagementSettings(
+                settings.IdleBehavior.DISPLAY_OFF,
+                false /* idleControlled */, lidBehavior,
+                false /* lidClosedControlled */, true /* hasLid */);
+          };
+
+          sendLid(settings.LidClosedBehavior.SUSPEND);
+          assertTrue(lidClosedToggle.checked);
+
+          MockInteractions.tap(lidClosedToggle);
           expectEquals(
               settings.LidClosedBehavior.DO_NOTHING,
               settings.DevicePageBrowserProxyImpl.getInstance()
                   .lidClosedBehavior_);
+          sendLid(settings.LidClosedBehavior.DO_NOTHING);
+          expectFalse(lidClosedToggle.checked);
 
-          selectValue(lidClosedSelect, settings.LidClosedBehavior.SUSPEND);
+          MockInteractions.tap(lidClosedToggle);
           expectEquals(
               settings.LidClosedBehavior.SUSPEND,
               settings.DevicePageBrowserProxyImpl.getInstance()
                   .lidClosedBehavior_);
+          sendLid(settings.LidClosedBehavior.SUSPEND);
+          expectTrue(lidClosedToggle.checked);
+
+          // Tapping the label should also toggle the setting.
+          MockInteractions.tap(lidClosedLabel);
+          expectEquals(
+              settings.LidClosedBehavior.DO_NOTHING,
+              settings.DevicePageBrowserProxyImpl.getInstance()
+                  .lidClosedBehavior_);
+          sendLid(settings.LidClosedBehavior.DO_NOTHING);
+          expectFalse(lidClosedToggle.checked);
+
+          MockInteractions.tap(lidClosedLabel);
+          expectEquals(
+              settings.LidClosedBehavior.SUSPEND,
+              settings.DevicePageBrowserProxyImpl.getInstance()
+                  .lidClosedBehavior_);
+          sendLid(settings.LidClosedBehavior.SUSPEND);
+          expectTrue(lidClosedToggle.checked);
         });
 
         test('display idle and lid behavior', function() {
@@ -827,10 +860,10 @@ cr.define('device_page_tests', function() {
                 settings.IdleBehavior.DISPLAY_ON.toString(), idleSelect.value);
             expectFalse(idleSelect.disabled);
             expectEquals(null, powerPage.$$('#idleControlledIndicator'));
-            expectEquals(
-                settings.LidClosedBehavior.DO_NOTHING.toString(),
-                lidClosedSelect.value);
-            expectFalse(lidClosedSelect.disabled);
+            expectEquals(loadTimeData.getString('powerLidSleepLabel'),
+                         lidClosedLabel.innerText);
+            expectFalse(lidClosedToggle.checked);
+            expectFalse(lidClosedToggle.disabled);
             expectEquals(null, powerPage.$$('#lidClosedControlledIndicator'));
           }).then(function() {
             sendPowerManagementSettings(
@@ -843,21 +876,21 @@ cr.define('device_page_tests', function() {
                          idleSelect.value);
             expectFalse(idleSelect.disabled);
             expectEquals(null, powerPage.$$('#idleControlledIndicator'));
-            expectEquals(
-                settings.LidClosedBehavior.SUSPEND.toString(),
-                lidClosedSelect.value);
-            expectFalse(lidClosedSelect.disabled);
+            expectEquals(loadTimeData.getString('powerLidSleepLabel'),
+                         lidClosedLabel.innerText);
+            expectTrue(lidClosedToggle.checked);
+            expectFalse(lidClosedToggle.disabled);
             expectEquals(null, powerPage.$$('#lidClosedControlledIndicator'));
           });
         });
 
         test('display controlled idle and lid behavior', function() {
-          // When settings are controlled, the selects should be disabled and
+          // When settings are controlled, the controls should be disabled and
           // the indicators should be shown.
           return new Promise(function(resolve) {
             sendPowerManagementSettings(
                 settings.IdleBehavior.OTHER, true /* idleControlled */,
-                settings.LidClosedBehavior.SUSPEND,
+                settings.LidClosedBehavior.SHUT_DOWN,
                 true /* lidClosedControlled */, true /* hasLid */);
             powerPage.async(resolve);
           }).then(function() {
@@ -865,12 +898,31 @@ cr.define('device_page_tests', function() {
                 settings.IdleBehavior.OTHER.toString(), idleSelect.value);
             expectTrue(idleSelect.disabled);
             expectNotEquals(null, powerPage.$$('#idleControlledIndicator'));
-            expectEquals(
-                settings.LidClosedBehavior.SUSPEND.toString(),
-                lidClosedSelect.value);
-            expectTrue(lidClosedSelect.disabled);
+            expectEquals(loadTimeData.getString('powerLidShutDownLabel'),
+                         lidClosedLabel.innerText);
+            expectTrue(lidClosedToggle.checked);
+            expectTrue(lidClosedToggle.disabled);
             expectNotEquals(
                 null, powerPage.$$('#lidClosedControlledIndicator'));
+          }).then(function() {
+            sendPowerManagementSettings(
+                settings.IdleBehavior.DISPLAY_OFF,
+                true /* idleControlled */,
+                settings.LidClosedBehavior.STOP_SESSION,
+                true /* lidClosedControlled */, true /* hasLid */);
+            return new Promise(function(resolve) { powerPage.async(resolve); });
+          }).then(function() {
+            expectEquals(
+                settings.IdleBehavior.DISPLAY_OFF.toString(),
+                idleSelect.value);
+            expectTrue(idleSelect.disabled);
+            expectNotEquals(null, powerPage.$$('#idleControlledIndicator'));
+            expectEquals(loadTimeData.getString('powerLidSignOutLabel'),
+                         lidClosedLabel.innerText);
+            expectTrue(lidClosedToggle.checked);
+            expectTrue(lidClosedToggle.disabled);
+            expectNotEquals(null,
+                            powerPage.$$('#lidClosedControlledIndicator'));
           });
         });
 
