@@ -6,7 +6,7 @@
     placeholder, for example, "input->%s", "p_%s". The placeholder will be
     substituted with struct field names to refer to the input fields.
     |context| is the name of the serialization context.
-    |input_may_be_temp| indicates whether any input may be temporary obejcts.
+    |input_may_be_temp| indicates whether any input may be temporary objects.
     We need to assign temporary objects to local variables before passing it to
     Serializer, because it is illegal to pass temporary objects as non-const
     references.
@@ -20,7 +20,8 @@
                               input_may_be_temp=False) -%}
   size_t size = sizeof({{struct|get_qualified_name_for_kind(internal=True)}});
 {%-   for pf in struct.packed.packed_fields_in_ordinal_order
-          if pf.field.kind|is_object_kind or pf.field.kind|is_associated_kind %}
+          if pf.field.kind|is_object_kind or
+              pf.field.kind|is_any_handle_or_interface_kind %}
 {%-     set name = pf.field.name -%}
 {%-     set kind = pf.field.kind -%}
 {%-     set original_input_field = input_field_pattern|format(name) %}
@@ -28,6 +29,14 @@
                                                else original_input_field %}
 {%-     if input_may_be_temp %}
   decltype({{original_input_field}}) in_{{name}} = {{original_input_field}};
+{%-       if kind|is_any_handle_or_interface_kind -%}
+  // Compile-time sanity check to ensure that handles are never temporary
+  // objects.
+  static_assert(std::is_lvalue_reference<decltype({{input_field}})>::value,
+                "Handle and interface types must be exposed by reference. "
+                "Please check the StructTraits accessor for this field and "
+                "ensure that it returns a non-const reference.");
+{%-       endif %}
 {%-     endif %}
 
 {%-     set serializer_type = kind|unmapped_type_for_serializer %}
