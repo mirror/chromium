@@ -2426,7 +2426,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return value;
     }
     case CSSPropertyDirection:
-      return CSSIdentifierValue::Create(style.Direction());
+      return CSSIdentifierValue::Create(style.SpecifiedDirection());
     case CSSPropertyDisplay:
       return CSSIdentifierValue::Create(style.Display());
     case CSSPropertyEmptyCells:
@@ -3342,7 +3342,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return CSSIdentifierValue::Create(style.PointerEvents());
     case CSSPropertyWritingMode:
     case CSSPropertyWebkitWritingMode:
-      return CSSIdentifierValue::Create(style.GetWritingMode());
+      return CSSIdentifierValue::Create(style.SpecifiedWritingMode());
     case CSSPropertyWebkitTextCombine:
       if (style.TextCombine() == ETextCombine::kAll)
         return CSSIdentifierValue::Create(CSSValueHorizontal);

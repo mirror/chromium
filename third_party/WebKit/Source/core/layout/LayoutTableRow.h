@@ -92,29 +92,11 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
   bool RowIndexWasSet() const { return row_index_ != kUnsetRowIndex; }
   unsigned RowIndex() const {
     DCHECK(RowIndexWasSet());
-    DCHECK(
-        !Section() ||
-        !Section()
-             ->NeedsCellRecalc());  // index may be bogus if cells need recalc.
+    DCHECK(!Section() ||
+           // index may be bogus if cells need recalc.
+           !Section()->NeedsCellRecalc());
     return row_index_;
   }
-
-  BorderValue BorderAdjoiningTableStart() const {
-    if (Section()->HasSameDirectionAs(Table()))
-      return Style()->BorderStart();
-
-    return Style()->BorderEnd();
-  }
-
-  BorderValue BorderAdjoiningTableEnd() const {
-    if (Section()->HasSameDirectionAs(Table()))
-      return Style()->BorderEnd();
-
-    return Style()->BorderStart();
-  }
-
-  BorderValue BorderAdjoiningStartCell(const LayoutTableCell*) const;
-  BorderValue BorderAdjoiningEndCell(const LayoutTableCell*) const;
 
   bool NodeAtPoint(HitTestResult&,
                    const HitTestLocation& location_in_container,

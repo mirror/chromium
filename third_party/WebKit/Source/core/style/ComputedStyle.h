@@ -2359,6 +2359,40 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool RequireTransformOrigin(ApplyTransformOrigin apply_origin,
                               ApplyMotionPath) const;
 
+  TextDirection Direction() const {
+    return HasEffectiveDirectionInternal() ? EffectiveDirectionInternal()
+                                           : SpecifiedDirection();
+  }
+  void SetDirection(TextDirection direction) {
+    SetSpecifiedDirection(direction);
+    SetHasEffectiveDirectionInternal(false);
+  }
+  void SetEffectiveDirection(TextDirection direction) {
+    if (direction != SpecifiedDirection()) {
+      SetHasEffectiveDirectionInternal(true);
+      SetEffectiveDirectionInternal(direction);
+    } else {
+      SetHasEffectiveDirectionInternal(false);
+    }
+  }
+
+  WritingMode GetWritingMode() const {
+    return HasEffectiveWritingModeInternal() ? EffectiveWritingModeInternal()
+                                             : SpecifiedWritingMode();
+  }
+  void SetWritingMode(WritingMode writing_mode) {
+    SetSpecifiedWritingMode(writing_mode);
+    SetHasEffectiveWritingModeInternal(false);
+  }
+  void SetEffectiveWritingMode(WritingMode writing_mode) {
+    if (writing_mode != SpecifiedWritingMode()) {
+      SetHasEffectiveWritingModeInternal(true);
+      SetEffectiveWritingModeInternal(writing_mode);
+    } else {
+      SetHasEffectiveWritingModeInternal(false);
+    }
+  }
+
  private:
   void SetVisitedLinkBackgroundColor(const StyleColor& v) {
     SetVisitedLinkBackgroundColorInternal(v);
