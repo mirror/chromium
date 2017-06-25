@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95707f04_9a185711",
+        "filename": "device/bluetooth/test/fake_remote_gatt_characteristic.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T07:51:13Z",
+      "side": 1,
+      "message": "Btw, I would suggest returning a const reference here to avoid copying.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "1716d9da353d4c4d3b314abc4b0f4fec3856b89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
