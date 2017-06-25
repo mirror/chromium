@@ -388,6 +388,7 @@
     },
     {
       name: "direction",
+      name_for_methods: "SpecifiedDirection",
       custom_value: true,
       type_name: "TextDirection",
       inherited: true,

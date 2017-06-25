@@ -401,9 +401,6 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
     return CreateAnonymousWithParent(parent);
   }
 
-  BorderValue TableStartBorderAdjoiningCell(const LayoutTableCell*) const;
-  BorderValue TableEndBorderAdjoiningCell(const LayoutTableCell*) const;
-
   void AddCaption(const LayoutTableCaption*);
   void RemoveCaption(const LayoutTableCaption*);
   void AddColumn(const LayoutTableCol*);
