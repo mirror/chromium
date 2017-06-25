@@ -917,11 +917,6 @@ Element* HTMLConstructionSite::CreateElement(
     // TODO(dominicc): Implement step 10 when the HTML parser does
     // something useful with parse errors.
 
-    // 11. If element is a resettable element, invoke its reset
-    // algorithm. (This initializes the element's value and
-    // checkedness based on the element's attributes.)
-    // TODO(dominicc): Implement step 11, resettable elements.
-
     // 12. If element is a form-associated element, and the form
     // element pointer is not null, and there is no template element
     // on the stack of open elements, ...
@@ -956,6 +951,15 @@ Element* HTMLConstructionSite::CreateElement(
     }
     // "8. Append each attribute in the given token to element."
     SetAttributes(element, token, parser_content_policy_);
+
+    // 11. If element is a resettable element, invoke its reset
+    // algorithm. (This initializes the element's value and
+    // checkedness based on the element's attributes.)
+    HTMLFormControlElement* form_control_element = nullptr;
+    if (element->IsFormControlElement())
+      form_control_element = ToHTMLFormControlElement(element);
+    if (form_control_element)
+      form_control_element->Reset();
   }
 
   return element;

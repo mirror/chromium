@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="resources/custom-elements-helpers.js"></script>
+<body>
+<script>
+'use strict';
+
+// Looks up the preceeding element (which should be a template
+// element) and creates a Promise test. The test name is taken from
+// the template's data-test attribute.
+//
+// The content of the template is loaded into an iframe. On load, f
+// is passed the frame's content window to run assertions.
+function test_with_content(f) {
+  let t = document.currentScript.previousElementSibling;
+  test_with_window(f, t.dataset.test, t.innerHTML);
+}
+
+// https://html.spec.whatwg.org/multipage/parsing.html#create-an-element-for-the-token
+// 11. If element is a resettable element, invoke its reset algorithm. (This initializes the element's value and checkedness based on the element's attributes.)
+</script>
+<template data-test="parsing resettable built-in elements">
+  <form id='f1'>
+    <input type='text' id='i1' is='i-i' value='default'>
+    <input type='text' id='i2' is='i-i'>
+    <input type='checkbox' id="i3" is='i-i' checked>
+    <input type='checkbox' id="i4" is='i-i'>
+    <input type='reset'>
+  </form>
+  <script>
+  'use strict';
+
+
+  window.invocations = [];
+  customElements.define('i-i', class extends HTMLInputElement {
+    constructor() {
+      super();
+      invocations.push('constructor');
+      invocations.push(this.id);
+      invocations.push(this.value);
+      invocations.push(this.checked);
+    }
+    connectedCallback() {
+      invocations.push('connected');
+    }
+  }, {extends: 'input'});
+  </script>
+</template>
+<script>
+'use strict';
+
+test_with_content((w) => {
+  assert_array_equals(
+      w.invocations,
+      ['constructor', 'i1', 'default', false, 'connected',
+       'constructor', 'i2', '', false, 'connected',
+       'constructor', 'i3', 'on', true, 'connected',
+       'constructor', 'i4', 'on', false, 'connected'],
+      'the built-in element should be reset');
+});
+</script>
+
