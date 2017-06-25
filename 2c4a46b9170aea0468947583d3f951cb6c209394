@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6380c03_03f44179",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-25T17:53:55Z",
+      "side": 1,
+      "message": "Could we use importScripts() for deps loading in workers?\nAt least we could throw an error message explaining why auto load is failing in workers.",
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f807db_42844b94",
+        "filename": "third_party/WebKit/LayoutTests/mojo/resources/worker.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-25T17:53:55Z",
+      "side": 1,
+      "message": "I feel that the name \"worker.js\" is too general. This file contains code for a specific test case, so the name should reflect that.",
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2dfb3ae_75f48ef5",
+        "filename": "third_party/WebKit/LayoutTests/mojo/resources/worker.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-25T17:53:55Z",
+      "side": 1,
+      "message": "\";\" at the end?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01cecce4_79372aad",
         "filename": "third_party/WebKit/Source/core/mojo/Mojo.cpp",
         "patchSetId": 5
