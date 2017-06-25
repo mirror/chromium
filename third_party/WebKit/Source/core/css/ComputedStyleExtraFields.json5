@@ -1005,5 +1005,20 @@
       keywords: ["no-auto-repeat", "auto-fill", "auto-fit"],
       default_value: "no-auto-repeat",
     },
+    {
+      name: "HasEffectiveDirection",
+      field_template: "storage_only",
+      default_value: "false",
+      type_name: "bool",
+    },
+    {
+      name: "EffectiveDirection",
+      field_template: "storage_only",
+      field_group: "rare-non-inherited",
+      field_size: 1,
+      type_name: "TextDirection",
+      default_value: "TextDirection::kLtr",
+      include_paths: ["platform/text/TextDirection.h"],
+    },
   ],
 }

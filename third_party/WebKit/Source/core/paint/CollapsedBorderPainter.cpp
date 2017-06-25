@@ -66,12 +66,6 @@ void CollapsedBorderPainter::SetupBorders() {
     after_.end_outset = end_.outer_width;
   }
 
-  // TODO(crbug.com/727173): We have a lot of bugs about mixed row direction.
-  // Just bail out not to optimize duplicated borders.
-  if (!cell_.Row()->HasSameDirectionAs(&table_) ||
-      !cell_.Section()->HasSameDirectionAs(&table_))
-    return;
-
   // Skip painting the start border if it will be painted by the preceding cell
   // as its end border.
   if (start_.value) {
@@ -92,8 +86,7 @@ void CollapsedBorderPainter::SetupBorders() {
   if (before_.value && !cell_.Row()->PaginationStrut()) {
     const auto* cell_above = table_.CellAbove(cell_);
     if (cell_.StartsAtSameColumn(cell_above) &&
-        cell_above->ColSpan() >= cell_.ColSpan() &&
-        cell_above->Row()->HasSameDirectionAs(&table_)) {
+        cell_above->ColSpan() >= cell_.ColSpan()) {
       before_.value = nullptr;
       // Otherwise we'll still paint the shared border twice which may cause
       // incorrect border conflict resolution for row/col spanning cells.
@@ -108,25 +101,12 @@ static const LayoutTableCell::CollapsedBorderValues* GetCollapsedBorderValues(
 }
 
 void CollapsedBorderPainter::AdjustJoints() {
-  // TODO(crbug.com/727173): We have a lot of bugs about mixed row direction.
-  // Just bail out not to adjust the joints.
-  if (!cell_.Row()->HasSameDirectionAs(&table_) ||
-      !cell_.Section()->HasSameDirectionAs(&table_))
-    return;
-
   // If we break page before the row with non-zero strut, we need to paint the
   // before border as if there is no cell above.
   const auto* cell_above =
       cell_.Row()->PaginationStrut() ? nullptr : table_.CellAbove(cell_);
-  if (cell_above && (!cell_above->Row()->HasSameDirectionAs(&table_) ||
-                     !cell_above->Section()->HasSameDirectionAs(&table_)))
-    cell_above = nullptr;
 
   const auto* cell_below = table_.CellBelow(cell_);
-  if (cell_below && (!cell_below->Row()->HasSameDirectionAs(&table_) ||
-                     !cell_below->Section()->HasSameDirectionAs(&table_)))
-    cell_above = nullptr;
-
   const auto* cell_preceding = table_.CellPreceding(cell_);
   const auto* cell_following = table_.CellFollowing(cell_);
 
