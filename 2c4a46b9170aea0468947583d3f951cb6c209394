@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01cecce4_79372aad",
+        "filename": "third_party/WebKit/Source/core/mojo/Mojo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:09:56Z",
+      "side": 1,
+      "message": "What are the circumstances where we\u0027d reach this block? I guess worklets? But is this API actually exposed in worklets?\n\nOr is this something that can happen if a document removes the iframe it\u0027s hosted in from the DOM but continues to execute script?",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 80
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bce702_515d6e44",
+        "filename": "third_party/WebKit/Source/core/mojo/test/MojoInterfaceInterceptor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:09:56Z",
+      "side": 1,
+      "message": "What are the cases we hit this path?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 80
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040d6333_e3e2309b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:09:56Z",
+      "side": 1,
+      "message": "FWIW, the signature here seems kind of sad: I looked at how this gets passed around and it seems to bounce around arbitrarily between std::string, String, and const char*. Would be nice to be consistent...\n\nI don\u0027t know that I have a real solution though, given the difference in string types \u003d/",
+      "range": {
+        "startLine": 75,
+        "startChar": 60,
+        "endLine": 75,
+        "endChar": 72
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
