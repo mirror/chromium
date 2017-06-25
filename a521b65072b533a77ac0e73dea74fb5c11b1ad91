@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33239fa2_c1767393",
+        "filename": "media/mojo/clients/mojo_demuxer_stream_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:25:35Z",
+      "side": 1,
+      "message": "I suspect these std::move() calls may not be useful anymore? It looks like this is getting passed by const reference.",
+      "range": {
+        "startLine": 85,
+        "startChar": 17,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58571cc_75ade11f",
+        "filename": "media/mojo/interfaces/encryption_scheme_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:25:35Z",
+      "side": 1,
+      "message": "Please out-of-line (sorry I\u0027m reviewing the files from bottom to top: similar comments apply to the first struct traits as well)",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f9d6cc_26275cf3",
+        "filename": "media/mojo/interfaces/encryption_scheme_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:25:35Z",
+      "side": 1,
+      "message": "Please type map enums as well using EnumTraits and the typemap files.",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 56
+      },
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adee8826_168929df",
+        "filename": "media/mojo/interfaces/video_decoder_config_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:25:35Z",
+      "side": 1,
+      "message": "This should return a const reference (as should the corresponding getter on VideoDecoderConfig). It\u0027s better not to copy at all during serialization (especially since each serializer is called twice today, due to a quirk of Mojo)",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d07e9f_2d7a06fc",
+        "filename": "media/mojo/interfaces/video_decoder_config_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:25:35Z",
+      "side": 1,
+      "message": "Same for all the other getters (and the base::Optional below)",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc31d12_b6015c5a",
+        "filename": "media/mojo/interfaces/video_decoder_config_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:25:35Z",
+      "side": 1,
+      "message": "Read() is usually out-of-lined, as it\u0027s typically fairly long. Please do so here.",
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd49f87_501afe89",
+        "filename": "media/mojo/interfaces/video_decoder_config_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:25:35Z",
+      "side": 1,
+      "message": "Please use EnumTraits and typemap these as well, rather than using static cast.\n\n(It would be even better if we just used the mojo enums directly; is there any reason we can\u0027t do that?)",
+      "range": {
+        "startLine": 96,
+        "startChar": 23,
+        "endLine": 96,
+        "endChar": 54
+      },
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9bf609_0afeef13",
+        "filename": "media/mojo/services/mojo_demuxer_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-25T08:25:35Z",
+      "side": 1,
+      "message": "Is this coming from a more trusted to a less trusted process?\n\n(I\u0027m wondering if this is actually a safe DCHECK, though I suppose failing it is pretty innocuous)",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 43
+      },
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
