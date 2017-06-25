@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<style>
+#test {height:70px; opacity: .75;}
+</style>
+<p>crbug.com/731044: Ensure float is painted.
+<div>
+	<div style="height: 200px">
+		<div id="header">
+			<div></div>
+			<div id="test">
+				<span>You should see this text.</span>
+			</div>
+      djskla
+		</div>
+	</div>
+</div>
+<script>
+document.body.offsetTop;
+test.style["float"] = "left";
+document.body.offsetTop;
+test.style["overflow"] = "hidden";
+test.style["opacity"] = 100;
+</script>

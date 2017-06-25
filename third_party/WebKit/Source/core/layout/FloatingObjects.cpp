@@ -31,6 +31,7 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LineLayoutBlockFlow.h"
 #include "core/layout/shapes/ShapeOutsideInfo.h"
+#include "core/paint/PaintLayer.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -86,6 +87,34 @@ FloatingObject::FloatingObject(LayoutBox* layout_object,
 {
 }
 
+static void checkConsistencyOfFloatLists(LayoutObject* parent, LayoutBox* object, int spaces, bool print, bool before)
+{
+	for (LayoutObject* curr = parent->SlowFirstChild(); curr; curr = curr->NextSibling()) {
+		if (print) {
+			for (int i = 0; i < spaces; i++)
+				printf(" ");
+			printf("%s(%p)", curr->DebugName().Utf8().data(), curr);
+		}
+
+		if (curr->IsLayoutBlockFlow()) {
+			LayoutBlockFlow* currBlockFlow = ToLayoutBlockFlow(curr);
+			if (currBlockFlow->ContainsFloat(object)) {
+				if (print && !before)
+					printf(" <---- %p NOT DELETED from %s(%p), childrenInline: %i", object, currBlockFlow->DebugName().Utf8().data(), currBlockFlow, currBlockFlow->ChildrenInline());
+				if (print && before)
+					printf(" <---- %p CONTAINED BY %s(%p), childrenInline: %i", object, currBlockFlow->DebugName().Utf8().data(), currBlockFlow, currBlockFlow->ChildrenInline());
+			}
+		}
+		if (print)
+			printf("\n");
+		spaces++;
+		checkConsistencyOfFloatLists(curr, object, spaces, print, before);
+		spaces--;
+	}
+}
+
+
+
 std::unique_ptr<FloatingObject> FloatingObject::Create(
     LayoutBox* layout_object) {
   std::unique_ptr<FloatingObject> new_obj =
@@ -97,6 +126,15 @@ std::unique_ptr<FloatingObject> FloatingObject::Create(
 
   new_obj->SetIsDescendant(true);
 
+  // We set SelfPaintingStatusChanged in case we get to the next compositing
+  // update and still haven't decided who should paint the float. If we've
+  // decided that the current float owner can paint it that step is unnecessary,
+  // so we can clear it now.
+
+	if (layout_object->DebugName().Utf8() == "LayoutIFrame (floating) IFRAME id='twitter-widget-0' class='twitter-share-button twitter-share-button-rendered twitter-tweet-button'") {
+    printf("%s Create\n", layout_object->DebugName().Utf8().data());
+    checkConsistencyOfFloatLists(layout_object->View(), layout_object, 0, true, false);
+  }
   return new_obj;
 }
 
