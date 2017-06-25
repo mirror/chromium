@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2a37784a_482727a6",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-25T00:27:29Z",
+      "side": 1,
+      "message": "nit: Can you change it to CanActivateMoreDownloads?\nIt should be a verb (\"Activate\") rather than a noun (\"Active\")",
+      "parentUuid": "efd2a808_be0f8a32",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2aba4330_4ea1794b",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -126,6 +150,24 @@
     },
     {
       "key": {
+        "uuid": "d7be2646_de65bc5c",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-25T00:27:29Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t see that these are two different configs. My bad :)",
+      "parentUuid": "0f2d9144_a9c884ea",
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad1c8ed9_85a7df6b",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -161,6 +203,30 @@
       "side": 1,
       "message": "Done. This changed the function behavior a little bit. An unnecessary Next/Reschedule might be called if the first one should be blocked.",
       "parentUuid": "ad1c8ed9_85a7df6b",
+      "range": {
+        "startLine": 826,
+        "startChar": 2,
+        "endLine": 826,
+        "endChar": 16
+      },
+      "revId": "a8396a9dfe77a007bb98b0d0ce4c44b7a3538632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48fd64b_cd686b83",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-25T00:27:29Z",
+      "side": 1,
+      "message": "Actually, we should have while(CanActiveMoreDownloads(...) \u0026\u0026 next) rather than while(next \u0026\u0026 CanActiveMoreDownloads(...)). So if the first check is false, it will not check for \u0027next\u0027.\nThis will keep the function behavior same although it might look a bit weird to read :)",
+      "parentUuid": "64158fd2_d9e8e34c",
       "range": {
         "startLine": 826,
         "startChar": 2,
