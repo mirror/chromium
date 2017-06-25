@@ -185,7 +185,10 @@ static const V8DOMConfiguration::MethodConfiguration V8TestIntegerIndexedMethods
     {"voidMethodDocument", V8TestIntegerIndexed::voidMethodDocumentMethodCallback, 1, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
 };
 
-static void installV8TestIntegerIndexedTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestIntegerIndexedTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestIntegerIndexed::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestIntegerIndexed::internalFieldCount);
 
@@ -196,9 +199,13 @@ static void installV8TestIntegerIndexedTemplate(v8::Isolate* isolate, const DOMW
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
-  V8DOMConfiguration::InstallAccessors(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestIntegerIndexedAccessors, WTF_ARRAY_LENGTH(V8TestIntegerIndexedAccessors));
-  V8DOMConfiguration::InstallMethods(isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate, signature, V8TestIntegerIndexedMethods, WTF_ARRAY_LENGTH(V8TestIntegerIndexedMethods));
+  // Register IDL constants, attributes and operations.
+  V8DOMConfiguration::InstallAccessors(
+      isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate,
+      signature, V8TestIntegerIndexedAccessors, WTF_ARRAY_LENGTH(V8TestIntegerIndexedAccessors));
+  V8DOMConfiguration::InstallMethods(
+      isolate, world, instanceTemplate, prototypeTemplate, interfaceTemplate,
+      signature, V8TestIntegerIndexedMethods, WTF_ARRAY_LENGTH(V8TestIntegerIndexedMethods));
 
   // Indexed properties
   v8::IndexedPropertyHandlerConfiguration indexedPropertyHandlerConfig(V8TestIntegerIndexed::indexedPropertyGetterCallback, V8TestIntegerIndexed::indexedPropertySetterCallback, nullptr, V8TestIntegerIndexed::indexedPropertyDeleterCallback, IndexedPropertyEnumerator<TestIntegerIndexed>, v8::Local<v8::Value>(), v8::PropertyHandlerFlags::kNone);
@@ -209,6 +216,23 @@ static void installV8TestIntegerIndexedTemplate(v8::Isolate* isolate, const DOMW
 
   // Array iterator (@@iterator)
   prototypeTemplate->SetIntrinsicDataProperty(v8::Symbol::GetIterator(isolate), v8::kArrayProto_values, v8::DontEnum);
+
+  V8TestIntegerIndexed::InstallRuntimeEnabledFeaturesOnTemplate(
+      isolate, world, interfaceTemplate);
+}
+
+void V8TestIntegerIndexed::InstallRuntimeEnabledFeaturesOnTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interface_template) {
+  v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interface_template);
+  ALLOW_UNUSED_LOCAL(signature);
+  v8::Local<v8::ObjectTemplate> instance_template = interface_template->InstanceTemplate();
+  ALLOW_UNUSED_LOCAL(instance_template);
+  v8::Local<v8::ObjectTemplate> prototype_template = interface_template->PrototypeTemplate();
+  ALLOW_UNUSED_LOCAL(prototype_template);
+
+  // Register IDL constants, attributes and operations.
 }
 
 v8::Local<v8::FunctionTemplate> V8TestIntegerIndexed::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {

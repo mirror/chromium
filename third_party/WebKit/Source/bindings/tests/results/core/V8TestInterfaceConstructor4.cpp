@@ -132,7 +132,10 @@ void V8TestInterfaceConstructor4::constructorCallback(const v8::FunctionCallback
   TestInterfaceConstructor4V8Internal::constructor(info);
 }
 
-static void installV8TestInterfaceConstructor4Template(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
+static void installV8TestInterfaceConstructor4Template(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   // Initialize the interface object's template.
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, V8TestInterfaceConstructor4::wrapperTypeInfo.interface_name, v8::Local<v8::FunctionTemplate>(), V8TestInterfaceConstructor4::internalFieldCount);
   interfaceTemplate->SetCallHandler(V8TestInterfaceConstructor4::constructorCallback);
@@ -145,7 +148,24 @@ static void installV8TestInterfaceConstructor4Template(v8::Isolate* isolate, con
   v8::Local<v8::ObjectTemplate> prototypeTemplate = interfaceTemplate->PrototypeTemplate();
   ALLOW_UNUSED_LOCAL(prototypeTemplate);
 
-  // Register DOM constants, attributes and operations.
+  // Register IDL constants, attributes and operations.
+
+  V8TestInterfaceConstructor4::InstallRuntimeEnabledFeaturesOnTemplate(
+      isolate, world, interfaceTemplate);
+}
+
+void V8TestInterfaceConstructor4::InstallRuntimeEnabledFeaturesOnTemplate(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::FunctionTemplate> interface_template) {
+  v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interface_template);
+  ALLOW_UNUSED_LOCAL(signature);
+  v8::Local<v8::ObjectTemplate> instance_template = interface_template->InstanceTemplate();
+  ALLOW_UNUSED_LOCAL(instance_template);
+  v8::Local<v8::ObjectTemplate> prototype_template = interface_template->PrototypeTemplate();
+  ALLOW_UNUSED_LOCAL(prototype_template);
+
+  // Register IDL constants, attributes and operations.
 }
 
 v8::Local<v8::FunctionTemplate> V8TestInterfaceConstructor4::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {
