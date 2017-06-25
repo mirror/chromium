@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4713612a_2a55ca69",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-25T21:11:11Z",
+      "side": 1,
+      "message": "I think the quote should be around \"assignment had no effet\", i.e. the comment should be\n\n  # Silence \"assignment had no effect\" error for non-default toolchains\n  # as host_target is only used when in the expansion of the template for\n  # the default toolchain.",
+      "revId": "807ea203dd689f0da3568d6c7dc56d258e108f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48faf2a2_547093fc",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-25T21:11:11Z",
+      "side": 1,
+      "message": "I\u0027d prefer if the defaults passed to the template were the same for all toolchains. You can probably make this work by adding an assert(invoker.configs !\u003d []) in the template to silence the warning \"assigment had no effect\" error.",
+      "range": {
+        "startLine": 1509,
+        "startChar": 31,
+        "endLine": 1509,
+        "endChar": 51
+      },
+      "revId": "807ea203dd689f0da3568d6c7dc56d258e108f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea13cdd_fbd9c9e3",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-25T21:11:11Z",
+      "side": 1,
+      "message": "If possible, this target should be made \"testonly \u003d true\" too. At least in a followup CL.",
+      "revId": "807ea203dd689f0da3568d6c7dc56d258e108f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "bc97c2e7_fbe0fcbb",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-25T21:11:11Z",
+      "side": 1,
+      "message": "Setting \"testonly \u003d true\" in the template body will pass it to all templates and targets. It is possible that some of the template do not honor it (but then it is a defect of the template). I think however that the value will still be used.\n\nYou do not have to do the change in this CL if this require too many changes, but I think it would be best if the targets created by this template all had the \"testonly \u003d true\" flag so this should probably be done in a followup CL at least.",
+      "parentUuid": "c95d35a8_96325cb0",
+      "revId": "ceaffa69ef7dff8822175f42505543775498c2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5b9a5c_12e4bfd1",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 2
