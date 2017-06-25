@@ -20,7 +20,10 @@ promise_test(() => {
       let event_values = results.slice(1).map(v => v.buffer);
       for (let event_value of event_values) {
         assert_equals(event_value, read_value);
-        assert_array_equals(event_value, read_value);
+        assert_array_equals(
+          Array.from(new Uint8Array(event_value)),
+          Array.from(new Uint8Array(read_value))
+        );
       }
     });
 }, 'Add multiple event listeners then readValue().');
