@@ -270,7 +270,10 @@ CustomElementDefinition* CustomElementRegistry::DefinitionForId(
 }
 
 void CustomElementRegistry::AddCandidate(Element* candidate) {
-  const AtomicString& name = candidate->localName();
+  const AtomicString& isAttribute = candidate->getAttribute(HTMLNames::isAttr);
+  const AtomicString& name =
+      isAttribute.IsNull() ? candidate->localName() : isAttribute;
+
   if (NameIsDefined(name) || V0NameIsDefined(name))
     return;
   UpgradeCandidateMap::iterator it = upgrade_candidates_->find(name);

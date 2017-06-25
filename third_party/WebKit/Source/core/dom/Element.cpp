@@ -1447,8 +1447,14 @@ inline void Element::AttributeChangedFromParserOrByCloning(
     const QualifiedName& name,
     const AtomicString& new_value,
     AttributeModificationReason reason) {
-  if (name == isAttr)
+  if (name == isAttr) {
     V0CustomElementRegistrationContext::SetTypeExtension(this, new_value);
+    if (RuntimeEnabledFeatures::CustomElementsBuiltinEnabled() &&
+        GetCustomElementState() == CustomElementState::kUncustomized) {
+      SetCustomElementState(CustomElementState::kUndefined);
+    }
+  }
+
   AttributeChanged(
       AttributeModificationParams(name, g_null_atom, new_value, reason));
 }
