@@ -7,21 +7,21 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "CollapsedBorderValues",
-          "rect": [8, 8, 104, 204],
-          "reason": "geometry"
+          "object": "LayoutTableRow TR",
+          "rect": [8, 8, 60, 54],
+          "reason": "style change"
         }
       ]
     }
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutTableCell TD id='target'",
-      "reason": "geometry"
+      "object": "LayoutTable TABLE id='tbl'",
+      "reason": "style change"
     },
     {
-      "object": "CollapsedBorderValues",
-      "reason": "geometry"
+      "object": "LayoutTableRow TR",
+      "reason": "style change"
     }
   ]
 }
