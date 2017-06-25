@@ -1006,6 +1006,21 @@
       default_value: "no-auto-repeat",
     },
     {
+      name: "HasEffectiveWritingMode",
+      field_template: "storage_only",
+      default_value: "false",
+      type_name: "bool",
+    },
+    {
+      name: "EffectiveWritingMode",
+      field_template: "storage_only",
+      field_group: "rare-non-inherited",
+      field_size: 2,
+      type_name: "WritingMode",
+      default_value: "WritingMode::kHorizontalTb",
+      include_paths: ["platform/text/WritingMode.h"],
+    },
+    {
       name: "HasEffectiveDirection",
       field_template: "storage_only",
       default_value: "false",

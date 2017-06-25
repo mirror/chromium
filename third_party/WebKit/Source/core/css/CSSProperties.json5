@@ -561,6 +561,7 @@
     },
     {
       name: "writing-mode",
+      name_for_methods: "SpecifiedWritingMode",
       custom_value: true,
       inherited: true,
       default_value: "horizontal-tb",
@@ -572,6 +573,7 @@
     },
     {
       name: "-webkit-writing-mode",
+      name_for_methods: "SpecifiedWritingMode",
       custom_value: true,
       inherited: true,
       priority: "High",

@@ -194,10 +194,10 @@ class CORE_EXPORT StyleResolverState {
       font_builder_.DidChangeEffectiveZoom();
   }
   void SetWritingMode(WritingMode new_writing_mode) {
-    if (style_->GetWritingMode() == new_writing_mode) {
+    if (style_->SpecifiedWritingMode() == new_writing_mode) {
       return;
     }
-    style_->SetWritingMode(new_writing_mode);
+    style_->SetSpecifiedWritingMode(new_writing_mode);
     font_builder_.DidChangeWritingMode();
   }
   void SetTextOrientation(ETextOrientation text_orientation) {
