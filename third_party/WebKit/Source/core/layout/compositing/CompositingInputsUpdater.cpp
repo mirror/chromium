@@ -266,6 +266,7 @@ void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
 
   geometry_map_.PopMappingsToAncestor(layer->Parent());
 
+	printf("%s checking SelfPaintingStatusChanged %i\n", layer->GetLayoutBox()->DebugName().Utf8().data(), layer->SelfPaintingStatusChanged());
   if (layer->SelfPaintingStatusChanged()) {
     layer->ClearSelfPaintingStatusChanged();
     // If the floating object becomes non-self-painting, so some ancestor should

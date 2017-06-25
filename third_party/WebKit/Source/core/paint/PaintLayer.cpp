@@ -172,6 +172,7 @@ PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
   UpdateStackingNode();
 
   is_self_painting_layer_ = ShouldBeSelfPaintingLayer();
+	printf("%s initial UpdateSelfPaintingLayer %i\n", GetLayoutBox()->DebugName().Utf8().data(), is_self_painting_layer_);
 
   UpdateScrollableArea();
 }
@@ -2912,9 +2913,11 @@ bool PaintLayer::ShouldBeSelfPaintingLayer() const {
 
 void PaintLayer::UpdateSelfPaintingLayer() {
   bool is_self_painting_layer = ShouldBeSelfPaintingLayer();
+	printf("%s trying UpdateSelfPaintingLayer %i\n", GetLayoutBox()->DebugName().Utf8().data(), is_self_painting_layer);
   if (this->IsSelfPaintingLayer() == is_self_painting_layer)
     return;
 
+	printf("%s doiung UpdateSelfPaintingLayer\n", GetLayoutBox()->DebugName().Utf8().data());
   // Invalidate the old subsequences which may no longer contain some
   // descendants of this layer because of the self painting status change.
   SetNeedsRepaint();
