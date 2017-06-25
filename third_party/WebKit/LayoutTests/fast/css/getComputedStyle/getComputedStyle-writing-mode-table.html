@@ -1,0 +1,56 @@
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<table id="table">
+  <tbody id="tbody">
+    <tr id="tr">
+      <td id="td">
+        <div id="div"></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<script>
+test(function() {
+  assert_equals(getComputedStyle(table).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(tbody).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(tr).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(td).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(div).writingMode, 'horizontal-tb');
+}, 'default');
+test(function() {
+  table.style.writingMode = 'vertical-rl';
+  assert_equals(getComputedStyle(table).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(tbody).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(tr).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(td).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(div).writingMode, 'vertical-rl');
+  table.style.writingMode = 'initial';
+}, 'table vertical-rl');
+test(function() {
+  tbody.style.writingMode = 'vertical-rl';
+  assert_equals(getComputedStyle(table).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(tbody).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(tr).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(td).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(div).writingMode, 'vertical-rl');
+  tbody.style.writingMode = 'initial';
+}, 'tbody vertical-rl');
+test(function() {
+  tr.style.writingMode = 'vertical-rl';
+  assert_equals(getComputedStyle(table).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(tbody).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(tr).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(td).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(div).writingMode, 'vertical-rl');
+  tr.style.writingMode = 'initial';
+}, 'tr vertical-rl');
+test(function() {
+  td.style.writingMode = 'vertical-rl';
+  assert_equals(getComputedStyle(table).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(tbody).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(tr).writingMode, 'horizontal-tb');
+  assert_equals(getComputedStyle(td).writingMode, 'vertical-rl');
+  assert_equals(getComputedStyle(div).writingMode, 'vertical-rl');
+  td.style.writingMode = 'initial';
+}, 'td vertical-rl');
+</script>

@@ -337,11 +337,11 @@ static void AdjustStyleForDisplay(ComputedStyle& style,
       style.Display() == EDisplay::kTableRow ||
       style.Display() == EDisplay::kTableRowGroup) {
     style.SetEffectiveDirection(layout_parent_style.Direction());
-    style.SetWritingMode(layout_parent_style.GetWritingMode());
+    style.SetEffectiveWritingMode(layout_parent_style.GetWritingMode());
   } else if (style.Display() == EDisplay::kTableCell) {
     // TODO(crbug.com/409155): Table cells should be allowed to be perpendicular
     // or flipped with respect to the table, though.
-    style.SetWritingMode(layout_parent_style.GetWritingMode());
+    style.SetEffectiveWritingMode(layout_parent_style.GetWritingMode());
   }
 
   // FIXME: Since we don't support block-flow on flexible boxes yet, disallow
