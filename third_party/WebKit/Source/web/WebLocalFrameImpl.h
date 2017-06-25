@@ -39,7 +39,6 @@
 #include "core/frame/WebLocalFrameBase.h"
 #include "modules/mediastream/UserMediaClientImpl.h"
 #include "platform/geometry/FloatRect.h"
-#include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/Compiler.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileSystemType.h"
@@ -88,7 +87,6 @@ class WEB_EXPORT WebLocalFrameImpl final
   // WebFrame methods:
   // TODO(dcheng): Fix sorting here; a number of method have been moved to
   // WebLocalFrame but not correctly updated here.
-  void Close() override;
   WebString AssignedName() const override;
   void SetName(const WebString&) override;
   WebVector<WebIconURL> IconURLs(int icon_types_mask) const override;
@@ -425,7 +423,7 @@ class WEB_EXPORT WebLocalFrameImpl final
   // Returns a hit-tested VisiblePosition for the given point
   VisiblePosition VisiblePositionForViewportPoint(const WebPoint&);
 
-  void SetFrameWidget(WebFrameWidgetBase*) override;
+  void BindFrameWidget(WebFrameWidgetBase&) override;
 
   // DevTools front-end bindings.
   void SetDevToolsFrontend(WebDevToolsFrontendImpl* frontend) override {
@@ -522,11 +520,6 @@ class WEB_EXPORT WebLocalFrameImpl final
   WebTextCheckClient* text_check_client_;
 
   WebSpellCheckPanelHostClient* spell_check_panel_host_client_;
-
-  // Oilpan: WebLocalFrameImpl must remain alive until close() is called.
-  // Accomplish that by keeping a self-referential Persistent<>. It is
-  // cleared upon close().
-  SelfKeepAlive<WebLocalFrameImpl> self_keep_alive_;
 };
 
 DEFINE_TYPE_CASTS(WebLocalFrameImpl,

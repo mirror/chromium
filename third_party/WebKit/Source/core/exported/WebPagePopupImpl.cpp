@@ -40,6 +40,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
+#include "core/frame/WebFrameWidgetBase.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/api/LayoutAPIShim.h"
@@ -124,7 +125,8 @@ class PagePopupChromeClient final : public EmptyChromeClient {
     // Calling scheduleAnimation on m_webView so WebViewTestProxy will call
     // beginFrame.
     if (LayoutTestSupport::IsRunningLayoutTest())
-      popup_->web_view_->MainFrameImpl()->FrameWidget()->ScheduleAnimation();
+      ToWebFrameWidgetBase(popup_->web_view_->MainFrameImpl()->FrameWidget())
+          ->ScheduleAnimation();
 
     if (popup_->layer_tree_view_) {
       popup_->layer_tree_view_->SetNeedsBeginFrame();

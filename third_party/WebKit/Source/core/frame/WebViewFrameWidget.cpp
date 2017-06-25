@@ -13,30 +13,25 @@ namespace blink {
 WebViewFrameWidget::WebViewFrameWidget(WebWidgetClient& client,
                                        WebViewBase& web_view,
                                        WebLocalFrameBase& main_frame)
-    : client_(&client),
-      web_view_(&web_view),
-      main_frame_(&main_frame),
-      self_keep_alive_(this) {
-  main_frame_->SetFrameWidget(this);
+    : WebFrameWidgetBase(main_frame), client_(&client), web_view_(&web_view) {
   web_view_->SetCompositorVisibility(true);
 }
 
 WebViewFrameWidget::~WebViewFrameWidget() {}
 
-void WebViewFrameWidget::Close() {
+void WebViewFrameWidget::Dispose() {
   // Note: it's important to use the captured main frame pointer here. During
   // a frame swap, the swapped frame is detached *after* the frame tree is
   // updated. If the main frame is being swapped, then
-  // m_webView()->mainFrameImpl() will no longer point to the original frame.
+  // web_view_->MainFrameImpl() will no longer point to the original frame.
   web_view_->SetCompositorVisibility(false);
-  main_frame_->SetFrameWidget(nullptr);
-  main_frame_ = nullptr;
   web_view_ = nullptr;
   client_ = nullptr;
+}
 
-  // Note: this intentionally does not forward to WebView::close(), to make it
-  // easier to untangle the cleanup logic later.
-  self_keep_alive_.Clear();
+void WebViewFrameWidget::Close() {
+  NOTREACHED() << "WebFrameWidget lifetime is automatically managed; do not "
+                  "call Close().";
 }
 
 WebSize WebViewFrameWidget::Size() {
@@ -256,7 +251,6 @@ HitTestResult WebViewFrameWidget::CoreHitTestResultAt(const WebPoint& point) {
 }
 
 DEFINE_TRACE(WebViewFrameWidget) {
-  visitor->Trace(main_frame_);
   WebFrameWidgetBase::Trace(visitor);
 }
 

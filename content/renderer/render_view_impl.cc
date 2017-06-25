@@ -2172,6 +2172,8 @@ void RenderViewImpl::OnSetActive(bool active) {
 }
 
 blink::WebWidget* RenderViewImpl::GetWebWidget() const {
+  // TODO(dcheng): Shouldn't this always return the frame_widget_? Maybe there's
+  // some weird things happening during process shutdown?
   if (frame_widget_)
     return frame_widget_;
 
@@ -2180,7 +2182,6 @@ blink::WebWidget* RenderViewImpl::GetWebWidget() const {
 
 void RenderViewImpl::CloseForFrame() {
   DCHECK(frame_widget_);
-  frame_widget_->Close();
   frame_widget_ = nullptr;
 }
 

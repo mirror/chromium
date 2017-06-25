@@ -8,7 +8,6 @@
 #include "core/CoreExport.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/WebRemoteFrameBase.h"
-#include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/Compiler.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/web/WebRemoteFrameClient.h"
@@ -31,7 +30,6 @@ class CORE_EXPORT WebRemoteFrameImpl final
   ~WebRemoteFrameImpl() override;
 
   // WebFrame methods:
-  void Close() override;
   WebString AssignedName() const override;
   void SetName(const WebString&) override;
   WebSize ContentsSize() const override;
@@ -111,11 +109,6 @@ class CORE_EXPORT WebRemoteFrameImpl final
   Member<RemoteFrameClientImpl> frame_client_;
   Member<RemoteFrame> frame_;
   WebRemoteFrameClient* client_;
-
-  // Oilpan: WebRemoteFrameImpl must remain alive until close() is called.
-  // Accomplish that by keeping a self-referential Persistent<>. It is
-  // cleared upon close().
-  SelfKeepAlive<WebRemoteFrameImpl> self_keep_alive_;
 };
 
 DEFINE_TYPE_CASTS(WebRemoteFrameImpl,

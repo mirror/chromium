@@ -69,7 +69,10 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
 
   ~WebFrameWidgetImpl();
 
-  // WebWidget functions:
+  // WebFrameWidgetBase overrides:
+  void Dispose() override;
+
+  // WebFrameWidget overrides:
   void Close() override;
   WebSize Size() override;
   void Resize(const WebSize&) override;
@@ -110,7 +113,6 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   void SetIsInert(bool) override;
 
   // WebFrameWidget implementation.
-  WebLocalFrameBase* LocalRoot() const override { return local_root_; }
   void SetVisibilityState(WebPageVisibilityState) override;
   void SetBackgroundColorOverride(WebColor) override;
   void ClearBackgroundColorOverride() override;
@@ -193,11 +195,6 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
 
   WebWidgetClient* client_;
 
-  // WebFrameWidget is associated with a subtree of the frame tree,
-  // corresponding to a maximal connected tree of LocalFrames. This member
-  // points to the root of that subtree.
-  Member<WebLocalFrameBase> local_root_;
-
   WebSize size_;
 
   // If set, the (plugin) node which has mouse capture.
@@ -231,8 +228,6 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   static const WebInputEvent* current_input_event_;
 
   WebColor base_background_color_;
-
-  SelfKeepAlive<WebFrameWidgetImpl> self_keep_alive_;
 };
 
 DEFINE_TYPE_CASTS(WebFrameWidgetImpl,

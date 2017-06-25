@@ -69,6 +69,7 @@
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
+#include "core/frame/WebFrameWidgetBase.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
@@ -692,7 +693,7 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
       DCHECK(fling_curve);
       gesture_animation_ = WebActiveGestureAnimation::CreateWithTimeOffset(
           std::move(fling_curve), this, event.TimeStampSeconds());
-      MainFrameImpl()->FrameWidget()->ScheduleAnimation();
+      ToWebFrameWidgetBase(MainFrameImpl()->FrameWidget())->ScheduleAnimation();
       event_result = WebInputEventResult::kHandledSystem;
 
       WebGestureEvent scaled_event =
@@ -1008,7 +1009,7 @@ void WebViewImpl::TransferActiveWheelFlingAnimation(
       std::move(curve), this, parameters.start_time);
   DCHECK_NE(parameters.source_device, kWebGestureDeviceUninitialized);
   fling_source_device_ = parameters.source_device;
-  MainFrameImpl()->FrameWidget()->ScheduleAnimation();
+  ToWebFrameWidgetBase(MainFrameImpl()->FrameWidget())->ScheduleAnimation();
 }
 
 bool WebViewImpl::EndActiveFlingAnimation() {
@@ -1985,7 +1986,7 @@ void WebViewImpl::BeginFrame(double last_frame_time_monotonic) {
   // Create synthetic wheel events as necessary for fling.
   if (gesture_animation_) {
     if (gesture_animation_->Animate(last_frame_time_monotonic))
-      MainFrameImpl()->FrameWidget()->ScheduleAnimation();
+      ToWebFrameWidgetBase(MainFrameImpl()->FrameWidget())->ScheduleAnimation();
     else {
       DCHECK_NE(fling_source_device_, kWebGestureDeviceUninitialized);
       WebGestureDevice last_fling_source_device = fling_source_device_;
@@ -2035,7 +2036,8 @@ void WebViewImpl::UpdateAllLifecyclePhases() {
   if (LocalFrameView* view = MainFrameImpl()->GetFrameView()) {
     LocalFrame* frame = MainFrameImpl()->GetFrame();
     WebWidgetClient* client =
-        WebLocalFrameBase::FromFrame(frame)->FrameWidget()->Client();
+        ToWebFrameWidgetBase(WebLocalFrameBase::FromFrame(frame)->FrameWidget())
+            ->Client();
 
     if (should_dispatch_first_visually_non_empty_layout_ &&
         view->IsVisuallyNonEmpty()) {
@@ -2154,7 +2156,7 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
                WebInputEvent::GetName(input_event.GetType()));
 
   // If a drag-and-drop operation is in progress, ignore input events.
-  if (MainFrameImpl()->FrameWidget()->DoingDragAndDrop())
+  if (ToWebFrameWidgetBase(MainFrameImpl()->FrameWidget())->DoingDragAndDrop())
     return WebInputEventResult::kHandledSuppressed;
 
   if (dev_tools_emulator_->HandleInputEvent(input_event))
@@ -2175,14 +2177,16 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
   UIEventWithKeyState::ClearNewTabModifierSetFromIsolatedWorld();
 
   bool is_pointer_locked = false;
-  if (WebFrameWidgetBase* widget = MainFrameImpl()->FrameWidget()) {
+  if (WebFrameWidgetBase* widget =
+          ToWebFrameWidgetBase(MainFrameImpl()->FrameWidget())) {
     if (WebWidgetClient* client = widget->Client())
       is_pointer_locked = client->IsPointerLocked();
   }
 
   if (is_pointer_locked &&
       WebInputEvent::IsMouseEventType(input_event.GetType())) {
-    MainFrameImpl()->FrameWidget()->PointerLockMouseEvent(coalesced_event);
+    ToWebFrameWidgetBase(MainFrameImpl()->FrameWidget())
+        ->PointerLockMouseEvent(coalesced_event);
     return WebInputEventResult::kHandledSystem;
   }
 

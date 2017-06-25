@@ -42,6 +42,9 @@ class CORE_EXPORT WebViewFrameWidget : public WebFrameWidgetBase {
                               WebLocalFrameBase&);
   virtual ~WebViewFrameWidget();
 
+  // WebFrameWidgetBase overrides:
+  void Dispose() override;
+
   // WebFrameWidget overrides:
   void Close() override;
   WebSize Size() override;
@@ -113,9 +116,6 @@ class CORE_EXPORT WebViewFrameWidget : public WebFrameWidgetBase {
  private:
   WebWidgetClient* client_;
   RefPtr<WebViewBase> web_view_;
-  Member<WebLocalFrameBase> main_frame_;
-
-  SelfKeepAlive<WebViewFrameWidget> self_keep_alive_;
 };
 
 }  // namespace blink

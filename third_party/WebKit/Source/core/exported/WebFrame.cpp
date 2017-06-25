@@ -340,10 +340,6 @@ void WebFrame::TraceFrames(Visitor* visitor, WebFrame* frame) {
     TraceFrame(visitor, child);
 }
 
-void WebFrame::Close() {
-  opened_frame_tracker_->Dispose();
-}
-
 void WebFrame::DetachFromParent() {
   // TODO(dcheng): This should really just check if there's a parent, and call
   // RemoveChild() if so. Once provisional frames are removed, this check can be

@@ -521,6 +521,7 @@ WebRemoteFrame* WebLocalFrameImpl::ToWebRemoteFrame() {
   return 0;
 }
 
+#if 0
 void WebLocalFrameImpl::Close() {
   WebLocalFrame::Close();
 
@@ -529,11 +530,10 @@ void WebLocalFrameImpl::Close() {
   if (dev_tools_agent_)
     dev_tools_agent_.Clear();
 
-  self_keep_alive_.Clear();
-
   if (print_context_)
     PrintEnd();
 }
+#endif
 
 WebString WebLocalFrameImpl::AssignedName() const {
   return GetFrame()->Tree().GetName();
@@ -1589,8 +1589,7 @@ WebLocalFrameImpl::WebLocalFrameImpl(
       web_dev_tools_frontend_(0),
       input_method_controller_(*this),
       text_checker_client_(new TextCheckerClientImpl(this)),
-      spell_check_panel_host_client_(nullptr),
-      self_keep_alive_(this) {
+      spell_check_panel_host_client_(nullptr) {
   DCHECK(client_);
   g_frame_count++;
   client_->BindToFrame(this);
@@ -2313,8 +2312,9 @@ TextFinder& WebLocalFrameImpl::EnsureTextFinder() {
   return *text_finder_;
 }
 
-void WebLocalFrameImpl::SetFrameWidget(WebFrameWidgetBase* frame_widget) {
-  frame_widget_ = frame_widget;
+void WebLocalFrameImpl::BindFrameWidget(WebFrameWidgetBase& frame_widget) {
+  DCHECK(!frame_widget_);
+  frame_widget_ = &frame_widget;
 }
 
 WebFrameWidgetBase* WebLocalFrameImpl::FrameWidget() const {

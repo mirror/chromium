@@ -3142,10 +3142,7 @@ void RenderFrameImpl::FrameDetached(blink::WebLocalFrame* frame,
   CHECK_EQ(it->second, this);
   g_frame_map.Get().erase(it);
 
-  // |frame| is invalid after here.  Be sure to clear frame_ as well, since this
-  // object may not be deleted immediately and other methods may try to access
-  // it.
-  frame->Close();
+  // After returning, |frame_| must not be referenced anymore, so clear it now.
   frame_ = nullptr;
 
   // If this was a provisional frame with an associated proxy, tell the proxy
