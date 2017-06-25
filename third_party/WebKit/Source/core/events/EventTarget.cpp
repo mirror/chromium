@@ -545,6 +545,8 @@ static const AtomicString& LegacyType(const Event* event) {
   if (event->type() == EventTypeNames::animationiteration)
     return EventTypeNames::webkitAnimationIteration;
 
+  // FIXME: The wheel => mousewheel fallback is not part of the spec.
+  // (https://dom.spec.whatwg.org/#concept-event-listener-invoke)
   if (event->type() == EventTypeNames::wheel)
     return EventTypeNames::mousewheel;
 
@@ -621,7 +623,7 @@ DispatchEventResult EventTarget::FireEventListeners(Event* event) {
   bool fired_event_listeners = false;
   if (listeners_vector) {
     fired_event_listeners = FireEventListeners(event, d, *listeners_vector);
-  } else if (legacy_listeners_vector) {
+  } else if (event->isTrusted() && legacy_listeners_vector) {
     AtomicString unprefixed_type_name = event->type();
     event->SetType(legacy_type_name);
     fired_event_listeners =
