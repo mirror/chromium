@@ -966,17 +966,7 @@ void LayoutTableSection::UpdateLayout() {
         row_logical_top = row->LogicalBottom();
         row_logical_top += LayoutUnit(Table()->VBorderSpacing());
       }
-
-      if (!Table()->HasSameDirectionAs(row)) {
-        UseCounter::Count(GetDocument(),
-                          WebFeature::kTableRowDirectionDifferentFromTable);
-      }
     }
-  }
-
-  if (!Table()->HasSameDirectionAs(this)) {
-    UseCounter::Count(GetDocument(),
-                      WebFeature::kTableSectionDirectionDifferentFromTable);
   }
 
   ClearNeedsLayout();
@@ -1590,38 +1580,6 @@ unsigned LayoutTableSection::NumEffectiveColumns() const {
   }
 
   return result + 1;
-}
-
-BorderValue LayoutTableSection::BorderAdjoiningStartCell(
-    const LayoutTableCell* cell) const {
-#if DCHECK_IS_ON()
-  DCHECK(cell->IsFirstOrLastCellInRow());
-#endif
-  return HasSameDirectionAs(cell) ? Style()->BorderStart()
-                                  : Style()->BorderEnd();
-}
-
-BorderValue LayoutTableSection::BorderAdjoiningEndCell(
-    const LayoutTableCell* cell) const {
-#if DCHECK_IS_ON()
-  DCHECK(cell->IsFirstOrLastCellInRow());
-#endif
-  return HasSameDirectionAs(cell) ? Style()->BorderEnd()
-                                  : Style()->BorderStart();
-}
-
-const LayoutTableCell* LayoutTableSection::FirstRowCellAdjoiningTableStart()
-    const {
-  unsigned adjoining_start_cell_column_index =
-      HasSameDirectionAs(Table()) ? 0 : Table()->LastEffectiveColumnIndex();
-  return PrimaryCellAt(0, adjoining_start_cell_column_index);
-}
-
-const LayoutTableCell* LayoutTableSection::FirstRowCellAdjoiningTableEnd()
-    const {
-  unsigned adjoining_end_cell_column_index =
-      HasSameDirectionAs(Table()) ? Table()->LastEffectiveColumnIndex() : 0;
-  return PrimaryCellAt(0, adjoining_end_cell_column_index);
 }
 
 LayoutTableCell* LayoutTableSection::OriginatingCellAt(

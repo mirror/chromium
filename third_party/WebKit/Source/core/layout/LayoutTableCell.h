@@ -246,45 +246,19 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   // direction on all table parts and writing-mode on cells.
   const ComputedStyle& StyleForCellFlow() const { return Row()->StyleRef(); }
 
-  BorderValue BorderAdjoiningTableStart() const {
-#if DCHECK_IS_ON()
-    DCHECK(IsFirstOrLastCellInRow());
-#endif
-    if (Section()->HasSameDirectionAs(Table()))
-      return Style()->BorderStart();
-
-    return Style()->BorderEnd();
+  BorderValue BorderAdjoiningCellPreceding() const {
+    // TODO(crbug.com/409155): Add support for mixed writing-mode at the cell
+    // level.
+    return HasSameDirectionAs(Table()) ? StyleRef().BorderStart()
+                                       : StyleRef().BorderEnd();
   }
 
-  BorderValue BorderAdjoiningTableEnd() const {
-#if DCHECK_IS_ON()
-    DCHECK(IsFirstOrLastCellInRow());
-#endif
-    if (Section()->HasSameDirectionAs(Table()))
-      return Style()->BorderEnd();
-
-    return Style()->BorderStart();
+  BorderValue BorderAdjoiningCellFollowing() const {
+    // TODO(crbug.com/409155): Add support for mixed writing-mode at the cell
+    // level.
+    return HasSameDirectionAs(Table()) ? StyleRef().BorderEnd()
+                                       : StyleRef().BorderStart();
   }
-
-  BorderValue BorderAdjoiningCellBefore(const LayoutTableCell& cell) {
-    DCHECK_EQ(Table()->CellFollowing(cell), this);
-    // FIXME: https://webkit.org/b/79272 - Add support for mixed directionality
-    // at the cell level.
-    return Style()->BorderStart();
-  }
-
-  BorderValue BorderAdjoiningCellAfter(const LayoutTableCell& cell) {
-    DCHECK_EQ(Table()->CellPreceding(cell), this);
-    // FIXME: https://webkit.org/b/79272 - Add support for mixed directionality
-    // at the cell level.
-    return Style()->BorderEnd();
-  }
-
-#if DCHECK_IS_ON()
-  bool IsFirstOrLastCellInRow() const {
-    return !Table()->CellFollowing(*this) || !Table()->CellPreceding(*this);
-  }
-#endif
 
   const char* GetName() const override { return "LayoutTableCell"; }
 
@@ -450,10 +424,8 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
     SetIntrinsicPaddingAfter(after);
   }
 
-  inline bool IsInStartColumn() const;
-  inline bool IsInEndColumn() const;
-  bool HasStartBorderAdjoiningTable() const;
-  bool HasEndBorderAdjoiningTable() const;
+  bool IsInStartColumn() const { return !AbsoluteColumnIndex(); }
+  bool IsInEndColumn() const;
 
   // Those functions implement the CSS collapsing border conflict
   // resolution algorithm.
