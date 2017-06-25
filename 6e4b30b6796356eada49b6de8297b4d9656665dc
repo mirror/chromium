@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "404410d0_2f225f30",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/table/collapsed-border-cell-resize.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-25T17:32:20Z",
+      "side": 1,
+      "message": "Perhaps because of naming conflict. Renamed the new tests to collapsed-border-cell-change-width*.html and restored this one.",
+      "parentUuid": "4be27b97_e0c16eae",
+      "revId": "6e4b30b6796356eada49b6de8297b4d9656665dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e05e2274_78f9cfb6",
         "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/composited-table-row-expected.txt",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-25T15:41:51Z",
       "side": 1,
       "message": "Why did this change?",
+      "revId": "6e4b30b6796356eada49b6de8297b4d9656665dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d181a064_8d7b4b29",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/composited-table-row-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-25T17:32:20Z",
+      "side": 1,
+      "message": "This is because the visual rect of a table cell no longer includes collapsed borders.",
+      "parentUuid": "e05e2274_78f9cfb6",
       "revId": "6e4b30b6796356eada49b6de8297b4d9656665dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "6e4b30b6796356eada49b6de8297b4d9656665dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40093b53_b3bd96d3",
+        "filename": "third_party/WebKit/Source/core/paint/TableRowPainter.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-25T17:32:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8898d5f6_7b031d44",
+      "revId": "6e4b30b6796356eada49b6de8297b4d9656665dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
