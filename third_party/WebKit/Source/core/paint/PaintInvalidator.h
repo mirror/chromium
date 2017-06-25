@@ -65,6 +65,10 @@ struct CORE_EXPORT PaintInvalidatorContext {
     // don't need any invalidation. They are used as "painting subroutines"
     // for one or more other locations in SVG.
     kSubtreeNoInvalidation = 1 << 6,
+
+    // Don't skip invalidating because the previous and current visual
+    // rects were empty.
+    kInvalidateEmptyVisualRect = 1 << 7,
   };
   unsigned subtree_flags = 0;
 
