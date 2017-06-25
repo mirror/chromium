@@ -82,7 +82,9 @@ void PageOverlay::Update() {
       frame->GetPage()->GetVisualViewport().ContainerLayer()->AddChild(
           layer_.get());
     } else {
-      frame_impl_->FrameWidget()->RootGraphicsLayer()->AddChild(layer_.get());
+      ToWebFrameWidgetBase(frame_impl_->FrameWidget())
+          ->RootGraphicsLayer()
+          ->AddChild(layer_.get());
     }
   }
 

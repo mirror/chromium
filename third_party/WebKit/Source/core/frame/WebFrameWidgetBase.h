@@ -8,6 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/clipboard/DataObject.h"
 #include "core/dom/UserGestureIndicator.h"
+#include "core/frame/WebLocalFrameBase.h"
 #include "platform/graphics/paint/PaintImage.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Assertions.h"
@@ -34,6 +35,8 @@ class CORE_EXPORT WebFrameWidgetBase
  public:
   virtual ~WebFrameWidgetBase() {}
 
+  virtual void Dispose() = 0;
+
   virtual bool ForSubframe() const = 0;
   virtual void ScheduleAnimation() = 0;
   virtual CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient() = 0;
@@ -54,6 +57,7 @@ class CORE_EXPORT WebFrameWidgetBase
   virtual HitTestResult CoreHitTestResultAt(const WebPoint&) = 0;
 
   // WebFrameWidget implementation.
+  WebLocalFrameBase* LocalRoot() const override { return local_root_; }
   WebDragOperation DragTargetDragEnter(const WebDragData&,
                                        const WebPoint& point_in_viewport,
                                        const WebPoint& screen_point,
@@ -100,6 +104,8 @@ class CORE_EXPORT WebFrameWidgetBase
  protected:
   enum DragAction { kDragEnter, kDragOver };
 
+  WebFrameWidgetBase(WebLocalFrameBase& local_root);
+
   // Consolidate some common code between starting a drag over a target and
   // updating a drag over a target. If we're starting a drag, |isEntering|
   // should be true.
@@ -136,6 +142,9 @@ class CORE_EXPORT WebFrameWidgetBase
  private:
   void CancelDrag();
   LocalFrame* FocusedLocalFrameInWidget() const;
+
+  // The frame associated with this frame widget. It will never be null.
+  const Member<WebLocalFrameBase> local_root_;
 
   static bool ignore_input_events_;
   RefPtr<UserGestureToken> pointer_lock_gesture_token_;

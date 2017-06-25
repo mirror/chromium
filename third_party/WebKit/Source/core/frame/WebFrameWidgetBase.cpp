@@ -181,6 +181,11 @@ void WebFrameWidgetBase::StartDragging(WebReferrerPolicy policy,
   Client()->StartDragging(policy, data, mask, drag_image, drag_image_offset);
 }
 
+WebFrameWidgetBase::WebFrameWidgetBase(WebLocalFrameBase& local_root)
+    : local_root_(&local_root) {
+  DCHECK(local_root.GetFrame()->IsLocalRoot());
+  local_root_->BindFrameWidget(*this);
+}
 WebDragOperation WebFrameWidgetBase::DragTargetDragEnterOrOver(
     const WebPoint& point_in_viewport,
     const WebPoint& screen_point,
@@ -226,7 +231,7 @@ WebPoint WebFrameWidgetBase::ViewportToRootFrame(
 }
 
 WebViewBase* WebFrameWidgetBase::View() const {
-  return ToWebLocalFrameBase(LocalRoot())->ViewImpl();
+  return LocalRoot()->ViewImpl();
 }
 
 Page* WebFrameWidgetBase::GetPage() const {
@@ -259,6 +264,7 @@ void WebFrameWidgetBase::RequestDecode(
 
 DEFINE_TRACE(WebFrameWidgetBase) {
   visitor->Trace(current_drag_data_);
+  visitor->Trace(local_root_);
 }
 
 // TODO(665924): Remove direct dispatches of mouse events from
@@ -268,8 +274,8 @@ void WebFrameWidgetBase::PointerLockMouseEvent(
   const WebInputEvent& input_event = coalesced_event.Event();
   const WebMouseEvent& mouse_event =
       static_cast<const WebMouseEvent&>(input_event);
-  WebMouseEvent transformed_event = TransformWebMouseEvent(
-      ToWebLocalFrameBase(LocalRoot())->GetFrameView(), mouse_event);
+  WebMouseEvent transformed_event =
+      TransformWebMouseEvent(LocalRoot()->GetFrameView(), mouse_event);
 
   LocalFrame* focusedFrame = FocusedLocalFrameInWidget();
   if (focusedFrame) {

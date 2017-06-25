@@ -43,6 +43,7 @@ class WebLocalFrame;
 class WebInputMethodController;
 class WebWidgetClient;
 
+// WebFrameWidget is a WebWidget intended for
 class WebFrameWidget : public WebWidget {
  public:
   BLINK_EXPORT static WebFrameWidget* Create(WebWidgetClient*, WebLocalFrame*);

@@ -426,8 +426,6 @@ void RenderFrameProxy::FrameDetached(DetachType type) {
     Send(new FrameHostMsg_Detach(routing_id_));
   }
 
-  web_frame_->Close();
-
   // If this proxy was associated with a provisional RenderFrame, and we're not
   // in the process of swapping with it, clean it up as well.
   if (type == DetachType::kRemove &&

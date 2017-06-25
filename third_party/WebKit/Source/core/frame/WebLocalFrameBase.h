@@ -6,7 +6,6 @@
 #define WebLocalFrameBase_h
 
 #include "core/CoreExport.h"
-#include "core/frame/WebFrameWidgetBase.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "public/web/WebLocalFrame.h"
 
@@ -14,6 +13,7 @@ namespace blink {
 
 class ContentSettingsClient;
 class FrameOwner;
+class HTMLFrameOwnerElement;
 class LocalFrame;
 class LocalFrameView;
 class Node;
@@ -54,8 +54,7 @@ class WebLocalFrameBase : public GarbageCollectedFinalized<WebLocalFrameBase>,
                                    FrameOwner*,
                                    const AtomicString& name) = 0;
   virtual TextFinder& EnsureTextFinder() = 0;
-  virtual WebFrameWidgetBase* FrameWidget() const = 0;
-  virtual void SetFrameWidget(WebFrameWidgetBase*) = 0;
+  virtual void BindFrameWidget(WebFrameWidgetBase&) = 0;
   virtual WebDevToolsAgentImpl* DevToolsAgentImpl() const = 0;
   virtual void SetDevToolsFrontend(WebDevToolsFrontendImpl*) = 0;
   virtual WebDevToolsFrontendImpl* DevToolsFrontend() = 0;

@@ -100,6 +100,7 @@
 #include "public/web/WebFrame.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebFrameContentDumper.h"
+#include "public/web/WebFrameWidget.h"
 #include "public/web/WebHitTestResult.h"
 #include "public/web/WebInputMethodController.h"
 #include "public/web/WebPrintParams.h"
@@ -2422,7 +2423,7 @@ static void DragAndDropURL(WebViewBase* web_view, const std::string& url) {
 
   const WebPoint client_point(0, 0);
   const WebPoint screen_point(0, 0);
-  WebFrameWidgetBase* widget = web_view->MainFrameImpl()->FrameWidget();
+  WebFrameWidget* widget = web_view->MainFrameImpl()->FrameWidget();
   widget->DragTargetDragEnter(drag_data, client_point, screen_point,
                               kWebDragOperationCopy, 0);
   widget->DragTargetDrop(drag_data, client_point, screen_point, 0);

@@ -1515,7 +1515,9 @@ void RenderWidget::Close() {
   WillCloseLayerTreeView();
   compositor_.reset();
   if (webwidget_internal_) {
-    webwidget_internal_->Close();
+    // The lifetime of WebFrameWidget is controlled by Blink.
+    if (!for_oopif_)
+      webwidget_internal_->Close();
     webwidget_internal_ = nullptr;
   }
 }

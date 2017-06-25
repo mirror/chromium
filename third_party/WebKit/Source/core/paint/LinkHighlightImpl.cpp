@@ -33,6 +33,7 @@
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/WebFrameWidgetBase.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/layout/LayoutBoxModelObject.h"
 #include "core/layout/LayoutObject.h"
@@ -339,7 +340,8 @@ void LinkHighlightImpl::StartHighlightAnimationIfNeeded() {
   compositor_player_->AddAnimation(std::move(animation));
 
   Invalidate();
-  owning_web_view_->MainFrameImpl()->FrameWidget()->ScheduleAnimation();
+  ToWebFrameWidgetBase(owning_web_view_->MainFrameImpl()->FrameWidget())
+      ->ScheduleAnimation();
 }
 
 void LinkHighlightImpl::ClearGraphicsLayerLinkHighlightPointer() {
