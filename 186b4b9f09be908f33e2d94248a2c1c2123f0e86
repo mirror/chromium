@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4170c3dd_9ca3c3f0",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-25T13:18:40Z",
+      "side": 1,
+      "message": "Just curious; does this spec cover all gramatical pattens, except for \"not specified\" ones?\nOr do we have to refer other specs?",
+      "revId": "186b4b9f09be908f33e2d94248a2c1c2123f0e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879545e7_bcf0f0cb",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-25T13:18:40Z",
+      "side": 1,
+      "message": "What does \"current spec\" mean?",
+      "range": {
+        "startLine": 353,
+        "startChar": 25,
+        "endLine": 353,
+        "endChar": 32
+      },
+      "revId": "186b4b9f09be908f33e2d94248a2c1c2123f0e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
