@@ -36409,6 +36409,7 @@ from previous Chrome versions.
   <int value="11" label="Disabled by Key"/>
   <int value="12" label="Language in ULP"/>
   <int value="13" label="Aborted by translate ranker"/>
+  <int value="14" label="Aborted by too often denied rule"/>
 </enum>
 
 <enum name="TranslateLanguage">
