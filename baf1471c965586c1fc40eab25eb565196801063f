@@ -87,6 +87,24 @@
       "revId": "baf1471c965586c1fc40eab25eb565196801063f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f81043_f700f948",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-26T20:14:27Z",
+      "side": 1,
+      "message": "- I think the current test is sufficient.\n- Sounds good. Throwing an error is better then.",
+      "parentUuid": "0524b2d8_21ed4f85",
+      "revId": "baf1471c965586c1fc40eab25eb565196801063f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

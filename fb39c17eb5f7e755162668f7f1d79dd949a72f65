@@ -16,6 +16,24 @@
       "revId": "fb39c17eb5f7e755162668f7f1d79dd949a72f65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3148026_214fdb91",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-26T20:14:27Z",
+      "side": 1,
+      "message": "The link in your comment above points to comment #239 that talks about how |browser| should be constant, and that check has been added. \n\nI assume you are referring to the case when |window_id| might be set to kCurrentWindowId. I first understood your comment at line 179 \"window_id may be set to kCurrentWindowId, but that could still be acceptable, and |browser| may be changed below. A slight modification to this ...\" to refer to one change, but re-reading it now, I notice the two changes. \n\nDoes my new change correctly address the kCurrentWindowId case that you indicated?",
+      "parentUuid": "b1d2f1dd_caf167cc",
+      "revId": "fb39c17eb5f7e755162668f7f1d79dd949a72f65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
