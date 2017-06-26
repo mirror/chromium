@@ -1,0 +1,21 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module mojom;
+
+import "url/mojo/url.mojom";
+
+struct MediaEngagementDetails {
+  url.mojom.Url origin;
+  double total_score;
+
+  // Details of the components which make up |score|.
+  int64 visits;
+  int64 media_playbacks;
+  double last_media_playback_time;
+};
+
+interface MediaEngagementDetailsProvider {
+  GetMediaEngagementDetails() => (array<MediaEngagementDetails> info);
+};

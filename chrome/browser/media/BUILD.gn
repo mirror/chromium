@@ -21,3 +21,21 @@ fuzzer_test("cast_remoting_connector_fuzzer") {
   libfuzzer_options = [ "max_len = 128" ]
   seed_corpus = "../../test/data/cast/cast_remoting_connector_fuzz_corpus"
 }
+
+import("//mojo/public/tools/bindings/mojom.gni")
+
+mojom("mojo_bindings") {
+  sources = [
+    "media_engagement_details.mojom",
+  ]
+
+  public_deps = [
+    "//url/mojo:url_mojom_gurl",
+  ]
+
+  # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
+  use_once_callback = false
+
+  # TODO(crbug.com/699569): Convert to use the new JS bindings.
+  use_new_js_bindings = false
+}
