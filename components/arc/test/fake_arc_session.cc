@@ -15,6 +15,13 @@ FakeArcSession::FakeArcSession() = default;
 
 FakeArcSession::~FakeArcSession() = default;
 
+void FakeArcSession::StartForLoginScreen() {
+  if (boot_failure_emulation_enabled_) {
+    for (auto& observer : observer_list_)
+      observer.OnSessionStopped(boot_failure_reason_);
+  }
+}
+
 void FakeArcSession::Start() {
   if (boot_failure_emulation_enabled_) {
     for (auto& observer : observer_list_)

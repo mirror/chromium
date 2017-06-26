@@ -20,6 +20,7 @@ class FakeArcSession : public ArcSession {
   ~FakeArcSession() override;
 
   // ArcSession overrides:
+  void StartForLoginScreen() override;
   void Start() override;
   void Stop() override;
   void OnShutdown() override;
@@ -29,11 +30,12 @@ class FakeArcSession : public ArcSession {
 
   // The following control Start() behavior for testing various situations.
 
-  // Enables/disables boot failure emulation, in which OnStopped(reason) will
-  // be called when Start() is called.
+  // Enables/disables boot failure emulation, in which OnSessionStopped(reason)
+  // will be called when Start() or StartForLoginScreen() is called.
   void EnableBootFailureEmulation(ArcStopReason reason);
 
-  // Emulate Start() is suspended at some phase, before OnReady() is invoked.
+  // Emulate Start() is suspended at some phase, before OnSessionReady() is
+  // invoked.
   void SuspendBoot();
 
   // Returns FakeArcSession instance. This can be used for a factory
