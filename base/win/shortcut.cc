@@ -188,6 +188,7 @@ bool CreateOrUpdateShortcutLink(const FilePath& shortcut_path,
 bool ResolveShortcutProperties(const FilePath& shortcut_path,
                                uint32_t options,
                                ShortcutProperties* properties) {
+  LOG(ERROR) << "ResolveShortcutProperties 1";
   DCHECK(options && properties);
   base::ThreadRestrictions::AssertIOAllowed();
 
@@ -202,14 +203,20 @@ bool ResolveShortcutProperties(const FilePath& shortcut_path,
     return false;
   }
 
+  LOG(ERROR) << "ResolveShortcutProperties 2";
+
   ScopedComPtr<IPersistFile> persist;
   // Query IShellLink for the IPersistFile interface.
   if (FAILED(i_shell_link.CopyTo(persist.GetAddressOf())))
     return false;
 
+  LOG(ERROR) << "ResolveShortcutProperties 3";
+
   // Load the shell link.
   if (FAILED(persist->Load(shortcut_path.value().c_str(), STGM_READ)))
     return false;
+
+  LOG(ERROR) << "ResolveShortcutProperties 4";
 
   // Reset |properties|.
   properties->options = 0;
@@ -221,17 +228,23 @@ bool ResolveShortcutProperties(const FilePath& shortcut_path,
     properties->set_target(FilePath(temp));
   }
 
+  LOG(ERROR) << "ResolveShortcutProperties 5";
+
   if (options & ShortcutProperties::PROPERTIES_WORKING_DIR) {
     if (FAILED(i_shell_link->GetWorkingDirectory(temp, MAX_PATH)))
       return false;
     properties->set_working_dir(FilePath(temp));
   }
 
+  LOG(ERROR) << "ResolveShortcutProperties 6";
+
   if (options & ShortcutProperties::PROPERTIES_ARGUMENTS) {
     if (FAILED(i_shell_link->GetArguments(temp, MAX_PATH)))
       return false;
     properties->set_arguments(temp);
   }
+
+  LOG(ERROR) << "ResolveShortcutProperties 7";
 
   if (options & ShortcutProperties::PROPERTIES_DESCRIPTION) {
     // Note: description length constrained by MAX_PATH.
@@ -240,6 +253,8 @@ bool ResolveShortcutProperties(const FilePath& shortcut_path,
     properties->set_description(temp);
   }
 
+  LOG(ERROR) << "ResolveShortcutProperties 8";
+
   if (options & ShortcutProperties::PROPERTIES_ICON) {
     int temp_index;
     if (FAILED(i_shell_link->GetIconLocation(temp, MAX_PATH, &temp_index)))
@@ -247,17 +262,24 @@ bool ResolveShortcutProperties(const FilePath& shortcut_path,
     properties->set_icon(FilePath(temp), temp_index);
   }
 
+  LOG(ERROR) << "ResolveShortcutProperties 9";
+
   if (options & ShortcutProperties::PROPERTIES_WIN7) {
+    LOG(ERROR) << "ResolveShortcutProperties 9-1";
     ScopedComPtr<IPropertyStore> property_store;
     if (FAILED(i_shell_link.CopyTo(property_store.GetAddressOf())))
       return false;
 
+    LOG(ERROR) << "ResolveShortcutProperties 9-2";
+
     if (options & ShortcutProperties::PROPERTIES_APP_ID) {
+      LOG(ERROR) << "ResolveShortcutProperties 9-2-1";
       ScopedPropVariant pv_app_id;
       if (property_store->GetValue(PKEY_AppUserModel_ID,
                                    pv_app_id.Receive()) != S_OK) {
         return false;
       }
+      LOG(ERROR) << "ResolveShortcutProperties 9-2-2";
       switch (pv_app_id.get().vt) {
         case VT_EMPTY:
           properties->set_app_id(L"");
@@ -270,13 +292,16 @@ bool ResolveShortcutProperties(const FilePath& shortcut_path,
           return false;
       }
     }
+    LOG(ERROR) << "ResolveShortcutProperties 9-3";
 
     if (options & ShortcutProperties::PROPERTIES_DUAL_MODE) {
+      LOG(ERROR) << "ResolveShortcutProperties 9-3-1";
       ScopedPropVariant pv_dual_mode;
       if (property_store->GetValue(PKEY_AppUserModel_IsDualMode,
                                    pv_dual_mode.Receive()) != S_OK) {
         return false;
       }
+      LOG(ERROR) << "ResolveShortcutProperties 9-3-2";
       switch (pv_dual_mode.get().vt) {
         case VT_EMPTY:
           properties->set_dual_mode(false);
@@ -288,9 +313,11 @@ bool ResolveShortcutProperties(const FilePath& shortcut_path,
           NOTREACHED() << "Unexpected variant type: " << pv_dual_mode.get().vt;
           return false;
       }
+      LOG(ERROR) << "ResolveShortcutProperties 9-3-3";
     }
   }
 
+  LOG(ERROR) << "ResolveShortcutProperties 10";
   return true;
 }
 

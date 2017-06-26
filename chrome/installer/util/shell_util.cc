@@ -1270,9 +1270,12 @@ bool ShortcutOpListOrRemoveUnknownArgs(
     bool do_removal,
     std::vector<std::pair<base::FilePath, base::string16> >* shortcuts,
     const base::FilePath& shortcut_path) {
+  LOG(ERROR) << "ShortcutOpListOrRemoveUnknownArgs 1";
   base::string16 args;
   if (!base::win::ResolveShortcut(shortcut_path, NULL, &args))
     return false;
+
+  LOG(ERROR) << "ShortcutOpListOrRemoveUnknownArgs 2";
 
   base::CommandLine current_args(base::CommandLine::FromString(
       base::StringPrintf(L"unused_program %ls", args.c_str())));
@@ -1287,10 +1290,12 @@ bool ShortcutOpListOrRemoveUnknownArgs(
                                 arraysize(kept_switches));
   if (desired_args.argv().size() == current_args.argv().size())
     return true;
+  LOG(ERROR) << "ShortcutOpListOrRemoveUnknownArgs 3";
   if (shortcuts)
     shortcuts->push_back(std::make_pair(shortcut_path, args));
   if (!do_removal)
     return true;
+  LOG(ERROR) << "ShortcutOpListOrRemoveUnknownArgs 4";
   base::win::ShortcutProperties updated_properties;
   updated_properties.set_arguments(desired_args.GetArgumentsString());
   return base::win::CreateOrUpdateShortcutLink(
@@ -1312,17 +1317,23 @@ bool BatchShortcutAction(
     const scoped_refptr<ShellUtil::SharedCancellationFlag>& cancel) {
   DCHECK(!shortcut_operation.is_null());
 
+  LOG(ERROR) << "BatchShortcutAction 1 " << location;
+
   // There is no system-level Quick Launch shortcut folder.
   if (level == ShellUtil::SYSTEM_LEVEL &&
       location == ShellUtil::SHORTCUT_LOCATION_QUICK_LAUNCH) {
     return true;
   }
 
+  LOG(ERROR) << "BatchShortcutAction 2";
+
   base::FilePath shortcut_folder;
   if (!ShellUtil::GetShortcutPath(location, dist, level, &shortcut_folder)) {
     LOG(WARNING) << "Cannot find path at location " << location;
     return false;
   }
+
+  LOG(ERROR) << "BatchShortcutAction 3";
 
   bool success = true;
   base::FileEnumerator enumerator(
@@ -1345,6 +1356,7 @@ bool BatchShortcutAction(
       success = false;
     }
   }
+  LOG(ERROR) << "BatchShortcutAction 4 " << success;
   return success;
 }
 
@@ -2261,8 +2273,10 @@ bool ShellUtil::ShortcutListMaybeRemoveUnknownArgs(
   // Assert that this is only called with the one relevant distribution.
   // TODO(grt): Remove this when BrowserDistribution goes away.
   DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
+  LOG(ERROR) << "ShortcutListMaybeRemoveUnknownArgs 1" <<  location;
   if (!ShortcutLocationIsSupported(location))
     return false;
+  LOG(ERROR) << "ShortcutListMaybeRemoveUnknownArgs 2";
   DCHECK(dist);
   FilterTargetEq shortcut_filter(chrome_exe, true);
   ShortcutOperationCallback shortcut_operation(
