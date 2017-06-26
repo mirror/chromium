@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/android/vr_shell/textures/ui_texture.h"
+#include "chrome/browser/android/vr_shell/ui_elements/simple_textured_element.h"
 
 namespace vr_shell {
 
@@ -24,6 +25,9 @@ class InsecureContentPermanentTexture : public UiTexture {
 
   DISALLOW_COPY_AND_ASSIGN(InsecureContentPermanentTexture);
 };
+
+typedef SimpleTexturedElement<InsecureContentPermanentTexture>
+    PermanentSecurityWarning;
 
 }  // namespace vr_shell
 
