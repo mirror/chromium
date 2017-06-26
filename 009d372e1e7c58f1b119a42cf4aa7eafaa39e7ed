@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d47b8c3_b424a027",
+        "filename": "ash/accelerators/exit_warning_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-26T20:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9baa93cb_eedc42cc",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7c02846_72cf6803",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "37a1a637_94c3e768",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-26T20:04:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7c02846_72cf6803",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1be321_91e1d361",
         "filename": "ash/shelf/overflow_bubble_view.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-26T18:34:35Z",
       "side": 1,
       "message": "You should be able to call set_parent() in InitOverflowBubble(). You may be able to remove this method from the base class - I seem to recall adding it just to support ConfigureWidgetInitParamsForContainer(). It might require a little fiddling with shadow setup, but it\u0027s probably worth it to get rid of the delegation.",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c25096_28994033",
+        "filename": "ash/shelf/overflow_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-26T20:04:58Z",
+      "side": 1,
+      "message": "BubbleDialogDelegateView::OnBeforeBubbleWidgetInit() was added for other cases and has other overrides, so I can\u0027t remove it. Given that, doesn\u0027t it seem better to keep the override here? Otherwise the bubble gets added to another container and then parented to the right one. That should still work, but I think there are less potential side effects when initializing with the right parent. WDYT?",
+      "parentUuid": "8e1be321_91e1d361",
       "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7e573c86_5612be59",
+        "filename": "ash/shelf/shelf_tooltip_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-26T20:04:58Z",
+      "side": 1,
+      "message": "Same comment with same concerns.",
+      "parentUuid": "76f81b3e_81d9d842",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6b92ebe_8204ab7f",
         "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0d0a46_44a57e34",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-26T20:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b92ebe_8204ab7f",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
