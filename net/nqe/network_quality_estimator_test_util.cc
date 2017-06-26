@@ -190,6 +190,13 @@ base::Optional<base::TimeDelta> TestNetworkQualityEstimator::GetTransportRTT()
   return NetworkQualityEstimator::GetTransportRTT();
 }
 
+base::Optional<int32_t>
+TestNetworkQualityEstimator::GetDownstreamThroughputKbps() const {
+  if (start_time_null_downlink_throughput_kbps_)
+    return start_time_null_downlink_throughput_kbps_;
+  return NetworkQualityEstimator::GetDownstreamThroughputKbps();
+}
+
 bool TestNetworkQualityEstimator::GetRecentDownlinkThroughputKbps(
     const base::TimeTicks& start_time,
     int32_t* kbps) const {
@@ -239,6 +246,13 @@ TestNetworkQualityEstimator::GetAccuracyRecordingIntervals() const {
 
 double TestNetworkQualityEstimator::RandDouble() const {
   return rand_double_;
+}
+
+base::Optional<int32_t>
+TestNetworkQualityEstimator::GetBandwidthDelayProductKBits() const {
+  if (bandwidth_delay_product_kbits_.has_value())
+    return bandwidth_delay_product_kbits_.value();
+  return NetworkQualityEstimator::GetBandwidthDelayProductKBits();
 }
 
 int TestNetworkQualityEstimator::GetEntriesCount(NetLogEventType type) const {
