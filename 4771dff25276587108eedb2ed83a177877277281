@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "c1b612a0_5c56ce57",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-26T12:49:15Z",
+      "side": 1,
+      "message": "(By the way I\u0027m fine landing the code like this and changing in a follow-up patch, but wanted to make rough agreement about how it could look like)",
+      "parentUuid": "e5628d5b_badde78b",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f39d2b_39e48b03",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 11
