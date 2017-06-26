@@ -11,6 +11,7 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -18,12 +19,25 @@
 #include "content/common/content_export.h"
 #include "net/base/priority_queue.h"
 #include "net/base/request_priority.h"
+#include "net/nqe/effective_connection_type.h"
 
 namespace net {
 class URLRequest;
 }
 
 namespace content {
+namespace {
+// A struct that encapsulates a bandwidth delay product range and the maximum
+// number of delayable requests for that range for the experiment
+// |kMaxDelayableRequestsNetworkOverride|.
+struct BDPRangeRequestCountEntry {
+  int64_t bdp_lower_bound_in_kbits;
+  int64_t bdp_upper_bound_in_kbits;
+  size_t request_count;
+};
+typedef std::vector<BDPRangeRequestCountEntry> BDPRangeRequestCounts;
+}  // namespace
+
 class ResourceThrottle;
 
 // There is one ResourceScheduler. All renderer-initiated HTTP requests are
@@ -142,6 +156,15 @@ class CONTENT_EXPORT ResourceScheduler {
   // start resource requests.
   bool yielding_scheduler_enabled_;
   int max_requests_before_yielding_;
+
+  // True if the experiment |kMaxDelayableRequestsNetworkOverride| is enabled.
+  // In this experiment, the number of delayable requests simultaneously in
+  // flight is throttled based on the bandwidth delay product (BDP) information
+  // obtained from the network quality estimator module.
+  const bool max_delayable_requests_override_enabled_;
+  const BDPRangeRequestCounts max_delayable_requests_by_bdp_ranges_;
+  const net::EffectiveConnectionType
+      max_delayable_requests_network_override_max_ect_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
