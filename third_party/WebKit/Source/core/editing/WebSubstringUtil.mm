@@ -37,9 +37,9 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
-#include "core/dom/Range.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
+#include "core/editing/VisibleUnits.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
@@ -57,13 +57,13 @@
 #include "public/web/WebFrameWidget.h"
 #include "public/web/WebHitTestResult.h"
 #include "public/web/WebLocalFrame.h"
-#include "public/web/WebRange.h"
 
 using namespace blink;
 
-static NSAttributedString* attributedSubstringFromRange(
-    const EphemeralRange& range,
-    float fontScale) {
+namespace {
+
+NSAttributedString* AttributedSubstringFromRange(const EphemeralRange& range,
+                                                 float fontScale) {
   NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
   NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
   size_t length = range.EndPosition().ComputeOffsetInContainerNode() -
@@ -90,10 +90,10 @@ static NSAttributedString* attributedSubstringFromRange(
       continue;
 
     const ComputedStyle* style = layoutObject->Style();
-    FontPlatformData fontPlatformData =
+    FontPlatformData font_platform_data =
         style->GetFont().PrimaryFont()->PlatformData();
-    fontPlatformData.text_size_ *= fontScale;
-    NSFont* font = toNSFont(fontPlatformData.CtFont());
+    font_platform_data.text_size_ *= fontScale;
+    NSFont* font = toNSFont(font_platform_data.CtFont());
     // If the platform font can't be loaded, or the size is incorrect comparing
     // to the computed style, it's likely that the site is using a web font.
     // For now, just use the default font instead.
@@ -101,7 +101,7 @@ static NSAttributedString* attributedSubstringFromRange(
     // to use the font.
     // TODO(shuchen): Support scaling the font as necessary according to CSS
     // transforms, not just pinch-zoom.
-    if (!font || floor(fontPlatformData.size()) !=
+    if (!font || floor(font_platform_data.size()) !=
                      floor([[font fontDescriptor] pointSize])) {
       font = [NSFont systemFontOfSize:style->GetFont()
                                           .GetFontDescription()
@@ -135,22 +135,22 @@ static NSAttributedString* attributedSubstringFromRange(
   return [string autorelease];
 }
 
-WebPoint getBaselinePoint(LocalFrameView* frameView,
+WebPoint GetBaselinePoint(LocalFrameView* frame_view,
                           const EphemeralRange& range,
                           NSAttributedString* string) {
-  // TODO(yosin): We shold avoid to create |Range| object. See crbug.com/529985.
-  IntRect stringRect =
-      frameView->ContentsToViewport(CreateRange(range)->BoundingBox());
-  IntPoint stringPoint = stringRect.MinXMaxYCorner();
+  IntRect string_rect = frame_view->ContentsToViewport(ComputeTextRect(range));
+  IntPoint string_point = string_rect.MinXMaxYCorner();
 
   // Adjust for the font's descender. AppKit wants the baseline point.
   if ([string length]) {
     NSDictionary* attributes = [string attributesAtIndex:0 effectiveRange:NULL];
     if (NSFont* font = [attributes objectForKey:NSFontAttributeName])
-      stringPoint.Move(0, ceil([font descender]));
+      string_point.Move(0, ceil([font descender]));
   }
-  return stringPoint;
+  return string_point;
 }
+
+}  // namespace
 
 namespace blink {
 
@@ -178,9 +178,9 @@ NSAttributedString* WebSubstringUtil::AttributedWordAtPoint(
   const EphemeralRange word_range = selection.ToNormalizedEphemeralRange();
 
   // Convert to NSAttributedString.
-  NSAttributedString* string = attributedSubstringFromRange(
+  NSAttributedString* string = AttributedSubstringFromRange(
       word_range, frame->GetPage()->GetVisualViewport().Scale());
-  baseline_point = getBaselinePoint(frame->View(), word_range, string);
+  baseline_point = GetBaselinePoint(frame->View(), word_range, string);
   return string;
 }
 
@@ -209,10 +209,10 @@ NSAttributedString* WebSubstringUtil::AttributedSubstringInRange(
   if (ephemeral_range.IsNull())
     return nil;
 
-  NSAttributedString* result = attributedSubstringFromRange(
+  NSAttributedString* result = AttributedSubstringFromRange(
       ephemeral_range, frame->GetPage()->GetVisualViewport().Scale());
   if (baseline_point)
-    *baseline_point = getBaselinePoint(frame->View(), ephemeral_range, result);
+    *baseline_point = GetBaselinePoint(frame->View(), ephemeral_range, result);
   return result;
 }
 
