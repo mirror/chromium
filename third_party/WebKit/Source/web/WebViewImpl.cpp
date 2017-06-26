@@ -31,6 +31,7 @@
 #include "web/WebViewImpl.h"
 
 #include <memory>
+#include "controller/WebDevToolsAgentImpl.h"
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
 #include "core/animation/CompositorMutatorImpl.h"
@@ -171,7 +172,6 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 #if USE(DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"
