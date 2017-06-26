@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "fa34dd70_5723d004",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T17:32:12Z",
+      "side": 1,
+      "message": "How can reordering reordering of non-active windows be triggered? All these actions bring a window to the front *and* update the BrowserList accordingly:\n\n* Alt+Tab\n* Overview mode\n* clicking on a non-active window\n* clicking on an icon in the taskbar\n* closing the active window\n* opening a new window (ctrl+n, right-click on a link + Open link in new window)",
+      "parentUuid": "b9c99865_34f8695c",
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "953f52dc_6b4cdb51",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 13
@@ -93,6 +111,30 @@
       "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6aff84_831c7ab8",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T17:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "953f52dc_6b4cdb51",
+      "range": {
+        "startLine": 268,
+        "startChar": 30,
+        "endLine": 268,
+        "endChar": 39
+      },
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "613721a3_5cf3fc6c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T17:32:12Z",
+      "side": 1,
+      "message": "This problem already exists when non-selected tabs are discarded and the user quickly switches between tabs (ctrl+tab to traverse all tabs or ctrl+w to close tabs one by one). We plan to address it as part of the TabManager Lifecycle Management project (see state diagram in https://docs.google.com/a/google.com/document/d/1jTNldgUmsQ1JfuyiJXyRpFCJcQ68_Jjl1CUwkVbh1oA/edit?usp\u003dsharing). I think it\u0027s out of scope for this CL.",
+      "parentUuid": "30dafcfc_b8e5bccc",
+      "range": {
+        "startLine": 853,
+        "startChar": 18,
+        "endLine": 853,
+        "endChar": 34
+      },
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "936033d2_d0324aa9",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 13
@@ -142,6 +208,30 @@
     },
     {
       "key": {
+        "uuid": "8d3a6ca5_862d416e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T17:32:12Z",
+      "side": 1,
+      "message": "Done. Renamed function to IsActiveWebContentsInActiveBrowser and changed implementation to match the name.",
+      "parentUuid": "936033d2_d0324aa9",
+      "range": {
+        "startLine": 327,
+        "startChar": 10,
+        "endLine": 327,
+        "endChar": 21
+      },
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3232771_daebc479",
         "filename": "chrome/browser/ui/webui/about_ui.cc",
         "patchSetId": 13
@@ -162,6 +252,30 @@
       "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15db016f_e71d723b",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T17:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3232771_daebc479",
+      "range": {
+        "startLine": 479,
+        "startChar": 15,
+        "endLine": 479,
+        "endChar": 27
+      },
+      "revId": "d0132d97264478940009b61c175ba25dc4c6d7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
