@@ -2859,9 +2859,6 @@ crbug.com/725455 [ Linux ] nfc/watch.html [ Failure Pass Timeout ]
 # Sheriff failures 2017-05-29
 crbug.com/727252 [ Win7 ] external/wpt/media-source/mediasource-endofstream.html [ Pass Timeout ]
 
-# Failures when using libc++.  Rebaseline after landing https://codereview.chromium.org/2933573002/
-crbug.com/734873 [ Linux ] fast/backgrounds/size/contain-and-cover.html [ Pass Failure ]
-
 # Compositor worker tests are flaky, crashing and timing out
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/basic-plumbing-main-to-worker.html [ Pass Failure Timeout Crash ]
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/request-animation-frame.html [ Pass Failure Timeout Crash ]
@@ -2941,7 +2938,6 @@ crbug.com/736177 [ Mac ] svg/W3C-SVG-1.1/script-handle-04-b.svg [ Failure Pass ]
 crbug.com/736177 [ Mac ] svg/W3C-SVG-1.1/struct-use-05-b.svg [ Failure Pass ]
 crbug.com/736177 [ Mac ] svg/W3C-SVG-1.1/text-fonts-01-t.svg [ Failure Pass ]
 crbug.com/736177 [ Mac ] svg/as-border-image/svg-as-border-image-2.html [ Failure Pass ]
-crbug.com/736177 [ Mac ] svg/as-border-image/svg-as-border-image.html [ Failure Pass ]
 crbug.com/736177 [ Mac ] svg/batik/text/textLayout.svg [ Failure Pass ]
 crbug.com/736177 [ Mac ] svg/custom/focus-ring-text.svg [ Failure Pass ]
 crbug.com/736177 [ Mac ] svg/text/surrogate-pair-queries.html [ Failure Pass ]
