@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5f8d8bb_3ef84009",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2518,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T18:07:24Z",
+      "side": 0,
+      "message": "We shouldn\u0027t change this because Android is still using this code and this will change the memory pressure level on Android.",
+      "revId": "f38bfbbf471cd96f74b73fd87ce84fa51bc283ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
