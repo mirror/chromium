@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3efa908_e732f833",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-26T18:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3029b9_2828eb74",
+      "revId": "8e52d8f424100781553fff756c25b57388a265da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b239abd4_d3e58504",
         "filename": "ui/android/view_android.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d2f2966e_827bc509",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-26T18:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b239abd4_d3e58504",
+      "revId": "8e52d8f424100781553fff756c25b57388a265da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b481a4ba_35a71770",
         "filename": "ui/android/view_android.h",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "8e52d8f424100781553fff756c25b57388a265da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ae3dc7_67a903c3",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-26T18:58:18Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "b481a4ba_35a71770",
+      "revId": "8e52d8f424100781553fff756c25b57388a265da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
