@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c8e3f4cb_17f77821",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "nit: sort these alphabetically",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 31
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "988b502f_043a9417",
         "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
         "patchSetId": 3
@@ -42,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "8170da1a_6869e6da",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "This actually depends on how the encoder uses the timestamp. WebrtcVideoEncoderVpx doesn\u0027t use the clock_, so it can be removed from there.  There are two possible approaches:\n 1. base::TimeTicks::Now() - first_frame_timestamp. \n 2. Increment timestamp for every frame by certain amount (e.g. params.duration).\n\nFor the VPX encoder we pass 0 as timestamp. The encoder also gets duration for each frame which is specified with FrameParams.duration. Internally libvpx calculates target_bitrate*duration to estimate target frame size.",
+      "parentUuid": "f072bd1c_cbc34ad8",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 77
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5070e760_c496734d",
         "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
         "patchSetId": 3
@@ -53,6 +100,30 @@
       "writtenOn": "2017-06-23T15:45:21Z",
       "side": 1,
       "message": "This function needs a redesign once I get more information about how often this callback is called. I.e., should we expect to have it called multiple times throughout the lifetime of the encoder? And if so, should we dump the old buffers each time and grab fresh ones?\n\nFor now I\u0027m just using a relatively naive implementation.",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90a23db_b20607c2",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "I would expect it to be called more than once. E.g. if screen is resized then old buffers may not be big enough.\nIt seems to be properly documented in media/video/video_encode_accelerator.h, which says \"The VEA disclaims use or ownership of all previously provided buffers once this callback is made.\"",
+      "parentUuid": "5070e760_c496734d",
       "range": {
         "startLine": 41,
         "startChar": 28,
@@ -88,6 +159,53 @@
     },
     {
       "key": {
+        "uuid": "e4b71342_7520b4fa",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "3 looks, fine.",
+      "parentUuid": "369d8f1f_67995a5b",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630f6b38_c25724a7",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "It won\u0027t compile without std::move(), see https://codesearch.chromium.org/chromium/src/base/callback.h?type\u003dcs\u0026q\u003dbase/callback.h\u0026l\u003d73\n\nThe callback here is a base::OnceCallback, which means it can be called only once. It\u0027s enforced by allowing Run() call to be called only on r-value. The r-value version of Run() resets the callback, which ensures it\u0027s not possible to call it again.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 66
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29cb40c6_d8a04fad",
         "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
         "patchSetId": 3
@@ -104,6 +222,191 @@
         "startChar": 62,
         "endLine": 104,
         "endChar": 75
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c04a00_eef00854",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "I think it\u0027s fine for now. Maybe add a TODO in the header to reconsider this interface later. Specifically we would want to find out which codecs are supported and use it to drive codec selection in the session handshake.",
+      "parentUuid": "29cb40c6_d8a04fad",
+      "range": {
+        "startLine": 104,
+        "startChar": 62,
+        "endLine": 104,
+        "endChar": 75
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c3654e_12a8449f",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "nit: don\u0027t need semicolon here",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e3cd16_aa332576",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "we may need to delay encoder initialization until the first frame is captured.",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddd4b61_b61a087c",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "Suggest calling it WebrtcVideoEncoderGpu.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e9434a_cab44cfd",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "FWIW RGB-YUV conversion is just a few lines of code, see https://codesearch.chromium.org/chromium/src/remoting/codec/webrtc_video_encoder_vpx.cc?q\u003dwebrtc_video_encod+package:%5Echromium$\u0026l\u003d555",
+      "range": {
+        "startLine": 30,
+        "startChar": 54,
+        "endLine": 30,
+        "endChar": 73
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e2293b_6f8e7a8a",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "would it be easier to use media::VideoCodecProfile instead of this enum?",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f90151c_1148d4c4",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "There is unlikely to be more than a handful of elements in this map. With the current implementation of WebrtcFrameSchedulerSimple there is never more than one pending Encode request. base::flat_map\u003c\u003e is a better choice in this case. See https://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 75
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe21460e_60a8f014",
+        "filename": "remoting/codec/webrtc_video_encoder_vea_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-26T22:54:08Z",
+      "side": 1,
+      "message": "empty line after webrtc_video_encoder_vea.h\n\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 46
       },
       "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
