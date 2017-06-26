@@ -51,4 +51,5 @@ class MseCasesStoryExpectations(
     story.expectations.StoryExpectations):
 
   def SetExpectations(self):
-    pass
+    self.DisableStory('startup_test.html?testType=AV&useAppendStream=true',
+                      [story.expectations.ANDROID_ONE], 'crbug.com/736849')
