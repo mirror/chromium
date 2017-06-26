@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d3e5e9_2283e660",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T21:00:24Z",
+      "side": 1,
+      "message": "The else statement says \"!iOS\". Is this necessary for our purposes?",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48d5569_045926f3",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T21:00:24Z",
+      "side": 1,
+      "message": "It seems more common to use _unittest.cc as a postfix.",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4077fe28_b7204eef",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T21:00:24Z",
+      "side": 1,
+      "message": "You\u0027ve properly identified where to add deps.\nLet\u0027s remove this so we don\u0027t accidentally \nleave it in.",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e1753a_28082279",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T21:00:24Z",
+      "side": 1,
+      "message": "Comment the class and any non-inherited methods.",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
