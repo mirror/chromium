@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12cbf0c3_e45633dd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-26T18:13:06Z",
+      "side": 1,
+      "message": "Combining this with the existing trace events seems to cause quite a bit of complexity. Would this be simpler if it were a separate trace event (possibly in a dedicated trace category)?\n\nThat might also allow us to use the tracing of that category as the signal about whether Blink RCS should be enabled.",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a94d872_23074a72",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-26T18:13:06Z",
+      "side": 1,
+      "message": "FWIW, we can avoid the copy of the name here if we modify blink::TracedValue to expose the distinction between copied and non-copied strings that base::TracedValue has. (Actually, at present I don\u0027t believe anything in Blink needs to copy, but we presently do.)\n\nThis should make the time spent doing this dump smaller (and a little more code could move even more out of the trace-recording path). Do you have an idea of how expensive this presently is?\n\nAlso, is this format motivated by matching what V8 does? If not, we might also consider not recording timers that have zero count.",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7f47a9_dcc434da",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-26T18:13:06Z",
+      "side": 1,
+      "message": "nit: Is this trick necessary? It seems to me that the following ought to suffice:\n\n#define COUNTER_NAME_ENTRY(name) \"BlinkRCS_\" ##name\n\nAlso, nit: is there a reason for including \"RCS\" in this, given that they are RCS keys?",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa231f0_3f42783d",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-26T18:13:06Z",
+      "side": 1,
+      "message": "I don\u0027t understand. This seems like it will reset the stats table, and we\u0027ll lose all knowledge if the same isolate is used recursively:\n\n1. call V8 function\n2. reset stats table\n3. bunch of interesting stuff happens\n4. enter Blink\n5. synchronously call another V8 function\n6. reset stats table (losing interesting stuff from 3)\n\nIf this cannot happen, could you clarify?",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d0cdbb_14a92fc2",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-26T18:13:06Z",
+      "side": 1,
+      "message": "Does this macro add substantial value? I\u0027d prefer to have fewer macros if we can avoid it.",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d408f30_14d56a3f",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-26T18:13:06Z",
+      "side": 1,
+      "message": "Do we need to InitializeData, regardless of the runtime flag, category group and whether tracing is even enabled?",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef90102_6c170fee",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-26T18:13:06Z",
+      "side": 1,
+      "message": "You can just write \"bool begin_event_created_ \u003d true;\" below to get similar behaviour, without having to explicitly call the default constructor above.",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
