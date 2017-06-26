@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d182f8b_d79bc36e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-26T21:06:23Z",
+      "side": 1,
+      "message": "Did defocusing the ContentViewCore not work? Why not simply call ContentViewCore#onFocusChanged?",
+      "range": {
+        "startLine": 1087,
+        "startChar": 17,
+        "endLine": 1087,
+        "endChar": 49
+      },
+      "revId": "b0e7c0179ad1a25f45e0761719be7cc41a03cabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
