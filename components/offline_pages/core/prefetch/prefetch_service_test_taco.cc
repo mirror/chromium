@@ -9,6 +9,7 @@
 #include "components/offline_pages/core/prefetch/offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
+#include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
@@ -17,11 +18,16 @@
 
 namespace offline_pages {
 
+namespace {
+const version_info::Channel kTestChannel = version_info::Channel::UNKNOWN;
+}  // namespace
+
 PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
   metrics_collector_ = base::MakeUnique<TestOfflineMetricsCollector>();
   dispatcher_ = base::MakeUnique<PrefetchDispatcherImpl>();
   gcm_handler_ = base::MakeUnique<TestPrefetchGCMHandler>();
   suggested_articles_observer_ = base::MakeUnique<SuggestedArticlesObserver>();
+  prefetch_downloader_ = base::MakeUnique<PrefetchDownloader>(kTestChannel);
   // This sets up the testing articles as an empty vector, we can ignore the
   // result here.  This allows us to not create a ContentSuggestionsService.
   suggested_articles_observer_->GetTestingArticles();
@@ -53,12 +59,19 @@ void PrefetchServiceTestTaco::SetSuggestedArticlesObserver(
   suggested_articles_observer_ = std::move(suggested_articles_observer);
 }
 
+void PrefetchServiceTestTaco::SetPrefetchDownloader(
+    std::unique_ptr<PrefetchDownloader> prefetch_downloader) {
+  CHECK(!prefetch_service_);
+  prefetch_downloader_ = std::move(prefetch_downloader);
+}
+
 void PrefetchServiceTestTaco::CreatePrefetchService() {
   CHECK(metrics_collector_ && dispatcher_ && gcm_handler_ &&
-        suggested_articles_observer_);
+        suggested_articles_observer_ && prefetch_downloader_);
   prefetch_service_ = base::MakeUnique<PrefetchServiceImpl>(
       std::move(metrics_collector_), std::move(dispatcher_),
-      std::move(gcm_handler_), std::move(suggested_articles_observer_));
+      std::move(gcm_handler_), std::move(suggested_articles_observer_),
+      std::move(prefetch_downloader_));
 }
 
 std::unique_ptr<PrefetchService>

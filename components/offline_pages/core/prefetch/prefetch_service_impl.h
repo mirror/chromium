@@ -10,10 +10,12 @@
 #include "base/macros.h"
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
+#include "components/offline_pages/core/prefetch/prefetch_types.h"
 
 namespace offline_pages {
 class OfflineMetricsCollector;
 class PrefetchDispatcher;
+class PrefetchDownloader;
 class PrefetchGCMHandler;
 class SuggestedArticlesObserver;
 
@@ -23,7 +25,8 @@ class PrefetchServiceImpl : public PrefetchService {
       std::unique_ptr<OfflineMetricsCollector> offline_metrics_collector,
       std::unique_ptr<PrefetchDispatcher> dispatcher,
       std::unique_ptr<PrefetchGCMHandler> gcm_handler,
-      std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer);
+      std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer,
+      std::unique_ptr<PrefetchDownloader> prefetch_downloader);
   ~PrefetchServiceImpl() override;
 
   // PrefetchService implementation:
@@ -32,17 +35,22 @@ class PrefetchServiceImpl : public PrefetchService {
   PrefetchGCMHandler* GetPrefetchGCMHandler() override;
   SuggestedArticlesObserver* GetSuggestedArticlesObserver() override;
   OfflineEventLogger* GetLogger() override;
+  PrefetchDownloader* GetPrefetchDownloader() override;
 
   // KeyedService implementation:
   void Shutdown() override;
 
  private:
+  // Called when a download completes.
+  void OnDownloadCompleted(const PrefetchDownloadResult& result);
+
   OfflineEventLogger logger_;
 
   std::unique_ptr<OfflineMetricsCollector> offline_metrics_collector_;
   std::unique_ptr<PrefetchDispatcher> prefetch_dispatcher_;
   std::unique_ptr<PrefetchGCMHandler> prefetch_gcm_handler_;
   std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer_;
+  std::unique_ptr<PrefetchDownloader> prefetch_downloader_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchServiceImpl);
 };
