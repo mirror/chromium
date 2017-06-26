@@ -34,6 +34,24 @@
       "revId": "b4a44794c0a6276ffbe3a605c119a17d1b8d722c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc6c0f33_a719412a",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-26T15:58:11Z",
+      "side": 1,
+      "message": "Since we have is_desktop_linux in the build system, any\nreason we shouldn\u0027t just have IS_DESKTOP_LINUX as a C++ macro?\n\nThen this code would be IS_DESKTOP_LINUX and HAS_ATK, which would\nbe the most semantically and technically accurate I could imagine.\n\nEither way, lgtm - I don\u0027t want to hold this up, I\u0027m just\nusing this as an excuse to figure out how to improve it\nfurther. I may do a follow-up after this change but I\ndon\u0027t want to slow you down.",
+      "parentUuid": "adcb0093_e6d82118",
+      "revId": "b4a44794c0a6276ffbe3a605c119a17d1b8d722c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
