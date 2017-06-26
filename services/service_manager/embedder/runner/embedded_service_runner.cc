@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/service_manager/embedded_service_runner.h"
+#include "services/service_manager/embedder/runner/embedded_service_runner.h"
 
 #include <map>
 #include <memory>
@@ -19,7 +19,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
-namespace content {
+namespace service_manager {
 
 class EmbeddedServiceRunner::InstanceManager
     : public base::RefCountedThreadSafe<InstanceManager> {
@@ -176,8 +176,8 @@ EmbeddedServiceRunner::EmbeddedServiceRunner(const base::StringPiece& name,
                                              const ServiceInfo& info)
     : weak_factory_(this) {
   instance_manager_ = new InstanceManager(
-      name, info, base::Bind(&EmbeddedServiceRunner::OnQuit,
-                             weak_factory_.GetWeakPtr()));
+      name, info,
+      base::Bind(&EmbeddedServiceRunner::OnQuit, weak_factory_.GetWeakPtr()));
 }
 
 EmbeddedServiceRunner::~EmbeddedServiceRunner() {
@@ -189,8 +189,7 @@ void EmbeddedServiceRunner::BindServiceRequest(
   instance_manager_->BindServiceRequest(std::move(request));
 }
 
-void EmbeddedServiceRunner::SetQuitClosure(
-    const base::Closure& quit_closure) {
+void EmbeddedServiceRunner::SetQuitClosure(const base::Closure& quit_closure) {
   quit_closure_ = quit_closure;
 }
 
@@ -199,4 +198,4 @@ void EmbeddedServiceRunner::OnQuit() {
     quit_closure_.Run();
 }
 
-}  // namespace content
+}  // namespace service_manager
