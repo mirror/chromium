@@ -65,6 +65,19 @@ void ContentSubresourceFilterThrottleManager::RenderFrameDeleted(
   DestroyRulesetHandleIfNoLongerUsed();
 }
 
+void ContentSubresourceFilterThrottleManager::DidStartNavigation(
+    content::NavigationHandle* navigation_handle) {
+  CHECK(!base::ContainsKey(pending_activation_throttles_, navigation_handle));
+  if (auto throttle =
+          MaybeCreateActivationStateComputingThrottle(navigation_handle)) {
+    throttle->set_destruction_closure(base::BindOnce(
+        &ContentSubresourceFilterThrottleManager::
+            OnActivationStateThrottleDestroyed,
+        weak_ptr_factory_.GetWeakPtr(), base::Unretained(navigation_handle)));
+    pending_activation_throttles_[navigation_handle] = std::move(throttle);
+  }
+}
+
 // Pull the AsyncDocumentSubresourceFilter and its associated ActivationState
 // out of the activation state computing throttle. Store it for later filtering
 // of subframe navigations.
@@ -108,6 +121,9 @@ void ContentSubresourceFilterThrottleManager::ReadyToCommitNavigation(
 
 void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
+  // Just in case the navigation did not have throttles attached.
+  pending_activation_throttles_.erase(navigation_handle);
+
   // Do nothing if the navigation finished in the same document. Just make sure
   // to not leak throttle pointers.
   if (!navigation_handle->HasCommitted() ||
@@ -211,12 +227,15 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
           MaybeCreateSubframeNavigationFilteringThrottle(navigation_handle)) {
     throttles->push_back(std::move(filtering_throttle));
   }
-  if (auto activation_throttle =
-          MaybeCreateActivationStateComputingThrottle(navigation_handle)) {
-    CHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
+
+  CHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
+  auto activation_throttle =
+      pending_activation_throttles_.find(navigation_handle);
+  if (activation_throttle != pending_activation_throttles_.end()) {
     ongoing_activation_throttles_[navigation_handle] =
-        activation_throttle.get();
-    throttles->push_back(std::move(activation_throttle));
+        activation_throttle->second.get();
+    throttles->push_back(std::move(activation_throttle->second));
+    pending_activation_throttles_.erase(activation_throttle);
   }
 }
 
@@ -316,6 +335,14 @@ void ContentSubresourceFilterThrottleManager::OnDocumentLoadStatistics(
     const DocumentLoadStatistics& statistics) {
   if (statistics_)
     statistics_->OnDocumentLoadStatistics(statistics);
+}
+
+void ContentSubresourceFilterThrottleManager::
+    OnActivationStateThrottleDestroyed(
+        content::NavigationHandle* navigation_handle) {
+  // Should be after DidFinishNavigation in all cases, so should already be
+  // erased from the map if that method is called.
+  CHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
 }
 
 }  // namespace subresource_filter
