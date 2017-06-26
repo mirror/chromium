@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "856aad6f_0eef2b1f",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-26T19:09:21Z",
+      "side": 1,
+      "message": "We should also delete the request from the map here right?",
+      "revId": "ad3281bbab0a91553f5fb5c7e730827bf9be8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d54aba6_eb3d2e9f",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-26T19:09:21Z",
+      "side": 1,
+      "message": "nit: s/recent/active/",
+      "range": {
+        "startLine": 53,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "ad3281bbab0a91553f5fb5c7e730827bf9be8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "c047c6d5_6adf8d11",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-26T19:09:21Z",
+      "side": 0,
+      "message": "\u003e Do you want it per blocking operation instead of the sum of blocking operations per network request? Again, I am not sure what we would get out of that.\n\nYeah I was referring to recording per blocking operation. Won\u0027t it be useful to answer the question -\u003e \"How much does an average extension using the web request API delay the network request\"? \n\nIn contrast, Extensions.NetworkDelay is dependent on the no. of extensions which use the Web Request API.",
+      "parentUuid": "6aadb71c_62e567c9",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc911042_cde2c05c",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
         "patchSetId": 1
