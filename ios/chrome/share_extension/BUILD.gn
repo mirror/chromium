@@ -51,7 +51,6 @@ ios_appex_bundle("share_extension") {
     ":system_strings",
     "//base",
     "//ios/chrome/common/app_group",
-    "//ios/chrome/common/app_group:client",
   ]
   bundle_deps_filter = [ "//third_party/icu:icudata" ]
 

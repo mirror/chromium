@@ -12,13 +12,6 @@
 
 namespace app_group {
 
-// Suffix to the name of file containing logs ready for upload.
-extern NSString* const kPendingLogFileSuffix;
-
-// Directory containing the logs produced by extensions that are ready for
-// upload.
-extern NSString* const kPendingLogFileDirectory;
-
 // Offsets the sessionID to avoid collision. The sessionID is limited to 1<<23.
 int AppGroupSessionID(int sessionID, AppGroupApplications application);
 

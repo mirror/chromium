@@ -32,7 +32,6 @@
 #include "components/version_info/version_info.h"
 #import "ios/chrome/common/app_group/app_group_constants.h"
 #import "ios/chrome/common/app_group/app_group_metrics.h"
-#import "ios/chrome/common/app_group/app_group_metrics_client.h"
 #include "ios/chrome/common/channel_info.h"
 
 namespace {
@@ -212,15 +211,6 @@ void TodayMetricsLogger::PersistLogs() {
 }
 
 bool TodayMetricsLogger::CreateNewLog() {
-  id previous_log = [[NSUserDefaults standardUserDefaults]
-      dataForKey:kTodayExtensionMetricsCurrentLog];
-  if (previous_log) {
-    app_group::client_app::AddPendingLog(previous_log,
-                                         app_group::APP_GROUP_TODAY_EXTENSION);
-    thread_pool_->PostTask(
-        FROM_HERE, base::Bind(&app_group::client_app::CleanOldPendingLogs));
-  }
-
   base::scoped_nsobject<NSUserDefaults> shared_defaults(
       [[NSUserDefaults alloc] initWithSuiteName:app_group::ApplicationGroup()]);
 

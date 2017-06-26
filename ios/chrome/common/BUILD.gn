@@ -22,7 +22,6 @@ source_set("common") {
     "//base",
     "//components/version_info",
     "//components/version_info:version_string",
-    "//ios/chrome/common/app_group:main_app",
     "//ios/chrome/common/physical_web",
     "//net",
     "//url",
