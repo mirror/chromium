@@ -77,6 +77,15 @@ class HttpStreamFactoryImpl::JobController
   // Called when the priority of transaction changes.
   void SetPriority(RequestPriority priority) override;
 
+  void OnStreamReadyOnPooledConnection(
+      const SSLConfig& used_ssl_config,
+      const ProxyInfo& proxy_info,
+      std::unique_ptr<HttpStream> stream) override;
+  void OnBidirectionalStreamImplReadyOnPooledConnection(
+      const SSLConfig& used_ssl_config,
+      const ProxyInfo& used_proxy_info,
+      std::unique_ptr<BidirectionalStreamImpl> stream) override;
+
   // From HttpStreamFactoryImpl::Job::Delegate.
   // Invoked when |job| has an HttpStream ready.
   void OnStreamReady(Job* job, const SSLConfig& used_ssl_config) override;
