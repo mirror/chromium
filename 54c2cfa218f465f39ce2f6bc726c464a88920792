@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "903c8ebc_27d38373",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-26T22:35:20Z",
+      "side": 1,
+      "message": "Resolved then :)",
+      "parentUuid": "de915614_ba0401bf",
+      "revId": "54c2cfa218f465f39ce2f6bc726c464a88920792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8c5cad4_c4b07f5c",
         "filename": "components/supervised_user_error_page/supervised_user_error_page_android.cc",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "21a8196a_15ac8c7d",
+        "filename": "components/supervised_user_error_page/supervised_user_error_page_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-26T22:35:20Z",
+      "side": 1,
+      "message": "Yep, I meant clang-tidy. I\u0027m pretty sure clang-tidy suggested the space-less format; that\u0027s what we use in components/ntp_snippets. But hopefully it\u0027ll recognize it with spaces too?\nAnyway, since sadly still ~nobody uses clang-tidy, it doesn\u0027t really matter.",
+      "parentUuid": "748ededc_440cc256",
+      "revId": "54c2cfa218f465f39ce2f6bc726c464a88920792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60c5dfe_377d131d",
         "filename": "components/supervised_user_error_page/supervised_user_error_page_unittest.cc",
         "patchSetId": 4
@@ -104,6 +140,24 @@
       "revId": "54c2cfa218f465f39ce2f6bc726c464a88920792",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157f0d41_8d6c78a6",
+        "filename": "components/supervised_user_error_page/supervised_user_error_page_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-26T22:35:20Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "5d862f5e_c05d1aa3",
+      "revId": "54c2cfa218f465f39ce2f6bc726c464a88920792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
