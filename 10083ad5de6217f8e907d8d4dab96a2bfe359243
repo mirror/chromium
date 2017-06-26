@@ -22,6 +22,30 @@
       "revId": "10083ad5de6217f8e907d8d4dab96a2bfe359243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6379022e_d7455183",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-26T14:46:12Z",
+      "side": 1,
+      "message": "I think that should be fine as our intention is to start with 2 global scope. Will make that change once that two global scope is implemented :)",
+      "parentUuid": "ea5ea1d0_7d45b381",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "10083ad5de6217f8e907d8d4dab96a2bfe359243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
