@@ -34,6 +34,24 @@
       "revId": "14072aff84d5ba7298a8e61be8dba95fa209c112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f15104_4640a63c",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-26T18:05:23Z",
+      "side": 0,
+      "message": "Shouldn\u0027t images in a shader share the rect for the op that has the shader?\n\nIs inset_rects unused?\n\nShould this just call image_map.GetDiscardableImagesInRect instead of going through this test function that gets rects as well, if you\u0027re not going to ask anything about them?",
+      "parentUuid": "8fa1aa01_ff6d169f",
+      "revId": "14072aff84d5ba7298a8e61be8dba95fa209c112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
