@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5dc10e3b_f56279ab",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-26T15:35:35Z",
+      "side": 1,
+      "message": "Oops, sorry, you are correct. This is needed.",
+      "parentUuid": "d9f94920_b3543d95",
+      "revId": "b9163e4e6b98c7ebb0023246bc886ff7a519184c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89f180e7_cc6f1a86",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-06-26T06:56:29Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 161,
+        "startChar": 7,
+        "endLine": 161,
+        "endChar": 16
+      },
+      "revId": "b9163e4e6b98c7ebb0023246bc886ff7a519184c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08a8690_6e25d962",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-26T15:35:35Z",
+      "side": 1,
+      "message": "Sorry, this is needed too.",
+      "parentUuid": "89f180e7_cc6f1a86",
       "range": {
         "startLine": 161,
         "startChar": 7,
