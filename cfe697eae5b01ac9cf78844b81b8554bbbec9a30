@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901037eb_2cff088f",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T14:54:42Z",
+      "side": 1,
+      "message": "This coordinator is starting to do a lot of stuff a mediator should do. Can you start thinking of splitting responsibilities?\nThe added benefit will be that porting to Bling* will be easier: coordinators are not shared, but mediators could largely be.",
+      "range": {
+        "startLine": 377,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 38
+      },
+      "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0bbccbb_9bd526d0",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T14:54:42Z",
+      "side": 1,
+      "message": "Could this method be oneliner-ed?",
+      "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73b546c_b1567575",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T14:54:42Z",
+      "side": 1,
+      "message": "You might want to check if the newBounds are different from the current ones:\nhttps://www.objc.io/issues/3-views/collection-view-layouts/#shouldinvalidatelayoutforboundschange\n\nCould you verify that this was indeed called on scrolls?",
+      "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

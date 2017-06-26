@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b8f4d24_6c2e0138",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T14:54:42Z",
+      "side": 0,
+      "message": "Isn\u0027t it still needed, especially when line 180 is run?",
+      "revId": "a14584962a3595452b55f8aeeea44a97afee4346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
