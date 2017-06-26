@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31464fb7_4e596018",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T20:42:27Z",
+      "side": 1,
+      "message": "Could you take this by value and move the callback to cc. And do the same on cc::Layer if you didn\u0027t to store the callback?",
+      "revId": "556b9503d595c8f255c2d18d4a57301ac13d9554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
