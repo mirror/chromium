@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff5be84_eaf0ecab",
+        "filename": "headless/lib/browser/headless_tab_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-26T14:13:05Z",
+      "side": 1,
+      "message": "Can we verify that the renderer isn\u0027t giving us a bogus execution context ID? Or some other renderer\u0027s execution context ID? It would be nice if the browser knew in some way what IDs were associated with the thing on the other end of the mojo pipe without relying on the embedded content to supply them.",
+      "revId": "0fbef6c8ad8ccbd82307c00397a8abb07cf494c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
