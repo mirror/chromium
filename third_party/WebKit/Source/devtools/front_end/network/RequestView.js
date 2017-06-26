@@ -38,32 +38,4 @@ Network.RequestView = class extends UI.VBox {
     this.element.classList.add('request-view');
     this.request = request;
   }
-
-  /**
-   * @param {!SDK.NetworkRequest} request
-   * @param {!SDK.NetworkRequest.ContentData} contentData
-   * @return {boolean}
-   */
-  static hasTextContent(request, contentData) {
-    if (request.resourceType().isTextType())
-      return true;
-    if (request.resourceType() === Common.resourceTypes.Other || contentData.error)
-      return !!contentData.content && !contentData.encoded;
-    return false;
-  }
-
-  /**
-   * @param {!SDK.NetworkRequest} request
-   * @return {!UI.Widget}
-   */
-  static nonSourceViewForRequest(request) {
-    switch (request.resourceType()) {
-      case Common.resourceTypes.Image:
-        return new SourceFrame.ImageView(request.mimeType, request);
-      case Common.resourceTypes.Font:
-        return new SourceFrame.FontView(request.mimeType, request);
-      default:
-        return new Network.RequestView(request);
-    }
-  }
 };

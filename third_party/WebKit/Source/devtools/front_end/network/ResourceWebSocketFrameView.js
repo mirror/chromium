@@ -178,18 +178,18 @@ Network.ResourceWebSocketFrameView = class extends UI.VBox {
     function contentHandler(content) {
       if (this._currentSelectedNode !== selectedNode)
         return;
-      Network.JSONView.parseJSON(content).then(handleJSONData.bind(this));
+      SourceFrame.JSONView.parseJSON(content).then(handleJSONData.bind(this));
     }
 
     /**
-     * @param {?Network.ParsedJSON} parsedJSON
+     * @param {?SourceFrame.ParsedJSON} parsedJSON
      * @this {Network.ResourceWebSocketFrameView}
      */
     function handleJSONData(parsedJSON) {
       if (this._currentSelectedNode !== selectedNode)
         return;
       if (parsedJSON)
-        this._splitWidget.setSidebarWidget(Network.JSONView.createSearchableView(parsedJSON));
+        this._splitWidget.setSidebarWidget(SourceFrame.JSONView.createSearchableView(parsedJSON));
       else
         this._splitWidget.setSidebarWidget(new SourceFrame.ResourceSourceFrame(contentProvider));
     }
