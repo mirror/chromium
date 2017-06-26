@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "615d5cb5_3d66abf8",
+        "filename": "ui/gfx/image/image_skia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-26T19:49:09Z",
+      "side": 0,
+      "message": "I think this was for line 157, which is most likely legacy code. I\u0027d suggest that you keep this in this CL, then remove this and line 157 so that if it ever cause a regression, we can just revert it.",
+      "revId": "1ffeff7a49a7aeeb48fc2ac5f3d4f24f6194e85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
