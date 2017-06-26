@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8a54e12c_ca8d5476",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-26T15:59:37Z",
+      "side": 1,
+      "message": "Yeah, even though the computation is significantly different, let\u0027s keep that one for now, hoping that throttling will prevent us from competing too much with the page.",
+      "parentUuid": "bfe062a3_69f2034c",
+      "range": {
+        "startLine": 747,
+        "startChar": 15,
+        "endLine": 747,
+        "endChar": 25
+      },
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c160822_732a2ead",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
         "patchSetId": 1
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "I changed field names in PreconnectPrediction accordingly to make it more clear.\nIf you think that it\u0027d be better to truncate scheme and port for preresolve vector, we need to discuss it. There would be some complications with that because underlying implementation of preresolve requires host-port pair.\nhttps://cs.chromium.org/chromium/src/net/dns/host_resolver.h?l\u003d180\u0026gs\u003dcpp%253Anet%253A%253Aclass-HostResolver%253A%253AResolve(const%2Bnet%253A%253AHostResolver%253A%253ARequestInfo%2B%2526%252C%2Bnet%253A%253ARequestPriority%252C%2Bnet%253A%253AAddressList%2B*%252C%2Bconst%2Bbase%253A%253ACallback%253Cvoid%2B(int)%252C%2Bbase%253A%253Ainternal%253A%253ACopyMode%253A%253ACopyable%252C%2Bbase%253A%253Ainternal%253A%253ARepeatMode%253A%253ARepeating%253E%2B%2526%252C%2Bstd%253A%253Aunique_ptr%253Cnet%253A%253AHostResolver%253A%253ARequest%252C%2Bstd%253A%253Adefault_delete%253Cnet%253A%253AHostResolver%253A%253ARequest%253E%2B%253E%2B*%252C%2Bconst%2Bnet%253A%253ANetLogWithSource%2B%2526)%2540chromium%252F..%252F..%252Fnet%252Fdns%252Fhost_resolver.h%257Cdecl\u0026gsn\u003dResolve\u0026ct\u003dxref_usages",
       "parentUuid": "7c160822_732a2ead",
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abe75bc5_d5665f18",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-26T15:59:37Z",
+      "side": 1,
+      "message": "Oh, I missed that.\nThat\u0027s a weird API.\n\nAcknowledged.",
+      "parentUuid": "4fc232d2_1f68c753",
       "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
