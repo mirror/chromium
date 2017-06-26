@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23d85b6a_6826291a",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-06-26T10:21:15Z",
+      "side": 1,
+      "message": "I just switched this one flag for illustration. It seems that none of the tests that run under TSAN on gpu.fyi is whitelisted for v8. Are the normal gpu (non-fyi) tests not suitable for tsan?\n\nIf I add the V8 predicate to one of the fyi tests like this one, it also gets added to the other (non-tsan) V8 bots. Not sure if we want that.\n\nIf we don\u0027t, we probably need to refactor this generator a bit to distinguish between v8-like-normal-gpu-bot and v8-like-fyi-gpu-bot.\n\nIf we do, we\u0027ll get a bit more load on GPU bots due to the extra testing on the three other bots.\n\n@ulan and kbr: Independent of this, do you think that all tests running under tsan on gpu.fyi are useful to run in v8?",
+      "range": {
+        "startLine": 2088,
+        "startChar": 32,
+        "endLine": 2088,
+        "endChar": 51
+      },
+      "revId": "11328116dfaca361d0daaf82a2c9c22249272010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
