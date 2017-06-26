@@ -18,6 +18,7 @@
 #import "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
 #include "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/vector_icons/vector_icons.h"
 #include "skia/ext/skia_utils_mac.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -116,10 +117,10 @@ class ChooserDialogCocoaControllerTest : public CocoaProfileTest {
     NSImageView* image_view = [device_chooser_content_view_
         tableRowViewImage:static_cast<NSInteger>(row)];
     ASSERT_TRUE(image_view);
-    EXPECT_TRUE(
-        gfx::test::AreImagesEqual(gfx::Image(gfx::CreateVectorIcon(
-                                      kBluetoothConnectedIcon, expected_color)),
-                                  gfx::Image([[image_view image] copy])));
+    EXPECT_TRUE(gfx::test::AreImagesEqual(
+        gfx::Image(gfx::CreateVectorIcon(vector_icons::kBluetoothConnectedIcon,
+                                         expected_color)),
+        gfx::Image([[image_view image] copy])));
   }
 
   void ExpectRowTextIs(int row, NSString* expected_text) {
