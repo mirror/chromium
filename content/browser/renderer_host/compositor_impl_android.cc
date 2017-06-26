@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+y  // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -48,7 +48,6 @@
 #include "cc/trees/layer_tree_settings.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_compositor/compositor_overlay_candidate_validator_android.h"
-#include "components/viz/service/display_compositor/gl_helper.h"
 #include "components/viz/service/display_compositor/host_shared_bitmap_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "content/browser/compositor/surface_utils.h"
@@ -77,7 +76,7 @@
 #include "ui/gfx/color_space_switches.h"
 #include "ui/gfx/swap_result.h"
 
-namespace gpu {
+    namespace gpu {
 struct GpuProcessHostedCALayerTreeParamsMac;
 }
 
