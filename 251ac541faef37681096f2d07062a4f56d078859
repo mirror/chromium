@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f867b38_c327f72e",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-26T15:27:20Z",
+      "side": 1,
+      "message": "nit: provide some comment.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "251ac541faef37681096f2d07062a4f56d078859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484fd94f_b18a9577",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-26T15:27:20Z",
+      "side": 1,
+      "message": "nit: s/payment_request_delegate_/payment_request_ui_delegate_",
+      "range": {
+        "startLine": 222,
+        "startChar": 38,
+        "endLine": 222,
+        "endChar": 63
+      },
+      "revId": "251ac541faef37681096f2d07062a4f56d078859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40f4b42_9db5b60e",
+        "filename": "ios/chrome/browser/payments/payment_request_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-26T15:27:20Z",
+      "side": 1,
+      "message": "is this needed?",
+      "range": {
+        "startLine": 16,
+        "startChar": 38,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "251ac541faef37681096f2d07062a4f56d078859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c0579b_8e5ef2bc",
+        "filename": "ios/chrome/browser/payments/test_payment_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-26T15:27:20Z",
+      "side": 1,
+      "message": "I suggest having two constructors for TestPaymentRequest. One that takes the extra argument and one that doesn\u0027t. The one that doesn\u0027t can simply call other constructor with nil and therefore create PaymentRequest with nil. Most unit tests don\u0027t need a fully constructed PaymentRequest. That way you would only have to replace PaymentRequest with TestPaymentRequest in the unit tests.",
+      "revId": "251ac541faef37681096f2d07062a4f56d078859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84bbf478_54e0a301",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-26T15:27:20Z",
+      "side": 1,
+      "message": "Since addressNormalizer a reference to a member variable of PaymentRequest, you should change AddressNormalizationManager so that it receives an unowned raw pointer instead.",
+      "revId": "251ac541faef37681096f2d07062a4f56d078859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
