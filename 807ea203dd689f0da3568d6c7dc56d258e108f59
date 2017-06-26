@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56a47c88_fbfb15db",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-26T18:18:43Z",
+      "side": 1,
+      "message": "Nice! Thanks!",
+      "parentUuid": "4713612a_2a55ca69",
+      "revId": "807ea203dd689f0da3568d6c7dc56d258e108f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48faf2a2_547093fc",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "57f1d8d7_4ef57475",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-26T18:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48faf2a2_547093fc",
+      "range": {
+        "startLine": 1509,
+        "startChar": 31,
+        "endLine": 1509,
+        "endChar": 51
+      },
+      "revId": "807ea203dd689f0da3568d6c7dc56d258e108f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea13cdd_fbd9c9e3",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "807ea203dd689f0da3568d6c7dc56d258e108f59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e28c2e1_5fde3d47",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-26T18:18:43Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "bea13cdd_fbd9c9e3",
+      "revId": "807ea203dd689f0da3568d6c7dc56d258e108f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
