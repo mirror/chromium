@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d40890_c92869dc",
+        "filename": "chrome/browser/ui/cocoa/simple_message_box_bridge_views.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-26T09:34:50Z",
+      "side": 1,
+      "message": "Needs a comment like\n\n// Use a views dialog on an initialized UI thread, otherwise fallback to NSAlert.",
+      "revId": "a0baf6deeb2a81f522155623932ae55f50a10398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe5bb73_5400cce9",
+        "filename": "chrome/browser/ui/cocoa/simple_message_box_cocoa.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-26T09:34:50Z",
+      "side": 1,
+      "message": "this comment can be removed now",
+      "revId": "a0baf6deeb2a81f522155623932ae55f50a10398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a7d74a_1edd2b1b",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-26T09:34:50Z",
+      "side": 1,
+      "message": "The churn from the extra chrome:: is unfortunate.. But I guess we\u0027d want to make this an enum class when it comes out of the chrome:: namespace, so there\u0027s churn either way",
+      "revId": "a0baf6deeb2a81f522155623932ae55f50a10398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11041d99_6ba00e3d",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-26T09:34:50Z",
+      "side": 1,
+      "message": "optional: an alternative that might be nicer\n\n  bool use_system_modal \u003d is_system_modal_;\n#if defined(OS_MACOSX)\n  // Mac does not support system modal dialogs.\n  use_system_modal \u003d false;\n#endif\n  return use_system_modal ? ...",
+      "revId": "a0baf6deeb2a81f522155623932ae55f50a10398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7d6aaa_159008d7",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-26T09:34:50Z",
+      "side": 1,
+      "message": "This should only be done when this is no parent.\n\nThe clearest way might be to remove the /* is_system_modal */ comment above, and make it a bool istead",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 215,
+        "endChar": 24
+      },
+      "revId": "a0baf6deeb2a81f522155623932ae55f50a10398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
