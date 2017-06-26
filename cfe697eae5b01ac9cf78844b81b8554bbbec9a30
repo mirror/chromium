@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "180139cb_59b7879f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T16:02:10Z",
+      "side": 1,
+      "message": ":D",
+      "parentUuid": "ea008b96_088e38ec",
+      "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b73b546c_b1567575",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
         "patchSetId": 2
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "It is indeed called on scroll. It is used to keep the header to the top on scrolling.",
       "parentUuid": "b73b546c_b1567575",
+      "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5303811_28aadf18",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T16:02:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f4befb8_89b82475",
       "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
