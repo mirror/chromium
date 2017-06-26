@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00e2496e_b6c5769e",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-26T08:13:59Z",
+      "side": 1,
+      "message": "Ack, though I mostly just added on to what was already there.",
+      "parentUuid": "e446e4a9_3ff9e6ee",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62d60289_dd8bfce8",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T09:02:07Z",
       "side": 1,
       "message": "If you want, it\u0027s possible to do this in one line:\n\nauto timing \u003d mojom::EmbeddedWorkerStartTiming::New(\n    start_worker_received_time_, blink_initialized_time_);\n\nOne of the disadvantages is that it\u0027s possible to mix up argument order though...",
+      "range": {
+        "startLine": 1232,
+        "startChar": 2,
+        "endLine": 1233,
+        "endChar": 46
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1855b606_c97e7b81",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-26T08:13:59Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll leave it as is for now since I plan to add a bunch more timing variables later.",
+      "parentUuid": "62d60289_dd8bfce8",
       "range": {
         "startLine": 1232,
         "startChar": 2,
