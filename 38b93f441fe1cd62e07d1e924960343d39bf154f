@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "627da8ff_d6326ec4",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T00:57:49Z",
+      "side": 1,
+      "message": "Nit: In some places you say InstallRuntimeEnabled\"Features\"OnTemplate while in other places you say InstallRuntimeEnabledOnTemplateFunction etc.",
+      "revId": "38b93f441fe1cd62e07d1e924960343d39bf154f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfb58c5_e4684741",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T00:57:49Z",
+      "side": 1,
+      "message": "I understand that we need line 670 - 709 but would you help me understand why we need line 711 - 748?\n\nI think you are writing InstallRuntimeEnabledFeaturesOnTemplate as a subset of {{v8_class_or_partial}}::install{{v8_class}}Template, but I\u0027m wondering how you selected things you need to do in InstallRuntimeEnabledFeaturesOnTemplate.",
+      "revId": "38b93f441fe1cd62e07d1e924960343d39bf154f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
