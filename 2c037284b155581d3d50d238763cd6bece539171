@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90fd6db2_646475de",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-26T16:54:45Z",
+      "side": 1,
+      "message": "nit: Could we construct this in-line at the call-site, as:\n\nbase::Bind(\u0026TaskRunner::PostTask, base::ThreadTaskRunnerHandle::Get(), FROM_HERE, callback)\n\nFROM_HERE won\u0027t be technically correct, but will still be meaningful, I think.",
+      "revId": "2c037284b155581d3d50d238763cd6bece539171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99a340a_875e3670",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-26T16:54:45Z",
+      "side": 1,
+      "message": "nit: base::SequenceTaskRunnerHandle::Get() for future-proof-ness?  e.g. BrowserThread::IO could in principle become a Sequence in future...",
+      "revId": "2c037284b155581d3d50d238763cd6bece539171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
