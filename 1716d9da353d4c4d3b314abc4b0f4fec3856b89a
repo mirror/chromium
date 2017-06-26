@@ -22,6 +22,30 @@
       "revId": "1716d9da353d4c4d3b314abc4b0f4fec3856b89a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46502bec_82678281",
+        "filename": "device/bluetooth/test/fake_remote_gatt_characteristic.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-26T00:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95707f04_9a185711",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "1716d9da353d4c4d3b314abc4b0f4fec3856b89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
