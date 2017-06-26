@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a5e6b40_b4c415a1",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "I\u0027d rather keep the TabDelegate and TabSpecifics abstractions out of the TaskTracker class. I think this keeps the abstractions cleaner, and makes it more clear the TaskTracker has limited responsibilities.",
+      "parentUuid": "cd9c74a5_86d217c4",
+      "range": {
+        "startLine": 492,
+        "startChar": 26,
+        "endLine": 492,
+        "endChar": 43
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e0fc953_8f653397",
         "filename": "components/sync_sessions/sessions_sync_manager.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-26T18:22:06Z",
       "side": 1,
       "message": "Should this be doing +/-6 to avoid doing too much work?",
+      "range": {
+        "startLine": 500,
+        "startChar": 22,
+        "endLine": 500,
+        "endChar": 34
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c9c6d1_07567442",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "That would possibly result in incorrect parent information (e.g. if the parent is further than 6 navigations away). Even if we don\u0027t write a navigation into sync right now, we might later, so I\u0027d rather attempt to consume all navigation information we can.",
+      "parentUuid": "4e0fc953_8f653397",
       "range": {
         "startLine": 500,
         "startChar": 22,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4b6f4693_511c2ae2",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc0e5dc_cdc7b596",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5155a603_2f3d84f2",
         "filename": "components/sync_sessions/task_tracker.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c67145_925d730f",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5155a603_2f3d84f2",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e248360e_b2f77bb9",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b349d599_298d2036",
+      "range": {
+        "startLine": 85,
+        "startChar": 32,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d974fc_b4279b20",
         "filename": "components/sync_sessions/task_tracker.cc",
         "patchSetId": 2
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "dce50bb3_fa4d3992",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d974fc_b4279b20",
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c171c42_34931e4e",
         "filename": "components/sync_sessions/task_tracker.h",
         "patchSetId": 2
@@ -145,6 +283,30 @@
       "writtenOn": "2017-06-26T18:22:06Z",
       "side": 1,
       "message": "Is this true? Seems like this constant should actually be defined somewhere else, closer to where navigation ids come from, right?",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeeda2cc_75e46f5c",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "There\u0027s no notion of invalid unique id elsewhere as far as I can tell. Looking at NavigationEntryImpl, looks like they just initialize to 0, and treat that as the \"no id\" value. Updated this to be 0.",
+      "parentUuid": "7c171c42_34931e4e",
       "range": {
         "startLine": 27,
         "startChar": 21,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "a185e527_1b6ecde6",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f458bb92_01bc2793",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aca2040a_c0fd403a",
         "filename": "components/sync_sessions/task_tracker.h",
         "patchSetId": 2
@@ -191,6 +377,30 @@
       "writtenOn": "2017-06-26T18:22:06Z",
       "side": 1,
       "message": "Should this class get moved into its own file?",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a3d158_052965b7",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "It\u0027s not really meant to be used separately from the TaskTracker. I don\u0027t feel strongly either way though. If you prefer I can pull it out.",
+      "parentUuid": "aca2040a_c0fd403a",
       "range": {
         "startLine": 33,
         "startChar": 6,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "7fac344d_58228d72",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d24b4e4_8c12ef09",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0dace84_776f073b",
         "filename": "components/sync_sessions/task_tracker.h",
         "patchSetId": 2
@@ -237,6 +471,30 @@
       "writtenOn": "2017-06-26T18:22:06Z",
       "side": 1,
       "message": "If this should always be present, can you have a constructor that forces one to be specified upon creation?",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2e95e6_d44a7d88",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "That would invalidate the assignment operator and default constructor, making the struct tough to use in a map (and more like a class than POD struct). Added some DHECKS to enforce this more though.",
+      "parentUuid": "c0dace84_776f073b",
       "range": {
         "startLine": 53,
         "startChar": 40,
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "3d7b4f22_d854c448",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done (in the comment for TaskTracker)",
+      "parentUuid": "29245067_27a9f306",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ccc7d6d_cd337189",
         "filename": "components/sync_sessions/task_tracker.h",
         "patchSetId": 2
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "088aa196_44c9d063",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ccc7d6d_cd337189",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 22
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be114c89_20c4d11b",
         "filename": "components/sync_sessions/task_tracker.h",
         "patchSetId": 2
@@ -306,6 +612,30 @@
       "writtenOn": "2017-06-26T18:22:06Z",
       "side": 1,
       "message": "Using kInvalidTaskID here doesn\u0027t seem valid.",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2017799_6fd56bc0",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Global ids and task ids have the same units (they\u0027re timestamps under the hood). Renamed kInvalidTaskID to kInvalidGlobalId, and added a comment, to make that clearer.",
+      "parentUuid": "be114c89_20c4d11b",
       "range": {
         "startLine": 59,
         "startChar": 24,
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "62680103_88541f7f",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55c4cd15_ebf516fd",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c1f9c6c_f7dadaaf",
         "filename": "components/sync_sessions/task_tracker.h",
         "patchSetId": 2
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "920203c5_db766fb3",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "Correct. It\u0027s possible the user will hit the forward button too though, in which case the task isn\u0027t really \"orphaned\". But yeah, if the user performs a new navigation after hitting back, the previous forward nav is orphaned, and eventually aged out.",
+      "parentUuid": "9c1f9c6c_f7dadaaf",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 25
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2e6412f_64cb7eb5",
         "filename": "components/sync_sessions/task_tracker.h",
         "patchSetId": 2
@@ -375,6 +753,30 @@
       "writtenOn": "2017-06-26T18:22:06Z",
       "side": 1,
       "message": "Why does this take a parent id?",
+      "range": {
+        "startLine": 85,
+        "startChar": 35,
+        "endLine": 85,
+        "endChar": 42
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ca408f_d323e91a",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-06-26T19:59:47Z",
+      "side": 1,
+      "message": "For tabs that are created from another (parent) tab. Basically navigations that open in a new tab. Added comment.",
+      "parentUuid": "d2e6412f_64cb7eb5",
       "range": {
         "startLine": 85,
         "startChar": 35,
