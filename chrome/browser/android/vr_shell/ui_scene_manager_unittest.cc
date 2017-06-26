@@ -357,6 +357,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForWebVR) {
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
   manager_->SetLocationAccessIndicator(true);
+  manager_->SetBluetoothConnectedIndicator(true);
 
   // All elements should be hidden.
   VerifyElementsVisible("Elements hidden", std::set<UiElementDebugId>{});
@@ -368,6 +369,7 @@ TEST_F(UiSceneManagerTest, UiUpdateTransitionToWebVR) {
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
   manager_->SetLocationAccessIndicator(true);
+  manager_->SetBluetoothConnectedIndicator(true);
 
   // Transition to WebVR mode
   manager_->SetWebVrMode(true, false, false);
@@ -379,8 +381,9 @@ TEST_F(UiSceneManagerTest, UiUpdateTransitionToWebVR) {
 
 TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
   const std::set<UiElementDebugId> indicators = {
-      kAudioCaptureIndicator, kVideoCaptureIndicator, kScreenCaptureIndicator,
-      kLocationAccessIndicator,
+      kAudioCaptureIndicator,       kVideoCaptureIndicator,
+      kScreenCaptureIndicator,      kLocationAccessIndicator,
+      kBluetoothConnectedIndicator,
   };
 
   MakeManager(kNotInCct, kNotInWebVr);
@@ -390,6 +393,7 @@ TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
   manager_->SetLocationAccessIndicator(true);
+  manager_->SetBluetoothConnectedIndicator(true);
   EXPECT_TRUE(VerifyVisibility(indicators, true));
 
   // Go into non-browser modes and make sure all indicators are hidden.
@@ -408,6 +412,7 @@ TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
   manager_->SetVideoCapturingIndicator(false);
   manager_->SetScreenCapturingIndicator(false);
   manager_->SetLocationAccessIndicator(false);
+  manager_->SetBluetoothConnectedIndicator(false);
   EXPECT_TRUE(VerifyVisibility(indicators, false));
 }
 
