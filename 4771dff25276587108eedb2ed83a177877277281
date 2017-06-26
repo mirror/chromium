@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e5628d5b_badde78b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-26T09:41:53Z",
+      "side": 1,
+      "message": "This is probably ok in the current design/scope, but what would we do if we want to do more context-aware throttling depending on request types/priorities?  I wonder if this scheduler wants to have ability to look into request itself?",
+      "parentUuid": "1c9a27af_3db6ae5f",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f39d2b_39e48b03",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 11
