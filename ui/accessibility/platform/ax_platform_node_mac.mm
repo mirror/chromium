@@ -413,7 +413,9 @@ void NotifyMacEvent(AXPlatformNodeCocoa* target, ui::AXEvent event_type) {
 }
 
 - (BOOL)accessibilityIsAttributeSettable:(NSString*)attributeName {
-  if (node_->GetData().HasState(ui::AX_STATE_DISABLED))
+  const int control_mode =
+      node_->GetData().GetIntAttribute(ui::AX_ATTR_CONTROL_MODE);
+  if (control_mode == ui::AX_CONTROL_MODE_DISABLED)
     return NO;
 
   // Allow certain attributes to be written via an accessibility client. A
@@ -431,13 +433,14 @@ void NotifyMacEvent(AXPlatformNodeCocoa* target, ui::AXEvent event_type) {
     // them is via the value attribute rather than the selected attribute.
     if (node_->GetData().role == ui::AX_ROLE_TAB)
       return !node_->GetData().HasState(ui::AX_STATE_SELECTED);
+
+    return YES;
   }
 
-  if ([attributeName isEqualToString:NSAccessibilityValueAttribute] ||
-      [attributeName isEqualToString:NSAccessibilitySelectedTextAttribute] ||
+  if ([attributeName isEqualToString:NSAccessibilitySelectedTextAttribute] ||
       [attributeName
           isEqualToString:NSAccessibilitySelectedTextRangeAttribute]) {
-    return !node_->GetData().HasState(ui::AX_STATE_READ_ONLY);
+    return control_mode != ui::AX_CONTROL_MODE_DISABLED;
   }
 
   if ([attributeName isEqualToString:NSAccessibilityFocusedAttribute]) {
@@ -546,7 +549,8 @@ void NotifyMacEvent(AXPlatformNodeCocoa* target, ui::AXEvent event_type) {
 }
 
 - (NSNumber*)AXEnabled {
-  return @(!node_->GetData().HasState(ui::AX_STATE_DISABLED));
+  return @(node_->GetData().GetIntAttribute(ui::AX_ATTR_CONTROL_MODE) ==
+           ui::AX_CONTROL_MODE_ENABLED);
 }
 
 - (NSNumber*)AXFocused {
