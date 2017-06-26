@@ -3010,20 +3010,20 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
 void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
-  content::ServiceInfo info;
+  service_manager::ServiceInfo info;
   info.factory = base::Bind(&media::CreateMediaService);
   services->insert(std::make_pair("media", info));
 #endif
 #if defined(OS_CHROMEOS)
   {
-    content::ServiceInfo info;
+    service_manager::ServiceInfo info;
     info.factory = base::Bind(&ChromeServiceChromeOS::CreateService);
     info.task_runner = base::ThreadTaskRunnerHandle::Get();
     services->insert(std::make_pair(chromeos::kChromeServiceName, info));
   }
 
   if (features::PrefServiceEnabled()) {
-    content::ServiceInfo info;
+    service_manager::ServiceInfo info;
     info.factory = base::Bind([] {
       return std::unique_ptr<service_manager::Service>(
           base::MakeUnique<ActiveProfilePrefService>());
@@ -3033,7 +3033,7 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
   }
 
   if (!ash_util::IsRunningInMash()) {
-    content::ServiceInfo info;
+    service_manager::ServiceInfo info;
     info.factory = base::Bind(&ash_util::CreateEmbeddedAshService,
                               base::ThreadTaskRunnerHandle::Get());
     info.task_runner = base::ThreadTaskRunnerHandle::Get();

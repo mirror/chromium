@@ -125,7 +125,7 @@ void ShellContentUtilityClient::UtilityThreadStarted() {
 }
 
 void ShellContentUtilityClient::RegisterServices(StaticServiceMap* services) {
-  ServiceInfo info;
+  service_manager::ServiceInfo info;
   info.factory = base::Bind(&CreateTestService);
   services->insert(std::make_pair(kTestServiceUrl, info));
 }

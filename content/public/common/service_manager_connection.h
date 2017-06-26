@@ -10,7 +10,7 @@
 #include "base/callback_forward.h"
 #include "base/sequenced_task_runner.h"
 #include "content/common/content_export.h"
-#include "content/public/common/service_info.h"
+#include "services/service_manager/embedder/public/service_info.h"
 #include "services/service_manager/public/cpp/identity.h"
 #include "services/service_manager/public/interfaces/service.mojom.h"
 
@@ -104,7 +104,7 @@ class CONTENT_EXPORT ServiceManagerConnection {
   // |info| provides details on how to construct new instances of the
   // service when an incoming connection is made to |name|.
   virtual void AddEmbeddedService(const std::string& name,
-                                  const ServiceInfo& info) = 0;
+                                  const service_manager::ServiceInfo& info) = 0;
 
   // Adds a generic ServiceRequestHandler for a given service name. This
   // will be used to satisfy any incoming calls to CreateService() which

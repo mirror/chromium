@@ -41,7 +41,7 @@ class CONTENT_EXPORT ServiceManagerConnectionImpl
   int AddConnectionFilter(std::unique_ptr<ConnectionFilter> filter) override;
   void RemoveConnectionFilter(int filter_id) override;
   void AddEmbeddedService(const std::string& name,
-                          const ServiceInfo& info) override;
+                          const service_manager::ServiceInfo& info) override;
   void AddServiceRequestHandler(
       const std::string& name,
       const ServiceRequestHandler& handler) override;
