@@ -44,6 +44,7 @@
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
+#include "content/browser/payments/payment_app_context_impl.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
 #include "content/browser/presentation/presentation_service_impl.h"
@@ -59,6 +60,7 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/browser/websockets/websocket_manager.h"
 #include "content/browser/webui/url_data_manager_backend.h"
 #include "content/browser/webui/web_ui_controller_factory_registry.h"
@@ -2906,6 +2908,13 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   GetInterfaceRegistry()->AddInterface(
       base::Bind(&ForwardShapeDetectionRequest<
                  shape_detection::mojom::TextDetectionRequest>));
+
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
+          GetSiteInstance()->GetBrowserContext(), GetSiteInstance()));
+  GetInterfaceRegistry()->AddInterface(
+      base::Bind(&PaymentAppContextImpl::CreatePaymentManager,
+                 base::Unretained(storage_partition->GetPaymentAppContext())));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
