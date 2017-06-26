@@ -22,6 +22,30 @@
       "revId": "021f1b2f0d59d8db33f90e1d1ca0fb3b2c23ba23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb249d8a_71e22c98",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-06-26T03:11:35Z",
+      "side": 0,
+      "message": "Oops, thanks. I overlooked the marker name difference. Done.",
+      "parentUuid": "d93e8d6c_9d0041ef",
+      "range": {
+        "startLine": 413,
+        "startChar": 17,
+        "endLine": 413,
+        "endChar": 44
+      },
+      "revId": "021f1b2f0d59d8db33f90e1d1ca0fb3b2c23ba23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
