@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "288b32da_22b616d1",
+        "filename": "gpu/ipc/service/gpu_channel_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-26T18:44:19Z",
+      "side": 1,
+      "message": "While this is the minimal logical expression it\u0027s hard to understand. Please consider expanding it out, perhaps even into two if-statements.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "324ab40631d213209478ea72d7961e33cffaf6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
