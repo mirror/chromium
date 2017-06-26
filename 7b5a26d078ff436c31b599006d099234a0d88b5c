@@ -51,6 +51,24 @@
       "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa82337_d9e94873",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-26T11:35:29Z",
+      "side": 1,
+      "message": "\u003e Why are these becoming sync IPCs if they weren\u0027t sync before?\n\nAs discussed in [1], code-left blocked the caller with a WaitableEvent.Wait() waiting on an async response from the utility process, which Signal()s the event and unblocks the caller.  Seems like a round-about way to create the same effect as a SYNC IPC.\n\n[1] https://chromium-review.googlesource.com/c/538519/5/chrome%252Fbrowser%252Fwin%252Fchrome_select_file_dialog_factory.cc#174",
+      "parentUuid": "b39cf9c8_78bdc2e5",
+      "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
