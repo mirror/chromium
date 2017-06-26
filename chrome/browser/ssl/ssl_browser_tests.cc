@@ -3184,8 +3184,9 @@ class DelayableNetworkTimeURLRequestJob : public net::URLRequestJob {
     // Start reading asynchronously as would a normal network request.
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
-        base::Bind(&DelayableNetworkTimeURLRequestJob::NotifyHeadersComplete,
-                   weak_factory_.GetWeakPtr()));
+        base::BindOnce(
+            &DelayableNetworkTimeURLRequestJob::NotifyHeadersComplete,
+            weak_factory_.GetWeakPtr()));
   }
 
  private:
@@ -3302,7 +3303,7 @@ class SSLNetworkTimeBrowserTest : public SSLUITest {
 
   void TearDownOnMainThread() override {
     content::BrowserThread::PostTask(content::BrowserThread::IO, FROM_HERE,
-                                     base::Bind(&CleanUpOnIOThread));
+                                     base::BindOnce(&CleanUpOnIOThread));
   }
 
  protected:
@@ -3311,17 +3312,17 @@ class SSLNetworkTimeBrowserTest : public SSLUITest {
     interceptor_ = new DelayedNetworkTimeInterceptor();
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::Bind(&SetUpNetworkTimeInterceptorOnIOThread,
-                   base::Unretained(interceptor_),
-                   g_browser_process->network_time_tracker()
-                       ->GetTimeServerURLForTesting()));
+        base::BindOnce(&SetUpNetworkTimeInterceptorOnIOThread,
+                       base::Unretained(interceptor_),
+                       g_browser_process->network_time_tracker()
+                           ->GetTimeServerURLForTesting()));
   }
 
   void TriggerTimeResponse() {
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::Bind(&ResumeDelayedNetworkTimeRequest,
-                   base::Unretained(interceptor_)));
+        base::BindOnce(&ResumeDelayedNetworkTimeRequest,
+                       base::Unretained(interceptor_)));
   }
 
   // Asserts that the first time request to the server is currently pending.
@@ -3669,12 +3670,12 @@ class CommonNameMismatchBrowserTest : public CertVerifierBrowserTest {
     host_resolver()->AddRule("*", "127.0.0.1");
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::Bind(&SetUpHttpNameMismatchPingInterceptorOnIOThread));
+        base::BindOnce(&SetUpHttpNameMismatchPingInterceptorOnIOThread));
   }
 
   void TearDownOnMainThread() override {
     content::BrowserThread::PostTask(content::BrowserThread::IO, FROM_HERE,
-                                     base::Bind(&CleanUpOnIOThread));
+                                     base::BindOnce(&CleanUpOnIOThread));
     CertVerifierBrowserTest::TearDownOnMainThread();
   }
 };
