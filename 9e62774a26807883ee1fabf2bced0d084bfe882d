@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cf3f770_d2ff9edc",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-26T08:17:34Z",
+      "side": 1,
+      "message": "Could you remove associated_binding_set and strong_associated_binding_set includes?",
+      "revId": "9e62774a26807883ee1fabf2bced0d084bfe882d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
