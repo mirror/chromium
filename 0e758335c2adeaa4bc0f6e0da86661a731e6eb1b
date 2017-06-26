@@ -22,6 +22,30 @@
       "revId": "0e758335c2adeaa4bc0f6e0da86661a731e6eb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1066e572_f711f9dc",
+        "filename": "components/tracing/child/child_trace_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-26T09:48:00Z",
+      "side": 1,
+      "message": "This is just about DEPS rules, currently not  allowing services from the component.\nThere seem to be precedent* to have components depend on services/, so especially given that this is temporary, it should be fine by just adding an entry in components/tracing/child/DEPS.\nI\u0027d just do a special one for this file only, i.e.:\n\n# TODO(hjd): this is temporary, yada yada\nspecific_include_rules \u003d {\n  \u0027child_trace_emssage_filter\\.cc\u0027: [\n    \"+services/resource_coordinator/public/cpp/memory_instrumentation\",\n  ],\n}\n\n\n* https://cs.chromium.org/search/?q\u003df:components+f:DEPS+services/+package:%5Echromium$\u0026type\u003dcs",
+      "parentUuid": "5bf19edc_018cd0cb",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "0e758335c2adeaa4bc0f6e0da86661a731e6eb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
