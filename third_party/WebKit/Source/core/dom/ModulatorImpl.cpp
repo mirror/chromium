@@ -30,7 +30,7 @@ ModulatorImpl::ModulatorImpl(RefPtr<ScriptState> script_state,
       fetcher_(fetcher),
       map_(this, ModuleMap::Create(this)),
       loader_registry_(ModuleScriptLoaderRegistry::Create()),
-      tree_linker_registry_(ModuleTreeLinkerRegistry::Create()),
+      tree_linker_registry_(this, ModuleTreeLinkerRegistry::Create()),
       script_module_resolver_(ScriptModuleResolverImpl::Create(
           this,
           ExecutionContext::From(script_state_.Get()))) {
@@ -185,9 +185,7 @@ void ModulatorImpl::ExecuteModule(const ModuleScript* module_script) {
 
   // Step 3. "If s is errored, then report the exception given by s's error for
   // s and abort these steps." [spec text]
-  // TODO(kouhei): Update "is errored".
-  ModuleInstantiationState instantiationState = module_script->State();
-  if (instantiationState == ModuleInstantiationState::kErrored) {
+  if (module_script->IsErrored()) {
     v8::Isolate* isolate = script_state_->GetIsolate();
     ScriptModule::ReportException(
         script_state_.Get(), module_script->CreateErrorInternal(isolate),
@@ -221,6 +219,7 @@ DEFINE_TRACE(ModulatorImpl) {
 
 DEFINE_TRACE_WRAPPERS(ModulatorImpl) {
   visitor->TraceWrappers(map_);
+  visitor->TraceWrappers(tree_linker_registry_);
 }
 
 }  // namespace blink

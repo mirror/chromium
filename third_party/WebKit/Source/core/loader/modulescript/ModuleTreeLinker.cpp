@@ -71,7 +71,9 @@ ModuleTreeLinker::ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
     : modulator_(modulator),
       registry_(registry),
       client_(client),
-      ancestor_list_with_url_(ancestor_list_with_url) {
+      ancestor_list_with_url_(ancestor_list_with_url),
+      module_script_(this, nullptr),
+      descendants_module_script_(this, nullptr) {
   CHECK(modulator);
   CHECK(registry);
   CHECK(client);
@@ -85,6 +87,11 @@ DEFINE_TRACE(ModuleTreeLinker) {
   visitor->Trace(descendants_module_script_);
   visitor->Trace(dependency_clients_);
   SingleModuleClient::Trace(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS(ModuleTreeLinker) {
+  visitor->TraceWrappers(module_script_);
+  visitor->TraceWrappers(descendants_module_script_);
 }
 
 #if DCHECK_IS_ON()
@@ -175,8 +182,9 @@ void ModuleTreeLinker::NotifyModuleLoadFinished(ModuleScript* result) {
 
   // Step 3. "If result is null, ..."
   // Step 4. "If result's state is "instantiated" or "errored", ..."
+  // TODO(kouhei): Update the spec references.
   if (!result || result->State() == ModuleInstantiationState::kInstantiated ||
-      result->State() == ModuleInstantiationState::kErrored) {
+      result->IsErrored()) {
     // "asynchronously complete this algorithm with result, and abort these
     // steps."
     descendants_module_script_ = result;
@@ -193,12 +201,7 @@ void ModuleTreeLinker::NotifyModuleLoadFinished(ModuleScript* result) {
   FetchDescendants();
 }
 
-class ModuleTreeLinker::DependencyModuleClient
-    : public GarbageCollectedFinalized<
-          ModuleTreeLinker::DependencyModuleClient>,
-      public ModuleTreeClient {
-  USING_GARBAGE_COLLECTED_MIXIN(ModuleTreeLinker::DependencyModuleClient);
-
+class ModuleTreeLinker::DependencyModuleClient : public ModuleTreeClient {
  public:
   static DependencyModuleClient* Create(ModuleTreeLinker* module_tree_linker) {
     return new DependencyModuleClient(module_tree_linker);
@@ -240,8 +243,9 @@ void ModuleTreeLinker::FetchDescendants() {
   // Step 2. If module script's state is "instantiated" or "errored",
   // asynchronously complete this algorithm with module script, and abort these
   // steps.
+  // TODO(kouhei): Update spec references
   if (module_script_->State() == ModuleInstantiationState::kInstantiated ||
-      module_script_->State() == ModuleInstantiationState::kErrored) {
+      module_script_->IsErrored()) {
     descendants_module_script_ = module_script_;
     AdvanceState(State::kFinished);
     return;
@@ -398,7 +402,8 @@ void ModuleTreeLinker::NotifyOneDescendantFinished(
   // "If any invocation of the internal module script graph fetching procedure
   // asynchronously completes with a module script whose state is "errored",
   // then ..." [spec text]
-  if (module_script->State() == ModuleInstantiationState::kErrored) {
+  // TODO(kouhei): Update spec references.
+  if (module_script->IsErrored()) {
     // "optionally abort all other invocations, ..." [spec text]
     // TODO(kouhei) Implement this.
 
@@ -438,8 +443,7 @@ void ModuleTreeLinker::Instantiate() {
   // Contrary to the spec, we don't store the "record" in Step 4 for its use in
   // Step 10. If Instantiate() was called on descendant ModuleTreeLinker and
   // failed, module_script_->Record() may be already cleared.
-  if (module_script_->State() == ModuleInstantiationState::kErrored) {
-    DCHECK(module_script_->HasEmptyRecord());
+  if (module_script_->IsErrored()) {
     AdvanceState(State::kFinished);
     return;
   }

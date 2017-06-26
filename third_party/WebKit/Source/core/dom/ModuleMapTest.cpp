@@ -21,16 +21,15 @@ namespace blink {
 
 namespace {
 
-class TestSingleModuleClient final
-    : public GarbageCollectedFinalized<TestSingleModuleClient>,
-      public SingleModuleClient {
-  USING_GARBAGE_COLLECTED_MIXIN(TestSingleModuleClient);
-
+class TestSingleModuleClient final : public SingleModuleClient {
  public:
   TestSingleModuleClient() = default;
   virtual ~TestSingleModuleClient() {}
 
-  DEFINE_INLINE_TRACE() { visitor->Trace(module_script_); }
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(module_script_);
+    SingleModuleClient::Trace(visitor);
+  }
 
   void NotifyModuleLoadFinished(ModuleScript* module_script) override {
     was_notify_finished_ = true;
@@ -55,6 +54,10 @@ class TestScriptModuleResolver final : public ScriptModuleResolver {
 
   void RegisterModuleScript(ModuleScript*) override {
     register_module_script_call_count_++;
+  }
+
+  void UnregisterModuleScript(ModuleScript*) override {
+    FAIL() << "UnregisterModuleScript shouldn't be called in ModuleMapTest";
   }
 
   ScriptModule Resolve(const String& specifier,

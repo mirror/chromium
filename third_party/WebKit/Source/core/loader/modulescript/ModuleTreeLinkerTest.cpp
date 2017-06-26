@@ -26,15 +26,14 @@ namespace blink {
 
 namespace {
 
-class TestModuleTreeClient final
-    : public GarbageCollectedFinalized<TestModuleTreeClient>,
-      public ModuleTreeClient {
-  USING_GARBAGE_COLLECTED_MIXIN(TestModuleTreeClient);
-
+class TestModuleTreeClient final : public ModuleTreeClient {
  public:
   TestModuleTreeClient() = default;
 
-  DEFINE_INLINE_TRACE() { visitor->Trace(module_script_); }
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(module_script_);
+    ModuleTreeClient::Trace(visitor);
+  }
 
   void NotifyModuleTreeLoadFinished(ModuleScript* module_script) override {
     was_notify_finished_ = true;
@@ -97,7 +96,11 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
     }
 
     EXPECT_EQ(url, pending_request_url_);
-    EXPECT_EQ(state, module_script->State());
+    if (state == ModuleInstantiationState::kErrored) {
+      EXPECT_TRUE(module_script->IsErrored());
+    } else {
+      EXPECT_EQ(state, module_script->State());
+    }
     EXPECT_TRUE(pending_client_);
     pending_client_->NotifyModuleLoadFinished(module_script);
     pending_client_.Clear();
@@ -295,8 +298,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeInstantiationFailure) {
 
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(client->GetModuleScript()->State(),
-            ModuleInstantiationState::kErrored);
+  EXPECT_TRUE(client->GetModuleScript()->IsErrored());
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchTreePreviousInstantiationFailure) {
@@ -320,8 +322,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreePreviousInstantiationFailure) {
       url, {}, ModuleInstantiationState::kErrored);
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(ModuleInstantiationState::kErrored,
-            client->GetModuleScript()->State());
+  EXPECT_TRUE(client->GetModuleScript()->IsErrored());
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchTreeWithSingleDependency) {
