@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e431db6_08230cde",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-26T23:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298080ab_ee6bc97e",
+      "range": {
+        "startLine": 608,
+        "startChar": 26,
+        "endLine": 608,
+        "endChar": 35
+      },
+      "revId": "e1706af10ee023ffe8739cf4e1a6c6f0c02dfc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da209c8b_cd3947a4",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-17T00:02:40Z",
       "side": 1,
       "message": "Should we delete but not recreate at this point and/or stop trying to commit changes? Maybe have a WrapperImpl::ResetDatabase() method that nulls out the ptr and delete\u0027s any pending commit_batch in there. I think that would prevent it from even trying to commit. And when creating new wrappers, give them null database_ ptrs.\n\nWell, then again, I guess we could be able to read w/o being able to write, so we wouldn\u0027t want to null it.",
+      "revId": "e1706af10ee023ffe8739cf4e1a6c6f0c02dfc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f80d17b_ab584713",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-26T23:45:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it really makes sense to do anything at this point. No matter what we do, the behavior will be confusing, and the whole situation should be exceedingly rare. So yes, we could make the code more complicated and try to do something slightly smarter than just ignoring commit errors, but ignoring commit errors is pretty much what the old implementation did under all circumstances, and anything more complicated just seems like it would introduce more possibilities for bugs, with little benefit.\n\nI suppose we should somehow track just how rare it is for this to happen, but I don\u0027t really have good ideas for what to measure under what circumstances. Maybe UMA histograms commit_error_count_ on every commit, but not sure how useful/actionable that is going to be either.",
+      "parentUuid": "da209c8b_cd3947a4",
       "revId": "e1706af10ee023ffe8739cf4e1a6c6f0c02dfc46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
