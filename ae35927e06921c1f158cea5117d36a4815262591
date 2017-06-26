@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "38998822_701c4c2b",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T20:37:10Z",
+      "side": 1,
+      "message": "Yes. Move it to an anonymouse namespace if it is only called in this file.",
+      "parentUuid": "b268dad5_1547ee4c",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fce607c_c8c245e5",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 19
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Same as the function above.",
       "parentUuid": "6fce607c_c8c245e5",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48db3e0_af47d24a",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T20:37:10Z",
+      "side": 1,
+      "message": "Yup, anonymous namespace.",
+      "parentUuid": "9eec1a26_eec61fe7",
       "revId": "ae35927e06921c1f158cea5117d36a4815262591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "2dafc083_3c1af43c",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T20:37:10Z",
+      "side": 1,
+      "message": "If you really want to include units, bdp_lower_bound_in_bytes would be clearest.\n\nMostly, I think units for BDP isn\u0027t that intuitive though, since the Bandwidth is bits sent per second of transimission and Delay is seconds it takes to reach the destination. I\u0027m being somewhat pedantic, but multiplying the frequency of bits by the amount of time a bit has to travel doesn\u0027t get the amount of bits sent. BDP is a valuable measure for this, but I don\u0027t really think you need to express units at all unless you express them in a comment as bytes/sec * RTT in seconds.",
+      "parentUuid": "b0e627ff_3f9be2fe",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0caf8bd8_b3857c22",
         "filename": "net/nqe/network_quality_estimator.cc",
         "patchSetId": 19
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "Done. It\u0027s strange that the presubmit did not catch it though.",
       "parentUuid": "0caf8bd8_b3857c22",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61db5ec5_f378a4c3",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T20:37:10Z",
+      "side": 1,
+      "message": "It\u0027s legal in general to have LOG statements, but they should only be used for failure cases, and most of those are DLOG.",
+      "parentUuid": "c735364b_4189524b",
       "revId": "ae35927e06921c1f158cea5117d36a4815262591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
