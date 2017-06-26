@@ -16,6 +16,29 @@
       "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d54f27e_a8203053",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-06-26T18:42:57Z",
+      "side": 1,
+      "message": "Is this ok?\n\nGBM_BO_USE_RENDERING was removed in https://codereview.chromium.org/1339443002/ since it was causing performance issues with CPU mapping. I know we\u0027re not using VGEM, but presumably it would cause the same performance issues for other use cases where the buffer is mapped by the CPU.",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
