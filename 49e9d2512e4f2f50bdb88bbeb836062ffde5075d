@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a0602b_63a8c1ff",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-26T10:55:37Z",
+      "side": 1,
+      "message": "trying to understand where the \"Hello world!\" message should come from ... I think this file is missing :)",
+      "range": {
+        "startLine": 281,
+        "startChar": 58,
+        "endLine": 281,
+        "endChar": 67
+      },
+      "revId": "49e9d2512e4f2f50bdb88bbeb836062ffde5075d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
