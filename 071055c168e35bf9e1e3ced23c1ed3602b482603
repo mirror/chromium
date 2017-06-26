@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cca082dd_7190de56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ContextMenuDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-06-26T18:17:35Z",
+      "side": 1,
+      "message": "I think this is needed because we have a case that the context menu is not triggered by Chrome native and for that case, we want the context menu pops up and displays from center. This call will display the context menu from top left of the screen I guess. So there should be a way to figure out whether topContentOffsetYPx is explicitly set and if not, call animation \u003d new ScaleAnimation(fromX, toX, fromY, toY, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f).",
+      "revId": "071055c168e35bf9e1e3ced23c1ed3602b482603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
