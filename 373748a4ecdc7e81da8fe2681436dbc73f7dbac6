@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11400f9d_97c57cd8",
+        "filename": "third_party/WebKit/Source/core/frame/VisualViewport.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-26T15:31:20Z",
+      "side": 1,
+      "message": "Looking at the history of this code, I think we don\u0027t need this non-root exception anymore, it predates the visual viewport concept and we don\u0027t allow pinch-zoom scaling at all in fullscreen mode anymore. Could you remove it and see if tests continue to pass? (could do in a separate patch if you prefer not to have changes in the refactor).",
+      "range": {
+        "startLine": 629,
+        "startChar": 8,
+        "endLine": 629,
+        "endChar": 62
+      },
+      "revId": "373748a4ecdc7e81da8fe2681436dbc73f7dbac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
