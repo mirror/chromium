@@ -8684,7 +8684,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 
   // Navigate main tab to b.com again.  This should not crash.
   GURL b_url(embedded_test_server()->GetURL("b.com", "/title3.html"));
-  EXPECT_TRUE(NavigateToURL(shell(), b_url));
+  EXPECT_TRUE(NavigateToURLNoBlock(shell(), b_url));
 
   // The b.com RVH in the main tab should become active.
   EXPECT_TRUE(rvh->is_active());
@@ -8729,10 +8729,13 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   crash_observer.Wait();
 
   // Since the navigation above didn't commit, the b.com RenderViewHost in the
-  // main tab should still not be active.
+  // main tab should still not be active. On PlzNavigate the error state has
+  // not been propagated to observers though internal navigation state is in
+  // aborted state, since the navigation request is still alive.
   EXPECT_FALSE(rvh->is_active());
-  EXPECT_EQ(net::ERR_ABORTED, handle_observer.net_error_code());
-
+  if (!IsBrowserSideNavigationEnabled()) {
+    EXPECT_EQ(net::ERR_ABORTED, handle_observer.net_error_code());
+  }
   // Navigate popup to b.com to recreate the b.com process.  When creating
   // opener proxies, |rvh| should be reused as a swapped out RVH.  In
   // https://crbug.com/627893, recreating the opener RenderView was hitting a

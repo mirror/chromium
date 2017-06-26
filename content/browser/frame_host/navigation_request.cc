@@ -771,10 +771,19 @@ void NavigationRequest::OnStartChecksComplete(
   // the StoragePartition. Using the url of the navigation will result in a
   // wrong StoragePartition being picked when a WebView is navigating.
   DCHECK_NE(AssociatedSiteInstanceType::NONE, associated_site_instance_type_);
-  RenderFrameHostImpl* navigating_frame_host =
-      associated_site_instance_type_ == AssociatedSiteInstanceType::SPECULATIVE
-          ? frame_tree_node_->render_manager()->speculative_frame_host()
-          : frame_tree_node_->current_frame_host();
+  RenderFrameHostImpl* navigating_frame_host;
+  if (associated_site_instance_type_ == AssociatedSiteInstanceType::CURRENT) {
+    navigating_frame_host = frame_tree_node_->current_frame_host();
+  } else {
+    navigating_frame_host =
+        frame_tree_node_->render_manager()->speculative_frame_host();
+    if (!navigating_frame_host) {
+      RenderFrameHostManager* rfhm = frame_tree_node_->render_manager();
+      bool success = rfhm->CreateSpeculativeRenderFrameHostForNavigation(*this);
+      DCHECK(success);
+      navigating_frame_host = rfhm->speculative_frame_host();
+    }
+  }
   DCHECK(navigating_frame_host);
 
   navigation_handle_->SetExpectedProcess(navigating_frame_host->GetProcess());

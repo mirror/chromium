@@ -88,6 +88,18 @@ bool NavigateToURL(Shell* window, const GURL& url) {
   return window->web_contents()->GetLastCommittedURL() == url;
 }
 
+bool NavigateToURLNoBlock(Shell* window, const GURL& url) {
+  TestNavigationObserver same_tab_observer(window->web_contents(), 1);
+  window->LoadURL(url);
+  same_tab_observer.Wait();
+
+  if (!IsLastCommittedEntryOfPageType(window->web_contents(),
+                                      PAGE_TYPE_NORMAL)) {
+    return false;
+  }
+  return window->web_contents()->GetLastCommittedURL() == url;
+}
+
 bool NavigateToURLAndExpectNoCommit(Shell* window, const GURL& url) {
   NavigationEntry* old_entry =
       window->web_contents()->GetController().GetLastCommittedEntry();
