@@ -22,6 +22,8 @@ source_set("loader") {
     "LinkHeader.cpp",
     "LinkHeader.h",
     "fetch/AccessControlStatus.h",
+    "fetch/BufferingDataPipeWriter.cpp",
+    "fetch/BufferingDataPipeWriter.h",
     "fetch/CachedMetadata.cpp",
     "fetch/CachedMetadata.h",
     "fetch/CachedMetadataHandler.h",
@@ -113,6 +115,7 @@ source_set("unit_tests") {
   # Source files for blink_platform_unittests.
   sources = [
     "LinkHeaderTest.cpp",
+    "fetch/BufferingDataPipeWriterTest.cpp",
     "fetch/ClientHintsPreferencesTest.cpp",
     "fetch/CrossOriginAccessControlTest.cpp",
     "fetch/FetchUtilsTest.cpp",
