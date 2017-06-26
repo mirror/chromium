@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cafb1adc_55218b6f",
+        "filename": "headless/lib/browser/headless_tab_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-26T10:36:59Z",
+      "side": 1,
+      "message": "nit: (v8_execution_)context_id",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 16
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d34372_3332b1f8",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-26T10:36:59Z",
+      "side": 1,
+      "message": "should this be \u003d\u003d1 ? (or do we even need it?)",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 31
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d2de70_7373ecd4",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-26T10:36:59Z",
+      "side": 1,
+      "message": "Should this be only one exclamation mark?",
+      "range": {
+        "startLine": 256,
+        "startChar": 9,
+        "endLine": 256,
+        "endChar": 10
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
