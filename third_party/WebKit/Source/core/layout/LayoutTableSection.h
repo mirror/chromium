@@ -362,6 +362,9 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
                                               unsigned auto_rows_count);
   void DistributeRemainingExtraLogicalHeight(int& extra_logical_height);
 
+  // Check whether row or row group has visibility:collapse.
+  bool RowHasVisibilityCollapse(unsigned row) const;
+
   void UpdateBaselineForCell(LayoutTableCell*,
                              unsigned row,
                              int& baseline_descent);

@@ -36,6 +36,7 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/SubtreeLayoutScope.h"
 #include "core/paint/TableSectionPainter.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/HashSet.h"
 
 namespace blink {
@@ -767,6 +768,13 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
   }
 }
 
+bool LayoutTableSection::RowHasVisibilityCollapse(unsigned row) const {
+  return (RuntimeEnabledFeatures::VisibilityCollapseEnabled() &&
+          ((grid_[row].row &&
+            grid_[row].row->Style()->Visibility() == EVisibility::kCollapse) ||
+           Style()->Visibility() == EVisibility::kCollapse));
+}
+
 // Find out the baseline of the cell
 // If the cell's baseline is more than the row's baseline then the cell's
 // baseline become the row's baseline and if the row's baseline goes out of the
@@ -834,6 +842,12 @@ int LayoutTableSection::CalcRowLogicalHeight() {
 
     if (state.IsPaginated() && grid_[r].row)
       row_pos_[r] += grid_[r].row->PaginationStrut().Ceil();
+
+    if (RowHasVisibilityCollapse(r)) {
+      // If the row or row group is collapsed, ignore row height.
+      row_pos_[r + 1] = row_pos_[r];
+      continue;
+    }
 
     if (grid_[r].logical_height.IsSpecified()) {
       // Our base size is the biggest logical height from our cells' styles
