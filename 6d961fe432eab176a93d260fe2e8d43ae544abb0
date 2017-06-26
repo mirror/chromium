@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "1aa1f6a3_966dcef6",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-26T21:00:39Z",
+      "side": 1,
+      "message": "I think part of the issue here is that these are \"Accel\" metrics, suggesting that they reflect key/button presses, but semantically it seems they only record actual shut down requests. If the intention is to record key presses then this is the wrong patch. If the intention is to record shut down reasons, then maybe they should all move here, and arguably the metrics should be renamed to e.g. ShutDown_Reason_* though that might not be worth the churn.",
+      "parentUuid": "e5d8b243_6969d5de",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d717534_ac5c9620",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 2
