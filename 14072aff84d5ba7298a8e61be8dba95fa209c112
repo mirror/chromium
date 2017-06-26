@@ -16,6 +16,24 @@
       "revId": "14072aff84d5ba7298a8e61be8dba95fa209c112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa1aa01_ff6d169f",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T17:57:29Z",
+      "side": 0,
+      "message": "Ideally we\u0027d compare against positions here, but because this is in the shader we currently don\u0027t have position information other than the bounding rect of all the images. \n\nThe thing is that we don\u0027t use this position for anything except checker imaging (invalidations from impl side), and we don\u0027t checker shaders currently. So I removed rect checks and just relying on rtree queries to verify that it returns what we expect. I made this more direct without the use of PositionDrawImage.",
+      "parentUuid": "9e95df64_b7b5a07e",
+      "revId": "14072aff84d5ba7298a8e61be8dba95fa209c112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

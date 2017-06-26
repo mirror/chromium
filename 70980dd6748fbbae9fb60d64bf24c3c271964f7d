@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31bcb8f1_2bd33f69",
+        "filename": "cc/base/rtree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T17:57:29Z",
+      "side": 1,
+      "message": "I removed this in favor of just adding a second pass to where we get the images. There shouldn\u0027t be too many of them and I added a TODO to remove the second pass since we do this in TileManager anyway.",
+      "parentUuid": "3b687aac_8d6fe36c",
+      "revId": "70980dd6748fbbae9fb60d64bf24c3c271964f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87c25689_4ec38e05",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "70980dd6748fbbae9fb60d64bf24c3c271964f7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dac1759_656e9be8",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T17:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87c25689_4ec38e05",
+      "revId": "70980dd6748fbbae9fb60d64bf24c3c271964f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
