@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e38c96ff_2ece04bc",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T01:49:23Z",
+      "side": 0,
+      "message": "Because mojo IPC is asychronous it is possible (in theory) that when 2 IMEs are installed ash could send a SwitchToNextIme() message to chrome at the same time that chrome uninstalled the second IME.\n\nAlso, removing this allows me to take CanCycleInputMethod() out of the public section for InputMethodManager::State and test it via calls to SwitchToNextInputMethod().",
+      "revId": "8bacc33c910f8c9d12f403b3f1dbdc9231ce6c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

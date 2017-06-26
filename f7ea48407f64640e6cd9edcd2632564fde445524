@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79784c8d_90bff3d9",
+        "filename": "ash/accelerators/accelerator_table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T01:49:23Z",
+      "side": 1,
+      "message": "shuchen, should I remove this? Handling this key was removed in https://chromiumcodereview.appspot.com/18001004/ (see input_method_manager_impl.cc). The migration code added in that CL was removed in https://codereview.chromium.org/24953003/.",
+      "revId": "f7ea48407f64640e6cd9edcd2632564fde445524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
