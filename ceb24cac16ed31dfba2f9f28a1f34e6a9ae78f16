@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6b5850_c84413ae",
+        "filename": "gpu/command_buffer/service/test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-26T22:02:26Z",
+      "side": 1,
+      "message": "Please add a comment that this corresponds to the early-out in Program::UpdateUniforms.",
+      "revId": "ceb24cac16ed31dfba2f9f28a1f34e6a9ae78f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
