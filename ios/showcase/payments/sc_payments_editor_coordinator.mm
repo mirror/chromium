@@ -151,8 +151,7 @@
   self.alerter.baseViewController = self.baseViewController;
 
   self.paymentRequestEditViewController =
-      [[PaymentRequestEditViewController alloc]
-          initWithStyle:CollectionViewControllerStyleAppBar];
+      [[PaymentRequestEditViewController alloc] init];
   [self.paymentRequestEditViewController setTitle:@"Add info"];
   self.mediator = [[SCPaymentsEditorMediator alloc] init];
   [self.mediator setConsumer:self.paymentRequestEditViewController];

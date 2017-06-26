@@ -78,8 +78,7 @@ class PaymentRequestEditViewControllerTest
  protected:
   CollectionViewController* InstantiateController() override {
     PaymentRequestEditViewController* viewController =
-        [[PaymentRequestEditViewController alloc]
-            initWithStyle:CollectionViewControllerStyleDefault];
+        [[PaymentRequestEditViewController alloc] init];
     mediator_ = [[TestPaymentRequestEditMediator alloc] init];
     [mediator_ setConsumer:viewController];
     [viewController setDataSource:mediator_];
