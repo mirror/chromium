@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "0b7ed6d7_63a4a0e0",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-26T12:27:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89698e29_036ec23f",
+      "revId": "96291d8a05c1f2ec2167a47f050dc80e25a93e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3addba52_955f6f18",
         "filename": "components/arc/arc_session.cc",
         "patchSetId": 8
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "Looks not yet done?\nEven if container running for login_screen is stopped, this object looks to be kept alive and held by ArcSessionRunner, which I\u0027d like to avoid.\n\nWhat I\u0027d expect is; if a container is running, an instance is alive and held by ArcSessionRunner. If it is stopped, it is deleted rather than resetting its internal state.\nNote that, it would be necessary to track the state in ArcSessionRunner, but IMHO it is ok, because it actually changes its behavior for the regular booting and for the login_screen\u0027s.\n\nWDYT?",
       "parentUuid": "98a55d3c_4ca94646",
+      "revId": "96291d8a05c1f2ec2167a47f050dc80e25a93e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0631f3_b9c15678",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-26T12:27:10Z",
+      "side": 1,
+      "message": "Ok, done.\n\nRemoved ResetLoginScreenSession() and instead added a new state to ASR as you suggested. I still think existence of the mini instance shouldn\u0027t be visible to c/b/c/arc/arc_session_manager.cc, but handling it at ASR layer seems okay (and better :-)",
+      "parentUuid": "b58e106f_c352e3e9",
       "revId": "96291d8a05c1f2ec2167a47f050dc80e25a93e41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
