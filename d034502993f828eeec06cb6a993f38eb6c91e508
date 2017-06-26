@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "901383b0_239db8e2",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-26T19:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8c13aab_a44288f1",
+      "revId": "d034502993f828eeec06cb6a993f38eb6c91e508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094eb098_38b40fe2",
         "filename": "ui/events/blink/input_handler_proxy.cc",
         "patchSetId": 6
@@ -51,6 +69,24 @@
       "revId": "d034502993f828eeec06cb6a993f38eb6c91e508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c62f20_aa16eb92",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-26T19:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee8730ad_26a7bb44",
+      "revId": "d034502993f828eeec06cb6a993f38eb6c91e508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
