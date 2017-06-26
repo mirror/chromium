@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfe062a3_69f2034c",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-26T14:37:50Z",
+      "side": 1,
+      "message": "What value would you suggest?\nnet::Predictor has this constant set to 0.1. Confidence is calculated differently though.\nhttps://cs.chromium.org/chromium/src/chrome/browser/net/predictor.cc?l\u003d68\u0026gs\u003dcpp%253Achrome_browser_net%253A%253Aclass-Predictor%253A%253AkDNSPreresolutionWorthyExpectedValue%2540chromium%252F..%252F..%252Fchrome%252Fbrowser%252Fnet%252Fpredictor.cc%257Cdef\u0026gsn\u003dkDNSPreresolutionWorthyExpectedValue\u0026ct\u003dxref_usages",
+      "parentUuid": "899b67d5_25a28088",
+      "range": {
+        "startLine": 747,
+        "startChar": 15,
+        "endLine": 747,
+        "endChar": 25
+      },
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c160822_732a2ead",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc232d2_1f68c753",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-26T14:37:50Z",
+      "side": 1,
+      "message": "I changed field names in PreconnectPrediction accordingly to make it more clear.\nIf you think that it\u0027d be better to truncate scheme and port for preresolve vector, we need to discuss it. There would be some complications with that because underlying implementation of preresolve requires host-port pair.\nhttps://cs.chromium.org/chromium/src/net/dns/host_resolver.h?l\u003d180\u0026gs\u003dcpp%253Anet%253A%253Aclass-HostResolver%253A%253AResolve(const%2Bnet%253A%253AHostResolver%253A%253ARequestInfo%2B%2526%252C%2Bnet%253A%253ARequestPriority%252C%2Bnet%253A%253AAddressList%2B*%252C%2Bconst%2Bbase%253A%253ACallback%253Cvoid%2B(int)%252C%2Bbase%253A%253Ainternal%253A%253ACopyMode%253A%253ACopyable%252C%2Bbase%253A%253Ainternal%253A%253ARepeatMode%253A%253ARepeating%253E%2B%2526%252C%2Bstd%253A%253Aunique_ptr%253Cnet%253A%253AHostResolver%253A%253ARequest%252C%2Bstd%253A%253Adefault_delete%253Cnet%253A%253AHostResolver%253A%253ARequest%253E%2B%253E%2B*%252C%2Bconst%2Bnet%253A%253ANetLogWithSource%2B%2526)%2540chromium%252F..%252F..%252Fnet%252Fdns%252Fhost_resolver.h%257Cdecl\u0026gsn\u003dResolve\u0026ct\u003dxref_usages",
+      "parentUuid": "7c160822_732a2ead",
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7fb75438_826a1f20",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-26T14:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fdc29d8_ce31753a",
+      "range": {
+        "startLine": 267,
+        "startChar": 15,
+        "endLine": 267,
+        "endChar": 39
+      },
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a5ae60_a8774e1b",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor_unittest.cc",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b4cf4f_006ee10a",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-26T14:37:50Z",
+      "side": 1,
+      "message": "This is because I put \"wrong\" data into the database. We transform URLs into origins on a level above. Here we just see what was put in the database.\nFixed the test data to meet expectations.",
+      "parentUuid": "11a5ae60_a8774e1b",
+      "range": {
+        "startLine": 1655,
+        "startChar": 58,
+        "endLine": 1655,
+        "endChar": 68
+      },
+      "revId": "cd856c36113c10cf11bfeb0287343f58c877c447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
