@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "658b0b99_94bbbcaf",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-26T13:39:27Z",
+      "side": 1,
+      "message": "no { } for case: unless you need the scope to define variables or smth",
+      "revId": "238ef061ee6e9cfc1cd0989acdb98f2db2dbf719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58858d50_4030d160",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-26T13:39:27Z",
+      "side": 1,
+      "message": "nit. different from DISALLOW_COPY_AND_ASSING, WTF_MAKE_NONCOPYABLE goes right before the public: at the beginning of the class",
+      "revId": "238ef061ee6e9cfc1cd0989acdb98f2db2dbf719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
