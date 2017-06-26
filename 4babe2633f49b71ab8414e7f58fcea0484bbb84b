@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "503e3309_f116b675",
+        "filename": "components/tracing/common/process_metrics_memory_dump_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-26T15:14:45Z",
+      "side": 1,
+      "message": "Maybe add a top level comment here, similar to the one in the DEPS, saying that this call forwarding is very temporary  and add a link to the tracker bug.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "4babe2633f49b71ab8414e7f58fcea0484bbb84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdde00d_03800361",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/process_metrics_memory_dump_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-26T15:14:45Z",
+      "side": 1,
+      "message": "Thank you Gerrit for your very smart copy-detection algorithm that decided that this is a brand new file with no left-side.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "4babe2633f49b71ab8414e7f58fcea0484bbb84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
