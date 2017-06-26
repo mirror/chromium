@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "462de9c0_645e07c3",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T22:47:29Z",
+      "side": 1,
+      "message": "All newly added files in //ios should be .mm.",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c22c1b_f79e0b98",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T22:47:29Z",
+      "side": 1,
+      "message": "configs +\u003d [ \"//build/config/compiler:enable_arc\" ]\nWe need this for .mm files.",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a184d8_e93aa341",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T22:47:29Z",
+      "side": 1,
+      "message": "Our codebase has a very particular convention here: \"_unittest.cc\". (But the source set is plural -- \"unit_tests\")",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e210b5_e482f4bc",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T22:47:29Z",
+      "side": 1,
+      "message": "Remove this until it\u0027s needed. Also, do you need \"testonly \u003d true\" here?",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3a746a_cd7dc519",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T22:47:29Z",
+      "side": 1,
+      "message": "s/Accesses/Returns",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59e90d8_a0ce0e1b",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T22:47:29Z",
+      "side": 1,
+      "message": "Remove this. The code speaks for itself.",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
