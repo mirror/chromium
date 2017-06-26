@@ -30,6 +30,7 @@ class CC_EXPORT RendererSettings {
   bool show_overdraw_feedback = false;
   bool enable_color_correct_rendering = false;
   int highp_threshold_min = 0;
+  bool wait_for_all_surfaces_before_swap = false;
 
   // Determines whether we disallow non-exact matches when finding resources
   // in ResourcePool. Only used for layout or pixel tests, as non-deterministic

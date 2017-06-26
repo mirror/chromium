@@ -78,6 +78,7 @@ class CC_SURFACES_EXPORT Display : public DisplaySchedulerClient,
   bool SurfaceDamaged(const SurfaceId& surface_id,
                       const BeginFrameAck& ack) override;
   void SurfaceDiscarded(const SurfaceId& surface_id) override;
+  const RendererSettings& GetRendererSettings() const override;
 
   // OutputSurfaceClient implementation.
   void SetNeedsRedrawRect(const gfx::Rect& damage_rect) override;

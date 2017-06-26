@@ -315,49 +315,79 @@ void DisplayScheduler::OnSurfaceDamageExpected(const SurfaceId& surface_id,
 void DisplayScheduler::OnSurfaceWillDraw(const SurfaceId& surface_id) {}
 
 base::TimeTicks DisplayScheduler::DesiredBeginFrameDeadlineTime() {
+  switch (DesiredBeginFrameDeadlineMode()) {
+    case BeginFrameDeadlineMode::IMMEDIATE:
+      return base::TimeTicks();
+    case BeginFrameDeadlineMode::REGULAR:
+      // Wait indefinitely in full-pipe mode.
+      if (client_->GetRendererSettings().wait_for_all_surfaces_before_swap)
+        return base::TimeTicks::Max();
+      // Otherwise, wait until current BeginFrame's specified deadline.
+      return current_begin_frame_args_.deadline;
+    case BeginFrameDeadlineMode::LATE:
+      // Wait indefinitely in full-pipe mode.
+      if (client_->GetRendererSettings().wait_for_all_surfaces_before_swap)
+        return base::TimeTicks::Max();
+      // Otherwise, wait until next BeginFrame's frame time.
+      return current_begin_frame_args_.frame_time +
+             current_begin_frame_args_.interval;
+    default:
+      NOTREACHED();
+      return base::TimeTicks();
+  }
+}
+
+DisplayScheduler::BeginFrameDeadlineMode
+DisplayScheduler::DesiredBeginFrameDeadlineMode() {
   if (output_surface_lost_) {
     TRACE_EVENT_INSTANT0("cc", "Lost output surface", TRACE_EVENT_SCOPE_THREAD);
-    return base::TimeTicks();
+    return BeginFrameDeadlineMode::IMMEDIATE;
   }
 
   if (pending_swaps_ >= max_pending_swaps_) {
     TRACE_EVENT_INSTANT0("cc", "Swap throttled", TRACE_EVENT_SCOPE_THREAD);
-    return current_begin_frame_args_.frame_time +
-           current_begin_frame_args_.interval;
-  }
-
-  if (!needs_draw_) {
-    TRACE_EVENT_INSTANT0("cc", "No damage yet", TRACE_EVENT_SCOPE_THREAD);
-    return current_begin_frame_args_.frame_time +
-           current_begin_frame_args_.interval;
+    return BeginFrameDeadlineMode::LATE;
   }
 
   if (root_surface_resources_locked_) {
     TRACE_EVENT_INSTANT0("cc", "Root surface resources locked",
                          TRACE_EVENT_SCOPE_THREAD);
-    return current_begin_frame_args_.frame_time +
-           current_begin_frame_args_.interval;
+    return BeginFrameDeadlineMode::LATE;
   }
 
-  bool all_surfaces_ready =
-      !has_pending_surfaces_ && root_surface_id_.is_valid();
-  if (all_surfaces_ready && !expecting_root_surface_damage_because_of_resize_) {
+  bool all_surfaces_ready = !has_pending_surfaces_ &&
+                            root_surface_id_.is_valid() &&
+                            !expecting_root_surface_damage_because_of_resize_;
+
+  // When no draw is needed, only allow an early deadline in full-pipe mode.
+  // This way, we can unblock the BeginFrame in full-pipe mode if no draw is
+  // necessary, but accommodate damage as a result of missed BeginFrames from
+  // clients otherwise.
+  bool allow_early_deadline_without_draw =
+      client_->GetRendererSettings().wait_for_all_surfaces_before_swap;
+
+  if (all_surfaces_ready &&
+      (needs_draw_ || allow_early_deadline_without_draw)) {
     TRACE_EVENT_INSTANT0("cc", "All active surfaces ready",
                          TRACE_EVENT_SCOPE_THREAD);
-    return base::TimeTicks();
+    return BeginFrameDeadlineMode::IMMEDIATE;
+  }
+
+  if (!needs_draw_) {
+    TRACE_EVENT_INSTANT0("cc", "No damage yet", TRACE_EVENT_SCOPE_THREAD);
+    return BeginFrameDeadlineMode::LATE;
   }
 
   // TODO(mithro): Be smarter about resize deadlines.
   if (expecting_root_surface_damage_because_of_resize_) {
     TRACE_EVENT_INSTANT0("cc", "Entire display damaged",
                          TRACE_EVENT_SCOPE_THREAD);
-    return current_begin_frame_args_.frame_time +
-           current_begin_frame_args_.interval;
+    return BeginFrameDeadlineMode::LATE;
   }
 
   TRACE_EVENT_INSTANT0("cc", "More damage expected soon",
                        TRACE_EVENT_SCOPE_THREAD);
-  return current_begin_frame_args_.deadline;
+  return BeginFrameDeadlineMode::REGULAR;
 }
 
 void DisplayScheduler::ScheduleBeginFrameDeadline() {
@@ -385,8 +415,14 @@ void DisplayScheduler::ScheduleBeginFrameDeadline() {
   // Schedule the deadline.
   begin_frame_deadline_task_time_ = desired_deadline;
   begin_frame_deadline_task_.Cancel();
-  begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
 
+  if (begin_frame_deadline_task_time_ == base::TimeTicks::Max()) {
+    TRACE_EVENT_INSTANT0("cc", "Using infinite deadline",
+                         TRACE_EVENT_SCOPE_THREAD);
+    return;
+  }
+
+  begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
   base::TimeDelta delta =
       std::max(base::TimeDelta(), desired_deadline - base::TimeTicks::Now());
   task_runner_->PostDelayedTask(FROM_HERE,
