@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09a2764b_118fa487",
+        "filename": "third_party/WebKit/LayoutTests/custom-elements/spec/parsing_resettable_elements.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-26T04:06:13Z",
+      "side": 1,
+      "message": "This looks familiar, was this copied from somewhere? Could you move it to a common place and reuse it?",
+      "revId": "9d238c2cae3c90fbb27ebf664cd9d8f4ce90677d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e352d3c_274e288b",
+        "filename": "third_party/WebKit/LayoutTests/custom-elements/spec/parsing_resettable_elements.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-26T04:06:13Z",
+      "side": 1,
+      "message": "Use one blank line.",
+      "revId": "9d238c2cae3c90fbb27ebf664cd9d8f4ce90677d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca4fdb7_ead6eb8a",
+        "filename": "third_party/WebKit/LayoutTests/custom-elements/spec/parsing_resettable_elements.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-26T04:06:13Z",
+      "side": 1,
+      "message": "Could you name the properties here to make the test output more readable? I like what you did in the other test recently with `${name}\u003d\"${value}\"`",
+      "revId": "9d238c2cae3c90fbb27ebf664cd9d8f4ce90677d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa56248c_25e3016e",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-26T04:06:13Z",
+      "side": 1,
+      "message": "The code in the parser can be quite performance sensitive. I think all of the resettable elements are form associated elements. Maybe you can use this to make a quick exit for the common case of non-reset-able elements.",
+      "revId": "9d238c2cae3c90fbb27ebf664cd9d8f4ce90677d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ce2624_a84571eb",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-26T04:06:13Z",
+      "side": 1,
+      "message": "Maybe you could simplify this to make it clear that only form elements end up here? Something like:\n\nif (element-\u003eIsFormControlElement()) {\n  HTMLFormControlElement* form_control_element \u003d ToHTMLFormControlElement(element);\n  etc.",
+      "revId": "9d238c2cae3c90fbb27ebf664cd9d8f4ce90677d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
