@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99c2165_20b2f3b2",
+        "filename": "chrome/browser/resources/settings/device_page/power.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-26T15:26:49Z",
+      "side": 1,
+      "message": "There\u0027s some substantial duplication here, which makes updates/fixes for aria issues, styling, etc. harder to apply consistently.\n\nI\u0027d prefer if this was a \u003csettings-toggle-button no-set-pref pref\u003d\"{{fakePref}}\" ...\u003e where you manipulate fakePref to make settings-toggle-button work the way you want, if that\u0027s possible. That\u0027s not ideal either, but we\u0027ve done it before.",
+      "revId": "750b5c7d1db9bd80a38bb1bab7229a44bcfc6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
