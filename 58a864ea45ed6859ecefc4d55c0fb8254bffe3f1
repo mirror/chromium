@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31f1b3b5_629e45d9",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-26T16:53:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3638f5cc_776607d3",
+      "revId": "58a864ea45ed6859ecefc4d55c0fb8254bffe3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a300b574_f36b75cf",
         "filename": "components/safe_browsing/common/DEPS",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T17:15:24Z",
       "side": 1,
       "message": "I thought we usually just put directories into things rather than individual headers? *shrug* I\u0027m good with whatever.",
+      "revId": "58a864ea45ed6859ecefc4d55c0fb8254bffe3f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c673d75_a9621f4a",
+        "filename": "components/safe_browsing/common/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-26T16:53:58Z",
+      "side": 1,
+      "message": "This is to keep the scope as small as possible. (so if we are going to use other cryptos in the future, we\u0027ll still need you or other crypto owners to take a look to make sure we\u0027re doing the right thing.)",
+      "parentUuid": "a300b574_f36b75cf",
       "revId": "58a864ea45ed6859ecefc4d55c0fb8254bffe3f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
