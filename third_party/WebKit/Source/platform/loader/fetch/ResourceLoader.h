@@ -30,7 +30,10 @@
 #define ResourceLoader_h
 
 #include <memory>
+#include "base/gtest_prod_util.h"
 #include "platform/PlatformExport.h"
+#include "platform/loader/fetch/CrossOriginAccessControl.h"
+#include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/Forward.h"
@@ -40,7 +43,6 @@
 namespace blink {
 
 class FetchContext;
-class Resource;
 class ResourceError;
 class ResourceFetcher;
 
@@ -112,6 +114,8 @@ class PLATFORM_EXPORT ResourceLoader final
   void DidFinishLoadingFirstPartInMultipart();
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(ResourceLoaderTest, DetermineCORSStatus);
+
   // Assumes ResourceFetcher and Resource are non-null.
   ResourceLoader(ResourceFetcher*, Resource*);
 
@@ -122,7 +126,11 @@ class PLATFORM_EXPORT ResourceLoader final
 
   FetchContext& Context() const;
   ResourceRequestBlockedReason CanAccessResponse(Resource*,
-                                                 const ResourceResponse&) const;
+                                                 const ResourceResponse&,
+                                                 const String&) const;
+
+  Resource::CORSStatus DetermineCORSStatus(const ResourceResponse&,
+                                           StringBuilder&) const;
 
   void CancelForRedirectAccessCheckError(const KURL&,
                                          ResourceRequestBlockedReason);
