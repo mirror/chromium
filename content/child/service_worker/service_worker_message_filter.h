@@ -13,6 +13,7 @@
 #include "content/common/content_export.h"
 
 struct ServiceWorkerMsg_MessageToDocument_Params;
+struct ServiceWorkerMsg_SetControllerServiceWorker_Params;
 
 namespace content {
 
@@ -59,11 +60,7 @@ class CONTENT_EXPORT ServiceWorkerMessageFilter
       int changed_mask,
       const ServiceWorkerVersionAttributes& attrs);
   void OnStaleSetControllerServiceWorker(
-      int thread_id,
-      int provider_id,
-      const ServiceWorkerObjectInfo& info,
-      bool should_notify_controllerchange,
-      const std::set<uint32_t>& used_features);
+      const ServiceWorkerMsg_SetControllerServiceWorker_Params& params);
   void OnStaleMessageToDocument(
       const ServiceWorkerMsg_MessageToDocument_Params& params);
 
