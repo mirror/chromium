@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3f9a42a_7c242988",
+        "filename": "third_party/WebKit/Source/platform/graphics/Gradient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T23:38:47Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s too slow to recreate the shader, but is there a perf test I could run to verify this?",
+      "parentUuid": "1598f29a_796c468a",
+      "revId": "add2c16f4bde5c9335ec8bbffe486c721f712e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91d7b448_106d4ecd",
         "filename": "third_party/WebKit/Source/platform/graphics/Pattern.cpp",
         "patchSetId": 3
