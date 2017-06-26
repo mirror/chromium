@@ -46,7 +46,6 @@
 #include "base/native_library.h"
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
-#include "base/synchronization/lock.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/worker_pool.h"
@@ -652,10 +651,6 @@ class NSSInitSingleton {
   }
 #endif
 
-  base::Lock* write_lock() {
-    return &write_lock_;
-  }
-
  private:
   friend struct base::LazyInstanceTraitsBase<NSSInitSingleton>;
 
@@ -815,9 +810,6 @@ class NSSInitSingleton {
   std::map<std::string, std::unique_ptr<ChromeOSUserData>> chromeos_user_map_;
   ScopedPK11Slot test_system_slot_;
 #endif
-  // TODO(davidben): When https://bugzilla.mozilla.org/show_bug.cgi?id=564011
-  // is fixed, we will no longer need the lock.
-  base::Lock write_lock_;
 
   base::ThreadChecker thread_checker_;
 };
@@ -863,23 +855,6 @@ void EnsureNSSInit() {
 
 bool CheckNSSVersion(const char* version) {
   return !!NSS_VersionCheck(version);
-}
-
-base::Lock* GetNSSWriteLock() {
-  return g_nss_singleton.Get().write_lock();
-}
-
-AutoNSSWriteLock::AutoNSSWriteLock() : lock_(GetNSSWriteLock()) {
-  // May be nullptr if the lock is not needed in our version of NSS.
-  if (lock_)
-    lock_->Acquire();
-}
-
-AutoNSSWriteLock::~AutoNSSWriteLock() {
-  if (lock_) {
-    lock_->AssertAcquired();
-    lock_->Release();
-  }
 }
 
 AutoSECMODListReadLock::AutoSECMODListReadLock()
