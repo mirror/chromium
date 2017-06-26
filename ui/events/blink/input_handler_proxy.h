@@ -259,6 +259,11 @@ class InputHandlerProxy
   // supporting overscroll IPC notifications due to fling animation updates.
   std::unique_ptr<DidOverscrollParams> current_overscroll_params_;
 
+  // Used to record touch action notifications in the case of a touch action
+  // starting. The touch action bit can be bundled in the event ack, saving
+  // an IPC.
+  cc::TouchAction touch_action_;
+
   std::unique_ptr<CompositorThreadEventQueue> compositor_event_queue_;
   bool has_ongoing_compositor_scroll_fling_pinch_;
 

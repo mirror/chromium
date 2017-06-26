@@ -1065,7 +1065,9 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
     cc::InputHandler::TouchStartOrMoveEventListenerType event_listener_type =
         input_handler_->EventListenerTypeForTouchStartOrMoveAt(
             gfx::Point(touch_event.touches[i].PositionInWidget().x,
-                       touch_event.touches[i].PositionInWidget().y));
+                       touch_event.touches[i].PositionInWidget().y),
+            &touch_action_);
+
     if (event_listener_type !=
         cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER) {
       *is_touching_scrolling_layer =
@@ -1118,6 +1120,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
   bool is_touching_scrolling_layer;
   EventDisposition result =
       HitTestTouchEvent(touch_event, &is_touching_scrolling_layer);
+  // TODO(hayleyferr) : Send |touch_action_| to browser.
+
   // If |result| is still DROP_EVENT look at the touch end handler as
   // we may not want to discard the entire touch sequence. Note this
   // code is explicitly after the assignment of the |touch_result_|
