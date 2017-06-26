@@ -52,6 +52,24 @@
       "revId": "14072aff84d5ba7298a8e61be8dba95fa209c112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ad62c0_9918b146",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T18:25:51Z",
+      "side": 0,
+      "message": "\u003e Shouldn\u0027t images in a shader share the rect for the op that has the shader?\n\nThey do in the sense that that\u0027s the rect we use to query the rtree. However, the rect that we store is based on the union of all paint image ids that have that. And shaders all share one (invalid) paint image id currently.\n\nPreviously, we\u0027d also store the individual rect for each image, because that\u0027s the vector we used to construct the rtree. Now, we still use this to construct the rtree, but we no longer have to retain the vector since the rtree just stores DrawImages instead of indices, so in the test we no longer have access to individual image rects.\n\n\u003e \n\u003e Is inset_rects unused?\n\nIt is in this test, I removed it in the latest PS. \n\n\u003e \n\u003e Should this just call image_map.GetDiscardableImagesInRect instead of going through this test function that gets rects as well, if you\u0027re not going to ask anything about them?\n\nYep, changed in the latest PS.",
+      "parentUuid": "f3f15104_4640a63c",
+      "revId": "14072aff84d5ba7298a8e61be8dba95fa209c112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
