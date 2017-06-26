@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30117aee_241b3322",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-26T14:38:06Z",
+      "side": 1,
+      "message": "I removed the include and used a forward definition instead. But I see your other comment wanted me to remove WidgetInputHandler from the render_widget_host. I\u0027ve removed FrameInputHandler from this class and only expose it on the impl class.",
+      "parentUuid": "801e4ac8_3ea1d2ac",
+      "revId": "02ca57ea773a6b7e7698228fb5b0b593493e74ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "582a5709_702ffd18",
         "filename": "content/public/browser/render_widget_host.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "02ca57ea773a6b7e7698228fb5b0b593493e74ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff54c07_6356801d",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-26T14:38:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "582a5709_702ffd18",
+      "revId": "02ca57ea773a6b7e7698228fb5b0b593493e74ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
