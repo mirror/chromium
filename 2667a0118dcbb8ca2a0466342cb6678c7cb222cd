@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2ecfac6_19c57ba5",
+        "filename": "media/midi/midi_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-26T17:46:54Z",
+      "side": 1,
+      "message": "Please document that this is used to back an UMA histogram, and should therefore be treated as append-only.",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20805101_aa49ce31",
         "filename": "media/midi/midi_manager.cc",
         "patchSetId": 1
@@ -18,6 +41,75 @@
         "startChar": 2,
         "endLine": 42,
         "endChar": 7
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5b2729_8201c882",
+        "filename": "media/midi/midi_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-26T17:46:54Z",
+      "side": 1,
+      "message": "Optional: I\"d recommend instead a COUNT, which has an automatically incremented value.  However, if you prefer MAX, that\u0027s ok too.",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 5
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1d8887_d59c5e0d",
+        "filename": "media/midi/midi_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-26T17:46:54Z",
+      "side": 1,
+      "message": "FYI, the static_casts shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 307,
+        "startChar": 26,
+        "endLine": 307,
+        "endChar": 0
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c73765_c0bd070b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29308,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-26T17:46:54Z",
+      "side": 1,
+      "message": "I find this a bit unclear.  Let me try to rephrase, and either you can correct my mistake, or take my rephrasing either verbatim or as a starting point:\n\n\"Reports whether any data was sent or received by a MidiManager. Recorded once per MidiManager instantiation, upon destruction.\"\n\nNote that one thing that\u0027s still not clear to me is what causes a MidiManager to be instantiated and destroyed.  If there\u0027s a straightforward way to describe that, it would be great to include.",
+      "range": {
+        "startLine": 29308,
+        "startChar": 79,
+        "endLine": 29308,
+        "endChar": 0
       },
       "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
