@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/memory/memory_pressure_listener.h"
 #include "base/memory/weak_ptr.h"
 #include "chromecast/browser/cast_content_window.h"
 #include "content/public/browser/web_contents.h"
@@ -96,6 +97,8 @@ class CastWebView : content::WebContentsObserver, content::WebContentsDelegate {
 #endif  // defined(OS_ANDROID)
 
   void DelayedCloseContents();
+  void OnMemoryPressure(
+      base::MemoryPressureListener::MemoryPressureLevel level);
 
   Delegate* const delegate_;
   content::BrowserContext* const browser_context_;
@@ -104,6 +107,7 @@ class CastWebView : content::WebContentsObserver, content::WebContentsDelegate {
   std::unique_ptr<content::WebContents> web_contents_;
   std::unique_ptr<shell::CastContentWindow> window_;
   bool did_start_navigation_;
+  std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
 
   base::WeakPtrFactory<CastWebView> weak_factory_;
 

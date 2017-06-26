@@ -6,6 +6,7 @@
 
 #include "base/memory/memory_pressure_listener.h"
 #include "base/strings/stringprintf.h"
+#include "content/browser/memory/memory_pressure_controller_impl.h"
 #include "content/public/common/content_features.h"
 
 namespace content {
@@ -28,8 +29,8 @@ Response MemoryHandler::SetPressureNotificationsSuppressed(
         "Cannot enable/disable notifications when memory coordinator is "
         "enabled");
   }
-
-  base::MemoryPressureListener::SetNotificationsSuppressed(suppressed);
+  content::MemoryPressureControllerImpl::GetInstance()
+      ->SetPressureNotificationsSuppressedInAllProcesses(suppressed);
   return Response::OK();
 }
 
@@ -45,8 +46,8 @@ Response MemoryHandler::SimulatePressureNotification(
         "Invalid memory pressure level '%s'", level.c_str()));
   }
 
-  // Simulate memory pressure notification in the browser process.
-  base::MemoryPressureListener::SimulatePressureNotification(parsed_level);
+  MemoryPressureControllerImpl::GetInstance()
+      ->SimulatePressureNotificationInAllProcesses(parsed_level);
   return Response::OK();
 }
 
