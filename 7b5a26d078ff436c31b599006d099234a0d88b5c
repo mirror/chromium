@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55259b4c_5dc6d7c5",
+        "filename": "chrome/browser/win/chrome_select_file_dialog_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-26T11:10:36Z",
+      "side": 1,
+      "message": "\u003e Is this because the Mojo IPC is sync?\n\nYes.  If the utility process fails to start or crashes, the error callback is invoked and the sync IPC call terminates (and returns empty results).\n\n\u003e Does this need to be set at all?\n\nYes.  The utility process mojo client DCHECK\u0027s that an error callback has been set when you Start() the utility process; see the code and comments at http://bit.ly/2t52UdU and http://bit.ly/2t5j5aJ",
+      "parentUuid": "b35434e2_57141dc7",
+      "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b39cf9c8_78bdc2e5",
         "filename": "chrome/common/shell_handler_win.mojom",
         "patchSetId": 8
