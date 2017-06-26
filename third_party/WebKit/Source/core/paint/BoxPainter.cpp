@@ -180,6 +180,7 @@ void BoxPainter::PaintBoxDecorationBackgroundWithRect(
   }
 
   if (!painting_overflow_contents) {
+    LOG(ERROR) << "Box is " << &layout_box_;
     PaintInsetBoxShadow(paint_info, paint_rect, style);
 
     // The theme will tell us whether or not we should also paint the CSS

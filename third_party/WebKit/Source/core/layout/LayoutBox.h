@@ -202,6 +202,10 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
  public:
   explicit LayoutBox(ContainerNode*);
 
+  ~LayoutBox() {
+    LOG(ERROR) << "Deletign LayoutBox " << this;
+  }
+
   PaintLayerType LayerTypeRequired() const override;
 
   bool BackgroundIsKnownToBeOpaqueInRect(

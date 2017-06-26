@@ -83,6 +83,8 @@
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/AtomicString.h"
 
+#include <base/debug/stack_trace.h>
+
 template <typename T, typename U>
 inline bool compareEqual(const T& t, const U& u) {
   return t == static_cast<T>(u);
@@ -252,6 +254,20 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   static RefPtr<ComputedStyle> Clone(const ComputedStyle&);
   static const ComputedStyle& InitialStyle() { return MutableInitialStyle(); }
   static void InvalidateInitialStyle();
+
+  ~ComputedStyle() {
+    LOG(ERROR) << "Deleting Computed Style " << this;
+  }
+
+  void Ref() const {
+    RefCounted::Ref();
+    LOG(ERROR) << "Computed Style Ref " << this << " " << RefCount();
+  }
+
+  void Deref() const {
+    LOG(ERROR) << "Computed Style Deref " << this << " " << RefCount();
+    RefCounted::Deref();
+  }
 
   // Computes how the style change should be propagated down the tree.
   static StyleRecalcChange StylePropagationDiff(const ComputedStyle* old_style,

@@ -133,6 +133,7 @@ void BoxPainterBase::PaintInsetBoxShadow(const PaintInfo& info,
                                          const ComputedStyle& style,
                                          bool include_logical_left_edge,
                                          bool include_logical_right_edge) {
+  LOG(ERROR) << "style is " << &style;
   if (!style.BoxShadow())
     return;
   FloatRoundedRect bounds = style.GetRoundedInnerBorderFor(

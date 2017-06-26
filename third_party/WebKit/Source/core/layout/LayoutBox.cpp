@@ -101,6 +101,7 @@ LayoutBox::LayoutBox(ContainerNode* node)
       min_preferred_logical_width_(-1),
       max_preferred_logical_width_(-1),
       inline_box_wrapper_(nullptr) {
+  LOG(ERROR) << "Creating box " << this;
   SetIsBox();
 }
 
@@ -122,6 +123,8 @@ PaintLayerType LayoutBox::LayerTypeRequired() const {
 }
 
 void LayoutBox::WillBeDestroyed() {
+  LOG(ERROR) << "WillBeDestroyed box " << this;
+
   ClearOverrideSize();
   ClearContainingBlockOverrideSize();
 
@@ -234,6 +237,9 @@ void LayoutBox::StyleWillChange(StyleDifference diff,
 
 void LayoutBox::StyleDidChange(StyleDifference diff,
                                const ComputedStyle* old_style) {
+  LOG(ERROR) << "StyleDidChange box " << this << " old style " << old_style
+             << " new style " << &StyleRef();
+
   // Horizontal writing mode definition is updated in LayoutBoxModelObject::
   // updateFromStyle, (as part of the LayoutBoxModelObject::styleDidChange call
   // below). So, we can safely cache the horizontal writing mode value before
