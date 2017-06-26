@@ -35,13 +35,15 @@ const char FocusRing::kViewClassName[] = "FocusRing";
 
 // static
 views::View* FocusRing::Install(views::View* parent,
-                                ui::NativeTheme::ColorId override_color_id) {
+                                ui::NativeTheme::ColorId override_color_id,
+                                FocusRingDelegate* focus_ring_delegate) {
   FocusRing* ring = GetFocusRing(parent);
   if (!ring) {
     ring = new FocusRing();
     parent->AddChildView(ring);
   }
   ring->override_color_id_ = override_color_id;
+  ring->focus_ring_delegate_ = focus_ring_delegate;
   ring->Layout();
   ring->SchedulePaint();
   return ring;
@@ -61,6 +63,9 @@ bool FocusRing::CanProcessEventsWithinSubtree() const {
 }
 
 void FocusRing::Layout() {
+  // Delegate layout if focus_ring_delegate_ is set
+  if (focus_ring_delegate_)
+    return focus_ring_delegate_->LayoutFocusRing(this);
   // The focus ring handles its own sizing, which is simply to fill the parent
   // and extend a little beyond its borders.
   gfx::Rect focus_bounds = parent()->GetLocalBounds();
@@ -69,6 +74,9 @@ void FocusRing::Layout() {
 }
 
 void FocusRing::OnPaint(gfx::Canvas* canvas) {
+  // Delegate painting if focus_ring_delegate_ is set
+  if (focus_ring_delegate_)
+    return focus_ring_delegate_->PaintFocusRing(this, canvas);
   cc::PaintFlags flags;
   flags.setAntiAlias(true);
   flags.setColor(

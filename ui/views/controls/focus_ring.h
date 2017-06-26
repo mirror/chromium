@@ -7,6 +7,7 @@
 
 #include "base/optional.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/views/controls/focus_ring_delegate.h"
 #include "ui/views/view.h"
 
 namespace views {
@@ -22,8 +23,9 @@ class FocusRing : public View {
   // exists. |override_color_id| will be used in place of the default coloration
   // when provided.
   static View* Install(views::View* parent,
-                      ui::NativeTheme::ColorId override_color_id =
-                          ui::NativeTheme::kColorId_NumColors);
+                       ui::NativeTheme::ColorId override_color_id =
+                           ui::NativeTheme::kColorId_NumColors,
+                       FocusRingDelegate* focus_ring_delegate = nullptr);
 
   // Removes the FocusRing from |parent|.
   static void Uninstall(views::View* parent);
@@ -39,6 +41,7 @@ class FocusRing : public View {
   ~FocusRing() override;
 
   ui::NativeTheme::ColorId override_color_id_;
+  FocusRingDelegate* focus_ring_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(FocusRing);
 };
