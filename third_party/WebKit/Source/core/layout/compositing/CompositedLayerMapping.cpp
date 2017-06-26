@@ -51,9 +51,9 @@
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/StickyPositionScrollingConstraints.h"
-#include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/FramePaintTiming.h"
 #include "core/paint/LayerClipRecorder.h"
 #include "core/paint/ObjectPaintInvalidator.h"
@@ -1472,6 +1472,10 @@ void CompositedLayerMapping::UpdateScrollingLayerGeometry(
 
   IntSize scroll_size(layout_box.PixelSnappedScrollWidth(),
                       layout_box.PixelSnappedScrollHeight());
+
+  if (RootScrollerUtil::IsGlobal(layout_box))
+    scroll_size.ClampToMinimumSize(overflow_clip_rect.Size());
+
   if (overflow_clip_rect_offset_changed)
     scrolling_contents_layer_->SetNeedsDisplay();
 
