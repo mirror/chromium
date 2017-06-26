@@ -22,6 +22,30 @@
       "revId": "3d52b8913ce39753cf04372140a1f8349e82bf8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55b3909_495cf912",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-26T22:02:21Z",
+      "side": 1,
+      "message": "Yes, we only try to apply the dynamic lookup to libcronet_tests.so for now.",
+      "parentUuid": "8b523d44_534943d2",
+      "range": {
+        "startLine": 545,
+        "startChar": 24,
+        "endLine": 545,
+        "endChar": 30
+      },
+      "revId": "3d52b8913ce39753cf04372140a1f8349e82bf8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
