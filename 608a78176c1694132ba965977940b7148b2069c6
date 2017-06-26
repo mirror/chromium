@@ -16,6 +16,24 @@
       "revId": "608a78176c1694132ba965977940b7148b2069c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117ff38b_fe3fadf4",
+        "filename": "ios/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 0,
+      "message": "You\u0027re right, it still builds fine with that line in there. I don\u0027t know why I removed it. It\u0027s back now.",
+      "parentUuid": "23e956b2_d31fd3c6",
+      "revId": "608a78176c1694132ba965977940b7148b2069c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

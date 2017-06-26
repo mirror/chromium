@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4881c33_953105ee",
+        "filename": "ios/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Apparently it does not. Fixed.",
+      "parentUuid": "c5d6d192_907ab3c0",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6759d075_0981bdc9",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa29bee_da21c0da",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6759d075_0981bdc9",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2e442633_7cc8743c",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "824b0b93_9964a185",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "287c8848_bfd3dd0b",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cf5759_d5cfb1a8",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "287c8848_bfd3dd0b",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fa6d1501_90400f0c",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aaab707_52b48086",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8203c6da_a7b39bd7",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b6b39c_213d16ee",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8203c6da_a7b39bd7",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b513ef5f_f623a3c3",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a8e62e_a61853d4",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3a4c481_890fc4c5",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6a46e5ba_6692e53c",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3a4c481_890fc4c5",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b985b5_38538655",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
         "patchSetId": 1
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-26T17:09:47Z",
       "side": 1,
       "message": "You mentioned this operator is required because of namespace collision. Is there a better way to handle this?",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749ed53d_b4c5cb6d",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:17:49Z",
+      "side": 1,
+      "message": "Now that I think about it, I think the best answer is to reorder the namespaces. Use feature_engagement_tracker::ios instead of the other way around. This exposes all of feature_engagement_tracker to the FeatureEngagementTrackerFactory, prevents collisions, and maintains consistency with other duplicated //chrome vs. //ios/chrome files.\n\nAlternatives:\nRemove the ios namespace and only use feature_engagement_tracker. This is more consistent with how iOS deals with duplicating files from //chrome in //ios/chrome. Some cursory compilations show that it will still compile despite the collision (presumably because we\u0027re not actually compiling the Android version of FeatureEngagementTrackerFactory).",
+      "parentUuid": "f2b985b5_38538655",
       "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
