@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ea342b5_b14fe5e4",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-26T18:57:19Z",
+      "side": 1,
+      "message": "Should this just be return !insets.IsEmpty()?",
+      "revId": "0db83b4c75d7e270f81629c73ba6551efcf798be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
