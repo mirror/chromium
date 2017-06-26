@@ -2636,8 +2636,49 @@ bool AutofillTable::MigrateToVersion73AddMaskedCardBankName() {
 }
 
 bool AutofillTable::MigrateToVersion74AddServerCardTypeColumn() {
+  sql::Transaction transaction(db_);
+  if (!transaction.Begin())
+    return false;
+
+  if (!db_->DoesColumnExist("masked_credit_cards", "type")) {
+    return db_->Execute(
+               "ALTER TABLE masked_credit_cards ADD COLUMN type INTEGER "
+               "DEFAULT 0") &&
+           transaction.Commit();
+  }
+
+  // The column should not exist, but it has been observed in the wild. It may
+  // be the VARCHAR column from before version 72, so it cannot be reused.
+  // http://crbug.com/736839
+  if (db_->DoesTableExist("masked_credit_cards_temp") &&
+      !db_->Execute("DROP TABLE masked_credit_cards_temp")) {
+    return false;
+  }
+
   return db_->Execute(
-      "ALTER TABLE masked_credit_cards ADD COLUMN type INTEGER DEFAULT 0");
+             "CREATE TABLE masked_credit_cards_temp ("
+             "id VARCHAR,"
+             "status VARCHAR,"
+             "name_on_card VARCHAR,"
+             "network VARCHAR,"
+             "type INTEGER DEFAULT 0,"
+             "bank_name VARCHAR,"
+             "last_four VARCHAR,"
+             "exp_month INTEGER DEFAULT 0,"
+             "exp_year INTEGER DEFAULT 0)") &&
+         db_->Execute(
+             "INSERT INTO masked_credit_cards_temp ("
+             "id, status, name_on_card, network, bank_name, last_four, "
+             "exp_month, exp_year"
+             ") SELECT "
+             "id, status, name_on_card, network, banke_name, last_four, "
+             "exp_month, exp_year"
+             " FROM masked_credit_cards") &&
+         db_->Execute("DROP TABLE masked_credit_cards") &&
+         db_->Execute(
+             "ALTER TABLE masked_credit_cards_temp "
+             "RENAME TO masked_credit_cards") &&
+         transaction.Commit();
 }
 
 }  // namespace autofill
