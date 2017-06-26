@@ -43,6 +43,7 @@ const char kChromeManageAccountsHeader[] = "X-Chrome-Manage-Accounts";
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 const char kDiceResponseHeader[] = "X-Chrome-ID-Consistency-Response";
+const char kGoogleSignoutResponseHeader[] = "Google-Accounts-SignOut";
 #endif
 
 // Processes the mirror response header on the UI thread. Currently depending
@@ -212,12 +213,15 @@ void ProcessDiceResponseHeaderIfExists(
     return;
 
   std::string header_value;
-  if (!response_headers->GetNormalizedHeader(kDiceResponseHeader,
-                                             &header_value)) {
-    return;
+  DiceResponseParams params;
+  if (response_headers->GetNormalizedHeader(kDiceResponseHeader,
+                                            &header_value)) {
+    params = BuildDiceSigninResponseParams(header_value);
+  } else if (response_headers->GetNormalizedHeader(kGoogleSignoutResponseHeader,
+                                                   &header_value)) {
+    params = BuildDiceSignoutResponseParams(header_value);
   }
 
-  DiceResponseParams params = BuildDiceResponseParams(header_value);
   // If the request does not have a response header or if the header contains
   // garbage, then |user_intention| is set to |NONE|.
   if (params.user_intention == DiceAction::NONE)
