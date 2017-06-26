@@ -28,72 +28,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-Network.RequestPreviewView = class extends Network.RequestView {
+Network.RequestPreviewView = class extends Network.RequestResponseView {
   /**
    * @param {!SDK.NetworkRequest} request
    */
   constructor(request) {
     super(request);
-    /** @type {?Promise<!UI.Widget>} */
-    this._previewViewPromise = null;
-  }
-
-  /**
-   * @return {!UI.EmptyWidget}
-   */
-  _createEmptyWidget() {
-    return this._createMessageView(Common.UIString('This request has no preview available.'));
-  }
-
-  /**
-   * @param {string} message
-   * @return {!UI.EmptyWidget}
-   */
-  _createMessageView(message) {
-    return new UI.EmptyWidget(message);
-  }
-
-  /**
-   * @param {string} content
-   * @param {string} mimeType
-   * @return {?UI.SearchableView}
-   */
-  _xmlView(content, mimeType) {
-    var parsedXML = Network.XMLView.parseXML(content, mimeType);
-    return parsedXML ? Network.XMLView.createSearchableView(parsedXML) : null;
-  }
-
-  /**
-   * @param {string} content
-   * @return {!Promise<?UI.SearchableView>}
-   */
-  async _jsonView(content) {
-    // We support non-strict JSON parsing by parsing an AST tree which is why we offload it to a worker.
-    var parsedJSON = await Network.JSONView.parseJSON(content);
-    if (!parsedJSON || typeof parsedJSON.data !== 'object')
-      return null;
-    return Network.JSONView.createSearchableView(/** @type {!Network.ParsedJSON} */ (parsedJSON));
+    this._previewProvider = new SourceFrame.PreviewProvider();
   }
 
   /**
    * @override
+   * @protected
    */
-  wasShown() {
-    this._showPreviewView();
-  }
-
-  async _showPreviewView() {
-    if (!this._previewViewPromise)
-      this._previewViewPromise = this._createPreviewView();
-    var previewView = await this._previewViewPromise;
-    if (this.element.contains(previewView.element))
-      return;
-
-    previewView.show(this.element);
-
-    if (previewView instanceof UI.SimpleView) {
+  async showPreview() {
+    var view = await super.showPreview();
+    if (view instanceof UI.SimpleView) {
       var toolbar = new UI.Toolbar('network-item-preview-toolbar', this.element);
-      for (var item of previewView.syncToolbarItems())
+      for (var item of view.syncToolbarItems())
         toolbar.appendToolbarItem(item);
     }
   }
@@ -121,38 +73,26 @@ Network.RequestPreviewView = class extends Network.RequestView {
   }
 
   /**
+   * @override
    * @return {!Promise<!UI.Widget>}
    */
-  async _createPreviewView() {
+  async createPreview() {
     var contentData = await this.request.contentData();
     if (contentData.error)
-      return this._createMessageView(Common.UIString('Failed to load response data'));
-
-    var content = contentData.content || '';
-    if (contentData.encoded)
-      content = window.atob(content);
-    if (!content)
-      return this._createEmptyWidget();
-
-    var xmlView = this._xmlView(content, this.request.mimeType);
-    if (xmlView)
-      return xmlView;
-
-    var jsonView = await this._jsonView(content);
-    if (jsonView)
-      return jsonView;
+      return this.createMessageView(Common.UIString('Failed to load response data'));
 
     var htmlErrorPreview = this._htmlErrorPreview(contentData);
     if (htmlErrorPreview)
       return htmlErrorPreview;
 
+    // Try provider before the source view - so JSON and XML are not shown in generic editor
+    var provided = await this._previewProvider.preview(this.request, this.request.mimeType);
+    if (provided)
+      return provided;
+
     var sourceView = await Network.RequestResponseView.sourceViewForRequest(this.request);
     if (sourceView)
       return sourceView;
-
-    if (this.request.resourceType() === Common.resourceTypes.Other)
-      return this._createEmptyWidget();
-
-    return Network.RequestView.nonSourceViewForRequest(this.request);
+    return this.createMessageView(Common.UIString('No preview available'));
   }
 };

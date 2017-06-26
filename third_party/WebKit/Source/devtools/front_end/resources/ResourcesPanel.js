@@ -12,6 +12,9 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
     /** @type {?UI.Widget} */
     this.visibleView = null;
 
+    /** @type {?Promise<!UI.Widget>} */
+    this._pendingViewPromise = null;
+
     /** @type {?Resources.StorageCategoryView} */
     this._categoryView = null;
 
@@ -28,6 +31,8 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
 
     /** @type {?UI.EmptyWidget} */
     this._emptyWidget = null;
+
+    this._previewProvider = new SourceFrame.PreviewProvider();
 
     this._sidebar = new Resources.ApplicationPanelSidebar(this);
     this._sidebar.show(this.panelSidebarElement());
@@ -82,6 +87,7 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
    * @param {?UI.Widget} view
    */
   showView(view) {
+    this._pendingViewPromise = null;
     if (this.visibleView === view)
       return;
 
@@ -98,6 +104,30 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
       this._storageViewToolbar.appendToolbarItem(toolbarItems[i]);
     this._storageViewToolbar.element.classList.toggle('hidden', !toolbarItems.length);
   }
+
+  /**
+   * @param {!Promise<!UI.Widget>} viewPromise
+   */
+  async scheduleShowView(viewPromise) {
+    this._pendingViewPromise = viewPromise;
+    var view = await viewPromise;
+    if (this._pendingViewPromise !== viewPromise)
+      return;
+    this.showView(view);
+  }
+
+  /**
+   * @param {!SDK.Resource} resource
+   * @return {!Promise<!UI.Widget>}
+   */
+  getPreviewForResource(resource) {
+    return this._previewProvider.preview(resource, resource.mimeType).then(view => {
+      if (view)
+        return view;
+      return new UI.EmptyWidget(resource.url);
+    });
+  }
+
 
   /**
    * @param {string} categoryName
