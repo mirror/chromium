@@ -22,6 +22,30 @@
       "revId": "11328116dfaca361d0daaf82a2c9c22249272010",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb61412a_b48d2140",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-26T18:12:11Z",
+      "side": 1,
+      "message": "Our team ran into significant problems trying to run the Telemetry-based tests under TSAN on Linux. See http://crbug.com/691029 . Basically, any test which brought up the browser would hang. It wasn\u0027t clear whether this was because of the many errors being flagged by TSAN (for which jbauman@ added suppressions a couple of months ago), or some other deeper problem. Unfortunately, these are the tests that would exercise V8. angle_perftests and others run no JavaScript and would not be useful on the client.v8.fyi waterfall.\n\nI\u0027ll try turning on one of the Telemetry-based tests again in https://chromium-review.googlesource.com/548958 . If it works then we can remove the disabled_instrumentation_types directives for a bunch of the other tests.",
+      "parentUuid": "23d85b6a_6826291a",
+      "range": {
+        "startLine": 2088,
+        "startChar": 32,
+        "endLine": 2088,
+        "endChar": 51
+      },
+      "revId": "11328116dfaca361d0daaf82a2c9c22249272010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
