@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c6df321_d3b4d3d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-26T15:43:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0934dc_717ca10c",
+      "revId": "5493bf5340cc68a65fd697181cf97be85ca0a0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2e38a02_b8d737de",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "5493bf5340cc68a65fd697181cf97be85ca0a0ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3dc0bb_8c809c15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-26T15:43:06Z",
+      "side": 1,
+      "message": "I\u0027ll upload a new CL for this to continue the discussion.",
+      "parentUuid": "650d3a93_ffe5ce31",
+      "revId": "5493bf5340cc68a65fd697181cf97be85ca0a0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
