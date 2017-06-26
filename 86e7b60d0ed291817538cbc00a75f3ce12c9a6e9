@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12534978_686bb022",
+        "filename": "third_party/WebKit/Source/core/editing/WebSubstringUtil.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-06-26T17:54:22Z",
+      "side": 1,
+      "message": "Changed some |camelCase| names to the Chromium style in this file.\nHope that it is OK.",
+      "revId": "86e7b60d0ed291817538cbc00a75f3ce12c9a6e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6beabf_250f0e5c",
+        "filename": "third_party/WebKit/Source/core/editing/WebSubstringUtil.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-06-26T17:54:22Z",
+      "side": 1,
+      "message": "Range::BoundingBox() is implemented via ComputeTextRect() function, and it looks like we don\u0027t need to create a Range object anymore.",
+      "revId": "86e7b60d0ed291817538cbc00a75f3ce12c9a6e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
