@@ -218,6 +218,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   // The same as finalResponseMIMEType() but fallbacks to "text/xml" if
   // finalResponseMIMEType() returns an empty string.
   AtomicString FinalResponseMIMETypeWithFallback() const;
+  AtomicString FinalResponseCharset() const;
   bool ResponseIsXML() const;
   bool ResponseIsHTML() const;
 
@@ -300,7 +301,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   State state_;
 
   ResourceResponse response_;
-  String final_response_charset_;
+  String override_response_charset_;
 
   std::unique_ptr<TextResourceDecoder> decoder_;
 
