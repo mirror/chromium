@@ -16,6 +16,7 @@
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/dom_distiller/tab_utils.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/media/router/media_router_dialog_controller.h"  // nogncheck
 #include "chrome/browser/media/router/media_router_feature.h"
@@ -153,6 +154,7 @@ using content::NavigationEntry;
 using content::OpenURLParams;
 using content::Referrer;
 using content::WebContents;
+using feature_engagement_tracker::NewTabFeatureEngagementTracker;
 
 namespace chrome {
 namespace {
@@ -587,6 +589,9 @@ void NewTab(Browser* browser) {
   // user-initiated commands.
   UMA_HISTOGRAM_ENUMERATION("Tab.NewTab", TabStripModel::NEW_TAB_COMMAND,
                             TabStripModel::NEW_TAB_ENUM_COUNT);
+  NewTabFeatureEngagementTracker* tracker =
+      NewTabFeatureEngagementTracker::Get();
+  tracker->NotifyNewTab();
 
   if (browser->is_type_tabbed()) {
     AddTabAt(browser, GURL(), -1, true);
