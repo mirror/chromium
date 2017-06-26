@@ -68,6 +68,30 @@
       "revId": "8809ffc88bf01e83675fd493c57bf6604e908c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e562463d_eee3aabd",
+        "filename": "content/renderer/render_widget.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-26T15:00:17Z",
+      "side": 1,
+      "message": "It is not always populated. Specifically it isn\u0027t populated on RenderViews. I guess we could adjust the renderer.mojom to pass a Widget\u0026 in on the CreateView/CreateFrame methods. I tried it and it started to be non-trivial.\n\nWDYT?",
+      "parentUuid": "ab648fdb_f3e79520",
+      "range": {
+        "startLine": 453,
+        "startChar": 50,
+        "endLine": 453,
+        "endChar": 60
+      },
+      "revId": "8809ffc88bf01e83675fd493c57bf6604e908c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
