@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b02595d_3ac29df9",
+        "filename": "cc/ipc/copy_output_request_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T17:22:24Z",
+      "side": 1,
+      "message": "Rather than forcing the |callback| to be a copyable type, which this code does by taking a const\u0026 and copying it into the |impl|, you could take the |callback| by value, since this code is taking ownership of it, and then std::move() would be applicable here.",
+      "parentUuid": "2dfab747_fe27a173",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66e4af1c_e195255c",
         "filename": "cc/ipc/struct_traits_unittest.cc",
         "patchSetId": 7
