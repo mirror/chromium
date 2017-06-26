@@ -203,7 +203,6 @@
     busy,
     collapsed,
     default,
-    disabled,
     editable,
     expanded,
     focusable,
@@ -217,7 +216,6 @@
     multiselectable,
     offscreen,
     protected,
-    readOnly,
     required,
     richlyEditable,
     selectable,
@@ -643,9 +641,6 @@
     // The value of the aria-invalid attribute, indicating the error type.
     DOMString? ariaInvalidValue;
 
-    // The value of the aria-readonly attribute, if applicable.
-    boolean? ariaReadonly;
-
     // The CSS display attribute for this node, if applicable.
     DOMString? display;
 
@@ -655,6 +650,11 @@
     // The language code for this subtree.
     DOMString? language;
 
+    // State describing checkbox or radio button:
+    // 'enabled' | 'disabled' | 'readOnly' | undefined (if not a control)
+    DOMString? controlMode;
+
+    // The RGBA foreground color of this subtree, as an integer.
     // Tri-state describing checkbox or radio button:
     // 'false' | 'true' | 'mixed'
     DOMString? checked;
