@@ -10,6 +10,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutBoxModelObject.h"
+#include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/RootScrollerController.h"
@@ -74,11 +75,11 @@ bool IsEffective(const LayoutBox& box) {
          &box.GetDocument().GetRootScrollerController().EffectiveRootScroller();
 }
 
-bool IsGlobal(const LayoutBox& box) {
-  if (!box.GetNode() || !box.GetNode()->GetDocument().GetPage())
+bool IsGlobal(const LayoutObject& object) {
+  if (!object.GetNode() || !object.GetNode()->GetDocument().GetPage())
     return false;
 
-  return box.GetNode() == box.GetDocument()
+  return object.GetNode() == object.GetDocument()
                               .GetPage()
                               ->GlobalRootScrollerController()
                               .GlobalRootScroller();

@@ -228,6 +228,7 @@ SmoothScrollSequencer* PaintLayerScrollableArea::GetSmoothScrollSequencer()
 }
 
 GraphicsLayer* PaintLayerScrollableArea::LayerForScrolling() const {
+  DisableCompositingQueryAsserts disabler;
   return Layer()->HasCompositedLayerMapping()
              ? Layer()->GetCompositedLayerMapping()->ScrollingContentsLayer()
              : 0;

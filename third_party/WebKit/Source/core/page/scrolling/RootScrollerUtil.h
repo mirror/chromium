@@ -8,6 +8,7 @@
 namespace blink {
 
 class LayoutBox;
+class LayoutObject;
 class Node;
 class PaintLayer;
 class ScrollableArea;
@@ -29,7 +30,7 @@ PaintLayer* PaintLayerForRootScroller(const Node*);
 // always establishes a PaintLayer.
 bool IsEffective(const LayoutBox&);
 
-bool IsGlobal(const LayoutBox&);
+bool IsGlobal(const LayoutObject&);
 bool IsGlobal(const PaintLayer&);
 
 }  // namespace RootScrollerUtil

@@ -18,6 +18,7 @@
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ViewportScrollCallback.h"
 #include "core/paint/PaintLayer.h"
+#include "platform/graphics/GraphicsLayer.h"
 #include "platform/scroll/ScrollableArea.h"
 
 namespace blink {
