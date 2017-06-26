@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94143269_4cb36880",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-26T04:27:25Z",
+      "side": 1,
+      "message": "why not have this PropertyRegistration default to nullptr too rather than adding nullptr passes to heaps of sub classes?",
+      "revId": "c5c5d2ddf9cab8a253c2132faebb280b743c9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad2210f_4a53a8e1",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-26T04:27:25Z",
+      "side": 1,
+      "message": "perhaps CreateInterpolationTypesForCSSSyntax? at first this read to me like it should be moved to InterpolationTypesMap.",
+      "revId": "c5c5d2ddf9cab8a253c2132faebb280b743c9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a96831b_710e9ae9",
+        "filename": "third_party/WebKit/Source/core/css/PropertyRegistration.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-26T04:27:25Z",
+      "side": 1,
+      "message": "yas removing duplicate code",
+      "revId": "c5c5d2ddf9cab8a253c2132faebb280b743c9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
