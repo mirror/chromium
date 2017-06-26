@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c273c70_fa73591a",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 0,
+      "message": "where is this now handled?",
+      "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b285e71b_b6f42d62",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 0,
+      "message": "This comment should still be here and SurfaceObserver overrides should be grouped.",
+      "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

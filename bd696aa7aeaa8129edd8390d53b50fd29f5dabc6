@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb86ca41_dc45113f",
+        "filename": "components/exo/notification_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "not sure it was correct to destroy the window here. Can we leave the window intact and not add the DestroyHostWindow function?",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83cb164_98fee33d",
+        "filename": "components/exo/pointer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "Change this to the actual name of class we\u0027re overriding instead of SurfaceTreeHost",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adef4db8_7f816f80",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "hm, is this always going to be the same as root surface contents size?",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01dc6f09_bc2147d3",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c637762e_e16f136c",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "This should still say SurfaceDelegate",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3da5c1b_eff0e90e",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "if this doesn\u0027t do anything, is it necessary to inherit SurfaceObserver?",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039b1d6d_843c3ec9",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "nit: remove root_surface here and require the derived class to call SetRootSurface if needed",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4433b88b_4645a078",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "nit: add short comment explaining this function",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864761ed_6664fb6e",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "remove this if possible. see my other comment on the use of it.",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183c3f21_db8a00a6",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "nit: short comment above these functions would be nice",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ce6203_1ae2d56a",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T17:44:37Z",
+      "side": 1,
+      "message": "nit: const aura::Window* host_window() const ...",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
