@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "462d2e3b_de97153d",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-26T22:56:40Z",
+      "side": 1,
+      "message": "Not sure what you are asking here/what you want to make moveable? Or was this comment supposed to be in the RequestAsReply method below?",
+      "parentUuid": "7baa38b9_ceeb8218",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79d476b0_cd1bd1fd",
         "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
         "patchSetId": 9
@@ -53,6 +77,30 @@
       "writtenOn": "2017-06-23T17:30:32Z",
       "side": 1,
       "message": "make bug?",
+      "range": {
+        "startLine": 332,
+        "startChar": 20,
+        "endLine": 332,
+        "endChar": 23
+      },
+      "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee58115_713ba20c",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-26T22:56:40Z",
+      "side": 1,
+      "message": "I will if you want me to, but I\u0027m not sure it\u0027s worth the effort to do so at this point.\n\nI can see two values in filing bugs for TODOs:\n1) to make sure we don\u0027t forget about particular issues before shipping something. This wouldn\u0027t apply in this case (and for most TODOs at this point) since there are plenty of existing layout tests that would fail if we don\u0027t address this TODO.\n\n2) to better keep track of remaining work for planning purposes. I suppose it might make sense for this reason to file bugs for TODOs like this, but it still doesn\u0027t seem particularly useful unless both more than just me is working on this, and we don\u0027t only file bugs for TODOs in code, but also more generally chop up the work needed to completely migrate to mojo blobs in individual tasks/bugs. Which seems like a lot of work, not necessarily that useful at this point in time. Yes, as soon as more than just me is working on this it might make a lot of sense to file bugs (I suppose filing bugs might magically attract other people to work on this stuff, but that seems unlikely), but I\u0027m not sure what the benefit of filing bugs would be otherwise at this point.\n\nWhat do you think?",
+      "parentUuid": "64de3057_335dbe5d",
       "range": {
         "startLine": 332,
         "startChar": 20,
