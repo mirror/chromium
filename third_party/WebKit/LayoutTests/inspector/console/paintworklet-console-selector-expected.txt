@@ -1,0 +1,7 @@
+CONSOLE ERROR: line 1: Uncaught SyntaxError: Unexpected identifier
+Tests console execution context selector.
+
+Console context selector:
+* top 
+  ____PaintWorkletGlobalScope 
+

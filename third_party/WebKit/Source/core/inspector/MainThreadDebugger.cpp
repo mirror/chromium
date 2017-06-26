@@ -139,7 +139,8 @@ void MainThreadDebugger::DidClearContextsForFrame(LocalFrame* frame) {
 
 void MainThreadDebugger::ContextCreated(ScriptState* script_state,
                                         LocalFrame* frame,
-                                        SecurityOrigin* origin) {
+                                        SecurityOrigin* origin,
+                                        String override_human_readable_name) {
   DCHECK(IsMainThread());
   v8::HandleScope handles(script_state->GetIsolate());
   DOMWrapperWorld& world = script_state->World();
@@ -153,6 +154,8 @@ void MainThreadDebugger::ContextCreated(ScriptState* script_state,
   String human_readable_name = world.IsIsolatedWorld()
                                    ? world.IsolatedWorldHumanReadableName()
                                    : String();
+  if (override_human_readable_name.length() != 0)
+    human_readable_name.swap(override_human_readable_name);
   String origin_string = origin ? origin->ToRawString() : String();
   v8_inspector::V8ContextInfo context_info(
       script_state->GetContext(), ContextGroupId(frame),
