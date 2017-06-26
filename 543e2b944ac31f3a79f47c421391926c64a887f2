@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa366287_888cdce6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-26T22:05:08Z",
+      "side": 1,
+      "message": "Also add a comment about Reschedule getting called only for entries in AVAILABLE/ACTIVE states.",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "543e2b944ac31f3a79f47c421391926c64a887f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8bddcd_e6ef3b5d",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-26T22:05:08Z",
+      "side": 1,
+      "message": "nit: scheduling_candidates.",
+      "range": {
+        "startLine": 818,
+        "startChar": 19,
+        "endLine": 818,
+        "endChar": 38
+      },
+      "revId": "543e2b944ac31f3a79f47c421391926c64a887f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e8a921_3f742367",
+        "filename": "components/download/internal/scheduler/scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-26T22:05:08Z",
+      "side": 1,
+      "message": "Add a comment : Caller is required to send only available or active entries.",
+      "revId": "543e2b944ac31f3a79f47c421391926c64a887f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
