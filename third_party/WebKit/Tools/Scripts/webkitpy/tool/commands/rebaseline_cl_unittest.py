@@ -188,7 +188,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
             'INFO: Aborted: no try jobs and --no-trigger-jobs passed.\n',
         ])
 
-    def test_execute_one_missing_build_(self):
+    def test_execute_one_missing_build(self):
         builds = {
             Build('MOCK Try Win', 5000): TryJobStatus('COMPLETED', 'FAILURE'),
             Build('MOCK Try Mac', 4000): TryJobStatus('COMPLETED', 'FAILURE'),
@@ -207,6 +207,57 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
             'INFO:   MOCK Try Linux\n',
             'INFO: Once all pending try jobs have finished, please re-run\n'
             'webkit-patch rebaseline-cl to fetch new baselines.\n',
+        ])
+
+    def test_execute_with_unfinished_jobs(self):
+        builds = {
+            Build('MOCK Try Win', 5000): TryJobStatus('COMPLETED', 'FAILURE'),
+            Build('MOCK Try Mac', 4000): TryJobStatus('STARTED'),
+            Build('MOCK Try Linux', 6000): TryJobStatus('SCHEDULED'),
+        }
+        git_cl = GitCL(self.tool)
+        git_cl.get_issue_number = lambda: '11112222'
+        git_cl.latest_try_jobs = lambda _: builds
+        self.command.git_cl = lambda: git_cl
+        exit_code = self.command.execute(self.command_options(), [], self.tool)
+        self.assertEqual(exit_code, 1)
+        self.assertLog([
+            'INFO: Finished try jobs:\n',
+            'INFO:   MOCK Try Win\n',
+            'INFO: Scheduled or started try jobs:\n',
+            'INFO:   MOCK Try Linux\n',
+            'INFO:   MOCK Try Mac\n',
+            'INFO: There are some builders with no results:\n',
+            'INFO:   MOCK Try Linux\n',
+            'INFO:   MOCK Try Mac\n',
+            'INFO: Would you like to try to fill in missing results with\n'
+            'available results? This assumes that layout test results\n'
+            'for the platforms with missing results are the same as\n'
+            'results on other platforms.\n',
+            'INFO: Aborting.\n',
+        ])
+
+    def test_execute_with_canceled_job(self):
+        builds = {
+            Build('MOCK Try Win', 5000): TryJobStatus('COMPLETED', 'FAILURE'),
+            Build('MOCK Try Mac', 4000): TryJobStatus('COMPLETED', 'FAILURE'),
+            Build('MOCK Try Linux', 6000): TryJobStatus('COMPLETED', 'CANCELED'),
+        }
+        git_cl = GitCL(self.tool)
+        git_cl.get_issue_number = lambda: '11112222'
+        git_cl.latest_try_jobs = lambda _: builds
+        self.command.git_cl = lambda: git_cl
+        exit_code = self.command.execute(self.command_options(), [], self.tool)
+        self.assertEqual(exit_code, 1)
+        self.assertLog([
+            'INFO: Finished try jobs found for all try bots.\n',
+            'INFO: There are some builders with no results:\n',
+            'INFO:   MOCK Try Linux\n',
+            'INFO: Would you like to try to fill in missing results with\n'
+            'available results? This assumes that layout test results\n'
+            'for the platforms with missing results are the same as\n'
+            'results on other platforms.\n',
+            'INFO: Aborting.\n',
         ])
 
     def test_execute_with_no_trigger_jobs_option(self):
@@ -250,9 +301,9 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         # In this example, one test failed both with and without the patch
         # in the try job, so it is not rebaselined.
         builds = {
-            Build('MOCK Try Win', 5000): TryJobStatus('COMPLETED', 'FAILURE'),
-            Build('MOCK Try Mac', 4000): TryJobStatus('COMPLETED', 'FAILURE'),
-            Build('MOCK Try Linux', 6000): TryJobStatus('COMPLETED', 'FAILURE'),
+            Build('MOCK Try Win', 5000),
+            Build('MOCK Try Mac', 4000),
+            Build('MOCK Try Linux', 6000),
         }
         for build in builds:
             self.tool.buildbot.set_retry_sumary_json(build, json.dumps({
