@@ -71,6 +71,11 @@ class PDF {
   static void SetCrashData(const InstanceHandle& instance,
                            const char* pdf_url,
                            const char* top_level_url);
+  static void SelectionChanged(const InstanceHandle& instance,
+                               PP_Point left,
+                               int32_t left_height,
+                               PP_Point right,
+                               int32_t right_height);
 };
 
 }  // namespace pp

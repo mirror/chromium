@@ -51,3 +51,13 @@ void ChromePDFWebContentsHelperClient::OnSaveURL(
     content::WebContents* contents) {
   RecordDownloadSource(DOWNLOAD_INITIATED_BY_PDF_SAVE);
 }
+
+void ChromePDFWebContentsHelperClient::OnSelectionChanged(
+    content::WebContents* contents,
+    const gfx::Point& left,
+    int32_t left_height,
+    const gfx::Point& right,
+    int32_t right_height) {
+  fprintf(stderr, "Selection %d,%d x %d -> %d,%d x %d\n", left.x(), left.y(),
+          left_height, right.x(), right.y(), right_height);
+}
