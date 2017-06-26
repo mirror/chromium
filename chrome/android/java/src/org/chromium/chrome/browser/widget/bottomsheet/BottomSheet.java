@@ -54,6 +54,7 @@ import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController.ContentType;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.content.browser.BrowserStartupController;
+import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.ui.UiUtils;
 
@@ -228,6 +229,9 @@ public class BottomSheet
 
     /** Whether the sheet is currently open. */
     private boolean mIsSheetOpen;
+
+    /** If the base page text controls have been cleared. */
+    private boolean mDidClearTextControls;
 
     /** The activity displaying the bottom sheet. */
     private ChromeActivity mActivity;
@@ -931,6 +935,7 @@ public class BottomSheet
         if (mIsSheetOpen) return;
 
         mIsSheetOpen = true;
+        setBasePageTextControlVisibility(false);
         for (BottomSheetObserver o : mObservers) o.onSheetOpened();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_opened));
         mActivity.addViewObscuringAllTabs(this);
@@ -943,6 +948,7 @@ public class BottomSheet
         if (!mIsSheetOpen) return;
 
         mIsSheetOpen = false;
+        setBasePageTextControlVisibility(true);
         for (BottomSheetObserver o : mObservers) o.onSheetClosed();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_closed));
         clearFocus();
@@ -1071,6 +1077,28 @@ public class BottomSheet
 
         setTranslationY(mContainerHeight - offset);
         sendOffsetChangeEvents();
+    }
+
+    /**
+     * Set the visibility of the base page text selection controls. This will also attempt to
+     * remove focus from the base page to clear any open controls.
+     * @param visible If the text controls are visible.
+     */
+    private void setBasePageTextControlVisibility(boolean visible) {
+        if (mActivity == null || mActivity.getActivityTab() == null) return;
+
+        ContentViewCore baseContentView = mActivity.getActivityTab().getContentViewCore();
+        if (baseContentView == null) return;
+        // If the sheet does not have focus or isn't open, return.
+        if (isSheetOpen() && mDidClearTextControls && !visible) return;
+        if (!isSheetOpen() && !mDidClearTextControls && visible) return;
+
+        mDidClearTextControls = !visible;
+
+        if (!visible) {
+            baseContentView.getContainerView().clearFocus();
+        }
+        baseContentView.updateTextSelectionUI(visible);
     }
 
     /**
