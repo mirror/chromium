@@ -69,6 +69,24 @@
       "revId": "baf1471c965586c1fc40eab25eb565196801063f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0524b2d8_21ed4f85",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-26T19:40:26Z",
+      "side": 1,
+      "message": "\u003e I made the change. Should this case be tested?\n\nI think the tests we have (including your new one) should be sufficient here; what do you think?\n\n\u003e Also, instead of throwing an error, if opener_browser is set, can we enforce that browser \u003d\u003d opener_browser by setting browser to opener_browser?\n\nI don\u0027t think we should do that.  It would ensure that we don\u0027t have an opener from a different browser, but it\u0027s unintuitive to the developer.  I think it\u0027s more clear to let the developer know the error and have them fix it to be what they intend, rather than guessing at the intent.",
+      "parentUuid": "90ecdf01_a43bf8d9",
+      "revId": "baf1471c965586c1fc40eab25eb565196801063f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

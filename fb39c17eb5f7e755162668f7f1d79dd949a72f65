@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1d2f1dd_caf167cc",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-26T19:40:26Z",
+      "side": 1,
+      "message": "We still have the problem described in https://chromium-review.googlesource.com/c/544520/5/chrome%252Fbrowser%252Fextensions%252Fextension_tab_util.cc#239, right?",
+      "revId": "fb39c17eb5f7e755162668f7f1d79dd949a72f65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
