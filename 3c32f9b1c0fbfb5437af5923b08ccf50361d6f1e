@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "c89d7595_e9a02160",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-26T18:32:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure how it\u0027s more flexible. If it needed to be separate for testing or something, I could see that, but that doesn\u0027t seem to be the case. What do you need the flexibility for?\n\nAnd you could just call Observe(nullptr) -- you don\u0027t need to make ResetWebContents() public.",
+      "parentUuid": "f3553172_6f9a5aad",
+      "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "374695a9_21879adc",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
         "patchSetId": 5
