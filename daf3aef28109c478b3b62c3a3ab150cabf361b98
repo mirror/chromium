@@ -22,6 +22,30 @@
       "revId": "daf3aef28109c478b3b62c3a3ab150cabf361b98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79f4326_9a1d14cd",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-26T16:43:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "17272127_e86a1934",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 11
+      },
+      "revId": "daf3aef28109c478b3b62c3a3ab150cabf361b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

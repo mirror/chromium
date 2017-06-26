@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdafce01_b7a44fd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-26T16:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a828d1fb_cd656c2d",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c78eff98_25db0518",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-23T15:29:02Z",
       "side": 1,
       "message": "Do you need a separate class for this, or can FullscreenToolbarAnimationController be the WebContentsObserver itself? See https://cs.chromium.org/chromium/src/content/public/browser/web_contents_observer.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d470.",
+      "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3553172_6f9a5aad",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-26T16:43:58Z",
+      "side": 1,
+      "message": "My original solution made FullscreenToolbarAnimationController to be a WebContentsObserver, but I find that it\u0027s more flexible if we have a separate class since FullscreenToolbarAnimationController keeps changing the WebContents that it wants to observe. I also can\u0027t stop it from observing a WebContents object without exposing the private ResetWebContents() method.",
+      "parentUuid": "c78eff98_25db0518",
       "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1d2405_09175c98",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-26T16:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "374695a9_21879adc",
+      "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b91da4e1_0e022e13",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-26T16:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dab52116_8795bc49",
+      "range": {
+        "startLine": 100,
+        "startChar": 21,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05d298ca_b669a322",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h",
         "patchSetId": 5
@@ -96,6 +180,24 @@
       "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0183fd1d_1286443a",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-26T16:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05d298ca_b669a322",
+      "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
