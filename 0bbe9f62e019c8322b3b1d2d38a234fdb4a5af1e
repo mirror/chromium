@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9406e20_8178c91f",
+        "filename": "ios/chrome/browser/ui/ntp/most_visited_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-26T09:39:38Z",
+      "side": 1,
+      "message": "Is there a need to strongify here? This callback should run on the main thread (right?), so if weakSelf is nil, the block will be:\n\nif (URL \u003d\u003d [nil URL]) {\n  [nil setImage:favicon];\n}\n\nWhich should be OK.",
+      "range": {
+        "startLine": 141,
+        "startChar": 43,
+        "endLine": 141,
+        "endChar": 53
+      },
+      "revId": "0bbe9f62e019c8322b3b1d2d38a234fdb4a5af1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07039f97_816f22dd",
+        "filename": "ios/chrome/browser/ui/ntp/most_visited_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-26T09:39:38Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 151,
+        "startChar": 14,
+        "endLine": 151,
+        "endChar": 29
+      },
+      "revId": "0bbe9f62e019c8322b3b1d2d38a234fdb4a5af1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
