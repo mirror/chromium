@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34fbce70_cbea35b2",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T23:49:08Z",
+      "side": 1,
+      "message": "I wonder if it makes sense to have a transition table here.  Something like:\n\n\u003e\u003eSNIP\nstd::map\u003cstd::pair\u003cUsageType,UsageType\u003e,UsageType\u003e table \u003d {\n  {{UNUSED, STARTED}, STARTED},\n  {{UNUSED, OFFLINE}, OFFLINE},\n  {{STARTED, OFFLINE}, OFFLINE},\n  {{ONLINE, OFFLINE}, MIXED},\n  {{UNUSED, ONLINE}, ONLINE},\n  {{STARTED, ONLINE}, ONLINE},\n  {{OFFLINE, ONLINE}, MIXED},\n};\n\nif (auto iter \u003d table.find(std::make_pair(accumulated_usage_type_, sample))) {\n  accumulated_usage_type_ \u003d iter-\u003esecond;\n  return true;\n}\n\nreturn false;\nSNIP\n\nNow that I look at it, if the \"if\" statements are preferred, they could be simplified:\nif (ac \u003d\u003d MIXED || ac \u003d\u003d sample) return false;\nif (ac \u003d\u003d UNUSED || ac \u003d\u003d STARTED) {\n  ac \u003d sample;\n  return true;\n}\nif (ac \u003d\u003d OFFLINE \u0026\u0026 sample \u003d\u003d ONLINE || ac \u003d\u003d ONLINE \u0026\u0026 sample \u003d\u003d OFFLINE) {\n  ac \u003d MIXED;\n  return true;\n}\nreturn false;",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d56d06d_2e547247",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T23:49:08Z",
+      "side": 1,
+      "message": "might it make sense to just store timestamp_.LocalMidnight(), and call it sample_end_timestamp_ or similar?",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bab7a7c_d73ddd95",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T23:49:08Z",
+      "side": 1,
+      "message": "I think that this calculation undercounts unused_days_count, by resetting improperly in the time interval between timestamp_.LocalMidnight() + 24h -\u003e timestamp + 48h.  (this also generalizes to undercounting unused days by 1 in longer intervals). We can record one unused day, but days_in_between \u003d\u003d 0 because |InDays| rounds down.\n\nIt might be clearer to remark that InDays() rounds down, and maybe even go through a couple sample calculations here:\n* If now is the same day as timestamp_, we have already returned\n* Now is a different day but less than 24h past timestamp_, now - timestamp.InDays() - 1 \u003d\u003d -1\n* Now is \u003e24h past timestamp_ but less than 24h past timestamp.LocalMidnight(), now - timestamp.InDays() \u003d\u003d 0.  This current day is not recorded because it\u0027s not over yet.\n* Now is \u003e24h past timestamp.LocalMidnight() but less than 48h past timestamp.",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 21
+      },
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38e76c2_3a3b2e58",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T23:49:08Z",
+      "side": 1,
+      "message": "This will not count starts of Chrome that never load native.",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ed7b65_f905bb7d",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T23:49:08Z",
+      "side": 1,
+      "message": "nit: document the time that |timestamp_| represents.",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4108148_254d6c34",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T23:49:08Z",
+      "side": 1,
+      "message": "s/overlives/outlives",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3abca2_15a30e9a",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T23:49:08Z",
+      "side": 1,
+      "message": "can you name it TransitionOfflineToOnline (and similar below) for easier debugging from red bots?",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
