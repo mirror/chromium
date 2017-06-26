@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed4aed55_7e32f1a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T23:53:35Z",
+      "side": 1,
+      "message": "I think that the CL description should contain information about the change (and maybe be tagged [Offline Pages])\n\nAlso, blank line between title and body of commit message.",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34fbce70_cbea35b2",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
         "patchSetId": 4
