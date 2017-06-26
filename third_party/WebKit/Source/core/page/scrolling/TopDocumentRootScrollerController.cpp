@@ -18,6 +18,7 @@
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ViewportScrollCallback.h"
 #include "core/paint/PaintLayer.h"
+#include "platform/graphics/GraphicsLayer.h"
 #include "platform/scroll/ScrollableArea.h"
 
 namespace blink {
@@ -48,6 +49,11 @@ void TopDocumentRootScrollerController::DidResizeViewport() {
   // Top controls can resize the viewport without invalidating compositing or
   // paint so we need to do that manually here.
   GlobalRootScroller()->SetNeedsCompositingUpdate();
+
+  if (ScrollableArea* area = RootScrollerArea()) {
+    if (GraphicsLayer* layer = area->LayerForScrolling())
+      layer->SetDisplayItemsUncached();
+  }
 
   if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled()) {
     if (GlobalRootScroller()->GetLayoutObject())

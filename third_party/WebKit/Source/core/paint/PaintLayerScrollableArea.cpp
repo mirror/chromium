@@ -228,6 +228,7 @@ SmoothScrollSequencer* PaintLayerScrollableArea::GetSmoothScrollSequencer()
 }
 
 GraphicsLayer* PaintLayerScrollableArea::LayerForScrolling() const {
+  DisableCompositingQueryAsserts disabler;
   return Layer()->HasCompositedLayerMapping()
              ? Layer()->GetCompositedLayerMapping()->ScrollingContentsLayer()
              : 0;
@@ -940,6 +941,15 @@ void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
 }
 
 void PaintLayerScrollableArea::DidChangeGlobalRootScroller() {
+  // TODO(bokan): Why is this needed? Shouldn't a compositing update as marked
+  // below cause an invalidation? What's the right way to do this? Without it I
+  // get errors in the log: [ERROR:PaintController.cpp(252)] Visual rect changed
+  // without invalidation: "Scrolling Contents Layer" old="0,0 412x612" new="0,0
+  // 412x660"
+  Box().SetDisplayItemsUncached();
+  if (LayerForScrolling())
+    LayerForScrolling()->SetDisplayItemsUncached();
+
   // Being the global root scroller will affect clipping size due to browser
   // controls behavior so we need to update compositing based on updated clip
   // geometry.

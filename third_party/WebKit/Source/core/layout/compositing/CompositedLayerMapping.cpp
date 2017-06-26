@@ -1472,6 +1472,15 @@ void CompositedLayerMapping::UpdateScrollingLayerGeometry(
 
   IntSize scroll_size(layout_box.PixelSnappedScrollWidth(),
                       layout_box.PixelSnappedScrollHeight());
+
+  bool is_root_scroller = layout_box.GetFrame()
+                              ->GetPage()
+                              ->GlobalRootScrollerController()
+                              .GlobalRootScroller() == layout_box.GetNode();
+
+  if (is_root_scroller)
+    scroll_size.ClampToMinimumSize(overflow_clip_rect.Size());
+
   if (overflow_clip_rect_offset_changed)
     scrolling_contents_layer_->SetNeedsDisplay();
 
