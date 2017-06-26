@@ -72,6 +72,29 @@
     },
     {
       "key": {
+        "uuid": "81204a71_f62c39a7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T09:48:52Z",
+      "side": 1,
+      "message": "This feels like a layering violation to me, the scheduler/base shouldn\u0027t really know about scheduler/renderer concepts.",
+      "range": {
+        "startLine": 99,
+        "startChar": 13,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2489d82_9caf9aa7",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 1
@@ -112,6 +135,29 @@
         "startChar": 24,
         "endLine": 143,
         "endChar": 38
+      },
+      "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedcfce3_36d3bbae",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T09:48:52Z",
+      "side": 1,
+      "message": "Perhaps members in this struct should be const, because the spec is supposed to be immutable.",
+      "range": {
+        "startLine": 188,
+        "startChar": 4,
+        "endLine": 188,
+        "endChar": 14
       },
       "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
