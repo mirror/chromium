@@ -1609,7 +1609,7 @@ crbug.com/474759 fast/writing-mode/vertical-rl-replaced-selection.html [ Failure
 
 crbug.com/353746 virtual/android/fullscreen/video-specified-size.html [ Failure Pass ]
 
-crbug.com/527270 accessibility/name-calc-img.html [ Failure Pass Timeout ]
+crbug.com/527270 [ Mac10.12 ] accessibility/name-calc-img.html [ Failure Pass Timeout ]
 
 # Win7 does not support the needed DirectWrite APIs for font fallback
 crbug.com/459056 [ Win7 ] fast/text/font-fallback-win.html [ Failure ]
