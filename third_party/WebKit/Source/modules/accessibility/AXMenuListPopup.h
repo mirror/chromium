@@ -42,7 +42,7 @@ class AXMenuListPopup final : public AXMockObject {
     return new AXMenuListPopup(ax_object_cache);
   }
 
-  bool IsEnabled() const override;
+  AXControlMode ControlMode() const override;
   bool IsOffScreen() const override;
 
   void DidUpdateActiveOption(int option_index, bool fire_notifications = true);

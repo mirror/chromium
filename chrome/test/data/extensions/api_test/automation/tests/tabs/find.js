@@ -38,13 +38,12 @@ function initializeNodes(rootNode) {
   okButton = rootNode.children[2];
   assertEq(RoleType.BUTTON, okButton.role);
   assertEq('Ok', okButton.name);
-  assertTrue(StateType.DISABLED in okButton.state);
-  assertTrue(okButton.state.disabled);
+  assertEq('disabled', okButton.controlMode);
 
   cancelButton = rootNode.children[3];
   assertEq(RoleType.BUTTON, cancelButton.role);
   assertEq('Cancel', cancelButton.name);
-  assertFalse(StateType.DISABLED in cancelButton.state);
+  assertEq('enabled', cancelButton.controlMode);
 }
 
 var allTests = [
@@ -87,18 +86,22 @@ var allTests = [
     // Find disabled buttons.
     assertEq(
         okButton,
-        rootNode.find({role: RoleType.BUTTON, state: {disabled: true}}));
+        rootNode.find({role: RoleType.BUTTON,
+            attributes: {controlMode: "disabled"}}));
     assertEq(
         [okButton],
-        rootNode.findAll({role: RoleType.BUTTON, state: {disabled: true}}));
+        rootNode.findAll({role: RoleType.BUTTON,
+            attributes: {controlMode: "disabled"}}));
 
     // Find enabled buttons.
     assertEq(
         cancelButton,
-        rootNode.find({role: RoleType.BUTTON, state: {disabled: false}}));
+        rootNode.find({role: RoleType.BUTTON,
+            attributes: {controlMode: "enabled"}}));
     assertEq(
         [cancelButton],
-        rootNode.findAll({role: RoleType.BUTTON, state: {disabled: false}}));
+        rootNode.findAll({role: RoleType.BUTTON,
+            attributes: {controlMode: "enabled"}}));
     chrome.test.succeed();
   },
 
