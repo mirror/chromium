@@ -220,13 +220,13 @@ unpacker.Decompressor.prototype.processMessage = function(data, operation,
 
     case unpacker.request.Operation.CONSOLE_LOG:
     case unpacker.request.Operation.CONSOLE_DEBUG:
-      var src_file = data[unpacker.request.Key.SRC_FILE];
-      var src_line = data[unpacker.request.Key.SRC_LINE];
-      var src_func = data[unpacker.request.Key.SRC_FUNC];
+      var srcFile = data[unpacker.request.Key.SRC_FILE];
+      var srcLine = data[unpacker.request.Key.SRC_LINE];
+      var srcFunc = data[unpacker.request.Key.SRC_FUNC];
       var msg = data[unpacker.request.Key.MESSAGE];
       var log = operation == unpacker.request.Operation.CONSOLE_LOG ?
                 console.log : console.debug;
-      log(src_file + ':' + src_func + ':' + src_line + ': ' + msg);
+      log(srcFile + ':' + srcFunc + ':' + srcLine + ': ' + msg);
       break;
 
     default:
@@ -245,19 +245,19 @@ unpacker.Decompressor.prototype.processMessage = function(data, operation,
  */
 unpacker.Decompressor.prototype.readChunk_ = function(data, requestId) {
   // Offset and length are received as strings. See request.js.
-  var offset_str = data[unpacker.request.Key.OFFSET];
-  var length_str = data[unpacker.request.Key.LENGTH];
+  var offsetStr = data[unpacker.request.Key.OFFSET];
+  var lengthStr = data[unpacker.request.Key.LENGTH];
 
   // Explicit check if offset is undefined as it can be 0.
-  console.assert(offset_str !== undefined && !isNaN(offset_str) &&
-                     Number(offset_str) >= 0 &&
-                     Number(offset_str) < this.blob_.size,
+  console.assert(offsetStr !== undefined && !isNaN(offsetStr) &&
+                     Number(offsetStr) >= 0 &&
+                     Number(offsetStr) < this.blob_.size,
                  'Invalid offset.');
-  console.assert(length_str && !isNaN(length_str) && Number(length_str) > 0,
+  console.assert(lengthStr && !isNaN(lengthStr) && Number(lengthStr) > 0,
                  'Invalid length.');
 
-  var offset = Number(offset_str);
-  var length = Math.min(this.blob_.size - offset, Number(length_str));
+  var offset = Number(offsetStr);
+  var length = Math.min(this.blob_.size - offset, Number(lengthStr));
 
   // Read a chunk from offset to offset + length.
   var blob = this.blob_.slice(offset, offset + length);

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPRESSSOR_ARCHIVE_H_
-#define COMPRESSSOR_ARCHIVE_H_
+#ifndef CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSSOR_ARCHIVE_H_
+#define CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSSOR_ARCHIVE_H_
 
 #include "compressor_io_javascript_stream.h"
 
@@ -59,4 +59,4 @@ class CompressorArchive {
   std::string error_message_;
 };
 
-#endif  // COMPRESSSOR_ARCHIVE_H_
+#endif  // CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_COMPRESSSOR_ARCHIVE_H_

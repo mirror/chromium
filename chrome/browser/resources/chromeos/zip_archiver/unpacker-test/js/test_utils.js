@@ -7,7 +7,7 @@
 /**
  * Utility functions for all tests.
  */
-var test_utils = {
+var testUtils = {
   /**
    * Forces failure in tests. Should be called only from 'beforeEach',
    * 'afterEach' and 'it'. Useful to force failures in promises.

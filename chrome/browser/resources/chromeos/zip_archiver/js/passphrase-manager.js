@@ -23,7 +23,7 @@ unpacker.PassphraseManager = function(initPassphrase) {
 /**
  * Requests a passphrase from the user. If a passphrase was previously
  * remembered, then tries it first. Otherwise shows a passphrase dialog.
- * @return {!Promise.<string>}
+ * @return {!Promise<string>}
  */
 unpacker.PassphraseManager.prototype.getPassphrase = function() {
   return new Promise(function(fulfill, reject) {
@@ -62,4 +62,4 @@ unpacker.PassphraseManager.prototype.getPassphrase = function() {
               }.bind(this);
         }.bind(this));
   }.bind(this));
-}
+};

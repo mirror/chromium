@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef JAVASCRIPT_MESSAGE_SENDER_INTERFACE_H_
-#define JAVASCRIPT_MESSAGE_SENDER_INTERFACE_H_
+#ifndef CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_JAVASCRIPT_MESSAGE_SENDER_INTERFACE_H_
+#define CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_JAVASCRIPT_MESSAGE_SENDER_INTERFACE_H_
 
 #include <string>
 
@@ -68,4 +68,4 @@ class JavaScriptMessageSenderInterface {
 #define CONSOLE_LOG(fsid, rid, msg) \
   SendConsoleLog(fsid, rid, __FILE__, __LINE__, __func__, msg)
 
-#endif  // JAVASCRIPT_MESSAGE_SENDER_INTERFACE_H_
+#endif  // CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_JAVASCRIPT_MESSAGE_SENDER_INTERFACE_H_

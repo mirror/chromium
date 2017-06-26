@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef VOLUME_READER_JAVSCRIPT_STREAM_H_
-#define VOLUME_READER_JAVSCRIPT_STREAM_H_
+#ifndef CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_READER_JAVSCRIPT_STREAM_H_
+#define CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_READER_JAVSCRIPT_STREAM_H_
 
 #include <pthread.h>
 
@@ -117,4 +117,4 @@ class VolumeReaderJavaScriptStream : public VolumeReader {
   pp::VarArrayBuffer* read_ahead_array_buffer_ptr_;
 };
 
-#endif  // VOLUME_READER_JAVSCRIPT_STREAM_H_
+#endif  // CHROME_BROWSER_RESOURCES_CHROMEOS_ZIP_ARCHIVER_CPP_VOLUME_READER_JAVSCRIPT_STREAM_H_
