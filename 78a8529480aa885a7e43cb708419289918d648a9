@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c49b9f99_fad43014",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-26T17:31:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow what these extra conditionals are.  I would have believed that if it had a will change transform hint then it would always fall into this.  Shouldn\u0027t a page scale change (for instance) change this?",
+      "revId": "78a8529480aa885a7e43cb708419289918d648a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a57b3ca_8e35426c",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-26T17:31:50Z",
+      "side": 1,
+      "message": "I think raster source scale needs to be appropriately set here, otherwise the contents \u003d device * page * source assumption is broken.",
+      "revId": "78a8529480aa885a7e43cb708419289918d648a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e677ed4_ce14b256",
+        "filename": "cc/layers/picture_layer_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3157,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-26T17:31:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the minimum scale be device scale * page scale? Can you test this case where device and page scale are not 1?",
+      "revId": "78a8529480aa885a7e43cb708419289918d648a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
