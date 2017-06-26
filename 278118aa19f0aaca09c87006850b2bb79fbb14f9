@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c7f97a98_ca91c680",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-26T07:21:00Z",
+      "side": 1,
+      "message": "Regarding ::first-letter, there seems to be no existing tests failing this. Did you add any new ones? If so, do you remember which CL?",
+      "parentUuid": "1509a712_799de3e7",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26d6c860_d665f213",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13
