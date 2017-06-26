@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/WebDevToolsAgentImpl.h"
+#include "controller/WebDevToolsAgentImpl.h"
 
 #include <v8-inspector.h>
 #include <memory>
@@ -100,7 +100,7 @@ bool IsMainFrame(WebLocalFrameBase* frame) {
   // though |frame| is meant to be main frame.  See http://crbug.com/526162.
   return frame->ViewImpl() && !frame->Parent();
 }
-}
+}  // namespace
 
 class ClientMessageLoopAdapter : public MainThreadDebugger::ClientMessageLoop {
  public:
@@ -651,9 +651,10 @@ void WebDevToolsAgentImpl::RunDebuggerTask(
 
   WebDevToolsAgentImpl* agent_impl =
       static_cast<WebDevToolsAgentImpl*>(webagent);
-  if (agent_impl->Attached())
+  if (agent_impl->Attached()) {
     agent_impl->DispatchMessageFromFrontend(session_id, descriptor->Method(),
                                             descriptor->Message());
+  }
 }
 
 void WebDevToolsAgent::InterruptAndDispatch(int session_id,
