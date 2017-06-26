@@ -40,6 +40,7 @@ group("all") {
   } else {
     deps = [
       # List all the targets that need to be built on iOS by default.
+      "//components/feature_engagement_tracker",
       "//ios/chrome/app:chrome",
       "//ios/chrome/content_widget_extension",
       "//ios/chrome/search_widget_extension",
@@ -54,7 +55,6 @@ group("all") {
       "//ios/chrome/test:all_tests",
       "//ios/chrome/test/earl_grey:all_tests",
       "//ios/clean/chrome/test:all_tests",
-      "//ios/components:all_tests",
       "//ios/net:all_tests",
       "//ios/showcase:all_tests",
       "//ios/testing:all_tests",
