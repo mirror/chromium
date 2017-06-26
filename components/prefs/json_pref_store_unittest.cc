@@ -150,7 +150,10 @@ void CommitPendingWrite(
 class JsonPrefStoreTest
     : public testing::TestWithParam<CommitPendingWriteMode> {
  public:
-  JsonPrefStoreTest() = default;
+  JsonPrefStoreTest()
+      : scoped_task_environment_(
+            base::ScopedTaskEnvironment::MainThreadType::DEFAULT,
+            base::ScopedTaskEnvironment::ExecutionMode::QUEUED) {}
 
  protected:
   void SetUp() override {
@@ -947,13 +950,7 @@ class JsonPrefStoreCallbackTest : public JsonPrefStoreTest {
   DISALLOW_COPY_AND_ASSIGN(JsonPrefStoreCallbackTest);
 };
 
-// Flaky on Linux TSAN. http://crbug.com/732445.
-#if defined(OS_LINUX) && defined(THREAD_SANITIZER)
-#define MAYBE_TestSerializeDataCallbacks DISABLED_TestSerializeDataCallbacks
-#else
-#define MAYBE_TestSerializeDataCallbacks TestSerializeDataCallbacks
-#endif
-TEST_F(JsonPrefStoreCallbackTest, MAYBE_TestSerializeDataCallbacks) {
+TEST_F(JsonPrefStoreCallbackTest, TestSerializeDataCallbacks) {
   base::FilePath input_file = temp_dir_.GetPath().AppendASCII("write.json");
   ASSERT_LT(0,
             base::WriteFile(input_file, kReadJson, arraysize(kReadJson) - 1));
