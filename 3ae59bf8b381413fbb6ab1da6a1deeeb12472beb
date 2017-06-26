@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae6d5501_e2a19043",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-26T18:10:08Z",
+      "side": 1,
+      "message": "Changed back the name.\nThis is not called after onChildStartFailed, since onChildStartFailed is called if the service is already bound to some other client, so we don\u0027t control the service lice-cycle, the already bound client does. (I added a comment to onChildStartFailed).",
+      "parentUuid": "f7e80df5_d32dce46",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5812026d_64edf4a7",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T17:12:11Z",
       "side": 1,
       "message": "this is now synchronous, the stop can happen before the corresponding connection state is even set in allocator/helper, which can probably lead to problems",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b759146_5eab747f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-26T18:10:08Z",
+      "side": 1,
+      "message": "Are you sure? ChildConnectionAllocator.allocate() starts the connection right before returning it, after setting mChildProcessConnections so I think it should be fine.\nAnd CPLH used to call start right after allocating the connection, so that would have been similar as far as I can tell.",
+      "parentUuid": "5812026d_64edf4a7",
       "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9ab1e3b7_0ddc2000",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-26T18:10:08Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "e0da5a56_9b3c63bb",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3dc5240_41eb34f8",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-26T17:12:11Z",
       "side": 1,
       "message": "why is the pid !\u003d 0 check no longer needed?",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74818e91_ba67913b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-26T18:10:08Z",
+      "side": 1,
+      "message": "Brought it back (in onChildProcessDied)",
+      "parentUuid": "c3dc5240_41eb34f8",
       "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
