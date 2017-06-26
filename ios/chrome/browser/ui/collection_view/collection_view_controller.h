@@ -28,9 +28,12 @@ typedef NS_ENUM(NSInteger, CollectionViewControllerStyle) {
 @property(strong, nonatomic, readonly)
     CollectionViewModel<CollectionViewItem*>* collectionViewModel;
 
-// Initializer with the desired style.
-- (instancetype)initWithStyle:(CollectionViewControllerStyle)style
+// Initializer with the desired style and layout.
+- (instancetype)initWithLayout:(UICollectionViewLayout*)layout
+                         style:(CollectionViewControllerStyle)style
     NS_DESIGNATED_INITIALIZER;
+// Initializer with the desired style and a MDCCollectionViewFlowLayout layout.
+- (instancetype)initWithStyle:(CollectionViewControllerStyle)style;
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout*)layout
     NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString*)nibNameOrNil
