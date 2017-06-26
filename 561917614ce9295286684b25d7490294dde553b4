@@ -16,6 +16,24 @@
       "revId": "561917614ce9295286684b25d7490294dde553b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dd445f_b7482bcc",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-26T19:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5409b78d_ec38f233",
+      "revId": "561917614ce9295286684b25d7490294dde553b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
