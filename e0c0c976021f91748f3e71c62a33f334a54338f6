@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f143c90_8bc0525f",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T15:06:27Z",
+      "side": 1,
+      "message": "This is in common with the other CL? Can you base one of the CL on top of the other?",
+      "range": {
+        "startLine": 408,
+        "startChar": 11,
+        "endLine": 408,
+        "endChar": 24
+      },
+      "revId": "e0c0c976021f91748f3e71c62a33f334a54338f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03aadbb4_519f62a4",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T15:06:27Z",
+      "side": 1,
+      "message": "Missing call to super?",
+      "range": {
+        "startLine": 394,
+        "startChar": 8,
+        "endLine": 394,
+        "endChar": 35
+      },
+      "revId": "e0c0c976021f91748f3e71c62a33f334a54338f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359254e0_c58e4add",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T15:06:27Z",
+      "side": 1,
+      "message": "Seems like all this logic could be extracted in an object that could be unit tested and used here.",
+      "revId": "e0c0c976021f91748f3e71c62a33f334a54338f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
