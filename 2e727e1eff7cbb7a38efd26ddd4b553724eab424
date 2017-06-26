@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "632d7a35_91d5df14",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-26T20:19:20Z",
+      "side": 1,
+      "message": "This is per prefetch_item.cc. That way I don\u0027t need to make extra steps when converting one to the other.\n\nPlease make a decision on the c++ level and I\u0027ll gladly follow it here.",
+      "parentUuid": "a0737b98_8c5b9801",
+      "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8185e11d_c796ce9f",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
         "patchSetId": 15

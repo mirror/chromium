@@ -517,6 +517,24 @@
     },
     {
       "key": {
+        "uuid": "fb263050_e61fe236",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-26T20:19:20Z",
+      "side": 1,
+      "message": "Already reached out to the sql owner and asked for specific advice on these.",
+      "parentUuid": "e3365d41_4d51421c",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "589c13f2_004b911a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 8

@@ -16,6 +16,24 @@
       "revId": "05249fbd560da93fbf50c1a7b0d39aec3fb0e2b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fdd0445_00a21dad",
+        "filename": "components/offline_pages/core/prefetch/suggested_articles_observer_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-26T20:19:20Z",
+      "side": 1,
+      "message": "That is the intention of the comment:\n\n// Ensure the store can be properly disposed off.\n\nI don\u0027t think putting more elaborate comment in every test is the best solution. It would be best if people were actually conscious about using the taco.",
+      "parentUuid": "7d9060e6_95800269",
+      "revId": "05249fbd560da93fbf50c1a7b0d39aec3fb0e2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
