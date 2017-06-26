@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c33af0_18985677",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-26T18:27:30Z",
+      "side": 1,
+      "message": "Nit: Can you move this line above Change-Id?\nNote: You can edit the CL description by clicking \u0027Edit\u0027 just underneath it on the main CL page.",
+      "revId": "9a65b9ef13f1dac14ef880a866c854bd152d8286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b492d4_ac68cbd9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2231,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-26T18:27:30Z",
+      "side": 1,
+      "message": "I think we discussed using a separate feature for this? Something specific to the screenshot-code?\nNote: This require doing some more work in the world of //tools/metrics",
+      "range": {
+        "startLine": 2231,
+        "startChar": 41,
+        "endLine": 2231,
+        "endChar": 79
+      },
+      "revId": "9a65b9ef13f1dac14ef880a866c854bd152d8286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
