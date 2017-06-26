@@ -165,6 +165,30 @@
       "revId": "2360fbf586fd81761dfc646f8d55b728a3bc8569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f7af60a_62335955",
+        "filename": "base/task_scheduler/task_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-26T21:03:08Z",
+      "side": 1,
+      "message": "After taking a closer look at ComInitCheckHook, I\u0027m less convinced that wrapping it is necessary.\n\nCurrently, the class will no-op if COM_INIT_CHECK_HOOK_ENABLED() \u003d 0. That\u0027s desirable for quick one-offs in functions that might want this (e.g. unit-tests).\n\nThe benefit of wrapping here is to reduce the size of TaskSchedulerImpl when COM_INIT_CHECK_HOOK_ENABLED() \u003d 0, which is generally the case for release builds.",
+      "parentUuid": "efb02e86_6fd6833a",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "2360fbf586fd81761dfc646f8d55b728a3bc8569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
