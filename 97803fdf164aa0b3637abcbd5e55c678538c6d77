@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "179fa317_8a878dc9",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-26T15:32:30Z",
+      "side": 1,
+      "message": "This seemed to be a bug in the old code. I\u0027m happy to revert if this was actually intended.",
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
