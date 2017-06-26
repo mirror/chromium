@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55468248_f17a172a",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-26T19:42:04Z",
+      "side": 1,
+      "message": "This is superfluous. s/A mojo instance for Chrome that is used to notify/Notifies/ is sufficient.",
+      "range": {
+        "startLine": 40,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 52
+      },
+      "revId": "ff3b4633eadc54599f2b2c1ae038f3462ec4073d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db31cc5_2cae56fc",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-26T19:42:04Z",
+      "side": 1,
+      "message": "nit: Triggers",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "ff3b4633eadc54599f2b2c1ae038f3462ec4073d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
