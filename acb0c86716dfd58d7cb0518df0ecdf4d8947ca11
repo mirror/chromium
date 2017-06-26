@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6ea0528_7789b358",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-26T18:10:38Z",
+      "side": 1,
+      "message": "Can you leave a comment about how to make a layer not scrollable (or mention that it\u0027s not possible to undo this).",
+      "revId": "acb0c86716dfd58d7cb0518df0ecdf4d8947ca11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
