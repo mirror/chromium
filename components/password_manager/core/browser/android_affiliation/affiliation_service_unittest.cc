@@ -33,11 +33,11 @@ const char kTestFacetURIAlpha3[] = "https://three.alpha.example.com";
 const char kTestFacetURIBeta1[] = "https://one.beta.example.com";
 
 AffiliatedFacets GetTestEquivalenceClassAlpha() {
-  AffiliatedFacets affiliated_facets;
-  affiliated_facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURIAlpha1));
-  affiliated_facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURIAlpha2));
-  affiliated_facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURIAlpha3));
-  return affiliated_facets;
+  return AffiliatedFacets{
+      {FacetURI::FromCanonicalSpec(kTestFacetURIAlpha1), FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestFacetURIAlpha2), FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestFacetURIAlpha3), FacetBrandingInfo{}},
+  };
 }
 
 }  // namespace
@@ -104,9 +104,10 @@ class AffiliationServiceTest : public testing::Test {
 TEST_F(AffiliationServiceTest, GetAffiliations) {
   // The first request allows on-demand fetching, and should trigger a fetch.
   // Then, it should succeed after the fetch is complete.
-  service()->GetAffiliations(FacetURI::FromCanonicalSpec(kTestFacetURIAlpha1),
-                             StrategyOnCacheMiss::FETCH_OVER_NETWORK,
-                             mock_consumer()->GetResultCallback());
+  service()->GetAffiliations(
+      {FacetURI::FromCanonicalSpec(kTestFacetURIAlpha1), FacetBrandingInfo{}},
+      StrategyOnCacheMiss::FETCH_OVER_NETWORK,
+      mock_consumer()->GetResultCallback());
 
   background_task_runner()->RunUntilIdle();
   ASSERT_TRUE(fake_affiliation_api()->HasPendingRequest());
@@ -117,9 +118,9 @@ TEST_F(AffiliationServiceTest, GetAffiliations) {
   testing::Mock::VerifyAndClearExpectations(mock_consumer());
 
   // The second request should be (and can be) served from cache.
-  service()->GetAffiliations(FacetURI::FromCanonicalSpec(kTestFacetURIAlpha1),
-                             StrategyOnCacheMiss::FAIL,
-                             mock_consumer()->GetResultCallback());
+  service()->GetAffiliations(
+      {FacetURI::FromCanonicalSpec(kTestFacetURIAlpha1), FacetBrandingInfo{}},
+      StrategyOnCacheMiss::FAIL, mock_consumer()->GetResultCallback());
 
   background_task_runner()->RunUntilIdle();
   ASSERT_FALSE(fake_affiliation_api()->HasPendingRequest());
@@ -130,9 +131,9 @@ TEST_F(AffiliationServiceTest, GetAffiliations) {
 
   // The third request is also restricted to the cache, but cannot be served
   // from cache, thus it should fail.
-  service()->GetAffiliations(FacetURI::FromCanonicalSpec(kTestFacetURIBeta1),
-                             StrategyOnCacheMiss::FAIL,
-                             mock_consumer()->GetResultCallback());
+  service()->GetAffiliations(
+      {FacetURI::FromCanonicalSpec(kTestFacetURIBeta1), FacetBrandingInfo{}},
+      StrategyOnCacheMiss::FAIL, mock_consumer()->GetResultCallback());
 
   background_task_runner()->RunUntilIdle();
   ASSERT_FALSE(fake_affiliation_api()->HasPendingRequest());
@@ -143,9 +144,10 @@ TEST_F(AffiliationServiceTest, GetAffiliations) {
 }
 
 TEST_F(AffiliationServiceTest, ShutdownWhileTasksArePosted) {
-  service()->GetAffiliations(FacetURI::FromCanonicalSpec(kTestFacetURIAlpha1),
-                             StrategyOnCacheMiss::FETCH_OVER_NETWORK,
-                             mock_consumer()->GetResultCallback());
+  service()->GetAffiliations(
+      {FacetURI::FromCanonicalSpec(kTestFacetURIAlpha1), FacetBrandingInfo{}},
+      StrategyOnCacheMiss::FETCH_OVER_NETWORK,
+      mock_consumer()->GetResultCallback());
   EXPECT_TRUE(background_task_runner()->HasPendingTask());
 
   DestroyService();

@@ -32,7 +32,7 @@ class FacetManager {
   using StrategyOnCacheMiss = AffiliationService::StrategyOnCacheMiss;
 
   // Both the |backend| and |clock| must outlive this object.
-  FacetManager(const FacetURI& facet_uri,
+  FacetManager(const Facet& facet,
                FacetManagerHost* backend,
                base::Clock* clock);
   ~FacetManager();
@@ -106,7 +106,7 @@ class FacetManager {
   // Posts the callback of the request described by |request_info| with failure.
   static void ServeRequestWithFailure(const RequestInfo& request_info);
 
-  FacetURI facet_uri_;
+  Facet facet_;
   FacetManagerHost* backend_;
   base::Clock* clock_;
 

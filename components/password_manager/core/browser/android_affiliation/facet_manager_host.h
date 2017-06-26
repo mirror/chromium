@@ -15,19 +15,19 @@ class FacetManagerHost {
  public:
   virtual ~FacetManagerHost() {}
 
-  // Reads the equivalence class containing |facet_uri| from the database and
+  // Reads the equivalence class containing |facet| from the database and
   // returns true if found; returns false otherwise.
   virtual bool ReadAffiliationsFromDatabase(
-      const FacetURI& facet_uri,
+      const Facet& facet,
       AffiliatedFacetsWithUpdateTime* affiliations) = 0;
 
   // Signals the fetching logic that affiliation information for a facet needs
   // to be fetched immediately.
   virtual void SignalNeedNetworkRequest() = 0;
 
-  // Requests that the FacetManager corresponding to |facet_uri| be notified at
+  // Requests that the FacetManager corresponding to |facet| be notified at
   // the specified |time| so it can perform delayed administrative tasks.
-  virtual void RequestNotificationAtTime(const FacetURI& facet_uri,
+  virtual void RequestNotificationAtTime(const Facet& facet,
                                          base::Time time) = 0;
 };
 

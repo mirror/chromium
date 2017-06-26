@@ -53,6 +53,7 @@
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "url/gurl.h"
 #include "url/third_party/mozilla/url_parse.h"
 
 namespace autofill {
@@ -150,8 +151,27 @@ class FacetURI {
   url::Parsed parsed_;
 };
 
+// The branding information for a given facet. Corresponds to the |BrandingInfo|
+// message in affiliation_api.proto.
+struct FacetBrandingInfo {
+  std::string name;
+  GURL icon_url;
+};
+
+// Needed for testing.
+bool operator==(const FacetBrandingInfo& lhs, const FacetBrandingInfo& rhs);
+
+// Facet struct, corresponds to the |Facet| message in affiliation_api.proto.
+struct Facet {
+  FacetURI uri;
+  FacetBrandingInfo branding_info;
+};
+
+// Needed for testing.
+bool operator==(const Facet& lhs, const Facet& rhs);
+
 // A collection of facets affiliated with each other, i.e. an equivalence class.
-typedef std::vector<FacetURI> AffiliatedFacets;
+typedef std::vector<Facet> AffiliatedFacets;
 
 // A collection of facets affiliated with each other, i.e. an equivalence class,
 // plus a timestamp that indicates the last time the data was updated from an

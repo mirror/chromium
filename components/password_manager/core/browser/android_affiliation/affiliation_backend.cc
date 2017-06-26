@@ -58,44 +58,44 @@ void AffiliationBackend::Initialize(const base::FilePath& db_path) {
 }
 
 void AffiliationBackend::GetAffiliations(
-    const FacetURI& facet_uri,
+    const Facet& facet,
     StrategyOnCacheMiss cache_miss_strategy,
     const AffiliationService::ResultCallback& callback,
     const scoped_refptr<base::TaskRunner>& callback_task_runner) {
   DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
 
-  FacetManager* facet_manager = GetOrCreateFacetManager(facet_uri);
+  FacetManager* facet_manager = GetOrCreateFacetManager(facet);
   DCHECK(facet_manager);
   facet_manager->GetAffiliations(cache_miss_strategy, callback,
                                  callback_task_runner);
 
   if (facet_manager->CanBeDiscarded())
-    facet_managers_.erase(facet_uri);
+    facet_managers_.erase(facet.uri);
 }
 
-void AffiliationBackend::Prefetch(const FacetURI& facet_uri,
+void AffiliationBackend::Prefetch(const Facet& facet,
                                   const base::Time& keep_fresh_until) {
   DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
 
-  FacetManager* facet_manager = GetOrCreateFacetManager(facet_uri);
+  FacetManager* facet_manager = GetOrCreateFacetManager(facet);
   DCHECK(facet_manager);
   facet_manager->Prefetch(keep_fresh_until);
 
   if (facet_manager->CanBeDiscarded())
-    facet_managers_.erase(facet_uri);
+    facet_managers_.erase(facet.uri);
 }
 
-void AffiliationBackend::CancelPrefetch(const FacetURI& facet_uri,
+void AffiliationBackend::CancelPrefetch(const Facet& facet,
                                         const base::Time& keep_fresh_until) {
   DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
 
-  auto facet_manager_it = facet_managers_.find(facet_uri);
+  auto facet_manager_it = facet_managers_.find(facet.uri);
   if (facet_manager_it == facet_managers_.end())
     return;
   facet_manager_it->second->CancelPrefetch(keep_fresh_until);
 
   if (facet_manager_it->second->CanBeDiscarded())
-    facet_managers_.erase(facet_uri);
+    facet_managers_.erase(facet.uri);
 }
 
 void AffiliationBackend::TrimCache() {
@@ -107,11 +107,11 @@ void AffiliationBackend::TrimCache() {
     DiscardCachedDataIfNoLongerNeeded(affiliation.facets);
 }
 
-void AffiliationBackend::TrimCacheForFacet(const FacetURI& facet_uri) {
+void AffiliationBackend::TrimCacheForFacet(const Facet& facet) {
   DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
 
   AffiliatedFacetsWithUpdateTime affiliation;
-  if (cache_->GetAffiliationsForFacet(facet_uri, &affiliation))
+  if (cache_->GetAffiliationsForFacet(facet, &affiliation))
     DiscardCachedDataIfNoLongerNeeded(affiliation.facets);
 }
 
@@ -120,12 +120,10 @@ void AffiliationBackend::DeleteCache(const base::FilePath& db_path) {
   AffiliationDatabase::Delete(db_path);
 }
 
-FacetManager* AffiliationBackend::GetOrCreateFacetManager(
-    const FacetURI& facet_uri) {
-  std::unique_ptr<FacetManager>& facet_manager = facet_managers_[facet_uri];
+FacetManager* AffiliationBackend::GetOrCreateFacetManager(const Facet& facet) {
+  std::unique_ptr<FacetManager>& facet_manager = facet_managers_[facet.uri];
   if (!facet_manager) {
-    facet_manager =
-        base::MakeUnique<FacetManager>(facet_uri, this, clock_.get());
+    facet_manager = base::MakeUnique<FacetManager>(facet, this, clock_.get());
   }
   return facet_manager.get();
 }
@@ -136,8 +134,8 @@ void AffiliationBackend::DiscardCachedDataIfNoLongerNeeded(
 
   // Discard the equivalence class if there is no facet in the class whose
   // FacetManager claims that it needs to keep the data.
-  for (const auto& facet_uri : affiliated_facets) {
-    auto facet_manager_it = facet_managers_.find(facet_uri);
+  for (const auto& facet : affiliated_facets) {
+    auto facet_manager_it = facet_managers_.find(facet.uri);
     if (facet_manager_it != facet_managers_.end() &&
         !facet_manager_it->second->CanCachedDataBeDiscarded()) {
       return;
@@ -148,35 +146,36 @@ void AffiliationBackend::DiscardCachedDataIfNoLongerNeeded(
   cache_->DeleteAffiliationsForFacet(affiliated_facets[0]);
 }
 
-void AffiliationBackend::OnSendNotification(const FacetURI& facet_uri) {
+void AffiliationBackend::OnSendNotification(const Facet& facet) {
   DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
 
-  auto facet_manager_it = facet_managers_.find(facet_uri);
+  auto facet_manager_it = facet_managers_.find(facet.uri);
   if (facet_manager_it == facet_managers_.end())
     return;
   facet_manager_it->second->NotifyAtRequestedTime();
 
   if (facet_manager_it->second->CanBeDiscarded())
-    facet_managers_.erase(facet_uri);
+    facet_managers_.erase(facet.uri);
 }
 
 bool AffiliationBackend::ReadAffiliationsFromDatabase(
-    const FacetURI& facet_uri,
+    const Facet& facet,
     AffiliatedFacetsWithUpdateTime* affiliations) {
-  return cache_->GetAffiliationsForFacet(facet_uri, affiliations);
+  return cache_->GetAffiliationsForFacet(facet, affiliations);
 }
 
 void AffiliationBackend::SignalNeedNetworkRequest() {
   throttler_->SignalNetworkRequestNeeded();
 }
 
-void AffiliationBackend::RequestNotificationAtTime(const FacetURI& facet_uri,
+void AffiliationBackend::RequestNotificationAtTime(const Facet& facet,
                                                    base::Time time) {
   // TODO(engedy): Avoid spamming the task runner; only ever schedule the first
   // callback. crbug.com/437865.
   task_runner_->PostDelayedTask(
-      FROM_HERE, base::Bind(&AffiliationBackend::OnSendNotification,
-                            weak_ptr_factory_.GetWeakPtr(), facet_uri),
+      FROM_HERE,
+      base::Bind(&AffiliationBackend::OnSendNotification,
+                 weak_ptr_factory_.GetWeakPtr(), facet),
       time - clock_->Now());
 }
 
@@ -206,14 +205,14 @@ void AffiliationBackend::OnFetchSucceeded(
     // should be implemented at some point by letting facet managers know if
     // data. See: https://crbug.com/478832.
 
-    for (const auto& facet_uri : affiliated_facets) {
-      auto facet_manager_it = facet_managers_.find(facet_uri);
+    for (const auto& facet : affiliated_facets) {
+      auto facet_manager_it = facet_managers_.find(facet.uri);
       if (facet_manager_it == facet_managers_.end())
         continue;
       FacetManager* facet_manager = facet_manager_it->second.get();
       facet_manager->OnFetchSucceeded(affiliation);
       if (facet_manager->CanBeDiscarded())
-        facet_managers_.erase(facet_uri);
+        facet_managers_.erase(facet.uri);
     }
   }
 

@@ -93,12 +93,12 @@ struct FacetManager::RequestInfo {
   scoped_refptr<base::TaskRunner> callback_task_runner;
 };
 
-FacetManager::FacetManager(const FacetURI& facet_uri,
+FacetManager::FacetManager(const Facet& facet,
                            FacetManagerHost* backend,
                            base::Clock* clock)
-    : facet_uri_(facet_uri), backend_(backend), clock_(clock) {
+    : facet_(facet), backend_(backend), clock_(clock) {
   AffiliatedFacetsWithUpdateTime affiliations;
-  if (backend_->ReadAffiliationsFromDatabase(facet_uri_, &affiliations))
+  if (backend_->ReadAffiliationsFromDatabase(facet_, &affiliations))
     last_update_time_ = affiliations.last_update_time;
 }
 
@@ -118,11 +118,11 @@ void FacetManager::GetAffiliations(
   request_info.callback_task_runner = callback_task_runner;
   if (IsCachedDataFresh()) {
     AffiliatedFacetsWithUpdateTime affiliation;
-    if (!backend_->ReadAffiliationsFromDatabase(facet_uri_, &affiliation)) {
+    if (!backend_->ReadAffiliationsFromDatabase(facet_, &affiliation)) {
       ServeRequestWithFailure(request_info);
       return;
     }
-    DCHECK_EQ(affiliation.last_update_time, last_update_time_) << facet_uri_;
+    DCHECK_EQ(affiliation.last_update_time, last_update_time_) << facet_.uri;
     ServeRequestWithSuccess(request_info, affiliation.facets);
   } else if (cache_miss_strategy == StrategyOnCacheMiss::FETCH_OVER_NETWORK) {
     pending_requests_.push_back(request_info);
@@ -141,13 +141,13 @@ void FacetManager::Prefetch(const base::Time& keep_fresh_until) {
   if (next_required_fetch <= clock_->Now())
     backend_->SignalNeedNetworkRequest();
   else if (next_required_fetch < base::Time::Max())
-    backend_->RequestNotificationAtTime(facet_uri_, next_required_fetch);
+    backend_->RequestNotificationAtTime(facet_, next_required_fetch);
 
   // For a finite |keep_fresh_until|, schedule a callback so that once the
   // prefetch expires, it can be removed from |keep_fresh_untils_|, and also the
   // manager can get a chance to be destroyed unless it is otherwise needed.
   if (keep_fresh_until > clock_->Now() && keep_fresh_until < base::Time::Max())
-    backend_->RequestNotificationAtTime(facet_uri_, keep_fresh_until);
+    backend_->RequestNotificationAtTime(facet_, keep_fresh_until);
 }
 
 void FacetManager::CancelPrefetch(const base::Time& keep_fresh_until) {
@@ -159,14 +159,14 @@ void FacetManager::CancelPrefetch(const base::Time& keep_fresh_until) {
 void FacetManager::OnFetchSucceeded(
     const AffiliatedFacetsWithUpdateTime& affiliation) {
   last_update_time_ = affiliation.last_update_time;
-  DCHECK(IsCachedDataFresh()) << facet_uri_;
+  DCHECK(IsCachedDataFresh()) << facet_.uri;
   for (const auto& request_info : pending_requests_)
     ServeRequestWithSuccess(request_info, affiliation.facets);
   pending_requests_.clear();
 
   base::Time next_required_fetch(GetNextRequiredFetchTimeDueToPrefetch());
   if (next_required_fetch < base::Time::Max())
-    backend_->RequestNotificationAtTime(facet_uri_, next_required_fetch);
+    backend_->RequestNotificationAtTime(facet_, next_required_fetch);
 }
 
 void FacetManager::NotifyAtRequestedTime() {
@@ -174,7 +174,7 @@ void FacetManager::NotifyAtRequestedTime() {
   if (next_required_fetch <= clock_->Now())
     backend_->SignalNeedNetworkRequest();
   else if (next_required_fetch < base::Time::Max())
-    backend_->RequestNotificationAtTime(facet_uri_, next_required_fetch);
+    backend_->RequestNotificationAtTime(facet_, next_required_fetch);
 
   auto iter_first_non_expired =
       keep_fresh_until_thresholds_.upper_bound(clock_->Now());

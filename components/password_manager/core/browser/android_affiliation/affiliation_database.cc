@@ -62,7 +62,7 @@ bool AffiliationDatabase::Init(const base::FilePath& path) {
 }
 
 bool AffiliationDatabase::GetAffiliationsForFacet(
-    const FacetURI& facet_uri,
+    const Facet& facet,
     AffiliatedFacetsWithUpdateTime* result) const {
   DCHECK(result);
   result->facets.clear();
@@ -72,11 +72,12 @@ bool AffiliationDatabase::GetAffiliationsForFacet(
       "SELECT m2.facet_uri, c.last_update_time "
       "FROM eq_class_members m1, eq_class_members m2, eq_classes c "
       "WHERE m1.facet_uri = ? AND m1.set_id = m2.set_id AND m1.set_id = c.id"));
-  statement.BindString(0, facet_uri.canonical_spec());
+  statement.BindString(0, facet.uri.canonical_spec());
 
   while (statement.Step()) {
-    result->facets.push_back(
-        FacetURI::FromCanonicalSpec(statement.ColumnString(0)));
+    result->facets.emplace_back(
+        Facet{FacetURI::FromCanonicalSpec(statement.ColumnString(0)),
+              FacetBrandingInfo{}});
     result->last_update_time =
         base::Time::FromInternalValue(statement.ColumnInt64(1));
   }
@@ -104,14 +105,14 @@ void AffiliationDatabase::GetAllAffiliations(
       last_eq_class_id = eq_class_id;
     }
     results->back().facets.push_back(
-        FacetURI::FromCanonicalSpec(statement.ColumnString(0)));
+        Facet{FacetURI::FromCanonicalSpec(statement.ColumnString(0)),
+              FacetBrandingInfo{}});
     results->back().last_update_time =
         base::Time::FromInternalValue(statement.ColumnInt64(1));
   }
 }
 
-void AffiliationDatabase::DeleteAffiliationsForFacet(
-    const FacetURI& facet_uri) {
+void AffiliationDatabase::DeleteAffiliationsForFacet(const Facet& facet) {
   sql::Transaction transaction(sql_connection_.get());
   if (!transaction.Begin())
     return;
@@ -120,7 +121,7 @@ void AffiliationDatabase::DeleteAffiliationsForFacet(
       SQL_FROM_HERE,
       "SELECT m.set_id FROM eq_class_members m "
       "WHERE m.facet_uri = ?"));
-  statement_lookup.BindString(0, facet_uri.canonical_spec());
+  statement_lookup.BindString(0, facet.uri.canonical_spec());
 
   // No such |facet_uri|, nothing to do.
   if (!statement_lookup.Step())
@@ -177,9 +178,9 @@ bool AffiliationDatabase::Store(
     return false;
 
   int64_t eq_class_id = sql_connection_->GetLastInsertRowId();
-  for (const FacetURI& uri : affiliated_facets.facets) {
+  for (const Facet& facet : affiliated_facets.facets) {
     statement_child.Reset(true);
-    statement_child.BindString(0, uri.canonical_spec());
+    statement_child.BindString(0, facet.uri.canonical_spec());
     statement_child.BindInt64(1, eq_class_id);
     if (!statement_child.Run())
       return false;
@@ -199,14 +200,14 @@ void AffiliationDatabase::StoreAndRemoveConflicting(
   if (!transaction.Begin())
     return;
 
-  for (const FacetURI& uri : affiliation.facets) {
+  for (const Facet& facet : affiliation.facets) {
     AffiliatedFacetsWithUpdateTime old_affiliation;
-    if (GetAffiliationsForFacet(uri, &old_affiliation)) {
+    if (GetAffiliationsForFacet(facet, &old_affiliation)) {
       if (!AreEquivalenceClassesEqual(old_affiliation.facets,
                                       affiliation.facets)) {
         removed_affiliations->push_back(old_affiliation);
       }
-      DeleteAffiliationsForFacet(uri);
+      DeleteAffiliationsForFacet(facet);
     }
   }
 

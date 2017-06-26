@@ -74,15 +74,14 @@ class AffiliationBackend : public FacetManagerHost,
   // Implementations for methods of the same name in AffiliationService. They
   // are not documented here again. See affiliation_service.h for details:
   void GetAffiliations(
-      const FacetURI& facet_uri,
+      const Facet& facet,
       StrategyOnCacheMiss cache_miss_strategy,
       const AffiliationService::ResultCallback& callback,
       const scoped_refptr<base::TaskRunner>& callback_task_runner);
-  void Prefetch(const FacetURI& facet_uri, const base::Time& keep_fresh_until);
-  void CancelPrefetch(const FacetURI& facet_uri,
-                      const base::Time& keep_fresh_until);
+  void Prefetch(const Facet& facet, const base::Time& keep_fresh_until);
+  void CancelPrefetch(const Facet& facet, const base::Time& keep_fresh_until);
   void TrimCache();
-  void TrimCacheForFacet(const FacetURI& facet_uri);
+  void TrimCacheForFacet(const Facet& facet);
 
   // Deletes the cache database file at |db_path|, and all auxiliary files. The
   // database must be closed before calling this.
@@ -94,9 +93,9 @@ class AffiliationBackend : public FacetManagerHost,
       AffiliationBackendTest,
       DiscardCachedDataIfNoLongerNeededWithEmptyAffiliation);
 
-  // Retrieves the FacetManager corresponding to |facet_uri|, creating it and
+  // Retrieves the FacetManager corresponding to |facet|, creating it and
   // storing it into |facet_managers_| if it did not exist.
-  FacetManager* GetOrCreateFacetManager(const FacetURI& facet_uri);
+  FacetManager* GetOrCreateFacetManager(const Facet& facet);
 
   // Discards cached data corresponding to |affiliated_facets| unless there are
   // FacetManagers that still need the data.
@@ -105,15 +104,14 @@ class AffiliationBackend : public FacetManagerHost,
 
   // Scheduled by RequestNotificationAtTime() to be called back at times when a
   // FacetManager needs to be notified.
-  void OnSendNotification(const FacetURI& facet_uri);
+  void OnSendNotification(const Facet& facet);
 
   // FacetManagerHost:
   bool ReadAffiliationsFromDatabase(
-      const FacetURI& facet_uri,
+      const Facet& facet,
       AffiliatedFacetsWithUpdateTime* affiliations) override;
   void SignalNeedNetworkRequest() override;
-  void RequestNotificationAtTime(const FacetURI& facet_uri,
-                                 base::Time time) override;
+  void RequestNotificationAtTime(const Facet& facet, base::Time time) override;
 
   // AffiliationFetcherDelegate:
   void OnFetchSucceeded(

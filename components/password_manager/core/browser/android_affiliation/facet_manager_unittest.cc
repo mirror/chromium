@@ -12,6 +12,7 @@
 #include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/rand_util.h"
 #include "base/test/test_mock_time_task_runner.h"
@@ -112,9 +113,9 @@ class MockFacetManagerHost : public FacetManagerHost {
  private:
   // FacetManagerHost:
   bool ReadAffiliationsFromDatabase(
-      const FacetURI& facet_uri,
+      const Facet& facet,
       AffiliatedFacetsWithUpdateTime* affiliations) override {
-    EXPECT_EQ(expected_facet_uri_, facet_uri);
+    EXPECT_EQ(expected_facet_uri_, facet.uri);
     if (fake_database_content_.last_update_time.is_null())
       return false;
     *affiliations = fake_database_content_;
@@ -125,9 +126,8 @@ class MockFacetManagerHost : public FacetManagerHost {
     signaled_need_network_request_ = true;
   }
 
-  void RequestNotificationAtTime(const FacetURI& facet_uri,
-                                 base::Time time) override {
-    EXPECT_EQ(expected_facet_uri_, facet_uri);
+  void RequestNotificationAtTime(const Facet& facet, base::Time time) override {
+    EXPECT_EQ(expected_facet_uri_, facet.uri);
     // The absolute timing of notification requests is not all that interesting,
     // only the ability to perturb it slightly, which is done by the notifier.
     notifier_->Notify(time);
@@ -149,11 +149,11 @@ const char kTestFacetURI2[] = "https://two.example.com";
 const char kTestFacetURI3[] = "https://three.example.com";
 
 AffiliatedFacets GetTestEquivalenceClass() {
-  AffiliatedFacets affiliated_facets;
-  affiliated_facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI1));
-  affiliated_facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI2));
-  affiliated_facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI3));
-  return affiliated_facets;
+  return AffiliatedFacets{
+      {FacetURI::FromCanonicalSpec(kTestFacetURI1), FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestFacetURI2), FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestFacetURI3), FacetBrandingInfo{}},
+  };
 }
 
 AffiliatedFacetsWithUpdateTime GetTestEquivalenceClassWithUpdateTime(
@@ -233,9 +233,9 @@ class FacetManagerTest : public testing::Test {
     // The order is important: FacetManager will read the DB in its constructor.
     facet_manager_host_.set_expected_facet_uri(
         FacetURI::FromCanonicalSpec(kTestFacetURI1));
-    facet_manager_.reset(
-        new FacetManager(FacetURI::FromCanonicalSpec(kTestFacetURI1),
-                         fake_facet_manager_host(), main_clock_.get()));
+    facet_manager_ = base::MakeUnique<FacetManager>(
+        Facet{FacetURI::FromCanonicalSpec(kTestFacetURI1), FacetBrandingInfo{}},
+        fake_facet_manager_host(), main_clock_.get());
     facet_manager_notifier_.set_facet_manager(facet_manager_.get());
     facet_manager_creation_ = Now();
   }

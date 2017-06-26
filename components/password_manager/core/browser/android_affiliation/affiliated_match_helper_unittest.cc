@@ -39,15 +39,15 @@ class MockAffiliationService : public testing::StrictMock<AffiliationService> {
 
   MOCK_METHOD2(OnGetAffiliationsCalled,
                AffiliatedFacets(const FacetURI&, StrategyOnCacheMiss));
-  MOCK_METHOD2(Prefetch, void(const FacetURI&, const base::Time&));
-  MOCK_METHOD2(CancelPrefetch, void(const FacetURI&, const base::Time&));
-  MOCK_METHOD1(TrimCacheForFacet, void(const FacetURI&));
+  MOCK_METHOD2(Prefetch, void(const Facet&, const base::Time&));
+  MOCK_METHOD2(CancelPrefetch, void(const Facet&, const base::Time&));
+  MOCK_METHOD1(TrimCacheForFacet, void(const Facet&));
 
-  void GetAffiliations(const FacetURI& facet_uri,
+  void GetAffiliations(const Facet& facet,
                        StrategyOnCacheMiss cache_miss_strategy,
                        const ResultCallback& result_callback) override {
     AffiliatedFacets affiliation =
-        OnGetAffiliationsCalled(facet_uri, cache_miss_strategy);
+        OnGetAffiliationsCalled(facet.uri, cache_miss_strategy);
     result_callback.Run(affiliation, !affiliation.empty());
   }
 
@@ -65,24 +65,32 @@ class MockAffiliationService : public testing::StrictMock<AffiliationService> {
       StrategyOnCacheMiss expected_cache_miss_strategy) {
     EXPECT_CALL(*this, OnGetAffiliationsCalled(expected_facet_uri,
                                                expected_cache_miss_strategy))
-        .WillOnce(testing::Return(std::vector<FacetURI>()));
+        .WillOnce(testing::Return(std::vector<Facet>()));
   }
 
   void ExpectCallToPrefetch(const char* expected_facet_uri_spec) {
-    EXPECT_CALL(*this,
-                Prefetch(FacetURI::FromCanonicalSpec(expected_facet_uri_spec),
-                         base::Time::Max())).RetiresOnSaturation();
+    EXPECT_CALL(
+        *this,
+        Prefetch(Facet{FacetURI::FromCanonicalSpec(expected_facet_uri_spec),
+                       FacetBrandingInfo{}},
+                 base::Time::Max()))
+        .RetiresOnSaturation();
   }
 
   void ExpectCallToCancelPrefetch(const char* expected_facet_uri_spec) {
-    EXPECT_CALL(*this, CancelPrefetch(
-                           FacetURI::FromCanonicalSpec(expected_facet_uri_spec),
-                           base::Time::Max())).RetiresOnSaturation();
+    EXPECT_CALL(*this,
+                CancelPrefetch(
+                    Facet{FacetURI::FromCanonicalSpec(expected_facet_uri_spec),
+                          FacetBrandingInfo{}},
+                    base::Time::Max()))
+        .RetiresOnSaturation();
   }
 
   void ExpectCallToTrimCacheForFacet(const char* expected_facet_uri_spec) {
-    EXPECT_CALL(*this, TrimCacheForFacet(FacetURI::FromCanonicalSpec(
-                           expected_facet_uri_spec))).RetiresOnSaturation();
+    EXPECT_CALL(*this, TrimCacheForFacet(Facet{
+                           FacetURI::FromCanonicalSpec(expected_facet_uri_spec),
+                           FacetBrandingInfo{}}))
+        .RetiresOnSaturation();
   }
 
  private:
@@ -118,25 +126,24 @@ const char kTestUsername[] = "JohnDoe";
 const char kTestPassword[] = "secret";
 
 AffiliatedFacets GetTestEquivalenceClassAlpha() {
-  AffiliatedFacets affiliated_facets;
-  affiliated_facets.push_back(
-      FacetURI::FromCanonicalSpec(kTestWebFacetURIAlpha1));
-  affiliated_facets.push_back(
-      FacetURI::FromCanonicalSpec(kTestWebFacetURIAlpha2));
-  affiliated_facets.push_back(
-      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIAlpha3));
-  return affiliated_facets;
+  return AffiliatedFacets{
+      {FacetURI::FromCanonicalSpec(kTestWebFacetURIAlpha1),
+       FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestWebFacetURIAlpha2),
+       FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestAndroidFacetURIAlpha3),
+       FacetBrandingInfo{}},
+  };
 }
 
 AffiliatedFacets GetTestEquivalenceClassBeta() {
-  AffiliatedFacets affiliated_facets;
-  affiliated_facets.push_back(
-      FacetURI::FromCanonicalSpec(kTestWebFacetURIBeta1));
-  affiliated_facets.push_back(
-      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta2));
-  affiliated_facets.push_back(
-      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta3));
-  return affiliated_facets;
+  return AffiliatedFacets{
+      {FacetURI::FromCanonicalSpec(kTestWebFacetURIBeta1), FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta2),
+       FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta3),
+       FacetBrandingInfo{}},
+  };
 }
 
 autofill::PasswordForm GetTestAndroidCredentials(const char* signon_realm) {
@@ -579,9 +586,12 @@ TEST_F(AffiliatedMatchHelperTest, PrefetchBeforeTrimForPrimaryKeyUpdates) {
 // expects that Prefetch() and CancelPrefetch() will each be called four times.
 TEST_F(AffiliatedMatchHelperTest,
        DuplicateCredentialsArePrefetchWithMultiplicity) {
-  EXPECT_CALL(*mock_affiliation_service(),
-              Prefetch(FacetURI::FromCanonicalSpec(kTestAndroidFacetURIAlpha3),
-                       base::Time::Max())).Times(4);
+  EXPECT_CALL(
+      *mock_affiliation_service(),
+      Prefetch(Facet{FacetURI::FromCanonicalSpec(kTestAndroidFacetURIAlpha3),
+                     FacetBrandingInfo{}},
+               base::Time::Max()))
+      .Times(4);
 
   autofill::PasswordForm android_form(
       GetTestAndroidCredentials(kTestAndroidRealmAlpha3));

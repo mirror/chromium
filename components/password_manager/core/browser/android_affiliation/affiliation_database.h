@@ -39,17 +39,17 @@ class AffiliationDatabase {
   // and returns true on success.
   bool Init(const base::FilePath& path);
 
-  // Looks up the equivalence class containing |facet_uri|, and returns true if
+  // Looks up the equivalence class containing |facet|, and returns true if
   // such a class is found, in which case it is also stored into |result|.
-  bool GetAffiliationsForFacet(const FacetURI& facet_uri,
+  bool GetAffiliationsForFacet(const Facet& facet,
                                AffiliatedFacetsWithUpdateTime* result) const;
 
   // Retrieves all stored equivalence classes.
   void GetAllAffiliations(
       std::vector<AffiliatedFacetsWithUpdateTime>* results) const;
 
-  // Removes the stored equivalence class, if any, containing |facet_uri|.
-  void DeleteAffiliationsForFacet(const FacetURI& facet_uri);
+  // Removes the stored equivalence class, if any, containing |facet|.
+  void DeleteAffiliationsForFacet(const Facet& facet);
 
   // Removes stored equivalence classes that were last updated before the
   // |cutoff_threshold|.

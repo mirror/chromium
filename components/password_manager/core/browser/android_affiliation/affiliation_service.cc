@@ -50,7 +50,7 @@ void AffiliationService::Initialize(
 }
 
 void AffiliationService::GetAffiliations(
-    const FacetURI& facet_uri,
+    const Facet& facet,
     StrategyOnCacheMiss cache_miss_strategy,
     const ResultCallback& result_callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -58,28 +58,28 @@ void AffiliationService::GetAffiliations(
   backend_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&AffiliationBackend::GetAffiliations,
-                 base::Unretained(backend_), facet_uri, cache_miss_strategy,
+                 base::Unretained(backend_), facet, cache_miss_strategy,
                  result_callback, base::ThreadTaskRunnerHandle::Get()));
 }
 
-void AffiliationService::Prefetch(const FacetURI& facet_uri,
+void AffiliationService::Prefetch(const Facet& facet,
                                   const base::Time& keep_fresh_until) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(backend_);
   backend_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&AffiliationBackend::Prefetch, base::Unretained(backend_),
-                 facet_uri, keep_fresh_until));
+                 facet, keep_fresh_until));
 }
 
-void AffiliationService::CancelPrefetch(const FacetURI& facet_uri,
+void AffiliationService::CancelPrefetch(const Facet& facet,
                                         const base::Time& keep_fresh_until) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(backend_);
   backend_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&AffiliationBackend::CancelPrefetch,
-                 base::Unretained(backend_), facet_uri, keep_fresh_until));
+                 base::Unretained(backend_), facet, keep_fresh_until));
 }
 
 void AffiliationService::TrimCache() {
@@ -90,12 +90,12 @@ void AffiliationService::TrimCache() {
       base::Bind(&AffiliationBackend::TrimCache, base::Unretained(backend_)));
 }
 
-void AffiliationService::TrimCacheForFacet(const FacetURI& facet_uri) {
+void AffiliationService::TrimCacheForFacet(const Facet& facet) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(backend_);
   backend_task_runner_->PostTask(
       FROM_HERE, base::Bind(&AffiliationBackend::TrimCacheForFacet,
-                            base::Unretained(backend_), facet_uri));
+                            base::Unretained(backend_), facet));
 }
 
 // static

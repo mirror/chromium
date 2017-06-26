@@ -36,24 +36,28 @@ void ExpectEquivalenceClassesAreEqual(
     const AffiliatedFacetsWithUpdateTime& expectation,
     const AffiliatedFacetsWithUpdateTime& reality) {
   EXPECT_EQ(expectation.last_update_time, reality.last_update_time);
-  EXPECT_THAT(reality.facets,
+  EXPECT_THAT(expectation.facets,
               testing::UnorderedElementsAreArray(reality.facets));
 }
 
 AffiliatedFacetsWithUpdateTime TestEquivalenceClass1() {
   AffiliatedFacetsWithUpdateTime affiliation;
   affiliation.last_update_time = base::Time::FromInternalValue(kTestTimeUs1);
-  affiliation.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI1));
-  affiliation.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI2));
-  affiliation.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI3));
+  affiliation.facets = AffiliatedFacets{
+      {FacetURI::FromCanonicalSpec(kTestFacetURI1), FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestFacetURI2), FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestFacetURI3), FacetBrandingInfo{}},
+  };
   return affiliation;
 }
 
 AffiliatedFacetsWithUpdateTime TestEquivalenceClass2() {
   AffiliatedFacetsWithUpdateTime affiliation;
   affiliation.last_update_time = base::Time::FromInternalValue(kTestTimeUs2);
-  affiliation.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI4));
-  affiliation.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI5));
+  affiliation.facets = AffiliatedFacets{
+      {FacetURI::FromCanonicalSpec(kTestFacetURI4), FacetBrandingInfo{}},
+      {FacetURI::FromCanonicalSpec(kTestFacetURI5), FacetBrandingInfo{}},
+  };
   return affiliation;
 }
 
@@ -61,7 +65,7 @@ AffiliatedFacetsWithUpdateTime TestEquivalenceClass3() {
   AffiliatedFacetsWithUpdateTime affiliation;
   affiliation.last_update_time = base::Time::FromInternalValue(kTestTimeUs3);
   affiliation.facets.push_back(
-      FacetURI::FromCanonicalSpec(kTestAndroidFacetURI));
+      {FacetURI::FromCanonicalSpec(kTestAndroidFacetURI), FacetBrandingInfo{}});
   return affiliation;
 }
 
@@ -124,8 +128,10 @@ TEST_F(AffiliationDatabaseTest, Store) {
     sql::test::ScopedErrorExpecter expecter;
     expecter.ExpectError(SQLITE_CONSTRAINT);
     AffiliatedFacetsWithUpdateTime intersecting;
-    intersecting.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI3));
-    intersecting.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI4));
+    intersecting.facets = AffiliatedFacets{
+        {FacetURI::FromCanonicalSpec(kTestFacetURI3), FacetBrandingInfo{}},
+        {FacetURI::FromCanonicalSpec(kTestFacetURI4), FacetBrandingInfo{}},
+    };
     EXPECT_FALSE(db().Store(intersecting));
     EXPECT_TRUE(expecter.SawExpectedErrors());
   }
@@ -164,7 +170,9 @@ TEST_F(AffiliationDatabaseTest, GetAffiliationForFacet) {
   {
     AffiliatedFacetsWithUpdateTime affiliation;
     EXPECT_TRUE(db().GetAffiliationsForFacet(
-        FacetURI::FromCanonicalSpec(kTestAndroidFacetURI), &affiliation));
+        {FacetURI::FromCanonicalSpec(kTestAndroidFacetURI),
+         FacetBrandingInfo{}},
+        &affiliation));
     ExpectEquivalenceClassesAreEqual(TestEquivalenceClass3(), affiliation);
   }
 
@@ -172,7 +180,8 @@ TEST_F(AffiliationDatabaseTest, GetAffiliationForFacet) {
   {
     AffiliatedFacetsWithUpdateTime affiliation;
     EXPECT_FALSE(db().GetAffiliationsForFacet(
-        FacetURI::FromCanonicalSpec(kTestFacetURI6), &affiliation));
+        {FacetURI::FromCanonicalSpec(kTestFacetURI6), FacetBrandingInfo{}},
+        &affiliation));
     ExpectEquivalenceClassesAreEqual(AffiliatedFacetsWithUpdateTime(),
                                      affiliation);
   }
@@ -193,7 +202,8 @@ TEST_F(AffiliationDatabaseTest, StoreAndRemoveConflicting) {
 
     AffiliatedFacetsWithUpdateTime affiliation;
     EXPECT_TRUE(db().GetAffiliationsForFacet(
-        FacetURI::FromCanonicalSpec(kTestFacetURI1), &affiliation));
+        {FacetURI::FromCanonicalSpec(kTestFacetURI1), FacetBrandingInfo{}},
+        &affiliation));
     ExpectEquivalenceClassesAreEqual(updated, affiliation);
   }
 
@@ -203,8 +213,10 @@ TEST_F(AffiliationDatabaseTest, StoreAndRemoveConflicting) {
     AffiliatedFacetsWithUpdateTime intersecting;
     std::vector<AffiliatedFacetsWithUpdateTime> removed;
     intersecting.last_update_time = base::Time::FromInternalValue(5000000);
-    intersecting.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI3));
-    intersecting.facets.push_back(FacetURI::FromCanonicalSpec(kTestFacetURI4));
+    intersecting.facets = AffiliatedFacets{
+        {FacetURI::FromCanonicalSpec(kTestFacetURI3), FacetBrandingInfo{}},
+        {FacetURI::FromCanonicalSpec(kTestFacetURI4), FacetBrandingInfo{}},
+    };
     db().StoreAndRemoveConflicting(intersecting, &removed);
 
     ASSERT_EQ(2u, removed.size());

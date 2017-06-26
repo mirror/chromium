@@ -61,14 +61,14 @@ class AffiliationBackend;
 //           : public base::SupportsWeakPtr<...> {
 //        public:
 //         ExampleAffiliatedCredentialFiller(AffiliationService* service,
-//                                           const FacetURI& y)
+//                                           const Facet& y)
 //             : service_(service), y_(y) {
 //           cancel_handle_ = service_->Prefetch(y_, base::Time::Max());
 //         }
 //
 //         ~ExampleAffiliatedCredentialFiller() { cancel_handle_.Run(); }
 //
-//         void ShouldFillInto(const FacetURI& wi, FillDelegate* delegate) {
+//         void ShouldFillInto(const Facet& wi, FillDelegate* delegate) {
 //           service_->GetAffiliations(wi, StrategyOnCacheMiss::FAIL,
 //               base::Bind(
 //                   &ExampleAffiliatedCredentialFiller::OnAffiliationResult,
@@ -85,7 +85,7 @@ class AffiliationBackend;
 //
 //        private:
 //         AffiliationService* service_;
-//         const FacetURI& y_;
+//         const Facet& y_;
 //         CancelPrefetchingHandle cancel_handle_;
 //       };
 class AffiliationService : public KeyedService {
@@ -107,18 +107,18 @@ class AffiliationService : public KeyedService {
   void Initialize(net::URLRequestContextGetter* request_context_getter,
                   const base::FilePath& db_path);
 
-  // Looks up facets affiliated with the facet identified by |facet_uri|, and
+  // Looks up facets affiliated with the facet identified by |facet|, and
   // invokes |result_callback| with the results.
   //
-  // If the local cache contains fresh affiliation information for |facet_uri|,
+  // If the local cache contains fresh affiliation information for |facet|,
   // the request will be served from cache. Otherwise, |cache_miss_policy|
   // controls whether to issue an on-demand network request, or to fail the
   // request without fetching.
-  virtual void GetAffiliations(const FacetURI& facet_uri,
+  virtual void GetAffiliations(const Facet& facet,
                                StrategyOnCacheMiss cache_miss_strategy,
                                const ResultCallback& result_callback);
 
-  // Prefetches affiliation information for the facet identified by |facet_uri|,
+  // Prefetches affiliation information for the facet identified by |facet|,
   // and keeps the information fresh by periodic re-fetches (as needed) until
   // the clock strikes |keep_fresh_until| (exclusive), until a matching call to
   // CancelPrefetch(), or until Chrome is shut down, whichever is sooner. It is
@@ -128,12 +128,11 @@ class AffiliationService : public KeyedService {
   // no longer wasted on repeatedly refreshing affiliation information. Note
   // that canceling will not blow away data already stored in the cache unless
   // it becomes stale.
-  virtual void Prefetch(const FacetURI& facet_uri,
-                        const base::Time& keep_fresh_until);
+  virtual void Prefetch(const Facet& facet, const base::Time& keep_fresh_until);
 
   // Cancels the corresponding prefetch command, i.e., the one issued for the
-  // same |facet_uri| and with the same |keep_fresh_until|.
-  virtual void CancelPrefetch(const FacetURI& facet_uri,
+  // same |facet| and with the same |keep_fresh_until|.
+  virtual void CancelPrefetch(const Facet& facet,
                               const base::Time& keep_fresh_until);
 
   // Wipes results of on-demand fetches and expired prefetches from the cache,
@@ -142,9 +141,9 @@ class AffiliationService : public KeyedService {
   // triggered by this call.
   //
   // The second version will only potentially remove data corresponding to the
-  // given |facet_uri|, but still only as long as the data is no longer needed.
+  // given |facet|, but still only as long as the data is no longer needed.
   virtual void TrimCache();
-  virtual void TrimCacheForFacet(const FacetURI& facet_uri);
+  virtual void TrimCacheForFacet(const Facet& facet);
 
   // Posts a task to the |backend_task_runner| to delete the cache database file
   // at |db_path|, and all auxiliary files. The database must be closed before

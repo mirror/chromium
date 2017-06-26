@@ -274,6 +274,14 @@ AffiliatedFacetsWithUpdateTime::~AffiliatedFacetsWithUpdateTime() {
 
 // Helpers --------------------------------------------------------------------
 
+bool operator==(const FacetBrandingInfo& lhs, const FacetBrandingInfo& rhs) {
+  return lhs.name == rhs.name && lhs.icon_url == rhs.icon_url;
+}
+
+bool operator==(const Facet& lhs, const Facet& rhs) {
+  return lhs.uri == rhs.uri && lhs.branding_info == rhs.branding_info;
+}
+
 std::ostream& operator<<(std::ostream& os, const FacetURI& facet_uri) {
   return os << facet_uri.potentially_invalid_spec();
 }
@@ -283,11 +291,16 @@ bool AreEquivalenceClassesEqual(const AffiliatedFacets& a,
   if (a.size() != b.size())
     return false;
 
-  std::vector<FacetURI> a_sorted(a.begin(), a.end());
-  std::vector<FacetURI> b_sorted(b.begin(), b.end());
-  std::sort(a_sorted.begin(), a_sorted.end());
-  std::sort(b_sorted.begin(), b_sorted.end());
-  return std::equal(a_sorted.begin(), a_sorted.end(), b_sorted.begin());
+  const auto sort_uris = [](const AffiliatedFacets& facets) {
+    std::vector<FacetURI> uris;
+    uris.reserve(facets.size());
+    std::transform(facets.begin(), facets.end(), std::back_inserter(uris),
+                   [](const Facet& facet) { return facet.uri; });
+    std::sort(uris.begin(), uris.end());
+    return uris;
+  };
+
+  return sort_uris(a) == sort_uris(b);
 }
 
 bool IsValidAndroidFacetURI(const std::string& url) {
