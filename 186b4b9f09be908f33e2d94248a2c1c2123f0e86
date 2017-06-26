@@ -123,6 +123,30 @@
       "revId": "186b4b9f09be908f33e2d94248a2c1c2123f0e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2066f22_71728426",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-26T01:42:10Z",
+      "side": 1,
+      "message": "Web IDL is a living standard. I\u0027m not sure adding revision makes sense. If we starts adding revision references we will end up having a lot of comments.\n\nI\u0027d prefer to follow a similar way we do in blink -- We only put the spec URL in each IDL file (not revision).",
+      "parentUuid": "b9dc527e_407a2000",
+      "range": {
+        "startLine": 353,
+        "startChar": 25,
+        "endLine": 353,
+        "endChar": 32
+      },
+      "revId": "186b4b9f09be908f33e2d94248a2c1c2123f0e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
