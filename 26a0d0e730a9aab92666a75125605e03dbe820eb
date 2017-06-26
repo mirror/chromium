@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc87b8df_5d9da011",
+        "filename": "media/midi/task_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-26T07:06:54Z",
+      "side": 1,
+      "message": "Can you tell me why you changed the whether the lock is acquired outside or inside of the function? There is a chance for Unbind to run between L87-L88, so I think the previous version is safer.",
+      "revId": "26a0d0e730a9aab92666a75125605e03dbe820eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa90f08a_a725c02b",
+        "filename": "media/midi/task_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-26T07:06:54Z",
+      "side": 1,
+      "message": "Can you update this comment?",
+      "revId": "26a0d0e730a9aab92666a75125605e03dbe820eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
