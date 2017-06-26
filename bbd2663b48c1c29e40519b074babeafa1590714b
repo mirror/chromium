@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e00e4412_1b85731e",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-26T18:42:08Z",
+      "side": 1,
+      "message": "This also means that you will not be sending events to a page when it\u0027s being hidden (e.g. during tab-switch). I think this would break this case: (1) hover over something in a page, so that the hover effect shows up (2) without moving the mouse cursor, switch to a different tab (e.g. by pressing ctrl+tab). (3) move mouse cursor so that it is no longer on top of the page. (4) switch back to the previous page (e.g. ctrl+shift+tab). I think you will see that the page still has the hover effect. So this is not something you should do here. Instead, I think you want this to happen only when this is called from WindowTreeHost::OnCursorVisibilityChanged(). As noted in event.h, I think this information should be included in Event:flags_. So this function should take an option MouseEventFlags as input, which OnCursorVisibilityChanged() will use to set EF_CURSOR_VISBILITY from here.",
+      "revId": "bbd2663b48c1c29e40519b074babeafa1590714b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0796d492_4faa9052",
+        "filename": "ui/events/blink/web_input_event.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-26T18:42:08Z",
+      "side": 1,
+      "message": "Should you just not send the event at all?",
+      "revId": "bbd2663b48c1c29e40519b074babeafa1590714b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1cff2b9_b41349ec",
+        "filename": "ui/events/event.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-26T18:42:08Z",
+      "side": 1,
+      "message": "This is pretty weird. Code in a lower layer like ui/events/ shouldn\u0027t ideally differentiate between views and blink.\n\nI agree with bokan@ on crbug that we probably should dispatch some event other than EXITED. (e.g. perhaps a ET_CURSOR_VISIBLITY_CHANGED or something). But, if we want to continue sending EXITED, then it would be better to add a MouseEventFlags for that, e.g. EF_CURSOR_VISIBILITY or something like that. Code in content/browser can then filter those out and not send to blink.",
+      "revId": "bbd2663b48c1c29e40519b074babeafa1590714b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
