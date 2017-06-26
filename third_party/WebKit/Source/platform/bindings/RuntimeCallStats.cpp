@@ -15,6 +15,13 @@ namespace {
 RuntimeCallStats* g_runtime_call_stats_for_testing = nullptr;
 }
 
+void RuntimeCallCounter::Dump(TracedValue& value) {
+  value.BeginArray(name_);
+  value.PushDouble(count_);
+  value.PushDouble(time_.InMicroseconds());
+  value.EndArray();
+}
+
 void RuntimeCallTimer::Start(RuntimeCallCounter* counter,
                              RuntimeCallTimer* parent) {
   DCHECK(!IsRunning());
@@ -38,7 +45,7 @@ RuntimeCallTimer* RuntimeCallTimer::Stop() {
 
 RuntimeCallStats::RuntimeCallStats() {
   static const char* const names[] = {
-#define COUNTER_NAME_ENTRY(name) #name,
+#define COUNTER_NAME_ENTRY(name) "Blink_" #name,
       FOR_EACH_COUNTER(COUNTER_NAME_ENTRY)
 #undef COUNTER_NAME_ENTRY
   };
@@ -59,6 +66,15 @@ void RuntimeCallStats::Reset() {
   for (int i = 0; i < number_of_counters_; i++) {
     counters_[i].Reset();
   }
+  in_use_ = true;
+}
+
+void RuntimeCallStats::Dump(TracedValue& value) {
+  for (int i = 0; i < number_of_counters_; i++) {
+    if (counters_[i].GetCount() > 0)
+      counters_[i].Dump(value);
+  }
+  in_use_ = false;
 }
 
 String RuntimeCallStats::ToString() const {
@@ -86,6 +102,32 @@ void RuntimeCallStats::SetRuntimeCallStatsForTesting() {
 // static
 void RuntimeCallStats::ClearRuntimeCallStatsForTesting() {
   g_runtime_call_stats_for_testing = nullptr;
+}
+
+void RuntimeCallStatsScopedTracer::InitializeData(RuntimeCallStats* stats,
+                                                  const char* category_group,
+                                                  const char* name) {
+  TRACE_EVENT_CATEGORY_GROUP_ENABLED(category_group, &category_group_enabled_);
+  data_.category_group = category_group;
+  data_.name = name;
+  if (ShouldTrace()) {
+    if (stats->InUse())
+      has_parent_scope_ = true;
+    else
+      stats->Reset();
+    data_.stats = stats;
+  }
+}
+
+void RuntimeCallStatsScopedTracer::AddEndTraceEvent() {
+  if (ShouldTrace() && !has_parent_scope_) {
+    std::unique_ptr<TracedValue> value = TracedValue::Create();
+    data_.stats->Dump(*value);
+    TRACE_EVENT_END1(data_.category_group, data_.name, "runtime-call-stats",
+                     std::move(value));
+  } else if (begin_event_created_) {
+    TRACE_EVENT_END0(data_.category_group, data_.name);
+  }
 }
 
 }  // namespace blink
