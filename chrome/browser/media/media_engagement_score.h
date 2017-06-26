@@ -50,6 +50,9 @@ class MediaEngagementScore final {
     return last_media_playback_time_;
   }
 
+  // Calculate the score as per the formula in the design doc.
+  static double CalculateScore(int visits, int media_playbacks);
+
   // The dictionary keys to store individual metrics. kVisitsKey will
   // store the number of visits to an origin and kMediaPlaybacksKey
   // will store the number of media playbacks on an origin.
