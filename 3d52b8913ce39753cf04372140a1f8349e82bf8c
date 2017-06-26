@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b523d44_534943d2",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-06-26T21:43:19Z",
+      "side": 1,
+      "message": "Is it expected to be applied to libcronet_tests.so only and not to libcronet.so?",
+      "range": {
+        "startLine": 545,
+        "startChar": 24,
+        "endLine": 545,
+        "endChar": 30
+      },
+      "revId": "3d52b8913ce39753cf04372140a1f8349e82bf8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
