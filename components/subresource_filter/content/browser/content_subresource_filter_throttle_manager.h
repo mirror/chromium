@@ -91,6 +91,8 @@ class ContentSubresourceFilterThrottleManager
  protected:
   // content::WebContentsObserver:
   void RenderFrameDeleted(content::RenderFrameHost* frame_host) override;
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override;
   void ReadyToCommitNavigation(
       content::NavigationHandle* navigation_handle) override;
   void DidFinishNavigation(
@@ -129,17 +131,33 @@ class ContentSubresourceFilterThrottleManager
 
   void OnDocumentLoadStatistics(const DocumentLoadStatistics& statistics);
 
+  void OnActivationStateThrottleDestroyed(
+      content::NavigationHandle* navigation_handle);
+
   // For each RenderFrameHost where the last committed load has subresource
   // filtering activated, owns the corresponding AsyncDocumentSubresourceFilter.
-  std::unordered_map<content::RenderFrameHost*,
-                     std::unique_ptr<AsyncDocumentSubresourceFilter>>
+  std::map<content::RenderFrameHost*,
+           std::unique_ptr<AsyncDocumentSubresourceFilter>>
       activated_frame_hosts_;
+
+  // This map contains activation state computing throttles between
+  // DidStartNavigation and throttle insertion time. This is done to ensure that
+  // every throttle we insert to track a given NavigationHandle is one that will
+  // receive DidFinishNavigation (since DidStartNavigation and
+  // DidFinishNavigation are self-consistent).
+  std::map<content::NavigationHandle*,
+           std::unique_ptr<ActivationStateComputingNavigationThrottle>>
+      pending_activation_throttles_;
 
   // For each ongoing navigation that requires activation state computation,
   // keeps track of the throttle that is carrying out that computation, so that
   // the result can be retrieved when the navigation is ready to commit.
-  std::unordered_map<content::NavigationHandle*,
-                     ActivationStateComputingNavigationThrottle*>
+  //
+  // Throttles are added to the map at throttle insertion time, when the
+  // ownership of the throttle is passed from |pending_activation_throttles_| to
+  // the NavigationHandle itself.
+  std::map<content::NavigationHandle*,
+           ActivationStateComputingNavigationThrottle*>
       ongoing_activation_throttles_;
 
   ScopedObserver<SubresourceFilterObserverManager, SubresourceFilterObserver>
