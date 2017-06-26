@@ -69,6 +69,24 @@
       "revId": "38b93f441fe1cd62e07d1e924960343d39bf154f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf12137_706d486f",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T05:59:07Z",
+      "side": 1,
+      "message": "Ah, makes sense.\n\nLGTM!",
+      "parentUuid": "930519c5_ca3acf25",
+      "revId": "38b93f441fe1cd62e07d1e924960343d39bf154f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
