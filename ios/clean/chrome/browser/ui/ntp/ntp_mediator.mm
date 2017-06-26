@@ -6,7 +6,6 @@
 #import "ios/clean/chrome/browser/ui/ntp/ntp_mediator.h"
 
 #import "ios/chrome/browser/ui/ntp/new_tab_page_bar_item.h"
-#import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_consumer.h"
