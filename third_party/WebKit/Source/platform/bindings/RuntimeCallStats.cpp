@@ -15,6 +15,13 @@ namespace {
 RuntimeCallStats* g_runtime_call_stats_for_testing = nullptr;
 }
 
+void RuntimeCallCounter::Dump(TracedValue& value) {
+  value.BeginArray(name_);
+  value.PushDouble(count_);
+  value.PushDouble(time_.InMicroseconds());
+  value.EndArray();
+}
+
 void RuntimeCallTimer::Start(RuntimeCallCounter* counter,
                              RuntimeCallTimer* parent) {
   DCHECK(!IsRunning());
@@ -38,9 +45,11 @@ RuntimeCallTimer* RuntimeCallTimer::Stop() {
 
 RuntimeCallStats::RuntimeCallStats() {
   static const char* const names[] = {
-#define COUNTER_NAME_ENTRY(name) #name,
+#define QUOTE(name) #name
+#define COUNTER_NAME_ENTRY(name) QUOTE(BlinkRCS_##name),
       FOR_EACH_COUNTER(COUNTER_NAME_ENTRY)
 #undef COUNTER_NAME_ENTRY
+#undef QUOTE
   };
 
   for (int i = 0; i < number_of_counters_; i++) {
@@ -58,6 +67,12 @@ RuntimeCallStats* RuntimeCallStats::From(v8::Isolate* isolate) {
 void RuntimeCallStats::Reset() {
   for (int i = 0; i < number_of_counters_; i++) {
     counters_[i].Reset();
+  }
+}
+
+void RuntimeCallStats::Dump(TracedValue& value) {
+  for (int i = 0; i < number_of_counters_; i++) {
+    counters_[i].Dump(value);
   }
 }
 
@@ -86,6 +101,27 @@ void RuntimeCallStats::SetRuntimeCallStatsForTesting() {
 // static
 void RuntimeCallStats::ClearRuntimeCallStatsForTesting() {
   g_runtime_call_stats_for_testing = nullptr;
+}
+
+void RuntimeCallStatsScopedTracer::InitializeData(RuntimeCallStats* stats,
+                                                  const char* category_group,
+                                                  const char* name) {
+  stats->Reset();
+  data_.stats = stats;
+  data_.category_group = category_group;
+  data_.name = name;
+}
+
+void RuntimeCallStatsScopedTracer::AddEndTraceEvent() {
+  if (RuntimeEnabledFeatures::BlinkRuntimeCallStatsEnabled()) {
+    std::unique_ptr<TracedValue> value = TracedValue::Create();
+    data_.stats->Dump(*value);
+    data_.stats->Reset();
+    TRACE_EVENT_END1(data_.category_group, data_.name, "runtime-call-stats",
+                     std::move(value));
+  } else if (begin_event_created_) {
+    TRACE_EVENT_END0(data_.category_group, data_.name);
+  }
 }
 
 }  // namespace blink
