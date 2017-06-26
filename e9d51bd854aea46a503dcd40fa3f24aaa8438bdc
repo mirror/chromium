@@ -34,6 +34,24 @@
       "revId": "e9d51bd854aea46a503dcd40fa3f24aaa8438bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7d94dd_db1f1ddc",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-26T20:33:57Z",
+      "side": 1,
+      "message": "I envisioned UMA_HISTOGRAM_COUNTS_N to see how many times the switch was used and compare that to the total number of instances the extensions auto-updated, so we could compute some percentage.\n\nI didn\u0027t see UMA_HISTOGRAM_BOOLEAN was an option until now. Using this instead makes more sense. Of the times an extension is updated, we can see how many times the switch was used compared to when it was not used.",
+      "parentUuid": "8a08fd18_26ddefb3",
+      "revId": "e9d51bd854aea46a503dcd40fa3f24aaa8438bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
