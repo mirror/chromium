@@ -33,6 +33,24 @@
       "revId": "6a263120ca894138a8094056810831eb07bfba75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad266a5b_858aa8d2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-06-26T17:11:18Z",
+      "side": 1,
+      "message": "This isn\u0027t performance sensitive so this should do.\n\nAnother option would be to take advantage of the fact that the number of graphemes are guaranteed to be equal to or less than the number of characters:\n\nCHECK(length \u003e\u003d text_.length());\ntext_.Truncate(length);\ntext_.Fill(mask);\n\nUp to you.",
+      "parentUuid": "e7bddc85_67b1660c",
+      "revId": "6a263120ca894138a8094056810831eb07bfba75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
