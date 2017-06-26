@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b452e169_29e9a19d",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-26T09:46:03Z",
+      "side": 1,
+      "message": "It\u0027s a just idea, but you can create an interface pointer in the blink side by passing mojo::MessagePipeHandle. \nWhat do you think? I guess code would be simpler if EventDispatcher is accessible directly from blink because we don\u0027t have to insert the boilerplate layer.",
+      "revId": "03768906f02f1a3009863a221a83e69021ae5de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
