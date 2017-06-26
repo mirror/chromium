@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56dd162f_66c46018",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildConnectionAllocator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T18:43:57Z",
+      "side": 1,
+      "message": "ok.. maybe we should just use an ObserverList from base instead, that actually correctly implements modification during iteration correctly",
+      "revId": "6098e52697cd31f84ecd6eb0e0f84ab2202eece8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fea090_7e0cc9a3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T18:43:57Z",
+      "side": 1,
+      "message": "unrelated no-op change..?",
+      "revId": "6098e52697cd31f84ecd6eb0e0f84ab2202eece8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860eb1ff_1804193e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T18:43:57Z",
+      "side": 1,
+      "message": "can assert connection is not null now",
+      "revId": "6098e52697cd31f84ecd6eb0e0f84ab2202eece8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
