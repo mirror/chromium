@@ -86,6 +86,30 @@
       "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd46c2f_731baf05",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-06-26T20:44:20Z",
+      "side": 1,
+      "message": "Ack. Thanks for confirming.",
+      "parentUuid": "ed303f85_38efd294",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
