@@ -16,6 +16,24 @@
       "revId": "e165c20944bf898abeae3905349453fcecb6fdd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de54e6ed_120671c5",
+        "filename": "chrome/browser/chromeos/fileapi/external_file_url_request_job_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-26T08:36:55Z",
+      "side": 1,
+      "message": "No need to be a ptr. Thanks!\nDone.",
+      "parentUuid": "7be422fd_8e23814f",
+      "revId": "e165c20944bf898abeae3905349453fcecb6fdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
