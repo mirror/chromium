@@ -415,6 +415,10 @@ bool Display::SurfaceHasUndrawnFrame(const SurfaceId& surface_id) const {
   return surface->HasUndrawnActiveFrame();
 }
 
+const RendererSettings& Display::GetRendererSettings() const {
+  return settings_;
+}
+
 const SurfaceId& Display::CurrentSurfaceId() {
   return current_surface_id_;
 }
