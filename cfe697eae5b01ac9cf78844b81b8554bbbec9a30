@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11c3d2a3_d1f9f613",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-26T15:54:01Z",
+      "side": 1,
+      "message": "Yes, I am developing some functionalities to have a workable NTP, then I will probably split and rename some files.",
+      "parentUuid": "901037eb_2cff088f",
+      "range": {
+        "startLine": 377,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 38
+      },
+      "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0bbccbb_9bd526d0",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ea008b96_088e38ec",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-26T15:54:01Z",
+      "side": 1,
+      "message": "Does it make sense at all? This was copy-pasted from the one currently used on the NTP. I removed it.",
+      "parentUuid": "a0bbccbb_9bd526d0",
+      "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b73b546c_b1567575",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4befb8_89b82475",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-26T15:54:01Z",
+      "side": 1,
+      "message": "It is indeed called on scroll. It is used to keep the header to the top on scrolling.",
+      "parentUuid": "b73b546c_b1567575",
+      "revId": "cfe697eae5b01ac9cf78844b81b8554bbbec9a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
