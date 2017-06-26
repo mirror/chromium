@@ -16,6 +16,24 @@
       "revId": "734b0f4b78e014a4baba05eb66128cf1bf376c37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791b1452_ce2a228c",
+        "filename": "mojo/public/tools/bindings/generators/js_templates/module.amd.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-26T21:42:39Z",
+      "side": 0,
+      "message": "I changed this code move the reference to document out of a path that is run unconditionally.",
+      "parentUuid": "38f7aeff_e3664f18",
+      "revId": "734b0f4b78e014a4baba05eb66128cf1bf376c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

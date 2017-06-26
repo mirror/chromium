@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a55282c3_ce397e17",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-26T21:42:39Z",
+      "side": 1,
+      "message": "I tried building that. The problem is that importScripts expects paths relative to the worker\u0027s main script and there is no equivalent to document.currentScript.src to resolve the relative path between the current script and document.location.\n\nWhat is the best way to set mojo.config.autoLoadMojomDeps to false?\n\nI can throw an error in this function if I detect that internal.global is a WorkerGlobalScope.",
+      "parentUuid": "a6380c03_03f44179",
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86f807db_42844b94",
         "filename": "third_party/WebKit/LayoutTests/mojo/resources/worker.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f8a3f8_bcdc2433",
+        "filename": "third_party/WebKit/LayoutTests/mojo/resources/worker.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-26T21:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f807db_42844b94",
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9861e785_7e2284a3",
+        "filename": "third_party/WebKit/LayoutTests/mojo/resources/worker.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-26T21:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2dfb3ae_75f48ef5",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01cecce4_79372aad",
         "filename": "third_party/WebKit/Source/core/mojo/Mojo.cpp",
         "patchSetId": 5
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "47d4b722_ff7c2c08",
+        "filename": "third_party/WebKit/Source/core/mojo/Mojo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-26T21:42:39Z",
+      "side": 1,
+      "message": "I\u0027ve written a test that hits this path but only when working with a detached frame. I don\u0027t think it\u0027s possible for script to trigger this in a worker because you can\u0027t pass objects from the WorkerGlobalScope into other execution contexts.",
+      "parentUuid": "01cecce4_79372aad",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 80
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8bce702_515d6e44",
         "filename": "third_party/WebKit/Source/core/mojo/test/MojoInterfaceInterceptor.cpp",
         "patchSetId": 5
@@ -93,6 +177,30 @@
       "writtenOn": "2017-06-25T08:09:56Z",
       "side": 1,
       "message": "What are the cases we hit this path?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 80
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25a209c_f845f216",
+        "filename": "third_party/WebKit/Source/core/mojo/test/MojoInterfaceInterceptor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-26T21:42:39Z",
+      "side": 1,
+      "message": "The MojoInterfaceInterceptor attaches itself to the ExecutionContext from which it was constructed. We can hit this case if, for example, start() is called after the frame it is attached to has been destroyed.",
+      "parentUuid": "d8bce702_515d6e44",
       "range": {
         "startLine": 38,
         "startChar": 0,
