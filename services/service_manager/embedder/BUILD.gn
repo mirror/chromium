@@ -2,6 +2,20 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+source_set("support") {
+  sources = [
+    "embedder/embedded_service_runner.cc",
+    "embedder/embedded_service_runner.h",
+  ]
+
+  deps = [
+    "//base:base_static",
+    "//services/service_manager/embedder/public",
+    "//services/service_manager/public/cpp",
+    "//services/service_manager/public/interfaces",
+  ]
+}
+
 component("embedder") {
   sources = [
     "main.cc",
