@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "08ff82b7_6162eb21",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-26T17:20:50Z",
+      "side": 1,
+      "message": "if (!previews_state) ?\nis there a preference for \u003d\u003d nullptr vs implicit boolean?",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 20
+      },
+      "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6b33cb_e996ce66",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-26T17:20:50Z",
+      "side": 1,
+      "message": "if (delegate_) ?",
+      "range": {
+        "startLine": 373,
+        "startChar": 6,
+        "endLine": 373,
+        "endChar": 15
+      },
+      "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cae79176_46e0c192",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 3
