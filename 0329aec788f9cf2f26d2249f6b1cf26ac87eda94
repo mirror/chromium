@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "21af5b86_243c33db",
+        "filename": "cc/ipc/copy_output_request_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Actually it needs to be moved out of the CopyOutputRequest at context construction time anyway, so I\u0027ve changed this to a value arg and kept the move here.",
+      "parentUuid": "2dfab747_fe27a173",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f59001e3_edb5f2db",
+        "filename": "cc/ipc/copy_output_request_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Indeed, this was an oversight on my part and that\u0027s exactly what I ended up doing.",
+      "parentUuid": "5b02595d_3ac29df9",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e4af1c_e195255c",
         "filename": "cc/ipc/struct_traits_unittest.cc",
         "patchSetId": 7
@@ -54,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "8c70b2b2_73bfbbe9",
+        "filename": "cc/ipc/struct_traits_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e4af1c_e195255c",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9122fa22_c11577f4",
         "filename": "mojo/public/cpp/bindings/interface_request.h",
         "patchSetId": 7
@@ -65,6 +119,24 @@
       "writtenOn": "2017-06-26T16:53:46Z",
       "side": 1,
       "message": "One idea is to be more consistent with InterfacePtrInfo/AssociatedInterfacePtrInfo/AssociatedInterfaceRequest, which have the following:\n  ScopedMessagePipeHandle PassHandle();\n  const ScopedMessagePipeHandle\u0026 handle() const;",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bc44f5_1be4699b",
+        "filename": "mojo/public/cpp/bindings/interface_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Yeah, I thought about that. I decided being locally consistent would be better for this CL since PassMessagePipe is called in quite a few places. We can do a rename of these methods in a future CL. WDYT?",
+      "parentUuid": "9122fa22_c11577f4",
       "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "17bea430_b218e599",
+        "filename": "mojo/public/cpp/bindings/struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0eb6ec4_d8b77488",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d50ba7_66f8340b",
         "filename": "mojo/public/cpp/bindings/struct_traits.h",
         "patchSetId": 7
@@ -102,6 +192,24 @@
       "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fe13b1_3c58cfb0",
+        "filename": "mojo/public/cpp/bindings/struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d50ba7_66f8340b",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "4b56e99f_4e5f7ef6",
+        "filename": "mojo/public/cpp/bindings/struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d55fa190_fec07f4a",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9a20799_381ebb5b",
         "filename": "mojo/public/cpp/bindings/struct_traits.h",
         "patchSetId": 7
@@ -136,6 +262,24 @@
       "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca067257_6c1d13ec",
+        "filename": "mojo/public/cpp/bindings/struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9a20799_381ebb5b",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "980122f8_e0511ef6",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4d19e7e_57375b82",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37798415_b467db61",
         "filename": "ui/gfx/mojo/buffer_types_struct_traits.cc",
         "patchSetId": 7
@@ -170,6 +332,24 @@
       "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282b7f18_a425afab",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37798415_b467db61",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

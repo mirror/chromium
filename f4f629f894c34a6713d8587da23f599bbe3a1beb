@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c4de60_92bbd5d7",
+        "filename": "mojo/public/cpp/bindings/lib/handle_interface_serialization.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T17:27:05Z",
+      "side": 1,
+      "message": "Yuzhu, please also note this new change. Since the handle will be serialized before it\u0027s actually released from the InterfacePtr, this can break some expectations that internal binding object state (e.g. wrt SyncHandleRegistry usage). For this reason it\u0027s necessary to ensure an InterfacePtr\u0027s proxy is de-configured before serialization. WDYT?",
+      "revId": "f4f629f894c34a6713d8587da23f599bbe3a1beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
