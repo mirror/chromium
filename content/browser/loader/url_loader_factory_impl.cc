@@ -85,7 +85,7 @@ void URLLoaderFactoryImpl::CreateLoaderAndStart(
   ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();
   rdh->OnRequestResourceWithMojo(requester_info, routing_id, request_id,
                                  url_request, std::move(request),
-                                 std::move(client));
+                                 std::move(client), traffic_annotation);
 }
 
 // static
