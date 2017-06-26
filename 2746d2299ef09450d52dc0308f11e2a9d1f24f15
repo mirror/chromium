@@ -114,6 +114,30 @@
     },
     {
       "key": {
+        "uuid": "c4f13bf0_6f74f05a",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/select/listbox-not-force-layout.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-26T20:49:15Z",
+      "side": 1,
+      "message": "\u003e Non-forced layout might be finished at this point\n\nIsn\u0027t this because you have a RAF between setting \"selected \u003d true\" and reading from internals?  If you read from internals immediately after setting \"selected \u003d true\", there should not be any opportunity for non-forced layout to run.",
+      "parentUuid": "14a65069_685cb29b",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f4013ec_8e5fbcfb",
         "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/fast/forms/select/listbox-scrollbar-incremental-load-expected.txt",
         "patchSetId": 9
@@ -267,6 +291,30 @@
     },
     {
       "key": {
+        "uuid": "e8479e57_bb5aed14",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-26T20:49:15Z",
+      "side": 1,
+      "message": "How about calling LayoutObject::SetNeedsLayout if we\u0027re not already kLayoutClean?  I\u0027m just worried about the failure mode where we set option_to_scroll_to_, but the scroll never happens because the HTMLSelectElement never gets marked as NeedsLayout().",
+      "parentUuid": "a4e05972_5470270d",
+      "range": {
+        "startLine": 894,
+        "startChar": 46,
+        "endLine": 894,
+        "endChar": 63
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c154da_cfdb0ba9",
         "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
         "patchSetId": 9
@@ -332,6 +380,24 @@
       "side": 1,
       "message": "It seems it\u0027s unsafe.  I saw the following DCHECK failure with fast/forms/select/listbox-in-multi-column.html :\n\n[3154:39939:0626/115744.115542:1828171697646139:FATAL:MultiColumnFragmentainerGroup.h(50)] Check failed: IsLogicalHeightKnown(). \n0   libbase.dylib                       0x0000000104c4368e base::debug::StackTrace::StackTrace(unsigned long) + 174\n1   libbase.dylib                       0x0000000104c4372d base::debug::StackTrace::StackTrace(unsigned long) + 29\n2   libbase.dylib                       0x0000000104c41bbc base::debug::StackTrace::StackTrace() + 28\n3   libbase.dylib                       0x0000000104ce127f logging::LogMessage::~LogMessage() + 479\n4   libbase.dylib                       0x0000000104cdebf5 logging::LogMessage::~LogMessage() + 21\n5   libblink_core.dylib                 0x000000011e70da17 blink::MultiColumnFragmentainerGroup::GroupLogicalHeight() const + 199\n6   libblink_core.dylib                 0x000000011e7151c0 blink::LayoutMultiColumnSet::FragmentainerGroupAtVisualPoint(blink::LayoutPoint const\u0026) const + 432\n7   libblink_core.dylib                 0x000000011e71665b blink::LayoutMultiColumnSet::VisualPointToFlowThreadPoint(blink::LayoutPoint const\u0026) const + 43\n8   libblink_core.dylib                 0x000000011e70c2c2 blink::LayoutMultiColumnFlowThread::VisualPointToFlowThreadPoint(blink::LayoutPoint const\u0026) const + 322\n9   libblink_core.dylib                 0x000000011e727e75 blink::LayoutObject::MapAncestorToLocal(blink::LayoutBoxModelObject const*, blink::TransformState\u0026, unsigned int) const + 949\n10  libblink_core.dylib                 0x000000011e651d1e blink::LayoutBox::MapAncestorToLocal(blink::LayoutBoxModelObject const*, blink::TransformState\u0026, unsigned int) const + 174\n11  libblink_core.dylib                 0x000000011e727c4c blink::LayoutObject::MapAncestorToLocal(blink::LayoutBoxModelObject const*, blink::TransformState\u0026, unsigned int) const + 396\n12  libblink_core.dylib                 0x000000011e651d1e blink::LayoutBox::MapAncestorToLocal(blink::LayoutBoxModelObject const*, blink::TransformState\u0026, unsigned int) const + 174\n13  libblink_core.dylib                 0x000000011e726b81 blink::LayoutObject::AncestorToLocalQuad(blink::LayoutBoxModelObject*, blink::FloatQuad const\u0026, unsigned int) const + 225\n14  libblink_core.dylib                 0x000000011d3ab694 blink::LayoutObject::AbsoluteToLocalQuad(blink::FloatQuad const\u0026, unsigned int) const + 52\n15  libblink_core.dylib                 0x000000011ebde5ff blink::PaintLayerScrollableArea::ScrollIntoView(blink::LayoutRect const\u0026, blink::ScrollAlignment const\u0026, blink::ScrollAlignment const\u0026, bool, blink::ScrollType) + 223\n16  libblink_core.dylib                 0x000000011e6fde5a blink::LayoutListBox::ScrollToRect(blink::LayoutRect const\u0026) + 474\n17  libblink_core.dylib                 0x000000011e0476af blink::HTMLSelectElement::ScrollToOptionAfterLayout() + 143\n18  libblink_core.dylib                 0x000000011ebd95b1 blink::PaintLayerScrollableArea::UpdateAfterLayout() + 2321\n19  libblink_core.dylib                 0x000000011ebaf9d4 blink::PaintLayer::UpdateSizeAndScrollingAfterLayout() + 84\n20  libblink_core.dylib                 0x000000011e648504 blink::LayoutBox::UpdateAfterLayout() + 84",
       "parentUuid": "ca7c5636_fc352783",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a66375d_afad9860",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-26T20:49:15Z",
+      "side": 1,
+      "message": "Hmm, my interpretation of this stack trace is that PLSA::ScrollIntoView calls LayoutObject::AbsoluteToLocalQuad, which relies on ancestors having up-to-date layout, which isn\u0027t a safe assumption in PLSA::UpdateAfterLayout.  Does that match your understanding?\n\nCan you call ScrollableArea::SetScrollOffset from HTMLSelectElement, instead of calling PLSA::ScrollIntoView?  That will avoid the use of AbsoluteToLocalQuad, but still give us the proper side effects of performing the scroll.",
+      "parentUuid": "8a0c6e16_1d122a65",
       "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
