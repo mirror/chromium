@@ -19,31 +19,3 @@ source_set("app_group") {
     "//ios/chrome/common:ios_app_bundle_id_prefix_header",
   ]
 }
-
-# This target will be included into application extensions and the list
-# of its dependencies must be kept as short as possible.
-source_set("client") {
-  configs += [ "//build/config/compiler:enable_arc" ]
-  sources = [
-    "app_group_metrics_client.h",
-    "app_group_metrics_client.mm",
-  ]
-
-  deps = [
-    ":app_group",
-    "//base",
-  ]
-}
-
-source_set("main_app") {
-  configs += [ "//build/config/compiler:enable_arc" ]
-  sources = [
-    "app_group_metrics_mainapp.h",
-    "app_group_metrics_mainapp.mm",
-  ]
-
-  deps = [
-    ":app_group",
-    "//base",
-  ]
-}

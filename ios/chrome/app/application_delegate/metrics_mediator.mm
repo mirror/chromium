@@ -8,7 +8,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
-#include "base/task_scheduler/post_task.h"
 #include "components/crash/core/common/crash_keys.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_service.h"
@@ -26,7 +25,6 @@
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/main/browser_view_information.h"
-#include "ios/chrome/common/app_group/app_group_metrics_mainapp.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #include "ios/public/provider/chrome/browser/distribution/app_distribution_provider.h"
 #include "ios/web/public/web_thread.h"
@@ -63,11 +61,6 @@ using metrics_mediator::kAppEnteredBackgroundDateKey;
 
 // Starts or stops metrics recording and/or uploading.
 - (void)setMetricsEnabled:(BOOL)enabled withUploading:(BOOL)allowUploading;
-// Sets variables needed by the app_group application to collect UMA data.
-// Process the pending logs produced by extensions.
-// Called on start (cold and warm) and UMA settings change to update the
-// collecting settings in extensions.
-- (void)setAppGroupMetricsEnabled:(BOOL)enabled;
 // Processes crash reports present at startup.
 - (void)processCrashReportsPresentAtStartup;
 // Starts or stops crash recording and/or uploading.
@@ -223,39 +216,6 @@ using metrics_mediator::kAppEnteredBackgroundDateKey;
         setMinimumBackgroundFetchInterval:
             UIApplicationBackgroundFetchIntervalNever];
   }
-}
-
-- (void)setAppGroupMetricsEnabled:(BOOL)enabled {
-  app_group::ProceduralBlockWithData callback;
-  if (enabled) {
-    PrefService* prefs = GetApplicationContext()->GetLocalState();
-    NSString* brandCode =
-        base::SysUTF8ToNSString(ios::GetChromeBrowserProvider()
-                                    ->GetAppDistributionProvider()
-                                    ->GetDistributionBrandCode());
-
-    app_group::main_app::EnableMetrics(
-        base::SysUTF8ToNSString(
-            GetApplicationContext()->GetMetricsService()->GetClientId()),
-        brandCode, prefs->GetInt64(metrics::prefs::kInstallDate),
-        prefs->GetInt64(metrics::prefs::kMetricsReportingEnabledTimestamp));
-
-    // If metrics are enabled, process the logs. Otherwise, just delete them.
-    callback = ^(NSData* log_content) {
-      std::string log(static_cast<const char*>([log_content bytes]),
-                      static_cast<size_t>([log_content length]));
-      web::WebThread::PostTask(
-          web::WebThread::UI, FROM_HERE, base::BindBlockArc(^{
-            GetApplicationContext()->GetMetricsService()->PushExternalLog(log);
-          }));
-    };
-  } else {
-    app_group::main_app::DisableMetrics();
-  }
-
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&app_group::main_app::ProcessPendingLogs, callback));
 }
 
 - (void)processCrashReportsPresentAtStartup {

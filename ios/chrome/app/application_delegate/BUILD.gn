@@ -116,7 +116,6 @@ source_set("application_delegate_internal") {
     "//ios/chrome/browser/ui:ui_internal",
     "//ios/chrome/browser/ui/authentication",
     "//ios/chrome/browser/ui/main",
-    "//ios/chrome/common/app_group:main_app",
     "//ios/net",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/distribution",

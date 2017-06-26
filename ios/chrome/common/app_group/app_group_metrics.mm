@@ -12,10 +12,6 @@
 
 namespace app_group {
 
-NSString* const kPendingLogFileSuffix = @"_PendingLog";
-
-NSString* const kPendingLogFileDirectory = @"ExtensionLogs";
-
 // To avoid collision between session_ids from chrome or external components,
 // the session ID is offset depending on the application.
 int AppGroupSessionID(int session_id, AppGroupApplications application) {
