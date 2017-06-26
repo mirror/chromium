@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d9ed53_9ef0fb6f",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "While you are here, could you replace const with constexpr for these constants?",
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ad84d98_747df906",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "What is the benefit of having this constant?",
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44bc6e6e_9b5724e9",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "Instead of rewriting all existing code, how about adding a new method (e.g. ApplyTeamDriveChangeList)?",
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd957cd0_aed3b911",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "Is this line needed?",
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfa9ae0e_8533ac50",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "This should be ASSERT.\nOtherwise, the next line will crash with SEGV when failing.",
+      "range": {
+        "startLine": 297,
+        "startChar": 2,
+        "endLine": 297,
+        "endChar": 8
+      },
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef339230_8542b861",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "IIUC ConvertChangeResourceToResourceEntry() doesn\u0027t set parent local ID for this case.\nPlease provide the same data set as ChangeListProcessor will receive (and be consistent with the new_file below).",
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cc02d8_238cff2e",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "Most part of this function is about handling Team Drive largest change stamp.\nHow about handling team_drive_id.empty()\u003d\u003dtrue case handling in ChangeListProcessor::Apply(), and renaming this function to something like SetTeamDriveLargestChangestamp?",
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9b52876_1165eae4",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "IIUC this code doesn\u0027t work for Team Drives.",
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13792088_b54562b7",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T07:06:03Z",
+      "side": 1,
+      "message": "Please add a comment about team_drive_id",
+      "revId": "7bb9b586922fa78f2a6b6e6e21d837d50a2222e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
