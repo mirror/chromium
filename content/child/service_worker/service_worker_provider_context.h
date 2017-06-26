@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner_helpers.h"
 #include "content/common/content_export.h"
+#include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_provider_interfaces.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
@@ -49,6 +50,9 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
                                         ServiceWorkerProviderContextDeleter>,
       NON_EXPORTED_BASE(public mojom::ServiceWorkerProvider) {
  public:
+  using ControllerChangeCallback =
+      base::Callback<void(mojom::ServiceWorkerEventDispatcherPtrInfo)>;
+
   // |provider_id| specifies which host will receive the message from this
   // provider. |provider_type| changes the behavior of this provider
   // context. |request| is an endpoint which is connected to
@@ -58,7 +62,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       int provider_id,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerProviderAssociatedRequest request,
-      ThreadSafeSender* thread_safe_sender);
+      ThreadSafeSender* thread_safe_sender,
+      const ControllerChangeCallback& controller_change_callback);
 
   // Called from ServiceWorkerDispatcher.
   void OnAssociateRegistration(
@@ -69,7 +74,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   void OnDisassociateRegistration();
   void OnSetControllerServiceWorker(
       std::unique_ptr<ServiceWorkerHandleReference> controller,
-      const std::set<uint32_t>& used_features);
+      const std::set<uint32_t>& used_features,
+      mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info);
 
   // Called on the worker thread. Used for initializing
   // ServiceWorkerGlobalScope.
@@ -108,6 +114,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   std::unique_ptr<Delegate> delegate_;
 
   std::set<uint32_t> used_features_;
+
+  ControllerChangeCallback controller_change_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerProviderContext);
 };
