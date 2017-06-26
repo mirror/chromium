@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99bbfb3f_20480ded",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-26T22:30:05Z",
+      "side": 1,
+      "message": "Updated this line from\n  CHECK(length \u003e\u003d text_.length());\n\nThe number of grapheme clusters should always be lesser than or equal to the number of UChars in text_.",
+      "revId": "7607f9d21d16d39b0cfdc343165123d020003dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
