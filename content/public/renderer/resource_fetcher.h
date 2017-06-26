@@ -5,13 +5,12 @@
 #ifndef CONTENT_PUBLIC_RENDERER_RESOURCE_FETCHER_H_
 #define CONTENT_PUBLIC_RENDERER_RESOURCE_FETCHER_H_
 
+#include <memory>
 #include <string>
 
 #include "base/callback.h"
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
-
-class GURL;
 
 namespace base {
 class TimeDelta;
@@ -39,28 +38,17 @@ class CONTENT_EXPORT ResourceFetcher {
   // Creates a ResourceFetcher for the specified resource.  Caller takes
   // ownership of the returned object.  Deleting the ResourceFetcher will cancel
   // the request, and the callback will never be run.
-  static ResourceFetcher* Create(const GURL& url);
-
-  // Set the corresponding parameters of the request.  Must be called before
-  // Start.  By default, requests are GETs with no body and respect the default
-  // cache policy.
-  virtual void SetMethod(const std::string& method) = 0;
-  virtual void SetBody(const std::string& body) = 0;
-  virtual void SetHeader(const std::string& header,
-                         const std::string& value) = 0;
+  static ResourceFetcher* Create();
 
   // Starts the request using the specified frame.  Calls |callback| when
   // done.
   virtual void Start(blink::WebLocalFrame* frame,
-                     blink::WebURLRequest::RequestContext request_context,
+                     std::unique_ptr<blink::WebURLRequest> request,
                      const Callback& callback) = 0;
 
   // Sets how long to wait for the server to reply.  By default, there is no
   // timeout.  Must be called after a request is started.
   virtual void SetTimeout(const base::TimeDelta& timeout) = 0;
-
-  // Manually cancel the request.
-  virtual void Cancel() = 0;
 };
 
 }  // namespace content

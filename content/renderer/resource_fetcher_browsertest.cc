@@ -22,10 +22,15 @@
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "third_party/WebKit/public/platform/WebData.h"
+#include "third_party/WebKit/public/platform/WebHTTPBody.h"
+#include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
+using blink::WebString;
 using blink::WebURLRequest;
 using blink::WebURLResponse;
 
@@ -152,9 +157,13 @@ class ResourceFetcherTests : public ContentBrowserTest {
         GetRenderView()->GetWebView()->MainFrame()->ToWebLocalFrame();
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
-    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+
+    std::unique_ptr<WebURLRequest> request =
+        base::MakeUnique<WebURLRequest>(url);
+    request->SetRequestContext(WebURLRequest::kRequestContextInternal);
+
+    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create());
+    fetcher->Start(frame, std::move(request), delegate->NewCallback());
 
     delegate->WaitForResponse();
 
@@ -169,9 +178,13 @@ class ResourceFetcherTests : public ContentBrowserTest {
         GetRenderView()->GetWebView()->MainFrame()->ToWebLocalFrame();
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
-    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+
+    std::unique_ptr<WebURLRequest> request =
+        base::MakeUnique<WebURLRequest>(url);
+    request->SetRequestContext(WebURLRequest::kRequestContextInternal);
+
+    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create());
+    fetcher->Start(frame, std::move(request), delegate->NewCallback());
 
     delegate->WaitForResponse();
 
@@ -186,9 +199,13 @@ class ResourceFetcherTests : public ContentBrowserTest {
     // Try to fetch a page on a site that doesn't exist.
     GURL url("http://localhost:1339/doesnotexist");
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
-    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+
+    std::unique_ptr<WebURLRequest> request =
+        base::MakeUnique<WebURLRequest>(url);
+    request->SetRequestContext(WebURLRequest::kRequestContextInternal);
+
+    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create());
+    fetcher->Start(frame, std::move(request), delegate->NewCallback());
 
     delegate->WaitForResponse();
 
@@ -205,9 +222,13 @@ class ResourceFetcherTests : public ContentBrowserTest {
         GetRenderView()->GetWebView()->MainFrame()->ToWebLocalFrame();
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
-    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+
+    std::unique_ptr<WebURLRequest> request =
+        base::MakeUnique<WebURLRequest>(url);
+    request->SetRequestContext(WebURLRequest::kRequestContextInternal);
+
+    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create());
+    fetcher->Start(frame, std::move(request), delegate->NewCallback());
     fetcher->SetTimeout(base::TimeDelta());
 
     delegate->WaitForResponse();
@@ -225,9 +246,13 @@ class ResourceFetcherTests : public ContentBrowserTest {
         GetRenderView()->GetWebView()->MainFrame()->ToWebLocalFrame();
 
     std::unique_ptr<EvilFetcherDelegate> delegate(new EvilFetcherDelegate);
-    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+
+    std::unique_ptr<WebURLRequest> request =
+        base::MakeUnique<WebURLRequest>(url);
+    request->SetRequestContext(WebURLRequest::kRequestContextInternal);
+
+    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create());
+    fetcher->Start(frame, std::move(request), delegate->NewCallback());
     fetcher->SetTimeout(base::TimeDelta());
     delegate->SetFetcher(fetcher.release());
 
@@ -242,11 +267,19 @@ class ResourceFetcherTests : public ContentBrowserTest {
         GetRenderView()->GetWebView()->MainFrame()->ToWebLocalFrame();
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
-    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->SetMethod("POST");
-    fetcher->SetBody(kBody);
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+
+    std::unique_ptr<WebURLRequest> request =
+        base::MakeUnique<WebURLRequest>(url);
+    request->SetHTTPMethod(WebString::FromLatin1("POST"));
+    request->SetRequestContext(WebURLRequest::kRequestContextInternal);
+
+    blink::WebHTTPBody web_http_body;
+    web_http_body.Initialize();
+    web_http_body.AppendData(blink::WebData(std::string(kBody)));
+    request->SetHTTPBody(web_http_body);
+
+    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create());
+    fetcher->Start(frame, std::move(request), delegate->NewCallback());
 
     delegate->WaitForResponse();
     ASSERT_TRUE(delegate->completed());
@@ -255,21 +288,26 @@ class ResourceFetcherTests : public ContentBrowserTest {
   }
 
   void ResourceFetcherSetHeader(const GURL& url) {
-    const char* kHeader = "Rather boring header.";
+    const char* kHeaderValue = "Rather boring header.";
 
     blink::WebLocalFrame* frame =
         GetRenderView()->GetWebView()->MainFrame()->ToWebLocalFrame();
 
     std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
-    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
-    fetcher->SetHeader("header", kHeader);
-    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
-                   delegate->NewCallback());
+
+    std::unique_ptr<WebURLRequest> request =
+        base::MakeUnique<WebURLRequest>(url);
+    request->SetHTTPHeaderField(WebString::FromLatin1("header"),
+                                WebString::FromLatin1(kHeaderValue));
+    request->SetRequestContext(WebURLRequest::kRequestContextInternal);
+
+    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create());
+    fetcher->Start(frame, std::move(request), delegate->NewCallback());
 
     delegate->WaitForResponse();
     ASSERT_TRUE(delegate->completed());
     EXPECT_EQ(delegate->response().HttpStatusCode(), 200);
-    EXPECT_EQ(kHeader, delegate->data());
+    EXPECT_EQ(kHeaderValue, delegate->data());
   }
 
   int32_t render_view_routing_id_;

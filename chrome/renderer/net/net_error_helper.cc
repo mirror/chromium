@@ -35,7 +35,10 @@
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_message_macros.h"
 #include "third_party/WebKit/public/platform/WebCachePolicy.h"
+#include "third_party/WebKit/public/platform/WebData.h"
+#include "third_party/WebKit/public/platform/WebHTTPBody.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
+#include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
@@ -49,6 +52,11 @@
 #include "url/gurl.h"
 
 using base::JSONWriter;
+using blink::WebData;
+using blink::WebHTTPBody;
+using blink::WebString;
+using blink::WebURLRequest;
+using blink::WebURLResponse;
 using content::DocumentState;
 using content::RenderFrame;
 using content::RenderFrameObserver;
@@ -277,15 +285,21 @@ void NetErrorHelper::FetchNavigationCorrections(
     const std::string& navigation_correction_request_body) {
   DCHECK(!correction_fetcher_.get());
 
-  correction_fetcher_.reset(
-      content::ResourceFetcher::Create(navigation_correction_url));
-  correction_fetcher_->SetMethod("POST");
-  correction_fetcher_->SetBody(navigation_correction_request_body);
-  correction_fetcher_->SetHeader("Content-Type", "application/json");
+  std::unique_ptr<WebURLRequest> request =
+      base::MakeUnique<WebURLRequest>(navigation_correction_url);
+  request->SetHTTPMethod(WebString::FromLatin1("POST"));
+  request->SetHTTPHeaderField(WebString::FromLatin1("Content-Type"),
+                              WebString::FromLatin1("application/json"));
+  request->SetRequestContext(WebURLRequest::kRequestContextInternal);
 
+  WebHTTPBody web_http_body;
+  web_http_body.Initialize();
+  web_http_body.AppendData(WebData(navigation_correction_request_body));
+  request->SetHTTPBody(web_http_body);
+
+  correction_fetcher_.reset(content::ResourceFetcher::Create());
   correction_fetcher_->Start(
-      render_frame()->GetWebFrame(),
-      blink::WebURLRequest::kRequestContextInternal,
+      render_frame()->GetWebFrame(), std::move(request),
       base::Bind(&NetErrorHelper::OnNavigationCorrectionsFetched,
                  base::Unretained(this)));
 
@@ -300,15 +314,22 @@ void NetErrorHelper::CancelFetchNavigationCorrections() {
 void NetErrorHelper::SendTrackingRequest(
     const GURL& tracking_url,
     const std::string& tracking_request_body) {
-  // If there's already a pending tracking request, this will cancel it.
-  tracking_fetcher_.reset(content::ResourceFetcher::Create(tracking_url));
-  tracking_fetcher_->SetMethod("POST");
-  tracking_fetcher_->SetBody(tracking_request_body);
-  tracking_fetcher_->SetHeader("Content-Type", "application/json");
+  std::unique_ptr<WebURLRequest> request =
+      base::MakeUnique<WebURLRequest>(tracking_url);
+  request->SetHTTPMethod(WebString::FromLatin1("POST"));
+  request->SetHTTPHeaderField(WebString::FromLatin1("Content-Type"),
+                              WebString::FromLatin1("application/json"));
+  request->SetRequestContext(WebURLRequest::kRequestContextInternal);
 
+  WebHTTPBody web_http_body;
+  web_http_body.Initialize();
+  web_http_body.AppendData(WebData(tracking_request_body));
+  request->SetHTTPBody(web_http_body);
+
+  // If there's already a pending tracking request, this will cancel it.
+  tracking_fetcher_.reset(content::ResourceFetcher::Create());
   tracking_fetcher_->Start(
-      render_frame()->GetWebFrame(),
-      blink::WebURLRequest::kRequestContextInternal,
+      render_frame()->GetWebFrame(), std::move(request),
       base::Bind(&NetErrorHelper::OnTrackingRequestComplete,
                  base::Unretained(this)));
 }
@@ -323,7 +344,7 @@ void NetErrorHelper::LoadPageFromCache(const GURL& page_url) {
   blink::WebLocalFrame* web_frame = render_frame()->GetWebFrame();
   DCHECK_NE("POST", web_frame->DataSource()->GetRequest().HttpMethod().Ascii());
 
-  blink::WebURLRequest request(page_url);
+  WebURLRequest request(page_url);
   request.SetCachePolicy(blink::WebCachePolicy::kReturnCacheDataDontLoad);
   web_frame->LoadRequest(request);
 }
@@ -366,7 +387,7 @@ void NetErrorHelper::OnSetNavigationCorrectionInfo(
 }
 
 void NetErrorHelper::OnNavigationCorrectionsFetched(
-    const blink::WebURLResponse& response,
+    const WebURLResponse& response,
     const std::string& data) {
   // The fetcher may only be deleted after |data| is passed to |core_|.  Move
   // it to a temporary to prevent any potential re-entrancy issues.
@@ -377,9 +398,8 @@ void NetErrorHelper::OnNavigationCorrectionsFetched(
                                         base::i18n::IsRTL());
 }
 
-void NetErrorHelper::OnTrackingRequestComplete(
-    const blink::WebURLResponse& response,
-    const std::string& data) {
+void NetErrorHelper::OnTrackingRequestComplete(const WebURLResponse& response,
+                                               const std::string& data) {
   tracking_fetcher_.reset();
 }
 

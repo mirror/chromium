@@ -10,13 +10,13 @@
 #include "base/macros.h"
 #include "base/strings/string_util.h"
 #include "base/time/time.h"
-#include "third_party/WebKit/public/platform/WebHTTPBody.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/platform/WebURLLoader.h"
 #include "third_party/WebKit/public/platform/WebURLLoaderClient.h"
+#include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebKit.h"
@@ -26,8 +26,8 @@
 namespace content {
 
 // static
-ResourceFetcher* ResourceFetcher::Create(const GURL& url) {
-  return new ResourceFetcherImpl(url);
+ResourceFetcher* ResourceFetcher::Create() {
+  return new ResourceFetcherImpl();
 }
 
 class ResourceFetcherImpl::ClientImpl : public blink::WebURLLoaderClient {
@@ -121,9 +121,7 @@ class ResourceFetcherImpl::ClientImpl : public blink::WebURLLoaderClient {
   DISALLOW_COPY_AND_ASSIGN(ClientImpl);
 };
 
-ResourceFetcherImpl::ResourceFetcherImpl(const GURL& url)
-    : request_(url) {
-}
+ResourceFetcherImpl::ResourceFetcherImpl() {}
 
 ResourceFetcherImpl::~ResourceFetcherImpl() {
   if (!loader_)
@@ -135,64 +133,24 @@ ResourceFetcherImpl::~ResourceFetcherImpl() {
     loader_->Cancel();
 }
 
-void ResourceFetcherImpl::SetMethod(const std::string& method) {
-  DCHECK(!request_.IsNull());
-  DCHECK(!loader_);
-
-  request_.SetHTTPMethod(blink::WebString::FromUTF8(method));
-}
-
-void ResourceFetcherImpl::SetBody(const std::string& body) {
-  DCHECK(!request_.IsNull());
-  DCHECK(!loader_);
-
-  blink::WebHTTPBody web_http_body;
-  web_http_body.Initialize();
-  web_http_body.AppendData(blink::WebData(body));
-  request_.SetHTTPBody(web_http_body);
-}
-
-void ResourceFetcherImpl::SetHeader(const std::string& header,
-                                    const std::string& value) {
-  DCHECK(!request_.IsNull());
-  DCHECK(!loader_);
-
-  if (base::LowerCaseEqualsASCII(header, "referer")) {
-    blink::WebString referrer =
-        blink::WebSecurityPolicy::GenerateReferrerHeader(
-            blink::kWebReferrerPolicyDefault, request_.Url(),
-            blink::WebString::FromUTF8(value));
-    request_.SetHTTPReferrer(referrer, blink::kWebReferrerPolicyDefault);
-  } else {
-    request_.SetHTTPHeaderField(blink::WebString::FromUTF8(header),
-                                blink::WebString::FromUTF8(value));
-  }
-}
-
-void ResourceFetcherImpl::Start(
-    blink::WebLocalFrame* frame,
-    blink::WebURLRequest::RequestContext request_context,
-    const Callback& callback) {
+void ResourceFetcherImpl::Start(blink::WebLocalFrame* frame,
+                                std::unique_ptr<blink::WebURLRequest> request,
+                                const Callback& callback) {
   DCHECK(!loader_);
   DCHECK(!client_);
-  DCHECK(!request_.IsNull());
+
   DCHECK(frame);
   DCHECK(!frame->GetDocument().IsNull());
-  if (!request_.HttpBody().IsNull())
-    DCHECK_NE("GET", request_.HttpMethod().Utf8()) << "GETs can't have bodies.";
+  if (!request->HttpBody().IsNull())
+    DCHECK_NE("GET", request->HttpMethod().Utf8()) << "GETs can't have bodies.";
 
-  request_.SetRequestContext(request_context);
-  request_.SetFirstPartyForCookies(frame->GetDocument().FirstPartyForCookies());
-  request_.SetRequestorOrigin(frame->GetDocument().GetSecurityOrigin());
-  request_.AddHTTPOriginIfNeeded(blink::WebSecurityOrigin::CreateUnique());
+  request->SetFirstPartyForCookies(frame->GetDocument().FirstPartyForCookies());
+  request->AddHTTPOriginIfNeeded(blink::WebSecurityOrigin::CreateUnique());
 
   client_.reset(new ClientImpl(this, callback));
 
   loader_ = frame->CreateURLLoader();
-  loader_->LoadAsynchronously(request_, client_.get());
-
-  // No need to hold on to the request; reset it now.
-  request_ = blink::WebURLRequest();
+  loader_->LoadAsynchronously(*request, client_.get());
 }
 
 void ResourceFetcherImpl::SetTimeout(const base::TimeDelta& timeout) {
