@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5afc6678_426b1700",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-26T18:49:15Z",
+      "side": 1,
+      "message": "Shutdown state is used to signal release during MailboxHoldersReleased(). Today when we suspend a media element we destruct the renderers, but hold on to the last frame. This keeps the last ref alive and thus all resources held by the pool.",
+      "parentUuid": "371906af_d8b11c22",
+      "revId": "af3f7effca92a5cf710a32a3959bde33cf5af57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "079a2e20_1782c14b",
         "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T18:24:57Z",
       "side": 1,
       "message": "Do we want to keep this now that old entries will be deleted by your new logic?\n\nThis is basically cleaning up the pool when we get a VideoFrame at a different resolutions than the ones already in the pool.",
+      "revId": "af3f7effca92a5cf710a32a3959bde33cf5af57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07e0658_373fcdcf",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-26T18:49:15Z",
+      "side": 1,
+      "message": "I think both are good; this will free up memory faster.",
+      "parentUuid": "079a2e20_1782c14b",
       "revId": "af3f7effca92a5cf710a32a3959bde33cf5af57c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
