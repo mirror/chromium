@@ -51,6 +51,8 @@ class CONTENT_EXPORT RenderWidgetInputHandler {
       const blink::WebFloatPoint& position,
       const blink::WebFloatSize& velocity);
 
+  void TouchActionFromBlink(cc::TouchAction touch_action);
+
   bool handling_input_event() const { return handling_input_event_; }
   void set_handling_input_event(bool handling_input_event) {
     handling_input_event_ = handling_input_event;
@@ -80,6 +82,11 @@ class CONTENT_EXPORT RenderWidgetInputHandler {
   // bundled in the event ack, saving an IPC.  Note that we must continue
   // supporting overscroll IPC notifications due to fling animation updates.
   std::unique_ptr<ui::DidOverscrollParams>* handling_event_overscroll_;
+
+  // Similarly to |handling_event_overscroll_|, used to intercept touch action
+  // notifications while an event is handled. If the event cause a touch action,
+  // the touch action metadata can be bundle in the event ack, saving an IPC.
+  std::unique_ptr<cc::TouchAction>* handling_touch_action_;
 
   // Type of the input event we are currently handling.
   blink::WebInputEvent::Type handling_event_type_;
