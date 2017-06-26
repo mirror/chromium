@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62cbc72e_7ddd4600",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-26T23:26:28Z",
+      "side": 1,
+      "message": "There\u0027s an ongoing effort to stop posting tasks to specific threads, to using the base::TaskRunner/TaskSequence APIs.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/threading_and_tasks.md#Posting-to-the-Main-Thread-or-to-the-IO-Thread-in-the-Browser-Process\n\nimcheng@ has been starting to migrate some of our code to use the new task APIs.\nIf DiscoveryNetworkMonitor can be migrated to run on any thread (not just the IO thread) it would be possible to migrate this code as well.\n\nMaybe take a look and scope out the work involved, and we can decide to fix this now or migrate later.",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5097f140_15de94b4",
+        "filename": "chrome/common/extensions/api/dial.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-26T23:26:28Z",
+      "side": 1,
+      "message": "Also add a // Deprecated comment here",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18ae1d2_34869e4f",
+        "filename": "chrome/test/data/extensions/api_test/dial/experimental/get_network_id.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-26T23:26:28Z",
+      "side": 1,
+      "message": "Can you assert the network Id computed for the fake data provided by the test?",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4569ee69_931842c5",
+        "filename": "chrome/test/data/extensions/api_test/dial/experimental/network_id_changed.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-26T23:26:28Z",
+      "side": 1,
+      "message": "Can you assert the exact ids computed for networkIds[0] and networkIds[1]?",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
