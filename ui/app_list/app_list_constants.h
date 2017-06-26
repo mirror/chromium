@@ -29,6 +29,7 @@ APP_LIST_EXPORT extern const SkColor kDialogSeparatorColor;
 
 APP_LIST_EXPORT extern const SkColor kHighlightedColor;
 APP_LIST_EXPORT extern const SkColor kSelectedColor;
+APP_LIST_EXPORT extern const SkColor kGridSelectedColor;
 
 APP_LIST_EXPORT extern const SkColor kPagerHoverColor;
 APP_LIST_EXPORT extern const SkColor kPagerNormalColor;
@@ -47,6 +48,8 @@ APP_LIST_EXPORT extern const int kGridTileHeight;
 APP_LIST_EXPORT extern const int kGridIconTopPadding;
 APP_LIST_EXPORT extern const int kGridTitleSpacing;
 APP_LIST_EXPORT extern const int kGridTitleHorizontalPadding;
+APP_LIST_EXPORT extern const int kGridSelectedSize;
+APP_LIST_EXPORT extern const int kGridSelectedCornerRadius;
 
 APP_LIST_EXPORT extern const SkColor kFolderTitleColor;
 APP_LIST_EXPORT extern const SkColor kFolderTitleHintTextColor;
