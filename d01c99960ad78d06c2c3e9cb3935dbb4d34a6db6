@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7f298468_2c81a1d8",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-26T17:59:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure I fully understand the use of this macro. Is the intention to use it inside a parameterized method that could be called with the indices into the histogram names map, or does the macro generate all of the histograms in a particular range (of enums, say) with one invocation? If it is the former, then I believe it could be useful here. If it\u0027s the latter, I\u0027m not sure how much use it would be since the sets of histograms to generate are not cleanly defined as ranges of enum values.",
+      "parentUuid": "14d22e42_6226f08d",
+      "range": {
+        "startLine": 247,
+        "startChar": 19,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45e4411b_6349e4f5",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 11
