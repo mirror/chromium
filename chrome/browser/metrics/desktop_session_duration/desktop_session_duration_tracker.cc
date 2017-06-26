@@ -112,6 +112,14 @@ void DesktopSessionDurationTracker::OnTimerFired() {
   }
 }
 
+void DesktopSessionDurationTracker::AddObserver(Observer* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+void DesktopSessionDurationTracker::RemoveObserver(Observer* observer) {
+  observer_list_.RemoveObserver(observer);
+}
+
 void DesktopSessionDurationTracker::StartSession() {
   in_session_ = true;
   is_first_session_ = false;
@@ -130,6 +138,9 @@ void DesktopSessionDurationTracker::EndSession(
   delta -= time_to_discount;
   if (delta < kZeroTime)
     delta = kZeroTime;
+
+  for (Observer& observer : observer_list_)
+    observer.OnSessionEnded(delta);
 
   DVLOG(4) << "Logging session length of " << delta.InSeconds() << " seconds.";
 
