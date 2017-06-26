@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a935ba4c_4f62b374",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-26T15:53:18Z",
+      "side": 1,
+      "message": "Just to confirm, is this because if touch-action is not specified in css, the assumed touch-action is auto?",
+      "parentUuid": "cde64136_d44799b6",
+      "revId": "9cbe04fa19e610cad0a40a655eb11240717ccb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc5e2c49_539c78e7",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T14:55:57Z",
       "side": 1,
       "message": "Shouldn\u0027t this also be max since there\u0027s no handler or touch action region?",
+      "revId": "9cbe04fa19e610cad0a40a655eb11240717ccb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba9d809_00148132",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-26T15:53:18Z",
+      "side": 1,
+      "message": "Same question as asked in touch_action_region.h.",
+      "parentUuid": "cc5e2c49_539c78e7",
       "revId": "9cbe04fa19e610cad0a40a655eb11240717ccb32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6eb213f7_c47b335e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-26T15:53:18Z",
+      "side": 1,
+      "message": "I may need some clarification on why we would not use the touch_action resulting from GetWhiteListedTouchAction in the HANDLER/HANDLER_ON_SCROLLING_LAYER cases.",
+      "parentUuid": "6d0592c3_18962bb7",
+      "revId": "9cbe04fa19e610cad0a40a655eb11240717ccb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d254a455_cb9c7c7e",
         "filename": "ui/events/blink/input_handler_proxy.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-26T14:55:57Z",
       "side": 1,
       "message": "Is this for another CL? Should we make the following check look at touch_action as well / instead to decide if we can handle the event?",
+      "revId": "9cbe04fa19e610cad0a40a655eb11240717ccb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929460a3_c6125908",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-26T15:53:18Z",
+      "side": 1,
+      "message": "The logic to send the touch_action bit will be in another CL. The hope was to created shorter CLs.\n\nFor the check, would we want to check for the the touch_action being PanX and/or PanY to determine the is_touching_scrolling_layer? \n   i.e. is_touching_scrolling_layer \u003d (touch_action \u003d\u003d PanX || touch_action \u003d\u003d PanY)",
+      "parentUuid": "d254a455_cb9c7c7e",
       "revId": "9cbe04fa19e610cad0a40a655eb11240717ccb32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
