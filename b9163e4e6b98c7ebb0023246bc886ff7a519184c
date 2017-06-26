@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9f94920_b3543d95",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-06-26T14:03:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow: was this check not needed before?\n\nIf HandleReceivedData() can cause the client to detach, then we can still reach this point with client_ \u003d\u003d nullptr, no?",
+      "parentUuid": "94b478b4_8eecb34e",
+      "revId": "b9163e4e6b98c7ebb0023246bc886ff7a519184c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89f180e7_cc6f1a86",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
         "patchSetId": 1
