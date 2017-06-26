@@ -22,6 +22,30 @@
       "revId": "7cdb45f87e0a8dba7b58e3770aa539dbabbc64b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91196287_85c070e4",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-26T15:35:32Z",
+      "side": 1,
+      "message": "It\u0027s in focus_ring.h.\n\nSo I should add a focus_ring_delegate.h?",
+      "parentUuid": "c4964069_a330c150",
+      "range": {
+        "startLine": 26,
+        "startChar": 42,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "7cdb45f87e0a8dba7b58e3770aa539dbabbc64b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
