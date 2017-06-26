@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0303c037_ef246659",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-26T22:48:37Z",
+      "side": 1,
+      "message": "Add a comment above:\n\n// Do not honor SchedulerBackwardCompatibility::INIT_COM_STA when COM_INIT_CHECK_HOOK_ENABLED()\n// in order for the check to be able to catch usage of COM outside of a COMStaTaskRunner.\n// TODO(robliao): Remove SchedulerBackwardCompatibility::INIT_COM_STA entirely when this has backed long enough.",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 53
+      },
+      "revId": "b7bfd2ca394018a6d315e5da4f4707358c1dd849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1819847b_ecbc8792",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-26T22:48:37Z",
+      "side": 1,
+      "message": "Add a comment cross-referencing SchedulerWorker::ThreadMain() and why this is testing different behaviors on different configs.",
+      "revId": "b7bfd2ca394018a6d315e5da4f4707358c1dd849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
