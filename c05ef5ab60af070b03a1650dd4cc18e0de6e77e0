@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ee23df7_f3bd53a7",
+        "filename": "components/web_contents_delegate_android/android/java/src/org/chromium/components/web_contents_delegate_android/ValidationMessageBubble.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-26T18:25:54Z",
+      "side": 1,
+      "message": "Continuing from my comment on the other thread.  I\u0027ll defer to you on how much refactoring you want to do, but I do think there are things we can do to unify these.\n\nThe inputs here vs setPositionsRelativeToAnchor seem to be the same.\n\n    private ValidationMessageBubble(View containerView, String mainText, String subText) {\n        mView \u003d containerView;\n        ViewGroup root \u003d ...\n        mPopup \u003d new PopupWindow(root);\n        updateTextViews(root, mainText, subText);\n    }\n\n    private void setPositionRelativeToAnchor(...) {\n        RectF anchor \u003d makeRectInScreen(...);\n        Point origin \u003d adjustWindowPosition(...);\n        if (!mPopup.isShowing()) {\n            measure(viewportWidthPx, viewportHeightPx);\n            mPopup.showAtLocation(mView, Gravity.NO_GRAVITY, origin.x, origin.y);\n        } else {\n            mPopup.update(origin.x, origin.y, mPopup.getWidth(), mPopup.getHeight());\n        }\n    }\n\nI \"believe\" something like that cuts down on a bunch of the boilerplate code and duplicate params and makes it slightly easier to read.",
+      "range": {
+        "startLine": 69,
+        "startChar": 33,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "c05ef5ab60af070b03a1650dd4cc18e0de6e77e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
