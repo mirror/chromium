@@ -110,6 +110,30 @@
       "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ebdf017_9d07566d",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-06-26T23:38:10Z",
+      "side": 1,
+      "message": "Gurchetan, thx for answering. In addition, when i915 allocates tiling buffer, mmap requires gtt mapping, which is very slow.\nGBM_BO_USE_RENDERING had used to create tiling buffer, but the flag of minigbm symentic has changed as time goes on. GBM_BO_USE_LINEAR guarantees to create linear buffer.",
+      "parentUuid": "bbd46c2f_731baf05",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
