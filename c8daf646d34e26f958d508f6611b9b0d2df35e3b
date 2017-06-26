@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fe72014_683913e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-26T20:23:38Z",
+      "side": 1,
+      "message": "Would this work if we got the location on screen for the url bar on down and compared below if it was different?  I\u0027m trying to see if there is a way to make this not aware of the bottom sheet.",
+      "range": {
+        "startLine": 403,
+        "startChar": 36,
+        "endLine": 403,
+        "endChar": 48
+      },
+      "revId": "c8daf646d34e26f958d508f6611b9b0d2df35e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
