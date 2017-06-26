@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24dcf725_692049f4",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-26T07:19:45Z",
+      "side": 1,
+      "message": "The WhitespaceAttacher is stack allocated. We are using a local attacher when we rebuild inside an element with a LayoutObject because any text descendants may only have LayoutObject siblings which are descendants of this element. For display:contents elements, LayoutObject siblings may be found up the dom tree, in which case we need to persist the last seen Text node walking back up the tree. I think this part needs some documentation. Will add.",
+      "parentUuid": "9659ddff_ac9106a6",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b308742_667306bc",
         "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-25T20:32:41Z",
       "side": 1,
       "message": "Maybe DCHECK(text.length()) or add text.length() \u0026\u0026 IsASCIISpace(..)?\n\nIIRC when I tried to implement the same optimization it failed for some first-letter edge cases and similar?",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1509a712_799de3e7",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-26T07:19:45Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "8b308742_667306bc",
       "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dff40454_4f34e19d",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-26T07:19:45Z",
+      "side": 1,
+      "message": "The purpose of this code is to start traversing at a node which is part of the flat tree. Starting at a \u003cslot\u003e or \u003ccontent\u003e element will trigger asserts in FlatTreeTraversal/LayoutTreeBuilderTraversal. NextLayoutSibling in the loop below will handle display:contents elements. I\u0027ll modify the comment to be clear about this.",
+      "parentUuid": "26d6c860_d665f213",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4832662f_f8ab2515",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-25T20:32:41Z",
       "side": 1,
       "message": "I believe you should assert here that !child-\u003eIsElement() || !ToElement(child)-\u003eHasDisplayContentsStyle(), that should\u0027ve caught my above comment.",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42cad5b_ea9cf9fc",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-26T07:19:45Z",
+      "side": 1,
+      "message": "Child may be an Element, and it may have display:contents at this point. The loop below will skip until we find a whitespace text node, or an in-flow.",
+      "parentUuid": "4832662f_f8ab2515",
       "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
