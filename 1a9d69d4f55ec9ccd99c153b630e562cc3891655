@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07afd241_cd8d48cc",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/readValue/add-multiple-event-listeners.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-26T00:56:55Z",
+      "side": 1,
+      "message": "can you change this to:\n\nlet read_value \u003d new Uint8Array(results[0].buffer);\nlet event_value \u003d results.slice(1).map(v \u003d\u003e new Uint8Array(v.buffer);\n\nfor (...) {\n  assert_equals(event_value, read_value);\n  assert_array_equals(event_value, read_value);\n}\n\nNo need for Array.from().",
+      "revId": "1a9d69d4f55ec9ccd99c153b630e562cc3891655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
