@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed8e4884_29953116",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-26T17:07:11Z",
+      "side": 1,
+      "message": "Can you add a very brief description of AudioParamMap?  Something like this maps the name of an audioparam to the actual audio param object?",
+      "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0faace4_1e343171",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-26T17:07:11Z",
+      "side": 1,
+      "message": "What is the style for these kinds of helper classes?  Should this local class in AudioParamMap?",
+      "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9e84eb_2d24b2d8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-26T17:07:11Z",
+      "side": 1,
+      "message": "size or Size? I think it should be Size",
+      "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf2adc3_3247d15c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-26T17:07:11Z",
+      "side": 1,
+      "message": "Likewise, At instead of at?",
+      "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
