@@ -164,6 +164,30 @@
       "revId": "bc314fd25623bbd15b4e0934414cac2ce13dac2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece2d7e0_7f923cc9",
+        "filename": "remoting/client/jni/remoting_jni_onload.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-26T18:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd638ff6_04aa907c",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "bc314fd25623bbd15b4e0934414cac2ce13dac2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
