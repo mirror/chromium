@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8a39543_f19387e8",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-26T16:11:39Z",
+      "side": 1,
+      "message": "These functions use the same naming convention as the existing PaddingXXXUsing() functions.",
+      "revId": "25733800a7280a278bd9bc4058526ad323a923cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
