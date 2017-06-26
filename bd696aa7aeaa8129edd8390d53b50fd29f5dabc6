@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "26c3fec8_c737d337",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T22:01:09Z",
+      "side": 1,
+      "message": "should we use root_surface()-\u003econtent_size() instead? I\u0027m worried about cases where commit has not been called yet or the surface has been destroyed. Thinking we should avoid changing logic with this CL if possible to minimize a chance of hard to diagnose regressions.",
+      "parentUuid": "71c749bf_c879f783",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01dc6f09_bc2147d3",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 9

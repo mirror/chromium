@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "525cd494_b012917b",
+        "filename": "components/exo/notification_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T22:01:09Z",
+      "side": 1,
+      "message": "SurfaceDelegate",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "af0f68f9cc7febf6253d6aa6b67e2caa84cc53b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320de71c_8951a792",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T22:01:09Z",
+      "side": 1,
+      "message": "nit: remove this blank line as this is part of the \"Overridden from aura::WindowTargeter:\" group",
+      "revId": "af0f68f9cc7febf6253d6aa6b67e2caa84cc53b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63c5aa5_035720b9",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T22:01:09Z",
+      "side": 1,
+      "message": "nit: looks like most of what SetRootSurfce does is not needed. Is \"root_surface_-\u003eSetSurfaceDelegate(nullptr);\" enough?",
+      "revId": "af0f68f9cc7febf6253d6aa6b67e2caa84cc53b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e39127_f95951b2",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T22:01:09Z",
+      "side": 1,
+      "message": "remove \"public SurfaceObserver\" as this class doesn\u0027t implement that anymore",
+      "revId": "af0f68f9cc7febf6253d6aa6b67e2caa84cc53b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

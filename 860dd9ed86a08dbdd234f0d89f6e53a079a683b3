@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "945dd0de_c5c18c57",
+        "filename": "components/exo/notification_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T22:01:09Z",
+      "side": 0,
+      "message": "keep line 40 and 41",
+      "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c273c70_fa73591a",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 9
@@ -37,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "52a1bbb8_26c5e172",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T22:01:09Z",
+      "side": 0,
+      "message": "where did this go?",
+      "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b285e71b_b6f42d62",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 9
@@ -66,6 +100,23 @@
       "side": 0,
       "message": "Done",
       "parentUuid": "b285e71b_b6f42d62",
+      "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541690b6_da558402",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T22:01:09Z",
+      "side": 0,
+      "message": "think this still needs to inherit from SurfaceObserver as it doesn\u0027t make sense for SurfaceTreeHost to do without implementing the interface",
       "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
