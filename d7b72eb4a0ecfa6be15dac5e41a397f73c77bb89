@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecb926f7_92cb85e9",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/svg/window-expected.txt",
+        "patchSetId": 22
+      },
+      "lineNbr": 1986,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-26T23:14:35Z",
+      "side": 1,
+      "message": "Perhaps because of the removal of empty rect optimization? If yes, this looks good because object invalidation is fast, and we still won\u0027t invalidate empty rects.",
+      "parentUuid": "42a58f50_ec2496e0",
+      "revId": "d7b72eb4a0ecfa6be15dac5e41a397f73c77bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6577a8ba_fc13f072",
         "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
         "patchSetId": 22
