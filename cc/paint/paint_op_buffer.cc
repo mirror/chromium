@@ -317,6 +317,11 @@ void DrawPathOp::RasterWithFlags(const PaintOpWithFlags* base_op,
                                  SkCanvas* canvas,
                                  const SkMatrix& original_ctm) {
   auto* op = static_cast<const DrawPathOp*>(base_op);
+  if (!flags->isAntiAlias()) {
+    LOG(ERROR) << "NOT AA";
+    op->path.dump();
+    return;
+  }
   canvas->drawPath(op->path, ToSkPaint(*flags));
 }
 
@@ -491,6 +496,10 @@ int DrawPathOp::CountSlowPaths() const {
 
 int DrawRecordOp::CountSlowPaths() const {
   return record->numSlowPaths();
+}
+
+bool DrawRecordOp::HasNonAAPaint() const {
+  return record->HasNonAAPaint();
 }
 
 AnnotateOp::AnnotateOp(PaintCanvas::AnnotationType annotation_type,
