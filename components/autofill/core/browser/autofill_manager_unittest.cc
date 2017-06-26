@@ -604,11 +604,13 @@ class TestAutofillManager : public AutofillManager {
     call_parent_upload_form_data_ = value;
   }
 
-  void UploadFormDataAsyncCallback(const FormStructure* submitted_form,
-                                   const base::TimeTicks& load_time,
-                                   const base::TimeTicks& interaction_time,
-                                   const base::TimeTicks& submission_time,
-                                   bool observed_submission) override {
+  void UploadFormDataAsyncCallback(
+      const FormStructure* submitted_form,
+      AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger,
+      const base::TimeTicks& load_time,
+      const base::TimeTicks& interaction_time,
+      const base::TimeTicks& submission_time,
+      bool observed_submission) override {
     run_loop_->Quit();
 
     EXPECT_EQ(expected_observed_submission_, observed_submission);
@@ -635,8 +637,8 @@ class TestAutofillManager : public AutofillManager {
     }
 
     AutofillManager::UploadFormDataAsyncCallback(
-        submitted_form, load_time, interaction_time, submission_time,
-        observed_submission);
+        submitted_form, form_interactions_ukm_logger, load_time,
+        interaction_time, submission_time, observed_submission);
   }
 
   // Resets the run loop so that it can wait for an asynchronous form

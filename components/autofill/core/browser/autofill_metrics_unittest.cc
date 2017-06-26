@@ -316,16 +316,18 @@ class TestAutofillManager : public AutofillManager {
   void ResetRunLoop() { run_loop_.reset(new base::RunLoop()); }
   void RunRunLoop() { run_loop_->Run(); }
 
-  void UploadFormDataAsyncCallback(const FormStructure* submitted_form,
-                                   const TimeTicks& load_time,
-                                   const TimeTicks& interaction_time,
-                                   const TimeTicks& submission_time,
-                                   bool observed_submission) override {
+  void UploadFormDataAsyncCallback(
+      const FormStructure* submitted_form,
+      AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger,
+      const TimeTicks& load_time,
+      const TimeTicks& interaction_time,
+      const TimeTicks& submission_time,
+      bool observed_submission) override {
     run_loop_->Quit();
 
     AutofillManager::UploadFormDataAsyncCallback(
-        submitted_form, load_time, interaction_time, submission_time,
-        observed_submission);
+        submitted_form, form_interactions_ukm_logger, load_time,
+        interaction_time, submission_time, observed_submission);
   }
 
  private:
@@ -3018,6 +3020,38 @@ TEST_F(AutofillMetricsTest, CreditCardSubmittedFormEvents) {
     autofill_manager_->DidShowSuggestions(true /* is_new_popup */, form, field);
     autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
     autofill_manager_->SubmitForm(form, TimeTicks::Now());
+    histogram_tester.ExpectBucketCount(
+        "Autofill.FormEvents.CreditCard",
+        AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_SUBMITTED_ONCE, 1);
+    histogram_tester.ExpectBucketCount(
+        "Autofill.FormEvents.CreditCard",
+        AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_WILL_SUBMIT_ONCE, 1);
+
+    VerifyFormInteractionUkm(
+        form, &test_ukm_recorder_, internal::kUKMSuggestionsShownEntryName,
+        {{{internal::kUKMMillisecondsSinceFormParsedMetricName, 0},
+          {internal::kUKMHeuristicTypeMetricName, CREDIT_CARD_NUMBER},
+          {internal::kUKMHtmlFieldTypeMetricName, HTML_TYPE_UNSPECIFIED},
+          {internal::kUKMServerTypeMetricName, CREDIT_CARD_NUMBER}}});
+    VerifySubmitFormUkm(form, &test_ukm_recorder_,
+                        AutofillMetrics::NON_FILLABLE_FORM_OR_NEW_DATA);
+  }
+
+  // Reset the autofill manager state and purge UKM logs.
+  autofill_manager_->Reset();
+  test_ukm_recorder_.Purge();
+
+  autofill_manager_->AddSeenForm(form, field_types, field_types);
+
+  {
+    // Simulating submission with suggestion shown, and reset is called before
+    // form submitted.
+    base::HistogramTester histogram_tester;
+    autofill_manager_->DidShowSuggestions(true /* is_new_popup */, form, field);
+    autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
+    autofill_manager_->WillSubmitForm(form, TimeTicks::Now());
+    autofill_manager_->Reset();
+    autofill_manager_->OnFormSubmitted(form);
     histogram_tester.ExpectBucketCount(
         "Autofill.FormEvents.CreditCard",
         AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_SUBMITTED_ONCE, 1);

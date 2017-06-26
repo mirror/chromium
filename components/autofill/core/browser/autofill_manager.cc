@@ -483,9 +483,10 @@ void AutofillManager::StartUploadProcess(
                        raw_form),
         base::BindOnce(&AutofillManager::UploadFormDataAsyncCallback,
                        weak_ptr_factory_.GetWeakPtr(),
-                       base::Owned(form_structure.release()), loaded_timestamp,
-                       initial_interaction_timestamp_, timestamp,
-                       observed_submission));
+                       base::Owned(form_structure.release()),
+                       base::Owned(form_interactions_ukm_logger_.release()),
+                       loaded_timestamp, initial_interaction_timestamp_,
+                       timestamp, observed_submission));
   }
 }
 
@@ -1519,13 +1520,14 @@ void AutofillManager::CollectRapporSample(
 // get reset before this method executes.
 void AutofillManager::UploadFormDataAsyncCallback(
     const FormStructure* submitted_form,
+    AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger,
     const TimeTicks& load_time,
     const TimeTicks& interaction_time,
     const TimeTicks& submission_time,
     bool observed_submission) {
   submitted_form->LogQualityMetrics(
       load_time, interaction_time, submission_time,
-      client_->GetRapporServiceImpl(), form_interactions_ukm_logger_.get(),
+      client_->GetRapporServiceImpl(), form_interactions_ukm_logger,
       did_show_suggestions_, observed_submission);
   if (submitted_form->ShouldBeCrowdsourced())
     UploadFormData(*submitted_form, observed_submission);
