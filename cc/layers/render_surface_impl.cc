@@ -396,6 +396,8 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
   PictureLayerImpl* mask_layer = static_cast<PictureLayerImpl*>(MaskLayer());
   // Resourceless mode does not support masks.
   if (draw_mode != DRAW_MODE_RESOURCELESS_SOFTWARE && mask_layer &&
+      (!mask_layer->GetRasterSource()->IsSolidColor() ||
+       mask_layer->GetRasterSource()->GetSolidColor() != 0) &&
       mask_layer->DrawsContent() && !mask_layer->bounds().IsEmpty()) {
     // The software renderer applies mask layer and blending in the wrong
     // order but kDstIn doesn't commute with masking. It is okay to not
@@ -403,6 +405,9 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
     // mask layers.
     DCHECK(BlendMode() != SkBlendMode::kDstIn)
         << "kDstIn blend mode with mask layer is unsupported.";
+    TRACE_EVENT1("cc", "RenderSurfaceImpl::AppendQuads",
+                 "mask_layer_gpu_memory_usage",
+                 mask_layer->GPUMemoryUsageInBytes());
     if (mask_layer->mask_type() == Layer::LayerMaskType::MULTI_TEXTURE_MASK) {
       TileMaskLayer(render_pass, shared_quad_state, visible_layer_rect);
       return;
