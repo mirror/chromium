@@ -18,17 +18,9 @@ namespace mojo {
 
 template <>
 struct StructTraits<gfx::mojom::SharedBufferSkBitmapDataView, SkBitmap> {
-  struct Context {
-    Context();
-    ~Context();
-
-    mojo::ScopedSharedBufferHandle shared_buffer_handle;
-    uint64_t buffer_byte_size = 0;
-  };
-
   static void* SetUpContext(const SkBitmap& input);
   static void TearDownContext(const SkBitmap& input, void* context);
-  static mojo::ScopedSharedBufferHandle shared_buffer_handle(
+  static mojo::ScopedSharedBufferHandle& shared_buffer_handle(
       const SkBitmap& input,
       void* context);
   static uint64_t buffer_byte_size(const SkBitmap& input, void* context);

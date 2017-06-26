@@ -51,6 +51,10 @@ class InterfacePtrState {
     return proxy_.get();
   }
 
+  MessagePipeHandle handle() const {
+    return router_ ? router_->handle() : handle_.get();
+  }
+
   uint32_t version() const { return version_; }
 
   void QueryVersion(const base::Callback<void(uint32_t)>& callback) {

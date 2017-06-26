@@ -50,8 +50,9 @@ namespace mojo {
 //      return value or reference of base::Optional<T>/WTF::Optional<T>, if T
 //      has the right *Traits defined.
 //
-//      During serialization, getters for string/struct/array/map/union fields
-//      are called twice (one for size calculation and one for actual
+//      During serialization, getters for string/struct/array/map/union/handle/
+//      non-associated interface/non-associated interface request fields are
+//      called twice (one for size calculation and one for actual
 //      serialization). If you want to return a value (as opposed to a
 //      reference) from these getters, you have to be sure that constructing and
 //      copying the returned object is really cheap.
@@ -98,21 +99,27 @@ namespace mojo {
 //      that case, an incoming null value is considered invalid and causes the
 //      message pipe to be disconnected.
 //
-//   4. [Optional] As mentioned above, getters for string/struct/array/map/union
+//   4. [Optional] As mentioned above, getters for string/struct/array/map/
+//      union/handle/non-associated interface/non-associated interface request
 //      fields are called multiple times (twice to be exact). If you need to do
 //      some expensive calculation/conversion, you probably want to cache the
 //      result across multiple calls. You can introduce an arbitrary context
 //      object by adding two optional methods:
+//
 //        static void* SetUpContext(const T& input);
 //        static void TearDownContext(const T& input, void* context);
 //
 //      And then you append a second parameter, void* context, to getters:
+//
 //        static <return type> <field name>(const T& input, void* context);
 //
-//      If a T instance is not null, the serialization code will call
-//      SetUpContext() at the beginning, and pass the resulting context pointer
-//      to getters. After serialization is done, it calls TearDownContext() so
-//      that you can do any necessary cleanup.
+//      If SetUpContext() is defined, it will always be called exactly once
+//      before attempting to serialize a value of type |T|, and a subsequent
+//      call to TearDownContext() will be made after serialization.
+//
+//      Note that the IsNull may also take a context argument, as in:
+//
+//        static bool IsNull(const T& input, void* context);
 //
 // In the description above, methods having an |input| parameter define it as
 // const reference of T. Actually, it can be a non-const reference of T too.

@@ -59,6 +59,8 @@ media::mojom::VideoFrameDataPtr MakeVideoFrameData(
 void* StructTraits<media::mojom::VideoFrameDataView,
                    scoped_refptr<media::VideoFrame>>::
     SetUpContext(const scoped_refptr<media::VideoFrame>& input) {
+  if (!input)
+    return nullptr;
   return new media::mojom::VideoFrameDataPtr(MakeVideoFrameData(input));
 }
 

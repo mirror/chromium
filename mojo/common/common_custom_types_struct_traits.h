@@ -102,11 +102,13 @@ struct StructTraits<common::mojom::TimeDeltaDataView, base::TimeDelta> {
 
 template <>
 struct StructTraits<common::mojom::FileDataView, base::File> {
-  static bool IsNull(const base::File& file) { return !file.IsValid(); }
+  static void* SetUpContext(base::File& file);
+  static void TearDownContext(const base::File&, void* context);
 
+  static bool IsNull(const base::File& file, void* context);
   static void SetToNull(base::File* file) { *file = base::File(); }
 
-  static mojo::ScopedHandle fd(base::File& file);
+  static mojo::ScopedHandle& fd(base::File& file, void* context);
   static bool Read(common::mojom::FileDataView data, base::File* file);
 };
 

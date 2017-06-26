@@ -17,6 +17,11 @@ namespace mojo {
 template <>
 struct StructTraits<cc::mojom::CopyOutputResultDataView,
                     std::unique_ptr<cc::CopyOutputResult>> {
+  static void* SetUpContext(std::unique_ptr<cc::CopyOutputResult>& result);
+  static void TearDownContext(
+      const std::unique_ptr<cc::CopyOutputResult>& result,
+      void* context);
+
   static const gfx::Size& size(
       const std::unique_ptr<cc::CopyOutputResult>& result) {
     return result->size_;
@@ -30,8 +35,9 @@ struct StructTraits<cc::mojom::CopyOutputResultDataView,
     return result->texture_mailbox_;
   }
 
-  static cc::mojom::TextureMailboxReleaserPtr releaser(
-      const std::unique_ptr<cc::CopyOutputResult>& result);
+  static cc::mojom::TextureMailboxReleaserPtr& releaser(
+      const std::unique_ptr<cc::CopyOutputResult>& result,
+      void* context);
 
   static bool Read(cc::mojom::CopyOutputResultDataView data,
                    std::unique_ptr<cc::CopyOutputResult>* out_p);

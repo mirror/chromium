@@ -32,7 +32,19 @@ class MOJO_CPP_BINDINGS_EXPORT SerializedHandleVector {
   size_t size() const { return handles_.size(); }
   std::vector<mojo::ScopedHandle>* mutable_handles() { return &handles_; }
 
-  // Adds a handle to the handle list and returns its index for encoding.
+  size_t num_tracked_handles() const { return tracked_handles_.size(); }
+  std::vector<mojo::Handle>* tracked_handles() { return &tracked_handles_; }
+
+  // Adds a handle to the list of tracked handles. Note that unlike AddHandle,
+  // this does not take ownership of the handle. Handles are accumulated during
+  // the message sizing phase, and every handle tracked should correspond to an
+  // eventual call to AddHandle() on this context, in the same order in which
+  // the handles were tracked.
+  void TrackHandle(mojo::Handle handle);
+
+  // Serializes a handle into index data to be included in a message. |handle|
+  // must correspond to a handle previously tracked by TrackHandle, and calls
+  // to AddHandle should happen in the same order as calls to TrackHandle.
   Handle_Data AddHandle(mojo::ScopedHandle handle);
 
   // Takes a handle from the list of serialized handle data.
@@ -49,6 +61,9 @@ class MOJO_CPP_BINDINGS_EXPORT SerializedHandleVector {
   void Swap(std::vector<mojo::ScopedHandle>* other);
 
  private:
+  // Handles tracked but not (yet) owned by this object.
+  std::vector<mojo::Handle> tracked_handles_;
+
   // Handles are owned by this object.
   std::vector<mojo::ScopedHandle> handles_;
 
@@ -61,8 +76,8 @@ struct MOJO_CPP_BINDINGS_EXPORT SerializationContext {
 
   ~SerializationContext();
 
-  // Transfers ownership of any accumulated handles and associated endpoint
-  // handles into |*message|.
+  // Transfers ownership of any accumulated associated endpoint handles into
+  // |*message|.
   void AttachHandlesToMessage(Message* message);
 
   // Opaque context pointers returned by StringTraits::SetUpContext().

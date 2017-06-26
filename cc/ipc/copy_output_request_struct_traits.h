@@ -16,6 +16,12 @@ namespace mojo {
 template <>
 struct StructTraits<cc::mojom::CopyOutputRequestDataView,
                     std::unique_ptr<cc::CopyOutputRequest>> {
+  static void* SetUpContext(
+      const std::unique_ptr<cc::CopyOutputRequest>& request);
+  static void TearDownContext(
+      const std::unique_ptr<cc::CopyOutputRequest>& request,
+      void* context);
+
   static const base::Optional<base::UnguessableToken>& source(
       const std::unique_ptr<cc::CopyOutputRequest>& request) {
     return request->source_;
@@ -36,8 +42,9 @@ struct StructTraits<cc::mojom::CopyOutputRequestDataView,
     return request->texture_mailbox_;
   }
 
-  static cc::mojom::CopyOutputResultSenderPtr result_sender(
-      const std::unique_ptr<cc::CopyOutputRequest>& request);
+  static cc::mojom::CopyOutputResultSenderPtr& result_sender(
+      const std::unique_ptr<cc::CopyOutputRequest>& request,
+      void* context);
 
   static bool Read(cc::mojom::CopyOutputRequestDataView data,
                    std::unique_ptr<cc::CopyOutputRequest>* out_p);

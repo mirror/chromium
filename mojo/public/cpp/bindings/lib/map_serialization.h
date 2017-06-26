@@ -97,7 +97,7 @@ struct Serializer<MapDataView<Key, Value>, MaybeConstUserType> {
 
   static size_t PrepareToSerialize(MaybeConstUserType& input,
                                    SerializationContext* context) {
-    if (CallIsNullIfExists<Traits>(input))
+    if (CallIsNullIfExists<Traits>(input, nullptr))
       return 0;
 
     size_t struct_overhead = sizeof(Data);
@@ -118,7 +118,7 @@ struct Serializer<MapDataView<Key, Value>, MaybeConstUserType> {
                         SerializationContext* context) {
     DCHECK(validate_params->key_validate_params);
     DCHECK(validate_params->element_validate_params);
-    if (CallIsNullIfExists<Traits>(input)) {
+    if (CallIsNullIfExists<Traits>(input, nullptr)) {
       *output = nullptr;
       return;
     }

@@ -108,8 +108,12 @@ template <typename Base, typename T>
 struct Serializer<InterfacePtrDataView<Base>, InterfacePtr<T>> {
   static_assert(std::is_base_of<Base, T>::value, "Interface type mismatch.");
 
-  static size_t PrepareToSerialize(const InterfacePtr<T>& input,
+  static size_t PrepareToSerialize(InterfacePtr<T>& input,
                                    SerializationContext* context) {
+    if (input.is_bound()) {
+      input.Bind(input.PassInterface());
+      context->handles.TrackHandle(input.internal_state()->handle());
+    }
     return 0;
   }
 
@@ -138,6 +142,8 @@ struct Serializer<InterfaceRequestDataView<Base>, InterfaceRequest<T>> {
 
   static size_t PrepareToSerialize(const InterfaceRequest<T>& input,
                                    SerializationContext* context) {
+    if (input.is_pending())
+      context->handles.TrackHandle(input.message_pipe());
     return 0;
   }
 
@@ -161,6 +167,8 @@ template <typename T>
 struct Serializer<ScopedHandleBase<T>, ScopedHandleBase<T>> {
   static size_t PrepareToSerialize(const ScopedHandleBase<T>& input,
                                    SerializationContext* context) {
+    if (input.is_valid())
+      context->handles.TrackHandle(input.get());
     return 0;
   }
 

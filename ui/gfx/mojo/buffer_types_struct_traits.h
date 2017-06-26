@@ -267,6 +267,10 @@ struct StructTraits<gfx::mojom::NativePixmapHandleDataView,
 template <>
 struct StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
                     gfx::GpuMemoryBufferHandle> {
+  static void* SetUpContext(const gfx::GpuMemoryBufferHandle& handle);
+  static void TearDownContext(const gfx::GpuMemoryBufferHandle& handle,
+                              void* context);
+
   static gfx::GpuMemoryBufferType type(
       const gfx::GpuMemoryBufferHandle& handle) {
     return handle.type;
@@ -274,8 +278,9 @@ struct StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
   static gfx::GpuMemoryBufferId id(const gfx::GpuMemoryBufferHandle& handle) {
     return handle.id;
   }
-  static mojo::ScopedSharedBufferHandle shared_memory_handle(
-      const gfx::GpuMemoryBufferHandle& handle);
+  static mojo::ScopedSharedBufferHandle& shared_memory_handle(
+      const gfx::GpuMemoryBufferHandle& handle,
+      void* context);
   static uint32_t offset(const gfx::GpuMemoryBufferHandle& handle) {
     return handle.offset;
   }
@@ -284,7 +289,8 @@ struct StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
   }
   static const gfx::NativePixmapHandle& native_pixmap_handle(
       const gfx::GpuMemoryBufferHandle& handle);
-  static mojo::ScopedHandle mach_port(const gfx::GpuMemoryBufferHandle& handle);
+  static mojo::ScopedHandle& mach_port(const gfx::GpuMemoryBufferHandle& handle,
+                                       void* context);
   static bool Read(gfx::mojom::GpuMemoryBufferHandleDataView data,
                    gfx::GpuMemoryBufferHandle* handle);
 };

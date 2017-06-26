@@ -21,7 +21,7 @@ namespace internal {
 template <typename T>
 struct HasIsNullMethod {
   template <typename U>
-  static char Test(decltype(U::IsNull)*);
+  static char Test(decltype(U::IsNull) *);
   template <typename U>
   static int Test(...);
   static const bool value = sizeof(Test<T>(0)) == sizeof(char);
@@ -30,25 +30,40 @@ struct HasIsNullMethod {
   EnsureTypeIsComplete<T> check_t_;
 };
 
+template <typename UserType>
+bool CallIsNullWithContext(bool (*f)(const UserType& input, void*),
+                           const UserType& input,
+                           void* context) {
+  return f(input, context);
+}
+
+template <typename UserType>
+bool CallIsNullWithContext(bool (*f)(const UserType& input),
+                           const UserType& input,
+                           void* context) {
+  return f(input);
+}
+
 template <
     typename Traits,
     typename UserType,
     typename std::enable_if<HasIsNullMethod<Traits>::value>::type* = nullptr>
-bool CallIsNullIfExists(const UserType& input) {
-  return Traits::IsNull(input);
+bool CallIsNullIfExists(const UserType& input, void* context) {
+  return CallIsNullWithContext(&Traits::IsNull, input, context);
 }
 
 template <
     typename Traits,
     typename UserType,
     typename std::enable_if<!HasIsNullMethod<Traits>::value>::type* = nullptr>
-bool CallIsNullIfExists(const UserType& input) {
+bool CallIsNullIfExists(const UserType& input, void* context) {
   return false;
 }
+
 template <typename T>
 struct HasSetToNullMethod {
   template <typename U>
-  static char Test(decltype(U::SetToNull)*);
+  static char Test(decltype(U::SetToNull) *);
   template <typename U>
   static int Test(...);
   static const bool value = sizeof(Test<T>(0)) == sizeof(char);
@@ -80,7 +95,7 @@ bool CallSetToNullIfExists(UserType* output) {
 template <typename T>
 struct HasSetUpContextMethod {
   template <typename U>
-  static char Test(decltype(U::SetUpContext)*);
+  static char Test(decltype(U::SetUpContext) *);
   template <typename U>
   static int Test(...);
   static const bool value = sizeof(Test<T>(0)) == sizeof(char);
@@ -148,7 +163,8 @@ ReturnType CallWithContext(ReturnType (*f)(ParamType),
 template <typename T, typename MaybeConstUserType>
 struct HasGetBeginMethod {
   template <typename U>
-  static char Test(decltype(U::GetBegin(std::declval<MaybeConstUserType&>()))*);
+  static char Test(
+      decltype(U::GetBegin(std::declval<MaybeConstUserType&>())) *);
   template <typename U>
   static int Test(...);
   static const bool value = sizeof(Test<T>(0)) == sizeof(char);
@@ -179,7 +195,7 @@ size_t CallGetBeginIfExists(MaybeConstUserType& input) {
 template <typename T, typename MaybeConstUserType>
 struct HasGetDataMethod {
   template <typename U>
-  static char Test(decltype(U::GetData(std::declval<MaybeConstUserType&>()))*);
+  static char Test(decltype(U::GetData(std::declval<MaybeConstUserType&>())) *);
   template <typename U>
   static int Test(...);
   static const bool value = sizeof(Test<T>(0)) == sizeof(char);
