@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74ea42af_776c404d",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-26T14:42:19Z",
+      "side": 1,
+      "message": "Ack - working on this :)",
+      "parentUuid": "cf933168_43e1aeb4",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 35
+      },
+      "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be28dd51_10ae7b5e",
         "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T23:32:45Z",
       "side": 1,
       "message": "One might ask how DesktopSessionDurationObserver fits here (it looks like it\u0027s relatively separate). It might be worthwhile to rename that class. I\u0027ll defer to the owners for that.",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17de049_e7cedbc5",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-26T14:42:19Z",
+      "side": 1,
+      "message": "Ack, waiting for owners\u0027 feedback",
+      "parentUuid": "be28dd51_10ae7b5e",
       "range": {
         "startLine": 49,
         "startChar": 8,
@@ -92,6 +140,30 @@
       "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d36910_77b83398",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-26T14:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41abef42_fcc596e3",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
