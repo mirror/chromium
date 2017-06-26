@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9d360e09_9d154beb",
+        "filename": "third_party/WebKit/Source/platform/graphics/Gradient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-26T23:54:44Z",
+      "side": 1,
+      "message": "I don\u0027t know of any. Could you check the blame line history to see why this cache was\nadded?",
+      "parentUuid": "e3f9a42a_7c242988",
+      "revId": "add2c16f4bde5c9335ec8bbffe486c721f712e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91d7b448_106d4ecd",
         "filename": "third_party/WebKit/Source/platform/graphics/Pattern.cpp",
         "patchSetId": 3
