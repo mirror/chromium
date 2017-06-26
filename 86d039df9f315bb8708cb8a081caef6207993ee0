@@ -22,6 +22,30 @@
       "revId": "86d039df9f315bb8708cb8a081caef6207993ee0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a26a6c9_30bfcdb7",
+        "filename": "headless/lib/browser/headless_tab_socket_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T09:35:52Z",
+      "side": 1,
+      "message": "That\u0027s the type the mojo bindings use.",
+      "parentUuid": "f9551c91_bfc22fe9",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "86d039df9f315bb8708cb8a081caef6207993ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
