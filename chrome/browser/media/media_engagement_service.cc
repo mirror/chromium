@@ -79,6 +79,21 @@ std::map<GURL, double> MediaEngagementService::GetScoreMap() const {
   return score_map;
 }
 
+std::vector<mojom::MediaEngagementDetails>
+MediaEngagementService::GetAllDetails() const {
+  std::set<GURL> origins = GetEngagementOriginsFromContentSettings(profile_);
+
+  std::vector<mojom::MediaEngagementDetails> details;
+  details.reserve(origins.size());
+  for (const GURL& origin : origins) {
+    if (!origin.is_valid())
+      continue;
+    details.push_back(CreateEngagementScore(origin).GetDetails());
+  }
+
+  return details;
+}
+
 void MediaEngagementService::HandleInteraction(const GURL& url,
                                                unsigned short int interaction) {
   MediaEngagementScore score = CreateEngagementScore(url);
