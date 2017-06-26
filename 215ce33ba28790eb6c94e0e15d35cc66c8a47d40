@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7573961_11088b0e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-26T08:34:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I understand why. Do you have a test case?",
+      "revId": "215ce33ba28790eb6c94e0e15d35cc66c8a47d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
