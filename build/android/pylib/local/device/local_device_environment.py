@@ -82,7 +82,7 @@ class LocalDeviceEnvironment(environment.Environment):
     self._blacklist = (device_blacklist.Blacklist(args.blacklist_file)
                        if args.blacklist_file
                        else None)
-    self._device_serial = args.test_device
+    self._device_serial = args.test_devices
     self._devices_lock = threading.Lock()
     self._devices = None
     self._concurrent_adb = args.enable_concurrent_adb
