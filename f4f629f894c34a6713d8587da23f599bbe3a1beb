@@ -16,6 +16,24 @@
       "revId": "f4f629f894c34a6713d8587da23f599bbe3a1beb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7be920_62a3b3b5",
+        "filename": "mojo/public/cpp/bindings/lib/handle_interface_serialization.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T19:52:04Z",
+      "side": 1,
+      "message": "This seems a little unfortunate. It relies on some internal details of how InterafcePtr is implemented.\n\nAfter some thoughts, I think I would vote for the caching-IsNull()-result solution that we discussed:\n- call IsNull() as the first thing during serialization, if it is true, don\u0027t touch anything.\n- taking handles happens after IsNull() is called, in PrepareToSerialize().\n- we would need to find an efficient way to cache IsNull() results.\n\nI feel that it is the easiest for users to understand.\n\nIf it is not too much trouble, could we quickly try it out and see whether it has any perf impact? I expect the change should be small, but I might be wrong. WDYT?",
+      "parentUuid": "59c4de60_92bbd5d7",
+      "revId": "f4f629f894c34a6713d8587da23f599bbe3a1beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
