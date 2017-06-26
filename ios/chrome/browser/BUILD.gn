@@ -111,6 +111,7 @@ source_set("browser") {
     "//google_apis",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser/browser_state",
+    "//ios/chrome/browser/feature_engagement_tracker",
     "//ios/chrome/browser/sync/glue",
     "//ios/chrome/common",
     "//ios/components/io_thread",
