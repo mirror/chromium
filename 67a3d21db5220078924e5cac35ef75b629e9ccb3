@@ -1,0 +1,389 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd9c74a5_86d217c4",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Should this method and WriteTasksIntoSpecifics get moved into the TaskTracker class? I\u0027m really not sure, totally okay if you think that\u0027d be a bad idea.",
+      "range": {
+        "startLine": 492,
+        "startChar": 26,
+        "endLine": 492,
+        "endChar": 43
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0fc953_8f653397",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Should this be doing +/-6 to avoid doing too much work?",
+      "range": {
+        "startLine": 500,
+        "startChar": 22,
+        "endLine": 500,
+        "endChar": 34
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc0e5dc_cdc7b596",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Do you really need the \u003c kMaxNumTasksPerTab here? You prune it elsewhere anyways. Maybe DCHECK instead before the return that the size isn\u0027t over kMaxNumTasksPerTab?",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5155a603_2f3d84f2",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Can you remove this if check? Shouldn\u0027t it always evaluate to true?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b349d599_298d2036",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "This seems like it\u0027s duplicating the task_id/global_id assignment part.",
+      "range": {
+        "startLine": 85,
+        "startChar": 32,
+        "endLine": 85,
+        "endChar": 41
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d974fc_b4279b20",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Okay, after being confused for quite some time, I think I finally understand what\u0027s going on. You\u0027re duplicating the TabTasks object because someone just switched tabs, and you want to maintain tracking between those tabs. And you\u0027re duplicating things to simplify ownership but at the expense of memory.\n\nCan you add some comments explaining we\u0027re purposely performing a deep copy of the TabTasks object to support cross-tab task linking? And why not doing this would be really tricky.",
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c171c42_34931e4e",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Is this true? Seems like this constant should actually be defined somewhere else, closer to where navigation ids come from, right?",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f458bb92_01bc2793",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Can you make it more clear that there\u0027s supposed to be exactly 1 TabTasks for every Tab?",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca2040a_c0fd403a",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Should this class get moved into its own file?",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d24b4e4_8c12ef09",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Comment explaining what this struct represents?",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dace84_776f073b",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "If this should always be present, can you have a constructor that forces one to be specified upon creation?",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29245067_27a9f306",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Should probably explain what a \"Task\" is, and what a \"Task ID\" is, and why there isn\u0027t a 1:1 mapping between the two concepts.",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccc7d6d_cd337189",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "The stand alone word \"task\" is very confusing to me in this context. What do you think of\n\n// The most recent global_id for the navigation this object is tracking. ...",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 22
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be114c89_20c4d11b",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Using kInvalidTaskID here doesn\u0027t seem valid.",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c4cd15_ebf516fd",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "The name of this variable needs to contain type information, parent_nav_id.",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1f9c6c_f7dadaaf",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Are we going to orphan tasks when the user hit the back button? And they\u0027re going to get cleaned up after some of the non-orphaned but older navigations, right?",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 25
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e6412f_64cb7eb5",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T18:22:06Z",
+      "side": 1,
+      "message": "Why does this take a parent id?",
+      "range": {
+        "startLine": 85,
+        "startChar": 35,
+        "endLine": 85,
+        "endChar": 42
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
