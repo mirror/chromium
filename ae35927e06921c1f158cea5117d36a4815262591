@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6ef05c8_7f829a8d",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T18:22:16Z",
+      "side": 1,
+      "message": "nit: use the shorthand for optional s/bandwidth_delay_product.has_value()/bandwidth_delay_product/",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1440edfb_07607a8c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T18:22:16Z",
+      "side": 1,
+      "message": "nit: IMO, you should move \"It looks for...\" to above the while loop. In general, class method comments should be in the header, so you don\u0027t need the comment here, and any detail beyond what the consumer needs should be within the method.",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fce607c_c8c245e5",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T18:22:16Z",
+      "side": 1,
+      "message": "Same comment about class methods only being commented in the header.",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb1a6c2_13ec579e",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T18:22:16Z",
+      "side": 1,
+      "message": "nit:s/bdp_lower_bound/bdp_lower_bound/ same for upper bound.",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0caf8bd8_b3857c22",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T18:22:16Z",
+      "side": 1,
+      "message": "remove before you land.",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
