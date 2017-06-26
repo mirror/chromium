@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67f2b216_b6b80a63",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-26T17:27:08Z",
+      "side": 1,
+      "message": "Would it make more sense to have a data_saver_disabled bucket as well?",
+      "revId": "bb8610642bbd4399220225cc84ceabb8b7882649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
