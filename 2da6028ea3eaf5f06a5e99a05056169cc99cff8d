@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "f3f4ebba_26714e01",
+        "filename": "headless/lib/renderer/headless_render_frame_controller_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-26T11:26:43Z",
+      "side": 1,
+      "message": "Ah, forgot that this runs in the renderer and it doesn\u0027t see SetAllowTabSocket(). One option would be to set a command line flag but that\u0027s not really worth it here.",
+      "parentUuid": "8e4ea254_e752652a",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07bdd49b_d7730433",
         "filename": "headless/public/headless_tab_socket.h",
         "patchSetId": 7
