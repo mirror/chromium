@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd34b525_a3eb99de",
+        "filename": "third_party/WebKit/Source/controller/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-26T23:26:45Z",
+      "side": 1,
+      "message": "Don\u0027t think this is needed, but if you like, I would be interested in moving at least one unit test so we can create the unit_tests target in this file in the same patch.",
+      "revId": "d0f8112ac00a43d0691e45d95d6c6ee7d75397e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5081eee0_33a83800",
+        "filename": "third_party/WebKit/Source/controller/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-26T23:26:45Z",
+      "side": 1,
+      "message": "Is this a minimal list? If not, for now we can just start with core, modules, v8 and platform, I think.",
+      "revId": "d0f8112ac00a43d0691e45d95d6c6ee7d75397e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c03892_079d1f64",
+        "filename": "third_party/WebKit/Source/controller/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-26T23:26:45Z",
+      "side": 1,
+      "message": "What\u0027s this for? If it\u0027s just in wherever you copied the file from I\u0027d try remove it and see if it still passes on the Mac bots. Although it looks pretty essential... Maybe",
+      "revId": "d0f8112ac00a43d0691e45d95d6c6ee7d75397e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bec48d6_dc54a235",
+        "filename": "third_party/WebKit/Source/controller/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-26T23:26:45Z",
+      "side": 1,
+      "message": "Where\u0027d you get this list from? Is this core/ owners + us?\nSgtm but I think maybe we want to prune a few, not all core/ OWNERs might want to be controller/ OWNERs",
+      "revId": "d0f8112ac00a43d0691e45d95d6c6ee7d75397e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6168a7_a6de3597",
+        "filename": "third_party/WebKit/Source/controller/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-26T23:26:45Z",
+      "side": 1,
+      "message": "Can remove these",
+      "revId": "d0f8112ac00a43d0691e45d95d6c6ee7d75397e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c84232_024fd424",
+        "filename": "third_party/WebKit/Source/controller/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-26T23:26:45Z",
+      "side": 1,
+      "message": "Maybe we should make a controller-specific list for this? Not sure :)",
+      "revId": "d0f8112ac00a43d0691e45d95d6c6ee7d75397e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
