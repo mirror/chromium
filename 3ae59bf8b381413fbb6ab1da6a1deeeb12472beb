@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5d953ddf_4cbccad3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T18:22:32Z",
+      "side": 1,
+      "message": "\u003e Are you sure? ChildConnectionAllocator.allocate() starts the connection right before returning it, after setting mChildProcessConnections so I think it should be fine.\n\nThat\u0027s exactly the problematic case in my mind. CPHL (or SpareConnection) has the childdied callback called before it even got the return value from allocate, so now can it clean anything up?\n\n\u003e And CPLH used to call start right after allocating the connection, so that would have been similar as far as I can tell.",
+      "parentUuid": "0b759146_5eab747f",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0da5a56_9b3c63bb",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 5
