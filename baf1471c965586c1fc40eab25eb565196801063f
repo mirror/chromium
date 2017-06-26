@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f370f4c_a4b2a465",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-26T18:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d90cb2db_66d907cb",
+      "revId": "baf1471c965586c1fc40eab25eb565196801063f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a838b44_1dadf42f",
         "filename": "chrome/browser/extensions/extension_tab_util.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-24T02:40:09Z",
       "side": 1,
       "message": "|browser| should be constant after this point, we should be able to do:\nif (opener_browser \u0026\u0026 browser !\u003d opener_browser) {\n  // set error, return null\n}",
+      "revId": "baf1471c965586c1fc40eab25eb565196801063f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ecdf01_a43bf8d9",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-26T18:53:45Z",
+      "side": 1,
+      "message": "I made the change. Should this case be tested?\n\nAlso, instead of throwing an error, if opener_browser is set, can we enforce that browser \u003d\u003d opener_browser by setting browser to opener_browser?",
+      "parentUuid": "4a838b44_1dadf42f",
       "revId": "baf1471c965586c1fc40eab25eb565196801063f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
