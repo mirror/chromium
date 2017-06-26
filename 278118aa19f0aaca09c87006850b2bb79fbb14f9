@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "ebb2482e_7f06d006",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-26T08:31:37Z",
+      "side": 1,
+      "message": "NextLayoutSibling (and FirstLayoutChild) enters display:contents elements. I tried the example below, and the FirstLayoutChild() on the first display:contents returns the span. Then, the NextLayoutSibling on the span returns the whitespace node inside the following display:contents.\n\nI\u0027ll add unit tests if this is not yet covered.\n\n\n\u003c!DOCTYPE html\u003e\n\u003cdiv id\u003d\"reattach\"\u003e\u003c/div\u003e\u003cdiv style\u003d\"display: contents;\"\u003e\u003cspan style\u003d\"display:none\"\u003e\u003c/span\u003e\u003cdiv style\u003d\"display:contents\"\u003e \u003c/div\u003e\u003c/div\u003e\u003cdiv id\u003d\"other\"\u003e\u003c/div\u003e\n\u003cscript\u003e\n  document.body.offsetTop;\n  reattach.style.display \u003d \"inline\";\n\u003c/script\u003e",
+      "parentUuid": "3d3740b8_0b6820a6",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4832662f_f8ab2515",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13
