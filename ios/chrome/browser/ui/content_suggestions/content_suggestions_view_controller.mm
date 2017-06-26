@@ -13,6 +13,8 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_delegate.h"
+#import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -38,16 +40,23 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 // Left and right margins for the content inset of the collection view.
 @property(nonatomic, assign) CGFloat cardStyleMargin;
 
+// The overscroll actions controller managing accelerators over the toolbar.
+@property(nonatomic, strong)
+    OverscrollActionsController* overscrollActionsController;
 @end
 
 @implementation ContentSuggestionsViewController
 
 @synthesize suggestionCommandHandler = _suggestionCommandHandler;
+@synthesize suggestionsDelegate = _suggestionsDelegate;
 @synthesize collectionUpdater = _collectionUpdater;
 @synthesize cardStyleMargin = _cardStyleMargin;
+@synthesize overscrollActionsController = _overscrollActionsController;
+@synthesize overscrollDelegate = _overscrollDelegate;
+@synthesize scrolledToTop = _scrolledToTop;
 @dynamic collectionViewModel;
 
-#pragma mark - Public
+#pragma mark - Lifecycle
 
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
                    dataSource:(id<ContentSuggestionsDataSource>)dataSource {
@@ -59,6 +68,12 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   }
   return self;
 }
+
+- (void)dealloc {
+  [self.overscrollActionsController invalidate];
+}
+
+#pragma mark - Public
 
 - (void)dismissEntryAtIndexPath:(NSIndexPath*)indexPath {
   if (!indexPath || ![self.collectionViewModel hasItemAtIndexPath:indexPath]) {
@@ -157,6 +172,14 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
                   action:@selector(handleLongPress:)];
   longPressRecognizer.numberOfTouchesRequired = 1;
   [self.collectionView addGestureRecognizer:longPressRecognizer];
+
+  if (!IsIPadIdiom()) {
+    self.overscrollActionsController = [[OverscrollActionsController alloc]
+        initWithScrollView:self.collectionView];
+    [self.overscrollActionsController
+        setStyle:OverscrollStyle::NTP_NON_INCOGNITO];
+    self.overscrollActionsController.delegate = self.overscrollDelegate;
+  }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
@@ -364,7 +387,72 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
   [super scrollViewDidScroll:scrollView];
+  [self.overscrollActionsController scrollViewDidScroll:scrollView];
   [self.suggestionCommandHandler updateFakeOmniboxForScrollView:scrollView];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView {
+  [self.overscrollActionsController scrollViewWillBeginDragging:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView
+                  willDecelerate:(BOOL)decelerate {
+  [super scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+  [self.overscrollActionsController scrollViewDidEndDragging:scrollView
+                                              willDecelerate:decelerate];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView*)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint*)targetContentOffset {
+  [super scrollViewWillEndDragging:scrollView
+                      withVelocity:velocity
+               targetContentOffset:targetContentOffset];
+  [self.overscrollActionsController
+      scrollViewWillEndDragging:scrollView
+                   withVelocity:velocity
+            targetContentOffset:targetContentOffset];
+
+  if (IsIPadIdiom() || [self.suggestionsDelegate isOmniboxFocused])
+    return;
+
+  CGFloat pinnedOffsetY = [self.suggestionsDelegate pinnedOffsetY];
+  CGFloat offsetY = scrollView.contentOffset.y;
+  CGFloat targetY = targetContentOffset->y;
+  if (offsetY > 0 && offsetY < pinnedOffsetY) {
+    // Omnibox is currently between middle and top of screen.
+    if (velocity.y > 0) {  // scrolling upwards
+      if (targetY < pinnedOffsetY) {
+        // Scroll the omnibox up to |pinnedOffsetY| if velocity is upwards but
+        // scrolling will stop before reaching |pinnedOffsetY|.
+        targetContentOffset->y = offsetY;
+        [self.collectionView setContentOffset:CGPointMake(0, pinnedOffsetY)
+                                     animated:YES];
+      }
+      self.scrolledToTop = YES;
+    } else {  // scrolling downwards
+      if (targetY > 0) {
+        // Scroll the omnibox down to zero if velocity is downwards or 0 but
+        // scrolling will stop before reaching 0.
+        targetContentOffset->y = offsetY;
+        [self.collectionView setContentOffset:CGPointZero animated:YES];
+      }
+      self.scrolledToTop = NO;
+    }
+  } else if (offsetY > pinnedOffsetY &&
+             targetContentOffset->y < pinnedOffsetY) {
+    // Most visited cells are currently scrolled up past the omnibox but will
+    // end the scroll below the omnibox. Stop the scroll at just below the
+    // omnibox.
+    targetContentOffset->y = offsetY;
+    [self.collectionView setContentOffset:CGPointMake(0, pinnedOffsetY)
+                                 animated:YES];
+    self.scrolledToTop = YES;
+  } else if (offsetY >= pinnedOffsetY) {
+    self.scrolledToTop = YES;
+  } else if (offsetY <= 0) {
+    self.scrolledToTop = NO;
+  }
 }
 
 #pragma mark - Private
