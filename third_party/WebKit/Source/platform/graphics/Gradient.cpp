@@ -63,7 +63,6 @@ void Gradient::AddColorStop(const Gradient::ColorStop& stop) {
   }
 
   stops_.push_back(stop);
-  cached_shader_.reset();
 }
 
 void Gradient::AddColorStops(const Vector<Gradient::ColorStop>& stops) {
@@ -167,15 +166,9 @@ std::unique_ptr<PaintShader> Gradient::CreateShaderInternal(
 }
 
 void Gradient::ApplyToFlags(PaintFlags& flags, const SkMatrix& local_matrix) {
-  if (!cached_shader_ ||
-      local_matrix != cached_shader_->sk_shader()->getLocalMatrix() ||
-      flags.getColorFilter() != color_filter_.get()) {
-    color_filter_ = flags.refColorFilter();
-    flags.setColorFilter(nullptr);
-    cached_shader_ = CreateShaderInternal(local_matrix);
-  }
-
-  flags.setShader(WTF::MakeUnique<PaintShader>(*cached_shader_));
+  color_filter_ = flags.refColorFilter();
+  flags.setColorFilter(nullptr);
+  flags.setShader(CreateShaderInternal(local_matrix));
 
   // Legacy behavior: gradients are always dithered.
   flags.setDither(true);

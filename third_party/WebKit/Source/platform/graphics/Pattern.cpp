@@ -56,14 +56,7 @@ Pattern::~Pattern() {
 }
 
 void Pattern::ApplyToFlags(PaintFlags& flags, const SkMatrix& local_matrix) {
-  if (!cached_shader_ || IsLocalMatrixChanged(local_matrix))
-    cached_shader_ = CreateShader(local_matrix);
-
-  flags.setShader(WTF::MakeUnique<PaintShader>(*cached_shader_));
-}
-
-bool Pattern::IsLocalMatrixChanged(const SkMatrix& local_matrix) const {
-  return local_matrix != cached_shader_->sk_shader()->getLocalMatrix();
+  flags.setShader(CreateShader(local_matrix));
 }
 
 }  // namespace blink
