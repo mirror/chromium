@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "416421ca_d4b2e1da",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtilsTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-26T18:41:12Z",
+      "side": 1,
+      "message": "Will add tests after reviewers acknowledge the general direction of this CL.",
+      "revId": "01c72cdab5bb826bb664618455dabed9dd710b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
