@@ -21,6 +21,9 @@ class ChildThreadImpl;
 // Base class for child processes of the browser process (i.e. renderer and
 // plugin host). This is a singleton object for each child process.
 //
+// In tests, use ChildProcessForTesting instead of this to ensure that
+// TaskScheduler is cleaned up.
+//
 // During process shutdown the following sequence of actions happens in
 // order.
 //
@@ -88,6 +91,11 @@ class CONTENT_EXPORT ChildProcess {
   static ChildProcess* current();
 
   static void WaitForDebugger(const std::string& label);
+
+ protected:
+  bool initialized_task_scheduler() const {
+    return initialized_task_scheduler_;
+  }
 
  private:
   int ref_count_;

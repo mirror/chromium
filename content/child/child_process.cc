@@ -99,8 +99,9 @@ ChildProcess::~ChildProcess() {
   g_lazy_tls.Pointer()->Set(NULL);
   io_thread_.Stop();
 
-  if (initialized_task_scheduler_) {
-    DCHECK(base::TaskScheduler::GetInstance());
+  // Shutdown TaskScheduler if it was initialized by us and wasn't cleaned up by
+  // ChildProcessForTesting.
+  if (initialized_task_scheduler() && base::TaskScheduler::GetInstance()) {
     base::TaskScheduler::GetInstance()->Shutdown();
   }
 }
