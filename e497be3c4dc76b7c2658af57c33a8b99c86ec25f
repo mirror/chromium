@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd0f17a9_d9e9c0b2",
+        "filename": "media/gpu/video_decode_accelerator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-06-26T14:31:22Z",
+      "side": 1,
+      "message": "I think you should just drop this parameter. Could you please update OzoneGpuTestHelper to fix the inconsistencies?\n - in FakeGpuProcessHost constructor, rename |gpu_task_runner| to |ui_task_runner| since that\u0027s the expectation.\n - Update ozone_demo.cc since that also uses OzoneGpuTestHelper.",
+      "range": {
+        "startLine": 289,
+        "startChar": 28,
+        "endLine": 289,
+        "endChar": 63
+      },
+      "revId": "e497be3c4dc76b7c2658af57c33a8b99c86ec25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
