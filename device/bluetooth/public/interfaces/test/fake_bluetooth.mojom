@@ -145,4 +145,43 @@ interface FakeCentral {
   SetNextReadCharacteristicResponse(uint16 gatt_code, array<uint8>? value,
                                     string characteristic_id, string service_id,
                                     string peripheral_address) => (bool success);
+
+  // Sets the next subscribe to notifications response for characteristic with
+  // |characteristics_id| in |service_id| and in |peripheral_address| to |code|.
+  // |code| could be a GATT Error Response from
+  // BT 4.2 Vol 3 Part F 3.4.1.1 Error Response or a number outside that range
+  // returned by specific platforms e.g. Android returns 0x101 to signal a GATT
+  // failure.
+  // https://developer.android.com/reference/android/bluetooth/BluetoothGatt.html#GATT_FAILURE
+  // Subscribing to notifications involves writing to the CCC descriptor.
+  // Since platforms abstract this procedure in different ways we also
+  // abstract it.
+  SetNextSubscribeToNotificationsResponse(
+      uint16 gatt_code,
+      string characteristic_id,
+      string service_id,
+      string peripheral_address) => (bool success);
+
+  // Sets the next unsubscribe from notifications response for characteristic
+  // with |characteristics_id| in |service_id| and in |peripheral_address| to
+  // |code|. |code| could be a GATT Error Response from
+  // BT 4.2 Vol 3 Part F 3.4.1.1 Error Response or a number outside that range
+  // returned by specific platforms e.g. Android returns 0x101 to signal a GATT
+  // failure.
+  // https://developer.android.com/reference/android/bluetooth/BluetoothGatt.html#GATT_FAILURE
+  // Unsubscribing from notifications involves writing to the CCC descriptor.
+  // Since platforms abstract this procedure in different ways we also
+  // abstract it.
+  SetNextUnsubscribeFromNotificationsResponse(
+      uint16 gatt_code,
+      string characteristic_id,
+      string service_id,
+      string peripheral_address) => (bool success);
+
+  // Returns whether or not a client has subscribed to notifications for
+  // characteristic with |characteristics_id| in |service_id| and in
+  // |peripheral_address|.
+  IsNotifying(string characteristic_id,
+              string service_id,
+              string peripheral_address) => (bool success, bool is_notifying);
 };

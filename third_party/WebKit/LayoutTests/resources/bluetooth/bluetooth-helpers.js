@@ -593,8 +593,12 @@ function getConnectedHealthThermometerDevice(options) {
     .then(() => fake_health_thermometer.addFakeCharacteristic({
       uuid: 'measurement_interval', properties: ['read', 'write', 'indicate']}))
     .then(c => fake_measurement_interval = c)
-    .then(() => fake_measurement_interval.addFakeDescriptor({
-      uuid: 'gatt.characteristic_user_description'}))
+    .then(() => Promise.all([
+      fake_measurement_interval.addFakeDescriptor({
+        uuid: 'gatt.characteristic_user_description'}),
+      fake_measurement_interval.addFakeDescriptor({
+        uuid: 'gatt.client_characteristic_configuration'})
+    ]))
     .then(() => fake_health_thermometer.addFakeCharacteristic({
       uuid: 'temperature_measurement', properties: ['indicate']}))
     .then(c => fake_temperature_measurement = c)
