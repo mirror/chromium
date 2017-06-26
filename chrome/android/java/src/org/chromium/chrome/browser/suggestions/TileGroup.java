@@ -387,8 +387,8 @@ public class TileGroup implements MostVisitedSites.Observer {
         }
 
         if (countChanged) mObserver.onTileCountChanged();
-        if (isInitialLoad) mObserver.onLoadTaskCompleted();
         mObserver.onTileDataChanged();
+        if (isInitialLoad) mObserver.onLoadTaskCompleted();
     }
 
     /** @return A tile matching the provided URL, or {@code null} if none is found. */
@@ -412,8 +412,6 @@ public class TileGroup implements MostVisitedSites.Observer {
         @Override
         public void onLargeIconAvailable(
                 @Nullable Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
-            if (mTrackLoadTask) mObserver.onLoadTaskCompleted();
-
             Tile tile = getTile(mUrl);
             if (tile == null) return; // The tile might have been removed.
 
@@ -436,6 +434,9 @@ public class TileGroup implements MostVisitedSites.Observer {
                 tile.setIcon(roundedIcon);
                 tile.setType(TileVisualType.ICON_REAL);
             }
+
+            // This call needs to be made after the tiles are completely initialised, for UMA.
+            if (mTrackLoadTask) mObserver.onLoadTaskCompleted();
 
             mObserver.onTileIconChanged(tile);
         }
