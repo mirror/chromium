@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f392bfdf_2fa8801b",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-06-26T18:47:08Z",
+      "side": 1,
+      "message": "This seems odd and feels like to me that this change is working around some other destruction issue.\nWhat IPC arrives after this that causes UAF? Can we spot that down and fix that instead?\ne.g. when I looked at \n\nTextInputManagerTester::InternalObserver::WebContentsDestroyed() override { text_input_manager_ \u003d nullptr; }\ni.e. It will not remove that InternalObserver from text input manager\u0027s observer if that happens:\n  ~InternalObserver() override {\n    if (text_input_manager_)\n      text_input_manager_-\u003eRemoveObserver(this);\n  }",
+      "range": {
+        "startLine": 1787,
+        "startChar": 18,
+        "endLine": 1787,
+        "endChar": 48
+      },
+      "revId": "7c5c7b3da14848a793382f5a5e62fcb94a130f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
