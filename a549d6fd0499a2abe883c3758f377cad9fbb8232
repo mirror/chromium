@@ -16,6 +16,24 @@
       "revId": "a549d6fd0499a2abe883c3758f377cad9fbb8232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc002d5_28110a79",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1126145
+      },
+      "writtenOn": "2017-06-26T02:31:07Z",
+      "side": 1,
+      "message": "Just want to leave a comment let others know this fallback is not a part of the spec, if you think it\u0027s not necessary to leave a comment I can remove it.",
+      "parentUuid": "75475506_86faed34",
+      "revId": "a549d6fd0499a2abe883c3758f377cad9fbb8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
