@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5409b78d_ec38f233",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-26T18:15:17Z",
+      "side": 1,
+      "message": "nit: wrap args to next line and indent four spaces, or whatever clang-format recommends (this looks like it\u0027s 81 chars)",
+      "revId": "561917614ce9295286684b25d7490294dde553b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
