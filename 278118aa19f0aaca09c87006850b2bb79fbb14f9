@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f253c543_611dad14",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-06-26T08:04:42Z",
+      "side": 1,
+      "message": "I think it was https://codereview.chromium.org/2702153008/, but I don\u0027t think I added any new test, so I was likely misremembering. Probably the DCHECK doesn\u0027t hurt though.",
+      "parentUuid": "c7f97a98_ca91c680",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26d6c860_d665f213",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13
@@ -125,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "3d3740b8_0b6820a6",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-06-26T08:04:42Z",
+      "side": 1,
+      "message": "Sure, I get that, but if I\u0027m not misreading LayoutTreeBuilderTraversal::NextLayoutSibling(), if the distributed nodes of a slot are:\n\n\u003cdiv style\u003d\"display: contents;\"\u003e\u003cdiv\u003e\u003c/div\u003e\u003c/div\u003e\u003cdiv id\u003d\"other\"\u003e\u003c/div\u003e\n\nchild at this point is the display: contents element.\n\nIn this case we\u0027ll never traverse the in-flow kid of that display: contents element (because NextLayoutSibling will return #other). I\u0027m not sure if that\u0027s intended.\n\nMaybe we should just fix NextLayoutSibling to not call NextSibling unconditionally if the element has display: contents? It\u0027s not clear what NextLayoutSibling of a display: contents node should be. Returning a kid doesn\u0027t look particularly right.",
+      "parentUuid": "dff40454_4f34e19d",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4832662f_f8ab2515",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13
@@ -154,6 +190,24 @@
       "side": 1,
       "message": "Child may be an Element, and it may have display:contents at this point. The loop below will skip until we find a whitespace text node, or an in-flow.",
       "parentUuid": "4832662f_f8ab2515",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88af18ac_ed3c11c8",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-06-26T08:04:42Z",
+      "side": 1,
+      "message": "Sure (that assertion will only reject display: contents elements fwiw). I just think it either shouldn\u0027t have display: contents per my above comment, or we should fix NextLayoutSibling to do what this loop expects for display: contents nodes (I don\u0027t have a strong opinion on that).\n\nIf I\u0027m missing something here re NextLayoutSibling, and my previous comment isn\u0027t right, then please disregard it :).",
+      "parentUuid": "d42cad5b_ea9cf9fc",
       "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
