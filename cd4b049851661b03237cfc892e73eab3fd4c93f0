@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd906252_6ab9f739",
+        "filename": "components/arc/audio/arc_audio_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-26T20:57:32Z",
+      "side": 1,
+      "message": "Do we want to guard here, too?",
+      "revId": "cd4b049851661b03237cfc892e73eab3fd4c93f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
