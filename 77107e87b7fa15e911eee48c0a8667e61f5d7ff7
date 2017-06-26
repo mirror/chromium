@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d199e82_a2105439",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T21:19:20Z",
+      "side": 1,
+      "message": "Done, made a run_all_unittests set.",
+      "parentUuid": "2bcc1a95_c84cd4cc",
+      "revId": "77107e87b7fa15e911eee48c0a8667e61f5d7ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b2e0210_fb76ca59",
         "filename": "components/viz/service/display_compositor/DEPS",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T18:41:31Z",
       "side": 1,
       "message": "Are the changes to DEPS here still required? I sort of lost track of what change this is related to.",
+      "revId": "77107e87b7fa15e911eee48c0a8667e61f5d7ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05077365_c97e84a3",
+        "filename": "components/viz/service/display_compositor/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T21:19:20Z",
+      "side": 1,
+      "message": "I.. don\u0027t know why this worked before, maybe it didn\u0027t.\n\ngpu_display_provider.cc:22:#include \"gpu/command_buffer/service/image_factory.h\"\n\nI get presubmit errors without it though.",
+      "parentUuid": "0b2e0210_fb76ca59",
       "revId": "77107e87b7fa15e911eee48c0a8667e61f5d7ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
