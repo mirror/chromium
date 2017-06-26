@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "432d5f88_cd7882ee",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "style: move all the static stuff to the top",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b250040b_58135a95",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "nit: \u003d default; like above",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a936a490_cb6ec74b",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "Sounds that this would only change if `stored_media_playbacks` has changed. It\u0027s fine to check too, to be safe but maybe there is no need to add the min delta? We could just compare the `double`?",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb20d658_9aa2a58e",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "Can you make the class final?\n\nAlso add a class comment explaining what it does.",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69873a61_f3ff9a75",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "Any reason why you are declaring this to make it default?",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf5c7d4_06106776",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e3dc56_856ef6c9",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "If you mention the design doc, maybe link to it in the top level comment. It would be fine to just drop the mention of the design doc.",
+      "range": {
+        "startLine": 31,
+        "startChar": 56,
+        "endLine": 31,
+        "endChar": 66
+      },
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4d7a23_075428b2",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "style: IncrementVisits() (foo_bar() is for getters)",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c344fe5a_d473c05a",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb70b2b4_b414d669",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-26T18:05:31Z",
+      "side": 1,
+      "message": "FWIW, to avoid adding those, I usually add an accessor in my test class. Friend-ness in C++ isn\u0027t inherit, therefore because MediaEngagementScoreTest is the parent of all the TEST_F(Foo,...), they can\u0027t access what MediaEngagementScoreTest can but if MediaEngagementScoreTest has a method that does the access for them, everything would work.\n\nEither work but because you are already making MediaEngagementScoreTest a friend below, maybe simpler to add the right methods?",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
