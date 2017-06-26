@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c084b5_55a1057d",
+        "filename": "docs/fuchsia_build_instructions.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-26T19:59:17Z",
+      "side": 1,
+      "message": "TRAILING WHITESPACE",
+      "range": {
+        "startLine": 6,
+        "startChar": 58,
+        "endLine": 6,
+        "endChar": 59
+      },
+      "revId": "f94d84d8cd80e52a4a5950bbf82fba73dada7424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
