@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce2396c0_04a47420",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-26T21:07:39Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this is needed. When BuildServiceInstanceFor is called, context should not be NULL.",
+      "revId": "7eeebb6eeb4861c4663edb32acc8c31e6d97c5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac47da49_b9a9a1af",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-26T21:07:39Z",
+      "side": 1,
+      "message": "nit: add empty line before this line",
+      "revId": "7eeebb6eeb4861c4663edb32acc8c31e6d97c5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df40da7a_95f18f82",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-26T21:07:39Z",
+      "side": 1,
+      "message": "nit: add const modifier",
+      "revId": "7eeebb6eeb4861c4663edb32acc8c31e6d97c5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09dd294a_8a55dcec",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-26T21:07:39Z",
+      "side": 1,
+      "message": "nit: add const modifier",
+      "revId": "7eeebb6eeb4861c4663edb32acc8c31e6d97c5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ade6fd0_d5bb5b42",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-26T21:07:39Z",
+      "side": 1,
+      "message": "nit: Do we want to DCHECK if the request with same name exists.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "7eeebb6eeb4861c4663edb32acc8c31e6d97c5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3040af8a_0303790d",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-26T21:07:39Z",
+      "side": 1,
+      "message": "nit: \u0027current_\u0027 prefix may be skipped for simplicity",
+      "revId": "7eeebb6eeb4861c4663edb32acc8c31e6d97c5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6431d43a_b349ec87",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-26T21:07:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "7eeebb6eeb4861c4663edb32acc8c31e6d97c5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
