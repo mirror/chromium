@@ -6,9 +6,12 @@
 
 #import <UIKit/UIKit.h>
 
+#include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "ios/web/public/user_agent.h"
+#include "ios/web/shell/grit/shell_resources.h"
 #include "ios/web/shell/shell_web_main_parts.h"
+#include "services/test/echo/echo_service.h"
 #include "ui/base/resource/resource_bundle.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -52,6 +55,25 @@ base::StringPiece ShellWebClient::GetDataResource(
 base::RefCountedMemory* ShellWebClient::GetDataResourceBytes(
     int resource_id) const {
   return ResourceBundle::GetSharedInstance().LoadDataResourceBytes(resource_id);
+}
+
+void ShellWebClient::RegisterServices(StaticServiceMap* services) {
+  service_manager::ServiceInfo echo_info;
+  echo_info.factory = base::Bind(&echo::CreateEchoService);
+  echo_info.task_runner = base::ThreadTaskRunnerHandle::Get();
+  services->insert(std::make_pair("echo", echo_info));
+}
+
+std::unique_ptr<base::Value> ShellWebClient::GetServiceManifestOverlay(
+    base::StringPiece name) {
+  if (name != "web_browser")
+    return nullptr;
+
+  base::StringPiece manifest_contents =
+      ui::ResourceBundle::GetSharedInstance().GetRawDataResourceForScale(
+          IDR_WEB_SHELL_BROWSER_MANIFEST_OVERLAY,
+          ui::ScaleFactor::SCALE_FACTOR_NONE);
+  return base::JSONReader::Read(manifest_contents);
 }
 
 void ShellWebClient::AllowCertificateError(
