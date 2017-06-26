@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e80df5_d32dce46",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T17:12:11Z",
+      "side": 1,
+      "message": "nit: keep the old name? \"stopped\" kinda implies stopped by client\n\nalso specify if this is called when onChildStartFailed. I think the answer is yes",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5812026d_64edf4a7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T17:12:11Z",
+      "side": 1,
+      "message": "this is now synchronous, the stop can happen before the corresponding connection state is even set in allocator/helper, which can probably lead to problems",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0da5a56_9b3c63bb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T17:12:11Z",
+      "side": 1,
+      "message": "don\u0027t need this anymore?",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3dc5240_41eb34f8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T17:12:11Z",
+      "side": 1,
+      "message": "why is the pid !\u003d 0 check no longer needed?",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
