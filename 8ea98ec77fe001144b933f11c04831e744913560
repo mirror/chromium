@@ -22,6 +22,30 @@
       "revId": "8ea98ec77fe001144b933f11c04831e744913560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9f2652_d3294675",
+        "filename": "ui/views_content_client/views_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-26T22:57:24Z",
+      "side": 1,
+      "message": "Yeah I complained about repeated code in this patch as well and your patch looks much better. I will abandon.",
+      "parentUuid": "6fae81c8_d69988da",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "8ea98ec77fe001144b933f11c04831e744913560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
