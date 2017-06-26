@@ -9,6 +9,7 @@ group("all_tests") {
   testonly = true
   deps = [
     ":ios_clean_chrome_unittests",
+    "//ios/clean/chrome/test/performance:ios_clean_skeleton_egtests",
   ]
 }
 

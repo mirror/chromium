@@ -9,6 +9,7 @@
 #import "ios/clean/chrome/app/steps/launch_to_basic.h"
 #import "ios/clean/chrome/app/steps/launch_to_foreground.h"
 #import "ios/clean/chrome/app/steps/root_coordinator+application_step.h"
+#import "ios/performance/startupLoggers.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -26,6 +27,7 @@
 
 - (BOOL)application:(UIApplication*)application
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
+  [[startupLoggers sharedInstance] registerAppDidFinishLaunchingTime];
   self.applicationState = [[ApplicationState alloc] init];
   self.applicationState.application = application;
   [self configureApplicationState];
@@ -35,6 +37,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
+  [[startupLoggers sharedInstance] registerAppDidBecomeActiveTime];
 }
 
 - (void)applicationWillResignActive:(UIApplication*)application {
