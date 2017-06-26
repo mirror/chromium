@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63609b94_45b7828b",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-26T17:02:02Z",
+      "side": 1,
+      "message": "This would be more like the comment above and also more in the spirit of early returns:\nif (foo !\u003d ZOMBIE)\n  continue;",
+      "range": {
+        "startLine": 106,
+        "startChar": 22,
+        "endLine": 106,
+        "endChar": 28
+      },
+      "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8185e11d_c796ce9f",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-26T17:02:02Z",
+      "side": 1,
+      "message": "Not sure I understand why would you run it when FAILURE?",
+      "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aac328e_2356db9f",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-26T17:02:02Z",
+      "side": 1,
+      "message": "I think we need a unittest for this - for example if it round-trips the item through store successfully. For example, if someone adds a field in database but forgets to add it here.\n\nSame for other methods in this file.",
+      "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
