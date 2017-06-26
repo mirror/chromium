@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac09fdb_d126127c",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-26T16:14:42Z",
+      "side": 1,
+      "message": "Can we avoid passing scoped_refptr to a post task? If the message loop is destroyed before this is processed then the reference will not be dropped on the thread we expect..",
+      "revId": "e60ca8fa500d08b128707efa7a4eae492d3f3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
