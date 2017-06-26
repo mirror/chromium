@@ -499,6 +499,24 @@
     },
     {
       "key": {
+        "uuid": "e3365d41_4d51421c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-26T18:29:00Z",
+      "side": 1,
+      "message": "Are they related to the expected usage patterns of the DB? this could be quite different from the OPM.",
+      "parentUuid": "a0dfb44f_72e9cd4a",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "589c13f2_004b911a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 8
