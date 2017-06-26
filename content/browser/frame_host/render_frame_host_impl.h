@@ -777,6 +777,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                 base::string16 text,
                                 base::string16 html);
   void OnToggleFullscreen(bool enter_fullscreen);
+  bool IsFullscreenContentEnabled();
   void OnDidStartLoading(bool to_different_document);
   void OnDidStopLoading();
   void OnDidChangeLoadProgress(double load_progress);

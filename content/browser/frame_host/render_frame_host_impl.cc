@@ -2477,6 +2477,10 @@ void RenderFrameHostImpl::OnToggleFullscreen(bool enter_fullscreen) {
     }
   }
 
+  bool fullscreen_content_enabled = IsFullscreenContentEnabled();
+  if (fullscreen_content_enabled) {
+  }
+
   // TODO(alexmos): See if this can use the last committed origin instead.
   if (enter_fullscreen)
     delegate_->EnterFullscreenMode(last_committed_url().GetOrigin());
@@ -2492,6 +2496,14 @@ void RenderFrameHostImpl::OnToggleFullscreen(bool enter_fullscreen) {
   // there are any OOPIF widgets, this will also trigger them to resize via
   // frameRectsChanged.
   render_view_host_->GetWidget()->WasResized();
+}
+
+bool RenderFrameHostImpl::IsFullscreenContentEnabled() {
+#if defined(OS_MACOSX)
+  return base::FeatureList::IsEnabled(features::kFullscreenContent);
+#else
+  return false;
+#endif
 }
 
 void RenderFrameHostImpl::OnDidStartLoading(bool to_different_document) {
