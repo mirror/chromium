@@ -29,7 +29,7 @@ unpacker.app = {
 
   /**
    * The default filename for .nmf file.
-   * This value must not be const because it is overwritten in tests.
+   * This value must not be constant because it is overwritten in tests.
    * Since .nmf file is not available in .grd, we use .txt instead.
    * @type {string}
    */
@@ -411,7 +411,7 @@ unpacker.app = {
           unpacker.app.moduleLoadedPromise = null;
           return;
         }
-        unpacker.app.naclModule = document.getElementById(moduleId);
+        unpacker.app.naclModule = document.querySelector('#' + moduleId);
         fulfill();
       }, true);
 

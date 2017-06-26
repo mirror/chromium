@@ -126,7 +126,7 @@ unpacker.Compressor.prototype.getArchiveName_ = function() {
   if (this.items_.length !== 1)
     return unpacker.Compressor.DEFAULT_ARCHIVE_NAME;
 
-  var name = this.items_[0].entry.name
+  var name = this.items_[0].entry.name;
   var idx = name.lastIndexOf('.');
   // When the name does not have extension.
   // TODO(takise): This converts file.tar.gz to file.tar.zip.
@@ -182,7 +182,7 @@ unpacker.Compressor.prototype.sendCreateArchiveRequest_ = function() {
   var request = unpacker.request.createCreateArchiveRequest(
       this.compressorId_);
   this.naclModule_.postMessage(request);
-}
+};
 
 /**
  * A handler of create archive done response.
@@ -193,7 +193,7 @@ unpacker.Compressor.prototype.createArchiveDone_ = function() {
   this.items_.forEach(function(item) {
     this.getEntryMetadata_(item.entry);
   }.bind(this));
-}
+};
 
 /**
  * Gets metadata of a file or directory.
@@ -205,7 +205,7 @@ unpacker.Compressor.prototype.getEntryMetadata_ = function(entry) {
     this.getSingleMetadata_(entry);
   else
     this.getDirectoryEntryMetadata_(/** @type {!DirectoryEntry} */ (entry));
-}
+};
 
 /**
  * Requests metadata of an entry non-recursively.
@@ -227,7 +227,7 @@ unpacker.Compressor.prototype.getSingleMetadata_ = function(entry) {
         error.message + '.');
     this.onError_(this.compressorId_);
   }.bind(this));
-}
+};
 
 /**
  * Requests metadata of an entry recursively.
@@ -259,7 +259,7 @@ unpacker.Compressor.prototype.getDirectoryEntryMetadata_ = function(dir) {
 
   // Get the metadata of this dir itself.
   this.getSingleMetadata_(dir);
-}
+};
 
 /**
  * Pops an entry from the queue and adds it to the archive.
@@ -298,7 +298,7 @@ unpacker.Compressor.prototype.sendAddToArchiveRequest_ = function() {
       this.metadata_[entryId].size, modificationTime,
       this.entries_[entryId].isDirectory);
   this.naclModule_.postMessage(request);
-}
+};
 
 /**
  * Sends a close archive request to minizip. minizip writes metadata of
@@ -309,7 +309,7 @@ unpacker.Compressor.prototype.sendCloseArchiveRequest = function(hasError) {
   var request = unpacker.request.createCloseArchiveRequest(
       this.compressorId_, hasError);
   this.naclModule_.postMessage(request);
-}
+};
 
 /**
  * Sends a read file chunk done response.
@@ -322,7 +322,7 @@ unpacker.Compressor.prototype.sendReadFileChunkDone_ =
   var request = unpacker.request.createReadFileChunkDoneResponse(
       this.compressorId_, length, buffer);
   this.naclModule_.postMessage(request);
-}
+};
 
 /**
  * A handler of read file chunk messages.
@@ -368,7 +368,7 @@ unpacker.Compressor.prototype.onReadFileChunk_ = function(data) {
       // occurred in reading a chunk.
       this.sendReadFileChunkDone_(-1, new ArrayBuffer(0));
       this.onError_(this.compressorId_);
-    }
+    };
 
     reader.readAsArrayBuffer(file);
   }.bind(this);
@@ -384,7 +384,7 @@ unpacker.Compressor.prototype.onReadFileChunk_ = function(data) {
 
   // From the second time onward.
   readFileChunk();
-}
+};
 
 /**
  * A handler of write chunk requests.
@@ -397,7 +397,7 @@ unpacker.Compressor.prototype.onWriteChunk_ = function(data) {
   var length = Number(data[unpacker.request.Key.LENGTH]);
   var buffer = data[unpacker.request.Key.CHUNK_BUFFER];
   this.writeChunk_(offset, length, buffer, this.sendWriteChunkDone_.bind(this));
-}
+};
 
 /**
  * Writes buffer into the archive file (window.archiveFileEntry).
@@ -448,7 +448,7 @@ unpacker.Compressor.prototype.sendWriteChunkDone_ = function(length) {
   var request = unpacker.request.createWriteChunkDoneResponse(
       this.compressorId_, length);
   this.naclModule_.postMessage(request);
-}
+};
 
 /**
  * A handler of add to archive done responses.
@@ -463,7 +463,7 @@ unpacker.Compressor.prototype.onAddToArchiveDone_ = function() {
 
   // Start processing another entry.
   this.sendAddToArchiveRequest_();
-}
+};
 
 /**
  * A handler of close archive responses.
@@ -472,7 +472,7 @@ unpacker.Compressor.prototype.onAddToArchiveDone_ = function() {
  */
 unpacker.Compressor.prototype.onCloseArchiveDone_ = function() {
   this.onSuccess_(this.compressorId_);
-}
+};
 
 /**
  * Processes messages from NaCl module.

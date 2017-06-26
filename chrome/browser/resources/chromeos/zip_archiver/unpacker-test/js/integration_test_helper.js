@@ -7,7 +7,7 @@
 /**
  * A helper namespace used by integration_tests.js.
  */
-var tests_helper = {
+var testsHelper = {
   /**
    * The base URL where all test archives are located.
    * @private {string}
@@ -54,12 +54,12 @@ var tests_helper = {
    *     with the download failure error.
    */
   getFileBlob: function(filePath) {
-    if (tests_helper.fileBlobCache_[filePath])
-      return Promise.resolve(tests_helper.fileBlobCache_[filePath]);
+    if (testsHelper.fileBlobCache_[filePath])
+      return Promise.resolve(testsHelper.fileBlobCache_[filePath]);
 
     return new Promise(function(fulfill, reject) {
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', tests_helper.TEST_FILES_BASE_URL_ + filePath);
+      xhr.open('GET', testsHelper.TEST_FILES_BASE_URL_ + filePath);
       xhr.responseType = 'blob';
 
       xhr.onload = fulfill.bind(null, xhr);
@@ -70,7 +70,7 @@ var tests_helper = {
     }).then(function(xhr) {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          tests_helper.fileBlobCache_[filePath] = xhr.response;
+          testsHelper.fileBlobCache_[filePath] = xhr.response;
           return xhr.response;  // The blob.
         } else {
           return Promise.reject(xhr.statusText + ': ' + filePath);
@@ -89,7 +89,7 @@ var tests_helper = {
    *     or rejects with any received error.
    */
   getAndReadFileBlobPromise: function(filePath) {
-    return tests_helper.getFileBlob(filePath).then(function(blob) {
+    return testsHelper.getFileBlob(filePath).then(function(blob) {
       return new Promise(function(fulfill, reject) {
         var fileReader = new FileReader();
         fileReader.onload = function(event) {
@@ -120,17 +120,17 @@ var tests_helper = {
 
     sinon.stub(chrome.storage.local, 'set', function(state, opt_successfulSet) {
       // Save the state in the local storage in a different memory.
-      tests_helper.localStorageState = JSON.parse(JSON.stringify(state));
+      testsHelper.localStorageState = JSON.parse(JSON.stringify(state));
       if (opt_successfulSet)
         opt_successfulSet();
     });
 
     sinon.stub(chrome.storage.local, 'get', function(state, onSuccess) {
-      // Make a deep copy as tests_helper.localStorageState is the data on the
+      // Make a deep copy as testsHelper.localStorageState is the data on the
       // local storage and not in memory. This way the extension will work on a
       // different memory which is the case in real scenarios.
       var localStorageState =
-          JSON.parse(JSON.stringify(tests_helper.localStorageState));
+          JSON.parse(JSON.stringify(testsHelper.localStorageState));
       onSuccess(localStorageState);
     });
 
@@ -141,7 +141,7 @@ var tests_helper = {
       getDisplayPath: sinon.stub()
     };
 
-    tests_helper.volumesInformation.forEach(function(volume) {
+    testsHelper.volumesInformation.forEach(function(volume) {
       chrome.fileSystem.retainEntry.withArgs(volume.entry)
           .returns(volume.entryId);
       chrome.fileSystem.restoreEntry.withArgs(volume.entryId)
@@ -159,7 +159,7 @@ var tests_helper = {
       mount: sinon.stub(),
       unmount: sinon.stub(),
       get: function(fileSystemId, callback) {
-        var volumeInfoList = tests_helper.volumesInformation.filter(
+        var volumeInfoList = testsHelper.volumesInformation.filter(
             function(volumeInfo) {
               return volumeInfo.fileSystemId == fileSystemId;
             });
@@ -170,11 +170,11 @@ var tests_helper = {
       },
       getAll: sinon.stub().callsArgWith(
           0,
-          tests_helper.volumesInformation.map(function(volumeInfo) {
+          testsHelper.volumesInformation.map(function(volumeInfo) {
             return volumeInfo.fileSystemMetadata;
           }))
     };
-    tests_helper.volumesInformation.forEach(function(volume) {
+    testsHelper.volumesInformation.forEach(function(volume) {
       chrome.fileSystemProvider.mount
           .withArgs({fileSystemId: volume.fileSystemId,
                      displayName: volume.entry.name,
@@ -211,7 +211,7 @@ var tests_helper = {
 
     // Chrome app window API. Used for the passphrase dialog only.
     chrome.app.window = {
-      create: tests_helper.createAppWindow
+      create: testsHelper.createAppWindow
     };
   },
 
@@ -231,10 +231,10 @@ var tests_helper = {
     // Create promises to obtain archives blob.
     return Promise.all(archivesToTest.map(function(archiveData) {
       // Inititialization is done outside of the promise in order for Mocha to
-      // correctly identify the number of tests_helper.volumesInformation when
+      // correctly identify the number of testsHelper.volumesInformation when
       // it initialiazes tests. In case this is done in the promise, Mocha
       // will think there is no volumeInformation because at the time the
-      // JavaScript test file is parssed tests_helper.volumesInformation will
+      // JavaScript test file is parssed testsHelper.volumesInformation will
       // still be empty.
       var fileSystemId = archiveData.name;
 
@@ -283,9 +283,9 @@ var tests_helper = {
         }
       };
 
-      tests_helper.volumesInformation.push(volumeInformation);
+      testsHelper.volumesInformation.push(volumeInformation);
 
-      return tests_helper.getFileBlob(archiveData.name).then(function(blob) {
+      return testsHelper.getFileBlob(archiveData.name).then(function(blob) {
         volumeInformation.entry.file = sinon.stub().callsArgWith(0, blob);
       });
     }));
