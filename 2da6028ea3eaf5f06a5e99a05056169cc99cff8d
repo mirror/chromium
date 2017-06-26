@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a3b6db2_ff633bef",
+        "filename": "headless/lib/browser/headless_tab_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T11:08:52Z",
+      "side": 1,
+      "message": "Yes although I\u0027ve changed the logic a bit in a way that should have that effect.",
+      "parentUuid": "ee8b1a88_c19ee5bc",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae94fc9f_a8382ff6",
         "filename": "headless/lib/browser/headless_tab_socket_impl.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55d778e_ec407b55",
+        "filename": "headless/lib/browser/headless_tab_socket_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T11:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae94fc9f_a8382ff6",
+      "range": {
+        "startLine": 93,
+        "startChar": 67,
+        "endLine": 93,
+        "endChar": 71
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8e4ea254_e752652a",
+        "filename": "headless/lib/renderer/headless_render_frame_controller_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T11:08:52Z",
+      "side": 1,
+      "message": "Unfortunately we can\u0027t know that in the renderer ahead of time.  Also currently we only know a tab socket is to be installed if either HeadlessRenderFrameControllerImpl::InstallTabSocket  or HeadlessRenderFrameControllerImpl::InstallMainWorldTabSocket are called.",
+      "parentUuid": "067b3b9d_8439d50a",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07bdd49b_d7730433",
         "filename": "headless/public/headless_tab_socket.h",
         "patchSetId": 7
@@ -232,6 +304,30 @@
       "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eaad7a_bf024d96",
+        "filename": "headless/public/headless_tab_socket.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T11:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07bdd49b_d7730433",
+      "range": {
+        "startLine": 25,
+        "startChar": 27,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "72b8e612_a7ebc3fb",
+        "filename": "headless/public/headless_tab_socket.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T11:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "483d007b_abe1ca5d",
+      "range": {
+        "startLine": 42,
+        "startChar": 50,
+        "endLine": 42,
+        "endChar": 73
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d988ba3_ab59044d",
         "filename": "headless/test/headless_js_bindings_browsertest.cc",
         "patchSetId": 7
@@ -278,6 +398,30 @@
       "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cfd3c9_f1b0d6b0",
+        "filename": "headless/test/headless_js_bindings_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T11:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d988ba3_ab59044d",
+      "range": {
+        "startLine": 77,
+        "startChar": 14,
+        "endLine": 77,
+        "endChar": 45
+      },
+      "revId": "2da6028ea3eaf5f06a5e99a05056169cc99cff8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
