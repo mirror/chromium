@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d2b4b4c_39f15300",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-26T15:09:12Z",
+      "side": 1,
+      "message": "This could move into SuggestionsUiDelegateImpl now.",
+      "range": {
+        "startLine": 315,
+        "startChar": 27,
+        "endLine": 315,
+        "endChar": 49
+      },
+      "revId": "ce268d6f17b266049146aae3ad4082e7760cb6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
