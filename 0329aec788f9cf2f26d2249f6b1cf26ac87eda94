@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dfab747_fe27a173",
+        "filename": "cc/ipc/copy_output_request_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "no need to have std::move",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e4af1c_e195255c",
+        "filename": "cc/ipc/struct_traits_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "You might also want to TearDownContext",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9122fa22_c11577f4",
+        "filename": "mojo/public/cpp/bindings/interface_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "One idea is to be more consistent with InterfacePtrInfo/AssociatedInterfacePtrInfo/AssociatedInterfaceRequest, which have the following:\n  ScopedMessagePipeHandle PassHandle();\n  const ScopedMessagePipeHandle\u0026 handle() const;",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0eb6ec4_d8b77488",
+        "filename": "mojo/public/cpp/bindings/struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "Please update this sentence with \"handles/non-associated interfaces/non-associated interface requests\"",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d50ba7_66f8340b",
+        "filename": "mojo/public/cpp/bindings/struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "Does it make sense to talk about this in #4 instead? #4 talks about what is |context| and also what methods support appending a |context| param.",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55fa190_fec07f4a",
+        "filename": "mojo/public/cpp/bindings/struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a20799_381ebb5b",
+        "filename": "mojo/public/cpp/bindings/struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "Please update this sentence with \"handles/non-associated interfaces/non-associated interface requests\"",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d19e7e_57375b82",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "Please consider adding the same static assert for handles/interfaces as the struct serializer.",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37798415_b467db61",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-26T16:53:46Z",
+      "side": 1,
+      "message": "explicit, please",
+      "revId": "0329aec788f9cf2f26d2249f6b1cf26ac87eda94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
