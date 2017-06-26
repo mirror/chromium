@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "fe7abb48_d0a3e94e",
+        "filename": "ios/chrome/browser/ui/authentication/signin_account_selector_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-26T09:01:14Z",
+      "side": 1,
+      "message": "I removed it as it was not used.",
+      "parentUuid": "82054f20_c3aacf7f",
+      "range": {
+        "startLine": 29,
+        "startChar": 16,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a018bd_a3299628",
         "filename": "ios/chrome/browser/ui/collection_view/collection_view_controller.h",
         "patchSetId": 1
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "I don\u0027t think it is worth the time. But if you think it brings value, tell me.",
       "parentUuid": "b1a018bd_a3299628",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "175aa366_56dc210b",
+        "filename": "ios/chrome/browser/ui/collection_view/collection_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-26T09:01:14Z",
+      "side": 1,
+      "message": "I have done it.",
+      "parentUuid": "1975d54c_04695094",
       "range": {
         "startLine": 32,
         "startChar": 16,
@@ -191,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "facb175f_866c5eae",
+        "filename": "ios/chrome/browser/ui/collection_view/collection_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-26T09:01:14Z",
+      "side": 1,
+      "message": "Because the class clearly only used one initializer, without declaring it as designated or overriding its superclass designated initializer. I fixed it.",
+      "parentUuid": "c9914c02_610d0f32",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dc2d012_caf43190",
         "filename": "ios/chrome/browser/ui/collection_view/collection_view_controller.mm",
         "patchSetId": 1
@@ -211,6 +283,30 @@
       "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabb56db_4e595cda",
+        "filename": "ios/chrome/browser/ui/collection_view/collection_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-26T09:01:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dc2d012_caf43190",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "8eb7b8e82c4f025e8b039fbb696fcbc7cd6e4d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
