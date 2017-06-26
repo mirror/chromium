@@ -1027,15 +1027,14 @@ void RenderFrameHostManager::CancelPendingIfNecessary(
   if (render_frame_host == pending_render_frame_host_.get())
     CancelPending();
   else if (render_frame_host == speculative_render_frame_host_.get()) {
-    // TODO(nasko, clamy): This should just clean up the speculative RFH
-    // without canceling the request.  See https://crbug.com/636119.
     if (frame_tree_node_->navigation_request() &&
         frame_tree_node_->navigation_request()->navigation_handle()) {
       frame_tree_node_->navigation_request()
           ->navigation_handle()
           ->set_net_error_code(net::ERR_ABORTED);
     }
-    frame_tree_node_->ResetNavigationRequest(false, true);
+    // Destroy speculative render frame host only; keep the navigation request.
+    CleanUpNavigation();
   }
 }
 
@@ -1747,6 +1746,22 @@ RenderFrameHostManager::CreateRenderFrameHost(
       site_instance, render_view_host, render_frame_delegate_,
       render_widget_delegate_, frame_tree, frame_tree_node_, frame_routing_id,
       widget_routing_id, hidden, renderer_initiated_creation);
+}
+
+// PlzNavigate
+bool RenderFrameHostManager::CreateSpeculativeRenderFrameHostForNavigation(
+    const NavigationRequest& request) {
+  bool was_server_redirect = request.navigation_handle() &&
+                             request.navigation_handle()->WasServerRedirect();
+
+  scoped_refptr<SiteInstance> site_instance = GetSiteInstanceForNavigation(
+      request.common_params().url, request.source_site_instance(),
+      request.dest_site_instance(), nullptr, request.common_params().transition,
+      request.restore_type() != RestoreType::NONE, request.is_view_source(),
+      was_server_redirect);
+
+  return CreateSpeculativeRenderFrameHost(
+      current_frame_host()->GetSiteInstance(), site_instance.get());
 }
 
 // PlzNavigate

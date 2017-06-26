@@ -505,6 +505,11 @@ class CONTENT_EXPORT RenderFrameHostManager
   bool InitRenderView(RenderViewHostImpl* render_view_host,
     RenderFrameProxyHost* proxy);
 
+  // PlzNavigate
+  // Create and initialize a speculative RenderFrameHost for a given navigation.
+  bool CreateSpeculativeRenderFrameHostForNavigation(
+      const NavigationRequest& request);
+
  private:
   friend class NavigatorTestWithBrowserSideNavigation;
   friend class RenderFrameHostManagerTest;

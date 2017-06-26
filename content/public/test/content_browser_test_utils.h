@@ -58,6 +58,7 @@ GURL GetTestUrl(const char* dir, const char* file);
 // TODO(alexmos): any tests that use this function and expect successful
 // navigations should do EXPECT_TRUE(NavigateToURL()).
 bool NavigateToURL(Shell* window, const GURL& url);
+bool NavigateToURLNoBlock(Shell* window, const GURL& url);
 
 void LoadDataWithBaseURL(Shell* window,
                          const GURL& url,
