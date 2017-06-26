@@ -214,6 +214,10 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
   if (auto activation_throttle =
           MaybeCreateActivationStateComputingThrottle(navigation_handle)) {
     CHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
+    activation_throttle->set_destruction_closure(base::BindOnce(
+        &ContentSubresourceFilterThrottleManager::
+            OnActivationStateThrottleDestroyed,
+        weak_ptr_factory_.GetWeakPtr(), base::Unretained(navigation_handle)));
     ongoing_activation_throttles_[navigation_handle] =
         activation_throttle.get();
     throttles->push_back(std::move(activation_throttle));
@@ -316,6 +320,15 @@ void ContentSubresourceFilterThrottleManager::OnDocumentLoadStatistics(
     const DocumentLoadStatistics& statistics) {
   if (statistics_)
     statistics_->OnDocumentLoadStatistics(statistics);
+}
+
+void ContentSubresourceFilterThrottleManager::
+    OnActivationStateThrottleDestroyed(
+        content::NavigationHandle* navigation_handle) {
+  // Should be after DidFinishNavigation in all cases, so should already be
+  // erased from the map if that method is called (most of the time). Note that
+  // in this is sometimes not called for RendererDebugURLs.
+  ongoing_activation_throttles_.erase(navigation_handle);
 }
 
 }  // namespace subresource_filter
