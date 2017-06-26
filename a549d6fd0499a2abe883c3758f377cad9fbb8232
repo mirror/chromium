@@ -34,6 +34,24 @@
       "revId": "a549d6fd0499a2abe883c3758f377cad9fbb8232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e223d842_f287448a",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-26T02:40:26Z",
+      "side": 1,
+      "message": "It\u0027s a nice comment, but you shouldn\u0027t add the comment in this CL because it\u0027s unrelated to crbug.com/692000.  Please remove the comment, and make another CL to add the comment if you\u0027d like to do add it.",
+      "parentUuid": "dbc002d5_28110a79",
+      "revId": "a549d6fd0499a2abe883c3758f377cad9fbb8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
