@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that gradient gets applied properly with canvas2d text drawing when filled with maxwidth 
+Harness: the test ran to completion.
+

@@ -397,3 +397,12 @@ crbug.com/676572 [ Debug ] external/wpt/webstorage/storage_local_setitem_quotaex
 crbug.com/451577 [ Linux ] inspector/elements/user-properties.html [ Slow ]
 crbug.com/451577 [ Linux ] inspector/layers/layer-canvas-log.html [ Slow ]
 
+# Slow tests when using SwiftShader
+crbug.com/726075 [ Win ] css3/filters/effect-all-on-background-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-brightness-clamping-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-combined-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-reference-colorspace-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-reference-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-reference-subregion-hw.html [ Slow ]
+crbug.com/726075 [ Win ] css3/filters/effect-reference-zoom-hw.html [ Slow ]
+crbug.com/726075 [ Win ] virtual/gpu/fast/canvas/OffscreenCanvas-filter-in-worker.html [ Slow ]

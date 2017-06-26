@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that color gradient is applied properly for fillText() in 2d canvas. 
+Harness: the test ran to completion.
+

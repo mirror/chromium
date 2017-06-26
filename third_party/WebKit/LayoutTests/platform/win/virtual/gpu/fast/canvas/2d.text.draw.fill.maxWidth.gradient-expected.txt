@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Test that gradient gets applied properly with canvas2d text drawing when filled with maxwidth assert_equals: red expected 0 but got 1
+Harness: the test ran to completion.
+

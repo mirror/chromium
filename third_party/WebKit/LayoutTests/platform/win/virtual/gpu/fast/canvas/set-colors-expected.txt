@@ -1,0 +1,35 @@
+This is a testharness.js-based test.
+PASS TestFillStyle 1 
+PASS TestFillStyle 2 
+PASS TestFillStyle 3 
+PASS TestFillStyle 4 
+PASS TestFillStyle 5 
+PASS TestFillStyle 6 
+PASS TestFillStyle 7 
+PASS TestFillStyle 8 
+FAIL TestFillGradient 1 assert_equals: expected "rgba(0, 0, 0, 0.0)" but got "rgba(255, 255, 255, 0.00392156862745098)"
+FAIL TestFillGradient 2 assert_equals: expected "#0000ff" but got "#0101ff"
+FAIL TestFillGradient 3 assert_equals: expected "#ff0000" but got "#ff0101"
+FAIL TestFillGradient 4 assert_equals: expected "#ff0000" but got "#ff0101"
+FAIL TestFillGradient 5 assert_equals: expected "#ff0000" but got "#ff0101"
+FAIL TestFillGradient 6 assert_equals: expected "#ff0000" but got "#ff0101"
+FAIL TestFillGradient 7 assert_equals: expected "rgba(255, 0, 0, 0.8)" but got "rgba(255, 1, 1, 0.803921568627451)"
+FAIL TestFillGradient 8 assert_equals: expected "rgba(0, 0, 0, 0.0)" but got "rgba(255, 255, 255, 0.00392156862745098)"
+PASS TestStrokeStyle 1 
+PASS TestStrokeStyle 2 
+PASS TestStrokeStyle 3 
+PASS TestStrokeStyle 4 
+PASS TestStrokeStyle 5 
+PASS TestStrokeStyle 6 
+PASS TestStrokeStyle 7 
+PASS TestStrokeStyle 8 
+FAIL TestStrokeGradient 1 assert_equals: expected "rgba(0, 0, 0, 0.0)" but got "rgba(255, 255, 255, 0.00392156862745098)"
+FAIL TestStrokeGradient 2 assert_equals: expected "#0000ff" but got "#0101ff"
+FAIL TestStrokeGradient 3 assert_equals: expected "#ff0000" but got "#ff0101"
+FAIL TestStrokeGradient 4 assert_equals: expected "#ff0000" but got "#ff0101"
+FAIL TestStrokeGradient 5 assert_equals: expected "#ff0000" but got "#ff0101"
+FAIL TestStrokeGradient 6 assert_equals: expected "#ff0000" but got "#ff0101"
+FAIL TestStrokeGradient 7 assert_equals: expected "rgba(255, 0, 0, 0.8)" but got "rgba(255, 1, 1, 0.803921568627451)"
+FAIL TestStrokeGradient 8 assert_equals: expected "rgba(0, 0, 0, 0.0)" but got "rgba(255, 255, 255, 0.00392156862745098)"
+Harness: the test ran to completion.
+
