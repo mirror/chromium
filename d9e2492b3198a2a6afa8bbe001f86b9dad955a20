@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0185d13_d806486b",
+        "filename": "ash/system/keyboard_brightness/keyboard_brightness_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-26T18:11:48Z",
+      "side": 1,
+      "message": "nit: update these header guards (and the comment at the bottom) to refer to the new path",
+      "revId": "d9e2492b3198a2a6afa8bbe001f86b9dad955a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
