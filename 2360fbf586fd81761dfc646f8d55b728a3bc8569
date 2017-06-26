@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62f1e23_f65111f3",
+        "filename": "base/task_scheduler/task_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T18:34:41Z",
+      "side": 1,
+      "message": "s/is undefined even if/is undefined if/ ?",
+      "range": {
+        "startLine": 108,
+        "startChar": 28,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "2360fbf586fd81761dfc646f8d55b728a3bc8569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826c2a7b_3ecb571b",
+        "filename": "base/task_scheduler/task_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T18:34:41Z",
+      "side": 1,
+      "message": "If we don\u0027t expect ComInitCheckHook to be instantiated when !COM_INIT_CHECK_HOOK_ENABLED(), could we surround the definition of ComInitCheckHook with #if COM_INIT_CHECK_HOOK_ENABLED() in com_init_check_hook.h?",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "2360fbf586fd81761dfc646f8d55b728a3bc8569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
