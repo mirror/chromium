@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385081a1_24da67fe",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T09:09:34Z",
+      "side": 1,
+      "message": "Remove this. Yet I don\u0027t understand what was wrong with having init as convenience, since the parent designated was correctly overridden and the convenience called to the override?\n\nMoreover, now the unittest instantiate with the AppBar style, but that might not be an issue.",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "10632a99b14e6b0b93c5e7f3e9df1040bd2b01d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da7decc_d444b12b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_error_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-26T09:09:34Z",
+      "side": 1,
+      "message": "Optional nit: remove empty line.",
+      "revId": "10632a99b14e6b0b93c5e7f3e9df1040bd2b01d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
