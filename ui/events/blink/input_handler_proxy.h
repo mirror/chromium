@@ -74,7 +74,8 @@ class InputHandlerProxy
       base::OnceCallback<void(EventDisposition,
                               WebScopedInputEvent WebInputEvent,
                               const LatencyInfo&,
-                              std::unique_ptr<ui::DidOverscrollParams>)>;
+                              std::unique_ptr<ui::DidOverscrollParams>,
+                              std::unique_ptr<cc::TouchAction>)>;
   void HandleInputEventWithLatencyInfo(WebScopedInputEvent event,
                                        const LatencyInfo& latency_info,
                                        EventDispositionCallback callback);
@@ -258,6 +259,11 @@ class InputHandlerProxy
   // bundled in the event ack, saving an IPC.  Note that we must continue
   // supporting overscroll IPC notifications due to fling animation updates.
   std::unique_ptr<DidOverscrollParams> current_overscroll_params_;
+
+  // Used to record touch action notifications while an event is being
+  // dispatched.  The touch action bit will be bundled in the event ack,
+  // saving an IPC.
+  std::unique_ptr<cc::TouchAction> current_touch_action_;
 
   std::unique_ptr<CompositorThreadEventQueue> compositor_event_queue_;
   bool has_ongoing_compositor_scroll_fling_pinch_;
