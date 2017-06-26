@@ -2179,21 +2179,21 @@ bool ResourceProvider::OnMemoryDump(
             resource.gpu_memory_buffer->GetHandle().handle.GetGUID();
         break;
       case RESOURCE_TYPE_GL_TEXTURE:
-        DCHECK(resource.gl_id);
+        CHECK(resource.gl_id);
         guid = gl::GetGLTextureClientGUIDForTracing(
             compositor_context_provider_->ContextSupport()
                 ->ShareGroupTracingGUID(),
             resource.gl_id);
         break;
       case RESOURCE_TYPE_BITMAP:
-        DCHECK(resource.has_shared_bitmap_id);
+        CHECK(resource.has_shared_bitmap_id);
         guid = GetSharedBitmapGUIDForTracing(resource.shared_bitmap_id);
         shared_memory_guid =
             resource.shared_bitmap->GetSharedMemoryHandle().GetGUID();
         break;
     }
 
-    DCHECK(!guid.empty());
+    CHECK(!guid.empty());
 
     const int kImportance = 2;
     if (!shared_memory_guid.is_empty()) {
