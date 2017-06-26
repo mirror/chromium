@@ -16,10 +16,12 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTable.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/compositing/CompositedLayerMapping.h"
 #include "core/layout/line/RootInlineBox.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BoxDecorationData.h"
 #include "core/paint/LayoutObjectDrawingRecorder.h"
@@ -73,6 +75,9 @@ void BoxPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info,
     // contents layer of a composited scroller we need to include the entire
     // overflow rect.
     paint_rect = layout_box_.LayoutOverflowRect();
+    if (RootScrollerUtil::IsGlobal(layout_box_))
+      paint_rect.Unite(layout_box_.View()->ViewRect());
+
     scroll_recorder.emplace(paint_info.context, layout_box_, paint_info.phase,
                             layout_box_.ScrolledContentOffset());
 
@@ -81,7 +86,9 @@ void BoxPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info,
     // background into the scrolling contents layer.
     paint_rect.Expand(layout_box_.BorderBoxOutsets());
   } else {
-    paint_rect = layout_box_.BorderBoxRect();
+    paint_rect = RootScrollerUtil::IsGlobal(layout_box_)
+                     ? layout_box_.View()->ViewRect()
+                     : layout_box_.BorderBoxRect();
   }
 
   paint_rect.MoveBy(paint_offset);
@@ -91,11 +98,17 @@ void BoxPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info,
 LayoutRect BoxPainter::BoundsForDrawingRecorder(
     const PaintInfo& paint_info,
     const LayoutPoint& adjusted_paint_offset) {
-  LayoutRect bounds =
-      IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
-          &layout_box_, paint_info)
-          ? layout_box_.LayoutOverflowRect()
-          : layout_box_.SelfVisualOverflowRect();
+  LayoutRect bounds;
+  if (IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
+          &layout_box_, paint_info)) {
+    bounds = layout_box_.LayoutOverflowRect();
+    if (RootScrollerUtil::IsGlobal(layout_box_))
+      bounds.Unite(layout_box_.View()->ViewRect());
+  } else {
+    bounds = RootScrollerUtil::IsGlobal(layout_box_)
+                 ? layout_box_.View()->ViewRect()
+                 : layout_box_.SelfVisualOverflowRect();
+  }
   bounds.MoveBy(adjusted_paint_offset);
   return bounds;
 }

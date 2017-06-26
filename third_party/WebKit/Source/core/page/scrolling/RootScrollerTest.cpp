@@ -21,6 +21,7 @@
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerScrollableArea.h"
+#include "platform/graphics/GraphicsLayer.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -1114,6 +1115,127 @@ TEST_P(RootScrollerTest, ImmediateUpdateOfLayoutViewport) {
 
   EXPECT_EQ(MainFrameView()->LayoutViewportScrollableArea(),
             &MainFrameView()->GetRootFrameViewport()->LayoutViewport());
+}
+
+// Ensures that the main graphics layer is adjusted in size to match the
+// viewport when the scroller (without overflow) becomes the rootScroller.
+TEST_F(RootScrollerTest, NoOverflowMainLayerHeightHiddenURLBar) {
+  Initialize();
+
+  WebURL base_url = URLTestHelpers::ToKURL("http://www.test.com/");
+  FrameTestHelpers::LoadHTMLString(
+      GetWebView()->MainFrameImpl(),
+      "<!DOCTYPE html>"
+      "<meta name='viewport' content='width=device-width'>"
+      "<style>"
+      "  body { margin: 0; }"
+      "  #view {"
+      "      position: absolute;"
+      "      width: 100%;"
+      "      height: 100%;"
+      "      overflow: auto;"
+      "      will-change: transform;"
+      "  }"
+      "</style>"
+      "<div id='view'>"
+      "</div>",
+      base_url);
+
+  // Hide the URL bar.
+  GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, false);
+  MainFrameView()->UpdateAllLifecyclePhases();
+
+  Element* view = MainFrame()->GetDocument()->getElementById("view");
+  ScrollableArea* view_scroller =
+      static_cast<PaintInvalidationCapableScrollableArea*>(
+          ToLayoutBox(view->GetLayoutObject())->GetScrollableArea());
+  CompositedLayerMapping* clm =
+      view_scroller->Layer()->GetCompositedLayerMapping();
+
+  // Note that the view is `position: absolute; height: 100%` so it gets its
+  // height from the LayoutView which is statically sized to the height when
+  // the URL bar is showing.
+  ASSERT_TRUE(clm);
+  ASSERT_TRUE(clm->MainGraphicsLayer());
+  ASSERT_EQ(400, clm->MainGraphicsLayer()->Size().Height());
+
+  // Making the scroller the rootScroller should cause its GraphicsLayer to
+  // resize to match the full viewport height.
+  MainFrame()->GetDocument()->setRootScroller(view, ASSERT_NO_EXCEPTION);
+  MainFrameView()->UpdateAllLifecyclePhases();
+
+  EXPECT_EQ(450, clm->MainGraphicsLayer()->Size().Height());
+
+  // Hide the URL bar.
+  GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, true);
+  MainFrameView()->UpdateAllLifecyclePhases();
+
+  EXPECT_EQ(400, clm->MainGraphicsLayer()->Size().Height());
+}
+
+// Ensures that the scrolling layer, scrolling contents layer, and main
+// graphics layer are adjusted in size to match the viewport when the scroller
+// becomes the rootScroller.
+TEST_F(RootScrollerTest, ScrollingLayerHeightHiddenURLBar) {
+  Initialize();
+
+  WebURL base_url = URLTestHelpers::ToKURL("http://www.test.com/");
+  FrameTestHelpers::LoadHTMLString(
+      GetWebView()->MainFrameImpl(),
+      "<!DOCTYPE html>"
+      "<meta name='viewport' content='width=device-width'>"
+      "<style>"
+      "  body { margin: 0; }"
+      "  #view {"
+      "      position: absolute;"
+      "      width: 100%;"
+      "      height: 100%;"
+      "      overflow: auto;"
+      "  }"
+      "</style>"
+      "<div id='view'>"
+      "  <div style='height: 401px'></div>"
+      "</div>",
+      base_url);
+
+  // Hide the URL bar.
+  GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, false);
+  MainFrameView()->UpdateAllLifecyclePhases();
+
+  Element* view = MainFrame()->GetDocument()->getElementById("view");
+  ScrollableArea* view_scroller =
+      static_cast<PaintInvalidationCapableScrollableArea*>(
+          ToLayoutBox(view->GetLayoutObject())->GetScrollableArea());
+  CompositedLayerMapping* clm =
+      view_scroller->Layer()->GetCompositedLayerMapping();
+
+  // Note that the view is `position: absolute; height: 100%` so it gets its
+  // height from the LayoutView which is statically sized to the height when
+  // the URL bar is showing.
+  ASSERT_TRUE(clm);
+  ASSERT_TRUE(clm->MainGraphicsLayer());
+  EXPECT_TRUE(clm->ScrollingLayer());
+  EXPECT_TRUE(clm->ScrollingContentsLayer());
+  ASSERT_EQ(400, clm->ScrollingLayer()->Size().Height());
+  ASSERT_EQ(401, clm->ScrollingContentsLayer()->Size().Height());
+  ASSERT_EQ(400, clm->MainGraphicsLayer()->Size().Height());
+
+  // Making the scroller the rootScroller should cause all its layers to resize
+  // to match the full viewport height.
+  MainFrame()->GetDocument()->setRootScroller(view, ASSERT_NO_EXCEPTION);
+  MainFrameView()->UpdateAllLifecyclePhases();
+
+  EXPECT_EQ(450, clm->ScrollingLayer()->Size().Height());
+  EXPECT_EQ(450, clm->ScrollingContentsLayer()->Size().Height());
+  EXPECT_EQ(450, clm->MainGraphicsLayer()->Size().Height());
+
+  // Hide the URL bar.
+  GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, true);
+  MainFrameView()->UpdateAllLifecyclePhases();
+
+  EXPECT_EQ(400, clm->ScrollingLayer()->Size().Height());
+  EXPECT_EQ(401, clm->ScrollingContentsLayer()->Size().Height());
+  EXPECT_EQ(400, clm->MainGraphicsLayer()->Size().Height());
 }
 
 class RootScrollerHitTest : public RootScrollerTest {
