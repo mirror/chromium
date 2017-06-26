@@ -1520,8 +1520,12 @@ void WebContentsImpl::WasUnOccluded() {
 
 bool WebContentsImpl::NeedToFireBeforeUnload() {
   // TODO(creis): Should we fire even for interstitial pages?
+  // TODO(nasko): it's confusing that this method, per comments and tests that
+  // depend on this behavior, needs to check unload handlers as well.
   return WillNotifyDisconnection() && !ShowingInterstitialPage() &&
-         !GetRenderViewHost()->SuddenTerminationAllowed();
+         !GetRenderViewHost()->SuddenTerminationAllowed() &&
+         (GetMainFrame()->ShouldDispatchBeforeUnload() ||
+          GetMainFrame()->HasUnloadHandler());
 }
 
 void WebContentsImpl::DispatchBeforeUnload() {

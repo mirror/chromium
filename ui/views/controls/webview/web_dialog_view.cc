@@ -107,7 +107,8 @@ bool WebDialogView::CanClose() {
   // RenderViewHostImpl::ClosePageIgnoringUnloadEvents, it indicates
   // beforeunload event should not be fired during closing.
   if ((is_attempting_close_dialog_ && before_unload_fired_) ||
-      close_contents_called_) {
+      close_contents_called_ ||
+      !web_view_->web_contents()->NeedToFireBeforeUnload()) {
     is_attempting_close_dialog_ = false;
     before_unload_fired_ = false;
     return true;
