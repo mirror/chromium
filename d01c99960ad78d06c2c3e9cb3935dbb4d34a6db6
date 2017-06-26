@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "79ce0a15_79b71e7d",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-26T20:34:19Z",
+      "side": 1,
+      "message": "Thanks, STATIC_HISTOGRAM_POINTER_GROUP did the trick! In response to my question above, it looks like it was the former. I\u0027ve cleaned up the observer code to use that macro instead.",
+      "parentUuid": "7f298468_2c81a1d8",
+      "range": {
+        "startLine": 247,
+        "startChar": 19,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e4411b_6349e4f5",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 11
