@@ -1853,8 +1853,9 @@ Color ComputedStyle::VisitedDependentColor(int color_property) const {
                unvisited_color.Alpha());
 }
 
-BorderValue ComputedStyle::BorderBefore() const {
-  switch (GetWritingMode()) {
+BorderValue ComputedStyle::BorderBeforeUsing(
+    const ComputedStyle& style_for_direction) const {
+  switch (style_for_direction.GetWritingMode()) {
     case WritingMode::kHorizontalTb:
       return BorderTop();
     case WritingMode::kVerticalLr:
@@ -1866,8 +1867,9 @@ BorderValue ComputedStyle::BorderBefore() const {
   return BorderTop();
 }
 
-BorderValue ComputedStyle::BorderAfter() const {
-  switch (GetWritingMode()) {
+BorderValue ComputedStyle::BorderAfterUsing(
+    const ComputedStyle& style_for_direction) const {
+  switch (style_for_direction.GetWritingMode()) {
     case WritingMode::kHorizontalTb:
       return BorderBottom();
     case WritingMode::kVerticalLr:
@@ -1879,16 +1881,24 @@ BorderValue ComputedStyle::BorderAfter() const {
   return BorderBottom();
 }
 
-BorderValue ComputedStyle::BorderStart() const {
-  if (IsHorizontalWritingMode())
-    return IsLeftToRightDirection() ? BorderLeft() : BorderRight();
-  return IsLeftToRightDirection() ? BorderTop() : BorderBottom();
+BorderValue ComputedStyle::BorderStartUsing(
+    const ComputedStyle& style_for_direction) const {
+  if (style_for_direction.IsHorizontalWritingMode()) {
+    return style_for_direction.IsLeftToRightDirection() ? BorderLeft()
+                                                        : BorderRight();
+  }
+  return style_for_direction.IsLeftToRightDirection() ? BorderTop()
+                                                      : BorderBottom();
 }
 
-BorderValue ComputedStyle::BorderEnd() const {
-  if (IsHorizontalWritingMode())
-    return IsLeftToRightDirection() ? BorderRight() : BorderLeft();
-  return IsLeftToRightDirection() ? BorderBottom() : BorderTop();
+BorderValue ComputedStyle::BorderEndUsing(
+    const ComputedStyle& style_for_direction) const {
+  if (style_for_direction.IsHorizontalWritingMode()) {
+    return style_for_direction.IsLeftToRightDirection() ? BorderRight()
+                                                        : BorderLeft();
+  }
+  return style_for_direction.IsLeftToRightDirection() ? BorderBottom()
+                                                      : BorderTop();
 }
 
 float ComputedStyle::BorderBeforeWidth() const {
