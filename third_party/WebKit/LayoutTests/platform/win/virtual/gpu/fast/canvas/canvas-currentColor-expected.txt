@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Test that CanvasRenderingContext2D supports the 'currentColor' value. assert_equals: expected "255,0,0,255" but got "255,1,1,255"
+Harness: the test ran to completion.
+
