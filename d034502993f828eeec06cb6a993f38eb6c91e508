@@ -33,6 +33,24 @@
       "revId": "d034502993f828eeec06cb6a993f38eb6c91e508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8730ad_26a7bb44",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-26T19:17:25Z",
+      "side": 1,
+      "message": "I believe we\u0027d need to add that in both HandleTouchStart \u0026\u0026 HandleTouchMove.",
+      "parentUuid": "094eb098_38b40fe2",
+      "revId": "d034502993f828eeec06cb6a993f38eb6c91e508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
