@@ -58,6 +58,7 @@ constexpr int kWebViewHeight = 224;
 
 // Tile container constants.
 constexpr int kTileSpacing = 7;
+constexpr int kTileSpacingFullscreen = 24;
 constexpr int kNumStartPageTilesCols = 5;
 constexpr int kTilesHorizontalMarginLeft = 145;
 constexpr int kCenterColumnOfStartPageAppGrid = 3;
@@ -237,11 +238,14 @@ void StartPageView::StartPageTilesContainer::CreateAppsGrid(int apps_num) {
   SetLayoutManager(tiles_layout_manager);
 
   views::ColumnSet* column_set = tiles_layout_manager->AddColumnSet(0);
-  column_set->AddPaddingColumn(0, kTilesHorizontalMarginLeft);
+  if (!is_fullscreen_app_list_enabled_)
+    column_set->AddPaddingColumn(0, kTilesHorizontalMarginLeft);
   for (int col = 0; col < kNumStartPageTilesCols; ++col) {
     column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 0,
                           views::GridLayout::USE_PREF, 0, 0);
-    column_set->AddPaddingColumn(0, kTileSpacing);
+    column_set->AddPaddingColumn(0, features::IsFullscreenAppListEnabled()
+                                        ? kTileSpacingFullscreen
+                                        : kTileSpacing);
   }
 
   // Add SearchResultTileItemViews to the container.
@@ -423,6 +427,11 @@ void StartPageView::Layout() {
     bounds.Inset(0, indicator_->GetPreferredSize().height(), 0, 0);
   }
   bounds.set_height(tiles_container_->GetHeightForWidth(bounds.width()));
+  if (is_fullscreen_app_list_enabled_) {
+    bounds.Offset((bounds.width() - kGridTileWidth) / 2 -
+                      (kGridTileWidth + kTileSpacingFullscreen) * 2,
+                  0);
+  }
   tiles_container_->SetBoundsRect(bounds);
 
   CustomLauncherPageView* custom_launcher_page_view =
