@@ -16,6 +16,24 @@
       "revId": "215ce33ba28790eb6c94e0e15d35cc66c8a47d40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f9c998_891af9ed",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-26T16:57:21Z",
+      "side": 1,
+      "message": "Ah yes you\u0027re right! I thought it was necessary for row spans but it actually isn\u0027t. Thanks so much! And I\u0027m working on getting the test cases approved on github so that I can import them here.",
+      "parentUuid": "a7573961_11088b0e",
+      "revId": "215ce33ba28790eb6c94e0e15d35cc66c8a47d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
