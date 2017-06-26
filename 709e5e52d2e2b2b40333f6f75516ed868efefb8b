@@ -16,6 +16,24 @@
       "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c355a7c_56cd191a",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-26T13:12:26Z",
+      "side": 1,
+      "message": "Hmm, I think I\u0027d prefer to have a standard way of doing this. How much more complex is it to use the TestServiceManagerContext?",
+      "parentUuid": "0ce5434e_e8cc4a75",
+      "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
