@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b2edb3b_22450c7b",
+        "filename": "base/stl_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T20:49:53Z",
+      "side": 1,
+      "message": "This seems like a good idea, what about maps? and flat_set?\n\nIs it possible to dynamically make ContainsValue !enable_if when collection.find() exists?",
+      "revId": "34c89d2131c0176455dbb64ab78d6b580cb30fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddf3710_f4aba640",
+        "filename": "base/stl_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T20:49:53Z",
+      "side": 1,
+      "message": "does static_assert(false, ...) not work?",
+      "revId": "34c89d2131c0176455dbb64ab78d6b580cb30fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
