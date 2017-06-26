@@ -17942,6 +17942,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Event.Scroll.GPUMemoryForTilingsInKB" units="KB">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    Record the GPU memory we allocate for tilings when compositing a scroller.
+    Team: threaded-rendering@chromium.org.
+  </summary>
+</histogram>
+
 <histogram name="Event.Scroll.ScrollerSize.OnLoad" units="pixels">
   <owner>yigu@chromium.org</owner>
   <owner>input-dev@chromium.org</owner>

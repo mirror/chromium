@@ -16,6 +16,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/metrics/single_sample_metrics.h"
 #include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "cc/base/synced_property.h"
@@ -880,6 +881,8 @@ class CC_EXPORT LayerTreeHostImpl
   bool touchpad_and_wheel_scroll_latching_enabled_;
 
   ImplThreadPhase impl_thread_phase_;
+
+  std::unique_ptr<base::SingleSampleMetric> gpu_memory_usage_metric_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHostImpl);
 };
