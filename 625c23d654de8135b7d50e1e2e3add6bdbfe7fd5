@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1cfbeea_b801432e",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "GrGLuint return type?",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce28c45f_4a3b6e34",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "nit: no braces",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d95b52_109df13b",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "keep \u003d default?",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e48a605_c9158362",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "How is the case of image_data-\u003eupload.image() !\u003d nullptr, but TryLockImage being false handled. Is the image reset by TryLock?",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6b9dff_c7838beb",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "You might just introduce an enum instead of comments all the time, but it\u0027s up to you.",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aefa31_3bc8d583",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "This doesn\u0027t happen on 1376, but there don\u0027t seem to be changes in the if statements that do this. Are both paths handled properly? Can you elaborate either here on in the comments in the code?",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5e26df_52cefb5f",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "s/mm/m/",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0acd093b_0bf050f4",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "Is there a better type or do we just use uint32_ts?",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f1a81c_81fbf5a5",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "I think this is either named a bit too vaguely or it needs a good comment to explain what these operations might be",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a53224_5bbf5244",
+        "filename": "gpu/command_buffer/service/service_discardable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "Device memory right? Like RAM?",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e524eef6_450c4c62",
+        "filename": "gpu/command_buffer/service/service_discardable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T21:03:21Z",
+      "side": 1,
+      "message": "\u003c_________\u003c",
+      "revId": "625c23d654de8135b7d50e1e2e3add6bdbfe7fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
