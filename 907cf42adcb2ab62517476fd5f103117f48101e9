@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f525a7d_ee7bdcf8",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-26T19:34:40Z",
+      "side": 1,
+      "message": "An alternative idea:\nCan we reuse JobController::OnNewSpdySessionReady() for the pooling case?\nWe\u0027ll need to modify |spdy_session_request_map_| to be a map of SpdySessionKey to Jobs. \nWhen a new SpdySession is ready, we notify the Job (via a new method, OnSpdySessionPooled). The Job will reset its ClientSocketHandle (which cancels the socket request if there is any) and calls JobController::OnNewSpdySessionReady().\n\nI am trying to see if there\u0027s a solution to unify the logic and avoid duplicated code as much as possible.",
+      "revId": "907cf42adcb2ab62517476fd5f103117f48101e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
