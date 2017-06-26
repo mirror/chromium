@@ -147,6 +147,30 @@
       "revId": "186b4b9f09be908f33e2d94248a2c1c2123f0e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e27636_02674578",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-26T01:52:54Z",
+      "side": 1,
+      "message": "Yes, it is a living standard, and being updated.\nSo why do we need \"in the current spec\"?",
+      "parentUuid": "b2066f22_71728426",
+      "range": {
+        "startLine": 353,
+        "startChar": 25,
+        "endLine": 353,
+        "endChar": 32
+      },
+      "revId": "186b4b9f09be908f33e2d94248a2c1c2123f0e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
