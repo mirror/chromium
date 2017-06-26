@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb26f486_3cd7f8ee",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-26T22:25:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be code.textContent instead of code?",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f180c0a4_268acc45",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-26T22:25:22Z",
+      "side": 1,
+      "message": "Inline?",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d54963_57b152e8",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-26T22:25:22Z",
+      "side": 1,
+      "message": "Please update this with a more specific description.",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854e4338_ea62db98",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-26T22:25:22Z",
+      "side": 1,
+      "message": "So does the worklet run in the main world or in another isolated world? If former, I wonder whether we should be setting isDEfault to true in line 149 above, and if latter, why not just use SetIsolatedWorldHumanReadableName() when creating the world?",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec186ebb_dd3cf6d8",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-26T22:25:22Z",
+      "side": 1,
+      "message": "We generally avoid default parameters where possible, please make it explicit considering there\u0027s just one other callsite.",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
