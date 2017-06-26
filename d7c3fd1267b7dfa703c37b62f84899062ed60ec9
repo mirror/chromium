@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e6c401_6f006f1b",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-26T23:37:08Z",
+      "side": 1,
+      "message": "This function touches base::FeatureList before the new code.",
+      "revId": "d7c3fd1267b7dfa703c37b62f84899062ed60ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44956db8_77ce08b7",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-26T23:37:08Z",
+      "side": 1,
+      "message": "This is a call to base::FeatureList before the new code.",
+      "revId": "d7c3fd1267b7dfa703c37b62f84899062ed60ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
