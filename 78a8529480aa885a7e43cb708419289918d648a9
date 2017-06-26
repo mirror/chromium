@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3f879dad_a92c1068",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-26T23:34:56Z",
+      "side": 1,
+      "message": "Is this a strict requirement? We seem to break it if we clamp between min and max as well?",
+      "parentUuid": "9a57b3ca_8e35426c",
+      "revId": "78a8529480aa885a7e43cb708419289918d648a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e677ed4_ce14b256",
         "filename": "cc/layers/picture_layer_impl_unittest.cc",
         "patchSetId": 6
