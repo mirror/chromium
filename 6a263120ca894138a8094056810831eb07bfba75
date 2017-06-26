@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e801acad_4b423c8f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-26T16:28:36Z",
+      "side": 1,
+      "message": "From \"platform/text/TextBreakIterator.h\"",
+      "revId": "6a263120ca894138a8094056810831eb07bfba75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7bddc85_67b1660c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-26T16:28:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this might be less efficient than String::Fill. Fill creates an uninitialized String and sets each of the character values, whereas this involves converting from a StringBuilder. Is there a better way to do this?",
+      "revId": "6a263120ca894138a8094056810831eb07bfba75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
