@@ -19,12 +19,13 @@
 #include "base/threading/platform_thread.h"
 #include "base/threading/simple_thread.h"
 #include "base/threading/thread.h"
+#include "base/win/com_init_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
-#include <objbase.h>
 
+#include "base/win/com_init_util.h"
 #include "base/win/current_module.h"
 #endif  // defined(OS_WIN)
 
@@ -450,11 +451,7 @@ TEST_P(TaskSchedulerSingleThreadTaskRunnerManagerCommonTest,
 
   com_task_runner->PostTask(
       FROM_HERE, BindOnce([]() {
-        HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-        if (SUCCEEDED(hr)) {
-          ADD_FAILURE() << "COM STA was not initialized on this thread";
-          CoUninitialize();
-        }
+        win::AssertComApartmentType(win::ComApartmentType::STA);
       }));
 
   task_tracker_.Shutdown();
