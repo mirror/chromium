@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d94ccea6_c0aa445c",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-26T01:37:47Z",
+      "side": 1,
+      "message": "Hmm, I wonder if we have to specify rules that were in past drafts or not.",
+      "parentUuid": "e709c244_cbc02896",
+      "revId": "186b4b9f09be908f33e2d94248a2c1c2123f0e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "879545e7_bcf0f0cb",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 2
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "https://heycam.github.io/webidl/#idl-grammar",
       "parentUuid": "879545e7_bcf0f0cb",
+      "range": {
+        "startLine": 353,
+        "startChar": 25,
+        "endLine": 353,
+        "endChar": 32
+      },
+      "revId": "186b4b9f09be908f33e2d94248a2c1c2123f0e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9dc527e_407a2000",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-26T01:37:47Z",
+      "side": 1,
+      "message": "I mean \"current\" does not make sense.\nWhy don\u0027t we put a revision number or date of spec if we put \"in the current spec\"?",
+      "parentUuid": "03690803_c2bf953a",
       "range": {
         "startLine": 353,
         "startChar": 25,
