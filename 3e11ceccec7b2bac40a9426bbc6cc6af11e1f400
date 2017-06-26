@@ -22,6 +22,30 @@
       "revId": "3e11ceccec7b2bac40a9426bbc6cc6af11e1f400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9469a8e_1b69b239",
+        "filename": "chrome/test/base/chrome_test_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-06-26T19:39:28Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "4ff9778e_a772dda6",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 62
+      },
+      "revId": "3e11ceccec7b2bac40a9426bbc6cc6af11e1f400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
