@@ -16,6 +16,24 @@
       "revId": "e9d51bd854aea46a503dcd40fa3f24aaa8438bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a08fd18_26ddefb3",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-26T19:49:42Z",
+      "side": 1,
+      "message": "The way uma counts work is that it will record the value provided, up to the maximum which is specified in the suffix.  So in this case, it will record a value of up to 10k.  However, we only ever record \"1\" (as you\u0027ve hard-coded here), so the extra 9999 slots are unnecessary. :)\n\nInstead, we have a UMA_HISTOGRAM_BOOLEAN() macro, which is what I\u0027d suggest we use here.\n\nAdditionally, when adding new metrics, it\u0027s good to think about what you\u0027re going to do with them.  For something like this, we\u0027re hoping to be able to make a decision (i.e., whether or not the flag is in use).  So thinking about some of the potential data here, can we determine that given certain data?  If we see that there are 10,000 counts, what determination can we make from that?  If we can\u0027t figure out the answer to the original question (\"can we deprecate this flag\") from the data we receive, it\u0027s an indication that we\u0027d need to structure our data gathering differently.\n\nIn this case, WDYT?  Would these data be sufficient to make a decision about the usage of the flag?",
+      "parentUuid": "48c39249_7dd39955",
+      "revId": "e9d51bd854aea46a503dcd40fa3f24aaa8438bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
