@@ -22,6 +22,30 @@
       "revId": "373748a4ecdc7e81da8fe2681436dbc73f7dbac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee56d4b3_8095f914",
+        "filename": "third_party/WebKit/Source/core/frame/VisualViewport.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-26T21:45:40Z",
+      "side": 1,
+      "message": "I made the change and CQ-ed it.  If any tests fail, I\u0027ll revert to the previous patchset.",
+      "parentUuid": "11400f9d_97c57cd8",
+      "range": {
+        "startLine": 629,
+        "startChar": 8,
+        "endLine": 629,
+        "endChar": 62
+      },
+      "revId": "373748a4ecdc7e81da8fe2681436dbc73f7dbac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
