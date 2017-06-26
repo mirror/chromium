@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "082106fc_c3ec0c50",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ToV8ForCore.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T15:59:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a48141b_fdb18996",
+      "revId": "150248741e191343adac93476edb984b3a3ccf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a32676b_6bbe6c99",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.cpp",
         "patchSetId": 8
@@ -47,6 +65,24 @@
       "writtenOn": "2017-06-26T00:31:44Z",
       "side": 1,
       "message": "Can we drop the scope_name parameter from the call site?\n\nCan we replace runtime_call_stats with isolate? Then the call site doesn\u0027t need to call RuntimeCallStats::FromIsolate().",
+      "revId": "150248741e191343adac93476edb984b3a3ccf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabe771c_f74ddf2c",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T15:59:32Z",
+      "side": 1,
+      "message": "Using runtime_call_stats instead of isolate makes it much easier to test the macro. So I\u0027m keeping this version with runtime_call_stats for testing, and creating a macro with isolate as a parameter that calls the runtime_call_stats version.\n\nAlso removing scope_name.",
+      "parentUuid": "b184915b_d04af2cb",
       "revId": "150248741e191343adac93476edb984b3a3ccf30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +120,24 @@
       "revId": "150248741e191343adac93476edb984b3a3ccf30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848ec405_eefee7d3",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T15:59:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dcb86ed_cd64a7de",
+      "revId": "150248741e191343adac93476edb984b3a3ccf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
