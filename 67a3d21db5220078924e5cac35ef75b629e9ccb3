@@ -319,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "423a3fa3_bd85db35",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-26T20:05:07Z",
+      "side": 1,
+      "message": "Is it possible to create a constant in NavigationEntryImpl-ish land that we can reference? Or maybe it\u0027d be better place on our delegate interface and then DCHECK every tab that comes through?",
+      "parentUuid": "aeeda2cc_75e46f5c",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "67a3d21db5220078924e5cac35ef75b629e9ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f458bb92_01bc2793",
         "filename": "components/sync_sessions/task_tracker.h",
         "patchSetId": 2
