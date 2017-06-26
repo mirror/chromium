@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80cb4331_314fe0a2",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-26T17:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63609b94_45b7828b",
+      "range": {
+        "startLine": 106,
+        "startChar": 22,
+        "endLine": 106,
+        "endChar": 28
+      },
+      "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8185e11d_c796ce9f",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
         "patchSetId": 15
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1ee1d8c4_43f7fae4",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-26T17:55:50Z",
+      "side": 1,
+      "message": "Thanks for pointing that out. I added documentation for the method.\n\nThe reason to run it is: to drain the pending_commands_ when initialization fails.\n\nI did it, because that is how I read one of your earlier comments on the patch:\n\nhttps://chromium-review.googlesource.com/c/534175/8/components/offline_pages/core/prefetch/store/prefetch_store_sql.cc#141\n\n\u003e In case of initialization failure, this seem to retry the initialization with every Execute call. Also, if the initialization persistently fail (say, until device is restarted), the pending_commands_ grows unbounded.\nPerhaps the better solution would be to fail the command? Not sure how to invoke the result_callback though, because of the custom result type.\n\nThe reason to trigger the task is that the code here does not know how to construct a result indicating a failure. WDYT?\n\n(Marking as resolved, but open to discuss this, as this method is the core of the patch.)",
+      "parentUuid": "8185e11d_c796ce9f",
+      "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aac328e_2356db9f",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
         "patchSetId": 15
@@ -53,6 +95,24 @@
       "writtenOn": "2017-06-26T17:02:02Z",
       "side": 1,
       "message": "I think we need a unittest for this - for example if it round-trips the item through store successfully. For example, if someone adds a field in database but forgets to add it here.\n\nSame for other methods in this file.",
+      "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a04bdfa_aa6f16df",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-26T17:55:50Z",
+      "side": 1,
+      "message": "This is good point, except I don\u0027t think I got to use that function yet. I\u0027ll create an extra patch with a proper read task/function and make sure to test it thoroughly.\n\nOnly called by GetPrefetchItemByOfflineIdSync and that is not called yet.\n\nThis one is already too big and if anything I can remove a couple of functions for now to make it a bit smaller.",
+      "parentUuid": "7aac328e_2356db9f",
       "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
