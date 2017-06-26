@@ -361,6 +361,8 @@ DOM_KEY_MAP_DECLARATION {
   DOM_KEY_MAP("LaunchWebBrowser",     LAUNCH_WEB_BROWSER,       0x0B09),
   DOM_KEY_MAP("LaunchWebCam",         LAUNCH_WEB_CAM,           0x0B0A),
   DOM_KEY_MAP("LaunchWordProcessor",  LAUNCH_WORD_PROCESSOR,    0x0B0B),
+  // Assistant entry is not in standard (yet?).
+  DOM_KEY_MAP("LaunchAssistant",      LAUNCH_ASSISTANT,         0x0B0C),
 
   // =========================================================
   // Browser Keys
