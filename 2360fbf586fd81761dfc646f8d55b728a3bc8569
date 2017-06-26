@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76d69f23_1ea02876",
+        "filename": "base/task_scheduler/task_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-26T19:49:27Z",
+      "side": 1,
+      "message": "The \"even\" is intentional here, emphasizing the preprocessor does not perform lazy evaluation of the statement.",
+      "parentUuid": "d62f1e23_f65111f3",
+      "range": {
+        "startLine": 108,
+        "startChar": 28,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "2360fbf586fd81761dfc646f8d55b728a3bc8569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "826c2a7b_3ecb571b",
         "filename": "base/task_scheduler/task_scheduler_impl.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-26T18:34:41Z",
       "side": 1,
       "message": "If we don\u0027t expect ComInitCheckHook to be instantiated when !COM_INIT_CHECK_HOOK_ENABLED(), could we surround the definition of ComInitCheckHook with #if COM_INIT_CHECK_HOOK_ENABLED() in com_init_check_hook.h?",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "2360fbf586fd81761dfc646f8d55b728a3bc8569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1374dfd7_9ba14376",
+        "filename": "base/task_scheduler/task_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-26T19:49:27Z",
+      "side": 1,
+      "message": "We could, but then the compiler would have to reserve space for this empty type. This is why the condition is structured in this fashion.",
+      "parentUuid": "826c2a7b_3ecb571b",
       "range": {
         "startLine": 111,
         "startChar": 2,
