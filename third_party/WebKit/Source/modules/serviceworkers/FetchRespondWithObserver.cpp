@@ -239,8 +239,8 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
     }
     // Handle the stream response.
     mojo::DataPipe data_pipe;
-    DCHECK(data_pipe.producer_handle.is_valid());
-    DCHECK(data_pipe.consumer_handle.is_valid());
+    CHECK(data_pipe.producer_handle.is_valid());
+    CHECK(data_pipe.consumer_handle.is_valid());
 
     std::unique_ptr<WebServiceWorkerStreamHandle> body_stream_handle =
         WTF::MakeUnique<WebServiceWorkerStreamHandle>(
