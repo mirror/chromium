@@ -15,12 +15,15 @@
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_client.h"
 #include "components/signin/core/browser/signin_header_helper.h"
+#include "components/signin/core/browser/signin_manager.h"
+#include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "google_apis/gaia/gaia_auth_fetcher.h"
 #include "google_apis/gaia/gaia_constants.h"
@@ -52,6 +55,7 @@ class DiceResponseHandlerFactory : public BrowserContextKeyedServiceFactory {
     DependsOn(AccountTrackerServiceFactory::GetInstance());
     DependsOn(ChromeSigninClientFactory::GetInstance());
     DependsOn(ProfileOAuth2TokenServiceFactory::GetInstance());
+    DependsOn(SigninManagerFactory::GetInstance());
   }
 
   ~DiceResponseHandlerFactory() override {}
@@ -64,6 +68,7 @@ class DiceResponseHandlerFactory : public BrowserContextKeyedServiceFactory {
 
     Profile* profile = static_cast<Profile*>(context);
     return new DiceResponseHandler(
+        SigninManagerFactory::GetForProfile(profile),
         ChromeSigninClientFactory::GetForProfile(profile),
         ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
         AccountTrackerServiceFactory::GetForProfile(profile));
@@ -136,12 +141,15 @@ DiceResponseHandler* DiceResponseHandler::GetForProfile(Profile* profile) {
 }
 
 DiceResponseHandler::DiceResponseHandler(
+    SigninManager* signin_manager,
     SigninClient* signin_client,
     ProfileOAuth2TokenService* profile_oauth2_token_service,
     AccountTrackerService* account_tracker_service)
-    : signin_client_(signin_client),
+    : signin_manager_(signin_manager),
+      signin_client_(signin_client),
       token_service_(profile_oauth2_token_service),
       account_tracker_service_(account_tracker_service) {
+  DCHECK(signin_manager_);
   DCHECK(signin_client_);
   DCHECK(token_service_);
   DCHECK(account_tracker_service_);
@@ -153,15 +161,19 @@ void DiceResponseHandler::ProcessDiceHeader(
     const signin::DiceResponseParams& dice_params) {
   DCHECK_EQ(switches::AccountConsistencyMethod::kDice,
             switches::GetAccountConsistencyMethod());
+  DCHECK_EQ(dice_params.gaia_id.size(), dice_params.email.size());
+  DCHECK_EQ(dice_params.gaia_id.size(), dice_params.session_index.size());
 
   switch (dice_params.user_intention) {
     case signin::DiceAction::SIGNIN:
-      ProcessDiceSigninHeader(dice_params.gaia_id, dice_params.email,
+      DCHECK_EQ(1u, dice_params.gaia_id.size());
+      ProcessDiceSigninHeader(dice_params.gaia_id.back(),
+                              dice_params.email.back(),
                               dice_params.authorization_code);
       return;
     case signin::DiceAction::SIGNOUT:
-    case signin::DiceAction::SINGLE_SESSION_SIGNOUT:
-      LOG(ERROR) << "Signout through Dice is not implemented.";
+      DCHECK_GT(dice_params.gaia_id.size(), 0u);
+      ProcessDiceSignoutHeader(dice_params.gaia_id, dice_params.email);
       return;
     case signin::DiceAction::NONE:
       NOTREACHED() << "Invalid Dice response parameters.";
@@ -193,6 +205,34 @@ void DiceResponseHandler::ProcessDiceSigninHeader(
 
   token_fetchers_.push_back(base::MakeUnique<DiceTokenFetcher>(
       gaia_id, email, authorization_code, signin_client_, this));
+}
+
+void DiceResponseHandler::ProcessDiceSignoutHeader(
+    const std::vector<std::string>& gaia_ids,
+    const std::vector<std::string>& emails) {
+  DCHECK_EQ(gaia_ids.size(), emails.size());
+  // If one of the signed out accounts is the main Chrome account, then force a
+  // complete signout. Otherwise simply revoke the corresponding tokens.
+  std::string current_account = signin_manager_->GetAuthenticatedAccountId();
+  std::vector<std::string> signed_out_accounts;
+  for (unsigned int i = 0; i < gaia_ids.size(); ++i) {
+    std::string signed_out_account =
+        account_tracker_service_->PickAccountIdForAccount(gaia_ids[i],
+                                                          emails[i]);
+    if (signed_out_account == current_account) {
+      VLOG(1) << "Dice: signing out all accounts.";
+      signin_manager_->SignOut(signin_metrics::SERVER_FORCED_DISABLE,
+                               signin_metrics::SignoutDelete::IGNORE_METRIC);
+      return;
+    } else {
+      signed_out_accounts.push_back(signed_out_account);
+    }
+  }
+
+  for (const auto& account : signed_out_accounts) {
+    VLOG(1) << "Dice: revoking token for account: " << account;
+    token_service_->RevokeCredentials(account);
+  }
 }
 
 void DiceResponseHandler::DeleteTokenFetcher(DiceTokenFetcher* token_fetcher) {
