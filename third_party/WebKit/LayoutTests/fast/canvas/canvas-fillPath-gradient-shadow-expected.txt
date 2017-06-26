@@ -1,0 +1,23 @@
+This is a testharness.js-based test.
+PASS TestAlphaShadow 1 
+PASS TestAlphaShadow 2 
+PASS TestAlphaShadow 3 
+PASS TestAlphaShadow 4 
+PASS TestAlphaShadow 5 
+PASS TestBlurryShadow 1 
+FAIL TestBlurryShadow 2 assert_approx_equals: expected 255 +/- 4 but got 248
+PASS TestBlurryShadow 3 
+PASS TestBlurryShadow 4 
+PASS TestBlurryShadow 5 
+PASS TestRotatedAlphaShadow 1 
+PASS TestRotatedAlphaShadow 2 
+PASS TestRotatedAlphaShadow 3 
+PASS TestRotatedAlphaShadow 4 
+PASS TestRotatedAlphaShadow 5 
+PASS TestRotatedBlurryShadow 1 
+FAIL TestRotatedBlurryShadow 2 assert_approx_equals: expected 255 +/- 4 but got 248
+FAIL TestRotatedBlurryShadow 3 assert_approx_equals: expected 255 +/- 4 but got 246
+PASS TestRotatedBlurryShadow 4 
+FAIL TestRotatedBlurryShadow 5 assert_approx_equals: expected 255 +/- 4 but got 246
+Harness: the test ran to completion.
+
