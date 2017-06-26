@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e05c515_3d5a46a8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 60499,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-26T20:38:52Z",
+      "side": 1,
+      "message": "This will let us see if the current heuristic is rejecting too many potential MSAA cases.",
+      "range": {
+        "startLine": 60499,
+        "startChar": 27,
+        "endLine": 60499,
+        "endChar": 66
+      },
+      "revId": "5c87e6a53e1dfd8c273097c8bf3f1b7213340747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
