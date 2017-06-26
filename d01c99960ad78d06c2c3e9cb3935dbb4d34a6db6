@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "14d22e42_6226f08d",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-26T13:26:26Z",
+      "side": 1,
+      "message": "Could STATIC_HISTOGRAM_POINTER_GROUP help in this case?\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?rcl\u003d4ee121999f15be82a0eb1fcf3f09cec215094822\u0026l\u003d288",
+      "parentUuid": "570594f3_a5aae388",
+      "range": {
+        "startLine": 247,
+        "startChar": 19,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "d01c99960ad78d06c2c3e9cb3935dbb4d34a6db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e4411b_6349e4f5",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 11
