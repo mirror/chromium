@@ -34,6 +34,24 @@
       "revId": "fb39c17eb5f7e755162668f7f1d79dd949a72f65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ab1087_72a691c0",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-26T22:18:42Z",
+      "side": 1,
+      "message": "Right, my bad!  Meant to point to the comment at line 179.\n\nThe new change looks like it would potentially address the problem, but at a higher level, I think the checks here are obsolete with the opener_browser !\u003d browser check below.  Is there a reason to keep it?",
+      "parentUuid": "a3148026_214fdb91",
+      "revId": "fb39c17eb5f7e755162668f7f1d79dd949a72f65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
