@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0074f1ee_d2956a98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-26T00:42:01Z",
+      "side": 1,
+      "message": "Didn\u0027t we agree that abstracting this class from modules is against the strategy, since it should be in controller which depends on core+modules? Looks like something we are going to undo this work, so why do it now?",
+      "revId": "1fe8fde0a1791146a709b4480b33d58c9bec1fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
