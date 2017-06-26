@@ -14,6 +14,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/favicon/favicon_utils.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/ui/browser.h"
@@ -51,6 +52,7 @@
 
 using base::UserMetricsAction;
 using content::WebContents;
+using feature_engagement_tracker::NewTabFeatureEngagementTracker;
 
 namespace {
 
@@ -358,6 +360,10 @@ bool BrowserTabStripController::IsCompatibleWith(TabStrip* other) const {
 }
 
 void BrowserTabStripController::CreateNewTab() {
+  NewTabFeatureEngagementTracker* tracker =
+      NewTabFeatureEngagementTracker::Get();
+  tracker->NotifyNewTab();
+
   model_->delegate()->AddTabAt(GURL(), -1, true);
 }
 
