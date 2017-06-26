@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "152a0560_9da5c5fb",
+        "filename": "components/exo/notification_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "The original code does this. But I tested without destroying the host_window_, seems fine.\n\nDone",
+      "parentUuid": "fb86ca41_dc45113f",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f83cb164_98fee33d",
         "filename": "components/exo/pointer.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T17:44:37Z",
       "side": 1,
       "message": "Change this to the actual name of class we\u0027re overriding instead of SurfaceTreeHost",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a75a7dd_a2d4eb28",
+        "filename": "components/exo/pointer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f83cb164_98fee33d",
       "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "71c749bf_c879f783",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Yes for now. We will update host_window()-\u003ebounds() in OnSurfaceCommit().\n\nIn future, should the host_window()-\u003ebounds() be a bigger rect which contains all subsurfaces?",
+      "parentUuid": "adef4db8_7f816f80",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01dc6f09_bc2147d3",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-26T17:44:37Z",
       "side": 1,
       "message": "ditto",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e63f10_73ae89ba",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "01dc6f09_bc2147d3",
       "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "72c6b9dc_bbd8481b",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c637762e_e16f136c",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3da5c1b_eff0e90e",
         "filename": "components/exo/surface_tree_host.cc",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-26T17:44:37Z",
       "side": 1,
       "message": "if this doesn\u0027t do anything, is it necessary to inherit SurfaceObserver?",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf4594e_050d8e93",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3da5c1b_eff0e90e",
       "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "471878d4_2cbaf58b",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "039b1d6d_843c3ec9",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4433b88b_4645a078",
         "filename": "components/exo/surface_tree_host.h",
         "patchSetId": 9
@@ -132,6 +258,24 @@
       "writtenOn": "2017-06-26T17:44:37Z",
       "side": 1,
       "message": "nit: add short comment explaining this function",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15712602_4d83e867",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4433b88b_4645a078",
       "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "4cf984cc_2ab50edd",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "864761ed_6664fb6e",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "183c3f21_db8a00a6",
         "filename": "components/exo/surface_tree_host.h",
         "patchSetId": 9
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "b9684047_dd99d5ed",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "183c3f21_db8a00a6",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21ce6203_1ae2d56a",
         "filename": "components/exo/surface_tree_host.h",
         "patchSetId": 9
@@ -183,6 +363,24 @@
       "writtenOn": "2017-06-26T17:44:37Z",
       "side": 1,
       "message": "nit: const aura::Window* host_window() const ...",
+      "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f7cb6e_0d030d5d",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-26T21:23:23Z",
+      "side": 1,
+      "message": "Done\n\nThe weird signature is because ShellSurface::GetDragWindow() is defined as below, and it use this method. I modified ShellSurface::GetDragWindow() to address your comment.\n\n\naura::Window* GetDragWindow() const;",
+      "parentUuid": "21ce6203_1ae2d56a",
       "revId": "bd696aa7aeaa8129edd8390d53b50fd29f5dabc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
