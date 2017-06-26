@@ -1,6 +1,4 @@
 include_rules = [
-  "+content/public",
-  "+media/audio",
   "+ui/aura",
   "+ui/base",
   "+ui/compositor",
