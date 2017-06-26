@@ -16,6 +16,24 @@
       "revId": "5c1b5cb1ca13d47ba2a509b020c4b759bf4376f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5446748_f0c5cfb3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-26T22:40:10Z",
+      "side": 1,
+      "message": "lgtm. This behavior is consistent with the exporter, where credentials.json takes priority:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/wpt-export?l\u003d76\n\nLarger question: do we even have a need for command-line arguments? I haven\u0027t used them in a long time. The exporter doesn\u0027t use them in prod. It\u0027d simplify things if we could remove the command line and env var options and require the use of credentials.json.",
+      "parentUuid": "2e4f3b5f_2291cdf4",
+      "revId": "5c1b5cb1ca13d47ba2a509b020c4b759bf4376f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
