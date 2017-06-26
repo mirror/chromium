@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a967fc9_85940064",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T18:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6ef05c8_7f829a8d",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1440edfb_07607a8c",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T18:22:16Z",
       "side": 1,
       "message": "nit: IMO, you should move \"It looks for...\" to above the while loop. In general, class method comments should be in the header, so you don\u0027t need the comment here, and any detail beyond what the consumer needs should be within the method.",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b268dad5_1547ee4c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T18:58:02Z",
+      "side": 1,
+      "message": "I actually don\u0027t need this to be a class member. Do you think it is better to move it out of the class?",
+      "parentUuid": "1440edfb_07607a8c",
       "revId": "ae35927e06921c1f158cea5117d36a4815262591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9eec1a26_eec61fe7",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T18:58:02Z",
+      "side": 1,
+      "message": "Same as the function above.",
+      "parentUuid": "6fce607c_c8c245e5",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efb1a6c2_13ec579e",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 19
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-26T18:22:16Z",
       "side": 1,
       "message": "nit:s/bdp_lower_bound/bdp_lower_bound/ same for upper bound.",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e627ff_3f9be2fe",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T18:58:02Z",
+      "side": 1,
+      "message": "Not clear what you mean. Changed bits to kbits though (based on the other CL, which computes BDP in kbits in NQE).",
+      "parentUuid": "efb1a6c2_13ec579e",
       "revId": "ae35927e06921c1f158cea5117d36a4815262591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "ae35927e06921c1f158cea5117d36a4815262591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c735364b_4189524b",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T18:58:02Z",
+      "side": 1,
+      "message": "Done. It\u0027s strange that the presubmit did not catch it though.",
+      "parentUuid": "0caf8bd8_b3857c22",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
