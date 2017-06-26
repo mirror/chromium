@@ -12,6 +12,7 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_commands.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -50,7 +51,7 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
                    dataSource:(id<ContentSuggestionsDataSource>)dataSource {
-  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  UICollectionViewLayout* layout = [[ContentSuggestionsLayout alloc] init];
   self = [super initWithLayout:layout style:style];
   if (self) {
     _collectionUpdater = [[ContentSuggestionsCollectionUpdater alloc]
@@ -349,6 +350,13 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   [self.collectionUpdater
       dismissItem:[self.collectionViewModel itemAtIndexPath:indexPath]];
   [self dismissEntryAtIndexPath:indexPath];
+}
+
+#pragma mark - UIScrollViewDelegate Methods.
+
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
+  [super scrollViewDidScroll:scrollView];
+  [self.suggestionCommandHandler updateFakeOmniboxForScrollView:scrollView];
 }
 
 #pragma mark - Private
