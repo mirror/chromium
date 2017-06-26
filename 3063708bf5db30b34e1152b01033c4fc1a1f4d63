@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca3ca8eb_69b237a9",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-26T23:45:03Z",
+      "side": 1,
+      "message": "i picked \"check\", since it doesn\u0027t change the word wrapping :)",
+      "parentUuid": "5ca5b3fe_65663ae9",
+      "range": {
+        "startLine": 116,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "3063708bf5db30b34e1152b01033c4fc1a1f4d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53ae4b57_defdc3f0",
         "filename": "media/gpu/android_video_surface_chooser_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-26T23:37:48Z",
       "side": 1,
       "message": "What happens when L1 forcibly gets a SurfaceTexture instead of an overlay?",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "3063708bf5db30b34e1152b01033c4fc1a1f4d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221ef6b1_c37c40d7",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-26T23:45:03Z",
+      "side": 1,
+      "message": "it\u0027ll fail.  however, it has already failed at least once if it gets here.  it probably never gets here for L1, though, since it\u0027ll probably transition AVDA to the error state when MediaCodec::SetSurface fails to switch to the first SurfaceTexture.",
+      "parentUuid": "53ae4b57_defdc3f0",
       "range": {
         "startLine": 124,
         "startChar": 26,
