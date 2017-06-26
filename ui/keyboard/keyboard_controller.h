@@ -126,6 +126,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // |lock| is true.
   void ShowKeyboard(bool lock);
 
+  // Loads the keyboard UI contents in the background, but does not display
+  // the keyboard.
+  void LoadKeyboardUiInBackground();
+
   // Force the keyboard to show up in the specific display if not showing and
   // lock the keyboard
   void ShowKeyboardInDisplay(const int64_t display_id);
@@ -178,6 +182,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   // Show virtual keyboard immediately with animation.
   void ShowKeyboardInternal(int64_t display_id);
+  void ShowKeyboardInternalImpl(int64_t display_id, bool load_only);
 
   // Returns true if keyboard is scheduled to hide.
   bool WillHideKeyboard() const;

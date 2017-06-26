@@ -558,7 +558,16 @@ void KeyboardController::OnShowImeIfNeeded() {
     ShowKeyboardInternal(display::kInvalidDisplayId);
 }
 
+void KeyboardController::LoadKeyboardUiInBackground() {
+  ShowKeyboardInternalImpl(display::kInvalidDisplayId, true);
+}
+
 void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
+  ShowKeyboardInternalImpl(display_id, false);
+}
+
+void KeyboardController::ShowKeyboardInternalImpl(int64_t display_id,
+                                                  bool load_only) {
   // The container window should have been created already when
   // |Shell::CreateKeyboard| is called.
   DCHECK(container_.get());
@@ -575,7 +584,6 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
   }
 
   ui_->ReloadKeyboardIfNeeded();
-
   if (layout_delegate_ != nullptr) {
     if (display_id != display::kInvalidDisplayId)
       layout_delegate_->MoveKeyboardToDisplay(display_id);
@@ -585,8 +593,11 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
 
   if (keyboard_visible_) {
     return;
-  } else if (ui_->GetKeyboardWindow()->bounds().height() == 0) {
-    show_on_resize_ = true;
+  } else if (load_only || ui_->GetKeyboardWindow()->bounds().height() == 0) {
+    if (!load_only) {
+      // show the keyboard once loading is complete.
+      show_on_resize_ = true;
+    }
     ChangeState(KeyboardControllerState::LOADING_EXTENSION);
     return;
   }
