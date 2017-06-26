@@ -7,6 +7,7 @@
 
 #include <list>
 
+#include "base/android/jni_array.h"
 #include "base/android/jni_weak_ref.h"
 #include "base/bind.h"
 #include "base/memory/ref_counted.h"
@@ -151,7 +152,20 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // This may return null.
   base::android::ScopedJavaLocalRef<jobject> GetContainerView();
 
+  // Return the location of the container view in physical pixels.
+  gfx::Point GetLocationOfContainerViewOnScreen();
+
   float GetDipScale();
+
+  // Callback from java with the location of the container view.  This is a
+  // helper method for GetLocationOfContainerViewOnScreen().
+  void ReceiveLocationOfContainerView(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& clazz,
+      int x,
+      int y);
+
+  static bool RegisterViewAndroid(JNIEnv* env);
 
  protected:
   ViewAndroid* parent_;
@@ -219,6 +233,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
 
   gfx::Vector2dF content_offset_;  // in CSS pixel.
   std::unique_ptr<EventForwarder> event_forwarder_;
+
+  // Temporary space for GetLocationOfContainerViewOnScreen().
+  gfx::Point container_view_location_;
 
   DISALLOW_COPY_AND_ASSIGN(ViewAndroid);
 };

@@ -206,6 +206,27 @@ ScopedJavaLocalRef<jobject> ViewAndroid::GetContainerView() {
   return Java_ViewAndroidDelegate_getContainerView(env, delegate);
 }
 
+gfx::Point ViewAndroid::GetLocationOfContainerViewOnScreen() {
+  ScopedJavaLocalRef<jobject> delegate(GetViewAndroidDelegate());
+  if (delegate.is_null())
+    return gfx::Point();
+
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_ViewAndroidDelegate_getLocationOfContainerViewOnScreen(
+      env, delegate, reinterpret_cast<jlong>(this));
+
+  return container_view_location_;
+}
+
+// static
+void ViewAndroid::ReceiveLocationOfContainerView(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& clazz,
+    int x,
+    int y) {
+  container_view_location_ = gfx::Point(x, y);
+}
+
 void ViewAndroid::RemoveChild(ViewAndroid* child) {
   DCHECK(child);
   DCHECK_EQ(child->parent_, this);
@@ -384,6 +405,10 @@ bool ViewAndroid::HitTest(ViewClientCallback<E> send_to_client,
     }
   }
   return false;
+}
+
+bool ViewAndroid::RegisterViewAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 }  // namespace ui

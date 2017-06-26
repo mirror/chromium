@@ -21,6 +21,7 @@ static base::android::RegistrationMethod kAndroidRegisteredMethods[] = {
     {"EventForwarder", ui::RegisterEventForwarder},
     {"ResourceFactory", ui::RegisterResourceFactory},
     {"ResourceManager", ui::ResourceManagerImpl::RegisterResourceManager},
+    {"ViewAndroid", ViewAndroid::RegisterViewAndroid},
     {"WindowAndroid", WindowAndroid::RegisterWindowAndroid},
 };
 
