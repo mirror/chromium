@@ -66,11 +66,11 @@ ReceiverPresentationServiceDelegateImpl::
 
 void ReceiverPresentationServiceDelegateImpl::
     RegisterReceiverConnectionAvailableCallback(
-        const content::ReceiverConnectionAvailableCallback&
+        content::ReceiverConnectionAvailableCallback
             receiver_available_callback) {
   offscreen_presentation_manager_->OnOffscreenPresentationReceiverCreated(
       presentation_id_, web_contents_->GetLastCommittedURL(),
-      receiver_available_callback);
+      std::move(receiver_available_callback));
 }
 
 }  // namespace media_router

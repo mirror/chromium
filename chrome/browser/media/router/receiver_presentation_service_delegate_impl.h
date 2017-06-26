@@ -48,8 +48,8 @@ class ReceiverPresentationServiceDelegateImpl
   void RemoveObserver(int render_process_id, int render_frame_id) override;
   void Reset(int render_process_id, int render_frame_id) override;
   void RegisterReceiverConnectionAvailableCallback(
-      const content::ReceiverConnectionAvailableCallback&
-          receiver_available_callback) override;
+      content::ReceiverConnectionAvailableCallback receiver_available_callback)
+      override;
 
  private:
   friend class content::WebContentsUserData<
