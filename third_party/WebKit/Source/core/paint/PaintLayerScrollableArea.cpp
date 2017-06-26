@@ -1828,6 +1828,8 @@ void PaintLayerScrollableArea::UpdateScrollableAreaSet(bool has_overflow) {
   } else {
     frame_view->RemoveScrollableArea(this);
   }
+
+  layer_.DidUpdateScrollsOverflow();
 }
 
 void PaintLayerScrollableArea::UpdateCompositingLayersAfterScroll() {
@@ -1960,7 +1962,6 @@ void PaintLayerScrollableArea::UpdateNeedsCompositedScrolling(
   if (static_cast<bool>(needs_composited_scrolling_) !=
       needs_composited_scrolling) {
     needs_composited_scrolling_ = needs_composited_scrolling;
-    Layer()->DidUpdateNeedsCompositedScrolling();
   }
 }
 
