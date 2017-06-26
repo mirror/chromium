@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9baa93cb_eedc42cc",
+        "filename": "ash/accelerators/exit_warning_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T18:34:35Z",
+      "side": 1,
+      "message": "nit: move above with other params. lines",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c02846_72cf6803",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T18:34:35Z",
+      "side": 1,
+      "message": "drive by: Kinda weird that the const and non-const versions have different implementations.",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1be321_91e1d361",
+        "filename": "ash/shelf/overflow_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T18:34:35Z",
+      "side": 1,
+      "message": "You should be able to call set_parent() in InitOverflowBubble(). You may be able to remove this method from the base class - I seem to recall adding it just to support ConfigureWidgetInitParamsForContainer(). It might require a little fiddling with shadow setup, but it\u0027s probably worth it to get rid of the delegation.",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f81b3e_81d9d842",
+        "filename": "ash/shelf/shelf_tooltip_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T18:34:35Z",
+      "side": 1,
+      "message": "ditto, I\u0027ll bet set_parent() in constructor is enough\n\nMight wanna test manually tho.",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b92ebe_8204ab7f",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T18:34:35Z",
+      "side": 1,
+      "message": "nit: move with other params",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
