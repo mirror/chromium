@@ -16,6 +16,24 @@
       "revId": "ada502b77751c91dcb1046ab1472e33f313512f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3d7138_a85c8e3a",
+        "filename": "components/arc/audio/arc_audio_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-26T23:14:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a681d12_cce3c09c",
+      "revId": "ada502b77751c91dcb1046ab1472e33f313512f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
