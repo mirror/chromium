@@ -16,6 +16,24 @@
       "revId": "cc56e9a6cdc071320ead04c8c4bf328e731f7bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8798d57_e4c8ccb8",
+        "filename": "third_party/WebKit/Source/core/frame/WebMeaningfulLayoutsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-26T01:34:07Z",
+      "side": 1,
+      "message": "Yeah, I totally agree. The web/tests folder was perfect for these :\u0027(\n\nI\u0027m happy to just put them in core/exported, as they \"test the web APIs\" layer. WDYT?\n\nThe only alternative is straight in core/ (I\u0027d rather not) or something vague and \"high\" in the dependency tree like core/page.",
+      "parentUuid": "731c91f7_f0c58fee",
+      "revId": "cc56e9a6cdc071320ead04c8c4bf328e731f7bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
