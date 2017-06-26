@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a58f50_ec2496e0",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/svg/window-expected.txt",
+        "patchSetId": 22
+      },
+      "lineNbr": 1986,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-26T23:09:10Z",
+      "side": 1,
+      "message": "Do you know what these new \u003cg\u003e invalidations come from?",
+      "revId": "d7b72eb4a0ecfa6be15dac5e41a397f73c77bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6577a8ba_fc13f072",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-26T23:09:10Z",
+      "side": 1,
+      "message": "Can you pull this object \u003d\u003d invalidation container bit into a bool? I think that\u0027ll make it more clear that this is doing:\nif (hasTransform || paintInvalidationContainer) {\n  if (!paintInvalidationContainer)\n    ...",
+      "revId": "d7b72eb4a0ecfa6be15dac5e41a397f73c77bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c134ecb0_ab0dc5ff",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-26T23:09:10Z",
+      "side": 1,
+      "message": "This line was not obvious to me at first. Can you add a comment here that says we\u0027re removing the kInvalidateEmptyVisualRect bit?",
+      "revId": "d7b72eb4a0ecfa6be15dac5e41a397f73c77bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
