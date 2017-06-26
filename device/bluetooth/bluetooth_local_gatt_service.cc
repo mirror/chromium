@@ -6,7 +6,7 @@
 
 namespace device {
 
-#if !defined(OS_CHROMEOS) && !defined(OS_LINUX)
+#if !defined(OS_LINUX)
 // static
 base::WeakPtr<BluetoothLocalGattService> BluetoothLocalGattService::Create(
     BluetoothAdapter* adapter,

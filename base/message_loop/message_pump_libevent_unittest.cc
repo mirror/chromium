@@ -82,7 +82,7 @@ class StupidWatcher : public MessagePumpLibevent::Watcher {
 
 // Test to make sure that we catch calling WatchFileDescriptor off of the
 // wrong thread.
-#if defined(OS_CHROMEOS) || defined(OS_LINUX)
+#if defined(OS_LINUX)
 // Flaky on Chrome OS and Linux: crbug.com/138845.
 #define MAYBE_TestWatchingFromBadThread DISABLED_TestWatchingFromBadThread
 #else

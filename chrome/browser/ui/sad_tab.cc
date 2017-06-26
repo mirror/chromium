@@ -180,7 +180,7 @@ int SadTab::GetSubMessage(size_t line_id) {
       return 0;
     case chrome::SAD_TAB_KIND_CRASHED:
     case chrome::SAD_TAB_KIND_KILLED:
-#if defined(OS_MACOSX) || defined(OS_LINUX) || defined(OS_CHROMEOS)
+#if defined(OS_MACOSX) || defined(OS_LINUX)
       if (line_id == 0)
         return AreOtherTabsOpen() ? IDS_SAD_TAB_RELOAD_CLOSE_TABS
                                   : IDS_SAD_TAB_RELOAD_CLOSE_NOTABS;
