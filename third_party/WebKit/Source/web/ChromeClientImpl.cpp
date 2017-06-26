@@ -798,6 +798,14 @@ DOMWindow* ChromeClientImpl::PagePopupWindowForTesting() const {
   return web_view_->PagePopupWindow();
 }
 
+void ChromeClientImpl::SetBrowserControlsState(float height, bool shrinks_layout) {
+  web_view_->SetBrowserControlsStateForTesting(height, shrinks_layout);
+}
+
+void ChromeClientImpl::SetBrowserControlsShownRatio(float ratio) {
+  web_view_->SetBrowserControlsShownRatioForTesting(ratio);
+}
+
 bool ChromeClientImpl::ShouldOpenModalDialogDuringPageDismissal(
     LocalFrame& frame,
     DialogType dialog_type,

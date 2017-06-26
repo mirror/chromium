@@ -1697,6 +1697,17 @@ PagePopup* WebViewImpl::OpenPagePopup(PagePopupClient* client) {
   return page_popup_.Get();
 }
 
+void WebViewImpl::SetBrowserControlsStateForTesting(float height, bool shrinks_layout) {
+  ResizeWithBrowserControls(
+    WebSize(size_.width, size_.height - (shrinks_layout ? height : 0)),
+    height,
+    shrinks_layout);
+}
+
+void WebViewImpl::SetBrowserControlsShownRatioForTesting(float ratio) {
+  GetBrowserControls().SetShownRatio(ratio);
+}
+
 void WebViewImpl::ClosePagePopup(PagePopup* popup) {
   DCHECK(popup);
   WebPagePopupImpl* popup_impl = ToWebPagePopupImpl(popup);

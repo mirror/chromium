@@ -103,6 +103,9 @@ class WEB_EXPORT WebViewImpl final
  public:
   static WebViewBase* Create(WebViewClient*, WebPageVisibilityState);
 
+  void SetBrowserControlsStateForTesting(float, bool) override;
+  void SetBrowserControlsShownRatioForTesting(float) override;
+
   // WebWidget methods:
   void Close() override;
   WebSize Size() override;

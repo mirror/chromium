@@ -80,6 +80,9 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual float ClampPageScaleFactorToLimits(float) const = 0;
   virtual void ResetScaleStateImmediately() = 0;
 
+  virtual void SetBrowserControlsStateForTesting(float, bool) = 0;
+  virtual void SetBrowserControlsShownRatioForTesting(float) = 0;
+
   virtual WebLayerTreeView* LayerTreeView() const = 0;
   virtual WebViewClient* Client() = 0;
 

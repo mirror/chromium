@@ -722,6 +722,14 @@ ShadowRoot* Internals::createUserAgentShadowRoot(Element* host) {
   return &host->EnsureUserAgentShadowRoot();
 }
 
+void Internals::setBrowserControlsState(float height, bool shrinks_layout) {
+  document_->GetPage()->GetChromeClient().SetBrowserControlsState(height, shrinks_layout);
+}
+
+void Internals::setBrowserControlsShownRatio(float ratio) {
+  document_->GetPage()->GetChromeClient().SetBrowserControlsShownRatio(ratio);
+}
+
 ShadowRoot* Internals::shadowRoot(Element* host) {
   // FIXME: Internals::shadowRoot() in tests should be converted to
   // youngestShadowRoot() or oldestShadowRoot().
