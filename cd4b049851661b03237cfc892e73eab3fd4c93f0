@@ -16,6 +16,24 @@
       "revId": "cd4b049851661b03237cfc892e73eab3fd4c93f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd9f069_4162c4a7",
+        "filename": "components/arc/audio/arc_audio_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-26T21:05:21Z",
+      "side": 1,
+      "message": "Sure, why not? I\u0027ll put it after the DVLOG for debugging purposes.",
+      "parentUuid": "cd906252_6ab9f739",
+      "revId": "cd4b049851661b03237cfc892e73eab3fd4c93f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
