@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41eb1ccd_89c7876c",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-26T23:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8da8e50e_5dbe0d13",
+      "revId": "aa83f89e36f6a70eb8e5aefa38e685f5be8a824d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b6cf8d7_68d0b98a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T22:14:01Z",
       "side": 1,
       "message": "\"Recorded once per UMA ping\" is kind of tautologically true.  Instead, this should focus on when/how frequently we call into the UMA macro.",
+      "revId": "aa83f89e36f6a70eb8e5aefa38e685f5be8a824d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e58021_7082039f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21465,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-26T23:21:09Z",
+      "side": 1,
+      "message": "Removed the \"Recorded once per UMA ping\" sentence. Do you feel the \"when extensions auto-update\" bit capture the when/how frequently we call the UMA macro?",
+      "parentUuid": "1b6cf8d7_68d0b98a",
       "revId": "aa83f89e36f6a70eb8e5aefa38e685f5be8a824d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
