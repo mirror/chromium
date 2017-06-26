@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "433f91e8_25fd921a",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T21:24:19Z",
+      "side": 1,
+      "message": "nit: whitespace above this",
+      "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e323a5_ea493ec8",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T21:24:19Z",
+      "side": 1,
+      "message": "nit: move() the string, we don\u0027t need to keep ownership",
+      "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0793a36_01a0d457",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T21:24:19Z",
+      "side": 1,
+      "message": "If this function only wants a c_str() then should it not take a const char*, so callers do not have to build a std::string if they don\u0027t have one? If you reeeeeally want a C++ object for some reason, StringPiece would be better, but I don\u0027t see the reason here.\n\ntbh same applies elsewhere in this file, but that\u0027s not this CL of course.",
+      "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656b0269_e5ff1598",
+        "filename": "base/trace_event/memory_allocator_dump_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T21:24:19Z",
+      "side": 1,
+      "message": "This function is only public for this test to call it right? And I don\u0027t understand what this is testing here tbh. What I see is:\n\n1. We make a MAD.\n2. We get the guid() from it.\n3. We test that it made the guid() by calling this function?\n\nThat doesn\u0027t seem super useful to me. (Also line 119 is checking that mad-\u003eguid() \u003d\u003d mad-\u003eguid().)\n\nI suggest you make this function a private/file-local-static thing.",
+      "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
