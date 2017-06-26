@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a48141b_fdb18996",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ToV8ForCore.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T00:31:44Z",
+      "side": 1,
+      "message": "Nit: This place is performance sensitive. Make sure that this doesn\u0027t regress performance.",
+      "revId": "150248741e191343adac93476edb984b3a3ccf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a32676b_6bbe6c99",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T00:31:44Z",
+      "side": 1,
+      "message": "Nit: This place is performance sensitive. Make sure that this doesn\u0027t regress performance.",
+      "revId": "150248741e191343adac93476edb984b3a3ccf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b184915b_d04af2cb",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T00:31:44Z",
+      "side": 1,
+      "message": "Can we drop the scope_name parameter from the call site?\n\nCan we replace runtime_call_stats with isolate? Then the call site doesn\u0027t need to call RuntimeCallStats::FromIsolate().",
+      "revId": "150248741e191343adac93476edb984b3a3ccf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211093db_e45bc7cd",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMWrapper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T00:31:44Z",
+      "side": 1,
+      "message": "Nit: This place is performance sensitive. Make sure that this doesn\u0027t regress performance.",
+      "revId": "150248741e191343adac93476edb984b3a3ccf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcb86ed_cd64a7de",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T00:31:44Z",
+      "side": 1,
+      "message": "RUNTIME_CALL_TIMER_SCOPE_IF_ISOLATE_EXISTS(..., GetIsolate(), ...)\n\nmight look slightly nicer.",
+      "revId": "150248741e191343adac93476edb984b3a3ccf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
