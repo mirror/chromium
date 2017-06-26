@@ -12,8 +12,11 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteException;
+import android.support.test.InstrumentationRegistry;
 
 import org.junit.Assert;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 
 import org.chromium.base.Log;
 
@@ -30,8 +33,11 @@ import java.io.File;
  *   s.stopAndDestroyServer();
  *
  * Note that this runs net::test_server::EmbeddedTestServer in a service in a separate APK.
+ *
+ * This is extended from TestWatcher so tests can use this as a Junit4 test Rule. If used as
+ * a rule the server will be started before each test and shut down after each test.
  */
-public class EmbeddedTestServer {
+public class EmbeddedTestServer extends TestWatcher {
     private static final String TAG = "cr_TestServer";
 
     private static final String EMBEDDED_TEST_SERVER_SERVICE =
@@ -59,6 +65,22 @@ public class EmbeddedTestServer {
 
     private Context mContext;
     private final Object mImplMonitor = new Object();
+
+    @Override
+    protected void starting(Description description) {
+        try {
+            startServer(InstrumentationRegistry.getContext());
+        } catch (InterruptedException e) {
+            throw new EmbeddedTestServerFailure("Test server didn't start");
+        }
+        super.starting(description);
+    }
+
+    @Override
+    protected void finished(Description description) {
+        super.finished(description);
+        stopAndDestroyServer();
+    }
 
     /**
      * Exception class raised on failure in the EmbeddedTestServer.
@@ -255,12 +277,16 @@ public class EmbeddedTestServer {
      */
     public static <T extends EmbeddedTestServer> T initializeAndStartServer(
             T server, Context context) throws InterruptedException {
-        server.initializeNative(context);
-        server.addDefaultHandlers("");
-        if (!server.start()) {
+        server.startServer(context);
+        return server;
+    }
+
+    void startServer(Context context) throws InterruptedException {
+        initializeNative(context);
+        addDefaultHandlers("");
+        if (!start()) {
             throw new EmbeddedTestServerFailure("Failed to start serving using default handlers.");
         }
-        return server;
     }
 
     /** Get the full URL for the given relative URL.
