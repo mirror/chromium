@@ -34,6 +34,24 @@
       "revId": "1ffeff7a49a7aeeb48fc2ac5f3d4f24f6194e85c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e2744f_17ad7833",
+        "filename": "ui/gfx/image/image_skia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-26T21:42:24Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "150c458c_af89fa9d",
+      "revId": "1ffeff7a49a7aeeb48fc2ac5f3d4f24f6194e85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
