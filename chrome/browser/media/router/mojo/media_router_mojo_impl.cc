@@ -107,7 +107,7 @@ void MediaRouterMojoImpl::BindToMojoRequest(
 
   binding_.reset(
       new mojo::Binding<mojom::MediaRouter>(this, std::move(request)));
-  binding_->set_connection_error_handler(base::Bind(
+  binding_->set_connection_error_handler(base::BindOnce(
       &MediaRouterMojoImpl::OnConnectionError, base::Unretained(this)));
 
   media_route_provider_extension_id_ = extension.id();
@@ -159,7 +159,7 @@ void MediaRouterMojoImpl::RegisterMediaRouteProvider(
   }
 
   media_route_provider_ = std::move(media_route_provider_ptr);
-  media_route_provider_.set_connection_error_handler(base::Bind(
+  media_route_provider_.set_connection_error_handler(base::BindOnce(
       &MediaRouterMojoImpl::OnConnectionError, base::Unretained(this)));
 
   auto config = mojom::MediaRouteProviderConfig::New();
@@ -442,9 +442,9 @@ void MediaRouterMojoImpl::ProvideSinks(const std::string& provider_name,
                          << " devices...";
 
   SetWakeReason(MediaRouteProviderWakeReason::PROVIDE_SINKS);
-  RunOrDefer(base::Bind(&MediaRouterMojoImpl::DoProvideSinks,
-                        base::Unretained(this), provider_name,
-                        std::move(sinks)));
+  RunOrDefer(base::BindOnce(&MediaRouterMojoImpl::DoProvideSinks,
+                            base::Unretained(this), provider_name,
+                            std::move(sinks)));
 }
 
 bool MediaRouterMojoImpl::RegisterMediaSinksObserver(
@@ -616,8 +616,8 @@ void MediaRouterMojoImpl::RegisterRouteMessageObserver(
     SetWakeReason(
         MediaRouteProviderWakeReason::START_LISTENING_FOR_ROUTE_MESSAGES);
     RunOrDefer(
-        base::Bind(&MediaRouterMojoImpl::DoStartListeningForRouteMessages,
-                   base::Unretained(this), route_id));
+        base::BindOnce(&MediaRouterMojoImpl::DoStartListeningForRouteMessages,
+                       base::Unretained(this), route_id));
   }
 }
 
@@ -663,9 +663,9 @@ void MediaRouterMojoImpl::DoCreateRoute(
                          << ", presentation ID: " << presentation_id;
   media_route_provider_->CreateRoute(
       source_id, sink_id, presentation_id, origin, tab_id, timeout, incognito,
-      base::Bind(&MediaRouterMojoImpl::RouteResponseReceived,
-                 base::Unretained(this), presentation_id, incognito,
-                 base::Passed(&callbacks), false));
+      base::BindOnce(&MediaRouterMojoImpl::RouteResponseReceived,
+                     base::Unretained(this), presentation_id, incognito,
+                     base::Passed(&callbacks), false));
 }
 
 void MediaRouterMojoImpl::DoJoinRoute(
@@ -681,9 +681,9 @@ void MediaRouterMojoImpl::DoJoinRoute(
 
   media_route_provider_->JoinRoute(
       source_id, presentation_id, origin, tab_id, timeout, incognito,
-      base::Bind(&MediaRouterMojoImpl::RouteResponseReceived,
-                 base::Unretained(this), presentation_id, incognito,
-                 base::Passed(&callbacks), true));
+      base::BindOnce(&MediaRouterMojoImpl::RouteResponseReceived,
+                     base::Unretained(this), presentation_id, incognito,
+                     base::Passed(&callbacks), true));
 }
 
 void MediaRouterMojoImpl::DoConnectRouteByRouteId(
@@ -701,17 +701,16 @@ void MediaRouterMojoImpl::DoConnectRouteByRouteId(
 
   media_route_provider_->ConnectRouteByRouteId(
       source_id, route_id, presentation_id, origin, tab_id, timeout, incognito,
-      base::Bind(&MediaRouterMojoImpl::RouteResponseReceived,
-                 base::Unretained(this), presentation_id, incognito,
-                 base::Passed(&callbacks), true));
+      base::BindOnce(&MediaRouterMojoImpl::RouteResponseReceived,
+                     base::Unretained(this), presentation_id, incognito,
+                     base::Passed(&callbacks), true));
 }
 
 void MediaRouterMojoImpl::DoTerminateRoute(const MediaRoute::Id& route_id) {
   DVLOG_WITH_INSTANCE(1) << "DoTerminateRoute " << route_id;
   media_route_provider_->TerminateRoute(
-      route_id,
-      base::Bind(&MediaRouterMojoImpl::OnTerminateRouteResult,
-                 base::Unretained(this), route_id));
+      route_id, base::BindOnce(&MediaRouterMojoImpl::OnTerminateRouteResult,
+                               base::Unretained(this), route_id));
 }
 
 void MediaRouterMojoImpl::DoDetachRoute(const MediaRoute::Id& route_id) {
@@ -781,8 +780,8 @@ void MediaRouterMojoImpl::DoCreateMediaRouteController(
   media_route_provider_->CreateMediaRouteController(
       route_id, std::move(mojo_media_controller_request),
       std::move(mojo_observer),
-      base::Bind(&MediaRouterMojoImpl::OnMediaControllerCreated,
-                 base::Unretained(this), route_id));
+      base::BindOnce(&MediaRouterMojoImpl::OnMediaControllerCreated,
+                     base::Unretained(this), route_id));
 }
 
 void MediaRouterMojoImpl::OnRouteMessagesReceived(
