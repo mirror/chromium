@@ -16,6 +16,24 @@
       "revId": "03768906f02f1a3009863a221a83e69021ae5de3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3a6f54_4e68a62e",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-26T10:00:15Z",
+      "side": 1,
+      "message": "For this one we still need to create mojom::URLLoader{Factory} around the EventDispatcher, which needs to live in content/ for now :( (Or if you meant something else please let me know)",
+      "parentUuid": "b452e169_29e9a19d",
+      "revId": "03768906f02f1a3009863a221a83e69021ae5de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
