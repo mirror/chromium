@@ -51,6 +51,24 @@
       "revId": "6a263120ca894138a8094056810831eb07bfba75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd6e632_4e887659",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-26T18:46:57Z",
+      "side": 1,
+      "message": "Excellent, I think that would be simpler, so I\u0027ll change it to do that.",
+      "parentUuid": "ad266a5b_858aa8d2",
+      "revId": "6a263120ca894138a8094056810831eb07bfba75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
