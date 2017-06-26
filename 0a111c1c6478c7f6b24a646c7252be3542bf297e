@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7955628c_e0784497",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115894
+      },
+      "writtenOn": "2017-06-26T20:49:08Z",
+      "side": 1,
+      "message": "I\u0027m normally a fan of early-exits, but destroy() is one of those places I\u0027d hesitate to do it in.  If someone adds another member variable that needs to be destroyed, the early exit can potentially leave it undestroyed.",
+      "revId": "0a111c1c6478c7f6b24a646c7252be3542bf297e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a9cbd3_ac6fb96b",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115894
+      },
+      "writtenOn": "2017-06-26T20:49:08Z",
+      "side": 1,
+      "message": "Need explain when you should/shouldn\u0027t call this in a Javadoc.\n\nnt: If it\u0027s only done sometimes, maybe call it something other than \"init\"?  That implies that it needs to be called all the time before you can use it.",
+      "range": {
+        "startLine": 17,
+        "startChar": 61,
+        "endLine": 17,
+        "endChar": 72
+      },
+      "revId": "0a111c1c6478c7f6b24a646c7252be3542bf297e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
