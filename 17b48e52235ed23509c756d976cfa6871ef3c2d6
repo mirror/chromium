@@ -16,6 +16,24 @@
       "revId": "17b48e52235ed23509c756d976cfa6871ef3c2d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1301d97f_3b9fee70",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-26T05:39:47Z",
+      "side": 0,
+      "message": "This CL adds {{v8_class_or_partial}}::InstallRuntimeEnabledFeaturesOnTemplate() at the end of this method, so all runtime enabled features will be installed in it.",
+      "parentUuid": "fcd6a4a9_3576fd18",
+      "revId": "17b48e52235ed23509c756d976cfa6871ef3c2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

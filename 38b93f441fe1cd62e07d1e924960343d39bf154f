@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c55e822_8e4d91b6",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-26T05:39:47Z",
+      "side": 1,
+      "message": "...OnTemplate is a method\u0027s name, while ...OnTemplateFunction is a type name.\nI rename the latter one to be ...FeaturesOnTemplateFunction to be consistent.",
+      "parentUuid": "627da8ff_d6326ec4",
+      "revId": "38b93f441fe1cd62e07d1e924960343d39bf154f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cfb58c5_e4684741",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T00:57:49Z",
       "side": 1,
       "message": "I understand that we need line 670 - 709 but would you help me understand why we need line 711 - 748?\n\nI think you are writing InstallRuntimeEnabledFeaturesOnTemplate as a subset of {{v8_class_or_partial}}::install{{v8_class}}Template, but I\u0027m wondering how you selected things you need to do in InstallRuntimeEnabledFeaturesOnTemplate.",
+      "revId": "38b93f441fe1cd62e07d1e924960343d39bf154f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930519c5_ca3acf25",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-26T05:39:47Z",
+      "side": 1,
+      "message": "methods in this function are runtime enabled features, and the others are not.",
+      "parentUuid": "4cfb58c5_e4684741",
       "revId": "38b93f441fe1cd62e07d1e924960343d39bf154f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
