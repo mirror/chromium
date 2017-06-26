@@ -256,6 +256,22 @@
     "isolated_scripts": [
       {
         "args": [
+          "-v"
+        ],
+        "isolate_name": "angle_perftests",
+        "name": "angle_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
           "context_lost",
           "--show-stdout",
           "--browser=release",
@@ -507,6 +523,27 @@
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
         ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Linux TSAN Release - concurrent marking (NVIDIA)": {
+    "gtest_tests": [],
+    "isolated_scripts": [
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "angle_perftests",
+        "name": "angle_perftests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -851,6 +888,22 @@
   "Win Release (NVIDIA)": {
     "gtest_tests": [],
     "isolated_scripts": [
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "angle_perftests",
+        "name": "angle_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Windows-2008ServerR2-SP1"
+            }
+          ]
+        }
+      },
       {
         "args": [
           "context_lost",
