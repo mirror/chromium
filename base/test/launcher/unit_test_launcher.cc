@@ -551,8 +551,10 @@ void RunUnitTestsBatch(
   // Create a dedicated temporary directory to store the xml result data
   // per run to ensure clean state and make it possible to launch multiple
   // processes in parallel.
+  LOG(ERROR) << "RunUnitTestsBatch going to create";
   base::FilePath output_file;
   CHECK(platform_delegate->CreateTemporaryFile(&output_file));
+  LOG(ERROR) << "RunUnitTestsBatch:" << output_file.value();
 
   CommandLine cmd_line(platform_delegate->GetCommandLineForChildGTestProcess(
       test_names, output_file));

@@ -4,8 +4,11 @@
 
 #include "base/test/gtest_xml_unittest_result_printer.h"
 
+#include <sys/stat.h>
+
 #include "base/base64.h"
 #include "base/command_line.h"
+#include "base/debug/alias.h"
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/test/test_switches.h"
@@ -34,8 +37,28 @@ XmlUnitTestResultPrinter::~XmlUnitTestResultPrinter() {
 bool XmlUnitTestResultPrinter::Initialize(const FilePath& output_file_path) {
   DCHECK(!output_file_);
   output_file_ = OpenFile(output_file_path, "w");
-  if (!output_file_)
+  if (!output_file_) {
+    char buf[128];
+    bool exists = DirectoryExists(output_file_path.DirName());
+    strcpy(buf, exists ? "dir:true" : "dir:false");
+
+    struct stat statbuf;
+    int stat_result =
+        stat(output_file_path.DirName().value().c_str(), &statbuf);
+    strcat(buf, stat_result == 0 ? ",0," : ",nz,");
+
+    char buf2[16];
+    sprintf(buf2, "%d,", errno);
+    strcat(buf, buf2);
+
+    strcat(buf, output_file_path.value().c_str());
+    base::debug::Alias(&buf);
+
+    volatile int* x = (int*)32;
+    *x = 334;
+
     return false;
+  }
 
   fprintf(output_file_,
           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<testsuites>\n");
