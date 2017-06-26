@@ -16,6 +16,24 @@
       "revId": "f7ea48407f64640e6cd9edcd2632564fde445524",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19d52dd_3e5e059f",
+        "filename": "ash/accelerators/accelerator_table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-06-26T07:11:11Z",
+      "side": 1,
+      "message": "I think this can be removed.",
+      "parentUuid": "79784c8d_90bff3d9",
+      "revId": "f7ea48407f64640e6cd9edcd2632564fde445524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
