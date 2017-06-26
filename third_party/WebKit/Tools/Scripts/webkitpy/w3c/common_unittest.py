@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import argparse
+import json
 import unittest
 
 from webkitpy.common.host_mock import MockHost
@@ -9,6 +11,7 @@ from webkitpy.common.system.executive_mock import mock_git_commands
 from webkitpy.w3c.chromium_commit import ChromiumCommit
 from webkitpy.w3c.chromium_commit_mock import MockChromiumCommit
 from webkitpy.w3c.common import _exportable_commits_since
+from webkitpy.w3c.common import get_credentials
 from webkitpy.w3c.common import is_exportable
 from webkitpy.w3c.wpt_github import PullRequest
 from webkitpy.w3c.wpt_github_mock import MockWPTGitHub
@@ -92,3 +95,45 @@ class CommonTest(unittest.TestCase):
             PullRequest('Export PR', 12, 'Commit body\nCr-Commit-Position: refs/heads/master@{#423}', 'closed'),
         ])
         self.assertFalse(is_exportable(commit, MockLocalWPT(), github))
+
+    def test_get_credentials_empty(self):
+        host = MockHost()
+        args = argparse.Namespace(gh_user=None, gh_token=None)
+        self.assertEqual(get_credentials(host, args), {'GH_USER': None, 'GH_TOKEN': None})
+
+    def test_get_credentials_gets_from_args(self):
+        host = MockHost()
+        args = argparse.Namespace(
+            gh_user='my-user-github',
+            gh_token='my-pass-github')
+
+        self.assertEqual(
+            get_credentials(host, args),
+            {
+                'GH_USER': 'my-user-github',
+                'GH_TOKEN': 'my-pass-github',
+            })
+
+    def test_get_credentials_gets_values_from_file(self):
+        host = MockHost()
+        host.filesystem.write_text_file(
+            '/tmp/credentials.json',
+            json.dumps({
+                'GH_USER': 'user-github',
+                'GH_TOKEN': 'pass-github',
+                'GERRIT_USER': 'user-gerrit',
+                'GERRIT_TOKEN': 'pass-gerrit',
+            }))
+        args = argparse.Namespace(
+            gh_user='ignored-user-github',
+            gh_token='ignored-pass-github',
+            credentials_json='/tmp/credentials.json')
+
+        self.assertEqual(
+            get_credentials(host, args),
+            {
+                'GH_USER': 'user-github',
+                'GH_TOKEN': 'pass-github',
+                'GERRIT_USER': 'user-gerrit',
+                'GERRIT_TOKEN': 'pass-gerrit',
+            })

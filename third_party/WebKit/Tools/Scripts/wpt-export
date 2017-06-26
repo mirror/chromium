@@ -19,6 +19,7 @@ import logging
 
 from webkitpy.common.host import Host
 from webkitpy.w3c.test_exporter import TestExporter
+from webkitpy.w3c.common import get_credentials
 
 
 _log = logging.getLogger(__name__)
@@ -57,23 +58,7 @@ def main():
              'GH_USER, GH_TOKEN, GERRIT_USER, GERRIT_TOKEN')
     args = parser.parse_args()
     host = Host()
-    credentials = {
-        'GH_USER': args.gh_user,
-        'GH_TOKEN': args.gh_token,
-    }
-    credentials_json = None
-
-    if args.github_credentials_json:
-        credentials_json = args.github_credentials_json
-    if args.credentials_json:
-        credentials_json = args.credentials_json
-
-    if credentials_json:
-        with open(credentials_json, 'r') as f:
-            contents = json.load(f)
-            for key in ('GH_USER', 'GH_TOKEN', 'GERRIT_USER', 'GERRIT_TOKEN'):
-                if key in contents:
-                    credentials[key] = contents[key]
+    credentials = get_credentials(host, args)
 
     if not (credentials['GH_USER'] and credentials['GH_TOKEN']):
         parser.error('Must provide both gh_user and gh_token for GitHub.')

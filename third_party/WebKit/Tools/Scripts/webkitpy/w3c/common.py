@@ -4,6 +4,7 @@
 
 """Utility functions used both when importing and exporting."""
 
+import json
 import logging
 
 from webkitpy.w3c.chromium_commit import ChromiumCommit
@@ -93,3 +94,31 @@ def is_exportable(chromium_commit, local_wpt, wpt_github):
     if pull_request and pull_request.state == 'closed':
         return False
     return True
+
+
+def get_credentials(host, parsed_args):
+    """Extracts credentials from command-line args or a JSON file.
+
+    Assumes that gh_user and gh_token must be in args.
+    """
+    credentials = {
+        'GH_USER': parsed_args.gh_user,
+        'GH_TOKEN': parsed_args.gh_token,
+    }
+
+    credentials_json = None
+
+    # TODO(qyearsley): Remove this once when this option is removed from
+    # wpt-exporter.
+    if hasattr(parsed_args, 'github_credentials_json'):
+        credentials_json = parsed_args.github_credentials_json
+    if hasattr(parsed_args, 'credentials_json'):
+        credentials_json = parsed_args.credentials_json
+
+    if credentials_json:
+        contents = json.loads(host.filesystem.read_text_file(credentials_json))
+        for key in ('GH_USER', 'GH_TOKEN', 'GERRIT_USER', 'GERRIT_TOKEN'):
+            if key in contents:
+                credentials[key] = contents[key]
+
+    return credentials
