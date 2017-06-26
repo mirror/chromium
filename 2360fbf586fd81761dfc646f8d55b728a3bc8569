@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7e31c495_12a70e5e",
+        "filename": "base/task_scheduler/task_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T20:33:53Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "76d69f23_1ea02876",
+      "range": {
+        "startLine": 108,
+        "startChar": 28,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "2360fbf586fd81761dfc646f8d55b728a3bc8569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "826c2a7b_3ecb571b",
         "filename": "base/task_scheduler/task_scheduler_impl.h",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "We could, but then the compiler would have to reserve space for this empty type. This is why the condition is structured in this fashion.",
       "parentUuid": "826c2a7b_3ecb571b",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "2360fbf586fd81761dfc646f8d55b728a3bc8569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c783b6a2_b96c6e5d",
+        "filename": "base/task_scheduler/task_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-26T20:33:53Z",
+      "side": 1,
+      "message": "My suggestion was to add an #if in com_init_check_hook.h. That would prevent usage of base::win::ComInitCheckHook without an #if COM_INIT_CHECK_HOOK_ENABLED().",
+      "parentUuid": "1374dfd7_9ba14376",
       "range": {
         "startLine": 111,
         "startChar": 2,
