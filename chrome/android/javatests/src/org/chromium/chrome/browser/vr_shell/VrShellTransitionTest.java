@@ -128,7 +128,7 @@ public class VrShellTransitionTest {
      */
     @Test
     @CommandLineFlags.Add("enable-webvr")
-    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
+    @Restriction(RESTRICTION_TYPE_DEVICE_DAYDREAM)
     @MediumTest
     public void testExitPresentationWebVrToVrShell()
             throws IllegalArgumentException, InterruptedException, TimeoutException {
