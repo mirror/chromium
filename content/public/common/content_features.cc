@@ -355,6 +355,11 @@ const base::Feature kSendBeaconThrowForBlobWithNonSimpleType{
     "SendBeaconThrowForBlobWithNonSimpleType",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
+#if defined(OS_MACOSX)
+const base::Feature kFullscreenContent{"FullscreenContent",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 #if defined(OS_ANDROID)
 // Autofill Accessibility in Android.
 // crbug.com/627860
