@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2709d768_149a0740",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-26T17:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed8e4884_29953116",
+      "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0faace4_1e343171",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T17:07:11Z",
       "side": 1,
       "message": "What is the style for these kinds of helper classes?  Should this local class in AudioParamMap?",
+      "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadda896_bdc5b22b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-26T17:26:11Z",
+      "side": 1,
+      "message": "I am following this instance:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/webmidi/MIDIPortMap.h?q\u003dMIDIPortMap+package:%5Echromium$\u0026dr\u003dCSs\u0026l\u003d56\n\nYes, I believe this is local, but do you want to add another internal namespace scope?",
+      "parentUuid": "a0faace4_1e343171",
       "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "482658ed_181c4480",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-26T17:26:11Z",
+      "side": 1,
+      "message": "No. This is an IDL attribute from MapLike JS object, so it should use lower case. See: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/webmidi/MIDIPortMap.h?q\u003dMIDIPortMap+package:%5Echromium$\u0026dr\u003dCSs\u0026l\u003d24",
+      "parentUuid": "0a9e84eb_2d24b2d8",
+      "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecf2adc3_3247d15c",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711e73c1_836856d6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-26T17:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecf2adc3_3247d15c",
+      "revId": "31f8805b66e57754c73bc232bfcadbc7e8e2c861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
