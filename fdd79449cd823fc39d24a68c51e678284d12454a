@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2829514a_11445423",
+        "filename": "chrome/browser/android/vr_shell/textures/exit_warning_texture.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-26T16:17:20Z",
+      "side": 1,
+      "message": "And, sorry that I apparently can\u0027t edit text properly.",
+      "parentUuid": "15a4db0b_4cdb851b",
+      "revId": "fdd79449cd823fc39d24a68c51e678284d12454a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a2863d4_cb9a2ebf",
         "filename": "chrome/browser/android/vr_shell/textures/insecure_content_permanent_texture.h",
         "patchSetId": 2
