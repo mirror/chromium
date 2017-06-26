@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4618c640_39a2c85c",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-26T08:02:01Z",
+      "side": 1,
+      "message": "Can you move these variable declarations into each assignment statement? e.g., merging line 88 into line 93.",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 24
+      },
+      "revId": "45752b3114e5486da399e76c13aeae27f8199795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
