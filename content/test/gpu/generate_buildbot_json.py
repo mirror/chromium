@@ -901,6 +901,18 @@ V8_FYI_WATERFALL = {
       'swarming': True,
       'os_type': 'linux',
     },
+    'Linux TSAN Release - concurrent marking (NVIDIA)': {
+      'swarming_dimensions': [
+        {
+          'gpu': '10de:104a',
+          'os': 'Ubuntu'
+        },
+      ],
+      'build_config': 'Release',
+      'swarming': True,
+      'os_type': 'linux',
+      'instrumentation_type': 'tsan',
+    },
     'Android Release (Nexus 5X)': {
       'swarming_dimensions': [
         {
