@@ -40,6 +40,7 @@
 #include "ipc/ipc_message.h"
 #include "net/base/load_states.h"
 #include "net/base/request_priority.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 #include "url/gurl.h"
 
@@ -278,12 +279,14 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   void OnRenderFrameDeleted(const GlobalFrameRoutingId& global_routing_id);
 
   // Called when loading a request with mojo.
-  void OnRequestResourceWithMojo(ResourceRequesterInfo* requester_info,
-                                 int routing_id,
-                                 int request_id,
-                                 const ResourceRequest& request,
-                                 mojom::URLLoaderAssociatedRequest mojo_request,
-                                 mojom::URLLoaderClientPtr url_loader_client);
+  void OnRequestResourceWithMojo(
+      ResourceRequesterInfo* requester_info,
+      int routing_id,
+      int request_id,
+      const ResourceRequest& request,
+      mojom::URLLoaderAssociatedRequest mojo_request,
+      mojom::URLLoaderClientPtr url_loader_client,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
   void OnSyncLoadWithMojo(ResourceRequesterInfo* requester_info,
                           int routing_id,
@@ -534,12 +537,14 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
                          int request_id,
                          const ResourceRequest& request_data);
 
-  void OnRequestResourceInternal(ResourceRequesterInfo* requester_info,
-                                 int routing_id,
-                                 int request_id,
-                                 const ResourceRequest& request_data,
-                                 mojom::URLLoaderAssociatedRequest mojo_request,
-                                 mojom::URLLoaderClientPtr url_loader_client);
+  void OnRequestResourceInternal(
+      ResourceRequesterInfo* requester_info,
+      int routing_id,
+      int request_id,
+      const ResourceRequest& request_data,
+      mojom::URLLoaderAssociatedRequest mojo_request,
+      mojom::URLLoaderClientPtr url_loader_client,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
   void OnSyncLoad(ResourceRequesterInfo* requester_info,
                   int request_id,
@@ -574,7 +579,8 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       const SyncLoadResultCallback& sync_result_handler,  // only valid for sync
       int route_id,
       mojom::URLLoaderAssociatedRequest mojo_request,
-      mojom::URLLoaderClientPtr url_loader_client);
+      mojom::URLLoaderClientPtr url_loader_client,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
   // There are requests which need decisions to be made like the following:
   // Whether the presence of certain HTTP headers like the Origin header are
@@ -593,6 +599,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       const net::HttpRequestHeaders& headers,
       mojom::URLLoaderAssociatedRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
       HeaderInterceptorResult interceptor_result);
 
   // Creates a ResourceHandler to be used by BeginRequest() for normal resource
