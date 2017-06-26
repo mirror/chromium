@@ -92,12 +92,13 @@ mojo.config = {
     mojomRegistry.set(id, LoadState.LOADED);
   }
 
-  function loadMojomIfNecessary(id, url) {
+  function loadMojomIfNecessary(id, relativePath) {
     if (mojomRegistry.has(id)) {
       return;
     }
 
     markMojomPendingLoad(id);
+    var url = new URL(relativePath, document.currentScript.src).href;
     internal.global.document.write('<script type="text/javascript" src="' +
                                    url + '"></script>');
   }
