@@ -657,10 +657,12 @@ bool ImageData::ImageDataInCanvasColorSettings(
       ImageData::GetCanvasColorSpace(color_settings_.colorSpace());
   if (canvas_pixel_format == kRGBA8CanvasPixelFormat &&
       color_settings_.storageFormat() == kUint8ClampedArrayStorageFormatName) {
+    LOG(ERROR) << "YOOHOO";
     if ((canvas_color_space == kLegacyCanvasColorSpace ||
          canvas_color_space == kSRGBCanvasColorSpace) &&
         (image_data_color_space == kLegacyCanvasColorSpace ||
          image_data_color_space == kSRGBCanvasColorSpace)) {
+      LOG(ERROR) << "YOOHOO";
       memcpy(converted_pixels.get(), data_->Data(), data_->length());
       return true;
     }
