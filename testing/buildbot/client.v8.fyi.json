@@ -519,6 +519,10 @@
       }
     ]
   },
+  "Linux TSAN Release - concurrent marking (NVIDIA)": {
+    "gtest_tests": [],
+    "isolated_scripts": []
+  },
   "Mac Release (Intel)": {
     "gtest_tests": [],
     "isolated_scripts": [
