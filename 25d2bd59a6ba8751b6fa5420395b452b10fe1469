@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3da9cc7_4f56cf01",
+        "filename": "ash/system/overview/overview_button_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T23:29:49Z",
+      "side": 1,
+      "message": "It seems weird that you have to manually set opacity here. The Alt-Tab code doesn\u0027t do that. Maybe you need to switch the order of Show/Activate?\n\nhttps://cs.chromium.org/chromium/src/ash/wm/window_cycle_list.cc?type\u003dcs\u0026l\u003d412",
+      "revId": "25d2bd59a6ba8751b6fa5420395b452b10fe1469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
