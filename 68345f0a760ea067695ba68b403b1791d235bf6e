@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524ddc10_2a4bb35d",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-26T23:57:05Z",
+      "side": 1,
+      "message": "{!AndroidAppsInfo}",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a58005e_bc186734",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-26T23:57:05Z",
+      "side": 1,
+      "message": "Hiding an element like this is a bit awkward. If it doesn\u0027t make sense to merge this with settings-android-apps-page, then we should put the show/hide logic in basic_page.js, similar to shouldShowAndroidApps_ in basic_page.js.",
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aaf18e5_52c16515",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-26T23:57:05Z",
+      "side": 1,
+      "message": "Hmm, now I\u0027m confused why we also have visibility logic in android_settings_page.js.",
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4433aa0a_fe515109",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-26T23:57:05Z",
+      "side": 1,
+      "message": "Hmm, this is only visible if !androidAppsVisible? Now I am extra confused.",
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfb177b_37933a36",
+        "filename": "chrome/test/data/webui/settings/android_apps_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-26T23:57:05Z",
+      "side": 1,
+      "message": "can we name this test_android_apps_browser_proxy.js to reduce confusion with the real proxy (and for consistency with existing test proxies)?",
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
