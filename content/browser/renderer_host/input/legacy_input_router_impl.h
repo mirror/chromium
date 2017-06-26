@@ -58,8 +58,9 @@ class CONTENT_EXPORT LegacyInputRouterImpl
                         const Config& config);
   ~LegacyInputRouterImpl() override;
 
+  bool SendInput(std::unique_ptr<IPC::Message> message);
+
   // InputRouter
-  bool SendInput(std::unique_ptr<IPC::Message> message) override;
   void SendMouseEvent(const MouseEventWithLatencyInfo& mouse_event) override;
   void SendWheelEvent(
       const MouseWheelEventWithLatencyInfo& wheel_event) override;
