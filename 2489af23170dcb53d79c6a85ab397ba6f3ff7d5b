@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b226adc_7aca10b1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2480,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-26T20:12:49Z",
+      "side": 1,
+      "message": "I wouldn\u0027t put this here - it is \"dead code\" \u0026 won\u0027t compile (I think)",
+      "range": {
+        "startLine": 2480,
+        "startChar": 7,
+        "endLine": 2480,
+        "endChar": 33
+      },
+      "revId": "2489af23170dcb53d79c6a85ab397ba6f3ff7d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
