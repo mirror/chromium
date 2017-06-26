@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "4698134b_34ced834",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-26T19:43:10Z",
+      "side": 1,
+      "message": "Even better rule of thumb: Never use bare \"new\", do something like:\n\n  auto box_layout \u003d base::MakeUnique\u003cviews::BoxLayout\u003e(...);\n\nThen go ahead and .release() when passing to someone taking ownership as a raw pointer.\n\nSome related stuff in https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique .\n\nAlso, yeah, ownership in views is busted.  Sorry.  I have agitated about this before...",
+      "parentUuid": "f3cfd852_994711f1",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a3c4b9d_5965961e",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
         "patchSetId": 2
