@@ -21,6 +21,7 @@
 #include "chrome/browser/bookmarks/bookmark_stats.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h"
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor_factory.h"
@@ -55,6 +56,7 @@
 #include "url/gurl.h"
 
 using predictors::AutocompleteActionPredictor;
+using feature_engagement_tracker::NewTabFeatureEngagementTracker;
 
 namespace {
 
@@ -441,6 +443,12 @@ void ChromeOmniboxClient::OnRevert() {
 }
 
 void ChromeOmniboxClient::OnURLOpenedFromOmnibox(OmniboxLog* log) {
+  if (!IsNewTabPage(GetURL().spec())) {
+    NewTabFeatureEngagementTracker* tracker =
+        NewTabFeatureEngagementTracker::Get();
+    tracker->NotifyOmnibox();
+  }
+
   predictors::AutocompleteActionPredictorFactory::GetForProfile(profile_)
       ->OnOmniboxOpenedUrl(*log);
 }
