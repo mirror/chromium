@@ -475,15 +475,13 @@ void PaintLayerScrollableArea::UpdateScrollOffset(
     Box().SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
   }
 
-  if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled()) {
-    // The scrollOffsetTranslation paint property depends on the scroll offset.
-    // (see: PaintPropertyTreeBuilder.updateProperties(LocalFrameView&,...) and
-    // PaintPropertyTreeBuilder.updateScrollAndScrollTranslation).
-    if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() && is_root_layer) {
-      frame_view->SetNeedsPaintPropertyUpdate();
-    } else {
-      Box().SetNeedsPaintPropertyUpdate();
-    }
+  // The scrollOffsetTranslation paint property depends on the scroll offset.
+  // (see: PaintPropertyTreeBuilder.updateProperties(LocalFrameView&,...) and
+  // PaintPropertyTreeBuilder.updateScrollAndScrollTranslation).
+  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() && is_root_layer) {
+    frame_view->SetNeedsPaintPropertyUpdate();
+  } else {
+    Box().SetNeedsPaintPropertyUpdate();
   }
 
   // Schedule the scroll DOM event.
@@ -945,8 +943,7 @@ void PaintLayerScrollableArea::DidChangeGlobalRootScroller() {
   // geometry.
   if (Box().GetNode()->IsElementNode()) {
     ToElement(Box().GetNode())->SetNeedsCompositingUpdate();
-    if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
-      Box().SetNeedsPaintPropertyUpdate();
+    Box().SetNeedsPaintPropertyUpdate();
   }
 
   // On Android, where the VisualViewport supplies scrollbars, we need to
@@ -1834,11 +1831,9 @@ void PaintLayerScrollableArea::UpdateScrollableAreaSet(bool has_overflow) {
   if (did_scroll_overflow == ScrollsOverflow())
     return;
 
-  if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled()) {
-    // The scroll and scroll offset properties depend on |scrollsOverflow| (see:
-    // PaintPropertyTreeBuilder::updateScrollAndScrollTranslation).
-    Box().SetNeedsPaintPropertyUpdate();
-  }
+  // The scroll and scroll offset properties depend on |scrollsOverflow| (see:
+  // PaintPropertyTreeBuilder::updateScrollAndScrollTranslation).
+  Box().SetNeedsPaintPropertyUpdate();
 
   if (scrolls_overflow_) {
     DCHECK(CanHaveOverflowScrollbars(Box()));

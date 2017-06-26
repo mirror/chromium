@@ -1493,8 +1493,6 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void ComputeSelfHitTestRects(Vector<LayoutRect>&,
                                const LayoutPoint& layer_offset) const override;
 
-  PaintInvalidationReason DeprecatedInvalidatePaint(
-      const PaintInvalidationState&) override;
   PaintInvalidationReason InvalidatePaint(
       const PaintInvalidatorContext&) const override;
 
