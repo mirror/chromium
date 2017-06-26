@@ -704,6 +704,16 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       result.Set(v8::String::NewFromUtf8(isolate, checked_str.c_str()));
     }
   });
+  RouteNodeIDFunction("GetControlMode", [](v8::Isolate* isolate,
+                                           v8::ReturnValue<v8::Value> result,
+                                           TreeCache* cache, ui::AXNode* node) {
+    const ui::AXControlMode control_mode = static_cast<ui::AXControlMode>(
+        node->data().GetIntAttribute(ui::AX_ATTR_CONTROL_MODE));
+    if (control_mode) {
+      const std::string control_mode_str = ui::ToString(control_mode);
+      result.Set(v8::String::NewFromUtf8(isolate, control_mode_str.c_str()));
+    }
+  });
 }
 
 AutomationInternalCustomBindings::~AutomationInternalCustomBindings() {}

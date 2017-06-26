@@ -206,7 +206,6 @@ enum WebAXRole {
 // Accessibility states, used as a bitmask.
 enum WebAXState {
   kWebAXStateBusy,
-  kWebAXStateEnabled,
   kWebAXStateExpanded,
   kWebAXStateFocusable,
   kWebAXStateFocused,
@@ -218,7 +217,6 @@ enum WebAXState {
   kWebAXStateMultiselectable,
   kWebAXStateOffscreen,
   kWebAXStateProtected,
-  kWebAXStateReadonly,
   kWebAXStateRequired,
   kWebAXStateSelectable,
   kWebAXStateSelected,
@@ -299,6 +297,14 @@ enum WebAXInvalidState {
   kWebAXInvalidStateSpelling,
   kWebAXInvalidStateGrammar,
   kWebAXInvalidStateOther
+};
+
+// State of a form control or editors
+enum WebAXControlMode {
+  kWebAXControlModeNotAControl = 0,
+  kWebAXControlModeEnabled,
+  kWebAXControlModeReadOnly,
+  kWebAXControlModeDisabled,
 };
 
 enum WebAXMarkerType {

@@ -19,22 +19,25 @@ var allTests = [
 
     var state = RemoveUntestedStates(rootNode.state);
     assertEq(
-        {focusable: true, readOnly: true, focused: true},
+        {focusable: true, focused: true},
         state);
+    assertEq(undefined, rootNode.controlMode);
 
     var children = rootNode.children;
     assertEq(RoleType.ROOT_WEB_AREA, rootNode.role);
     assertEq(1, children.length);
     var body = children[0];
     state = RemoveUntestedStates(body.state);
-    assertEq({readOnly: true}, state);
+    assertEq({}, state);
+    assertEq(undefined, body.controlMode);
 
     var contentChildren = body.children;
     assertEq(3, contentChildren.length);
     var okButton = contentChildren[0];
     assertEq('Ok', okButton.name);
     state = RemoveUntestedStates(okButton.state);
-    assertEq({focusable: true, readOnly: true}, state);
+    assertEq({focusable: true}, state);
+    assertEq('enabled', okButton.controlMode);
     var userNameInput = contentChildren[1];
     assertEq('Username', userNameInput.name);
     state = RemoveUntestedStates(userNameInput.state);
@@ -43,7 +46,8 @@ var allTests = [
     assertEq('Cancel',
              cancelButton.name);
     state = RemoveUntestedStates(cancelButton.state);
-    assertEq({focusable: true, readOnly: true}, state);
+    assertEq({focusable: true}, state);
+    assertEq('enabled', cancelButton.controlMode);
 
     // Traversal.
     assertEq(undefined, rootNode.parent);

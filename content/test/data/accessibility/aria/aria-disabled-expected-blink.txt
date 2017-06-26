@@ -1,4 +1,4 @@
 rootWebArea
 ++genericContainer
-++++textField disabled
+++++textField controlMode=disabled
 ++++textField
