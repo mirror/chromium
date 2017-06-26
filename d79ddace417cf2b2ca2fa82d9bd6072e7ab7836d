@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d1c0836_6356d55a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T22:05:56Z",
+      "side": 1,
+      "message": "Considering the events would have to be sent at the same time, I thought this would be worthwhile to just combine the two. This was the plan outlined in the original blink RCS design doc as well.",
+      "parentUuid": "12cbf0c3_e45633dd",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a94d872_23074a72",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5020b397_c7bfc8a0",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T22:05:56Z",
+      "side": 1,
+      "message": "Ok that sounds like a good idea, I\u0027ll change the TracedValue API in a separate CL.\n\nThe format does need to match exactly what V8 does, but I think we can safely omit counters with zero counts actually, I\u0027ll do that.",
+      "parentUuid": "7a94d872_23074a72",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2e4d89d9_351941f7",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T22:05:56Z",
+      "side": 1,
+      "message": "Ah I forgot you could append literals like that, \"Blink_\" #name works!\n\nRegarding including \"RCS\", I just picked the name to represent that the counters come from Blink RCS and to differentiate it from V8 counters. But I guess V8 counters would probably not have a \u0027Blink_\u0027 prefix either, so yeah I\u0027ll change it.",
+      "parentUuid": "4c7f47a9_dcc434da",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfa231f0_3f42783d",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "697c8e2f_33c1aa4c",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T22:05:56Z",
+      "side": 1,
+      "message": "Did not consider this case at all, you\u0027re right, this is bad. V8 RCS also resets its stats before sending a start trace event, but it only does so for a top level tracing scope. I\u0027ll have to implement a similar thing.",
+      "parentUuid": "bfa231f0_3f42783d",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d0cdbb_14a92fc2",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-26T18:13:06Z",
       "side": 1,
       "message": "Does this macro add substantial value? I\u0027d prefer to have fewer macros if we can avoid it.",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21429c8d_78b371ed",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T22:05:56Z",
+      "side": 1,
+      "message": "Can be avoided, but I think it looks similar to the original TRACE_EVENT macro which it replaces in call sites, so its obvious that an event is being traced. I can remove this if needed though, I don\u0027t have a strong opinion on this.",
+      "parentUuid": "c6d0cdbb_14a92fc2",
       "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8271ae5c_63588603",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T22:05:56Z",
+      "side": 1,
+      "message": "Made some changes, we do need to initialize category_group/name regardless of runtime_flag and if the category_group is enabled, but stats should remain untouched if no tracing is happening.",
+      "parentUuid": "8d408f30_14d56a3f",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ef90102_6c170fee",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc99aaec_73980a0f",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-26T22:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ef90102_6c170fee",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
