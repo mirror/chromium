@@ -233,6 +233,24 @@
     },
     {
       "key": {
+        "uuid": "90e57143_a9a292c7",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-26T11:06:31Z",
+      "side": 1,
+      "message": "Oh. I didn\u0027t read your comments carefully enough. I see now that your point is that the starting point should be a \"LayoutSibling\", which a display:contents element isn\u0027t.\n\nFirstLayoutChild(), which I introduced, also does work with a display:contents. In fact, that is currently the only use case. Requiring to start with a non-display:contents element for that one will be very cumbersome, though.\n\nThe code here could be changed so that we\u0027ll get:\n\n  child \u003d last_display_contents\n\n  if (active-slot-or-insertion) {\n    child \u003d first-distributed-node\n  }\n\n  if (child is display contents)\n    child \u003d FirstLayoutChild()\n\n  DCHECK(!child-\u003eIsElement || !child-\u003eHasDisplayContentsStyle)\n\nWDYT?",
+      "parentUuid": "dfffbcda_103c31fe",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4832662f_f8ab2515",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13
