@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "267ee0f9_035e6e5a",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T21:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38998822_701c4c2b",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fce607c_c8c245e5",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 19
@@ -140,6 +158,24 @@
       "revId": "ae35927e06921c1f158cea5117d36a4815262591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f2d1a4_2080e6be",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T21:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b48db3e0_af47d24a",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "3419ed78_3a3da176",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T21:23:58Z",
+      "side": 1,
+      "message": "The intuition behind BDP is the amount of data that can be in transit in the network from the sender\u0027s perspective (the number of unacknowledged bytes/bits). So the units do make sense. I can add \u0027in\u0027 though. Makes it more readable.",
+      "parentUuid": "2dafc083_3c1af43c",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0caf8bd8_b3857c22",
         "filename": "net/nqe/network_quality_estimator.cc",
         "patchSetId": 19
@@ -243,6 +297,24 @@
       "side": 1,
       "message": "It\u0027s legal in general to have LOG statements, but they should only be used for failure cases, and most of those are DLOG.",
       "parentUuid": "c735364b_4189524b",
+      "revId": "ae35927e06921c1f158cea5117d36a4815262591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5a8be90_222162ff",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-26T21:23:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61db5ec5_f378a4c3",
       "revId": "ae35927e06921c1f158cea5117d36a4815262591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
