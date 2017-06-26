@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfb558be_3dce1e76",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T16:26:52Z",
+      "side": 1,
+      "message": "So.. a few things. I read this code some more and it seems like this test is using OSMesa, just like any other compositor unit test does. So I don\u0027t understand why this is a separate target, and the real_gl thing looks like a lie to me.\n\nThe one thing to note is ComponentsTestSuite initialized GL too, but not on IOS. But I don\u0027t think we need to build any of viz on IOS.\n\nI\u0027m going to try move this test into components_unittests and see what happens.",
+      "parentUuid": "043018e0_d9fe2a26",
+      "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65077697_083fa49c",
         "filename": "components/viz/common/BUILD.gn",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T16:12:57Z",
       "side": 1,
       "message": "Same comment as viz_gl_tests.",
+      "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2dd21e1_47e5b6a6",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T16:26:52Z",
+      "side": 1,
+      "message": "Can do, but going to try use the components test suite if i can, and rename the test suite if not.",
+      "parentUuid": "65077697_083fa49c",
       "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c0b22da_4f2bf629",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T16:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d6a0ba_cdb3090f",
+      "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd50c591_50baef87",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef814729_b5dc2174",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-26T16:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd50c591_50baef87",
+      "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
