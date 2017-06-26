@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80c994b6_2c97786b",
+        "filename": "ash/resources/vector_icons/system_menu_keyboard_brightness.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-26T16:31:59Z",
+      "side": 1,
+      "message": "This is a placeholder - I just copied system_menu_keyboard.icon.",
+      "revId": "6b230ef408673481ce56d55c6a2ea3537cd919ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603f4abd_09464a36",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-26T16:31:59Z",
+      "side": 1,
+      "message": "Returning false on these event handlers suppresses bubbling, which I *think* is the right thing to do here (?).",
+      "revId": "6b230ef408673481ce56d55c6a2ea3537cd919ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb38314a_ac7179f7",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-26T16:31:59Z",
+      "side": 1,
+      "message": "Nothing to see in this file yet; basically just a copy of tray_brightness_unittest.cc with s/Brightness/KeyboardBrightness/g.",
+      "revId": "6b230ef408673481ce56d55c6a2ea3537cd919ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
