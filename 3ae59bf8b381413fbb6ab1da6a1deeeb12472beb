@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "71bf0b3c_40f56a99",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T22:59:45Z",
+      "side": 1,
+      "message": "\u003e This is not called after onChildStartFailed, since onChildStartFailed is called if the service is already bound to some other client, so we don\u0027t control the service lice-cycle, the already bound client does. (I added a comment to onChildStartFailed).\n\nErr, onServiceConnected has to be called first we can verify with service whether it\u0027s already bound. That means onServiceDisconnected will be called afterwards (regardless of whether that verification succeeds or not)?",
+      "parentUuid": "ae6d5501_e2a19043",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5812026d_64edf4a7",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
         "patchSetId": 5
