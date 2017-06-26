@@ -68,6 +68,30 @@
       "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41abef42_fcc596e3",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-26T00:19:24Z",
+      "side": 1,
+      "message": "Making this an abstract base class would force all observers to implement all methods, even if they didn\u0027t make use of them. I think it\u0027s reasonable for observers to just have do-nothing methods like this.\n\nYou could inline the method body in here to make that more clear. Also, I think for your purposes, you needed a SessionStarted method too:\n\nvirtual ~Observer() {}\nvirtual void OnSessionStarted() {}\nvirtual void OnSessionEnded(base::TimeDelta session_length) {}",
+      "parentUuid": "60bdd3e0_afc580f4",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
