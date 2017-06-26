@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "6759d075_0981bdc9",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T17:20:20Z",
+      "side": 1,
+      "message": "nit: Remove assumed target name. \"//base\" is fine. Elsewhere in this file too.",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "824b0b93_9964a185",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 1
@@ -64,6 +81,23 @@
       "writtenOn": "2017-06-26T17:09:47Z",
       "side": 1,
       "message": "nit: alpha ordering.",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8203c6da_a7b39bd7",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-26T17:20:20Z",
+      "side": 1,
+      "message": "Clean up includes.",
       "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
