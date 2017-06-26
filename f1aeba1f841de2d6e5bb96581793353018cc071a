@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb5a3fb_d16482d6",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T11:10:21Z",
+      "side": 1,
+      "message": "What does this mean?\nIIUC corpus is an idea which only matters to the API layer.",
+      "range": {
+        "startLine": 146,
+        "startChar": 34,
+        "endLine": 146,
+        "endChar": 48
+      },
+      "revId": "f1aeba1f841de2d6e5bb96581793353018cc071a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d737336_638958b0",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T11:10:21Z",
+      "side": 1,
+      "message": "This variable is not needed until GetResourceEntryById() is called.\nPlease declare this just before GetResourceEntryById().",
+      "revId": "f1aeba1f841de2d6e5bb96581793353018cc071a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bad86f59_523c7e38",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-26T11:10:21Z",
+      "side": 1,
+      "message": "This updates the My Drive root\u0027s changestamp with a Team Drive\u0027s.\nCould you carefully check again if this change doesn\u0027t break the existing code?\nPerhaps, it might be better to add a new function (or a class) for Team Drive change processing?",
+      "revId": "f1aeba1f841de2d6e5bb96581793353018cc071a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
