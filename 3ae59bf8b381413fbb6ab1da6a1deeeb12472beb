@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2800271e_002cad52",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-26T22:26:17Z",
+      "side": 1,
+      "message": "You are right, for the spare connection it\u0027s going to be a problem.\nI changed to posting the callbacks.\nAnd I added extensive unit-testing to the class for good measure.",
+      "parentUuid": "5d953ddf_4cbccad3",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0da5a56_9b3c63bb",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 5
