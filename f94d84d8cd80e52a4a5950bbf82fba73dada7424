@@ -22,6 +22,30 @@
       "revId": "f94d84d8cd80e52a4a5950bbf82fba73dada7424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f2f346_aaf9dcaa",
+        "filename": "docs/fuchsia_build_instructions.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-26T20:10:45Z",
+      "side": 1,
+      "message": "Darn. Copy-paste from linux_build_instructions.md. I\u0027ll fix both next time I have to change something.",
+      "parentUuid": "68c084b5_55a1057d",
+      "range": {
+        "startLine": 6,
+        "startChar": 58,
+        "endLine": 6,
+        "endChar": 59
+      },
+      "revId": "f94d84d8cd80e52a4a5950bbf82fba73dada7424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
