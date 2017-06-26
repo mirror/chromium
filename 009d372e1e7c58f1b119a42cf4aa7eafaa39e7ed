@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "25934c05_95c25baf",
+        "filename": "ash/shelf/overflow_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-26T20:43:35Z",
+      "side": 1,
+      "message": "I don\u0027t think it will get added to another container. I think the parent gets set here:\nhttps://cs.chromium.org/chromium/src/ui/views/bubble/bubble_dialog_delegate.cc?q\u003dOnBeforeBubbleWidgetInit\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d40\n\nIf the method can\u0027t be removed that\u0027s fine, but I still think you should use set_parent() where you can.",
+      "parentUuid": "c0c25096_28994033",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76f81b3e_81d9d842",
         "filename": "ash/shelf/shelf_tooltip_manager.cc",
         "patchSetId": 2
