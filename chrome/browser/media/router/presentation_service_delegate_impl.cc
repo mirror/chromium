@@ -743,7 +743,7 @@ void PresentationServiceDelegateImpl::StartPresentation(
       new CreatePresentationConnectionRequest(
           render_frame_host_id, presentation_urls,
           GetLastCommittedURLForFrame(render_frame_host_id),
-          base::Bind(
+          base::BindOnce(
               &PresentationServiceDelegateImpl::OnStartPresentationSucceeded,
               weak_factory_.GetWeakPtr(), render_process_id, render_frame_id,
               success_cb),
