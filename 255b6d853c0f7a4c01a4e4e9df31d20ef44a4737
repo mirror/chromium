@@ -314,6 +314,24 @@
       "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2d29e4_8e0c74c4",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T20:57:44Z",
+      "side": 1,
+      "message": "Scratch that. Rearranging the namespaces into feature_engagement_tracker::ios causes conflicts with ios::ChromeBrowserState and the compiler expects ::ios::ChromeBrowserState, bringing us back to square 1.",
+      "parentUuid": "749ed53d_b4c5cb6d",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
