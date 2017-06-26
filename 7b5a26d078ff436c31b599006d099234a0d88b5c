@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c066e605_ffdde7e6",
+        "filename": "chrome/browser/win/chrome_select_file_dialog_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T15:47:30Z",
+      "side": 1,
+      "message": "FWIW I think this is kind of silly and you should just remove the DCHECK. It does not seem like a necessary or appropriate use of DCHECK.",
+      "parentUuid": "55259b4c_5dc6d7c5",
+      "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b39cf9c8_78bdc2e5",
         "filename": "chrome/common/shell_handler_win.mojom",
         "patchSetId": 8
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "\u003e Why are these becoming sync IPCs if they weren\u0027t sync before?\n\nAs discussed in [1], code-left blocked the caller with a WaitableEvent.Wait() waiting on an async response from the utility process, which Signal()s the event and unblocks the caller.  Seems like a round-about way to create the same effect as a SYNC IPC.\n\n[1] https://chromium-review.googlesource.com/c/538519/5/chrome%252Fbrowser%252Fwin%252Fchrome_select_file_dialog_factory.cc#174",
       "parentUuid": "b39cf9c8_78bdc2e5",
+      "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83321446_01ddd968",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-26T15:47:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffa82337_d9e94873",
       "revId": "7b5a26d078ff436c31b599006d099234a0d88b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
