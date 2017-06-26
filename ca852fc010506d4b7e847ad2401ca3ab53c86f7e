@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "323ccca2_934e9f62",
+        "filename": "chrome/browser/chromeos/file_manager/fileapi_util_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-26T07:57:50Z",
+      "side": 1,
+      "message": "I don\u0027t know why \"git cl format\" sort it like this, maybe it regards \"file_util.h\" as the header file of \"file_util_unittest.cc\". Anyway, I\u0027ll change it manually.\n\nDone.",
+      "parentUuid": "ac75928d_fef44794",
+      "revId": "ca852fc010506d4b7e847ad2401ca3ab53c86f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c14a125_19b3802a",
         "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7d462da4_b0c904f1",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-26T07:57:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c14a125_19b3802a",
+      "revId": "ca852fc010506d4b7e847ad2401ca3ab53c86f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "066b61cd_ff67e02f",
         "filename": "components/drive/drive_uploader.h",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-26T06:26:07Z",
       "side": 1,
       "message": "Could you add a comment to make it clear that wake_lock_provider can be null for tests?",
+      "revId": "ca852fc010506d4b7e847ad2401ca3ab53c86f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22141364_633a55ec",
+        "filename": "components/drive/drive_uploader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-26T07:57:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "066b61cd_ff67e02f",
       "revId": "ca852fc010506d4b7e847ad2401ca3ab53c86f7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
