@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c479c07_47c38ee2",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-06-26T14:36:40Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 37
+      },
+      "revId": "083053f6ec0d5b91f85051f13910b7399376277c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
