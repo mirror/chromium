@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6288ea5_1be6591e",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-26T09:17:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89d391b8_b8c6ebb0",
+      "revId": "005a554c8f7a31cd300dd61832f6be3469ce5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a6b4788_74c8a488",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
         "patchSetId": 1
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca27c7b0_f7149ece",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-26T09:17:52Z",
+      "side": 1,
+      "message": "Deleted this code.",
+      "parentUuid": "3f2c0139_72b7c305",
+      "revId": "005a554c8f7a31cd300dd61832f6be3469ce5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae03976_03812f86",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
         "patchSetId": 1
@@ -91,6 +127,30 @@
       "revId": "005a554c8f7a31cd300dd61832f6be3469ce5a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e74f960_c7fcf91e",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-26T09:17:52Z",
+      "side": 1,
+      "message": "I have just inlined the code.",
+      "parentUuid": "fae03976_03812f86",
+      "range": {
+        "startLine": 62,
+        "startChar": 10,
+        "endLine": 62,
+        "endChar": 20
+      },
+      "revId": "005a554c8f7a31cd300dd61832f6be3469ce5a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
