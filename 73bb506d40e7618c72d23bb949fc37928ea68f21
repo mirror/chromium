@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fa7d811_b5172644",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T08:10:17Z",
+      "side": 1,
+      "message": "Who traces Modulator/ModulatorImpl  in this case?",
+      "revId": "73bb506d40e7618c72d23bb949fc37928ea68f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4969d2_10dc711d",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T08:10:17Z",
+      "side": 1,
+      "message": "Who traces the ScirptLoader in this case? HTMLScriptElement.h?",
+      "revId": "73bb506d40e7618c72d23bb949fc37928ea68f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
