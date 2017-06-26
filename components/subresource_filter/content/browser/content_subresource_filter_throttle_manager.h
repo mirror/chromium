@@ -129,6 +129,10 @@ class ContentSubresourceFilterThrottleManager
 
   void OnDocumentLoadStatistics(const DocumentLoadStatistics& statistics);
 
+  // Method added to debug crbug.com/736658.
+  void OnActivationStateThrottleDestroyed(
+      content::NavigationHandle* navigation_handle);
+
   // For each RenderFrameHost where the last committed load has subresource
   // filtering activated, owns the corresponding AsyncDocumentSubresourceFilter.
   std::unordered_map<content::RenderFrameHost*,

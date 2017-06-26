@@ -108,21 +108,21 @@ void ContentSubresourceFilterThrottleManager::ReadyToCommitNavigation(
 
 void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
-  // Do nothing if the navigation finished in the same document. Just make sure
-  // to not leak throttle pointers.
-  if (!navigation_handle->HasCommitted() ||
-      navigation_handle->IsSameDocument()) {
-    ongoing_activation_throttles_.erase(navigation_handle);
-    return;
-  }
-
-  auto throttle = ongoing_activation_throttles_.find(navigation_handle);
   std::unique_ptr<AsyncDocumentSubresourceFilter> filter;
-  if (throttle != ongoing_activation_throttles_.end()) {
+  if (base::ContainsKey(ongoing_activation_throttles_, navigation_handle)) {
+    auto throttle = ongoing_activation_throttles_.find(navigation_handle);
     CHECK_EQ(navigation_handle, throttle->second->navigation_handle());
     filter = throttle->second->ReleaseFilter();
     ongoing_activation_throttles_.erase(throttle);
   }
+
+  // Do nothing if the navigation finished in the same document. Just make sure
+  // to not leak throttle pointers.
+  if (!navigation_handle->HasCommitted() ||
+      navigation_handle->IsSameDocument()) {
+    return;
+  }
+
 
   content::RenderFrameHost* frame_host =
       navigation_handle->GetRenderFrameHost();
@@ -207,13 +207,17 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
   DCHECK(!navigation_handle->IsSameDocument());
   if (!dealer_handle_)
     return;
+  CHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
   if (auto filtering_throttle =
           MaybeCreateSubframeNavigationFilteringThrottle(navigation_handle)) {
     throttles->push_back(std::move(filtering_throttle));
   }
   if (auto activation_throttle =
           MaybeCreateActivationStateComputingThrottle(navigation_handle)) {
-    CHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
+    activation_throttle->set_destruction_closure(base::BindOnce(
+        &ContentSubresourceFilterThrottleManager::
+            OnActivationStateThrottleDestroyed,
+        base::Unretained(this), base::Unretained(navigation_handle)));
     ongoing_activation_throttles_[navigation_handle] =
         activation_throttle.get();
     throttles->push_back(std::move(activation_throttle));
@@ -316,6 +320,15 @@ void ContentSubresourceFilterThrottleManager::OnDocumentLoadStatistics(
     const DocumentLoadStatistics& statistics) {
   if (statistics_)
     statistics_->OnDocumentLoadStatistics(statistics);
+}
+
+void ContentSubresourceFilterThrottleManager::
+    OnActivationStateThrottleDestroyed(
+        content::NavigationHandle* navigation_handle) {
+  // Should be after DidFinishNavigation in all cases, so should already be
+  // erased from the map.
+  size_t num_erased = ongoing_activation_throttles_.erase(navigation_handle);
+  CHECK_EQ(0u, num_erased);
 }
 
 }  // namespace subresource_filter
