@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4cd80335_09358614",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-26T17:46:02Z",
+      "side": 1,
+      "message": "nit: DCHECK(previews_state).",
+      "range": {
+        "startLine": 121,
+        "startChar": 27,
+        "endLine": 121,
+        "endChar": 34
+      },
+      "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08ff82b7_6162eb21",
         "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
         "patchSetId": 3
@@ -19,6 +42,40 @@
         "endLine": 122,
         "endChar": 20
       },
+      "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b787af4_bc7f1821",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-26T17:46:02Z",
+      "side": 1,
+      "message": "You can use DCHECK or the if, but not both - see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED\n\nGiven the call site, I\u0027d go with DCHECK and remove the if.",
+      "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d54400_0bcc1b5b",
+        "filename": "content/browser/frame_host/navigator_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-26T17:46:02Z",
+      "side": 1,
+      "message": "Let\u0027s also document that |previews_state| should point at a valid set of previews (i.e., be non-null), and that the set will be modified in-place.",
       "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +180,46 @@
       "writtenOn": "2017-06-26T17:41:24Z",
       "side": 1,
       "message": "nit: if (!delegate)",
+      "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64997ce0_785820a4",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3142,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-26T17:46:02Z",
+      "side": 1,
+      "message": "nit: if (delegate_)",
+      "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8854bb5e_a82a1f06",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-26T17:46:02Z",
+      "side": 1,
+      "message": "nit: move } up to this line to match the style in the rest of this file.",
+      "range": {
+        "startLine": 571,
+        "startChar": 80,
+        "endLine": 571,
+        "endChar": 0
+      },
       "revId": "84cc636271811b309d38c10d1b9badf547ac389f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
