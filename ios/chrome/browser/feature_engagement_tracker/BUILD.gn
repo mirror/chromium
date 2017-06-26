@@ -1,0 +1,30 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("feature_engagement_tracker") {
+  sources = [
+    "feature_engagement_tracker_factory.cc",
+    "feature_engagement_tracker_factory.h",
+  ]
+
+  deps = [
+    "//base",
+    "//components/feature_engagement_tracker",
+    "//components/feature_engagement_tracker/public",
+    "//components/keyed_service/ios",
+    "//ios/chrome/browser/browser_state",
+    "//mojo/common:common_custom_types",
+  ]
+}
+
+source_set("unit_tests") {
+  sources = [
+    "feature_engagement_tracker_factory_tests.cc",
+  ]
+  deps = [
+    # TODO(cooperknaak): Include actual deps when unit
+    # tests are written. Update other BUILD.gn files
+    # to actually include these unit tests.
+  ]
+}
