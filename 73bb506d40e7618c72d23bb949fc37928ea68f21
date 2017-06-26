@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0d5da71_5e352b45",
+        "filename": "third_party/WebKit/Source/core/dom/Modulator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-26T09:08:38Z",
+      "side": 1,
+      "message": "mlippautz@: Not related to this CL (you don\u0027t need to understand what this CL is :-) but would it be possible to add a static_assert to check that an object traced by traceWrappers inherits from GarbageCollected? I think we currently have only DCHECK(object-\u003echeckHeader()).",
+      "revId": "73bb506d40e7618c72d23bb949fc37928ea68f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fa7d811_b5172644",
         "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
         "patchSetId": 2
