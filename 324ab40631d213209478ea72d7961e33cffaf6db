@@ -22,6 +22,30 @@
       "revId": "324ab40631d213209478ea72d7961e33cffaf6db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf84321_155db6a5",
+        "filename": "gpu/ipc/service/gpu_channel_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-26T18:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "288b32da_22b616d1",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "324ab40631d213209478ea72d7961e33cffaf6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
