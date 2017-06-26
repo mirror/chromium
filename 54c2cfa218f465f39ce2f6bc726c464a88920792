@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4be2cf9_e0a52953",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-26T15:53:54Z",
+      "side": 1,
+      "message": "Is this on purpose? Was it just broken before?",
+      "revId": "54c2cfa218f465f39ce2f6bc726c464a88920792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c5cad4_c4b07f5c",
+        "filename": "components/supervised_user_error_page/supervised_user_error_page_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-26T15:53:54Z",
+      "side": 1,
+      "message": "nit: I think clang-format want to spaces inside the comment, like:\n/*is_deprecated\u003d*/",
+      "revId": "54c2cfa218f465f39ce2f6bc726c464a88920792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60c5dfe_377d131d",
+        "filename": "components/supervised_user_error_page/supervised_user_error_page_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-26T15:53:54Z",
+      "side": 1,
+      "message": "nit: Add a comment that is_child_account and is_deprecated are mutually exclusive?",
+      "revId": "54c2cfa218f465f39ce2f6bc726c464a88920792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
