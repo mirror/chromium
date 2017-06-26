@@ -5458,14 +5458,14 @@ class LayerTreeHostTestGpuRasterizationDefault : public LayerTreeHostTest {
   }
 
   void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
-    EXPECT_TRUE(layer_->IsSuitableForGpuRasterization());
+    EXPECT_FALSE(layer_->HasSlowPaths());
 
     EXPECT_FALSE(host_impl->pending_tree()->use_gpu_rasterization());
     EXPECT_FALSE(host_impl->use_gpu_rasterization());
   }
 
   void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
-    EXPECT_TRUE(layer_->IsSuitableForGpuRasterization());
+    EXPECT_FALSE(layer_->HasSlowPaths());
 
     EXPECT_FALSE(host_impl->active_tree()->use_gpu_rasterization());
     EXPECT_FALSE(host_impl->use_gpu_rasterization());
@@ -5509,14 +5509,14 @@ class LayerTreeHostTestEmptyLayerGpuRasterization : public LayerTreeHostTest {
   }
 
   void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
-    EXPECT_TRUE(layer_->IsSuitableForGpuRasterization());
+    EXPECT_FALSE(layer_->HasSlowPaths());
 
     EXPECT_FALSE(host_impl->pending_tree()->use_gpu_rasterization());
     EXPECT_FALSE(host_impl->use_gpu_rasterization());
   }
 
   void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
-    EXPECT_TRUE(layer_->IsSuitableForGpuRasterization());
+    EXPECT_FALSE(layer_->HasSlowPaths());
 
     EXPECT_FALSE(host_impl->active_tree()->use_gpu_rasterization());
     EXPECT_FALSE(host_impl->use_gpu_rasterization());
@@ -5540,17 +5540,14 @@ class LayerTreeHostWithGpuRasterizationTest : public LayerTreeHostTest {
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider) override {
     auto context = TestWebGraphicsContext3D::Create();
+    context->SetMaxSamples(4);
+    context->set_support_multisample_compatibility(false);
     context->set_gpu_rasterization(true);
     auto context_provider = TestContextProvider::Create(std::move(context));
     return LayerTreeHostTest::CreateLayerTreeFrameSink(
         renderer_settings, refresh_rate, std::move(context_provider),
         std::move(worker_context_provider));
   }
-};
-
-class LayerTreeHostTestGpuRasterizationEnabled
-    : public LayerTreeHostWithGpuRasterizationTest {
- protected:
   void SetupTree() override {
     LayerTreeHostTest::SetupTree();
 
@@ -5568,6 +5565,14 @@ class LayerTreeHostTestGpuRasterizationEnabled
     layer_client_.set_bounds(layer_->bounds());
   }
 
+  FakeContentLayerClient layer_client_;
+  FakePictureLayer* layer_;
+  FakeRecordingSource* recording_source_;
+};
+
+class LayerTreeHostTestGpuRasterizationEnabled
+    : public LayerTreeHostWithGpuRasterizationTest {
+ protected:
   void BeginTest() override {
     // Verify default value.
     EXPECT_FALSE(layer_tree_host()->has_gpu_rasterization_trigger());
@@ -5577,26 +5582,26 @@ class LayerTreeHostTestGpuRasterizationEnabled
     EXPECT_TRUE(layer_tree_host()->has_gpu_rasterization_trigger());
 
     // Content-based veto is relevant as well.
-    layer_->set_force_unsuitable_for_gpu_rasterization(true);
+    layer_->set_force_content_has_slow_paths(true);
 
     // Veto will take effect when layers are updated.
     // The results will be verified after commit is completed below.
-    // Since we are manually marking the source as unsuitable,
+    // Since we are manually marking the source as containing slow paths,
     // make sure that the layer gets a chance to update.
     layer_->SetNeedsDisplay();
     PostSetNeedsCommitToMainThread();
   }
 
   void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
-    // Ensure the suitability bit sticks.
-    EXPECT_FALSE(layer_->IsSuitableForGpuRasterization());
+    // Ensure the slow path bit sticks.
+    EXPECT_TRUE(layer_->HasSlowPaths());
 
     EXPECT_TRUE(host_impl->pending_tree()->use_gpu_rasterization());
     EXPECT_TRUE(host_impl->use_gpu_rasterization());
   }
 
   void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
-    EXPECT_FALSE(layer_->IsSuitableForGpuRasterization());
+    EXPECT_TRUE(layer_->HasSlowPaths());
 
     EXPECT_TRUE(host_impl->active_tree()->use_gpu_rasterization());
     EXPECT_TRUE(host_impl->use_gpu_rasterization());
@@ -5604,10 +5609,6 @@ class LayerTreeHostTestGpuRasterizationEnabled
   }
 
   void AfterTest() override {}
-
-  FakeContentLayerClient layer_client_;
-  FakePictureLayer* layer_;
-  FakeRecordingSource* recording_source_;
 };
 
 MULTI_THREAD_TEST_F(LayerTreeHostTestGpuRasterizationEnabled);
@@ -5619,39 +5620,6 @@ class LayerTreeHostTestGpuRasterizationReenabled
     settings->gpu_rasterization_msaa_sample_count = 4;
   }
 
-  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
-      const RendererSettings& renderer_settings,
-      double refresh_rate,
-      scoped_refptr<ContextProvider> compositor_context_provider,
-      scoped_refptr<ContextProvider> worker_context_provider) override {
-    std::unique_ptr<TestWebGraphicsContext3D> context =
-        TestWebGraphicsContext3D::Create();
-    context->SetMaxSamples(4);
-    context->set_gpu_rasterization(true);
-    compositor_context_provider =
-        TestContextProvider::Create(std::move(context));
-    return LayerTreeTest::CreateLayerTreeFrameSink(
-        renderer_settings, refresh_rate, compositor_context_provider,
-        worker_context_provider);
-  }
-
-  void SetupTree() override {
-    LayerTreeHostTest::SetupTree();
-
-    std::unique_ptr<FakeRecordingSource> recording_source(
-        new FakeRecordingSource);
-    recording_source_ = recording_source.get();
-
-    scoped_refptr<FakePictureLayer> layer =
-        FakePictureLayer::CreateWithRecordingSource(
-            &layer_client_, std::move(recording_source));
-    layer_ = layer.get();
-    layer->SetBounds(gfx::Size(10, 10));
-    layer->SetIsDrawable(true);
-    layer_tree_host()->root_layer()->AddChild(layer);
-    layer_client_.set_bounds(layer_->bounds());
-  }
-
   void BeginTest() override {
     // Verify default value.
     EXPECT_FALSE(layer_tree_host()->has_gpu_rasterization_trigger());
@@ -5661,11 +5629,11 @@ class LayerTreeHostTestGpuRasterizationReenabled
     EXPECT_TRUE(layer_tree_host()->has_gpu_rasterization_trigger());
 
     // Content-based veto is relevant as well.
-    layer_->set_force_unsuitable_for_gpu_rasterization(true);
+    layer_->set_force_content_has_slow_paths(true);
 
     // Veto will take effect when layers are updated.
     // The results will be verified after commit is completed below.
-    // Since we are manually marking the source as unsuitable,
+    // Since we are manually marking the source as containing slow paths,
     // make sure that the layer gets a chance to update.
     layer_->SetNeedsDisplay();
     PostSetNeedsCommitToMainThread();
@@ -5682,13 +5650,13 @@ class LayerTreeHostTestGpuRasterizationReenabled
     ++num_commits_;
     switch (num_commits_) {
       case 1:
-        layer_->set_force_unsuitable_for_gpu_rasterization(false);
+        layer_->set_force_content_has_slow_paths(false);
         break;
       case 30:
-        layer_->set_force_unsuitable_for_gpu_rasterization(true);
+        layer_->set_force_content_has_slow_paths(true);
         break;
       case 31:
-        layer_->set_force_unsuitable_for_gpu_rasterization(false);
+        layer_->set_force_content_has_slow_paths(false);
         break;
       case 90:
         expected_use_msaa_ = false;
@@ -5701,14 +5669,66 @@ class LayerTreeHostTestGpuRasterizationReenabled
 
   void AfterTest() override {}
 
-  FakeContentLayerClient layer_client_;
-  FakePictureLayer* layer_;
-  FakeRecordingSource* recording_source_;
   int num_commits_ = 0;
   bool expected_use_msaa_ = true;
 };
 
 MULTI_THREAD_TEST_F(LayerTreeHostTestGpuRasterizationReenabled);
+
+class LayerTreeHostTestGpuRasterizationNonAASticky
+    : public LayerTreeHostWithGpuRasterizationTest {
+ protected:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->gpu_rasterization_msaa_sample_count = 4;
+  }
+
+  void BeginTest() override {
+    // Verify default value.
+    EXPECT_FALSE(layer_tree_host()->has_gpu_rasterization_trigger());
+
+    // Gpu rasterization trigger is relevant.
+    layer_tree_host()->SetHasGpuRasterizationTrigger(true);
+    EXPECT_TRUE(layer_tree_host()->has_gpu_rasterization_trigger());
+
+    // Start without slow paths, but no non-aa paint.
+    layer_->set_force_content_has_slow_paths(true);
+    layer_->set_force_content_has_non_aa_paint(false);
+
+    // The results will be verified after commit is completed below.
+    layer_->SetNeedsDisplay();
+    PostSetNeedsCommitToMainThread();
+  }
+
+  void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
+    SCOPED_TRACE(base::StringPrintf("commit %d", num_commits_));
+    if (expected_use_msaa_) {
+      EXPECT_TRUE(host_impl->use_msaa());
+    } else {
+      EXPECT_FALSE(host_impl->use_msaa());
+    }
+
+    ++num_commits_;
+    switch (num_commits_) {
+      case 30:
+        layer_->set_force_content_has_non_aa_paint(true);
+        expected_use_msaa_ = false;
+        break;
+      case 31:
+        layer_->set_force_content_has_non_aa_paint(false);
+        break;
+    }
+    PostSetNeedsCommitToMainThread();
+    if (num_commits_ > 100)
+      EndTest();
+  }
+
+  void AfterTest() override {}
+
+  int num_commits_ = 0;
+  bool expected_use_msaa_ = true;
+};
+
+MULTI_THREAD_TEST_F(LayerTreeHostTestGpuRasterizationNonAASticky);
 
 class LayerTreeHostTestGpuRasterizationForced : public LayerTreeHostTest {
  protected:
@@ -5744,26 +5764,26 @@ class LayerTreeHostTestGpuRasterizationForced : public LayerTreeHostTest {
     EXPECT_TRUE(layer_tree_host()->has_gpu_rasterization_trigger());
 
     // Content-based veto is irrelevant as well.
-    layer_->set_force_unsuitable_for_gpu_rasterization(true);
+    layer_->set_force_content_has_slow_paths(true);
 
     // Veto will take effect when layers are updated.
     // The results will be verified after commit is completed below.
-    // Since we are manually marking the source as unsuitable,
+    // Since we are manually marking the source as containing slow paths,
     // make sure that the layer gets a chance to update.
     layer_->SetNeedsDisplay();
     PostSetNeedsCommitToMainThread();
   }
 
   void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
-    // Ensure the suitability bit sticks.
-    EXPECT_FALSE(layer_->IsSuitableForGpuRasterization());
+    // Ensure the slow-paths bit sticks.
+    EXPECT_TRUE(layer_->HasSlowPaths());
 
     EXPECT_TRUE(host_impl->sync_tree()->use_gpu_rasterization());
     EXPECT_TRUE(host_impl->use_gpu_rasterization());
   }
 
   void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
-    EXPECT_FALSE(layer_->IsSuitableForGpuRasterization());
+    EXPECT_TRUE(layer_->HasSlowPaths());
 
     EXPECT_TRUE(host_impl->active_tree()->use_gpu_rasterization());
     EXPECT_TRUE(host_impl->use_gpu_rasterization());
