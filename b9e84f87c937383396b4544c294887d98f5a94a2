@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38c356a9_30bd0a13",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T22:19:34Z",
+      "side": 1,
+      "message": "Yep I\u0027m not sure how this ended up in here. It\u0027s also in the above cross-platform deps. Fixed.",
+      "parentUuid": "86d3e5e9_2283e660",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a48d5569_045926f3",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97332c6a_ac315bbe",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T22:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a48d5569_045926f3",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f0abda59_80a2f5ce",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T22:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4077fe28_b7204eef",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8e1753a_28082279",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec314caf_f3f7ed42",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-26T22:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8e1753a_28082279",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
