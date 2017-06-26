@@ -377,11 +377,15 @@ ExtensionService::ExtensionService(Profile* profile,
   // Set up the ExtensionUpdater.
   if (autoupdate_enabled) {
     int update_frequency = extensions::kDefaultUpdateFrequencySeconds;
-    if (command_line->HasSwitch(switches::kExtensionsUpdateFrequency)) {
+    bool isExtensionsUpdateFrequencySwitchUsed =
+        command_line->HasSwitch(switches::kExtensionsUpdateFrequency);
+    if (isExtensionsUpdateFrequencySwitchUsed) {
       base::StringToInt(command_line->GetSwitchValueASCII(
           switches::kExtensionsUpdateFrequency),
           &update_frequency);
     }
+    UMA_HISTOGRAM_BOOLEAN("Extensions.UpdateFrequencyCommandLineFlagIsUsed",
+                          isExtensionsUpdateFrequencySwitchUsed);
     updater_.reset(new extensions::ExtensionUpdater(
         this,
         extension_prefs,
