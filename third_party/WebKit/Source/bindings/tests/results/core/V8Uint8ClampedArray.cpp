@@ -58,6 +58,7 @@ static_assert(
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");
 
+#line 759 "interface_base.cpp.tmpl"
 TestUint8ClampedArray* V8Uint8ClampedArray::toImpl(v8::Local<v8::Object> object) {
   DCHECK(object->IsUint8ClampedArray());
   ScriptWrappable* scriptWrappable = ToScriptWrappable(object);
@@ -93,4 +94,5 @@ TestUint8ClampedArray* NativeValueTraits<TestUint8ClampedArray>::NativeValue(v8:
   return nativeValue;
 }
 
+#line 920 "interface.cpp.tmpl"
 }  // namespace blink

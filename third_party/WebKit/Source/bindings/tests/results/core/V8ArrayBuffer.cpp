@@ -65,6 +65,7 @@ static_assert(
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");
 
+#line 759 "interface_base.cpp.tmpl"
 TestArrayBuffer* V8ArrayBuffer::toImpl(v8::Local<v8::Object> object) {
   DCHECK(object->IsArrayBuffer());
   v8::Local<v8::ArrayBuffer> v8buffer = object.As<v8::ArrayBuffer>();
@@ -100,4 +101,5 @@ TestArrayBuffer* NativeValueTraits<TestArrayBuffer>::NativeValue(v8::Isolate* is
   return nativeValue;
 }
 
+#line 920 "interface.cpp.tmpl"
 }  // namespace blink
