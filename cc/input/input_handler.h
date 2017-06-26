@@ -14,6 +14,10 @@
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/input/scroll_state.h"
 #include "cc/input/scrollbar.h"
+// Included touch_action.h here because NOT allowed in
+// ui/events/blink/input_handler_proxy.h.
+// Will find a more appropriate fix.
+#include "cc/input/touch_action.h"
 #include "cc/trees/swap_promise_monitor.h"
 
 namespace gfx {

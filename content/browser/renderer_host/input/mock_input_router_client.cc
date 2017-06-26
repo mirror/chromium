@@ -55,6 +55,10 @@ void MockInputRouterClient::DidOverscroll(
   overscroll_ = params;
 }
 
+void MockInputRouterClient::OnSetTouchAction(cc::TouchAction touch_action) {
+  touch_action_ = touch_action;
+}
+
 void MockInputRouterClient::DidStopFlinging() {
 }
 
