@@ -1585,6 +1585,7 @@ component("platform") {
     "//gin",
     "//mojo/public/cpp/bindings",
     "//mojo/public/cpp/bindings:wtf_support",
+    "//mojo/public/cpp/system:system",
     "//services/service_manager/public/cpp",
     "//third_party/WebKit/Source/platform/heap",
     "//third_party/WebKit/Source/platform/loader",
