@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "8c45bc60_b083a22e",
+        "filename": "ash/shelf/overflow_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-26T21:49:00Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "25934c05_95c25baf",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76f81b3e_81d9d842",
         "filename": "ash/shelf/shelf_tooltip_manager.cc",
         "patchSetId": 2
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "Same comment with same concerns.",
       "parentUuid": "76f81b3e_81d9d842",
+      "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc81d7e_1124ad18",
+        "filename": "ash/shelf/shelf_tooltip_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-26T21:49:00Z",
+      "side": 1,
+      "message": "Updated this one too.",
+      "parentUuid": "7e573c86_5612be59",
       "revId": "009d372e1e7c58f1b119a42cf4aa7eafaa39e7ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
