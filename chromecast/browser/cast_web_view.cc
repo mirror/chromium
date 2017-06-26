@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromecast/base/metrics/cast_metrics_helper.h"
+#include "content/public/browser/memory_pressure_controller.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
@@ -74,6 +75,10 @@ CastWebView::CastWebView(Delegate* delegate,
 
   if (transparent_)
     window_->SetTransparent();
+
+  memory_pressure_listener_.reset(
+      new base::MemoryPressureListener(base::BindRepeating(
+          &CastWebView::OnMemoryPressure, base::Unretained(this))));
 }
 
 CastWebView::~CastWebView() {}
@@ -109,6 +114,15 @@ void CastWebView::DelayedCloseContents() {
   window_.reset();  // Window destructor requires live web_contents on Android.
   web_contents_.reset();
   delegate_->OnPageStopped(net::OK);
+}
+
+void CastWebView::OnMemoryPressure(
+    base::MemoryPressureListener::MemoryPressureLevel level) {
+  if (!web_contents_)
+    return;
+
+  content::MemoryPressureController::SendPressureNotification(
+      web_contents_->GetRenderProcessHost(), level);
 }
 
 void CastWebView::Show(CastWindowManager* window_manager) {
