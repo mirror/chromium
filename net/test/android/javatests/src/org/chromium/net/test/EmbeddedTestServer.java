@@ -255,12 +255,16 @@ public class EmbeddedTestServer {
      */
     public static <T extends EmbeddedTestServer> T initializeAndStartServer(
             T server, Context context) throws InterruptedException {
-        server.initializeNative(context);
-        server.addDefaultHandlers("");
-        if (!server.start()) {
+        server.startServer(context);
+        return server;
+    }
+
+    void startServer(Context context) throws InterruptedException {
+        initializeNative(context);
+        addDefaultHandlers("");
+        if (!start()) {
             throw new EmbeddedTestServerFailure("Failed to start serving using default handlers.");
         }
-        return server;
     }
 
     /** Get the full URL for the given relative URL.
