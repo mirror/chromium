@@ -4,6 +4,8 @@
 
 #include "components/arc/audio/arc_audio_bridge.h"
 
+#include <utility>
+
 #include "ash/system/audio/tray_audio.h"
 #include "base/logging.h"
 #include "chromeos/audio/audio_device.h"
@@ -37,6 +39,11 @@ void ArcAudioBridge::OnInstanceReady() {
   mojom::AudioHostPtr host_proxy;
   binding_.Bind(mojo::MakeRequest(&host_proxy));
   audio_instance->Init(std::move(host_proxy));
+  available_ = true;
+}
+
+void ArcAudioBridge::OnInstanceClosed() {
+  available_ = false;
 }
 
 void ArcAudioBridge::ShowVolumeControls() {
@@ -107,6 +114,8 @@ void ArcAudioBridge::SendSwitchState(bool headphone_inserted,
 
 void ArcAudioBridge::SendVolumeState() {
   DVLOG(1) << "Send volume " << volume_ << " muted " << muted_;
+  if (!available_)
+    return;
   mojom::AudioInstance* audio_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service()->audio(), NotifyVolumeState);
   if (audio_instance)
