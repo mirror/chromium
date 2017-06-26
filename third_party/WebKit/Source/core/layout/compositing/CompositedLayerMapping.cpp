@@ -877,6 +877,10 @@ void CompositedLayerMapping::ComputeBoundsOfOwningLayer(
     subpixel_accumulation = offset_from_composited_ancestor -
                             snapped_offset_from_composited_ancestor;
   }
+
+  if (subpixel_accumulation != owning_layer_.SubpixelAccumulation())
+    SetContentsNeedDisplay();
+
   // Otherwise discard the sub-pixel remainder because paint offset can't be
   // transformed by a non-translation transform.
   owning_layer_.SetSubpixelAccumulation(subpixel_accumulation);

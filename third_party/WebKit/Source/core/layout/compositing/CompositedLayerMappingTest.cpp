@@ -74,6 +74,26 @@ class CompositedLayerMappingTest
 
 INSTANTIATE_TEST_CASE_P(All, CompositedLayerMappingTest, ::testing::Bool());
 
+TEST_P(CompositedLayerMappingTest, SubpixelAccumulationChange) {
+  SetBodyInnerHTML(
+      "<div id='target' style='will-change: transform; background: lightblue; "
+      "position: relative; left: 0.4px; width: 100px; height: 100px'>");
+
+  Element* target = GetDocument().getElementById("target");
+  target->SetInlineStyleProperty(CSSPropertyLeft, "0.6px");
+
+  GetDocument().View()->UpdateAllLifecyclePhasesExceptPaint();
+
+  PaintLayer* paint_layer =
+      ToLayoutBoxModelObject(target->GetLayoutObject())->Layer();
+  LOG(ERROR) << "HMM:"
+             << &paint_layer->GraphicsLayerBacking()->GetPaintController();
+  EXPECT_TRUE(paint_layer->GraphicsLayerBacking()
+                  ->GetPaintController()
+                  .GetPaintArtifact()
+                  .IsEmpty());
+}
+
 TEST_P(CompositedLayerMappingTest, SimpleInterestRect) {
   SetBodyInnerHTML(
       "<div id='target' style='width: 200px; height: 200px; will-change: "
