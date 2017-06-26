@@ -207,6 +207,8 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
     public void pdfWritingDone(boolean success) {
         if (mPrintingState == PRINTING_STATE_FINISHED) return;
         mPrintingState = PRINTING_STATE_READY;
+        closeFileDescriptor(mFileDescriptor);
+        mFileDescriptor = -1;
         if (success) {
             PageRange[] pageRanges = convertIntegerArrayToPageRanges(mPages);
             mOnWriteCallback.onWriteFinished(pageRanges);
@@ -214,8 +216,6 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
             mOnWriteCallback.onWriteFailed(mErrorMessage);
             resetCallbacks();
         }
-        closeFileDescriptor(mFileDescriptor);
-        mFileDescriptor = -1;
     }
 
     @Override
