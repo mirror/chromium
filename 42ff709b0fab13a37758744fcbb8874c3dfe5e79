@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043018e0_d9fe2a26",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-26T16:12:57Z",
+      "side": 1,
+      "message": "There is a references to \"display_compositor_gl_tests\" in deterministic_build_whitelist.pyl. That should be changed too? Also, tangentially related, if you have a good understanding of this test target and why it\u0027s special could you add comment explaining why it exists?",
+      "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65077697_083fa49c",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-26T16:12:57Z",
+      "side": 1,
+      "message": "Same comment as viz_gl_tests.",
+      "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d6a0ba_cdb3090f",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-26T16:12:57Z",
+      "side": 1,
+      "message": "Please remove.",
+      "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd50c591_50baef87",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-26T16:12:57Z",
+      "side": 1,
+      "message": "Please remove.",
+      "revId": "42ff709b0fab13a37758744fcbb8874c3dfe5e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
