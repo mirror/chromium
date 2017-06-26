@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8fcc4f7e_524b816b",
+        "filename": "chrome/browser/android/vr_shell/textures/exit_warning_texture.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-26T19:51:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2829514a_11445423",
+      "revId": "fdd79449cd823fc39d24a68c51e678284d12454a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a2863d4_cb9a2ebf",
         "filename": "chrome/browser/android/vr_shell/textures/insecure_content_permanent_texture.h",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2017-06-26T16:16:25Z",
       "side": 1,
       "message": "It would be awesome to also supply the UiElementDebugId through the template/typedef, but I guess we should move all these IDs to their respective elements in a separate change.  Right now the scene manager assigns them all.",
+      "revId": "fdd79449cd823fc39d24a68c51e678284d12454a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee266720_a371c1a6",
+        "filename": "chrome/browser/android/vr_shell/textures/insecure_content_permanent_texture.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-26T19:51:46Z",
+      "side": 1,
+      "message": "sg.",
+      "parentUuid": "0a2863d4_cb9a2ebf",
       "revId": "fdd79449cd823fc39d24a68c51e678284d12454a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
