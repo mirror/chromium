@@ -116,6 +116,24 @@
       "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3822c898_b0a97b02",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-26T18:20:33Z",
+      "side": 1,
+      "message": "This whole file needs a unittest since it contains utility functions used by other code which may or may not provide sufficient test coverage.\n\nAgree on this to be a separate CL, marking \u0027resolved\u0027 but lets not postpone.",
+      "parentUuid": "0a04bdfa_aa6f16df",
+      "revId": "2e727e1eff7cbb7a38efd26ddd4b553724eab424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
