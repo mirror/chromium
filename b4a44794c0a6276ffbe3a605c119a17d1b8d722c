@@ -52,6 +52,24 @@
       "revId": "b4a44794c0a6276ffbe3a605c119a17d1b8d722c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f37d25b9_e7769dd0",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-06-26T17:19:05Z",
+      "side": 1,
+      "message": "This is part of an effort to not depend on an OS if there is no need to (since it makes porting, and maintaining ports, easier). There is a larger discussion in the associated bug: crbug.com/290185.\n\nI\u0027m currently not convinced that we do depend on linux (as opposed to atk), but if I\u0027m wrong, I am writing another CL for the bug which creates a C++ macro equivalent to is_desktop_linux which could be used here.",
+      "parentUuid": "fc6c0f33_a719412a",
+      "revId": "b4a44794c0a6276ffbe3a605c119a17d1b8d722c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
