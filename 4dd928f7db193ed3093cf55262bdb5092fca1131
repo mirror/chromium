@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03b3e171_67e4fa4b",
+        "filename": "chromecast/media/cma/backend/android/java/src/org/chromium/chromecast/cma/backend/android/VolumeControl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-06-26T16:27:28Z",
+      "side": 1,
+      "message": "nit: can the enum mapping be maintained in just one place?  (either C++ or java).",
+      "revId": "4dd928f7db193ed3093cf55262bdb5092fca1131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68fc6ce_0e9cbf2b",
+        "filename": "chromecast/media/cma/backend/android/java/src/org/chromium/chromecast/cma/backend/android/VolumeControl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-06-26T16:27:28Z",
+      "side": 1,
+      "message": "note, there is a simple way to autogenerate a java enum from a C++ enum in the build system.  Look at recent CL from sanfin@ for an example.",
+      "revId": "4dd928f7db193ed3093cf55262bdb5092fca1131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
