@@ -49,6 +49,9 @@ class CONTENT_EXPORT RenderWidgetInputHandlerDelegate {
   // Notifies that an overscroll was completed from Blink.
   virtual void OnDidOverscroll(const ui::DidOverscrollParams& params) = 0;
 
+  // Notifies that a touch event was completed from Blink.
+  virtual void OnSetTouchAction(const cc::TouchAction& touch_action) = 0;
+
   // Notifies the delegate of the |input_handler| managing it.
   virtual void SetInputHandler(RenderWidgetInputHandler* input_handler) = 0;
 

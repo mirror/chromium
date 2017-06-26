@@ -197,6 +197,7 @@ RenderWidgetInputHandler::RenderWidgetInputHandler(
       widget_(widget),
       handling_input_event_(false),
       handling_event_overscroll_(nullptr),
+      handling_touch_action_(nullptr),
       handling_event_type_(WebInputEvent::kUndefined),
       suppress_next_char_events_(false) {
   DCHECK(delegate);
@@ -215,6 +216,12 @@ void RenderWidgetInputHandler::HandleInputEvent(
                                                       true);
   base::AutoReset<WebInputEvent::Type> handling_event_type_resetter(
       &handling_event_type_, input_event.GetType());
+
+  // Calls into |SetTouchAction()| while handling this event will populate
+  // |touch_action|, which in turn will be bundled with the event ack.
+  std::unique_ptr<cc::TouchAction> touch_action;
+  base::AutoReset<std::unique_ptr<cc::TouchAction>*>
+      handling_touch_action_resetter(&handling_touch_action_, &touch_action);
 
   // Calls into |didOverscroll()| while handling this event will populate
   // |event_overscroll|, which in turn will be bundled with the event ack.
@@ -384,9 +391,11 @@ void RenderWidgetInputHandler::HandleInputEvent(
   TRACE_EVENT_SYNTHETIC_DELAY_END("blink.HandleInputEvent");
   if (callback) {
     std::move(callback).Run(ack_result, swap_latency_info,
-                            std::move(event_overscroll));
+                            std::move(event_overscroll),
+                            std::move(touch_action));
   } else {
     DCHECK(!event_overscroll) << "Unexpected overscroll for un-acked event";
+    DCHECK(!touch_action) << "Unexpected touch action for un-acked event";
   }
 
 #if defined(OS_ANDROID)
@@ -444,6 +453,16 @@ void RenderWidgetInputHandler::DidOverscrollFromBlink(
   }
 
   delegate_->OnDidOverscroll(*params);
+}
+
+void RenderWidgetInputHandler::TouchActionFromBlink(
+    cc::TouchAction touchAction) {
+  if (handling_touch_action_) {
+    *handling_touch_action_ = base::MakeUnique<cc::TouchAction>(touchAction);
+    return;
+  }
+
+  delegate_->OnSetTouchAction(touchAction);
 }
 
 }  // namespace content
