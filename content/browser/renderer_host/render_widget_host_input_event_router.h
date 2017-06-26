@@ -158,7 +158,6 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
                             const blink::WebGestureEvent& event);
 
   FrameSinkIdOwnerMap owner_map_;
-  TargetQueue touchscreen_gesture_target_queue_;
   TargetData touch_target_;
   TargetData touchscreen_gesture_target_;
   TargetData touchpad_gesture_target_;

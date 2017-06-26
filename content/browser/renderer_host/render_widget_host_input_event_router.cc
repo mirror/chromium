@@ -56,14 +56,6 @@ void RenderWidgetHostInputEventRouter::OnRenderWidgetHostViewBaseDestroyed(
     active_touches_ = 0;
   }
 
-  // If the target that's being destroyed is in the gesture target queue, we
-  // replace it with nullptr so that we maintain the 1:1 correspondence between
-  // queue entries and the touch sequences that underly them.
-  for (size_t i = 0; i < touchscreen_gesture_target_queue_.size(); ++i) {
-    if (touchscreen_gesture_target_queue_[i].target == view)
-      touchscreen_gesture_target_queue_[i].target = nullptr;
-  }
-
   if (view == mouse_capture_target_.target)
     mouse_capture_target_.target = nullptr;
 
@@ -408,7 +400,6 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
         // might be to always transform each point to the |touch_target_.target|
         // for the duration of the sequence.
         touch_target_.delta = transformed_point - original_point;
-        touchscreen_gesture_target_queue_.push_back(touch_target_);
 
         if (!touch_target_.target)
           return;
@@ -796,22 +787,11 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
   // GestureTapDown is sent to the previous target, in case it is still in a
   // fling.
   if (event->GetType() == blink::WebInputEvent::kGestureTapDown) {
-    bool no_target = touchscreen_gesture_target_queue_.empty();
-    // This UMA metric is temporary, and will be removed once it has fulfilled
-    // it's purpose, namely telling us when the incidents of empty
-    // gesture-queues has dropped to zero. https://crbug.com/642008
-    UMA_HISTOGRAM_BOOLEAN("Event.FrameEventRouting.NoGestureTarget", no_target);
-    if (no_target) {
-      LOG(ERROR) << "Gesture sequence start detected with no target available.";
-      // Ignore this gesture sequence as no target is available.
-      // TODO(wjmaclean): this only happens on Windows, and should not happen.
-      // https://crbug.com/595422
-      touchscreen_gesture_target_.target = nullptr;
-      return;
-    }
-
-    touchscreen_gesture_target_ = touchscreen_gesture_target_queue_.front();
-    touchscreen_gesture_target_queue_.pop_front();
+    gfx::Point transformed_point;
+    gfx::Point original_point(event->x, event->y);
+    touchscreen_gesture_target_.target =
+        FindEventTarget(root_view, original_point, &transformed_point);
+    touchscreen_gesture_target_.delta = transformed_point - original_point;
 
     // Abort any scroll bubbling in progress to avoid double entry.
     if (touchscreen_gesture_target_.target &&
