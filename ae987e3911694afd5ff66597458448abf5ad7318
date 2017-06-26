@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a000d833_6edaf83b",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-26T17:40:13Z",
+      "side": 1,
+      "message": "I guess this is one of the downsides of using the singleton (anti?)-pattern. I didn\u0027t really see why it was needed here. No need to change it at this point, but IMHO a factory class that simply creates one instance and injects it to whoever needs it is usually the cleaner solution because it makes testing and reuse simpler and makes dependencies more explicit.",
+      "revId": "ae987e3911694afd5ff66597458448abf5ad7318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
