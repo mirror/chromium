@@ -132,14 +132,34 @@ ChangeListProcessor::ChangeListProcessor(ResourceMetadata* resource_metadata,
 ChangeListProcessor::~ChangeListProcessor() {
 }
 
+FileError ChangeListProcessor::SetTeamDriveLargestChangestamp(
+    const std::string& team_drive_id,
+    int64_t value) {
+  ResourceEntry entry;
+  std::string local_id;
+  FileError error =
+      resource_metadata_->GetIdByResourceId(team_drive_id, &local_id);
+  if (error != FILE_ERROR_OK)
+    return error;
+  error = resource_metadata_->GetResourceEntryById(local_id, &entry);
+  if (error != FILE_ERROR_OK)
+    return error;
+  entry.mutable_directory_specific_info()->set_changestamp(value);
+  return resource_metadata_->RefreshEntry(entry);
+}
+
 FileError ChangeListProcessor::Apply(
     std::unique_ptr<google_apis::AboutResource> about_resource,
+    const std::string& team_drive_id,
     std::vector<std::unique_ptr<ChangeList>> change_lists,
     bool is_delta_update) {
   DCHECK(about_resource);
 
   int64_t largest_changestamp = 0;
-  if (is_delta_update) {
+  // When we get files using Files:list, we need to use the largest_change_id
+  // in About resource. Because it cannot be applied for Team Drives changes,
+  // we use Changes:list even when it's not delta udpate.
+  if (is_delta_update || !team_drive_id.empty()) {
     if (!change_lists.empty()) {
       // The changestamp appears in the first page of the change list.
       // The changestamp does not appear in the full resource list.
@@ -192,7 +212,11 @@ FileError ChangeListProcessor::Apply(
   }
 
   // Update changestamp.
-  error = resource_metadata_->SetLargestChangestamp(largest_changestamp);
+  error =
+      team_drive_id.empty()
+          ? resource_metadata_->SetLargestChangestamp(largest_changestamp)
+          : SetTeamDriveLargestChangestamp(team_drive_id, largest_changestamp);
+
   if (error != FILE_ERROR_OK) {
     DLOG(ERROR) << "SetLargestChangeStamp failed: " << FileErrorToString(error);
     return error;
