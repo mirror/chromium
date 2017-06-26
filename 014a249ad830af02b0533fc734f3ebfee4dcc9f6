@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c48696c_5b60ffbf",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-26T18:21:28Z",
+      "side": 1,
+      "message": "I think this should also be conditional.\nif (activated_more_downloads)\n   scheduler_-\u003eReschedule(....);",
+      "range": {
+        "startLine": 833,
+        "startChar": 2,
+        "endLine": 833,
+        "endChar": 12
+      },
+      "revId": "014a249ad830af02b0533fc734f3ebfee4dcc9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
