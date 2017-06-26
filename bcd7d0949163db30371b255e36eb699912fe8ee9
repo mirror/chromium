@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b11b35f2_71b53e4c",
+        "filename": "content/renderer/media/android/media_info_loader.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-26T07:12:25Z",
+      "side": 1,
+      "message": "This class will be just removed by https://chromium-review.googlesource.com/c/544734/",
+      "revId": "bcd7d0949163db30371b255e36eb699912fe8ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
