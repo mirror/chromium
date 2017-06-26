@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "e5d8b243_6969d5de",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-26T20:47:53Z",
+      "side": 1,
+      "message": "Metrics should ideally only be recorded in a single place (function), those metrics you want to compare are guaranteed to be comparable to each other.  That said, there\u0027s an opposite concern, which means you don\u0027t want to move the metrics too low into a function / the depth of code, so that people may end up calling the function in other places (say, programmatically), that aren\u0027t relevant to the logging / user action.  (I think it\u0027s that latter sense that Lann is channeling when he cites my advice to make sure the metrics is \"close to the UI\". It should be somewhere that non-UI code will never end up calling it for any reason.)\n\nHope this helps.",
+      "parentUuid": "46660e69_952f867d",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d717534_ac5c9620",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 2
