@@ -258,6 +258,10 @@ Request::ResourceType GenericURLRequestJob::GetResourceType() const {
   }
 }
 
+bool GenericURLRequestJob::IsAsync() const {
+  return request_resource_info_->IsAsync();
+}
+
 std::string GenericURLRequestJob::GetPostData() const {
   if (!request_->has_upload())
     return "";
