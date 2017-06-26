@@ -159,6 +159,7 @@ const char* const kPublicSessionWhitelist[] = {
     "aoggjnmghgmcllfenalipjhmooomfdce",  // SAML SSO for Chrome Apps
     "fhndealchbngfhdoncgcokameljahhog",  // Certificate Enrollment for Chrome OS
     "npeicpdbkakmehahjeeohfdhnlpdklia",  // WebRTC Network Limiter
+    "noondiphcddnnabmjcihcjfbhfklnnep",  // Password Alert
 };
 
 // List of manifest entries from https://developer.chrome.com/apps/manifest.
