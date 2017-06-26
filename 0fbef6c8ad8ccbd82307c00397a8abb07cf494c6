@@ -16,6 +16,24 @@
       "revId": "0fbef6c8ad8ccbd82307c00397a8abb07cf494c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b9d819_e7499821",
+        "filename": "headless/lib/browser/headless_tab_socket_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-26T15:07:19Z",
+      "side": 1,
+      "message": "We can check* v8_execution_context_id is from a \"valid\" range (quotes used because the id came from the renderer in the first place, via devtools).  Unfortunately it looks like mojo doesn\u0027t tell us anything about the sender so I don\u0027t think we can assert v8_execution_context_id belongs to the renderer sending the message.\n\n* This class is only used by C++ embedders of headless_lib so crashing seems the right thing to do.",
+      "parentUuid": "3ff5be84_eaf0ecab",
+      "revId": "0fbef6c8ad8ccbd82307c00397a8abb07cf494c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
