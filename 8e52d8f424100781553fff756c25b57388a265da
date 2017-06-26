@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3029b9_2828eb74",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T17:34:14Z",
+      "side": 1,
+      "message": "sorry, passing this through jni is a bit odd in this case.. there is one java object, but could potentially be a bunch of native objects\n\nLet\u0027s just make this two calls, and return x and y separately",
+      "revId": "8e52d8f424100781553fff756c25b57388a265da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b239abd4_d3e58504",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T17:34:14Z",
+      "side": 1,
+      "message": "how can this be static and access instance variables? :p",
+      "revId": "8e52d8f424100781553fff756c25b57388a265da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b481a4ba_35a71770",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-26T17:34:14Z",
+      "side": 1,
+      "message": "nit: static at the top",
+      "revId": "8e52d8f424100781553fff756c25b57388a265da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
