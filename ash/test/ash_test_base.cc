@@ -257,9 +257,7 @@ std::unique_ptr<views::Widget> AshTestBase::CreateTestWidget(
   params.delegate = delegate;
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
   params.bounds = bounds;
-  Shell::GetPrimaryRootWindowController()
-      ->ConfigureWidgetInitParamsForContainer(widget.get(), container_id,
-                                              &params);
+  params.parent = Shell::GetPrimaryRootWindow()->GetChildById(container_id);
   widget->Init(params);
   widget->Show();
   return widget;

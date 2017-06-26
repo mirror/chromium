@@ -7,7 +7,6 @@
 #include <algorithm>
 
 #include "ash/public/cpp/shell_window_ids.h"
-#include "ash/root_window_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shell.h"
@@ -162,9 +161,9 @@ void OverflowBubbleView::OnBeforeBubbleWidgetInit(
     views::Widget::InitParams* params,
     views::Widget* bubble_widget) const {
   // Place the bubble in the same root window as the anchor.
-  RootWindowController::ForWindow(anchor_widget()->GetNativeWindow())
-      ->ConfigureWidgetInitParamsForContainer(
-          bubble_widget, kShellWindowId_ShelfBubbleContainer, params);
+  params->parent =
+      anchor_widget()->GetNativeWindow()->GetRootWindow()->GetChildById(
+          kShellWindowId_ShelfBubbleContainer);
 }
 
 gfx::Rect OverflowBubbleView::GetBubbleBounds() {
