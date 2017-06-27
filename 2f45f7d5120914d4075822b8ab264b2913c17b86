@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "74b773a0_f986b62a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/connect-src/connect-src-beacon-blocked.sub.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-27T08:03:18Z",
+      "side": 1,
+      "message": "Sure!",
+      "parentUuid": "2f0b9ed3_ebd5c1d7",
+      "revId": "2f45f7d5120914d4075822b8ab264b2913c17b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee7d6a7d_a100ae72",
         "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
         "patchSetId": 10
