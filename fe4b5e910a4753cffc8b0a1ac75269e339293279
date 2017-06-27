@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6813423d_c42be1a6",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-27T05:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "433f91e8_25fd921a",
+      "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1e323a5_ea493ec8",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1935e4ed_77f68d77",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-27T05:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e323a5_ea493ec8",
+      "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +136,24 @@
       "side": 1,
       "message": "This function, MemoryAllocatorDump::GetDumpIdFromName is being used by SharedMemoryTracker::GetDumpIdForTracing. That is why we are adding new public api here.\n\nThis line in test is added to ensure that MemoryAllocatorDump::GetDumpIdFromName returns the same value as MemoryAllocatorDump::MemoryAllocatorDump. Essentially to ensure that the constructor actually uses GetDumpIdFromName to make guid and not some other way.",
       "parentUuid": "656b0269_e5ff1598",
+      "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c9ef92_01997bdf",
+        "filename": "base/trace_event/memory_allocator_dump_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-27T05:27:42Z",
+      "side": 1,
+      "message": "This function is not only for testing but also for ProcessMemoryDump. Without this, PMD needed to create dumps to retrieve a dump\u0027s id. This CL tries to avoid this.",
+      "parentUuid": "5628ade5_f17d1b54",
       "revId": "fe4b5e910a4753cffc8b0a1ac75269e339293279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
