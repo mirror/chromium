@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9f44bfe_3fdd9f7f",
+        "filename": "chrome/common/channel_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-27T00:30:49Z",
+      "side": 1,
+      "message": "Add defined(GOOGLE_CHROME_BUILD) as well?",
+      "revId": "059fa210090cef6d1778d09c4ba667c22174fa25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d16e462_676bc0ba",
+        "filename": "chrome/common/channel_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-27T00:30:49Z",
+      "side": 1,
+      "message": "Explain what this does.",
+      "revId": "059fa210090cef6d1778d09c4ba667c22174fa25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc165e6a_7b939d81",
+        "filename": "chrome/common/chrome_paths_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-27T00:30:49Z",
+      "side": 1,
+      "message": "Update comment?",
+      "revId": "059fa210090cef6d1778d09c4ba667c22174fa25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
