@@ -1559,6 +1559,7 @@ test("browser_tests") {
       "../browser/ui/webui/task_scheduler_internals/task_scheduler_internals_ui_browsertest.cc",
       "../browser/ui/webui/webui_browsertest.cc",
       "../browser/ui/webui/webui_webview_browsertest.cc",
+      "../browser/ui/window_visibility_browsertest.cc",
       "../browser/ui/zoom/zoom_controller_browsertest.cc",
       "../browser/unload_browsertest.cc",
       "../browser/usb/usb_browsertest.cc",

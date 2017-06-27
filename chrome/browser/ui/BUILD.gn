@@ -1087,6 +1087,7 @@ split_static_library("ui") {
       "webui/theme_handler.h",
       "window_sizer/window_sizer.cc",
       "window_sizer/window_sizer.h",
+      "window_visibility.h",
       "zoom/chrome_zoom_level_otr_delegate.cc",
       "zoom/chrome_zoom_level_otr_delegate.h",
       "zoom/chrome_zoom_level_prefs.cc",
@@ -1425,6 +1426,7 @@ split_static_library("ui") {
       "views/ash/tab_scrubber.h",
       "views/touch_uma/touch_uma_ash.cc",
       "window_sizer/window_sizer_ash.cc",
+      "window_visibility_ash.cc",
     ]
     deps += [
       "//ash",
