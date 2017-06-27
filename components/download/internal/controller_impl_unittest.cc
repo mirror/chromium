@@ -84,8 +84,9 @@ class MockFileMonitor : public FileMonitor {
   void Initialize(const FileMonitor::InitCallback& callback) override;
   MOCK_METHOD2(DeleteUnknownFiles,
                void(const Model::EntryList&, const std::vector<DriverEntry>&));
-  MOCK_METHOD1(CleanupFilesForCompletedEntries,
-               std::vector<Entry*>(const Model::EntryList&));
+  MOCK_METHOD2(CleanupFilesForCompletedEntries,
+               std::vector<Entry*>(const Model::EntryList&,
+                                   const base::Closure&));
   MOCK_METHOD2(DeleteFiles,
                void(const std::vector<base::FilePath>&,
                     stats::FileCleanupReason));
@@ -94,6 +95,14 @@ class MockFileMonitor : public FileMonitor {
 void MockFileMonitor::Initialize(const FileMonitor::InitCallback& callback) {
   callback.Run(true);
 }
+
+class MockStartupListener : public Controller::StartupListener {
+ public:
+  MockStartupListener() = default;
+  ~MockStartupListener() = default;
+
+  void OnControllerInitialized(const StartupStatus& startup_status) override {}
+};
 
 class DownloadServiceControllerImplTest : public testing::Test {
  public:
@@ -153,6 +162,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
         std::move(model), std::move(device_status_listener),
         std::move(scheduler), std::move(task_scheduler),
         std::move(file_monitor), download_file_dir);
+    controller_->SetStartupListener(&startup_listener_);
   }
 
  protected:
@@ -180,6 +190,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
   MockScheduler* scheduler_;
   MockTaskScheduler* task_scheduler_;
   MockFileMonitor* file_monitor_;
+  MockStartupListener startup_listener_;
 
   DownloadParams::StartCallback start_callback_;
 
@@ -292,7 +303,7 @@ TEST_F(DownloadServiceControllerImplTest,
 
   std::vector<Entry> entries = {entry1, entry2, entry3};
 
-  EXPECT_CALL(*file_monitor_, CleanupFilesForCompletedEntries(_)).Times(1);
+  EXPECT_CALL(*file_monitor_, CleanupFilesForCompletedEntries(_, _)).Times(2);
 
   controller_->Initialize();
   driver_->MakeReady();

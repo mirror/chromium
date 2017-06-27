@@ -21,6 +21,7 @@ class MockController : public Controller {
 
   // Controller implementation.
   MOCK_METHOD0(Initialize, void());
+  MOCK_METHOD1(SetStartupListener, void(StartupListener*));
   MOCK_METHOD0(GetStartupStatus, const StartupStatus*());
   MOCK_METHOD1(StartDownload, void(const DownloadParams&));
   MOCK_METHOD1(PauseDownload, void(const std::string&));
