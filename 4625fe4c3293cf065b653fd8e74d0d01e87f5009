@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "6c501157_b35dc3e0",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-27T09:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650b9ea1_cf631568",
+      "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1012e9d7_8ba4bec8",
         "filename": "components/drive/chromeos/change_list_processor.cc",
         "patchSetId": 4
@@ -56,6 +74,24 @@
       "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e13243f_a1861aa5",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-27T09:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1012e9d7_8ba4bec8",
+      "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +115,30 @@
       "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb3f220_50e35927",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-27T09:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8143db20_7aaa82df",
+      "range": {
+        "startLine": 151,
+        "startChar": 18,
+        "endLine": 151,
+        "endChar": 46
+      },
+      "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
