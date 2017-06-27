@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c9fd23_f0594c79",
+        "filename": "chrome/browser/extensions/component_extensions_whitelist/whitelist.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-06-27T07:42:21Z",
+      "side": 1,
+      "message": "Can we remove the old extension id here?",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "6269e2591f7f1532b13aa931f0bce71f21c065e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b544e0a_953adae3",
+        "filename": "chrome/common/extensions/extension_constants.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-06-27T07:42:21Z",
+      "side": 1,
+      "message": "typo: archvier -\u003e archiver",
+      "range": {
+        "startLine": 227,
+        "startChar": 31,
+        "endLine": 227,
+        "endChar": 39
+      },
+      "revId": "6269e2591f7f1532b13aa931f0bce71f21c065e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
