@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1baba143_f2971fae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "This issue is caused by:",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0234ea_0b3775d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "On mac anc CrOS, we hide the mouse cursor on keydown event.",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5992e133_b8fe89d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "On CrOS, we hide the mouse cursor on touch event.",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfad0fb6_83ae687f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "when mouse cursor is hidden.",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d89be1_09a81ecc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "Can you please rephrase points 4 and 5, because I don\u0027t totally understand what they mean.",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac137c5_b9f15fa4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "In this patch, we introduce a new flag EF_CURSOR_HIDE, which is set on the mouse-exit event generated when the mouse cursor hides. This event is then filtered out, so that it does not reach the renderer.",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac15f3a1_6eda0786",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "Please add a comment why, and refer to the crbug.",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac87dabd_91e73631",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "I guess you can just use |event_flags| in place of the first ui::EF_NONE in the ctor.",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48200228_0153ae6d",
+        "filename": "ui/aura/window_event_dispatcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T22:57:06Z",
+      "side": 1,
+      "message": "Please document |event_flags| (e.g. something like \"|event_flags| will be set on the dispatched exit event.\")",
+      "revId": "e62bd6147205de2fb0ff7a429976d2dec3d7ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
