@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4eb7cc6_2348e10f",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T21:38:37Z",
+      "side": 1,
+      "message": "Nit: It seems like we could simplify this file a bit by doing this:\n\n  ui::ModalType modal_type \u003d\n      parent ? ui::MODAL_TYPE_WINDOW : ui::MODAL_TYPE_SYSTEM;\n#if defined(OS_MACOSX)\n  // Mac does not support system modal dialogs. Make the widget always on top so\n  // other Chrome dialogs don\u0027t obscure it.\n  if (modal_type \u003d\u003d ui::MODAL_TYPE_SYSTEM)\n    widget-\u003eSetAlwaysOnTop(true);\n  modal_type \u003d ui::MODAL_TYPE_WINDOW;\n#endif\n\n...now instead of passing |is_system_modal| to SimpleMessageBoxViews(), we pass |modal_type|.  GetModalType() then becomes a simple inline modal_type() accessor directly, and we eliminate the need for an #if in that function.  And it\u0027s easier to understand the Mac logic because it\u0027s in one place instead of two.",
+      "revId": "a72dfc26390c35f013a096fbb38bbc06bb615334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249270af_175add94",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T21:38:37Z",
+      "side": 1,
+      "message": "Nit: Can we simplify this API even further by:\n* Collapsing these two functions into one (\"Show()\")\n* Giving the |callback| arg a default value (\u003d MessageBoxResultCallback())\n* In the function body, check if (!callback), and if there is none, do the synchronous behavior Show() does today\n\nIf we can\u0027t do this, it adds impetus to an alternate suggestion of mine to convert this long repeated list of args to a struct to reduce duplication; but I think the above idea is better.",
+      "revId": "a72dfc26390c35f013a096fbb38bbc06bb615334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
