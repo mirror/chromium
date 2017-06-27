@@ -1688,6 +1688,22 @@
       }
     ]
   },
+  "Test Run with Tracing": {
+    "instrumentation_tests": [
+      {
+        "args": [
+          "--trace-all"
+        ],
+        "test": "chrome_public_test_apk"
+      },
+      {
+        "test": "chrome_sync_shell_test_apk"
+      },
+      {
+        "test": "content_shell_test_apk"
+      }
+    ]
+  },
   "Unswarmed N5 Tests Dummy Builder": {
     "gtest_tests": [
       {
