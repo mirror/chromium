@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ffe767d_6569311d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_file_stream_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-27T06:43:43Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "revId": "903ef40361d4b02e8d6b24b72f9c6fd7f7a80053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
