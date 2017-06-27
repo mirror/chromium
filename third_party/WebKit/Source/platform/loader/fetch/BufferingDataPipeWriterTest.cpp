@@ -44,8 +44,12 @@ TEST(BufferingDataPipeWriterTest, WriteMany) {
       std::move(producer), platform->CurrentThread()->GetWebTaskRunner());
 
   for (size_t i = 0; i < total;) {
+    // We use a temporary buffer to check that the buffer is copied immediately.
+    char temp[writing_chunk_size] = {};
     size_t size = std::min(total - i, writing_chunk_size);
-    ASSERT_TRUE(writer->Write(input.data() + i, size));
+
+    std::copy(input.data() + i, input.data() + i + size, temp);
+    ASSERT_TRUE(writer->Write(temp, size));
 
     i += size;
   }
