@@ -294,6 +294,10 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
 
 void RenderWidgetHostViewEventHandler::OnMouseEvent(ui::MouseEvent* event) {
   TRACE_EVENT0("input", "RenderWidgetHostViewBase::OnMouseEvent");
+
+  if (event->flags() & ui::EF_CURSOR_HIDE)
+    return;
+
   ForwardMouseEventToParent(event);
   // TODO(mgiuca): Return if event->handled() returns true. This currently
   // breaks drop-down lists which means something is incorrectly setting

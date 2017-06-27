@@ -489,6 +489,7 @@ class EventFilterRecorder : public ui::EventHandler {
   typedef std::vector<ui::EventType> Events;
   typedef std::vector<gfx::Point> EventLocations;
   typedef std::vector<int> EventFlags;
+  typedef std::vector<bool> UIOnlyEvents;
 
   EventFilterRecorder()
       : wait_until_event_(ui::ET_UNKNOWN),
@@ -521,6 +522,7 @@ class EventFilterRecorder : public ui::EventHandler {
     touch_locations_.clear();
     gesture_locations_.clear();
     mouse_event_flags_.clear();
+    ui_only_events_.clear();
     last_touch_may_cause_scrolling_ = false;
   }
 
@@ -1205,6 +1207,9 @@ TEST_P(WindowEventDispatcherTest, DispatchMouseExitWhenCursorHidden) {
   int translated_y = mouse_location.y() - window_origin.y();
   gfx::Point translated_point(translated_x, translated_y);
   EXPECT_EQ(recorder.mouse_location(0).ToString(), translated_point.ToString());
+
+  // Verify the mouse exit with ui::EF_CURSOR_HIDE flags.
+  EXPECT_TRUE(recorder.mouse_event_flags()[0] & ui::EF_CURSOR_HIDE);
   root_window()->RemovePreTargetHandler(&recorder);
 }
 
