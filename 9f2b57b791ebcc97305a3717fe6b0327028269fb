@@ -52,6 +52,24 @@
       "revId": "9f2b57b791ebcc97305a3717fe6b0327028269fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740a1ac9_2530dd54",
+        "filename": "services/service_manager/embedder/runner/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T15:37:30Z",
+      "side": 1,
+      "message": "Yes, for sure. However, there\u0027s actually another issue that I had forgotten and that had pushed me in this direction: Child processes use these files. It wasn\u0027t clear to me offhand whether the code in //services/service_manager/embedder is intended for processes other than the browser process? If that code is \"common\", I\u0027m happy to do the flattening.",
+      "parentUuid": "eafbdb08_1e8e4d0a",
+      "revId": "9f2b57b791ebcc97305a3717fe6b0327028269fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
