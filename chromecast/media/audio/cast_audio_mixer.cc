@@ -202,7 +202,7 @@ CastAudioMixer::~CastAudioMixer() {}
 
 bool CastAudioMixer::Register(MixerProxyStream* proxy_stream) {
   DCHECK_CALLED_ON_VALID_THREAD(audio_thread_checker_);
-  DCHECK(!base::ContainsValue(proxy_streams_, proxy_stream));
+  DCHECK(!base::ContainsKey(proxy_streams_, proxy_stream));
 
   // Do not allow opening new streams while in error state.
   if (error_)
