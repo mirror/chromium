@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c2e6a3_73bb9c55",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-27T16:44:56Z",
+      "side": 1,
+      "message": "Document on which thread the notifications will be called (UI, I\u0027m pretty sure, but worth double checking). The consumer will want/need to know this.",
+      "revId": "d3a6a786674a9cc0dfd9bac42011139468879f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba38b1f7_ba90c594",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-27T16:44:56Z",
+      "side": 1,
+      "message": "Please make this observer fully featured, and have it provide OnSessionStarted events as well:\n\nvirtual void OnSessionStarted(base::Time session_start) \u003d 0;",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "d3a6a786674a9cc0dfd9bac42011139468879f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
