@@ -86,6 +86,30 @@
       "revId": "e1e85a1107432588ee1a16be51733f3a3f287316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d796011_1dae6c72",
+        "filename": "services/ui/ws/gpu_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-27T19:50:11Z",
+      "side": 1,
+      "message": "In that case, we need to make a call to mojom::GpuMain(ui::GpuMain) CreateJpegDecoder()?\n\ncontent::GpuClient accesses mojom::GpuMain(GpuChildThread) via GpuProcessHost.\nhttps://chromium-review.googlesource.com/c/544404/2/content/browser/gpu/gpu_client.cc#115\n\nHow does ui::GpuClient get access to mojom::GpuMain(ui::GpuMain)?",
+      "parentUuid": "3c66a74d_b55307a8",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "e1e85a1107432588ee1a16be51733f3a3f287316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
