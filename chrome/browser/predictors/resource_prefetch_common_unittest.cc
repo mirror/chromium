@@ -157,19 +157,6 @@ TEST_F(ResourcePrefetchCommonTest, EnableManifests) {
   EXPECT_TRUE(config.is_manifests_enabled);
 }
 
-TEST_F(ResourcePrefetchCommonTest, EnableOriginLearning) {
-  variations::testing::VariationParamsManager params_manager(
-      "dummy-trial",
-      {{kModeParamName, kLearningMode},
-       {kEnableOriginLearningParamName, "true"}},
-      {kSpeculativeResourcePrefetchingFeatureName});
-
-  LoadingPredictorConfig config;
-  EXPECT_TRUE(IsSpeculativeResourcePrefetchingEnabled(profile_.get(), &config));
-  TestIsPrefetchLearning(config);
-  EXPECT_TRUE(config.is_origin_learning_enabled);
-}
-
 // Verifies whether prefetching is disabled according to the network type. But
 // learning should not be disabled by network.
 TEST_F(ResourcePrefetchCommonTest, RespectsNetworkSettings) {
