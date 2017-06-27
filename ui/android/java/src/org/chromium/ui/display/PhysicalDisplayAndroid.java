@@ -13,8 +13,8 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 
 import org.chromium.base.BuildInfo;
-import org.chromium.base.ContextUtils;
 import org.chromium.base.CommandLine;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 
 import java.lang.reflect.InvocationTargetException;
