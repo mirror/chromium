@@ -24,11 +24,12 @@ static const int kFrameIndexStart = 2;
 
 Surface::Surface(
     const SurfaceInfo& surface_info,
+    SurfaceManager* surface_manager,
     base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support)
     : surface_info_(surface_info),
       previous_frame_surface_id_(surface_info.id()),
       compositor_frame_sink_support_(std::move(compositor_frame_sink_support)),
-      surface_manager_(compositor_frame_sink_support_->surface_manager()),
+      surface_manager_(surface_manager),
       frame_index_(kFrameIndexStart),
       destroyed_(false) {}
 
@@ -320,8 +321,8 @@ void Surface::AddDestructionDependency(SurfaceSequence sequence) {
 }
 
 void Surface::SatisfyDestructionDependencies(
-    std::unordered_set<SurfaceSequence, SurfaceSequenceHash>* sequences,
-    std::unordered_set<FrameSinkId, FrameSinkIdHash>* valid_frame_sink_ids) {
+    base::flat_set<SurfaceSequence>* sequences,
+    base::flat_set<FrameSinkId>* valid_frame_sink_ids) {
   base::EraseIf(destruction_dependencies_,
                 [sequences, valid_frame_sink_ids](SurfaceSequence seq) {
                   return (!!sequences->erase(seq) ||
