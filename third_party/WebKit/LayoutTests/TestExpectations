@@ -1714,6 +1714,9 @@ crbug.com/638621 [ Win7 ] virtual/mojo-loading/http/tests/media/video-buffered-r
 crbug.com/646644 [ Mac10.9 ] http/tests/media/video-buffered-range-contains-currentTime.html [ Failure Timeout ]
 crbug.com/646644 [ Mac10.9 ] virtual/mojo-loading/http/tests/media/video-buffered-range-contains-currentTime.html [ Failure Timeout ]
 
+# This test is irrelevant because we're about to delete the virtual test suite anyway.
+Bug(none) virtual/disable-spinvalidation/paint/invalidation/percentage-transform-paint-offset.html [ Crash ]
+
 crbug.com/637930 http/tests/media/video-buffered.html [ Pass Failure ]
 crbug.com/637930 virtual/mojo-loading/http/tests/media/video-buffered.html [ Pass Failure ]
 
