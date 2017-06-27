@@ -36,6 +36,7 @@
 #include "SkFontMgr.h"
 #include "SkTypeface.h"
 #include "platform/fonts/FontCache.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/text/ICUError.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/StringExtras.h"
@@ -298,7 +299,8 @@ void InitializeScriptFontMap(ScriptToFontMap& script_font_map) {
   }
 
   // Initialize the locale-dependent mapping from system locale.
-  UScriptCode han_script = LayoutLocale::GetSystem().GetScriptForHan();
+  UScriptCode han_script =
+      FontGlobalContext::GetSystemLayoutLocale().GetScriptForHan();
   DCHECK(han_script != USCRIPT_HAN);
   if (script_font_map[han_script].candidate_family_names) {
     script_font_map[USCRIPT_HAN].candidate_family_names =

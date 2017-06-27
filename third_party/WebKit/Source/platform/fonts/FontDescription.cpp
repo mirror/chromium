@@ -31,6 +31,7 @@
 
 #include "platform/Language.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/StringHasher.h"
 #include "platform/wtf/text/AtomicStringHash.h"
@@ -109,6 +110,11 @@ bool FontDescription::operator==(const FontDescription& other) const {
          (variation_settings_ == other.variation_settings_ ||
           (variation_settings_ && other.variation_settings_ &&
            *variation_settings_ == *other.variation_settings_));
+}
+
+const LayoutLocale& FontDescription::LocaleOrDefault() const {
+  const LayoutLocale* locale = locale_.Get();
+  return locale ? *locale : FontGlobalContext::GetDefaultLayoutLocale();
 }
 
 FontWeight FontDescription::LighterWeight(FontWeight weight) {

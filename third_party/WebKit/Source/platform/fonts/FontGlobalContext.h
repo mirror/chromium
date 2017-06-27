@@ -7,9 +7,17 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/fonts/FontCache.h"
+#include "platform/wtf/HashMap.h"
 #include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/text/AtomicStringHash.h"
 
 namespace blink {
+
+class LayoutLocale;
+class FontCache;
+
+using LayoutLocaleMap =
+    HashMap<AtomicString, RefPtr<LayoutLocale>, CaseFoldingHash>;
 
 enum CreateIfNeeded { kDoNotCreate, kCreate };
 
@@ -21,17 +29,33 @@ class PLATFORM_EXPORT FontGlobalContext {
  public:
   static FontGlobalContext* Get(CreateIfNeeded = kCreate);
 
-  static inline FontCache& GetFontCache() { return Get()->font_cache; }
+  static inline FontCache& GetFontCache() { return Get()->font_cache_; }
+
+  static inline LayoutLocaleMap& GetLayoutLocaleMap() {
+    return Get()->layout_locale_map_;
+  }
+
+  static const LayoutLocale& GetDefaultLayoutLocale();
+  static const LayoutLocale& GetSystemLayoutLocale();
+  static const LayoutLocale& GetDefaultLocaleForHan();
+  static void ClearDefaultLocaleForHan();
 
   // Called by MemoryCoordinator to clear memory.
   static void ClearMemory();
+
+  static void ClearForTesting();
 
  private:
   friend class WTF::ThreadSpecific<FontGlobalContext>;
 
   FontGlobalContext();
 
-  FontCache font_cache;
+  FontCache font_cache_;
+
+  LayoutLocaleMap layout_locale_map_;
+  const LayoutLocale* default_locale_;
+  const LayoutLocale* system_locale_;
+  const LayoutLocale* default_locale_for_han_;
 };
 
 }  // namespace blink

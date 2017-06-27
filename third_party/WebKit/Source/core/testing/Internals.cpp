@@ -134,6 +134,7 @@
 #include "platform/LayoutLocale.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/V8ThrowException.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/GraphicsLayer.h"
@@ -2031,8 +2032,10 @@ void Internals::replaceMisspelled(Document* document,
 }
 
 bool Internals::canHyphenate(const AtomicString& locale) {
-  return LayoutLocale::ValueOrDefault(LayoutLocale::Get(locale))
-      .GetHyphenation();
+  const LayoutLocale* local_or_default = LayoutLocale::Get(locale);
+  if (!local_or_default)
+    local_or_default = &FontGlobalContext::GetDefaultLayoutLocale();
+  return local_or_default->GetHyphenation();
 }
 
 void Internals::setMockHyphenation(const AtomicString& locale) {
