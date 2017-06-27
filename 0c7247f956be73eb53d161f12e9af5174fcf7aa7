@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37654f34_a1bd941d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-27T14:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c52506ce_11e1468f",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "0c7247f956be73eb53d161f12e9af5174fcf7aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d218272_cfecc5fa",
         "filename": "net/cert/x509_util_ios.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0c7247f956be73eb53d161f12e9af5174fcf7aa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74831b41_0e86cb59",
+        "filename": "net/cert/x509_util_ios.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-27T14:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d218272_cfecc5fa",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "0c7247f956be73eb53d161f12e9af5174fcf7aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
