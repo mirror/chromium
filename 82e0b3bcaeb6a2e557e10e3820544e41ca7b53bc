@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a998f0f_d35051a2",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc2b4ca5_d9c226b2",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d7c97bd_6cbe30ce",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ecc52e_731210f7",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "If I move it out, line 25 won\u0027t compile properly (NewTabFeatureEngagementTracker* n_instance \u003d nullptr;).",
+      "parentUuid": "6d7c97bd_6cbe30ce",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "770daac5_d90410e3",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "I decided to make the NewTabFeatureEngagementTracker a global singleton, and instead have the methods dynamically retrieve the current profile. Let me know if this is ok!",
+      "parentUuid": "667ca2dd_3bd3e883",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d075aac4_928d5146",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 7
@@ -97,6 +157,30 @@
       "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f20ea8_54e19ffb",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d075aac4_928d5146",
+      "range": {
+        "startLine": 42,
+        "startChar": 32,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "aa6cafe0_6c8ae6be",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "830dfae8_43a208df",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d47648bf_a0cba660",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 7
@@ -140,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "a032cb92_47932498",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d47648bf_a0cba660",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8e0523b_ff8bc05e",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 7
@@ -151,6 +277,24 @@
       "writtenOn": "2017-06-27T00:22:45Z",
       "side": 1,
       "message": "what is this ivar used for?",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b269aaae_0fe4e3e3",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "I was going to use this bool to confirm that the timer was fired for when the total duration occurs. It\u0027s only necessary for testing, so maybe I should include it in the unit test file instead.",
+      "parentUuid": "f8e0523b_ff8bc05e",
       "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "be00769e_4259e77b",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f500afd9_80e17910",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c5696b5_260a10f2",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 7
@@ -185,6 +347,24 @@
       "writtenOn": "2017-06-27T00:22:45Z",
       "side": 1,
       "message": "Is this a placeholder? If so, please indicate this in a comment and remove it.",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cc7699_35c1bce0",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "No, this method is required whenever you show the UI. This is where the code to show the display the bubble delegate view will lie.",
+      "parentUuid": "7c5696b5_260a10f2",
       "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -205,6 +385,24 @@
       "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a8c5db_53b40d98",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Ack, I\u0027m currently writing up a unit test for this :)",
+      "parentUuid": "e6a29e30_11624a5e",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +429,30 @@
     },
     {
       "key": {
+        "uuid": "1fc55dba_5fd387b8",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ade42d_8873f765",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "710f4dd5_a3b24f7a",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
         "patchSetId": 7
@@ -245,6 +467,24 @@
       "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedf0fc0_792b55ac",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "710f4dd5_a3b24f7a",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -268,6 +508,30 @@
       "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e281592f_45352bf0",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T15:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98289a09_70e68cca",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
