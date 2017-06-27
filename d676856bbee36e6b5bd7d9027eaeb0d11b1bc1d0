@@ -69,6 +69,30 @@
       "revId": "d676856bbee36e6b5bd7d9027eaeb0d11b1bc1d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3eaa7c5_4f5dbdfd",
+        "filename": "base/android/java/src/org/chromium/base/TimezoneUtils.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-06-27T14:44:10Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "cb9c9634_6f071757",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "d676856bbee36e6b5bd7d9027eaeb0d11b1bc1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
