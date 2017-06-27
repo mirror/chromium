@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00e0f1eb_8d4c1943",
+        "filename": "components/web_contents_delegate_android/android/java/src/org/chromium/components/web_contents_delegate_android/ValidationMessageBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-27T21:09:28Z",
+      "side": 1,
+      "message": "In combo with my other comment below, I would remove all of this positioning logic from the create method.  I would have this method be renamed to just createIfApplicable( and then rename setPositionRelativeToAnchor to be showAtPositionRelativeToAnchor.  Then natively we\u0027d just call Create and then ShowAtPosition...  I think then the methods are distinct and you\u0027re not piping the same stuff over multiple places.",
+      "range": {
+        "startLine": 52,
+        "startChar": 34,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "942c7418da1d5526ac0263368eb5c555938a0201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a699662c_0cfac9eb",
+        "filename": "components/web_contents_delegate_android/android/java/src/org/chromium/components/web_contents_delegate_android/ValidationMessageBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-27T21:09:28Z",
+      "side": 1,
+      "message": "viewportWidthPx, viewportWidthPx, and contentOffsetYPx, and anchor are all not used anymore in the constructor",
+      "range": {
+        "startLine": 65,
+        "startChar": 60,
+        "endLine": 65,
+        "endChar": 75
+      },
+      "revId": "942c7418da1d5526ac0263368eb5c555938a0201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
