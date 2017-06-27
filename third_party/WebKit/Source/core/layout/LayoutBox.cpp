@@ -650,7 +650,8 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
                                     ScrollType scroll_type,
                                     bool make_visible_in_visual_viewport,
                                     ScrollBehavior scroll_behavior) {
-  DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
+  DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll ||
+         scroll_type == kSequencedSmoothScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
 
@@ -673,6 +674,8 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
   bool is_smooth = scroll_behavior == kScrollBehaviorSmooth ||
                    (scroll_behavior == kScrollBehaviorAuto &&
                     Style()->GetScrollBehavior() == kScrollBehaviorSmooth);
+  if (is_smooth)
+    scroll_type = kSequencedSmoothScroll;
 
   if (!IsLayoutView() && HasOverflowClip() && !restricted_by_line_clamp) {
     // Don't scroll to reveal an overflow layer that is restricted by the

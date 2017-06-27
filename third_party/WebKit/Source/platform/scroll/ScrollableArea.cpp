@@ -244,7 +244,8 @@ void ScrollableArea::ProgrammaticScrollHelper(
     GetProgrammaticScrollAnimator().AnimateToOffset(
         offset, sequenced_for_smooth_scroll);
   } else {
-    GetProgrammaticScrollAnimator().ScrollToOffsetWithoutAnimation(offset);
+    GetProgrammaticScrollAnimator().ScrollToOffsetWithoutAnimation(
+        offset, sequenced_for_smooth_scroll);
   }
 }
 
