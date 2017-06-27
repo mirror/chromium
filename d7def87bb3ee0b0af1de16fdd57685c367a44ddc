@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "389d2e80_a3a34bf7",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-27T08:21:41Z",
+      "side": 1,
+      "message": "display:content element may have a slot as its child.\n\nCan LayoutTreeBuilderTraversal::FirstLayoutChild take care of such a case?\nShould we find non-{display::content, content, slot} element recursively?",
+      "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8118d73d_1746a4d1",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-27T08:21:41Z",
+      "side": 1,
+      "message": "Regarding \"without traversing its children during layout tree build\",\n\nWe may encounter a display:contents (or slot or content) after traversing its children during layout tree rebuild, if and only if the children is distributed to a content or slot?\n\nIs my understanding correct? In other words, in such a case, the element we counter is a shadow host?",
+      "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928f46d0_daf99331",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-27T08:21:41Z",
+      "side": 1,
+      "message": "Ah, we have already traversed distributed nodes before the children.\n\nIt looks that has been done in previous CLs. Nicely done!",
+      "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
