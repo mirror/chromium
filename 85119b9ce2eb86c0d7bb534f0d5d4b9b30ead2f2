@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dcd4021_7f8063c7",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T18:34:44Z",
+      "side": 1,
+      "message": "These type deductions will implicitly copy |arg1_value| (and below, |arg2_value|), which will make them not work for things where copies are illegal (like std::unique_ptr\u003cConvertibleToTraceFormat\u003e) and expensive for things where copies are expensive.\n\nProperly forwarding these might suffice.",
+      "revId": "85119b9ce2eb86c0d7bb534f0d5d4b9b30ead2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b535e15c_e73b492c",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T18:34:44Z",
+      "side": 1,
+      "message": "nit: Is the struct helpful here, as opposed to just having them be members of the surrounding class?",
+      "revId": "85119b9ce2eb86c0d7bb534f0d5d4b9b30ead2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67870466_dd47a990",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T18:34:44Z",
+      "side": 1,
+      "message": "Is it useful to track these three booleans separately? It seems like we could just have a single bool (is_running_, or whatever) that determines whether this scope is responsible for reporting RCS (enabled \u0026\u0026 no parent).\n\nThat should suffice to determine whether we need to pass the runtime-call-stats parameter to the TRACE_EVENT_END{X}.",
+      "revId": "85119b9ce2eb86c0d7bb534f0d5d4b9b30ead2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

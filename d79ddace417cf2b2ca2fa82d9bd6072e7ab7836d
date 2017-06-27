@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8c44af75_f1670569",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T18:34:44Z",
+      "side": 1,
+      "message": "I don\u0027t mean to set all the details in stone at design time. We can do it like this, but it seems substantially simpler to do something like:\n\nclass RuntimeCallStatsScopedTracer {\n public:\n  explicit RuntimeCallStatsScopedTracer(v8::Isolate* isolate)\n      : RuntimeCallStatsScopedTracer(RuntimeCallStats::From(isolate)) {}\n\n  explicit RuntimeCallStatsScopedTracer(RuntimeCallStats* stats) {\n    if (UNLIKELY(RuntimeEnabledFeatures::BlinkRuntimeCallStatsEnabled()) \u0026\u0026 !stats-\u003eInUse()) {\n      stats_ \u003d stats;\n      stats-\u003eReset();\n      TRACE_EVENT_BEGIN0(\"blink.runtime_call_stats\", \"RuntimeCallStats Scope\");\n    }\n  }\n\n  ~RuntimeCallStatsScopedTracer() {\n    if (UNLIKELY(stats_)) {\n      TRACE_EVENT_END1(\"blink.runtime_call_stats\", \"RuntimeCallStats Scope\",\n                       \"runtime-call-stats\", stats_-\u003eDumpForTracing());\n    }\n  }\n\n private:\n  RuntimeCallStats* stats_ \u003d nullptr;\n};\n\nI\u0027m less convinced that combining the two is super useful, because:\n1. the combined one won\u0027t include RCS in recursive cases anyhow\n2. it\u0027s still quite easy to find the RuntimeCallStats in the trace either way\n\nAnd this ends up not requiring as much macros and template magic.",
+      "parentUuid": "9d1c0836_6356d55a",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a94d872_23074a72",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 3
