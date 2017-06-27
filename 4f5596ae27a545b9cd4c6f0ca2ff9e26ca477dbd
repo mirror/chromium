@@ -22,6 +22,30 @@
       "revId": "4f5596ae27a545b9cd4c6f0ca2ff9e26ca477dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd786557_417c5868",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-27T22:38:29Z",
+      "side": 1,
+      "message": "That makes sense. I support its removal.",
+      "parentUuid": "7559c3ee_71c762a7",
+      "range": {
+        "startLine": 1068,
+        "startChar": 29,
+        "endLine": 1068,
+        "endChar": 43
+      },
+      "revId": "4f5596ae27a545b9cd4c6f0ca2ff9e26ca477dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
