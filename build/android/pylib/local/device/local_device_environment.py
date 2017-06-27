@@ -23,7 +23,6 @@ from devil.utils import parallelizer
 from pylib import constants
 from pylib.base import environment
 from py_trace_event import trace_event
-from tracing_build import trace2html
 
 
 def _DeviceCachePath(device):
@@ -161,15 +160,6 @@ class LocalDeviceEnvironment(environment.Environment):
 
     self.parallel_devices.pMap(prepare_device)
 
-  @staticmethod
-  def _JsonToTrace(json_path, html_path, delete_json=True):
-    # First argument is call site.
-    cmd = [__file__, json_path, '--title', 'Android Test Runner Trace',
-           '--output', html_path]
-    trace2html.Main(cmd)
-    if delete_json:
-      os.remove(json_path)
-
   @property
   def blacklist(self):
     return self._blacklist
@@ -264,13 +254,12 @@ class LocalDeviceEnvironment(environment.Environment):
     with self._devices_lock:
       self._devices = [d for d in self._devices if str(d) != device_serial]
 
-  def DisableTracing(self):
+  @staticmethod
+  def DisableTracing():
     if not trace_event.trace_is_enabled():
       logging.warning('Tracing is not running.')
     else:
       trace_event.trace_disable()
-    self._JsonToTrace(self._trace_output + '.json',
-                      self._trace_output)
 
   def EnableTracing(self):
     if trace_event.trace_is_enabled():
