@@ -49,7 +49,119 @@
       });
 
       audit.define('test AudioNodeOptions', (task, should) => {
-        testAudioNodeOptions(should, context, 'DynamicsCompressorNode');
+        // Can't use testAudioNodeOptions because the constraints for this node
+        // are not supported there.
+        let node;
+
+        // Test that we can set the channel count to 1 or 2.
+        let options = {channelCount: 1};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .notThrow();
+        should(node.channelCount, 'node.channelCount').beEqualTo(1);
+
+        options = {channelCount: 2};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .notThrow();
+        should(node.channelCount, 'node.channelCount').beEqualTo(2);
+
+        // Test that other channel counts throw an error
+        options = {channelCount: 0};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .throw('NotSupportedError');
+
+        options = {channelCount: 3};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .throw('NotSupportedError');
+
+        options = {channelCount: 99};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .throw('NotSupportedError');
+
+        // Test channelCountMode
+        options = {channelCountMode: 'clamped-max'};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .notThrow();
+        should(node.channelCountMode, 'node.channelCountMode')
+            .beEqualTo(options.channelCountMode);
+
+        options = {channelCountMode: 'explicit'};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .notThrow();
+        should(node.channelCountMode, 'node.channelCountMode')
+            .beEqualTo(options.channelCountMode);
+
+        options = {channelCountMode: 'max'};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .throw('NotSupportedError');
+
+        options = {channelCountMode: 'foobar'};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .throw('TypeError');
+
+        // Test channelInterpretation.
+        options = {channelInterpretation: 'speakers'};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .notThrow();
+        should(node.channelInterpretation, 'node.channelInterpretation')
+            .beEqualTo(options.channelInterpretation);
+
+        options = {channelInterpretation: 'discrete'};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .notThrow();
+        should(node.channelInterpretation, 'node.channelInterpretation')
+            .beEqualTo(options.channelInterpretation);
+
+        options = {channelInterpretation: 'foobar'};
+        should(
+            () => {
+              node = new DynamicsCompressorNode(context, options);
+            },
+            'new DynamicsCompressorNode(c, ' + JSON.stringify(options) + ')')
+            .throw('TypeError');
         task.done();
       });
 
