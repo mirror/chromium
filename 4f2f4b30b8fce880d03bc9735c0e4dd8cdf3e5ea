@@ -16,6 +16,24 @@
       "revId": "4f2f4b30b8fce880d03bc9735c0e4dd8cdf3e5ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91376a1_b01f59d2",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac/virtual/stable/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 8100,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-27T20:05:33Z",
+      "side": 1,
+      "message": "That\u0027s unintentional, good catch. I don\u0027t think it makes a web-visible difference since we should never return null except possibly in some shutdown cases that shouldn\u0027t be visible to JS anyway. I did some testing and changing the Chrome IDL didn\u0027t change behaviour of setting here either.\n\nI think we should change to match the spec since we should never return a null visualViewport (and this matches some of the other attributes like `screen`) so I have a fix in https://chromium-review.googlesource.com/c/550262/. I\u0027ll land that first and then land this after.",
+      "parentUuid": "58e58eb5_e74fdca1",
+      "revId": "4f2f4b30b8fce880d03bc9735c0e4dd8cdf3e5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
