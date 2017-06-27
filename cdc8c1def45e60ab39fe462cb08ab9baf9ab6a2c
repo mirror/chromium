@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1728d5f_8a085426",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-06-27T16:18:02Z",
+      "side": 1,
+      "message": "Done. Let me know if you\u0027d like something like, \"Home cursor, to avoid spoofing.\"",
+      "parentUuid": "6965cd3b_3c4487ec",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6843d9e1_5f82db47",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a12fd0_10649176",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-06-27T16:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6843d9e1_5f82db47",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "368a7e5b_7c44de2e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-06-27T16:18:02Z",
+      "side": 1,
+      "message": "I put the revert back, and verified that revert-all is called (twice, in fact). (Recall we were unsure if it was even called earlier.)\n\nWe could easily skip the first revert by checking \u0027match.destination_url.is_valid()\u0027.",
+      "parentUuid": "1faff4c3_28de820e",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d928303_3ae09a25",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-27T02:06:11Z",
       "side": 1,
       "message": "I forget, why are we moving this down?  And how come we lost the |in_revert_| twiddling?  What was that for?  Honestly, what is it for just above?  I don\u0027t feel like I understand what this code is doing.",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176c525d_716f3723",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-06-27T16:18:02Z",
+      "side": 1,
+      "message": "You had said this needs to move to the end, I gathered so that the new select-all would be last. I forget (or missed) if you changed your mind.\n\nLooking at the in_revert stuff, it appears to simply squelch an unnecessary notification. It\u0027s missing in other locations, and I convinced myself that we wanted the notification if it was last.\n\nAnyways, I replaced all of it.",
+      "parentUuid": "3d928303_3ae09a25",
       "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
