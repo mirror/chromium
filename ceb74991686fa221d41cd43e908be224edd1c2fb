@@ -122,6 +122,24 @@
       "revId": "ceb74991686fa221d41cd43e908be224edd1c2fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fb5309_354fdab1",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-27T20:29:45Z",
+      "side": 1,
+      "message": "This is probably a question for yzshen@. Both about how to resolve issues with new bindings, or whether to upgrade later.",
+      "parentUuid": "54398e8d_d134c9c2",
+      "revId": "ceb74991686fa221d41cd43e908be224edd1c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
