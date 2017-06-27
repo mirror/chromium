@@ -101,9 +101,12 @@ gles2::ProgramCache* GpuChannelManager::program_cache() {
   if (!program_cache_.get() &&
       !gpu_preferences_.disable_gpu_program_cache) {
     const GpuDriverBugWorkarounds& workarounds = gpu_driver_bug_workarounds_;
-    bool disable_disk_cache =
-        gpu_preferences_.disable_gpu_shader_disk_cache ||
-        workarounds.disable_program_disk_cache;
+    bool disable_program_disk_cache =
+        (gpu_preferences().single_process ||
+         gpu_preferences().in_process_gpu) &&
+        workarounds.disable_in_process_gpu_program_disk_cache;
+    bool disable_disk_cache = gpu_preferences_.disable_gpu_shader_disk_cache ||
+                              disable_program_disk_cache;
     program_cache_.reset(new gles2::MemoryProgramCache(
         gpu_preferences_.gpu_program_cache_size, disable_disk_cache,
         workarounds.disable_program_caching_for_transform_feedback,
