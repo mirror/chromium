@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "023fe5cc_e3ac24b2",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T20:47:05Z",
+      "side": 1,
+      "message": "It looks like destroyed_ is never actually used anywhere. Can we remove it?",
+      "revId": "2185b1a24e1a05fcc1adad7cee4e3125c77645c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
