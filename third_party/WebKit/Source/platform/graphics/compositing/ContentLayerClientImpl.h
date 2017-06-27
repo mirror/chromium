@@ -67,7 +67,8 @@ class PLATFORM_EXPORT ContentLayerClientImpl : public cc::ContentLayerClient {
     PaintChunkInfo(const IntRect& bounds, const PaintChunk& chunk)
         : bounds_in_layer(bounds),
           id(chunk.id),
-          is_cacheable(chunk.is_cacheable) {}
+          is_cacheable(chunk.is_cacheable),
+          properties(chunk.properties) {}
 
     bool Matches(const PaintChunk& new_chunk) const {
       return is_cacheable && new_chunk.Matches(id);
@@ -76,20 +77,21 @@ class PLATFORM_EXPORT ContentLayerClientImpl : public cc::ContentLayerClient {
     IntRect bounds_in_layer;
     PaintChunk::Id id;
     bool is_cacheable;
+    PaintChunkProperties properties;
   };
 
   IntRect MapRasterInvalidationRectFromChunkToLayer(
       const FloatRect&,
       const PaintChunk&,
-      const PropertyTreeState&) const;
+      const PropertyTreeState& layer_state) const;
 
   void GenerateRasterInvalidations(
       const Vector<const PaintChunk*>& new_chunks,
       const Vector<PaintChunkInfo>& new_chunks_info,
-      const PropertyTreeState&);
+      const PropertyTreeState& layer_state);
   size_t MatchNewChunkToOldChunk(const PaintChunk& new_chunk, size_t old_index);
   void AddDisplayItemRasterInvalidations(const PaintChunk&,
-                                         const PropertyTreeState&);
+                                         const PropertyTreeState& layer_state);
   void InvalidateRasterForNewChunk(const PaintChunkInfo&,
                                    PaintInvalidationReason);
   void InvalidateRasterForOldChunk(const PaintChunkInfo&,
@@ -99,6 +101,15 @@ class PLATFORM_EXPORT ContentLayerClientImpl : public cc::ContentLayerClient {
   scoped_refptr<cc::PictureLayer> cc_picture_layer_;
   scoped_refptr<cc::DisplayItemList> cc_display_item_list_;
   gfx::Rect layer_bounds_;
+
+  // These are for detecting property node change of the whole layer. They hold
+  // references to the property nodes until the next compositing update. We use
+  // RefPtrs instead of PropertyTreeState here because PropertyTreeState should
+  // not hold the last references to property nodes, and we may change it to
+  // hold raw pointers in the future.
+  RefPtr<const TransformPaintPropertyNode> layer_transform_;
+  RefPtr<const ClipPaintPropertyNode> layer_clip_;
+  RefPtr<const EffectPaintPropertyNode> layer_effect_;
 
   Vector<PaintChunkInfo> paint_chunks_info_;
   Vector<std::unique_ptr<JSONArray>> paint_chunk_debug_data_;
