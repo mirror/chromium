@@ -35,10 +35,17 @@ class MEDIA_GPU_EXPORT SurfaceTextureGLOwner
  public:
   SurfaceTextureGLOwner();
 
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner() {
+    return task_runner_;
+  }
+
   // Returns the GL texture id that the SurfaceTexture is attached to.
   virtual GLuint GetTextureId() const = 0;
   virtual gl::GLContext* GetContext() const = 0;
   virtual gl::GLSurface* GetSurface() const = 0;
+
+  // Returns the task runner it was constructed on.
+  virtual scoped_refptr<base::SequencedTaskRunner> GetTaskRunner() const = 0;
 
   // Create a java surface for the SurfaceTexture.
   virtual gl::ScopedJavaSurface CreateJavaSurface() const = 0;
@@ -74,6 +81,8 @@ class MEDIA_GPU_EXPORT SurfaceTextureGLOwner
   virtual ~SurfaceTextureGLOwner() = default;
 
  private:
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
   DISALLOW_COPY_AND_ASSIGN(SurfaceTextureGLOwner);
 };
 
@@ -106,6 +115,9 @@ class MEDIA_GPU_EXPORT SurfaceTextureGLOwnerImpl
   // The context and surface that were used to create |texture_id_|.
   scoped_refptr<gl::GLContext> context_;
   scoped_refptr<gl::GLSurface> surface_;
+
+  // The sequence this was constructed on (and must be used on).
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // When SetReleaseTimeToNow() was last called. i.e., when the last
   // codec buffer was released to this surface. Or null if
