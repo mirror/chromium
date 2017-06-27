@@ -146,6 +146,9 @@ class CORE_EXPORT V8AbstractEventListener : public EventListener,
   // true if the listener is created through a DOM attribute.
   bool is_attribute_;
 
+  // https://heycam.github.io/webidl/#dfn-callback-context
+  RefPtr<ScriptState> script_state_of_callback_context_;
+
   RefPtr<DOMWrapperWorld> world_;
   v8::Isolate* isolate_;
 

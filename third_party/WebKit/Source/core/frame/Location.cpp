@@ -30,6 +30,7 @@
 
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8DOMActivityLogger.h"
 #include "core/dom/DOMURLUtilsReadOnly.h"
 #include "core/dom/Document.h"
@@ -241,6 +242,10 @@ void Location::SetLocation(const String& url,
                            SetLocationPolicy set_location_policy) {
   if (!IsAttached())
     return;
+
+  current_window =
+      ToLocalDOMWindow(v8::Isolate::GetCurrent()->GetIncumbentContext());
+  CHECK(current_window);
 
   if (!current_window->GetFrame())
     return;
