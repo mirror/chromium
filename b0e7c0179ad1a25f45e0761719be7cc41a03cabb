@@ -22,6 +22,30 @@
       "revId": "b0e7c0179ad1a25f45e0761719be7cc41a03cabb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508afcbe_b8ba190e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T23:32:44Z",
+      "side": 1,
+      "message": "Actually, I found that if I use ContentViewCore#onFocusChanged, the next text selection will appear grey instead of blue (I guess there is something to do with the drawable state?), so I changed back to view\u0027s clearFocus().",
+      "parentUuid": "9d182f8b_d79bc36e",
+      "range": {
+        "startLine": 1087,
+        "startChar": 17,
+        "endLine": 1087,
+        "endChar": 49
+      },
+      "revId": "b0e7c0179ad1a25f45e0761719be7cc41a03cabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

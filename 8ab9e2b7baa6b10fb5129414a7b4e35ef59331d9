@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63b4fa64_92799cc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f00de25a_4967da5c",
+      "range": {
+        "startLine": 1079,
+        "startChar": 7,
+        "endLine": 1080,
+        "endChar": 66
+      },
+      "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09ef61c7_73d95e44",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dd6e35_b96e5f2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09ef61c7_73d95e44",
+      "range": {
+        "startLine": 1082,
+        "startChar": 17,
+        "endLine": 1082,
+        "endChar": 53
+      },
+      "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "843e4ff4_68ec7204",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d755086_76ee60ae",
+      "range": {
+        "startLine": 1085,
+        "startChar": 42,
+        "endLine": 1085,
+        "endChar": 51
+      },
+      "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed606905_494f447a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f81710_2914a1fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed606905_494f447a",
+      "range": {
+        "startLine": 1086,
+        "startChar": 12,
+        "endLine": 1086,
+        "endChar": 27
+      },
+      "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
