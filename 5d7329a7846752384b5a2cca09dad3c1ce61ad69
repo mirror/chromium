@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1048547_2ddf25ba",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T19:40:12Z",
+      "side": 1,
+      "message": "The code here will run when user switches profile and we should avoid AddObserver twice.\n\nOne way is to move this to constructor. We probably need a WallpaperController interface to get the current color to update SearchBoxModel after the moving this code to ctor.\n\nOr check observer_binding_.is_bound() is bound and skip if it is already bound.",
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79539dec_de7229d3",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T19:40:12Z",
+      "side": 1,
+      "message": "Bail if |model_| is nullptr.",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 8
+      },
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afbb106_88597a0a",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T19:40:12Z",
+      "side": 1,
+      "message": "nit: Don\u0027t keep this unless we are going to use it other than adding the observer.",
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bf3fc2_76ca628f",
+        "filename": "components/wallpaper/wallpaper_color_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T19:40:12Z",
+      "side": 1,
+      "message": "nit: enum class ?",
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37346395_26075ae4",
+        "filename": "ui/app_list/search_box_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T19:40:12Z",
+      "side": 1,
+      "message": "std::vector\u003cSkColor\u003e -\u003e const std::vector\u003cSkColor\u003e\u0026, to avoid copying",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 22
+      },
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f7881f_74ebda14",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T19:40:12Z",
+      "side": 1,
+      "message": "no else after return.",
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6329a782_f9ee42fe",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T19:40:12Z",
+      "side": 1,
+      "message": "dm -\u003e dark_muted",
+      "range": {
+        "startLine": 508,
+        "startChar": 16,
+        "endLine": 508,
+        "endChar": 18
+      },
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a2d582_5a8af5f1",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T19:40:12Z",
+      "side": 1,
+      "message": "lv -\u003e light_vibrant",
+      "range": {
+        "startLine": 521,
+        "startChar": 16,
+        "endLine": 521,
+        "endChar": 18
+      },
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
