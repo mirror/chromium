@@ -13,6 +13,7 @@
 #include "ui/android/screen_android.h"
 #include "ui/android/window_android.h"
 #include "ui/display/display.h"
+#include "ui/gfx/color_space_switches.h"
 #include "ui/gfx/icc_profile.h"
 
 namespace ui {
@@ -93,7 +94,8 @@ void DisplayAndroidManager::UpdateDisplay(
   display::Display display(sdkDisplayId, bounds_in_dip);
   if (!Display::HasForceDeviceScaleFactor())
     display.set_device_scale_factor(dipScale);
-  if (!gfx::ICCProfile::HasForcedProfile()) {
+  if (!gfx::ICCProfile::HasForcedProfile() &&
+      base::FeatureList::IsEnabled(features::kColorCorrectRendering)) {
     if (isWideColorGamut)
       display.set_color_space(gfx::ColorSpace::CreateDisplayP3D65());
     else

@@ -5,14 +5,21 @@
 package org.chromium.ui.display;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
 
+import org.chromium.base.BuildInfo;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * A DisplayAndroid implementation tied to a physical Display.
@@ -100,9 +107,19 @@ import org.chromium.base.Log;
             display.getSize(size);
             display.getMetrics(displayMetrics);
         }
-        // TODO(ccameron): Populate isWideGamut based on the O APIs.
-        // https://crbug.com/735658
-        Boolean isWideGamut = false;
+
+        Boolean isWideColorGamut = false;
+        if (BuildInfo.isAtLeastO()) {
+            try {
+                Configuration config =
+                        ContextUtils.getApplicationContext().getResources().getConfiguration();
+                Method method = config.getClass().getMethod("isScreenWideColorGamut");
+                isWideColorGamut = (Boolean) method.invoke(config);
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                Log.e(TAG, "Error invoking isWideColorGamut:", e);
+            }
+        }
+
         if (hasForcedDIPScale()) displayMetrics.density = sForcedDIPScale.floatValue();
 
         // JellyBean MR1 and later always uses RGBA_8888.
@@ -111,6 +128,6 @@ import org.chromium.base.Log;
                 : PixelFormat.RGBA_8888;
         PixelFormat.getPixelFormatInfo(pixelFormatId, pixelFormat);
         super.update(size, displayMetrics.density, pixelFormat.bitsPerPixel,
-                bitsPerComponent(pixelFormatId), display.getRotation(), isWideGamut);
+                bitsPerComponent(pixelFormatId), display.getRotation(), isWideColorGamut);
     }
 }

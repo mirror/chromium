@@ -479,7 +479,7 @@ public class VrShellImpl
         int surfaceHeight = (int) Math.ceil(height * dpr);
 
         Point size = new Point(surfaceWidth, surfaceHeight);
-        mContentVirtualDisplay.update(size, dpr, null, null, null, false);
+        mContentVirtualDisplay.update(size, dpr, null, null, null, null);
         if (mTab != null && mTab.getContentViewCore() != null) {
             mTab.getContentViewCore().onSizeChanged(surfaceWidth, surfaceHeight, 0, 0);
             nativeOnPhysicalBackingSizeChanged(mNativeVrShell,

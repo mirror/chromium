@@ -56,6 +56,11 @@ extern "C" {
 
 // Not present egl/eglext.h yet.
 
+#ifndef EGL_EXT_gl_colorspace_display_p3_linear
+#define EGL_EXT_gl_colorspace_display_p3_linear 1
+#define EGL_GL_COLORSPACE_DISPLAY_P3_LINEAR_EXT 0x3362
+#endif /* EGL_EXT_gl_colorspace_display_p3_linear */
+
 #ifndef EGL_EXT_gl_colorspace_display_p3
 #define EGL_EXT_gl_colorspace_display_p3 1
 #define EGL_GL_COLORSPACE_DISPLAY_P3_EXT 0x3363
@@ -840,7 +845,8 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
         break;
       case GLSurfaceFormat::COLOR_SPACE_DISPLAY_P3:
         egl_window_attributes.push_back(EGL_GL_COLORSPACE_KHR);
-        egl_window_attributes.push_back(EGL_GL_COLORSPACE_DISPLAY_P3_EXT);
+        egl_window_attributes.push_back(
+            EGL_GL_COLORSPACE_DISPLAY_P3_LINEAR_EXT);
         break;
     }
   }

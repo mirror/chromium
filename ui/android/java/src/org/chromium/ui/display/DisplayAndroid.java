@@ -209,7 +209,8 @@ public class DisplayAndroid {
         boolean bitsPerComponentChanged =
                 bitsPerComponent != null && mBitsPerComponent != bitsPerComponent;
         boolean rotationChanged = rotation != null && mRotation != rotation;
-        boolean isWideColorGamutChanged = mIsWideColorGamut == isWideColorGamut;
+        boolean isWideColorGamutChanged =
+                isWideColorGamut != null && mIsWideColorGamut != isWideColorGamut;
 
         boolean changed = sizeChanged || dipScaleChanged || bitsPerPixelChanged
                 || bitsPerComponentChanged || rotationChanged || isWideColorGamutChanged;
