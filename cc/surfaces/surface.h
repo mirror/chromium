@@ -43,6 +43,7 @@ class CC_SURFACES_EXPORT Surface {
 
   Surface(
       const SurfaceInfo& surface_info,
+      SurfaceManager* surface_manager,
       base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support);
   ~Surface();
 
@@ -105,8 +106,8 @@ class CC_SURFACES_EXPORT Surface {
   // Satisfy all destruction dependencies that are contained in sequences, and
   // remove them from sequences.
   void SatisfyDestructionDependencies(
-      std::unordered_set<SurfaceSequence, SurfaceSequenceHash>* sequences,
-      std::unordered_set<FrameSinkId, FrameSinkIdHash>* valid_id_namespaces);
+      base::flat_set<SurfaceSequence>* sequences,
+      base::flat_set<FrameSinkId>* valid_id_namespaces);
   size_t GetDestructionDependencyCount() const {
     return destruction_dependencies_.size();
   }
@@ -165,7 +166,11 @@ class CC_SURFACES_EXPORT Surface {
 
   SurfaceInfo surface_info_;
   SurfaceId previous_frame_surface_id_;
+
+  // TODO(crbug.com/733702, staraz): Surface shouldn't know about
+  // CompositorFrameSinkSupport.
   base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support_;
+
   SurfaceManager* const surface_manager_;
 
   base::Optional<FrameData> pending_frame_data_;
