@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f9e70ad4_c0e5376f",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-fallback.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Sorry, my request was ambiguous. I was thinking a javascript variable rather than a custom property. I\u0027m not sure what\u0027s going to be the most readable option. WDYT?\n\nEither way, having the two elements of the list on separate lines is definitely easier to read (for me) than having them on one line.",
+      "parentUuid": "e4dc8caf_0f00878c",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a376e98_310fbfad",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
         "patchSetId": 11
@@ -139,6 +157,24 @@
       "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6dd6c7_522339fb",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e58939eb_e0b352b3",
+      "revId": "da8b9bb6fafd77e693a15fb6df372f8d2c809281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ba89f3e_50b27b49",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s make these test descriptions into sentences. ... And the more I dig into it, the more I realise I don\u0027t know how to parse this clause. How about \"Registered custom properties can be referred to in the values of other registered custom properties when used in animation keyframes. The interpolation is smooth if the custom property type is interpolable.\"",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a2a785_3f33b475",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "The variable names and accompanying comment are clearer in this version, thanks! Nit: Consider updating the javascript variables as well, perhaps mainAnimation and .. uh .. targetValueAnimation? (Naming is hard.)",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905a32c8_72737e74",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Nit: As above, sentence please.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a54e4d_4f8491dd",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Nit: Line wrapping makes this test frustrating to read. Even without a formal line length limit, consider splitting long lines onto multiple lines.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2b8c92_83a3171d",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Nit: Sentence",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631d6045_001a8861",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Nit: As above, make this description a sentence about what the test shows (incl. successful interpolation).",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5fe81c_37fcecfa",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered-animating.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Nit: Sentence. This test is easier to understand because I\u0027m reading it in the context of registered-var-to-unregistered.html and other tests in this patch. I think it will need more in the description/comment to make it easy to understand on its own.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada8a85b_2299e67a",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Nit: Sentence",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52ff739_6b506ead",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationEnvironment.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "OK, I\u0027ve pondered this some more. I\u0027d still prefer to see this return a pointer to make it obvious that it could be null, and let the calling code be in charge of asserting whether it\u0027s expected to be available or not.\n\nHowever, if you want to keep this as returning a reference instead of a pointer, I suggest defining\nbool HasVariableResolver()\nand for completeness and clarity make this function call\nDCHECK(HasVariableResolver())\nThat way, calling code has the ability to check first if there\u0027s any doubt.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f0943f_92560322",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "This is a case where I\u0027d expect the code to check HasVariableResolver first. This code should do something sensible if it\u0027s invoked in a part of the code where the InterpolationEnvironment has no variable resolver.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cbe76a_acfdcdfe",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Add a comment or error message to explain what this assertion means.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7063ff9_24c19286",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned that this is a fragile dependency that is not captured in code form. I\u0027m not sure there\u0027s anything you can do at this point to enforce this but we should consider it a code smell.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae8a4f4_14b9893c",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "I think this function should be able to handle the case where it\u0027s asked to fetch the active interpolations for a property that doesn\u0027t have any (i.e. the property doesn\u0027t appear in either map).",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4084c2_353bffa8",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Aside: If ActiveInterpolations{,Map} are moved off to be part of the core/animation interface, this if statement could be provided as a standard thing as well instead of largely duplicating it here and in ApplyAnimatedStandardProperties below.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74d2d62_d18a4968",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Aside: This definition of ActiveInterpolations and ActiveInterpolationsMap is sufficiently standard that we should consider defining it as part of the core/animation interface (say, in Interpolation.h) rather than having client code redefine it.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9058d16d_6eb099c9",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "We now have a very large number of functions named Apply*Property or Apply*Properties, sometimes with the same name but different arguments (and not listed next to each other). It is not clear how these functions all relate to each other. I think we need to review what the functions are and how they call each other so that we can either come up with new names for them or add comments to each to explain how they related to each other.",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058f0526_60bc74bf",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolverState.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-27T04:27:18Z",
+      "side": 1,
+      "message": "Sanity-check: Does const HashSet\u0026 guarantee that the items in the returned container cannot be modified at all, or does it just guarantee that the container itself is not modified?",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
