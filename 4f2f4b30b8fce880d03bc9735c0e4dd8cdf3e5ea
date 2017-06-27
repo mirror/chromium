@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58e58eb5_e74fdca1",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac/virtual/stable/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 8100,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-27T17:26:14Z",
+      "side": 1,
+      "message": "Spec IDL for this is: readonly attribute VisualViewport visualViewport;\nbut your IDL is: readonly attribute VisualViewport? visualViewport;\n\nWhy the difference?",
+      "revId": "4f2f4b30b8fce880d03bc9735c0e4dd8cdf3e5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
