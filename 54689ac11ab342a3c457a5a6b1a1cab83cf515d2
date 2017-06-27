@@ -45,6 +45,30 @@
       "revId": "54689ac11ab342a3c457a5a6b1a1cab83cf515d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7288f6_53e24635",
+        "filename": "media/gpu/mojo/jpeg_decoder_typemap_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-27T11:50:23Z",
+      "side": 1,
+      "message": "Right. \u0027Error\u0027 is too generic. How about renaming Error to DecodeError?",
+      "parentUuid": "5bd9e7b1_4ba01c88",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "54689ac11ab342a3c457a5a6b1a1cab83cf515d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
