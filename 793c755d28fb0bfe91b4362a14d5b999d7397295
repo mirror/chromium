@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dc60cc7_6bbd6140",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T07:14:54Z",
+      "side": 1,
+      "message": "debug output",
+      "revId": "793c755d28fb0bfe91b4362a14d5b999d7397295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fafee5_10a56829",
+        "filename": "content/browser/service_worker/service_worker_version_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T07:14:54Z",
+      "side": 1,
+      "message": "Can you also include a note about what the class does? Suggestion...\n\n\"ServiceWorkerVersionProxy forward events to a ServiceWorkerVersion. It\u0027s the browser-side implementation of mojom::ServiceWorkerEventDispatcher, used by the renderer to dispatch events initiated by a controllee to its controlling service worker. The short-term plan is for it to be used to dispatch fetch events directly to the service worker instead of relying on ServiceWorkerURLRequestJob. The longer term plan is to...\"",
+      "revId": "793c755d28fb0bfe91b4362a14d5b999d7397295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee6f0ab_91f4b929",
+        "filename": "content/browser/service_worker/service_worker_version_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T07:14:54Z",
+      "side": 1,
+      "message": "Can you update the Mojo docu to say this is both a renderer-side and browser-side interface and why?",
+      "revId": "793c755d28fb0bfe91b4362a14d5b999d7397295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9a223d_c01a17fd",
+        "filename": "content/browser/service_worker/service_worker_version_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T07:14:54Z",
+      "side": 1,
+      "message": "to be clear \"|receiver_version_|\u0027s controllees\"",
+      "revId": "793c755d28fb0bfe91b4362a14d5b999d7397295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
