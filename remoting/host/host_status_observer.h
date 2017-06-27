@@ -18,8 +18,8 @@ struct TransportRoute;
 // on receipt of these callbacks; they are purely informational.
 class HostStatusObserver {
  public:
-  HostStatusObserver() { }
-  virtual ~HostStatusObserver() { }
+  HostStatusObserver() {}
+  virtual ~HostStatusObserver() {}
 
   // Called when an unauthorized user attempts to connect to the host.
   virtual void OnAccessDenied(const std::string& jid) {}
@@ -41,9 +41,6 @@ class HostStatusObserver {
 
   // Called when hosting is started for an account.
   virtual void OnStart(const std::string& host_owner_email) {}
-
-  // Called when the host shuts down.
-  virtual void OnShutdown() {}
 };
 
 }  // namespace remoting

@@ -39,7 +39,6 @@ class IpcHostEventLogger : public HostEventLogger, public HostStatusObserver {
                            const std::string& channel_name,
                            const protocol::TransportRoute& route) override;
   void OnStart(const std::string& xmpp_login) override;
-  void OnShutdown() override;
 
  private:
   // Used to report host status events to the daemon.

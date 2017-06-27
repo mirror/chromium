@@ -133,10 +133,6 @@ class ChromotingHost : public ClientSession::EventHandler,
 
   const ClientSessions& client_sessions_for_tests() { return clients_; }
 
-  base::WeakPtr<ChromotingHost> AsWeakPtr() {
-    return weak_factory_.GetWeakPtr();
-  }
-
   scoped_refptr<protocol::TransportContext> transport_context_for_tests() {
     return transport_context_;
   }

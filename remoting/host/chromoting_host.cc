@@ -95,10 +95,7 @@ ChromotingHost::~ChromotingHost() {
   session_manager_.reset();
 
   // Notify observers.
-  if (started_) {
-    for (auto& observer : status_observers_)
-      observer.OnShutdown();
-  }
+  DCHECK(status_observers_.begin() == status_observers_.end());
 }
 
 void ChromotingHost::Start(const std::string& host_owner_email) {

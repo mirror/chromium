@@ -69,12 +69,6 @@ void IpcHostEventLogger::OnClientRouteChange(
       jid, channel_name, serialized_route));
 }
 
-void IpcHostEventLogger::OnShutdown() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
-  daemon_channel_->Send(new ChromotingNetworkDaemonMsg_HostShutdown());
-}
-
 void IpcHostEventLogger::OnStart(const std::string& xmpp_login) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 

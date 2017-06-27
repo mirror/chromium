@@ -128,10 +128,8 @@ class HostStatusLoggerTest : public testing::Test {
   void SetUp() override {
     EXPECT_CALL(signal_strategy_, AddListener(_));
     host_status_logger_.reset(
-        new HostStatusLogger(host_status_monitor_.AsWeakPtr(),
-                             ServerLogEntry::ME2ME,
-                             &signal_strategy_,
-                             kTestBotJid));
+        new HostStatusLogger(&host_status_monitor_, ServerLogEntry::ME2ME,
+                             &signal_strategy_, kTestBotJid));
     EXPECT_CALL(signal_strategy_, RemoveListener(_));
   }
 

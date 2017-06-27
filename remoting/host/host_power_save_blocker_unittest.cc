@@ -36,7 +36,7 @@ void HostPowerSaveBlockerTest::SetUp() {
   ASSERT_TRUE(blocking_thread_.StartWithOptions(
                   base::Thread::Options(base::MessageLoop::TYPE_IO, 0)) &&
               blocking_thread_.WaitUntilThreadStarted());
-  blocker_.reset(new HostPowerSaveBlocker(monitor_.AsWeakPtr(),
+  blocker_.reset(new HostPowerSaveBlocker(&monitor_,
                                           ui_message_loop_.task_runner(),
                                           blocking_thread_.task_runner()));
 }

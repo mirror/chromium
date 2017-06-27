@@ -119,8 +119,6 @@ IPC_MESSAGE_CONTROL3(ChromotingNetworkDaemonMsg_ClientRouteChange,
 IPC_MESSAGE_CONTROL1(ChromotingNetworkDaemonMsg_HostStarted,
                      std::string /* xmpp_login */)
 
-IPC_MESSAGE_CONTROL0(ChromotingNetworkDaemonMsg_HostShutdown)
-
 //-----------------------------------------------------------------------------
 // Chromoting messages sent from the desktop to the daemon process.
 

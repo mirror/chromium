@@ -181,12 +181,11 @@ void It2MeHost::ConnectOnNetworkThread(const std::string& username,
                                  DesktopEnvironmentOptions::CreateDefault()));
   host_->AddStatusObserver(this);
   host_status_logger_.reset(
-      new HostStatusLogger(host_->AsWeakPtr(), ServerLogEntry::IT2ME,
+      new HostStatusLogger(host_.get(), ServerLogEntry::IT2ME,
                            signal_strategy_.get(), directory_bot_jid));
 
   // Create event logger.
-  host_event_logger_ =
-      HostEventLogger::Create(host_->AsWeakPtr(), kApplicationName);
+  host_event_logger_ = HostEventLogger::Create(host_.get(), kApplicationName);
 
   // Connect signaling and start the host.
   signal_strategy_->Connect();
@@ -457,14 +456,16 @@ void It2MeHost::DisconnectOnNetworkThread() {
 
   confirmation_dialog_proxy_.reset();
 
+  // Destroy all host status observers before the host.
+  register_request_.reset();
+  host_status_logger_.reset();
   host_event_logger_.reset();
+
   if (host_) {
     host_->RemoveStatusObserver(this);
     host_.reset();
   }
 
-  register_request_.reset();
-  host_status_logger_.reset();
   signal_strategy_.reset();
 
   // Post tasks to delete UI objects on the UI thread.

@@ -26,7 +26,7 @@ namespace {
 
 class HostEventLoggerPosix : public HostEventLogger, public HostStatusObserver {
  public:
-  HostEventLoggerPosix(base::WeakPtr<HostStatusMonitor> monitor,
+  HostEventLoggerPosix(HostStatusMonitor* monitor,
                        const std::string& application_name);
 
   ~HostEventLoggerPosix() override;
@@ -40,12 +40,11 @@ class HostEventLoggerPosix : public HostEventLogger, public HostStatusObserver {
                            const std::string& channel_name,
                            const protocol::TransportRoute& route) override;
   void OnStart(const std::string& xmpp_login) override;
-  void OnShutdown() override;
 
  private:
   void Log(const std::string& message);
 
-  base::WeakPtr<HostStatusMonitor> monitor_;
+  HostStatusMonitor* const monitor_;
   std::string application_name_;
 
   DISALLOW_COPY_AND_ASSIGN(HostEventLoggerPosix);
@@ -53,18 +52,16 @@ class HostEventLoggerPosix : public HostEventLogger, public HostStatusObserver {
 
 } //namespace
 
-HostEventLoggerPosix::HostEventLoggerPosix(
-    base::WeakPtr<HostStatusMonitor> monitor,
-    const std::string& application_name)
-    : monitor_(monitor),
-      application_name_(application_name) {
+HostEventLoggerPosix::HostEventLoggerPosix(HostStatusMonitor* monitor,
+                                           const std::string& application_name)
+    : monitor_(monitor), application_name_(application_name) {
   openlog(application_name_.c_str(), 0, LOG_USER);
   monitor_->AddStatusObserver(this);
 }
 
 HostEventLoggerPosix::~HostEventLoggerPosix() {
-  if (monitor_.get())
-    monitor_->RemoveStatusObserver(this);
+  monitor_->RemoveStatusObserver(this);
+  Log("Host stopped.");
   closelog();
 }
 
@@ -92,10 +89,6 @@ void HostEventLoggerPosix::OnClientRouteChange(
       protocol::TransportRoute::GetTypeString(route.type).c_str()));
 }
 
-void HostEventLoggerPosix::OnShutdown() {
-  // TODO(rmsousa): Fix host shutdown to actually call this, and add a log line.
-}
-
 void HostEventLoggerPosix::OnStart(const std::string& xmpp_login) {
   Log("Host started for user: " + xmpp_login);
 }
@@ -106,7 +99,7 @@ void HostEventLoggerPosix::Log(const std::string& message) {
 
 // static
 std::unique_ptr<HostEventLogger> HostEventLogger::Create(
-    base::WeakPtr<HostStatusMonitor> monitor,
+    HostStatusMonitor* monitor,
     const std::string& application_name) {
   return base::WrapUnique(new HostEventLoggerPosix(monitor, application_name));
 }

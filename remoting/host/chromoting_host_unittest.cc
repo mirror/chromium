@@ -171,7 +171,7 @@ class ChromotingHostTest : public testing::Test {
   }
 
   void ShutdownHost() {
-    EXPECT_CALL(host_status_observer_, OnShutdown());
+    host_->RemoveStatusObserver(&host_status_observer_);
     host_.reset();
     desktop_environment_factory_.reset();
   }

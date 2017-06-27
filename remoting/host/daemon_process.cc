@@ -118,8 +118,6 @@ bool DaemonProcess::OnMessageReceived(const IPC::Message& message) {
                         OnClientRouteChange)
     IPC_MESSAGE_HANDLER(ChromotingNetworkDaemonMsg_HostStarted,
                         OnHostStarted)
-    IPC_MESSAGE_HANDLER(ChromotingNetworkDaemonMsg_HostShutdown,
-                        OnHostShutdown)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -277,8 +275,7 @@ void DaemonProcess::Initialize() {
   config_watcher_.reset(new ConfigFileWatcher(
       caller_task_runner(), io_task_runner(), config_path));
   config_watcher_->Watch(this);
-  host_event_logger_ =
-      HostEventLogger::Create(weak_factory_.GetWeakPtr(), kApplicationName);
+  host_event_logger_ = HostEventLogger::Create(this, kApplicationName);
 
   // Launch the process.
   LaunchNetworkProcess();
@@ -349,13 +346,6 @@ void DaemonProcess::OnHostStarted(const std::string& xmpp_login) {
 
   for (auto& observer : status_observers_)
     observer.OnStart(xmpp_login);
-}
-
-void DaemonProcess::OnHostShutdown() {
-  DCHECK(caller_task_runner()->BelongsToCurrentThread());
-
-  for (auto& observer : status_observers_)
-    observer.OnShutdown();
 }
 
 void DaemonProcess::DeleteAllDesktopSessions() {

@@ -28,7 +28,7 @@ namespace {
 
 class HostEventLoggerWin : public HostEventLogger, public HostStatusObserver {
  public:
-  HostEventLoggerWin(base::WeakPtr<HostStatusMonitor> monitor,
+  HostEventLoggerWin(HostStatusMonitor* monitor,
                      const std::string& application_name);
 
   ~HostEventLoggerWin() override;
@@ -43,13 +43,12 @@ class HostEventLoggerWin : public HostEventLogger, public HostStatusObserver {
       const std::string& channel_name,
       const protocol::TransportRoute& route) override;
   void OnStart(const std::string& xmpp_login) override;
-  void OnShutdown() override;
 
  private:
   void LogString(WORD type, DWORD event_id, const std::string& string);
   void Log(WORD type, DWORD event_id, const std::vector<std::string>& strings);
 
-  base::WeakPtr<HostStatusMonitor> monitor_;
+  HostStatusMonitor* const monitor_;
 
   // The handle of the application event log.
   HANDLE event_log_;
@@ -57,7 +56,7 @@ class HostEventLoggerWin : public HostEventLogger, public HostStatusObserver {
   DISALLOW_COPY_AND_ASSIGN(HostEventLoggerWin);
 };
 
-} //namespace
+}  // namespace
 
 HostEventLoggerWin::HostEventLoggerWin(base::WeakPtr<HostStatusMonitor> monitor,
                                        const std::string& application_name)
@@ -73,9 +72,10 @@ HostEventLoggerWin::HostEventLoggerWin(base::WeakPtr<HostStatusMonitor> monitor,
 }
 
 HostEventLoggerWin::~HostEventLoggerWin() {
+  LogString(EVENTLOG_INFORMATION_TYPE, MSG_HOST_STOPPED, xmpp_login);
+
   if (event_log_ != nullptr) {
-    if (monitor_)
-      monitor_->RemoveStatusObserver(this);
+    monitor_->RemoveStatusObserver(this);
     DeregisterEventSource(event_log_);
   }
 }
@@ -103,10 +103,6 @@ void HostEventLoggerWin::OnClientRouteChange(
   strings[3] = channel_name;
   strings[4] = protocol::TransportRoute::GetTypeString(route.type);
   Log(EVENTLOG_INFORMATION_TYPE, MSG_HOST_CLIENT_ROUTING_CHANGED, strings);
-}
-
-void HostEventLoggerWin::OnShutdown() {
-  // TODO(rmsousa): Fix host shutdown to actually call this, and add a log line.
 }
 
 void HostEventLoggerWin::OnStart(const std::string& xmpp_login) {
