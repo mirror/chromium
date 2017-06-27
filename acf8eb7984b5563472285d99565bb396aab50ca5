@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50efcd83_c42ad96a",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "super nit: 1 line desciption. Then can have paragraph below with more detail.\n\n\"\"\"One line description.\n\nMore detail here.\n\"\"\"",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08135ad5_9edcdfc6",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "I think you should change this to be pattern.match() to be more explicit.",
+      "range": {
+        "startLine": 55,
+        "startChar": 28,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e533c8b1_872ed20b",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "super nit: Two lines between all of these functions. Functions in classes like _TraceArguments are good with just 1 line sepearation",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8f0886_f44217b0",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "Maybe write out the full path for the modules you\u0027re excluding. Might just be py_trace_event.*\n\nAlso, maybe factor this out to a contstant DEFAULT_EXCLUDES or something?",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b69bdde_fc302240",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "Made this comment before, but this is statement doesnt do anything I dont think?\nI think you can just remove it to simplify code.",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9daed82_00a12bca",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "I would have if event \u003d\u003d \"return\" to be more explicit. Otherwise, at least have a comment saying this is \"return\"",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2b16bd_0ad3f80c",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "I think this should be in the try statement. Especially considering stop_instrumenting is in the finally.",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f507286_9e668be7",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "probably shouldnt append .json? Shouldnt the user pass in the filename they want such as my_trace.json for the value of trace_output?",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f17069_863c4536",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-27T18:22:48Z",
+      "side": 1,
+      "message": "nit: indentation 1 space off",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
