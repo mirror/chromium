@@ -964,7 +964,7 @@ void Resource::MarkAsPreload() {
   preload_state_ = kPreloadNotReferenced;
 }
 
-void Resource::MatchPreload() {
+bool Resource::MatchPreload(const FetchParameters& params) {
   DCHECK_EQ(preload_state_, kPreloadNotReferenced);
   preload_state_ = kPreloadReferenced;
 
@@ -975,6 +975,7 @@ void Resource::MatchPreload() {
                         ("PreloadScanner.ReferenceTime", 0, 10000, 50));
     preload_discovery_histogram.Count(time_since_discovery);
   }
+  return true;
 }
 
 bool Resource::CanReuseRedirectChain() const {
