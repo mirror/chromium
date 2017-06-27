@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "893da966_74168a4e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T05:22:28Z",
+      "side": 1,
+      "message": "Why is this interface not on-heap?",
+      "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e1d0fb_87416c55",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T05:22:28Z",
+      "side": 1,
+      "message": "Maybe uint32_t or uint64_t is better because size_t is a type representing a size.",
+      "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4e8423d_ce2370a2",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 14
@@ -30,6 +64,23 @@
       "writtenOn": "2017-06-26T09:41:53Z",
       "side": 1,
       "message": "Can you add a comment about when this happens?",
+      "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0671cec_75e784aa",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T05:22:28Z",
+      "side": 1,
+      "message": "This DCHECK hits with asynchronous cancellation.",
       "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
