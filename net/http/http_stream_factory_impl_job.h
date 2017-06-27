@@ -214,6 +214,10 @@ class HttpStreamFactoryImpl::Job {
   // the socket for |this| Job, and notify |delegate| upon completion.
   void Orphan();
 
+  // Reset |connection_| to cancel async callback,
+  // so that |this| can be safely destroyed.
+  void Reset();
+
   void SetPriority(RequestPriority priority);
 
   RequestPriority priority() const { return priority_; }

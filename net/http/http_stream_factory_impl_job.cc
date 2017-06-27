@@ -306,6 +306,11 @@ void HttpStreamFactoryImpl::Job::Orphan() {
   net_log_.AddEvent(NetLogEventType::HTTP_STREAM_JOB_ORPHANED);
 }
 
+void HttpStreamFactoryImpl::Job::Reset() {
+  if (connection_)
+    connection_->Reset();
+}
+
 void HttpStreamFactoryImpl::Job::SetPriority(RequestPriority priority) {
   priority_ = priority;
   // Ownership of |connection_| is passed to the newly created stream
@@ -472,7 +477,6 @@ void HttpStreamFactoryImpl::Job::OnNewSpdySessionReadyCallback() {
   MaybeCopyConnectionAttemptsFromSocketOrHandle();
 
   delegate_->OnNewSpdySessionReady(this, spdy_session, spdy_session_direct_);
-
   // |this| may be deleted after this call.
 }
 
