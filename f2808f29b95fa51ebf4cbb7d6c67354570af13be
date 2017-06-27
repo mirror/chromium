@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8db694dc_38a3a3a2",
+        "filename": "base/memory/raw_scoped_refptr_mismatch_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T15:27:42Z",
+      "side": 1,
+      "message": "One question, why did you choose not to decay T in this thing, instead forcing all callers to do it?",
+      "revId": "f2808f29b95fa51ebf4cbb7d6c67354570af13be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
