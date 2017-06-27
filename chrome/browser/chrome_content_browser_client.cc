@@ -2913,8 +2913,8 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
         Profile::FromBrowserContext(render_process_host->GetBrowserContext());
     net::URLRequestContextGetter* context =
         render_process_host->GetStoragePartition()->GetURLRequestContext();
-    registry->AddInterface(
-        base::Bind(&NetBenchmarking::Create, profile, context));
+    registry->AddInterface(base::Bind(&NetBenchmarking::Create, profile,
+                                      base::RetainedRef(context)));
   }
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
