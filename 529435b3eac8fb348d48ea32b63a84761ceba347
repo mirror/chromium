@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26b3a084_6a0001b2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 46045,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-27T21:51:37Z",
+      "side": 1,
+      "message": "I\u0027d suggest mentioning exactly what these get recorded",
+      "revId": "529435b3eac8fb348d48ea32b63a84761ceba347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
