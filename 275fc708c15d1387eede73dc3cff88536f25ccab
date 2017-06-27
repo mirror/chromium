@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa5ab27_d7ee6c1d",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-27T17:21:56Z",
+      "side": 1,
+      "message": "Please add a trailing comma (,) here so you don\u0027t have to change this line when you need to add a new entry into the file.",
+      "revId": "275fc708c15d1387eede73dc3cff88536f25ccab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
