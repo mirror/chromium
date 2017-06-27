@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7ed0929f_44bfbb71",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "nit: s/new/base::MakeUnique\u003cServiceManagerContext\u003e() ?",
+      "range": {
+        "startLine": 321,
+        "startChar": 37,
+        "endLine": 321,
+        "endChar": 58
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f461199f_636e7ad2",
         "filename": "ios/web/app/web_main_runner.mm",
         "patchSetId": 2
@@ -30,6 +53,93 @@
       "writtenOn": "2017-06-27T14:22:57Z",
       "side": 1,
       "message": "Why this particular value? 128MiB is quite large for a single message, especially if it is mapped in memory in its integrality.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad07414_233d5e60",
+        "filename": "ios/web/app/web_main_runner.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "Colin, do you want to explain in the comments why 128MB is the optimal size?",
+      "parentUuid": "0302703f_5344d94f",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e75f4d_6d341041",
+        "filename": "ios/web/merge_dictionary.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "Do we want to limit the stack depth somehow?",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd085d1_dc88e4d6",
+        "filename": "ios/web/merge_dictionary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "Do you want to explain justification of the decision instead of referring a specific person?",
+      "range": {
+        "startLine": 14,
+        "startChar": 59,
+        "endLine": 14,
+        "endChar": 67
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3fbaaf_8d715fb3",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "nit: Add a linebreak after first include.",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 35
+      },
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "e839d7d0_8005d526",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "da27bc50_61ee9eab",
+      "range": {
+        "startLine": 39,
+        "startChar": 43,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cb9a4ed_3a419186",
         "filename": "ios/web/public/service_manager_connection.h",
         "patchSetId": 2
@@ -178,6 +312,52 @@
       "writtenOn": "2017-06-27T14:22:57Z",
       "side": 1,
       "message": "service. this → service. This",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745a2712_95a40421",
+        "filename": "ios/web/public/web_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "s/Allow/Allows",
+      "range": {
+        "startLine": 125,
+        "startChar": 5,
+        "endLine": 125,
+        "endChar": 10
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707e7c99_a8f08169",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "How is this method threadsafe? It does use any synchronization for ivars.",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 22
+      },
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -303,6 +483,29 @@
     },
     {
       "key": {
+        "uuid": "69310f59_91c79cbf",
+        "filename": "ios/web/service_manager_connection_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "Please add comments",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38dc7467_15696731",
         "filename": "ios/web/service_manager_context.mm",
         "patchSetId": 2
@@ -354,6 +557,29 @@
     },
     {
       "key": {
+        "uuid": "3597532e_1cf98634",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "Add comments?",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 22
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70039d55_8bfc210e",
         "filename": "ios/web/service_manager_context.mm",
         "patchSetId": 2
@@ -399,6 +625,29 @@
       "writtenOn": "2017-06-27T14:22:57Z",
       "side": 1,
       "message": "id → identifier",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8c1ffb_fea9a62b",
+        "filename": "ios/web/shell/test/service_manager_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-27T21:38:02Z",
+      "side": 1,
+      "message": "How about using ivar or block+local variable to avoid globals?",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 30
+      },
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
