@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c1c2f0db_e798ae15",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-27T22:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dd155e9_14b7ccd9",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79d476b0_cd1bd1fd",
         "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
         "patchSetId": 9
@@ -87,6 +111,24 @@
       "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e5243f_9e0f1030",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-27T22:00:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79d476b0_cd1bd1fd",
+      "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +200,30 @@
       "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b90b74_27bb2be4",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-27T22:00:27Z",
+      "side": 1,
+      "message": "For now I think I\u0027ll just stick with TODO\u0027s in the code only. Once a bit more of all this has landed (or somebody else volunteers to work on blob mojofication as well) I\u0027ll go grep for TODO(mek)\u0027s and file appropriate bugs for what\u0027s still remaining.",
+      "parentUuid": "79c26921_9b09ed4e",
+      "range": {
+        "startLine": 332,
+        "startChar": 20,
+        "endLine": 332,
+        "endChar": 23
+      },
+      "revId": "ac44dfe426a829d2135cefde4782f6dea03bb358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
