@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6989f6b_36b418c8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/BufferingDataPipeWriter.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T09:30:11Z",
+      "side": 1,
+      "message": "You\u0027re right, fixed.",
+      "parentUuid": "07df8009_bd01b24d",
+      "revId": "aab2940fcaa295dd23a8f150ac1a07f3eb4e3885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faad8f51_501317e9",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/BufferingDataPipeWriter.cpp",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "aab2940fcaa295dd23a8f150ac1a07f3eb4e3885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64caa4b_b36b5980",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/BufferingDataPipeWriter.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T09:30:11Z",
+      "side": 1,
+      "message": "Yeah, It\u0027s not a problem for my use-case.",
+      "parentUuid": "faad8f51_501317e9",
+      "revId": "aab2940fcaa295dd23a8f150ac1a07f3eb4e3885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "aab2940fcaa295dd23a8f150ac1a07f3eb4e3885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e306facd_82f0225f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/BufferingDataPipeWriter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T09:30:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23fa1dca_114d0216",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "aab2940fcaa295dd23a8f150ac1a07f3eb4e3885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
