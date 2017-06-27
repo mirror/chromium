@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1d6c3693_3fb4e3d2",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T18:46:24Z",
+      "side": 1,
+      "message": "thanks, and makes sense (although these aren\u0027t the most descriptive names). :-)\n\ni was mostly confused by the is_default_view_ member here. it seems like we don\u0027t need that if we\u0027re only going to be creating detailed views.",
+      "parentUuid": "44bff640_0200a0f2",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f810ba1b_ae0d79f3",
         "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
         "patchSetId": 2
