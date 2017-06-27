@@ -20,6 +20,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#include "base/time/default_tick_clock.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "base/trace_event/trace_event.h"
@@ -51,7 +52,9 @@ class GpuMemoryBufferVideoFramePool::PoolImpl
       : media_task_runner_(media_task_runner),
         worker_task_runner_(worker_task_runner),
         gpu_factories_(gpu_factories),
-        output_format_(GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED) {
+        output_format_(GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED),
+        tick_clock_(&default_tick_clock_),
+        in_shutdown_(false) {
     DCHECK(media_task_runner_);
     DCHECK(worker_task_runner_);
   }
@@ -67,6 +70,13 @@ class GpuMemoryBufferVideoFramePool::PoolImpl
 
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                     base::trace_event::ProcessMemoryDump* pmd) override;
+
+  // Shuts down the frame pool and releases all frames in |frames_|.
+  // Once this is called frames will no longer be inserted back into
+  // |frames_|.
+  void Shutdown();
+
+  void SetTickClockForTesting(base::TickClock* tick_clock);
 
  private:
   friend class base::RefCountedThreadSafe<
@@ -85,14 +95,23 @@ class GpuMemoryBufferVideoFramePool::PoolImpl
   // All the resources needed to compose a frame.
   struct FrameResources {
     explicit FrameResources(const gfx::Size& size) : size(size) {}
-    void SetIsInUse(bool in_use) { in_use_ = in_use; }
-    bool IsInUse() const { return in_use_; }
+    void MarkUsed() {
+      is_used_ = true;
+      last_use_time_ = base::TimeTicks();
+    }
+    void MarkUnused(base::TimeTicks last_use_time) {
+      is_used_ = false;
+      last_use_time_ = last_use_time;
+    }
+    bool is_used() const { return is_used_; }
+    base::TimeTicks last_use_time() const { return last_use_time_; }
 
     const gfx::Size size;
     PlaneResource plane_resources[VideoFrame::kMaxPlanes];
 
    private:
-    bool in_use_ = true;
+    bool is_used_ = true;
+    base::TimeTicks last_use_time_;
   };
 
   // Copy |video_frame| data into |frame_resouces|
@@ -153,6 +172,11 @@ class GpuMemoryBufferVideoFramePool::PoolImpl
   std::list<FrameResources*> resources_pool_;
 
   GpuVideoAcceleratorFactories::OutputFormat output_format_;
+
+  base::DefaultTickClock default_tick_clock_;
+  base::TickClock* tick_clock_;
+
+  bool in_shutdown_;
 
   DISALLOW_COPY_AND_ASSIGN(PoolImpl);
 };
@@ -470,7 +494,7 @@ bool GpuMemoryBufferVideoFramePool::PoolImpl::OnMemoryDump(
                         buffer_size_in_bytes);
         dump->AddScalar("free_size",
                         base::trace_event::MemoryAllocatorDump::kUnitsBytes,
-                        frame_resources->IsInUse() ? 0 : buffer_size_in_bytes);
+                        frame_resources->is_used() ? 0 : buffer_size_in_bytes);
         auto shared_buffer_guid =
             plane_resource.gpu_memory_buffer->GetGUIDForTracing(
                 tracing_process_id);
@@ -712,14 +736,27 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::
 // Destroy all the resources posting one task per FrameResources
 // to the |media_task_runner_|.
 GpuMemoryBufferVideoFramePool::PoolImpl::~PoolImpl() {
+  DCHECK(in_shutdown_);
+}
+
+void GpuMemoryBufferVideoFramePool::PoolImpl::Shutdown() {
   // Delete all the resources on the media thread.
-  while (!resources_pool_.empty()) {
-    FrameResources* frame_resources = resources_pool_.front();
-    resources_pool_.pop_front();
+  in_shutdown_ = true;
+  for (auto* frame_resources : resources_pool_) {
+    // Will be deleted later upon return to pool.
+    if (frame_resources->is_used())
+      return;
+
     media_task_runner_->PostTask(
         FROM_HERE, base::Bind(&PoolImpl::DeleteFrameResources, gpu_factories_,
                               base::Owned(frame_resources)));
   }
+  resources_pool_.clear();
+}
+
+void GpuMemoryBufferVideoFramePool::PoolImpl::SetTickClockForTesting(
+    base::TickClock* tick_clock) {
+  tick_clock_ = tick_clock;
 }
 
 // Tries to find the resources in the pool or create them.
@@ -728,12 +765,14 @@ GpuMemoryBufferVideoFramePool::PoolImpl::FrameResources*
 GpuMemoryBufferVideoFramePool::PoolImpl::GetOrCreateFrameResources(
     const gfx::Size& size,
     GpuVideoAcceleratorFactories::OutputFormat format) {
+  DCHECK(!in_shutdown_);
+
   auto it = resources_pool_.begin();
   while (it != resources_pool_.end()) {
     FrameResources* frame_resources = *it;
-    if (!frame_resources->IsInUse()) {
+    if (!frame_resources->is_used()) {
       if (AreFrameResourcesCompatible(frame_resources, size)) {
-        frame_resources->SetIsInUse(true);
+        frame_resources->MarkUsed();
         return frame_resources;
       } else {
         resources_pool_.erase(it++);
@@ -809,14 +848,29 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::MailboxHoldersReleased(
     FrameResources* frame_resources,
     const gpu::SyncToken& release_sync_token) {
   DCHECK(media_task_runner_->BelongsToCurrentThread());
-  auto it = std::find(resources_pool_.begin(), resources_pool_.end(),
-                      frame_resources);
-  DCHECK(it != resources_pool_.end());
-  // We want the pool to behave in a FIFO way.
-  // This minimizes the chances of locking the buffer that might be
-  // still needed for drawing.
-  std::swap(*it, resources_pool_.back());
-  frame_resources->SetIsInUse(false);
+  if (in_shutdown_) {
+    DeleteFrameResources(gpu_factories_, frame_resources);
+    delete frame_resources;
+    return;
+  }
+
+  const base::TimeTicks now = tick_clock_->NowTicks();
+  frame_resources->MarkUnused(now);
+  auto it = resources_pool_.begin();
+  while (it != resources_pool_.end()) {
+    FrameResources* frame_resources = *it;
+
+    constexpr base::TimeDelta kStaleFrameLimit =
+        base::TimeDelta::FromSeconds(10);
+    if (!frame_resources->is_used() &&
+        now - frame_resources->last_use_time() > kStaleFrameLimit) {
+      resources_pool_.erase(it++);
+      DeleteFrameResources(gpu_factories_, frame_resources);
+      delete frame_resources;
+    } else {
+      it++;
+    }
+  }
 }
 
 GpuMemoryBufferVideoFramePool::GpuMemoryBufferVideoFramePool() {}
@@ -832,6 +886,11 @@ GpuMemoryBufferVideoFramePool::GpuMemoryBufferVideoFramePool(
 }
 
 GpuMemoryBufferVideoFramePool::~GpuMemoryBufferVideoFramePool() {
+  // May be nullptr in tests.
+  if (!pool_impl_)
+    return;
+
+  pool_impl_->Shutdown();
   base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
       pool_impl_.get());
 }
@@ -841,6 +900,11 @@ void GpuMemoryBufferVideoFramePool::MaybeCreateHardwareFrame(
     const FrameReadyCB& frame_ready_cb) {
   DCHECK(video_frame);
   pool_impl_->CreateHardwareFrame(video_frame, frame_ready_cb);
+}
+
+void GpuMemoryBufferVideoFramePool::SetTickClockForTesting(
+    base::TickClock* tick_clock) {
+  pool_impl_->SetTickClockForTesting(tick_clock);
 }
 
 }  // namespace media
