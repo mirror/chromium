@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8340e0e_8842ea46",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1710,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-06-27T09:46:28Z",
+      "side": 1,
+      "message": "I really think this function, as well as BaselinePosition, should also return a LayoutUnit type. We are doing type conversions to integrate these calls together. I would understand doing such change in a follow up patch, but perhaps a TODO comment here would help.",
+      "revId": "54e652c7b346279742e70c5567dfc82677061520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
