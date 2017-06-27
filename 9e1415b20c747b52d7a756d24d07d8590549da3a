@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75ebda15_09f746a7",
+        "filename": "chrome/browser/chromeos/login/chrome_restart_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-06-27T17:48:49Z",
+      "side": 1,
+      "message": "Yeah, I need to review all flags for which linux OS they are suppose to be used.",
+      "parentUuid": "d40fe5e4_3027f222",
+      "revId": "9e1415b20c747b52d7a756d24d07d8590549da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaeeac8a_7361f3e8",
         "filename": "chrome/browser/flag_descriptions.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T03:07:38Z",
       "side": 1,
       "message": "I\u0027m confused. Is OS_CHROMEOS subset of OS_LINUX?\nline 34 looks yes but line 1211 looks no.",
+      "revId": "9e1415b20c747b52d7a756d24d07d8590549da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52bdc037_cee05358",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-06-27T17:48:49Z",
+      "side": 1,
+      "message": "it is a subset of OS_LINUX in this build environment.  #if defined(OS_LINUX) should suffice.",
+      "parentUuid": "aaeeac8a_7361f3e8",
       "revId": "9e1415b20c747b52d7a756d24d07d8590549da3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
