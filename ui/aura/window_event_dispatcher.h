@@ -78,7 +78,8 @@ class AURA_EXPORT WindowEventDispatcher : public ui::EventProcessor,
   // If the |target| is NULL, we will dispatch the event to the root-window
   // TODO(beng): needed only for WTH::OnCursorVisibilityChanged().
   ui::EventDispatchDetails DispatchMouseExitAtPoint(Window* target,
-                                                    const gfx::Point& point)
+                                                    const gfx::Point& point,
+                                                    bool from_cursor_hide)
       WARN_UNUSED_RESULT;
 
   // Gesture Recognition -------------------------------------------------------

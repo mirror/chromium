@@ -174,9 +174,12 @@ void WindowEventDispatcher::DispatchGestureEvent(
 
 DispatchDetails WindowEventDispatcher::DispatchMouseExitAtPoint(
     Window* window,
-    const gfx::Point& point) {
+    const gfx::Point& point,
+    bool from_cursor_hide) {
   ui::MouseEvent event(ui::ET_MOUSE_EXITED, point, point, ui::EventTimeForNow(),
                        ui::EF_NONE, ui::EF_NONE);
+  if (from_cursor_hide)
+    event.set_flags(ui::EF_CURSOR_HIDE);
   return DispatchMouseEnterOrExit(window, event, ui::ET_MOUSE_EXITED);
 }
 
@@ -272,7 +275,7 @@ void WindowEventDispatcher::DispatchMouseExitToHidingWindow(Window* window) {
   if (window->Contains(mouse_moved_handler_) &&
       window->ContainsPointInRoot(last_mouse_location)) {
     DispatchDetails details =
-        DispatchMouseExitAtPoint(this->window(), last_mouse_location);
+        DispatchMouseExitAtPoint(this->window(), last_mouse_location, false);
     if (details.dispatcher_destroyed)
       return;
   }
@@ -423,7 +426,7 @@ void WindowEventDispatcher::OnOtherRootGotCapture() {
     // important when going from no window having capture to a window having
     // capture because we do not dispatch ET_MOUSE_CAPTURE_CHANGED in this case.
     DispatchDetails details =
-        DispatchMouseExitAtPoint(nullptr, GetLastMouseLocationInRoot());
+        DispatchMouseExitAtPoint(nullptr, GetLastMouseLocationInRoot(), false);
     if (details.dispatcher_destroyed)
       return;
   }

@@ -153,7 +153,7 @@ void WindowTreeHost::OnCursorVisibilityChanged(bool show) {
   // will trigger its own mouse enter.
   if (!show) {
     ui::EventDispatchDetails details = dispatcher()->DispatchMouseExitAtPoint(
-        nullptr, dispatcher()->GetLastMouseLocationInRoot());
+        nullptr, dispatcher()->GetLastMouseLocationInRoot(), true);
     if (details.dispatcher_destroyed)
       return;
   }

@@ -552,6 +552,8 @@ class EVENTS_EXPORT MouseEvent : public LocatedEvent {
     return (flags() & EF_RIGHT_MOUSE_BUTTON) != 0;
   }
 
+  bool IsFromCursorHide() const { return (flags() & EF_CURSOR_HIDE) != 0; }
+
   bool IsAnyButton() const {
     return button_flags() != 0;
   }
