@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "81edd66e_d38a3220",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-27T08:02:58Z",
+      "side": 0,
+      "message": "Extensions.NetworkDelay is on the sum delays of extensions. Many extensions or one particularly slow extension may skew this.\n\nI am still hesitant to add a new metric. Extensions.NetworkDelay was suggested for deletion multiple times because nobody took a look at it. I am concerned to add more code and data here that nobody looks at. Are you sure you want this added? In that case, I suggest that I will write a separate CL for that.",
+      "parentUuid": "a38e9213_1f00d97b",
+      "revId": "ca866e17bf86ae89f8b69400cb049e50992d1bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc911042_cde2c05c",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.h",
         "patchSetId": 1
