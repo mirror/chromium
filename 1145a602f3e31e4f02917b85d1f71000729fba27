@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e0ddabe6_5280ab61",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-06-27T16:55:02Z",
+      "side": 1,
+      "message": "Great, I\u0027ll move forward on these this evening.\n\nDoes it make sense to turn the queue into a map with unique_touch_event_id as the key?  That way, corner cases with strange ordering would be handled naturally.  This also solves my concern of prevent default on first touch-move (didn\u0027t have time to address this last night).  It would have to know if the target had already been popped off the queue by a prevent default on touch start, or risk a double pop.  If we were to simply remove the id from the map, it could never accidentally remove an item that it didn\u0027t own.",
+      "parentUuid": "d1c8c560_097f567f",
+      "range": {
+        "startLine": 390,
+        "startChar": 39,
+        "endLine": 390,
+        "endChar": 58
+      },
+      "revId": "1145a602f3e31e4f02917b85d1f71000729fba27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0391d617_60c4473e",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 2
