@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc08abc_fe7373bf",
+        "filename": "media/gpu/android/video_frame_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-27T22:06:47Z",
+      "side": 1,
+      "message": "is this happening when the map is destructed?  if so, then i\u0027m not sure about the gl context then.  might need to do it explicitly with the proper context current.\n\nmight also want to ask (e.g.) piman if this is needed, but i suspect that it is.  then again, it\u0027s always using a virtual context anyway....",
+      "revId": "1e3872df22c73b418300a5752c942a74c29a0e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9bb27c_f86df66a",
+        "filename": "media/gpu/android/video_frame_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-27T22:06:47Z",
+      "side": 1,
+      "message": "if this results in the destruction of the texture, should you make the correct context current?",
+      "revId": "1e3872df22c73b418300a5752c942a74c29a0e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
