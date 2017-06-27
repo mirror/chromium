@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d83edde5_abfc638a",
+        "filename": "components/history/core/browser/top_sites_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-27T18:26:45Z",
+      "side": 1,
+      "message": "I don\u0027t know. I\u0027m guessing probably \"yes\", but I don\u0027t know this code well enough to make that call. And getting it wrong might introduce subtle threading bugs.",
+      "parentUuid": "4479071d_fbbcf918",
+      "range": {
+        "startLine": 28,
+        "startChar": 28,
+        "endLine": 28,
+        "endChar": 66
+      },
+      "revId": "610fe460303f0335f98a8a781a6a6372cd1c6fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfd5c3ad_a43f013d",
         "filename": "components/history/core/browser/top_sites_backend.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "610fe460303f0335f98a8a781a6a6372cd1c6fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad85f86f_ee2264fe",
+        "filename": "components/history/core/browser/top_sites_backend.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-27T18:26:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfd5c3ad_a43f013d",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "610fe460303f0335f98a8a781a6a6372cd1c6fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
