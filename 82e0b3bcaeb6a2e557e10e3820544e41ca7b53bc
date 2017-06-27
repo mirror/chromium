@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc2b4ca5_d9c226b2",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "Which OSes do we want this for now? Maybe just Win and Linux?",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72389ea9_fd2ba92e",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "This uses the singleton pattern. Use the relevant class:\nhttps://cs.chromium.org/chromium/src/base/memory/singleton.h?dr\u003dC\n\nThat being said, do we really need a singleton? There are currently 3 places that we use this class: https://chromium-review.googlesource.com/c/549074/\n\nAll are in chrome/browser. Can we make this object a member of Browser instead?",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830dfae8_43a208df",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "all calls to \"new\" should be wrapped in a std::unique_ptr.\nhttp://en.cppreference.com/w/cpp/memory/unique_ptr\n\nThis ensures proper lifetime semantics.",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47648bf_a0cba660",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "AddObserver() and RemoveObserver() should happen in complimentary locations. If AddObserver() is called in the constructor, then RemoveObserver() should happen in the destructor.",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e0523b_ff8bc05e",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "what is this ivar used for?",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f500afd9_80e17910",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "Each method should do what it\u0027s name suggests. In this case, we\u0027re both updating prefs and evaluating a conditional. I recommend breaking this into two functions: UpdateSessionTime() and CheckSessionTime().",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5696b5_260a10f2",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "Is this a placeholder? If so, please indicate this in a comment and remove it.",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710f4dd5_a3b24f7a",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be a separate class. Make NewTabFeatureEngagementTracker inherit from DesktopSessionDurationTracker::Observer.",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98289a09_70e68cca",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T00:22:45Z",
+      "side": 1,
+      "message": "Please describe in comments the lifetime semantics of every raw pointer used in this header file.\n\nIn this case...I think you don\u0027t need all of them. e.g. duration_tracker_ and feature_tracker_ can be dynamically computed?",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
