@@ -311,13 +311,6 @@ GLES2_UTILS_EXPORT bool IsWebGLContextType(ContextType context_type);
 GLES2_UTILS_EXPORT bool IsWebGL1OrES2ContextType(ContextType context_type);
 GLES2_UTILS_EXPORT bool IsWebGL2OrES3ContextType(ContextType context_type);
 
-enum ColorSpace {
-  COLOR_SPACE_UNSPECIFIED,
-  COLOR_SPACE_SRGB,
-  COLOR_SPACE_DISPLAY_P3,
-  COLOR_SPACE_LAST = COLOR_SPACE_DISPLAY_P3
-};
-
 struct GLES2_UTILS_EXPORT ContextCreationAttribHelper {
   ContextCreationAttribHelper();
   ContextCreationAttribHelper(const ContextCreationAttribHelper& other);
@@ -344,7 +337,6 @@ struct GLES2_UTILS_EXPORT ContextCreationAttribHelper {
   bool single_buffer;
 
   ContextType context_type;
-  ColorSpace color_space = COLOR_SPACE_UNSPECIFIED;
 };
 
 }  // namespace gles2

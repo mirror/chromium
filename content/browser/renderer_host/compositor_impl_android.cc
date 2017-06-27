@@ -169,7 +169,6 @@ gpu::SharedMemoryLimits GetCompositorContextSharedMemoryLimits(
 }
 
 gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
-    gfx::NativeWindow window,
     bool has_transparent_background) {
   // This is used for the browser compositor (offscreen) and for the display
   // compositor (onscreen), so ask for capabilities needed by either one.
@@ -184,20 +183,6 @@ gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
   attributes.samples = 0;
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
-
-  if (base::FeatureList::IsEnabled(features::kColorCorrectRendering)) {
-    gfx::ColorSpace color_space = display::Screen::GetScreen()
-                                      ->GetDisplayNearestWindow(window)
-                                      .color_space();
-    if (color_space == gfx::ColorSpace::CreateSRGB()) {
-      attributes.color_space = gpu::gles2::COLOR_SPACE_SRGB;
-    } else if (color_space == gfx::ColorSpace::CreateDisplayP3D65()) {
-      attributes.color_space = gpu::gles2::COLOR_SPACE_DISPLAY_P3;
-    } else {
-      attributes.color_space = gpu::gles2::COLOR_SPACE_UNSPECIFIED;
-      DLOG(ERROR) << "Android color space is neither sRGB nor P3.";
-    }
-  }
 
   if (has_transparent_background) {
     attributes.alpha_size = 8;
@@ -767,8 +752,7 @@ void CompositorImpl::OnGpuChannelEstablished(
                std::string("CompositorContextProvider")),
           automatic_flushes, support_locking,
           GetCompositorContextSharedMemoryLimits(root_window_),
-          GetCompositorContextAttributes(root_window_,
-                                         has_transparent_background_),
+          GetCompositorContextAttributes(has_transparent_background_),
           shared_context,
           ui::command_buffer_metrics::DISPLAY_COMPOSITOR_ONSCREEN_CONTEXT);
   if (!context_provider->BindToCurrentThread()) {

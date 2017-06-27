@@ -59,15 +59,8 @@ class GL_EXPORT GLSurfaceFormat {
   int GetSamples();
 
   void SetDefaultPixelLayout(SurfacePixelLayout layout);
-  SurfacePixelLayout GetPixelLayout();
 
-  enum SurfaceColorSpace {
-    COLOR_SPACE_UNSPECIFIED = -1,
-    COLOR_SPACE_SRGB,
-    COLOR_SPACE_DISPLAY_P3,
-  };
-  void SetColorSpace(SurfaceColorSpace color_space);
-  SurfaceColorSpace GetColorSpace();
+  SurfacePixelLayout GetPixelLayout();
 
   // Compute number of bits needed for storing one pixel, not
   // including any padding. At this point mainly used to distinguish
@@ -76,7 +69,6 @@ class GL_EXPORT GLSurfaceFormat {
 
  private:
   SurfacePixelLayout pixel_layout_ = PIXEL_LAYOUT_DONT_CARE;
-  SurfaceColorSpace color_space_ = COLOR_SPACE_UNSPECIFIED;
   int red_bits_ = -1;
   int green_bits_ = -1;
   int blue_bits_ = -1;
