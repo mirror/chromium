@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d735623d_a52e5c6a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-27T17:43:50Z",
+      "side": 1,
+      "message": "Probably worth create a gvr bug. We are using Impl class here.",
+      "revId": "2558bada15e7044a9ac6c3fea30b28e07f9c6726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
