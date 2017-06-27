@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "6d7c97bd_6cbe30ce",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-27T00:37:01Z",
+      "side": 1,
+      "message": "Nit: move this namespace up out of feature_engagement_tracker (usually the anonymous namespace goes first in a file and it\u0027s not enclosed by anything else).",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72389ea9_fd2ba92e",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 7
@@ -30,6 +53,47 @@
       "writtenOn": "2017-06-27T00:22:45Z",
       "side": 1,
       "message": "This uses the singleton pattern. Use the relevant class:\nhttps://cs.chromium.org/chromium/src/base/memory/singleton.h?dr\u003dC\n\nThat being said, do we really need a singleton? There are currently 3 places that we use this class: https://chromium-review.googlesource.com/c/549074/\n\nAll are in chrome/browser. Can we make this object a member of Browser instead?",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667ca2dd_3bd3e883",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-27T00:37:01Z",
+      "side": 1,
+      "message": "To add to Erik\u0027s comments, I didn\u0027t realise that the feature engagement component was profile bound when I suggested a singleton approach. Since DesktopSessionDurationTracker is a global singleton, this setup unfortunately won\u0027t quite work, because users can use multiple profiles during the life of one browser session.\n\nAn important question to answer is if we want in-product help for the new tab button to be:\n\n - separate per profile (i.e. usage in one profile is separate to usage in another, and you show the help separately)\n - cumulative per profile (i.e. usage is added up across all profiles and you show the help once).\n\nThe DesktopSessionDurationTracker is *not* profile bound, meaning that it will arbitrarily tell you when sessions start and end without telling you which profile was in use. So if you have one of these per profile, you\u0027ll have one observer per open profile, but only one global DesktopSessionDurationTracker, and hence get multiple signals when you tip over the 2 hour threshold. That could end up showing the in-product help in both profile windows, which may or may not be what you want.",
+      "parentUuid": "72389ea9_fd2ba92e",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d075aac4_928d5146",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-27T00:37:01Z",
+      "side": 1,
+      "message": "Use initializer list initialization:\n\nNewTabFeatureEngagementTracker::NewTabFeatureEngagementTracker(Profile* profile) :\n  profile_(profile), observer_(base::MakeUnique\u003cNewTabSessionObserver\u003e(DesktopSessionDurationTracker::Get(), this, profile)), feature_tracker_(FeatureEngagementTrackerFactory::GetForBrowserContext(profile)) {}",
+      "range": {
+        "startLine": 42,
+        "startChar": 32,
+        "endLine": 42,
+        "endChar": 62
+      },
       "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
