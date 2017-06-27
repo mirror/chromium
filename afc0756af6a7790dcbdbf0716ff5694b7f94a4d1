@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b632ae33_dcea928e",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-27T16:06:03Z",
+      "side": 0,
+      "message": "This was the dead branch: clip_result here is set from GetClippingRect above (via ThumbnailTabHelper - I hope to remove some of that indirection in followups), so it can never be UNPROCESSED.",
+      "revId": "afc0756af6a7790dcbdbf0716ff5694b7f94a4d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a69dde_146c4983",
         "filename": "chrome/browser/thumbnails/simple_thumbnail_crop_unittest.cc",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-06-27T15:01:31Z",
       "side": 0,
       "message": "So basically non of these properties is necessary anymore?\nIf so, the ToDo captures all cases?\nIf not, can we bring (e.g. one combined) test back that ensures no regressions?",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 102,
+        "endChar": 1
+      },
+      "revId": "afc0756af6a7790dcbdbf0716ff5694b7f94a4d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c7d240_36e7827a",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-27T16:06:03Z",
+      "side": 0,
+      "message": "All of these were testing a dead code path - GetClippedBitmap was never used. And the main logic that was being tested is actually from GetCanvasCopyInfo/GetClippingRect, which have separate tests below. So I don\u0027t think we\u0027re losing any coverage.",
+      "parentUuid": "68a69dde_146c4983",
       "range": {
         "startLine": 24,
         "startChar": 1,

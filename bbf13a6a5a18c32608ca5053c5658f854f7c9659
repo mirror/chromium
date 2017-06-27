@@ -22,6 +22,30 @@
       "revId": "bbf13a6a5a18c32608ca5053c5658f854f7c9659",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985cf78c_797be2f0",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-27T16:06:03Z",
+      "side": 1,
+      "message": "\u003e So would this would this still work anyway?\n\nWould *what* still work anyway?\n\n\u003e In the CL where it was introduced, there was a problem with devices needing pixels instead of DPI [1]. I wouldn\u0027t want to regress here.\n\u003e \n\u003e [1] https://codereview.chromium.org/1028393003\n\nI don\u0027t follow... I guess my TODO isn\u0027t very clear.\n\nWhat I\u0027m trying to say is: Here, the bitmap already has the size we want (we took care to copy only that exact size from the GPU), so any extra scaling seems pointless. Also, CreateThumbnail would only ever scale *down* to the size we pass in here, which is extra pointless - we wouldn\u0027t have copied more than the maximum supported size.\n\nWhat I think happened is this: At some point in the past, we copied full-size screenshots from the GPU, and scaled them down on the CPU, in CreateThumbnail. Then someone noticed that that\u0027s kinda silly, and moved the scaling-down to the GPU (via the GetCanvasCopyInfo stuff). However, for whatever reason, they left the CPU-scaling code in place too, only now it doesn\u0027t actually do anything anymore.",
+      "parentUuid": "c7472d90_46a075a1",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "bbf13a6a5a18c32608ca5053c5658f854f7c9659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
