@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "e2094765_f97673c5",
+        "filename": "services/identity/public/cpp/account_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T12:22:39Z",
+      "side": 1,
+      "message": "Ken raised a similar question. I typemapped it because it\u0027s always going to be passed together with AccountInfo, which is typemapped. I thought it would be kind of strange to have consumers (and even the impl) always be dealing with a C++ and mojom struct right next to each other rather than two C++ structs. Maybe I should revisit that, but I\u0027m going to hold off until Mihai and I decide on whether these two structs should be packaged together (re: your other question).",
+      "parentUuid": "25f859e2_0a5adc2a",
+      "revId": "1777543dce1c551c24017a2cde929122d55f111b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0c966f8_80e07285",
         "filename": "services/identity/public/cpp/account_state.h",
         "patchSetId": 3
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "cf129072_7208e939",
+        "filename": "services/identity/public/cpp/account_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T12:22:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0c966f8_80e07285",
+      "revId": "1777543dce1c551c24017a2cde929122d55f111b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "192a3d28_6112a1fd",
         "filename": "services/identity/public/interfaces/identity_manager.mojom",
         "patchSetId": 3
@@ -70,6 +106,30 @@
       "writtenOn": "2017-06-21T09:02:52Z",
       "side": 1,
       "message": "It kind of feels like these things should just be bundled together in a result struct, removing the need for the disclaimer. *shrug*",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 20,
+        "endChar": 56
+      },
+      "revId": "1777543dce1c551c24017a2cde929122d55f111b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a29614_d9f84777",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T12:22:39Z",
+      "side": 1,
+      "message": "Chewing on this for a followup. I\u0027ll need to implement GetAccounts(), which will push the question to the forefront.",
+      "parentUuid": "192a3d28_6112a1fd",
       "range": {
         "startLine": 19,
         "startChar": 30,
