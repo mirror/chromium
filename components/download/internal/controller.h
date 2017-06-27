@@ -39,11 +39,21 @@ enum class CompletionType {
 // together to manage the active downloads.
 class Controller {
  public:
+  class StartupListener {
+   public:
+    // Indicates that the controller is initialized.
+    virtual void OnControllerInitialized(
+        const StartupStatus& startup_status) = 0;
+  };
+
   Controller() = default;
   virtual ~Controller() = default;
 
   // Initializes the controller.  Initialization may be asynchronous.
   virtual void Initialize() = 0;
+
+  // Sets the listener to be notified about the startup.
+  virtual void SetStartupListener(StartupListener* listener) = 0;
 
   // Returns the status of Controller.
   virtual const StartupStatus* GetStartupStatus() = 0;

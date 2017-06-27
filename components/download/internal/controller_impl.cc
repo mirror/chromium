@@ -93,6 +93,10 @@ void ControllerImpl::Initialize() {
                                        weak_ptr_factory_.GetWeakPtr()));
 }
 
+void ControllerImpl::SetStartupListener(StartupListener* listener) {
+  startup_listener_ = listener;
+}
+
 const StartupStatus* ControllerImpl::GetStartupStatus() {
   return &startup_status_;
 }
@@ -216,16 +220,20 @@ DownloadClient ControllerImpl::GetOwnerOfDownload(const std::string& guid) {
 void ControllerImpl::OnStartScheduledTask(
     DownloadTaskType task_type,
     const TaskFinishedCallback& callback) {
+  DCHECK(startup_status_.Complete());
+
   task_finished_callbacks_[task_type] = callback;
-  if (!startup_status_.Complete()) {
-    return;
-  } else if (!startup_status_.Ok()) {
+  if (!startup_status_.Ok()) {
     HandleTaskFinished(task_type, false,
                        stats::ScheduledTaskStatus::ABORTED_ON_FAILED_INIT);
     return;
   }
 
-  ProcessScheduledTasks();
+  if (task_type == DownloadTaskType::DOWNLOAD_TASK) {
+    ActivateMoreDownloads();
+  } else if (task_type == DownloadTaskType::CLEANUP_TASK) {
+    RemoveCleanupEligibleDownloads();
+  }
 }
 
 bool ControllerImpl::OnStopScheduledTask(DownloadTaskType task_type) {
@@ -234,37 +242,29 @@ bool ControllerImpl::OnStopScheduledTask(DownloadTaskType task_type) {
   return true;
 }
 
-void ControllerImpl::ProcessScheduledTasks() {
-  if (!startup_status_.Ok()) {
-    while (!task_finished_callbacks_.empty()) {
-      auto it = task_finished_callbacks_.begin();
-      HandleTaskFinished(it->first, false,
-                         stats::ScheduledTaskStatus::ABORTED_ON_FAILED_INIT);
-    }
-    return;
-  }
+void ControllerImpl::OnCompleteCleanupTask() {
+  HandleTaskFinished(DownloadTaskType::CLEANUP_TASK, false,
+                     stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
+}
 
-  while (!task_finished_callbacks_.empty()) {
-    auto it = task_finished_callbacks_.begin();
-    if (it->first == DownloadTaskType::DOWNLOAD_TASK) {
-      ActivateMoreDownloads();
-    } else if (it->first == DownloadTaskType::CLEANUP_TASK) {
-      auto timed_out_entries =
-          file_monitor_->CleanupFilesForCompletedEntries(model_->PeekEntries());
-      for (auto* entry : timed_out_entries) {
-        DCHECK_EQ(Entry::State::COMPLETE, entry->state);
-        model_->Remove(entry->guid);
-      }
-    }
-
-    HandleTaskFinished(it->first, false,
-                       stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
+void ControllerImpl::RemoveCleanupEligibleDownloads() {
+  auto timed_out_entries = file_monitor_->CleanupFilesForCompletedEntries(
+      model_->PeekEntries(), base::Bind(&ControllerImpl::OnCompleteCleanupTask,
+                                        weak_ptr_factory_.GetWeakPtr()));
+  for (auto* entry : timed_out_entries) {
+    DCHECK_EQ(Entry::State::COMPLETE, entry->state);
+    model_->Remove(entry->guid);
   }
 }
 
 void ControllerImpl::HandleTaskFinished(DownloadTaskType task_type,
                                         bool needs_reschedule,
                                         stats::ScheduledTaskStatus status) {
+  if (task_finished_callbacks_.find(task_type) ==
+      task_finished_callbacks_.end()) {
+    return;
+  }
+
   if (status != stats::ScheduledTaskStatus::CANCELLED_ON_STOP) {
     base::ResetAndReturn(&task_finished_callbacks_[task_type])
         .Run(needs_reschedule);
@@ -425,7 +425,6 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   if (!startup_status_.Ok()) {
     // TODO(dtrainor): Recover here.  Try to clean up any disk state and, if
     // possible, any DownloadDriver data and continue with initialization?
-    ProcessScheduledTasks();
     return;
   }
 
@@ -433,15 +432,17 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   PollActiveDriverDownloads();
   CancelOrphanedRequests();
   CleanupUnknownFiles();
+  RemoveCleanupEligibleDownloads();
   ResolveInitialRequestStates();
   NotifyClientsOfStartup();
 
   initializing_internals_ = false;
 
   UpdateDriverStates();
-  ProcessScheduledTasks();
 
   KillTimedOutDownloads();
+
+  startup_listener_->OnControllerInitialized(startup_status_);
 
   // Pull the initial straw if active downloads haven't reach maximum.
   ActivateMoreDownloads();
@@ -824,6 +825,17 @@ void ControllerImpl::ActivateMoreDownloads() {
                             device_status_listener_->CurrentDeviceStatus());
   }
   scheduler_->Reschedule(model_->PeekEntries());
+
+  // TODO(shaktisahu): Find out the condition.
+  entries_states.clear();
+  for (const auto* const entry : model_->PeekEntries())
+    entries_states[entry->state]++;
+  int num_remaining_downloads = entries_states[Entry::State::ACTIVE] +
+                                entries_states[Entry::State::AVAILABLE];
+  if (num_remaining_downloads == 0) {
+    HandleTaskFinished(DownloadTaskType::DOWNLOAD_TASK, false,
+                       stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
+  }
 }
 
 void ControllerImpl::HandleExternalDownload(const std::string& guid,

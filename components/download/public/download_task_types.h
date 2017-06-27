@@ -10,11 +10,13 @@ namespace download {
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.components.download
 enum class DownloadTaskType {
+  NONE = 0,
+
   // Task to invoke download service to take various download actions.
-  DOWNLOAD_TASK = 0,
+  DOWNLOAD_TASK = 1,
 
   // Task to remove unnecessary files from the system.
-  CLEANUP_TASK = 1,
+  CLEANUP_TASK = 2,
 };
 
 }  // namespace download

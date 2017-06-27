@@ -5,11 +5,13 @@
 #ifndef COMPONENTS_DOWNLOAD_INTERNAL_DOWNLOAD_SERVICE_IMPL_H_
 #define COMPONENTS_DOWNLOAD_INTERNAL_DOWNLOAD_SERVICE_IMPL_H_
 
+#include <deque>
 #include <memory>
 #include <string>
 
 #include "base/macros.h"
 #include "components/download/internal/config.h"
+#include "components/download/internal/controller.h"
 #include "components/download/internal/service_config_impl.h"
 #include "components/download/public/download_service.h"
 
@@ -20,7 +22,8 @@ struct DownloadParams;
 struct SchedulingParams;
 
 // The internal implementation of the DownloadService.
-class DownloadServiceImpl : public DownloadService {
+class DownloadServiceImpl : public DownloadService,
+                            public Controller::StartupListener {
  public:
   DownloadServiceImpl(std::unique_ptr<Configuration> config,
                       std::unique_ptr<Controller> controller);
@@ -39,6 +42,9 @@ class DownloadServiceImpl : public DownloadService {
   void ChangeDownloadCriteria(const std::string& guid,
                               const SchedulingParams& params) override;
 
+  // Controller::StartupListener implementation.
+  void OnControllerInitialized(const StartupStatus& startup_status) override;
+
  private:
   // config_ needs to be destructed after controller_ and service_config_ which
   // hold onto references to it.
@@ -46,6 +52,12 @@ class DownloadServiceImpl : public DownloadService {
 
   std::unique_ptr<Controller> controller_;
   ServiceConfigImpl service_config_;
+
+  // Contains a list of pending actions that were requested before startup was
+  // complete.
+  std::deque<std::pair<base::Closure, DownloadTaskType>> pending_actions_;
+
+  bool startup_completed_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadServiceImpl);
 };
