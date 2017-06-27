@@ -80,6 +80,10 @@
       status: "stable",
     },
     {
+      name: "AsyncCookiesAPI",
+      status: "test",
+    },
+    {
       name: "AudioOutputDevices",
       status: "stable",
     },
