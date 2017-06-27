@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7b32a0c_b4af5712",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-27T20:46:44Z",
+      "side": 1,
+      "message": "ubernit: I\u0027d switch the order of the declarations (start logically comes before end).",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "e9b9d28afcdd26e153265d49933939da3d83e91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761db8cb_5cbf8d87",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-27T20:46:44Z",
+      "side": 1,
+      "message": "There\u0027s no \"timer\" to speak of. Maybe:\n\nFor observing the status of the session tracker.",
+      "range": {
+        "startLine": 57,
+        "startChar": 45,
+        "endLine": 57,
+        "endChar": 50
+      },
+      "revId": "e9b9d28afcdd26e153265d49933939da3d83e91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a0606d_b07ed016",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-27T20:46:44Z",
+      "side": 1,
+      "message": "I\u0027d just call this \"session_ended\" as its a simple accessor. Maybe a better name is \"session_ended_seen\", for both the accessor and the variable.",
+      "revId": "e9b9d28afcdd26e153265d49933939da3d83e91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cf4c3a_b6a4bcee",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-27T20:46:44Z",
+      "side": 1,
+      "message": "Ditto for \"session_started_seen\".",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "e9b9d28afcdd26e153265d49933939da3d83e91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
