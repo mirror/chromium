@@ -174,7 +174,7 @@ bool ResourceLoader::WillFollowRedirect(
         resource_->GetType(), new_request, new_request.Url(),
         resource_->Options(),
         /* Don't send security violation reports for unused preloads */
-        (resource_->IsUnusedPreload()
+        (resource_->GetPreloadState() == Resource::kPreloadNotReferenced
              ? SecurityViolationReportingPolicy::kSuppressReporting
              : SecurityViolationReportingPolicy::kReport),
         FetchParameters::kUseDefaultOriginRestrictionForType);
@@ -280,7 +280,8 @@ ResourceRequestBlockedReason ResourceLoader::CanAccessResponse(
     Resource* resource,
     const ResourceResponse& response) const {
   // Redirects can change the response URL different from one of request.
-  bool unused_preload = resource->IsUnusedPreload();
+  bool unused_preload =
+      resource->GetPreloadState() == Resource::kPreloadNotReferenced;
   ResourceRequestBlockedReason blocked_reason = Context().CanRequest(
       resource->GetType(), resource->GetResourceRequest(), response.Url(),
       resource->Options(),

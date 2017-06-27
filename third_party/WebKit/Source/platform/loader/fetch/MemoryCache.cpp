@@ -339,7 +339,8 @@ void MemoryCache::EvictResources(EvictResourcePolicy policy) {
       DCHECK(resource_iter->value->GetResource());
       Resource* resource = resource_iter->value->GetResource();
       DCHECK(resource);
-      if (policy != kEvictAllResources && resource->IsUnusedPreload()) {
+      if (policy != kEvictAllResources &&
+          resource->GetPreloadState() == Resource::kPreloadNotReferenced) {
         // Store unused preloads aside, so they could be added back later.
         // That is in order to avoid the performance impact of iterating over
         // the same resource multiple times.
