@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c654ca6_a33db6cf",
+        "filename": "services/service_manager/embedder/runner/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-27T15:24:55Z",
+      "side": 1,
+      "message": "Sorry but do we really need a separate target or dir at all? service manager code has historically been wayyyyy overly hierarchical and I\u0027ve been meaning to flatten it. I\u0027d prefer to keep the embedder library flat if possible.",
+      "revId": "9f2b57b791ebcc97305a3717fe6b0327028269fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
