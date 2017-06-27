@@ -16,6 +16,24 @@
       "revId": "288f0253a547fe207aee6f828a46c766e3321df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12877924_dd71fa1c",
+        "filename": "media/base/mac/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-27T21:52:22Z",
+      "side": 1,
+      "message": "//media/filters/BUILD.gn : 162\n\nSome bots was failing for mac build. So it\u0027s dependency required for //media/filters.",
+      "parentUuid": "49947c90_2cdca881",
+      "revId": "288f0253a547fe207aee6f828a46c766e3321df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
