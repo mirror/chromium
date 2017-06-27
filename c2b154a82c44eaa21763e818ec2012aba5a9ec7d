@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0078424a_ef448321",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21465,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-27T15:17:51Z",
+      "side": 1,
+      "message": "To me, \"when extensions auto-update\" implies that this is recorded each time there is an auto-update, which isn\u0027t quite right.  Instead, this is recorded once when the ExtensionService is created, iff autoupdate is enabled.  Since ExtensionService is a pretty extension-y concept, and is tied to a profile, I\u0027d probably say something like \"recorded at profile creation if extensions autoupdate is enabled\".",
+      "revId": "c2b154a82c44eaa21763e818ec2012aba5a9ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
