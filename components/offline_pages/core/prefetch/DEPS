@@ -1,5 +1,6 @@
 include_rules = [
   "+google_apis",
+  "+components/variations",
   "+components/gcm_driver",
   "+components/ntp_snippets",
   "+components/version_info",
