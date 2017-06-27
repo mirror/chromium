@@ -608,8 +608,6 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       std::move(display_output_surface), std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(
           compositor->task_runner().get()));
-  GetSurfaceManager()->RegisterBeginFrameSource(begin_frame_source,
-                                                compositor->frame_sink_id());
   // Note that we are careful not to destroy prior BeginFrameSource objects
   // until we have reset |data->display|.
   data->synthetic_begin_frame_source = std::move(synthetic_begin_frame_source);
@@ -632,6 +630,12 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
                 viz::HostSharedBitmapManager::current());
   data->display->Resize(compositor->size());
   data->display->SetOutputIsSecure(data->output_is_secure);
+
+  // Register BeginFrameSource after the creation of DirectLayerTreeFrameSink
+  // so that we don't miss any BeginFrames.
+  GetSurfaceManager()->RegisterBeginFrameSource(begin_frame_source,
+                                                compositor->frame_sink_id());
+
   compositor->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));
 }
 
