@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75d440d9_16d516df",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-27T21:14:59Z",
+      "side": 1,
+      "message": "Just debugged the crashes of layout tests reported in https://storage.googleapis.com/chromium-layout-test-archives/linux_layout_tests_slimming_paint_v2/5389/layout-test-results/results.html#, and found the above field is the reason: it holds property node references until the next frame, breaking the DCHECKs in PropertyTreeState which doesn\u0027t expect itself to hold the last references to property nodes.\n\nThe simplest way seems to remove the DCHECKs in PropertyTreeState to allow its last references to property nodes. WDYT?",
+      "revId": "86f47e27e80e92160f268aa5c73df9309f3e8986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
