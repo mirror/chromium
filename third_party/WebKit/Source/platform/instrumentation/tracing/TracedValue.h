@@ -11,7 +11,6 @@
 
 namespace blink {
 
-// TracedValue copies all passed names and values and doesn't retain references.
 class PLATFORM_EXPORT TracedValue final
     : public base::trace_event::ConvertableToTraceFormat {
   WTF_MAKE_NONCOPYABLE(TracedValue);
@@ -29,6 +28,7 @@ class PLATFORM_EXPORT TracedValue final
   void SetBoolean(const char* name, bool value);
   void SetString(const char* name, const String& value);
   void BeginArray(const char* name);
+  void BeginArrayWithNonCopiedName(const char* name);
   void BeginDictionary(const char* name);
 
   void PushInteger(int);
