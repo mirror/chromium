@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c56731_5bfe3cc2",
+        "filename": "components/tracing/common/process_metrics_memory_dump_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-27T04:14:42Z",
+      "side": 1,
+      "message": "TODO(hjd) The actual impl lives in service/resource_coordinator. Update the callsites and remove this file.",
+      "revId": "5b6f2e70641ce84d4c93da00e773f177c626476a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
