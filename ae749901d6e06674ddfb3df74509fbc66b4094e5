@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4b5c5498_6e0a36de",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T22:20:40Z",
+      "side": 1,
+      "message": "I removed the default view code, which doesn\u0027t seem to have had any negative effect.",
+      "parentUuid": "000ddd59_3b40e470",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f810ba1b_ae0d79f3",
         "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
         "patchSetId": 2
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "ae194769_6c36d433",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T22:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1144e1d9_80c0a47b",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee45db9_7448c17c",
         "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.h",
         "patchSetId": 2
@@ -122,6 +158,24 @@
       "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a482eeb_0b417ac0",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T22:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee45db9_7448c17c",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
