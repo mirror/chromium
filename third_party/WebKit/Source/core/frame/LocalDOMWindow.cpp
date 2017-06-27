@@ -526,14 +526,8 @@ void LocalDOMWindow::SendOrientationChangeEvent() {
   // to send the event to, to mitigate side effects from event handlers
   // potentially interfering with others.
   HeapVector<Member<LocalFrame>> frames;
-  frames.push_back(GetFrame());
-  for (size_t i = 0; i < frames.size(); i++) {
-    for (Frame* child = frames[i]->Tree().FirstChild(); child;
-         child = child->Tree().NextSibling()) {
-      if (child->IsLocalFrame())
-        frames.push_back(ToLocalFrame(child));
-    }
-  }
+  for (LocalFrame* frame : GetFrame()->Tree().GetLocalRootRange())
+    frames.push_back(frame);
 
   for (LocalFrame* frame : frames) {
     frame->DomWindow()->DispatchEvent(
