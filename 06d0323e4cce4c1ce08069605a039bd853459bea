@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "104a4d7e_51289d46",
+        "filename": "components/metrics/machine_id_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-06-27T21:38:35Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "06d0323e4cce4c1ce08069605a039bd853459bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
