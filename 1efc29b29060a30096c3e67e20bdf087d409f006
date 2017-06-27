@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dbb243fd_11ebda50",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T06:22:40Z",
+      "side": 1,
+      "message": "Ah, I see now this is after the erase() call.",
+      "parentUuid": "8a636bb5_95522502",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e3aafb0_ed1ff64a",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 22
@@ -189,6 +207,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "15fae6e6_feec40d9",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "633fc7d1_798e524e",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T06:22:40Z",
+      "side": 1,
+      "message": "Sorry I meant to ask: What is the \"none\" of \"none exists\"?\n\nI think this should say something like \"If no suitable RenderProcessHost for the SiteInstance exists according to the policy...\"",
+      "parentUuid": "9bfdef9d_395345e8",
       "range": {
         "startLine": 54,
         "startChar": 22,
