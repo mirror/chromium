@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c670be_f2c29356",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T22:06:48Z",
+      "side": 1,
+      "message": "Nit: Name this GetTopOffset() since \"NewTabButton\" is already part of the classname.",
+      "revId": "b0e36951a180c160a5857706e452f747a8bce886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6a038a_ac827972",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T22:06:48Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem like this #include is necessary.  The forward-decl below should be sufficient.",
+      "revId": "b0e36951a180c160a5857706e452f747a8bce886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
