@@ -92,7 +92,7 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
 
    private:
     const char* tracing_name_ = nullptr;
-    void* id_;
+    const void* id_;
 
     DISALLOW_COPY_AND_ASSIGN(AsyncTraceState);
   };
