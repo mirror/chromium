@@ -46,7 +46,7 @@ class DocumentLoader;
 class ResourceRequest;
 class ResourceResponse;
 
-class CORE_EXPORT ApplicationCacheHost final
+class CORE_EXPORT_N2475 ApplicationCacheHost final
     : public GarbageCollectedFinalized<ApplicationCacheHost>,
       NON_EXPORTED_BASE(public WebApplicationCacheHostClient) {
   WTF_MAKE_NONCOPYABLE(ApplicationCacheHost);

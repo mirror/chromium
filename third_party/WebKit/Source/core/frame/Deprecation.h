@@ -15,7 +15,7 @@ namespace blink {
 
 class LocalFrame;
 
-class CORE_EXPORT Deprecation {
+class CORE_EXPORT_N2026 Deprecation {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(Deprecation);
 

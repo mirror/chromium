@@ -15,7 +15,7 @@ namespace blink {
 
 // This struct is used for storing margins, borders or padding of a box on all
 // four edges.
-struct CORE_EXPORT NGBoxStrut {
+struct CORE_EXPORT_N2403 NGBoxStrut {
   NGBoxStrut() {}
   NGBoxStrut(LayoutUnit inline_start,
              LayoutUnit inline_end,
@@ -61,14 +61,14 @@ struct CORE_EXPORT NGBoxStrut {
   LayoutUnit block_end;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGBoxStrut&);
+CORE_EXPORT_N2404 std::ostream& operator<<(std::ostream&, const NGBoxStrut&);
 
 struct NGPixelSnappedPhysicalBoxStrut;
 
 // Struct to store physical dimensions, independent of writing mode and
 // direction.
 // See https://drafts.csswg.org/css-writing-modes-3/#abstract-box
-struct CORE_EXPORT NGPhysicalBoxStrut {
+struct CORE_EXPORT_N2405 NGPhysicalBoxStrut {
   NGPhysicalBoxStrut() {}
   NGPhysicalBoxStrut(LayoutUnit top,
                      LayoutUnit right,
@@ -86,7 +86,7 @@ struct CORE_EXPORT NGPhysicalBoxStrut {
 };
 
 // Struct to store pixel snapped physical dimensions.
-struct CORE_EXPORT NGPixelSnappedPhysicalBoxStrut {
+struct CORE_EXPORT_N2406 NGPixelSnappedPhysicalBoxStrut {
   NGPixelSnappedPhysicalBoxStrut() {}
   NGPixelSnappedPhysicalBoxStrut(int top, int right, int bottom, int left)
       : top(top), right(right), bottom(bottom), left(left) {}

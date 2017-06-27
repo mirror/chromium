@@ -34,7 +34,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SVGFilterElement final : public SVGElement,
+class CORE_EXPORT_N2605 SVGFilterElement final : public SVGElement,
                                            public SVGURIReference {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(SVGFilterElement);

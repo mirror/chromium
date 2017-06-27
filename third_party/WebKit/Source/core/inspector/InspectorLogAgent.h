@@ -15,7 +15,7 @@ namespace blink {
 class ConsoleMessage;
 class ConsoleMessageStorage;
 
-class CORE_EXPORT InspectorLogAgent
+class CORE_EXPORT_N2264 InspectorLogAgent
     : public InspectorBaseAgent<protocol::Log::Metainfo>,
       public PerformanceMonitor::Client {
   USING_GARBAGE_COLLECTED_MIXIN(InspectorLogAgent);

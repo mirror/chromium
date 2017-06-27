@@ -14,7 +14,7 @@ namespace blink {
 
 class ExceptionState;
 
-class CORE_EXPORT Iterator : public GarbageCollectedFinalized<Iterator>,
+class CORE_EXPORT_N1660 Iterator : public GarbageCollectedFinalized<Iterator>,
                              public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

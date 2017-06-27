@@ -18,7 +18,7 @@ class StyleSheetContents;
 
 // FIXME: We should consider building CSSSelectors directly instead of using
 // the intermediate CSSParserSelector.
-class CORE_EXPORT CSSSelectorParser {
+class CORE_EXPORT_N1582 CSSSelectorParser {
   STACK_ALLOCATED();
 
  public:

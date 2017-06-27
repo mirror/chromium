@@ -13,7 +13,7 @@ namespace blink {
 
 // NGPhysicalOffset is the position of a rect (typically a fragment) relative to
 // its parent rect in the physical coordinate system.
-struct CORE_EXPORT NGPhysicalOffset {
+struct CORE_EXPORT_N2418 NGPhysicalOffset {
   NGPhysicalOffset() {}
   NGPhysicalOffset(LayoutUnit left, LayoutUnit top) : left(left), top(top) {}
 
@@ -31,7 +31,7 @@ struct CORE_EXPORT NGPhysicalOffset {
   String ToString() const;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGPhysicalOffset&);
+CORE_EXPORT_N2419 std::ostream& operator<<(std::ostream&, const NGPhysicalOffset&);
 
 }  // namespace blink
 

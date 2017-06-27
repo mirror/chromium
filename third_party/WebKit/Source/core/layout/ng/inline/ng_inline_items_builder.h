@@ -27,7 +27,7 @@ class NGInlineItem;
 // By calling EnterInline/ExitInline, it inserts bidirectional control
 // characters as defined in:
 // https://drafts.csswg.org/css-writing-modes-3/#bidi-control-codes-injection-table
-class CORE_EXPORT NGInlineItemsBuilder {
+class CORE_EXPORT_N2427 NGInlineItemsBuilder {
   STACK_ALLOCATED();
 
  public:

@@ -36,7 +36,7 @@ namespace blink {
 
 class KeyboardEvent;
 
-class CORE_EXPORT TypeAheadDataSource {
+class CORE_EXPORT_N2187 TypeAheadDataSource {
  public:
   virtual ~TypeAheadDataSource() {}
 

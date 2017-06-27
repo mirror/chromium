@@ -14,7 +14,7 @@ namespace blink {
 
 // NGLogicalRect is the position and size of a rect (typically a fragment)
 // relative to its parent rect in the logical coordinate system.
-struct CORE_EXPORT NGLogicalRect {
+struct CORE_EXPORT_N2410 NGLogicalRect {
   NGLogicalRect() {}
   NGLogicalRect(const NGLogicalOffset& offset, const NGLogicalSize& size)
       : offset(offset), size(size) {}
@@ -56,7 +56,7 @@ struct CORE_EXPORT NGLogicalRect {
   NGLogicalSize size;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGLogicalRect&);
+CORE_EXPORT_N2411 std::ostream& operator<<(std::ostream&, const NGLogicalRect&);
 
 }  // namespace blink
 

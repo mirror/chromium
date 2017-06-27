@@ -52,7 +52,7 @@ struct ObjectResizeInfo {
 
 typedef HashMap<const LayoutObject*, ObjectResizeInfo> ObjectLayerSizeMap;
 
-class CORE_EXPORT ImageQualityController final {
+class CORE_EXPORT_N2293 ImageQualityController final {
   WTF_MAKE_NONCOPYABLE(ImageQualityController);
   USING_FAST_MALLOC(ImageQualityController);
 

@@ -38,7 +38,7 @@ namespace blink {
 // Builds on the text iterator, adding a character position so we can walk one
 // character at a time, or faster, as needed. Useful for searching.
 template <typename Strategy>
-class CORE_EXPORT CharacterIteratorAlgorithm {
+class CORE_EXPORT_N1931 CharacterIteratorAlgorithm {
   STACK_ALLOCATED();
 
  public:
@@ -96,7 +96,7 @@ using CharacterIterator = CharacterIteratorAlgorithm<EditingStrategy>;
 extern template class CORE_EXTERN_TEMPLATE_EXPORT
     CharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
 
-CORE_EXPORT EphemeralRange CalculateCharacterSubrange(const EphemeralRange&,
+CORE_EXPORT_N1932 EphemeralRange CalculateCharacterSubrange(const EphemeralRange&,
                                                       int character_offset,
                                                       int character_count);
 

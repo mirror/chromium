@@ -16,7 +16,7 @@ namespace blink {
 class ScriptState;
 class ScriptValue;
 
-class CORE_EXPORT V8ObjectBuilder final {
+class CORE_EXPORT_N110 V8ObjectBuilder final {
   STACK_ALLOCATED();
 
  public:

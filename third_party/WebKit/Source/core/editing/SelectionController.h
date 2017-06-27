@@ -40,7 +40,7 @@ namespace blink {
 class HitTestResult;
 class LocalFrame;
 
-class CORE_EXPORT SelectionController final
+class CORE_EXPORT_N1809 SelectionController final
     : public GarbageCollectedFinalized<SelectionController>,
       public SynchronousMutationObserver {
   WTF_MAKE_NONCOPYABLE(SelectionController);

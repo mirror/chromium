@@ -35,7 +35,7 @@ class RuleSet;
 class SpaceSplitString;
 class StyleResolver;
 
-class CORE_EXPORT SharedStyleFinder {
+class CORE_EXPORT_N1595 SharedStyleFinder {
   STACK_ALLOCATED();
 
  public:

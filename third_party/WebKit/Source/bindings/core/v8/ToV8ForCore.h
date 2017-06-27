@@ -22,10 +22,10 @@ class Dictionary;
 class DOMWindow;
 class EventTarget;
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(DOMWindow*,
+CORE_EXPORT_N63 v8::Local<v8::Value> ToV8(DOMWindow*,
                                       v8::Local<v8::Object> creation_context,
                                       v8::Isolate*);
-CORE_EXPORT v8::Local<v8::Value> ToV8(EventTarget*,
+CORE_EXPORT_N64 v8::Local<v8::Value> ToV8(EventTarget*,
                                       v8::Local<v8::Object> creation_context,
                                       v8::Isolate*);
 inline v8::Local<v8::Value> ToV8(Node* node,

@@ -15,7 +15,7 @@ namespace blink {
 
 // Boolean
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLBoolean>
+struct CORE_EXPORT_N30 NativeValueTraits<IDLBoolean>
     : public NativeValueTraitsBase<IDLBoolean> {
   static bool NativeValue(v8::Isolate* isolate,
                           v8::Local<v8::Value> value,
@@ -31,7 +31,7 @@ struct CORE_EXPORT NativeValueTraits<IDLBoolean>
 // specify how the integers should be converted. The default nativeValue()
 // overload will always use NormalConversion.
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLByte>
+struct CORE_EXPORT_N31 NativeValueTraits<IDLByte>
     : public NativeValueTraitsBase<IDLByte> {
   static int8_t NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
@@ -48,7 +48,7 @@ struct CORE_EXPORT NativeValueTraits<IDLByte>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLOctet>
+struct CORE_EXPORT_N32 NativeValueTraits<IDLOctet>
     : public NativeValueTraitsBase<IDLOctet> {
   static uint8_t NativeValue(v8::Isolate* isolate,
                              v8::Local<v8::Value> value,
@@ -65,7 +65,7 @@ struct CORE_EXPORT NativeValueTraits<IDLOctet>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLShort>
+struct CORE_EXPORT_N33 NativeValueTraits<IDLShort>
     : public NativeValueTraitsBase<IDLShort> {
   static int16_t NativeValue(v8::Isolate* isolate,
                              v8::Local<v8::Value> value,
@@ -82,7 +82,7 @@ struct CORE_EXPORT NativeValueTraits<IDLShort>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLUnsignedShort>
+struct CORE_EXPORT_N34 NativeValueTraits<IDLUnsignedShort>
     : public NativeValueTraitsBase<IDLUnsignedShort> {
   static uint16_t NativeValue(v8::Isolate* isolate,
                               v8::Local<v8::Value> value,
@@ -99,7 +99,7 @@ struct CORE_EXPORT NativeValueTraits<IDLUnsignedShort>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLLong>
+struct CORE_EXPORT_N35 NativeValueTraits<IDLLong>
     : public NativeValueTraitsBase<IDLLong> {
   static int32_t NativeValue(v8::Isolate* isolate,
                              v8::Local<v8::Value> value,
@@ -116,7 +116,7 @@ struct CORE_EXPORT NativeValueTraits<IDLLong>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLUnsignedLong>
+struct CORE_EXPORT_N36 NativeValueTraits<IDLUnsignedLong>
     : public NativeValueTraitsBase<IDLUnsignedLong> {
   static uint32_t NativeValue(v8::Isolate* isolate,
                               v8::Local<v8::Value> value,
@@ -133,7 +133,7 @@ struct CORE_EXPORT NativeValueTraits<IDLUnsignedLong>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLLongLong>
+struct CORE_EXPORT_N37 NativeValueTraits<IDLLongLong>
     : public NativeValueTraitsBase<IDLLongLong> {
   static int64_t NativeValue(v8::Isolate* isolate,
                              v8::Local<v8::Value> value,
@@ -150,7 +150,7 @@ struct CORE_EXPORT NativeValueTraits<IDLLongLong>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLUnsignedLongLong>
+struct CORE_EXPORT_N38 NativeValueTraits<IDLUnsignedLongLong>
     : public NativeValueTraitsBase<IDLUnsignedLongLong> {
   static uint64_t NativeValue(v8::Isolate* isolate,
                               v8::Local<v8::Value> value,
@@ -168,7 +168,7 @@ struct CORE_EXPORT NativeValueTraits<IDLUnsignedLongLong>
 
 // Strings
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLByteString>
+struct CORE_EXPORT_N39 NativeValueTraits<IDLByteString>
     : public NativeValueTraitsBase<IDLByteString> {
   static String NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
@@ -178,7 +178,7 @@ struct CORE_EXPORT NativeValueTraits<IDLByteString>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLString>
+struct CORE_EXPORT_N40 NativeValueTraits<IDLString>
     : public NativeValueTraitsBase<IDLString> {
   static String NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
@@ -199,7 +199,7 @@ struct CORE_EXPORT NativeValueTraits<IDLString>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLUSVString>
+struct CORE_EXPORT_N41 NativeValueTraits<IDLUSVString>
     : public NativeValueTraitsBase<IDLUSVString> {
   static String NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
@@ -210,7 +210,7 @@ struct CORE_EXPORT NativeValueTraits<IDLUSVString>
 
 // Floats and doubles
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLDouble>
+struct CORE_EXPORT_N42 NativeValueTraits<IDLDouble>
     : public NativeValueTraitsBase<IDLDouble> {
   static double NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
@@ -220,7 +220,7 @@ struct CORE_EXPORT NativeValueTraits<IDLDouble>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLUnrestrictedDouble>
+struct CORE_EXPORT_N43 NativeValueTraits<IDLUnrestrictedDouble>
     : public NativeValueTraitsBase<IDLUnrestrictedDouble> {
   static double NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,
@@ -230,7 +230,7 @@ struct CORE_EXPORT NativeValueTraits<IDLUnrestrictedDouble>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLFloat>
+struct CORE_EXPORT_N44 NativeValueTraits<IDLFloat>
     : public NativeValueTraitsBase<IDLFloat> {
   static float NativeValue(v8::Isolate* isolate,
                            v8::Local<v8::Value> value,
@@ -240,7 +240,7 @@ struct CORE_EXPORT NativeValueTraits<IDLFloat>
 };
 
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLUnrestrictedFloat>
+struct CORE_EXPORT_N45 NativeValueTraits<IDLUnrestrictedFloat>
     : public NativeValueTraitsBase<IDLUnrestrictedFloat> {
   static float NativeValue(v8::Isolate* isolate,
                            v8::Local<v8::Value> value,
@@ -251,7 +251,7 @@ struct CORE_EXPORT NativeValueTraits<IDLUnrestrictedFloat>
 
 // Promises
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLPromise>
+struct CORE_EXPORT_N46 NativeValueTraits<IDLPromise>
     : public NativeValueTraitsBase<IDLPromise> {
   static ScriptPromise NativeValue(v8::Isolate* isolate,
                                    v8::Local<v8::Value> value,
@@ -267,7 +267,7 @@ struct CORE_EXPORT NativeValueTraits<IDLPromise>
 
 // Type-specific overloads
 template <>
-struct CORE_EXPORT NativeValueTraits<IDLDate>
+struct CORE_EXPORT_N47 NativeValueTraits<IDLDate>
     : public NativeValueTraitsBase<IDLDate> {
   static double NativeValue(v8::Isolate* isolate,
                             v8::Local<v8::Value> value,

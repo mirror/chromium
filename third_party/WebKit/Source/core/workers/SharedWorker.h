@@ -42,7 +42,7 @@ namespace blink {
 
 class ExceptionState;
 
-class CORE_EXPORT SharedWorker final
+class CORE_EXPORT_N2647 SharedWorker final
     : public AbstractWorker,
       public Supplementable<SharedWorker>,
       public ActiveScriptWrappable<SharedWorker> {

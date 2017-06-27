@@ -39,7 +39,7 @@ class Document;
 class ScriptLoader;
 class WebTaskRunner;
 
-class CORE_EXPORT ScriptRunner final
+class CORE_EXPORT_N1700 ScriptRunner final
     : public GarbageCollectedFinalized<ScriptRunner> {
   WTF_MAKE_NONCOPYABLE(ScriptRunner);
 

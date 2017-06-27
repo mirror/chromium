@@ -22,7 +22,7 @@ namespace blink {
 // A RefPtr alone does not prevent the underlying Resource from purging its data
 // buffer. This class holds a dummy client open for its lifetime in order to
 // guarantee that the data buffer will not be purged.
-class CORE_EXPORT ClassicPendingScript final
+class CORE_EXPORT_N1608 ClassicPendingScript final
     : public PendingScript,
       public ResourceOwner<ScriptResource>,
       public MemoryCoordinatorClient {

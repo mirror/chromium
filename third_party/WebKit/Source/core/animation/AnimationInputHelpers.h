@@ -18,7 +18,7 @@ class ExceptionState;
 class TimingFunction;
 class QualifiedName;
 
-class CORE_EXPORT AnimationInputHelpers {
+class CORE_EXPORT_N1435 AnimationInputHelpers {
   STATIC_ONLY(AnimationInputHelpers);
 
  public:

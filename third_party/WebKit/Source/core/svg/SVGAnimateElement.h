@@ -36,7 +36,7 @@ namespace blink {
 // during the animation since the value can be animated itself.
 enum AnimatedPropertyValueType { kRegularPropertyValue, kInheritValue };
 
-class CORE_EXPORT SVGAnimateElement : public SVGAnimationElement {
+class CORE_EXPORT_N2602 SVGAnimateElement : public SVGAnimationElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

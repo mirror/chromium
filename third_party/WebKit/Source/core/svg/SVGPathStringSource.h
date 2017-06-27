@@ -28,7 +28,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SVGPathStringSource {
+class CORE_EXPORT_N2611 SVGPathStringSource {
   WTF_MAKE_NONCOPYABLE(SVGPathStringSource);
   STACK_ALLOCATED();
 

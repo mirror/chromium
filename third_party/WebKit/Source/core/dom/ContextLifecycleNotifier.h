@@ -38,7 +38,7 @@ class SuspendableObject;
 class ContextLifecycleObserver;
 class ExecutionContext;
 
-class CORE_EXPORT ContextLifecycleNotifier
+class CORE_EXPORT_N1619 ContextLifecycleNotifier
     : public LifecycleNotifier<ExecutionContext, ContextLifecycleObserver> {
   WTF_MAKE_NONCOPYABLE(ContextLifecycleNotifier);
 

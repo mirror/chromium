@@ -50,7 +50,7 @@ class SecurityOrigin;
 // As for the lifetimes of ImageResourceContent::m_image and m_data, see this
 // document:
 // https://docs.google.com/document/d/1v0yTAZ6wkqX2U_M6BNIGUJpM1s0TIw1VsqpxoL7aciY/edit?usp=sharing
-class CORE_EXPORT ImageResource final
+class CORE_EXPORT_N2484 ImageResource final
     : public Resource,
       public MultipartImageResourceParser::Client {
   USING_GARBAGE_COLLECTED_MIXIN(ImageResource);

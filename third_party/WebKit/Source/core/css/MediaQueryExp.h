@@ -77,7 +77,7 @@ struct MediaQueryExpValue {
   }
 };
 
-class CORE_EXPORT MediaQueryExp {
+class CORE_EXPORT_N1510 MediaQueryExp {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

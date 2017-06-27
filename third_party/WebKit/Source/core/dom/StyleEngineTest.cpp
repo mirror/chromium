@@ -520,7 +520,7 @@ TEST_F(StyleEngineTest, ScheduleInvalidationAfterSubtreeRecalc) {
   // for some reason should change, this test will start failing and the
   // SubtreeStyleChange must be set another way.
   // Calling setNeedsStyleRecalc() explicitly with an arbitrary reason instead
-  // requires us to CORE_EXPORT the reason strings.
+  // requires us to CORE_EXPORT_N1707 the reason strings.
   GetStyleEngine().PlatformColorsChanged();
 
   // Check that no invalidations sets are scheduled when the document node is

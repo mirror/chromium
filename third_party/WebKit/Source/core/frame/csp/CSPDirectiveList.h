@@ -26,7 +26,7 @@ class ContentSecurityPolicy;
 
 typedef HeapVector<Member<SourceListDirective>> SourceListDirectiveVector;
 
-class CORE_EXPORT CSPDirectiveList
+class CORE_EXPORT_N2082 CSPDirectiveList
     : public GarbageCollectedFinalized<CSPDirectiveList> {
   WTF_MAKE_NONCOPYABLE(CSPDirectiveList);
 

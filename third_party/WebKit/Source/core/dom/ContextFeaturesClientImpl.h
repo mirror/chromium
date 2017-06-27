@@ -39,7 +39,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ContextFeaturesClientImpl final
+class CORE_EXPORT_N1618 ContextFeaturesClientImpl final
     : public NON_EXPORTED_BASE(ContextFeaturesClient) {
  public:
   static std::unique_ptr<ContextFeaturesClientImpl> Create() {

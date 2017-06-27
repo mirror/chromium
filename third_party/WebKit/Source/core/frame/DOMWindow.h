@@ -26,7 +26,7 @@ class ScriptValue;
 class SerializedScriptValue;
 class WindowProxyManager;
 
-class CORE_EXPORT DOMWindow : public EventTargetWithInlineData,
+class CORE_EXPORT_N2029 DOMWindow : public EventTargetWithInlineData,
                               public DOMWindowBase64 {
   DEFINE_WRAPPERTYPEINFO();
 

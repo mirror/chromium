@@ -33,7 +33,7 @@ class HTMLInputElement;
 // LayoutButton has a shadow node associated with it to receive click/hover
 // events.
 
-class CORE_EXPORT LayoutFileUploadControl final : public LayoutBlockFlow {
+class CORE_EXPORT_N2298 LayoutFileUploadControl final : public LayoutBlockFlow {
  public:
   LayoutFileUploadControl(HTMLInputElement*);
   ~LayoutFileUploadControl() override;

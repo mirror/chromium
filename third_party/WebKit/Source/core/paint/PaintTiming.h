@@ -17,7 +17,7 @@ class LocalFrame;
 
 // PaintTiming is responsible for tracking paint-related timings for a given
 // document.
-class CORE_EXPORT PaintTiming final
+class CORE_EXPORT_N2557 PaintTiming final
     : public GarbageCollectedFinalized<PaintTiming>,
       public Supplement<Document> {
   WTF_MAKE_NONCOPYABLE(PaintTiming);

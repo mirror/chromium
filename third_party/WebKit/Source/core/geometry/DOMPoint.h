@@ -12,7 +12,7 @@ namespace blink {
 
 class DOMPointInit;
 
-class CORE_EXPORT DOMPoint final : public DOMPointReadOnly {
+class CORE_EXPORT_N2088 DOMPoint final : public DOMPointReadOnly {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

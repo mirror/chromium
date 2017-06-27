@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SerializedScriptValueFactory {
+class CORE_EXPORT_N121 SerializedScriptValueFactory {
   WTF_MAKE_NONCOPYABLE(SerializedScriptValueFactory);
   USING_FAST_MALLOC(SerializedScriptValueFactory);
 

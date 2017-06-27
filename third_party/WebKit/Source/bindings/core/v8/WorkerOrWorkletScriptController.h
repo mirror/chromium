@@ -48,7 +48,7 @@ class ExceptionState;
 class ScriptSourceCode;
 class WorkerOrWorkletGlobalScope;
 
-class CORE_EXPORT WorkerOrWorkletScriptController
+class CORE_EXPORT_N117 WorkerOrWorkletScriptController
     : public GarbageCollectedFinalized<WorkerOrWorkletScriptController> {
   WTF_MAKE_NONCOPYABLE(WorkerOrWorkletScriptController);
 

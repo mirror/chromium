@@ -34,7 +34,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLIFrameElement final
+class CORE_EXPORT_N2118 HTMLIFrameElement final
     : public HTMLFrameElementBase,
       public Supplementable<HTMLIFrameElement> {
   DEFINE_WRAPPERTYPEINFO();

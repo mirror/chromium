@@ -36,7 +36,7 @@ class CompactHTMLToken;
 class HTMLTokenizer;
 class HTMLTreeBuilder;
 
-class CORE_EXPORT HTMLTreeBuilderSimulator {
+class CORE_EXPORT_N2212 HTMLTreeBuilderSimulator {
   USING_FAST_MALLOC(HTMLTreeBuilderSimulator);
 
  private:

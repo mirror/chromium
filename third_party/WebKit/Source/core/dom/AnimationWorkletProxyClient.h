@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT AnimationWorkletProxyClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N1601 AnimationWorkletProxyClient : public GarbageCollectedMixin {
   WTF_MAKE_NONCOPYABLE(AnimationWorkletProxyClient);
 
  public:

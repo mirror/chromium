@@ -48,7 +48,7 @@ class ScriptState;
 // Typedef from FormData.idl:
 typedef FileOrUSVString FormDataEntryValue;
 
-class CORE_EXPORT FormData final
+class CORE_EXPORT_N2093 FormData final
     : public GarbageCollected<FormData>,
       public ScriptWrappable,
       public PairIterable<String, FormDataEntryValue> {

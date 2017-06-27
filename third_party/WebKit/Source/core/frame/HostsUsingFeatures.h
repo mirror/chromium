@@ -19,7 +19,7 @@ class Document;
 class EventTarget;
 class ScriptState;
 
-class CORE_EXPORT HostsUsingFeatures {
+class CORE_EXPORT_N2040 HostsUsingFeatures {
   DISALLOW_NEW();
 
  public:
@@ -56,7 +56,7 @@ class CORE_EXPORT HostsUsingFeatures {
   void DocumentDetached(Document&);
   void UpdateMeasurementsAndClear();
 
-  class CORE_EXPORT Value {
+  class CORE_EXPORT_N2041 Value {
     DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
    public:

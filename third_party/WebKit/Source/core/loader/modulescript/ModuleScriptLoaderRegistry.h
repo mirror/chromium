@@ -20,7 +20,7 @@ class ResourceFetcher;
 enum class ModuleGraphLevel;
 
 // ModuleScriptLoaderRegistry keeps active ModuleLoaders alive.
-class CORE_EXPORT ModuleScriptLoaderRegistry final
+class CORE_EXPORT_N2477 ModuleScriptLoaderRegistry final
     : public GarbageCollected<ModuleScriptLoaderRegistry> {
  public:
   static ModuleScriptLoaderRegistry* Create() {

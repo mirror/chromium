@@ -38,7 +38,7 @@
 
 namespace blink {
 
-class CORE_EXPORT AnimatableValue : public RefCounted<AnimatableValue> {
+class CORE_EXPORT_N1462 AnimatableValue : public RefCounted<AnimatableValue> {
  public:
   virtual ~AnimatableValue() {}
 

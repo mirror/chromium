@@ -23,7 +23,7 @@ enum class ModuleGraphLevel;
 
 // A ModuleMap implements "module map" spec.
 // https://html.spec.whatwg.org/#module-map
-class CORE_EXPORT ModuleMap final : public GarbageCollected<ModuleMap>,
+class CORE_EXPORT_N1668 ModuleMap final : public GarbageCollected<ModuleMap>,
                                     public TraceWrapperBase {
   WTF_MAKE_NONCOPYABLE(ModuleMap);
   class Entry;

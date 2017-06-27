@@ -18,7 +18,7 @@ namespace blink {
 class LocalFrame;
 class Resource;
 
-class CORE_EXPORT InspectorResourceContentLoader final
+class CORE_EXPORT_N2270 InspectorResourceContentLoader final
     : public GarbageCollectedFinalized<InspectorResourceContentLoader> {
   WTF_MAKE_NONCOPYABLE(InspectorResourceContentLoader);
 

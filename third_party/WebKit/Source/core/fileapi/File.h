@@ -42,7 +42,7 @@ class FileMetadata;
 class KURL;
 class ScriptState;
 
-class CORE_EXPORT File final : public Blob {
+class CORE_EXPORT_N2006 File final : public Blob {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

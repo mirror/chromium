@@ -120,7 +120,7 @@ struct FocusParams {
 
 typedef HeapVector<Member<Attr>> AttrNodeList;
 
-class CORE_EXPORT Element : public ContainerNode {
+class CORE_EXPORT_N1649 Element : public ContainerNode {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

@@ -58,7 +58,7 @@ inline NinePiece& operator++(NinePiece& piece) {
 //       |         |              +------------------+
 //
 // it generates drawing information for the nine border pieces.
-class CORE_EXPORT NinePieceImageGrid {
+class CORE_EXPORT_N2531 NinePieceImageGrid {
   STACK_ALLOCATED();
 
  public:
@@ -67,7 +67,7 @@ class CORE_EXPORT NinePieceImageGrid {
                      IntRect border_image_area,
                      const IntRectOutsets& border_widths);
 
-  struct CORE_EXPORT NinePieceDrawInfo {
+  struct CORE_EXPORT_N2532 NinePieceDrawInfo {
     STACK_ALLOCATED();
     bool is_drawable;
     bool is_corner_piece;

@@ -32,7 +32,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
+class CORE_EXPORT_N2136 HTMLScriptElement final : public HTMLElement,
                                             public ScriptElementBase {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(HTMLScriptElement);

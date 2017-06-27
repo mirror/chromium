@@ -36,7 +36,7 @@ namespace blink {
 
 // FIXME: Some consumers of this class may benefit from lazily fetching items
 // rather than creating the list statically as is currently the only option.
-class CORE_EXPORT DOMStringList final
+class CORE_EXPORT_N1643 DOMStringList final
     : public GarbageCollectedFinalized<DOMStringList>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

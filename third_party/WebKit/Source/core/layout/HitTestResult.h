@@ -52,7 +52,7 @@ class Scrollbar;
 // penetrating tests which collect all nodes (see: HitTestRequest::RequestType).
 enum ListBasedHitTestBehavior { kContinueHitTesting, kStopHitTesting };
 
-class CORE_EXPORT HitTestResult {
+class CORE_EXPORT_N2292 HitTestResult {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

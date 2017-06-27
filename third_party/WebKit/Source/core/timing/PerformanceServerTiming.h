@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT PerformanceServerTiming : public PerformanceEntry {
+class CORE_EXPORT_N2632 PerformanceServerTiming : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

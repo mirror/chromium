@@ -29,7 +29,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSParserSelector {
+class CORE_EXPORT_N1578 CSSParserSelector {
   WTF_MAKE_NONCOPYABLE(CSSParserSelector);
   USING_FAST_MALLOC(CSSParserSelector);
 

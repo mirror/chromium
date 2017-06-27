@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TextBufferBase {
+class CORE_EXPORT_N1936 TextBufferBase {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(TextBufferBase);
 

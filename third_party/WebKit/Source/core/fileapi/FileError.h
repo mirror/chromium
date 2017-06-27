@@ -56,20 +56,20 @@ enum ErrorCode {
   kPathExistsErr = 12,
 };
 
-CORE_EXPORT extern const char kAbortErrorMessage[];
-CORE_EXPORT extern const char kEncodingErrorMessage[];
-CORE_EXPORT extern const char kInvalidStateErrorMessage[];
-CORE_EXPORT extern const char kNoModificationAllowedErrorMessage[];
-CORE_EXPORT extern const char kNotFoundErrorMessage[];
-CORE_EXPORT extern const char kNotReadableErrorMessage[];
-CORE_EXPORT extern const char kPathExistsErrorMessage[];
-CORE_EXPORT extern const char kQuotaExceededErrorMessage[];
-CORE_EXPORT extern const char kSecurityErrorMessage[];
-CORE_EXPORT extern const char kSyntaxErrorMessage[];
-CORE_EXPORT extern const char kTypeMismatchErrorMessage[];
+CORE_EXPORT_N2007 extern const char kAbortErrorMessage[];
+CORE_EXPORT_N2008 extern const char kEncodingErrorMessage[];
+CORE_EXPORT_N2009 extern const char kInvalidStateErrorMessage[];
+CORE_EXPORT_N2010 extern const char kNoModificationAllowedErrorMessage[];
+CORE_EXPORT_N2011 extern const char kNotFoundErrorMessage[];
+CORE_EXPORT_N2012 extern const char kNotReadableErrorMessage[];
+CORE_EXPORT_N2013 extern const char kPathExistsErrorMessage[];
+CORE_EXPORT_N2014 extern const char kQuotaExceededErrorMessage[];
+CORE_EXPORT_N2015 extern const char kSecurityErrorMessage[];
+CORE_EXPORT_N2016 extern const char kSyntaxErrorMessage[];
+CORE_EXPORT_N2017 extern const char kTypeMismatchErrorMessage[];
 
-CORE_EXPORT void ThrowDOMException(ExceptionState&, ErrorCode);
-CORE_EXPORT DOMException* CreateDOMException(ErrorCode);
+CORE_EXPORT_N2018 void ThrowDOMException(ExceptionState&, ErrorCode);
+CORE_EXPORT_N2019 DOMException* CreateDOMException(ErrorCode);
 
 }  // namespace FileError
 

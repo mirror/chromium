@@ -29,7 +29,7 @@ namespace blink {
 // definition is known, and generally the difference is important. For
 // example, a definition for "my-element", "my-element" must not be
 // applied to an element <button is="my-element">.
-class CORE_EXPORT CustomElementDescriptor final {
+class CORE_EXPORT_N1728 CustomElementDescriptor final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

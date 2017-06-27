@@ -37,7 +37,7 @@ namespace blink {
 
 enum MultilineMode { kMultilineDisabled, kMultilineEnabled };
 
-class CORE_EXPORT ScriptRegexp {
+class CORE_EXPORT_N57 ScriptRegexp {
   USING_FAST_MALLOC(ScriptRegexp);
   WTF_MAKE_NONCOPYABLE(ScriptRegexp);
 

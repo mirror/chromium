@@ -36,7 +36,7 @@ class CompositeEditCommand;
 class Document;
 class EditingState;
 
-class CORE_EXPORT EditCommand : public GarbageCollectedFinalized<EditCommand> {
+class CORE_EXPORT_N1917 EditCommand : public GarbageCollectedFinalized<EditCommand> {
  public:
   virtual ~EditCommand();
 
@@ -77,7 +77,7 @@ enum ShouldAssumeContentIsAlwaysEditable {
   kDoNotAssumeContentIsAlwaysEditable,
 };
 
-class CORE_EXPORT SimpleEditCommand : public EditCommand {
+class CORE_EXPORT_N1918 SimpleEditCommand : public EditCommand {
  public:
   virtual void DoUnapply() = 0;
   virtual void DoReapply();  // calls doApply()

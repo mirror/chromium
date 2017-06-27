@@ -12,7 +12,7 @@ namespace blink {
 class Element;
 class HTMLSlotElement;
 
-class CORE_EXPORT SlotScopedTraversal {
+class CORE_EXPORT_N1745 SlotScopedTraversal {
  public:
   static HTMLSlotElement* FindScopeOwnerSlot(const Element&);
   static Element* NearestInclusiveAncestorAssignedToSlot(const Element&);

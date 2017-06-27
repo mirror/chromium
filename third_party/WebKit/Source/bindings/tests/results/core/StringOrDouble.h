@@ -21,7 +21,7 @@
 
 namespace blink {
 
-class CORE_EXPORT StringOrDouble final {
+class CORE_EXPORT_N213 StringOrDouble final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   StringOrDouble();
@@ -53,15 +53,15 @@ class CORE_EXPORT StringOrDouble final {
   double m_double;
   String m_string;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const StringOrDouble&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N214 v8::Local<v8::Value> ToV8(const StringOrDouble&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8StringOrDouble final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, StringOrDouble&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N215 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, StringOrDouble&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const StringOrDouble&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N216 v8::Local<v8::Value> ToV8(const StringOrDouble&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, StringOrDouble& impl) {
@@ -75,7 +75,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, StringOrDouble& i
 
 template <>
 struct NativeValueTraits<StringOrDouble> : public NativeValueTraitsBase<StringOrDouble> {
-  CORE_EXPORT static StringOrDouble NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N217 static StringOrDouble NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

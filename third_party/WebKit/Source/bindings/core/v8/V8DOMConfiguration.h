@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class CORE_EXPORT V8DOMConfiguration final {
+class CORE_EXPORT_N102 V8DOMConfiguration final {
   STATIC_ONLY(V8DOMConfiguration);
 
  public:

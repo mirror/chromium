@@ -32,7 +32,7 @@ namespace blink {
 class HTMLSelectElement;
 class HTMLDivElement;
 
-class CORE_EXPORT HTMLOptGroupElement final : public HTMLElement {
+class CORE_EXPORT_N2130 HTMLOptGroupElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

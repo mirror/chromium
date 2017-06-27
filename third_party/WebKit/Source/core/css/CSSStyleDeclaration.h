@@ -35,7 +35,7 @@ class CSSStyleSheet;
 class CSSValue;
 class ExceptionState;
 
-class CORE_EXPORT CSSStyleDeclaration
+class CORE_EXPORT_N1492 CSSStyleDeclaration
     : public GarbageCollectedFinalized<CSSStyleDeclaration>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

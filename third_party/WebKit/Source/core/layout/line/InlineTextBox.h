@@ -48,7 +48,7 @@ class GraphicsContext;
 const unsigned short kCNoTruncation = USHRT_MAX;
 const unsigned short kCFullTruncation = USHRT_MAX - 1;
 
-class CORE_EXPORT InlineTextBox : public InlineBox {
+class CORE_EXPORT_N2346 InlineTextBox : public InlineBox {
  public:
   InlineTextBox(LineLayoutItem item, int start, unsigned short length)
       : InlineBox(item),

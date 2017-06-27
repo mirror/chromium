@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT NGConstraintSpaceBuilder final {
+class CORE_EXPORT_N2361 NGConstraintSpaceBuilder final {
   DISALLOW_NEW();
 
  public:

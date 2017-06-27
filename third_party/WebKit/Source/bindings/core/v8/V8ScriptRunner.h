@@ -47,7 +47,7 @@ class ScriptSourceCode;
 class ExecutionContext;
 class ScriptStreamer;
 
-class CORE_EXPORT V8ScriptRunner final {
+class CORE_EXPORT_N111 V8ScriptRunner final {
   STATIC_ONLY(V8ScriptRunner);
 
  public:

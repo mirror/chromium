@@ -41,7 +41,7 @@ class FrontendMenuProvider;
 class InspectorFrontendClient;
 class LocalFrame;
 
-class CORE_EXPORT DevToolsHost final
+class CORE_EXPORT_N2249 DevToolsHost final
     : public GarbageCollectedFinalized<DevToolsHost>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

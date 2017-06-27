@@ -19,7 +19,7 @@ class NodeWithIndex;
 class SynchronousMutationObserver;
 class Text;
 
-class CORE_EXPORT SynchronousMutationNotifier
+class CORE_EXPORT_N1710 SynchronousMutationNotifier
     : public LifecycleNotifier<Document, SynchronousMutationObserver> {
  public:
   // TODO(yosin): We will have |notifyXXX()| functions defined in

@@ -32,7 +32,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT HTMLBodyElement final : public HTMLElement {
+class CORE_EXPORT_N2097 HTMLBodyElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

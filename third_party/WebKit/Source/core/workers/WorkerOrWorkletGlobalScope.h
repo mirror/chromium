@@ -14,7 +14,7 @@ class ScriptWrappable;
 class WorkerOrWorkletScriptController;
 class WorkerThread;
 
-class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
+class CORE_EXPORT_N2668 WorkerOrWorkletGlobalScope : public ExecutionContext {
  public:
   explicit WorkerOrWorkletGlobalScope(v8::Isolate*);
   virtual ~WorkerOrWorkletGlobalScope();

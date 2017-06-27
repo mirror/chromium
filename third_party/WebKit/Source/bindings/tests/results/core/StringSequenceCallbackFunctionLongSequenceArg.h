@@ -24,7 +24,7 @@ namespace blink {
 
 class ScriptState;
 
-class CORE_EXPORT StringSequenceCallbackFunctionLongSequenceArg final : public GarbageCollectedFinalized<StringSequenceCallbackFunctionLongSequenceArg>, public TraceWrapperBase {
+class CORE_EXPORT_N223 StringSequenceCallbackFunctionLongSequenceArg final : public GarbageCollectedFinalized<StringSequenceCallbackFunctionLongSequenceArg>, public TraceWrapperBase {
  public:
   static StringSequenceCallbackFunctionLongSequenceArg* Create(ScriptState*, v8::Local<v8::Value> callback);
 
@@ -48,7 +48,7 @@ class CORE_EXPORT StringSequenceCallbackFunctionLongSequenceArg final : public G
 
 template <>
 struct NativeValueTraits<StringSequenceCallbackFunctionLongSequenceArg> : public NativeValueTraitsBase<StringSequenceCallbackFunctionLongSequenceArg> {
-  CORE_EXPORT static StringSequenceCallbackFunctionLongSequenceArg* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N224 static StringSequenceCallbackFunctionLongSequenceArg* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 }  // namespace blink

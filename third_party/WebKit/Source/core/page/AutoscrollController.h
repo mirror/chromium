@@ -52,7 +52,7 @@ enum AutoscrollType {
 
 // AutscrollController handels autoscroll and middle click autoscroll for
 // EventHandler.
-class CORE_EXPORT AutoscrollController final
+class CORE_EXPORT_N2498 AutoscrollController final
     : public GarbageCollected<AutoscrollController> {
  public:
   static AutoscrollController* Create(Page&);

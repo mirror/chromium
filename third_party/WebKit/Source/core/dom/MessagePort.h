@@ -52,7 +52,7 @@ class SerializedScriptValue;
 typedef Vector<std::unique_ptr<WebMessagePortChannel>, 1>
     MessagePortChannelArray;
 
-class CORE_EXPORT MessagePort : public EventTargetWithInlineData,
+class CORE_EXPORT_N1664 MessagePort : public EventTargetWithInlineData,
                                 public ActiveScriptWrappable<MessagePort>,
                                 public ContextLifecycleObserver,
                                 public WebMessagePortChannelClient {

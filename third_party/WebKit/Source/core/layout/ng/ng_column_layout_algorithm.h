@@ -15,7 +15,7 @@ namespace blink {
 
 class NGBlockNode;
 
-class CORE_EXPORT NGColumnLayoutAlgorithm : public NGBlockLayoutAlgorithm {
+class CORE_EXPORT_N2359 NGColumnLayoutAlgorithm : public NGBlockLayoutAlgorithm {
  public:
   NGColumnLayoutAlgorithm(NGBlockNode* node,
                           NGConstraintSpace* space,

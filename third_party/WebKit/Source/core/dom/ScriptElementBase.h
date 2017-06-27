@@ -34,7 +34,7 @@ class Element;
 class HTMLScriptElementOrSVGScriptElement;
 class ScriptLoader;
 
-class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
+class CORE_EXPORT_N1696 ScriptElementBase : public GarbageCollectedMixin {
  public:
   virtual ~ScriptElementBase() {}
 

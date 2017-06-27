@@ -59,7 +59,7 @@ struct SerializedResource;
 // This class is used to serialize frame's contents back to text (typically
 // HTML).  It serializes frame's document and resources such as images and CSS
 // stylesheets.
-class CORE_EXPORT FrameSerializer final {
+class CORE_EXPORT_N2037 FrameSerializer final {
   STACK_ALLOCATED();
 
  public:

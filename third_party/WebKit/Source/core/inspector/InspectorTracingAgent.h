@@ -18,7 +18,7 @@ namespace blink {
 class InspectedFrames;
 class InspectorWorkerAgent;
 
-class CORE_EXPORT InspectorTracingAgent final
+class CORE_EXPORT_N2278 InspectorTracingAgent final
     : public InspectorBaseAgent<protocol::Tracing::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorTracingAgent);
 

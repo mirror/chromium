@@ -36,7 +36,7 @@ class Document;
 class FetchParameters;
 class ResourceFetcher;
 
-class CORE_EXPORT DocumentResource final : public TextResource {
+class CORE_EXPORT_N2481 DocumentResource final : public TextResource {
  public:
   using ClientType = ResourceClient;
 
@@ -73,7 +73,7 @@ DEFINE_TYPE_CASTS(DocumentResource,
                   resource->GetType() == Resource::kSVGDocument,
                   resource.GetType() == Resource::kSVGDocument);
 
-class CORE_EXPORT DocumentResourceClient : public ResourceClient {
+class CORE_EXPORT_N2482 DocumentResourceClient : public ResourceClient {
  public:
   ~DocumentResourceClient() override {}
   static bool IsExpectedType(ResourceClient* client) {

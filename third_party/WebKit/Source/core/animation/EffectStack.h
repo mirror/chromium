@@ -49,7 +49,7 @@ class InertEffect;
 
 // Represents the order in which a sequence of SampledEffects should apply.
 // This sequence is broken down to per PropertyHandle granularity.
-class CORE_EXPORT EffectStack {
+class CORE_EXPORT_N1443 EffectStack {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(EffectStack);
 

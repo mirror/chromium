@@ -34,7 +34,7 @@ namespace blink {
 
 class StylePropertySet;
 
-struct CORE_EXPORT MatchedProperties {
+struct CORE_EXPORT_N1592 MatchedProperties {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
@@ -86,7 +86,7 @@ class MatchedPropertiesRange {
   MatchedPropertiesVector::const_iterator end_;
 };
 
-class CORE_EXPORT MatchResult {
+class CORE_EXPORT_N1593 MatchResult {
   WTF_MAKE_NONCOPYABLE(MatchResult);
   STACK_ALLOCATED();
 

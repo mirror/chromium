@@ -44,7 +44,7 @@ namespace blink {
 // lines. CR, LR or CRLF are considered linebreaks. Normalizes NULs (U+0000)
 // to 'REPLACEMENT CHARACTER' (U+FFFD) and does not return the linebreaks as
 // part of the result.
-class CORE_EXPORT BufferedLineReader {
+class CORE_EXPORT_N2234 BufferedLineReader {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(BufferedLineReader);
 

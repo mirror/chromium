@@ -17,7 +17,7 @@ class FloatSize;
 // duplicating cc::BrowserControlsManager behaviour.  Browser controls'
 // self-animation to completion is still handled by compositor and kicks in
 // when scrolling is complete (i.e, upon ScrollEnd or FlingEnd).
-class CORE_EXPORT BrowserControls final
+class CORE_EXPORT_N2024 BrowserControls final
     : public GarbageCollected<BrowserControls> {
  public:
   static BrowserControls* Create(const Page& page) {

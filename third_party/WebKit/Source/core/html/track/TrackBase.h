@@ -36,7 +36,7 @@ namespace blink {
 
 class HTMLMediaElement;
 
-class CORE_EXPORT TrackBase : public Supplementable<TrackBase> {
+class CORE_EXPORT_N2230 TrackBase : public Supplementable<TrackBase> {
  public:
   virtual ~TrackBase();
 

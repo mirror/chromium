@@ -28,7 +28,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLEmbedElement final : public HTMLPlugInElement {
+class CORE_EXPORT_N2108 HTMLEmbedElement final : public HTMLPlugInElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

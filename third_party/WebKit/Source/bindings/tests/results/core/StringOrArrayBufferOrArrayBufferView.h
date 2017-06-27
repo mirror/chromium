@@ -26,7 +26,7 @@ namespace blink {
 
 class TestArrayBuffer;
 
-class CORE_EXPORT StringOrArrayBufferOrArrayBufferView final {
+class CORE_EXPORT_N208 StringOrArrayBufferOrArrayBufferView final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   StringOrArrayBufferOrArrayBufferView();
@@ -65,15 +65,15 @@ class CORE_EXPORT StringOrArrayBufferOrArrayBufferView final {
   Member<TestArrayBufferView> m_arrayBufferView;
   String m_string;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const StringOrArrayBufferOrArrayBufferView&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N209 v8::Local<v8::Value> ToV8(const StringOrArrayBufferOrArrayBufferView&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8StringOrArrayBufferOrArrayBufferView final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, StringOrArrayBufferOrArrayBufferView&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N210 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, StringOrArrayBufferOrArrayBufferView&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const StringOrArrayBufferOrArrayBufferView&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N211 v8::Local<v8::Value> ToV8(const StringOrArrayBufferOrArrayBufferView&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, StringOrArrayBufferOrArrayBufferView& impl) {
@@ -87,7 +87,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, StringOrArrayBuff
 
 template <>
 struct NativeValueTraits<StringOrArrayBufferOrArrayBufferView> : public NativeValueTraitsBase<StringOrArrayBufferOrArrayBufferView> {
-  CORE_EXPORT static StringOrArrayBufferOrArrayBufferView NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N212 static StringOrArrayBufferOrArrayBufferView NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

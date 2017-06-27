@@ -33,7 +33,7 @@
 namespace blink {
 class TextResourceDecoder;
 
-class CORE_EXPORT DecodedDataDocumentParser : public DocumentParser {
+class CORE_EXPORT_N1624 DecodedDataDocumentParser : public DocumentParser {
  public:
   // Only used by the XMLDocumentParser to communicate back to
   // XMLHttpRequest if the responseXML was well formed.

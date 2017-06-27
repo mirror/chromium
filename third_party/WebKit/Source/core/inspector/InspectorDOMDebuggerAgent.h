@@ -55,7 +55,7 @@ namespace protocol {
 class DictionaryValue;
 }
 
-class CORE_EXPORT InspectorDOMDebuggerAgent final
+class CORE_EXPORT_N2259 InspectorDOMDebuggerAgent final
     : public InspectorBaseAgent<protocol::DOMDebugger::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorDOMDebuggerAgent);
 

@@ -36,7 +36,7 @@
 
 namespace blink {
 
-class CORE_EXPORT AtomicHTMLToken {
+class CORE_EXPORT_N2197 AtomicHTMLToken {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(AtomicHTMLToken);
 

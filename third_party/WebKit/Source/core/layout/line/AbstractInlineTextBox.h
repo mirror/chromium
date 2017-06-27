@@ -45,7 +45,7 @@ class InlineTextBox;
 
 // High-level abstraction of InlineTextBox to allow the accessibility module to
 // get information about InlineTextBoxes without tight coupling.
-class CORE_EXPORT AbstractInlineTextBox
+class CORE_EXPORT_N2344 AbstractInlineTextBox
     : public RefCounted<AbstractInlineTextBox> {
  private:
   AbstractInlineTextBox(LineLayoutText line_layout_item,

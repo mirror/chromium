@@ -49,7 +49,7 @@ class Node;
 class Page;
 class WebMouseEvent;
 
-class CORE_EXPORT DragController final
+class CORE_EXPORT_N2501 DragController final
     : public GarbageCollected<DragController> {
   WTF_MAKE_NONCOPYABLE(DragController);
 

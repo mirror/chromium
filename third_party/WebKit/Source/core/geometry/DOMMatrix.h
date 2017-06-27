@@ -13,7 +13,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DOMMatrix : public DOMMatrixReadOnly {
+class CORE_EXPORT_N2086 DOMMatrix : public DOMMatrixReadOnly {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

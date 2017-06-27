@@ -48,7 +48,7 @@ enum DragApplicationFlags {
   kDragApplicationIsCopyKeyDown = 8
 };
 
-class CORE_EXPORT DragData {
+class CORE_EXPORT_N2502 DragData {
   STACK_ALLOCATED();
 
  public:

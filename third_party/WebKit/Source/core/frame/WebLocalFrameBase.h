@@ -41,8 +41,8 @@ struct FrameLoadRequest;
 class WebLocalFrameBase : public GarbageCollectedFinalized<WebLocalFrameBase>,
                           public WebLocalFrame {
  public:
-  CORE_EXPORT static WebLocalFrameBase* FromFrame(LocalFrame*);
-  CORE_EXPORT static WebLocalFrameBase* FromFrame(LocalFrame&);
+  CORE_EXPORT_N2077 static WebLocalFrameBase* FromFrame(LocalFrame*);
+  CORE_EXPORT_N2078 static WebLocalFrameBase* FromFrame(LocalFrame&);
 
   virtual WebViewBase* ViewImpl() const = 0;
   virtual WebFrameClient* Client() const = 0;

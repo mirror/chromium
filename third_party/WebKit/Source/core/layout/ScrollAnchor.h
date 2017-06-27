@@ -15,7 +15,7 @@ class LayoutObject;
 class ScrollableArea;
 
 // Scrolls to compensate for layout movements (bit.ly/scroll-anchoring).
-class CORE_EXPORT ScrollAnchor final {
+class CORE_EXPORT_N2336 ScrollAnchor final {
   DISALLOW_NEW();
 
  public:

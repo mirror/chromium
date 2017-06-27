@@ -14,7 +14,7 @@ namespace blink {
 
 class CSSMatrixComponent;
 
-class CORE_EXPORT CSSTransformComponent
+class CORE_EXPORT_N1557 CSSTransformComponent
     : public GarbageCollectedFinalized<CSSTransformComponent>,
       public ScriptWrappable {
   WTF_MAKE_NONCOPYABLE(CSSTransformComponent);

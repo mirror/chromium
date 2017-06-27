@@ -31,7 +31,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SVGImageElement final : public SVGGraphicsElement,
+class CORE_EXPORT_N2607 SVGImageElement final : public SVGGraphicsElement,
                                           public ImageElementBase,
                                           public SVGURIReference {
   DEFINE_WRAPPERTYPEINFO();

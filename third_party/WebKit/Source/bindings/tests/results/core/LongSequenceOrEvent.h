@@ -23,7 +23,7 @@ namespace blink {
 
 class Event;
 
-class CORE_EXPORT LongSequenceOrEvent final {
+class CORE_EXPORT_N193 LongSequenceOrEvent final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   LongSequenceOrEvent();
@@ -55,15 +55,15 @@ class CORE_EXPORT LongSequenceOrEvent final {
   Member<Event> m_event;
   Vector<int32_t> m_longSequence;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const LongSequenceOrEvent&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N194 v8::Local<v8::Value> ToV8(const LongSequenceOrEvent&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8LongSequenceOrEvent final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, LongSequenceOrEvent&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N195 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, LongSequenceOrEvent&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const LongSequenceOrEvent&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N196 v8::Local<v8::Value> ToV8(const LongSequenceOrEvent&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, LongSequenceOrEvent& impl) {
@@ -77,7 +77,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, LongSequenceOrEve
 
 template <>
 struct NativeValueTraits<LongSequenceOrEvent> : public NativeValueTraitsBase<LongSequenceOrEvent> {
-  CORE_EXPORT static LongSequenceOrEvent NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N197 static LongSequenceOrEvent NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

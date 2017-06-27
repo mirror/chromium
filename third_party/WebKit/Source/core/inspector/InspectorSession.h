@@ -19,7 +19,7 @@ class InspectorAgent;
 class CoreProbeSink;
 class LocalFrame;
 
-class CORE_EXPORT InspectorSession
+class CORE_EXPORT_N2271 InspectorSession
     : public GarbageCollectedFinalized<InspectorSession>,
       public protocol::FrontendChannel,
       public v8_inspector::V8Inspector::Channel {

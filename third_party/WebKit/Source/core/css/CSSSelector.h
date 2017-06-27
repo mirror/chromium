@@ -87,7 +87,7 @@ class CSSSelectorList;
 // value() method returns the value matched against in case of selectors like
 // [attr="value"].
 //
-class CORE_EXPORT CSSSelector {
+class CORE_EXPORT_N1489 CSSSelector {
   USING_FAST_MALLOC_WITH_TYPE_NAME(blink::CSSSelector);
 
  public:

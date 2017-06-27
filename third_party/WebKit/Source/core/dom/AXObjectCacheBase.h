@@ -19,7 +19,7 @@ class AXObjectImpl;
 // TODO(dmazzoni): Once all dependencies in web/ use this class instead of
 // AXObjectCacheImpl, refactor usages to use AXObjectCache instead (introducing
 // new public API methods or similar) and remove this class.
-class CORE_EXPORT AXObjectCacheBase : public AXObjectCache {
+class CORE_EXPORT_N1606 AXObjectCacheBase : public AXObjectCache {
   WTF_MAKE_NONCOPYABLE(AXObjectCacheBase);
 
  public:

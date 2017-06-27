@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT IdleRequestCallback
+class CORE_EXPORT_N1657 IdleRequestCallback
     : public GarbageCollectedFinalized<IdleRequestCallback> {
  public:
   DEFINE_INLINE_VIRTUAL_TRACE() {}

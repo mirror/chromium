@@ -48,7 +48,7 @@ class Node;
 class NodeWithIndex;
 class Text;
 
-class CORE_EXPORT Range final : public GarbageCollected<Range>,
+class CORE_EXPORT_N1687 Range final : public GarbageCollected<Range>,
                                 public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
@@ -214,7 +214,7 @@ class CORE_EXPORT Range final : public GarbageCollected<Range>,
   friend class RangeUpdateScope;
 };
 
-CORE_EXPORT bool AreRangesEqual(const Range*, const Range*);
+CORE_EXPORT_N1688 bool AreRangesEqual(const Range*, const Range*);
 
 using RangeVector = HeapVector<Member<Range>>;
 

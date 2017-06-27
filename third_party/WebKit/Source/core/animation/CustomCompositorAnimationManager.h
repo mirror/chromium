@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CustomCompositorAnimationManager
+class CORE_EXPORT_N1439 CustomCompositorAnimationManager
     : public CompositorMutationsTarget {
   WTF_MAKE_NONCOPYABLE(CustomCompositorAnimationManager);
 

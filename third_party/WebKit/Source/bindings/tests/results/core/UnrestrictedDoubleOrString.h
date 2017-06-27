@@ -21,7 +21,7 @@
 
 namespace blink {
 
-class CORE_EXPORT UnrestrictedDoubleOrString final {
+class CORE_EXPORT_N254 UnrestrictedDoubleOrString final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   UnrestrictedDoubleOrString();
@@ -53,15 +53,15 @@ class CORE_EXPORT UnrestrictedDoubleOrString final {
   String m_string;
   double m_unrestrictedDouble;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const UnrestrictedDoubleOrString&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N255 v8::Local<v8::Value> ToV8(const UnrestrictedDoubleOrString&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8UnrestrictedDoubleOrString final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, UnrestrictedDoubleOrString&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N256 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, UnrestrictedDoubleOrString&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const UnrestrictedDoubleOrString&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N257 v8::Local<v8::Value> ToV8(const UnrestrictedDoubleOrString&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, UnrestrictedDoubleOrString& impl) {
@@ -75,7 +75,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, UnrestrictedDoubl
 
 template <>
 struct NativeValueTraits<UnrestrictedDoubleOrString> : public NativeValueTraitsBase<UnrestrictedDoubleOrString> {
-  CORE_EXPORT static UnrestrictedDoubleOrString NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N258 static UnrestrictedDoubleOrString NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

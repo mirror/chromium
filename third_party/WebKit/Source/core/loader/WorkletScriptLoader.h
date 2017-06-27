@@ -26,7 +26,7 @@ class WorkletScriptLoader final
   WTF_MAKE_NONCOPYABLE(WorkletScriptLoader);
 
  public:
-  class CORE_EXPORT Client : public GarbageCollectedMixin {
+  class CORE_EXPORT_N2474 Client : public GarbageCollectedMixin {
    public:
     // Called when resource loading is completed. If loading is failed or
     // canceled, an empty ScriptSourceCode is passed. You can check if loading

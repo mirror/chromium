@@ -16,7 +16,7 @@ namespace blink {
 // Stores all adjacent pairs of keyframes (represented by Interpolations) in a
 // KeyframeEffectModel with keyframe offset data preprocessed for more efficient
 // active keyframe pair sampling.
-class CORE_EXPORT InterpolationEffect {
+class CORE_EXPORT_N1449 InterpolationEffect {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

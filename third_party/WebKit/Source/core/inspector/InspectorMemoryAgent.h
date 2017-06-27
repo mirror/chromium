@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class CORE_EXPORT InspectorMemoryAgent final
+class CORE_EXPORT_N2265 InspectorMemoryAgent final
     : public InspectorBaseAgent<protocol::Memory::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorMemoryAgent);
 

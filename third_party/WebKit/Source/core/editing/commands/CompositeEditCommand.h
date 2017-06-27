@@ -42,7 +42,7 @@ class HTMLElement;
 class HTMLSpanElement;
 class Text;
 
-class CORE_EXPORT CompositeEditCommand : public EditCommand {
+class CORE_EXPORT_N1915 CompositeEditCommand : public EditCommand {
  public:
   enum ShouldPreserveSelection { kPreserveSelection, kDoNotPreserveSelection };
   enum ShouldPreserveStyle { kPreserveStyle, kDoNotPreserveStyle };

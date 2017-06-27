@@ -77,9 +77,9 @@ FromPositionInDOMTree<EditingInFlatTreeStrategy>(
       position_with_affinity.Affinity());
 }
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&,
+CORE_EXPORT_N1804 std::ostream& operator<<(std::ostream&,
                                      const PositionWithAffinity&);
-CORE_EXPORT std::ostream& operator<<(std::ostream&,
+CORE_EXPORT_N1805 std::ostream& operator<<(std::ostream&,
                                      const PositionInFlatTreeWithAffinity&);
 
 }  // namespace blink

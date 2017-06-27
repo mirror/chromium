@@ -36,7 +36,7 @@ namespace blink {
 
 class IntRect;
 
-class CORE_EXPORT ClientRect final : public GarbageCollected<ClientRect>,
+class CORE_EXPORT_N1610 ClientRect final : public GarbageCollected<ClientRect>,
                                      public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

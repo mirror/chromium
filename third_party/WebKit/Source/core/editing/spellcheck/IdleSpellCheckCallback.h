@@ -26,7 +26,7 @@ class SpellCheckRequester;
   V(InColdModeInvocation)
 
 // Main class for the implementation of idle time spell checker.
-class CORE_EXPORT IdleSpellCheckCallback final
+class CORE_EXPORT_N1955 IdleSpellCheckCallback final
     : public IdleRequestCallback,
       public SynchronousMutationObserver {
   DISALLOW_COPY_AND_ASSIGN(IdleSpellCheckCallback);

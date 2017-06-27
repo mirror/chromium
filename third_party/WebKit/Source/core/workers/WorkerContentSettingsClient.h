@@ -42,7 +42,7 @@ class ExecutionContext;
 class WebString;
 class WebWorkerContentSettingsClientProxy;
 
-class CORE_EXPORT WorkerContentSettingsClient final
+class CORE_EXPORT_N2660 WorkerContentSettingsClient final
     : public GarbageCollectedFinalized<WorkerContentSettingsClient>,
       public Supplement<WorkerClients> {
   USING_GARBAGE_COLLECTED_MIXIN(WorkerContentSettingsClient);
@@ -67,7 +67,7 @@ class CORE_EXPORT WorkerContentSettingsClient final
   std::unique_ptr<WebWorkerContentSettingsClientProxy> proxy_;
 };
 
-void CORE_EXPORT ProvideContentSettingsClientToWorker(
+void CORE_EXPORT_N2661 ProvideContentSettingsClientToWorker(
     WorkerClients*,
     std::unique_ptr<WebWorkerContentSettingsClientProxy>);
 

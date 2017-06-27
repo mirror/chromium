@@ -19,7 +19,7 @@ class LayoutPoint;
 class LayoutRect;
 struct PaintInvalidatorContext;
 
-class CORE_EXPORT ObjectPaintInvalidator {
+class CORE_EXPORT_N2533 ObjectPaintInvalidator {
   STACK_ALLOCATED();
 
  public:

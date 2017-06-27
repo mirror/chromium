@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT InputDeviceCapabilities final
+class CORE_EXPORT_N2240 InputDeviceCapabilities final
     : public GarbageCollected<InputDeviceCapabilities>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

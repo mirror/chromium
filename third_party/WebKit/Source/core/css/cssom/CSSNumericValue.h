@@ -16,7 +16,7 @@ namespace blink {
 class CSSUnitValue;
 class ExceptionState;
 
-class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
+class CORE_EXPORT_N1547 CSSNumericValue : public CSSStyleValue {
   WTF_MAKE_NONCOPYABLE(CSSNumericValue);
   DEFINE_WRAPPERTYPEINFO();
 

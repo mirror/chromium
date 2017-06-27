@@ -41,7 +41,7 @@ class CSSFontSelectorClient;
 class Document;
 class FontDescription;
 
-class CORE_EXPORT CSSFontSelector : public FontSelector {
+class CORE_EXPORT_N1478 CSSFontSelector : public FontSelector {
  public:
   static CSSFontSelector* Create(Document* document) {
     return new CSSFontSelector(document);

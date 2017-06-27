@@ -31,9 +31,9 @@ namespace blink {
 class V8DataView {
   STATIC_ONLY(V8DataView);
  public:
-  CORE_EXPORT static TestDataView* toImpl(v8::Local<v8::Object> object);
-  CORE_EXPORT static TestDataView* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N276 static TestDataView* toImpl(v8::Local<v8::Object> object);
+  CORE_EXPORT_N277 static TestDataView* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
+  CORE_EXPORT_N278 static const WrapperTypeInfo wrapperTypeInfo;
   static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
     visitor->Trace(scriptWrappable->ToImpl<TestDataView>());
   }
@@ -44,15 +44,15 @@ class V8DataView {
 
   // Callback functions
 
-  CORE_EXPORT static void getUint8MethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
-  CORE_EXPORT static void getFloat64MethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
-  CORE_EXPORT static void setUint8MethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
-  CORE_EXPORT static void setFloat64MethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N279 static void getUint8MethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N280 static void getFloat64MethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N281 static void setUint8MethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N282 static void setFloat64MethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
 };
 
 template <>
 struct NativeValueTraits<TestDataView> : public NativeValueTraitsBase<TestDataView> {
-  CORE_EXPORT static TestDataView* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N283 static TestDataView* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

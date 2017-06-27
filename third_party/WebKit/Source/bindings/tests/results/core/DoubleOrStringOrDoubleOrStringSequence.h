@@ -23,7 +23,7 @@ namespace blink {
 
 class DoubleOrString;
 
-class CORE_EXPORT DoubleOrStringOrDoubleOrStringSequence final {
+class CORE_EXPORT_N166 DoubleOrStringOrDoubleOrStringSequence final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   DoubleOrStringOrDoubleOrStringSequence();
@@ -62,15 +62,15 @@ class CORE_EXPORT DoubleOrStringOrDoubleOrStringSequence final {
   HeapVector<DoubleOrString> m_doubleOrStringSequence;
   String m_string;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const DoubleOrStringOrDoubleOrStringSequence&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N167 v8::Local<v8::Value> ToV8(const DoubleOrStringOrDoubleOrStringSequence&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8DoubleOrStringOrDoubleOrStringSequence final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, DoubleOrStringOrDoubleOrStringSequence&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N168 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, DoubleOrStringOrDoubleOrStringSequence&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const DoubleOrStringOrDoubleOrStringSequence&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N169 v8::Local<v8::Value> ToV8(const DoubleOrStringOrDoubleOrStringSequence&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, DoubleOrStringOrDoubleOrStringSequence& impl) {
@@ -84,7 +84,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, DoubleOrStringOrD
 
 template <>
 struct NativeValueTraits<DoubleOrStringOrDoubleOrStringSequence> : public NativeValueTraitsBase<DoubleOrStringOrDoubleOrStringSequence> {
-  CORE_EXPORT static DoubleOrStringOrDoubleOrStringSequence NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N170 static DoubleOrStringOrDoubleOrStringSequence NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

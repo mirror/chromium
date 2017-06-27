@@ -42,7 +42,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ScriptValue final {
+class CORE_EXPORT_N61 ScriptValue final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

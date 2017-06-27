@@ -17,7 +17,7 @@ namespace blink {
 class ConsoleMessage;
 class LocalFrame;
 
-class CORE_EXPORT MainThreadWorkletGlobalScope
+class CORE_EXPORT_N2645 MainThreadWorkletGlobalScope
     : public WorkletGlobalScope,
       public ContextClient {
   USING_GARBAGE_COLLECTED_MIXIN(MainThreadWorkletGlobalScope);

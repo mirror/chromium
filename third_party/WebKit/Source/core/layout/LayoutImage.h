@@ -45,7 +45,7 @@ class HTMLMapElement;
 //
 // The class is image type agnostic as it only manipulates decoded images.
 // See LayoutImageResource that holds this image.
-class CORE_EXPORT LayoutImage : public LayoutReplaced {
+class CORE_EXPORT_N2303 LayoutImage : public LayoutReplaced {
  public:
   // These are the paddings to use when displaying either alt text or an image.
   static const unsigned short kPaddingWidth = 4;

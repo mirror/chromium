@@ -33,7 +33,7 @@ namespace blink {
 
 class HTMLMetaCharsetParser;
 
-class CORE_EXPORT TextResourceDecoder {
+class CORE_EXPORT_N2216 TextResourceDecoder {
   USING_FAST_MALLOC(TextResourceDecoder);
   WTF_MAKE_NONCOPYABLE(TextResourceDecoder);
 

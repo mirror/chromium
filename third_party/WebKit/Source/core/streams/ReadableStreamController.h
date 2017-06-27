@@ -17,7 +17,7 @@
 namespace blink {
 
 // TODO(tyoshino): Rename this to ReadableStreamDefaultControllerWrapper.
-class CORE_EXPORT ReadableStreamController final
+class CORE_EXPORT_N2574 ReadableStreamController final
     : public GarbageCollectedFinalized<ReadableStreamController> {
  public:
   DEFINE_INLINE_TRACE() {}

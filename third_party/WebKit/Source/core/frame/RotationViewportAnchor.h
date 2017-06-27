@@ -28,7 +28,7 @@ class VisualViewport;
 // viewport origin maintains its orientation relative to the anchor. If there is
 // no node or it is lost during the resize, we fall back to the resize anchor
 // logic.
-class CORE_EXPORT RotationViewportAnchor {
+class CORE_EXPORT_N2063 RotationViewportAnchor {
   STACK_ALLOCATED();
 
  public:

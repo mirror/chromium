@@ -41,7 +41,7 @@ namespace blink {
 
 class Element;
 
-class CORE_EXPORT ColorChooserClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N2173 ColorChooserClient : public GarbageCollectedMixin {
  public:
   virtual ~ColorChooserClient();
   DEFINE_INLINE_VIRTUAL_TRACE() {}

@@ -40,7 +40,7 @@ class HTMLFormControlsCollection;
 class HTMLImageElement;
 class RadioNodeListOrElement;
 
-class CORE_EXPORT HTMLFormElement final : public HTMLElement {
+class CORE_EXPORT_N2112 HTMLFormElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

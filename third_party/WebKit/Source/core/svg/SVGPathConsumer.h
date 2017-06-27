@@ -32,7 +32,7 @@ namespace blink {
 
 struct PathSegmentData;
 
-class CORE_EXPORT SVGPathConsumer {
+class CORE_EXPORT_N2609 SVGPathConsumer {
   WTF_MAKE_NONCOPYABLE(SVGPathConsumer);
   STACK_ALLOCATED();
 

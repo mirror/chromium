@@ -17,7 +17,7 @@ struct NGPhysicalSize;
 
 // NGLogicalOffset is the position of a rect (typically a fragment) relative to
 // its parent rect in the logical coordinate system.
-struct CORE_EXPORT NGLogicalOffset {
+struct CORE_EXPORT_N2408 NGLogicalOffset {
   NGLogicalOffset() {}
   NGLogicalOffset(LayoutUnit inline_offset, LayoutUnit block_offset)
       : inline_offset(inline_offset), block_offset(block_offset) {}
@@ -55,7 +55,7 @@ struct CORE_EXPORT NGLogicalOffset {
   String ToString() const;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGLogicalOffset&);
+CORE_EXPORT_N2409 std::ostream& operator<<(std::ostream&, const NGLogicalOffset&);
 
 }  // namespace blink
 

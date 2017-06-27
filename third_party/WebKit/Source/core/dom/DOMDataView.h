@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DOMDataView final : public DOMArrayBufferView {
+class CORE_EXPORT_N1638 DOMDataView final : public DOMArrayBufferView {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

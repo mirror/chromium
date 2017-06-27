@@ -17,7 +17,7 @@ struct NGLogicalOffset;
 // Implements relative positioning spec:
 // https://www.w3.org/TR/css-position-3/#rel-pos
 // Return relative position offset as defined by style.
-CORE_EXPORT NGLogicalOffset
+CORE_EXPORT_N2397 NGLogicalOffset
 ComputeRelativeOffset(const ComputedStyle& child_style,
                       NGWritingMode container_writing_mode,
                       TextDirection container_direction,

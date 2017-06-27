@@ -44,7 +44,7 @@ class ResourceError;
 class ResourceResponse;
 class ResourceTimingInfo;
 
-class CORE_EXPORT ThreadableLoaderClient {
+class CORE_EXPORT_N2471 ThreadableLoaderClient {
   WTF_MAKE_NONCOPYABLE(ThreadableLoaderClient);
 
  public:

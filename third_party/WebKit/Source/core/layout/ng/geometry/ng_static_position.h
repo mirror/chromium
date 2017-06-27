@@ -14,7 +14,7 @@
 namespace blink {
 
 // Represents static position of an out of flow descendant.
-struct CORE_EXPORT NGStaticPosition {
+struct CORE_EXPORT_N2425 NGStaticPosition {
   enum Type { kTopLeft, kTopRight, kBottomLeft, kBottomRight };
 
   Type type;  // Logical corner that corresponds to physical top left.

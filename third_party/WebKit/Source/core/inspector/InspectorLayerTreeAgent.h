@@ -48,7 +48,7 @@ class PictureSnapshot;
 class PaintLayer;
 class PaintLayerCompositor;
 
-class CORE_EXPORT InspectorLayerTreeAgent final
+class CORE_EXPORT_N2263 InspectorLayerTreeAgent final
     : public InspectorBaseAgent<protocol::LayerTree::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorLayerTreeAgent);
 

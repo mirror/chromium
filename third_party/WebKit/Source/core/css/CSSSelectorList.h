@@ -61,7 +61,7 @@ class CSSParserSelector;
 // Use CSSSelector::TagHistory() and CSSSelector::IsLastInTagHistory()
 // to traverse through each sequence of simple selectors,
 // from .c3 to #ident; from span to .c2; from div to .c1
-class CORE_EXPORT CSSSelectorList {
+class CORE_EXPORT_N1490 CSSSelectorList {
   USING_FAST_MALLOC(CSSSelectorList);
 
  public:

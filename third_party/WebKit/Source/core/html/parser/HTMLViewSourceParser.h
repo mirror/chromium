@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLViewSourceParser final
+class CORE_EXPORT_N2213 HTMLViewSourceParser final
     : public DecodedDataDocumentParser {
  public:
   static HTMLViewSourceParser* Create(HTMLViewSourceDocument& document,

@@ -66,10 +66,10 @@ class SerializedScriptValue;
 class SubstituteData;
 struct FrameLoadRequest;
 
-CORE_EXPORT bool IsBackForwardLoadType(FrameLoadType);
-CORE_EXPORT bool IsReloadLoadType(FrameLoadType);
+CORE_EXPORT_N2452 bool IsBackForwardLoadType(FrameLoadType);
+CORE_EXPORT_N2453 bool IsReloadLoadType(FrameLoadType);
 
-class CORE_EXPORT FrameLoader final {
+class CORE_EXPORT_N2454 FrameLoader final {
   WTF_MAKE_NONCOPYABLE(FrameLoader);
   DISALLOW_NEW();
 

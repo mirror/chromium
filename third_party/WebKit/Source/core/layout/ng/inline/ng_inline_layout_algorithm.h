@@ -32,7 +32,7 @@ class NGTextFragmentBuilder;
 // This class determines the position of NGInlineItem and build line boxes.
 //
 // Uses NGLineBreaker to find NGInlineItems to form a line.
-class CORE_EXPORT NGInlineLayoutAlgorithm final
+class CORE_EXPORT_N2429 NGInlineLayoutAlgorithm final
     : public NGLayoutAlgorithm<NGInlineNode, NGInlineBreakToken> {
  public:
   NGInlineLayoutAlgorithm(NGInlineNode*,

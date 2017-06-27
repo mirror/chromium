@@ -57,7 +57,7 @@ enum {
   kRelationNoOpener = 0x00040000,
 };
 
-class CORE_EXPORT HTMLAnchorElement : public HTMLElement, public DOMURLUtils {
+class CORE_EXPORT_N2094 HTMLAnchorElement : public HTMLElement, public DOMURLUtils {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

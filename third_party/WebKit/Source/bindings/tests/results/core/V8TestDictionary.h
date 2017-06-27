@@ -25,10 +25,10 @@ class ExceptionState;
 
 class V8TestDictionary {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestDictionary&, ExceptionState&);
+  CORE_EXPORT_N317 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestDictionary&, ExceptionState&);
 };
 
-CORE_EXPORT bool toV8TestDictionary(const TestDictionary&, v8::Local<v8::Object> dictionary, v8::Local<v8::Object> creationContext, v8::Isolate*);
+CORE_EXPORT_N318 bool toV8TestDictionary(const TestDictionary&, v8::Local<v8::Object> dictionary, v8::Local<v8::Object> creationContext, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestDictionary& impl) {
@@ -42,7 +42,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestDictionary& i
 
 template <>
 struct NativeValueTraits<TestDictionary> : public NativeValueTraitsBase<TestDictionary> {
-  CORE_EXPORT static TestDictionary NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N319 static TestDictionary NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

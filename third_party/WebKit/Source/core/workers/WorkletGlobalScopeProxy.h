@@ -17,7 +17,7 @@ class WorkletPendingTasks;
 // Abstracts communication from (Main/Threaded)Worklet on the main thread to
 // (Main/Threaded)WorkletGlobalScope so that Worklet class doesn't have to care
 // about the thread WorkletGlobalScope runs on.
-class CORE_EXPORT WorkletGlobalScopeProxy {
+class CORE_EXPORT_N2678 WorkletGlobalScopeProxy {
  public:
   virtual ~WorkletGlobalScopeProxy() {}
 

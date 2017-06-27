@@ -42,7 +42,7 @@ namespace blink {
 
 class EventDispatchMediator;
 
-class CORE_EXPORT ScopedEventQueue {
+class CORE_EXPORT_N1987 ScopedEventQueue {
   WTF_MAKE_NONCOPYABLE(ScopedEventQueue);
   USING_FAST_MALLOC(ScopedEventQueue);
 

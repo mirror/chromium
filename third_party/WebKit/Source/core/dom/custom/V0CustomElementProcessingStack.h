@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class CORE_EXPORT V0CustomElementProcessingStack
+class CORE_EXPORT_N1738 V0CustomElementProcessingStack
     : public GarbageCollected<V0CustomElementProcessingStack> {
   WTF_MAKE_NONCOPYABLE(V0CustomElementProcessingStack);
 

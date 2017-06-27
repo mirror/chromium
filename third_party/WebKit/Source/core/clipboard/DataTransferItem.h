@@ -44,7 +44,7 @@ class File;
 class FunctionStringCallback;
 class ScriptState;
 
-class CORE_EXPORT DataTransferItem final
+class CORE_EXPORT_N1468 DataTransferItem final
     : public GarbageCollected<DataTransferItem>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

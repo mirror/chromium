@@ -28,7 +28,7 @@ class NGLayoutResult;
 
 // Represents an anonymous block box to be laid out, that contains consecutive
 // inline nodes and their descendants.
-class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
+class CORE_EXPORT_N2430 NGInlineNode : public NGLayoutInputNode {
  public:
   NGInlineNode(LayoutObject* start_inline, LayoutNGBlockFlow*);
   ~NGInlineNode() override;

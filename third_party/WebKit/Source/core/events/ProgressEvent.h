@@ -32,7 +32,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ProgressEvent : public Event {
+class CORE_EXPORT_N1984 ProgressEvent : public Event {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

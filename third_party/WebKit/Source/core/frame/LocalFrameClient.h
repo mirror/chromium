@@ -88,7 +88,7 @@ class WebRTCPeerConnectionHandler;
 class WebServiceWorkerProvider;
 class WebURLLoader;
 
-class CORE_EXPORT LocalFrameClient : public FrameClient {
+class CORE_EXPORT_N2046 LocalFrameClient : public FrameClient {
  public:
   ~LocalFrameClient() override {}
 

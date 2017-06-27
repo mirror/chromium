@@ -14,7 +14,7 @@
 
 namespace blink {
 
-class CORE_EXPORT BackwardGraphemeBoundaryStateMachine {
+class CORE_EXPORT_N1960 BackwardGraphemeBoundaryStateMachine {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(BackwardGraphemeBoundaryStateMachine);
 

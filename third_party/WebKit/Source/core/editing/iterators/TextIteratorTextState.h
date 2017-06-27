@@ -38,7 +38,7 @@ namespace blink {
 class LayoutText;
 class TextIteratorBehavior;
 
-class CORE_EXPORT TextIteratorTextState {
+class CORE_EXPORT_N1941 TextIteratorTextState {
   STACK_ALLOCATED();
 
  public:

@@ -42,7 +42,7 @@ namespace blink {
 class ExecutionContext;
 class Node;
 
-class CORE_EXPORT V8GCController {
+class CORE_EXPORT_N104 V8GCController {
   STATIC_ONLY(V8GCController);
 
  public:

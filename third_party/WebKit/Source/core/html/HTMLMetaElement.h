@@ -38,7 +38,7 @@ enum ViewportErrorCode {
   kTargetDensityDpiUnsupported
 };
 
-class CORE_EXPORT HTMLMetaElement final : public HTMLElement {
+class CORE_EXPORT_N2127 HTMLMetaElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

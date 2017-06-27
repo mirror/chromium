@@ -23,7 +23,7 @@ class DOMURL;
 typedef USVStringSequenceSequenceOrUSVStringOrURLSearchParams
     URLSearchParamsInit;
 
-class CORE_EXPORT URLSearchParams final
+class CORE_EXPORT_N1718 URLSearchParams final
     : public GarbageCollectedFinalized<URLSearchParams>,
       public ScriptWrappable,
       public PairIterable<String, String> {

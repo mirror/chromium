@@ -33,7 +33,7 @@ class CSSValue;
 class CSSImageGeneratorValue;
 class Document;
 
-class CORE_EXPORT StyleGeneratedImage final : public StyleImage {
+class CORE_EXPORT_N2594 StyleGeneratedImage final : public StyleImage {
  public:
   static StyleGeneratedImage* Create(const CSSImageGeneratorValue& value) {
     return new StyleGeneratedImage(value);

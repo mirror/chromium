@@ -34,7 +34,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SpinButtonElement final : public HTMLDivElement,
+class CORE_EXPORT_N2185 SpinButtonElement final : public HTMLDivElement,
                                             public PopupOpeningObserver {
  public:
   enum UpDownState {

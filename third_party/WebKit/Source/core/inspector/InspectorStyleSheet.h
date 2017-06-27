@@ -84,7 +84,7 @@ class InspectorStyle final : public GarbageCollectedFinalized<InspectorStyle> {
 class InspectorStyleSheetBase
     : public GarbageCollectedFinalized<InspectorStyleSheetBase> {
  public:
-  class CORE_EXPORT Listener {
+  class CORE_EXPORT_N2272 Listener {
    public:
     Listener() {}
     virtual ~Listener() {}

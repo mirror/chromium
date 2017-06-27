@@ -50,7 +50,7 @@ class Node;
 // A class which inherits both Node and TreeScope must call clearRareData() in
 // its destructor so that the Node destructor no longer does problematic
 // NodeList cache manipulation in the destructor.
-class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
+class CORE_EXPORT_N1716 TreeScope : public GarbageCollectedMixin {
  public:
   TreeScope* ParentTreeScope() const { return parent_tree_scope_; }
 

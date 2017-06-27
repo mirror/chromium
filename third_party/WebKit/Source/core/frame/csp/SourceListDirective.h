@@ -20,7 +20,7 @@ namespace blink {
 class ContentSecurityPolicy;
 class KURL;
 
-class CORE_EXPORT SourceListDirective final : public CSPDirective {
+class CORE_EXPORT_N2085 SourceListDirective final : public CSPDirective {
   WTF_MAKE_NONCOPYABLE(SourceListDirective);
 
  public:

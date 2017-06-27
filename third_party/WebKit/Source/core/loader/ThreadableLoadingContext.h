@@ -24,7 +24,7 @@ class WorkerGlobalScope;
 // An abstract interface for top-level loading context.
 // This should be accessed only from the thread where the loading
 // context is bound to (e.g. on the main thread).
-class CORE_EXPORT ThreadableLoadingContext
+class CORE_EXPORT_N2472 ThreadableLoadingContext
     : public GarbageCollected<ThreadableLoadingContext> {
   WTF_MAKE_NONCOPYABLE(ThreadableLoadingContext);
 

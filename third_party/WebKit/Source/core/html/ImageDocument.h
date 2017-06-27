@@ -34,7 +34,7 @@ namespace blink {
 
 class ImageResource;
 
-class CORE_EXPORT ImageDocument final : public HTMLDocument {
+class CORE_EXPORT_N2149 ImageDocument final : public HTMLDocument {
  public:
   static ImageDocument* Create(
       const DocumentInit& initializer = DocumentInit()) {

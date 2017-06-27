@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT StyleEngineContext {
+class CORE_EXPORT_N1706 StyleEngineContext {
  public:
   StyleEngineContext();
   ~StyleEngineContext() {}

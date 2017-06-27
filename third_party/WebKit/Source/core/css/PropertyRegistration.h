@@ -22,7 +22,7 @@ class PropertyDescriptor;
 
 using CSSInterpolationTypes = Vector<std::unique_ptr<CSSInterpolationType>>;
 
-class CORE_EXPORT PropertyRegistration
+class CORE_EXPORT_N1519 PropertyRegistration
     : public GarbageCollectedFinalized<PropertyRegistration> {
  public:
   static void registerProperty(ExecutionContext*,

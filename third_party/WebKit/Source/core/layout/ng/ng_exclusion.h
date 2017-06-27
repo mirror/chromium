@@ -12,7 +12,7 @@
 namespace blink {
 
 // Struct that represents NG exclusion.
-struct CORE_EXPORT NGExclusion {
+struct CORE_EXPORT_N2362 NGExclusion {
   // Type of NG exclusion.
   enum Type {
     // Undefined exclusion type.
@@ -52,9 +52,9 @@ struct CORE_EXPORT NGExclusion {
   bool MaybeCombineWith(const NGExclusion& other);
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGExclusion&);
+CORE_EXPORT_N2363 std::ostream& operator<<(std::ostream&, const NGExclusion&);
 
-struct CORE_EXPORT NGExclusions {
+struct CORE_EXPORT_N2364 NGExclusions {
   NGExclusions();
   NGExclusions(const NGExclusions& other);
 

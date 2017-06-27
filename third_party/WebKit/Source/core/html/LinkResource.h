@@ -42,7 +42,7 @@ namespace blink {
 class HTMLLinkElement;
 class LocalFrame;
 
-class CORE_EXPORT LinkResource
+class CORE_EXPORT_N2152 LinkResource
     : public GarbageCollectedFinalized<LinkResource> {
   WTF_MAKE_NONCOPYABLE(LinkResource);
 

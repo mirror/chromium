@@ -33,7 +33,7 @@
 
 namespace blink {
 
-class CORE_EXPORT PseudoElement : public Element {
+class CORE_EXPORT_N1683 PseudoElement : public Element {
  public:
   static PseudoElement* Create(Element* parent, PseudoId);
 

@@ -18,7 +18,7 @@ class ExceptionState;
 class ScriptState;
 class ScriptValue;
 
-class CORE_EXPORT DOMPointReadOnly : public GarbageCollected<DOMPointReadOnly>,
+class CORE_EXPORT_N2089 DOMPointReadOnly : public GarbageCollected<DOMPointReadOnly>,
                                      public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

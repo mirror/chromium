@@ -66,7 +66,7 @@ class StyleRuleUsageTracker;
 class StyleSheetContents;
 class ViewportStyleResolver;
 
-class CORE_EXPORT StyleEngine final
+class CORE_EXPORT_N1705 StyleEngine final
     : public GarbageCollectedFinalized<StyleEngine>,
       public CSSFontSelectorClient,
       public TraceWrapperBase {

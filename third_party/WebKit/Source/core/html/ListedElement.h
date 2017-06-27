@@ -41,7 +41,7 @@ class Node;
 class ValidityState;
 
 // https://html.spec.whatwg.org/multipage/forms.html#category-listed
-class CORE_EXPORT ListedElement : public GarbageCollectedMixin {
+class CORE_EXPORT_N2153 ListedElement : public GarbageCollectedMixin {
  public:
   virtual ~ListedElement();
 
@@ -125,10 +125,10 @@ class CORE_EXPORT ListedElement : public GarbageCollectedMixin {
   bool form_was_set_by_parser_;
 };
 
-CORE_EXPORT HTMLElement* ToHTMLElement(ListedElement*);
-CORE_EXPORT HTMLElement& ToHTMLElement(ListedElement&);
-CORE_EXPORT const HTMLElement* ToHTMLElement(const ListedElement*);
-CORE_EXPORT const HTMLElement& ToHTMLElement(const ListedElement&);
+CORE_EXPORT_N2154 HTMLElement* ToHTMLElement(ListedElement*);
+CORE_EXPORT_N2155 HTMLElement& ToHTMLElement(ListedElement&);
+CORE_EXPORT_N2156 const HTMLElement* ToHTMLElement(const ListedElement*);
+CORE_EXPORT_N2157 const HTMLElement& ToHTMLElement(const ListedElement&);
 
 }  // namespace blink
 

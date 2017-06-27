@@ -35,7 +35,7 @@
 
 namespace blink {
 
-class CORE_EXPORT GenericEventQueue final : public EventQueue {
+class CORE_EXPORT_N1976 GenericEventQueue final : public EventQueue {
  public:
   static GenericEventQueue* Create(EventTarget*);
   ~GenericEventQueue() override;

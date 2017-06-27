@@ -15,7 +15,7 @@ namespace blink {
 
 struct NGLogicalSize;
 
-class CORE_EXPORT NGFragment {
+class CORE_EXPORT_N2368 NGFragment {
   STACK_ALLOCATED();
 
  public:

@@ -18,7 +18,7 @@ class ClipRect;
 class GraphicsContext;
 class LayoutBoxModelObject;
 
-class CORE_EXPORT LayerClipRecorder {
+class CORE_EXPORT_N2530 LayerClipRecorder {
   USING_FAST_MALLOC(LayerClipRecorder);
 
  public:

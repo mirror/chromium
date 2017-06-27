@@ -42,7 +42,7 @@ namespace blink {
 
 class FontDescription;
 
-class CORE_EXPORT StyleResolverState {
+class CORE_EXPORT_N1598 StyleResolverState {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(StyleResolverState);
 

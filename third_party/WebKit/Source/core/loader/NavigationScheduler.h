@@ -51,7 +51,7 @@ class FormSubmission;
 class LocalFrame;
 class ScheduledNavigation;
 
-class CORE_EXPORT NavigationScheduler final
+class CORE_EXPORT_N2463 NavigationScheduler final
     : public GarbageCollectedFinalized<NavigationScheduler> {
   WTF_MAKE_NONCOPYABLE(NavigationScheduler);
 

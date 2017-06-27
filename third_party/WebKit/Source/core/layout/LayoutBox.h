@@ -198,7 +198,7 @@ struct LayoutBoxRareData {
 // (e.g. the overflows). Thus it is paramount to know which box a function is
 // manipulating. Also of critical importance is the coordinate system used (see
 // the COORDINATE SYSTEMS section in LayoutBoxModelObject).
-class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
+class CORE_EXPORT_N2296 LayoutBox : public LayoutBoxModelObject {
  public:
   explicit LayoutBox(ContainerNode*);
 

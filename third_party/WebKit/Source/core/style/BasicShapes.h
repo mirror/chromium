@@ -46,7 +46,7 @@ class FloatRect;
 class FloatSize;
 class Path;
 
-class CORE_EXPORT BasicShape : public RefCounted<BasicShape> {
+class CORE_EXPORT_N2578 BasicShape : public RefCounted<BasicShape> {
  public:
   virtual ~BasicShape() {}
 
@@ -156,7 +156,7 @@ class BasicShapeRadius {
   RadiusType type_;
 };
 
-class CORE_EXPORT BasicShapeCircle final : public BasicShape {
+class CORE_EXPORT_N2579 BasicShapeCircle final : public BasicShape {
  public:
   static PassRefPtr<BasicShapeCircle> Create() {
     return AdoptRef(new BasicShapeCircle);

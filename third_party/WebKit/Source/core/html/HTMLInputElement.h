@@ -46,7 +46,7 @@ class ListAttributeTargetObserver;
 class RadioButtonGroupScope;
 struct DateTimeChooserParameters;
 
-class CORE_EXPORT HTMLInputElement : public TextControlElement {
+class CORE_EXPORT_N2122 HTMLInputElement : public TextControlElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

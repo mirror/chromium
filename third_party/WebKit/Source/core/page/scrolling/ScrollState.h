@@ -19,7 +19,7 @@ namespace blink {
 
 class Element;
 
-class CORE_EXPORT ScrollState final
+class CORE_EXPORT_N2524 ScrollState final
     : public GarbageCollectedFinalized<ScrollState>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

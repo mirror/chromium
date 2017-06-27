@@ -178,7 +178,7 @@ enum IntegerConversionConfiguration {
 };
 
 // Convert a value to a boolean.
-CORE_EXPORT bool ToBooleanSlow(v8::Isolate*,
+CORE_EXPORT_N67 bool ToBooleanSlow(v8::Isolate*,
                                v8::Local<v8::Value>,
                                ExceptionState&);
 inline bool ToBoolean(v8::Isolate* isolate,
@@ -192,7 +192,7 @@ inline bool ToBoolean(v8::Isolate* isolate,
 // Convert a value to a 8-bit signed integer. The conversion fails if the
 // value cannot be converted to a number or the range violated per WebIDL:
 // http://www.w3.org/TR/WebIDL/#es-byte
-CORE_EXPORT int8_t ToInt8(v8::Isolate*,
+CORE_EXPORT_N68 int8_t ToInt8(v8::Isolate*,
                           v8::Local<v8::Value>,
                           IntegerConversionConfiguration,
                           ExceptionState&);
@@ -200,7 +200,7 @@ CORE_EXPORT int8_t ToInt8(v8::Isolate*,
 // Convert a value to a 8-bit unsigned integer. The conversion fails if the
 // value cannot be converted to a number or the range violated per WebIDL:
 // http://www.w3.org/TR/WebIDL/#es-octet
-CORE_EXPORT uint8_t ToUInt8(v8::Isolate*,
+CORE_EXPORT_N69 uint8_t ToUInt8(v8::Isolate*,
                             v8::Local<v8::Value>,
                             IntegerConversionConfiguration,
                             ExceptionState&);
@@ -208,7 +208,7 @@ CORE_EXPORT uint8_t ToUInt8(v8::Isolate*,
 // Convert a value to a 16-bit signed integer. The conversion fails if the
 // value cannot be converted to a number or the range violated per WebIDL:
 // http://www.w3.org/TR/WebIDL/#es-short
-CORE_EXPORT int16_t ToInt16(v8::Isolate*,
+CORE_EXPORT_N70 int16_t ToInt16(v8::Isolate*,
                             v8::Local<v8::Value>,
                             IntegerConversionConfiguration,
                             ExceptionState&);
@@ -216,7 +216,7 @@ CORE_EXPORT int16_t ToInt16(v8::Isolate*,
 // Convert a value to a 16-bit unsigned integer. The conversion fails if the
 // value cannot be converted to a number or the range violated per WebIDL:
 // http://www.w3.org/TR/WebIDL/#es-unsigned-short
-CORE_EXPORT uint16_t ToUInt16(v8::Isolate*,
+CORE_EXPORT_N71 uint16_t ToUInt16(v8::Isolate*,
                               v8::Local<v8::Value>,
                               IntegerConversionConfiguration,
                               ExceptionState&);
@@ -224,7 +224,7 @@ CORE_EXPORT uint16_t ToUInt16(v8::Isolate*,
 // Convert a value to a 32-bit signed integer. The conversion fails if the
 // value cannot be converted to a number or the range violated per WebIDL:
 // http://www.w3.org/TR/WebIDL/#es-long
-CORE_EXPORT int32_t ToInt32Slow(v8::Isolate*,
+CORE_EXPORT_N72 int32_t ToInt32Slow(v8::Isolate*,
                                 v8::Local<v8::Value>,
                                 IntegerConversionConfiguration,
                                 ExceptionState&);
@@ -241,7 +241,7 @@ inline int32_t ToInt32(v8::Isolate* isolate,
 // Convert a value to a 32-bit unsigned integer. The conversion fails if the
 // value cannot be converted to a number or the range violated per WebIDL:
 // http://www.w3.org/TR/WebIDL/#es-unsigned-long
-CORE_EXPORT uint32_t ToUInt32Slow(v8::Isolate*,
+CORE_EXPORT_N73 uint32_t ToUInt32Slow(v8::Isolate*,
                                   v8::Local<v8::Value>,
                                   IntegerConversionConfiguration,
                                   ExceptionState&);
@@ -264,7 +264,7 @@ inline uint32_t ToUInt32(v8::Isolate* isolate,
 // Convert a value to a 64-bit signed integer. The conversion fails if the
 // value cannot be converted to a number or the range violated per WebIDL:
 // http://www.w3.org/TR/WebIDL/#es-long-long
-CORE_EXPORT int64_t ToInt64Slow(v8::Isolate*,
+CORE_EXPORT_N74 int64_t ToInt64Slow(v8::Isolate*,
                                 v8::Local<v8::Value>,
                                 IntegerConversionConfiguration,
                                 ExceptionState&);
@@ -286,7 +286,7 @@ inline int64_t ToInt64(v8::Isolate* isolate,
 // Convert a value to a 64-bit unsigned integer. The conversion fails if the
 // value cannot be converted to a number or the range violated per WebIDL:
 // http://www.w3.org/TR/WebIDL/#es-unsigned-long-long
-CORE_EXPORT uint64_t ToUInt64Slow(v8::Isolate*,
+CORE_EXPORT_N75 uint64_t ToUInt64Slow(v8::Isolate*,
                                   v8::Local<v8::Value>,
                                   IntegerConversionConfiguration,
                                   ExceptionState&);
@@ -305,7 +305,7 @@ inline uint64_t ToUInt64(v8::Isolate* isolate,
 }
 
 // Convert a value to a double precision float, which might fail.
-CORE_EXPORT double ToDoubleSlow(v8::Isolate*,
+CORE_EXPORT_N76 double ToDoubleSlow(v8::Isolate*,
                                 v8::Local<v8::Value>,
                                 ExceptionState&);
 inline double ToDouble(v8::Isolate* isolate,
@@ -317,7 +317,7 @@ inline double ToDouble(v8::Isolate* isolate,
 }
 
 // Convert a value to a double precision float, throwing on non-finite values.
-CORE_EXPORT double ToRestrictedDouble(v8::Isolate*,
+CORE_EXPORT_N77 double ToRestrictedDouble(v8::Isolate*,
                                       v8::Local<v8::Value>,
                                       ExceptionState&);
 
@@ -329,18 +329,18 @@ inline float ToFloat(v8::Isolate* isolate,
 }
 
 // Convert a value to a single precision float, throwing on non-finite values.
-CORE_EXPORT float ToRestrictedFloat(v8::Isolate*,
+CORE_EXPORT_N78 float ToRestrictedFloat(v8::Isolate*,
                                     v8::Local<v8::Value>,
                                     ExceptionState&);
 
 // Converts a value to a String, throwing if any code unit is outside 0-255.
-CORE_EXPORT String ToByteString(v8::Isolate*,
+CORE_EXPORT_N79 String ToByteString(v8::Isolate*,
                                 v8::Local<v8::Value>,
                                 ExceptionState&);
 
 // Converts a value to a String, replacing unmatched UTF-16 surrogates with
 // replacement characters.
-CORE_EXPORT String ToUSVString(v8::Isolate*,
+CORE_EXPORT_N80 String ToUSVString(v8::Isolate*,
                                v8::Local<v8::Value>,
                                ExceptionState&);
 
@@ -411,14 +411,14 @@ VectorType ToImplArguments(const v8::FunctionCallbackInfo<v8::Value>& info,
 }
 
 // Gets an iterator from an Object.
-CORE_EXPORT v8::Local<v8::Object> GetEsIterator(v8::Isolate*,
+CORE_EXPORT_N81 v8::Local<v8::Object> GetEsIterator(v8::Isolate*,
                                                 v8::Local<v8::Object>,
                                                 ExceptionState&);
 
 // Validates that the passed object is a sequence type per the WebIDL spec: it
 // has a callable @iterator.
 // https://heycam.github.io/webidl/#es-sequence
-CORE_EXPORT bool HasCallableIteratorSymbol(v8::Isolate*,
+CORE_EXPORT_N82 bool HasCallableIteratorSymbol(v8::Isolate*,
                                            v8::Local<v8::Value>,
                                            ExceptionState&);
 
@@ -449,46 +449,46 @@ struct NativeValueTraits<v8::Local<v8::Value>>
   }
 };
 
-CORE_EXPORT v8::Isolate* ToIsolate(ExecutionContext*);
-CORE_EXPORT v8::Isolate* ToIsolate(LocalFrame*);
+CORE_EXPORT_N83 v8::Isolate* ToIsolate(ExecutionContext*);
+CORE_EXPORT_N84 v8::Isolate* ToIsolate(LocalFrame*);
 
-CORE_EXPORT DOMWindow* ToDOMWindow(v8::Isolate*, v8::Local<v8::Value>);
+CORE_EXPORT_N85 DOMWindow* ToDOMWindow(v8::Isolate*, v8::Local<v8::Value>);
 LocalDOMWindow* ToLocalDOMWindow(v8::Local<v8::Context>);
 LocalDOMWindow* EnteredDOMWindow(v8::Isolate*);
-CORE_EXPORT LocalDOMWindow* CurrentDOMWindow(v8::Isolate*);
-CORE_EXPORT ExecutionContext* ToExecutionContext(v8::Local<v8::Context>);
-CORE_EXPORT void RegisterToExecutionContextForModules(ExecutionContext* (
+CORE_EXPORT_N86 LocalDOMWindow* CurrentDOMWindow(v8::Isolate*);
+CORE_EXPORT_N87 ExecutionContext* ToExecutionContext(v8::Local<v8::Context>);
+CORE_EXPORT_N88 void RegisterToExecutionContextForModules(ExecutionContext* (
     *to_execution_context_for_modules)(v8::Local<v8::Context>));
-CORE_EXPORT ExecutionContext* CurrentExecutionContext(v8::Isolate*);
+CORE_EXPORT_N89 ExecutionContext* CurrentExecutionContext(v8::Isolate*);
 
 // Returns a V8 context associated with a ExecutionContext and a
 // DOMWrapperWorld.  This method returns an empty context if there is no frame
 // or the frame is already detached.
-CORE_EXPORT v8::Local<v8::Context> ToV8Context(ExecutionContext*,
+CORE_EXPORT_N90 v8::Local<v8::Context> ToV8Context(ExecutionContext*,
                                                DOMWrapperWorld&);
 // Returns a V8 context associated with a Frame and a DOMWrapperWorld.
 // This method returns an empty context if the frame is already detached.
-CORE_EXPORT v8::Local<v8::Context> ToV8Context(LocalFrame*, DOMWrapperWorld&);
+CORE_EXPORT_N91 v8::Local<v8::Context> ToV8Context(LocalFrame*, DOMWrapperWorld&);
 // Like toV8Context but also returns the context if the frame is already
 // detached.
-CORE_EXPORT v8::Local<v8::Context> ToV8ContextEvenIfDetached(LocalFrame*,
+CORE_EXPORT_N92 v8::Local<v8::Context> ToV8ContextEvenIfDetached(LocalFrame*,
                                                              DOMWrapperWorld&);
 
 // These methods can return nullptr if the context associated with the
 // ScriptState has already been detached.
-CORE_EXPORT ScriptState* ToScriptState(LocalFrame*, DOMWrapperWorld&);
+CORE_EXPORT_N93 ScriptState* ToScriptState(LocalFrame*, DOMWrapperWorld&);
 // Do not use this method unless you are sure you should use the main world's
 // ScriptState
-CORE_EXPORT ScriptState* ToScriptStateForMainWorld(LocalFrame*);
+CORE_EXPORT_N94 ScriptState* ToScriptStateForMainWorld(LocalFrame*);
 
 // Returns the frame object of the window object associated with
 // a context, if the window is currently being displayed in a Frame.
-CORE_EXPORT LocalFrame* ToLocalFrameIfNotDetached(v8::Local<v8::Context>);
+CORE_EXPORT_N95 LocalFrame* ToLocalFrameIfNotDetached(v8::Local<v8::Context>);
 
 // If 'storage' is non-null, it must be large enough to copy all bytes in the
 // array buffer view into it.  Use allocateFlexibleArrayBufferStorage(v8Value)
 // to allocate it using alloca() in the callers stack frame.
-CORE_EXPORT void ToFlexibleArrayBufferView(v8::Isolate*,
+CORE_EXPORT_N96 void ToFlexibleArrayBufferView(v8::Isolate*,
                                            v8::Local<v8::Value>,
                                            FlexibleArrayBufferView&,
                                            void* storage = nullptr);
@@ -563,18 +563,18 @@ VectorType ToImplSequence(v8::Isolate* isolate,
   return result;
 }
 
-CORE_EXPORT bool IsValidEnum(const String& value,
+CORE_EXPORT_N97 bool IsValidEnum(const String& value,
                              const char** valid_values,
                              size_t length,
                              const String& enum_name,
                              ExceptionState&);
-CORE_EXPORT bool IsValidEnum(const Vector<String>& values,
+CORE_EXPORT_N98 bool IsValidEnum(const Vector<String>& values,
                              const char** valid_values,
                              size_t length,
                              const String& enum_name,
                              ExceptionState&);
 
-CORE_EXPORT void MoveEventListenerToNewWrapper(v8::Isolate*,
+CORE_EXPORT_N99 void MoveEventListenerToNewWrapper(v8::Isolate*,
                                                v8::Local<v8::Object>,
                                                EventListener* old_value,
                                                v8::Local<v8::Value> new_value,
@@ -584,7 +584,7 @@ CORE_EXPORT void MoveEventListenerToNewWrapper(v8::Isolate*,
 // http://www.w3.org/TR/WebIDL/#delete
 enum DeleteResult { kDeleteSuccess, kDeleteReject, kDeleteUnknownProperty };
 
-CORE_EXPORT v8::Local<v8::Value> FromJSONString(v8::Isolate*,
+CORE_EXPORT_N100 v8::Local<v8::Value> FromJSONString(v8::Isolate*,
                                                 const String& stringified_json,
                                                 ExceptionState&);
 

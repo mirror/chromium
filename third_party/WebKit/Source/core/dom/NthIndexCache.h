@@ -14,7 +14,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT NthIndexData final : public GarbageCollected<NthIndexData> {
+class CORE_EXPORT_N1679 NthIndexData final : public GarbageCollected<NthIndexData> {
   WTF_MAKE_NONCOPYABLE(NthIndexData);
 
  public:
@@ -33,7 +33,7 @@ class CORE_EXPORT NthIndexData final : public GarbageCollected<NthIndexData> {
   DECLARE_TRACE();
 };
 
-class CORE_EXPORT NthIndexCache final {
+class CORE_EXPORT_N1680 NthIndexCache final {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(NthIndexCache);
 

@@ -19,7 +19,7 @@ class PaintTiming;
 // until network stable (2 seconds of no network activity), and computes the
 // layout-based First Meaningful Paint.
 // See https://goo.gl/vpaxv6 and http://goo.gl/TEiMi4 for more details.
-class CORE_EXPORT FirstMeaningfulPaintDetector
+class CORE_EXPORT_N2528 FirstMeaningfulPaintDetector
     : public GarbageCollectedFinalized<FirstMeaningfulPaintDetector> {
   WTF_MAKE_NONCOPYABLE(FirstMeaningfulPaintDetector);
 

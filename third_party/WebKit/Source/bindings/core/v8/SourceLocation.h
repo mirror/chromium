@@ -17,7 +17,7 @@ namespace blink {
 class ExecutionContext;
 class TracedValue;
 
-class CORE_EXPORT SourceLocation {
+class CORE_EXPORT_N62 SourceLocation {
  public:
   // Zero lineNumber and columnNumber mean unknown. Captures current stack
   // trace.

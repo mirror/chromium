@@ -22,7 +22,7 @@ class WorkletGlobalScopeProxy;
 // https://drafts.css-houdini.org/worklets/#worklet
 // Although some worklets run off the main thread, this must be created and
 // destroyed on the main thread.
-class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
+class CORE_EXPORT_N2676 Worklet : public GarbageCollectedFinalized<Worklet>,
                             public ScriptWrappable,
                             public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();

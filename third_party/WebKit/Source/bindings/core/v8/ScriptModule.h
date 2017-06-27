@@ -24,7 +24,7 @@ namespace blink {
 // across different contexts.
 // Currently all ScriptModule users can easily access its context Modulator, so
 // we use it to fill ScriptState in.
-class CORE_EXPORT ScriptModule final {
+class CORE_EXPORT_N52 ScriptModule final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

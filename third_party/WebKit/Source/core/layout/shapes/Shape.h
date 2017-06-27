@@ -62,7 +62,7 @@ struct LineSegment {
 // are returned as pairs of logical X coordinates. The BasicShape itself is
 // defined in physical coordinates.
 
-class CORE_EXPORT Shape {
+class CORE_EXPORT_N2439 Shape {
   USING_FAST_MALLOC(Shape);
 
  public:

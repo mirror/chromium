@@ -197,7 +197,7 @@ const int kShowTreeCharacterOffset = 39;
 // PreferredLogicalWidthsDirty.
 //
 // See the individual getters below for more details about what each width is.
-class CORE_EXPORT LayoutObject : public ImageResourceObserver,
+class CORE_EXPORT_N2308 LayoutObject : public ImageResourceObserver,
                                  public DisplayItemClient {
   friend class LayoutObjectChildList;
   FRIEND_TEST_ALL_PREFIXES(LayoutObjectTest, MutableForPaintingClearPaintFlags);
@@ -1736,7 +1736,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   // Painters can use const methods only, except for these explicitly declared
   // methods.
-  class CORE_EXPORT MutableForPainting {
+  class CORE_EXPORT_N2309 MutableForPainting {
    public:
     // Convenience mutator that clears paint invalidation flags and this object
     // and its descendants' needs-paint-property-update flags.
@@ -2833,12 +2833,12 @@ inline double AdjustScrollForAbsoluteZoom(double value,
 
 #ifndef NDEBUG
 // Outside the blink namespace for ease of invocation from gdb.
-CORE_EXPORT void showTree(const blink::LayoutObject*);
-CORE_EXPORT void showLineTree(const blink::LayoutObject*);
-CORE_EXPORT void showLayoutTree(const blink::LayoutObject* object1);
+CORE_EXPORT_N2310 void showTree(const blink::LayoutObject*);
+CORE_EXPORT_N2311 void showLineTree(const blink::LayoutObject*);
+CORE_EXPORT_N2312 void showLayoutTree(const blink::LayoutObject* object1);
 // We don't make object2 an optional parameter so that showLayoutTree
 // can be called from gdb easily.
-CORE_EXPORT void showLayoutTree(const blink::LayoutObject* object1,
+CORE_EXPORT_N2313 void showLayoutTree(const blink::LayoutObject* object1,
                                 const blink::LayoutObject* object2);
 
 #endif

@@ -14,7 +14,7 @@ namespace blink {
 
 // NGPixelSnappedPhysicalRect is the position and size of a rect relative to the
 // root document snapped to device pixels.
-struct CORE_EXPORT NGPixelSnappedPhysicalRect {
+struct CORE_EXPORT_N2420 NGPixelSnappedPhysicalRect {
   int top;
   int left;
   int width;
@@ -23,7 +23,7 @@ struct CORE_EXPORT NGPixelSnappedPhysicalRect {
 
 // NGPhysicalRect is the position and size of a rect (typically a fragment)
 // relative to the root document.
-struct CORE_EXPORT NGPhysicalRect {
+struct CORE_EXPORT_N2421 NGPhysicalRect {
   NGPhysicalRect();
   NGPhysicalRect(const NGPhysicalLocation& location, const NGPhysicalSize& size)
       : location(location), size(size) {}
@@ -40,7 +40,7 @@ struct CORE_EXPORT NGPhysicalRect {
   String ToString() const;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGPhysicalRect&);
+CORE_EXPORT_N2422 std::ostream& operator<<(std::ostream&, const NGPhysicalRect&);
 
 }  // namespace blink
 

@@ -31,7 +31,7 @@ class CSSStyleDeclaration;
 class StyleRuleCSSStyleDeclaration;
 class StyleRule;
 
-class CORE_EXPORT CSSStyleRule final : public CSSRule {
+class CORE_EXPORT_N1493 CSSStyleRule final : public CSSRule {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

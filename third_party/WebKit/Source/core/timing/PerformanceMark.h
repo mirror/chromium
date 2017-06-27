@@ -32,7 +32,7 @@
 
 namespace blink {
 
-class CORE_EXPORT PerformanceMark final : public PerformanceEntry {
+class CORE_EXPORT_N2626 PerformanceMark final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

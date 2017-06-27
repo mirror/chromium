@@ -21,7 +21,7 @@ class ScriptModule;
 // The ScriptModuleResolverImpl implements ScriptModuleResolver interface
 // and implements "HostResolveImportedModule" HTML spec algorithm to bridge
 // ModuleMap (via Modulator) and V8 bindings.
-class CORE_EXPORT ScriptModuleResolverImpl final : public ScriptModuleResolver {
+class CORE_EXPORT_N1699 ScriptModuleResolverImpl final : public ScriptModuleResolver {
  public:
   static ScriptModuleResolverImpl* Create(Modulator* modulator) {
     return new ScriptModuleResolverImpl(modulator);

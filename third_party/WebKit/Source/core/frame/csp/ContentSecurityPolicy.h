@@ -73,7 +73,7 @@ typedef HeapVector<Member<ConsoleMessage>> ConsoleMessageVector;
 typedef std::pair<String, ContentSecurityPolicyHeaderType> CSPHeaderAndType;
 using RedirectStatus = ResourceRequest::RedirectStatus;
 
-class CORE_EXPORT ContentSecurityPolicy
+class CORE_EXPORT_N2080 ContentSecurityPolicy
     : public GarbageCollectedFinalized<ContentSecurityPolicy> {
  public:
   enum ExceptionStatus { kWillThrowException, kWillNotThrowException };

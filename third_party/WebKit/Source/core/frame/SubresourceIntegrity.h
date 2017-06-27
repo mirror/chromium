@@ -19,7 +19,7 @@ class ExecutionContext;
 class KURL;
 class Resource;
 
-class CORE_EXPORT SubresourceIntegrity {
+class CORE_EXPORT_N2070 SubresourceIntegrity {
   STATIC_ONLY(SubresourceIntegrity);
 
  public:

@@ -71,7 +71,7 @@ class SerializedScriptValue;
 class WebServiceWorkerNetworkProvider;
 struct ViewportDescriptionWrapper;
 
-class CORE_EXPORT DocumentLoader
+class CORE_EXPORT_N2443 DocumentLoader
     : public GarbageCollectedFinalized<DocumentLoader>,
       private RawResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(DocumentLoader);

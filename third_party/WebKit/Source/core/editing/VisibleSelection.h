@@ -188,16 +188,16 @@ using VisibleSelection = VisibleSelectionTemplate<EditingStrategy>;
 using VisibleSelectionInFlatTree =
     VisibleSelectionTemplate<EditingInFlatTreeStrategy>;
 
-CORE_EXPORT VisibleSelection CreateVisibleSelection(const SelectionInDOMTree&);
-CORE_EXPORT VisibleSelectionInFlatTree
+CORE_EXPORT_N1822 VisibleSelection CreateVisibleSelection(const SelectionInDOMTree&);
+CORE_EXPORT_N1823 VisibleSelectionInFlatTree
 CreateVisibleSelection(const SelectionInFlatTree&);
 
 // We don't yet support multi-range selections, so we only ever have one range
 // to return.
-CORE_EXPORT EphemeralRange FirstEphemeralRangeOf(const VisibleSelection&);
+CORE_EXPORT_N1824 EphemeralRange FirstEphemeralRangeOf(const VisibleSelection&);
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const VisibleSelection&);
-CORE_EXPORT std::ostream& operator<<(std::ostream&,
+CORE_EXPORT_N1825 std::ostream& operator<<(std::ostream&, const VisibleSelection&);
+CORE_EXPORT_N1826 std::ostream& operator<<(std::ostream&,
                                      const VisibleSelectionInFlatTree&);
 
 }  // namespace blink

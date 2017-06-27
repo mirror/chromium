@@ -18,7 +18,7 @@ namespace blink {
 class ComputedStyle;
 class NGConstraintSpace;
 
-struct CORE_EXPORT NGAbsolutePhysicalPosition {
+struct CORE_EXPORT_N2348 NGAbsolutePhysicalPosition {
   NGPhysicalBoxStrut inset;
   NGPhysicalSize size;
   String ToString() const;
@@ -40,15 +40,15 @@ struct CORE_EXPORT NGAbsolutePhysicalPosition {
 
 // True if ComputePartialAbsoluteWithChildInlineSize will need
 // estimated inline size.
-CORE_EXPORT bool AbsoluteNeedsChildInlineSize(const ComputedStyle&);
+CORE_EXPORT_N2349 bool AbsoluteNeedsChildInlineSize(const ComputedStyle&);
 
 // True if ComputeFullAbsoluteWithChildBlockSize will need
 // estimated block size.
-CORE_EXPORT bool AbsoluteNeedsChildBlockSize(const ComputedStyle&);
+CORE_EXPORT_N2350 bool AbsoluteNeedsChildBlockSize(const ComputedStyle&);
 
 // Compute part of position that depends on child's inline_size
 // returns partially filled position.
-CORE_EXPORT NGAbsolutePhysicalPosition
+CORE_EXPORT_N2351 NGAbsolutePhysicalPosition
 ComputePartialAbsoluteWithChildInlineSize(
     const NGConstraintSpace& space,
     const ComputedStyle& style,
@@ -56,7 +56,7 @@ ComputePartialAbsoluteWithChildInlineSize(
     const Optional<MinMaxContentSize>& child_minmax);
 
 // Compute rest of NGPhysicalRect that depends on child's block_size.
-CORE_EXPORT void ComputeFullAbsoluteWithChildBlockSize(
+CORE_EXPORT_N2352 void ComputeFullAbsoluteWithChildBlockSize(
     const NGConstraintSpace& space,
     const ComputedStyle& style,
     const NGStaticPosition&,

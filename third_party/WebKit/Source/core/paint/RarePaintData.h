@@ -17,7 +17,7 @@ class PaintLayer;
 
 // This is for paint-related data on LayoutObject that is not needed on all
 // objects.
-class CORE_EXPORT RarePaintData {
+class CORE_EXPORT_N2559 RarePaintData {
   WTF_MAKE_NONCOPYABLE(RarePaintData);
   USING_FAST_MALLOC(RarePaintData);
 

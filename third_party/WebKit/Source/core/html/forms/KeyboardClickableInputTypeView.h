@@ -37,7 +37,7 @@
 namespace blink {
 
 // An InputTypeView class that dispatches a simulated click on space/return key.
-class CORE_EXPORT KeyboardClickableInputTypeView : public InputTypeView {
+class CORE_EXPORT_N2182 KeyboardClickableInputTypeView : public InputTypeView {
  protected:
   KeyboardClickableInputTypeView(HTMLInputElement& element)
       : InputTypeView(element) {}

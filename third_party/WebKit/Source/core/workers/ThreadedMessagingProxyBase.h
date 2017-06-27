@@ -21,7 +21,7 @@ class WorkerLoaderProxy;
 class WorkerThread;
 class WorkerThreadStartupData;
 
-class CORE_EXPORT ThreadedMessagingProxyBase
+class CORE_EXPORT_N2651 ThreadedMessagingProxyBase
     : private WorkerLoaderProxyProvider {
  public:
   void TerminateGlobalScope();

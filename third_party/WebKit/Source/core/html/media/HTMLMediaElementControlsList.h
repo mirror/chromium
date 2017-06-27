@@ -27,9 +27,9 @@ class HTMLMediaElementControlsList final : public DOMTokenList,
   DECLARE_VIRTUAL_TRACE();
 
   // Whether the list dictates to hide a certain control.
-  CORE_EXPORT bool ShouldHideDownload() const;
-  CORE_EXPORT bool ShouldHideFullscreen() const;
-  CORE_EXPORT bool ShouldHideRemotePlayback() const;
+  CORE_EXPORT_N2190 bool ShouldHideDownload() const;
+  CORE_EXPORT_N2191 bool ShouldHideFullscreen() const;
+  CORE_EXPORT_N2192 bool ShouldHideRemotePlayback() const;
 
  private:
   explicit HTMLMediaElementControlsList(HTMLMediaElement*);

@@ -19,7 +19,7 @@ class CSSPrimitiveValue;
 class LocalFrame;
 enum class ColorSpaceGamut;
 
-class CORE_EXPORT MediaValues : public GarbageCollectedFinalized<MediaValues> {
+class CORE_EXPORT_N1514 MediaValues : public GarbageCollectedFinalized<MediaValues> {
  public:
   virtual ~MediaValues() {}
   DEFINE_INLINE_VIRTUAL_TRACE() {}

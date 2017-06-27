@@ -89,7 +89,7 @@ enum IndentTextOrNot { kDoNotIndentText, kIndentText };
 // This is suggested by CSS to correctly the layout mixed inlines and blocks
 // lines (http://www.w3.org/TR/CSS21/visuren.html#anonymous-block-level). See
 // LayoutBlock::addChild about how the invariant is enforced.
-class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
+class CORE_EXPORT_N2295 LayoutBlockFlow : public LayoutBlock {
  public:
   explicit LayoutBlockFlow(ContainerNode*);
   ~LayoutBlockFlow() override;

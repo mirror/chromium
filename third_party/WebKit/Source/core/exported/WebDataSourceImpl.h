@@ -44,7 +44,7 @@
 
 namespace blink {
 
-class CORE_EXPORT WebDataSourceImpl final : public DocumentLoader,
+class CORE_EXPORT_N2002 WebDataSourceImpl final : public DocumentLoader,
                                             public WebDataSource {
  public:
   static WebDataSourceImpl* Create(LocalFrame*,

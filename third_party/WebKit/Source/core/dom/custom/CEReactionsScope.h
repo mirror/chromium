@@ -17,7 +17,7 @@ class CustomElementReaction;
 class Element;
 
 // https://html.spec.whatwg.org/multipage/scripting.html#cereactions
-class CORE_EXPORT CEReactionsScope final {
+class CORE_EXPORT_N1720 CEReactionsScope final {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(CEReactionsScope);
 

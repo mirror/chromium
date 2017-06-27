@@ -21,7 +21,7 @@ typedef HashCountedSet<UntracedMember<EventTarget>> EventTargetSet;
 // Registry for keeping track of event handlers. Note that only handlers on
 // documents that can be rendered or can receive input (i.e., are attached to a
 // Page) are registered here.
-class CORE_EXPORT EventHandlerRegistry final
+class CORE_EXPORT_N2030 EventHandlerRegistry final
     : public GarbageCollectedFinalized<EventHandlerRegistry> {
  public:
   explicit EventHandlerRegistry(Page&);

@@ -30,7 +30,7 @@ enum class ModuleGraphLevel;
 // ModuleScript.
 //
 // ModuleScriptLoader(s) should only be used via Modulator and its ModuleMap.
-class CORE_EXPORT ModuleScriptLoader final
+class CORE_EXPORT_N2476 ModuleScriptLoader final
     : public GarbageCollectedFinalized<ModuleScriptLoader>,
       public ResourceOwner<ScriptResource> {
   WTF_MAKE_NONCOPYABLE(ModuleScriptLoader);

@@ -20,7 +20,7 @@ class LayoutObject;
 
 // Produces a PaintGeneratedImage from a CSS Paint API callback.
 // https://drafts.css-houdini.org/css-paint-api/
-class CORE_EXPORT CSSPaintImageGenerator
+class CORE_EXPORT_N1484 CSSPaintImageGenerator
     : public GarbageCollectedFinalized<CSSPaintImageGenerator> {
  public:
   // This observer is used if the paint worklet doesn't have a javascript

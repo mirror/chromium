@@ -21,7 +21,7 @@ class ExceptionState;
 class ExecutionContext;
 
 // Owned by the main thread or control thread.
-class CORE_EXPORT CompositorProxy final
+class CORE_EXPORT_N1612 CompositorProxy final
     : public GarbageCollectedFinalized<CompositorProxy>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

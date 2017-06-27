@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DOMSharedArrayBuffer final : public DOMArrayBufferBase {
+class CORE_EXPORT_N1642 DOMSharedArrayBuffer final : public DOMArrayBufferBase {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

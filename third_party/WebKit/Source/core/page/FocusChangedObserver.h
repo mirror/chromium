@@ -13,7 +13,7 @@ namespace blink {
 class LocalFrame;
 class Page;
 
-class CORE_EXPORT FocusChangedObserver : public GarbageCollectedMixin {
+class CORE_EXPORT_N2503 FocusChangedObserver : public GarbageCollectedMixin {
  public:
   explicit FocusChangedObserver(Page*);
   virtual void FocusedFrameChanged() = 0;

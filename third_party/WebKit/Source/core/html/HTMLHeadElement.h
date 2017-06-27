@@ -29,7 +29,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLHeadElement final : public HTMLElement {
+class CORE_EXPORT_N2116 HTMLHeadElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

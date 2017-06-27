@@ -34,7 +34,7 @@ class ExceptionState;
 class HTMLDataListElement;
 class HTMLSelectElement;
 
-class CORE_EXPORT HTMLOptionElement final : public HTMLElement {
+class CORE_EXPORT_N2131 HTMLOptionElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

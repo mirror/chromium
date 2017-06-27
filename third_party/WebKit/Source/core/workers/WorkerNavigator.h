@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class CORE_EXPORT WorkerNavigator final
+class CORE_EXPORT_N2667 WorkerNavigator final
     : public GarbageCollectedFinalized<WorkerNavigator>,
       public ScriptWrappable,
       public NavigatorConcurrentHardware,

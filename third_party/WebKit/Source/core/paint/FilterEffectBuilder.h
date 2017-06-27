@@ -44,7 +44,7 @@ class ReferenceFilterOperation;
 class SVGFilterElement;
 class SVGFilterGraphNodeMap;
 
-class CORE_EXPORT FilterEffectBuilder final {
+class CORE_EXPORT_N2527 FilterEffectBuilder final {
   STACK_ALLOCATED();
 
  public:

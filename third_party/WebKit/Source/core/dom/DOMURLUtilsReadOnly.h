@@ -33,7 +33,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DOMURLUtilsReadOnly {
+class CORE_EXPORT_N1648 DOMURLUtilsReadOnly {
  public:
   virtual KURL Url() const = 0;
   virtual String Input() const = 0;

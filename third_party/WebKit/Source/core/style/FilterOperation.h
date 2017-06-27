@@ -44,7 +44,7 @@ class SVGElementProxy;
 
 // CSS Filters
 
-class CORE_EXPORT FilterOperation
+class CORE_EXPORT_N2582 FilterOperation
     : public GarbageCollectedFinalized<FilterOperation> {
   WTF_MAKE_NONCOPYABLE(FilterOperation);
 
@@ -128,7 +128,7 @@ class CORE_EXPORT FilterOperation
                     op->GetType() == FilterOperation::operationType, \
                     op.GetType() == FilterOperation::operationType);
 
-class CORE_EXPORT ReferenceFilterOperation : public FilterOperation {
+class CORE_EXPORT_N2583 ReferenceFilterOperation : public FilterOperation {
  public:
   static ReferenceFilterOperation* Create(const String& url,
                                           SVGElementProxy& element_proxy) {
@@ -171,7 +171,7 @@ DEFINE_FILTER_OPERATION_TYPE_CASTS(ReferenceFilterOperation, REFERENCE);
 
 // GRAYSCALE, SEPIA, SATURATE and HUE_ROTATE are variations on a basic color
 // matrix effect.  For HUE_ROTATE, the angle of rotation is stored in m_amount.
-class CORE_EXPORT BasicColorMatrixFilterOperation : public FilterOperation {
+class CORE_EXPORT_N2584 BasicColorMatrixFilterOperation : public FilterOperation {
  public:
   static BasicColorMatrixFilterOperation* Create(double amount,
                                                  OperationType type) {
@@ -213,7 +213,7 @@ DEFINE_TYPE_CASTS(BasicColorMatrixFilterOperation,
 
 // INVERT, BRIGHTNESS, CONTRAST and OPACITY are variations on a basic component
 // transfer effect.
-class CORE_EXPORT BasicComponentTransferFilterOperation
+class CORE_EXPORT_N2585 BasicComponentTransferFilterOperation
     : public FilterOperation {
  public:
   static BasicComponentTransferFilterOperation* Create(double amount,
@@ -256,7 +256,7 @@ DEFINE_TYPE_CASTS(BasicComponentTransferFilterOperation,
                   IsBasicComponentTransferFilterOperation(*op),
                   IsBasicComponentTransferFilterOperation(op));
 
-class CORE_EXPORT BlurFilterOperation : public FilterOperation {
+class CORE_EXPORT_N2586 BlurFilterOperation : public FilterOperation {
  public:
   static BlurFilterOperation* Create(const Length& std_deviation) {
     return new BlurFilterOperation(std_deviation);
@@ -287,7 +287,7 @@ class CORE_EXPORT BlurFilterOperation : public FilterOperation {
 
 DEFINE_FILTER_OPERATION_TYPE_CASTS(BlurFilterOperation, BLUR);
 
-class CORE_EXPORT DropShadowFilterOperation : public FilterOperation {
+class CORE_EXPORT_N2587 DropShadowFilterOperation : public FilterOperation {
  public:
   static DropShadowFilterOperation* Create(const ShadowData& shadow) {
     return new DropShadowFilterOperation(shadow);
@@ -318,7 +318,7 @@ class CORE_EXPORT DropShadowFilterOperation : public FilterOperation {
 
 DEFINE_FILTER_OPERATION_TYPE_CASTS(DropShadowFilterOperation, DROP_SHADOW);
 
-class CORE_EXPORT BoxReflectFilterOperation : public FilterOperation {
+class CORE_EXPORT_N2588 BoxReflectFilterOperation : public FilterOperation {
  public:
   static BoxReflectFilterOperation* Create(const BoxReflection& reflection) {
     return new BoxReflectFilterOperation(reflection);

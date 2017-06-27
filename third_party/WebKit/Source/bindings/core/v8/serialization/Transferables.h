@@ -21,7 +21,7 @@ using ImageBitmapArray = HeapVector<Member<ImageBitmap>>;
 using OffscreenCanvasArray = HeapVector<Member<OffscreenCanvas>>;
 using MessagePortArray = HeapVector<Member<MessagePort>>;
 
-class CORE_EXPORT Transferables final {
+class CORE_EXPORT_N122 Transferables final {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(Transferables);
 

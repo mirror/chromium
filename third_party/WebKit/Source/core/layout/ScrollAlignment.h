@@ -61,7 +61,7 @@ enum ScrollAlignmentBehavior {
 
 class LayoutRect;
 
-struct CORE_EXPORT ScrollAlignment {
+struct CORE_EXPORT_N2335 ScrollAlignment {
   STACK_ALLOCATED();
   static ScrollAlignmentBehavior GetVisibleBehavior(const ScrollAlignment& s) {
     return s.rect_visible_;

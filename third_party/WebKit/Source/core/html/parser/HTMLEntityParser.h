@@ -63,7 +63,7 @@ class DecodedHTMLEntity {
   UChar data[kMaxLength];
 };
 
-CORE_EXPORT bool ConsumeHTMLEntity(SegmentedString&,
+CORE_EXPORT_N2201 bool ConsumeHTMLEntity(SegmentedString&,
                                    DecodedHTMLEntity& decoded_entity,
                                    bool& not_enough_characters,
                                    UChar additional_allowed_character = '\0');

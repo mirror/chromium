@@ -44,7 +44,7 @@ template <typename T>
 class EventSender;
 using ImageEventSender = EventSender<ImageLoader>;
 
-class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
+class CORE_EXPORT_N2458 ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
                                 public ImageResourceObserver {
   USING_PRE_FINALIZER(ImageLoader, Dispose);
 

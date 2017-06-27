@@ -36,7 +36,7 @@
 
 namespace blink {
 
-class CORE_EXPORT AnimatableDouble final : public AnimatableValue {
+class CORE_EXPORT_N1460 AnimatableDouble final : public AnimatableValue {
  public:
   ~AnimatableDouble() override {}
 

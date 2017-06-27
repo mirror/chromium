@@ -71,7 +71,7 @@ struct FiringEventIterator {
 };
 using FiringEventIteratorVector = Vector<FiringEventIterator, 1>;
 
-class CORE_EXPORT EventTargetData final
+class CORE_EXPORT_N1973 EventTargetData final
     : public GarbageCollectedFinalized<EventTargetData> {
   WTF_MAKE_NONCOPYABLE(EventTargetData);
 
@@ -112,7 +112,7 @@ class CORE_EXPORT EventTargetData final
 //   depending on the base class of your class.
 // - EventTargets do not support EAGERLY_FINALIZE. You need to use
 //   a pre-finalizer instead.
-class CORE_EXPORT EventTarget : public GarbageCollectedFinalized<EventTarget>,
+class CORE_EXPORT_N1974 EventTarget : public GarbageCollectedFinalized<EventTarget>,
                                 public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
@@ -230,7 +230,7 @@ class CORE_EXPORT EventTarget : public GarbageCollectedFinalized<EventTarget>,
 // object. However, we intentionally use it as a part of object for performance,
 // assuming that no one extracts a pointer of
 // EventTargetWithInlineData::m_eventTargetData and store it to a Member etc.
-class GC_PLUGIN_IGNORE("513199") CORE_EXPORT EventTargetWithInlineData
+class GC_PLUGIN_IGNORE("513199") CORE_EXPORT_N1975 EventTargetWithInlineData
     : public EventTarget {
  public:
   ~EventTargetWithInlineData() override {}

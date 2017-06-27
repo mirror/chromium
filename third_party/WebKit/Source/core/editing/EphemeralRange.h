@@ -143,7 +143,7 @@ using EphemeralRangeInFlatTree =
 
 // Returns a newly created |Range| object from |range| or |nullptr| if
 // |range.isNull()| returns true.
-CORE_EXPORT Range* CreateRange(const EphemeralRange& /* range */);
+CORE_EXPORT_N1791 Range* CreateRange(const EphemeralRange& /* range */);
 
 }  // namespace blink
 

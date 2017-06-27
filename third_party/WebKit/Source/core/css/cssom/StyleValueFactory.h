@@ -13,7 +13,7 @@ namespace blink {
 
 class CSSValue;
 
-class CORE_EXPORT StyleValueFactory {
+class CORE_EXPORT_N1568 StyleValueFactory {
   STATIC_ONLY(StyleValueFactory);
 
  public:

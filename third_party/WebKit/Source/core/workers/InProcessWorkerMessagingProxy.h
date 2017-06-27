@@ -46,7 +46,7 @@ class InProcessWorkerObjectProxy;
 class SerializedScriptValue;
 class WorkerClients;
 
-class CORE_EXPORT InProcessWorkerMessagingProxy
+class CORE_EXPORT_N2642 InProcessWorkerMessagingProxy
     : public ThreadedMessagingProxyBase {
   WTF_MAKE_NONCOPYABLE(InProcessWorkerMessagingProxy);
 

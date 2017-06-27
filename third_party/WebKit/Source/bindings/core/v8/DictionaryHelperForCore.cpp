@@ -43,21 +43,21 @@
 namespace blink {
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N6 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        v8::Local<v8::Value>& value) {
   return dictionary.Get(key, value);
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N7 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        Dictionary& value) {
   return dictionary.Get(key, value);
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N8 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        bool& value) {
   v8::Local<v8::Value> v8_value;
@@ -68,7 +68,7 @@ CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N9 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        int32_t& value) {
   v8::Local<v8::Value> v8_value;
@@ -79,7 +79,7 @@ CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N10 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        double& value,
                                        bool& has_value) {
@@ -117,14 +117,14 @@ bool GetStringType(const Dictionary& dictionary,
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N11 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        String& value) {
   return GetStringType(dictionary, key, value);
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N12 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        AtomicString& value) {
   return GetStringType(dictionary, key, value);
@@ -149,7 +149,7 @@ bool DictionaryHelper::Get(const Dictionary& dictionary,
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N13 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        unsigned short& value) {
   return GetNumericType<unsigned short>(dictionary, key, value);
@@ -230,7 +230,7 @@ bool DictionaryHelper::Get(const Dictionary& dictionary,
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N14 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        Vector<String>& value) {
   v8::Local<v8::Value> v8_value;
@@ -256,7 +256,7 @@ CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N15 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        Vector<Vector<String>>& value,
                                        ExceptionState& exception_state) {
@@ -287,7 +287,7 @@ CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N16 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        ArrayValue& value) {
   v8::Local<v8::Value> v8_value;
@@ -305,7 +305,7 @@ CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
 }
 
 template <>
-CORE_EXPORT bool DictionaryHelper::Get(const Dictionary& dictionary,
+CORE_EXPORT_N17 bool DictionaryHelper::Get(const Dictionary& dictionary,
                                        const StringView& key,
                                        DOMUint8Array*& value) {
   v8::Local<v8::Value> v8_value;

@@ -58,7 +58,7 @@ class Document;
 class ElementVisibilityObserver;
 class HTMLMediaElement;
 
-class CORE_EXPORT AutoplayUmaHelper : public EventListener,
+class CORE_EXPORT_N2189 AutoplayUmaHelper : public EventListener,
                                       public ContextLifecycleObserver {
   USING_GARBAGE_COLLECTED_MIXIN(AutoplayUmaHelper);
 

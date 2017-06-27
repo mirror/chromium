@@ -54,7 +54,7 @@ class SecurityOrigin;
 class ThreadableLoaderClient;
 class ThreadableLoadingContext;
 
-class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
+class CORE_EXPORT_N2445 DocumentThreadableLoader final : public ThreadableLoader,
                                                    private RawResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(DocumentThreadableLoader);
 

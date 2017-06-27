@@ -44,7 +44,7 @@ class Interpolation;
 // Time independent representation of an Animation's content.
 // Can be sampled for the active pairs of Keyframes (represented by
 // Interpolations) at a given time fraction.
-class CORE_EXPORT EffectModel : public GarbageCollectedFinalized<EffectModel> {
+class CORE_EXPORT_N1442 EffectModel : public GarbageCollectedFinalized<EffectModel> {
  public:
   enum CompositeOperation {
     kCompositeReplace,

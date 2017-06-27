@@ -42,7 +42,7 @@ namespace blink {
 
 class StyleSheet;
 
-class CORE_EXPORT StyleSheetCollection
+class CORE_EXPORT_N1708 StyleSheetCollection
     : public GarbageCollected<StyleSheetCollection>,
       public TraceWrapperBase {
   WTF_MAKE_NONCOPYABLE(StyleSheetCollection);

@@ -22,7 +22,7 @@
 
 namespace blink {
 
-class CORE_EXPORT LongOrTestDictionary final {
+class CORE_EXPORT_N188 LongOrTestDictionary final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   LongOrTestDictionary();
@@ -54,15 +54,15 @@ class CORE_EXPORT LongOrTestDictionary final {
   int32_t m_long;
   TestDictionary m_testDictionary;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const LongOrTestDictionary&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N189 v8::Local<v8::Value> ToV8(const LongOrTestDictionary&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8LongOrTestDictionary final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, LongOrTestDictionary&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N190 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, LongOrTestDictionary&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const LongOrTestDictionary&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N191 v8::Local<v8::Value> ToV8(const LongOrTestDictionary&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, LongOrTestDictionary& impl) {
@@ -76,7 +76,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, LongOrTestDiction
 
 template <>
 struct NativeValueTraits<LongOrTestDictionary> : public NativeValueTraitsBase<LongOrTestDictionary> {
-  CORE_EXPORT static LongOrTestDictionary NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N192 static LongOrTestDictionary NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

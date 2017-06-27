@@ -34,7 +34,7 @@ class KURL;
 class StyleImage;
 class ComputedStyle;
 
-class CORE_EXPORT CSSImageValue : public CSSValue {
+class CORE_EXPORT_N1482 CSSImageValue : public CSSValue {
  public:
   static CSSImageValue* Create(const KURL& url, StyleImage* image = 0) {
     return Create(url.GetString(), url, Referrer(), image);

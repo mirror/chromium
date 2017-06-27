@@ -24,7 +24,7 @@ namespace blink {
 class TestInterfaceEmpty;
 class TestInterfaceImplementation;
 
-class CORE_EXPORT TestInterfaceOrTestInterfaceEmpty final {
+class CORE_EXPORT_N248 TestInterfaceOrTestInterfaceEmpty final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestInterfaceOrTestInterfaceEmpty();
@@ -56,15 +56,15 @@ class CORE_EXPORT TestInterfaceOrTestInterfaceEmpty final {
   Member<TestInterfaceImplementation> m_testInterface;
   Member<TestInterfaceEmpty> m_testInterfaceEmpty;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const TestInterfaceOrTestInterfaceEmpty&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N249 v8::Local<v8::Value> ToV8(const TestInterfaceOrTestInterfaceEmpty&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8TestInterfaceOrTestInterfaceEmpty final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestInterfaceOrTestInterfaceEmpty&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N250 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestInterfaceOrTestInterfaceEmpty&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const TestInterfaceOrTestInterfaceEmpty&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N251 v8::Local<v8::Value> ToV8(const TestInterfaceOrTestInterfaceEmpty&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestInterfaceOrTestInterfaceEmpty& impl) {
@@ -78,7 +78,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestInterfaceOrTe
 
 template <>
 struct NativeValueTraits<TestInterfaceOrTestInterfaceEmpty> : public NativeValueTraitsBase<TestInterfaceOrTestInterfaceEmpty> {
-  CORE_EXPORT static TestInterfaceOrTestInterfaceEmpty NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N252 static TestInterfaceOrTestInterfaceEmpty NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

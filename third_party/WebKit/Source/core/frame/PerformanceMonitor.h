@@ -34,7 +34,7 @@ class SourceLocation;
 // The monitor is maintained per local root.
 // Long task notifications are delivered to observing Performance* instances
 // (in the local frame tree) in m_webPerformanceObservers.
-class CORE_EXPORT PerformanceMonitor final
+class CORE_EXPORT_N2056 PerformanceMonitor final
     : public GarbageCollectedFinalized<PerformanceMonitor>,
       public scheduler::TaskTimeObserver {
   WTF_MAKE_NONCOPYABLE(PerformanceMonitor);
@@ -51,7 +51,7 @@ class CORE_EXPORT PerformanceMonitor final
     kAfterLast
   };
 
-  class CORE_EXPORT Client : public GarbageCollectedMixin {
+  class CORE_EXPORT_N2057 Client : public GarbageCollectedMixin {
    public:
     virtual void ReportLongTask(double start_time,
                                 double end_time,

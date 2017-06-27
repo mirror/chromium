@@ -35,7 +35,7 @@ namespace blink {
 
 class FloatRoundedRect;
 
-class CORE_EXPORT HitTestLocation {
+class CORE_EXPORT_N2291 HitTestLocation {
   DISALLOW_NEW();
 
  public:

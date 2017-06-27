@@ -14,7 +14,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT CustomElementAdoptedCallbackReaction final
+class CORE_EXPORT_N1722 CustomElementAdoptedCallbackReaction final
     : public CustomElementReaction {
   WTF_MAKE_NONCOPYABLE(CustomElementAdoptedCallbackReaction);
 

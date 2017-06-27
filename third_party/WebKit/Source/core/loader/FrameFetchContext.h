@@ -52,7 +52,7 @@ class LocalFrameClient;
 class ResourceError;
 class ResourceResponse;
 
-class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
+class CORE_EXPORT_N2451 FrameFetchContext final : public BaseFetchContext {
  public:
   static ResourceFetcher* CreateFetcherFromDocumentLoader(
       DocumentLoader* loader) {

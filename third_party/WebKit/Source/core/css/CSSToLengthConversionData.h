@@ -45,7 +45,7 @@ class ComputedStyle;
 class LayoutViewItem;
 class Font;
 
-class CORE_EXPORT CSSToLengthConversionData {
+class CORE_EXPORT_N1496 CSSToLengthConversionData {
   DISALLOW_NEW();
 
  public:

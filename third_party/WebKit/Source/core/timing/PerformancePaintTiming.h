@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT PerformancePaintTiming final : public PerformanceEntry {
+class CORE_EXPORT_N2630 PerformancePaintTiming final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

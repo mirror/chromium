@@ -174,12 +174,12 @@ String ExceptionMessages::ReadOnly(const char* detail) {
 }
 
 template <>
-CORE_EXPORT String ExceptionMessages::FormatNumber<float>(float number) {
+CORE_EXPORT_N20 String ExceptionMessages::FormatNumber<float>(float number) {
   return FormatPotentiallyNonFiniteNumber(number);
 }
 
 template <>
-CORE_EXPORT String ExceptionMessages::FormatNumber<double>(double number) {
+CORE_EXPORT_N21 String ExceptionMessages::FormatNumber<double>(double number) {
   return FormatPotentiallyNonFiniteNumber(number);
 }
 

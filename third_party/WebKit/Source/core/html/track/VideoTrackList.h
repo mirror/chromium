@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT VideoTrackList final : public TrackListBase<VideoTrack> {
+class CORE_EXPORT_N2233 VideoTrackList final : public TrackListBase<VideoTrack> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

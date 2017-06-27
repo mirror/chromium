@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class CORE_EXPORT AnimatableTransform final : public AnimatableValue {
+class CORE_EXPORT_N1461 AnimatableTransform final : public AnimatableValue {
  public:
   ~AnimatableTransform() override {}
   static PassRefPtr<AnimatableTransform> Create(

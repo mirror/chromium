@@ -33,7 +33,7 @@ class PluginView;
 
 // LayoutObject for frames via LayoutFrame and LayoutIFrame, and plugins via
 // LayoutEmbeddedObject.
-class CORE_EXPORT LayoutPart : public LayoutReplaced {
+class CORE_EXPORT_N2314 LayoutPart : public LayoutReplaced {
  public:
   explicit LayoutPart(Element*);
   ~LayoutPart() override;

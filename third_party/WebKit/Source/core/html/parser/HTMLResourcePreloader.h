@@ -39,7 +39,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT HTMLResourcePreloader
+class CORE_EXPORT_N2209 HTMLResourcePreloader
     : public GarbageCollected<HTMLResourcePreloader>,
       public ResourcePreloader {
   WTF_MAKE_NONCOPYABLE(HTMLResourcePreloader);

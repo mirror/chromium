@@ -14,7 +14,7 @@ namespace blink {
 
 class HTMLIFrameElement;
 
-class CORE_EXPORT HTMLIFrameElementAllow final : public DOMTokenList,
+class CORE_EXPORT_N2119 HTMLIFrameElementAllow final : public DOMTokenList,
                                                  public DOMTokenListObserver {
   USING_GARBAGE_COLLECTED_MIXIN(HTMLIFrameElementAllow);
 

@@ -13,7 +13,7 @@ namespace blink {
 class HTMLSelectElement;
 class HTMLOptionElement;
 
-class CORE_EXPORT OptionListIterator final {
+class CORE_EXPORT_N2183 OptionListIterator final {
   STACK_ALLOCATED();
 
  public:

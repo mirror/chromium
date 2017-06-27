@@ -14,7 +14,7 @@ namespace blink {
 // implement the MarkerType() method). Markers with touching endpoints are
 // merged on insert. Markers are kept sorted by start offset in order to be able
 // to do this efficiently.
-class CORE_EXPORT SpellCheckMarkerListImpl : public DocumentMarkerList {
+class CORE_EXPORT_N1949 SpellCheckMarkerListImpl : public DocumentMarkerList {
  public:
   // DocumentMarkerList implementations
   bool IsEmpty() const final;

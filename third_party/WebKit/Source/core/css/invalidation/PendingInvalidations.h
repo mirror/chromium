@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT PendingInvalidations final {
+class CORE_EXPORT_N1572 PendingInvalidations final {
   WTF_MAKE_NONCOPYABLE(PendingInvalidations);
 
  public:

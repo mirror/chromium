@@ -42,7 +42,7 @@ class SharedBuffer;
 
 // Allows transfer of data in multiple chunks from a SharedBuffer to a provided
 // buffer.
-class CORE_EXPORT SharedBufferReader {
+class CORE_EXPORT_N2687 SharedBufferReader {
   USING_FAST_MALLOC(SharedBufferReader);
 
  public:

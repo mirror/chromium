@@ -22,7 +22,7 @@ enum class TextSegmentationMachineState {
   kFinished,
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&,
+CORE_EXPORT_N1964 std::ostream& operator<<(std::ostream&,
                                      TextSegmentationMachineState);
 
 }  // namespace blink

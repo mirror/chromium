@@ -12,7 +12,7 @@ namespace blink {
 class NGPhysicalBoxFragment;
 
 // Contains the information necessary for copying back data to a FloatingObject.
-struct CORE_EXPORT NGPositionedFloat {
+struct CORE_EXPORT_N2396 NGPositionedFloat {
   NGPositionedFloat(RefPtr<NGPhysicalBoxFragment> fragment,
                     const NGLogicalOffset& logical_offset,
                     const NGPhysicalOffset& paint_offset)

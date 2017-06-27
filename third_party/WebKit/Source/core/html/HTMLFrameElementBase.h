@@ -30,7 +30,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLFrameElementBase : public HTMLFrameOwnerElement {
+class CORE_EXPORT_N2113 HTMLFrameElementBase : public HTMLFrameOwnerElement {
  public:
   bool CanContainRangeEndPoint() const final { return false; }
 

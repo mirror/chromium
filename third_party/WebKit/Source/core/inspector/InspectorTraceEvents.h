@@ -66,7 +66,7 @@ class ParseHTML;
 
 enum ResourceLoadPriority : int;
 
-class CORE_EXPORT InspectorTraceEvents : public InspectorAgent {
+class CORE_EXPORT_N2275 InspectorTraceEvents : public InspectorAgent {
   WTF_MAKE_NONCOPYABLE(InspectorTraceEvents);
 
  public:
@@ -443,8 +443,8 @@ namespace InspectorAsyncTask {
 std::unique_ptr<TracedValue> Data(const String&);
 }
 
-CORE_EXPORT String ToHexString(const void* p);
-CORE_EXPORT void SetCallStack(TracedValue*);
+CORE_EXPORT_N2276 String ToHexString(const void* p);
+CORE_EXPORT_N2277 void SetCallStack(TracedValue*);
 
 }  // namespace blink
 

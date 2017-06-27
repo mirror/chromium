@@ -58,7 +58,7 @@ class QualifiedName;
 class ComputedStyle;
 class StylePropertySet;
 
-class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
+class CORE_EXPORT_N1750 EditingStyle final : public GarbageCollected<EditingStyle> {
  public:
   enum PropertiesToInclude {
     kAllProperties,

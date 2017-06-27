@@ -70,7 +70,7 @@ enum CompositingStateTransitionType {
 // In Slimming Paint v2, PaintLayerCompositor will be eventually replaced by
 // PaintArtifactCompositor.
 
-class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
+class CORE_EXPORT_N2343 PaintLayerCompositor final : public GraphicsLayerClient {
   USING_FAST_MALLOC(PaintLayerCompositor);
 
  public:

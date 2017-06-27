@@ -33,7 +33,7 @@ namespace blink {
 class CSSValue;
 class StyleResolverState;
 
-class CORE_EXPORT FilterOperationResolver {
+class CORE_EXPORT_N1590 FilterOperationResolver {
   STATIC_ONLY(FilterOperationResolver);
 
  public:

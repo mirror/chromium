@@ -68,7 +68,7 @@ class ClickHandlingState final : public EventDispatchHandlingState {
 // An InputTypeView object represents the UI-specific part of an
 // HTMLInputElement. Do not expose instances of InputTypeView and classes
 // derived from it to classes other than HTMLInputElement.
-class CORE_EXPORT InputTypeView : public GarbageCollectedMixin {
+class CORE_EXPORT_N2181 InputTypeView : public GarbageCollectedMixin {
   WTF_MAKE_NONCOPYABLE(InputTypeView);
 
  public:

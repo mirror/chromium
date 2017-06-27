@@ -25,10 +25,10 @@ class ExceptionState;
 
 class V8TestPermissiveDictionary {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestPermissiveDictionary&, ExceptionState&);
+  CORE_EXPORT_N1365 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestPermissiveDictionary&, ExceptionState&);
 };
 
-CORE_EXPORT bool toV8TestPermissiveDictionary(const TestPermissiveDictionary&, v8::Local<v8::Object> dictionary, v8::Local<v8::Object> creationContext, v8::Isolate*);
+CORE_EXPORT_N1366 bool toV8TestPermissiveDictionary(const TestPermissiveDictionary&, v8::Local<v8::Object> dictionary, v8::Local<v8::Object> creationContext, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestPermissiveDictionary& impl) {
@@ -42,7 +42,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestPermissiveDic
 
 template <>
 struct NativeValueTraits<TestPermissiveDictionary> : public NativeValueTraitsBase<TestPermissiveDictionary> {
-  CORE_EXPORT static TestPermissiveDictionary NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N1367 static TestPermissiveDictionary NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

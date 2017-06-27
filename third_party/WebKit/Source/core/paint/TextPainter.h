@@ -16,7 +16,7 @@ class LayoutTextCombine;
 class LineLayoutItem;
 
 // Text painter for legacy layout. Operates on TextRuns.
-class CORE_EXPORT TextPainter : public TextPainterBase {
+class CORE_EXPORT_N2562 TextPainter : public TextPainterBase {
   STACK_ALLOCATED();
 
  public:

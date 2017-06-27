@@ -536,7 +536,7 @@ const char* PaintPropertyTreeGraphBuilder::effect_node_color_ = "black";
 }  // namespace {
 }  // namespace blink
 
-CORE_EXPORT void showAllPropertyTrees(const blink::LocalFrameView& rootFrame) {
+CORE_EXPORT_N2546 void showAllPropertyTrees(const blink::LocalFrameView& rootFrame) {
   showTransformPropertyTree(rootFrame);
   showClipPropertyTree(rootFrame);
   showEffectPropertyTree(rootFrame);

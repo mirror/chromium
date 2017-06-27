@@ -14,7 +14,7 @@ namespace blink {
 
 class ThreadedWorkletObjectProxy;
 
-class CORE_EXPORT ThreadedWorkletMessagingProxy
+class CORE_EXPORT_N2655 ThreadedWorkletMessagingProxy
     : public ThreadedMessagingProxyBase,
       public WorkletGlobalScopeProxy {
  public:

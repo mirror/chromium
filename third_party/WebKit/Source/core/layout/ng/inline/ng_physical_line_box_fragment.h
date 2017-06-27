@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT NGPhysicalLineBoxFragment final : public NGPhysicalFragment {
+class CORE_EXPORT_N2435 NGPhysicalLineBoxFragment final : public NGPhysicalFragment {
  public:
   // This modifies the passed-in children vector.
   NGPhysicalLineBoxFragment(NGPhysicalSize size,

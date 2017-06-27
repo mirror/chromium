@@ -26,7 +26,7 @@ struct WebPrintPresetOptions;
 // instead, so we can remove cyclic dependencies in web/ and move classes from
 // web/ into core/ or modules.
 // TODO(slangley): Remove this class once WebPluginContainerImpl is in core/.
-class CORE_EXPORT WebPluginContainerBase
+class CORE_EXPORT_N2004 WebPluginContainerBase
     : public GarbageCollectedFinalized<WebPluginContainerBase>,
       public PluginView,
       NON_EXPORTED_BASE(public WebPluginContainer),

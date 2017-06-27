@@ -42,7 +42,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DocumentLifecycle {
+class CORE_EXPORT_N1629 DocumentLifecycle {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(DocumentLifecycle);
 
@@ -159,7 +159,7 @@ class CORE_EXPORT DocumentLifecycle {
   // throttling (e.g., during BeginMainFrame). If a script needs to run inside
   // this scope, DisallowThrottlingScope should be used to let the script
   // perform a synchronous layout if necessary.
-  class CORE_EXPORT AllowThrottlingScope {
+  class CORE_EXPORT_N1630 AllowThrottlingScope {
     STACK_ALLOCATED();
     WTF_MAKE_NONCOPYABLE(AllowThrottlingScope);
 
@@ -168,7 +168,7 @@ class CORE_EXPORT DocumentLifecycle {
     ~AllowThrottlingScope();
   };
 
-  class CORE_EXPORT DisallowThrottlingScope {
+  class CORE_EXPORT_N1631 DisallowThrottlingScope {
     STACK_ALLOCATED();
     WTF_MAKE_NONCOPYABLE(DisallowThrottlingScope);
 

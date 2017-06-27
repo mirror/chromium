@@ -43,7 +43,7 @@ class ScriptState;
 class ScriptValue;
 
 // Legacy support for NT1(https://www.w3.org/TR/navigation-timing/).
-class CORE_EXPORT PerformanceNavigation final
+class CORE_EXPORT_N2627 PerformanceNavigation final
     : public GarbageCollected<PerformanceNavigation>,
       public ScriptWrappable,
       public DOMWindowClient {

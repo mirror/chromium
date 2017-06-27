@@ -12,7 +12,7 @@ namespace blink {
 
 class LayoutSlider;
 
-class CORE_EXPORT LayoutSliderItem : NON_EXPORTED_BASE(public LayoutBlockItem) {
+class CORE_EXPORT_N2339 LayoutSliderItem : NON_EXPORTED_BASE(public LayoutBlockItem) {
  public:
   explicit LayoutSliderItem(LayoutSlider*);
 

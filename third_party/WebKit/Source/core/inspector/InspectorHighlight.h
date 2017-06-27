@@ -16,7 +16,7 @@ namespace blink {
 
 class Color;
 
-struct CORE_EXPORT InspectorHighlightConfig {
+struct CORE_EXPORT_N2260 InspectorHighlightConfig {
   USING_FAST_MALLOC(InspectorHighlightConfig);
 
  public:
@@ -39,7 +39,7 @@ struct CORE_EXPORT InspectorHighlightConfig {
   String selector_list;
 };
 
-class CORE_EXPORT InspectorHighlight {
+class CORE_EXPORT_N2261 InspectorHighlight {
   STACK_ALLOCATED();
 
  public:

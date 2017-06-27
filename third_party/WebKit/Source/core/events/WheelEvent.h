@@ -34,7 +34,7 @@
 
 namespace blink {
 
-class CORE_EXPORT WheelEvent final : public MouseEvent {
+class CORE_EXPORT_N1999 WheelEvent final : public MouseEvent {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

@@ -45,7 +45,7 @@ class LocalFrame;
 //
 // Both can safely be used up until destruction; i.e., unsafe to
 // call upon in a destructor.
-class CORE_EXPORT ContextClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N1620 ContextClient : public GarbageCollectedMixin {
  public:
   ExecutionContext* GetExecutionContext() const;
   LocalFrame* GetFrame() const;
@@ -63,7 +63,7 @@ class CORE_EXPORT ContextClient : public GarbageCollectedMixin {
 // ContextLifecycleObserver provides an additional contextDestroyed() hook
 // to execute cleanup code when a context is destroyed. Prefer the simpler
 // ContextClient when possible.
-class CORE_EXPORT ContextLifecycleObserver
+class CORE_EXPORT_N1621 ContextLifecycleObserver
     : public LifecycleObserver<ExecutionContext, ContextLifecycleObserver> {
  public:
   virtual void ContextDestroyed(ExecutionContext*) {}
@@ -109,7 +109,7 @@ class CORE_EXPORT ContextLifecycleObserver
 // document. In this case, a Document is recreated but a DOMWindow is reused.
 // Hence, in the navigated document ContextClient::getExecutionContext()
 // returns null while DOMWindowClient::domWindow() keeps returning the window.
-class CORE_EXPORT DOMWindowClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N1622 DOMWindowClient : public GarbageCollectedMixin {
  public:
   LocalDOMWindow* DomWindow() const;
   LocalFrame* GetFrame() const;

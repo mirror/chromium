@@ -40,7 +40,7 @@ class LabelsNodeList;
 
 // LabelableElement represents "labelable element" defined in the HTML
 // specification, and provides the implementation of the "labels" attribute.
-class CORE_EXPORT LabelableElement : public HTMLElement {
+class CORE_EXPORT_N2150 LabelableElement : public HTMLElement {
  public:
   ~LabelableElement() override;
   LabelsNodeList* labels();

@@ -61,7 +61,7 @@ class XMLHttpRequest;
 class WebSocketHandshakeRequest;
 class WebSocketHandshakeResponse;
 
-class CORE_EXPORT InspectorNetworkAgent final
+class CORE_EXPORT_N2266 InspectorNetworkAgent final
     : public InspectorBaseAgent<protocol::Network::Metainfo> {
  public:
   static InspectorNetworkAgent* Create(InspectedFrames* inspected_frames) {

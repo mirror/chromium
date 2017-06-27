@@ -15,7 +15,7 @@ namespace blink {
 class NGInlineNode;
 class NGPhysicalTextFragment;
 
-class CORE_EXPORT NGTextFragmentBuilder final {
+class CORE_EXPORT_N2438 NGTextFragmentBuilder final {
   STACK_ALLOCATED();
 
  public:

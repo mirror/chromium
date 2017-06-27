@@ -22,7 +22,7 @@ class ExceptionState;
 class HTMLElement;
 class QualifiedName;
 
-class CORE_EXPORT CustomElementDefinition
+class CORE_EXPORT_N1725 CustomElementDefinition
     : public GarbageCollectedFinalized<CustomElementDefinition> {
   WTF_MAKE_NONCOPYABLE(CustomElementDefinition);
 
@@ -80,7 +80,7 @@ class CORE_EXPORT CustomElementDefinition
                                        const AtomicString& old_value,
                                        const AtomicString& new_value);
 
-  class CORE_EXPORT ConstructionStackScope final {
+  class CORE_EXPORT_N1726 ConstructionStackScope final {
     STACK_ALLOCATED();
     DISALLOW_COPY_AND_ASSIGN(ConstructionStackScope);
 

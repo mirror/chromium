@@ -34,7 +34,7 @@ namespace blink {
 class CSSRule;
 class CSSStyleSheet;
 
-class CORE_EXPORT StyleRuleBase
+class CORE_EXPORT_N1536 StyleRuleBase
     : public GarbageCollectedFinalized<StyleRuleBase> {
  public:
   enum RuleType {
@@ -92,7 +92,7 @@ class CORE_EXPORT StyleRuleBase
   unsigned type_ : 5;
 };
 
-class CORE_EXPORT StyleRule : public StyleRuleBase {
+class CORE_EXPORT_N1537 StyleRule : public StyleRuleBase {
  public:
   // Adopts the selector list
   static StyleRule* Create(CSSSelectorList selector_list,
@@ -200,7 +200,7 @@ class StyleRulePage : public StyleRuleBase {
   CSSSelectorList selector_list_;
 };
 
-class CORE_EXPORT StyleRuleGroup : public StyleRuleBase {
+class CORE_EXPORT_N1538 StyleRuleGroup : public StyleRuleBase {
  public:
   const HeapVector<Member<StyleRuleBase>>& ChildRules() const {
     return child_rules_;
@@ -219,7 +219,7 @@ class CORE_EXPORT StyleRuleGroup : public StyleRuleBase {
   HeapVector<Member<StyleRuleBase>> child_rules_;
 };
 
-class CORE_EXPORT StyleRuleCondition : public StyleRuleGroup {
+class CORE_EXPORT_N1539 StyleRuleCondition : public StyleRuleGroup {
  public:
   String ConditionText() const { return condition_text_; }
 
@@ -236,7 +236,7 @@ class CORE_EXPORT StyleRuleCondition : public StyleRuleGroup {
   String condition_text_;
 };
 
-class CORE_EXPORT StyleRuleMedia : public StyleRuleCondition {
+class CORE_EXPORT_N1540 StyleRuleMedia : public StyleRuleCondition {
  public:
   static StyleRuleMedia* Create(
       RefPtr<MediaQuerySet> media,

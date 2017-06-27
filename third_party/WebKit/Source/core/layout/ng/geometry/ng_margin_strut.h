@@ -11,7 +11,7 @@
 namespace blink {
 
 // This struct is used for the margin collapsing calculation.
-struct CORE_EXPORT NGMarginStrut {
+struct CORE_EXPORT_N2414 NGMarginStrut {
   LayoutUnit margin;
   LayoutUnit negative_margin;
 
@@ -26,7 +26,7 @@ struct CORE_EXPORT NGMarginStrut {
   String ToString() const;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGMarginStrut&);
+CORE_EXPORT_N2415 std::ostream& operator<<(std::ostream&, const NGMarginStrut&);
 
 }  // namespace blink
 

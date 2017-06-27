@@ -80,13 +80,13 @@ enum PageshowEventPersistence {
 
 // Note: if you're thinking of returning something DOM-related by reference,
 // please ping dcheng@chromium.org first. You probably don't want to do that.
-class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
+class CORE_EXPORT_N2043 LocalDOMWindow final : public DOMWindow,
                                          public Supplementable<LocalDOMWindow> {
   USING_GARBAGE_COLLECTED_MIXIN(LocalDOMWindow);
   USING_PRE_FINALIZER(LocalDOMWindow, Dispose);
 
  public:
-  class CORE_EXPORT EventListenerObserver : public GarbageCollectedMixin {
+  class CORE_EXPORT_N2044 EventListenerObserver : public GarbageCollectedMixin {
    public:
     virtual void DidAddEventListener(LocalDOMWindow*, const AtomicString&) = 0;
     virtual void DidRemoveEventListener(LocalDOMWindow*,

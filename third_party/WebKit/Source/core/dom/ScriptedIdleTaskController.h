@@ -20,7 +20,7 @@ class ExecutionContext;
 class IdleRequestCallback;
 class IdleRequestOptions;
 
-class CORE_EXPORT ScriptedIdleTaskController
+class CORE_EXPORT_N1695 ScriptedIdleTaskController
     : public GarbageCollectedFinalized<ScriptedIdleTaskController>,
       public SuspendableObject {
   USING_GARBAGE_COLLECTED_MIXIN(ScriptedIdleTaskController);

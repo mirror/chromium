@@ -34,7 +34,7 @@
 
 namespace blink {
 
-class CORE_EXPORT LayoutThemeFontProvider {
+class CORE_EXPORT_N2327 LayoutThemeFontProvider {
   STATIC_ONLY(LayoutThemeFontProvider);
 
  public:

@@ -54,7 +54,7 @@ class ThreadableLoadingContext;
 // still kept to it.
 //
 // TODO(nhiroki): Clean up or remove this class (https://crbug.com/694914).
-class CORE_EXPORT WorkerLoaderProxyProvider {
+class CORE_EXPORT_N2665 WorkerLoaderProxyProvider {
  public:
   virtual ~WorkerLoaderProxyProvider() {}
 
@@ -65,7 +65,7 @@ class CORE_EXPORT WorkerLoaderProxyProvider {
   }
 };
 
-class CORE_EXPORT WorkerLoaderProxy final
+class CORE_EXPORT_N2666 WorkerLoaderProxy final
     : public ThreadSafeRefCounted<WorkerLoaderProxy> {
  public:
   static PassRefPtr<WorkerLoaderProxy> Create(

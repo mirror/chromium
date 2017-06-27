@@ -44,7 +44,7 @@ enum PageVisibilityState {
   kPageVisibilityStatePrerender,
 };
 
-CORE_EXPORT String PageVisibilityStateString(PageVisibilityState);
+CORE_EXPORT_N2513 String PageVisibilityStateString(PageVisibilityState);
 
 }  // namespace blink
 

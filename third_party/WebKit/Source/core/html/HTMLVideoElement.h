@@ -45,7 +45,7 @@ class ImageBitmapOptions;
 class MediaCustomControlsFullscreenDetector;
 class MediaRemotingInterstitial;
 
-class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
+class CORE_EXPORT_N2146 HTMLVideoElement final : public HTMLMediaElement,
                                            public CanvasImageSource,
                                            public ImageBitmapSource {
   DEFINE_WRAPPERTYPEINFO();

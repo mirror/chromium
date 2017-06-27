@@ -38,7 +38,7 @@ namespace blink {
 
 class CSSFontSelector;
 
-class CORE_EXPORT CSSFontSelectorClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N1479 CSSFontSelectorClient : public GarbageCollectedMixin {
  public:
   virtual ~CSSFontSelectorClient() {}
 

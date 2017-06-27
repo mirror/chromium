@@ -16,7 +16,7 @@
 
 namespace blink {
 
-class CORE_EXPORT PromiseRejectionEvent final : public Event {
+class CORE_EXPORT_N1985 PromiseRejectionEvent final : public Event {
   DEFINE_WRAPPERTYPEINFO();
   USING_PRE_FINALIZER(PromiseRejectionEvent, Dispose);
 

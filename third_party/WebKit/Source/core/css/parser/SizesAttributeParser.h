@@ -14,7 +14,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SizesAttributeParser {
+class CORE_EXPORT_N1587 SizesAttributeParser {
   STACK_ALLOCATED();
 
  public:

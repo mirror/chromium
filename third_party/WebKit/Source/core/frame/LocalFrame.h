@@ -86,7 +86,7 @@ class WebURLLoader;
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<LocalFrame>;
 
-class CORE_EXPORT LocalFrame final : public Frame,
+class CORE_EXPORT_N2045 LocalFrame final : public Frame,
                                      public Supplementable<LocalFrame> {
   USING_GARBAGE_COLLECTED_MIXIN(LocalFrame);
 

@@ -12,7 +12,7 @@ namespace blink {
 // CSSUnsupportedStyleValue is the internal representation of a base
 // CSSStyleValue that is returned when we do not yet support a CSS Typed OM type
 // for a given CSS Value.
-class CORE_EXPORT CSSUnsupportedStyleValue final : public CSSStyleValue {
+class CORE_EXPORT_N1562 CSSUnsupportedStyleValue final : public CSSStyleValue {
   WTF_MAKE_NONCOPYABLE(CSSUnsupportedStyleValue);
 
  public:

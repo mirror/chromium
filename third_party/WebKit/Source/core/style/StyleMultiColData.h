@@ -35,7 +35,7 @@ namespace blink {
 
 // CSS3 Multi Column Layout
 
-class CORE_EXPORT StyleMultiColData : public RefCounted<StyleMultiColData> {
+class CORE_EXPORT_N2596 StyleMultiColData : public RefCounted<StyleMultiColData> {
  public:
   static PassRefPtr<StyleMultiColData> Create() {
     return AdoptRef(new StyleMultiColData);

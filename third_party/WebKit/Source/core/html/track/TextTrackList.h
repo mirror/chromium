@@ -39,7 +39,7 @@ namespace blink {
 class GenericEventQueue;
 class TextTrack;
 
-class CORE_EXPORT TextTrackList final : public EventTargetWithInlineData {
+class CORE_EXPORT_N2229 TextTrackList final : public EventTargetWithInlineData {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

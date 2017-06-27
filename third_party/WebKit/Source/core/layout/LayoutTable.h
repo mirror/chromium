@@ -133,7 +133,7 @@ enum TableHeightChangingValue { kTableHeightNotChanging, kTableHeightChanging };
 // See absoluteColumnToEffectiveColumn() for converting an absolute column
 // index into an index into effectiveColumns() and effectiveColumnPositions().
 
-class CORE_EXPORT LayoutTable final : public LayoutBlock {
+class CORE_EXPORT_N2318 LayoutTable final : public LayoutBlock {
  public:
   explicit LayoutTable(Element*);
   ~LayoutTable() override;
