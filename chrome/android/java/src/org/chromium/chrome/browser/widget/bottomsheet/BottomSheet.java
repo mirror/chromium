@@ -41,6 +41,7 @@ import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
+import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
@@ -730,6 +731,11 @@ public class BottomSheet
 
     @Override
     public int loadUrl(LoadUrlParams params, boolean incognito) {
+        if (NewTabPage.isNTPUrl(params.getUrl())) {
+            displayNewTabUi(incognito);
+            return TabLoadStatus.PAGE_LOAD_FAILED;
+        }
+
         boolean isShowingNtp = isShowingNewTab();
         for (BottomSheetObserver o : mObservers) o.onLoadUrl(params.getUrl());
 
