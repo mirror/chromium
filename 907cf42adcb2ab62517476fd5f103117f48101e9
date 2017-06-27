@@ -16,6 +16,24 @@
       "revId": "907cf42adcb2ab62517476fd5f103117f48101e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2181b4db_1c46bcde",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-06-27T15:45:35Z",
+      "side": 1,
+      "message": "Oh I didn\u0027t realize it\u0027s that easy to cancel the callback, I\u0027ll do that.  This way there\u0027s no need for special logic in OnStreamReady(), because that will never get called once pooling happens.\n\nHowever, there might be one or two Jobs owned by JobController, and when SpdySessionPool notifies Request that it can pool to another connection, there is no clear connection with any of the Jobs.  JobContoller should notify and destroy both Jobs, but why would the Job call back to JobController::OnNewSpdySessionReady(), and more importantly, which one would do that?\n\nAlso, many things in OnNewSpdySessionReady() do not apply: we did not actually establish that an AltSvc is broken; Request is already marked completed by SpdySessionPool; and SpdySessionPool::OnNewSpdySessionReady() is already called.\n\nI think it might be cleaner to keep it this way.  WDYT?",
+      "parentUuid": "6f525a7d_ee7bdcf8",
+      "revId": "907cf42adcb2ab62517476fd5f103117f48101e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
