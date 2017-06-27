@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e240275_de7c864a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 5282,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-27T00:26:22Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right. That\u0027s for the InProductHelp.ShouldTriggerHelpUIResult.Triggered.* I think.\n\nCould this stay:\n    The feature engagement tracker tried to determine whether in-product help\n    should be shown to the user.\n?",
+      "range": {
+        "startLine": 5282,
+        "startChar": 34,
+        "endLine": 5282,
+        "endChar": 46
+      },
+      "revId": "8e06fedb2af5774997b9cbc0dd25ff8fd8f1e340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d61473_8b6e0f45",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 5290,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-27T00:26:22Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "8e06fedb2af5774997b9cbc0dd25ff8fd8f1e340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec1f506_e2e3baca",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 5298,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-27T00:26:22Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "8e06fedb2af5774997b9cbc0dd25ff8fd8f1e340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef40a744_1efff820",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 5306,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-27T00:26:22Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "8e06fedb2af5774997b9cbc0dd25ff8fd8f1e340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
