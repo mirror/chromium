@@ -22,6 +22,30 @@
       "revId": "c05ef5ab60af070b03a1650dd4cc18e0de6e77e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2da516e_466b5e2d",
+        "filename": "components/web_contents_delegate_android/android/java/src/org/chromium/components/web_contents_delegate_android/ValidationMessageBubble.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-27T08:24:11Z",
+      "side": 1,
+      "message": "Ah |isShowing()| does the trick. Thanks for the suggestion. \nAnd I found a mistake in unit conversion (should have done css-\u003ephysical but was doing css-\u003edip). Will fix that as well. I\u0027m doing a ground job for that in other CL. Will come back after landing it.",
+      "parentUuid": "9ee23df7_f3bd53a7",
+      "range": {
+        "startLine": 69,
+        "startChar": 33,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "c05ef5ab60af070b03a1650dd4cc18e0de6e77e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
