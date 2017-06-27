@@ -355,7 +355,19 @@ int IntFunc0() {
   return g_func_mock_ptr->IntMethod0();
 }
 
+class RefThing : public RefCounted<RefThing> {
+ private:
+  virtual ~RefThing() { LOG(ERROR) << "Destroyed"; }
+  friend class RefCounted<RefThing>;
+};
+
 TEST_F(BindTest, BasicTest) {
+  {
+    RefThing* x = new RefThing;
+    Closure c = base::Bind([](RefThing*) {}, x);
+    { scoped_refptr<RefThing> x2(x); }
+    LOG(ERROR) << "Closure going out of scope.";
+  }
   Callback<int(int, int, int)> cb = Bind(&Sum, 32, 16, 8);
   EXPECT_EQ(92, cb.Run(13, 12, 11));
 
