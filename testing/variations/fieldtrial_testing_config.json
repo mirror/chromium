@@ -3301,6 +3301,25 @@
             ]
         }
     ],
+    "V8AsmJSToWasm": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "AsmJsToWebAssembly"
+                },
+                {
+                    "name": "Control"
+                }
+            ]
+        }
+    ],
     "V8CacheStrategiesForCacheStorage": [
         {
             "platforms": [
