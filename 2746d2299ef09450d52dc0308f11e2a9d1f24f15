@@ -138,6 +138,30 @@
     },
     {
       "key": {
+        "uuid": "ce4e534b_23af101a",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/select/listbox-not-force-layout.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-27T07:06:52Z",
+      "side": 1,
+      "message": "The forced layout is kicked in a timer task. So the test needs rAF or setTimeout to fail with the current code.",
+      "parentUuid": "c4f13bf0_6f74f05a",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f4013ec_8e5fbcfb",
         "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/fast/forms/select/listbox-scrollbar-incremental-load-expected.txt",
         "patchSetId": 9
@@ -315,6 +339,30 @@
     },
     {
       "key": {
+        "uuid": "05558d7b_ce062024",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-27T07:06:52Z",
+      "side": 1,
+      "message": "Calling SetNeedsLayout() is a nice idea. Done.",
+      "parentUuid": "e8479e57_bb5aed14",
+      "range": {
+        "startLine": 894,
+        "startChar": 46,
+        "endLine": 894,
+        "endChar": 63
+      },
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c154da_cfdb0ba9",
         "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
         "patchSetId": 9
@@ -398,6 +446,24 @@
       "side": 1,
       "message": "Hmm, my interpretation of this stack trace is that PLSA::ScrollIntoView calls LayoutObject::AbsoluteToLocalQuad, which relies on ancestors having up-to-date layout, which isn\u0027t a safe assumption in PLSA::UpdateAfterLayout.  Does that match your understanding?\n\nCan you call ScrollableArea::SetScrollOffset from HTMLSelectElement, instead of calling PLSA::ScrollIntoView?  That will avoid the use of AbsoluteToLocalQuad, but still give us the proper side effects of performing the scroll.",
       "parentUuid": "8a0c6e16_1d122a65",
+      "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70521b1_da22d738",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSelectElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-27T07:06:52Z",
+      "side": 1,
+      "message": "\u003e Does that match your understanding?\n\nYes. My understanding is same.\n\n\u003e Can you call ScrollableArea::SetScrollOffset from HTMLSelectElement, instead of calling PLSA::ScrollIntoView?  That will avoid the use of AbsoluteToLocalQuad, but still give us the proper side effects of performing the scroll.\n\nThe latest Patch Set does something like it. I factored out non-absolute part of PLSA::ScrollIntoView(), and HTMLSelectElement uses it.",
+      "parentUuid": "6a66375d_afad9860",
       "revId": "2746d2299ef09450d52dc0308f11e2a9d1f24f15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
