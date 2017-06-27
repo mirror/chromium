@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a39f2197_49dd80b7",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-06-27T21:45:42Z",
+      "side": 1,
+      "message": "I guess this doesn\u0027t happen enough to optimize.",
+      "parentUuid": "368a7e5b_7c44de2e",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d928303_3ae09a25",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 1
@@ -157,6 +175,24 @@
       "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9524ad77_27b693a0",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-06-27T21:45:42Z",
+      "side": 1,
+      "message": "Ya, I can\u0027t see an additional select-all affecting this call location.",
+      "parentUuid": "14b4dc0f_22b19281",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
