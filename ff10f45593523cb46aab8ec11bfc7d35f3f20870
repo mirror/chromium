@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "598e5599_76afe517",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-06-27T06:33:10Z",
+      "side": 1,
+      "message": "As discussed, I\u0027ve moved ConsumeAnimationValue and ConsumeTransitionValue to respective property API files.",
+      "parentUuid": "62a83acd_6ee77457",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "547b8cc0_6ad71d68",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-27T03:30:14Z",
       "side": 1,
       "message": "I would merge the 2 utils files since one relies on the other. I would like to avoid property  utils files calling each other. These methods are clearly related so it makes sense for them to be in the same utils.\n\nedit: this issue is superseded by removing need to pass CSSPropertyID",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37dd4abe_3821e6b1",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-06-27T06:33:10Z",
+      "side": 1,
+      "message": "CSSPropertyAnimationTimingFunctionUtils is no longer used by this util file, so I\u0027ll keep the two utils separate. Also CSSPropertyAnimationTimingFunctionUtils is used by longhand property animation-timing-function (which will be converted to a longhand API later). Hence we\u0027ll need CSSPropertyAnimationTimingFunctionUtils as standalone util file.",
+      "parentUuid": "547b8cc0_6ad71d68",
       "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43aa5d72_967038ee",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-06-27T06:33:10Z",
+      "side": 1,
+      "message": "As discussed, I\u0027ve modified the code structure.",
+      "parentUuid": "66f24672_2059924a",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcc50003_deb6c0c9",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPITransition.cpp",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8d94a650_d5d5db5b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPITransition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-06-27T06:33:10Z",
+      "side": 1,
+      "message": "It\u0027s no longer used.",
+      "parentUuid": "bcc50003_deb6c0c9",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9306ad30_06ea4a2d",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPITransition.cpp",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-27T03:30:14Z",
       "side": 1,
       "message": "This \u0027false\u0027 violates the style guide (although it was not introduced in this patch). Do you think it would be better to use local_content.UseAliasParsing() here or change this method to accept an enum so that a literal like this may be passed? I\u0027m leaning towards changing it to enum as passing a literal here makes it clear that there *is* no legacy parsing in this case, although that means that the local_context would need to store an enum instead of a bool. (since this patch didn\u0027t introduce the violation you don\u0027t need to fix it here)",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab2d468_ff122149",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPITransition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-06-27T06:33:10Z",
+      "side": 1,
+      "message": "This is no longer used.",
+      "parentUuid": "9306ad30_06ea4a2d",
       "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
