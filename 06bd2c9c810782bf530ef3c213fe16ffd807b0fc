@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "098b1427_b536cf99",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-27T17:16:29Z",
+      "side": 1,
+      "message": "In landscape on iPhone, will this be wrong?",
+      "range": {
+        "startLine": 131,
+        "startChar": 11,
+        "endLine": 131,
+        "endChar": 19
+      },
+      "revId": "06bd2c9c810782bf530ef3c213fe16ffd807b0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
