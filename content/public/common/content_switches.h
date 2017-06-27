@@ -186,6 +186,7 @@ CONTENT_EXPORT extern const char kJavaScriptHarmony[];
 CONTENT_EXPORT extern const char kLogGpuControlListDecisions[];
 CONTENT_EXPORT extern const char kLoggingLevel[];
 CONTENT_EXPORT extern const char kLogNetLog[];
+CONTENT_EXPORT extern const char kLogUrlsLog[];
 CONTENT_EXPORT extern const char kMainFrameResizesAreOrientationChanges[];
 extern const char kMaxUntiledLayerHeight[];
 extern const char kMaxUntiledLayerWidth[];

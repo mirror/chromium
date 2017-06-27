@@ -19,9 +19,16 @@ bool g_cancel_requests_with_referrer_policy_violation = false;
 }
 
 ShellNetworkDelegate::ShellNetworkDelegate() {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kLogUrlsLog)) {
+    log_urls_.reset(new net_log::LogUrlsToFile(
+        base::CommandLine::ForCurrentProcess()->GetSwitchValuePath(
+            switches::kLogUrlsLog)));
+  }
 }
 
 ShellNetworkDelegate::~ShellNetworkDelegate() {
+  log_urls_.reset();
 }
 
 void ShellNetworkDelegate::SetBlockThirdPartyCookies(bool block) {
@@ -37,6 +44,9 @@ int ShellNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
+  if (log_urls_) {
+    log_urls_.get()->LogURL(request->url());
+  }
   return net::OK;
 }
 

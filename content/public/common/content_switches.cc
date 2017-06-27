@@ -613,6 +613,10 @@ const char kLoggingLevel[]                  = "log-level";
 // Enables saving net log events to a file and sets the file name to use.
 const char kLogNetLog[]                     = "log-net-log";
 
+// Enables saving requested urls to a file and sets the file name to use.
+// It's crash resistant and suitable for ClusterFuzz.
+const char kLogUrlsLog[]                     = "log-urls-log";
+
 // Resizes of the main frame are caused by changing between landscape and
 // portrait mode (i.e. Android) so the page should be rescaled to fit.
 const char kMainFrameResizesAreOrientationChanges[] =
