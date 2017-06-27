@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ac987da1_3c38b6a8",
+        "filename": "components/history/core/browser/top_sites_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T21:39:26Z",
+      "side": 1,
+      "message": "Looks like we do need single threaded. Please add a comment something like:\n\n// Need to use single-threaded as Chrome sets SQLITE_ENABLE_MEMORY_MANAGEMENT, which\n// means you must access the sqlite connection on the thread you create\n// the connection on. See http://www.sqlite.org/cvstrac/wiki?p\u003dMultiThreading for details.",
+      "parentUuid": "d83edde5_abfc638a",
+      "range": {
+        "startLine": 28,
+        "startChar": 28,
+        "endLine": 28,
+        "endChar": 66
+      },
+      "revId": "610fe460303f0335f98a8a781a6a6372cd1c6fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfd5c3ad_a43f013d",
         "filename": "components/history/core/browser/top_sites_backend.h",
         "patchSetId": 2
