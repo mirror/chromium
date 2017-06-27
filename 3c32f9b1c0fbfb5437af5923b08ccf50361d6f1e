@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "1c31705f_803a8cae",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-27T12:35:03Z",
+      "side": 1,
+      "message": "Weird, I was having issues with Observe(nullptr) last week when I made the controller an WebContentsObserver :/. It probably another issue that I fixed when I separated it into another class. Anyway, looks like it\u0027s good now, thanks for letting me know",
+      "parentUuid": "c89d7595_e9a02160",
+      "revId": "3c32f9b1c0fbfb5437af5923b08ccf50361d6f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "374695a9_21879adc",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h",
         "patchSetId": 5
