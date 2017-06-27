@@ -15,7 +15,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/sequenced_task_runner.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/values.h"
 #include "components/policy/core/common/async_policy_provider.h"
@@ -42,8 +41,7 @@ class TestHarness : public PolicyProviderTestHarness {
   void SetUp() override;
 
   ConfigurationPolicyProvider* CreateProvider(
-      SchemaRegistry* registry,
-      scoped_refptr<base::SequencedTaskRunner> task_runner) override;
+      SchemaRegistry* registry) override;
 
   void InstallEmptyPolicy() override;
   void InstallStringPolicy(const std::string& policy_name,
@@ -75,11 +73,10 @@ TestHarness::~TestHarness() {}
 void TestHarness::SetUp() {}
 
 ConfigurationPolicyProvider* TestHarness::CreateProvider(
-    SchemaRegistry* registry,
-    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+    SchemaRegistry* registry) {
   prefs_ = new MockPreferences();
   std::unique_ptr<AsyncPolicyLoader> loader(
-      new PolicyLoaderMac(task_runner, base::FilePath(), prefs_));
+      new PolicyLoaderMac(base::FilePath(), prefs_));
   return new AsyncPolicyProvider(registry, std::move(loader));
 }
 
@@ -150,7 +147,7 @@ class PolicyLoaderMacTest : public PolicyTestBase {
   void SetUp() override {
     PolicyTestBase::SetUp();
     std::unique_ptr<AsyncPolicyLoader> loader(
-        new PolicyLoaderMac(loop_.task_runner(), base::FilePath(), prefs_));
+        new PolicyLoaderMac(base::FilePath(), prefs_));
     provider_.reset(
         new AsyncPolicyProvider(&schema_registry_, std::move(loader)));
     provider_->Init(&schema_registry_);

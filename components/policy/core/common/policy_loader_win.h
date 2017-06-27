@@ -21,10 +21,6 @@
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/policy_export.h"
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace policy {
 
 class AppliedGPOListProvider;
@@ -56,14 +52,12 @@ class POLICY_EXPORT PolicyLoaderWin
   // Passing |gpo_provider| equal nullptr forces all reads to go through the
   // registry.  This is undesirable for Chrome (see crbug.com/259236), but
   // needed for some other use cases (i.e. Chromoting - see crbug.com/460734).
-  PolicyLoaderWin(scoped_refptr<base::SequencedTaskRunner> task_runner,
-                  const base::string16& chrome_policy_key,
+  PolicyLoaderWin(const base::string16& chrome_policy_key,
                   AppliedGPOListProvider* gpo_provider);
   ~PolicyLoaderWin() override;
 
   // Creates a policy loader that uses the Win API to access GPO.
   static std::unique_ptr<PolicyLoaderWin> Create(
-      scoped_refptr<base::SequencedTaskRunner> task_runner,
       const base::string16& chrome_policy_key);
 
   // AsyncPolicyLoader implementation.

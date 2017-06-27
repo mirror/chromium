@@ -125,12 +125,7 @@ const char kKeyDictionary[] = "DictionaryPolicy";
 
 }  // namespace test_keys
 
-PolicyTestBase::PolicyTestBase()
-#if defined(OS_POSIX)
-    : file_descriptor_watcher_(&loop_)
-#endif
-{
-}
+PolicyTestBase::PolicyTestBase() {}
 
 PolicyTestBase::~PolicyTestBase() {}
 
@@ -207,8 +202,7 @@ void ConfigurationPolicyProviderTest::SetUp() {
                       "cccccccccccccccccccccccccccccccc"),
       extension_schema);
 
-  provider_.reset(
-      test_harness_->CreateProvider(&schema_registry_, loop_.task_runner()));
+  provider_.reset(test_harness_->CreateProvider(&schema_registry_));
   provider_->Init(&schema_registry_);
   // Some providers do a reload on init. Make sure any notifications generated
   // are fired now.

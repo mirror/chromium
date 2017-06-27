@@ -810,8 +810,7 @@ void HostProcess::StartOnUiThread() {
     return;
   }
 
-  policy_watcher_ =
-      PolicyWatcher::Create(nullptr, context_->file_task_runner());
+  policy_watcher_ = PolicyWatcher::Create(nullptr);
   policy_watcher_->StartWatching(
       base::Bind(&HostProcess::OnPolicyUpdate, base::Unretained(this)),
       base::Bind(&HostProcess::OnPolicyError, base::Unretained(this)));

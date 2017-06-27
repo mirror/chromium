@@ -61,10 +61,9 @@ PolicyLoadStatus JsonErrorToPolicyLoadStatus(int status) {
 }  // namespace
 
 ConfigDirPolicyLoader::ConfigDirPolicyLoader(
-    scoped_refptr<base::SequencedTaskRunner> task_runner,
     const base::FilePath& config_dir,
     PolicyScope scope)
-    : AsyncPolicyLoader(task_runner), config_dir_(config_dir), scope_(scope) {}
+    : config_dir_(config_dir), scope_(scope) {}
 
 ConfigDirPolicyLoader::~ConfigDirPolicyLoader() {}
 

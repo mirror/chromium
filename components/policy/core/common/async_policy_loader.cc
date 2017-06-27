@@ -29,10 +29,7 @@ const int kReloadIntervalSeconds = 15 * 60;
 
 }  // namespace
 
-AsyncPolicyLoader::AsyncPolicyLoader(
-    const scoped_refptr<base::SequencedTaskRunner>& task_runner)
-    : task_runner_(task_runner),
-      weak_factory_(this) {}
+AsyncPolicyLoader::AsyncPolicyLoader() : weak_factory_(this) {}
 
 AsyncPolicyLoader::~AsyncPolicyLoader() {}
 

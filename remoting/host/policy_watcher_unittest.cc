@@ -69,8 +69,7 @@ class PolicyWatcherTest : public testing::Test {
     EXPECT_CALL(mock_policy_callback_, OnPolicyError()).Times(0);
 
     // Retaining a raw pointer to keep control over policy contents.
-    policy_loader_ =
-        new policy::FakeAsyncPolicyLoader(base::ThreadTaskRunnerHandle::Get());
+    policy_loader_ = new policy::FakeAsyncPolicyLoader();
     policy_watcher_ = PolicyWatcher::CreateFromPolicyLoaderForTesting(
         base::WrapUnique(policy_loader_));
 
