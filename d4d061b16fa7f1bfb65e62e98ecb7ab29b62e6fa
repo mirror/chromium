@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6736bba_290b9aa3",
+        "filename": "media/base/video_frame_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-27T21:28:13Z",
+      "side": 1,
+      "message": "I\u0027ve not been following the deque discussions closely. Are the memory implications solved now?\n\nIf the expected number of FrameEntries is small (I\u0027d guess small is ~100), a std::vector may be a better choice.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a792eb3_fcb1c549",
+        "filename": "media/base/video_frame_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-27T21:28:13Z",
+      "side": 1,
+      "message": "I\u0027d consider moving this to the top (or I suppose a comment about it would be fine too), just to remind readers that this behavior exists.",
+      "range": {
+        "startLine": 128,
+        "startChar": 28,
+        "endLine": 128,
+        "endChar": 44
+      },
+      "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4ee4c0_c90e1bd1",
+        "filename": "media/base/video_frame_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-27T21:28:13Z",
+      "side": 1,
+      "message": "Please add a comment describing the loop invariant here. (At first glace it looks like a no-op.) In particular, the correctness of this scan relies on the deque being in descending age order (perhaps an obvious property), but exactly where the edge is is worth being explicit about.\n\nThis also depends indirectly on the fact that frames are taken from the end first. That should probably be documented on CreateFrame() at least.",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 70
+      },
+      "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3545b4f9_2831ae3e",
         "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
         "patchSetId": 2
