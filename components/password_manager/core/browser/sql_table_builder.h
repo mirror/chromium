@@ -52,6 +52,9 @@ class SQLTableBuilder {
   // Create the builder for "logins".
   SQLTableBuilder();
 
+  // Create the builder for an arbitrary table name.
+  explicit SQLTableBuilder(const std::string& table_name);
+
   ~SQLTableBuilder();
 
   // Adds a column in the table description, with |name| and |type|. |name|
@@ -140,6 +143,9 @@ class SQLTableBuilder {
   // The "UNIQUE" part of an SQL CREATE TABLE constraint. This value is
   // computed dring sealing the first version (0).
   std::string unique_constraint_;
+
+  // The name of the table.
+  const std::string kTableName_;
 
   DISALLOW_COPY_AND_ASSIGN(SQLTableBuilder);
 };
