@@ -18,8 +18,9 @@
 #include "base/metrics/user_metrics.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/lazy_task_runner.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
@@ -53,6 +54,14 @@ const char kNotificationOriginUrl[] = "chrome://screenshot";
 const char kImageClipboardFormatPrefix[] = "<img src='data:image/png;base64,";
 const char kImageClipboardFormatSuffix[] = "'>";
 
+// User is waiting for the screenshot-taken notification, hence USER_VISIBLE.
+constexpr base::TaskTraits kTaskRunnerTraits = {
+    base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+    base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN};
+
+base::LazySequencedTaskRunner g_sequenced_task_runner =
+    LAZY_SEQUENCED_TASK_RUNNER_INITIALIZER(kTaskRunnerTraits);
+
 void CopyScreenshotToClipboard(scoped_refptr<base::RefCountedString> png_data) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -73,6 +82,7 @@ void CopyScreenshotToClipboard(scoped_refptr<base::RefCountedString> png_data) {
 }
 
 void ReadFileAndCopyToClipboardLocal(const base::FilePath& screenshot_path) {
+  base::ThreadRestrictions::AssertIOAllowed();
   scoped_refptr<base::RefCountedString> png_data(new base::RefCountedString());
   if (!base::ReadFileToString(screenshot_path, &(png_data->data()))) {
     LOG(ERROR) << "Failed to read the screenshot file: "
@@ -94,7 +104,7 @@ void ReadFileAndCopyToClipboardDrive(
                << drive::FileErrorToString(error);
     return;
   }
-  content::BrowserThread::GetBlockingPool()->PostTask(
+  g_sequenced_task_runner.Get()->PostTask(
       FROM_HERE, base::Bind(&ReadFileAndCopyToClipboardLocal, file_path));
 }
 
@@ -130,7 +140,7 @@ class ScreenshotGrabberNotificationDelegate : public NotificationDelegate {
                                base::Bind(&ReadFileAndCopyToClipboardDrive));
           return;
         }
-        content::BrowserThread::GetBlockingPool()->PostTask(
+        g_sequenced_task_runner.Get()->PostTask(
             FROM_HERE,
             base::Bind(&ReadFileAndCopyToClipboardLocal, screenshot_path_));
         break;
@@ -212,7 +222,7 @@ void EnsureDirectoryExistsCallback(
   } else {
     LOG(ERROR) << "Failed to ensure the existence of the specified directory "
                << "in Google Drive: " << error;
-    content::BrowserThread::GetBlockingPool()->PostTask(
+    g_sequenced_task_runner.Get()->PostTask(
         FROM_HERE,
         base::Bind(callback,
                    ui::ScreenshotGrabberDelegate::FILE_CHECK_DIR_FAILED,
@@ -278,11 +288,8 @@ std::string GetScreenshotBaseFilename() {
 }  // namespace
 
 ChromeScreenshotGrabber::ChromeScreenshotGrabber()
-    : screenshot_grabber_(new ui::ScreenshotGrabber(
-          this,
-          base::CreateTaskRunnerWithTraits(
-              {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-               base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}))),
+    : screenshot_grabber_(
+          new ui::ScreenshotGrabber(this, g_sequenced_task_runner.Get())),
       profile_for_test_(NULL) {
   screenshot_grabber_->AddObserver(this);
 }
