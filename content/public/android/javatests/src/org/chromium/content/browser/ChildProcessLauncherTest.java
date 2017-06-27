@@ -582,8 +582,8 @@ public class ChildProcessLauncherTest {
                 new Criteria("The connection wasn't established.") {
                     @Override
                     public boolean isSatisfied() {
-                        return launcher.getConnection() != null
-                                && launcher.getConnection().isConnected();
+                        return launcher.getChildProcessConnection() != null
+                                && launcher.getChildProcessConnection().isConnected();
                     }
                 });
     }
