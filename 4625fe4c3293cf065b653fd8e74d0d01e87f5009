@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f83ba97c_d9432a49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-27T09:06:52Z",
+      "side": 1,
+      "message": "Please add Bug.\nPlease add tests to make it clear that at least you run related unit_tests.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650b9ea1_cf631568",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-27T09:06:52Z",
+      "side": 1,
+      "message": "This should come after ChangeList and DirectoryFetchInfo.",
+      "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1012e9d7_8ba4bec8",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-27T09:06:52Z",
+      "side": 1,
+      "message": "You can put function bodies in the class definition now.",
+      "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8143db20_7aaa82df",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-27T09:06:52Z",
+      "side": 1,
+      "message": "nit: Why is only one of them quoted with ||?\nPlease be consistent.\n\nAlso, please also mention parent_resource_id_map_.",
+      "range": {
+        "startLine": 151,
+        "startChar": 18,
+        "endLine": 151,
+        "endChar": 46
+      },
+      "revId": "4625fe4c3293cf065b653fd8e74d0d01e87f5009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
