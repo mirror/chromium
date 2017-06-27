@@ -31,6 +31,7 @@
 #include "web/WebViewImpl.h"
 
 #include <memory>
+#include "controller/WebDevToolsAgentImpl.h"
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
 #include "core/animation/CompositorMutatorImpl.h"
@@ -171,7 +172,6 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 #if USE(DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"
@@ -216,15 +216,6 @@ namespace blink {
 const double WebView::kTextSizeMultiplierRatio = 1.2;
 const double WebView::kMinTextSizeMultiplier = 0.5;
 const double WebView::kMaxTextSizeMultiplier = 3.0;
-
-// Used to defer all page activity in cases where the embedder wishes to run
-// a nested event loop. Using a stack enables nesting of message loop
-// invocations.
-static Vector<std::unique_ptr<ScopedPageSuspender>>& PageSuspenderStack() {
-  DEFINE_STATIC_LOCAL(Vector<std::unique_ptr<ScopedPageSuspender>>,
-                      suspender_stack, ());
-  return suspender_stack;
-}
 
 static bool g_should_use_external_popup_menus = false;
 
@@ -279,7 +270,7 @@ WebViewBase* WebViewImpl::Create(WebViewClient* client,
   return AdoptRef(new WebViewImpl(client, visibility_state)).LeakRef();
 }
 
-const WebInputEvent* WebViewBase::CurrentInputEvent() {
+WEB_EXPORT const WebInputEvent* WebViewBase::CurrentInputEvent() {
   return WebViewImpl::CurrentInputEvent();
 }
 
@@ -295,15 +286,6 @@ void WebView::ResetVisitedLinkState(bool invalidate_visited_link_hashes) {
   Page::AllVisitedStateChanged(invalidate_visited_link_hashes);
 }
 
-void WebView::WillEnterModalLoop() {
-  PageSuspenderStack().push_back(WTF::MakeUnique<ScopedPageSuspender>());
-}
-
-void WebView::DidExitModalLoop() {
-  DCHECK(PageSuspenderStack().size());
-  PageSuspenderStack().pop_back();
-}
-
 void WebViewImpl::SetCredentialManagerClient(
     WebCredentialManagerClient* web_credential_manager_client) {
   DCHECK(page_);
@@ -316,12 +298,6 @@ void WebViewImpl::SetPrerendererClient(
   DCHECK(page_);
   ProvidePrerendererClientTo(*page_,
                              new PrerendererClient(*page_, prerenderer_client));
-}
-
-// static
-HashSet<WebViewBase*>& WebViewBase::AllInstances() {
-  DEFINE_STATIC_LOCAL(HashSet<WebViewBase*>, all_instances, ());
-  return all_instances;
 }
 
 WebViewImpl::WebViewImpl(WebViewClient* client,
@@ -3662,7 +3638,7 @@ void WebViewImpl::MainFrameScrollOffsetChanged() {
   dev_tools_emulator_->MainFrameScrollOrScaleChanged();
 }
 
-bool WebViewBase::UseExternalPopupMenus() {
+WEB_EXPORT bool WebViewBase::UseExternalPopupMenus() {
   return WebViewImpl::UseExternalPopupMenus();
 }
 
