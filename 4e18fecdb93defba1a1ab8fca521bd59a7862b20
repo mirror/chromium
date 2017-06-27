@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fe5fdfd_3d37e610",
+        "filename": "components/exo/notification_surface.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-27T17:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8341eb14_7afbf89b",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e53dc83_1ba420de",
         "filename": "components/exo/notification_surface.h",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-27T16:27:39Z",
       "side": 1,
       "message": "nit: can we instead remove this function and use host_window() directly?",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9d8434_382b00f5",
+        "filename": "components/exo/notification_surface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-27T17:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e53dc83_1ba420de",
       "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c920653c_3437f012",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-27T17:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39a529b8_505ec8cb",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e11dbd89_8352a828",
         "filename": "components/exo/surface_tree_host.h",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c4a708d4_e18c15b0",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-27T17:16:08Z",
+      "side": 1,
+      "message": "Done,\nRemove the \u003ccstdint\u003e\n\u003cmemory\u003e is for std::unique_ptr",
+      "parentUuid": "e11dbd89_8352a828",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cff88beb_56b40a20",
         "filename": "components/exo/surface_tree_host.h",
         "patchSetId": 12
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-27T16:27:39Z",
       "side": 1,
       "message": "nit: no need for this comment. remove it to be consistent with gfx below",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a01e51_643d3bc0",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-27T17:16:08Z",
+      "side": 1,
+      "message": "Done\nBut when I run git cl format, it will be added back. :(\n\nSo I added the comment for namespace gfx to keep those two same.",
+      "parentUuid": "cff88beb_56b40a20",
       "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
