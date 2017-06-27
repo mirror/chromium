@@ -52,6 +52,24 @@
       "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899752db_3197b8a4",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T13:11:13Z",
+      "side": 1,
+      "message": "Makes sense to me, thanks!\n\nnit: I think it would be more future-proof if we called this ElideServiceManagerConnectionForTesting() and had it set a bool that then got checked right after line 405 and short-circuits out if true. That way you wouldn\u0027t be depending somewhat invisibly on the behavior in lines 402-403. Does that make sense?",
+      "parentUuid": "f1d6dd6f_8095716a",
+      "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
