@@ -164,6 +164,30 @@
       "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc133a5f_aad940ef",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:33:20Z",
+      "side": 1,
+      "message": "This should not be an abstract base class as not all overriders will want both OnSessionStarted and OnSessionEnded. I would go with dominickn@ here.",
+      "parentUuid": "e6d36910_77b83398",
+      "range": {
+        "startLine": 52,
+        "startChar": 32,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "3e55ccb92a611941a6c7343fd9f4f8ad5f055ef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

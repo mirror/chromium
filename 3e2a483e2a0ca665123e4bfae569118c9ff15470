@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3238b950_ab37bd93",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:33:20Z",
+      "side": 1,
+      "message": "Nit: Reverse of the order of Started and Ended - here and below.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 68
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1798f75c_1a16a80d",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:33:20Z",
+      "side": 1,
+      "message": "Add a comment indicating what parent initially declared these methods.\n\nIn this case, add\n// metrics::DesktopSessionDurationTracker::Observer:",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 21
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7bf746_4512aa4f",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:33:20Z",
+      "side": 1,
+      "message": "Follow the same ordering as metrics::DesktopSessionDurationTracker::Observer.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 3
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fac10f_b5853e7f",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:33:20Z",
+      "side": 1,
+      "message": "Keep to this order for each block below where the same values are checked.",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 38
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2327ac6a_0534c652",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:33:20Z",
+      "side": 1,
+      "message": "This while loop should be unnecessary, but that can be fixed later.",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 256,
+        "endChar": 35
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
