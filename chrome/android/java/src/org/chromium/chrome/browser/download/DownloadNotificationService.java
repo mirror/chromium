@@ -100,6 +100,8 @@ public class DownloadNotificationService extends Service {
             "org.chromium.chrome.browser.download.DOWNLOAD_UPDATE_SUMMARY_ICON";
     public static final String ACTION_DOWNLOAD_FAIL_SAFE =
             "org.chromium.chrome.browser.download.ACTION_SUMMARY_FAIL_SAFE";
+    public static final String ACTION_DOWNLOAD_REMOVED =
+            "org.chromium.chrome.browser.download.DOWNLOAD_REMOVED";
 
     static final String NOTIFICATION_NAMESPACE = "DownloadNotificationService";
     private static final String TAG = "DownloadNotification";
@@ -1012,7 +1014,9 @@ public class DownloadNotificationService extends Service {
         }
         builder.setDeleteIntent(buildSummaryIconIntent(notificationId));
         builder.setLargeIcon(icon != null ? icon : mDownloadSuccessLargeIcon);
-        updateNotification(notificationId, builder.build(), id, null);
+        DownloadSharedPreferenceEntry entry =
+                mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
+        updateNotification(notificationId, builder.build(), id, entry);
         stopTrackingInProgressDownload(id, true);
         return notificationId;
     }
@@ -1201,6 +1205,9 @@ public class DownloadNotificationService extends Service {
             // User canceled a download by dismissing its notification from earlier versions, ignore
             // it. TODO(qinmin): remove this else-if block after M60.
             return;
+        } else if (ACTION_DOWNLOAD_REMOVED.equals(intent.getAction())) {
+            cancelNotification(entry.notificationId, entry.id);
+            return;
         }
 
         BrowserParts parts = new EmptyBrowserParts() {
@@ -1355,7 +1362,8 @@ public class DownloadNotificationService extends Service {
         if (!ACTION_DOWNLOAD_CANCEL.equals(intent.getAction())
                 && !ACTION_DOWNLOAD_RESUME.equals(intent.getAction())
                 && !ACTION_DOWNLOAD_PAUSE.equals(intent.getAction())
-                && !ACTION_DOWNLOAD_OPEN.equals(intent.getAction())) {
+                && !ACTION_DOWNLOAD_OPEN.equals(intent.getAction())
+                && !ACTION_DOWNLOAD_REMOVED.equals(intent.getAction())) {
             return false;
         }
 
@@ -1382,7 +1390,6 @@ public class DownloadNotificationService extends Service {
                 || !intent.hasExtra(EXTRA_DOWNLOAD_CONTENTID_NAMESPACE)) {
             return null;
         }
-
         return new ContentId(
                 IntentUtils.safeGetStringExtra(intent, EXTRA_DOWNLOAD_CONTENTID_NAMESPACE),
                 IntentUtils.safeGetStringExtra(intent, EXTRA_DOWNLOAD_CONTENTID_ID));
