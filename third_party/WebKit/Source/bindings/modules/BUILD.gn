@@ -198,3 +198,9 @@ source_set("generated") {
     "//v8",
   ]
 }
+
+generate_idl_information_store("modules_idl_information_store") {
+  sources = modules_definition_idl_files + modules_dependency_idl_files
+  output = "IDLInformationStoreForModules.pickle"
+  output_dir = bindings_modules_output_dir
+}
