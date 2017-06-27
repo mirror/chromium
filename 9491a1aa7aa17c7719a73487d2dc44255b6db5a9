@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c80424b_ffc7fd2d",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T20:27:27Z",
+      "side": 1,
+      "message": "This still doesn\u0027t seem to ensure that it\u0027s initialized for the first time on the main thread. That\u0027s probably the case, but it\u0027s hard to be statically certain.\n\nOne approach might be to make the implementations of blink::Platform::DefaultLocale safe to call on any thread (except that it uses RenderThreadImpl, that seems plausible).\n\nA simpler approach might be to query it once (e.g. in blink::Initialize) on the main thread before other threads exist, and then you can simply always know that it\u0027s been initialized.",
+      "revId": "9491a1aa7aa17c7719a73487d2dc44255b6db5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236da2d3_4f12aa57",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T20:27:27Z",
+      "side": 1,
+      "message": "DEFINE_THREAD_SAFE_STATIC_LOCAL: we don\u0027t want to have to register a static destructor to run ~Mutex.",
+      "revId": "9491a1aa7aa17c7719a73487d2dc44255b6db5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a111a399_31a08fb8",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T20:27:27Z",
+      "side": 1,
+      "message": "You\u0027ll want DEFINE_THREAD_SAFE_STATIC_LOCAL here, because AtomicString has a destructor, and we don\u0027t want to register static destructors.",
+      "revId": "9491a1aa7aa17c7719a73487d2dc44255b6db5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

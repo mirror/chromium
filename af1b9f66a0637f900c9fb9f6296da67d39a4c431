@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "daf7b444_deb4704b",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T20:27:27Z",
+      "side": 1,
+      "message": "Yeah, but it seems that it cannot ever have multiple languages in non-test code. So all of the code that handles having multiple, doing text track logic based on that, etc. is dead in production.\n\nIt\u0027s only used for four layout tests, two of which tests that the override-for-test functionality itself works, and the other two test track selection in the presence of multiple user preferred languages, which we still don\u0027t support.\n\nI\u0027d be tempted to (in a separate CL) remove UserPreferredLanguages and OverrideUserPreferredLanguages altogether. At that point, most of the complexity here goes away. With those gone, this just becomes a string that\u0027s set during Blink setup and never changes, and the scope of the rest of this is reduced.",
+      "parentUuid": "95b043c1_99f8956e",
+      "revId": "af1b9f66a0637f900c9fb9f6296da67d39a4c431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8aad0762_9718f471",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
         "patchSetId": 3
