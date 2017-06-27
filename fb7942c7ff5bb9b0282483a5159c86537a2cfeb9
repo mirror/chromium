@@ -22,6 +22,30 @@
       "revId": "fb7942c7ff5bb9b0282483a5159c86537a2cfeb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecf7b42_d11f2bb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-27T17:44:36Z",
+      "side": 0,
+      "message": "I\u0027ll just abandon this CL then since it\u0027s not actually supported.",
+      "parentUuid": "e51c9cca_ea70cb6c",
+      "range": {
+        "startLine": 798,
+        "startChar": 51,
+        "endLine": 798,
+        "endChar": 74
+      },
+      "revId": "fb7942c7ff5bb9b0282483a5159c86537a2cfeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
