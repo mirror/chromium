@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ff8b624b_7ddc75cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-27T15:28:06Z",
+      "side": 1,
+      "message": "Please remove this line prior to landing this CL (unless you want future code viewers to offer belated suggestions \u003d])",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a58f4a89_37412885",
         "filename": "content/browser/service_worker/service_worker_metrics.cc",
         "patchSetId": 6
