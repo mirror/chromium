@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57396bcc_bfd62dba",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-27T11:04:15Z",
+      "side": 0,
+      "message": "I think that you should keep this.",
+      "revId": "56a7cdb2df5c350fbd1c97d0f35aada0d3d67b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
