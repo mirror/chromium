@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dc66cd8_45cc7b24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-27T13:12:31Z",
+      "side": 1,
+      "message": "Suggestion: \"Bug: \" without a line between it and the change ID, to match Gerrit\u0027s footers.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "425c05b1a5dc884c53c3786959d568bd247ca19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
