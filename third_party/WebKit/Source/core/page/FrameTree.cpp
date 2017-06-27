@@ -260,6 +260,74 @@ Frame* FrameTree::TraverseNext(const Frame* stay_within) const {
   return nullptr;
 }
 
+FrameTree::Iterator FrameTree::begin() {
+  return Iterator(this_frame_);
+}
+
+FrameTree::Iterator FrameTree::end() {
+  return Iterator(nullptr);
+}
+
+FrameTree::Iterator& FrameTree::Iterator::operator++() {
+  do {
+    current_frame_ = current_frame_->Tree().TraverseNext(root_);
+  } while (current_frame_ && should_skip_frame_ &&
+           (*should_skip_frame_)(current_frame_));
+
+  return *this;
+}
+
+FrameTree::LocalFrameIterator& FrameTree::LocalFrameIterator::operator++() {
+  do {
+    Iterator::operator++();
+  } while (current_frame_ && !current_frame_->IsLocalFrame());
+
+  return *this;
+}
+
+bool FrameTree::Iterator::operator==(const FrameTree::Iterator& rhs) const {
+  return current_frame_ == rhs.current_frame_;
+}
+
+bool FrameTree::Iterator::operator!=(const FrameTree::Iterator& rhs) const {
+  return !(*this == rhs);
+}
+
+FrameTree::Iterator::operator bool() const {
+  return !!current_frame_;
+}
+
+LocalFrame* FrameTree::LocalFrameIterator::operator*() {
+  return ToLocalFrame(current_frame_);
+}
+
+LocalFrame* FrameTree::LocalFrameIterator::operator->() {
+  return ToLocalFrame(current_frame_);
+}
+
+FrameTree::LocalFrameIterator FrameTree::LocalRootRange::begin() {
+  return LocalFrameIterator(root_, WTF::Bind(
+                                       [](Frame* root, Frame* frame) -> bool {
+                                         while (frame) {
+                                           if (frame == root)
+                                             return false;
+                                           if (frame->IsRemoteFrame())
+                                             return true;
+                                           frame = frame->Tree().Parent();
+                                         }
+                                         return false;
+                                       },
+                                       WrapPersistent(root_.Get())));
+}
+
+FrameTree::LocalFrameIterator FrameTree::LocalRootRange::end() {
+  return LocalFrameIterator(nullptr);
+}
+
+FrameTree::LocalRootRange FrameTree::GetLocalRootRange() {
+  return LocalRootRange(ToLocalFrame(this_frame_));
+}
+
 DEFINE_TRACE(FrameTree) {
   visitor->Trace(this_frame_);
 }

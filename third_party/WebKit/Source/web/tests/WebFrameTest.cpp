@@ -12025,4 +12025,124 @@ TEST_F(WebFrameTest, NavigatorPluginsClearedWhenPluginsDisabled) {
   EXPECT_EQ(0, result->Int32Value());
 }
 
+enum class FrameType { kLocal, kRemote };
+struct FrameTreeCreatorHelper {
+  FrameTreeCreatorHelper(FrameType type = FrameType::kLocal) : type_(type) {}
+  FrameTreeCreatorHelper(FrameType type,
+                         std::initializer_list<FrameTreeCreatorHelper> init)
+      : type_(type), children_(init) {}
+  FrameType type_;
+  std::vector<FrameTreeCreatorHelper> children_;
+
+  // TODO(dcheng): Remove once WebRemoteFrameClients can be self-owned.
+  static FrameTestHelpers::TestWebRemoteFrameClient* DefaultRemoteClient() {
+    static FrameTestHelpers::TestWebRemoteFrameClient remote_client;
+    return &remote_client;
+  }
+
+  static WebLocalFrameBase* CreateLocalFrame(WebLocalFrameBase* parent) {
+    v8::HandleScope scope(v8::Isolate::GetCurrent());
+    parent->ExecuteScriptAndReturnValue(WebScriptSource(WebString::FromUTF8(
+        "document.body.appendChild(document.createElement('iframe'))")));
+    WebFrame* child = parent->FirstChild();
+    while (child->NextSibling())
+      child = child->NextSibling();
+    return ToWebLocalFrameBase(child);
+  }
+
+  void CreateFrameTree(WebFrame* parent) {
+    if (type_ == FrameType::kLocal) {
+      WebLocalFrameBase* local_parent = ToWebLocalFrameBase(parent);
+      for (FrameTreeCreatorHelper& frame : children_) {
+        WebFrame* child = nullptr;
+        if (frame.type_ == FrameType::kLocal) {
+          child = CreateLocalFrame(local_parent);
+        } else if (frame.type_ == FrameType::kRemote) {
+          // To create a RemoteFrame child, we need to first create a local
+          // child, then swap it with a RemoteFrame.
+          WebFrame* local_child = CreateLocalFrame(local_parent);
+          child = WebRemoteFrameImpl::Create(WebTreeScopeType::kDocument,
+                                             DefaultRemoteClient());
+          local_child->Swap(child);
+        }
+        frame.CreateFrameTree(child);
+      }
+    } else if (type_ == FrameType::kRemote) {
+      WebRemoteFrameBase* remote_parent = ToWebRemoteFrameBase(parent);
+      for (FrameTreeCreatorHelper& frame : children_) {
+        WebFrame* child = nullptr;
+        if (frame.type_ == FrameType::kLocal) {
+          child = FrameTestHelpers::CreateLocalChild(remote_parent);
+        } else if (frame.type_ == FrameType::kRemote) {
+          child = FrameTestHelpers::CreateRemoteChild(remote_parent,
+                                                      DefaultRemoteClient());
+        }
+        frame.CreateFrameTree(child);
+      }
+    }
+  }
+};
+
+TEST_F(WebFrameTest, FrameTreeIterator) {
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.Initialize();
+
+  WebLocalFrameBase* main_frame = web_view_helper.LocalMainFrame();
+  FrameTreeCreatorHelper tree(
+      FrameType::kLocal,
+      {FrameType::kLocal,
+       FrameType::kRemote,
+       FrameType::kLocal,
+       {FrameType::kRemote,
+        {{FrameType::kLocal, {FrameType::kLocal}}, FrameType::kRemote}},
+       FrameType::kLocal});
+  tree.CreateFrameTree(main_frame);
+
+  int local_frames = 0;
+  int remote_frames = 0;
+  for (Frame* frame : main_frame->GetFrame()->Tree()) {
+    if (frame->IsLocalFrame())
+      local_frames++;
+    else if (frame->IsRemoteFrame())
+      remote_frames++;
+  }
+  EXPECT_EQ(6, local_frames);
+  EXPECT_EQ(3, remote_frames);
+
+  local_frames = 0;
+  remote_frames = 0;
+  for (Frame* frame : main_frame->GetFrame()->Tree().GetLocalRootRange()) {
+    if (frame->IsLocalFrame())
+      local_frames++;
+    else if (frame->IsRemoteFrame())
+      remote_frames++;
+  }
+  EXPECT_EQ(4, local_frames);
+  EXPECT_EQ(0, remote_frames);
+
+  local_frames = 0;
+  remote_frames = 0;
+  for (Frame* frame : ToWebLocalFrameBase(main_frame->FirstChild()
+                                              ->NextSibling()
+                                              ->NextSibling()
+                                              ->NextSibling()
+                                              ->FirstChild())
+                          ->GetFrame()
+                          ->Tree()
+                          .GetLocalRootRange()) {
+    if (frame->IsLocalFrame())
+      local_frames++;
+    else if (frame->IsRemoteFrame())
+      remote_frames++;
+  }
+  EXPECT_EQ(2, local_frames);
+  EXPECT_EQ(0, remote_frames);
+
+  local_frames = 0;
+  for (FrameTree::LocalFrameIterator it(main_frame->GetFrame()); it; ++it) {
+    local_frames++;
+  }
+  EXPECT_EQ(6, local_frames);
+}
+
 }  // namespace blink
