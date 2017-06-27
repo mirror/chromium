@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dfb9fd57_9ac1a012",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T19:53:56Z",
+      "side": 1,
+      "message": "If it\u0027s not inline I would not hacker_case it.",
+      "parentUuid": "dce40923_d48615eb",
+      "range": {
+        "startLine": 371,
+        "startChar": 8,
+        "endLine": 371,
+        "endChar": 28
+      },
+      "revId": "754b4864ae362cad1e361914d67377e2dad5b879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ddf9a5e_da54c61d",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 13
