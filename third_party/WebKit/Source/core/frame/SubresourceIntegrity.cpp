@@ -130,7 +130,7 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     size_t size,
     const KURL& resource_url,
     const Resource& resource) {
-  if (!resource.IsEligibleForIntegrityCheck(document.GetSecurityOrigin())) {
+  if (!resource.IsEligibleForIntegrityCheck()) {
     UseCounter::Count(document,
                       WebFeature::kSRIElementIntegrityAttributeButIneligible);
     LogErrorToConsole("Subresource Integrity: The resource '" +
