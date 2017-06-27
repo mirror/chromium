@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bcf5b60_1c4c841e",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T01:03:22Z",
+      "side": 1,
+      "message": "Given your change to GetModalType(), can this still be true sometimes?\n\nI ask because always-on-top dialog windows can lead to scary UX, and I\u0027d love to avoid this if we can\u0027t actually need them.",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e233b55_a9ef6be9",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T01:03:22Z",
+      "side": 1,
+      "message": "Nit: Definition order must match declaration order",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee37470f_d0949d9b",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T01:03:22Z",
+      "side": 1,
+      "message": "How come we have both a public Show() method and a public constructor?  I\u0027d have expected to either only have the constructor, or else for the constructor to be private.",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8952c049_eb16d06e",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T01:03:22Z",
+      "side": 1,
+      "message": "Nit: No need to say \"Overridden from \"",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5de67db_c971a46f",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T01:03:22Z",
+      "side": 1,
+      "message": "Nit: You don\u0027t directly subclass this class, these functions come to you through DialogDelegate; so just have one list of DialogDelegate overrides.\n\n(This way if DialogDelegate were to add an override of one of these functions, it wouldn\u0027t require us to change all subclasses or else accept that our comments were now misleading.)",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
