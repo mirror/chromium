@@ -70,20 +70,20 @@ public class FakeAccountManagerDelegate implements AccountManagerDelegate {
      * Add an AccountHolder directly.
      *
      * @param accountHolder the account holder to add
-     * @return whether the account holder was added successfully
      */
-    public boolean addAccountHolderExplicitly(AccountHolder accountHolder) {
-        return mAccounts.add(accountHolder);
+    public void addAccountHolderExplicitly(AccountHolder accountHolder) {
+        boolean added = mAccounts.add(accountHolder);
+        assert added;
     }
 
     /**
      * Remove an AccountHolder directly.
      *
      * @param accountHolder the account holder to remove
-     * @return whether the account holder was removed successfully
      */
-    public boolean removeAccountHolderExplicitly(AccountHolder accountHolder) {
-        return mAccounts.remove(accountHolder);
+    public void removeAccountHolderExplicitly(AccountHolder accountHolder) {
+        boolean removed = mAccounts.remove(accountHolder);
+        assert removed;
     }
 
     @Override
