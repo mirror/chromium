@@ -70,6 +70,30 @@
       "revId": "11328116dfaca361d0daaf82a2c9c22249272010",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb4b1e9_ea1ce971",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-27T20:57:08Z",
+      "side": 1,
+      "message": "Unfortunately as you\u0027ve seen on http://crbug.com/691029 TSAN still breaks Chrome. I\u0027ve reviewed and LGTM\u0027d https://chromium-review.googlesource.com/549278/ ; perhaps we could abandon this one for the time being.",
+      "parentUuid": "600e84d3_25ea8ace",
+      "range": {
+        "startLine": 2088,
+        "startChar": 32,
+        "endLine": 2088,
+        "endChar": 51
+      },
+      "revId": "11328116dfaca361d0daaf82a2c9c22249272010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
