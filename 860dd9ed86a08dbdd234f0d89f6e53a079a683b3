@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b197b30_31f3561c",
+        "filename": "components/exo/notification_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-27T14:55:18Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "945dd0de_c5c18c57",
+      "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c273c70_fa73591a",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 9
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e6b40caf_b5ad7080",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-27T14:55:18Z",
+      "side": 0,
+      "message": "We will nenver set transform on surface_-\u003ewindow() instead we set the transform on host_window(). And the host_window() will be destroyed with ShellSurface(), so we don\u0027t need recover it.",
+      "parentUuid": "52a1bbb8_26c5e172",
+      "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b285e71b_b6f42d62",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 9
@@ -117,6 +153,24 @@
       "writtenOn": "2017-06-26T22:01:09Z",
       "side": 0,
       "message": "think this still needs to inherit from SurfaceObserver as it doesn\u0027t make sense for SurfaceTreeHost to do without implementing the interface",
+      "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af3d26b_c87a9fed",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-06-27T14:55:18Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "541690b6_da558402",
       "revId": "860dd9ed86a08dbdd234f0d89f6e53a079a683b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
