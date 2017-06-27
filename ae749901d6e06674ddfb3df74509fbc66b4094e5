@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "653c6749_9ac050d6",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T02:03:14Z",
+      "side": 1,
+      "message": "is this from somewhere else? it sounds like it\u0027s maybe referring to rows that appear in the tray itself, which i think that this isn\u0027t supposed to -- it should only appear as a standalone bubble when the keyboard brightness is adjusted.\n\ni have to admit that the tray code has always confused me a bit and i\u0027m never sure where anything is going to be displayed (i.e. i\u0027m guessing that these views are typically used both in the tray and in bubbles). xiyuan@ might know more, or might know of someone who does.\n\nre the above default_view variable, i see this description in ash/system/tray/system_tray_item.h:\n\n// Tray view - The icon in the status area in the shelf.\n// Default view - The row in the top-level menu.\n// Detailed view - The submenu shown when the top-level menu row is clicked.\n\ni\u0027d expect this to not have a detailed view, in that case (assuming that the default view is also used for bubbles).",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f810ba1b_ae0d79f3",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T02:03:14Z",
+      "side": 1,
+      "message": "consider moving the body of this method into KeyboardBrightnessChanged, since it looks like it\u0027s the only caller and it doesn\u0027t do anything besides calling this method.",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee45db9_7448c17c",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T02:03:14Z",
+      "side": 1,
+      "message": "nit: consider initializing this to nullptr and current_percent_ to 0.0 or whatever in the header; i think that chrome\u0027s been moving toward that style",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
