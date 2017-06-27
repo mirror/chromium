@@ -2636,8 +2636,30 @@ bool AutofillTable::MigrateToVersion73AddMaskedCardBankName() {
 }
 
 bool AutofillTable::MigrateToVersion74AddServerCardTypeColumn() {
-  return db_->Execute(
-      "ALTER TABLE masked_credit_cards ADD COLUMN type INTEGER DEFAULT 0");
+  sql::Transaction transaction(db_);
+  if (!transaction.Begin())
+    return false;
+
+  // The "type" column may have been added in version 73, which was later
+  // reverted due to a version collision with the version 73 that adds the
+  // "bank_name" column.
+  if (!db_->DoesColumnExist("masked_credit_cards", "type") &&
+      !db_->Execute("ALTER TABLE masked_credit_cards ADD COLUMN type INTEGER "
+                    "DEFAULT 0")) {
+    return false;
+  }
+
+  // The "bank_name" column is supposed to have been added in version 73, but
+  // this may not have happened due to the version collision with the version 73
+  // that added the "type" column instead. Make sure the "bank_name" column is
+  // added.
+  if (!db_->DoesColumnExist("masked_credit_cards", "bank_name") &&
+      !db_->Execute("ALTER TABLE masked_credit_cards ADD COLUMN "
+                    "bank_name VARCHAR")) {
+    return false;
+  }
+
+  return transaction.Commit();
 }
 
 }  // namespace autofill
