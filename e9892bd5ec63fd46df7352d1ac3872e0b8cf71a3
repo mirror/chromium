@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcd5fb17_7a432613",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-27T00:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "462de9c0_645e07c3",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7c22c1b_f79e0b98",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ea99a9_a3e4d9bd",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-27T00:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7c22c1b_f79e0b98",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17383e59_c1f1f316",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-27T00:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a184d8_e93aa341",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57e210b5_e482f4bc",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e301e2f_602141a8",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-27T00:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57e210b5_e482f4bc",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "201d4861_126fda7f",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-27T00:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe3a746a_cd7dc519",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c59e90d8_a0ce0e1b",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843b04ca_ea9c29f5",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-27T00:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59e90d8_a0ce0e1b",
+      "revId": "e9892bd5ec63fd46df7352d1ac3872e0b8cf71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
