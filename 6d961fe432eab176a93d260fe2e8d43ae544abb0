@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "e50b6ee7_ee36f426",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T20:42:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79c0291_305c427e",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "206ca701_064b7677",
         "filename": "ash/shutdown_controller.h",
         "patchSetId": 2
@@ -180,6 +198,24 @@
     },
     {
       "key": {
+        "uuid": "f85015bf_a875dff6",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T20:42:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e186788a_0af3a2c3",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d717534_ac5c9620",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 2
@@ -248,6 +284,24 @@
       "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739c3096_fd8446f0",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T20:42:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c8e967e_f0197194",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
