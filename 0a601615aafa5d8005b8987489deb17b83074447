@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4d546cb1_8fc5369e",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T16:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9106e0b6_5a01ec17",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbfa1f4c_b582acca",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
         "patchSetId": 20
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "fff43258_17e65369",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95e2e7e9_48bf78ff",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T16:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63d3f4ae_bf4e1924",
       "revId": "0a601615aafa5d8005b8987489deb17b83074447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

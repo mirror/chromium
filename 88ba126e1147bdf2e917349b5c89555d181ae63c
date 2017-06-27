@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4402574b_65bb3ceb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T16:57:38Z",
+      "side": 1,
+      "message": "It does, which is why you need the macro for \"friending\" the actual tests. In this case, however, I\u0027d like to call DetermineCORSStatus from the text fixture to allow for less verbose tests. Unfortunately, FRIEND_TEST_ALL_PREFIXES does not extend to the fixture class, so friending the fixture class without macro was the only working solution that I could figure out.",
+      "parentUuid": "140a6d7e_cb9e229d",
+      "revId": "88ba126e1147bdf2e917349b5c89555d181ae63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8be92692_36ee7732",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
         "patchSetId": 24
@@ -33,6 +51,24 @@
       "revId": "88ba126e1147bdf2e917349b5c89555d181ae63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d396349b_578ca5bd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T16:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be92692_36ee7732",
+      "revId": "88ba126e1147bdf2e917349b5c89555d181ae63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
