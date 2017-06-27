@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c40de5f_73419268",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T23:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a14ee8e6_b1fde51d",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e69b52_0e7b7027",
         "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "05377a7bdcf95285eb049277d990175738979819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb69984_67e86efb",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T23:18:39Z",
+      "side": 1,
+      "message": "It\u0027s...not a sentence? Oh well.",
+      "parentUuid": "10e69b52_0e7b7027",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "76f63775_b8508045",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T23:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a5c163_6577063f",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a80bc097_15a16f51",
         "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "05377a7bdcf95285eb049277d990175738979819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b35dcf4_20c94be6",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T23:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a80bc097_15a16f51",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "710e89d8_8ffd856d",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T23:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "979bba86_4df3d22b",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "957fde44_68fbbd7d",
         "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "05377a7bdcf95285eb049277d990175738979819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed754e15_0f491cff",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T23:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "957fde44_68fbbd7d",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
