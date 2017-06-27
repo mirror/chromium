@@ -36,6 +36,39 @@
 
 namespace {
 
+base::FilePath g_temp_history_dir;
+
+// Waits until a change is observed in media engagement content settings.
+class MediaEngagementChangeWaiter : public content_settings::Observer {
+ public:
+  explicit MediaEngagementChangeWaiter(Profile* profile) : profile_(profile) {
+    HostContentSettingsMapFactory::GetForProfile(profile)->AddObserver(this);
+  }
+  ~MediaEngagementChangeWaiter() override {
+    HostContentSettingsMapFactory::GetForProfile(profile_)->RemoveObserver(
+        this);
+  }
+
+  // Overridden from content_settings::Observer:
+  void OnContentSettingChanged(const ContentSettingsPattern& primary_pattern,
+                               const ContentSettingsPattern& secondary_pattern,
+                               ContentSettingsType content_type,
+                               std::string resource_identifier) override {
+    if (content_type == CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT)
+      Proceed();
+  }
+
+  void Wait() { run_loop_.Run(); }
+
+ private:
+  void Proceed() { run_loop_.Quit(); }
+
+  Profile* profile_;
+  base::RunLoop run_loop_;
+
+  DISALLOW_COPY_AND_ASSIGN(MediaEngagementChangeWaiter);
+};
+
 base::Time GetReferenceTime() {
   base::Time::Exploded exploded_reference_time;
   exploded_reference_time.year = 2015;
@@ -53,6 +86,14 @@ base::Time GetReferenceTime() {
   return out_time;
 }
 
+std::unique_ptr<KeyedService> BuildTestHistoryService(
+    content::BrowserContext* context) {
+  std::unique_ptr<history::HistoryService> service(
+      new history::HistoryService());
+  service->Init(history::TestHistoryDatabaseParamsForPath(g_temp_history_dir));
+  return std::move(service);
+}
+
 }  // namespace
 
 class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
@@ -61,10 +102,21 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
     scoped_feature_list_.InitAndEnableFeature(media::kMediaEngagement);
     ChromeRenderViewHostTestHarness::SetUp();
 
+    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
+    g_temp_history_dir = temp_dir_.GetPath();
+    HistoryServiceFactory::GetInstance()->SetTestingFactory(
+        profile(), &BuildTestHistoryService);
+
     test_clock_ = new base::SimpleTestClock();
     test_clock_->SetNow(GetReferenceTime());
     service_ = base::WrapUnique(
         new MediaEngagementService(profile(), base::WrapUnique(test_clock_)));
+  }
+
+  void TearDown() override {
+    service_->Shutdown();
+    service_.reset();
+    ChromeRenderViewHostTestHarness::TearDown();
   }
 
   void NavigateAndInteract(GURL url, int interaction) {
@@ -107,13 +159,32 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
                  expected_last_media_playback_time);
   }
 
+  void SetScores(GURL url, int visits, int media_playbacks) {
+    MediaEngagementScore score = service_->CreateEngagementScore(url);
+    score.SetVisits(visits);
+    score.SetMediaPlaybacks(media_playbacks);
+    score.Commit();
+  }
+
+  double GetTotalScore(GURL url) {
+    return service_->CreateEngagementScore(url).GetTotalScore();
+  }
+
+  std::map<GURL, double> GetScoreMap() const { return service_->GetScoreMap(); }
+
   base::Time Now() const { return test_clock_->Now(); }
 
   base::Time TimeNotSet() const { return base::Time(); }
 
+  void SetNow(base::Time now) { test_clock_->SetNow(now); }
+
  private:
   base::SimpleTestClock* test_clock_ = nullptr;
+
   std::unique_ptr<MediaEngagementService> service_;
+
+  base::ScopedTempDir temp_dir_;
+
   base::test::ScopedFeatureList scoped_feature_list_;
 };
 
@@ -190,4 +261,126 @@ TEST_F(MediaEngagementServiceTest, IncognitoEngagementService) {
   NavigateAndInteract(url4);
   ExpectScores(incognito_service, url4, 1, 1, Now());
   ExpectScores(url4, 1, 1, Now());
+}
+
+TEST_F(MediaEngagementServiceTest, CleanupOriginsOnHistoryDeletion) {
+  GURL origin1("http://www.google.com/");
+  GURL origin1a("http://www.google.com/search?q=asdf");
+  GURL origin1b("http://www.google.com/maps/search?q=asdf");
+  GURL origin2("https://drive.google.com/");
+  GURL origin3("http://deleted.com/");
+  GURL origin3a("http://deleted.com/test");
+  GURL origin4("http://notdeleted.com");
+
+  // origin1 will have a score that is high enough to not return zero
+  // and we will ensure it has the same score. origin2 will have a score
+  // that is zero and will remain zero. origin3 will have a score
+  // and will be cleared. origin4 will have a normal score.
+  SetScores(origin1, MediaEngagementScore::kScoreMinVisits + 3, 2);
+  SetScores(origin2, 2, 1);
+  SetScores(origin3, 2, 1);
+  SetScores(origin4, MediaEngagementScore::kScoreMinVisits, 2);
+
+  base::Time today = GetReferenceTime();
+  base::Time yesterday = GetReferenceTime() - base::TimeDelta::FromDays(1);
+  base::Time yesterday_afternoon = GetReferenceTime() -
+                                   base::TimeDelta::FromDays(1) +
+                                   base::TimeDelta::FromHours(4);
+  base::Time yesterday_week = GetReferenceTime() - base::TimeDelta::FromDays(8);
+  SetNow(today);
+
+  history::HistoryService* history = HistoryServiceFactory::GetForProfile(
+      profile(), ServiceAccessType::IMPLICIT_ACCESS);
+
+  history->AddPage(origin1, yesterday_afternoon, history::SOURCE_BROWSED);
+  history->AddPage(origin1a, yesterday_afternoon, history::SOURCE_BROWSED);
+  history->AddPage(origin1b, yesterday_week, history::SOURCE_BROWSED);
+  history->AddPage(origin2, yesterday_afternoon, history::SOURCE_BROWSED);
+  history->AddPage(origin3, yesterday_week, history::SOURCE_BROWSED);
+  history->AddPage(origin3a, yesterday_afternoon, history::SOURCE_BROWSED);
+
+  // Check that the scores are valid at the beginning.
+  ExpectScores(origin1, MediaEngagementScore::kScoreMinVisits + 3, 2,
+               TimeNotSet());
+  EXPECT_TRUE(GetTotalScore(origin1));
+  ExpectScores(origin2, 2, 1, TimeNotSet());
+  EXPECT_FALSE(GetTotalScore(origin2));
+  ExpectScores(origin3, 2, 1, TimeNotSet());
+  EXPECT_FALSE(GetTotalScore(origin3));
+  ExpectScores(origin4, MediaEngagementScore::kScoreMinVisits, 2, TimeNotSet());
+  EXPECT_TRUE(GetTotalScore(origin4));
+
+  {
+    MediaEngagementChangeWaiter waiter(profile());
+
+    base::CancelableTaskTracker task_tracker;
+    // Expire origin1, origin1a, origin2, and origin3a's most recent visit.
+    history->ExpireHistoryBetween(std::set<GURL>(), yesterday, today,
+                                  base::Bind(&base::DoNothing), &task_tracker);
+    waiter.Wait();
+
+    // origin1 should have a score that is not zero and is the same as the old
+    // score (sometimes it may not match exactly due to rounding). origin2
+    // should have a score that is zero but it's visits and playbacks should
+    // have decreased. origin3 should have had a decrease in the number of
+    // visits. origin4 should have the old score.
+    ExpectScores(origin1, MediaEngagementScore::kScoreMinVisits + 1, 1,
+                 TimeNotSet());
+    EXPECT_TRUE(GetTotalScore(origin1));
+    ExpectScores(origin2, 1, 0, TimeNotSet());
+    EXPECT_FALSE(GetTotalScore(origin2));
+    ExpectScores(origin3, 1, 0, TimeNotSet());
+    ExpectScores(origin4, MediaEngagementScore::kScoreMinVisits, 2,
+                 TimeNotSet());
+  }
+
+  {
+    MediaEngagementChangeWaiter waiter(profile());
+
+    // Expire origin1b.
+    std::vector<history::ExpireHistoryArgs> expire_list;
+    history::ExpireHistoryArgs args;
+    args.urls.insert(origin1b);
+    args.SetTimeRangeForOneDay(yesterday_week);
+    expire_list.push_back(args);
+
+    base::CancelableTaskTracker task_tracker;
+    history->ExpireHistory(expire_list, base::Bind(&base::DoNothing),
+                           &task_tracker);
+    waiter.Wait();
+
+    // origin1's score should have changed but the rest should remain the same.
+    ExpectScores(origin1, MediaEngagementScore::kScoreMinVisits, 0,
+                 TimeNotSet());
+    ExpectScores(origin2, 1, 0, TimeNotSet());
+    ExpectScores(origin3, 1, 0, TimeNotSet());
+    ExpectScores(origin4, MediaEngagementScore::kScoreMinVisits, 2,
+                 TimeNotSet());
+  }
+
+  {
+    MediaEngagementChangeWaiter waiter(profile());
+
+    // Expire origin3.
+    std::vector<history::ExpireHistoryArgs> expire_list;
+    history::ExpireHistoryArgs args;
+    args.urls.insert(origin3);
+    args.SetTimeRangeForOneDay(yesterday_week);
+    expire_list.push_back(args);
+
+    base::CancelableTaskTracker task_tracker;
+    history->ExpireHistory(expire_list, base::Bind(&base::DoNothing),
+                           &task_tracker);
+    waiter.Wait();
+
+    // origin3's score should be removed but the rest should remain the same.
+    std::map<GURL, double> scores = GetScoreMap();
+    EXPECT_TRUE(scores.find(origin3) == scores.end());
+    ExpectScores(origin1, MediaEngagementScore::kScoreMinVisits, 0,
+                 TimeNotSet());
+    ExpectScores(origin2, 1, 0, TimeNotSet());
+    ExpectScores(origin3, 0, 0, TimeNotSet());
+    ExpectScores(origin4, MediaEngagementScore::kScoreMinVisits, 2,
+                 TimeNotSet());
+  }
 }
