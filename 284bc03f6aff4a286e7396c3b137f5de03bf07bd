@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27171885_3ce4ed5d",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T13:35:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb398c36_adaac705",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40f92c21_255213f2",
         "filename": "services/docs/api_standards.md",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T15:42:29Z",
       "side": 1,
       "message": "curious: why should we care about this? and under what scenarios would a set of mojo interfaces not be implementable by a third party?",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aed4089_60ad519f",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T13:35:03Z",
+      "side": 1,
+      "message": "Tried to make this more precise, and eliminated confusing \"third-party\". Basically, what I\u0027m trying to get at is that it should be feasible to reimplement the service from its API documentation and tests, i.e., without having to do any reverse-engineering of requirements from the current implementation. This seems important to me for use cases we\u0027ve talked about like providing an alternative implementation of the network service for Headless (even if we\u0027re not actually pursuing that particular use case).",
+      "parentUuid": "40f92c21_255213f2",
       "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a21852cc_6dfa21ca",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T13:35:03Z",
+      "side": 1,
+      "message": "Eliminated references to \"third party\" in favor of \"engineers with a distinct implementation.\" I still think that thinking of these as \"compliance tests\" makes sense, even if it would just be for the benefit of other Chromium engineers looking to drop in an alternative impl of the service that would live in Chromium and be used in specific use cases.",
+      "parentUuid": "fb9f85ec_e399ac42",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9182ffc_425e7178",
         "filename": "services/docs/api_standards.md",
         "patchSetId": 3
@@ -222,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "18cad2bc_7ba1dab8",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T13:35:03Z",
+      "side": 1,
+      "message": "Yes, totally (I tried to adopt that semantic distinction in responding to your other related comments as well). Done.",
+      "parentUuid": "f887d4d7_fd73765c",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1aef0ddb_bd401653",
         "filename": "services/docs/api_standards.md",
         "patchSetId": 3
@@ -233,6 +305,24 @@
       "writtenOn": "2017-06-23T15:42:29Z",
       "side": 1,
       "message": "I don\u0027t understand this line?",
+      "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b017fe_f9a67702",
+        "filename": "services/docs/api_standards.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T13:35:03Z",
+      "side": 1,
+      "message": "Was trying to express \"think like an OWNER in writing your CL.\" Made the point more explicitly.",
+      "parentUuid": "1aef0ddb_bd401653",
       "revId": "284bc03f6aff4a286e7396c3b137f5de03bf07bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
