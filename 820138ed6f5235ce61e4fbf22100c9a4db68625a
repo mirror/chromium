@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adcdb7ec_4cf4d182",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-27T22:04:33Z",
+      "side": 1,
+      "message": "The comment goes with the manage_link_ code below.",
+      "range": {
+        "startLine": 430,
+        "startChar": 14,
+        "endLine": 430,
+        "endChar": 19
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd04f9f_9bcf00c7",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-27T22:04:33Z",
+      "side": 1,
+      "message": "It looks to me like you\u0027re not using learn_more_link as a string any more. In that case should it be a boolean \"show_learn_more\" instead?",
+      "range": {
+        "startLine": 440,
+        "startChar": 22,
+        "endLine": 440,
+        "endChar": 37
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb9f8be_4c72be6b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-27T22:04:33Z",
+      "side": 1,
+      "message": "This line looks redundant with the call to SetFocusForPlatform below.",
+      "range": {
+        "startLine": 442,
+        "startChar": 24,
+        "endLine": 442,
+        "endChar": 40
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11c9a53_543afbbe",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-27T22:04:33Z",
+      "side": 1,
+      "message": "If I have this right, a dialog of this type could have both a \"learn more\" link (now an icon button) and a manage link? As a user of the dialog I don\u0027t think I\u0027d expect the icon and the text to do different things when clicked. Can we move one of these, maybe to the content area since there\u0027s already a \"manage checkbox\"? Or maybe change the management link to a different icon?\n\nAlternatively, if we don\u0027t want to show both at the same time, can we enforce that?",
+      "range": {
+        "startLine": 456,
+        "startChar": 4,
+        "endLine": 456,
+        "endChar": 10
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
