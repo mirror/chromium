@@ -44,6 +44,7 @@
 #include "core/inspector/WorkerThreadDebugger.h"
 #include "core/loader/WorkerThreadableLoader.h"
 #include "core/probe/CoreProbes.h"
+#include "core/workers/WorkerInstalledScriptsManager.h"
 #include "core/workers/WorkerLocation.h"
 #include "core/workers/WorkerNavigator.h"
 #include "core/workers/WorkerReportingProxy.h"
@@ -190,44 +191,94 @@ void WorkerGlobalScope::importScripts(const Vector<String>& urls,
     completed_urls.push_back(url);
   }
 
+  // TODO(shimazu): Use WorkerInstalledScriptsManager here.
   for (const KURL& complete_url : completed_urls) {
-    RefPtr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
-    script_loader->SetRequestContext(WebURLRequest::kRequestContextScript);
-    script_loader->LoadSynchronously(
-        execution_context, complete_url, WebURLRequest::kFetchRequestModeNoCORS,
-        execution_context.GetSecurityContext().AddressSpace());
-
-    // If the fetching attempt failed, throw a NetworkError exception and
-    // abort all these steps.
-    if (script_loader->Failed()) {
-      exception_state.ThrowDOMException(
-          kNetworkError, "The script at '" + complete_url.ElidedString() +
-                             "' failed to load.");
-      return;
+    ImportScriptResult result =
+        MaybeHandleImportScriptByInstalledScriptsManager(complete_url,
+                                                         exception_state);
+    if (result == ImportScriptResult::kNotHandled) {
+      result = HandleImportScriptByScriptLoader(complete_url, execution_context,
+                                                exception_state);
     }
-
-    probe::scriptImported(&execution_context, script_loader->Identifier(),
-                          script_loader->SourceText());
-
-    ErrorEvent* error_event = nullptr;
-    std::unique_ptr<Vector<char>> cached_meta_data(
-        script_loader->ReleaseCachedMetadata());
-    CachedMetadataHandler* handler(CreateWorkerScriptCachedMetadataHandler(
-        complete_url, cached_meta_data.get()));
-    GetThread()->GetWorkerReportingProxy().WillEvaluateImportedScript(
-        script_loader->SourceText().length(),
-        script_loader->CachedMetadata()
-            ? script_loader->CachedMetadata()->size()
-            : 0);
-    ScriptController()->Evaluate(ScriptSourceCode(script_loader->SourceText(),
-                                                  script_loader->ResponseURL()),
-                                 &error_event, handler, v8_cache_options_);
-    if (error_event) {
-      ScriptController()->RethrowExceptionFromImportedScript(error_event,
-                                                             exception_state);
+    if (result == ImportScriptResult::kFailed)
       return;
-    }
   }
+}
+
+WorkerGlobalScope::ImportScriptResult
+WorkerGlobalScope::MaybeHandleImportScriptByInstalledScriptsManager(
+    const KURL& script_url,
+    ExceptionState& exception_state) {
+  if (!GetThread()->installed_scripts_manager()) {
+    TRACE_EVENT1("ServiceWorker", __func__, "status", "no scripts_manager");
+    return ImportScriptResult::kNotHandled;
+  }
+  Optional<WorkerInstalledScriptsManager::ScriptData> data =
+      GetThread()->installed_scripts_manager()->GetScriptData(script_url);
+  if (!data.has_value()) {
+    TRACE_EVENT1("ServiceWorker", __func__, "status", "no data");
+    return ImportScriptResult::kNotHandled;
+  }
+  TRACE_EVENT2("ServiceWorker", __func__, "script size",
+               data->source_text.length(), "metadata size",
+               (data->meta_data) ? data->meta_data->size() : 0);
+
+  bool success =
+      EvaluateImportScript(script_url, script_url, std::move(data->meta_data),
+                           std::move(data->source_text), exception_state);
+  return success ? ImportScriptResult::kSuccess : ImportScriptResult::kFailed;
+}
+
+WorkerGlobalScope::ImportScriptResult
+WorkerGlobalScope::HandleImportScriptByScriptLoader(
+    const KURL& script_url,
+    ExecutionContext& execution_context,
+    ExceptionState& exception_state) {
+  RefPtr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
+  script_loader->SetRequestContext(WebURLRequest::kRequestContextScript);
+  script_loader->LoadSynchronously(
+      execution_context, script_url, WebURLRequest::kFetchRequestModeNoCORS,
+      execution_context.GetSecurityContext().AddressSpace());
+
+  // If the fetching attempt failed, throw a NetworkError exception and
+  // abort all these steps.
+  if (script_loader->Failed()) {
+    exception_state.ThrowDOMException(
+        kNetworkError,
+        "The script at '" + script_url.ElidedString() + "' failed to load.");
+    return ImportScriptResult::kFailed;
+  }
+  probe::scriptImported(&execution_context, script_loader->Identifier(),
+                        script_loader->SourceText());
+  bool success =
+      EvaluateImportScript(script_url, script_loader->ResponseURL(),
+                           script_loader->ReleaseCachedMetadata(),
+                           script_loader->SourceText(), exception_state);
+  return success ? ImportScriptResult::kSuccess : ImportScriptResult::kFailed;
+}
+
+bool WorkerGlobalScope::EvaluateImportScript(
+    const KURL& script_url,
+    const KURL& response_url,
+    std::unique_ptr<Vector<char>> cached_meta_data,
+    String source_code,
+    ExceptionState& exception_state) {
+  TRACE_EVENT1("ServiceWorker", __func__, "url",
+               script_url.GetString().Utf8().data());
+  ErrorEvent* error_event = nullptr;
+  CachedMetadataHandler* handler(CreateWorkerScriptCachedMetadataHandler(
+      script_url, cached_meta_data.get()));
+  GetThread()->GetWorkerReportingProxy().WillEvaluateImportedScript(
+      source_code.length(),
+      cached_meta_data.get() ? cached_meta_data->size() : 0);
+  ScriptController()->Evaluate(ScriptSourceCode(source_code, response_url),
+                               &error_event, handler, v8_cache_options_);
+  if (error_event) {
+    ScriptController()->RethrowExceptionFromImportedScript(error_event,
+                                                           exception_state);
+    return false;
+  }
+  return true;
 }
 
 v8::Local<v8::Object> WorkerGlobalScope::Wrap(
