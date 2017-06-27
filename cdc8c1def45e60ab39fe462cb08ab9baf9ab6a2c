@@ -139,6 +139,24 @@
       "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b4dc0f_22b19281",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T20:58:34Z",
+      "side": 1,
+      "message": "Trying to remember the discussion on this... I think I was worried about whether \"revert, then navigate\" really makes sense compared to \"navigate, then revert\".  That still may be worth investigating, but it probably doesn\u0027t need to be coupled to this change?",
+      "parentUuid": "176c525d_716f3723",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
