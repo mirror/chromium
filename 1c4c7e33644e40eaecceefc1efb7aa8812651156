@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98c971c5_3e62c14f",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "const auto\u0026\n\nSame below one line 104. Otherwise, you\u0027re copying the item every iteration.",
+      "range": {
+        "startLine": 89,
+        "startChar": 27,
+        "endLine": 89,
+        "endChar": 50
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb3013f_5c5e8789",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "No else after return.",
+      "range": {
+        "startLine": 94,
+        "startChar": 10,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34681b1_1e65be96",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "Nit: Add empty line below.",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afdbd62_0e25abdd",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "Nit: Remove empty line above, add one below this line.",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8204f31_9e3d8863",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "Nit: I believe \"static const\" is preferable inside function because it generates more efficient code with MSVC. (Until we\u0027re in a world where clang is used everywhere.)\n\nThere was a thread on chromium-dev about this a few years back and this was discussed more recently on another CL. Please fix throughout.",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0f3d5b_b198d5ae",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "Nit: Just // namespace",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05c057e_302685b1",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "Nit: Add empty line after this",
+      "range": {
+        "startLine": 161,
+        "startChar": 1,
+        "endLine": 161,
+        "endChar": 0
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e942934_603bc015",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_test_util.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "Nit: Convention is to have empty lines within the anon namespace except when their content is trivial.)",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07c015a_95179d71",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:25:45Z",
+      "side": 1,
+      "message": "Nit: Add an empty line after this.",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "1c4c7e33644e40eaecceefc1efb7aa8812651156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
