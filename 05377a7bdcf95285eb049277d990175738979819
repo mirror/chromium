@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a14ee8e6_b1fde51d",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T22:38:47Z",
+      "side": 1,
+      "message": "are you using this?",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e69b52_0e7b7027",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T22:38:47Z",
+      "side": 1,
+      "message": "nit: add trailing period",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a5c163_6577063f",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T22:38:47Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80bc097_15a16f51",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T22:38:47Z",
+      "side": 1,
+      "message": "if the \"16\" is copied from somewhere else, can you move it to a shared constant?",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979bba86_4df3d22b",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T22:38:47Z",
+      "side": 1,
+      "message": "nit: CHECK(!brightness_view_) is what i usually see in chrome",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957fde44_68fbbd7d",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T22:38:47Z",
+      "side": 1,
+      "message": "nit: please add a brief class-level comment, e.g.\n\n  // Manages a detailed view containing a readonly slider for the\n  // keyboard backlight brightness. This is used in a bubble but\n  // not displayed anywhere else.",
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a689f4d_b6bd280c",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T22:38:47Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "05377a7bdcf95285eb049277d990175738979819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
