@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6325a5a_5f7ff0a5",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T08:28:52Z",
+      "side": 1,
+      "message": "Hrm. Do you just want `kFailed` here? Or do you want to check for success? That is, why do we want to accept things here that wouldn\u0027t return true for `IsSameOriginOrCORSSuccessful()`?",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfa1f4c_b582acca",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T08:28:52Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb3b6d9_21a05d14",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T08:28:52Z",
+      "side": 1,
+      "message": "Do we need this method at all? It might make sense to just drop it and be explicit about the fact that integrity checks require CORS checks.",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246ef733_e81f47c1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T08:28:52Z",
+      "side": 1,
+      "message": "Nit: s/enum /enum class /",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa55223_35fdff52",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T08:28:52Z",
+      "side": 1,
+      "message": "Did you consider moving this enum up to //public/platform? It seems like we\u0027re going to want to use it outside of Blink, so putting it somewhere easily shared might be helpful.\n\nIf you decide to leave it here, I\u0027d suggest adding a TODO to move it up the stack eventually.",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f764f93c_bc79bc9b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T08:28:52Z",
+      "side": 1,
+      "message": "Nit: You can enforce this via presubmit checks by naming it `SetCORSStatusForTest(...)`.",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
