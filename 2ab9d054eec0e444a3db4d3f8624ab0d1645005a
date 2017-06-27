@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60047451_801dcb0b",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T00:46:35Z",
+      "side": 1,
+      "message": "done (const, but not ref, since the function returns by value (even though c++ permits it, it\u0027s still weird)) :-)",
+      "parentUuid": "131ee3b0_a5e1860a",
+      "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a82ae16_e0bee49c",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-27T00:19:09Z",
       "side": 1,
       "message": "multi-line if needs {}",
+      "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad58f739_5077a1fd",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T00:46:35Z",
+      "side": 1,
+      "message": "the rule (as i\u0027ve understood it) is about multi-line bodies, not multi-line conditions, but i don\u0027t have strong feelings about this and have updated it",
+      "parentUuid": "4a82ae16_e0bee49c",
       "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-06-27T00:19:09Z",
       "side": 1,
       "message": "any reason these are not in anonymous namespace?",
+      "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa9136b_2c82cfef",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T00:46:35Z",
+      "side": 1,
+      "message": "nope. :-) done",
+      "parentUuid": "38f7ed26_4e201a3a",
       "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
