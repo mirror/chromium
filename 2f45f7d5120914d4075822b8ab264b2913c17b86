@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f0b9ed3_ebd5c1d7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/connect-src/connect-src-beacon-blocked.sub.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T06:27:53Z",
+      "side": 1,
+      "message": "Looks so, but can I address the issue later? It\u0027s copied from the above one.",
+      "parentUuid": "85e946cf_e6eacc62",
+      "revId": "2f45f7d5120914d4075822b8ab264b2913c17b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee7d6a7d_a100ae72",
         "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3862ef52_81555029",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T06:27:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee7d6a7d_a100ae72",
+      "revId": "2f45f7d5120914d4075822b8ab264b2913c17b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e48ecf1e_eae9ca43",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-27T04:38:01Z",
       "side": 1,
       "message": "could you please write some analysis about why leaving a ResourceLoader outlive StopFetching() call is safe?",
+      "revId": "2f45f7d5120914d4075822b8ab264b2913c17b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044e6aaa_940a66ec",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-27T06:27:53Z",
+      "side": 1,
+      "message": "ResourceLoader currently outlives ResourceFetcher for PingLoader cases, and this doesn\u0027t change the situation.",
+      "parentUuid": "e48ecf1e_eae9ca43",
       "revId": "2f45f7d5120914d4075822b8ab264b2913c17b86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
