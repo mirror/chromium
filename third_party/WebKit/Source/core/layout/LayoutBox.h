@@ -1141,12 +1141,14 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void MarkChildForPaginationRelayoutIfNeeded(LayoutBox&, SubtreeLayoutScope&);
 
   bool IsWritingModeRoot() const {
-    return !Parent() ||
-           Parent()->Style()->GetWritingMode() != Style()->GetWritingMode();
+    return (!Parent() ||
+            Parent()->Style()->GetWritingMode() != Style()->GetWritingMode()) &&
+           !IsTableBoxComponent();
   }
   bool IsOrthogonalWritingModeRoot() const {
     return Parent() &&
-           Parent()->IsHorizontalWritingMode() != IsHorizontalWritingMode();
+           Parent()->IsHorizontalWritingMode() != IsHorizontalWritingMode() &&
+           !IsTableBoxComponent();
   }
   void MarkOrthogonalWritingModeRoot();
   void UnmarkOrthogonalWritingModeRoot();
@@ -1620,8 +1622,10 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
 
   bool LogicalHeightComputesAsNone(SizeType) const;
 
-  bool IsBox() const =
-      delete;  // This will catch anyone doing an unnecessary check.
+  // This will catch anyone doing an unnecessary check.
+  bool IsBox() const = delete;
+
+  virtual bool IsTableBoxComponent() const { return false; }
 
   void LocationChanged();
   void SizeChanged();
