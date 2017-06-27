@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92319dae_937ad4d3",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T13:55:05Z",
+      "side": 1,
+      "message": "Would you mind adding a `TODO(mkwst): Move this to \u0027KURL::NullURL()\u0027?` There are probably a million places we should be doing this rather than constructing a new KURL.",
+      "revId": "1a0477842831b796cb99bc285599e2a1f033a1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fef0bdd_5344a084",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T13:55:05Z",
+      "side": 1,
+      "message": "Is this the only place that crashes if we don\u0027t have a `document_`? I would have expected more issues...\n\nIn order to make sure, would you mind adding a test or two that exercise the code page? Just a layout test that crashes without the patch, but doesn\u0027t crash with the patch should be enough.",
+      "revId": "1a0477842831b796cb99bc285599e2a1f033a1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
