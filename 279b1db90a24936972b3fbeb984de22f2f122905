@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "305bbe73_526bc5fd",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-27T20:52:38Z",
+      "side": 1,
+      "message": "Sorry, forgot to add that SECURITY would make it pretty clear that this has nothing to do with the privacy interstitials.",
+      "parentUuid": "860f5596_f471e189",
+      "revId": "279b1db90a24936972b3fbeb984de22f2f122905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f925910_78f96206",
         "filename": "components/safe_browsing/triggers/trigger_manager.h",
         "patchSetId": 1
