@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0d5f0a_dc1dce75",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T18:37:58Z",
+      "side": 1,
+      "message": "Do you need to call the request_gpu_info_callbacks_ here as well? This would be for the case the GPU process crashes before you got an initialization reply.",
+      "revId": "0fca6dc3ba6d07a3c2588532b7e28df24bea91c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
