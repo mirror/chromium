@@ -537,7 +537,6 @@ public class BottomSheet
         if (e.getActionMasked() != MotionEvent.ACTION_DOWN) {
             mGestureDetector.onTouchEvent(createRawMotionEvent(e));
         }
-
         // If the user is scrolling and the event is a cancel or up action, update scroll state
         // and return.
         if (e.getActionMasked() == MotionEvent.ACTION_UP
