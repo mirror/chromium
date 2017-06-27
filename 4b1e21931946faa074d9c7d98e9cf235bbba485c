@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9c96bcf_78ba079a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T21:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c882e91_83c7d214",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 31
+      },
+      "revId": "4b1e21931946faa074d9c7d98e9cf235bbba485c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c56b7048_f06ef6b8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-27T20:49:04Z",
       "side": 1,
       "message": "If you remove this break, MotionEvent.ACTION_UP will fall through and execute the code in MotionEvent.ACTION_CANCEL, so we can remove the duplicate lines setting mIsTouchEventsBeingProcessed and isTouchEventConsumed, and calling view.setPressed.",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 21
+      },
+      "revId": "4b1e21931946faa074d9c7d98e9cf235bbba485c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1172c3d4_a322fe87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T21:05:34Z",
+      "side": 1,
+      "message": "Yes but the presubmit check won\u0027t let me do that...\n  \n  chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java:109:13: Fall through from previous branch of the switch statement.",
+      "parentUuid": "c56b7048_f06ef6b8",
       "range": {
         "startLine": 114,
         "startChar": 16,
