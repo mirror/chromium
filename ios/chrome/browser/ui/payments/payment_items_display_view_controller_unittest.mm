@@ -10,11 +10,13 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/payments/payment_request_test_util.h"
+#include "ios/chrome/browser/payments/test_payment_request.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller_test.h"
 #import "ios/chrome/browser/ui/payments/cells/price_item.h"
 #import "ios/chrome/browser/ui/payments/payment_items_display_view_controller_data_source.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/web/public/payments/payment_request.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -44,7 +46,7 @@ class PaymentRequestPaymentItemsDisplayViewControllerTest
     : public CollectionViewControllerTest {
  protected:
   CollectionViewController* InstantiateController() override {
-    payment_request_ = base::MakeUnique<PaymentRequest>(
+    payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
         &personal_data_manager_);
     mediator_ = [[TestPaymentItemsDisplayMediator alloc] init];
@@ -58,6 +60,8 @@ class PaymentRequestPaymentItemsDisplayViewControllerTest
     return base::mac::ObjCCastStrict<PaymentItemsDisplayViewController>(
         controller());
   }
+
+  web::TestWebThreadBundle thread_bundle_;
 
   autofill::TestPersonalDataManager personal_data_manager_;
   std::unique_ptr<PaymentRequest> payment_request_;

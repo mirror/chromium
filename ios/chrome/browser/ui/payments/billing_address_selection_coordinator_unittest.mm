@@ -17,6 +17,7 @@
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #include "ios/chrome/browser/payments/test_payment_request.h"
 #import "ios/chrome/browser/ui/payments/payment_request_selector_view_controller.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/OCMock/OCMock.h"
@@ -70,6 +71,8 @@ class PaymentRequestBillingAddressSelectionCoordinatorTest
   }
 
   BillingAddressSelectionCoordinator* GetCoordinator() { return coordinator_; }
+
+  web::TestWebThreadBundle thread_bundle_;
 
   UINavigationController* navigation_controller_;
   BillingAddressSelectionCoordinator* coordinator_;
