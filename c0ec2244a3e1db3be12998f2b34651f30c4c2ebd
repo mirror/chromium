@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c361d70_bf27ec3f",
+        "filename": "media/gpu/android/promotion_hint_aggregator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-27T21:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87cf263d_0eb4da08",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "c0ec2244a3e1db3be12998f2b34651f30c4c2ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e62b926d_5503bbf6",
         "filename": "media/gpu/android/promotion_hint_aggregator_impl_unittest.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "c0ec2244a3e1db3be12998f2b34651f30c4c2ebd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b36d739_4792be4a",
+        "filename": "media/gpu/android/promotion_hint_aggregator_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-27T21:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e62b926d_5503bbf6",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "c0ec2244a3e1db3be12998f2b34651f30c4c2ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
