@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7801012a_689cc72c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T05:21:08Z",
+      "side": 1,
+      "message": "Can you just check event-\u003eflags() \u0026 EF_CURSOR_HIDE?",
+      "revId": "e419f299b9187f117c878a7db6bf0b320e0ec5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce607ffa_2741e3e4",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T05:21:08Z",
+      "side": 1,
+      "message": "if (event_flags)\n  event.set_flags(event.flags() | event_flags);",
+      "revId": "e419f299b9187f117c878a7db6bf0b320e0ec5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45eabbac_9a0497ad",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T05:21:08Z",
+      "side": 1,
+      "message": "Don\u0027t need to change this, because of the default value of the param.",
+      "revId": "e419f299b9187f117c878a7db6bf0b320e0ec5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f216a0_c0fe24f2",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T05:21:08Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e419f299b9187f117c878a7db6bf0b320e0ec5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b67750a_2fc337f0",
+        "filename": "ui/aura/window_event_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T05:21:08Z",
+      "side": 1,
+      "message": "Use an event_flags as the input. Give it a default value, i.e.:\n\n  int event_flags \u003d 0)",
+      "revId": "e419f299b9187f117c878a7db6bf0b320e0ec5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923cbc99_090dc500",
+        "filename": "ui/events/event.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T05:21:08Z",
+      "side": 1,
+      "message": "See comment in content/. I don\u0027t think we need this.",
+      "revId": "e419f299b9187f117c878a7db6bf0b320e0ec5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396e5313_958ec2f3",
+        "filename": "ui/events/event_constants.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-27T05:21:08Z",
+      "side": 1,
+      "message": "\"\"\"Indicates this mouse event is generated because the cursor was just hidden. This can be used to update hover state.\"\"\"",
+      "revId": "e419f299b9187f117c878a7db6bf0b320e0ec5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
