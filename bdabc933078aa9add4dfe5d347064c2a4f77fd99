@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7db82581_22f94b3d",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-27T14:29:38Z",
+      "side": 1,
+      "message": "Done, removed the code.\n\nI didn\u0027t remove the code to not introduce \u0027stopping arc instance for login screen\u0027 state in ASR, but L682-694 had a race anyways. If an instance for login screen is stopped while it\u0027s creating a socket, OnStopped (and ASR\u0027s OnSessionStopped) are called asynchronously. I\u0027m removing this code path, and instead modifying ASR slightly.",
+      "parentUuid": "e09851e1_ecfc59d8",
+      "revId": "bdabc933078aa9add4dfe5d347064c2a4f77fd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0e04b0d_8f5e07cb",
         "filename": "components/arc/arc_session_runner.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "bdabc933078aa9add4dfe5d347064c2a4f77fd99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95c2b30_fcb5aa54",
+        "filename": "components/arc/arc_session_runner.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-27T14:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0e04b0d_8f5e07cb",
+      "revId": "bdabc933078aa9add4dfe5d347064c2a4f77fd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
