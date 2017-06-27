@@ -40,6 +40,10 @@ static_library("prefetch") {
     "prefetch_service_impl.h",
     "prefetch_types.cc",
     "prefetch_types.h",
+    "store/prefetch_store_sql.cc",
+    "store/prefetch_store_sql.h",
+    "store/prefetch_store_sql_utils.cc",
+    "store/prefetch_store_sql_utils.h",
     "suggested_articles_observer.cc",
     "suggested_articles_observer.h",
   ]
@@ -59,6 +63,7 @@ static_library("prefetch") {
     "//components/version_info",
     "//google_apis",
     "//net:net",
+    "//sql:sql",
     "//url",
   ]
 }
@@ -70,6 +75,8 @@ static_library("test_support") {
     "prefetch_request_test_base.h",
     "prefetch_service_test_taco.cc",
     "prefetch_service_test_taco.h",
+    "store/prefetch_store_sql_test_util.cc",
+    "store/prefetch_store_sql_test_util.h",
     "task_test_base.cc",
     "task_test_base.h",
     "test_offline_metrics_collector.h",
@@ -89,6 +96,8 @@ static_library("test_support") {
     "//components/offline_pages/core",
     "//components/version_info:channel",
     "//net:test_support",
+    "//sql:sql",
+    "//url",
   ]
 }
 
@@ -104,6 +113,7 @@ proto_library("proto") {
 source_set("unit_tests") {
   testonly = true
   sources = [
+    "add_unique_urls_task_unittest.cc",
     "generate_page_bundle_request_unittest.cc",
     "generate_page_bundle_task_unittest.cc",
     "get_operation_request_unittest.cc",
@@ -114,18 +124,21 @@ source_set("unit_tests") {
     "prefetch_network_request_factory_impl_unittest.cc",
     "prefetch_request_fetcher_unittest.cc",
     "prefetch_request_operation_response_unittest.cc",
+    "store/prefetch_store_sql_unittest.cc",
     "suggested_articles_observer_unittest.cc",
   ]
 
   deps = [
     ":prefetch",
     ":test_support",
+    "//base",
     "//components/gcm_driver/instance_id",
     "//components/offline_pages/core",
     "//components/offline_pages/core:switches",
     "//components/offline_pages/core:test_support",
     "//components/version_info:channel",
     "//net:test_support",
+    "//sql:sql",
     "//testing/gmock",
     "//testing/gtest",
     "//url",
