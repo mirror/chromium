@@ -5,6 +5,7 @@
 #include "components/gcm_driver/crypto/message_payload_parser.h"
 
 #include "base/big_endian.h"
+#include "components/gcm_driver/crypto/gcm_decryption_result.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace gcm {
@@ -75,6 +76,8 @@ TEST(MessagePayloadParserTest, MinimumMessageSize) {
 
   MessagePayloadParser parser(message);
   EXPECT_FALSE(parser.IsValid());
+  EXPECT_EQ(parser.GetFailureReason(),
+            GCMDecryptionResult::INVALID_BINARY_HEADER_PAYLOAD_LENGTH);
 }
 
 TEST(MessagePayloadParserTest, MinimumRecordSize) {
@@ -85,9 +88,11 @@ TEST(MessagePayloadParserTest, MinimumRecordSize) {
 
   MessagePayloadParser parser(message);
   EXPECT_FALSE(parser.IsValid());
+  EXPECT_EQ(parser.GetFailureReason(),
+            GCMDecryptionResult::INVALID_BINARY_HEADER_RECORD_SIZE);
 }
 
-TEST(MessagePayloadParserTest, InvalidPublicKey) {
+TEST(MessagePayloadParserTest, InvalidPublicKeyLength) {
   std::string message = CreateMessageString();
 
   uint8_t invalid_public_key_size = 42;
@@ -96,6 +101,21 @@ TEST(MessagePayloadParserTest, InvalidPublicKey) {
 
   MessagePayloadParser parser(message);
   EXPECT_FALSE(parser.IsValid());
+  EXPECT_EQ(parser.GetFailureReason(),
+            GCMDecryptionResult::INVALID_BINARY_HEADER_PUBLIC_KEY_LENGTH);
+}
+
+TEST(MessagePayloadParserTest, InvalidPublicKeyFormat) {
+  std::string message = CreateMessageString();
+
+  uint8_t invalid_p256_uncompressed_key_prefix = 0x42;
+  base::WriteBigEndian(&message[0] + 16 /* salt */ + 4 /* rs */ + 1 /* idlen */,
+                       invalid_p256_uncompressed_key_prefix);
+
+  MessagePayloadParser parser(message);
+  EXPECT_FALSE(parser.IsValid());
+  EXPECT_EQ(parser.GetFailureReason(),
+            GCMDecryptionResult::INVALID_BINARY_HEADER_PUBLIC_KEY_FORMAT);
 }
 
 }  // namespace
