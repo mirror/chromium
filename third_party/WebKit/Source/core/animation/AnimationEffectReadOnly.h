@@ -38,7 +38,7 @@
 
 namespace blink {
 
-class Animation;
+class AnimationEffectOwnerDelegate;
 class AnimationEffectReadOnly;
 class AnimationEffectTimingReadOnly;
 class ComputedTimingProperties;
@@ -62,7 +62,6 @@ class CORE_EXPORT AnimationEffectReadOnly
     : public GarbageCollectedFinalized<AnimationEffectReadOnly>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
-  friend class Animation;  // Calls attach/detach, updateInheritedTime.
  public:
   // Note that logic in CSSAnimations depends on the order of these values.
   enum Phase {
@@ -108,14 +107,20 @@ class CORE_EXPORT AnimationEffectReadOnly
            SpecifiedTiming().end_delay;
   }
 
-  const Animation* GetAnimation() const { return animation_; }
-  Animation* GetAnimation() { return animation_; }
+  const AnimationEffectOwnerDelegate* GetAnimation() const {
+    return animation_;
+  }
+  AnimationEffectOwnerDelegate* GetAnimation() { return animation_; }
   const Timing& SpecifiedTiming() const { return timing_; }
   virtual AnimationEffectTimingReadOnly* timing();
   void UpdateSpecifiedTiming(const Timing&);
 
   void getComputedTiming(ComputedTimingProperties&);
   ComputedTimingProperties getComputedTiming();
+
+  virtual void Attach(AnimationEffectOwnerDelegate* animation) {
+    animation_ = animation;
+  }
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -132,8 +137,6 @@ class CORE_EXPORT AnimationEffectReadOnly
   }
   void ClearEventDelegate() { event_delegate_ = nullptr; }
 
-  virtual void Attach(Animation* animation) { animation_ = animation; }
-
   virtual void Detach() {
     DCHECK(animation_);
     animation_ = nullptr;
@@ -149,7 +152,7 @@ class CORE_EXPORT AnimationEffectReadOnly
       double time_to_next_iteration) const = 0;
   virtual void SpecifiedTimingChanged() {}
 
-  Member<Animation> animation_;
+  Member<AnimationEffectOwnerDelegate> animation_;
   Timing timing_;
   Member<EventDelegate> event_delegate_;
 

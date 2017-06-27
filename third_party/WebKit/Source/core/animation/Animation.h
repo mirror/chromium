@@ -37,6 +37,7 @@
 #include "bindings/core/v8/ScriptPromiseProperty.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/animation/AnimationEffectOwnerDelegate.h"
 #include "core/animation/AnimationEffectReadOnly.h"
 #include "core/animation/CompositorAnimations.h"
 #include "core/animation/DocumentTimeline.h"
@@ -61,7 +62,8 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
                                     public ActiveScriptWrappable<Animation>,
                                     public ContextLifecycleObserver,
                                     public CompositorAnimationDelegate,
-                                    public CompositorAnimationPlayerClient {
+                                    public CompositorAnimationPlayerClient,
+                                    public AnimationEffectOwnerDelegate {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Animation);
 

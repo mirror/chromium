@@ -8,6 +8,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/UnrestrictedDoubleOrKeyframeEffectOptions.h"
 #include "core/animation/Animation.h"
+#include "core/animation/AnimationEffectOwnerDelegate.h"
 #include "core/animation/EffectInput.h"
 #include "core/animation/ElementAnimations.h"
 #include "core/animation/Interpolation.h"
@@ -84,9 +85,10 @@ KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,
       sampled_effect_(nullptr),
       priority_(priority) {}
 
-void KeyframeEffectReadOnly::Attach(Animation* animation) {
+void KeyframeEffectReadOnly::Attach(AnimationEffectOwnerDelegate* animation) {
   if (target_) {
-    target_->EnsureElementAnimations().Animations().insert(animation);
+    // TODO(smcgruer): This would need a solution.
+    // target_->EnsureElementAnimations().Animations().insert(animation);
     target_->SetNeedsAnimationStyleRecalc();
     if (RuntimeEnabledFeatures::WebAnimationsSVGEnabled() &&
         target_->IsSVGElement())
@@ -96,8 +98,10 @@ void KeyframeEffectReadOnly::Attach(Animation* animation) {
 }
 
 void KeyframeEffectReadOnly::Detach() {
-  if (target_)
-    target_->GetElementAnimations()->Animations().erase(GetAnimation());
+  if (target_) {
+    // TODO(smcgruer): This would need a solution.
+    // target_->GetElementAnimations()->Animations().erase(GetAnimation());
+  }
   if (sampled_effect_)
     ClearEffects();
   AnimationEffectReadOnly::Detach();

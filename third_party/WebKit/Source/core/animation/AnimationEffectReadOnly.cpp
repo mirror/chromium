@@ -31,6 +31,7 @@
 #include "core/animation/AnimationEffectReadOnly.h"
 
 #include "core/animation/Animation.h"
+#include "core/animation/AnimationEffectOwnerDelegate.h"
 #include "core/animation/AnimationEffectTimingReadOnly.h"
 #include "core/animation/ComputedTimingProperties.h"
 #include "core/animation/TimingCalculations.h"

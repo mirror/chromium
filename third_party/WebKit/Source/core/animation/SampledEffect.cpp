@@ -4,6 +4,8 @@
 
 #include "core/animation/SampledEffect.h"
 
+#include "core/animation/AnimationEffectOwnerDelegate.h"
+
 namespace blink {
 
 SampledEffect::SampledEffect(KeyframeEffectReadOnly* effect)

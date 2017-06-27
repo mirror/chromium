@@ -31,6 +31,7 @@
 #include "core/animation/EffectStack.h"
 
 #include <algorithm>
+#include "core/animation/AnimationEffectOwnerDelegate.h"
 #include "core/animation/CompositorAnimations.h"
 #include "core/animation/InvalidatableInterpolation.h"
 #include "core/animation/css/CSSAnimations.h"
@@ -126,10 +127,11 @@ ActiveInterpolationsMap EffectStack::ActiveInterpolations(
                    CompareSampledEffects);
     effect_stack->RemoveRedundantSampledEffects();
     for (const auto& sampled_effect : sampled_effects) {
+      // TODO(smcgruer): Find some way to deal with this.
       if (sampled_effect->GetPriority() != priority ||
           (suppressed_animations && sampled_effect->Effect() &&
-           suppressed_animations->Contains(
-               sampled_effect->Effect()->GetAnimation())))
+           true /*suppressed_animations->Contains(
+               sampled_effect->Effect()->GetAnimation())*/))
         continue;
       CopyToActiveInterpolationsMap(sampled_effect->Interpolations(),
                                     property_handle_filter, result);

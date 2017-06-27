@@ -84,6 +84,8 @@ class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
 
   void DowngradeToNormal() { priority_ = kDefaultPriority; }
 
+  void Attach(AnimationEffectOwnerDelegate*) override;
+
  protected:
   KeyframeEffectReadOnly(Element*,
                          EffectModel*,
@@ -94,7 +96,6 @@ class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
   void ApplyEffects();
   void ClearEffects();
   void UpdateChildrenAndEffects() const override;
-  void Attach(Animation*) override;
   void Detach() override;
   void SpecifiedTimingChanged() override;
   double CalculateTimeToEffectChange(
