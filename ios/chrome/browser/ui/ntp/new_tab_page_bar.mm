@@ -128,6 +128,7 @@ const int kNumberOfTabsIncognito = 2;
       setFrame:CGRectMake(0, -shadowImage.size.height, self.bounds.size.width,
                           shadowImage.size.height)];
   [shadow_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+  [shadow_ setAlpha:0];
   [self addSubview:shadow_];
 
   self.contentMode = UIViewContentModeRedraw;

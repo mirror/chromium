@@ -716,8 +716,10 @@ enum {
   [self.homePanel setScrollsToTop:(_currentController == self.homePanel)];
   [_openTabsController
       setScrollsToTop:(_currentController == _openTabsController)];
-  [self.ntpView.tabBar
-      setShadowAlpha:[_currentController alphaForBottomShadow]];
+  if (oldController) {
+    [self.ntpView.tabBar
+        setShadowAlpha:[_currentController alphaForBottomShadow]];
+  }
 
   if (oldController != _currentController) {
     [_currentController wasShown];
