@@ -415,9 +415,6 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // status, such as "resolving host", "connecting", etc.
   LoadState GetLoadState() const;
 
-  // Returns server infomation in the form of (scheme/host/port).
-  url::SchemeHostPort GetServer();
-
   // MultiplexedSession methods:
   bool GetRemoteEndpoint(IPEndPoint* endpoint) override;
   bool GetSSLInfo(SSLInfo* ssl_info) const override;

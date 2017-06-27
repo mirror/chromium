@@ -1138,11 +1138,6 @@ LoadState SpdySession::GetLoadState() const {
   return LOAD_STATE_IDLE;
 }
 
-url::SchemeHostPort SpdySession::GetServer() {
-  return url::SchemeHostPort(is_secure_ ? "https" : "http",
-                             host_port_pair().host(), host_port_pair().port());
-}
-
 bool SpdySession::GetRemoteEndpoint(IPEndPoint* endpoint) {
   return GetPeerAddress(endpoint) == OK;
 }
