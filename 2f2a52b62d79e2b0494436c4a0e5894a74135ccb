@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b59ab60_6ad940c6",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-06-27T22:13:38Z",
+      "side": 1,
+      "message": "Could you make the function no-op if the state_ is not INITIAL?",
+      "revId": "2f2a52b62d79e2b0494436c4a0e5894a74135ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9f45f4_b1af63a8",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-06-27T22:13:38Z",
+      "side": 1,
+      "message": "Why don\u0027t you set show_on_resize_ false if load_only?",
+      "revId": "2f2a52b62d79e2b0494436c4a0e5894a74135ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ea4c83_de490de7",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-06-27T22:13:38Z",
+      "side": 1,
+      "message": "Nit: Prefer UI over Ui.\nhttps://google.github.io/styleguide/cppguide.html#Function_Names",
+      "revId": "2f2a52b62d79e2b0494436c4a0e5894a74135ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
