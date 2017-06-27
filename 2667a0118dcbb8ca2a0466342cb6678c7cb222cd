@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb08830f_ef9483c7",
+        "filename": "media/midi/midi_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-27T06:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ecfac6_19c57ba5",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20805101_aa49ce31",
         "filename": "media/midi/midi_manager.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ae5d95_65c9e8ef",
+        "filename": "media/midi/midi_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-27T06:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20805101_aa49ce31",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 7
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1301e1cc_fd3c0964",
+        "filename": "media/midi/midi_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-27T06:26:18Z",
+      "side": 1,
+      "message": "This is an enforced rule of src/media/ that presubmit checks.\n\nHere is the error message.\n\n\u003e ** Presubmit ERRORS **\n\u003e UMA_HISTOGRAM_ENUMERATION reports in src/media/ are expected to adhere\n\u003e to the following guidelines:\n\u003e  - The max value (3rd argument) should be an enum value equal to the\n\u003e    last valid value, e.g. FOO_MAX \u003d LAST_VALID_FOO.\n\u003e  - 1 must be added to that max value.\n\u003e Contact dalecurtis@chromium.org if you have questions.",
+      "parentUuid": "3b5b2729_8201c882",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 5
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c1d8887_d59c5e0d",
         "filename": "media/midi/midi_manager.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a349ac11_d96410a1",
+        "filename": "media/midi/midi_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-27T06:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c1d8887_d59c5e0d",
+      "range": {
+        "startLine": 307,
+        "startChar": 26,
+        "endLine": 307,
+        "endChar": 0
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2c73765_c0bd070b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d86215_dace7c77",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29308,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-27T06:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2c73765_c0bd070b",
+      "range": {
+        "startLine": 29308,
+        "startChar": 79,
+        "endLine": 29308,
+        "endChar": 0
+      },
+      "revId": "2667a0118dcbb8ca2a0466342cb6678c7cb222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
