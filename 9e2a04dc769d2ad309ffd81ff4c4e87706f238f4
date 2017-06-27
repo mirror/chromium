@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78692e0b_2d6d9134",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-27T19:07:49Z",
+      "side": 1,
+      "message": "nit: Shall we pass the StartupListener in Controller::Initialize, and put DCHECK for startup_listener_ at places in controller_impl.cc.",
+      "revId": "9e2a04dc769d2ad309ffd81ff4c4e87706f238f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7594397e_6271f01b",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-27T19:07:49Z",
+      "side": 1,
+      "message": "Not for this CL, I think we only transit from available to active here, so do the counting before this block is ok.",
+      "range": {
+        "startLine": 822,
+        "startChar": 4,
+        "endLine": 822,
+        "endChar": 56
+      },
+      "revId": "9e2a04dc769d2ad309ffd81ff4c4e87706f238f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf862ef4_116c8930",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-27T19:07:49Z",
+      "side": 1,
+      "message": "nit: Maybe we can directly call the function here, and bind the callback after this block.",
+      "range": {
+        "startLine": 38,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "9e2a04dc769d2ad309ffd81ff4c4e87706f238f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2908370_e4714f41",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-27T19:07:49Z",
+      "side": 1,
+      "message": "nit: Maybe std::find() or something similar.",
+      "revId": "9e2a04dc769d2ad309ffd81ff4c4e87706f238f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f907f8a2_18859504",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-27T19:07:49Z",
+      "side": 1,
+      "message": "nit: DownloadTaskType::NONE seems to be used for a different purpose than the other two enum value.",
+      "range": {
+        "startLine": 98,
+        "startChar": 39,
+        "endLine": 98,
+        "endChar": 61
+      },
+      "revId": "9e2a04dc769d2ad309ffd81ff4c4e87706f238f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
