@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a636bb5_95522502",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "This is because site_process_set_ can have multiple different-site-same-host entries.",
+      "parentUuid": "a138d116_718a9202",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e3aafb0_ed1ff64a",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 22
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6bc52fdd_d680db80",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3aafb0_ed1ff64a",
+      "range": {
+        "startLine": 827,
+        "startChar": 21,
+        "endLine": 827,
+        "endChar": 49
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d5dcdd5_66f6eb19",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 22
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "822be229_41478d18",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5dcdd5_66f6eb19",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8cccef5_4d1f2af5",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 22
@@ -73,6 +133,24 @@
       "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bcc687_f477820c",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8cccef5_4d1f2af5",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfdef9d_395345e8",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15fae6e6_feec40d9",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +241,48 @@
     },
     {
       "key": {
+        "uuid": "f34b7383_8d60635f",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082dcb2c_b8d2d872",
+      "range": {
+        "startLine": 55,
+        "startChar": 61,
+        "endLine": 55,
+        "endChar": 65
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1dd9a4f5_b7e577ae",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd142aed_cfa0673b",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0736f35a_a6b74860",
         "filename": "content/browser/site_instance_impl.h",
         "patchSetId": 22
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "2ba451d6_8dd6e31c",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0736f35a_a6b74860",
+      "range": {
+        "startLine": 74,
+        "startChar": 35,
+        "endLine": 74,
+        "endChar": 42
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a552281_37f63031",
         "filename": "content/browser/site_instance_impl.h",
         "patchSetId": 22
@@ -173,6 +341,24 @@
       "writtenOn": "2017-06-27T05:39:52Z",
       "side": 1,
       "message": "s/is reused same as other policy/is reused as in the other policies/.\n\nBut that seems to imply that, for all policies, when the process limit is reached, a randomly chosen RPH is used, which means we don\u0027t need to mention it for this particular policy value?",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37bd3ca_344f9131",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-27T06:07:24Z",
+      "side": 1,
+      "message": "Done.\n\nI think we should mention this because the first sentence says \"SiteInstances don\u0027t proactively reuse processes\".",
+      "parentUuid": "4a552281_37f63031",
       "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
