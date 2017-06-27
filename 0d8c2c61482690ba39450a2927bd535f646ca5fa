@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8006599a_eb322546",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-27T07:08:25Z",
+      "side": 1,
+      "message": "DownloadJobFactory::IsParallelizableDownload() specifies the technical requirements. I don\u0027t think that we need to mention the list here. WDYT?",
+      "parentUuid": "8ee5f624_51cad429",
+      "range": {
+        "startLine": 222,
+        "startChar": 13,
+        "endLine": 222,
+        "endChar": 50
+      },
+      "revId": "0d8c2c61482690ba39450a2927bd535f646ca5fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4184d195_ac84ea67",
         "filename": "content/browser/download/parallel_download_job.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-22T09:48:00Z",
       "side": 1,
       "message": "What form of authentication? Do you mean HTTP auth in the URL, or something else?",
+      "range": {
+        "startLine": 224,
+        "startChar": 30,
+        "endLine": 224,
+        "endChar": 44
+      },
+      "revId": "0d8c2c61482690ba39450a2927bd535f646ca5fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d29f9d_84a81bcd",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-27T07:08:25Z",
+      "side": 1,
+      "message": "OAuth 2.0 token would be sent.",
+      "parentUuid": "4184d195_ac84ea67",
       "range": {
         "startLine": 224,
         "startChar": 30,
