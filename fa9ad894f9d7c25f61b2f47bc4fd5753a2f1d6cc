@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fd04579_fa349d93",
+        "filename": "components/autofill/core/browser/webdata/autofill_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2624,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T20:44:46Z",
+      "side": 1,
+      "message": "Nit: While here: This whole function could  be simplified by dropping the transaction.  There\u0027s only one write to the DB, so a transaction is unnecessary.",
+      "revId": "fa9ad894f9d7c25f61b2f47bc4fd5753a2f1d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdf6b65_8ef54b76",
+        "filename": "components/autofill/core/browser/webdata/autofill_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2660,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T20:44:46Z",
+      "side": 1,
+      "message": "Nit: While this works as written, it\u0027s a bit hard for me to follow, and it duplicates the code in the v73 migration function.  How about something like this:\n\n  // Version 73 was actually used by two different schemas; an attempt to add\n  // the \"type\" column (as in this version 74) was landed and reverted, and then\n  // the \"bank_name\" column was added (and stuck).  Some clients may have been\n  // upgraded to one and some the other.  Figure out which is the case.\n  const bool added_type_column_in_v73 \u003d\n      db_-\u003eDoesColumnExist(\"masked_credit_cards\", \"type\");\n\n  // If we previously added the \"type\" column, then it\u0027s already present with\n  // the correct semantics, but we now need to run the \"bank_name\" migration.\n  // Otherwise, we need to add \"type\" now.\n  return added_type_column_in_v73\n             ? MigrateToVersion73AddMaskedCardBankName()\n             : db_-\u003eExecute(\"ALTER TABLE masked_credit_cards ADD COLUMN type\"\n                            \" INTEGER DEFAULT 0\");\n\n(Minor style changes are possible)\n\nNote that I don\u0027t bother with a transaction since we never do more than one write to the DB.",
+      "revId": "fa9ad894f9d7c25f61b2f47bc4fd5753a2f1d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
