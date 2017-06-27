@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc07ce46_44e98d2f",
+        "filename": "base/android/java/src/org/chromium/base/TimezoneUtils.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-06-27T14:35:54Z",
+      "side": 1,
+      "message": "this can still be private if only access via jni",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "d676856bbee36e6b5bd7d9027eaeb0d11b1bc1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83952cff_9a949e9e",
+        "filename": "base/android/java/src/org/chromium/base/TimezoneUtils.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-06-27T14:35:54Z",
+      "side": 1,
+      "message": "does this have to be done on main thread? Could you do it as part of LazyInitIcuDataFile() or will it race against other stuff during init?",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "d676856bbee36e6b5bd7d9027eaeb0d11b1bc1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
