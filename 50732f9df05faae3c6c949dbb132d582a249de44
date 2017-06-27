@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b509e31_92e40b04",
+        "filename": "components/offline_pages/core/background/request_queue_store_sql.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-27T17:27:09Z",
+      "side": 1,
+      "message": "I wonder if it\u0027d be better to be explicit:\n\nINSERT INTO $TABLE (request_id ..., client_id, original_url, request_origin) SELECT (request_id ..., client_id, original_url, \"\") -- explicit empty string for request_origin\n\nWDYT?",
+      "revId": "50732f9df05faae3c6c949dbb132d582a249de44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
