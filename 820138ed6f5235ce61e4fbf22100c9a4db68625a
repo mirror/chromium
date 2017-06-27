@@ -91,6 +91,30 @@
       "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22eeb1c7_92b61ebf",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T22:09:58Z",
+      "side": 1,
+      "message": "It looks like maybe only ContentSettingMediaStreamBubbleModel uses the \"manage\" link today, so hopefully either moving to the content area or only showing one at once work for now.",
+      "parentUuid": "f11c9a53_543afbbe",
+      "range": {
+        "startLine": 456,
+        "startChar": 4,
+        "endLine": 456,
+        "endChar": 10
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
