@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aab16f4_ef11f57b",
+        "filename": "gpu/command_buffer/service/preemption_flag.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T00:40:31Z",
+      "side": 1,
+      "message": "I think Set/Reset should be memory_order_release, and IsSet should be memory_order_acquire.\n\nBasically on the IO thread we add a bunch of tasks to a list under lock, and set the flag. On the main thread, we test the flag and if set we (may) look at the list of tasks, under lock as well, and expect the tasks to be there. Without the memory order, the main thread could see the flag set but no task in the list.\n\nThat said, the data race is fairly harmless (as much as one can be), we\u0027ll always see a self-consistent task list (because of the lock), and worst case  we may preempt a channel spuriously and resume it without executing preempting tasks. The next time we look at the flag it should be set consistently thanks to the locks.\n\nStill, I don\u0027t see a reason not to use proper memory order. IsSet (which is called often) was already using acquire, so there shouldn\u0027t be any regression there. Set and Reset are seldom called, and the cost of the memory order should be dwarfed by the cost of the posted tasks to execute them anyway.",
+      "revId": "2933cfe5b266cb371203c632c3288a19c1056e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
