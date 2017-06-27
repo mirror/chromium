@@ -921,7 +921,8 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
   if (!IsReusableAlsoForPreloading(params, resource, false))
     return nullptr;
 
-  resource->MatchPreload();
+  if (!resource->MatchPreload(params))
+    return nullptr;
   preloads_.erase(it);
   matched_preloads_.push_back(resource);
   return resource;
@@ -969,9 +970,9 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
     return false;
   }
 
-  // Never use cache entries for downloadToFile / useStreamOnResponse requests.
-  // The data will be delivered through other paths.
-  if (request.DownloadToFile() || request.UseStreamOnResponse())
+  // Never use cache entries for downloadToFile requests. The data will be
+  // delivered through other paths.
+  if (request.DownloadToFile())
     return false;
 
   // Never reuse opaque responses from a service worker for requests that are
@@ -1121,6 +1122,11 @@ ResourceFetcher::DetermineRevalidationPolicy(
                                    is_static_data)) {
     return kReload;
   }
+
+  // Never use cache entries for UseStreamOnResponse requests.
+  // The data will be delivered through other paths.
+  if (request.UseStreamOnResponse())
+    return kReload;
 
   // If resource was populated from a SubstituteData load or data: url, use it.
   if (is_static_data)
