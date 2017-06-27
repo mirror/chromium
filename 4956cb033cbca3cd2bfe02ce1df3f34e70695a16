@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "903cd395_ce367e7f",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1225929
+      },
+      "writtenOn": "2017-06-27T20:21:47Z",
+      "side": 1,
+      "message": "Please follow the C++ style, not Java style for indentations.",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "4956cb033cbca3cd2bfe02ce1df3f34e70695a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c8faa4_93dc043a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5213,
+      "author": {
+        "id": 1225929
+      },
+      "writtenOn": "2017-06-27T20:21:47Z",
+      "side": 1,
+      "message": "Are you sure they want to be owner of this feature? What does the owner here mean?",
+      "range": {
+        "startLine": 5213,
+        "startChar": 2,
+        "endLine": 5213,
+        "endChar": 37
+      },
+      "revId": "4956cb033cbca3cd2bfe02ce1df3f34e70695a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
