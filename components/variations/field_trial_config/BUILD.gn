@@ -41,7 +41,11 @@ static_library("field_trial_config") {
   deps = [
     ":field_trial_testing_config_action",
     "//base",
+    "//cc/base",
+    "//components/flags_ui",
     "//components/variations",
+    "//components/variations/service",
+    "//content/public/common",
     "//net",
   ]
 }

@@ -62,6 +62,7 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
   int32_t GetProduct() override;
   std::string GetApplicationLocale() override;
   bool GetBrand(std::string* brand_code) override;
+  static std::string GetOrCreateGUID(const base::FilePath guid_file_path);
   metrics::SystemProfileProto::Channel GetChannel() override;
   std::string GetVersionString() override;
   void InitializeSystemProfileMetrics(
@@ -81,6 +82,7 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
 
   void InitializeWithGUID(std::string* guid);
 
+  static std::string guid;
   bool is_enabled_;
   PrefService* pref_service_;
   net::URLRequestContextGetter* request_context_;

@@ -673,80 +673,29 @@ void ChromeBrowserMainParts::SetupFieldTrials() {
       new base::FieldTrialList(browser_process_->GetMetricsServicesManager()
                                    ->CreateEntropyProvider()));
 
-  const base::CommandLine* command_line =
-      base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kEnableBenchmarking) ||
-      command_line->HasSwitch(cc::switches::kEnableGpuBenchmarking)) {
-    base::FieldTrial::EnableBenchmarking();
-  }
-
-  if (command_line->HasSwitch(variations::switches::kForceFieldTrialParams)) {
-    bool result = variations::AssociateParamsFromString(
-        command_line->GetSwitchValueASCII(
-            variations::switches::kForceFieldTrialParams));
-    CHECK(result) << "Invalid --"
-                  << variations::switches::kForceFieldTrialParams
-                  << " list specified.";
-  }
-
-  // Ensure any field trials specified on the command line are initialized.
-  if (command_line->HasSwitch(switches::kForceFieldTrials)) {
-    std::set<std::string> unforceable_field_trials;
-#if defined(OFFICIAL_BUILD)
-    unforceable_field_trials.insert("SettingsEnforcement");
-#endif  // defined(OFFICIAL_BUILD)
-
-    // Create field trials without activating them, so that this behaves in a
-    // consistent manner with field trials created from the server.
-    bool result = base::FieldTrialList::CreateTrialsFromString(
-        command_line->GetSwitchValueASCII(switches::kForceFieldTrials),
-        unforceable_field_trials);
-    CHECK(result) << "Invalid --" << switches::kForceFieldTrials
-                  << " list specified.";
-  }
-
-  std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
-
   // Associate parameters chosen in about:flags and create trial/group for them.
   flags_ui::PrefServiceFlagsStorage flags_storage(
       g_browser_process->local_state());
+
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+
+  std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
+
   std::vector<std::string> variation_ids =
       about_flags::RegisterAllFeatureVariationParameters(
           &flags_storage, feature_list.get());
 
-  variations::VariationsHttpHeaderProvider* http_header_provider =
-      variations::VariationsHttpHeaderProvider::GetInstance();
-  // Force the variation ids selected in chrome://flags and/or specified using
-  // the command-line flag.
-  bool result = http_header_provider->ForceVariationIds(
-      command_line->GetSwitchValueASCII(switches::kForceVariationIds),
-      &variation_ids);
-  CHECK(result) << "Invalid list of variation ids specified (either in --"
-                << switches::kForceVariationIds << " or in chrome://flags)";
-
-  feature_list->InitializeFromCommandLine(
-      command_line->GetSwitchValueASCII(switches::kEnableFeatures),
-      command_line->GetSwitchValueASCII(switches::kDisableFeatures));
-
-#if defined(FIELDTRIAL_TESTING_ENABLED)
-  if (!command_line->HasSwitch(
-          variations::switches::kDisableFieldTrialTestingConfig) &&
-      !command_line->HasSwitch(switches::kForceFieldTrials) &&
-      !command_line->HasSwitch(variations::switches::kVariationsServerURL)) {
-    variations::AssociateDefaultFieldTrialConfig(feature_list.get());
-  }
-#endif  // defined(FIELDTRIAL_TESTING_ENABLED)
+  variations::VariationsSeed seed;
 
   variations::VariationsService* variations_service =
       browser_process_->variations_service();
 
-  bool has_seed = variations_service &&
-                  variations_service->CreateTrialsFromSeed(feature_list.get());
+  bool has_seed = SetupFieldTrialsCommon(field_trial_list_, &feature_list,
+                                         variation_ids, variations_service);
 
   browser_field_trials_.SetupFeatureControllingFieldTrials(has_seed,
                                                            feature_list.get());
-
-  base::FeatureList::SetInstance(std::move(feature_list));
 
   // This must be called after |local_state_| is initialized.
   browser_field_trials_.SetupFieldTrials();
