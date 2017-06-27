@@ -3,7 +3,7 @@ This tests that XMLHttpRequest overrideMimeType() properly updates the Content-T
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-PASS xhr.getResponseHeader("Content-Type") is "text/xml;charset=GBK"
+FAIL xhr.getResponseHeader("Content-Type") should be text/xml;charset=GBK. Was application/xml.
 PASS successfullyParsed is true
 
 TEST COMPLETE
