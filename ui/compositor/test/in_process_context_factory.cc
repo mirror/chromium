@@ -244,8 +244,6 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
       std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(
           compositor->task_runner().get()));
-  GetSurfaceManager()->RegisterBeginFrameSource(begin_frame_source.get(),
-                                                compositor->frame_sink_id());
   // Note that we are careful not to destroy a prior |data->begin_frame_source|
   // until we have reset |data->display|.
   data->begin_frame_source = std::move(begin_frame_source);
@@ -256,6 +254,8 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
       context_provider, shared_worker_context_provider_,
       &gpu_memory_buffer_manager_, &shared_bitmap_manager_);
   compositor->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));
+  GetSurfaceManager()->RegisterBeginFrameSource(data->begin_frame_source.get(),
+                                                compositor->frame_sink_id());
 
   data->display->Resize(compositor->size());
 }
