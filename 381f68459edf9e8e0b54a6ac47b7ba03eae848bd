@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4701a894_00cf5071",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T21:39:44Z",
+      "side": 1,
+      "message": "nit: i don\u0027t think you\u0027re using this",
+      "revId": "381f68459edf9e8e0b54a6ac47b7ba03eae848bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
