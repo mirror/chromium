@@ -124,10 +124,10 @@ class MockClientProcess : public mojom::ClientProcess {
 class MockGlobalMemoryDumpCallback {
  public:
   MockGlobalMemoryDumpCallback() = default;
-  MOCK_METHOD3(OnCall, void(uint64_t, bool, GlobalMemoryDump*));
+  MOCK_METHOD3(OnCall, void(bool, uint64_t, GlobalMemoryDump*));
 
-  void Run(uint64_t dump_guid, bool success, GlobalMemoryDumpPtr ptr) {
-    OnCall(dump_guid, success, ptr.get());
+  void Run(bool success, uint64_t dump_guid, GlobalMemoryDumpPtr ptr) {
+    OnCall(success, dump_guid, ptr.get());
   }
 
   RequestGlobalMemoryDumpCallback Get() {
@@ -146,7 +146,7 @@ TEST_F(CoordinatorImplTest, NoClients) {
       base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
 
   MockGlobalMemoryDumpCallback callback;
-  EXPECT_CALL(callback, OnCall(Ne(0u), true, NotNull()));
+  EXPECT_CALL(callback, OnCall(true, Ne(0u), NotNull()));
   RequestGlobalMemoryDump(args, callback.Get());
 }
 
@@ -165,7 +165,7 @@ TEST_F(CoordinatorImplTest, SeveralClients) {
       base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
 
   MockGlobalMemoryDumpCallback callback;
-  EXPECT_CALL(callback, OnCall(Ne(0u), true, NotNull()))
+  EXPECT_CALL(callback, OnCall(true, Ne(0u), NotNull()))
       .WillOnce(RunClosure(run_loop.QuitClosure()));
   RequestGlobalMemoryDump(args, callback.Get());
   run_loop.Run();
@@ -209,7 +209,7 @@ TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
           }));
 
   MockGlobalMemoryDumpCallback callback;
-  EXPECT_CALL(callback, OnCall(Ne(0u), false, NotNull()))
+  EXPECT_CALL(callback, OnCall(false, Ne(0u), NotNull()))
       .WillOnce(RunClosure(run_loop.QuitClosure()));
   RequestGlobalMemoryDump(args, callback.Get());
   run_loop.Run();
@@ -243,7 +243,7 @@ TEST_F(CoordinatorImplTest, GlobalMemoryDumpStruct) {
           }));
 
   MockGlobalMemoryDumpCallback callback;
-  EXPECT_CALL(callback, OnCall(Ne(0u), true, NotNull()))
+  EXPECT_CALL(callback, OnCall(true, Ne(0u), NotNull()))
       .WillOnce(Invoke([&run_loop](uint64_t dump_guid, bool success,
                                    GlobalMemoryDump* dump) {
 
