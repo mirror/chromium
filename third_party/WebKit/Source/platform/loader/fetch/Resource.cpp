@@ -320,7 +320,7 @@ void Resource::SetLoader(ResourceLoader* loader) {
   CHECK(!loader_);
   DCHECK(StillNeedsLoad());
   loader_ = loader;
-  status_ = ResourceStatus::kPending;
+  NotifyStartLoad();
 }
 
 void Resource::CheckNotify() {
@@ -404,7 +404,7 @@ void Resource::FinishAsError(const ResourceError& error) {
 
   if (!ErrorOccurred())
     SetStatus(ResourceStatus::kLoadError);
-  DCHECK(ErrorOccurred());
+
   ClearData();
   loader_ = nullptr;
   CheckNotify();
