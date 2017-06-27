@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2647eaa_7657feff",
+        "filename": "base/stl_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T19:05:02Z",
+      "side": 1,
+      "message": "class names should be HasKeyType, even tho that doesn\u0027t match the thing literally",
+      "revId": "1508bdf72cc2868eec8878ca620176d09b4f49ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040f10e3_5ba2dfa3",
+        "filename": "base/stl_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T19:05:02Z",
+      "side": 1,
+      "message": "nit: 0 -\u003e nullptr?",
+      "revId": "1508bdf72cc2868eec8878ca620176d09b4f49ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

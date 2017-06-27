@@ -69,6 +69,24 @@
       "revId": "34c89d2131c0176455dbb64ab78d6b580cb30fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c7ce44b_c349cc3f",
+        "filename": "base/stl_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T19:05:02Z",
+      "side": 1,
+      "message": "Ooh ya makes sense.",
+      "parentUuid": "d97f904d_d998a0b4",
+      "revId": "34c89d2131c0176455dbb64ab78d6b580cb30fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
