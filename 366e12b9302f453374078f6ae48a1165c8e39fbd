@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "073883f1_3370d644",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-27T18:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa825887_1c96af66",
+      "revId": "366e12b9302f453374078f6ae48a1165c8e39fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e110d31_c70da783",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "73fe87fb_8a43b8e5",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-27T18:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e110d31_c70da783",
+      "revId": "366e12b9302f453374078f6ae48a1165c8e39fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92f55801_25dbcbf9",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
         "patchSetId": 1
@@ -67,6 +103,24 @@
       "revId": "366e12b9302f453374078f6ae48a1165c8e39fbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559e9cce_75ea218e",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-27T18:54:38Z",
+      "side": 1,
+      "message": "I believe it still needs the include header. Notice lines 16 and 30, it does both with Tab.",
+      "parentUuid": "92f55801_25dbcbf9",
+      "revId": "366e12b9302f453374078f6ae48a1165c8e39fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
