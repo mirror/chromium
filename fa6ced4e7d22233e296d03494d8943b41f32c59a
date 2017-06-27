@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1e35b2_bbfe5f6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "This can be omitted from the CL description",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11db7ddd_632778a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "This will be inaccessible to folks outside of Google. Is there a chromium.org publishable version of this? You might have to request a chromium.org account after all.",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8acc0a84_f7e95057",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "Add a new_tab_feature_engagement_tracker_unittests.cc to test the file.",
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d1e2b7_0373c01b",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "What\u0027s the verdict on the per-profile tracking for this work?\nchrisbenson@ also encountered a similar thing with his UI work.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc4a86c_19e90fc8",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "Chromium Convention:\nStatic methods have a comment of // static on the previous line.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ce1ab7_ad24aa57",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "Here too.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3d09ff_ed23fe60",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "No trailing underscores for local variables, here and for the rest of the file.",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16893c5a_6dc41b35",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "Generally, any\n  if (condition)\n    return true;\n\n  return false;\n\nCan be rewritten as\nreturn condition;\n\nThat applies here.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196deff5_92a31855",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "|duration_tracker_|",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0c75dc_c415dad3",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "One space between \"//\" and the comment.",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 5
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd50cd1f_9e531d29",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "This statement isn\u0027t true. You only own an object if you control the lifetime of that object.\n\nIn this case, ownership is controlled by the DesktopSessionDurationTracker.\n\nA short\n// Owned by DesktopSessionDurationTracker.\nwill be sufficient.",
+      "range": {
+        "startLine": 44,
+        "startChar": 24,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c6e7a1_954df9fc",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "Similarly, see above.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d38281_18ad7b40",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-27T21:55:57Z",
+      "side": 1,
+      "message": "Does this have to go in this CL?",
+      "range": {
+        "startLine": 1755,
+        "startChar": 4,
+        "endLine": 1778,
+        "endChar": 6
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
