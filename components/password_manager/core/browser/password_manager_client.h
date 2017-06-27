@@ -11,7 +11,9 @@
 #include "base/macros.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/credentials_filter.h"
+#include "components/password_manager/core/browser/password_manager_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_store.h"
+#include "components/ukm/public/ukm_entry_builder.h"
 #include "components/ukm/public/ukm_recorder.h"
 
 class PrefService;
@@ -222,6 +224,13 @@ class PasswordManagerClient {
   // Gets a ukm::SourceId that is associated with the WebContents object
   // and its last committed main frame navigation.
   virtual ukm::SourceId GetUkmSourceId() = 0;
+
+  // Gets a metrics recorder for the currently committed navigation.
+  // As PasswordManagerMetricsRecorder submits metrics on destruction, a new
+  // instance will be returned for each committed navigation. A caller must not
+  // hold on to the pointer.
+  // Does not return nullptr.
+  virtual PasswordManagerMetricsRecorder* GetMetricsRecorder() = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerClient);

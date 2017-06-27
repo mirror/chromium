@@ -17,9 +17,6 @@
 
 namespace {
 constexpr char kTestUrl[] = "https://www.example.com/";
-}
-
-namespace password_manager {
 
 // Create a UkmEntryBuilder with a SourceId that is initialized for kTestUrl.
 std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmEntryBuilder(
@@ -27,8 +24,8 @@ std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmEntryBuilder(
   ukm::SourceId source_id = test_ukm_recorder->GetNewSourceID();
   static_cast<ukm::UkmRecorder*>(test_ukm_recorder)
       ->UpdateSourceURL(source_id, GURL(kTestUrl));
-  return PasswordFormMetricsRecorder::CreateUkmEntryBuilder(test_ukm_recorder,
-                                                            source_id);
+  return password_manager::PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+      test_ukm_recorder, source_id);
 }
 
 // Verifies that the metric |metric_name| was recorded with value |value| in the
@@ -51,6 +48,10 @@ void ExpectUkmValueCount(ukm::TestUkmRecorder* test_ukm_recorder,
   }
   EXPECT_EQ(expected_count, occurrences) << metric_name << ": " << value;
 }
+
+}  // namespace
+
+namespace password_manager {
 
 // Test the metrics recorded around password generation and the user's
 // interaction with the offer to generate passwords.
