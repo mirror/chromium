@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "905fcfe6_5b6d80e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-27T01:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed4aed55_7e32f1a9",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34fbce70_cbea35b2",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4ffb3e6d_e5cdcd07",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-27T01:27:37Z",
+      "side": 1,
+      "message": "I happily steal your second one! Thanks.",
+      "parentUuid": "34fbce70_cbea35b2",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d56d06d_2e547247",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "03c772d80da4eb55ce48873133a27895818516d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5636addb_d60dfba8",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-27T01:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d56d06d_2e547247",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "932c14a1_9501aaf1",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-27T01:27:37Z",
+      "side": 1,
+      "message": "With a switch to storing midnight instead of a full timestamp, this simplified. I\u0027ve added comment as well, please take a look.",
+      "parentUuid": "3bab7a7c_d73ddd95",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 21
+      },
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38e76c2_3a3b2e58",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
         "patchSetId": 4
@@ -87,6 +165,24 @@
       "writtenOn": "2017-06-26T23:49:08Z",
       "side": 1,
       "message": "This will not count starts of Chrome that never load native.",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7c89bc_7948adbe",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-27T01:27:37Z",
+      "side": 1,
+      "message": "Those never show an activity with a tab in it... For example, a push message or a download notification. I think those should not be included into count as they don\u0027t constitute the \u0027usage\u0027 by the actual user.",
+      "parentUuid": "c38e76c2_3a3b2e58",
       "revId": "03c772d80da4eb55ce48873133a27895818516d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "241f2708_acb91f2d",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-27T01:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5ed7b65_f905bb7d",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4108148_254d6c34",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
         "patchSetId": 4
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "77aaedec_628a7cf2",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-27T01:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4108148_254d6c34",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b3abca2_15a30e9a",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "03c772d80da4eb55ce48873133a27895818516d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ccb1b4_3e1f6bf3",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-27T01:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b3abca2_15a30e9a",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
