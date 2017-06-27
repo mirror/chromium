@@ -989,7 +989,10 @@ public class MediaNotificationManager {
             // to do here.
         }
 
-        mMediaSession.setMetadata(createMetadata());
+        // Don't set metadata if null as on some platforms it crashes Android. See
+        // https://crbug.com/734283.
+        MediaMetadataCompat metadata = createMetadata();
+        if (metadata != null) mMediaSession.setMetadata(createMetadata());
 
         PlaybackStateCompat.Builder playbackStateBuilder =
                 new PlaybackStateCompat.Builder().setActions(computeMediaSessionActions());
