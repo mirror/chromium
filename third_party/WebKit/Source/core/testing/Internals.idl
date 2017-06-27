@@ -266,6 +266,7 @@ enum EffectiveConnectionType {
     DOMString getCurrentCursorInfo();
 
     readonly attribute boolean cursorUpdatePending;
+    readonly attribute boolean fakeMouseMovePending; 
 
     DOMString markerTextForListItem(Element element);
 

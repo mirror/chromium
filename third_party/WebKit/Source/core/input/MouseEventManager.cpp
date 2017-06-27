@@ -56,7 +56,11 @@ String CanvasRegionId(Node* node, const WebMouseEvent& mouse_event) {
 
 // The amount of time to wait before sending a fake mouse event triggered
 // during a scroll.
-const double kFakeMouseMoveInterval = 0.1;
+const double kFakeMouseMoveIntervalDuringScroll = 0.1;
+
+// The amount of time to wait before sending a fake mouse event on style and
+// layout changes sets to 50Hz, same as common screen refresh rate.
+const double kFakeMouseMoveIntervalPerFrame = 0.02;
 
 // TODO(crbug.com/653490): Read these values from the OS.
 #if OS(MACOSX)
@@ -72,6 +76,8 @@ constexpr TimeDelta kTextDragDelay = TimeDelta::FromSecondsD(0.0);
 }  // namespace
 
 enum class DragInitiator { kMouse, kTouch };
+
+// enum class DispatchInterval { kDuringScroll, kPerFrame };
 
 MouseEventManager::MouseEventManager(LocalFrame& frame,
                                      ScrollManager& scroll_manager)
@@ -307,6 +313,7 @@ WebInputEventResult MouseEventManager::DispatchMouseClickIfNeeded(
 
 void MouseEventManager::FakeMouseMoveEventTimerFired(TimerBase* timer) {
   TRACE_EVENT0("input", "MouseEventManager::fakeMouseMoveEventTimerFired");
+
   DCHECK(timer == &fake_mouse_move_event_timer_);
   DCHECK(!mouse_pressed_);
 
@@ -581,7 +588,8 @@ void MouseEventManager::SetLastKnownMousePosition(const WebMouseEvent& event) {
   last_known_mouse_global_position_ = event.PositionInScreen();
 }
 
-void MouseEventManager::DispatchFakeMouseMoveEventSoon() {
+void MouseEventManager::DispatchFakeMouseMoveEventSoon(
+    DispatchInterval dispatch_interval) {
   if (mouse_pressed_)
     return;
 
@@ -590,8 +598,12 @@ void MouseEventManager::DispatchFakeMouseMoveEventSoon() {
 
   // Reschedule the timer, to prevent dispatching mouse move events
   // during a scroll. This avoids a potential source of scroll jank.
-  fake_mouse_move_event_timer_.StartOneShot(kFakeMouseMoveInterval,
-                                            BLINK_FROM_HERE);
+  // Or dispatch a fake mouse move to update hover states when the layout
+  // changes.
+  double interval = dispatch_interval == DispatchInterval::kDuringScroll
+                        ? kFakeMouseMoveIntervalDuringScroll
+                        : kFakeMouseMoveIntervalPerFrame;
+  fake_mouse_move_event_timer_.StartOneShot(interval, BLINK_FROM_HERE);
 }
 
 void MouseEventManager::DispatchFakeMouseMoveEventSoonInQuad(
@@ -604,7 +616,7 @@ void MouseEventManager::DispatchFakeMouseMoveEventSoonInQuad(
           view->RootFrameToContents(last_known_mouse_position_)))
     return;
 
-  DispatchFakeMouseMoveEventSoon();
+  DispatchFakeMouseMoveEventSoon(DispatchInterval::kDuringScroll);
 }
 
 WebInputEventResult MouseEventManager::HandleMousePressEvent(
@@ -1095,6 +1107,10 @@ void MouseEventManager::SetClickCount(int click_count) {
 
 bool MouseEventManager::MouseDownMayStartDrag() {
   return mouse_down_may_start_drag_;
+}
+
+bool MouseEventManager::FakeMouseMovePending() {
+  return fake_mouse_move_event_timer_.IsActive();
 }
 
 }  // namespace blink

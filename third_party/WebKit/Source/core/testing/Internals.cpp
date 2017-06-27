@@ -2751,6 +2751,13 @@ bool Internals::cursorUpdatePending() const {
   return GetFrame()->GetEventHandler().CursorUpdatePending();
 }
 
+bool Internals::fakeMouseMovePending() const {
+  if (!GetFrame())
+    return false;
+
+  return GetFrame()->GetEventHandler().FakeMouseMovePending();
+}
+
 DOMArrayBuffer* Internals::serializeObject(
     PassRefPtr<SerializedScriptValue> value) const {
   StringView view = value->GetWireData();

@@ -30,6 +30,8 @@ class ScrollManager;
 
 enum class DragInitiator;
 
+enum class DispatchInterval { kDuringScroll, kPerFrame };
+
 // This class takes care of dispatching all mouse events and keeps track of
 // positions and states of mouse.
 class CORE_EXPORT MouseEventManager final
@@ -87,7 +89,7 @@ class CORE_EXPORT MouseEventManager final
   void FakeMouseMoveEventTimerFired(TimerBase*);
 
   void CancelFakeMouseMoveEvent();
-  void DispatchFakeMouseMoveEventSoon();
+  void DispatchFakeMouseMoveEventSoon(DispatchInterval);
   void DispatchFakeMouseMoveEventSoonInQuad(const FloatQuad&);
 
   void SetLastKnownMousePosition(const WebMouseEvent&);
@@ -147,6 +149,8 @@ class CORE_EXPORT MouseEventManager final
   void SetClickCount(int);
 
   bool MouseDownMayStartDrag();
+
+  bool FakeMouseMovePending();
 
  private:
   class MouseEventBoundaryEventDispatcher : public BoundaryEventDispatcher {

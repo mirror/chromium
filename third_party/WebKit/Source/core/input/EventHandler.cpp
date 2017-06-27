@@ -1884,16 +1884,22 @@ void EventHandler::ScheduleCursorUpdate() {
   DCHECK_EQ(frame_, &frame_->LocalFrameRoot());
 
   // TODO(https://crbug.com/668758): Use a normal BeginFrame update for this.
-  if (!cursor_update_timer_.IsActive())
+  if (!cursor_update_timer_.IsActive()) {
     cursor_update_timer_.StartOneShot(kCursorUpdateInterval, BLINK_FROM_HERE);
+  }
 }
 
 bool EventHandler::CursorUpdatePending() {
   return cursor_update_timer_.IsActive();
 }
 
-void EventHandler::DispatchFakeMouseMoveEventSoon() {
-  mouse_event_manager_->DispatchFakeMouseMoveEventSoon();
+bool EventHandler::FakeMouseMovePending() {
+  return mouse_event_manager_->FakeMouseMovePending();
+}
+
+void EventHandler::DispatchFakeMouseMoveEventSoon(
+    DispatchInterval dispatch_interval) {
+  mouse_event_manager_->DispatchFakeMouseMoveEventSoon(dispatch_interval);
 }
 
 void EventHandler::DispatchFakeMouseMoveEventSoonInQuad(const FloatQuad& quad) {

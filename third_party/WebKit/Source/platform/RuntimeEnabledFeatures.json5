@@ -1029,6 +1029,10 @@
       status: "experimental",
     },
     {
+      name: "UpdateHoverPostLayout",
+      status: "experimental",
+    },
+    {
       name: "V8IdleTasks",
     },
     {
