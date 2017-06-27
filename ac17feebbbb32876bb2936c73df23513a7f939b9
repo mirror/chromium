@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd2044a5_90a23e51",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-27T18:37:12Z",
+      "side": 1,
+      "message": "Done. Thanks for explaining!",
+      "parentUuid": "d79e1987_42071326",
+      "range": {
+        "startLine": 1622,
+        "startChar": 40,
+        "endLine": 1622,
+        "endChar": 61
+      },
+      "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "578f6072_c4f0f34b",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240df89e_86d729c6",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-27T18:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "578f6072_c4f0f34b",
+      "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5517c761_2211e0df",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1644,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-27T18:37:12Z",
+      "side": 1,
+      "message": "Nice catch!",
+      "parentUuid": "7a72f505_e80e11c8",
+      "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac7bc4a0_6ae4fe62",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d72e09_7918da5d",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-27T18:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac7bc4a0_6ae4fe62",
+      "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
