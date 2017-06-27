@@ -1,0 +1,227 @@
+<html>
+  <div id="content"></div>
+  <script src="resources/shared.js"></script>
+  <script src="resources/idb-load-docs-shared.js"></script>
+  <script>
+
+    var write_values = function(object_store, values) {
+      for (let value of values) {
+        object_store.put(value);
+      }
+    }
+
+    var open_request = window.indexedDB.open(database_name);
+    open_request.onsuccess = function() {
+      var db = open_request.result;
+
+      var txn1 = function() {
+        var txn = db.transaction("Users", "readonly");
+        var users = txn.objectStore("Users");
+
+        var get = users.get("ufa1a865c6eb48d97");
+        get.onsuccess = ()=>{
+          console.log("Txn1 got user", get.result);
+        }
+        return transaction_complete_promise(txn).then(function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Txn1 done, got the user: "
+          div.innerHTML += get.result.emailAddress;
+          console.log("Txn1 done.")
+        });
+      }
+
+      var txn2 = function() {
+
+        var txn = db.transaction(["DocumentLocks"], "readwrite");
+        var locks = txn.objectStore("DocumentLocks");
+
+        var get = locks.get(["19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI"]);
+        get.onsuccess = ()=>{
+          console.log("Txn2 got lock", get.result);
+        }
+        t2_DocumentLocks_values.forEach((value)=>(locks.put(value)));
+        return transaction_complete_promise(txn).then(function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Txn2 done, got the lock: ";
+          div.innerHTML += get.result.e;
+          console.log("Txn2 done.")
+        });
+      }
+
+      var txn3 = function() {
+        var txn = db.transaction(["Documents"], "readonly");
+        var documents = txn.objectStore("Documents");
+
+        var get = documents.get("19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI");
+        get.onsuccess = ()=>{
+          console.log("Txn3 got doc", get.result);
+        }
+        return transaction_complete_promise(txn).then(function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Txn3 done, got the document, with image: ";
+
+          var img = document.createElement("img");
+          div.appendChild(img);
+          img.src = get.result.docosKeyData[8][2];
+          console.log("Txn3 done.")
+        });
+      }
+
+      var txn4 = async function() {
+        var txn = db.transaction(["PendingQueues"], "readonly");
+        var queues = txn.objectStore("PendingQueues");
+
+        var get = queues.get("19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI");
+        get.onsuccess = ()=>{
+          console.log("Txn4 got queue", get.result);
+        }
+        return transaction_complete_promise(txn).then(function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Txn4 done, got the queue: ";
+          div.innerHTML += get.result.r;
+          console.log("Txn4 done.")
+        });
+      }
+
+      var txn5 = function() {
+        var txn = db.transaction(["SyncObjects"], "readwrite");
+        var syncs = txn.objectStore("SyncObjects");
+
+        t5_SyncObjects_values.forEach((value)=>(syncs.put(value).onsuccess = (event)=>{
+          console.log("set value ", event.target.result);
+        }
+        ));
+
+        return transaction_complete_promise(txn).then(function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Put SyncObjects.";
+          console.log("Txn5 done.")
+        });
+      }
+
+      var txn6_15 = function() {
+        var promises = [];
+        for (let i = 0; i < 9; ++i) {
+          let txn = db.transaction("FontMetadata", "readonly");
+          let get = txn.objectStore("FontMetadata").get("Cambria");
+          get.onsuccess = function() {
+            console.log("Txn " + (i + 6) + " got font", get.result);
+          }
+          promises.push(transaction_complete_promise(txn).then(function() {
+            console.log("Txn " + (i + 6) + " done");
+            var div = document.createElement("div");
+            document.body.appendChild(div);
+            div.innerHTML = "Got font with " + get.result.fontFaces.length + " faces.";
+          }));
+        }
+        return Promise.all(promises);
+      }
+
+      var txn16 = function() {
+        let txn = db.transaction("BlobMetadata", "readonly");
+        let request = txn.objectStore("BlobMetadata").openCursor(IDBKeyRange.only("test"));
+        request.onsuccess = function(event) {
+          console.log("Txn 16 opened cursor", request.result);
+        }
+        return transaction_complete_promise(txn).then(function() {
+          console.log("Txn 16 done");
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Checked blob metadata";
+        });
+      }
+
+      var txn17 = function(doc_get_callback) {
+        var txn = db.transaction(["DocumentLocks", "Documents", "PendingQueues", "BlobMetadata", "DocumentCommands"], "readwrite");
+        var locks = txn.objectStore("DocumentLocks");
+        var documents = txn.objectStore("Documents");
+        var document_commands = txn.objectStore("DocumentCommands");
+
+        var queues = txn.objectStore("PendingQueues");
+
+        var lock_get;
+        var document_get;
+        var commands_delete;
+        var queues_get;
+        var gets_done = function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Starting edit, got lock: ";
+          div.innerHTML += lock_get.result.e;
+
+          div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Document with pricture: ";
+          var img = document.createElement("img");
+          div.appendChild(img);
+          img.src = document_get.result.docosKeyData[8][2];
+
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "And the queue: ";
+          div.innerHTML += queues_get.result.r;
+
+          locks.put(t17_DocumentLocksValue);
+          documents.put(t17_Documents_value);
+          document_commands.put(t17_DocumentCommands_value);
+          queues.put(t17_PendingQueues_value);
+        }
+        var barrier = create_incremental_barrier(gets_done);
+
+        lock_get = locks.get(["19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI"]);
+        document_get = documents.get("19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI");
+        queues_get = queues.get("19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI");
+        commands_delete = document_commands.delete(IDBKeyRange.bound(["19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI"], ["19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI", []], false, false));
+
+        lock_get.onsuccess = barrier();
+        var doc_get_barrier = barrier();
+        document_get.onsuccess = function() {
+          doc_get_callback();
+          doc_get_barrier();
+        }
+        commands_delete.onsuccess = barrier();
+        queues_get.onsuccess = barrier();
+
+        return transaction_complete_promise(txn).then(function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Txn17 done";
+          console.log("Txn 17 done")
+        });
+      }
+
+      var txn18 = function() {
+        var txn = db.transaction(["Documents"], "readonly");
+        var documents = txn.objectStore("Documents");
+
+        documents.get("19OmSKoWTJrUPwoA3G2-ZHe6jPMw2voDpyStgHFXH7qI").onsuccess = function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Got final document!";
+          console.log("Txn 17 done")
+        }
+
+        return transaction_complete_promise(txn).then(function() {
+          var div = document.createElement("div");
+          document.body.appendChild(div);
+          div.innerHTML = "Txn18 done";
+          console.log("Txn 18 done");
+          report_done();
+        });
+      }
+
+      txn1().then(()=>{
+        return Promise.all([txn2(), txn3(), txn4()]).then(()=>{
+          return Promise.all([txn5(), txn6_15(), txn16(), txn17(txn18)]);
+        }
+        )
+      }
+      )
+    }
+  </script>
+</html>
