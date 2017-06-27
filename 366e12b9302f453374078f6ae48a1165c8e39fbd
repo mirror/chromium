@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "633411ff_3cff779f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T18:06:39Z",
+      "side": 1,
+      "message": "For each CL, please include a CL description after the title.\n\nIn this case, make sure to mention that this CL is a refactor with no intended behavior change.",
+      "revId": "366e12b9302f453374078f6ae48a1165c8e39fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa825887_1c96af66",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T18:06:39Z",
+      "side": 1,
+      "message": "Comment that describes lifetime semantics, please.",
+      "revId": "366e12b9302f453374078f6ae48a1165c8e39fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e110d31_c70da783",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T18:06:39Z",
+      "side": 1,
+      "message": "I realize this is just a copy-paste...but does this need to be a bool*? Why not just a bool? If it\u0027s going to be a pointer, you\u0027ll want to describe the lifetime semantics...which are quite unclear.",
+      "revId": "366e12b9302f453374078f6ae48a1165c8e39fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f55801_25dbcbf9",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-27T18:06:39Z",
+      "side": 1,
+      "message": "shouldn\u0027t the forward include at line 28 be sufficient?",
+      "revId": "366e12b9302f453374078f6ae48a1165c8e39fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
