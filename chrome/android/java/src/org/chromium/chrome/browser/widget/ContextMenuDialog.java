@@ -20,15 +20,16 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.ScaleAnimation;
 
 import org.chromium.chrome.browser.contextmenu.TabularContextMenuViewPager;
-import org.chromium.content.browser.RenderCoordinates;
-
-import javax.annotation.Nullable;
 
 /**
  * ContextMenuDialog is a subclass of AlwaysDismissedDialog that ensures that the proper scale
  * animation is played upon calling {@link #show()} and {@link #dismiss()}.
  */
 public class ContextMenuDialog extends AlwaysDismissedDialog {
+    // Scale animation mode for menu display.
+    public static final int ANIMATION_CENTER = 1 << 0;
+    public static final int ANIMATION_PIVOT = 1 << 1;
+
     private static final long ENTER_ANIMATION_DURATION_MS = 250;
     // Exit animation duration should be set to 60% of the enter animation duration.
     private static final long EXIT_ANIMATION_DURATION_MS = 150;
@@ -37,7 +38,8 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
     private final View mContentView;
     private final float mTouchPointXPx;
     private final float mTouchPointYPx;
-    private final RenderCoordinates mRenderCoordinates;
+    private final float mTopContentOffsetPx; // used only for pivot animation.
+    private final int mAnimation;
 
     private float mContextMenuSourceXPx;
     private float mContextMenuSourceYPx;
@@ -46,22 +48,23 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
     /**
      * Creates an instance of the ContextMenuDialog.
      * @param ownerActivity The activity in which the dialog should run
+     * @param contentView The The {@link TabularContextMenuViewPager} to display on the dialog.
      * @param theme A style resource describing the theme to use for the window, or {@code 0} to use
      *              the default dialog theme
+     * @param animation scale animation mode; either center or pivot
      * @param touchPointXPx The x-coordinate of the touch that triggered the context menu.
      * @param touchPointYPx The y-coordinate of the touch that triggered the context menu.
-     * @param contentView The The {@link TabularContextMenuViewPager} to display on the dialog.
-     * @param renderCoordinates The render coordinates to get the y offset of the window. This could
-     *                          be null if ContentViewCore is not available.
+     * @param topContentOffsetPx The offset of the content from the top.
      */
-    public ContextMenuDialog(Activity ownerActivity, int theme, float touchPointXPx,
-            float touchPointYPx, View contentView, @Nullable RenderCoordinates renderCoordinates) {
+    public ContextMenuDialog(Activity ownerActivity, View contentView, int theme, int animation,
+            float touchPointXPx, float touchPointYPx, float topContentOffsetPx) {
         super(ownerActivity, theme);
         mActivity = ownerActivity;
+        mContentView = contentView;
+        mAnimation = animation;
         mTouchPointXPx = touchPointXPx;
         mTouchPointYPx = touchPointYPx;
-        mContentView = contentView;
-        mRenderCoordinates = renderCoordinates;
+        mTopContentOffsetPx = topContentOffsetPx;
     }
 
     @Override
@@ -98,9 +101,7 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
         window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
 
         float xOffsetPx = rectangle.left;
-        float contentOffsetYPx =
-                mRenderCoordinates != null ? mRenderCoordinates.getContentOffsetYPix() : 0;
-        float yOffsetPx = rectangle.top + contentOffsetYPx;
+        float yOffsetPx = rectangle.top + mTopContentOffsetPx;
 
         int[] currentLocationOnScreenPx = new int[2];
         mContentView.getLocationOnScreen(currentLocationOnScreenPx);
@@ -158,19 +159,25 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
      *               as an absolute number where 0 is the top edge.
      * @return Returns the scale animation for the context menu.
      */
-    public Animation getScaleAnimation(boolean isEnterAnimation, float pivotX, float pivotY) {
+    private Animation getScaleAnimation(boolean isEnterAnimation, float pivotX, float pivotY) {
         float fromX = isEnterAnimation ? 0f : 1f;
         float toX = isEnterAnimation ? 1f : 0f;
         float fromY = fromX;
         float toY = toX;
 
         ScaleAnimation animation;
-        if (mRenderCoordinates == null) {
-            animation = new ScaleAnimation(fromX, toX, fromY, toY, Animation.RELATIVE_TO_SELF, 0.5f,
-                    Animation.RELATIVE_TO_SELF, 0.5f);
-        } else {
-            animation = new ScaleAnimation(
-                    fromX, toX, fromY, toY, Animation.ABSOLUTE, pivotX, Animation.ABSOLUTE, pivotY);
+        switch (mAnimation) {
+            case ANIMATION_CENTER:
+                animation = new ScaleAnimation(fromX, toX, fromY, toY, Animation.RELATIVE_TO_SELF,
+                        0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                break;
+            case ANIMATION_PIVOT:
+                animation = new ScaleAnimation(fromX, toX, fromY, toY, Animation.ABSOLUTE, pivotX,
+                        Animation.ABSOLUTE, pivotY);
+                break;
+            default:
+                animation = null;
+                assert false;
         }
 
         long duration = isEnterAnimation ? ENTER_ANIMATION_DURATION_MS : EXIT_ANIMATION_DURATION_MS;

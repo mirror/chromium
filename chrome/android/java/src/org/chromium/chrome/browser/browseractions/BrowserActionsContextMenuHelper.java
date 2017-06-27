@@ -24,6 +24,7 @@ import org.chromium.chrome.browser.contextmenu.ContextMenuUi;
 import org.chromium.chrome.browser.contextmenu.PlatformContextMenuUi;
 import org.chromium.chrome.browser.contextmenu.ShareContextMenuItem;
 import org.chromium.chrome.browser.contextmenu.TabularContextMenuUi;
+import org.chromium.chrome.browser.widget.ContextMenuDialog;
 import org.chromium.ui.base.WindowAndroid.OnCloseContextMenuListener;
 
 import java.util.ArrayList;
@@ -152,7 +153,8 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
      */
     public void displayBrowserActionsMenu(final View view) {
         if (IS_NEW_UI_ENABLED) {
-            ContextMenuUi menuUi = new TabularContextMenuUi(mOnShareClickedRunnable);
+            ContextMenuUi menuUi = new TabularContextMenuUi(mOnShareClickedRunnable,
+                    ContextMenuDialog.ANIMATION_CENTER, 0 /* top offset */);
             menuUi.displayMenu(mActivity, mCurrentContextMenuParams, mItems, mItemSelectedCallback,
                     mOnMenuShown, mOnMenuClosed);
         } else {

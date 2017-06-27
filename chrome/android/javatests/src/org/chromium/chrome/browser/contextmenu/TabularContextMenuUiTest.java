@@ -24,6 +24,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.widget.ContextMenuDialog;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.content_public.common.Referrer;
@@ -73,11 +74,15 @@ public class TabularContextMenuUiTest {
         mActivityTestRule.startMainActivityOnBlankPage();
     }
 
+    private static TabularContextMenuUi createContextMenu() {
+        return new TabularContextMenuUi(null, ContextMenuDialog.ANIMATION_CENTER, 0);
+    }
+
     @Test
     @SmallTest
     @Feature({"CustomContextMenu"})
     public void testViewDisplaysSingleItemProperly() throws ExecutionException {
-        final TabularContextMenuUi dialog = new TabularContextMenuUi(null);
+        final TabularContextMenuUi dialog = createContextMenu();
 
         final List<Pair<Integer, List<ContextMenuItem>>> itemGroups = new ArrayList<>();
         List<? extends ContextMenuItem> item =
@@ -106,7 +111,7 @@ public class TabularContextMenuUiTest {
     @SmallTest
     @Feature({"CustomContextMenu"})
     public void testViewDisplaysViewPagerForMultipleItems() throws ExecutionException {
-        final TabularContextMenuUi dialog = new TabularContextMenuUi(null);
+        final TabularContextMenuUi dialog = createContextMenu();
 
         final List<Pair<Integer, List<ContextMenuItem>>> itemGroups = new ArrayList<>();
         List<? extends ContextMenuItem> item =
@@ -137,7 +142,7 @@ public class TabularContextMenuUiTest {
     @SmallTest
     @Feature({"CustomContextMenu"})
     public void testURLIsShownOnContextMenu() throws ExecutionException {
-        final TabularContextMenuUi dialog = new TabularContextMenuUi(null);
+        final TabularContextMenuUi dialog = createContextMenu();
         final List<? extends ContextMenuItem> item =
                 CollectionUtil.newArrayList(ChromeContextMenuItem.ADD_TO_CONTACTS,
                         ChromeContextMenuItem.CALL, ChromeContextMenuItem.COPY_LINK_ADDRESS);
@@ -158,7 +163,7 @@ public class TabularContextMenuUiTest {
     @SmallTest
     @Feature({"CustomContextMenu"})
     public void testHeaderIsNotShownWhenThereIsNoParams() throws ExecutionException {
-        final TabularContextMenuUi dialog = new TabularContextMenuUi(null);
+        final TabularContextMenuUi dialog = createContextMenu();
         final List<? extends ContextMenuItem> item =
                 CollectionUtil.newArrayList(ChromeContextMenuItem.ADD_TO_CONTACTS,
                         ChromeContextMenuItem.CALL, ChromeContextMenuItem.COPY_LINK_ADDRESS);
@@ -178,7 +183,7 @@ public class TabularContextMenuUiTest {
     @SmallTest
     @Feature({"CustomContextMenu"})
     public void testLinkShowsMultipleLinesWhenClicked() throws ExecutionException {
-        final TabularContextMenuUi dialog = new TabularContextMenuUi(null);
+        final TabularContextMenuUi dialog = createContextMenu();
         final List<? extends ContextMenuItem> item =
                 CollectionUtil.newArrayList(ChromeContextMenuItem.ADD_TO_CONTACTS,
                         ChromeContextMenuItem.CALL, ChromeContextMenuItem.COPY_LINK_ADDRESS);

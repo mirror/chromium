@@ -30,7 +30,6 @@ import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.ContextMenuDialog;
-import org.chromium.content.browser.RenderCoordinates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +38,20 @@ import java.util.List;
  * A custom dialog that separates each group into separate tabs. It uses a dialog instead.
  */
 public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemClickListener {
+    private final Callback<Boolean> mOnShareItemClicked;
+    private final int mAnimation;
+
     private ContextMenuDialog mContextMenuDialog;
     private Callback<Integer> mCallback;
     private int mMenuItemHeight;
     private ImageView mHeaderImageView;
-    private Callback<Boolean> mOnShareItemClicked;
     private View mPagerView;
-    private RenderCoordinates mRenderCoordinates;
+    private float mTopContentOffsetPx;
 
-    public TabularContextMenuUi(Callback<Boolean> onShareItemClicked) {
+    public TabularContextMenuUi(
+            Callback<Boolean> onShareItemClicked, int animation, float topContentOffsetPx) {
         mOnShareItemClicked = onShareItemClicked;
+        mAnimation = animation;
     }
 
     @Override
@@ -100,8 +103,9 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
         mPagerView = initPagerView(activity, params, itemGroups,
                 (TabularContextMenuViewPager) view.findViewById(R.id.custom_pager));
 
-        final ContextMenuDialog dialog = new ContextMenuDialog(activity, R.style.DialogWhenLarge,
-                touchPointXPx, touchPointYPx, mPagerView, mRenderCoordinates);
+        final ContextMenuDialog dialog =
+                new ContextMenuDialog(activity, mPagerView, R.style.DialogWhenLarge, mAnimation,
+                        touchPointXPx, touchPointYPx, mTopContentOffsetPx);
         dialog.setContentView(view);
 
         return dialog;
@@ -285,13 +289,5 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         mContextMenuDialog.dismiss();
         mCallback.onResult((int) id);
-    }
-
-    /**
-     * Gives this class access to the render coordinates to allow access to the total size of the
-     * toolbar and tab strip.
-     */
-    public void setRenderCoordinates(RenderCoordinates renderCoordinates) {
-        mRenderCoordinates = renderCoordinates;
     }
 }
