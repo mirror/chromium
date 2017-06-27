@@ -27,6 +27,7 @@ public class AppMenuButtonHelper extends AccessibilityDelegate implements OnTouc
     private final AppMenuHandler mMenuHandler;
     private Runnable mOnAppMenuShownListener;
     private boolean mIsTouchEventsBeingProcessed;
+    private boolean mShowMenuOnUp;
 
     /**
      * @param menuHandler MenuHandler implementation that can show and get the app menu.
@@ -40,6 +41,14 @@ public class AppMenuButtonHelper extends AccessibilityDelegate implements OnTouc
      */
     public void setOnAppMenuShownListener(Runnable onAppMenuShownListener) {
         mOnAppMenuShownListener = onAppMenuShownListener;
+    }
+
+    /**
+     * @param showMenuOnUp Whether app menu should show on the up action.
+     *                     If false, the app menu will be shown on the down action.
+     */
+    public void setShowMenuOnUp(boolean showMenuOnUp) {
+        mShowMenuOnUp = showMenuOnUp;
     }
 
     /**
@@ -88,12 +97,21 @@ public class AppMenuButtonHelper extends AccessibilityDelegate implements OnTouc
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                mIsTouchEventsBeingProcessed = true;
-                isTouchEventConsumed |= true;
-                view.setPressed(true);
-                showAppMenu(view, true);
+                if (!mShowMenuOnUp) {
+                    mIsTouchEventsBeingProcessed = true;
+                    isTouchEventConsumed |= true;
+                    view.setPressed(true);
+                    showAppMenu(view, true);
+                }
                 break;
             case MotionEvent.ACTION_UP:
+                mIsTouchEventsBeingProcessed = false;
+                isTouchEventConsumed |= true;
+                view.setPressed(false);
+                if (mShowMenuOnUp) {
+                    showAppMenu(view, false);
+                }
+                break;
             case MotionEvent.ACTION_CANCEL:
                 mIsTouchEventsBeingProcessed = false;
                 isTouchEventConsumed |= true;
