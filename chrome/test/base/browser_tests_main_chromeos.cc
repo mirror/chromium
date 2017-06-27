@@ -2,9 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <algorithm>
-
-#include "base/sys_info.h"
+#include "base/test/launcher/test_launcher.h"
 #include "chrome/test/base/chrome_test_launcher.h"
 #include "chrome/test/base/chrome_test_suite.h"
 #include "chrome/test/base/mash_browser_tests_main.h"
@@ -14,8 +12,12 @@ int main(int argc, char** argv) {
   if (RunMashBrowserTests(argc, argv, &exit_code))
     return exit_code;
 
-  int default_jobs = std::max(1, base::SysInfo::NumberOfProcessors() / 2);
+  size_t parallel_jobs = base::NumParallelJobs() / 2U;
+  if (parallel_jobs == 0U) {
+    return 1;
+  }
+
   ChromeTestSuiteRunner runner;
   ChromeTestLauncherDelegate delegate(&runner);
-  return LaunchChromeTests(default_jobs, &delegate, argc, argv);
+  return LaunchChromeTests(parallel_jobs, &delegate, argc, argv);
 }
