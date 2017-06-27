@@ -33,7 +33,7 @@ class LockDebugView : public views::View, public views::ButtonListener {
   void RebuildDebugUserColumn();
 
   std::unique_ptr<DebugDataDispatcherTransformer> const debug_data_dispatcher_;
-  size_t num_users_ = 1;
+  size_t num_users_ = 1u;
 
   LockContentsView* lock_;
 

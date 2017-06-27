@@ -168,7 +168,7 @@ LockDebugView::~LockDebugView() = default;
 
 void LockDebugView::Layout() {
   views::View::Layout();
-  lock_->SetBoundsRect(bounds());
+  lock_->SetBoundsRect(GetLocalBounds());
   debug_->SetPosition(gfx::Point());
 }
 
@@ -180,8 +180,8 @@ void LockDebugView::ButtonPressed(views::Button* sender,
       ++num_users_;
     else if (sender == remove_user_)
       --num_users_;
-    if (num_users_ < 1)
-      num_users_ = 1;
+    if (num_users_ < 1u)
+      num_users_ = 1u;
     debug_data_dispatcher_->SetUserCount(num_users_);
     RebuildDebugUserColumn();
     Layout();
