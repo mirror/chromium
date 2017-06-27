@@ -16,6 +16,24 @@
       "revId": "0fca6dc3ba6d07a3c2588532b7e28df24bea91c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a381fc87_d2742aa9",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-27T20:07:31Z",
+      "side": 1,
+      "message": "Yes, we should call request_gpu_info_callbacks_ with empty GpuInfo. Thanks for pointing this out.\nShould we check for status_ as UNKNOWN before making these calls, also taking into consideration the normal destruction case? Probably in that case, the vector has already been cleared either in DidInitialize or DidFailInitialize.",
+      "parentUuid": "bf0d5f0a_dc1dce75",
+      "revId": "0fca6dc3ba6d07a3c2588532b7e28df24bea91c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
