@@ -59,7 +59,7 @@ Polymer({
   },
 
   /**
-   * @param {AndroidAppsInfo} info
+   * @param {!AndroidAppsInfo}
    * @private
    */
   androidAppsInfoUpdate_: function(info) {

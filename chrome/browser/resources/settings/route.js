@@ -135,6 +135,8 @@ cr.define('settings', function() {
   // <if expr="chromeos">
   r.ANDROID_APPS = r.BASIC.createSection('/androidApps', 'androidApps');
   r.ANDROID_APPS_DETAILS = r.ANDROID_APPS.createChild('/androidApps/details');
+  r.ANDROID_SETTINGS =
+      r.BASIC.createSection('/androidSettings', 'androidSettings');
   // </if>
 
   r.ON_STARTUP = r.BASIC.createSection('/onStartup', 'onStartup');

@@ -20,6 +20,8 @@ Polymer({
 
     showAndroidApps: Boolean,
 
+    showAndroidSettings: Boolean,
+
     showChromeCleanup: {
       type: Boolean,
       value: function() {
@@ -186,6 +188,16 @@ Polymer({
     var visibility = /** @type {boolean|undefined} */ (
         this.get('pageVisibility.androidApps'));
     return this.showAndroidApps && this.showPage_(visibility);
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  shouldShowAndroidSettings_: function() {
+    var visibility = /** @type {boolean|undefined} */ (
+        this.get('pageVisibility.androidSettings'));
+    return this.showAndroidSettings && this.showPage_(visibility);
   },
 
   /**
