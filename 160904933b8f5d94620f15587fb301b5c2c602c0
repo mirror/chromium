@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1a393666_350d276e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:23:28Z",
+      "side": 1,
+      "message": "Let\u0027s please not use our users as a testbed for our experiments shall we? Crashing the browser is a very poor experience.\nDCHECK it should be. Use UMA instead if you need to collect data.",
+      "parentUuid": "25b26d87_5a15a614",
+      "range": {
+        "startLine": 758,
+        "startChar": 2,
+        "endLine": 758,
+        "endChar": 7
+      },
+      "revId": "160904933b8f5d94620f15587fb301b5c2c602c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a601767_3cc03327",
         "filename": "content/browser/renderer_host/input/legacy_input_router_impl.h",
         "patchSetId": 6

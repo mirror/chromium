@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c4e1755_7d93978b",
+        "filename": "content/browser/frame_host/input/legacy_ipc_frame_input_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:23:28Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "7d5fff73feef0b654db6683bbfa835ae7fa9e9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785d56fc_a7f9da3d",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:23:28Z",
+      "side": 1,
+      "message": "nit: the only reason you need the RenderWidgetHostImpl is for the input router and the routing id. If you pass those explicitly (in particular the input router) you can save a scary static_cast.",
+      "revId": "7d5fff73feef0b654db6683bbfa835ae7fa9e9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d644ad3_1526815b",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:23:28Z",
+      "side": 1,
+      "message": "nit: explicit (but maybe moot, see comment in the .cc)",
+      "revId": "7d5fff73feef0b654db6683bbfa835ae7fa9e9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dd3ca8_be91f492",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:23:28Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this one go through the widget input handler? Maybe worth a comment?",
+      "revId": "7d5fff73feef0b654db6683bbfa835ae7fa9e9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebc16fc_e91771d9",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:23:28Z",
+      "side": 1,
+      "message": "Can you use host_view_ instead of host_-\u003eGetView()?\nDitto several places below... Do you need host_ at all?",
+      "revId": "7d5fff73feef0b654db6683bbfa835ae7fa9e9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74370c8_30211f3b",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:23:28Z",
+      "side": 1,
+      "message": "nit: {} needed per style guide",
+      "revId": "7d5fff73feef0b654db6683bbfa835ae7fa9e9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
