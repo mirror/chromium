@@ -116,6 +116,13 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
   // Most visited data from the MostVisitedSites service currently in use.
   ntp_tiles::NTPTilesVector _mostVisitedData;
 
+  // Most visited data from the MostVisitedSites service (copied upon receiving
+  // the callback), not yet used.
+  ntp_tiles::NTPTilesVector _freshMostVisitedData;
+
+  // Most visited data used for logging the tiles impression.
+  ntp_tiles::NTPTilesVector _mostVisitedDataForLogging;
+
   // Observes the WebStateList so that this mediator can update the UI when the
   // active WebState changes.
   std::unique_ptr<WebStateListObserverBridge> _webStateListObserver;
@@ -136,16 +143,8 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 // The dispatcher for this mediator.
 @property(nonatomic, assign) id<ChromeExecuteCommand, UrlLoader> dispatcher;
 
-// Most visited data from the MostVisitedSites service (copied upon receiving
-// the callback), not yet used.
-@property(nonatomic, assign) ntp_tiles::NTPTilesVector freshMostVisitedData;
-
 // Perform initial setup.
 - (void)setUp;
-
-// If there is some fresh most visited tiles, they become the current tiles and
-// the consumer gets notified.
-- (void)useFreshData;
 
 @end
 
@@ -154,7 +153,6 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 @synthesize consumer = _consumer;
 @synthesize dispatcher = _dispatcher;
 @synthesize webStateList = _webStateList;
-@synthesize freshMostVisitedData = _freshMostVisitedData;
 
 - (instancetype)initWithConsumer:(id<GoogleLandingConsumer>)consumer
                     browserState:(ios::ChromeBrowserState*)browserState
@@ -260,7 +258,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
   if (_mostVisitedData.size() > 0) {
     // If some content is already displayed to the user, do not update it to
     // prevent updating the all the tiles without any action from the user.
-    self.freshMostVisitedData = data;
+    _freshMostVisitedData = data;
     return;
   }
 
@@ -269,12 +267,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 
   if (data.size() && !_recordedPageImpression) {
     _recordedPageImpression = YES;
-    int index = 0;
-    for (const ntp_tiles::NTPTile& ntpTile : data) {
-      ntp_tiles::metrics::RecordTileImpression(
-          index++, ntpTile.source, ntp_tiles::UNKNOWN_TILE_TYPE, ntpTile.url,
-          GetApplicationContext()->GetRapporServiceImpl());
-    }
+    _mostVisitedDataForLogging = data;
     ntp_tiles::metrics::RecordPageImpression(data.size());
   }
 }
@@ -298,6 +291,8 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 
   void (^faviconBlock)(const favicon_base::LargeIconResult&) = ^(
       const favicon_base::LargeIconResult& result) {
+    ntp_tiles::TileVisualType tileType;
+
     if (result.bitmap.is_valid()) {
       scoped_refptr<base::RefCountedMemory> data =
           result.bitmap.bitmap_data.get();
@@ -305,6 +300,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
           imageWithData:[NSData dataWithBytes:data->front() length:data->size()]
                   scale:[UIScreen mainScreen].scale];
       imageCallback(favicon);
+      tileType = ntp_tiles::TileVisualType::ICON_REAL;
     } else if (result.fallback_icon_style) {
       UIColor* backgroundColor = skia::UIColorFromSkColor(
           result.fallback_icon_style->background_color);
@@ -313,12 +309,15 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
       BOOL isDefaultColor =
           result.fallback_icon_style->is_default_background_color;
       fallbackCallback(backgroundColor, textColor, isDefaultColor);
+      tileType = isDefaultColor ? ntp_tiles::TileVisualType::ICON_DEFAULT
+                                : ntp_tiles::TileVisualType::ICON_COLOR;
     }
 
     base::scoped_nsobject<GoogleLandingMediator> strongSelf([weakSelf retain]);
-    if (strongSelf &&
-        (result.bitmap.is_valid() || result.fallback_icon_style)) {
-      [strongSelf largeIconCache]->SetCachedResult(URL, result);
+    if (strongSelf) {
+      if ((result.bitmap.is_valid() || result.fallback_icon_style))
+        [strongSelf largeIconCache]->SetCachedResult(URL, result);
+      [strongSelf faviconOfType:tileType fetchedForURL:URL];
     }
   };
 
@@ -439,9 +438,28 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 
 #pragma mark - Private
 
+// If there is some fresh most visited tiles, they become the current tiles and
+// the consumer gets notified.
 - (void)useFreshData {
-  _mostVisitedData = self.freshMostVisitedData;
+  _mostVisitedData = _freshMostVisitedData;
   [self.consumer mostVisitedDataUpdated];
+}
+
+// If it is the first time we see the favicon corresponding to |URL|, we log the
+// |tileType| impression.
+- (void)faviconOfType:(ntp_tiles::TileVisualType)tileType
+        fetchedForURL:(const GURL&)URL {
+  for (size_t i = 0; i < _mostVisitedDataForLogging.size(); ++i) {
+    ntp_tiles::NTPTile& ntpTile = _mostVisitedDataForLogging[i];
+    if (ntpTile.url == URL) {
+      ntp_tiles::metrics::RecordTileImpression(
+          i, ntpTile.source, tileType, URL,
+          GetApplicationContext()->GetRapporServiceImpl());
+      // Reset the URL to be sure to log the impression only once.
+      ntpTile.url = GURL();
+      break;
+    }
+  }
 }
 
 @end
