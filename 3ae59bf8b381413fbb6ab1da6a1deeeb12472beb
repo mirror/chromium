@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "916a9cde_b989f5b3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-27T00:21:20Z",
+      "side": 1,
+      "message": "Oh, I see what you mean. Yes, I think that\u0027s correct, onChildProcessDied will eventually be called when the other client unbind and I guess we get killed by the OOM. (since CPLH keeps it bound so when it does a restart it does not reuse it).\nUpdated the comments.",
+      "parentUuid": "71bf0b3c_40f56a99",
+      "revId": "3ae59bf8b381413fbb6ab1da6a1deeeb12472beb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5812026d_64edf4a7",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
         "patchSetId": 5
