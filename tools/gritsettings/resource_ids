@@ -81,7 +81,7 @@
   # START chrome/browser section.
   "chrome/browser/browser_resources.grd": {
     "includes": [11000],
-    "structures": [11480],
+    "structures": [11490],
   },
   "chrome/browser/resources/component_extension_resources.grd": {
     "includes": [11580],
