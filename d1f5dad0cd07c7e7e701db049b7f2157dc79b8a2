@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "502bf7b4_eb3fdef2",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "typo: destruction",
+      "range": {
+        "startLine": 231,
+        "startChar": 32,
+        "endLine": 231,
+        "endChar": 43
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f351be50_b5b1e5cb",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "Because the recorder is not passed anywhere, base::Optional would be better here. It avoids the additional heap allocation and communicates better the intentions.",
+      "range": {
+        "startLine": 232,
+        "startChar": 7,
+        "endLine": 232,
+        "endChar": 17
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02783006_96c2f30f",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "The changes in this file appear unrelated to the rest of the CL. Perhaps let\u0027s revert the change in here in order not to spam git history?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0604a2_c3f38540",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "optional nit: Normally we nest the anonymous namespace within the password_manager namespace to avoid the need to specify it inline. After all, the helper functions are still code from this component, so should be within password_manager namespace as well.",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f521a8_1ee145c8",
+        "filename": "components/password_manager/core/browser/password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "A forward decl should be enough here. Note that Chromium diverges in the style from Google: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Forward-declarations-vs_includes",
+      "range": {
+        "startLine": 14,
+        "startChar": 51,
+        "endLine": 14,
+        "endChar": 84
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9e0468_6207fad0",
+        "filename": "components/password_manager/core/browser/password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "Seems unused.",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2c53a2_2bd965e0",
+        "filename": "components/password_manager/core/browser/password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "Instead of relying on the contract of not returning null, let\u0027s make it return a reference. Note that unlike non-const references in arguments, which are forbidden, non-const references as return values are allowed.",
+      "range": {
+        "startLine": 232,
+        "startChar": 5,
+        "endLine": 232,
+        "endChar": 28
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead00c99_b548a857",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "Is this really worth a separate method with arguments, when it only is called at one place? My suggestion is to inline it in the destructor.",
+      "range": {
+        "startLine": 33,
+        "startChar": 37,
+        "endLine": 33,
+        "endChar": 52
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1ffc81_81d5f7f0",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "typo: owner?",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898fdc45_403a60b5",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "I suppose this could not be base::Optional, because UkmEntryBuilder is not moveable?\nIn that case, could it at least be const std::unique_ptr\u003c\u003e? That way it\u0027s clear that the unique_ptr stays in the class and points to the same address the whole time.",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a1af20_c4e6a916",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "optional: Initialise to false here to avoid boilerplate at the constructor definition.",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05c1699_a87bf8d0",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "If you nest the anonymous namespace inside password_manager (which makes sense, because all code in the component should be in its namespace), you can omit the mention of password_manager:: on line 24.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bff315_b3b9ea44",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "nit: Add a blank line above.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 55
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4401da_35bf292d",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "nit: ASSERT_TRUE(source) will produce a less spammy log in case of failure.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331812b3_e127057c",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "Should the types of the arguments be the same (currently int vs. int64_t)?",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 39
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d74924_a542d113",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "You could also add tests to verify that multiple calls to RecordUserModifiedPasswordField still only result in count \u003d\u003d 1.\nAnd also a test for the case when RecordUserModifiedPasswordField is not called at all.",
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed22539_734fbc5b",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "base::Optional?",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 17
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5caba1f5_270d211b",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T18:16:26Z",
+      "side": 1,
+      "message": "nit: Also do you want to comment on this data member?",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 23
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
