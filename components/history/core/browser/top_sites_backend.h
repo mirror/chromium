@@ -42,8 +42,7 @@ class TopSitesBackend : public base::RefCountedThreadSafe<TopSitesBackend> {
   typedef base::Callback<void(const scoped_refptr<MostVisitedThumbnails>&)>
       GetMostVisitedThumbnailsCallback;
 
-  explicit TopSitesBackend(
-      const scoped_refptr<base::SingleThreadTaskRunner>& db_task_runner);
+  explicit TopSitesBackend();
 
   void Init(const base::FilePath& path);
 
