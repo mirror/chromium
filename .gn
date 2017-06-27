@@ -51,7 +51,7 @@ default_args = {
 
   # TODO(jochen): Remove this. http://crbug.com/v8/5830,
   # http://crbug.com/728583.
-  v8_check_microtasks_scopes_consistency = false
+  # v8_check_microtasks_scopes_consistency = false
 }
 
 # These are the targets to check headers for by default. The files in targets

@@ -626,7 +626,7 @@ bool MenuController::OnMouseDragged(SubmenuView* source,
       SetSelection(part.menu ? part.menu : state_.item, SELECTION_OPEN_SUBMENU);
     }
   } else if (part.type == MenuPart::NONE) {
-    ShowSiblingMenu(source, event.location());
+    HandleMouseLocation(source, event.location());
   }
   UpdateActiveMouseView(source, event, mouse_menu);
 
