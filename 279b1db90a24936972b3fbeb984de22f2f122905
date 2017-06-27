@@ -16,6 +16,70 @@
       "revId": "279b1db90a24936972b3fbeb984de22f2f122905",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860f5596_f471e189",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-27T20:51:19Z",
+      "side": 1,
+      "message": "+1, but may be SECURITY_INTERSTITIAL since:\nthe enum is already called: SafeBrowsingTriggerType\n\nAlso, enum class?",
+      "parentUuid": "539d2fed_9455af4c",
+      "revId": "279b1db90a24936972b3fbeb984de22f2f122905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f925910_78f96206",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-27T20:51:19Z",
+      "side": 1,
+      "message": "TODO(lpz) or NOTE?",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "279b1db90a24936972b3fbeb984de22f2f122905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b2f342_b46878bd",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-27T20:51:19Z",
+      "side": 1,
+      "message": "Would it make sense to pass this value as an argument, or make the name of the function imply interstitials?",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 65
+      },
+      "revId": "279b1db90a24936972b3fbeb984de22f2f122905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
