@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c10ba4b_e0e37575",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T18:27:00Z",
+      "side": 1,
+      "message": "optional: remove \u0027:vector_icons\u0027, it\u0027s unnecessary.",
+      "range": {
+        "startLine": 1103,
+        "startChar": 20,
+        "endLine": 1103,
+        "endChar": 45
+      },
+      "revId": "e0716ca04761101c52e29d09547c926bb1b6a400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001b94ab_61fb38e3",
+        "filename": "chrome/browser/ui/cocoa/device_chooser_content_view_cocoa.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T18:27:00Z",
+      "side": 1,
+      "message": "If possible, remove this include. Same for other files.",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "e0716ca04761101c52e29d09547c926bb1b6a400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521f6434_e4750c4e",
+        "filename": "components/vector_icons/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T18:27:00Z",
+      "side": 1,
+      "message": "sort",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "e0716ca04761101c52e29d09547c926bb1b6a400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
