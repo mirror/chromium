@@ -75,12 +75,7 @@ class MediaGpuChannelFilter : public IPC::MessageFilter {
   }
 
  private:
-  ~MediaGpuChannelFilter() override {
-    // TODO(sunnyps): Remove once crbug.com/729483 has been resolved.
-    base::debug::SetCrashKeyToStackTrace(
-        gpu::crash_keys::kMediaGpuChannelFilterTrace,
-        base::debug::StackTrace());
-  }
+  ~MediaGpuChannelFilter() override = default;
 
   IPC::Channel* channel_;
   base::UnguessableToken channel_token_;
