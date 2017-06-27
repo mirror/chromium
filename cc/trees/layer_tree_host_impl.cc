@@ -387,8 +387,7 @@ void LayerTreeHostImpl::UpdateSyncTreeAfterCommitOrImplSideInvalidation() {
     // is important for SingleThreadProxy and impl-side painting case. For
     // STP, we commit to active tree and RequiresHighResToDraw, and set
     // Scheduler to wait for ReadyToDraw signal to avoid Checkerboard.
-    if (CommitToActiveTree())
-      NotifyReadyToDraw();
+    NotifyReadyToDraw();
   } else if (!CommitToActiveTree()) {
     DCHECK(!pending_tree_raster_duration_timer_);
     pending_tree_raster_duration_timer_ =
