@@ -9,14 +9,47 @@
 #include "cc/base/switches.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/layer_tree_frame_sink_client.h"
+#include "cc/output/renderer_settings.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/scheduler/delay_based_time_source.h"
-#include "cc/test/fake_layer_tree_frame_sink.h"
+#include "cc/test/fake_output_surface.h"
+#include "cc/test/test_context_provider.h"
+#include "cc/test/test_layer_tree_frame_sink.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/display/display_switches.h"
 #include "ui/gfx/switches.h"
 
 namespace ui {
+namespace {
+
+class FrameSinkClient : public cc::TestLayerTreeFrameSinkClient {
+ public:
+  explicit FrameSinkClient(
+      scoped_refptr<cc::ContextProvider> display_context_provider)
+      : display_context_provider_(std::move(display_context_provider)) {}
+
+  std::unique_ptr<cc::OutputSurface> CreateDisplayOutputSurface(
+      scoped_refptr<cc::ContextProvider> compositor_context_provider) override {
+    return cc::FakeOutputSurface::Create3d(
+        std::move(display_context_provider_));
+  }
+
+  void DisplayReceivedLocalSurfaceId(
+      const cc::LocalSurfaceId& local_surface_id) override {}
+  void DisplayReceivedCompositorFrame(
+      const cc::CompositorFrame& frame) override {}
+  void DisplayWillDrawAndSwap(
+      bool will_draw_and_swap,
+      const cc::RenderPassList& render_passes) override {}
+  void DisplayDidDrawAndSwap() override {}
+
+ private:
+  scoped_refptr<cc::ContextProvider> display_context_provider_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameSinkClient);
+};
+
+}  // namespace
 
 FakeContextFactory::FakeContextFactory() {
 #if defined(OS_WIN)
@@ -42,12 +75,25 @@ FakeContextFactory::FakeContextFactory() {
 FakeContextFactory::~FakeContextFactory() = default;
 
 const cc::CompositorFrame& FakeContextFactory::GetLastCompositorFrame() const {
-  return *frame_sink_->last_sent_frame();
+  // HACK! FIX ME!
+  static cc::CompositorFrame hack;
+  return hack;  //*frame_sink_->last_sent_frame();
 }
 
 void FakeContextFactory::CreateLayerTreeFrameSink(
     base::WeakPtr<ui::Compositor> compositor) {
-  auto frame_sink = cc::FakeLayerTreeFrameSink::Create3d();
+  scoped_refptr<cc::TestContextProvider> context_provider =
+      cc::TestContextProvider::Create();
+  frame_sink_client_ = base::MakeUnique<FrameSinkClient>(context_provider);
+  constexpr bool synchronous_composite = true;
+  constexpr bool disable_display_vsync = false;
+  constexpr double refresh_rate = 60.0;
+  auto frame_sink = base::MakeUnique<cc::TestLayerTreeFrameSink>(
+      context_provider, cc::TestContextProvider::CreateWorker(), nullptr,
+      nullptr, cc::RendererSettings(),
+      base::ThreadTaskRunnerHandle::Get().get(), synchronous_composite,
+      disable_display_vsync, refresh_rate);
+  frame_sink->SetClient(frame_sink_client_.get());
   frame_sink_ = frame_sink.get();
   compositor->SetLayerTreeFrameSink(std::move(frame_sink));
 }
