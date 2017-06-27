@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "47937ac3_b755cbd5",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T00:58:06Z",
+      "side": 1,
+      "message": "Chromium style guide recommend to not use abbreviations, Attrib -\u003e Attribute. Can you also add a description above this struct to describe that it is.\n\nAnd why does this have \"GpuMemoryBuffer\" prefix and not \"Buffer\"-prefix as BufferFormat above?",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709cc1b2_3e50788c",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T00:58:06Z",
+      "side": 1,
+      "message": "nit: s/{};/ {}/",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38dec93d_9dc88ecf",
         "filename": "ui/gfx/buffer_types.h",
         "patchSetId": 2
@@ -13,6 +47,40 @@
       "writtenOn": "2017-06-27T00:19:42Z",
       "side": 1,
       "message": "Please provide initializers for format and modifier",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2878b5bd_b7d93fd6",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T00:58:06Z",
+      "side": 1,
+      "message": "nit: s/{};/ {}/",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35b8a1a_010f33ea",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T00:58:06Z",
+      "side": 1,
+      "message": "nit: s/{};/ {}/",
       "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
