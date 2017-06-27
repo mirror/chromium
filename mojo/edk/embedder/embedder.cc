@@ -38,6 +38,7 @@ Core* GetCore() { return g_core; }
 }  // namespace internal
 
 void Init(const Configuration& configuration) {
+  DCHECK(!internal::g_core);
   MojoSystemThunks thunks = MakeSystemThunks();
   size_t expected_size = MojoEmbedderSetSystemThunks(&thunks);
   DCHECK_EQ(expected_size, sizeof(thunks));
