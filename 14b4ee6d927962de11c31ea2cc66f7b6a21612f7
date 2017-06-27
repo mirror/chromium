@@ -59,6 +59,74 @@
     },
     {
       "key": {
+        "uuid": "741e9d9f_8c33d963",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "No target depends on this one. You need to add a dependency if you want those tests to be run (probably a dependency from ios_chrome_unittests).",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000fea32_89ce8a57",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "BrowserStateKeyedServiceFactories are integration objects. Their sole purpose is to instantiate objects that require the full Chrome stack. They are not unit testable (test is exercised by the integration testing done by EarlGrey tests).\n\nI think this file should be removed.",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad7c2ca_f3daa9fa",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "We usually do not use namespace for \"application code\" only for \"library code\". That means we should not use namespace for code in ios/chrome/browser/... and instead should be in the global namespace (yes, the rule is inconsistently respected, but no need to add new exceptions).",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f8e194_db895567",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "This should take a ios::ChromeBrowserState* (as ios::ChromeBrowserState is the only concrete implementation of web::BrowserState that should be used in ios/chrome/browser/...).\n\nThis will make the implementation safer (as the implementation most likely will end up using a call to ios::ChromeBrowserState::FromBrowserState at some point and if the only public API take ios::ChromeBrowserState, then it is guaranteed to be safe).",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc50b99f_1bead8ea",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
         "patchSetId": 7
@@ -76,6 +144,58 @@
     },
     {
       "key": {
+        "uuid": "d8a3a4af_a7cb0a82",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "The default implementation does the following:\n\n  return browser_state-\u003eIsOffTheRecord() ? nullptr : browser_state;\n\nMaybe it is what the code wants, in which case it does not have to be overloaded.",
+      "parentUuid": "cc50b99f_1bead8ea",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66f0ee0_69d8153b",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "nit: usually we put the following comment before declaring overrides (this make it easier to find where the original method is declared and to lookup the method comment):\n\n  // BrowserStateKeyedServiceFactory implementation.\n  std::unique_ptr\u003cKeyedService\u003e BuildServiceInstanceFor(\n    web::BrowserState* context) const override;",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669eff7f_8a159ae9",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "nit: this is usually put at the beginning of the \"private:\" section, i.e. before the constructor/destructor declaration (order in a section is usually \"types, methods, member variables\").",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe325e2c_752e23ac",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
         "patchSetId": 7
@@ -87,6 +207,109 @@
       "writtenOn": "2017-06-27T05:57:40Z",
       "side": 1,
       "message": "Need to sort imports alphabetically.",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ca3e69_227732b3",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "The following command will ensure that your code is formatted and headers are sorted alphabetically, I recommend always using it before uploading your CLs to avoid roundtrip during your reviews\n\n  $ git cl format\n\ngchatz: the #include are correctly sorted, but the convention in chromium codebase is that the first file included from foo{_unittest}.{cc,mm} is foo.h, then system includes, then project includes. Each group is usually separated by a blank line, and I would recommend adding a blank line after the first include, so that it reads:\n\n#include \"ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h\"\n\n#include \"base/memory/singleton.h\"\n#include \"components/feature_engagement_tracker/public/feature_engagement_tracker.h\"\n...",
+      "parentUuid": "fe325e2c_752e23ac",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245ee4e6_01611289",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "Add \"// static\" comment before the method definition\n\n// static\nFeatureEngagementTrackerFactory*\nFeatureEngagementTrackerFactory::GetInstance() {\n  ...",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb3cde6_ad8e0f84",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "Please don\u0027t do that but instead provide a real implementation for ::GetInstance(), otherwise if one CL try to add a dependency on this factory this will result in a crash. Implementation is really simple:\n\n  return base::Singleton\u003cFeatureEngagementTrackerFactory\u003e::get();",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903694c8_4acf034f",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "ditto: // static",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55f2175_9418ea5f",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "Use just the plain class name here, so just \"FeatureEngagementTracker\".",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff61556_a8203483",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T07:52:34Z",
+      "side": 1,
+      "message": "nit: you can use \"return nullptr;\" here too.",
       "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
