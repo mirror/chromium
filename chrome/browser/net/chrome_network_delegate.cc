@@ -153,9 +153,18 @@ ChromeNetworkDelegate::ChromeNetworkDelegate(
   DCHECK(enable_referrers);
   extensions_delegate_.reset(
       ChromeExtensionsNetworkDelegate::Create(event_router));
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kLogUrlsLog)) {
+    log_urls_.reset(new net_log::LogUrlsToFile(
+        base::CommandLine::ForCurrentProcess()->GetSwitchValuePath(
+            switches::kLogUrlsLog)));
+  }
 }
 
-ChromeNetworkDelegate::~ChromeNetworkDelegate() {}
+ChromeNetworkDelegate::~ChromeNetworkDelegate() {
+  log_urls_.reset();
+}
 
 void ChromeNetworkDelegate::set_extension_info_map(
     extensions::InfoMap* extension_info_map) {
@@ -217,6 +226,10 @@ int ChromeNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
+  if (log_urls_) {
+    log_urls_.get()->LogURL(request->url());
+  }
+
   // TODO(mmenke): Remove ScopedTracker below once crbug.com/456327 is fixed.
   tracked_objects::ScopedTracker tracking_profile1(
       FROM_HERE_WITH_EXPLICIT_FUNCTION(

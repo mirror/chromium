@@ -20,6 +20,7 @@
 #include "components/domain_reliability/monitor.h"
 #include "components/prefs/pref_member.h"
 #include "net/base/network_delegate_impl.h"
+#include "net/log/log_urls_to_file.h"
 
 class ChromeExtensionsNetworkDelegate;
 class PrefService;
@@ -225,6 +226,10 @@ class ChromeNetworkDelegate : public net::NetworkDelegateImpl {
   data_usage::DataUseAggregator* data_use_aggregator_;
   // Controls whether network usage is reported as being off the record.
   bool is_data_usage_off_the_record_;
+
+  // Log all requested URLs to the file. This is used by ClusterFuzz. See:
+  // crbug.com/715656
+  std::unique_ptr<net_log::LogUrlsToFile> log_urls_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeNetworkDelegate);
 };

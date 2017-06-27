@@ -6,8 +6,10 @@
 #define CONTENT_SHELL_BROWSER_SHELL_NETWORK_DELEGATE_H_
 
 #include "base/compiler_specific.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "net/base/network_delegate_impl.h"
+#include "net/log/log_urls_to_file.h"
 
 namespace content {
 
@@ -61,6 +63,10 @@ class ShellNetworkDelegate : public net::NetworkDelegateImpl {
       const net::URLRequest& request,
       const GURL& target_url,
       const GURL& referrer_url) const override;
+
+  // Log all requested URLs to the file. This is used by ClusterFuzz. See:
+  // crbug.com/715656
+  std::unique_ptr<net_log::LogUrlsToFile> log_urls_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellNetworkDelegate);
 };
