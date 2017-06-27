@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "295767aa_3b824b25",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T18:55:54Z",
+      "side": 1,
+      "message": "The implementation of blink::Platform::DefaultLocale uses RenderThreadImpl, which can only be accessed from the main thread. This will fail on any other thread.",
+      "revId": "af1b9f66a0637f900c9fb9f6296da67d39a4c431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133a091f_82aa26c2",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T18:55:54Z",
+      "side": 1,
+      "message": "This has the quirk that the override will only affect the one thread. (Aside: it\u0027s not clear to me that this vector needs to exist, given that there doesn\u0027t seem to be any way for it to be set in production.)",
+      "revId": "af1b9f66a0637f900c9fb9f6296da67d39a4c431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aad0762_9718f471",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-27T18:55:54Z",
+      "side": 1,
+      "message": "nit: header is included -- no need for forward declaration",
+      "revId": "af1b9f66a0637f900c9fb9f6296da67d39a4c431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
