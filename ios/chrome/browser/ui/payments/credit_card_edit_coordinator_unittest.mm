@@ -16,6 +16,7 @@
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type.h"
 #import "ios/chrome/browser/ui/payments/payment_request_editor_field.h"
 #import "ios/chrome/test/scoped_key_window.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
@@ -37,8 +38,11 @@ class MockTestPersonalDataManager : public autofill::TestPersonalDataManager {
 class MockPaymentRequest : public PaymentRequest {
  public:
   MockPaymentRequest(web::PaymentRequest web_payment_request,
-                     autofill::PersonalDataManager* personal_data_manager)
-      : PaymentRequest(web_payment_request, personal_data_manager) {}
+                     autofill::PersonalDataManager* personal_data_manager,
+                     id<PaymentRequestUIDelegate> payment_request_ui_delegate)
+      : PaymentRequest(web_payment_request,
+                       personal_data_manager,
+                       payment_request_ui_delegate) {}
   MOCK_METHOD1(AddCreditCard,
                autofill::CreditCard*(const autofill::CreditCard&));
 };
@@ -107,8 +111,10 @@ class PaymentRequestCreditCardEditCoordinatorTest : public PlatformTest {
   PaymentRequestCreditCardEditCoordinatorTest() {
     payment_request_ = base::MakeUnique<MockPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, nil);
   }
+
+  web::TestWebThreadBundle thread_bundle_;
 
   MockTestPersonalDataManager personal_data_manager_;
   std::unique_ptr<MockPaymentRequest> payment_request_;

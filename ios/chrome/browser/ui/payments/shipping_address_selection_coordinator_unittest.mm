@@ -17,6 +17,7 @@
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #include "ios/chrome/browser/payments/test_payment_request.h"
 #import "ios/chrome/browser/ui/payments/payment_request_selector_view_controller.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/OCMock/OCMock.h"
@@ -46,6 +47,8 @@ class PaymentRequestShippingAddressSelectionCoordinatorTest
     payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
         &personal_data_manager_);
+
+    web::TestWebThreadBundle thread_bundle_;
 
     test_region_data_loader_.set_synchronous_callback(true);
     payment_request_->SetRegionDataLoader(&test_region_data_loader_);

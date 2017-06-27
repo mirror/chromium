@@ -21,6 +21,7 @@
 #import "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.h"
 #import "ios/chrome/browser/ui/payments/payment_request_editor_field.h"
 #import "ios/chrome/test/scoped_key_window.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
@@ -110,6 +111,8 @@ class PaymentRequestContactInfoEditCoordinatorTest : public PlatformTest {
   void TearDown() override {
     personal_data_manager_.SetTestingPrefService(nullptr);
   }
+
+  web::TestWebThreadBundle thread_bundle_;
 
   std::unique_ptr<PrefService> pref_service_;
   MockTestPersonalDataManager personal_data_manager_;
