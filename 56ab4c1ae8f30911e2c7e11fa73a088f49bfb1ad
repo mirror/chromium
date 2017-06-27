@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21d9395f_320203dc",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-27T01:51:50Z",
+      "side": 0,
+      "message": "You should probably keep disabling this dialog for other sites that use Cast Web SDK on Android (e.g. DailyMotion). However, returning nullptr here violates the contract stated in the comment to the function. I\u0027d rather do the check in the calling code (for Android it should only be https://cs.chromium.org/chromium/src/chrome/browser/media/router/presentation_service_delegate_impl.cc?rcl\u003d6b1f67dbfa7dc753e17264a38c7cb51f63fac525\u0026l\u003d753) or maybe in MediaRouterDialogControllerAndroid (e.g. call OnDialogCancelled about here: https://cs.chromium.org/chromium/src/chrome/browser/media/android/router/media_router_dialog_controller_android.cc?rcl\u003d3c44bf08d8154bde7c160edf5e3df8daaefe40c2\u0026l\u003d139).",
+      "revId": "56ab4c1ae8f30911e2c7e11fa73a088f49bfb1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

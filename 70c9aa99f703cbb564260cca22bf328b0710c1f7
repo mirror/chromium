@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a9a63ca_472d27ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/remote/RemoteMediaPlayerBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-27T01:51:50Z",
+      "side": 1,
+      "message": "You should probably early return here too: this is what shows the controller dialog if casted:\n1. user goes to m.youtube.com\n2. user casts the video\n3. user enters VR\n4. users clicks on the cast button\n\nAlso, you should call mMediaStateListener.onRouteDialogCancelled() before returning to notify the Blink side properly.",
+      "revId": "70c9aa99f703cbb564260cca22bf328b0710c1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
