@@ -55,12 +55,21 @@ enum class ShouldUseOverlay { No, Yes };
 enum class AllowDynamic { No, Yes };
 enum class IsFullscreen { No, Yes };
 enum class IsSecure { No, Yes };
+enum class IsCCPromotable { No, Yes };
 
-using TestParams =
-    std::tuple<ShouldUseOverlay, AllowDynamic, IsFullscreen, IsSecure>;
+using TestParams = std::tuple<ShouldUseOverlay,
+                              AllowDynamic,
+                              IsFullscreen,
+                              IsSecure,
+                              IsCCPromotable>;
 
 // Useful macro for instantiating tests.
 #define Either(x) Values(x::No, x::Yes)
+
+// Check if a parameter of type |type| is Yes.  |n| is the location of the
+// parameter of that type.
+// c++14 can remove |n|, and std::get() by type.
+#define IsYes(type, n) (::testing::get<n>(GetParam()) == type::Yes);
 
 }  // namespace
 
@@ -77,6 +86,9 @@ class AndroidVideoSurfaceChooserImplTest
 
     // Advance the clock just so we're not at 0.
     tick_clock_.Advance(base::TimeDelta::FromSeconds(10));
+
+    // Don't prevent promotions because of the compositor.
+    chooser_state_.is_compositor_promotable = true;
 
     // We create a destruction observer.  By default, the overlay must not be
     // destroyed until the test completes.  Of course, the test may ask the
@@ -284,16 +296,15 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
 }
 
 TEST_P(AndroidVideoSurfaceChooserImplTest, OverlayIsUsedOrNotBasedOnState) {
-// Provide a factory, and verify that it is used when the state says that it
-// should be.  If the overlay is used, then we also verify that it does not
-// switch to SurfaceTexture first, since pre-M requires it.
+  // Provide a factory, and verify that it is used when the state says that it
+  // should be.  If the overlay is used, then we also verify that it does not
+  // switch to SurfaceTexture first, since pre-M requires it.
 
-// c++14 can remove |n|, and std::get() by type.
-#define IsTrue(x, n) (::testing::get<n>(GetParam()) == x::Yes);
-  const bool should_use_overlay = IsTrue(ShouldUseOverlay, 0);
-  allow_dynamic_ = IsTrue(AllowDynamic, 1);
-  chooser_state_.is_fullscreen = IsTrue(IsFullscreen, 2);
-  chooser_state_.is_secure = IsTrue(IsSecure, 3);
+  const bool should_use_overlay = IsYes(ShouldUseOverlay, 0);
+  allow_dynamic_ = IsYes(AllowDynamic, 1);
+  chooser_state_.is_fullscreen = IsYes(IsFullscreen, 2);
+  chooser_state_.is_secure = IsYes(IsSecure, 3);
+  chooser_state_.is_compositor_promotable = IsYes(IsCCPromotable, 4);
 
   if (should_use_overlay) {
     EXPECT_CALL(client_, UseSurfaceTexture()).Times(0);
@@ -317,18 +328,33 @@ INSTANTIATE_TEST_CASE_P(NoFullscreenUsesSurfaceTexture,
                         Combine(Values(ShouldUseOverlay::No),
                                 Either(AllowDynamic),
                                 Values(IsFullscreen::No),
-                                Values(IsSecure::No)));
+                                Values(IsSecure::No),
+                                Either(IsCCPromotable)));
 INSTANTIATE_TEST_CASE_P(FullscreenUsesOverlay,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::Yes),
                                 Either(AllowDynamic),
                                 Values(IsFullscreen::Yes),
-                                Values(IsSecure::No)));
+                                Values(IsSecure::No),
+                                Values(IsCCPromotable::Yes)));
 INSTANTIATE_TEST_CASE_P(SecureUsesOverlay,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::Yes),
                                 Either(AllowDynamic),
                                 Either(IsFullscreen),
-                                Values(IsSecure::Yes)));
+                                Values(IsSecure::Yes),
+                                Values(IsCCPromotable::Yes)));
+// For all dynamic cases, we shouldn't use an overlay if the compositor won't
+// promote it.  For L1, it will fail either way until the CC supports "must
+// promote" overlays, so we ignore those cases.  Non-dynamic is excluded, since
+// we don't get (or use) compositor feedback before the first frame.  At that
+// point, we've already chosen the output surface and can't switch it.
+INSTANTIATE_TEST_CASE_P(NotCCPromotableNotSecureUsesSurfaceTexture,
+                        AndroidVideoSurfaceChooserImplTest,
+                        Combine(Values(ShouldUseOverlay::No),
+                                Values(AllowDynamic::Yes),
+                                Either(IsFullscreen),
+                                Values(IsSecure::No),
+                                Values(IsCCPromotable::No)));
 
 }  // namespace media
