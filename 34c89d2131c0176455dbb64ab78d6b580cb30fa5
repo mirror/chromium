@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "051aa1e2_f957e6af",
+        "filename": "base/stl_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-27T18:35:38Z",
+      "side": 1,
+      "message": "I couldn\u0027t figure out a sensible way to make it depend on the existence of find() (made particularly tricky because there are multiple find() methods), but I did now change it to instead guard this on the existence of Collection::key_type. As far as I can tell that covers pretty much exactly the types for which ContainsValue should not be used. Not sure if there is a cleaner/simpler way to do a similar check, most of this still seems like magic to me.",
+      "parentUuid": "0b2edb3b_22450c7b",
+      "revId": "34c89d2131c0176455dbb64ab78d6b580cb30fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ddf3710_f4aba640",
         "filename": "base/stl_util.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "34c89d2131c0176455dbb64ab78d6b580cb30fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97f904d_d998a0b4",
+        "filename": "base/stl_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-27T18:35:38Z",
+      "side": 1,
+      "message": "No, the assertions has to depend on the type, otherwise the static_assert will trigger even if the template is never instantiated.",
+      "parentUuid": "5ddf3710_f4aba640",
+      "revId": "34c89d2131c0176455dbb64ab78d6b580cb30fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
