@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dafd2a92_11670f83",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2191,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T15:34:41Z",
+      "side": 1,
+      "message": "Do you not want to count it if you only have a SharedBitmapId though? This would mean the compositor references some shared memory, but it didn\u0027t map it yet. Would this be counted somewhere else?",
+      "revId": "bfa4267fd11fa500ec6688a33fa80e449f9dd868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
