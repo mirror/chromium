@@ -44,6 +44,8 @@
 
 namespace web {
 
+namespace {}
+
 /* static */
 std::unique_ptr<WebState> WebState::Create(const CreateParams& params) {
   std::unique_ptr<WebStateImpl> web_state(new WebStateImpl(params));

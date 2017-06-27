@@ -13,6 +13,7 @@
 #include "ios/web/app/web_main_loop.h"
 #include "ios/web/public/url_schemes.h"
 #import "ios/web/public/web_client.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "ui/base/ui_base_paths.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -20,6 +21,11 @@
 #endif
 
 namespace web {
+
+namespace {
+
+constexpr size_t kMaximumMojoMessageSize = 128 * 1024 * 1024;
+}
 
 class WebMainRunnerImpl : public WebMainRunner {
  public:
@@ -51,6 +57,10 @@ class WebMainRunnerImpl : public WebMainRunner {
       delegate_->BasicStartupComplete();
     }
     completed_basic_startup_ = true;
+
+    mojo::edk::Configuration mojo_config;
+    mojo_config.max_message_num_bytes = kMaximumMojoMessageSize;
+    mojo::edk::Init(mojo_config);
 
     // TODO(rohitrao): Should we instead require that all embedders call
     // SetWebClient()?
