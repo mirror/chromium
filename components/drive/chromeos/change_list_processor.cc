@@ -26,32 +26,6 @@ namespace internal {
 
 namespace {
 
-class ChangeListToEntryMapUMAStats {
- public:
-  ChangeListToEntryMapUMAStats()
-    : num_regular_files_(0),
-      num_hosted_documents_(0) {
-  }
-
-  // Increments number of files.
-  void IncrementNumFiles(bool is_hosted_document) {
-    is_hosted_document ? num_hosted_documents_++ : num_regular_files_++;
-  }
-
-  // Updates UMA histograms with file counts.
-  void UpdateFileCountUmaHistograms() {
-    const int num_total_files = num_hosted_documents_ + num_regular_files_;
-    UMA_HISTOGRAM_COUNTS("Drive.NumberOfRegularFiles", num_regular_files_);
-    UMA_HISTOGRAM_COUNTS("Drive.NumberOfHostedDocuments",
-                         num_hosted_documents_);
-    UMA_HISTOGRAM_COUNTS("Drive.NumberOfTotalFiles", num_total_files);
-  }
-
- private:
-  int num_regular_files_;
-  int num_hosted_documents_;
-};
-
 // Returns true if it's OK to overwrite the local entry with the remote one.
 bool ShouldApplyChange(const ResourceEntry& local_entry,
                        const ResourceEntry& remote_entry) {
@@ -67,6 +41,19 @@ std::string DirectoryFetchInfo::ToString() const {
   return ("local_id: " + local_id_ +
           ", resource_id: " + resource_id_ +
           ", changestamp: " + base::Int64ToString(changestamp_));
+}
+
+void ChangeListProcessor::ChangeListToEntryMapUMAStats::IncrementNumFiles(
+    bool is_hosted_document) {
+  is_hosted_document ? num_hosted_documents_++ : num_regular_files_++;
+}
+
+void ChangeListProcessor::ChangeListToEntryMapUMAStats::
+    UpdateFileCountUmaHistograms() {
+  const int num_total_files = num_hosted_documents_ + num_regular_files_;
+  UMA_HISTOGRAM_COUNTS("Drive.NumberOfRegularFiles", num_regular_files_);
+  UMA_HISTOGRAM_COUNTS("Drive.NumberOfHostedDocuments", num_hosted_documents_);
+  UMA_HISTOGRAM_COUNTS("Drive.NumberOfTotalFiles", num_total_files);
 }
 
 ChangeList::ChangeList() {}
@@ -153,36 +140,9 @@ FileError ChangeListProcessor::Apply(
     DCHECK(!about_resource->root_folder_id().empty());
   }
 
-  // Convert ChangeList to map.
-  ChangeListToEntryMapUMAStats uma_stats;
-  for (size_t i = 0; i < change_lists.size(); ++i) {
-    ChangeList* change_list = change_lists[i].get();
-
-    std::vector<ResourceEntry>* entries = change_list->mutable_entries();
-    for (size_t i = 0; i < entries->size(); ++i) {
-      ResourceEntry* entry = &(*entries)[i];
-
-      // Count the number of files.
-      if (!entry->file_info().is_directory()) {
-        uma_stats.IncrementNumFiles(
-            entry->file_specific_info().is_hosted_document());
-      }
-      parent_resource_id_map_[entry->resource_id()] =
-          change_list->parent_resource_ids()[i];
-      entry_map_[entry->resource_id()].Swap(entry);
-      LOG_IF(WARNING, !entry->resource_id().empty())
-          << "Found duplicated file: " << entry->base_name();
-    }
-  }
-
-  // Add the largest changestamp for directories.
-  for (ResourceEntryMap::iterator it = entry_map_.begin();
-       it != entry_map_.end(); ++it) {
-    if (it->second.file_info().is_directory()) {
-      it->second.mutable_directory_specific_info()->set_changestamp(
-          largest_changestamp);
-    }
-  }
+  ChangeListProcessor::ChangeListToEntryMapUMAStats uma_stats;
+  ConvertChangeListsToMap(std::move(change_lists), largest_changestamp,
+                          &uma_stats);
 
   FileError error =
       ApplyEntryMap(largest_changestamp, std::move(about_resource));
@@ -203,6 +163,40 @@ FileError ChangeListProcessor::Apply(
     uma_stats.UpdateFileCountUmaHistograms();
 
   return FILE_ERROR_OK;
+}
+
+void ChangeListProcessor::ConvertChangeListsToMap(
+    std::vector<std::unique_ptr<ChangeList>> change_lists,
+    int64_t largest_changestamp,
+    ChangeListProcessor::ChangeListToEntryMapUMAStats* uma_stats) {
+  for (size_t i = 0; i < change_lists.size(); ++i) {
+    ChangeList* change_list = change_lists[i].get();
+
+    std::vector<ResourceEntry>* entries = change_list->mutable_entries();
+    for (size_t i = 0; i < entries->size(); ++i) {
+      ResourceEntry* entry = &(*entries)[i];
+
+      // Count the number of files.
+      if (!entry->file_info().is_directory()) {
+        uma_stats->IncrementNumFiles(
+            entry->file_specific_info().is_hosted_document());
+      }
+      parent_resource_id_map_[entry->resource_id()] =
+          change_list->parent_resource_ids()[i];
+      entry_map_[entry->resource_id()].Swap(entry);
+      LOG_IF(WARNING, !entry->resource_id().empty())
+          << "Found duplicated file: " << entry->base_name();
+    }
+  }
+
+  // Add the largest changestamp for directories.
+  for (ResourceEntryMap::iterator it = entry_map_.begin();
+       it != entry_map_.end(); ++it) {
+    if (it->second.file_info().is_directory()) {
+      it->second.mutable_directory_specific_info()->set_changestamp(
+          largest_changestamp);
+    }
+  }
 }
 
 FileError ChangeListProcessor::ApplyEntryMap(

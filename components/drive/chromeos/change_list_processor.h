@@ -141,6 +141,22 @@ class ChangeListProcessor {
       const std::string& parent_resource_id);
 
  private:
+  class ChangeListToEntryMapUMAStats {
+   public:
+    ChangeListToEntryMapUMAStats()
+        : num_regular_files_(0), num_hosted_documents_(0) {}
+
+    // Increments number of files.
+    void IncrementNumFiles(bool is_hosted_document);
+
+    // Updates UMA histograms with file counts.
+    void UpdateFileCountUmaHistograms();
+
+   private:
+    int num_regular_files_;
+    int num_hosted_documents_;
+  };
+
   typedef std::map<std::string /* resource_id */, ResourceEntry>
       ResourceEntryMap;
   typedef std::map<std::string /* resource_id */,
@@ -157,6 +173,13 @@ class ChangeListProcessor {
 
   // Adds the directories changed by the update on |entry| to |changed_dirs_|.
   void UpdateChangedDirs(const ResourceEntry& entry);
+
+  // Converts the |change_lists| to entry_map_, to be applied by
+  // ApplyEntryMap() later.
+  void ConvertChangeListsToMap(
+      std::vector<std::unique_ptr<ChangeList>> change_lists,
+      int64_t largest_changestamp,
+      ChangeListProcessor::ChangeListToEntryMapUMAStats* uma_stats);
 
   ResourceMetadata* resource_metadata_;  // Not owned.
   base::CancellationFlag* in_shutdown_;  // Not owned.
