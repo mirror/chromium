@@ -1313,7 +1313,7 @@ int LayoutTable::BaselinePosition(FontBaseline baseline_type,
   int baseline = FirstLineBoxBaseline();
   if (baseline != -1) {
     if (IsInline())
-      return BeforeMarginInLineDirection(direction) + baseline;
+      return (BeforeMarginInLineDirection(direction) + baseline).ToInt();
     return baseline;
   }
 
@@ -1321,9 +1321,9 @@ int LayoutTable::BaselinePosition(FontBaseline baseline_type,
                                      line_position_mode);
 }
 
-int LayoutTable::InlineBlockBaseline(LineDirectionMode) const {
+LayoutUnit LayoutTable::InlineBlockBaseline(LineDirectionMode) const {
   // Tables are skipped when computing an inline-block's baseline.
-  return -1;
+  return LayoutUnit(-1);
 }
 
 int LayoutTable::FirstLineBoxBaseline() const {
