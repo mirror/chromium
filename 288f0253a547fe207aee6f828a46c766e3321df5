@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49947c90_2cdca881",
+        "filename": "media/base/mac/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T17:14:25Z",
+      "side": 1,
+      "message": "What is this needed for? I don\u0027t see any dependencies needing this?",
+      "revId": "288f0253a547fe207aee6f828a46c766e3321df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
