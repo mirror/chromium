@@ -5,8 +5,10 @@
 #include "components/offline_pages/core/prefetch/prefetch_request_fetcher.h"
 
 #include "base/test/mock_callback.h"
+#include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/prefetch_request_test_base.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
+#include "components/variations/variations_params_manager.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/url_request_status.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -23,20 +25,44 @@ namespace {
 const version_info::Channel kTestChannel = version_info::Channel::UNKNOWN;
 const char kTestURLPath[] = "/test";
 const char kTestMessage[] = "Testing";
+const char kTestOfflinePagesSuggestionsServerEndpoint[] =
+    "https://test-offlinepages-pa.sandbox.googleapis.com/";
+const char kInvalidServerEndpoint[] = "^__^";
 }  // namespace
 
 class PrefetchRequestFetcherTest : public PrefetchRequestTestBase {
  public:
+  PrefetchRequestFetcherTest();
+
   PrefetchRequestStatus RunFetcherWithNetError(net::Error net_error);
   PrefetchRequestStatus RunFetcherWithHttpError(int http_error);
   PrefetchRequestStatus RunFetcherWithData(const std::string& response_data,
                                            std::string* data_received);
 
- private:
+  void SetTestingServerEndpoint(bool is_valid);
+
   PrefetchRequestStatus RunFetcher(
       const base::Callback<void(void)>& respond_callback,
       std::string* data_received);
+
+  GURL last_url() { return last_url_; }
+
+ private:
+  GURL last_url_;
+  variations::testing::VariationParamsManager params_manager_;
 };
+
+PrefetchRequestFetcherTest::PrefetchRequestFetcherTest() {}
+
+void PrefetchRequestFetcherTest::SetTestingServerEndpoint(bool is_valid) {
+  params_manager_.ClearAllVariationParams();
+  params_manager_.SetVariationParamsWithFeatureAssociations(
+      kPrefetchingOfflinePagesFeature.name,
+      {{"offline_pages_backend",
+        is_valid ? kTestOfflinePagesSuggestionsServerEndpoint
+                 : kInvalidServerEndpoint}},
+      {kPrefetchingOfflinePagesFeature.name});
+}
 
 PrefetchRequestStatus PrefetchRequestFetcherTest::RunFetcherWithNetError(
     net::Error net_error) {
@@ -82,6 +108,8 @@ PrefetchRequestStatus PrefetchRequestFetcherTest::RunFetcher(
   EXPECT_CALL(callback, Run(_, _))
       .WillOnce(DoAll(SaveArg<0>(&status), SaveArg<1>(&data)));
   respond_callback.Run();
+
+  last_url_ = GetRunningFetcher()->GetOriginalURL();
 
   *data_received = data;
   return status;
@@ -137,6 +165,21 @@ TEST_F(PrefetchRequestFetcherTest, Success) {
   EXPECT_EQ(PrefetchRequestStatus::SUCCESS,
             RunFetcherWithData("Any data.", &data));
   EXPECT_FALSE(data.empty());
+}
+
+TEST_F(PrefetchRequestFetcherTest, TestVariationsEndpoint) {
+  std::string data;
+  RunFetcherWithData("", &data);
+  EXPECT_EQ("offlinepages-pa.googleapis.com", last_url().host());
+
+  SetTestingServerEndpoint(true /* is_valid */);
+
+  RunFetcherWithData("", &data);
+  EXPECT_EQ("test-offlinepages-pa.sandbox.googleapis.com", last_url().host());
+
+  SetTestingServerEndpoint(false /* is_valid */);
+  RunFetcherWithData("", &data);
+  EXPECT_EQ("offlinepages-pa.googleapis.com", last_url().host());
 }
 
 }  // namespace offline_pages
