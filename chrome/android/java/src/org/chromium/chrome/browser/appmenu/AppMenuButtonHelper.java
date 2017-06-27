@@ -27,6 +27,7 @@ public class AppMenuButtonHelper extends AccessibilityDelegate implements OnTouc
     private final AppMenuHandler mMenuHandler;
     private Runnable mOnAppMenuShownListener;
     private boolean mIsTouchEventsBeingProcessed;
+    private boolean mHasBottomToolbar;
 
     /**
      * @param menuHandler MenuHandler implementation that can show and get the app menu.
@@ -40,6 +41,13 @@ public class AppMenuButtonHelper extends AccessibilityDelegate implements OnTouc
      */
     public void setOnAppMenuShownListener(Runnable onAppMenuShownListener) {
         mOnAppMenuShownListener = onAppMenuShownListener;
+    }
+
+    /**
+     * @param hasBottomToolbar Whether a bottom toolbar exists on screen.
+     */
+    public void setHasBottomToolbar(boolean hasBottomToolbar) {
+        mHasBottomToolbar = hasBottomToolbar;
     }
 
     /**
@@ -88,12 +96,21 @@ public class AppMenuButtonHelper extends AccessibilityDelegate implements OnTouc
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                mIsTouchEventsBeingProcessed = true;
-                isTouchEventConsumed |= true;
-                view.setPressed(true);
-                showAppMenu(view, true);
+                if (!mHasBottomToolbar) {
+                    mIsTouchEventsBeingProcessed = true;
+                    isTouchEventConsumed |= true;
+                    view.setPressed(true);
+                    showAppMenu(view, true);
+                }
                 break;
             case MotionEvent.ACTION_UP:
+                if (mHasBottomToolbar) {
+                    mIsTouchEventsBeingProcessed = true;
+                    isTouchEventConsumed |= true;
+                    view.setPressed(true);
+                    showAppMenu(view, false);
+                }
+                break;
             case MotionEvent.ACTION_CANCEL:
                 mIsTouchEventsBeingProcessed = false;
                 isTouchEventConsumed |= true;
