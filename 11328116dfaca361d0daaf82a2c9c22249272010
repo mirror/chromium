@@ -46,6 +46,30 @@
       "revId": "11328116dfaca361d0daaf82a2c9c22249272010",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600e84d3_25ea8ace",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-06-27T06:44:34Z",
+      "side": 1,
+      "message": "Thanks for the info. We\u0027ll wait if the blocker gets resolved mid-term and think about other testing possibilities instead.",
+      "parentUuid": "eb61412a_b48d2140",
+      "range": {
+        "startLine": 2088,
+        "startChar": 32,
+        "endLine": 2088,
+        "endChar": 51
+      },
+      "revId": "11328116dfaca361d0daaf82a2c9c22249272010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
