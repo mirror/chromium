@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fb752f7_a54e8e0c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_fetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-27T22:54:40Z",
+      "side": 1,
+      "message": "Please also check if endpoint has https scheme.",
+      "range": {
+        "startLine": 39,
+        "startChar": 18,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "ccdc60103186856ed30e560d75477f78670ea6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
