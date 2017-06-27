@@ -19,6 +19,91 @@
     },
     {
       "key": {
+        "uuid": "4877d536_7546e7c2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "So, we\u0027re overriding a method that returns a value with a method that doesn\u0027t. How is compiler fine with that? ;-)",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a39bd0f_afae97a8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "We only need this because of a call to _htmlErrorPreview(), so let\u0027s move it there.",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53cc592a_d99f6014",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "this._contentViewPromise",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab615214_ec412181",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "Note that contentData.error is set on the protocol error, so it implies content \u003d\u003d\u003d null and undefined value of encoded.",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1812000a_8218b470",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "nit: I\u0027d just inline it instead.",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7024ca7_d1b23ea1",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
         "patchSetId": 3
@@ -42,6 +127,23 @@
     },
     {
       "key": {
+        "uuid": "102fea14_ae9fed29",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "Let\u0027s add @return annotation.",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8eb25be3_7c093926",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestView.js",
         "patchSetId": 3
@@ -53,6 +155,40 @@
       "writtenOn": "2017-06-27T19:46:08Z",
       "side": 1,
       "message": "What\u0027s the point of this class now?",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07282e31_706319c7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesPanel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "no get prefixes please!",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a5bb35_63c77a50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesSection.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "Can we turn this logic into something like this._panel.showPreview()?",
       "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +235,23 @@
     },
     {
       "key": {
+        "uuid": "99ccdb75_771327ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewProvider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "Add copyright header. Also, this looks more like PreviewFactory to me :-)",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "437a5d5b_1c0ab1a4",
         "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewProvider.js",
         "patchSetId": 3
@@ -122,6 +275,23 @@
     },
     {
       "key": {
+        "uuid": "b3560fa8_332aeb89",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewProvider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "No need for empty constructor.",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcd868c1_e928c3ac",
         "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewProvider.js",
         "patchSetId": 3
@@ -133,6 +303,23 @@
       "writtenOn": "2017-06-27T19:46:08Z",
       "side": 1,
       "message": "Might as well be a static function?",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533be7fd_b13f3077",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewProvider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T19:50:19Z",
+      "side": 1,
+      "message": "static async createPreview(), perhaps?",
       "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
