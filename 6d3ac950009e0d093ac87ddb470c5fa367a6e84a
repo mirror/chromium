@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afce7888_1ce693ea",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFO.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-06-27T08:06:24Z",
+      "side": 1,
+      "message": "Histograms need to be also defined in tools/metrics/histograms/histograms.xml, see how it\u0027s done there for glitch counts/missed deadline.",
+      "revId": "6d3ac950009e0d093ac87ddb470c5fa367a6e84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5108f1_8487006d",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFO.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-06-27T08:06:24Z",
+      "side": 1,
+      "message": "Why sparse histogram is preferred?\n\nSee Media.AudioRendererMissedDeadline, it uses UMA_HISTOGRAM_PERCENTAGE which is a linear histogram [https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/audio_sync_reader.cc?type\u003dcs\u0026q\u003dMedia.AudioRendererMissedDeadline\u0026l\u003d103]\n\nI also see that FrameSerializer uses LinearHistogram for percentage [https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/FrameSerializer.cpp?type\u003dcs\u0026l\u003d368]",
+      "revId": "6d3ac950009e0d093ac87ddb470c5fa367a6e84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161e1d8e_01e14b9c",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFO.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-06-27T08:06:24Z",
+      "side": 1,
+      "message": "Check for division by zero?\nActually, we should skip it all if |pull_count_| is zero. (See also AudioSyncReader destructor)",
+      "revId": "6d3ac950009e0d093ac87ddb470c5fa367a6e84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
