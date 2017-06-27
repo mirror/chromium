@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3363acd1_3c126372",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-27T22:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25c670be_f2c29356",
+      "revId": "b0e36951a180c160a5857706e452f747a8bce886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be6a038a_ac827972",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-27T22:06:48Z",
       "side": 1,
       "message": "Doesn\u0027t seem like this #include is necessary.  The forward-decl below should be sufficient.",
+      "revId": "b0e36951a180c160a5857706e452f747a8bce886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d986877f_d787b501",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-27T22:20:08Z",
+      "side": 1,
+      "message": "When I try taking this out it breaks. Having both the #include in the header and the forward declaration seem to be necessary, as this was what was done for the Tab and TabController.",
+      "parentUuid": "be6a038a_ac827972",
       "revId": "b0e36951a180c160a5857706e452f747a8bce886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
