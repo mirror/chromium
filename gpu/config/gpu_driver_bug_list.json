@@ -2324,7 +2324,7 @@
       },
       "gl_renderer": "Adreno \\(TM\\) [45].*",
       "features": [
-        "disable_program_disk_cache"
+        "disable_in_process_gpu_program_disk_cache"
       ]
     },
     {
