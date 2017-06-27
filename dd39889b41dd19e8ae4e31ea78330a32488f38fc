@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60dec16e_9a73dc28",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-27T17:13:28Z",
+      "side": 1,
+      "message": "Can these be default initialized to 0?",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "dd39889b41dd19e8ae4e31ea78330a32488f38fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
