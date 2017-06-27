@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8341eb14_7afbf89b",
+        "filename": "components/exo/notification_surface.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T16:27:39Z",
+      "side": 1,
+      "message": "nit: I think this DCHECK is overkill",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e53dc83_1ba420de",
+        "filename": "components/exo/notification_surface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T16:27:39Z",
+      "side": 1,
+      "message": "nit: can we instead remove this function and use host_window() directly?",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a529b8_505ec8cb",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T16:27:39Z",
+      "side": 1,
+      "message": "nit: I think this DCHECK is overkill. we\u0027ll fail in an obvious way when doing surface-\u003eAddSurfaceObserver below if this ctor is ever called incorrectly in the future",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11dbd89_8352a828",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T16:27:39Z",
+      "side": 1,
+      "message": "what are these two includes for?",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff88beb_56b40a20",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T16:27:39Z",
+      "side": 1,
+      "message": "nit: no need for this comment. remove it to be consistent with gfx below",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
