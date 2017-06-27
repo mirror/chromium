@@ -8,7 +8,7 @@
 #include "ash/wm/native_cursor_manager_ash.h"
 
 namespace ui {
-class CursorDataFactoryOzone;
+class CursorDataFactory;
 class ImageCursors;
 }  // namespace ui
 
@@ -53,7 +53,7 @@ class ASH_EXPORT NativeCursorManagerAshMus : public NativeCursorManagerAsh {
   bool native_cursor_enabled_ = true;
 
 #if defined(USE_OZONE)
-  std::unique_ptr<ui::CursorDataFactoryOzone> cursor_factory_ozone_;
+  std::unique_ptr<ui::CursorDataFactory> cursor_factory_;
 #endif
 
   // Always nullptr when USE_OZONE is false.

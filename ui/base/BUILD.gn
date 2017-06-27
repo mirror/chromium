@@ -566,13 +566,13 @@ component("base") {
   }
   if (use_ozone) {
     sources += [
+      "cursor/cursor_data_factory.cc",
+      "cursor/cursor_data_factory.h",
       "cursor/cursor_loader_ozone.cc",
       "cursor/cursor_loader_ozone.h",
       "cursor/cursor_ozone.cc",
       "cursor/ozone/bitmap_cursor_factory_ozone.cc",
       "cursor/ozone/bitmap_cursor_factory_ozone.h",
-      "cursor/ozone/cursor_data_factory_ozone.cc",
-      "cursor/ozone/cursor_data_factory_ozone.h",
     ]
 
     deps += [

@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "ui/base/cursor/cursor.h"
+#include "ui/base/cursor/cursor_data_factory.h"
 #include "ui/base/cursor/cursor_util.h"
 #include "ui/ozone/public/cursor_factory_ozone.h"
 
@@ -24,8 +25,13 @@ void CursorLoaderOzone::LoadImageCursor(CursorType id,
 
   GetImageCursorBitmap(resource_id, scale(), rotation(), &hotspot, &bitmap);
 
-  cursors_[id] = CursorFactoryOzone::GetInstance()->CreateImageCursor(
-      bitmap, hotspot, scale());
+  if (CursorDataFactory::Exists()) {
+    cursors_[id] = CursorDataFactory::GetInstance()->CreateImageCursor(
+        bitmap, hotspot, scale());
+  } else {
+    cursors_[id] = CursorFactoryOzone::GetInstance()->CreateImageCursor(
+        bitmap, hotspot, scale());
+  }
 }
 
 void CursorLoaderOzone::LoadAnimatedCursor(CursorType id,
@@ -38,15 +44,24 @@ void CursorLoaderOzone::LoadAnimatedCursor(CursorType id,
   GetAnimatedCursorBitmaps(
       resource_id, scale(), rotation(), &hotspot, &bitmaps);
 
-  cursors_[id] = CursorFactoryOzone::GetInstance()->CreateAnimatedCursor(
-      bitmaps, hotspot, frame_delay_ms, scale());
+  if (CursorDataFactory::Exists()) {
+    cursors_[id] = CursorDataFactory::GetInstance()->CreateAnimatedCursor(
+        bitmaps, hotspot, frame_delay_ms, scale());
+  } else {
+    cursors_[id] = CursorFactoryOzone::GetInstance()->CreateAnimatedCursor(
+        bitmaps, hotspot, frame_delay_ms, scale());
+  }
 }
 
 void CursorLoaderOzone::UnloadAll() {
   for (ImageCursorMap::const_iterator it = cursors_.begin();
-       it != cursors_.end();
-       ++it)
-    CursorFactoryOzone::GetInstance()->UnrefImageCursor(it->second);
+       it != cursors_.end(); ++it) {
+    if (CursorDataFactory::Exists()) {
+      CursorDataFactory::GetInstance()->UnrefImageCursor(it->second);
+    } else {
+      CursorFactoryOzone::GetInstance()->UnrefImageCursor(it->second);
+    }
+  }
   cursors_.clear();
 }
 
@@ -61,8 +76,14 @@ void CursorLoaderOzone::SetPlatformCursor(gfx::NativeCursor* cursor) {
     // The platform cursor was already set via WebCursor::GetPlatformCursor.
     platform = cursor->platform();
   } else {
-    // Use default cursor of this type.
-    platform = CursorFactoryOzone::GetInstance()->GetDefaultCursor(native_type);
+    if (CursorDataFactory::Exists()) {
+      platform =
+          CursorDataFactory::GetInstance()->GetDefaultCursor(native_type);
+    } else {
+      // Use default cursor of this type.
+      platform =
+          CursorFactoryOzone::GetInstance()->GetDefaultCursor(native_type);
+    }
   }
 
   cursor->SetPlatformCursor(platform);

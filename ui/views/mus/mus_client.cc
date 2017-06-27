@@ -37,7 +37,7 @@
 #include "ui/wm/core/wm_state.h"
 
 #if defined(USE_OZONE)
-#include "ui/base/cursor/ozone/cursor_data_factory_ozone.h"
+#include "ui/base/cursor/cursor_data_factory.h"
 #endif
 
 // Widget::InitParams::Type must match that of ui::mojom::WindowType.
@@ -81,7 +81,7 @@ MusClient::MusClient(service_manager::Connector* connector,
   // instance. Partially initialize the ozone cursor internals here, like we
   // partially initialize other ozone subsystems in
   // ChromeBrowserMainExtraPartsViews.
-  cursor_factory_ozone_ = base::MakeUnique<ui::CursorDataFactoryOzone>();
+  cursor_factory_ = base::MakeUnique<ui::CursorDataFactory>();
 #endif
 
   if (!io_task_runner) {

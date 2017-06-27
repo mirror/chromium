@@ -36,7 +36,7 @@
 #include "ui/wm/public/activation_client.h"
 
 #if defined(USE_OZONE)
-#include "ui/base/cursor/ozone/cursor_data_factory_ozone.h"
+#include "ui/base/cursor/cursor_data_factory.h"
 #endif
 
 namespace views {
@@ -138,8 +138,7 @@ class NativeCursorManagerMus : public wm::NativeCursorManager {
     ui::CursorData mojo_cursor;
     if (cursor.platform()) {
 #if defined(USE_OZONE)
-      mojo_cursor =
-          ui::CursorDataFactoryOzone::GetCursorData(cursor.platform());
+      mojo_cursor = ui::CursorDataFactory::GetCursorData(cursor.platform());
 #else
       NOTIMPLEMENTED()
           << "Can't pass native platform cursors on non-ozone platforms";

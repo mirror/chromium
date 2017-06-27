@@ -17,7 +17,7 @@
 #include "ui/wm/core/cursor_manager.h"
 
 #if defined(USE_OZONE)
-#include "ui/base/cursor/ozone/cursor_data_factory_ozone.h"
+#include "ui/base/cursor/cursor_data_factory.h"
 #endif
 
 namespace ash {
@@ -29,7 +29,7 @@ void SetCursorOnAllRootWindows(gfx::NativeCursor cursor) {
   ui::CursorData mojo_cursor;
   if (cursor.platform()) {
 #if defined(USE_OZONE)
-    mojo_cursor = ui::CursorDataFactoryOzone::GetCursorData(cursor.platform());
+    mojo_cursor = ui::CursorDataFactory::GetCursorData(cursor.platform());
 #else
     NOTIMPLEMENTED()
         << "Can't pass native platform cursors on non-ozone platforms";
@@ -92,7 +92,7 @@ NativeCursorManagerAshMus::NativeCursorManagerAshMus() {
   // instance. Partially initialize the ozone cursor internals here, like we
   // partially initialize other ozone subsystems in
   // ChromeBrowserMainExtraPartsViews.
-  cursor_factory_ozone_ = base::MakeUnique<ui::CursorDataFactoryOzone>();
+  cursor_factory_ = base::MakeUnique<ui::CursorDataFactory>();
   image_cursors_ = base::MakeUnique<ui::ImageCursors>();
 #endif
 }

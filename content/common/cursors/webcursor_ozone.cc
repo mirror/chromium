@@ -6,6 +6,7 @@
 
 #include "third_party/WebKit/public/platform/WebCursorInfo.h"
 #include "ui/base/cursor/cursor.h"
+#include "ui/base/cursor/cursor_data_factory.h"
 #include "ui/base/cursor/cursor_util.h"
 #include "ui/ozone/public/cursor_factory_ozone.h"
 
@@ -15,6 +16,26 @@ const int kDefaultMaxCursorHeight = 64;
 }
 
 namespace content {
+
+namespace {
+
+void RefImageCursor(ui::PlatformCursor cursor) {
+  if (ui::CursorDataFactory::Exists()) {
+    ui::CursorDataFactory::GetInstance()->RefImageCursor(cursor);
+  } else {
+    ui::CursorFactoryOzone::GetInstance()->RefImageCursor(cursor);
+  }
+}
+
+void UnrefImageCursor(ui::PlatformCursor cursor) {
+  if (ui::CursorDataFactory::Exists()) {
+    ui::CursorDataFactory::GetInstance()->UnrefImageCursor(cursor);
+  } else {
+    ui::CursorFactoryOzone::GetInstance()->UnrefImageCursor(cursor);
+  }
+}
+
+}  // namespace
 
 ui::PlatformCursor WebCursor::GetPlatformCursor() {
   if (platform_cursor_)
@@ -35,8 +56,13 @@ ui::PlatformCursor WebCursor::GetPlatformCursor() {
   ui::ScaleAndRotateCursorBitmapAndHotpoint(scale, rotation_, &bitmap,
                                             &hotspot);
 
-  platform_cursor_ = ui::CursorFactoryOzone::GetInstance()->CreateImageCursor(
-      bitmap, hotspot, scale);
+  if (ui::CursorDataFactory::Exists()) {
+    platform_cursor_ = ui::CursorDataFactory::GetInstance()->CreateImageCursor(
+        bitmap, hotspot, scale);
+  } else {
+    platform_cursor_ = ui::CursorFactoryOzone::GetInstance()->CreateImageCursor(
+        bitmap, hotspot, scale);
+  }
   return platform_cursor_;
 }
 
@@ -55,7 +81,7 @@ void WebCursor::SetDisplayInfo(const display::Display& display) {
     maximum_cursor_size_ =
         gfx::Size(kDefaultMaxCursorWidth, kDefaultMaxCursorHeight);
   if (platform_cursor_)
-    ui::CursorFactoryOzone::GetInstance()->UnrefImageCursor(platform_cursor_);
+    UnrefImageCursor(platform_cursor_);
   platform_cursor_ = NULL;
   // It is not necessary to recreate platform_cursor_ yet, since it will be
   // recreated on demand when GetPlatformCursor is called.
@@ -83,17 +109,17 @@ bool WebCursor::IsPlatformDataEqual(const WebCursor& other) const {
 
 void WebCursor::CleanupPlatformData() {
   if (platform_cursor_) {
-    ui::CursorFactoryOzone::GetInstance()->UnrefImageCursor(platform_cursor_);
+    UnrefImageCursor(platform_cursor_);
     platform_cursor_ = NULL;
   }
 }
 
 void WebCursor::CopyPlatformData(const WebCursor& other) {
   if (platform_cursor_)
-    ui::CursorFactoryOzone::GetInstance()->UnrefImageCursor(platform_cursor_);
+    UnrefImageCursor(platform_cursor_);
   platform_cursor_ = other.platform_cursor_;
   if (platform_cursor_)
-    ui::CursorFactoryOzone::GetInstance()->RefImageCursor(platform_cursor_);
+    RefImageCursor(platform_cursor_);
 
   device_scale_factor_ = other.device_scale_factor_;
   maximum_cursor_size_ = other.maximum_cursor_size_;

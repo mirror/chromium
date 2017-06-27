@@ -36,7 +36,7 @@ class Connector;
 }
 
 namespace ui {
-class CursorDataFactoryOzone;
+class CursorDataFactory;
 }
 
 namespace wm {
@@ -157,7 +157,7 @@ class VIEWS_MUS_EXPORT MusClient : public aura::WindowTreeClientDelegate,
   base::ObserverList<MusClientObserver> observer_list_;
 
 #if defined(USE_OZONE)
-  std::unique_ptr<ui::CursorDataFactoryOzone> cursor_factory_ozone_;
+  std::unique_ptr<ui::CursorDataFactory> cursor_factory_;
 #endif
 
   // NOTE: this may be null (creation is based on argument supplied to
