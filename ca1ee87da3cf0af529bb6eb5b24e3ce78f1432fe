@@ -1,0 +1,401 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f461199f_636e7ad2",
+        "filename": "ios/web/app/web_main_runner.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "nit: remove those two blank lines around anonymous namespace\n\nnamespace web {\nnamespace {\nconstexpr size_t kMaximumMojoMessageSize \u003d ...\n}\n\nclass WebMainRunnerImpl : ...",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0302703f_5344d94f",
+        "filename": "ios/web/app/web_main_runner.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "Why this particular value? 128MiB is quite large for a single message, especially if it is mapped in memory in its integrality.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce3e11e_c537c939",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "Why this \"using\"? It would be necessary if you were to use TEST_F(), but TEST() does not require a subclass of testing::Test as first parameter IIRC (only TEST_F do, see https://github.com/google/googletest/blob/master/googletest/docs/Primer.md).",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709583bd_222d8fe9",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "Can you test merging dictionaries of different shapes? Like {a: {b: []}, c: \"hello\"} with {a: \"world\", b: \"bye\"}.\n\nReading the code, it should work properly but this is not exercised by the test.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340b1fcc_f92ff1b5",
+        "filename": "ios/web/public/app/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "nit: blank line above the import",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da27bc50_61ee9eab",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "I know that in context TLS means Thread Local Storage but TLS as an acronym can means many things. Can you use Thread Local Storage instead?",
+      "range": {
+        "startLine": 39,
+        "startChar": 43,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb9a4ed_3a419186",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "I\u0027m confused by what \"Process\" means here. Chrome on iOS (like all iOS application) is single process, so what kind of process does this method name refers to?\n\nMoreover, the documentation mention the value is stored in thread local storage. So can I call SetForProcess multiple time from a single process if I call it in different threads each time?\n\nMaybe this is something obvious for someone working with mojo, but then maybe this file should have a pointer to the documentation that should explain those terminology and how mojo and threads interact.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937ab19b_2e532aec",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "nit: no word wrap after \"Service\", should read\n\n  // Returns the service_manager::Connector received via this connection\u0027s\n  // Service implementation. Use this to initiate connections as this\n  // object\u0027s Identity",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca8dff3_09857092",
+        "filename": "ios/web/public/service_names.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "service. this → service. This",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff7dacb_0946cf15",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "nit: can you use base::MakeUnique\u003c\u003e here and below?",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a26e4f3_87869eb0",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "nit: result → insertion_result",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7814c6_59088a65",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "base/containers library (https://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md) recommends *not* to use std::unordered_map as the performance gain vs std::map is minimal in most of the case.\n\nNot sure whether flat_map\u003c\u003e would be better here or not though, but I think std::map\u003c\u003e would work.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf196c3a_c5187833",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719580fe_2bdb43ee",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "This is not consistent with the documentation. Documentation states that this is store in thread local storage and all calls need to be made from the same thread (i.e. GetForProcess and DestroyForProcess) but the implementation store in a global, so not in thread local storage and GetForProcess will return the value in any thread.\n\nIf the object is only valid from a single thread, then it should either be in TLS or there should be DCHECK() that the thread is the expected one.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4a532d_23e099e6",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "nit: I think you can use base::MakeUnique here.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bf552b_4a38c49b",
+        "filename": "ios/web/service_manager_connection_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "Remove \"explicit\". The constructor takes two parameters, so \"explicit\" is not needed here.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38dc7467_15696731",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "nit: auto manifest_value",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef298f36_4c059e0f",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f81b068_08f0d341",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "result → insertion_result",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70039d55_8bfc210e",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "This does not need to be \"static\".\n\nYou can also use std::array\u003c\u003e to be able to use the new syntax for \"for-loop\". This requires moving the definition of ManifestInfo struct outside of the method definition though:\n\nnamespace {\nstruct ManifestInfo {\n  const char* name;\n  int resource_id;\n};\n}  // namespace\n\nServiceManagerContext::ServiceManagerContext() {\n  service_manager::mojom::ServiceRequest packaged_services_request;\n  DCHECK(!service_manager::ServiceManagerIsRemote());\n  std::unique_ptr\u003cBuiltinManifestProvider\u003e manifest_provider \u003d\n      base::MakeUnique\u003cBuiltinManifestProvider\u003e();\n\n  const std::array\u003cManifestInfo, 3\u003e manifests \u003d {\n      {mojom::kBrowserServiceName, IDR_MOJO_WEB_BROWSER_MANIFEST},\n      {mojom::kPackagedServicesServiceName,\n       IDR_MOJO_WEB_PACKAGED_SERVICES_MANIFEST},\n      {catalog::mojom::kServiceName, IDR_MOJO_CATALOG_MANIFEST},\n  };\n  for (const ManifestInfo\u0026 manifest : manifests) {\n    manifest_provider-\u003eAddServiceManifest(manifest.name,\n                                          manifest.resource_id);\n  }",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6b0049_015a0e11",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "I think you can use base::MakeRefCounted here:\n\n  in_process_context_ \u003d base::MakeRefCounted\u003cInProcessServiceManagerContext\u003e();",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fbe0f2_68a41d80",
+        "filename": "ios/web/shell/shell_web_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "id → identifier",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee7cf6f_278d5c97",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T14:22:57Z",
+      "side": 1,
+      "message": "Revert changes to this file?",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
