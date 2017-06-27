@@ -5,7 +5,6 @@
 package org.chromium.ui.display;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
