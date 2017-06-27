@@ -8,15 +8,19 @@
 #include "device/generic_sensor/platform_sensor_provider.h"
 
 #include "base/android/scoped_java_ref.h"
+#include "device/generic_sensor/generic_sensor_export.h"
 
 namespace device {
 
-class PlatformSensorProviderAndroid : public PlatformSensorProvider {
+class DEVICE_GENERIC_SENSOR_EXPORT PlatformSensorProviderAndroid
+    : public PlatformSensorProvider {
  public:
   PlatformSensorProviderAndroid();
   ~PlatformSensorProviderAndroid() override;
 
   static PlatformSensorProviderAndroid* GetInstance();
+
+  void SetSensorManagerToNullForTesting();
 
  protected:
   void CreateSensorInternal(mojom::SensorType type,
