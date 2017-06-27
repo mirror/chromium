@@ -1765,8 +1765,8 @@ if (is_android) {
     # find the native side functions.
     if (is_android && is_component_build) {
       deps += [
-        "//device/generic_sensor",
         "//device/sensors",
+        "//services/device/generic_sensor",
       ]
     }
   }
