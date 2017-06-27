@@ -41,17 +41,36 @@ std::string SecurityStyleToProtocolSecurityState(
   }
 }
 
+std::string MixedContentTypeToProtocolMixedContentType(
+    content::SecurityStyleExplanation::MixedContentType mixed_content_type) {
+  switch (mixed_content_type) {
+    case content::SecurityStyleExplanation::MixedContentType::NO_MIXED_CONTENT:
+      return Security::MixedContentTypeEnum::None;
+    case content::SecurityStyleExplanation::MixedContentType::
+        PASSIVE_OPTIONALLY_BLOCKABLE:
+      return Security::MixedContentTypeEnum::OptionallyBlockable;
+    case content::SecurityStyleExplanation::MixedContentType::ACTIVE_BLOCKABLE:
+      return Security::MixedContentTypeEnum::Blockable;
+    default:
+      NOTREACHED();
+      return Security::MixedContentTypeEnum::None;
+  }
+}
+
 void AddExplanations(
     const std::string& security_style,
     const std::vector<SecurityStyleExplanation>& explanations_to_add,
     Explanations* explanations) {
   for (const auto& it : explanations_to_add) {
-    explanations->addItem(Security::SecurityStateExplanation::Create()
-        .SetSecurityState(security_style)
-        .SetSummary(it.summary)
-        .SetDescription(it.description)
-        .SetHasCertificate(it.has_certificate)
-        .Build());
+    explanations->addItem(
+        Security::SecurityStateExplanation::Create()
+            .SetSecurityState(security_style)
+            .SetSummary(it.summary)
+            .SetDescription(it.description)
+            .SetHasCertificate(it.has_certificate)
+            .SetMixedContentType(MixedContentTypeToProtocolMixedContentType(
+                it.mixed_content_type))
+            .Build());
   }
 }
 
