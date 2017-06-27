@@ -439,7 +439,6 @@ Resource* ResourceFetcher::ResourceForStaticData(
       params.GetResourceRequest(), params.Options(), params.DecoderOptions());
   resource->SetNeedsSynchronousCacheHit(substitute_data.ForceSynchronousLoad());
   // FIXME: We should provide a body stream here.
-  resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
   resource->ResponseReceived(response, nullptr);
   resource->SetDataBufferingPolicy(kBufferData);
@@ -463,7 +462,6 @@ Resource* ResourceFetcher::ResourceForBlockedRequest(
     ResourceRequestBlockedReason blocked_reason) {
   Resource* resource = factory.Create(
       params.GetResourceRequest(), params.Options(), params.DecoderOptions());
-  resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
       params.Url(), blocked_reason));

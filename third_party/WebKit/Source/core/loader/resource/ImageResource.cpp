@@ -382,7 +382,7 @@ void ImageResource::UpdateImageAndClearBuffer() {
 }
 
 void ImageResource::NotifyStartLoad() {
-  CHECK_EQ(GetStatus(), ResourceStatus::kPending);
+  Resource::NotifyStartLoad();
   GetContent()->NotifyStartLoad();
 }
 
