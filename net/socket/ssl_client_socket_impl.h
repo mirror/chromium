@@ -91,6 +91,7 @@ class SSLClientSocketImpl : public SSLClientSocket,
                                  TokenBindingType tb_type,
                                  std::vector<uint8_t>* out) override;
   crypto::ECPrivateKey* GetChannelIDKey() const override;
+  SSLErrorDetails GetConnectErrorDetails() const override;
 
   // SSLSocket implementation.
   int ExportKeyingMaterial(const base::StringPiece& label,
@@ -351,6 +352,8 @@ class SSLClientSocketImpl : public SSLClientSocket,
 
   // True if PKP is bypassed due to a local trust anchor.
   bool pkp_bypassed_;
+
+  SSLErrorDetails connect_error_details_;
 
   NetLogWithSource net_log_;
   base::WeakPtrFactory<SSLClientSocketImpl> weak_factory_;
