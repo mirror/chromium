@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c882e91_83c7d214",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-27T20:49:04Z",
+      "side": 1,
+      "message": "nit: this can go on a single line with the if statement.",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 31
+      },
+      "revId": "4b1e21931946faa074d9c7d98e9cf235bbba485c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56b7048_f06ef6b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-27T20:49:04Z",
+      "side": 1,
+      "message": "If you remove this break, MotionEvent.ACTION_UP will fall through and execute the code in MotionEvent.ACTION_CANCEL, so we can remove the duplicate lines setting mIsTouchEventsBeingProcessed and isTouchEventConsumed, and calling view.setPressed.",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 21
+      },
+      "revId": "4b1e21931946faa074d9c7d98e9cf235bbba485c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
