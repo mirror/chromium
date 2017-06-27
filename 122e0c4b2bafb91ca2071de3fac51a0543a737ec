@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe3658ac_1aff547a",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "This is no longer equivalent with previous logic (i.e. Android !isEnabled() maps to disabled state).\n\nAlso, since you changed the semantics of enabled/disabled to apply specifically to contorls, you need to add some notion of that to Android as well I guess?",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0b957b1_56647ec6",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Define \u0027readOnly\u0027 somewhere as a programmatic literal.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13676290_d4063d72",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "In this context, what does it mean to be enabled? Enabled was not set previously.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56a3a1ee_80c18e60",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Ditto. This looks more verbose.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "982bc1d0_77569f3e",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "More than these roles? You\u0027re using them pretty generically.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cdcd1b8_52d5624a",
+        "filename": "chrome/test/data/extensions/api_test/automation/tests/tabs/find.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "We use single quotes in js \"\u0027\" for string literals.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d373c87a_9b462337",
+        "filename": "chrome/test/data/extensions/api_test/automation/tests/tabs/sanity_check.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "An input isn\u0027t considered a control?",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a1d9719_8886cd4f",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_blink.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Move this comment downward to what I think it applies to?",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcb869d4_1f7f3e82",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Probably because most things are not controls, right? i.e. control mode is 0; so, on Android you probably want to have\nint control_mode \u003d GetIntAttribute(ui::AX_ATTR_CONTROL_MODE);\n return  control_mode \u003d\u003d ui::AX_CONTROL_MODE_ENABLED || control_mode \u003d\u003d ui::AX_CONTROL_MODE_NONE;\nOr, to make it equivalent with what was there before\n return  control_mode \u003d\u003d ui::AX_CONTROL_MODE_ENABLED || control_mode \u003d\u003d ui::AX_CONTROL_MODE_NONE || control_mode \u003d\u003d ui::AX_CONTROL_MODE_READ_ONLY;\nfavored over what you currently have I guess because someone might add a new control mode.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8726626_b84ac7f5",
+        "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. If it builds with the regular Chromium checkout (e.g. after running install-build-deps.sh) then include it; otherwise remove the comment.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76695ef7_b8f8fe7a",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5477,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Explain \"doc structs like list item\". nit: period at the end of comment.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "897c718c_4b06bf2e",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5479,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "This is new behavior. What about read-only text fields?",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84e0f726_1ca4c978",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5480,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Do you need to handle enabled in any special way?",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "897095b3_91762408",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Not sure what exactly this comment refers to?",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cd05508_6897ea35",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "nit: complete sentences end with period.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ada9f3d_b9ab7324",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Why CanSetFocusAttribute here? Does that matter.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96aa347e_ec8eb6c5",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "This looks really arbitrary. Point to a spec please.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0955eebf_1f9892c5",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "I would have expected this to go first (even before aria-disabled stuff).",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c21b7934_2034a691",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Folow the standard TODO format (TODO(username): xyz).",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5d8774e_7bd7f3d5",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "Is this something you\u0027re stating here? If so, then it should probably be fixed in input.IsReadOnly(). Otherwise, just use input.IsReadOnly.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7106c9f_fc34887a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-27T21:13:58Z",
+      "side": 1,
+      "message": "The focusable part of this definition looks wrong to me. What you are saying is that things like \u003cdiv role\u003d\"cell\"\u003e cannot be selected? Also, this significantly differs from the previous definition (which also means you\u0027ll likely break lots of behavior).",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
