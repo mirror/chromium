@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2c6b1ca6_06b71e56",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T21:59:02Z",
+      "side": 1,
+      "message": "Yep -- it\u0027s just called once and it kinda makes sense to read this code in a linear fashion. This is optional, though.",
+      "parentUuid": "bc94e6ea_b8478a6f",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d54963_57b152e8",
         "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
         "patchSetId": 2
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "In the paintworklet case, it is neither main world, nor isolated world, it is a worker world. So the human_readable_name will be null here without this change.",
       "parentUuid": "854e4338_ea62db98",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17758c4a_085717db",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-27T21:59:02Z",
+      "side": 1,
+      "message": "Oh, I see, thanks for clarification! My understanding is that the way the notion of Isolated World is used here (both in MainThreadDebugger and DOMWrapperWorld::SetIsolatedWolrdHumanReadableName()) it is actually meant to say \"worlds other than main\". So how about we replace world.IsIsolatedWorld() in line 154 with !world.IsMainWorld(), then replace the DCHECK(IsIsolatedWorld()) in SetIsolatedWolrdHumanReadableName() with DCHECK(!IsMainWorld()) and rename the method accordingly, then use it to set the world name in WorkerOrWorkletScriptController::InitializeContextIfNeeded(). This would make it consistent with how we already do it elsewhere and may also help other types of worlds in the future -- because I think the problem may be common.",
+      "parentUuid": "927119d7_e939d00f",
       "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
