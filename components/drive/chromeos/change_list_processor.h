@@ -141,10 +141,33 @@ class ChangeListProcessor {
       const std::string& parent_resource_id);
 
  private:
+  class ChangeListToEntryMapUMAStats {
+   public:
+    ChangeListToEntryMapUMAStats()
+        : num_regular_files_(0), num_hosted_documents_(0) {}
+
+    // Increments number of files.
+    void IncrementNumFiles(bool is_hosted_document);
+
+    // Updates UMA histograms with file counts.
+    void UpdateFileCountUmaHistograms();
+
+   private:
+    int num_regular_files_;
+    int num_hosted_documents_;
+  };
+
   typedef std::map<std::string /* resource_id */, ResourceEntry>
       ResourceEntryMap;
   typedef std::map<std::string /* resource_id */,
                    std::string /* parent_resource_id*/> ParentResourceIdMap;
+
+  // Converts the |change_lists| to entry_map_, to be applied by
+  // ApplyEntryMap() later.
+  void ConvertChangeListsToMap(
+      std::vector<std::unique_ptr<ChangeList>> change_lists,
+      int64_t largest_changestamp,
+      ChangeListProcessor::ChangeListToEntryMapUMAStats* uma_stats);
 
   // Applies the pre-processed metadata from entry_map_ onto the resource
   // metadata. |about_resource| must not be null.
