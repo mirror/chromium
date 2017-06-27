@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ba6dfa1_f5c3ec18",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T09:44:27Z",
+      "side": 1,
+      "message": "Good question. Since I don\u0027t fully understand what this histogram is used for, I tried to not alter the call logic. Prior to this CL, IsCORSFailed would only be set in case the CORS check explicitly failed:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp?rcl\u003dde0c27b10c909960c3797ffc42159fb81d8c4bbd\u0026l\u003d314\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp?rcl\u003dde0c27b10c909960c3797ffc42159fb81d8c4bbd\u0026l\u003d200\n\nSo IIUC, IsCORSFailed would for instance be false if the response would be an opaque service worker response, in which case !IsSameOriginOrCORSSuccessful would return true.\n\nI agree thought, that using !IsSameOriginOrCORSSuccessful _sounds_ like it would be the thing to use here and I don\u0027t know if the above mentioned situation could actually occur. And to be fair, this CL would still at least theoretically alter the input to FontLoaded since we set CORSStatus::kFailed when we would need CORS but the fetch mode is not CORS, which previously would not have caused IsCORSFailed to return true.",
+      "parentUuid": "f6325a5a_5f7ff0a5",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbfa1f4c_b582acca",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
         "patchSetId": 20
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-27T08:28:52Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff43258_17e65369",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T09:44:27Z",
+      "side": 1,
+      "message": "Same thoughts as above apply.",
+      "parentUuid": "fbfa1f4c_b582acca",
       "revId": "0a601615aafa5d8005b8987489deb17b83074447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "66ea44c9_d8f2112a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T09:44:27Z",
+      "side": 1,
+      "message": "Agreed, now that we handle the service worker case as well, this method is superfluous.",
+      "parentUuid": "feb3b6d9_21a05d14",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "246ef733_e81f47c1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "0a601615aafa5d8005b8987489deb17b83074447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429b3c44_83fe0405",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T09:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "246ef733_e81f47c1",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e47b2df5_52f49c7c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T09:44:27Z",
+      "side": 1,
+      "message": "Moved it to //public/platform/CORSStatus.h",
+      "parentUuid": "cfa55223_35fdff52",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f764f93c_bc79bc9b",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 20
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-27T08:28:52Z",
       "side": 1,
       "message": "Nit: You can enforce this via presubmit checks by naming it `SetCORSStatusForTest(...)`.",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183d46af_e935e768",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-27T09:44:27Z",
+      "side": 1,
+      "message": "Cool! But since it also has to be called by ResourceLoader, I would imagine that case then being also caught by the presubmit check? Can I friend ResourceLoader and Test or would that be an antipattern?",
+      "parentUuid": "f764f93c_bc79bc9b",
       "revId": "0a601615aafa5d8005b8987489deb17b83074447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
