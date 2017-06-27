@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "77a4bcad_ca2ac3c2",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/svg/window-expected.txt",
+        "patchSetId": 22
+      },
+      "lineNbr": 1986,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-27T02:32:11Z",
+      "side": 1,
+      "message": "Yes it\u0027s because of that. These things are underneath an SVG element\nwhich has a transform set on it in window.svg.",
+      "parentUuid": "ecb926f7_92cb85e9",
+      "revId": "d7b72eb4a0ecfa6be15dac5e41a397f73c77bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6577a8ba_fc13f072",
         "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
         "patchSetId": 22
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "22604d01_bd8dcf41",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-27T02:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6577a8ba_fc13f072",
+      "revId": "d7b72eb4a0ecfa6be15dac5e41a397f73c77bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c134ecb0_ab0dc5ff",
         "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
         "patchSetId": 22
@@ -68,6 +104,24 @@
       "revId": "d7b72eb4a0ecfa6be15dac5e41a397f73c77bb89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20cbf1b_686e2853",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-27T02:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c134ecb0_ab0dc5ff",
+      "revId": "d7b72eb4a0ecfa6be15dac5e41a397f73c77bb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
