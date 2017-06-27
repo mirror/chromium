@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a45e7a4_8ff21b8a",
+        "filename": "ios/showcase/common/protocol_alerter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T11:22:14Z",
+      "side": 1,
+      "message": "Maybe just \u0027ignoreSelector\u0027?",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "369c353cb39a521fb54e48ef3c5e6dd18b99dfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c02f62e_929d2b0b",
+        "filename": "ios/showcase/common/protocol_alerter.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T11:22:14Z",
+      "side": 1,
+      "message": "_ignoredSelectors?",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "369c353cb39a521fb54e48ef3c5e6dd18b99dfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
