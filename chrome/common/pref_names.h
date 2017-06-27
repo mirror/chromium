@@ -931,6 +931,13 @@ extern const char kClipboardLastModifiedTime[];
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
 extern const char kOfflinePrefetchBackoff[];
+extern const char kOfflineAccumulatedUsage[];
+extern const char kOfflineAccumulatedTimestamp[];
+extern const char kOfflineUsageUnusedCount[];
+extern const char kOfflineUsageStartedCount[];
+extern const char kOfflineUsageOfflineCount[];
+extern const char kOfflineUsageOnlineCount[];
+extern const char kOfflineUsageMixedCount[];
 #endif
 
 }  // namespace prefs
