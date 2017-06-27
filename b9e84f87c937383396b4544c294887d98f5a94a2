@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ccfbbfea_753ca4b6",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-27T17:23:22Z",
+      "side": 1,
+      "message": "I think this was a holdover from when I was trying to run the unit tests on iOS to see if the FeatureEngagementTracker would even build on iOS (although if the else statement said \"!iOS\" maybe not?). Tommy pushed a CL a while ago that built it on all platforms, so the unit tests are already linked in above. This line has been removed.",
+      "parentUuid": "e415599c_b0353866",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f609edcc_3b6a3f5e",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 3
