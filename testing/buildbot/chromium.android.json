@@ -541,7 +541,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
@@ -658,12 +658,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
           ],
-          "hard_timeout": 60,
+          "hard_timeout": 120,
           "output_links": [
             {
               "link": [
@@ -815,7 +815,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
@@ -932,12 +932,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
           ],
-          "hard_timeout": 60,
+          "hard_timeout": 120,
           "output_links": [
             {
               "link": [
@@ -972,12 +972,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
           ],
-          "hard_timeout": 60,
+          "hard_timeout": 120,
           "output_links": [
             {
               "link": [
@@ -1012,12 +1012,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
           ],
-          "hard_timeout": 60,
+          "hard_timeout": 120,
           "output_links": [
             {
               "link": [
@@ -6315,7 +6315,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
@@ -6435,7 +6435,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "MMB29Q",
               "device_type": "bullhead"
             }
