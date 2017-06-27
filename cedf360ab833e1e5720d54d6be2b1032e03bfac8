@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be90bc3c_12949cd5",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-27T21:27:38Z",
+      "side": 1,
+      "message": "I am not sure of (#LV 100% + #FFF 70%) color mixing at 100% opacity.\nWhat I do is 50% of (#LV 100%) and 50% of (#FFF 70%).\n0xB3 indicates 70%, 0x80 indicates 50%.",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae25c918_4654c45d",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-27T21:27:38Z",
+      "side": 1,
+      "message": "I remembered it was not recommended to set SK_ColorTRANSPARENT background color. But since light_vibrant_mixed has some transparency. If we still set light_vibrant_mixed to search_box_, the textfield background color is different than container\u0027s background.",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
