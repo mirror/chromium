@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "131ee3b0_a5e1860a",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-27T00:19:09Z",
+      "side": 1,
+      "message": "const gfx::Vector3dF\u0026 ?",
+      "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a82ae16_e0bee49c",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-27T00:19:09Z",
+      "side": 1,
+      "message": "multi-line if needs {}",
+      "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "227cb1cb_6b4eb67f",
         "filename": "ash/system/power/tablet_power_button_controller.h",
         "patchSetId": 1
@@ -13,6 +47,23 @@
       "writtenOn": "2017-06-26T23:43:41Z",
       "side": 1,
       "message": "things like this are making me consider relenting on my stance that we shouldn\u0027t list test classes as friends since it encourages excess dependencies on internal implementations. :-/\n\nmaybe i should instead say that it\u0027s okay to use \u0027friend class\u0027 to list the base test class (since that\u0027s essentially the same as declaring a TestApi class like this one), but avoid using FRIEND_TEST to at least keep individual tests from adding lots of dependencies.",
+      "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f7ed26_4e201a3a",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-27T00:19:09Z",
+      "side": 1,
+      "message": "any reason these are not in anonymous namespace?",
       "revId": "2ab9d054eec0e444a3db4d3f8624ab0d1645005a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
