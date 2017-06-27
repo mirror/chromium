@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44bff640_0200a0f2",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T17:22:23Z",
+      "side": 1,
+      "message": "The comment in system_tray_item.h says it all.\n\nIf we don\u0027t want an icon in bottom right status area, return nullptr in CreateTrayView().\n\nIf we don\u0027t want a row in the first-level tray popup menu, return nullptr in CreateDefaultView().\n\nCreateDetailedView() is used for both submenu and popup bubble. We would need it if we want to show a bubble similar to volume or display brightness.",
+      "parentUuid": "653c6749_9ac050d6",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f810ba1b_ae0d79f3",
         "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
         "patchSetId": 2
