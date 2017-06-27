@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "657482b9_d0f2a368",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-27T13:12:08Z",
+      "side": 1,
+      "message": "Yes!",
+      "parentUuid": "8dd2eaa7_fe7cb195",
+      "revId": "28d1b32d8842e356e159e5e6103fd93fd47dffbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4255e7db_2db925d0",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 3
@@ -151,6 +169,24 @@
       "revId": "28d1b32d8842e356e159e5e6103fd93fd47dffbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72c465e_77137993",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-27T13:12:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4255e7db_2db925d0",
+      "revId": "28d1b32d8842e356e159e5e6103fd93fd47dffbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +210,30 @@
       "revId": "28d1b32d8842e356e159e5e6103fd93fd47dffbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df865e2_9173583c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-27T13:12:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c47279_634b4885",
+      "range": {
+        "startLine": 241,
+        "startChar": 14,
+        "endLine": 241,
+        "endChar": 16
+      },
+      "revId": "28d1b32d8842e356e159e5e6103fd93fd47dffbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
