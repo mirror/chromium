@@ -165,6 +165,30 @@
       "revId": "c65b6773b2e57d4fc015102299c3b0ceba189f88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fef704_b96f6f45",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 11898,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-27T18:28:12Z",
+      "side": 1,
+      "message": "It now occurs to me that cc needs to do bounds clamping, and it assumes the minimum scroll_offset is (0, 0) in ScrollTree::ClampScrollOffsetToLimits.  That makes me think we have to use strategy (A) origin in position.  But how does it work today if CLM uses (B)?  I\u0027m missing something.",
+      "parentUuid": "52293cfe_cc5eb59d",
+      "range": {
+        "startLine": 11898,
+        "startChar": 21,
+        "endLine": 11898,
+        "endChar": 29
+      },
+      "revId": "c65b6773b2e57d4fc015102299c3b0ceba189f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
