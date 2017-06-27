@@ -37,8 +37,10 @@ void ProgrammaticScrollAnimator::NotifyOffsetChanged(
 }
 
 void ProgrammaticScrollAnimator::ScrollToOffsetWithoutAnimation(
-    const ScrollOffset& offset) {
+    const ScrollOffset& offset,
+    bool sequenced_for_smooth_scroll) {
   CancelAnimation();
+  sequenced_for_smooth_scroll_ = sequenced_for_smooth_scroll;
   NotifyOffsetChanged(offset);
 }
 
