@@ -102,10 +102,6 @@ class LayoutScrollbarPart final : public LayoutBlock {
   LayoutUnit PaddingBottom() const override { return LayoutUnit(); }
   LayoutUnit PaddingLeft() const override { return LayoutUnit(); }
   LayoutUnit PaddingRight() const override { return LayoutUnit(); }
-  LayoutUnit PaddingBefore() const override { return LayoutUnit(); }
-  LayoutUnit PaddingAfter() const override { return LayoutUnit(); }
-  LayoutUnit PaddingStart() const override { return LayoutUnit(); }
-  LayoutUnit PaddingEnd() const override { return LayoutUnit(); }
 
   void LayoutHorizontalPart();
   void LayoutVerticalPart();

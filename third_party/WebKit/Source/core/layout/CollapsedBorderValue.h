@@ -192,8 +192,6 @@ class CollapsedBorderValue {
 // Holds 4 CollapsedBorderValue's for 4 sides of a table cell.
 // The logical directions 'start', 'end', 'before', 'after' are according to
 // the table's writing mode and direction.
-// TODO(crbug.com/128227,crbug.com/727173): The direction is incorrect in some
-// cases.
 class CollapsedBorderValues {
   USING_FAST_MALLOC(CollapsedBorderValues);
 

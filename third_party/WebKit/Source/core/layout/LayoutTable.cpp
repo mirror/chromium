@@ -1135,36 +1135,36 @@ void LayoutTable::RecalcSections() const {
   needs_section_recalc_ = false;
 }
 
-LayoutUnit LayoutTable::BorderBefore() const {
+LayoutUnit LayoutTable::BorderLeft() const {
   if (ShouldCollapseBorders()) {
     UpdateCollapsedOuterBorders();
-    return LayoutUnit(collapsed_outer_border_before_);
+    return LayoutUnit(LogicalCollapsedOuterBorderToPhysical().Left());
   }
-  return LayoutUnit(LayoutBlock::BorderBefore().ToInt());
+  return LayoutUnit(LayoutBlock::BorderLeft().ToInt());
 }
 
-LayoutUnit LayoutTable::BorderAfter() const {
+LayoutUnit LayoutTable::BorderRight() const {
   if (ShouldCollapseBorders()) {
     UpdateCollapsedOuterBorders();
-    return LayoutUnit(collapsed_outer_border_after_);
+    return LayoutUnit(LogicalCollapsedOuterBorderToPhysical().Right());
   }
-  return LayoutUnit(LayoutBlock::BorderAfter().ToInt());
+  return LayoutUnit(LayoutBlock::BorderRight().ToInt());
 }
 
-LayoutUnit LayoutTable::BorderStart() const {
+LayoutUnit LayoutTable::BorderTop() const {
   if (ShouldCollapseBorders()) {
     UpdateCollapsedOuterBorders();
-    return LayoutUnit(collapsed_outer_border_start_);
+    return LayoutUnit(LogicalCollapsedOuterBorderToPhysical().Top());
   }
-  return LayoutUnit(LayoutBlock::BorderStart().ToInt());
+  return LayoutUnit(LayoutBlock::BorderTop().ToInt());
 }
 
-LayoutUnit LayoutTable::BorderEnd() const {
+LayoutUnit LayoutTable::BorderBottom() const {
   if (ShouldCollapseBorders()) {
     UpdateCollapsedOuterBorders();
-    return LayoutUnit(collapsed_outer_border_end_);
+    return LayoutUnit(LogicalCollapsedOuterBorderToPhysical().Bottom());
   }
-  return LayoutUnit(LayoutBlock::BorderEnd().ToInt());
+  return LayoutUnit(LayoutBlock::BorderBottom().ToInt());
 }
 
 LayoutTableSection* LayoutTable::SectionAbove(

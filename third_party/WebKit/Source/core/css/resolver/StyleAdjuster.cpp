@@ -328,19 +328,6 @@ static void AdjustStyleForDisplay(ComputedStyle& style,
       style.GetPosition() == EPosition::kSticky)
     style.SetPosition(EPosition::kStatic);
 
-  // writing-mode does not apply to table row groups, table column groups, table
-  // rows, and table columns.
-  // FIXME: Table cells should be allowed to be perpendicular or flipped with
-  // respect to the table, though.
-  if (style.Display() == EDisplay::kTableColumn ||
-      style.Display() == EDisplay::kTableColumnGroup ||
-      style.Display() == EDisplay::kTableFooterGroup ||
-      style.Display() == EDisplay::kTableHeaderGroup ||
-      style.Display() == EDisplay::kTableRow ||
-      style.Display() == EDisplay::kTableRowGroup ||
-      style.Display() == EDisplay::kTableCell)
-    style.SetWritingMode(layout_parent_style.GetWritingMode());
-
   // FIXME: Since we don't support block-flow on flexible boxes yet, disallow
   // setting of block-flow to anything other than TopToBottomWritingMode.
   // https://bugs.webkit.org/show_bug.cgi?id=46418 - Flexible box support.
