@@ -159,7 +159,7 @@ void LocalWindowProxy::Initialize() {
   }
 
   MainThreadDebugger::Instance()->ContextCreated(script_state_.Get(),
-                                                 GetFrame(), origin);
+                                                 GetFrame(), origin, String());
   GetFrame()->Loader().Client()->DidCreateScriptContext(context,
                                                         world_->GetWorldId());
   // If conditional features for window have been queued before the V8 context
