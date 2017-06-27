@@ -241,7 +241,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   void SetDataBufferingPolicy(DataBufferingPolicy);
 
   void MarkAsPreload();
-  void MatchPreload();
+  virtual bool MatchPreload(const FetchParameters&);
 
   bool CanReuseRedirectChain() const;
   bool MustRevalidateDueToCacheHeaders() const;
