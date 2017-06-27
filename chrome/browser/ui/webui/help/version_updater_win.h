@@ -9,8 +9,10 @@
 #define CHROME_BROWSER_UI_WEBUI_HELP_VERSION_UPDATER_WIN_H_
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "base/task_runner.h"
 #include "chrome/browser/google/google_update_win.h"
 #include "chrome/browser/ui/webui/help/version_updater.h"
 
@@ -38,7 +40,7 @@ class VersionUpdaterWin : public VersionUpdater,
                const base::string16& new_version) override;
 
  private:
-  void BeginUpdateCheckOnFileThread(bool install_update_if_possible);
+  void BeginUpdateCheckInBackground(bool install_update_if_possible);
 
   // A task run on the UI thread with the result of checking for a pending
   // restart.
@@ -49,6 +51,9 @@ class VersionUpdaterWin : public VersionUpdater,
 
   // Callback used to communicate update status to the client.
   StatusCallback callback_;
+
+  // Background task runner to run update check.
+  scoped_refptr<base::TaskRunner> task_runner_;
 
   // Used for callbacks.
   base::WeakPtrFactory<VersionUpdaterWin> weak_factory_;
