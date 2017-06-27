@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6965cd3b_3c4487ec",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T02:06:11Z",
+      "side": 1,
+      "message": "This sentence isn\u0027t actually needed any more, because doing a reversed selection homes the cursor anyway.  So we don\u0027t care about homing the cursor.",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6843d9e1_5f82db47",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T02:06:11Z",
+      "side": 1,
+      "message": "I don\u0027t think this sentence adds much value.  It basically says \"Do X because we want X\".  If you had specific cases to talk about where readers wouldn\u0027t necessarily expect this but we need to do it anyway, that would be more interesting.  But if not, I think this comment should just go away.",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faff4c3_28de820e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T02:06:11Z",
+      "side": 1,
+      "message": "The \"again\" here seems wrong now.",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d928303_3ae09a25",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T02:06:11Z",
+      "side": 1,
+      "message": "I forget, why are we moving this down?  And how come we lost the |in_revert_| twiddling?  What was that for?  Honestly, what is it for just above?  I don\u0027t feel like I understand what this code is doing.",
+      "revId": "cdc8c1def45e60ab39fe462cb08ab9baf9ab6a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
