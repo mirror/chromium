@@ -34,6 +34,8 @@ class WindowBoundsChangeObserver;
 
 // An implementation of KeyboardUI that uses a content::WebContents to implement
 // the keyboard.
+// TODO(yhanada): Consider to merge this class into ChromeKeyboardUI.
+//                This class is inherited only by that class.
 class KEYBOARD_EXPORT KeyboardUIContent : public KeyboardUI,
                                           public aura::WindowObserver {
  public:
@@ -92,6 +94,8 @@ class KEYBOARD_EXPORT KeyboardUIContent : public KeyboardUI,
   content::BrowserContext* browser_context() { return browser_context_; }
 
   const aura::Window* GetKeyboardRootWindow() const;
+
+  virtual content::WebContents* CreateWebContents();
 
  private:
   friend class TestApi;

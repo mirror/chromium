@@ -209,11 +209,7 @@ void KeyboardUIContent::UpdateInsetsForWindow(aura::Window* window) {
 
 aura::Window* KeyboardUIContent::GetKeyboardWindow() {
   if (!keyboard_contents_) {
-    content::BrowserContext* context = browser_context();
-    keyboard_contents_.reset(content::WebContents::Create(
-        content::WebContents::CreateParams(context,
-            content::SiteInstance::CreateForURL(context,
-                                                GetVirtualKeyboardUrl()))));
+    keyboard_contents_.reset(CreateWebContents());
     keyboard_contents_->SetDelegate(new KeyboardContentsDelegate(this));
     SetupWebContents(keyboard_contents_.get());
     LoadContents(GetVirtualKeyboardUrl());
@@ -318,6 +314,13 @@ const aura::Window* KeyboardUIContent::GetKeyboardRootWindow() const {
     return nullptr;
   }
   return keyboard_contents_->GetNativeView()->GetRootWindow();
+}
+
+content::WebContents* KeyboardUIContent::CreateWebContents() {
+  content::BrowserContext* context = browser_context();
+  return content::WebContents::Create(content::WebContents::CreateParams(
+      context,
+      content::SiteInstance::CreateForURL(context, GetVirtualKeyboardUrl())));
 }
 
 void KeyboardUIContent::LoadContents(const GURL& url) {

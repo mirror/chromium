@@ -186,3 +186,20 @@ test("keyboard_unittests") {
     "//ui/wm",
   ]
 }
+
+test("keyboard_with_content_browsertests") {
+  sources = [
+    "content/keyboard_ui_content_browsertest.cc",
+  ]
+
+  defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
+
+  deps = [
+    ":keyboard",
+    ":keyboard_with_content",
+    "//content/shell:content_shell_lib",
+    "//content/test:browsertest_support",
+    "//content/test:test_support",
+    "//testing/gtest",
+  ]
+}
