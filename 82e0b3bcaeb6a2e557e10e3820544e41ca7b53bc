@@ -191,6 +191,23 @@
     },
     {
       "key": {
+        "uuid": "e6a29e30_11624a5e",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-27T14:13:55Z",
+      "side": 1,
+      "message": "This seems like it\u0027s possible to write a unit test for?\nYou could create a |FakeFeatureEngagementTracker : public FeatureEngagementTracker| for example to test the interaction with that.",
+      "revId": "82e0b3bcaeb6a2e557e10e3820544e41ca7b53bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0ade42d_8873f765",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
         "patchSetId": 7
