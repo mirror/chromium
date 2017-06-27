@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad003e8b_fc247010",
+        "filename": "third_party/WebKit/LayoutTests/custom-elements/spec/parsing_resettable_elements.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1225023
+      },
+      "writtenOn": "2017-06-27T20:30:41Z",
+      "side": 1,
+      "message": "Yep, I reused it from another test, will do :)",
+      "parentUuid": "09a2764b_118fa487",
+      "revId": "9d238c2cae3c90fbb27ebf664cd9d8f4ce90677d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e352d3c_274e288b",
         "filename": "third_party/WebKit/LayoutTests/custom-elements/spec/parsing_resettable_elements.html",
         "patchSetId": 1
