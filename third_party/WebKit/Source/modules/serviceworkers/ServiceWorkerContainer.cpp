@@ -462,6 +462,7 @@ void ServiceWorkerContainer::DispatchMessageEvent(
 }
 
 void ServiceWorkerContainer::CountFeature(uint32_t feature) {
+  LOG(ERROR) << "Container CountFeature: " << feature;
   if (!GetExecutionContext())
     return;
   WebFeature use_counter_feature = static_cast<WebFeature>(feature);

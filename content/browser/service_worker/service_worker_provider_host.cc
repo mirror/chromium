@@ -791,6 +791,7 @@ void ServiceWorkerProviderHost::CountFeature(uint32_t feature) {
 
   // CountFeature message should be sent only for controllees.
   DCHECK(IsProviderForClient());
+  LOG(ERROR) << "ProviderHost: CountFeature: " << feature;
   Send(new ServiceWorkerMsg_CountFeature(render_thread_id_, provider_id(),
                                          feature));
 }

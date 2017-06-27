@@ -1195,6 +1195,7 @@ void ServiceWorkerDispatcherHost::UpdateComplete(
 
 void ServiceWorkerDispatcherHost::OnCountFeature(int64_t version_id,
                                                  uint32_t feature) {
+  LOG(ERROR) << "count feature: " << feature;
   if (!GetContext())
     return;
   ServiceWorkerVersion* version = GetContext()->GetLiveVersion(version_id);
