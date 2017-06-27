@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ffea709_24826fd1",
+        "filename": "net/cert/x509_util_ios.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-27T14:48:26Z",
+      "side": 0,
+      "message": "Oh, there\u0027s a similar function in x509_util_mac. Shall I remove that too?",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "55e4d9a48a1965626872aabca38484814f0d063a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
