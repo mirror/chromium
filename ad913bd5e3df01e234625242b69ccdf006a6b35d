@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5402f014_be0b9857",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-27T01:31:42Z",
+      "side": 1,
+      "message": "Renamed the class to LocalCameraClientObserver.",
+      "parentUuid": "fb03434e_0cd760d0",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a12c56a7_1f6f7165",
         "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
         "patchSetId": 12
@@ -382,6 +400,24 @@
       "side": 1,
       "message": "The reason I asked is because the name \"CameraHalDispatcher\" suggests that there should be some method that triggers the dispatching action.\n\nIn this case, please consider either adding the information that the dispatching is triggered internally and not exposed through this interface in the interface-level description or, probably better, choose an interface name that makes that clear. Maybe CameraHalDispatchRegistry?",
       "parentUuid": "72ad3c3b_2cb7dd48",
+      "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68682413_d27a619c",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-27T01:31:42Z",
+      "side": 1,
+      "message": "Let me clean this up in a follow-up CL since it needs to change the mojom files in three places (Chrome, Chrome OS, and Android container).",
+      "parentUuid": "24bc655a_ae672a68",
       "revId": "ad913bd5e3df01e234625242b69ccdf006a6b35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
