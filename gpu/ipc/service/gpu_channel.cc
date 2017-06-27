@@ -1170,14 +1170,14 @@ void GpuChannel::CacheShader(const std::string& key,
 
 void GpuChannel::AddFilter(IPC::MessageFilter* filter) {
   io_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&GpuChannelMessageFilter::AddChannelFilter, filter_, filter));
+      FROM_HERE, base::Bind(&GpuChannelMessageFilter::AddChannelFilter, filter_,
+                            make_scoped_refptr(filter)));
 }
 
 void GpuChannel::RemoveFilter(IPC::MessageFilter* filter) {
   io_task_runner_->PostTask(
       FROM_HERE, base::Bind(&GpuChannelMessageFilter::RemoveChannelFilter,
-                            filter_, filter));
+                            filter_, make_scoped_refptr(filter)));
 }
 
 uint64_t GpuChannel::GetMemoryUsage() {
