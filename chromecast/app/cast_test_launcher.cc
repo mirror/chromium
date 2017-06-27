@@ -4,6 +4,7 @@
 
 #include "base/macros.h"
 #include "base/sys_info.h"
+#include "base/test/launcher/test_launcher.h"
 #include "base/test/test_suite.h"
 #include "chromecast/app/cast_main_delegate.h"
 #include "content/public/test/test_launcher.h"
@@ -41,8 +42,8 @@ class CastTestLauncherDelegate : public content::TestLauncherDelegate {
 }  // namespace chromecast
 
 int main(int argc, char** argv) {
-  int default_jobs = std::max(1, base::SysInfo::NumberOfProcessors() / 2);
+  size_t parallel_jobs = base::NumParallelJobs() / 2U;
   chromecast::shell::CastTestLauncherDelegate launcher_delegate;
   mojo::edk::Init();
-  return content::LaunchTests(&launcher_delegate, default_jobs, argc, argv);
+  return content::LaunchTests(&launcher_delegate, parallel_jobs, argc, argv);
 }
