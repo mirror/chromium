@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10687275_4fec8421",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-27T23:59:23Z",
+      "side": 1,
+      "message": "We should also have a title and description for the CL :)\nThe description can contain : what is the current issue, how does this fix it, any issues not addressed etc. Example CL : https://chromium-review.googlesource.com/c/539104/",
+      "revId": "322b4f28fa5d0ada680740f5446e6d04f525f202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
