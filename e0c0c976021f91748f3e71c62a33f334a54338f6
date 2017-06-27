@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "676bcfee_55f14472",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-27T09:06:48Z",
+      "side": 1,
+      "message": "This is a child CL of the other one. I moved the method here as it is not private anymore, but part of the protocol.",
+      "parentUuid": "8f143c90_8bc0525f",
+      "range": {
+        "startLine": 408,
+        "startChar": 11,
+        "endLine": 408,
+        "endChar": 24
+      },
+      "revId": "e0c0c976021f91748f3e71c62a33f334a54338f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03aadbb4_519f62a4",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "e0c0c976021f91748f3e71c62a33f334a54338f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954078cb_3a562491",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-27T09:06:48Z",
+      "side": 1,
+      "message": "No implementation in super (unrecognized selector sent to instance...)",
+      "parentUuid": "03aadbb4_519f62a4",
+      "range": {
+        "startLine": 394,
+        "startChar": 8,
+        "endLine": 394,
+        "endChar": 35
+      },
+      "revId": "e0c0c976021f91748f3e71c62a33f334a54338f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
