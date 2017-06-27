@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21ac1cdb_e26aab1b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2901,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-27T16:25:41Z",
+      "side": 1,
+      "message": "nit: We can remove this comment now.",
+      "range": {
+        "startLine": 2901,
+        "startChar": 0,
+        "endLine": 2901,
+        "endChar": 38
+      },
+      "revId": "ec6efe58cc715904ee00d5f430adbb2eefd24d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
