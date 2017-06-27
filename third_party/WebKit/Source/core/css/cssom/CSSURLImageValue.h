@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSURLImageValue final : public CSSStyleImageValue {
+class CORE_EXPORT_N1563 CSSURLImageValue final : public CSSStyleImageValue {
   WTF_MAKE_NONCOPYABLE(CSSURLImageValue);
   DEFINE_WRAPPERTYPEINFO();
 

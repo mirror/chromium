@@ -44,7 +44,7 @@ using StaticNodeList = StaticNodeTypeList<Node>;
 class TouchEventContext;
 class TreeScope;
 
-class CORE_EXPORT TreeScopeEventContext final
+class CORE_EXPORT_N1989 TreeScopeEventContext final
     : public GarbageCollected<TreeScopeEventContext> {
  public:
   static TreeScopeEventContext* Create(TreeScope&);

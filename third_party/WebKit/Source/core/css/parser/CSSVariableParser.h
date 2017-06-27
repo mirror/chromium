@@ -17,7 +17,7 @@ class CSSCustomPropertyDeclaration;
 class CSSParserContext;
 class CSSVariableReferenceValue;
 
-class CORE_EXPORT CSSVariableParser {
+class CORE_EXPORT_N1584 CSSVariableParser {
  public:
   static bool ContainsValidVariableReferences(CSSParserTokenRange);
 

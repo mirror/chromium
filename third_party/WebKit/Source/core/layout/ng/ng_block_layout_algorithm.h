@@ -32,7 +32,7 @@ void PositionPendingFloats(LayoutUnit origin_block_offset,
 
 // A class for general block layout (e.g. a <div> with no special style).
 // Lays out the children in sequence.
-class CORE_EXPORT NGBlockLayoutAlgorithm
+class CORE_EXPORT_N2355 NGBlockLayoutAlgorithm
     : public NGLayoutAlgorithm<NGBlockNode, NGBlockBreakToken> {
  public:
   // Default constructor.

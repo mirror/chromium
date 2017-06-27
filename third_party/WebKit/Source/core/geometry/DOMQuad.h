@@ -17,7 +17,7 @@ class DOMQuadInit;
 class DOMRect;
 class DOMRectInit;
 
-class CORE_EXPORT DOMQuad : public GarbageCollected<DOMQuad>,
+class CORE_EXPORT_N2090 DOMQuad : public GarbageCollected<DOMQuad>,
                             public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

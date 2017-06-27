@@ -41,7 +41,7 @@ class MediaQueryExp;
 
 using ExpressionHeapVector = Vector<MediaQueryExp>;
 
-class CORE_EXPORT MediaQuery {
+class CORE_EXPORT_N1508 MediaQuery {
  public:
   enum RestrictorType { kOnly, kNot, kNone };
 

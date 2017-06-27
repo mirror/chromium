@@ -40,7 +40,7 @@
 namespace blink {
 class InspectedFrames;
 
-class CORE_EXPORT InspectorInputAgent final
+class CORE_EXPORT_N2262 InspectorInputAgent final
     : public InspectorBaseAgent<protocol::Input::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorInputAgent);
 

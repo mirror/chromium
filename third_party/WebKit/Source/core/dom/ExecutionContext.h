@@ -62,7 +62,7 @@ enum ReasonForCallingCanExecuteScripts {
   kNotAboutToExecuteScript
 };
 
-class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
+class CORE_EXPORT_N1651 ExecutionContext : public ContextLifecycleNotifier,
                                      public Supplementable<ExecutionContext> {
   WTF_MAKE_NONCOPYABLE(ExecutionContext);
 

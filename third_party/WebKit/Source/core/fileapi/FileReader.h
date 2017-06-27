@@ -49,7 +49,7 @@ class ExceptionState;
 class ExecutionContext;
 class StringOrArrayBuffer;
 
-class CORE_EXPORT FileReader final : public EventTargetWithInlineData,
+class CORE_EXPORT_N2021 FileReader final : public EventTargetWithInlineData,
                                      public ActiveScriptWrappable<FileReader>,
                                      public ContextLifecycleObserver,
                                      public FileReaderLoaderClient {

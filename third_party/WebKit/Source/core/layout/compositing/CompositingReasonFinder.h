@@ -18,7 +18,7 @@ class LayoutObject;
 class ComputedStyle;
 class LayoutView;
 
-class CORE_EXPORT CompositingReasonFinder {
+class CORE_EXPORT_N2342 CompositingReasonFinder {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(CompositingReasonFinder);
 

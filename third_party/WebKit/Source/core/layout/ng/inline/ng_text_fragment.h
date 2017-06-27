@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT NGTextFragment final : public NGFragment {
+class CORE_EXPORT_N2437 NGTextFragment final : public NGFragment {
  public:
   NGTextFragment(NGWritingMode writing_mode,
                  const NGPhysicalTextFragment* physical_text_fragment)

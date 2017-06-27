@@ -16,7 +16,7 @@ namespace blink {
 class V8IntersectionObserverCallback final
     : public IntersectionObserverCallback {
  public:
-  CORE_EXPORT V8IntersectionObserverCallback(v8::Local<v8::Function>,
+  CORE_EXPORT_N107 V8IntersectionObserverCallback(v8::Local<v8::Function>,
                                              v8::Local<v8::Object>,
                                              ScriptState*);
   ~V8IntersectionObserverCallback() override;

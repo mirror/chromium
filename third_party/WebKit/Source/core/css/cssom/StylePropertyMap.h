@@ -11,7 +11,7 @@ namespace blink {
 
 class ExceptionState;
 
-class CORE_EXPORT StylePropertyMap : public StylePropertyMapReadonly {
+class CORE_EXPORT_N1566 StylePropertyMap : public StylePropertyMapReadonly {
   DEFINE_WRAPPERTYPEINFO();
   WTF_MAKE_NONCOPYABLE(StylePropertyMap);
 

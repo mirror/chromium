@@ -23,13 +23,13 @@ struct NGLogicalOffset;
 //  - The child is a inline-level, e.g. "display: inline-block".
 //  - The child establishes a new formatting context, but should be a child of
 //    another layout algorithm, e.g. "display: table-caption" or flex-item.
-CORE_EXPORT bool IsNewFormattingContextForBlockLevelChild(
+CORE_EXPORT_N2398 bool IsNewFormattingContextForBlockLevelChild(
     const ComputedStyle& parent_style,
     const NGLayoutInputNode& node);
 
 // Gets the clearance offset based on the provided {@code clear_type} and list
 // of exclusions that represent left/right float.
-CORE_EXPORT WTF::Optional<LayoutUnit> GetClearanceOffset(
+CORE_EXPORT_N2399 WTF::Optional<LayoutUnit> GetClearanceOffset(
     const std::shared_ptr<NGExclusions>& exclusions,
     EClear clear_type);
 
@@ -40,7 +40,7 @@ bool ShouldShrinkToFit(const ComputedStyle& parent_style,
                        const ComputedStyle& style);
 
 // Adjusts {@code offset} to the clearance line.
-CORE_EXPORT void AdjustToClearance(
+CORE_EXPORT_N2400 void AdjustToClearance(
     const WTF::Optional<LayoutUnit>& clearance_offset,
     NGLogicalOffset* offset);
 

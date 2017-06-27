@@ -38,7 +38,7 @@ namespace blink {
 
 namespace XPath {
 
-struct CORE_EXPORT EvaluationContext {
+struct CORE_EXPORT_N2679 EvaluationContext {
   STACK_ALLOCATED();
 
  public:
@@ -52,13 +52,13 @@ struct CORE_EXPORT EvaluationContext {
   bool had_type_conversion_error;
 };
 
-class CORE_EXPORT ParseNode : public GarbageCollectedFinalized<ParseNode> {
+class CORE_EXPORT_N2680 ParseNode : public GarbageCollectedFinalized<ParseNode> {
  public:
   virtual ~ParseNode() {}
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
-class CORE_EXPORT Expression : public ParseNode {
+class CORE_EXPORT_N2681 Expression : public ParseNode {
   WTF_MAKE_NONCOPYABLE(Expression);
 
  public:

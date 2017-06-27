@@ -66,7 +66,7 @@ class InlineTextBox;
 //
 // The previous comment applies also for painting. See e.g.
 // BlockFlowPainter::paintContents in particular the use of LineBoxListPainter.
-class CORE_EXPORT LayoutText : public LayoutObject {
+class CORE_EXPORT_N2323 LayoutText : public LayoutObject {
  public:
   // FIXME: If the node argument is not a Text node or the string argument is
   // not the content of the Text node, updating text-transform property

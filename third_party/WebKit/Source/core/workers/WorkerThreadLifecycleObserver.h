@@ -26,7 +26,7 @@ class WorkerThreadLifecycleContext;
 // alive by wasContextDestroyedBeforeObserverCreation(). If this return true,
 // the worker thread has already been terminated before the observer is created,
 // and contextDestroyed() is never notified.
-class CORE_EXPORT WorkerThreadLifecycleObserver
+class CORE_EXPORT_N2674 WorkerThreadLifecycleObserver
     : public LifecycleObserver<WorkerThreadLifecycleContext,
                                WorkerThreadLifecycleObserver> {
  public:

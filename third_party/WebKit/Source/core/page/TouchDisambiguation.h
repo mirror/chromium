@@ -41,7 +41,7 @@ class LocalFrame;
 class IntRect;
 class Node;
 
-CORE_EXPORT void FindGoodTouchTargets(
+CORE_EXPORT_N2518 void FindGoodTouchTargets(
     const IntRect& touch_box,
     LocalFrame* main_frame,
     Vector<IntRect>& good_targets,

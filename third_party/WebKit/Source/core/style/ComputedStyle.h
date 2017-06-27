@@ -207,7 +207,7 @@ typedef Vector<RefPtr<ComputedStyle>, 4> PseudoStyleCache;
 // Currently, some properties are stored in ComputedStyle and some in
 // ComputedStyleBase. Eventually, the storage of all properties (except SVG
 // ones) will be in ComputedStyleBase.
-class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
+class CORE_EXPORT_N2580 ComputedStyle : public ComputedStyleBase<ComputedStyle>,
                                   public RefCounted<ComputedStyle> {
   // Needed to allow access to private/protected getters of fields to allow diff
   // generation

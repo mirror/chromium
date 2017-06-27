@@ -38,7 +38,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SmartClipData {
+class CORE_EXPORT_N2068 SmartClipData {
   STACK_ALLOCATED();
 
  public:
@@ -61,7 +61,7 @@ class CORE_EXPORT SmartClipData {
 // class is quirky and poorly tested. It's approximately
 // trying to do an implementation of columnar selection
 // followed by a copy operation.
-class CORE_EXPORT SmartClip {
+class CORE_EXPORT_N2069 SmartClip {
   STACK_ALLOCATED();
 
  public:

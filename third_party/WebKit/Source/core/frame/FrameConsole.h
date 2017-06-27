@@ -48,7 +48,7 @@ class SourceLocation;
 // Page to the ChromeClient and Inspector.  It's meant as an abstraction
 // around ChromeClient calls and the way that Blink core/ can add messages to
 // the console.
-class CORE_EXPORT FrameConsole final
+class CORE_EXPORT_N2033 FrameConsole final
     : public GarbageCollectedFinalized<FrameConsole> {
  public:
   static FrameConsole* Create(LocalFrame& frame) {

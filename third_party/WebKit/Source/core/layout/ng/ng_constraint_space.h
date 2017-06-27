@@ -33,7 +33,7 @@ enum NGFragmentationType {
 
 // The NGConstraintSpace represents a set of constraints and available space
 // which a layout algorithm may produce a NGFragment within.
-class CORE_EXPORT NGConstraintSpace final
+class CORE_EXPORT_N2360 NGConstraintSpace final
     : public RefCounted<NGConstraintSpace> {
  public:
   // This should live on NGBlockNode or another layout bridge and probably take

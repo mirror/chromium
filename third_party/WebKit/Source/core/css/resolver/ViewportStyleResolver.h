@@ -42,7 +42,7 @@ class DocumentStyleSheetCollection;
 class MutableStylePropertySet;
 class StyleRuleViewport;
 
-class CORE_EXPORT ViewportStyleResolver
+class CORE_EXPORT_N1599 ViewportStyleResolver
     : public GarbageCollectedFinalized<ViewportStyleResolver> {
  public:
   static ViewportStyleResolver* Create(Document& document) {

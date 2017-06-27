@@ -55,7 +55,7 @@ class WorkerThread;
 //
 // This also checks pending activities on WorkerGlobalScope and reports a result
 // to the message proxy when an exponential backoff timer is fired.
-class CORE_EXPORT InProcessWorkerObjectProxy : public ThreadedObjectProxyBase {
+class CORE_EXPORT_N2643 InProcessWorkerObjectProxy : public ThreadedObjectProxyBase {
   USING_FAST_MALLOC(InProcessWorkerObjectProxy);
   WTF_MAKE_NONCOPYABLE(InProcessWorkerObjectProxy);
 

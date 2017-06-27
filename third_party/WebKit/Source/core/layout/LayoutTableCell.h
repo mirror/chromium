@@ -84,7 +84,7 @@ class SubtreeLayoutScope;
 // LayoutTableCell is positioned with respect to the enclosing
 // LayoutTableSection. See callers of
 // LayoutTableSection::setLogicalPositionForCell() for when it is placed.
-class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
+class CORE_EXPORT_N2320 LayoutTableCell final : public LayoutBlockFlow {
  public:
   explicit LayoutTableCell(Element*);
 

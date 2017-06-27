@@ -101,7 +101,7 @@ enum ContainingBlockState { kNewContainingBlock, kSameContainingBlock };
 //     // Handle out-of-flow positioned objects.
 //     ...
 // }
-class CORE_EXPORT LayoutBlock : public LayoutBox {
+class CORE_EXPORT_N2294 LayoutBlock : public LayoutBox {
  protected:
   explicit LayoutBlock(ContainerNode*);
   ~LayoutBlock() override;

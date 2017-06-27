@@ -15,7 +15,7 @@ namespace blink {
 // This class provides toV8Impl() virtual function which will be overridden
 // by auto-generated IDL dictionary impl classes. toV8Impl() is used
 // in ToV8.h to provide a consistent API of ToV8().
-class CORE_EXPORT IDLDictionaryBase {
+class CORE_EXPORT_N29 IDLDictionaryBase {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

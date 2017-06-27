@@ -27,7 +27,7 @@ class WebThreadSupportingGC;
 // to a web worker. There is one-to-one correspondence between WorkerThread and
 // WorkerGlobalScope, but multiple WorkerThreads (i.e., multiple
 // WorkerGlobalScopes) can share one WorkerBackingThread.
-class CORE_EXPORT WorkerBackingThread final {
+class CORE_EXPORT_N2658 WorkerBackingThread final {
  public:
   static std::unique_ptr<WorkerBackingThread> Create(const char* name) {
     return WTF::WrapUnique(new WorkerBackingThread(name, false));

@@ -12,12 +12,12 @@
 
 namespace blink {
 
-CORE_EXPORT extern const CSSParserToken& g_static_eof_token;
+CORE_EXPORT_N1580 extern const CSSParserToken& g_static_eof_token;
 
 // A CSSParserTokenRange is an iterator over a subrange of a vector of
 // CSSParserTokens. Accessing outside of the range will return an endless stream
 // of EOF tokens. This class refers to half-open intervals [first, last).
-class CORE_EXPORT CSSParserTokenRange {
+class CORE_EXPORT_N1581 CSSParserTokenRange {
   DISALLOW_NEW();
 
  public:

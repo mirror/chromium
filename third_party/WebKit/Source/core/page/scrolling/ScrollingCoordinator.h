@@ -54,7 +54,7 @@ class WebScrollbarLayer;
 
 using ScrollbarId = uint64_t;
 
-class CORE_EXPORT ScrollingCoordinator final
+class CORE_EXPORT_N2523 ScrollingCoordinator final
     : public GarbageCollectedFinalized<ScrollingCoordinator> {
   WTF_MAKE_NONCOPYABLE(ScrollingCoordinator);
 

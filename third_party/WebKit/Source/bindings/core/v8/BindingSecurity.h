@@ -45,7 +45,7 @@ class Location;
 class Node;
 struct WrapperTypeInfo;
 
-class CORE_EXPORT BindingSecurity {
+class CORE_EXPORT_N2 BindingSecurity {
   STATIC_ONLY(BindingSecurity);
 
  public:

@@ -38,7 +38,7 @@ namespace blink {
 
 class HTMLDataListOptionsCollection;
 
-class CORE_EXPORT HTMLDataListElement final : public HTMLElement {
+class CORE_EXPORT_N2102 HTMLDataListElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

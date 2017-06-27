@@ -43,7 +43,7 @@ class LayoutMenuList;
 class LineLayoutItem;
 class LocalFrameView;
 
-class CORE_EXPORT AXObjectCache
+class CORE_EXPORT_N1604 AXObjectCache
     : public GarbageCollectedFinalized<AXObjectCache> {
   WTF_MAKE_NONCOPYABLE(AXObjectCache);
 
@@ -158,7 +158,7 @@ class CORE_EXPORT AXObjectCache
   static AXObjectCacheCreateFunction create_function_;
 };
 
-class CORE_EXPORT ScopedAXObjectCache {
+class CORE_EXPORT_N1605 ScopedAXObjectCache {
   USING_FAST_MALLOC(ScopedAXObjectCache);
   WTF_MAKE_NONCOPYABLE(ScopedAXObjectCache);
 

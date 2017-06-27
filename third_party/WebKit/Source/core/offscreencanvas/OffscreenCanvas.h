@@ -29,7 +29,7 @@ class
 typedef OffscreenCanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContext
     OffscreenRenderingContext;
 
-class CORE_EXPORT OffscreenCanvas final
+class CORE_EXPORT_N2496 OffscreenCanvas final
     : public EventTargetWithInlineData,
       public CanvasImageSource,
       public ImageBitmapSource,

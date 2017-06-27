@@ -40,7 +40,7 @@
 
 namespace blink {
 
-class CORE_EXPORT WebFileChooserCompletionImpl final
+class CORE_EXPORT_N2003 WebFileChooserCompletionImpl final
     : public NON_EXPORTED_BASE(WebFileChooserCompletion) {
  public:
   explicit WebFileChooserCompletionImpl(PassRefPtr<FileChooser>);

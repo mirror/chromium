@@ -14,7 +14,7 @@ namespace blink {
 
 class ScrollStateCallback;
 
-class CORE_EXPORT ScrollCustomizationCallbacks
+class CORE_EXPORT_N2522 ScrollCustomizationCallbacks
     : public GarbageCollected<ScrollCustomizationCallbacks> {
   WTF_MAKE_NONCOPYABLE(ScrollCustomizationCallbacks);
 

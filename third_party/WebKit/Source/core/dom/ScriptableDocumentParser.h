@@ -33,7 +33,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ScriptableDocumentParser : public DecodedDataDocumentParser {
+class CORE_EXPORT_N1693 ScriptableDocumentParser : public DecodedDataDocumentParser {
  public:
   // Only used by Document::open for deciding if its safe to act on a
   // JavaScript document.open() call right now, or it should be ignored.

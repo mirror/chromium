@@ -104,8 +104,8 @@ class NodeTraversal {
   static Node* NextIncludingPseudoSkippingChildren(const Node&,
                                                    const Node* stay_within = 0);
 
-  CORE_EXPORT static Node* NextAncestorSibling(const Node&);
-  CORE_EXPORT static Node* NextAncestorSibling(const Node&,
+  CORE_EXPORT_N1677 static Node* NextAncestorSibling(const Node&);
+  CORE_EXPORT_N1678 static Node* NextAncestorSibling(const Node&,
                                                const Node* stay_within);
   static Node& HighestAncestorOrSelf(Node&);
 

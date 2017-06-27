@@ -18,7 +18,7 @@ namespace blink {
 class CSSStyleSheet;
 class StyleSheetContents;
 
-class CORE_EXPORT CSSParserContext
+class CORE_EXPORT_N1575 CSSParserContext
     : public GarbageCollectedFinalized<CSSParserContext> {
  public:
   // https://drafts.csswg.org/selectors/#profiles
@@ -119,7 +119,7 @@ class CORE_EXPORT CSSParserContext
   WeakMember<const Document> document_;
 };
 
-CORE_EXPORT const CSSParserContext* StrictCSSParserContext();
+CORE_EXPORT_N1576 const CSSParserContext* StrictCSSParserContext();
 
 }  // namespace blink
 

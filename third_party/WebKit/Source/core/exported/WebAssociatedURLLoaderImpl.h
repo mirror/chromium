@@ -20,7 +20,7 @@ class WebAssociatedURLLoaderClient;
 class Document;
 
 // This class is used to implement WebFrame::createAssociatedURLLoader.
-class CORE_EXPORT WebAssociatedURLLoaderImpl final
+class CORE_EXPORT_N2001 WebAssociatedURLLoaderImpl final
     : public WebAssociatedURLLoader {
   WTF_MAKE_NONCOPYABLE(WebAssociatedURLLoaderImpl);
 

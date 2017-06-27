@@ -81,7 +81,7 @@ enum GraphicsLayerUpdateScope {
 //     the PaintLayer is squashed;
 // - Otherwise the PaintLayer doesn't own or directly reference any
 //   CompositedLayerMapping.
-class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
+class CORE_EXPORT_N2341 CompositedLayerMapping final : public GraphicsLayerClient {
   WTF_MAKE_NONCOPYABLE(CompositedLayerMapping);
   USING_FAST_MALLOC(CompositedLayerMapping);
 

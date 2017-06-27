@@ -49,7 +49,7 @@ namespace blink {
 
 class WorkerClients;
 
-class CORE_EXPORT WorkerThreadStartupData final {
+class CORE_EXPORT_N2675 WorkerThreadStartupData final {
   WTF_MAKE_NONCOPYABLE(WorkerThreadStartupData);
   USING_FAST_MALLOC(WorkerThreadStartupData);
 

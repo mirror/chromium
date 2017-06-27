@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ContextMenuAllowedScope {
+class CORE_EXPORT_N2237 ContextMenuAllowedScope {
   STACK_ALLOCATED();
 
  public:

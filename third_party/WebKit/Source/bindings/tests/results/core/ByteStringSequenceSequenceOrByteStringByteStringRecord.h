@@ -21,7 +21,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ByteStringSequenceSequenceOrByteStringByteStringRecord final {
+class CORE_EXPORT_N151 ByteStringSequenceSequenceOrByteStringByteStringRecord final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   ByteStringSequenceSequenceOrByteStringByteStringRecord();
@@ -53,15 +53,15 @@ class CORE_EXPORT ByteStringSequenceSequenceOrByteStringByteStringRecord final {
   Vector<std::pair<String, String>> m_byteStringByteStringRecord;
   Vector<Vector<String>> m_byteStringSequenceSequence;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const ByteStringSequenceSequenceOrByteStringByteStringRecord&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N152 v8::Local<v8::Value> ToV8(const ByteStringSequenceSequenceOrByteStringByteStringRecord&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8ByteStringSequenceSequenceOrByteStringByteStringRecord final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, ByteStringSequenceSequenceOrByteStringByteStringRecord&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N153 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, ByteStringSequenceSequenceOrByteStringByteStringRecord&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const ByteStringSequenceSequenceOrByteStringByteStringRecord&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N154 v8::Local<v8::Value> ToV8(const ByteStringSequenceSequenceOrByteStringByteStringRecord&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, ByteStringSequenceSequenceOrByteStringByteStringRecord& impl) {
@@ -75,7 +75,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, ByteStringSequenc
 
 template <>
 struct NativeValueTraits<ByteStringSequenceSequenceOrByteStringByteStringRecord> : public NativeValueTraitsBase<ByteStringSequenceSequenceOrByteStringByteStringRecord> {
-  CORE_EXPORT static ByteStringSequenceSequenceOrByteStringByteStringRecord NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N155 static ByteStringSequenceSequenceOrByteStringByteStringRecord NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

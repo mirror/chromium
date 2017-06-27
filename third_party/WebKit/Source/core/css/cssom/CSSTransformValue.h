@@ -13,7 +13,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSTransformValue final : public CSSStyleValue {
+class CORE_EXPORT_N1558 CSSTransformValue final : public CSSStyleValue {
   WTF_MAKE_NONCOPYABLE(CSSTransformValue);
   DEFINE_WRAPPERTYPEINFO();
 

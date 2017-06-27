@@ -21,7 +21,7 @@ class KURL;
 // Wrapper around a WebDocumentSubresourceFilter. This class will make it easier
 // to extend the subresource filter with optimizations only possible using blink
 // types (e.g. a caching layer using StringImpl).
-class CORE_EXPORT SubresourceFilter final
+class CORE_EXPORT_N2468 SubresourceFilter final
     : public GarbageCollectedFinalized<SubresourceFilter> {
  public:
   static SubresourceFilter* Create(

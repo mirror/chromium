@@ -248,7 +248,7 @@ enum class WouldLoadReason {
 
 using DocumentClassFlags = unsigned char;
 
-class CORE_EXPORT Document : public ContainerNode,
+class CORE_EXPORT_N1625 Document : public ContainerNode,
                              public TreeScope,
                              public SecurityContext,
                              public ExecutionContext,
@@ -1753,7 +1753,7 @@ DEFINE_TYPE_CASTS(TreeScope, Document, document, true, true);
 
 #ifndef NDEBUG
 // Outside the WebCore namespace for ease of invocation from gdb.
-CORE_EXPORT void showLiveDocumentInstances();
+CORE_EXPORT_N1626 void showLiveDocumentInstances();
 #endif
 
 #endif  // Document_h

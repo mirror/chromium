@@ -10,7 +10,7 @@
 namespace blink {
 
 // This is the DocumentMarkerList implementation used to store Spelling markers.
-class CORE_EXPORT SpellingMarkerListImpl final
+class CORE_EXPORT_N1950 SpellingMarkerListImpl final
     : public SpellCheckMarkerListImpl {
  public:
   SpellingMarkerListImpl() = default;

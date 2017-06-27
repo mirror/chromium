@@ -44,7 +44,7 @@ namespace blink {
 
 // This class harmonizes the viewport (particularly page scale) constraints from
 // the meta viewport tag and other sources.
-class CORE_EXPORT PageScaleConstraintsSet {
+class CORE_EXPORT_N2055 PageScaleConstraintsSet {
   USING_FAST_MALLOC(PageScaleConstraintsSet);
 
  public:

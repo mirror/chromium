@@ -39,7 +39,7 @@ namespace blink {
 class LocalFrameView;
 class WebViewBase;
 
-class CORE_EXPORT ValidationMessageClientImpl final
+class CORE_EXPORT_N2519 ValidationMessageClientImpl final
     : public GarbageCollectedFinalized<ValidationMessageClientImpl>,
       public NON_EXPORTED_BASE(ValidationMessageClient),
       private PopupOpeningObserver {

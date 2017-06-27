@@ -13,7 +13,7 @@
 namespace blink {
 
 // This overrides the default layout block algorithm to use Layout NG.
-class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
+class CORE_EXPORT_N2347 LayoutNGBlockFlow final : public LayoutBlockFlow {
  public:
   explicit LayoutNGBlockFlow(Element*);
   ~LayoutNGBlockFlow() override = default;

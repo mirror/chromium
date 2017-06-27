@@ -17,7 +17,7 @@ class PropertyHandle;
 
 // Represents an animation's effect between an adjacent pair of
 // PropertySpecificKeyframes.
-class CORE_EXPORT Interpolation : public RefCounted<Interpolation> {
+class CORE_EXPORT_N1448 Interpolation : public RefCounted<Interpolation> {
   WTF_MAKE_NONCOPYABLE(Interpolation);
 
  public:

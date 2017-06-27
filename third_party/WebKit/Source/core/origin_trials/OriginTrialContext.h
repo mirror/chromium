@@ -33,7 +33,7 @@ class WebTrialTokenValidator;
 // any provided tokens.
 //
 // For more information, see https://github.com/jpchase/OriginTrials.
-class CORE_EXPORT OriginTrialContext final
+class CORE_EXPORT_N2497 OriginTrialContext final
     : public GarbageCollectedFinalized<OriginTrialContext>,
       public Supplement<ExecutionContext> {
   USING_GARBAGE_COLLECTED_MIXIN(OriginTrialContext)

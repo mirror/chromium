@@ -38,7 +38,7 @@ namespace blink {
 
 class IntRect;
 
-struct CORE_EXPORT WindowFeatures {
+struct CORE_EXPORT_N2520 WindowFeatures {
   DISALLOW_NEW();
   WindowFeatures()
       : x(0),

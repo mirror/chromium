@@ -21,7 +21,7 @@
 
 namespace blink {
 
-class CORE_EXPORT FloatOrBoolean final {
+class CORE_EXPORT_N176 FloatOrBoolean final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   FloatOrBoolean();
@@ -53,15 +53,15 @@ class CORE_EXPORT FloatOrBoolean final {
   bool m_boolean;
   float m_float;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const FloatOrBoolean&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N177 v8::Local<v8::Value> ToV8(const FloatOrBoolean&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8FloatOrBoolean final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, FloatOrBoolean&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N178 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, FloatOrBoolean&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const FloatOrBoolean&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N179 v8::Local<v8::Value> ToV8(const FloatOrBoolean&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, FloatOrBoolean& impl) {
@@ -75,7 +75,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, FloatOrBoolean& i
 
 template <>
 struct NativeValueTraits<FloatOrBoolean> : public NativeValueTraitsBase<FloatOrBoolean> {
-  CORE_EXPORT static FloatOrBoolean NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N180 static FloatOrBoolean NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

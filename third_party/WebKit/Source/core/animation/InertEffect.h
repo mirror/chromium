@@ -41,7 +41,7 @@ namespace blink {
 // Lightweight subset of KeyframeEffect.
 // Used to transport data for deferred KeyframeEffect construction and one off
 // Interpolation sampling.
-class CORE_EXPORT InertEffect final : public AnimationEffectReadOnly {
+class CORE_EXPORT_N1444 InertEffect final : public AnimationEffectReadOnly {
  public:
   static InertEffect* Create(EffectModel*,
                              const Timing&,

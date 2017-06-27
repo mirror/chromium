@@ -45,7 +45,7 @@ class SVGLengthContext;
 class StrokeData;
 class TransformState;
 
-class CORE_EXPORT SVGLayoutSupport {
+class CORE_EXPORT_N2441 SVGLayoutSupport {
   STATIC_ONLY(SVGLayoutSupport);
 
  public:

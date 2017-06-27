@@ -34,7 +34,7 @@ namespace blink {
 class HTMLImageElement;
 class Path;
 
-class CORE_EXPORT HTMLAreaElement final : public HTMLAnchorElement {
+class CORE_EXPORT_N2095 HTMLAreaElement final : public HTMLAnchorElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

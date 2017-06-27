@@ -42,7 +42,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSSelectorWatch final
+class CORE_EXPORT_N1623 CSSSelectorWatch final
     : public GarbageCollectedFinalized<CSSSelectorWatch>,
       public Supplement<Document> {
   USING_GARBAGE_COLLECTED_MIXIN(CSSSelectorWatch);

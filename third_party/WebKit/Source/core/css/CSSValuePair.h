@@ -27,7 +27,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSValuePair : public CSSValue {
+class CORE_EXPORT_N1499 CSSValuePair : public CSSValue {
  public:
   enum IdenticalValuesPolicy { kDropIdenticalValues, kKeepIdenticalValues };
 

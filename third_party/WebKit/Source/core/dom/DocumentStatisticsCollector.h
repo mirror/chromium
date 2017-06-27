@@ -12,7 +12,7 @@ namespace blink {
 class Document;
 struct WebDistillabilityFeatures;
 
-class CORE_EXPORT DocumentStatisticsCollector {
+class CORE_EXPORT_N1633 DocumentStatisticsCollector {
  public:
   static WebDistillabilityFeatures CollectStatistics(Document&);
 };

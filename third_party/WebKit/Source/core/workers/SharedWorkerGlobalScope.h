@@ -76,7 +76,7 @@ class SharedWorkerGlobalScope final : public WorkerGlobalScope {
   String name_;
 };
 
-CORE_EXPORT MessageEvent* CreateConnectEvent(MessagePort*);
+CORE_EXPORT_N2648 MessageEvent* CreateConnectEvent(MessagePort*);
 
 }  // namespace blink
 

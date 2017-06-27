@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT MediaValuesInitialViewport final : public MediaValuesDynamic {
+class CORE_EXPORT_N1518 MediaValuesInitialViewport final : public MediaValuesDynamic {
  public:
   static MediaValuesInitialViewport* Create(LocalFrame&);
 

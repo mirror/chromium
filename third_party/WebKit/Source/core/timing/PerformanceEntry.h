@@ -47,7 +47,7 @@ class V8ObjectBuilder;
 using PerformanceEntryType = unsigned;
 using PerformanceEntryTypeMask = unsigned;
 
-class CORE_EXPORT PerformanceEntry
+class CORE_EXPORT_N2625 PerformanceEntry
     : public GarbageCollectedFinalized<PerformanceEntry>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

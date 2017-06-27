@@ -30,7 +30,7 @@ namespace blink {
 class Event;
 class ExecutionContext;
 
-class CORE_EXPORT EventListener
+class CORE_EXPORT_N1969 EventListener
     : public GarbageCollectedFinalized<EventListener> {
  public:
   enum ListenerType {

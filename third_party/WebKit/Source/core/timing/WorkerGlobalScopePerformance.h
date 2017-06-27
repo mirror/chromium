@@ -41,7 +41,7 @@ namespace blink {
 
 class WorkerGlobalScope;
 
-class CORE_EXPORT WorkerGlobalScopePerformance final
+class CORE_EXPORT_N2634 WorkerGlobalScopePerformance final
     : public GarbageCollected<WorkerGlobalScopePerformance>,
       public Supplement<WorkerGlobalScope> {
   USING_GARBAGE_COLLECTED_MIXIN(WorkerGlobalScopePerformance);

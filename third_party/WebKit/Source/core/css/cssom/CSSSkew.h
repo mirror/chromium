@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSSkew final : public CSSTransformComponent {
+class CORE_EXPORT_N1553 CSSSkew final : public CSSTransformComponent {
   WTF_MAKE_NONCOPYABLE(CSSSkew);
   DEFINE_WRAPPERTYPEINFO();
 

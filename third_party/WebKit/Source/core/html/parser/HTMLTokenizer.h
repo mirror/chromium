@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLTokenizer {
+class CORE_EXPORT_N2211 HTMLTokenizer {
   WTF_MAKE_NONCOPYABLE(HTMLTokenizer);
   USING_FAST_MALLOC(HTMLTokenizer);
 

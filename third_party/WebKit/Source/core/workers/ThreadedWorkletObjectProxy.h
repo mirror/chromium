@@ -18,7 +18,7 @@ class WorkerThread;
 
 // A proxy to talk to the parent worker object. See class comments on
 // ThreadedObjectProxyBase.h for lifetime of this class etc.
-class CORE_EXPORT ThreadedWorkletObjectProxy : public ThreadedObjectProxyBase {
+class CORE_EXPORT_N2656 ThreadedWorkletObjectProxy : public ThreadedObjectProxyBase {
   USING_FAST_MALLOC(ThreadedWorkletObjectProxy);
   WTF_MAKE_NONCOPYABLE(ThreadedWorkletObjectProxy);
 

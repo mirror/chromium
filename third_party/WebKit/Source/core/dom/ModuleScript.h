@@ -29,7 +29,7 @@ enum class ModuleInstantiationState {
 
 // ModuleScript is a model object for the "module script" spec concept.
 // https://html.spec.whatwg.org/multipage/webappapis.html#module-script
-class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
+class CORE_EXPORT_N1670 ModuleScript final : public Script, public TraceWrapperBase {
  public:
   // https://html.spec.whatwg.org/#creating-a-module-script
   static ModuleScript* Create(

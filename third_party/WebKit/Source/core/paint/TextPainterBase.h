@@ -27,7 +27,7 @@ class ShadowList;
 // Base class for text painting. Has no dependencies on the layout tree and thus
 // provides functionality and definitions that can be shared between both legacy
 // layout and LayoutNG. For performance reasons no virtual methods are utilized.
-class CORE_EXPORT TextPainterBase {
+class CORE_EXPORT_N2563 TextPainterBase {
   STACK_ALLOCATED();
 
  public:

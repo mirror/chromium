@@ -17,7 +17,7 @@ namespace blink {
 // TODO(alancutter): This class will replace *StyleInterpolation and
 // Interpolation. For now it needs to distinguish itself during the refactor and
 // temporarily has an ugly name.
-class CORE_EXPORT InvalidatableInterpolation : public Interpolation {
+class CORE_EXPORT_N1450 InvalidatableInterpolation : public Interpolation {
  public:
   static PassRefPtr<InvalidatableInterpolation> Create(
       const PropertyHandle& property,

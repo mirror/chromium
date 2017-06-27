@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSUnitValue final : public CSSNumericValue {
+class CORE_EXPORT_N1560 CSSUnitValue final : public CSSNumericValue {
   WTF_MAKE_NONCOPYABLE(CSSUnitValue);
   DEFINE_WRAPPERTYPEINFO();
 

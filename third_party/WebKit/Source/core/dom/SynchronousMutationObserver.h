@@ -31,7 +31,7 @@ class Text;
 //  - SelectionController
 //  - Range set
 //  - NodeIterator set
-class CORE_EXPORT SynchronousMutationObserver
+class CORE_EXPORT_N1711 SynchronousMutationObserver
     : public LifecycleObserver<Document, SynchronousMutationObserver> {
  public:
   // TODO(yosin): We will have following member functions:

@@ -28,7 +28,7 @@ namespace blink {
 
 class HTMLDivElement;
 
-class CORE_EXPORT HTMLMeterElement final : public LabelableElement {
+class CORE_EXPORT_N2128 HTMLMeterElement final : public LabelableElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

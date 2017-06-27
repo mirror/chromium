@@ -21,7 +21,7 @@ class DOMMatrixInit;
 class DOMPoint;
 class DOMPointInit;
 
-class CORE_EXPORT DOMMatrixReadOnly
+class CORE_EXPORT_N2087 DOMMatrixReadOnly
     : public GarbageCollectedFinalized<DOMMatrixReadOnly>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

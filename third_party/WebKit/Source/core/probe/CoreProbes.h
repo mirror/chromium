@@ -48,7 +48,7 @@ class ThreadDebugger;
 
 namespace probe {
 
-class CORE_EXPORT AsyncTask {
+class CORE_EXPORT_N2566 AsyncTask {
   STACK_ALLOCATED();
 
  public:
@@ -90,24 +90,24 @@ inline CoreProbeSink* ToCoreProbeSink(EventTarget* event_target) {
                       : nullptr;
 }
 
-CORE_EXPORT void AsyncTaskScheduled(ExecutionContext*,
+CORE_EXPORT_N2567 void AsyncTaskScheduled(ExecutionContext*,
                                     const String& name,
                                     void*);
-CORE_EXPORT void AsyncTaskScheduledBreakable(ExecutionContext*,
+CORE_EXPORT_N2568 void AsyncTaskScheduledBreakable(ExecutionContext*,
                                              const char* name,
                                              void*);
-CORE_EXPORT void AsyncTaskCanceled(ExecutionContext*, void*);
-CORE_EXPORT void AsyncTaskCanceledBreakable(ExecutionContext*,
+CORE_EXPORT_N2569 void AsyncTaskCanceled(ExecutionContext*, void*);
+CORE_EXPORT_N2570 void AsyncTaskCanceledBreakable(ExecutionContext*,
                                             const char* name,
                                             void*);
 
-CORE_EXPORT void AllAsyncTasksCanceled(ExecutionContext*);
-CORE_EXPORT void CanceledAfterReceivedResourceResponse(LocalFrame*,
+CORE_EXPORT_N2571 void AllAsyncTasksCanceled(ExecutionContext*);
+CORE_EXPORT_N2572 void CanceledAfterReceivedResourceResponse(LocalFrame*,
                                                        DocumentLoader*,
                                                        unsigned long identifier,
                                                        const ResourceResponse&,
                                                        Resource*);
-CORE_EXPORT void ContinueWithPolicyIgnore(LocalFrame*,
+CORE_EXPORT_N2573 void ContinueWithPolicyIgnore(LocalFrame*,
                                           DocumentLoader*,
                                           unsigned long identifier,
                                           const ResourceResponse&,

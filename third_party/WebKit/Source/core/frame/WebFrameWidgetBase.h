@@ -25,7 +25,7 @@ class WebViewBase;
 class HitTestResult;
 struct WebPoint;
 
-class CORE_EXPORT WebFrameWidgetBase
+class CORE_EXPORT_N2076 WebFrameWidgetBase
     : public NON_EXPORTED_BASE(WebFrameWidget) {
  public:
   virtual bool ForSubframe() const = 0;

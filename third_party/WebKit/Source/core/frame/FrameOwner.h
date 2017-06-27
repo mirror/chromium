@@ -19,7 +19,7 @@ class Frame;
 // Oilpan: all FrameOwner instances are GCed objects. FrameOwner additionally
 // derives from GarbageCollectedMixin so that Member<FrameOwner> references can
 // be kept (e.g., Frame::m_owner.)
-class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
+class CORE_EXPORT_N2035 FrameOwner : public GarbageCollectedMixin {
  public:
   virtual ~FrameOwner() {}
   DEFINE_INLINE_VIRTUAL_TRACE() {}
@@ -57,7 +57,7 @@ class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
 // TODO(dcheng): This class is an internal implementation detail of provisional
 // frames. Move this into WebLocalFrameImpl.cpp and remove existing dependencies
 // on it.
-class CORE_EXPORT DummyFrameOwner
+class CORE_EXPORT_N2036 DummyFrameOwner
     : public GarbageCollectedFinalized<DummyFrameOwner>,
       public FrameOwner {
   USING_GARBAGE_COLLECTED_MIXIN(DummyFrameOwner);

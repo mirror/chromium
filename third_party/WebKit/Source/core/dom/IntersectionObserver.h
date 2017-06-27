@@ -22,7 +22,7 @@ class ExceptionState;
 class IntersectionObserverCallback;
 class IntersectionObserverInit;
 
-class CORE_EXPORT IntersectionObserver final
+class CORE_EXPORT_N1659 IntersectionObserver final
     : public GarbageCollectedFinalized<IntersectionObserver>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

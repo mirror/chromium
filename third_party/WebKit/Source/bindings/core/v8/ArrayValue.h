@@ -35,7 +35,7 @@ namespace blink {
 
 class Dictionary;
 
-class CORE_EXPORT ArrayValue final {
+class CORE_EXPORT_N1 ArrayValue final {
   STACK_ALLOCATED();
 
  public:

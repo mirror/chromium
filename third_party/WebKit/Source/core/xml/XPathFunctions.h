@@ -34,7 +34,7 @@ namespace blink {
 
 namespace XPath {
 
-class CORE_EXPORT Function : public Expression {
+class CORE_EXPORT_N2682 Function : public Expression {
  public:
   void SetArguments(HeapVector<Member<Expression>>&);
   void SetName(const String& name) { name_ = name; }
@@ -50,7 +50,7 @@ class CORE_EXPORT Function : public Expression {
 };
 
 Function* CreateFunction(const String& name);
-CORE_EXPORT Function* CreateFunction(const String& name,
+CORE_EXPORT_N2683 Function* CreateFunction(const String& name,
                                      HeapVector<Member<Expression>>&);
 
 }  // namespace XPath

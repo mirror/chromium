@@ -13,7 +13,7 @@ namespace blink {
 
 class ContentSecurityPolicy;
 
-class CORE_EXPORT CSPDirective
+class CORE_EXPORT_N2081 CSPDirective
     : public GarbageCollectedFinalized<CSPDirective> {
   WTF_MAKE_NONCOPYABLE(CSPDirective);
 

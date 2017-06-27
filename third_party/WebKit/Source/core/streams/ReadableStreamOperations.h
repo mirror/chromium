@@ -19,7 +19,7 @@ class ScriptState;
 // V8 Extras.
 // All methods should be called in an appropriate V8 context. All ScriptValue
 // arguments must not be empty.
-class CORE_EXPORT ReadableStreamOperations {
+class CORE_EXPORT_N2575 ReadableStreamOperations {
   STATIC_ONLY(ReadableStreamOperations);
 
  public:

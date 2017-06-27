@@ -197,7 +197,7 @@ class MultiColumnFragmentainerGroup {
 // least one group. Deleting the one group is not allowed (or possible). There
 // will be more than one group if the owning column set lives in multiple outer
 // fragmentainers (e.g. multicol inside paged media).
-class CORE_EXPORT MultiColumnFragmentainerGroupList {
+class CORE_EXPORT_N2333 MultiColumnFragmentainerGroupList {
   DISALLOW_NEW();
 
  public:

@@ -36,7 +36,7 @@ namespace blink {
 
 class QualifiedName;
 
-class CORE_EXPORT CompactHTMLToken {
+class CORE_EXPORT_N2198 CompactHTMLToken {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

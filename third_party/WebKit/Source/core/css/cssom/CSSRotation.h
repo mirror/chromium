@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSRotation final : public CSSTransformComponent {
+class CORE_EXPORT_N1551 CSSRotation final : public CSSTransformComponent {
   WTF_MAKE_NONCOPYABLE(CSSRotation);
   DEFINE_WRAPPERTYPEINFO();
 

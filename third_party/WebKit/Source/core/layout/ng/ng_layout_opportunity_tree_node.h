@@ -14,7 +14,7 @@ namespace blink {
 // 3 node R-Tree that represents available space(left, bottom, right) or
 // layout opportunity after the parent spatial rectangle is split by the
 // exclusion rectangle.
-struct CORE_EXPORT NGLayoutOpportunityTreeNode {
+struct CORE_EXPORT_N2373 NGLayoutOpportunityTreeNode {
  public:
   // Default constructor.
   // Creates a Layout Opportunity tree node that is limited by it's own edge

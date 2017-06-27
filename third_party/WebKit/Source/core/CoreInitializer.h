@@ -36,7 +36,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CoreInitializer {
+class CORE_EXPORT_N1429 CoreInitializer {
   USING_FAST_MALLOC(CoreInitializer);
   WTF_MAKE_NONCOPYABLE(CoreInitializer);
 

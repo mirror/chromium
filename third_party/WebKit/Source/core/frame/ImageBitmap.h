@@ -41,7 +41,7 @@ enum ColorSpaceInfoUpdate {
   kDontUpdateColorSpaceInformation,
 };
 
-class CORE_EXPORT ImageBitmap final
+class CORE_EXPORT_N2042 ImageBitmap final
     : public GarbageCollectedFinalized<ImageBitmap>,
       public ScriptWrappable,
       public CanvasImageSource,

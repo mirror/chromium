@@ -46,7 +46,7 @@ class CompositionUnderlineVectorBuilder {
   STATIC_ONLY(CompositionUnderlineVectorBuilder);
 
  public:
-  CORE_EXPORT static Vector<CompositionUnderline> Build(
+  CORE_EXPORT_N1747 static Vector<CompositionUnderline> Build(
       const WebVector<WebCompositionUnderline>&);
 };
 

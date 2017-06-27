@@ -41,7 +41,7 @@ namespace blink {
 
 class Decimal;
 
-class CORE_EXPORT ExceptionMessages {
+class CORE_EXPORT_N22 ExceptionMessages {
   STATIC_ONLY(ExceptionMessages);
 
  public:

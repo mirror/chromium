@@ -12,7 +12,7 @@ namespace blink {
 class CSSNumericValue;
 class ExceptionState;
 
-class CORE_EXPORT CSSTranslation final : public CSSTransformComponent {
+class CORE_EXPORT_N1559 CSSTranslation final : public CSSTransformComponent {
   WTF_MAKE_NONCOPYABLE(CSSTranslation);
   DEFINE_WRAPPERTYPEINFO();
 

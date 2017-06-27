@@ -22,7 +22,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT CanvasAsyncBlobCreator
+class CORE_EXPORT_N2164 CanvasAsyncBlobCreator
     : public GarbageCollectedFinalized<CanvasAsyncBlobCreator> {
  public:
   static CanvasAsyncBlobCreator* Create(

@@ -43,7 +43,7 @@ enum ENinePieceImageRule {
   kRepeatImageRule
 };
 
-class CORE_EXPORT NinePieceImageData
+class CORE_EXPORT_N2590 NinePieceImageData
     : public RefCountedCopyable<NinePieceImageData> {
  public:
   static PassRefPtr<NinePieceImageData> Create() {
@@ -69,7 +69,7 @@ class CORE_EXPORT NinePieceImageData
   NinePieceImageData(const NinePieceImageData&) = default;
 };
 
-class CORE_EXPORT NinePieceImage {
+class CORE_EXPORT_N2591 NinePieceImage {
   DISALLOW_NEW();
 
  public:

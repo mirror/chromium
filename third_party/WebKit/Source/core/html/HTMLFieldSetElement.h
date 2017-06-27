@@ -31,7 +31,7 @@ namespace blink {
 
 class HTMLCollection;
 
-class CORE_EXPORT HTMLFieldSetElement final : public HTMLFormControlElement {
+class CORE_EXPORT_N2109 HTMLFieldSetElement final : public HTMLFormControlElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

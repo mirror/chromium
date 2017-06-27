@@ -63,7 +63,7 @@ inline float RoundForImpreciseConversion(double value) {
 
 // CSSPrimitiveValue stores numeric data types (e.g. 1, 10px, 4%) and calc()
 // values (e.g. calc(3px + 2em)).
-class CORE_EXPORT CSSPrimitiveValue : public CSSValue {
+class CORE_EXPORT_N1485 CSSPrimitiveValue : public CSSValue {
  public:
   // These units are iterated through, so be careful when adding or changing the
   // order.

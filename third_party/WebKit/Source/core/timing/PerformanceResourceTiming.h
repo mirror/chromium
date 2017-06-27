@@ -42,7 +42,7 @@ namespace blink {
 class ResourceLoadTiming;
 class ResourceTimingInfo;
 
-class CORE_EXPORT PerformanceResourceTiming : public PerformanceEntry {
+class CORE_EXPORT_N2631 PerformanceResourceTiming : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

@@ -41,7 +41,7 @@ class MutableStylePropertySet;
 class PropertyRegistry;
 class StyleSheetContents;
 
-class CORE_EXPORT StylePropertySet
+class CORE_EXPORT_N1533 StylePropertySet
     : public GarbageCollectedFinalized<StylePropertySet> {
   WTF_MAKE_NONCOPYABLE(StylePropertySet);
   friend class PropertyReference;
@@ -168,7 +168,7 @@ class CSSLazyPropertyParser
   DECLARE_VIRTUAL_TRACE();
 };
 
-class CORE_EXPORT ImmutableStylePropertySet : public StylePropertySet {
+class CORE_EXPORT_N1534 ImmutableStylePropertySet : public StylePropertySet {
  public:
   ~ImmutableStylePropertySet();
   static ImmutableStylePropertySet* Create(const CSSProperty* properties,
@@ -212,7 +212,7 @@ DEFINE_TYPE_CASTS(ImmutableStylePropertySet,
                   !set->IsMutable(),
                   !set.IsMutable());
 
-class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
+class CORE_EXPORT_N1535 MutableStylePropertySet : public StylePropertySet {
  public:
   ~MutableStylePropertySet() {}
   static MutableStylePropertySet* Create(CSSParserMode);

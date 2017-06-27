@@ -52,7 +52,7 @@ class FileReaderLoaderClient;
 class TextResourceDecoder;
 class ThreadableLoader;
 
-class CORE_EXPORT FileReaderLoader final : public ThreadableLoaderClient {
+class CORE_EXPORT_N2022 FileReaderLoader final : public ThreadableLoaderClient {
   USING_FAST_MALLOC(FileReaderLoader);
 
  public:

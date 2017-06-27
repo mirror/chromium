@@ -26,7 +26,7 @@ class WorkerScriptLoader;
 
 // Base class for workers that operate in the same process as the document that
 // creates them.
-class CORE_EXPORT InProcessWorkerBase
+class CORE_EXPORT_N2641 InProcessWorkerBase
     : public AbstractWorker,
       public ActiveScriptWrappable<InProcessWorkerBase> {
  public:

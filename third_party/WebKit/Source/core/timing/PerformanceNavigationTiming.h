@@ -22,7 +22,7 @@ class ExecutionContext;
 class ResourceTimingInfo;
 class ResourceLoadTiming;
 
-class CORE_EXPORT PerformanceNavigationTiming final
+class CORE_EXPORT_N2628 PerformanceNavigationTiming final
     : public PerformanceResourceTiming,
       public ContextClient {
   DEFINE_WRAPPERTYPEINFO();

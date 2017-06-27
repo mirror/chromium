@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ScrollbarManager {
+class CORE_EXPORT_N2560 ScrollbarManager {
   DISALLOW_NEW();
 
   // Helper class to manage the life cycle of Scrollbar objects.

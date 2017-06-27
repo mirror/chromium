@@ -32,7 +32,7 @@ class CSSStyleSheet;
 class StyleRulePage;
 class StyleRuleCSSStyleDeclaration;
 
-class CORE_EXPORT CSSPageRule final : public CSSRule {
+class CORE_EXPORT_N1483 CSSPageRule final : public CSSRule {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

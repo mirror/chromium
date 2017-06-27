@@ -34,7 +34,7 @@ class HTMLTableCellElement;
 class HTMLTableSectionElement;
 class HTMLToken;
 
-class CORE_EXPORT HTMLViewSourceDocument final : public HTMLDocument {
+class CORE_EXPORT_N2147 HTMLViewSourceDocument final : public HTMLDocument {
  public:
   enum SourceAnnotation { kAnnotateSourceAsSafe, kAnnotateSourceAsXSS };
 

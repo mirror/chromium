@@ -11,7 +11,7 @@
 namespace blink {
 
 // Struct to represent a simple edge that has start and end.
-struct CORE_EXPORT NGEdge {
+struct CORE_EXPORT_N2407 NGEdge {
   LayoutUnit start;
   LayoutUnit end;
 };

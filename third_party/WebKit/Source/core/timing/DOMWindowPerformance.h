@@ -15,7 +15,7 @@ namespace blink {
 class LocalDOMWindow;
 class Performance;
 
-class CORE_EXPORT DOMWindowPerformance final
+class CORE_EXPORT_N2620 DOMWindowPerformance final
     : public GarbageCollected<DOMWindowPerformance>,
       public Supplement<LocalDOMWindow> {
   USING_GARBAGE_COLLECTED_MIXIN(DOMWindowPerformance);

@@ -24,7 +24,7 @@ namespace blink {
 class DoubleOrString;
 class Element;
 
-class CORE_EXPORT ElementSequenceOrByteStringDoubleOrStringRecord final {
+class CORE_EXPORT_N171 ElementSequenceOrByteStringDoubleOrStringRecord final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   ElementSequenceOrByteStringDoubleOrStringRecord();
@@ -56,15 +56,15 @@ class CORE_EXPORT ElementSequenceOrByteStringDoubleOrStringRecord final {
   HeapVector<std::pair<String, DoubleOrString>> m_byteStringDoubleOrStringRecord;
   HeapVector<Member<Element>> m_elementSequence;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const ElementSequenceOrByteStringDoubleOrStringRecord&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N172 v8::Local<v8::Value> ToV8(const ElementSequenceOrByteStringDoubleOrStringRecord&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8ElementSequenceOrByteStringDoubleOrStringRecord final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, ElementSequenceOrByteStringDoubleOrStringRecord&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N173 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, ElementSequenceOrByteStringDoubleOrStringRecord&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const ElementSequenceOrByteStringDoubleOrStringRecord&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N174 v8::Local<v8::Value> ToV8(const ElementSequenceOrByteStringDoubleOrStringRecord&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, ElementSequenceOrByteStringDoubleOrStringRecord& impl) {
@@ -78,7 +78,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, ElementSequenceOr
 
 template <>
 struct NativeValueTraits<ElementSequenceOrByteStringDoubleOrStringRecord> : public NativeValueTraitsBase<ElementSequenceOrByteStringDoubleOrStringRecord> {
-  CORE_EXPORT static ElementSequenceOrByteStringDoubleOrStringRecord NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N175 static ElementSequenceOrByteStringDoubleOrStringRecord NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

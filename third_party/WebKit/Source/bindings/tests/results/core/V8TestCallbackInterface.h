@@ -40,7 +40,7 @@ class V8TestCallbackInterface final : public TestCallbackInterface {
   void customVoidMethodTestInterfaceEmptyArg(TestInterfaceEmpty* testInterfaceEmptyArg) override;
 
  private:
-  CORE_EXPORT V8TestCallbackInterface(v8::Local<v8::Function>, ScriptState*);
+  CORE_EXPORT_N309 V8TestCallbackInterface(v8::Local<v8::Function>, ScriptState*);
 
   ScopedPersistent<v8::Function> callback_;
   RefPtr<ScriptState> script_state_;

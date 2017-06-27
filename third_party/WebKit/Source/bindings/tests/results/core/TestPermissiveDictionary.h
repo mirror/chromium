@@ -18,7 +18,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TestPermissiveDictionary : public IDLDictionaryBase {
+class CORE_EXPORT_N253 TestPermissiveDictionary : public IDLDictionaryBase {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestPermissiveDictionary();

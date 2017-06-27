@@ -46,7 +46,7 @@ namespace blink {
 // The intrinsic ratio is used to keep the same proportion as the intrinsic
 // size (thus avoiding visual distortions if width / height doesn't match
 // the intrinsic value).
-class CORE_EXPORT LayoutReplaced : public LayoutBox {
+class CORE_EXPORT_N2316 LayoutReplaced : public LayoutBox {
  public:
   LayoutReplaced(Element*);
   LayoutReplaced(Element*, const LayoutSize& intrinsic_size);

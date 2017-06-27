@@ -45,7 +45,7 @@ class StyleRuleFontFace;
 class StyleRuleImport;
 class StyleRuleNamespace;
 
-class CORE_EXPORT StyleSheetContents
+class CORE_EXPORT_N1542 StyleSheetContents
     : public GarbageCollectedFinalized<StyleSheetContents> {
  public:
   static StyleSheetContents* Create(const CSSParserContext* context) {

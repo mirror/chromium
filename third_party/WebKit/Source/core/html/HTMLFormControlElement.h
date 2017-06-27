@@ -43,7 +43,7 @@ enum CheckValidityEventBehavior {
 // HTMLFormControlElement is the default implementation of
 // ListedElement, and listed element implementations should use
 // HTMLFormControlElement unless there is a special reason.
-class CORE_EXPORT HTMLFormControlElement : public LabelableElement,
+class CORE_EXPORT_N2110 HTMLFormControlElement : public LabelableElement,
                                            public ListedElement,
                                            public FormAssociated {
   USING_GARBAGE_COLLECTED_MIXIN(HTMLFormControlElement);

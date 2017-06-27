@@ -14,7 +14,7 @@ namespace blink {
 class ConsoleMessage;
 class ExecutionContext;
 
-class CORE_EXPORT ConsoleMessageStorage
+class CORE_EXPORT_N2248 ConsoleMessageStorage
     : public GarbageCollected<ConsoleMessageStorage> {
   WTF_MAKE_NONCOPYABLE(ConsoleMessageStorage);
 

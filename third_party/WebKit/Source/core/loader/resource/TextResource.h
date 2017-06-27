@@ -13,7 +13,7 @@ namespace blink {
 
 class TextResourceDecoder;
 
-class CORE_EXPORT TextResource : public Resource {
+class CORE_EXPORT_N2494 TextResource : public Resource {
  public:
   // Returns the decoded data in text form. The data has to be available at
   // call time.

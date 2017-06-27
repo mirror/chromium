@@ -42,7 +42,7 @@ class IdTargetObserver;
 class SVGSMILElement;
 
 // This class implements SMIL interval timing model as needed for SVG animation.
-class CORE_EXPORT SVGSMILElement : public SVGElement, public SVGTests {
+class CORE_EXPORT_N2617 SVGSMILElement : public SVGElement, public SVGTests {
   USING_GARBAGE_COLLECTED_MIXIN(SVGSMILElement);
 
  public:

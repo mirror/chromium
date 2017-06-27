@@ -30,7 +30,7 @@ class Path;
 class SVGPathByteStream;
 
 // String/SVGPathByteStream -> Path
-bool CORE_EXPORT BuildPathFromString(const String&, Path&);
+bool CORE_EXPORT_N2612 BuildPathFromString(const String&, Path&);
 bool BuildPathFromByteStream(const SVGPathByteStream&, Path&);
 
 // String -> SVGPathByteStream

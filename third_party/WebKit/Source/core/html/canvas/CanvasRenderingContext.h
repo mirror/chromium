@@ -58,7 +58,7 @@ constexpr const char* kRGB10A2CanvasPixelFormatName = "10-10-10-2";
 constexpr const char* kRGBA12CanvasPixelFormatName = "12-12-12-12";
 constexpr const char* kF16CanvasPixelFormatName = "float16";
 
-class CORE_EXPORT CanvasRenderingContext
+class CORE_EXPORT_N2168 CanvasRenderingContext
     : public GarbageCollectedFinalized<CanvasRenderingContext>,
       public ScriptWrappable,
       public WebThread::TaskObserver {

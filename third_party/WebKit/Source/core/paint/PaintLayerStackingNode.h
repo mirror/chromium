@@ -90,7 +90,7 @@ class LayoutBoxModelObject;
 // z-index are always empty (i.e. it's a leaf of the stacked element tree).
 // A real stacking context can also be a leaf if it doesn't contain any stacked
 // elements.
-class CORE_EXPORT PaintLayerStackingNode {
+class CORE_EXPORT_N2545 PaintLayerStackingNode {
   USING_FAST_MALLOC(PaintLayerStackingNode);
   WTF_MAKE_NONCOPYABLE(PaintLayerStackingNode);
 

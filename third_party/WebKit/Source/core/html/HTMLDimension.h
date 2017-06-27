@@ -71,8 +71,8 @@ class HTMLDimension {
   double value_;
 };
 
-CORE_EXPORT Vector<HTMLDimension> ParseListOfDimensions(const String&);
-CORE_EXPORT bool ParseDimensionValue(const String&, HTMLDimension&);
+CORE_EXPORT_N2103 Vector<HTMLDimension> ParseListOfDimensions(const String&);
+CORE_EXPORT_N2104 bool ParseDimensionValue(const String&, HTMLDimension&);
 
 }  // namespace blink
 

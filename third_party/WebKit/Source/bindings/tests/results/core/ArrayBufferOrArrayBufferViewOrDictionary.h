@@ -26,7 +26,7 @@ namespace blink {
 
 class TestArrayBuffer;
 
-class CORE_EXPORT ArrayBufferOrArrayBufferViewOrDictionary final {
+class CORE_EXPORT_N126 ArrayBufferOrArrayBufferViewOrDictionary final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   ArrayBufferOrArrayBufferViewOrDictionary();
@@ -65,15 +65,15 @@ class CORE_EXPORT ArrayBufferOrArrayBufferViewOrDictionary final {
   Member<TestArrayBufferView> m_arrayBufferView;
   Dictionary m_dictionary;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const ArrayBufferOrArrayBufferViewOrDictionary&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N127 v8::Local<v8::Value> ToV8(const ArrayBufferOrArrayBufferViewOrDictionary&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8ArrayBufferOrArrayBufferViewOrDictionary final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, ArrayBufferOrArrayBufferViewOrDictionary&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N128 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, ArrayBufferOrArrayBufferViewOrDictionary&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const ArrayBufferOrArrayBufferViewOrDictionary&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N129 v8::Local<v8::Value> ToV8(const ArrayBufferOrArrayBufferViewOrDictionary&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, ArrayBufferOrArrayBufferViewOrDictionary& impl) {
@@ -87,7 +87,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, ArrayBufferOrArra
 
 template <>
 struct NativeValueTraits<ArrayBufferOrArrayBufferViewOrDictionary> : public NativeValueTraitsBase<ArrayBufferOrArrayBufferViewOrDictionary> {
-  CORE_EXPORT static ArrayBufferOrArrayBufferViewOrDictionary NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N130 static ArrayBufferOrArrayBufferViewOrDictionary NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

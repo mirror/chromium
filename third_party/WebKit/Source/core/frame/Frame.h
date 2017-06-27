@@ -66,7 +66,7 @@ enum class UserGestureStatus { kActive, kNone };
 // Frame is the base class of LocalFrame and RemoteFrame and should only contain
 // functionality shared between both. In particular, any method related to
 // input, layout, or painting probably belongs on LocalFrame.
-class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
+class CORE_EXPORT_N2031 Frame : public GarbageCollectedFinalized<Frame> {
  public:
   virtual ~Frame();
 

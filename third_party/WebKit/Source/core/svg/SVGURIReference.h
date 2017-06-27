@@ -33,7 +33,7 @@ class Document;
 class Element;
 class IdTargetObserver;
 
-class CORE_EXPORT SVGURIReference : public GarbageCollectedMixin {
+class CORE_EXPORT_N2616 SVGURIReference : public GarbageCollectedMixin {
  public:
   virtual ~SVGURIReference() {}
 

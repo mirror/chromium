@@ -33,7 +33,7 @@ namespace blink {
 
 class LayoutBlockFlow;
 
-class CORE_EXPORT LayoutFullScreen final : public LayoutFlexibleBox {
+class CORE_EXPORT_N2301 LayoutFullScreen final : public LayoutFlexibleBox {
  public:
   static LayoutFullScreen* CreateAnonymous(Document*);
 

@@ -58,13 +58,13 @@ double ParseToDoubleForNumberType(
     double fallback_value = std::numeric_limits<double>::quiet_NaN());
 
 // http://www.whatwg.org/specs/web-apps/current-work/#rules-for-parsing-integers
-CORE_EXPORT bool ParseHTMLInteger(const String&, int&);
+CORE_EXPORT_N2202 bool ParseHTMLInteger(const String&, int&);
 
 // http://www.whatwg.org/specs/web-apps/current-work/#rules-for-parsing-non-negative-integers
-CORE_EXPORT bool ParseHTMLNonNegativeInteger(const String&, unsigned&);
+CORE_EXPORT_N2203 bool ParseHTMLNonNegativeInteger(const String&, unsigned&);
 
 // https://html.spec.whatwg.org/multipage/infrastructure.html#rules-for-parsing-a-list-of-floating-point-numbers
-CORE_EXPORT Vector<double> ParseHTMLListOfFloatingPointNumbers(const String&);
+CORE_EXPORT_N2204 Vector<double> ParseHTMLListOfFloatingPointNumbers(const String&);
 
 typedef Vector<std::pair<String, String>> HTMLAttributeList;
 // The returned encoding might not be valid.

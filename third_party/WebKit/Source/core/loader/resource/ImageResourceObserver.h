@@ -33,7 +33,7 @@ namespace blink {
 class ImageResourceContent;
 class IntRect;
 
-class CORE_EXPORT ImageResourceObserver {
+class CORE_EXPORT_N2487 ImageResourceObserver {
  public:
   virtual ~ImageResourceObserver() {}
 

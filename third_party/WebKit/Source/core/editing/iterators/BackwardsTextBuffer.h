@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT BackwardsTextBuffer final : public TextBufferBase {
+class CORE_EXPORT_N1929 BackwardsTextBuffer final : public TextBufferBase {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(BackwardsTextBuffer);
 

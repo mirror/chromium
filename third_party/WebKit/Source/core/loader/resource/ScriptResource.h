@@ -40,7 +40,7 @@ class FetchParameters;
 class ResourceFetcher;
 class ScriptResource;
 
-class CORE_EXPORT ScriptResourceClient : public ResourceClient {
+class CORE_EXPORT_N2490 ScriptResourceClient : public ResourceClient {
  public:
   ~ScriptResourceClient() override {}
   static bool IsExpectedType(ResourceClient* client) {
@@ -51,7 +51,7 @@ class CORE_EXPORT ScriptResourceClient : public ResourceClient {
   virtual void NotifyAppendData(ScriptResource* resource) {}
 };
 
-class CORE_EXPORT ScriptResource final : public TextResource {
+class CORE_EXPORT_N2491 ScriptResource final : public TextResource {
  public:
   using ClientType = ScriptResourceClient;
   static ScriptResource* Fetch(FetchParameters&, ResourceFetcher*);

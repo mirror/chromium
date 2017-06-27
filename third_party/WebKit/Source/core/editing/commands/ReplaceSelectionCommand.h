@@ -35,7 +35,7 @@ namespace blink {
 class DocumentFragment;
 class ReplacementFragment;
 
-class CORE_EXPORT ReplaceSelectionCommand final : public CompositeEditCommand {
+class CORE_EXPORT_N1925 ReplaceSelectionCommand final : public CompositeEditCommand {
  public:
   enum CommandOption {
     kSelectReplacement = 1 << 0,

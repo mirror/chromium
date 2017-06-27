@@ -26,7 +26,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SVGPathStringBuilder final : public SVGPathConsumer {
+class CORE_EXPORT_N2610 SVGPathStringBuilder final : public SVGPathConsumer {
  public:
   String Result();
 

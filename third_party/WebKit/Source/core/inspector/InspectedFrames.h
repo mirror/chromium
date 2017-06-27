@@ -14,12 +14,12 @@ namespace blink {
 
 class LocalFrame;
 
-class CORE_EXPORT InspectedFrames final
+class CORE_EXPORT_N2251 InspectedFrames final
     : public GarbageCollected<InspectedFrames> {
   WTF_MAKE_NONCOPYABLE(InspectedFrames);
 
  public:
-  class CORE_EXPORT Iterator {
+  class CORE_EXPORT_N2252 Iterator {
     STACK_ALLOCATED();
 
    public:

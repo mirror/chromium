@@ -16,7 +16,7 @@ namespace blink {
 
 // Represents the components of a PropertySpecificKeyframe's value that change
 // smoothly as it interpolates to an adjacent value.
-class CORE_EXPORT InterpolableValue {
+class CORE_EXPORT_N1445 InterpolableValue {
   USING_FAST_MALLOC(InterpolableValue);
 
  public:
@@ -51,7 +51,7 @@ class CORE_EXPORT InterpolableValue {
   friend class AnimationInterpolableValueTest;
 };
 
-class CORE_EXPORT InterpolableNumber final : public InterpolableValue {
+class CORE_EXPORT_N1446 InterpolableNumber final : public InterpolableValue {
  public:
   static std::unique_ptr<InterpolableNumber> Create(double value) {
     return WTF::WrapUnique(new InterpolableNumber(value));
@@ -79,7 +79,7 @@ class CORE_EXPORT InterpolableNumber final : public InterpolableValue {
   explicit InterpolableNumber(double value) : value_(value) {}
 };
 
-class CORE_EXPORT InterpolableList : public InterpolableValue {
+class CORE_EXPORT_N1447 InterpolableList : public InterpolableValue {
  public:
   // Explicitly delete operator= because MSVC automatically generate
   // copy constructors and operator= for dll-exported classes.

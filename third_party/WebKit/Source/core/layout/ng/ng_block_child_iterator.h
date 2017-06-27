@@ -20,7 +20,7 @@ class NGBlockBreakToken;
 //
 // This class does not handle modifications to its arguments after it has been
 // constructed.
-class CORE_EXPORT NGBlockChildIterator {
+class CORE_EXPORT_N2354 NGBlockChildIterator {
   STACK_ALLOCATED();
 
  public:

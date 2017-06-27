@@ -10,9 +10,9 @@
 
 namespace blink {
 
-class CORE_EXPORT TextIteratorBehavior final {
+class CORE_EXPORT_N1938 TextIteratorBehavior final {
  public:
-  class CORE_EXPORT Builder;
+  class CORE_EXPORT_N1939 Builder;
 
   TextIteratorBehavior(const TextIteratorBehavior& other);
   TextIteratorBehavior();
@@ -71,7 +71,7 @@ class CORE_EXPORT TextIteratorBehavior final {
   bool does_not_emit_space_beyond_range_end_ : 1;
 };
 
-class CORE_EXPORT TextIteratorBehavior::Builder final {
+class CORE_EXPORT_N1940 TextIteratorBehavior::Builder final {
  public:
   explicit Builder(const TextIteratorBehavior&);
   Builder();

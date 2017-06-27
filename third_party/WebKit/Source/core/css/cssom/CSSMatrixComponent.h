@@ -14,7 +14,7 @@ namespace blink {
 
 class DOMMatrixReadOnly;
 
-class CORE_EXPORT CSSMatrixComponent final : public CSSTransformComponent {
+class CORE_EXPORT_N1546 CSSMatrixComponent final : public CSSTransformComponent {
   WTF_MAKE_NONCOPYABLE(CSSMatrixComponent);
   DEFINE_WRAPPERTYPEINFO();
 

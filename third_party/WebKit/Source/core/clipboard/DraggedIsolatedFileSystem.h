@@ -13,7 +13,7 @@ namespace blink {
 
 class DataObject;
 
-class CORE_EXPORT DraggedIsolatedFileSystem {
+class CORE_EXPORT_N1469 DraggedIsolatedFileSystem {
   WTF_MAKE_NONCOPYABLE(DraggedIsolatedFileSystem);
 
  public:

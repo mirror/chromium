@@ -17,22 +17,22 @@ class LocalFrameView;
 }  // namespace blink
 
 // Outside the blink namespace for ease of invocation from gdb.
-CORE_EXPORT void showAllPropertyTrees(const blink::LocalFrameView& rootFrame);
-CORE_EXPORT void showTransformPropertyTree(
+CORE_EXPORT_N2547 void showAllPropertyTrees(const blink::LocalFrameView& rootFrame);
+CORE_EXPORT_N2548 void showTransformPropertyTree(
     const blink::LocalFrameView& rootFrame);
-CORE_EXPORT void showClipPropertyTree(const blink::LocalFrameView& rootFrame);
-CORE_EXPORT void showEffectPropertyTree(const blink::LocalFrameView& rootFrame);
-CORE_EXPORT void showScrollPropertyTree(const blink::LocalFrameView& rootFrame);
-CORE_EXPORT String
+CORE_EXPORT_N2549 void showClipPropertyTree(const blink::LocalFrameView& rootFrame);
+CORE_EXPORT_N2550 void showEffectPropertyTree(const blink::LocalFrameView& rootFrame);
+CORE_EXPORT_N2551 void showScrollPropertyTree(const blink::LocalFrameView& rootFrame);
+CORE_EXPORT_N2552 String
 transformPropertyTreeAsString(const blink::LocalFrameView& rootFrame);
-CORE_EXPORT String
+CORE_EXPORT_N2553 String
 clipPropertyTreeAsString(const blink::LocalFrameView& rootFrame);
-CORE_EXPORT String
+CORE_EXPORT_N2554 String
 effectPropertyTreeAsString(const blink::LocalFrameView& rootFrame);
-CORE_EXPORT String
+CORE_EXPORT_N2555 String
 scrollPropertyTreeAsString(const blink::LocalFrameView& rootFrame);
 
-CORE_EXPORT String paintPropertyTreeGraph(const blink::LocalFrameView&);
+CORE_EXPORT_N2556 String paintPropertyTreeGraph(const blink::LocalFrameView&);
 
 #endif  // if DCHECK_IS_ON()
 

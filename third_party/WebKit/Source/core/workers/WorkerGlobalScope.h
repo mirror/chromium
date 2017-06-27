@@ -55,7 +55,7 @@ class WorkerLocation;
 class WorkerNavigator;
 class WorkerThread;
 
-class CORE_EXPORT WorkerGlobalScope
+class CORE_EXPORT_N2662 WorkerGlobalScope
     : public EventTargetWithInlineData,
       public ActiveScriptWrappable<WorkerGlobalScope>,
       public SecurityContext,

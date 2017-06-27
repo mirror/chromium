@@ -28,7 +28,7 @@ class ScriptState;
 class ScriptValue;
 class V0CustomElementRegistrationContext;
 
-class CORE_EXPORT CustomElementRegistry final
+class CORE_EXPORT_N1734 CustomElementRegistry final
     : public GarbageCollectedFinalized<CustomElementRegistry>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

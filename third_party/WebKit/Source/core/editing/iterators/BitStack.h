@@ -32,7 +32,7 @@
 
 namespace blink {
 
-class CORE_EXPORT BitStack {
+class CORE_EXPORT_N1930 BitStack {
   STACK_ALLOCATED();
 
  public:

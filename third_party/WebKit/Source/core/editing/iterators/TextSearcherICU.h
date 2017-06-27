@@ -13,12 +13,12 @@ struct UStringSearch;
 
 namespace blink {
 
-struct CORE_EXPORT MatchResultICU {
+struct CORE_EXPORT_N1942 MatchResultICU {
   size_t start;
   size_t length;
 };
 
-class CORE_EXPORT TextSearcherICU {
+class CORE_EXPORT_N1943 TextSearcherICU {
   WTF_MAKE_NONCOPYABLE(TextSearcherICU);
 
  public:

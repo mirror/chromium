@@ -76,7 +76,7 @@ class WebInbandTextTrack;
 class WebLayer;
 class WebRemotePlaybackClient;
 
-class CORE_EXPORT HTMLMediaElement
+class CORE_EXPORT_N2126 HTMLMediaElement
     : public HTMLElement,
       public Supplementable<HTMLMediaElement>,
       public ActiveScriptWrappable<HTMLMediaElement>,

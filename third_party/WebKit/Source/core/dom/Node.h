@@ -163,7 +163,7 @@ WILL_NOT_BE_EAGERLY_TRACED_CLASS(Node);
 // A Node is a base class for all objects in the DOM tree.
 // The spec governing this interface can be found here:
 // https://dom.spec.whatwg.org/#interface-node
-class CORE_EXPORT Node : public EventTarget {
+class CORE_EXPORT_N1673 Node : public EventTarget {
   DEFINE_WRAPPERTYPEINFO();
   friend class TreeScope;
   friend class TreeScopeAdopter;
@@ -1041,8 +1041,8 @@ DEFINE_COMPARISON_OPERATORS_WITH_REFERENCES(Node)
 #define DEFINE_NODE_FACTORY(T) \
   T* T::Create(Document& document) { return new T(document); }
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const Node&);
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const Node*);
+CORE_EXPORT_N1674 std::ostream& operator<<(std::ostream&, const Node&);
+CORE_EXPORT_N1675 std::ostream& operator<<(std::ostream&, const Node*);
 
 }  // namespace blink
 

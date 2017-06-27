@@ -27,7 +27,7 @@ namespace blink {
 // multicol implementation).
 //
 // [1] http://www.w3.org/TR/css3-break/#fragmentation-model
-class CORE_EXPORT FragmentationContext {
+class CORE_EXPORT_N2288 FragmentationContext {
  public:
   virtual ~FragmentationContext() {}
 

@@ -38,7 +38,7 @@
 
 namespace blink {
 
-class CORE_EXPORT LinkLoaderClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N2460 LinkLoaderClient : public GarbageCollectedMixin {
  public:
   virtual ~LinkLoaderClient() {}
   DEFINE_INLINE_VIRTUAL_TRACE() {}

@@ -18,7 +18,7 @@ class CustomElementRegistry;
 // Implement CustomElementDefinitionBuilder to provide
 // technology-specific steps for CustomElementRegistry.define.
 // https://html.spec.whatwg.org/multipage/scripting.html#dom-customelementsregistry-define
-class CORE_EXPORT CustomElementDefinitionBuilder {
+class CORE_EXPORT_N1727 CustomElementDefinitionBuilder {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(CustomElementDefinitionBuilder);
 

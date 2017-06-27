@@ -13,7 +13,7 @@ namespace blink {
 
 class ExceptionState;
 
-class CORE_EXPORT CSSPerspective : public CSSTransformComponent {
+class CORE_EXPORT_N1548 CSSPerspective : public CSSTransformComponent {
   WTF_MAKE_NONCOPYABLE(CSSPerspective);
   DEFINE_WRAPPERTYPEINFO();
 

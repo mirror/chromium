@@ -33,7 +33,7 @@ namespace blink {
 class HTMLPlugInElement;
 class PluginView;
 
-class CORE_EXPORT PluginDocument final : public HTMLDocument {
+class CORE_EXPORT_N2158 PluginDocument final : public HTMLDocument {
  public:
   static PluginDocument* Create(
       const DocumentInit& initializer = DocumentInit()) {

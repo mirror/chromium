@@ -37,7 +37,7 @@ class SegmentedString;
 class ScriptableDocumentParser;
 class TextResourceDecoder;
 
-class CORE_EXPORT DocumentParser
+class CORE_EXPORT_N1632 DocumentParser
     : public GarbageCollectedFinalized<DocumentParser> {
  public:
   virtual ~DocumentParser();

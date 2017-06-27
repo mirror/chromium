@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT NGLineBoxFragment final : public NGFragment {
+class CORE_EXPORT_N2432 NGLineBoxFragment final : public NGFragment {
  public:
   NGLineBoxFragment(NGWritingMode writing_mode,
                     const NGPhysicalLineBoxFragment* physical_fragment)

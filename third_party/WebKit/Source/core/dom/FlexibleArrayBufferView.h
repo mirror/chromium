@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT FlexibleArrayBufferView {
+class CORE_EXPORT_N1653 FlexibleArrayBufferView {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(FlexibleArrayBufferView);
 

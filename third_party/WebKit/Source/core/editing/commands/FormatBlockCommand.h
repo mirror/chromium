@@ -37,7 +37,7 @@ namespace blink {
 class Document;
 class Element;
 
-class CORE_EXPORT FormatBlockCommand final : public ApplyBlockElementCommand {
+class CORE_EXPORT_N1920 FormatBlockCommand final : public ApplyBlockElementCommand {
  public:
   static FormatBlockCommand* Create(Document& document,
                                     const QualifiedName& tag_name) {

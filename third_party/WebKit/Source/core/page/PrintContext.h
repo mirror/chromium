@@ -37,7 +37,7 @@ class IntRect;
 class LocalFrame;
 class Node;
 
-class CORE_EXPORT PrintContext
+class CORE_EXPORT_N2516 PrintContext
     : public GarbageCollectedFinalized<PrintContext> {
  public:
   // By shrinking to a width of 75%, we will render the correct physical

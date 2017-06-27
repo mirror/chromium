@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT FrameView : public FrameOrPlugin {
+class CORE_EXPORT_N2038 FrameView : public FrameOrPlugin {
  public:
   virtual ~FrameView() {}
 };

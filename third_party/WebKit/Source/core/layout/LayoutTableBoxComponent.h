@@ -16,7 +16,7 @@ class LayoutTable;
 
 // Common super class for LayoutTableCol, LayoutTableSection and LayoutTableRow.
 // Also provides utility functions for all table parts.
-class CORE_EXPORT LayoutTableBoxComponent : public LayoutBox {
+class CORE_EXPORT_N2319 LayoutTableBoxComponent : public LayoutBox {
  public:
   static void InvalidateCollapsedBordersOnStyleChange(
       const LayoutObject& table_part,

@@ -13,7 +13,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DOMArrayBufferView
+class CORE_EXPORT_N1636 DOMArrayBufferView
     : public GarbageCollectedFinalized<DOMArrayBufferView>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

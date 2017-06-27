@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ClassicScript final : public Script {
+class CORE_EXPORT_N1609 ClassicScript final : public Script {
  public:
   static ClassicScript* Create(const ScriptSourceCode& script_source_code) {
     return new ClassicScript(script_source_code);

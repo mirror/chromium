@@ -11,9 +11,9 @@
 
 namespace blink {
 
-class CORE_EXPORT MediaValuesCached final : public MediaValues {
+class CORE_EXPORT_N1515 MediaValuesCached final : public MediaValues {
  public:
-  struct CORE_EXPORT MediaValuesCachedData final {
+  struct CORE_EXPORT_N1516 MediaValuesCachedData final {
     DISALLOW_NEW();
     // Members variables must be thread safe, since they're copied to the parser
     // thread

@@ -41,7 +41,7 @@ class ComputedStyle;
 
 typedef void* WrappedImagePtr;
 
-class CORE_EXPORT StyleImage : public GarbageCollectedFinalized<StyleImage> {
+class CORE_EXPORT_N2595 StyleImage : public GarbageCollectedFinalized<StyleImage> {
  public:
   virtual ~StyleImage() {}
 

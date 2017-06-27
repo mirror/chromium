@@ -56,7 +56,7 @@ class Element;
 class ExceptionState;
 class TreeScope;
 
-class CORE_EXPORT Animation final : public EventTargetWithInlineData,
+class CORE_EXPORT_N1430 Animation final : public EventTargetWithInlineData,
                                     public ActiveScriptWrappable<Animation>,
                                     public ContextLifecycleObserver,
                                     public CompositorAnimationDelegate,

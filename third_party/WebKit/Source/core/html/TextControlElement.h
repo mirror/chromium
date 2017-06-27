@@ -53,7 +53,7 @@ enum class TextControlSetValueSelection {
   kDoNotSet,
 };
 
-class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
+class CORE_EXPORT_N2159 TextControlElement : public HTMLFormControlElementWithState {
  public:
   // Common flag for HTMLInputElement::tooLong(),
   // HTMLTextAreaElement::tooLong(),

@@ -41,7 +41,7 @@ namespace blink {
 class Page;
 class Prerender;
 
-class CORE_EXPORT PrerendererClient : public Supplement<Page> {
+class CORE_EXPORT_N2465 PrerendererClient : public Supplement<Page> {
  public:
   virtual void WillAddPrerender(Prerender*) = 0;
   virtual bool IsPrefetchOnly() = 0;
@@ -53,7 +53,7 @@ class CORE_EXPORT PrerendererClient : public Supplement<Page> {
   explicit PrerendererClient(Page&);
 };
 
-CORE_EXPORT void ProvidePrerendererClientTo(Page&, PrerendererClient*);
+CORE_EXPORT_N2466 void ProvidePrerendererClientTo(Page&, PrerendererClient*);
 
 }  // namespace blink
 

@@ -36,7 +36,7 @@ namespace blink {
 
 class ExceptionState;
 
-class CORE_EXPORT DOMTokenListObserver : public GarbageCollectedMixin {
+class CORE_EXPORT_N1644 DOMTokenListObserver : public GarbageCollectedMixin {
  public:
   // Called when the value property is set, even if the tokens in
   // the set have not changed.
@@ -45,7 +45,7 @@ class CORE_EXPORT DOMTokenListObserver : public GarbageCollectedMixin {
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
-class CORE_EXPORT DOMTokenList : public GarbageCollectedFinalized<DOMTokenList>,
+class CORE_EXPORT_N1645 DOMTokenList : public GarbageCollectedFinalized<DOMTokenList>,
                                  public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
   WTF_MAKE_NONCOPYABLE(DOMTokenList);

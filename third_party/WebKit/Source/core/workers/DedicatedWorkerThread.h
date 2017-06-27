@@ -38,7 +38,7 @@ namespace blink {
 class InProcessWorkerObjectProxy;
 class WorkerThreadStartupData;
 
-class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
+class CORE_EXPORT_N2640 DedicatedWorkerThread : public WorkerThread {
  public:
   static std::unique_ptr<DedicatedWorkerThread> Create(
       PassRefPtr<WorkerLoaderProxy>,

@@ -13,7 +13,7 @@ namespace blink {
 // options. An application requests AddEventListenerOptions and the user
 // agent may change ('resolve') these settings (based on settings or policies)
 // and the result and the reasons why changes occurred are stored in this class.
-class CORE_EXPORT AddEventListenerOptionsResolved
+class CORE_EXPORT_N1965 AddEventListenerOptionsResolved
     : public AddEventListenerOptions {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 

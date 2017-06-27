@@ -23,7 +23,7 @@ class ExecutionContext;
 class SourceLocation;
 
 // TODO(dgozman): rename this to ThreadInspector (and subclasses).
-class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
+class CORE_EXPORT_N2281 ThreadDebugger : public v8_inspector::V8InspectorClient,
                                    public V8PerIsolateData::Data {
   WTF_MAKE_NONCOPYABLE(ThreadDebugger);
 

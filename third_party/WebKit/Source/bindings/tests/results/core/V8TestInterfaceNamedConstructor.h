@@ -29,21 +29,21 @@ class V8TestInterfaceNamedConstructorConstructor {
   STATIC_ONLY(V8TestInterfaceNamedConstructorConstructor);
  public:
   static v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate*, const DOMWrapperWorld&);
-  CORE_EXPORT static void NamedConstructorAttributeGetter(v8::Local<v8::Name> propertyName, const v8::PropertyCallbackInfo<v8::Value>& info);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N710 static void NamedConstructorAttributeGetter(v8::Local<v8::Name> propertyName, const v8::PropertyCallbackInfo<v8::Value>& info);
+  CORE_EXPORT_N711 static const WrapperTypeInfo wrapperTypeInfo;
 };
 
 class V8TestInterfaceNamedConstructor {
   STATIC_ONLY(V8TestInterfaceNamedConstructor);
  public:
-  CORE_EXPORT static bool hasInstance(v8::Local<v8::Value>, v8::Isolate*);
+  CORE_EXPORT_N712 static bool hasInstance(v8::Local<v8::Value>, v8::Isolate*);
   static v8::Local<v8::Object> findInstanceInPrototypeChain(v8::Local<v8::Value>, v8::Isolate*);
-  CORE_EXPORT static v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate*, const DOMWrapperWorld&);
+  CORE_EXPORT_N713 static v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate*, const DOMWrapperWorld&);
   static TestInterfaceNamedConstructor* toImpl(v8::Local<v8::Object> object) {
     return ToScriptWrappable(object)->ToImpl<TestInterfaceNamedConstructor>();
   }
-  CORE_EXPORT static TestInterfaceNamedConstructor* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N714 static TestInterfaceNamedConstructor* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
+  CORE_EXPORT_N715 static const WrapperTypeInfo wrapperTypeInfo;
   static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
     visitor->Trace(scriptWrappable->ToImpl<TestInterfaceNamedConstructor>());
   }
@@ -57,7 +57,7 @@ class V8TestInterfaceNamedConstructor {
 
 template <>
 struct NativeValueTraits<TestInterfaceNamedConstructor> : public NativeValueTraitsBase<TestInterfaceNamedConstructor> {
-  CORE_EXPORT static TestInterfaceNamedConstructor* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N716 static TestInterfaceNamedConstructor* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

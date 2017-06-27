@@ -74,7 +74,7 @@ class
 typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext
     RenderingContext;
 
-class CORE_EXPORT HTMLCanvasElement final
+class CORE_EXPORT_N2099 HTMLCanvasElement final
     : public HTMLElement,
       public ContextLifecycleObserver,
       public PageVisibilityObserver,

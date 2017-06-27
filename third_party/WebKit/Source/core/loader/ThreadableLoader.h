@@ -127,7 +127,7 @@ struct CrossThreadCopier<ThreadableLoaderOptions> {
 // - ResourceLoaderOptions argument will be passed to the FetchParameters
 //   that this ThreadableLoader creates. It can be altered e.g. when
 //   redirect happens.
-class CORE_EXPORT ThreadableLoader
+class CORE_EXPORT_N2470 ThreadableLoader
     : public GarbageCollectedFinalized<ThreadableLoader> {
   WTF_MAKE_NONCOPYABLE(ThreadableLoader);
 

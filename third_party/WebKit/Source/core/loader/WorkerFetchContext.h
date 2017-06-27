@@ -19,7 +19,7 @@ class WebWorkerFetchContext;
 class WorkerGlobalScope;
 class WorkerClients;
 
-CORE_EXPORT void ProvideWorkerFetchContextToWorker(
+CORE_EXPORT_N2473 void ProvideWorkerFetchContextToWorker(
     WorkerClients*,
     std::unique_ptr<WebWorkerFetchContext>);
 

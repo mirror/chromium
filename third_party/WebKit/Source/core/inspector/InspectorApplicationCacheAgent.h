@@ -37,7 +37,7 @@ namespace blink {
 class LocalFrame;
 class InspectedFrames;
 
-class CORE_EXPORT InspectorApplicationCacheAgent final
+class CORE_EXPORT_N2254 InspectorApplicationCacheAgent final
     : public InspectorBaseAgent<protocol::ApplicationCache::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorApplicationCacheAgent);
 

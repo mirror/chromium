@@ -15,7 +15,7 @@ namespace blink {
 class WorkerClients;
 class WorkerGlobalScope;
 
-class CORE_EXPORT CompositorWorkerProxyClient
+class CORE_EXPORT_N1614 CompositorWorkerProxyClient
     : public Supplement<WorkerClients> {
   WTF_MAKE_NONCOPYABLE(CompositorWorkerProxyClient);
 
@@ -31,7 +31,7 @@ class CORE_EXPORT CompositorWorkerProxyClient
   virtual CompositorProxyClient* GetCompositorProxyClient() = 0;
 };
 
-CORE_EXPORT void ProvideCompositorWorkerProxyClientTo(
+CORE_EXPORT_N1615 void ProvideCompositorWorkerProxyClientTo(
     WorkerClients*,
     CompositorWorkerProxyClient*);
 

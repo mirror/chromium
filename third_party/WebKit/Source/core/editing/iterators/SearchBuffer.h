@@ -91,10 +91,10 @@ class SearchBuffer {
   std::unique_ptr<TextSearcherICU> text_searcher_;
 };
 
-CORE_EXPORT EphemeralRange FindPlainText(const EphemeralRange& input_range,
+CORE_EXPORT_N1934 EphemeralRange FindPlainText(const EphemeralRange& input_range,
                                          const String&,
                                          FindOptions);
-CORE_EXPORT EphemeralRangeInFlatTree
+CORE_EXPORT_N1935 EphemeralRangeInFlatTree
 FindPlainText(const EphemeralRangeInFlatTree& input_range,
               const String&,
               FindOptions);

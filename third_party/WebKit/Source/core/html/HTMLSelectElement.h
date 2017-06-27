@@ -47,7 +47,7 @@ class HTMLOptionElementOrHTMLOptGroupElement;
 class HTMLElementOrLong;
 class PopupMenu;
 
-class CORE_EXPORT HTMLSelectElement final
+class CORE_EXPORT_N2137 HTMLSelectElement final
     : public HTMLFormControlElementWithState,
       private TypeAheadDataSource {
   DEFINE_WRAPPERTYPEINFO();

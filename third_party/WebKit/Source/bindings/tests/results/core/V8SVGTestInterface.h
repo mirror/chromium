@@ -28,14 +28,14 @@ namespace blink {
 class V8SVGTestInterface {
   STATIC_ONLY(V8SVGTestInterface);
  public:
-  CORE_EXPORT static bool hasInstance(v8::Local<v8::Value>, v8::Isolate*);
+  CORE_EXPORT_N284 static bool hasInstance(v8::Local<v8::Value>, v8::Isolate*);
   static v8::Local<v8::Object> findInstanceInPrototypeChain(v8::Local<v8::Value>, v8::Isolate*);
-  CORE_EXPORT static v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate*, const DOMWrapperWorld&);
+  CORE_EXPORT_N285 static v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate*, const DOMWrapperWorld&);
   static SVGTestInterface* toImpl(v8::Local<v8::Object> object) {
     return ToScriptWrappable(object)->ToImpl<SVGTestInterface>();
   }
-  CORE_EXPORT static SVGTestInterface* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N286 static SVGTestInterface* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
+  CORE_EXPORT_N287 static const WrapperTypeInfo wrapperTypeInfo;
   static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
     visitor->Trace(scriptWrappable->ToImpl<SVGTestInterface>());
   }
@@ -46,13 +46,13 @@ class V8SVGTestInterface {
 
   // Callback functions
 
-  CORE_EXPORT static void typeAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
-  CORE_EXPORT static void typeAttributeSetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N288 static void typeAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N289 static void typeAttributeSetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
 };
 
 template <>
 struct NativeValueTraits<SVGTestInterface> : public NativeValueTraitsBase<SVGTestInterface> {
-  CORE_EXPORT static SVGTestInterface* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N290 static SVGTestInterface* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

@@ -48,7 +48,7 @@ namespace blink {
 //
 // The 'scan' operation performs a 'match', and if the match is successful it
 // advance the input pointer past the matched sequence.
-class CORE_EXPORT VTTScanner {
+class CORE_EXPORT_N2235 VTTScanner {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(VTTScanner);
 

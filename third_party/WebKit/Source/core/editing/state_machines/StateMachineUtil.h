@@ -15,7 +15,7 @@ namespace blink {
 // DO NOT USE this function directly since this doesn't care about preceding
 // regional indicator symbols. Use ForwardGraphemeBoundaryStateMachine or
 // BackwardGraphemeBoundaryStateMachine instead.
-CORE_EXPORT bool IsGraphemeBreak(UChar32 prev_code_point,
+CORE_EXPORT_N1963 bool IsGraphemeBreak(UChar32 prev_code_point,
                                  UChar32 next_code_point);
 
 }  // namespace blink

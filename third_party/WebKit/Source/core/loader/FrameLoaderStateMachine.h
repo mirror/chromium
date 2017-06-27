@@ -40,7 +40,7 @@ namespace blink {
 // Encapsulates a state machine for FrameLoader. Note that this is different
 // from FrameState, which stores the state of the current load that FrameLoader
 // is executing.
-class CORE_EXPORT FrameLoaderStateMachine {
+class CORE_EXPORT_N2455 FrameLoaderStateMachine {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(FrameLoaderStateMachine);
 

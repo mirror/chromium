@@ -67,7 +67,7 @@ class ValueData : public GarbageCollectedFinalized<ValueData> {
 
 // Copying Value objects makes their data partially shared, so care has to be
 // taken when dealing with copies.
-class CORE_EXPORT Value {
+class CORE_EXPORT_N2686 Value {
   DISALLOW_NEW();
 
  public:

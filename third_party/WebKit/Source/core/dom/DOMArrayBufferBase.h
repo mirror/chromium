@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DOMArrayBufferBase
+class CORE_EXPORT_N1635 DOMArrayBufferBase
     : public GarbageCollectedFinalized<DOMArrayBufferBase>,
       public ScriptWrappable {
  public:

@@ -54,9 +54,9 @@ class LayoutObject;
 // of their container.  The provided methods support scroll:overflow and are
 // CSS position and transform-friendly.
 
-CORE_EXPORT FloatRect FindInPageRectFromAbsoluteRect(const FloatRect&,
+CORE_EXPORT_N1792 FloatRect FindInPageRectFromAbsoluteRect(const FloatRect&,
                                                      const LayoutObject*);
-CORE_EXPORT FloatRect FindInPageRectFromRange(const EphemeralRange&);
+CORE_EXPORT_N1793 FloatRect FindInPageRectFromRange(const EphemeralRange&);
 
 }  // namespace blink
 

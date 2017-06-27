@@ -23,7 +23,7 @@ namespace blink {
 // necessary during layout and stored on this object.
 // Layout code should access the NGPhysicalFragment through the wrappers in
 // NGFragment et al.
-class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
+class CORE_EXPORT_N2374 NGLayoutResult : public RefCounted<NGLayoutResult> {
  public:
   RefPtr<NGPhysicalFragment> PhysicalFragment() const {
     return physical_fragment_;

@@ -140,7 +140,7 @@ struct TaskTypeTraits : WTF::GenericHashTraits<TaskType> {
 // A set of helper functions to get a WebTaskRunner for TaskType and a context
 // object. The posted tasks are guaranteed to run in a sequence if they have the
 // same TaskType and the context objects belong to the same frame.
-class CORE_EXPORT TaskRunnerHelper final {
+class CORE_EXPORT_N1712 TaskRunnerHelper final {
   STATIC_ONLY(TaskRunnerHelper);
 
  public:

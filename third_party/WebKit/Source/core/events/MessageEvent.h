@@ -42,7 +42,7 @@
 
 namespace blink {
 
-class CORE_EXPORT MessageEvent final : public Event {
+class CORE_EXPORT_N1979 MessageEvent final : public Event {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

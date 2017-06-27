@@ -30,7 +30,7 @@ namespace blink {
 
 enum AnyStepHandling { kRejectAny, kAnyIsDefaultStep };
 
-class CORE_EXPORT StepRange {
+class CORE_EXPORT_N2186 StepRange {
   DISALLOW_NEW();
 
  public:

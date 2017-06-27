@@ -31,7 +31,7 @@ class LayoutObject;
 // Layout code should only access geometry information through the
 // NGFragment wrapper classes which transforms information into the logical
 // coordinate system.
-class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
+class CORE_EXPORT_N2395 NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
  public:
   enum NGFragmentType {
     kFragmentBox = 0,

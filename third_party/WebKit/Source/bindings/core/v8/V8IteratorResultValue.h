@@ -15,13 +15,13 @@ namespace blink {
 // "Iterator result" in this file is an object returned from iterator.next()
 // having two members "done" and "value".
 
-CORE_EXPORT v8::Local<v8::Object> V8IteratorResultValue(v8::Isolate*,
+CORE_EXPORT_N108 v8::Local<v8::Object> V8IteratorResultValue(v8::Isolate*,
                                                         bool done,
                                                         v8::Local<v8::Value>);
 
 // Unpacks |result|, stores the value of "done" member to |done| and returns
 // the value of "value" member. Returns an empty handle when errored.
-CORE_EXPORT v8::MaybeLocal<v8::Value>
+CORE_EXPORT_N109 v8::MaybeLocal<v8::Value>
 V8UnpackIteratorResult(ScriptState*, v8::Local<v8::Object> result, bool* done);
 
 template <typename T>

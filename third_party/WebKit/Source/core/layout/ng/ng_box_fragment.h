@@ -14,7 +14,7 @@ namespace blink {
 
 struct NGLogicalSize;
 
-class CORE_EXPORT NGBoxFragment final : public NGFragment {
+class CORE_EXPORT_N2357 NGBoxFragment final : public NGFragment {
  public:
   NGBoxFragment(NGWritingMode writing_mode,
                 const NGPhysicalBoxFragment* physical_fragment)

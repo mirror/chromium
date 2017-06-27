@@ -253,9 +253,9 @@ bool operator!=(const PositionTemplate<Strategy>& a,
   return !(a == b);
 }
 
-CORE_EXPORT PositionInFlatTree ToPositionInFlatTree(const Position&);
-CORE_EXPORT Position ToPositionInDOMTree(const Position&);
-CORE_EXPORT Position ToPositionInDOMTree(const PositionInFlatTree&);
+CORE_EXPORT_N1798 PositionInFlatTree ToPositionInFlatTree(const Position&);
+CORE_EXPORT_N1799 Position ToPositionInDOMTree(const Position&);
+CORE_EXPORT_N1800 Position ToPositionInDOMTree(const PositionInFlatTree&);
 
 template <typename Strategy>
 PositionTemplate<Strategy> FromPositionInDOMTree(const Position&);
@@ -272,9 +272,9 @@ inline PositionInFlatTree FromPositionInDOMTree<EditingInFlatTreeStrategy>(
   return ToPositionInFlatTree(position);
 }
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, PositionAnchorType);
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const Position&);
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const PositionInFlatTree&);
+CORE_EXPORT_N1801 std::ostream& operator<<(std::ostream&, PositionAnchorType);
+CORE_EXPORT_N1802 std::ostream& operator<<(std::ostream&, const Position&);
+CORE_EXPORT_N1803 std::ostream& operator<<(std::ostream&, const PositionInFlatTree&);
 
 }  // namespace blink
 

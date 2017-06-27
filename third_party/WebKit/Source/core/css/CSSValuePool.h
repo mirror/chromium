@@ -44,7 +44,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSValuePool
+class CORE_EXPORT_N1500 CSSValuePool
     : public GarbageCollectedFinalized<CSSValuePool> {
   WTF_MAKE_NONCOPYABLE(CSSValuePool);
 
@@ -144,10 +144,10 @@ class CORE_EXPORT CSSValuePool
   FontFaceValueCache font_face_value_cache_;
   FontFamilyValueCache font_family_value_cache_;
 
-  friend CORE_EXPORT CSSValuePool& CssValuePool();
+  friend CORE_EXPORT_N1501 CSSValuePool& CssValuePool();
 };
 
-CORE_EXPORT CSSValuePool& CssValuePool();
+CORE_EXPORT_N1502 CSSValuePool& CssValuePool();
 
 }  // namespace blink
 

@@ -34,7 +34,7 @@ namespace blink {
 class Page;
 class PageVisibilityObserver;
 
-class CORE_EXPORT PageVisibilityNotifier
+class CORE_EXPORT_N2511 PageVisibilityNotifier
     : public LifecycleNotifier<Page, PageVisibilityObserver> {
  public:
   void NotifyPageVisibilityChanged();

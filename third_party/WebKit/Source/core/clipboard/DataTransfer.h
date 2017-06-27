@@ -50,7 +50,7 @@ class Node;
 // http://www.whatwg.org/specs/web-apps/current-work/multipage/dnd.html
 // Clipboard API (copy/paste):
 // http://dev.w3.org/2006/webapi/clipops/clipops.html
-class CORE_EXPORT DataTransfer final
+class CORE_EXPORT_N1467 DataTransfer final
     : public GarbageCollectedFinalized<DataTransfer>,
       public ScriptWrappable,
       public DataObject::Observer {

@@ -25,7 +25,7 @@ struct SizesCalcValue {
       : value(numeric_value), is_length(length), operation(0) {}
 };
 
-class CORE_EXPORT SizesCalcParser {
+class CORE_EXPORT_N1588 SizesCalcParser {
   STACK_ALLOCATED();
 
  public:

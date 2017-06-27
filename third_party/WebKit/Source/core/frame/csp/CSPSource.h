@@ -18,7 +18,7 @@ namespace blink {
 class ContentSecurityPolicy;
 class KURL;
 
-class CORE_EXPORT CSPSource : public GarbageCollectedFinalized<CSPSource> {
+class CORE_EXPORT_N2083 CSPSource : public GarbageCollectedFinalized<CSPSource> {
  public:
   enum WildcardDisposition { kNoWildcard, kHasWildcard };
 

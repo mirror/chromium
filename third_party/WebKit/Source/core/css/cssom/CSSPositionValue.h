@@ -13,7 +13,7 @@ namespace blink {
 
 class CSSNumericValue;
 
-class CORE_EXPORT CSSPositionValue final : public CSSStyleValue {
+class CORE_EXPORT_N1549 CSSPositionValue final : public CSSStyleValue {
   WTF_MAKE_NONCOPYABLE(CSSPositionValue);
   DEFINE_WRAPPERTYPEINFO();
 

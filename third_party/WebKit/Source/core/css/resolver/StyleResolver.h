@@ -68,7 +68,7 @@ using ActiveInterpolationsMap =
 
 // This class selects a ComputedStyle for a given element based on a collection
 // of stylesheets.
-class CORE_EXPORT StyleResolver final
+class CORE_EXPORT_N1597 StyleResolver final
     : public GarbageCollectedFinalized<StyleResolver> {
   WTF_MAKE_NONCOPYABLE(StyleResolver);
 

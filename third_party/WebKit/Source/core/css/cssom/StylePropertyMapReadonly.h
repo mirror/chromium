@@ -15,7 +15,7 @@
 
 namespace blink {
 
-class CORE_EXPORT StylePropertyMapReadonly
+class CORE_EXPORT_N1567 StylePropertyMapReadonly
     : public GarbageCollectedFinalized<StylePropertyMapReadonly>,
       public ScriptWrappable,
       public PairIterable<String, CSSStyleValueOrCSSStyleValueSequence> {

@@ -42,7 +42,7 @@ namespace blink {
 
 class WebSharedWorkerRepositoryClient;
 
-class CORE_EXPORT SharedWorkerRepositoryClientImpl final
+class CORE_EXPORT_N2000 SharedWorkerRepositoryClientImpl final
     : public SharedWorkerRepositoryClient {
   WTF_MAKE_NONCOPYABLE(SharedWorkerRepositoryClientImpl);
   USING_FAST_MALLOC(SharedWorkerRepositoryClientImpl);

@@ -35,7 +35,7 @@ namespace blink {
 
 namespace XPath {
 
-class CORE_EXPORT Number final : public Expression {
+class CORE_EXPORT_N2684 Number final : public Expression {
  public:
   explicit Number(double);
   DECLARE_VIRTUAL_TRACE();
@@ -47,7 +47,7 @@ class CORE_EXPORT Number final : public Expression {
   Value value_;
 };
 
-class CORE_EXPORT StringExpression final : public Expression {
+class CORE_EXPORT_N2685 StringExpression final : public Expression {
  public:
   explicit StringExpression(const String&);
   DECLARE_VIRTUAL_TRACE();

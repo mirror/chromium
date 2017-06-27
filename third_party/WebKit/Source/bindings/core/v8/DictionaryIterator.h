@@ -21,7 +21,7 @@ class Dictionary;
 class ExceptionState;
 class ExecutionContext;
 
-class CORE_EXPORT DictionaryIterator {
+class CORE_EXPORT_N18 DictionaryIterator {
   STACK_ALLOCATED();
 
  public:

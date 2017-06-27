@@ -81,7 +81,7 @@ enum InvalidationType { kInvalidateDescendants, kInvalidateSiblings };
 //   the SiblingInvalidationSet also holding descendants containing class v.
 //
 // We avoid virtual functions to minimize space consumption.
-class CORE_EXPORT InvalidationSet {
+class CORE_EXPORT_N1569 InvalidationSet {
   WTF_MAKE_NONCOPYABLE(InvalidationSet);
   USING_FAST_MALLOC_WITH_TYPE_NAME(blink::InvalidationSet);
 
@@ -219,7 +219,7 @@ class CORE_EXPORT InvalidationSet {
   unsigned is_alive_ : 1;
 };
 
-class CORE_EXPORT DescendantInvalidationSet final : public InvalidationSet {
+class CORE_EXPORT_N1570 DescendantInvalidationSet final : public InvalidationSet {
  public:
   static PassRefPtr<DescendantInvalidationSet> Create() {
     return AdoptRef(new DescendantInvalidationSet);
@@ -229,7 +229,7 @@ class CORE_EXPORT DescendantInvalidationSet final : public InvalidationSet {
   DescendantInvalidationSet() : InvalidationSet(kInvalidateDescendants) {}
 };
 
-class CORE_EXPORT SiblingInvalidationSet final : public InvalidationSet {
+class CORE_EXPORT_N1571 SiblingInvalidationSet final : public InvalidationSet {
  public:
   static PassRefPtr<SiblingInvalidationSet> Create(
       PassRefPtr<DescendantInvalidationSet> descendants) {

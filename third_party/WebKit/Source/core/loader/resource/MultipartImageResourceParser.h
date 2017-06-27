@@ -49,12 +49,12 @@
 namespace blink {
 
 // A parser parsing mlutipart/x-mixed-replace resource.
-class CORE_EXPORT MultipartImageResourceParser final
+class CORE_EXPORT_N2488 MultipartImageResourceParser final
     : public GarbageCollectedFinalized<MultipartImageResourceParser> {
   WTF_MAKE_NONCOPYABLE(MultipartImageResourceParser);
 
  public:
-  class CORE_EXPORT Client : public GarbageCollectedMixin {
+  class CORE_EXPORT_N2489 Client : public GarbageCollectedMixin {
    public:
     virtual ~Client() = default;
     virtual void OnePartInMultipartReceived(const ResourceResponse&) = 0;

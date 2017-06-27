@@ -35,7 +35,7 @@ namespace blink {
 
 class Element;
 
-class CORE_EXPORT LiveNodeList : public NodeList, public LiveNodeListBase {
+class CORE_EXPORT_N1662 LiveNodeList : public NodeList, public LiveNodeListBase {
   USING_GARBAGE_COLLECTED_MIXIN(LiveNodeList);
 
  public:

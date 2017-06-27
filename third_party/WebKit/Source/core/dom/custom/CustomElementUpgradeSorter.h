@@ -15,7 +15,7 @@ class Node;
 
 // Does a shadow-including tree order sort of a subset of elements.
 // https://dom.spec.whatwg.org/#concept-shadow-including-tree-order
-class CORE_EXPORT CustomElementUpgradeSorter {
+class CORE_EXPORT_N1736 CustomElementUpgradeSorter {
   STACK_ALLOCATED();
 
  public:

@@ -38,7 +38,7 @@ namespace blink {
 class ContainerNode;
 class Range;
 
-class CORE_EXPORT PlainTextRange {
+class CORE_EXPORT_N1797 PlainTextRange {
   STACK_ALLOCATED();
 
  public:

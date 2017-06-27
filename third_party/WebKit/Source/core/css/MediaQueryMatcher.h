@@ -38,7 +38,7 @@ class MediaQuerySet;
 // query has changed. The listeners must be called in the very same order in
 // which they have been added.
 
-class CORE_EXPORT MediaQueryMatcher final
+class CORE_EXPORT_N1513 MediaQueryMatcher final
     : public GarbageCollectedFinalized<MediaQueryMatcher> {
   WTF_MAKE_NONCOPYABLE(MediaQueryMatcher);
 

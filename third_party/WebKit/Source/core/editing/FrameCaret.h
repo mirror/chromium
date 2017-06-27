@@ -49,7 +49,7 @@ struct PaintInvalidatorContext;
 
 enum class CaretVisibility { kVisible, kHidden };
 
-class CORE_EXPORT FrameCaret final
+class CORE_EXPORT_N1794 FrameCaret final
     : public GarbageCollectedFinalized<FrameCaret> {
  public:
   FrameCaret(LocalFrame&, const SelectionEditor&);

@@ -19,7 +19,7 @@ enum class ModuleGraphLevel;
 class ModuleScript;
 
 // ModuleTreeLinkerRegistry keeps active ModuleTreeLinkers alive.
-class CORE_EXPORT ModuleTreeLinkerRegistry
+class CORE_EXPORT_N2479 ModuleTreeLinkerRegistry
     : public GarbageCollected<ModuleTreeLinkerRegistry> {
  public:
   static ModuleTreeLinkerRegistry* Create() {

@@ -21,11 +21,11 @@ namespace blink {
 
 // Note that passed string must outlive the resulting StringView. This implies
 // it must not be a temporary object.
-CORE_EXPORT v8_inspector::StringView ToV8InspectorStringView(const StringView&);
-CORE_EXPORT std::unique_ptr<v8_inspector::StringBuffer>
+CORE_EXPORT_N2282 v8_inspector::StringView ToV8InspectorStringView(const StringView&);
+CORE_EXPORT_N2283 std::unique_ptr<v8_inspector::StringBuffer>
 ToV8InspectorStringBuffer(const StringView&);
-CORE_EXPORT String ToCoreString(const v8_inspector::StringView&);
-CORE_EXPORT String ToCoreString(std::unique_ptr<v8_inspector::StringBuffer>);
+CORE_EXPORT_N2284 String ToCoreString(const v8_inspector::StringView&);
+CORE_EXPORT_N2285 String ToCoreString(std::unique_ptr<v8_inspector::StringBuffer>);
 
 namespace protocol {
 
@@ -34,7 +34,7 @@ class Value;
 using String = WTF::String;
 using StringBuilder = WTF::StringBuilder;
 
-class CORE_EXPORT StringUtil {
+class CORE_EXPORT_N2286 StringUtil {
   STATIC_ONLY(StringUtil);
 
  public:

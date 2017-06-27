@@ -12,7 +12,7 @@ namespace blink {
 
 class CSSParserToken;
 
-class CORE_EXPORT MediaQueryBlockWatcher {
+class CORE_EXPORT_N1585 MediaQueryBlockWatcher {
   STACK_ALLOCATED();
 
  public:

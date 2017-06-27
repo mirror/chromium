@@ -27,7 +27,7 @@ class AutoplayPolicy final : public GarbageCollected<AutoplayPolicy> {
     kUserGestureRequiredForCrossOrigin,
   };
 
-  CORE_EXPORT static Type GetAutoplayPolicyForDocument(const Document&);
+  CORE_EXPORT_N2188 static Type GetAutoplayPolicyForDocument(const Document&);
 
   explicit AutoplayPolicy(HTMLMediaElement*);
 

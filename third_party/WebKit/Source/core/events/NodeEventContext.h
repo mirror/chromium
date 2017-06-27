@@ -38,7 +38,7 @@ class EventTarget;
 class Node;
 class TouchEventContext;
 
-class CORE_EXPORT NodeEventContext {
+class CORE_EXPORT_N1981 NodeEventContext {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

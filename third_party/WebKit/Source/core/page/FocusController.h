@@ -49,7 +49,7 @@ class Node;
 class Page;
 class RemoteFrame;
 
-class CORE_EXPORT FocusController final
+class CORE_EXPORT_N2504 FocusController final
     : public GarbageCollected<FocusController> {
   WTF_MAKE_NONCOPYABLE(FocusController);
 

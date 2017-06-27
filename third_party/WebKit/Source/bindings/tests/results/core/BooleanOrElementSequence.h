@@ -23,7 +23,7 @@ namespace blink {
 
 class Element;
 
-class CORE_EXPORT BooleanOrElementSequence final {
+class CORE_EXPORT_N131 BooleanOrElementSequence final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   BooleanOrElementSequence();
@@ -55,15 +55,15 @@ class CORE_EXPORT BooleanOrElementSequence final {
   bool m_boolean;
   HeapVector<Member<Element>> m_elementSequence;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const BooleanOrElementSequence&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N132 v8::Local<v8::Value> ToV8(const BooleanOrElementSequence&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8BooleanOrElementSequence final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, BooleanOrElementSequence&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N133 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, BooleanOrElementSequence&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const BooleanOrElementSequence&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N134 v8::Local<v8::Value> ToV8(const BooleanOrElementSequence&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, BooleanOrElementSequence& impl) {
@@ -77,7 +77,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, BooleanOrElementS
 
 template <>
 struct NativeValueTraits<BooleanOrElementSequence> : public NativeValueTraitsBase<BooleanOrElementSequence> {
-  CORE_EXPORT static BooleanOrElementSequence NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N135 static BooleanOrElementSequence NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

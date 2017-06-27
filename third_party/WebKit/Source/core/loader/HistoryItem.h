@@ -45,7 +45,7 @@ class KURL;
 class ResourceRequest;
 enum class WebCachePolicy;
 
-class CORE_EXPORT HistoryItem final
+class CORE_EXPORT_N2457 HistoryItem final
     : public GarbageCollectedFinalized<HistoryItem> {
  public:
   static HistoryItem* Create() { return new HistoryItem; }

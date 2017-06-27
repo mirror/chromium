@@ -174,7 +174,7 @@ class ClipRectsContext {
 // #container and #fixed are siblings in the paint tree but #container does
 // clip #fixed. This is the reason why we compute the painting clip rects during
 // a layout tree walk and cache them for painting.
-class CORE_EXPORT PaintLayerClipper {
+class CORE_EXPORT_N2541 PaintLayerClipper {
   DISALLOW_NEW();
 
  public:

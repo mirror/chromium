@@ -15,7 +15,7 @@ class SkImage;
 
 namespace blink {
 
-class CORE_EXPORT CanvasDrawListener : public GarbageCollectedMixin {
+class CORE_EXPORT_N2165 CanvasDrawListener : public GarbageCollectedMixin {
  public:
   virtual ~CanvasDrawListener();
   virtual void SendNewFrame(sk_sp<SkImage>);

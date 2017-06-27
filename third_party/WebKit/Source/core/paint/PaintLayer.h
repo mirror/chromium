@@ -84,7 +84,7 @@ enum CompositingQueryMode {
 };
 
 // FIXME: remove this once the compositing query DCHECKS are no longer hit.
-class CORE_EXPORT DisableCompositingQueryAsserts {
+class CORE_EXPORT_N2537 DisableCompositingQueryAsserts {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(DisableCompositingQueryAsserts);
 
@@ -217,7 +217,7 @@ struct PaintLayerRareData {
 // A good example of this is PaintLayerScrollableArea, which can only happen
 // be instanciated for LayoutBoxes. With the current design, it's hard to know
 // that by reading the code.
-class CORE_EXPORT PaintLayer : public DisplayItemClient {
+class CORE_EXPORT_N2538 PaintLayer : public DisplayItemClient {
   WTF_MAKE_NONCOPYABLE(PaintLayer);
 
  public:
@@ -1287,8 +1287,8 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
 
 #ifndef NDEBUG
 // Outside the WebCore namespace for ease of invocation from gdb.
-CORE_EXPORT void showLayerTree(const blink::PaintLayer*);
-CORE_EXPORT void showLayerTree(const blink::LayoutObject*);
+CORE_EXPORT_N2539 void showLayerTree(const blink::PaintLayer*);
+CORE_EXPORT_N2540 void showLayerTree(const blink::LayoutObject*);
 #endif
 
 #endif  // Layer_h

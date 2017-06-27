@@ -45,7 +45,7 @@ class TransformState;
 
 // Can be used while walking the layout tree to cache data about offsets and
 // transforms.
-class CORE_EXPORT LayoutGeometryMap {
+class CORE_EXPORT_N2302 LayoutGeometryMap {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(LayoutGeometryMap);
 

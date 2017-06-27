@@ -32,7 +32,7 @@ namespace blink {
 
 class FormControlState;
 
-class CORE_EXPORT HTMLFormControlElementWithState
+class CORE_EXPORT_N2111 HTMLFormControlElementWithState
     : public HTMLFormControlElement {
  public:
   ~HTMLFormControlElementWithState() override;

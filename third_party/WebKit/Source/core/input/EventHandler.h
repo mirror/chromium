@@ -76,7 +76,7 @@ class WebMouseEvent;
 class WebMouseWheelEvent;
 class WebTouchEvent;
 
-class CORE_EXPORT EventHandler final
+class CORE_EXPORT_N2238 EventHandler final
     : public GarbageCollectedFinalized<EventHandler> {
   WTF_MAKE_NONCOPYABLE(EventHandler);
 

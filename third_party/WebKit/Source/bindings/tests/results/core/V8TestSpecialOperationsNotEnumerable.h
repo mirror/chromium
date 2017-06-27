@@ -28,14 +28,14 @@ namespace blink {
 class V8TestSpecialOperationsNotEnumerable {
   STATIC_ONLY(V8TestSpecialOperationsNotEnumerable);
  public:
-  CORE_EXPORT static bool hasInstance(v8::Local<v8::Value>, v8::Isolate*);
+  CORE_EXPORT_N1380 static bool hasInstance(v8::Local<v8::Value>, v8::Isolate*);
   static v8::Local<v8::Object> findInstanceInPrototypeChain(v8::Local<v8::Value>, v8::Isolate*);
-  CORE_EXPORT static v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate*, const DOMWrapperWorld&);
+  CORE_EXPORT_N1381 static v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate*, const DOMWrapperWorld&);
   static TestSpecialOperationsNotEnumerable* toImpl(v8::Local<v8::Object> object) {
     return ToScriptWrappable(object)->ToImpl<TestSpecialOperationsNotEnumerable>();
   }
-  CORE_EXPORT static TestSpecialOperationsNotEnumerable* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N1382 static TestSpecialOperationsNotEnumerable* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
+  CORE_EXPORT_N1383 static const WrapperTypeInfo wrapperTypeInfo;
   static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
     visitor->Trace(scriptWrappable->ToImpl<TestSpecialOperationsNotEnumerable>());
   }
@@ -46,13 +46,13 @@ class V8TestSpecialOperationsNotEnumerable {
 
   // Callback functions
 
-  CORE_EXPORT static void namedPropertyGetterCallback(v8::Local<v8::Name>, const v8::PropertyCallbackInfo<v8::Value>&);
-  CORE_EXPORT static void indexedPropertyGetterCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N1384 static void namedPropertyGetterCallback(v8::Local<v8::Name>, const v8::PropertyCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N1385 static void indexedPropertyGetterCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>&);
 };
 
 template <>
 struct NativeValueTraits<TestSpecialOperationsNotEnumerable> : public NativeValueTraitsBase<TestSpecialOperationsNotEnumerable> {
-  CORE_EXPORT static TestSpecialOperationsNotEnumerable* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N1386 static TestSpecialOperationsNotEnumerable* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

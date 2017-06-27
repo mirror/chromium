@@ -23,7 +23,7 @@ namespace blink {
 
 class TestCallbackInterface;
 
-class CORE_EXPORT UnsignedLongLongOrBooleanOrTestCallbackInterface final {
+class CORE_EXPORT_N259 UnsignedLongLongOrBooleanOrTestCallbackInterface final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   UnsignedLongLongOrBooleanOrTestCallbackInterface();
@@ -62,15 +62,15 @@ class CORE_EXPORT UnsignedLongLongOrBooleanOrTestCallbackInterface final {
   Member<TestCallbackInterface> m_testCallbackInterface;
   uint64_t m_unsignedLongLong;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const UnsignedLongLongOrBooleanOrTestCallbackInterface&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N260 v8::Local<v8::Value> ToV8(const UnsignedLongLongOrBooleanOrTestCallbackInterface&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8UnsignedLongLongOrBooleanOrTestCallbackInterface final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, UnsignedLongLongOrBooleanOrTestCallbackInterface&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N261 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, UnsignedLongLongOrBooleanOrTestCallbackInterface&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const UnsignedLongLongOrBooleanOrTestCallbackInterface&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N262 v8::Local<v8::Value> ToV8(const UnsignedLongLongOrBooleanOrTestCallbackInterface&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, UnsignedLongLongOrBooleanOrTestCallbackInterface& impl) {
@@ -84,7 +84,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, UnsignedLongLongO
 
 template <>
 struct NativeValueTraits<UnsignedLongLongOrBooleanOrTestCallbackInterface> : public NativeValueTraitsBase<UnsignedLongLongOrBooleanOrTestCallbackInterface> {
-  CORE_EXPORT static UnsignedLongLongOrBooleanOrTestCallbackInterface NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N263 static UnsignedLongLongOrBooleanOrTestCallbackInterface NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

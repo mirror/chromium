@@ -31,14 +31,14 @@ class WebTaskRunner;
 // A SingleModuleClient is notified when single module script node (node as in a
 // module tree graph) load is complete and its corresponding entry is created in
 // module map.
-class CORE_EXPORT SingleModuleClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N1665 SingleModuleClient : public GarbageCollectedMixin {
  public:
   virtual void NotifyModuleLoadFinished(ModuleScript*) = 0;
 };
 
 // A ModuleTreeClient is notified when a module script and its whole descendent
 // tree load is complete.
-class CORE_EXPORT ModuleTreeClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N1666 ModuleTreeClient : public GarbageCollectedMixin {
  public:
   virtual void NotifyModuleTreeLoadFinished(ModuleScript*) = 0;
 };
@@ -52,7 +52,7 @@ enum class ModuleGraphLevel { kTopLevelModuleFetch, kDependentModuleFetch };
 // https://html.spec.whatwg.org/#environment-settings-object
 //
 // A Modulator also serves as an entry point for various module spec algorithms.
-class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
+class CORE_EXPORT_N1667 Modulator : public GarbageCollectedFinalized<Modulator>,
                               public V8PerContextData::Data,
                               public TraceWrapperBase {
   USING_GARBAGE_COLLECTED_MIXIN(Modulator);

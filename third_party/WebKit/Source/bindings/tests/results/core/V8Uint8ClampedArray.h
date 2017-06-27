@@ -31,9 +31,9 @@ namespace blink {
 class V8Uint8ClampedArray {
   STATIC_ONLY(V8Uint8ClampedArray);
  public:
-  CORE_EXPORT static TestUint8ClampedArray* toImpl(v8::Local<v8::Object> object);
-  CORE_EXPORT static TestUint8ClampedArray* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N1411 static TestUint8ClampedArray* toImpl(v8::Local<v8::Object> object);
+  CORE_EXPORT_N1412 static TestUint8ClampedArray* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
+  CORE_EXPORT_N1413 static const WrapperTypeInfo wrapperTypeInfo;
   static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
     visitor->Trace(scriptWrappable->ToImpl<TestUint8ClampedArray>());
   }
@@ -47,7 +47,7 @@ class V8Uint8ClampedArray {
 
 template <>
 struct NativeValueTraits<TestUint8ClampedArray> : public NativeValueTraitsBase<TestUint8ClampedArray> {
-  CORE_EXPORT static TestUint8ClampedArray* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N1414 static TestUint8ClampedArray* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

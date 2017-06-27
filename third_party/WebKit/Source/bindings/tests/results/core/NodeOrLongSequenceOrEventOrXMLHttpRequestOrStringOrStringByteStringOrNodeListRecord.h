@@ -26,7 +26,7 @@ class Event;
 class Node;
 class XMLHttpRequest;
 
-class CORE_EXPORT NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord final {
+class CORE_EXPORT_N198 NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord();
@@ -86,15 +86,15 @@ class CORE_EXPORT NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteS
   HeapVector<std::pair<String, ByteStringOrNodeList>> m_stringByteStringOrNodeListRecord;
   Member<XMLHttpRequest> m_xmlHttpRequest;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N199 v8::Local<v8::Value> ToV8(const NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N200 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N201 v8::Local<v8::Value> ToV8(const NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord& impl) {
@@ -108,7 +108,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, NodeOrLongSequenc
 
 template <>
 struct NativeValueTraits<NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord> : public NativeValueTraitsBase<NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord> {
-  CORE_EXPORT static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N202 static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

@@ -37,7 +37,7 @@ class HTMLDocument;
 class LocalDOMWindow;
 class XMLDocument;
 
-class CORE_EXPORT DOMImplementation final
+class CORE_EXPORT_N1640 DOMImplementation final
     : public GarbageCollected<DOMImplementation>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

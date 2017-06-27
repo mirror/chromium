@@ -28,7 +28,7 @@ namespace blink {
 //    ExecutionContext state. When the ExecutionContext is suspended,
 //    resolve or reject will be delayed. When it is stopped, resolve or reject
 //    will be ignored.
-class CORE_EXPORT ScriptPromiseResolver
+class CORE_EXPORT_N56 ScriptPromiseResolver
     : public GarbageCollectedFinalized<ScriptPromiseResolver>,
       public SuspendableObject {
   USING_GARBAGE_COLLECTED_MIXIN(ScriptPromiseResolver);

@@ -24,7 +24,7 @@ class ExceptionState;
 class ScriptState;
 class ScriptValue;
 
-class CORE_EXPORT ScriptCustomElementDefinitionBuilder
+class CORE_EXPORT_N50 ScriptCustomElementDefinitionBuilder
     : public CustomElementDefinitionBuilder {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(ScriptCustomElementDefinitionBuilder);

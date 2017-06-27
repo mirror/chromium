@@ -21,7 +21,7 @@ class ScriptSourceCode;
 class ScriptState;
 class WebScriptExecutionCallback;
 
-class CORE_EXPORT SuspendableScriptExecutor final
+class CORE_EXPORT_N2071 SuspendableScriptExecutor final
     : public GarbageCollectedFinalized<SuspendableScriptExecutor>,
       public SuspendableTimer {
   USING_GARBAGE_COLLECTED_MIXIN(SuspendableScriptExecutor);

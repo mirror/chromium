@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT NavigatorConcurrentHardware {
+class CORE_EXPORT_N2050 NavigatorConcurrentHardware {
  public:
   unsigned hardwareConcurrency() const;
 };

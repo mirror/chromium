@@ -28,9 +28,9 @@ namespace blink {
 class V8ArrayBuffer {
   STATIC_ONLY(V8ArrayBuffer);
  public:
-  CORE_EXPORT static TestArrayBuffer* toImpl(v8::Local<v8::Object> object);
-  CORE_EXPORT static TestArrayBuffer* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N264 static TestArrayBuffer* toImpl(v8::Local<v8::Object> object);
+  CORE_EXPORT_N265 static TestArrayBuffer* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
+  CORE_EXPORT_N266 static const WrapperTypeInfo wrapperTypeInfo;
   static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
     visitor->Trace(scriptWrappable->ToImpl<TestArrayBuffer>());
   }
@@ -41,12 +41,12 @@ class V8ArrayBuffer {
 
   // Callback functions
 
-  CORE_EXPORT static void byteLengthAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N267 static void byteLengthAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
 };
 
 template <>
 struct NativeValueTraits<TestArrayBuffer> : public NativeValueTraitsBase<TestArrayBuffer> {
-  CORE_EXPORT static TestArrayBuffer* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N268 static TestArrayBuffer* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

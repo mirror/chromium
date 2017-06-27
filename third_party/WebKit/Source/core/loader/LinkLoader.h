@@ -52,7 +52,7 @@ struct ViewportDescriptionWrapper;
 
 // The LinkLoader can load link rel types icon, dns-prefetch, subresource,
 // prefetch and prerender.
-class CORE_EXPORT LinkLoader final
+class CORE_EXPORT_N2459 LinkLoader final
     : public GarbageCollectedFinalized<LinkLoader>,
       public ResourceOwner<Resource, ResourceClient>,
       public PrerenderClient {

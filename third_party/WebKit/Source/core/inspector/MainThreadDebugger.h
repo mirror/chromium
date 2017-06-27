@@ -47,7 +47,7 @@ class LocalFrame;
 class SecurityOrigin;
 class SourceLocation;
 
-class CORE_EXPORT MainThreadDebugger final : public ThreadDebugger {
+class CORE_EXPORT_N2280 MainThreadDebugger final : public ThreadDebugger {
   WTF_MAKE_NONCOPYABLE(MainThreadDebugger);
 
  public:

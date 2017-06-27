@@ -11,7 +11,7 @@
 namespace blink {
 
 // The V8 settings that are passed from the main isolate to the worker isolate.
-struct CORE_EXPORT WorkerV8Settings {
+struct CORE_EXPORT_N118 WorkerV8Settings {
   enum class HeapLimitMode { kDefault, kIncreasedForDebugging };
   enum class AtomicsWaitMode { kDisallow, kAllow };
   WorkerV8Settings(HeapLimitMode heap_limit_mode,

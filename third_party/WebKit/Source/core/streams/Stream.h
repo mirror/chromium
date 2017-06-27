@@ -41,7 +41,7 @@ namespace blink {
 
 class ExecutionContext;
 
-class CORE_EXPORT Stream final : public GarbageCollectedFinalized<Stream>,
+class CORE_EXPORT_N2576 Stream final : public GarbageCollectedFinalized<Stream>,
                                  public SuspendableObject {
   USING_GARBAGE_COLLECTED_MIXIN(Stream);
 

@@ -70,16 +70,16 @@ enum MediaControlElementType {
   kMediaDownloadButton,
 };
 
-CORE_EXPORT const HTMLMediaElement* ToParentMediaElement(const Node*);
-CORE_EXPORT const HTMLMediaElement* ToParentMediaElement(const LayoutObject&);
+CORE_EXPORT_N2217 const HTMLMediaElement* ToParentMediaElement(const Node*);
+CORE_EXPORT_N2218 const HTMLMediaElement* ToParentMediaElement(const LayoutObject&);
 
-CORE_EXPORT MediaControlElementType GetMediaControlElementType(const Node*);
+CORE_EXPORT_N2219 MediaControlElementType GetMediaControlElementType(const Node*);
 
 // ----------------------------
 
 // TODO(mustaq): The Media control elements that use MouseEvents should be
 // ported to use PointerEvents instead.
-class CORE_EXPORT MediaControlElement : public GarbageCollectedMixin {
+class CORE_EXPORT_N2220 MediaControlElement : public GarbageCollectedMixin {
  public:
   // These hold the state about whether this control should be shown if
   // space permits.  These will also show / hide as needed.
@@ -151,7 +151,7 @@ class CORE_EXPORT MediaControlElement : public GarbageCollectedMixin {
 
 // ----------------------------
 
-class CORE_EXPORT MediaControlDivElement : public HTMLDivElement,
+class CORE_EXPORT_N2221 MediaControlDivElement : public HTMLDivElement,
                                            public MediaControlElement {
   USING_GARBAGE_COLLECTED_MIXIN(MediaControlDivElement);
 
@@ -167,7 +167,7 @@ class CORE_EXPORT MediaControlDivElement : public HTMLDivElement,
 
 // ----------------------------
 
-class CORE_EXPORT MediaControlInputElement : public HTMLInputElement,
+class CORE_EXPORT_N2222 MediaControlInputElement : public HTMLInputElement,
                                              public MediaControlElement {
   USING_GARBAGE_COLLECTED_MIXIN(MediaControlInputElement);
 
@@ -193,7 +193,7 @@ class CORE_EXPORT MediaControlInputElement : public HTMLInputElement,
 
 // ----------------------------
 
-class CORE_EXPORT MediaControlTimeDisplayElement
+class CORE_EXPORT_N2223 MediaControlTimeDisplayElement
     : public MediaControlDivElement {
  public:
   void SetCurrentValue(double);

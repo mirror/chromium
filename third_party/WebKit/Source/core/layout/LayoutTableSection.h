@@ -101,7 +101,7 @@ class LayoutTableRow;
 // LayoutTableCells (see layoutRows()). However it is not their containing
 // block, the enclosing LayoutTable (this object's parent()) is. This is why
 // this class inherits from LayoutTableBoxComponent and not LayoutBlock.
-class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
+class CORE_EXPORT_N2322 LayoutTableSection final : public LayoutTableBoxComponent {
  public:
   explicit LayoutTableSection(Element*);
   ~LayoutTableSection() override;

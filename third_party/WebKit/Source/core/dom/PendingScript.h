@@ -40,7 +40,7 @@ namespace blink {
 class Document;
 class PendingScript;
 
-class CORE_EXPORT PendingScriptClient : public GarbageCollectedMixin {
+class CORE_EXPORT_N1681 PendingScriptClient : public GarbageCollectedMixin {
  public:
   virtual ~PendingScriptClient() {}
 
@@ -56,7 +56,7 @@ class CORE_EXPORT PendingScriptClient : public GarbageCollectedMixin {
 // A container for an external script which may be loaded and executed.
 // This is used to receive a notification of "script is ready"
 // https://html.spec.whatwg.org/#the-script-is-ready via PendingScriptClient.
-class CORE_EXPORT PendingScript
+class CORE_EXPORT_N1682 PendingScript
     : public GarbageCollectedFinalized<PendingScript> {
   WTF_MAKE_NONCOPYABLE(PendingScript);
 

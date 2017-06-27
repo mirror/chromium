@@ -14,7 +14,7 @@ namespace blink {
 class CustomElementDefinition;
 class Element;
 
-class CORE_EXPORT CustomElementReaction
+class CORE_EXPORT_N1730 CustomElementReaction
     : public GarbageCollectedFinalized<CustomElementReaction> {
   WTF_MAKE_NONCOPYABLE(CustomElementReaction);
 

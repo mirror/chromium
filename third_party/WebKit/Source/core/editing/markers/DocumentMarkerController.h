@@ -43,7 +43,7 @@ namespace blink {
 class DocumentMarkerList;
 class Node;
 
-class CORE_EXPORT DocumentMarkerController final
+class CORE_EXPORT_N1946 DocumentMarkerController final
     : public GarbageCollected<DocumentMarkerController>,
       public SynchronousMutationObserver {
   WTF_MAKE_NONCOPYABLE(DocumentMarkerController);

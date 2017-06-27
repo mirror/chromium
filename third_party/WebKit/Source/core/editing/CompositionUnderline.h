@@ -34,7 +34,7 @@ namespace blink {
 
 struct WebCompositionUnderline;
 
-class CORE_EXPORT CompositionUnderline {
+class CORE_EXPORT_N1746 CompositionUnderline {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

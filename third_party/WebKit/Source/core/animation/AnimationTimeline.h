@@ -51,7 +51,7 @@ class AnimationEffectReadOnly;
 
 // AnimationTimeline is constructed and owned by Document, and tied to its
 // lifecycle.
-class CORE_EXPORT AnimationTimeline
+class CORE_EXPORT_N1436 AnimationTimeline
     : public GarbageCollectedFinalized<AnimationTimeline>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

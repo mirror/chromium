@@ -38,7 +38,7 @@ namespace blink {
 
 class AssignedNodesOptions;
 
-class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
+class CORE_EXPORT_N2138 HTMLSlotElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

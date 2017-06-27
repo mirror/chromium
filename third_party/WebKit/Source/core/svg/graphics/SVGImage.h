@@ -55,7 +55,7 @@ class SVGImageForContainer;
 // SVGImage would use a lighter container around an SVGDocument that does not
 // have the full Page machinery but still has the sandboxing security guarantees
 // needed by SVGImage.
-class CORE_EXPORT SVGImage final : public Image {
+class CORE_EXPORT_N2618 SVGImage final : public Image {
  public:
   static PassRefPtr<SVGImage> Create(ImageObserver* observer) {
     return AdoptRef(new SVGImage(observer));

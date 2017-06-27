@@ -21,7 +21,7 @@ class CSSTokenizerInputStream;
 class CSSParserObserverWrapper;
 class CSSParserTokenRange;
 
-class CORE_EXPORT CSSTokenizer {
+class CORE_EXPORT_N1583 CSSTokenizer {
   WTF_MAKE_NONCOPYABLE(CSSTokenizer);
   DISALLOW_NEW();
 

@@ -40,13 +40,13 @@ class KURL;
 class SecurityOrigin;
 class URLRegistry;
 
-class CORE_EXPORT URLRegistrable {
+class CORE_EXPORT_N2162 URLRegistrable {
  public:
   virtual ~URLRegistrable() {}
   virtual URLRegistry& Registry() const = 0;
 };
 
-class CORE_EXPORT URLRegistry {
+class CORE_EXPORT_N2163 URLRegistry {
   USING_FAST_MALLOC(URLRegistry);
 
  public:

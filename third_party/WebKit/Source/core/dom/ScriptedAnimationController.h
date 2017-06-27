@@ -42,7 +42,7 @@ class EventTarget;
 class FrameRequestCallback;
 class MediaQueryListListener;
 
-class CORE_EXPORT ScriptedAnimationController
+class CORE_EXPORT_N1694 ScriptedAnimationController
     : public GarbageCollectedFinalized<ScriptedAnimationController> {
  public:
   static ScriptedAnimationController* Create(Document* document) {

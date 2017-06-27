@@ -23,7 +23,7 @@ namespace blink {
 
 class TestInterfaceGarbageCollected;
 
-class CORE_EXPORT TestInterfaceGarbageCollectedOrString final {
+class CORE_EXPORT_N238 TestInterfaceGarbageCollectedOrString final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestInterfaceGarbageCollectedOrString();
@@ -55,15 +55,15 @@ class CORE_EXPORT TestInterfaceGarbageCollectedOrString final {
   String m_string;
   Member<TestInterfaceGarbageCollected> m_testInterfaceGarbageCollected;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const TestInterfaceGarbageCollectedOrString&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N239 v8::Local<v8::Value> ToV8(const TestInterfaceGarbageCollectedOrString&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8TestInterfaceGarbageCollectedOrString final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestInterfaceGarbageCollectedOrString&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N240 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestInterfaceGarbageCollectedOrString&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const TestInterfaceGarbageCollectedOrString&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N241 v8::Local<v8::Value> ToV8(const TestInterfaceGarbageCollectedOrString&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestInterfaceGarbageCollectedOrString& impl) {
@@ -77,7 +77,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestInterfaceGarb
 
 template <>
 struct NativeValueTraits<TestInterfaceGarbageCollectedOrString> : public NativeValueTraitsBase<TestInterfaceGarbageCollectedOrString> {
-  CORE_EXPORT static TestInterfaceGarbageCollectedOrString NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N242 static TestInterfaceGarbageCollectedOrString NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

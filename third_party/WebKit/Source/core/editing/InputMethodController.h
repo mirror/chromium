@@ -44,7 +44,7 @@ class Editor;
 class LocalFrame;
 class Range;
 
-class CORE_EXPORT InputMethodController final
+class CORE_EXPORT_N1796 InputMethodController final
     : public GarbageCollectedFinalized<InputMethodController>,
       public SynchronousMutationObserver {
   WTF_MAKE_NONCOPYABLE(InputMethodController);

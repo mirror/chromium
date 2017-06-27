@@ -14,7 +14,7 @@ namespace blink {
 class GraphicsContext;
 class AffineTransform;
 
-class CORE_EXPORT TransformRecorder {
+class CORE_EXPORT_N2564 TransformRecorder {
   STACK_ALLOCATED();
 
  public:

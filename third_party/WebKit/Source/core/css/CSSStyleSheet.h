@@ -42,7 +42,7 @@ class MediaQuerySet;
 class SecurityOrigin;
 class StyleSheetContents;
 
-class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
+class CORE_EXPORT_N1494 CSSStyleSheet final : public StyleSheet {
   DEFINE_WRAPPERTYPEINFO();
   WTF_MAKE_NONCOPYABLE(CSSStyleSheet);
 

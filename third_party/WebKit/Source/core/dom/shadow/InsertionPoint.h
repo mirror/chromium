@@ -39,7 +39,7 @@
 
 namespace blink {
 
-class CORE_EXPORT InsertionPoint : public HTMLElement {
+class CORE_EXPORT_N1742 InsertionPoint : public HTMLElement {
  public:
   ~InsertionPoint() override;
 

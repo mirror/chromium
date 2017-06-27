@@ -31,7 +31,7 @@ enum SelectionState {
 #undef V
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const SelectionState);
+CORE_EXPORT_N2340 std::ostream& operator<<(std::ostream&, const SelectionState);
 
 }  // namespace blink
 

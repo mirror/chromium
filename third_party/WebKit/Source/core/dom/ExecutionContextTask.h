@@ -40,7 +40,7 @@ namespace blink {
 
 class ExecutionContext;
 
-class CORE_EXPORT ExecutionContextTask {
+class CORE_EXPORT_N1652 ExecutionContextTask {
   WTF_MAKE_NONCOPYABLE(ExecutionContextTask);
   USING_FAST_MALLOC(ExecutionContextTask);
 

@@ -93,7 +93,7 @@ struct WebPoint;
 struct WebScreenInfo;
 struct WindowFeatures;
 
-class CORE_EXPORT ChromeClient : public PlatformChromeClient {
+class CORE_EXPORT_N2499 ChromeClient : public PlatformChromeClient {
  public:
   virtual void ChromeDestroyed() = 0;
 

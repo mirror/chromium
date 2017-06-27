@@ -15,7 +15,7 @@ class Element;
 class ImageLoader;
 class ImageResourceContent;
 
-class CORE_EXPORT ImageElementBase : public CanvasImageSource,
+class CORE_EXPORT_N2171 ImageElementBase : public CanvasImageSource,
                                      public ImageBitmapSource {
  public:
   virtual ImageLoader& GetImageLoader() const = 0;

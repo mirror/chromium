@@ -15,7 +15,7 @@ namespace blink {
 class ExceptionState;
 class UnrestrictedDoubleOrString;
 
-class CORE_EXPORT AnimationEffectTiming : public AnimationEffectTimingReadOnly {
+class CORE_EXPORT_N1433 AnimationEffectTiming : public AnimationEffectTimingReadOnly {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

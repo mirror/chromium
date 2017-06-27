@@ -13,7 +13,7 @@ namespace blink {
 
 class NetworkHintsInterface;
 
-class CORE_EXPORT ResourcePreloader {
+class CORE_EXPORT_N2215 ResourcePreloader {
  public:
   virtual void TakeAndPreload(PreloadRequestStream&);
 

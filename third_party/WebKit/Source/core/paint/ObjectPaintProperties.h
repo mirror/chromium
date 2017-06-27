@@ -36,7 +36,7 @@ namespace blink {
 // create-or-update pattern of re-using existing properties for efficiency:
 // 1. It avoids extra allocations.
 // 2. It preserves existing child->parent pointers.
-class CORE_EXPORT ObjectPaintProperties {
+class CORE_EXPORT_N2534 ObjectPaintProperties {
   WTF_MAKE_NONCOPYABLE(ObjectPaintProperties);
   USING_FAST_MALLOC(ObjectPaintProperties);
 

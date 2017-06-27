@@ -28,7 +28,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SVGAElement final : public SVGGraphicsElement,
+class CORE_EXPORT_N2601 SVGAElement final : public SVGGraphicsElement,
                                       public SVGURIReference {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(SVGAElement);

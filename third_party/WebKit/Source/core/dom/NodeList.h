@@ -31,7 +31,7 @@ namespace blink {
 
 class Node;
 
-class CORE_EXPORT NodeList : public GarbageCollectedFinalized<NodeList>,
+class CORE_EXPORT_N1676 NodeList : public GarbageCollectedFinalized<NodeList>,
                              public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

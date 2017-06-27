@@ -57,7 +57,7 @@ class WebBlobInfo;
 typedef HashMap<String, RefPtr<BlobDataHandle>> BlobDataHandleMap;
 typedef Vector<WebBlobInfo> WebBlobInfoArray;
 
-class CORE_EXPORT SerializedScriptValue
+class CORE_EXPORT_N119 SerializedScriptValue
     : public ThreadSafeRefCounted<SerializedScriptValue> {
  public:
   using ArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
@@ -273,7 +273,7 @@ class CORE_EXPORT SerializedScriptValue
 template <>
 struct NativeValueTraits<SerializedScriptValue>
     : public NativeValueTraitsBase<SerializedScriptValue> {
-  CORE_EXPORT static inline PassRefPtr<SerializedScriptValue> NativeValue(
+  CORE_EXPORT_N120 static inline PassRefPtr<SerializedScriptValue> NativeValue(
       v8::Isolate* isolate,
       v8::Local<v8::Value> value,
       const SerializedScriptValue::SerializeOptions& options,

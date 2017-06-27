@@ -15,7 +15,7 @@ class HTMLVideoElement;
 class IntRect;
 class TimerBase;
 
-class CORE_EXPORT MediaCustomControlsFullscreenDetector final
+class CORE_EXPORT_N2195 MediaCustomControlsFullscreenDetector final
     : public EventListener {
   WTF_MAKE_NONCOPYABLE(MediaCustomControlsFullscreenDetector);
 

@@ -64,12 +64,12 @@ class PseudoElement;
 class InspectorRevalidateDOMTask;
 class ShadowRoot;
 
-class CORE_EXPORT InspectorDOMAgent final
+class CORE_EXPORT_N2257 InspectorDOMAgent final
     : public InspectorBaseAgent<protocol::DOM::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorDOMAgent);
 
  public:
-  struct CORE_EXPORT DOMListener : public GarbageCollectedMixin {
+  struct CORE_EXPORT_N2258 DOMListener : public GarbageCollectedMixin {
     virtual ~DOMListener() {}
     virtual void DidAddDocument(Document*) = 0;
     virtual void DidRemoveDocument(Document*) = 0;

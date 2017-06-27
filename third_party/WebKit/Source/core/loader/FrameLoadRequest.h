@@ -38,7 +38,7 @@ class HTMLFormElement;
 class ResourceRequest;
 class SubstituteData;
 
-struct CORE_EXPORT FrameLoadRequest {
+struct CORE_EXPORT_N2456 FrameLoadRequest {
   STACK_ALLOCATED();
 
  public:

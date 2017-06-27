@@ -64,7 +64,7 @@ enum HashTokenType {
   kHashTokenUnrestricted,
 };
 
-class CORE_EXPORT CSSParserToken {
+class CORE_EXPORT_N1579 CSSParserToken {
   USING_FAST_MALLOC(CSSParserToken);
 
  public:

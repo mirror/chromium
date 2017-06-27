@@ -39,7 +39,7 @@ namespace blink {
 
 class FlexItem;
 
-class CORE_EXPORT LayoutFlexibleBox : public LayoutBlock {
+class CORE_EXPORT_N2299 LayoutFlexibleBox : public LayoutBlock {
  public:
   LayoutFlexibleBox(Element*);
   ~LayoutFlexibleBox() override;

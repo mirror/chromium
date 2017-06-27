@@ -33,7 +33,7 @@
 
 namespace blink {
 
-class CORE_EXPORT PageVisibilityObserver
+class CORE_EXPORT_N2512 PageVisibilityObserver
     : public LifecycleObserver<Page, PageVisibilityObserver> {
  public:
   virtual void PageVisibilityChanged() {}

@@ -56,7 +56,7 @@ class StylePropertySet;
 class StyleRuleFontFace;
 class WebTaskRunner;
 
-class CORE_EXPORT FontFace : public GarbageCollectedFinalized<FontFace>,
+class CORE_EXPORT_N1504 FontFace : public GarbageCollectedFinalized<FontFace>,
                              public ScriptWrappable,
                              public ActiveScriptWrappable<FontFace>,
                              public ContextClient {
@@ -115,7 +115,7 @@ class CORE_EXPORT FontFace : public GarbageCollectedFinalized<FontFace>,
 
   bool HadBlankText() const;
 
-  class CORE_EXPORT LoadFontCallback : public GarbageCollectedMixin {
+  class CORE_EXPORT_N1505 LoadFontCallback : public GarbageCollectedMixin {
    public:
     virtual ~LoadFontCallback() {}
     virtual void NotifyLoaded(FontFace*) = 0;

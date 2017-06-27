@@ -37,7 +37,7 @@ namespace blink {
 
 class LayoutProgress;
 
-class CORE_EXPORT LayoutThemeDefault : public LayoutTheme {
+class CORE_EXPORT_N2326 LayoutThemeDefault : public LayoutTheme {
  public:
   String ExtraDefaultStyleSheet() override;
   String ExtraQuirksStyleSheet() override;

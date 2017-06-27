@@ -57,7 +57,7 @@ class SharedBuffer;
 
 using blink::protocol::Maybe;
 
-class CORE_EXPORT InspectorPageAgent final
+class CORE_EXPORT_N2268 InspectorPageAgent final
     : public InspectorBaseAgent<protocol::Page::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorPageAgent);
 

@@ -28,7 +28,7 @@ namespace blink {
 
 class LayoutProgress;
 
-class CORE_EXPORT HTMLProgressElement final : public LabelableElement {
+class CORE_EXPORT_N2135 HTMLProgressElement final : public LabelableElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

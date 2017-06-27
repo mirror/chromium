@@ -18,7 +18,7 @@ namespace blink {
 class CustomElementDescriptor;
 class CustomElementRegistry;
 
-class CORE_EXPORT ScriptCustomElementDefinition final
+class CORE_EXPORT_N49 ScriptCustomElementDefinition final
     : public CustomElementDefinition {
   WTF_MAKE_NONCOPYABLE(ScriptCustomElementDefinition);
 

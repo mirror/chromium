@@ -18,7 +18,7 @@ enum NGWritingMode {
   kSidewaysLeftRight = 4
 };
 
-CORE_EXPORT NGWritingMode FromPlatformWritingMode(WritingMode);
+CORE_EXPORT_N2402 NGWritingMode FromPlatformWritingMode(WritingMode);
 
 // Lines have horizontal orientation; modes horizontal-tb.
 inline bool IsHorizontalWritingMode(NGWritingMode writing_mode) {

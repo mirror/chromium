@@ -33,7 +33,7 @@
 
 namespace blink {
 
-class CORE_EXPORT MediaError final
+class CORE_EXPORT_N2196 MediaError final
     : public GarbageCollectedFinalized<MediaError>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

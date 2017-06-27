@@ -42,7 +42,7 @@ namespace blink {
 class InspectedFrames;
 class WorkerInspectorProxy;
 
-class CORE_EXPORT InspectorWorkerAgent final
+class CORE_EXPORT_N2279 InspectorWorkerAgent final
     : public InspectorBaseAgent<protocol::Target::Metainfo>,
       public WorkerInspectorProxy::PageInspector {
   WTF_MAKE_NONCOPYABLE(InspectorWorkerAgent);

@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSScale final : public CSSTransformComponent {
+class CORE_EXPORT_N1552 CSSScale final : public CSSTransformComponent {
   WTF_MAKE_NONCOPYABLE(CSSScale);
   DEFINE_WRAPPERTYPEINFO();
 

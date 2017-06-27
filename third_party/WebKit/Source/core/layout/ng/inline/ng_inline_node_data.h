@@ -12,7 +12,7 @@
 namespace blink {
 
 // Data which is required for inline nodes.
-struct CORE_EXPORT NGInlineNodeData {
+struct CORE_EXPORT_N2431 NGInlineNodeData {
  private:
   friend class NGInlineNode;
   friend class NGInlineNodeForTest;

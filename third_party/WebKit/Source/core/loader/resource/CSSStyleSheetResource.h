@@ -38,7 +38,7 @@ class ResourceClient;
 class ResourceFetcher;
 class StyleSheetContents;
 
-class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
+class CORE_EXPORT_N2480 CSSStyleSheetResource final : public StyleSheetResource {
  public:
   enum class MIMETypeCheck { kStrict, kLax };
 

@@ -58,7 +58,7 @@ static inline double NullValue() {
 
 // Represents the content of an Animation and its fractional timing state.
 // http://w3c.github.io/web-animations/#animation-effect
-class CORE_EXPORT AnimationEffectReadOnly
+class CORE_EXPORT_N1432 AnimationEffectReadOnly
     : public GarbageCollectedFinalized<AnimationEffectReadOnly>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

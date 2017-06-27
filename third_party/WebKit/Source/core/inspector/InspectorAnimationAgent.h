@@ -19,7 +19,7 @@ class AnimationTimeline;
 class InspectedFrames;
 class InspectorCSSAgent;
 
-class CORE_EXPORT InspectorAnimationAgent final
+class CORE_EXPORT_N2253 InspectorAnimationAgent final
     : public InspectorBaseAgent<protocol::Animation::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorAnimationAgent);
 

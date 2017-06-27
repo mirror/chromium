@@ -22,7 +22,7 @@ class LayoutRect;
 // APIs that don't make sense on the combined viewport, the call is delegated to
 // the layout viewport. Thus, we could say this class is a decorator on the
 // LocalFrameView scrollable area that adds pinch-zoom semantics to scrolling.
-class CORE_EXPORT RootFrameViewport final
+class CORE_EXPORT_N2062 RootFrameViewport final
     : public GarbageCollectedFinalized<RootFrameViewport>,
       public ScrollableArea {
   USING_GARBAGE_COLLECTED_MIXIN(RootFrameViewport);

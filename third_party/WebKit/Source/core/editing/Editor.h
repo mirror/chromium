@@ -70,7 +70,7 @@ enum EditorParagraphSeparator {
   kEditorParagraphSeparatorIsP
 };
 
-class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
+class CORE_EXPORT_N1789 Editor final : public GarbageCollectedFinalized<Editor> {
   WTF_MAKE_NONCOPYABLE(Editor);
 
  public:
@@ -139,7 +139,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   void SetShouldStyleWithCSS(bool flag) { should_style_with_css_ = flag; }
   bool ShouldStyleWithCSS() const { return should_style_with_css_; }
 
-  class CORE_EXPORT Command {
+  class CORE_EXPORT_N1790 Command {
     STACK_ALLOCATED();
 
    public:

@@ -16,18 +16,18 @@ namespace blink {
 // Returns the inline size (relative to {@code parent_space}) of the
 // unpositioned float. If the float is in a different writing mode, this will
 // perform a layout.
-CORE_EXPORT LayoutUnit
+CORE_EXPORT_N2365 LayoutUnit
 ComputeInlineSizeForUnpositionedFloat(NGConstraintSpace* parent_space,
                                       NGUnpositionedFloat* unpositioned_float);
 
 // Positions {@code unpositioned_float} into {@code new_parent_space}.
 // @returns A positioned float.
-CORE_EXPORT NGPositionedFloat
+CORE_EXPORT_N2366 NGPositionedFloat
 PositionFloat(NGUnpositionedFloat*, NGConstraintSpace* new_parent_space);
 
 // Positions the list of {@code unpositioned_floats}. Adds them as exclusions to
 // {@code space}.
-CORE_EXPORT const Vector<NGPositionedFloat> PositionFloats(
+CORE_EXPORT_N2367 const Vector<NGPositionedFloat> PositionFloats(
     LayoutUnit origin_block_offset,
     LayoutUnit from_block_offset,
     LayoutUnit container_block_offset,

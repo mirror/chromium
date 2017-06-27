@@ -47,7 +47,7 @@ enum NavigationPolicy {
   kNavigationPolicyHandledByClientForInitialHistory,
 };
 
-CORE_EXPORT bool NavigationPolicyFromMouseEvent(unsigned short button,
+CORE_EXPORT_N2462 bool NavigationPolicyFromMouseEvent(unsigned short button,
                                                 bool ctrl,
                                                 bool shift,
                                                 bool alt,

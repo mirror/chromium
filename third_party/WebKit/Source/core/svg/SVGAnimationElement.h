@@ -51,7 +51,7 @@ enum CalcMode {
   kCalcModeSpline
 };
 
-class CORE_EXPORT SVGAnimationElement : public SVGSMILElement {
+class CORE_EXPORT_N2603 SVGAnimationElement : public SVGSMILElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

@@ -32,7 +32,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TextMetrics final : public GarbageCollected<TextMetrics>,
+class CORE_EXPORT_N2160 TextMetrics final : public GarbageCollected<TextMetrics>,
                                       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
