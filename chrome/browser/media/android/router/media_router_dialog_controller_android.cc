@@ -15,7 +15,12 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
+#include "device/vr/features/features.h"
 #include "jni/ChromeMediaRouterDialogController_jni.h"
+
+#if BUILDFLAG(ENABLE_VR)
+#include "chrome/browser/android/vr_shell/vr_tab_helper.h"
+#endif  // BUILDFLAG(ENABLE_VR)
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(
     media_router::MediaRouterDialogControllerAndroid);
@@ -112,7 +117,7 @@ void MediaRouterDialogControllerAndroid::CancelPresentationRequest() {
 
 MediaRouterDialogControllerAndroid::MediaRouterDialogControllerAndroid(
     WebContents* web_contents)
-    : MediaRouterDialogController(web_contents) {
+    : MediaRouterDialogController(web_contents), web_contents_(web_contents) {
   JNIEnv* env = base::android::AttachCurrentThread();
   java_dialog_controller_.Reset(Java_ChromeMediaRouterDialogController_create(
       env, reinterpret_cast<jlong>(this)));
@@ -127,6 +132,13 @@ MediaRouterDialogControllerAndroid::~MediaRouterDialogControllerAndroid() {
 }
 
 void MediaRouterDialogControllerAndroid::CreateMediaRouterDialog() {
+#if BUILDFLAG(ENABLE_VR)
+  if (vr_shell::VrTabHelper::IsInVr(web_contents_)) {
+    CancelPresentationRequest();
+    return;
+  }
+#endif  // BUILDFLAG(ENABLE_VR)
+
   JNIEnv* env = base::android::AttachCurrentThread();
 
   // TODO(crbug.com/627655): Support multiple URLs.
