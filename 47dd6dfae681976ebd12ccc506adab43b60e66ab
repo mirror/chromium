@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe6c95db_e41a6e40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T19:00:00Z",
+      "side": 1,
+      "message": "s/surfae/surface",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4d9435_bc87e43c",
+        "filename": "media/gpu/android/promotion_hint_aggregator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T19:00:00Z",
+      "side": 1,
+      "message": "NIT: Is \"promotion\" an obvious term for those that are well versed in compositing? If not, could you define it here, because I don\u0027t think it is defined anywhere else, and it might not be obvious to newcomers.",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30d7627_1672be79",
+        "filename": "media/gpu/android/promotion_hint_aggregator_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T19:00:00Z",
+      "side": 1,
+      "message": "Can you rephrase this? E.g. \"Minimum number of consecutive promotable frames we must receive before we actually start promoting frames\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26d223a_f9dc68cf",
+        "filename": "media/gpu/android_video_decode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T19:00:00Z",
+      "side": 1,
+      "message": "Is there a way to clarify this comment? It\u0027s not clear that the last parameter is allow_overlay and not the local variable |allow_overlay|.",
+      "range": {
+        "startLine": 899,
+        "startChar": 5,
+        "endLine": 901,
+        "endChar": 57
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e84a803_57ab4e9e",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T19:00:00Z",
+      "side": 1,
+      "message": "dominant visible element?",
+      "range": {
+        "startLine": 108,
+        "startChar": 34,
+        "endLine": 108,
+        "endChar": 54
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758b4f55_11d2eb51",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T19:00:00Z",
+      "side": 1,
+      "message": "Is there worth in calling out/commenting what the expected behavior when |is_compositor_promotable| is false and |is_secure| is true?",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 38
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0012f0_f07e0f8e",
+        "filename": "media/gpu/avda_codec_image.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T19:00:00Z",
+      "side": 1,
+      "message": "Curiosity: How are the x/y coordinates used?",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 21
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
