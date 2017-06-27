@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58d620f9_930ab4e6",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T19:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c7d3bc7_d38add88",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9187f713_6a430955",
         "filename": "chrome/browser/ui/browser_commands.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bcb9ddc_8029abb8",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T19:31:09Z",
+      "side": 1,
+      "message": "Ack, that directs to the code in browser_commands.cc",
+      "parentUuid": "9187f713_6a430955",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e724a698_92389e23",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T19:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d2ce97_ff462a40",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca5f4f8c_a7011fa0",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f14b9836_60c114b5",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T19:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca5f4f8c_a7011fa0",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "704d4c1c_26dd0865",
         "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-27T00:56:47Z",
       "side": 1,
       "message": "It looks like there\u0027s another relevant caller of this in https://cs.chromium.org/chromium/src/chrome/browser/ui/tabs/tab_strip_model.cc?l\u003d909 .\n\nThat would make three places we\u0027ve annotated to record \"open a new tab\".  Can we somehow collapse them into one?  If we were willing to make the tabstrip context menu \"New Tab\" feature open at the end instead of right after the current tab, then we could have both these other places call chrome::NewTab().  If not, maybe we could extract an intervening helper for this or something.",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b94c13_1321b910",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T19:31:09Z",
+      "side": 1,
+      "message": "Added to context menu. Will hold off on refactoring for now.",
+      "parentUuid": "704d4c1c_26dd0865",
       "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
