@@ -88,6 +88,24 @@
       "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a21253_b0f6fff2",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-27T13:19:45Z",
+      "side": 1,
+      "message": "Thank you so much for your advice! I changed the argument to gfx::NativeWindow.",
+      "parentUuid": "e8b1f85f_402fea32",
+      "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
