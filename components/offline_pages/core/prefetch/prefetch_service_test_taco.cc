@@ -21,8 +21,8 @@
 namespace offline_pages {
 
 PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
-  metrics_collector_ = base::MakeUnique<TestOfflineMetricsCollector>();
   dispatcher_ = base::MakeUnique<TestPrefetchDispatcher>();
+  metrics_collector_ = base::MakeUnique<TestOfflineMetricsCollector>(nullptr);
   gcm_handler_ = base::MakeUnique<TestPrefetchGCMHandler>();
   network_request_factory_ =
       base::MakeUnique<TestPrefetchNetworkRequestFactory>();
