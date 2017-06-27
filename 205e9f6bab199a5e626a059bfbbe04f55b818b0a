@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea24caa_e5626ce3",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-27T00:27:32Z",
+      "side": 1,
+      "message": "I don\u0027t think this is right.  I think if a will-change transform layer that has a \"natural\" scale that\u0027s bigger than 1 should be scaled with page scale?",
+      "revId": "205e9f6bab199a5e626a059bfbbe04f55b818b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5584c5_eaeeb287",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-27T00:27:32Z",
+      "side": 1,
+      "message": "I think the source scale needs to change here.  No, it\u0027s not a strict requirement, but it\u0027s weird to have it not be correct.",
+      "revId": "205e9f6bab199a5e626a059bfbbe04f55b818b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
