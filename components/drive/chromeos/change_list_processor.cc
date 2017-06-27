@@ -132,14 +132,43 @@ ChangeListProcessor::ChangeListProcessor(ResourceMetadata* resource_metadata,
 ChangeListProcessor::~ChangeListProcessor() {
 }
 
+FileError ChangeListProcessor::GetTeamDriveRoot(
+    const std::string& team_drive_id,
+    ResourceEntry* out_entry) {
+  std::string local_id;
+  FileError error =
+      resource_metadata_->GetIdByResourceId(team_drive_id, &local_id);
+  if (error != FILE_ERROR_OK)
+    return error;
+  ResourceEntry entry;
+  error = resource_metadata_->GetResourceEntryById(local_id, &entry);
+  if (error != FILE_ERROR_OK)
+    return error;
+  out_entry->Swap(&entry);
+  return error;
+}
+
+FileError ChangeListProcessor::SetTeamDriveLargestChangestamp(
+    const std::string& team_drive_id,
+    int64_t value) {
+  ResourceEntry entry;
+  GetTeamDriveRoot(team_drive_id, &entry);
+  entry.mutable_directory_specific_info()->set_changestamp(value);
+  return resource_metadata_->RefreshEntry(entry);
+}
+
 FileError ChangeListProcessor::Apply(
     std::unique_ptr<google_apis::AboutResource> about_resource,
+    const std::string& team_drive_id,
     std::vector<std::unique_ptr<ChangeList>> change_lists,
     bool is_delta_update) {
   DCHECK(about_resource);
 
   int64_t largest_changestamp = 0;
-  if (is_delta_update) {
+  // When we get files using Files:list, we need to use the largest_change_id
+  // in About resource. Because it cannot be applied for Team Drives changes,
+  // we use Changes:list even when it's not delta udpate.
+  if (is_delta_update || !team_drive_id.empty()) {
     if (!change_lists.empty()) {
       // The changestamp appears in the first page of the change list.
       // The changestamp does not appear in the full resource list.
@@ -184,18 +213,57 @@ FileError ChangeListProcessor::Apply(
     }
   }
 
-  FileError error =
-      ApplyEntryMap(largest_changestamp, std::move(about_resource));
+  ResourceEntry root;
+  if (team_drive_id.empty()) {
+    // Retrieve and update the entry for "My Drive" directory with the latest
+    // changestamp.
+    FileError error = resource_metadata_->GetResourceEntryByPath(
+        util::GetDriveMyDriveRootPath(), &root);
+    if (error != FILE_ERROR_OK) {
+      LOG(ERROR) << "Failed to get root entry: " << FileErrorToString(error);
+      return error;
+    }
+
+    root.mutable_directory_specific_info()->set_changestamp(
+        largest_changestamp);
+    root.set_resource_id(about_resource->root_folder_id());
+    error = resource_metadata_->RefreshEntry(root);
+    if (error != FILE_ERROR_OK) {
+      LOG(ERROR) << "Failed to update root entry: " << FileErrorToString(error);
+      return error;
+    }
+  } else {
+    FileError error = GetTeamDriveRoot(team_drive_id, &root);
+    if (error != FILE_ERROR_OK) {
+      LOG(ERROR) << "Failed to get Team Drive root entry: "
+                 << FileErrorToString(error);
+      return error;
+    }
+  }
+
+  error = ApplyEntryMap(root.resource_id(), largest_changestamp);
   if (error != FILE_ERROR_OK) {
     DLOG(ERROR) << "ApplyEntryMap failed: " << FileErrorToString(error);
     return error;
   }
 
-  // Update changestamp.
-  error = resource_metadata_->SetLargestChangestamp(largest_changestamp);
+  // Update changestamp of the root entry.
+  root.mutable_directory_specific_info()->set_changestamp(largest_changestamp);
+  FileError error = resource_metadata_->RefreshEntry(root);
   if (error != FILE_ERROR_OK) {
-    DLOG(ERROR) << "SetLargestChangeStamp failed: " << FileErrorToString(error);
+    DLOG(ERROR) << "RefreshEntry failed: " << FileErrorToString(error);
     return error;
+  }
+
+  // Update changestamp in the metadata header.
+  if (team_drive_id.empty()) {
+    error = resource_metadata_->SetLargestChangestamp(largest_changestamp);
+
+    if (error != FILE_ERROR_OK) {
+      DLOG(ERROR) << "SetLargestChangeStamp failed: "
+                  << FileErrorToString(error);
+      return error;
+    }
   }
 
   // Shouldn't record histograms when processing delta update.
@@ -206,27 +274,8 @@ FileError ChangeListProcessor::Apply(
 }
 
 FileError ChangeListProcessor::ApplyEntryMap(
-    int64_t changestamp,
-    std::unique_ptr<google_apis::AboutResource> about_resource) {
-  DCHECK(about_resource);
-
-  // Create the entry for "My Drive" directory with the latest changestamp.
-  ResourceEntry root;
-  FileError error = resource_metadata_->GetResourceEntryByPath(
-      util::GetDriveMyDriveRootPath(), &root);
-  if (error != FILE_ERROR_OK) {
-    LOG(ERROR) << "Failed to get root entry: " << FileErrorToString(error);
-    return error;
-  }
-
-  root.mutable_directory_specific_info()->set_changestamp(changestamp);
-  root.set_resource_id(about_resource->root_folder_id());
-  error = resource_metadata_->RefreshEntry(root);
-  if (error != FILE_ERROR_OK) {
-    LOG(ERROR) << "Failed to update root entry: " << FileErrorToString(error);
-    return error;
-  }
-
+    const std::string& root_entry_resource_id,
+    int64_t changestamp) {
   // Gather the set of changes in the old path.
   // Note that we want to notify the change in both old and new paths (suppose
   // /a/b/c is moved to /x/y/c. We want to notify both "/a/b" and "/x/y".)
@@ -318,7 +367,7 @@ FileError ChangeListProcessor::ApplyEntryMap(
       // Skip root entry in the change list. We don't expect servers to send
       // root entry, but we should better be defensive (see crbug.com/297259).
       ResourceEntryMap::iterator it = entries[i];
-      if (it->first != root.resource_id()) {
+      if (it->first != root_entry_resource_id) {
         FileError error = ApplyEntry(it->second);
         if (error != FILE_ERROR_OK) {
           LOG(ERROR) << "ApplyEntry failed: " << FileErrorToString(error)
