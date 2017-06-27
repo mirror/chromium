@@ -20,15 +20,16 @@ extern const base::Feature kIPHDummyFeature;
 // should also be declared in:
 // org.chromium.components.feature_engagement_tracker.FeatureConstants.
 #if defined(OS_ANDROID)
-extern const base::Feature kIPHDataSaverPreviewFeature;
 extern const base::Feature kIPHDataSaverDetailFeature;
-extern const base::Feature kIPHDownloadPageFeature;
+extern const base::Feature kIPHDataSaverPreviewFeature;
 extern const base::Feature kIPHDownloadHomeFeature;
+extern const base::Feature kIPHDownloadPageFeature;
 #endif  // OS_ANDROID
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
+extern const base::Feature kIPHIncognitoWindowFeature;
 extern const base::Feature kIPHNewTabFeature;
-#endif  // OS_WIN
+#endif  // OS_WIN || OS_LINUX
 
 }  // namespace feature_engagement_tracker
 
