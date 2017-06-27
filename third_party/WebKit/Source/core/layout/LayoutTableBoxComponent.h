@@ -74,6 +74,8 @@ class CORE_EXPORT LayoutTableBoxComponent : public LayoutBox {
   }
 
  private:
+  bool IsTableBoxComponent() const final { return true; }
+
   // If you have a LayoutTableBoxComponent, use firstChild or lastChild instead.
   void SlowFirstChild() const = delete;
   void SlowLastChild() const = delete;

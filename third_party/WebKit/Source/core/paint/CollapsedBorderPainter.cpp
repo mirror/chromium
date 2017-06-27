@@ -340,10 +340,6 @@ void CollapsedBorderPainter::PaintCollapsedBorders(
   // Collapsed borders are half inside and half outside of |rect|.
   IntRect rect =
       PixelSnappedIntRect(paint_offset + cell_.Location(), cell_.Size());
-  // |paint_rect| covers the whole collapsed borders.
-  IntRect paint_rect = rect;
-  paint_rect.Expand(IntRectOutsets(before_.outer_width, end_.outer_width,
-                                   after_.outer_width, start_.outer_width));
 
   // We never paint diagonals at the joins.  We simply let the border with the
   // highest precedence paint on top of borders with lower precedence.
