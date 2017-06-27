@@ -17,6 +17,8 @@ class FakeLayerTreeFrameSink;
 class ResourceSettings;
 class TestTaskGraphRunner;
 class TestGpuMemoryBufferManager;
+class TestLayerTreeFrameSink;
+class TestLayerTreeFrameSinkClient;
 }
 
 namespace ui {
@@ -41,7 +43,9 @@ class FakeContextFactory : public ui::ContextFactory {
   void RemoveObserver(ui::ContextFactoryObserver* observer) override {}
 
  private:
-  cc::FakeLayerTreeFrameSink* frame_sink_ = nullptr;
+  // cc::FakeLayerTreeFrameSink* frame_sink_ = nullptr;
+  std::unique_ptr<cc::TestLayerTreeFrameSinkClient> frame_sink_client_;
+  cc::TestLayerTreeFrameSink* frame_sink_ = nullptr;
   cc::TestTaskGraphRunner task_graph_runner_;
   cc::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
   cc::RendererSettings renderer_settings_;
