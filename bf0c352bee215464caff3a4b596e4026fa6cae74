@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28120f53_1c222ca3",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-27T18:11:45Z",
+      "side": 1,
+      "message": "optional nit: It is possible to prevent a double map lookup (in AnalyzeLogRequest and in erase), by something like:\nauto it \u003d request_time_logs_.find(request_id);\nAnalyzeLogRequest(it-\u003esecond, end_time);\nrequest_time_logs_.erase(it);",
+      "revId": "bf0c352bee215464caff3a4b596e4026fa6cae74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
