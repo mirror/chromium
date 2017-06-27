@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9758ecd3_fbf00337",
+        "filename": "net/cert/x509_util_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-06-27T19:13:08Z",
+      "side": 0,
+      "message": "Remove from x509_util_mac.h too\n\nAlso there\u0027s a use in x509_certificate_mac.cc, if we care about keeping the use_byte_certs\u003dfalse code (maybe) working. (I was pondering if I should just wait and remove all the old code at once, but turning it on is spread out enough that maybe I should just start removing that on a per-platform basis, eg mac has been on use_byte_certs since m59 already, with nothing testing the use_byte_certs\u003dfalse version.)",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "55e4d9a48a1965626872aabca38484814f0d063a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
