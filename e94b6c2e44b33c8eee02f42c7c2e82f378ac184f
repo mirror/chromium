@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38dec93d_9dc88ecf",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T00:19:42Z",
+      "side": 1,
+      "message": "Please provide initializers for format and modifier",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86aafda8_696ad52b",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T00:19:42Z",
+      "side": 1,
+      "message": "nit: you can use return std::tie(format, modifier) \u003c std::tie(rhs.format, rhs.modifier);",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b33940_8e6d06b2",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T00:19:42Z",
+      "side": 1,
+      "message": "Is this used anywhere?",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d24a60_57325dbb",
+        "filename": "ui/gfx/ipc/gfx_param_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T00:19:42Z",
+      "side": 1,
+      "message": "Please use IPC_STRUCT_TRAITS_* in ui/gfx/ipc/gfx_param_traits_macros.h instead of a manual implementation",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997f0b8a_114eebf6",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T00:19:42Z",
+      "side": 1,
+      "message": "Why only Linux?",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
