@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "e186788a_0af3a2c3",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-27T02:22:23Z",
+      "side": 1,
+      "message": "i think the intention (at least when i tried to use these metrics) was to answer someone\u0027s question about how often users shut down by holding the power button vs. by other methods.\n\nthe power button is weird, as far as accelerators go, since we don\u0027t take action on clamshell chromebooks unless it\u0027s held for some period of time, and the action we take depends on the state we started in and the amount of time it was held. (the duration of power button presses is reported as a histogram by a separate process, but it doesn\u0027t know anything about the actual actions that were taken.)\n\nfor the purposes of my original task, just (accurately) reporting power-button-triggered shutdowns here would\u0027ve been sufficient for comparison with other reported actions like how often the shut down button in the tray is clicked, so i\u0027m okay with going that route if it\u0027s simplest.\n\nif we want reporting to live up in the UI layer, the code that implements the power button delay would probably need to take a callback that it can use to communicate the action that it\u0027s taking back to the code that handles the power button event. (this code used to all live in one place before it got really complicated due to a UI redesign, i think. :-/) i\u0027m fine with saying that\u0027s not worth the effort.",
+      "parentUuid": "1aa1f6a3_966dcef6",
+      "revId": "6d961fe432eab176a93d260fe2e8d43ae544abb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d717534_ac5c9620",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 2
