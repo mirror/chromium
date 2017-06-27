@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae4d8367_02b4b4e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1225574
+      },
+      "writtenOn": "2017-06-27T23:40:00Z",
+      "side": 1,
+      "message": "Yes, I needed to grab the \"entry\" as passing in null deletes the entry.",
+      "parentUuid": "e7b13f79_8ca24d68",
+      "range": {
+        "startLine": 1018,
+        "startChar": 2,
+        "endLine": 1018,
+        "endChar": 3
+      },
+      "revId": "fb8696cf7d892aacdc2b25efa0cc5ec150a5f831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3e626ac_051c5707",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4a7489ab_d9e2f1d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1225574
+      },
+      "writtenOn": "2017-06-27T23:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e626ac_051c5707",
+      "revId": "fb8696cf7d892aacdc2b25efa0cc5ec150a5f831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7df35248_84480fdb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "fb8696cf7d892aacdc2b25efa0cc5ec150a5f831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a8b5d6_6dd8f399",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1225574
+      },
+      "writtenOn": "2017-06-27T23:40:00Z",
+      "side": 1,
+      "message": "I got rid of this change in the next CL :)",
+      "parentUuid": "7df35248_84480fdb",
+      "revId": "fb8696cf7d892aacdc2b25efa0cc5ec150a5f831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
