@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
+#include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/task_runner_util.h"
 #include "gpu/command_buffer/common/constants.h"
@@ -15,6 +16,7 @@
 #include "gpu/command_buffer/service/texture_manager.h"
 #include "gpu/ipc/service/gpu_channel.h"
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
+#include "media/base/bind_to_current_loop.h"
 #include "media/base/video_frame.h"
 #include "media/gpu//android/codec_image.h"
 #include "media/gpu/android/codec_wrapper.h"
@@ -116,19 +118,28 @@ void VideoFrameFactoryImpl::CreateVideoFrame(
     scoped_refptr<SurfaceTextureGLOwner> surface_texture,
     base::TimeDelta timestamp,
     gfx::Size natural_size,
-    FrameCreatedCb frame_created_cb) {
-  base::PostTaskAndReplyWithResult(
-      gpu_task_runner_.get(), FROM_HERE,
-      base::Bind(&GpuVideoFrameFactory::CreateVideoFrame,
-                 base::Unretained(gpu_video_frame_factory_.get()),
-                 base::Passed(&output_buffer), surface_texture, timestamp,
-                 natural_size),
-      std::move(frame_created_cb));
+    OutputWithReleaseMailboxCB output_cb) {
+  gpu_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&GpuVideoFrameFactory::CreateVideoFrame,
+                            base::Unretained(gpu_video_frame_factory_.get()),
+                            base::Passed(&output_buffer), surface_texture,
+                            timestamp, natural_size, std::move(output_cb),
+                            base::ThreadTaskRunnerHandle::Get()));
 }
 
 GpuVideoFrameFactory::GpuVideoFrameFactory() : weak_factory_(this) {}
 
-GpuVideoFrameFactory::~GpuVideoFrameFactory() = default;
+GpuVideoFrameFactory::~GpuVideoFrameFactory() {
+  // Make the gl context current before deleting |texture_refs_|. If this fails
+  // it's still safe to drop them because TextureManager will be aware that the
+  // context was lost.
+  if (stub_) {
+    auto* decoder = stub_->decoder();
+    if (decoder)
+      decoder->MakeCurrent();
+  }
+  texture_refs_.clear();
+}
 
 scoped_refptr<SurfaceTextureGLOwner> GpuVideoFrameFactory::Initialize(
     VideoFrameFactoryImpl::GetStubCb get_stub_cb) {
@@ -143,33 +154,65 @@ scoped_refptr<SurfaceTextureGLOwner> GpuVideoFrameFactory::Initialize(
   return SurfaceTextureGLOwnerImpl::Create();
 }
 
-scoped_refptr<VideoFrame> GpuVideoFrameFactory::CreateVideoFrame(
+void GpuVideoFrameFactory::CreateVideoFrame(
     std::unique_ptr<CodecOutputBuffer> output_buffer,
     scoped_refptr<SurfaceTextureGLOwner> surface_texture,
     base::TimeDelta timestamp,
-    gfx::Size natural_size) {
+    gfx::Size natural_size,
+    VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  scoped_refptr<VideoFrame> frame;
+  scoped_refptr<gpu::gles2::TextureRef> texture_ref;
+  CreateVideoFrameInternal(std::move(output_buffer), std::move(surface_texture),
+                           timestamp, natural_size, &frame, &texture_ref);
+  if (!frame || !texture_ref)
+    return;
+
+  // TODO(sandersd, watk): The VideoFrame release callback will not be called
+  // after MojoVideoDecoderService is destructed, so we have to release all
+  // our TextureRefs when |this| is destructed. This can unback outstanding
+  // VideoFrames (e.g., the current frame when the player is suspended). The
+  // release callback lifetime should be separate from MCVD or
+  // MojoVideoDecoderService (http://crbug.com/737220).
+  texture_refs_[texture_ref.get()] = texture_ref;
+  auto release_cb = BindToCurrentLoop(base::Bind(
+      &GpuVideoFrameFactory::DropTextureRef, weak_factory_.GetWeakPtr(),
+      base::Unretained(texture_ref.get())));
+  task_runner->PostTask(FROM_HERE, base::Bind(output_cb, std::move(release_cb),
+                                              std::move(frame)));
+}
+
+void GpuVideoFrameFactory::CreateVideoFrameInternal(
+    std::unique_ptr<CodecOutputBuffer> output_buffer,
+    scoped_refptr<SurfaceTextureGLOwner> surface_texture,
+    base::TimeDelta timestamp,
+    gfx::Size natural_size,
+    scoped_refptr<VideoFrame>* video_frame_out,
+    scoped_refptr<gpu::gles2::TextureRef>* texture_ref_out) {
   if (!stub_)
-    return nullptr;
+    return;
 
   // TODO(watk): Which of these null checks are unnecessary?
   gpu::gles2::GLES2Decoder* decoder = stub_->decoder();
   if (!decoder->MakeCurrent())
-    return nullptr;
+    return;
   gpu::gles2::ContextGroup* group = decoder->GetContextGroup();
   if (!group)
-    return nullptr;
+    return;
   gpu::gles2::TextureManager* texture_manager = group->texture_manager();
   if (!texture_manager)
-    return nullptr;
+    return;
   gpu::GpuChannel* channel = stub_->channel();
   if (!channel)
-    return nullptr;
+    return;
   gpu::SyncPointManager* sync_point_manager = channel->sync_point_manager();
   if (!sync_point_manager)
-    return nullptr;
+    return;
   gpu::gles2::MailboxManager* mailbox_manager = group->mailbox_manager();
   if (!mailbox_manager)
-    return nullptr;
+    return;
+
+  gfx::Size size = output_buffer->size();
 
   // Create a new CodecImage to back the video frame and try to render it early.
   auto image = make_scoped_refptr(
@@ -180,30 +223,39 @@ scoped_refptr<VideoFrame> GpuVideoFrameFactory::CreateVideoFrame(
   internal::MaybeRenderEarly(&images_);
 
   // Create a new Texture with the image attached and put it into a mailbox
-  gfx::Size size = output_buffer->size();
   auto texture_ref =
       CreateTexture(decoder, texture_manager, std::move(image), size);
-  // TODO(watk): The TextureRef will be deleted at the end of this scope because
-  // mailboxes don't keep a strong ref. A coming change to
-  // MojoVideoDecoderService will deliver a callback when the VideoFrame is
-  // destroyed by the client. So we can simply bind the ref into the callback,
-  // along with a thread hop to ensure the ref is dropped on this thread.
   gpu::Mailbox mailbox = gpu::Mailbox::Generate();
   mailbox_manager->ProduceTexture(mailbox, texture_ref->texture());
 
-  gpu::SyncToken sync_token(
-      gpu::CommandBufferNamespace::GPU_IO,  // TODO(sandersd): Is this right?
-      stub_->stream_id(), stub_->command_buffer_id(),
-      0);  // TODO(sandersd): Current release count?
+  // TODO(watk): Remove this once it's possible to leave the mailbox
+  // sync token empty (http://crrev.com/c/548973).
+  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
+                            stub_->stream_id(), stub_->command_buffer_id(), 0);
   gpu::MailboxHolder mailbox_holders[VideoFrame::kMaxPlanes];
   mailbox_holders[0] =
       gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_EXTERNAL_OES);
 
   gfx::Rect visible_rect(size);
   // Note: The pixel format doesn't matter.
-  return VideoFrame::WrapNativeTextures(PIXEL_FORMAT_ARGB, mailbox_holders,
-                                        VideoFrame::ReleaseMailboxCB(), size,
-                                        visible_rect, natural_size, timestamp);
+  auto frame = VideoFrame::WrapNativeTextures(
+      PIXEL_FORMAT_ARGB, mailbox_holders, VideoFrame::ReleaseMailboxCB(), size,
+      visible_rect, natural_size, timestamp);
+
+  *video_frame_out = std::move(frame);
+  *texture_ref_out = std::move(texture_ref);
+}
+
+void GpuVideoFrameFactory::DropTextureRef(gpu::gles2::TextureRef* ref,
+                                          const gpu::SyncToken& token) {
+  // Make the gl context current. If this fails it's still safe to drop the
+  // TextureRef because TextureManager will be aware that the context was lost.
+  if (stub_) {
+    auto* decoder = stub_->decoder();
+    if (decoder)
+      decoder->MakeCurrent();
+  }
+  texture_refs_.erase(ref);
 }
 
 void GpuVideoFrameFactory::OnImageDestructed(CodecImage* image) {
