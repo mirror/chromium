@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b2dde4e_fcfe9db1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-27T19:46:08Z",
+      "side": 1,
+      "message": "You should keep the return of overridden method:\n@return {!Promise\u003c?UI.Widget\u003e}",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7024ca7_d1b23ea1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-27T19:46:08Z",
+      "side": 1,
+      "message": "JSDoc please",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 21
+      },
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb25be3_7c093926",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-27T19:46:08Z",
+      "side": 1,
+      "message": "What\u0027s the point of this class now?",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666b6992_d340a284",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesSection.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-27T19:46:08Z",
+      "side": 1,
+      "message": "No get prefixes.",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 19
+      },
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c3863e_beccf476",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewProvider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-27T19:46:08Z",
+      "side": 1,
+      "message": "The copyright",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437a5d5b_1c0ab1a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewProvider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-27T19:46:08Z",
+      "side": 1,
+      "message": "Can drop this.",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 13
+      },
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd868c1_e928c3ac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewProvider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-27T19:46:08Z",
+      "side": 1,
+      "message": "Might as well be a static function?",
+      "revId": "a10ca9f0f61a9faf0b62c8b7fa49cbba74e013c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
