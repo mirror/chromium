@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c7d3bc7_d38add88",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T00:56:47Z",
+      "side": 1,
+      "message": "Nit: Avoid using directives unless they save significant verbiage.  We can get by without this one in this case. (multiple files)",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9187f713_6a430955",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T00:56:47Z",
+      "side": 1,
+      "message": "It looks from codesearch like this can be called programmatically by extensions ( https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/tabs/tabs_api.cc?type\u003dcs\u0026l\u003d603 ).  Do you care?",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d2ce97_ff462a40",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T00:56:47Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  NewTabFeatureEngagementTracker::Get()-\u003eNotifyNewTab();\n\n(multiple files)",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5f4f8c_a7011fa0",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T00:56:47Z",
+      "side": 1,
+      "message": "Nit: I suggest converting IsNewTabPage() (and its sibling IsHomePage()) to just take a GURL and do the .spec() calls internally, since that\u0027s the canonical way of passing GURLs, and all the clients here seem to have GURLs to begin with.",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704d4c1c_26dd0865",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T00:56:47Z",
+      "side": 1,
+      "message": "It looks like there\u0027s another relevant caller of this in https://cs.chromium.org/chromium/src/chrome/browser/ui/tabs/tab_strip_model.cc?l\u003d909 .\n\nThat would make three places we\u0027ve annotated to record \"open a new tab\".  Can we somehow collapse them into one?  If we were willing to make the tabstrip context menu \"New Tab\" feature open at the end instead of right after the current tab, then we could have both these other places call chrome::NewTab().  If not, maybe we could extract an intervening helper for this or something.",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
