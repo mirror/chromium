@@ -18,6 +18,7 @@ const base::Feature* kAllFeatures[] = {
     &kIPHDataSaverPreviewFeature,
     &kIPHDataSaverDetailFeature,
     &kIPHDownloadPageFeature,
+    &kIPHDownloadPageScreenshotFeature,
     &kIPHDownloadHomeFeature,
 #endif  // OS_ANDROID
 #if defined(OS_WIN)

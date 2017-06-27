@@ -19,8 +19,11 @@ const base::Feature kIPHDataSaverDetailFeature{
     "IPH_DataSaverDetail", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kIPHDownloadPageFeature{"IPH_DownloadPage",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kIPHDownloadPageScreenshotFeature{
+    "IPH_DownloadPageScreenshot", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kIPHDownloadHomeFeature{"IPH_DownloadHome",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 #endif  // OS_ANDROID
 
 #if defined(OS_WIN)
