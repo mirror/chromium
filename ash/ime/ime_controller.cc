@@ -6,8 +6,6 @@
 
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray_notifier.h"
-#include "ui/base/accelerators/accelerator.h"
-#include "ui/base/ime/chromeos/extension_ime_util.h"
 
 namespace ash {
 
@@ -24,50 +22,27 @@ void ImeController::SetClient(mojom::ImeControllerClientPtr client) {
 }
 
 bool ImeController::CanSwitchIme() const {
-  // Cannot switch unless there is an active IME.
-  if (current_ime_.id.empty())
-    return false;
-
-  // Do not consume key event if there is only one input method is enabled.
-  // Ctrl+Space or Alt+Shift may be used by other application.
-  return available_imes_.size() > 1;
+  NOTIMPLEMENTED();
+  return true;
 }
 
 void ImeController::SwitchToNextIme() {
-  if (client_)
-    client_->SwitchToNextIme();
+  NOTIMPLEMENTED();
 }
 
 void ImeController::SwitchToPreviousIme() {
-  if (client_)
-    client_->SwitchToPreviousIme();
+  NOTIMPLEMENTED();
 }
 
 bool ImeController::CanSwitchImeWithAccelerator(
     const ui::Accelerator& accelerator) const {
-  // If none of the input methods associated with |accelerator| are active, we
-  // should ignore the accelerator.
-  std::vector<std::string> candidate_ids =
-      GetCandidateImesForAccelerator(accelerator);
-  return !candidate_ids.empty();
+  NOTIMPLEMENTED();
+  return true;
 }
 
 void ImeController::SwitchImeWithAccelerator(
     const ui::Accelerator& accelerator) {
-  if (!client_)
-    return;
-
-  std::vector<std::string> candidate_ids =
-      GetCandidateImesForAccelerator(accelerator);
-  if (candidate_ids.empty())
-    return;
-  auto it =
-      std::find(candidate_ids.begin(), candidate_ids.end(), current_ime_.id);
-  if (it != candidate_ids.end())
-    ++it;
-  if (it == candidate_ids.end())
-    it = candidate_ids.begin();
-  client_->SwitchImeById(*it);
+  NOTIMPLEMENTED();
 }
 
 // mojom::ImeController:
@@ -108,48 +83,6 @@ void ImeController::SetImesManagedByPolicy(bool managed) {
 
 void ImeController::ShowImeMenuOnShelf(bool show) {
   Shell::Get()->system_tray_notifier()->NotifyRefreshIMEMenu(show);
-}
-
-void ImeController::FlushMojoForTesting() {
-  client_.FlushForTesting();
-}
-
-std::vector<std::string> ImeController::GetCandidateImesForAccelerator(
-    const ui::Accelerator& accelerator) const {
-  std::vector<std::string> candidate_ids;
-
-  using chromeos::extension_ime_util::GetInputMethodIDByEngineID;
-  std::vector<std::string> input_method_ids_to_switch;
-  switch (accelerator.key_code()) {
-    case ui::VKEY_CONVERT:  // Henkan key on JP106 keyboard
-      input_method_ids_to_switch.push_back(
-          GetInputMethodIDByEngineID("nacl_mozc_jp"));
-      break;
-    case ui::VKEY_NONCONVERT:  // Muhenkan key on JP106 keyboard
-      input_method_ids_to_switch.push_back(
-          GetInputMethodIDByEngineID("xkb:jp::jpn"));
-      break;
-    case ui::VKEY_DBE_SBCSCHAR:  // ZenkakuHankaku key on JP106 keyboard
-    case ui::VKEY_DBE_DBCSCHAR:
-      input_method_ids_to_switch.push_back(
-          GetInputMethodIDByEngineID("nacl_mozc_jp"));
-      input_method_ids_to_switch.push_back(
-          GetInputMethodIDByEngineID("xkb:jp::jpn"));
-      break;
-    default:
-      break;
-  }
-  if (input_method_ids_to_switch.empty()) {
-    DVLOG(1) << "Unexpected VKEY: " << accelerator.key_code();
-    return std::vector<std::string>();
-  }
-
-  // Obtain the intersection of input_method_ids_to_switch and available_imes_.
-  for (const mojom::ImeInfo& ime : available_imes_) {
-    if (base::ContainsValue(input_method_ids_to_switch, ime.id))
-      candidate_ids.push_back(ime.id);
-  }
-  return candidate_ids;
 }
 
 }  // namespace ash

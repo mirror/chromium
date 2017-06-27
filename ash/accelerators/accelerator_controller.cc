@@ -12,7 +12,6 @@
 #include "ash/accessibility_delegate.h"
 #include "ash/accessibility_types.h"
 #include "ash/focus_cycler.h"
-#include "ash/ime/ime_controller.h"
 #include "ash/ime/ime_switch_type.h"
 #include "ash/media_controller.h"
 #include "ash/multi_profile_uma.h"
@@ -260,7 +259,14 @@ void HandleNewWindow() {
 }
 
 bool CanCycleInputMethod() {
-  return Shell::Get()->ime_controller()->CanSwitchIme();
+  InputMethodManager* manager = InputMethodManager::Get();
+  DCHECK(manager);
+  if (!manager->GetActiveIMEState()) {
+    LOG(WARNING) << "Cannot cycle through input methods as they are not "
+                    "initialized yet.";
+    return false;
+  }
+  return manager->GetActiveIMEState()->CanCycleInputMethod();
 }
 
 bool CanHandleCycleMru(const ui::Accelerator& accelerator) {
@@ -278,7 +284,7 @@ bool CanHandleCycleMru(const ui::Accelerator& accelerator) {
 void HandleNextIme() {
   base::RecordAction(UserMetricsAction("Accel_Next_Ime"));
   RecordImeSwitchByAccelerator();
-  Shell::Get()->ime_controller()->SwitchToNextIme();
+  InputMethodManager::Get()->GetActiveIMEState()->SwitchToNextInputMethod();
 }
 
 void HandleOpenFeedbackPage() {
@@ -290,7 +296,9 @@ void HandlePreviousIme(const ui::Accelerator& accelerator) {
   base::RecordAction(UserMetricsAction("Accel_Previous_Ime"));
   if (accelerator.key_state() == ui::Accelerator::KeyState::PRESSED) {
     RecordImeSwitchByAccelerator();
-    Shell::Get()->ime_controller()->SwitchToPreviousIme();
+    InputMethodManager::Get()
+        ->GetActiveIMEState()
+        ->SwitchToPreviousInputMethod();
   }
   // Else: consume the Ctrl+Space ET_KEY_RELEASED event but do not do anything.
 }
@@ -360,14 +368,21 @@ void HandleShowTaskManager() {
 }
 
 bool CanHandleSwitchIme(const ui::Accelerator& accelerator) {
-  return Shell::Get()->ime_controller()->CanSwitchImeWithAccelerator(
-      accelerator);
+  InputMethodManager* manager = InputMethodManager::Get();
+  DCHECK(manager);
+  if (!manager->GetActiveIMEState()) {
+    LOG(WARNING) << "Cannot switch input methods as they are not "
+                    "initialized yet.";
+    return false;
+  }
+  return manager->GetActiveIMEState()->CanSwitchInputMethod(accelerator);
 }
 
 void HandleSwitchIme(const ui::Accelerator& accelerator) {
   base::RecordAction(UserMetricsAction("Accel_Switch_Ime"));
   RecordImeSwitchByAccelerator();
-  Shell::Get()->ime_controller()->SwitchImeWithAccelerator(accelerator);
+  InputMethodManager::Get()->GetActiveIMEState()->SwitchInputMethod(
+      accelerator);
 }
 
 bool CanHandleToggleAppList(const ui::Accelerator& accelerator,

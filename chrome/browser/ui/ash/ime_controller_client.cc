@@ -75,24 +75,15 @@ void ImeControllerClient::SetImesManagedByPolicy(bool managed) {
 
 // ash::mojom::ImeControllerClient:
 void ImeControllerClient::SwitchToNextIme() {
-  InputMethodManager::State* state =
-      input_method_manager_->GetActiveIMEState().get();
-  if (state)
-    state->SwitchToNextInputMethod();
+  NOTIMPLEMENTED();
 }
 
 void ImeControllerClient::SwitchToPreviousIme() {
-  InputMethodManager::State* state =
-      input_method_manager_->GetActiveIMEState().get();
-  if (state)
-    state->SwitchToPreviousInputMethod();
+  NOTIMPLEMENTED();
 }
 
 void ImeControllerClient::SwitchImeById(const std::string& id) {
-  InputMethodManager::State* state =
-      input_method_manager_->GetActiveIMEState().get();
-  if (state)
-    state->ChangeInputMethod(id, true /* show_message */);
+  NOTIMPLEMENTED();
 }
 
 void ImeControllerClient::ActivateImeProperty(const std::string& key) {
