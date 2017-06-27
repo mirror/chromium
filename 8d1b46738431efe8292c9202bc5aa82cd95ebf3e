@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add7b417_0b0ca4fe",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "Just want to clarify what matched/unmatched means given our discussion about multiple service workers.  Let\u0027s rephrase the last sentence to:\n\nThis class tracks processes with \u0027unmatched\u0027 service workers until the processes are reused for a navigation to a matching site. After a single matching navigation is put into the process, all service workers for that site in that process are considered \u0027matched.\u0027",
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60c3d0d_d7346d80",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "nit: Rephrase slightly to clarify:\n\nRegisters |render_process_host| as having an unmatched service worker for |site_url|.",
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c729d42_695a0278",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "nit: Rephrase slightly:\n\nFind a process with an unmatched service worker for |site_url| and removes the process from the tracker if it exists.",
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff52cc57_8c1b16d7",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "nit: Drop \"And\"",
+      "range": {
+        "startLine": 850,
+        "startChar": 61,
+        "endLine": 850,
+        "endChar": 64
+      },
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bfce93_e399d60e",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 3212,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "nit: is_unmatched_service_worker",
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40aa5b05_9d225805",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 3239,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "nit: Rephrase slightly:\n\nIf not, attempt to reuse an existing process with an unmatched service worker for this site. Exclude cases where the policy is DEFAULT and...",
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2982a87d_caa9928b",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "nit: and there are processes with unmatched service workers for the site,",
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d89d8d_b4d13eda",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "nit: the newest process with an unmatched service worker is reused.",
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d407ca_1c0c0738",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "nit: An existing process with an unmatched service worker for the site is reused only...",
+      "revId": "8d1b46738431efe8292c9202bc5aa82cd95ebf3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

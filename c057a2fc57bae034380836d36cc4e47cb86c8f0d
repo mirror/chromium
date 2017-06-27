@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "ca50f97f_02a8dbdd",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f264b95d_0d798fb4",
+      "revId": "c057a2fc57bae034380836d36cc4e47cb86c8f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95a5c5be_816499e2",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 21
@@ -192,6 +210,24 @@
       "revId": "c057a2fc57bae034380836d36cc4e47cb86c8f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb0bf5f_5bad739b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "That\u0027s fair.  It makes the definition of matched vs unmatched a little less clear, but I think it\u0027s better for behavior.  I\u0027ll suggest a few wording changes on the comment to make it clearer.",
+      "parentUuid": "55af4adb_a9fb32a2",
+      "revId": "c057a2fc57bae034380836d36cc4e47cb86c8f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -755,6 +791,30 @@
       "revId": "c057a2fc57bae034380836d36cc4e47cb86c8f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8427ea_11ffba19",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-27T22:52:14Z",
+      "side": 1,
+      "message": "Oh, I see.  I was confused because I was incorrectly reading this as applying in general, but it\u0027s specific to the DEFAULT and not the REUSE_PENDING_OR_COMMITTED_SITE case.  Looks good.",
+      "parentUuid": "bd0ed7ea_fa170831",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 43
+      },
+      "revId": "c057a2fc57bae034380836d36cc4e47cb86c8f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
