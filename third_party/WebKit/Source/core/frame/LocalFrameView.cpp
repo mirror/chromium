@@ -1266,6 +1266,7 @@ void LocalFrameView::UpdateLayout() {
 
     if (!PerformLayout(in_subtree_layout)) {
       TRACE_EVENT_END0("devtools.timeline", "Layout");
+      nested_layout_count_--;
       return;
     }
 
