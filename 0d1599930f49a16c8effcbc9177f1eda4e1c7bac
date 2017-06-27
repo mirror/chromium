@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a24fd4c2_9937ee6b",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T15:43:46Z",
+      "side": 1,
+      "message": "nit: set_size and Offset can be replaced with\n\nrect.Inset((rect.width() - kGridSelectedSize) / 2,\n           (rect.height() - kGridSelectedSize) / 2);",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 69
+      },
+      "revId": "0d1599930f49a16c8effcbc9177f1eda4e1c7bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8139de9d_2e215990",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T15:43:46Z",
+      "side": 1,
+      "message": "nit: use a bool for this for here and line 246 so that we only call this once.",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 45
+      },
+      "revId": "0d1599930f49a16c8effcbc9177f1eda4e1c7bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d43265b_be2e41a1",
+        "filename": "ui/app_list/views/tile_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T15:43:46Z",
+      "side": 1,
+      "message": "nit: negate and bail out early\ni.e.\n  if (!white_selected_color_enabled_ || !selected)\n    return;",
+      "revId": "0d1599930f49a16c8effcbc9177f1eda4e1c7bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38971c08_6abbb132",
+        "filename": "ui/app_list/views/tile_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T15:43:46Z",
+      "side": 1,
+      "message": "nit: rect.Inset((rect..width() - kGridSelectedSize) / 2,\n                (rect.height() - kGridSelectedSize) / 2);",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 67
+      },
+      "revId": "0d1599930f49a16c8effcbc9177f1eda4e1c7bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4cd9b7_83e3042b",
+        "filename": "ui/app_list/views/tile_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T15:43:46Z",
+      "side": 1,
+      "message": "SetBackground(nullptr) before SchedulePaint() to ensure no background is set previously.",
+      "revId": "0d1599930f49a16c8effcbc9177f1eda4e1c7bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
