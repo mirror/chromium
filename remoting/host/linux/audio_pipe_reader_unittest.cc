@@ -90,7 +90,7 @@ class AudioPipeReaderTest : public testing::Test,
 };
 
 // Verify that the reader can detect when the pipe is created and destroyed.
-TEST_F(AudioPipeReaderTest, CreateAndDestroyPipe) {
+TEST_F(AudioPipeReaderTest, DISABLED_CreateAndDestroyPipe) {
   ASSERT_NO_FATAL_FAILURE(CreatePipe());
   ASSERT_NO_FATAL_FAILURE(WriteAndWait("ABCD"));
   ASSERT_NO_FATAL_FAILURE(DeletePipe());
@@ -103,7 +103,7 @@ TEST_F(AudioPipeReaderTest, CreateAndDestroyPipe) {
 }
 
 // Verifies that the reader reads at the right speed.
-TEST_F(AudioPipeReaderTest, Pacing) {
+TEST_F(AudioPipeReaderTest, DISABLED_Pacing) {
   int test_data_size = AudioPipeReader::kSamplingRate *
                        AudioPipeReader::kChannels *
                        AudioPipeReader::kBytesPerSample / 2;
