@@ -95,11 +95,15 @@ void ExtensionUninstallDialog::ConfirmUninstall(
   }
 
   // Track that extension uninstalled externally.
-  DCHECK(!observer_.IsObserving(ExtensionRegistry::Get(profile_)));
+  observer_.RemoveAll();
   observer_.Add(ExtensionRegistry::Get(profile_));
 
   // Dialog will be shown once icon is loaded.
-  DCHECK(!dialog_shown_);
+  dialog_shown_ = false;
+  // Reset icon first to prevent handling |OnIconUpdated| in context of previous
+  // icon.
+  icon_.reset();
+
   icon_ = ChromeAppIconService::Get(profile_)->CreateIcon(this, extension->id(),
                                                           kIconSize);
   icon_->image_skia().GetRepresentation(GetScaleFactor(parent_));
