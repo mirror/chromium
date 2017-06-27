@@ -1,6 +1,6 @@
 <!DOCTYPE html> Passes if it does not crash.
-
-<body dir="rtl">
+<html dir="rtl">
+<body>
 </body>
 <script type="text/javascript">
 function selectionChangeHandler() {
@@ -44,7 +44,7 @@ window.onload = function() {
             eventSender.mouseMoveTo(100, 100);
             eventSender.mouseDown();
             setTimeout(function() {
-                eventSender.mouseMoveTo(100, 101);
+                eventSender.mouseMoveTo(100, 120);
                 eventSender.mouseUp();
                 if (testRunner)
                     testRunner.notifyDone();
