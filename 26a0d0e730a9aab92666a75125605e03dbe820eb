@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea815033_3eab17cd",
+        "filename": "media/midi/task_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-27T10:11:24Z",
+      "side": 1,
+      "message": "Just because taking a lock inside GetTaskRunner() looks a little simple to me (rather than using AssertAcuired check).\n\nActually, there is no difference between following two cases.\n 1) PostBoundTask() -\u003e UnbindInstance() -\u003e RunTask()\n 2) PostBoundTask() line 65-72 -\u003e UnbindInstance() -\u003e PostBoundTask() line 73-76 -\u003e RunTask()\nand 1) could happen even with the original code.\n\nWhat we need to ensure here is we don\u0027t call PostTask with kInvalidInstanceId (it would pass instance_id !\u003d bound_instance_id_ check at line 123 once the instance is unbound)",
+      "parentUuid": "cc87b8df_5d9da011",
+      "revId": "26a0d0e730a9aab92666a75125605e03dbe820eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa90f08a_a725c02b",
         "filename": "media/midi/task_service.h",
         "patchSetId": 3
