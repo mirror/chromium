@@ -345,6 +345,15 @@ class VariationsService
   DISALLOW_COPY_AND_ASSIGN(VariationsService);
 };
 
+bool CreateTrialsFromSeedCommon(
+    VariationsSeed* seed,
+    std::unique_ptr<base::FeatureList>* feature_list,
+    std::unique_ptr<const base::FieldTrial::EntropyProvider>*
+        low_entropy_provider,
+    PrefService* local_state,
+    UIStringOverrider* ui_string_overrider,
+    std::unique_ptr<ClientFilterableState>* client_state);
+
 }  // namespace variations
 
 #endif  // COMPONENTS_VARIATIONS_SERVICE_VARIATIONS_SERVICE_H_
