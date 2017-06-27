@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ad1c0a5_d5d13f07",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-27T23:42:30Z",
+      "side": 1,
+      "message": "This will need to be updated once https://chromium-review.googlesource.com/c/550585/ lands.",
+      "revId": "e6dc736e6ef0f9a4eeb004f15f5de4d1673389e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
