@@ -40,6 +40,31 @@ class MockDesktopSessionDurationTracker
   DISALLOW_COPY_AND_ASSIGN(MockDesktopSessionDurationTracker);
 };
 
+// Mock class for |DesktopSessionDurationTracker::Observer| for testing.
+class MockDesktopSessionObserver
+    : public metrics::DesktopSessionDurationTracker::Observer {
+ public:
+  MockDesktopSessionObserver() {}
+
+  bool is_session_end() const { return session_ended_; }
+  bool is_session_start() const { return session_started_; }
+
+ protected:
+  void OnSessionEnded(base::TimeDelta session_length) override {
+    session_ended_ = true;
+  }
+
+  void OnSessionStarted(base::TimeTicks session_start) override {
+    session_started_ = true;
+  }
+
+ private:
+  bool session_ended_ = false;
+  bool session_started_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(MockDesktopSessionObserver);
+};
+
 class DesktopSessionDurationTrackerTest : public testing::Test {
  public:
   DesktopSessionDurationTrackerTest()
@@ -55,6 +80,7 @@ class DesktopSessionDurationTrackerTest : public testing::Test {
 
   base::HistogramTester histogram_tester_;
   MockDesktopSessionDurationTracker instance_;
+  MockDesktopSessionObserver observer_;
 
  private:
   base::MessageLoop loop_;
@@ -205,4 +231,34 @@ TEST_F(DesktopSessionDurationTrackerTest, TestVisibilityTimeoutDiscount) {
   base::TimeTicks after_session_end = base::TimeTicks::Now();
 
   ExpectTotalDuration(after_session_end - before_session_start - kDelay);
+}
+
+TEST_F(DesktopSessionDurationTrackerTest, TestObserver) {
+  instance_.SetInactivityTimeoutForTesting(1);
+
+  instance_.AddObserver(&observer_);
+
+  EXPECT_FALSE(observer_.is_session_start());
+  EXPECT_FALSE(observer_.is_session_end());
+  EXPECT_FALSE(instance_.in_session());
+  EXPECT_FALSE(instance_.is_visible());
+  histogram_tester_.ExpectTotalCount("Session.TotalDuration", 0);
+
+  instance_.OnVisibilityChanged(true, kZeroTime);
+  instance_.OnUserEvent();
+  EXPECT_TRUE(instance_.in_session());
+  EXPECT_FALSE(observer_.is_session_end());
+  EXPECT_TRUE(observer_.is_session_start());
+  EXPECT_TRUE(instance_.is_visible());
+  histogram_tester_.ExpectTotalCount("Session.TotalDuration", 0);
+
+  // Wait until the session expires.
+  while (!instance_.is_timeout()) {
+    base::RunLoop().RunUntilIdle();
+  }
+
+  EXPECT_TRUE(observer_.is_session_end());
+  EXPECT_FALSE(instance_.in_session());
+  EXPECT_TRUE(instance_.is_visible());
+  histogram_tester_.ExpectTotalCount("Session.TotalDuration", 1);
 }
