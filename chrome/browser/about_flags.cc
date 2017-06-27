@@ -3039,6 +3039,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kMacTouchBarDescription, kOsMac,
      FEATURE_VALUE_TYPE(features::kBrowserTouchBar)},
 #endif  // defined(OS_MACOSX)
+    {"enable-fullscreen-exit-ui", flag_descriptions::kFullscreenExitUIName,
+     flag_descriptions::kFullscreenExitUIDescription,
+     kOsWin | kOsLinux | kOsCrOS,
+     SINGLE_VALUE_TYPE(switches::kEnableFullscreenExitUI)},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

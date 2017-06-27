@@ -31,6 +31,7 @@
 #include "chrome/browser/ui/views/frame/contents_web_view.h"
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/frame/web_contents_close_handler.h"
+#include "chrome/browser/ui/views/fullscreen_control_host.h"
 #include "chrome/browser/ui/views/load_complete_listener.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/tabs/tab_renderer_data.h"
@@ -54,6 +55,7 @@ class BrowserViewLayout;
 class ContentsLayoutManager;
 class DownloadShelfView;
 class ExclusiveAccessBubbleViews;
+class FullscreenControlHost;
 class InfoBarContainerView;
 class LocationBarView;
 class NewBackShortcutBubble;
@@ -481,6 +483,7 @@ class BrowserView : public BrowserWindow,
   // Do not friend BrowserViewLayout. Use the BrowserViewLayoutDelegate
   // interface to keep these two classes decoupled and testable.
   friend class BrowserViewLayoutDelegateImpl;
+  friend class FullscreenControlViewTest;
   FRIEND_TEST_ALL_PREFIXES(BrowserViewTest, BrowserView);
 
   // Appends to |toolbars| a pointer to each AccessiblePaneView that
@@ -579,6 +582,10 @@ class BrowserView : public BrowserWindow,
 
   // Returns the max top arrow height for infobar.
   int GetMaxTopInfoBarArrowHeight();
+
+  // Gets the FullscreenControlHost for this BrowserView, creating it if it does
+  // not yet exist.
+  FullscreenControlHost* GetFullscreenControlHost();
 
   // The BrowserFrame that hosts this view.
   BrowserFrame* frame_ = nullptr;
@@ -706,6 +713,8 @@ class BrowserView : public BrowserWindow,
 
   mutable base::WeakPtrFactory<BrowserView> activate_modal_dialog_factory_{
       this};
+
+  std::unique_ptr<FullscreenControlHost> fullscreen_control_host_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserView);
 };

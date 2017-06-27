@@ -348,6 +348,10 @@ const char kEnableExtensionActivityLogTesting[] =
 // crbug.com/142458 .
 const char kEnableFastUnload[] = "enable-fast-unload";
 
+// Enables the full screen exit UI to allow exiting fullscreen from mouse or
+// touch.
+const char kEnableFullscreenExitUI[] = "enable-fullscreen-exit-ui";
+
 // Enables the Material Design feedback form.
 const char kEnableMaterialDesignFeedback[] = "enable-md-feedback";
 

@@ -113,6 +113,7 @@ extern const char kEnableExperimentalHotwordHardware[];
 extern const char kEnableExtensionActivityLogging[];
 extern const char kEnableExtensionActivityLogTesting[];
 extern const char kEnableFastUnload[];
+extern const char kEnableFullscreenExitUI[];
 extern const char kEnableMaterialDesignFeedback[];
 extern const char kEnableMaterialDesignPolicyPage[];
 extern const char kEnableNaCl[];
