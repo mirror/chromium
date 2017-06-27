@@ -152,7 +152,7 @@ out/Default chrome/test:unit_tests`).
 Once it is built, you can simply run the browser:
 
 ```shell
-$ out/Default/chrome
+$ open out/Default/Chromium.app
 ```
 
 ## Running test targets
