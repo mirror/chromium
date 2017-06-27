@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8cf1253_89051af2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/remote/RemoteMediaPlayerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-27T22:18:46Z",
+      "side": 1,
+      "message": "nit: should we have a TODO and/or link to the bug for the reference and highlighting this is supposed to be temporary?",
+      "revId": "4db830b0ee04953e15586dc51f0304b62b234090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f7e821_fcdaa98d",
+        "filename": "chrome/browser/media/android/router/media_router_dialog_controller_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-27T22:18:46Z",
+      "side": 1,
+      "message": "You should just use initiator() method of the base class that\u0027s already protected and returns WebContents*.",
+      "revId": "4db830b0ee04953e15586dc51f0304b62b234090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
