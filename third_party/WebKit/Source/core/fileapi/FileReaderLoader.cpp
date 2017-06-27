@@ -90,6 +90,7 @@ void FileReaderLoader::Start(ExecutionContext* execution_context,
   // FIXME: Should this really be 'internal'? Do we know anything about the
   // actual request that generated this fetch?
   request.SetRequestContext(WebURLRequest::kRequestContextInternal);
+  request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeSameOrigin);
 
   request.SetHTTPMethod(HTTPNames::GET);
   if (has_range_)
@@ -98,7 +99,6 @@ void FileReaderLoader::Start(ExecutionContext* execution_context,
         AtomicString(String::Format("bytes=%d-%d", range_start_, range_end_)));
 
   ThreadableLoaderOptions options;
-  options.fetch_request_mode = WebURLRequest::kFetchRequestModeSameOrigin;
   // FIXME: Is there a directive to which this load should be subject?
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
