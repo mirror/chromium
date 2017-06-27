@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bad9028_b4191629",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8e3f4cb_17f77821",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 31
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "988b502f_043a9417",
         "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3984e7_348b3c49",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "RGB to YUV is relatively simple. Duplication of code shouldn\u0027t be an issue.",
+      "parentUuid": "988b502f_043a9417",
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,30 @@
       "side": 1,
       "message": "This actually depends on how the encoder uses the timestamp. WebrtcVideoEncoderVpx doesn\u0027t use the clock_, so it can be removed from there.  There are two possible approaches:\n 1. base::TimeTicks::Now() - first_frame_timestamp. \n 2. Increment timestamp for every frame by certain amount (e.g. params.duration).\n\nFor the VPX encoder we pass 0 as timestamp. The encoder also gets duration for each frame which is specified with FrameParams.duration. Internally libvpx calculates target_bitrate*duration to estimate target frame size.",
       "parentUuid": "f072bd1c_cbc34ad8",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 77
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c6bbd9_0a316f83",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "The only contract that the VideoEncodeAccelerator interface makes regarding the use of the timestamp is that the timestamp for a frame passed to encode must be the same as the timestamp passed to BitstreamBufferReady() when the encoding is done. What the specific VEA implementations do with the timestamp, I\u0027ll have to research.",
+      "parentUuid": "8170da1a_6869e6da",
       "range": {
         "startLine": 26,
         "startChar": 0,
@@ -136,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "c32ce2dd_c3e6841d",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll redesign with that in mind.",
+      "parentUuid": "b90a23db_b20607c2",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "369d8f1f_67995a5b",
         "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
         "patchSetId": 3
@@ -183,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "32ffbc51_b1d31dd1",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e4b71342_7520b4fa",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "630f6b38_c25724a7",
         "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
         "patchSetId": 3
@@ -203,6 +317,30 @@
       "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3a7913_3e54aa12",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "ah, makes sense. thanks for the explanation.",
+      "parentUuid": "630f6b38_c25724a7",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 66
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +391,30 @@
     },
     {
       "key": {
+        "uuid": "8e4fd6dc_d2eea3f3",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Done. I\u0027m also imagining it might be useful to have a method for getting available accelerated codecs - this already exists at the VEA level (GetSupportedProfiles: https://cs.chromium.org/chromium/src/media/video/video_encode_accelerator.h?rcl\u003d81ee6902392816c3e874b5b3aa4874362a605736\u0026l\u003d105). I can just make a method that essentially just wraps GetSupportedProfiles.",
+      "parentUuid": "98c04a00_eef00854",
+      "range": {
+        "startLine": 104,
+        "startChar": 62,
+        "endLine": 104,
+        "endChar": 75
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47c3654e_12a8449f",
         "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
         "patchSetId": 3
@@ -273,6 +435,30 @@
       "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8e8e0b_7f87de72",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47c3654e_12a8449f",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -299,6 +485,30 @@
     },
     {
       "key": {
+        "uuid": "c304b5e3_6925466a",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "04e3cd16_aa332576",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ddd4b61_b61a087c",
         "filename": "remoting/codec/webrtc_video_encoder_vea.h",
         "patchSetId": 3
@@ -322,6 +532,30 @@
     },
     {
       "key": {
+        "uuid": "01700936_9471108e",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ddd4b61_b61a087c",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38e9434a_cab44cfd",
         "filename": "remoting/codec/webrtc_video_encoder_vea.h",
         "patchSetId": 3
@@ -333,6 +567,30 @@
       "writtenOn": "2017-06-26T22:54:08Z",
       "side": 1,
       "message": "FWIW RGB-YUV conversion is just a few lines of code, see https://codesearch.chromium.org/chromium/src/remoting/codec/webrtc_video_encoder_vpx.cc?q\u003dwebrtc_video_encod+package:%5Echromium$\u0026l\u003d555",
+      "range": {
+        "startLine": 30,
+        "startChar": 54,
+        "endLine": 30,
+        "endChar": 73
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745fe282_f30633f7",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Ack - I\u0027ll add it in, but first there are some prerequisite things to take care of, e.g. allocation of a frame and setting the YUV format.",
+      "parentUuid": "38e9434a_cab44cfd",
       "range": {
         "startLine": 30,
         "startChar": 54,
@@ -368,6 +626,30 @@
     },
     {
       "key": {
+        "uuid": "4ee35aff_9c360a29",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Yeah - i think i make a similar comment somewhere later in the code - i think that makes sense",
+      "parentUuid": "a1e2293b_6f8e7a8a",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f90151c_1148d4c4",
         "filename": "remoting/codec/webrtc_video_encoder_vea.h",
         "patchSetId": 3
@@ -391,6 +673,30 @@
     },
     {
       "key": {
+        "uuid": "d3556cce_9d359b05",
+        "filename": "remoting/codec/webrtc_video_encoder_vea.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Perfect - I hadn\u0027t seen this document before, I\u0027ll read through it thoroughly. Code has been changed.",
+      "parentUuid": "8f90151c_1148d4c4",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 75
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe21460e_60a8f014",
         "filename": "remoting/codec/webrtc_video_encoder_vea_unittest.cc",
         "patchSetId": 3
@@ -411,6 +717,30 @@
       "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47caa651_50d31246",
+        "filename": "remoting/codec/webrtc_video_encoder_vea_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-06-27T20:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe21460e_60a8f014",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 46
+      },
+      "revId": "cfa2e09b0cc5e62eb03010929c6095579802f745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
