@@ -269,6 +269,24 @@
     },
     {
       "key": {
+        "uuid": "3cb60946_2131e430",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-06-27T00:18:10Z",
+      "side": 1,
+      "message": "Hmm... So I thought that would work, but after some thought, wouldn\u0027t that prevent us from visiting the element with id\u003d\"in-flow\" (and thus clearing the last_text_node_ member) in a slot whose distributed nodes looked like:\n\n\u003cdiv style\u003d\"display: contents\"\u003e\u003c/div\u003e\u003cdiv id\u003d\"in-flow\"\u003e\u003c/div\u003e\n\n?\n\nI.e., we\u0027d act as if the whole \u003cslot\u003e was empty. I think the logic here is going to need to be somewhat nasty somehow... I think the best I can think of is something like:\n\n  Node* child;\n  if (last_display_contents_-\u003eIsActiveSlotOrActiveInsertionPoint()) {\n    child \u003d first-distributed-node;\n    if (child \u0026\u0026 HasDisplayContents(*child)) {\n      if (Node* layout_child \u003d FirstLayoutChild(*child))\n        child \u003d layout_child;\n      else\n        child \u003d NextLayoutSibling(*child);\n    }\n  } else {\n    child \u003d FirstLayoutChild(*last_display_contents_);\n  }",
+      "parentUuid": "030d5081_4cc3f6a1",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4832662f_f8ab2515",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13
