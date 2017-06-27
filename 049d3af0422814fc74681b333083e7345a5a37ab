@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd219944_ce757839",
+        "filename": "components/translate/content/renderer/translate_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-06-27T07:43:01Z",
+      "side": 1,
+      "message": "super nit: // static is more common.",
+      "revId": "049d3af0422814fc74681b333083e7345a5a37ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
