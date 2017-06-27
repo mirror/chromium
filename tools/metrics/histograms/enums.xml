@@ -37887,6 +37887,11 @@ from previous Chrome versions.
   <int value="2" label="The AudioContext successfully autoplayed"/>
 </enum>
 
+<enum name="WebAudioFIFOUnderflowGlitchResult">
+  <int value="0" label="No underflow glitches"/>
+  <int value="1" label="Underflow glitches"/>
+</enum>
+
 <enum name="WebBluetoothConnectGATTOutcome">
   <int value="0" label="Success"/>
   <int value="1" label="Device no longer in range"/>

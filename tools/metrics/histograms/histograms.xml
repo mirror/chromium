@@ -82823,6 +82823,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebAudio.PushPullFIFO.UnderflowGlitches"
+    enum="WebAudioFIFOUnderflowGlitchResult">
+  <owner>rtoy@chromium.org</owner>
+  <owner>hongchan@chromium.org</owner>
+  <summary>
+    Captures if WebAudio caused glitches or not due to the FIFO underflow during
+    the BaseAudioContext's lifetime.
+  </summary>
+</histogram>
+
+<histogram name="WebAudio.PushPullFIFO.UnderflowPercentage" units="%">
+  <owner>rtoy@chromium.org</owner>
+  <owner>hongchan@chromium.org</owner>
+  <summary>
+    Percentage of FIFO underflow happened due to the the missed deadline of
+    WebAudio rendering engine.
+  </summary>
+</histogram>
+
 <histogram name="WebAudio.UserGesture" enum="UserGestureRequirement">
   <obsolete>
     Deprecated 2016-09. As of M55, this is no longer recorded.
