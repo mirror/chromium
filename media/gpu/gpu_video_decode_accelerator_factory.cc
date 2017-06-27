@@ -16,7 +16,7 @@
 #include "media/gpu/dxva_video_decode_accelerator_win.h"
 #elif defined(OS_MACOSX)
 #include "media/gpu/vt_video_decode_accelerator_mac.h"
-#elif defined(OS_CHROMEOS)
+#elif defined(OS_CHROMEOS) || defined(OS_LINUX)
 #if defined(USE_V4L2_CODEC)
 #include "media/gpu/v4l2_device.h"
 #include "media/gpu/v4l2_slice_video_decode_accelerator.h"
@@ -82,11 +82,12 @@ GpuVideoDecodeAcceleratorFactory::GetDecoderCapabilities(
 // profile (instead of calculating a superset).
 // TODO(posciak,henryhsu): improve this so that we choose a superset of
 // resolutions and other supported profile parameters.
+  DVLOG(1) << "Get Supported profiles";
 #if defined(OS_WIN)
   capabilities.supported_profiles =
       DXVAVideoDecodeAccelerator::GetSupportedProfiles(gpu_preferences,
                                                        workarounds);
-#elif defined(OS_CHROMEOS)
+#elif defined(OS_CHROMEOS) || defined(OS_LINUX)
   VideoDecodeAccelerator::SupportedProfiles vda_profiles;
 #if defined(USE_V4L2_CODEC)
   vda_profiles = V4L2VideoDecodeAccelerator::GetSupportedProfiles();
@@ -139,7 +140,7 @@ GpuVideoDecodeAcceleratorFactory::CreateVDA(
     &GpuVideoDecodeAcceleratorFactory::CreateV4L2VDA,
     &GpuVideoDecodeAcceleratorFactory::CreateV4L2SVDA,
 #endif
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if (defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)
     &GpuVideoDecodeAcceleratorFactory::CreateVaapiVDA,
 #endif
 #if defined(OS_MACOSX)
@@ -220,7 +221,7 @@ GpuVideoDecodeAcceleratorFactory::CreateV4L2SVDA(
 }
 #endif
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if (defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)
 std::unique_ptr<VideoDecodeAccelerator>
 GpuVideoDecodeAcceleratorFactory::CreateVaapiVDA(
     const gpu::GpuDriverBugWorkarounds& workarounds,

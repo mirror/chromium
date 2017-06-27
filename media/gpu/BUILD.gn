@@ -18,7 +18,7 @@ if (is_mac) {
   import("//build/config/mac/mac_sdk.gni")
 }
 
-if (is_chromeos && current_cpu != "arm") {
+if ((is_chromeos || is_desktop_linux) && current_cpu != "arm") {
   action("libva_generate_stubs") {
     extra_header = "va_stub_header.fragment"
 
@@ -234,7 +234,7 @@ component("gpu") {
     }
   }
 
-  if (is_chromeos || is_win) {
+  if (is_chromeos || is_win || is_desktop_linux) {
     sources += [
       "accelerated_video_decoder.h",
       "h264_decoder.cc",
@@ -243,7 +243,7 @@ component("gpu") {
       "h264_dpb.h",
     ]
   }
-  if (is_chromeos) {
+  if (is_chromeos || is_desktop_linux) {
     sources += [
       "vp8_decoder.cc",
       "vp8_decoder.h",
@@ -374,7 +374,7 @@ component("gpu") {
 }
 
 # TODO(watk): Run this on bots. http://crbug.com/461437
-if (is_win || is_android || is_chromeos) {
+if (is_win || is_android || is_chromeos || is_desktop_linux) {
   test("video_decode_accelerator_unittest") {
     sources = [
       "video_accelerator_unittest_helpers.h",
@@ -484,7 +484,7 @@ source_set("android_video_decode_accelerator_unittests") {
   }
 }
 
-if (is_chromeos || is_mac || is_win) {
+if (is_chromeos || is_mac || is_win || is_desktop_linux) {
   test("video_encode_accelerator_unittest") {
     deps = [
       "//base",
@@ -517,7 +517,7 @@ if (is_chromeos || is_mac || is_win) {
   }
 }
 
-if (is_chromeos) {
+if (is_chromeos || is_desktop_linux) {
   test("jpeg_decode_accelerator_unittest") {
     deps = [
       "//base",

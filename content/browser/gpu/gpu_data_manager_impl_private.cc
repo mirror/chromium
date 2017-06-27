@@ -760,7 +760,11 @@ void GpuDataManagerImplPrivate::AppendRendererCommandLine(
   DCHECK(command_line);
 
   if (ShouldDisableAcceleratedVideoDecode(command_line))
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+    command_line->AppendSwitch(switches::kEnableAcceleratedVideo);
+#else
     command_line->AppendSwitch(switches::kDisableAcceleratedVideoDecode);
+#endif
 
 #if defined(USE_AURA)
   if (!CanUseGpuBrowserCompositor())
@@ -825,7 +829,11 @@ void GpuDataManagerImplPrivate::AppendGpuCommandLine(
     if (gpu_preferences) {
       gpu_preferences->disable_accelerated_video_decode = true;
     } else {
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+      command_line->AppendSwitch(switches::kEnableAcceleratedVideo);
+#else
       command_line->AppendSwitch(switches::kDisableAcceleratedVideoDecode);
+#endif
     }
   }
 
@@ -929,7 +937,12 @@ void GpuDataManagerImplPrivate::UpdateRendererWebPrefs(
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
   if (!ShouldDisableAcceleratedVideoDecode(command_line) &&
-      !command_line->HasSwitch(switches::kDisableAcceleratedVideoDecode)) {
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+      command_line->HasSwitch(switches::kEnableAcceleratedVideo)
+#else
+      !command_line->HasSwitch(switches::kDisableAcceleratedVideoDecode)
+#endif
+          ) {
     prefs->pepper_accelerated_video_decode_enabled = true;
   }
   prefs->disable_2d_canvas_copy_on_write =
@@ -1105,7 +1118,13 @@ bool GpuDataManagerImplPrivate::ShouldDisableAcceleratedVideoDecode(
   // to resolve crbug/442039 has been collected.
   const std::string group_name = base::FieldTrialList::FindFullName(
       "DisableAcceleratedVideoDecode");
-  if (command_line->HasSwitch(switches::kDisableAcceleratedVideoDecode)) {
+  if (
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+      !command_line->HasSwitch(switches::kEnableAcceleratedVideo)
+#else
+      command_line->HasSwitch(switches::kDisableAcceleratedVideoDecode)
+#endif
+          ) {
     // It was already disabled on the command line.
     return false;
   }

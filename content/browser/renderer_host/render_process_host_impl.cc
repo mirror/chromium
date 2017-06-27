@@ -2104,7 +2104,11 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisable2dCanvasImageChromium,
     switches::kDisable3DAPIs,
     switches::kDisableAcceleratedJpegDecoding,
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+    switches::kEnableAcceleratedVideo,
+#else
     switches::kDisableAcceleratedVideoDecode,
+#endif
     switches::kDisableBackgroundTimerThrottling,
     switches::kDisableBlinkFeatures,
     switches::kDisableBreakpad,
@@ -2259,8 +2263,10 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kEnablePepperTesting,
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)
+#if !defined(OS_LINUX) || defined(OS_CHROMEOS)
     switches::kDisableWebRtcHWDecoding,
     switches::kDisableWebRtcHWEncoding,
+#endif
     switches::kEnableWebRtcSrtpAesGcm,
     switches::kEnableWebRtcStunOrigin,
     switches::kEnforceWebRtcIPPermissionCheck,
