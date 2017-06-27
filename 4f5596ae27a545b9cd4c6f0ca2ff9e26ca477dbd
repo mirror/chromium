@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7559c3ee_71c762a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-27T21:03:08Z",
+      "side": 1,
+      "message": "I could probably remove this all together since the offset shouldn\u0027t ever be less than the min offset e.g.\n\n\nif (offset \u003e getMinOffset()) {\n    onSheetOpened();\n} else {\n    onSheetClosed();\n}",
+      "range": {
+        "startLine": 1068,
+        "startChar": 29,
+        "endLine": 1068,
+        "endChar": 43
+      },
+      "revId": "4f5596ae27a545b9cd4c6f0ca2ff9e26ca477dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
