@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44f6c5e3_6c066c53",
+        "filename": "components/gcm_driver/crypto/gcm_decryption_result.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-27T15:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54a3e0a7_214aef8a",
+      "revId": "4dc6d1804678f5a6b051d61a7f5beb2e799eafae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2425e842_0fc6c885",
         "filename": "components/gcm_driver/crypto/message_payload_parser.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-27T15:20:44Z",
       "side": 1,
       "message": "little bit unclear to me what this has got to do with the *header* record size.. either distinguish this one from l43, or rename to just INVALID_BINARY_RECORD_SIZE ?",
+      "revId": "4dc6d1804678f5a6b051d61a7f5beb2e799eafae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18205162_4c0e1693",
+        "filename": "components/gcm_driver/crypto/message_payload_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-27T15:52:20Z",
+      "side": 1,
+      "message": "I removed the entire branch in favor of a DCHECK, it\u0027s redundant with the check on line 31.",
+      "parentUuid": "2425e842_0fc6c885",
       "revId": "4dc6d1804678f5a6b051d61a7f5beb2e799eafae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "4dc6d1804678f5a6b051d61a7f5beb2e799eafae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46781c5_4330f2c9",
+        "filename": "components/gcm_driver/crypto/message_payload_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-27T15:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c732c979_17d772d0",
+      "revId": "4dc6d1804678f5a6b051d61a7f5beb2e799eafae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
