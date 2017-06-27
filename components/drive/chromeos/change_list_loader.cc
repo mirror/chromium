@@ -579,13 +579,15 @@ void ChangeListLoader::LoadChangeListFromServerAfterLoadChangeList(
   logger_->Log(logging::LOG_INFO,
                "Apply change lists (is delta: %d)",
                is_delta_update);
+  // TODO(yamaguchi): Pass the team_drive_id to Apply() when we implement
+  // loading of Team Drive changelists.
   loader_controller_->ScheduleRun(base::Bind(
       &drive::util::RunAsyncTask, base::RetainedRef(blocking_task_runner_),
       FROM_HERE,
-      base::Bind(&ChangeListProcessor::Apply,
-                 base::Unretained(change_list_processor),
-                 base::Passed(&about_resource), base::Passed(&change_lists),
-                 is_delta_update),
+      base::Bind(
+          &ChangeListProcessor::Apply, base::Unretained(change_list_processor),
+          base::Passed(&about_resource), std::string() /* team_drive_id */,
+          base::Passed(&change_lists), is_delta_update),
       base::Bind(&ChangeListLoader::LoadChangeListFromServerAfterUpdate,
                  weak_ptr_factory_.GetWeakPtr(),
                  base::Owned(change_list_processor),

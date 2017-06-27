@@ -116,11 +116,15 @@ class ChangeListProcessor {
 
   // Applies change lists or full resource lists to |resource_metadata_|.
   //
+  // |team_drive_id| is the Team Drive's ID when applying change lists of a
+  // Team Drive, or an empty string when applying users's change lists,
+  //
   // |is_delta_update| determines the type of input data to process, whether
   // it is full resource lists (false) or change lists (true).
   //
   // Must be run on the same task runner as |resource_metadata_| uses.
   FileError Apply(std::unique_ptr<google_apis::AboutResource> about_resource,
+                  const std::string& team_drive_id,
                   std::vector<std::unique_ptr<ChangeList>> change_lists,
                   bool is_delta_update);
 
@@ -147,16 +151,26 @@ class ChangeListProcessor {
                    std::string /* parent_resource_id*/> ParentResourceIdMap;
 
   // Applies the pre-processed metadata from entry_map_ onto the resource
-  // metadata. |about_resource| must not be null.
-  FileError ApplyEntryMap(
-      int64_t changestamp,
-      std::unique_ptr<google_apis::AboutResource> about_resource);
+  // metadata.
+  FileError ApplyEntryMap(const std::string& root_entry_resource_id,
+                          int64_t changestamp);
 
   // Apply |entry| to resource_metadata_.
   FileError ApplyEntry(const ResourceEntry& entry);
 
+  // Retrieves the root entry of My Drive.
+  FileError GetMyDriveRootEntry(ResourceEntry* out_entry);
+
+  // Retrieves the root directory of a Team Drive.
+  FileError GetTeamDriveRoot(const std::string& team_drive_id,
+                             ResourceEntry* out_entry);
+
   // Adds the directories changed by the update on |entry| to |changed_dirs_|.
   void UpdateChangedDirs(const ResourceEntry& entry);
+
+  // Sets the largest changestamp of a Team Drive's change list.
+  FileError SetTeamDriveLargestChangestamp(const std::string& team_drive_id,
+                                           int64_t value);
 
   ResourceMetadata* resource_metadata_;  // Not owned.
   base::CancellationFlag* in_shutdown_;  // Not owned.
