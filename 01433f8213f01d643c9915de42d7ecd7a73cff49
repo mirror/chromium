@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08c7ef4e_473b1ce1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-27T15:33:36Z",
+      "side": 1,
+      "message": "You\u0027re right! I wasn\u0027t sure if I should keep the check the same as other places but it makes sense to take it out. Thanks!",
+      "parentUuid": "0a1f8da9_40dbe7d3",
+      "range": {
+        "startLine": 600,
+        "startChar": 14,
+        "endLine": 600,
+        "endChar": 71
+      },
+      "revId": "01433f8213f01d643c9915de42d7ecd7a73cff49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2c2da18_359565c6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "489a9f68_aa56b5a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-27T15:33:36Z",
+      "side": 1,
+      "message": "Thanks for catching this :)",
+      "parentUuid": "a2c2da18_359565c6",
+      "range": {
+        "startLine": 2222,
+        "startChar": 12,
+        "endLine": 2222,
+        "endChar": 38
+      },
+      "revId": "01433f8213f01d643c9915de42d7ecd7a73cff49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa8bde1_fc07cc54",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 15
@@ -62,6 +110,24 @@
       "revId": "01433f8213f01d643c9915de42d7ecd7a73cff49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdf8aff_ab0c7f90",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 5212,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-27T15:33:36Z",
+      "side": 1,
+      "message": "Yup, I\u0027ve added the two trigger ones.",
+      "parentUuid": "dfa8bde1_fc07cc54",
+      "revId": "01433f8213f01d643c9915de42d7ecd7a73cff49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
