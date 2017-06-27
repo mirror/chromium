@@ -8,6 +8,8 @@
 #include "platform/PlatformExport.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/text/AtomicStringHash.h"
 
 namespace blink {
 
@@ -21,7 +23,17 @@ class PLATFORM_EXPORT FontGlobalContext {
  public:
   static FontGlobalContext* Get(CreateIfNeeded = kCreate);
 
-  static inline FontCache& GetFontCache() { return Get()->font_cache; }
+  static inline FontCache& GetFontCache() { return Get()->font_cache_; }
+
+  static inline Vector<AtomicString>& GetPreferredLanguagesOverride() {
+    return Get()->perferred_languages_override_;
+  }
+
+  static inline const AtomicString& GetPlatformLanguage() {
+    return Get()->platform_language_;
+  }
+
+  static void SetPlatformLanguage(const AtomicString& language);
 
   // Called by MemoryCoordinator to clear memory.
   static void ClearMemory();
@@ -30,8 +42,12 @@ class PLATFORM_EXPORT FontGlobalContext {
   friend class WTF::ThreadSpecific<FontGlobalContext>;
 
   FontGlobalContext();
+  ~FontGlobalContext() {}
 
-  FontCache font_cache;
+  FontCache font_cache_;
+
+  Vector<AtomicString> perferred_languages_override_;
+  AtomicString platform_language_;
 };
 
 }  // namespace blink
