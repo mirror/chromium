@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de1662e7_082a9031",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/remote/RemoteMediaPlayerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-27T22:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8cf1253_89051af2",
+      "revId": "4db830b0ee04953e15586dc51f0304b62b234090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f7e821_fcdaa98d",
         "filename": "chrome/browser/media/android/router/media_router_dialog_controller_android.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "4db830b0ee04953e15586dc51f0304b62b234090",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85090c11_9e5b522b",
+        "filename": "chrome/browser/media/android/router/media_router_dialog_controller_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-27T22:43:34Z",
+      "side": 1,
+      "message": "Done.\n\nDoh, I knew there was a better way and it was already used all over this file. :P  Thanks!",
+      "parentUuid": "a7f7e821_fcdaa98d",
+      "revId": "4db830b0ee04953e15586dc51f0304b62b234090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
