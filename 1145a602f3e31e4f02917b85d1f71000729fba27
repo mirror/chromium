@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0106ecfa_0855c492",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-27T12:42:20Z",
+      "side": 1,
+      "message": "This is a step in the right direction, but I think to be safe I\u0027d like to see this function take a parameter of type RenderWidgetHostViewBase* and use it to verify that the element it\u0027s popping from the queue matches the RWHVx that received the acked touch event.",
+      "range": {
+        "startLine": 390,
+        "startChar": 39,
+        "endLine": 390,
+        "endChar": 58
+      },
+      "revId": "1145a602f3e31e4f02917b85d1f71000729fba27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a266a16e_99086713",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-27T12:42:20Z",
+      "side": 1,
+      "message": "Matching my comment in OnHandledTouchStart, pass |this| for the RWHVA when you make the call. Probably also a good idea to check and make sure the InputEventRouter isn\u0027t null ... we make this check elsewhere.\n\nMaybe also add a comment here mentioning that both RenderWidgetHostViewGuest/ChildFrame forward their Acked events here, to explain why we don\u0027t need this same code in those classes.",
+      "revId": "1145a602f3e31e4f02917b85d1f71000729fba27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
