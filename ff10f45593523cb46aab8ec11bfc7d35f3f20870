@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62a83acd_6ee77457",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-27T03:30:14Z",
+      "side": 1,
+      "message": "Passing around/switching on CSSPropertyID is something that Ribbon is working towards removing. this property specific logic should live inside the API files. Utils files should not reference CSSPropetyID, so this method should be refactored to remove the need for that before implementing these APIs. E.g. I removed the usage of this method in longhand parsing using callbacks in https://codereview.chromium.org/2849363002. For the shorthand parsing, this might be a case for calling ParseSingleValue of longhands directly. You might need to get property descriptors for longhand here. Will require some thought.",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547b8cc0_6ad71d68",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-27T03:30:14Z",
+      "side": 1,
+      "message": "I would merge the 2 utils files since one relies on the other. I would like to avoid property  utils files calling each other. These methods are clearly related so it makes sense for them to be in the same utils.\n\nedit: this issue is superseded by removing need to pass CSSPropertyID",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f24672_2059924a",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-27T03:30:14Z",
+      "side": 1,
+      "message": "can you please break out a separate patch that has the changes to this method separate from moving it? it\u0027s difficult to see the changes you have made here\n\nedit: this issue is superseded by removing need to pass CSSPropertyID",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc50003_deb6c0c9",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPITransition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-27T03:30:14Z",
+      "side": 1,
+      "message": "this is essentially the same as passing in a bool literal, would be better as an enum",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9306ad30_06ea4a2d",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPITransition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-27T03:30:14Z",
+      "side": 1,
+      "message": "This \u0027false\u0027 violates the style guide (although it was not introduced in this patch). Do you think it would be better to use local_content.UseAliasParsing() here or change this method to accept an enum so that a literal like this may be passed? I\u0027m leaning towards changing it to enum as passing a literal here makes it clear that there *is* no legacy parsing in this case, although that means that the local_context would need to store an enum instead of a bool. (since this patch didn\u0027t introduce the violation you don\u0027t need to fix it here)",
+      "revId": "ff10f45593523cb46aab8ec11bfc7d35f3f20870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
