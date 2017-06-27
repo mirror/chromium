@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71244e64_5a39d27b",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-27T04:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1329d7c7_a053c3dc",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8007753c_3467c559",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_posix.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fc439b_f8762168",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-27T04:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8007753c_3467c559",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "13d2df87_0a03c2ab",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_wifi_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-27T04:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa15d8b_9618e390",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b96495cf_6b6e16f2",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_wifi_mac.mm",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-23T23:19:54Z",
       "side": 1,
       "message": "Looks like there isn\u0027t an assign which takes a string\u0026\u0026.\n\nMaybe try using \"swap\", or \"*ssid_out \u003d std::move(ssid)\".",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30fdbeb_6c81ca64",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_wifi_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-27T04:28:01Z",
+      "side": 1,
+      "message": "#4? http://en.cppreference.com/w/cpp/string/basic_string/assign",
+      "parentUuid": "b96495cf_6b6e16f2",
       "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
