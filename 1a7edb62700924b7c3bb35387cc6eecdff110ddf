@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efe6cc78_e51989cf",
+        "filename": "chrome/browser/ui/window_visibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-27T19:44:48Z",
+      "side": 1,
+      "message": "The caller could provide a list of windows for which to return the visibility, but I decided that was not super useful since the impl will have to traverse all windows anyways. WDYT?",
+      "revId": "1a7edb62700924b7c3bb35387cc6eecdff110ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
