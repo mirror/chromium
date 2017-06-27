@@ -23,6 +23,14 @@
 #include "ui/gfx/win/rendering_window_manager.h"
 #endif
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#endif
+
+#if defined(OS_MACOSX)
+#include "base/message_loop/message_pump_mac.h"
+#endif
+
 namespace ui {
 namespace ws {
 
@@ -31,16 +39,30 @@ namespace {
 // The client Id 1 is reserved for the frame sink manager.
 const int32_t kInternalGpuChannelClientId = 2;
 
+#if defined(USE_X11)
+std::unique_ptr<base::MessagePump> CreateMessagePumpX11() {
+  // TODO(sad): This should create a TYPE_UI message pump, and create a
+  // PlatformEventSource when gpu process split happens.
+  return base::MessageLoop::CreateMessagePumpForType(
+      base::MessageLoop::TYPE_DEFAULT);
+}
+#endif  // defined(USE_X11)
+
+#if defined(OS_MACOSX)
+std::unique_ptr<base::MessagePump> CreateMessagePumpMac() {
+  return base::MakeUnique<base::MessagePumpCFRunLoop>();
+}
+#endif  // defined(OS_MACOSX)
+
 }  // namespace
 
 DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
     : delegate_(delegate),
       next_client_id_(kInternalGpuChannelClientId + 1),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      gpu_host_binding_(this) {
-  // TODO(sad): Once GPU process is split, this would look like:
-  //   connector->BindInterface("gpu", &gpu_main_);
-  gpu_main_impl_ = base::MakeUnique<GpuMain>(MakeRequest(&gpu_main_));
+      gpu_host_binding_(this),
+      gpu_thread_("GpuThread") {
+  StartGpuThread();
 
   // TODO(sad): Correctly initialize gpu::GpuPreferences (like it is initialized
   // in GpuProcessHost::Init()).
@@ -55,7 +77,55 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
                                                           next_client_id_++);
 }
 
-DefaultGpuHost::~DefaultGpuHost() {}
+DefaultGpuHost::~DefaultGpuHost() {
+  gpu_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&DefaultGpuHost::DestroyGpuMainOnGpuThread,
+                            base::Unretained(this)));
+  gpu_thread_.Stop();
+}
+
+void DefaultGpuHost::StartGpuThread() {
+  base::Thread::Options thread_options;
+
+#if defined(OS_WIN)
+  thread_options.message_loop_type = base::MessageLoop::TYPE_DEFAULT;
+#elif defined(USE_X11)
+  thread_options.message_pump_factory = base::Bind(&CreateMessagePumpX11);
+#elif defined(USE_OZONE)
+  // The MessageLoop type required depends on the Ozone platform selected at
+  // runtime.
+  thread_options.message_loop_type =
+      ui::OzonePlatform::EnsureInstance()->GetMessageLoopTypeForGpu();
+#elif defined(OS_LINUX)
+  thread_options.message_loop_type = base::MessageLoop::TYPE_DEFAULT;
+#elif defined(OS_MACOSX)
+  thread_options.message_pump_factory = base::Bind(&CreateMessagePumpMac);
+#else
+  thread_options.message_loop_type = base::MessageLoop::TYPE_IO;
+#endif
+
+#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+  thread_options.priority = base::ThreadPriority::DISPLAY;
+#endif
+  CHECK(gpu_thread_.StartWithOptions(thread_options));
+  gpu_thread_task_runner_ = gpu_thread_.task_runner();
+
+  mojom::GpuMainRequest gpu_main_request = MakeRequest(&gpu_main_);
+  gpu_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&DefaultGpuHost::CreateGpuMainOnGpuThread,
+                 base::Unretained(this), base::Passed(&gpu_main_request)));
+}
+
+void DefaultGpuHost::CreateGpuMainOnGpuThread(mojom::GpuMainRequest request) {
+  // TODO(sad): Once GPU process is split, this would look like:
+  //   connector->BindInterface("gpu", &gpu_main_);
+  gpu_main_impl_ = base::MakeUnique<GpuMain>(std::move(request));
+}
+
+void DefaultGpuHost::DestroyGpuMainOnGpuThread() {
+  gpu_main_impl_.reset();
+}
 
 void DefaultGpuHost::Add(mojom::GpuRequest request) {
   AddInternal(std::move(request));

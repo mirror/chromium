@@ -61,8 +61,10 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
                                    const gpu::GpuPreferences& preferences,
                                    gpu::GpuProcessActivityFlags activity_flags);
 
-  void TearDownOnCompositorThread();
-  void TearDownOnGpuThread();
+  // If GpuMain is going away then the Viz process is going away and so there's
+  // no reason to do a clean shutdown. This method just leak Gpu and compositor
+  // objects.
+  void LeakyShutdown();
 
   // gpu::GpuSandboxHelper:
   void PreSandboxStartup() override;
@@ -88,7 +90,6 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
   std::unique_ptr<gpu::GpuMemoryBufferFactory> gpu_memory_buffer_factory_;
 
   // The main thread for Gpu.
-  base::Thread gpu_thread_;
   scoped_refptr<base::SingleThreadTaskRunner> gpu_thread_task_runner_;
 
   // The thread that handles IO events for Gpu.

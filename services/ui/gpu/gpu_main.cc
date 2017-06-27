@@ -18,68 +18,19 @@
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "services/ui/gpu/gpu_service.h"
 
-#if defined(USE_OZONE)
-#include "ui/ozone/public/ozone_platform.h"
-#endif
-
-#if defined(OS_MACOSX)
-#include "base/message_loop/message_pump_mac.h"
-#endif
-
-namespace {
-
-#if defined(USE_X11)
-std::unique_ptr<base::MessagePump> CreateMessagePumpX11() {
-  // TODO(sad): This should create a TYPE_UI message pump, and create a
-  // PlatformEventSource when gpu process split happens.
-  return base::MessageLoop::CreateMessagePumpForType(
-      base::MessageLoop::TYPE_DEFAULT);
-}
-#endif  // defined(USE_X11)
-
-#if defined(OS_MACOSX)
-std::unique_ptr<base::MessagePump> CreateMessagePumpMac() {
-  return base::MakeUnique<base::MessagePumpCFRunLoop>();
-}
-#endif  // defined(OS_MACOSX)
-
-}  // namespace
-
 namespace ui {
 
 GpuMain::GpuMain(mojom::GpuMainRequest request)
-    : gpu_thread_("GpuThread"),
-      io_thread_("GpuIOThread"),
+    : io_thread_("GpuIOThread"),
       compositor_thread_("DisplayCompositorThread"),
       power_monitor_(base::MakeUnique<base::PowerMonitorDeviceSource>()),
       binding_(this) {
-  base::Thread::Options thread_options;
-
-#if defined(OS_WIN)
-  thread_options.message_loop_type = base::MessageLoop::TYPE_DEFAULT;
-#elif defined(USE_X11)
-  thread_options.message_pump_factory = base::Bind(&CreateMessagePumpX11);
-#elif defined(USE_OZONE)
-  // The MessageLoop type required depends on the Ozone platform selected at
-  // runtime.
-  thread_options.message_loop_type =
-      ui::OzonePlatform::EnsureInstance()->GetMessageLoopTypeForGpu();
-#elif defined(OS_LINUX)
-  thread_options.message_loop_type = base::MessageLoop::TYPE_DEFAULT;
-#elif defined(OS_MACOSX)
-  thread_options.message_pump_factory = base::Bind(&CreateMessagePumpMac);
-#else
-  thread_options.message_loop_type = base::MessageLoop::TYPE_IO;
-#endif
-
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
-  thread_options.priority = base::ThreadPriority::DISPLAY;
-#endif
-  CHECK(gpu_thread_.StartWithOptions(thread_options));
-  gpu_thread_task_runner_ = gpu_thread_.task_runner();
+  gpu_thread_task_runner_ = base::ThreadTaskRunnerHandle::Get();
 
   // TODO(sad): We do not need the IO thread once gpu has a separate process. It
   // should be possible to use |main_task_runner_| for doing IO tasks.
+  base::Thread::Options thread_options =
+      base::Thread::Options(base::MessageLoop::TYPE_IO, 0);
   thread_options = base::Thread::Options(base::MessageLoop::TYPE_IO, 0);
   thread_options.priority = base::ThreadPriority::NORMAL;
 #if defined(OS_ANDROID) || defined(OS_CHROMEOS)
@@ -95,31 +46,14 @@ GpuMain::GpuMain(mojom::GpuMainRequest request)
 
   // |this| will outlive the gpu thread and so it's safe to use
   // base::Unretained here.
-  gpu_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&GpuMain::InitOnGpuThread, base::Unretained(this),
-                 io_thread_.task_runner(), compositor_thread_task_runner_));
-  gpu_thread_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&GpuMain::BindOnGpu, base::Unretained(this),
-                            base::Passed(std::move(request))));
+  InitOnGpuThread(io_thread_.task_runner(), compositor_thread_task_runner_);
+  BindOnGpu(std::move(request));
 }
 
 GpuMain::~GpuMain() {
-  // Unretained() is OK here since the thread/task runner is owned by |this|.
-  compositor_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&GpuMain::TearDownOnCompositorThread, base::Unretained(this)));
-
-  // Block the main thread until the compositor thread terminates which blocks
-  // on the gpu thread. The Stop must be initiated from here instead of the gpu
-  // thread to avoid deadlock.
   compositor_thread_.Stop();
-
-  gpu_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&GpuMain::TearDownOnGpuThread, base::Unretained(this)));
-  gpu_thread_.Stop();
   io_thread_.Stop();
+  LeakyShutdown();
 }
 
 void GpuMain::CreateGpuService(mojom::GpuServiceRequest request,
@@ -196,16 +130,13 @@ void GpuMain::CreateFrameSinkManagerOnCompositorThread(
                                            std::move(client));
 }
 
-void GpuMain::TearDownOnCompositorThread() {
-  frame_sink_manager_.reset();
-  display_provider_.reset();
-}
-
-void GpuMain::TearDownOnGpuThread() {
+void GpuMain::LeakyShutdown() {
+  frame_sink_manager_.release();
+  display_provider_.release();
   binding_.Close();
-  gpu_service_.reset();
-  gpu_memory_buffer_factory_.reset();
-  gpu_init_.reset();
+  gpu_service_.release();
+  gpu_memory_buffer_factory_.release();
+  gpu_init_.release();
 }
 
 void GpuMain::CreateGpuServiceOnGpuThread(

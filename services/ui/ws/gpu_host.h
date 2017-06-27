@@ -59,6 +59,10 @@ class DefaultGpuHost : public GpuHost, public mojom::GpuHost {
  private:
   friend class test::GpuHostTest;
 
+  void StartGpuThread();
+  void CreateGpuMainOnGpuThread(mojom::GpuMainRequest request);
+  void DestroyGpuMainOnGpuThread();
+
   GpuClient* AddInternal(mojom::GpuRequest request);
   void OnBadMessageFromGpu();
 
@@ -99,8 +103,13 @@ class DefaultGpuHost : public GpuHost, public mojom::GpuHost {
 
   mojom::GpuMainPtr gpu_main_;
 
+  // The main thread for Gpu.
+  base::Thread gpu_thread_;
+  scoped_refptr<base::SingleThreadTaskRunner> gpu_thread_task_runner_;
+
   // TODO(fsamuel): GpuHost should not be holding onto |gpu_main_impl|
-  // because that will live in another process soon.
+  // because that will live in another process soon. This is created and
+  // destroyed on the |gpu_thread_|.
   std::unique_ptr<GpuMain> gpu_main_impl_;
 
   mojo::StrongBindingSet<mojom::Gpu> gpu_bindings_;
