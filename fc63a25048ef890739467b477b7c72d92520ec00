@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f951d58c_14099cf5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/usecounted-features.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T09:36:34Z",
+      "side": 1,
+      "message": "nhiroki: My test seems to fail here, this promise doesn\u0027t resolve. Am I using these internals functions incorrectly? I thought if the service worker uses isReload, the use counter would be propogated to this iframe and this window?\n\nAh, just realized maybe the request for the main resource doesn\u0027t get caught because the document doesn\u0027t exist yet?",
+      "revId": "fc63a25048ef890739467b477b7c72d92520ec00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
