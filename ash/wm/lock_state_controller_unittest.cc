@@ -11,6 +11,7 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/shutdown_controller.h"
+#include "ash/shutdown_reason.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/lock_state_controller_test_api.h"
 #include "ash/test/test_screenshot_delegate.h"
@@ -819,7 +820,7 @@ TEST_F(LockStateControllerTest, ShutdownWithoutButton) {
 TEST_F(LockStateControllerTest, RequestShutdownFromLoginScreen) {
   Initialize(false, LoginStatus::NOT_LOGGED_IN);
 
-  lock_state_controller_->RequestShutdown();
+  lock_state_controller_->RequestShutdown(ShutdownReason::SIGNIN_SHUTDOWN);
 
   ExpectShutdownAnimationStarted();
   Advance(SessionStateAnimator::ANIMATION_SPEED_SHUTDOWN);
@@ -843,7 +844,7 @@ TEST_F(LockStateControllerTest, RequestShutdownFromLockScreen) {
   Advance(SessionStateAnimator::ANIMATION_SPEED_SHUTDOWN);
   ExpectPostLockAnimationFinished();
 
-  lock_state_controller_->RequestShutdown();
+  lock_state_controller_->RequestShutdown(ShutdownReason::SIGNIN_SHUTDOWN);
 
   ExpectShutdownAnimationStarted();
   Advance(SessionStateAnimator::ANIMATION_SPEED_SHUTDOWN);
