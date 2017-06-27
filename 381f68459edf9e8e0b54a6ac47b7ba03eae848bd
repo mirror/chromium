@@ -16,6 +16,24 @@
       "revId": "381f68459edf9e8e0b54a6ac47b7ba03eae848bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314a8998_9e197ec6",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T22:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4701a894_00cf5071",
+      "revId": "381f68459edf9e8e0b54a6ac47b7ba03eae848bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
