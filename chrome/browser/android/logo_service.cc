@@ -4,6 +4,7 @@
 
 #include "chrome/browser/android/logo_service.h"
 
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/sequenced_worker_pool.h"
@@ -30,14 +31,20 @@ namespace {
 const char kCachedLogoDirectory[] = "Search Logo";
 const int kDecodeLogoTimeoutSeconds = 30;
 
+const base::Feature kUseDdljsonApiFeature{"UseDdljsonApi",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
+
+GURL GetGoogleBaseURL(Profile* profile) {
+  return GURL(UIThreadSearchTermsData(profile).GoogleBaseURLValue());
+}
+
 // Returns the URL where the doodle can be downloaded, e.g.
 // https://www.google.com/async/newtab_mobile. This depends on the user's
 // Google domain.
-GURL GetGoogleDoodleURL(Profile* profile) {
-  GURL google_base_url(UIThreadSearchTermsData(profile).GoogleBaseURLValue());
-  const char kGoogleDoodleURLPath[] = "async/newtab_mobile";
+GURL GetGoogleDoodleURL(GURL google_base_url, bool use_ddljson) {
   GURL::Replacements replacements;
-  replacements.SetPathStr(kGoogleDoodleURLPath);
+  replacements.SetPathStr(use_ddljson ? "async/ddljson"
+                                      : "async/newtab_mobile");
   return google_base_url.ReplaceComponents(replacements);
 }
 
@@ -131,23 +138,39 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
         base::MakeUnique<ChromeLogoDelegate>());
   }
 
-  GURL url =
-      use_fixed_logo ? template_url->logo_url() : GetGoogleDoodleURL(profile_);
-  auto parse_logo_response_callback =
-      use_fixed_logo
-          ? base::Bind(&search_provider_logos::ParseFixedLogoResponse)
-          : base::Bind(&search_provider_logos::GoogleParseLogoResponse);
+  if (use_fixed_logo) {
+    logo_tracker_->SetServerAPI(
+        template_url->logo_url(),
+        base::Bind(&search_provider_logos::ParseFixedLogoResponse),
+        base::Bind(&search_provider_logos::UseFixedLogoUrl));
+  } else {
+    bool use_ddljson = base::FeatureList::IsEnabled(kUseDdljsonApiFeature);
 
-  bool use_gray_background =
-      !base::FeatureList::IsEnabled(chrome::android::kChromeHomeFeature);
-  auto append_query_params_callback =
-      use_fixed_logo
-          ? base::Bind(&search_provider_logos::UseFixedLogoUrl)
-          : base::Bind(&search_provider_logos::GoogleAppendQueryparamsToLogoURL,
-                       use_gray_background);
+    GURL google_base_url = GetGoogleBaseURL(profile_);
 
-  logo_tracker_->SetServerAPI(url, parse_logo_response_callback,
-                              append_query_params_callback);
+    GURL url = GetGoogleDoodleURL(google_base_url, use_ddljson);
+
+    auto parse_logo_response_callback =
+        use_ddljson
+            ? base::Bind(&search_provider_logos::GoogleNewParseLogoResponse,
+                         google_base_url)
+            : base::Bind(&search_provider_logos::GoogleLegacyParseLogoResponse);
+
+    bool use_gray_background =
+        !base::FeatureList::IsEnabled(chrome::android::kChromeHomeFeature);
+    auto append_query_params_callback =
+        use_ddljson
+            ? base::Bind(
+                  &search_provider_logos::GoogleNewAppendQueryparamsToLogoURL,
+                  use_gray_background)
+            : base::Bind(&search_provider_logos::
+                             GoogleLegacyAppendQueryparamsToLogoURL,
+                         use_gray_background);
+
+    logo_tracker_->SetServerAPI(url, parse_logo_response_callback,
+                                append_query_params_callback);
+  }
+
   logo_tracker_->GetLogo(observer);
 }
 
