@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "485ccb3f_176109f1",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-27T04:22:27Z",
+      "side": 1,
+      "message": "This doesn\u0027t look correct; FlippedBlockWritingMode exists when vertical.",
+      "revId": "7e21ad79afc192bb3831673b2a4ef41c1b01db73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567f2555_1482b4b5",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-27T04:22:27Z",
+      "side": 1,
+      "message": "This doesn\u0027t look correct; FlippedBlockWritingMode exists when vertical.",
+      "revId": "7e21ad79afc192bb3831673b2a4ef41c1b01db73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
