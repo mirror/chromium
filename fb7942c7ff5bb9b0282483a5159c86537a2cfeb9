@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51c9cca_ea70cb6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-27T17:27:24Z",
+      "side": 0,
+      "message": "We can\u0027t get rid of this check here, or cardboard users will stumble into Chrome VR when the page calls exitPresent.\n\nWe could add a flag to change the behaviour under development/testing, but I would prefer if we just didn\u0027t test this case, or changed the test expectations under cardboard.",
+      "range": {
+        "startLine": 798,
+        "startChar": 51,
+        "endLine": 798,
+        "endChar": 74
+      },
+      "revId": "fb7942c7ff5bb9b0282483a5159c86537a2cfeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
