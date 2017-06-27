@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df4eb605_fd1a6bc3",
+        "filename": "chrome/browser/media/android/router/media_router_dialog_controller_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-27T18:43:59Z",
+      "side": 1,
+      "message": "Given that the entire block is for debug purposes (ie. the DCHECK), would it make sense to have it in a #ifdef? It would save a few cycles :)",
+      "revId": "3d49d605c42120a959f9ba1989ae513d98677a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
