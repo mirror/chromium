@@ -45,6 +45,30 @@
       "revId": "14c1ec38f971f2dd61ec038284ea65d9949b5e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d4cfff_01175c25",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2017-06-27T20:46:11Z",
+      "side": 1,
+      "message": "No. This is an InputStreamParameter for chrome, as we are capturing something, not playing something out. But for OS, we need to query its speaker device for system audio capturing.\n\nFor example, the windows implementation of GetInputStreamParameter is at [1], and you can see it DCHECK(!is_output_device), which says we are querying something for an input device, but it asks OS for the parameter of an eRender device (namely speaker).\n\n[1] https://cs.chromium.org/chromium/src/media/audio/win/core_audio_util_win.cc?type\u003dcs\u0026l\u003d719",
+      "parentUuid": "225fda2d_ceb4a0e9",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "14c1ec38f971f2dd61ec038284ea65d9949b5e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
