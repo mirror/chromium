@@ -16,6 +16,24 @@
       "revId": "0cf123d400197e4f941acdb84cf2e5663ab7ee24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a458672_506a22f3",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-27T21:50:49Z",
+      "side": 1,
+      "message": "Yes, because we are attempting to start with the wrong package, which leads to the creation of a ChildProcessAllocator with that wrong package. If we don\u0027t set these settings, the allocator tries to get them from the manifest for that wrong package and throws an exception.",
+      "parentUuid": "1d2eee8d_a9ae8ed5",
+      "revId": "0cf123d400197e4f941acdb84cf2e5663ab7ee24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
