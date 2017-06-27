@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a58f4a89_37412885",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-27T15:27:07Z",
+      "side": 1,
+      "message": "nit: Please factor out a small wrapper for this, that\u0027s called along the lines of\n\n  RecordStartMessageLatencyType(CrossProcessTimeDelta::INACCURATE_CLOCK);",
+      "range": {
+        "startLine": 800,
+        "startChar": 64,
+        "endLine": 800,
+        "endChar": 0
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d56b71_c652e012",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-27T15:27:07Z",
+      "side": 1,
+      "message": "I\u0027m not seeing where this is included in histograms.xml.  Am I just overlooking it?",
+      "range": {
+        "startLine": 820,
+        "startChar": 0,
+        "endLine": 822,
+        "endChar": 71
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c28f54d_54db0771",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-27T15:27:07Z",
+      "side": 1,
+      "message": "nit: Could you please factor out a wrapper for this histogram as well?  Each UMA_HISTOGRAM_* macro expands to a sizeable chunk of code, so it\u0027s nice to help the compiler avoid duplicating that.  Also, it helps avoid divergent typos in the parallel code paths.",
+      "range": {
+        "startLine": 831,
+        "startChar": 0,
+        "endLine": 832,
+        "endChar": 33
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e446e4a9_3ff9e6ee",
         "filename": "content/common/service_worker/embedded_worker.mojom",
         "patchSetId": 6
