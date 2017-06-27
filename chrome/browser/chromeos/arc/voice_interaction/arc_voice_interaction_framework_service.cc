@@ -184,10 +184,8 @@ void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
   binding_.Bind(mojo::MakeRequest(&host_proxy));
   framework_instance->Init(std::move(host_proxy));
 
-  // Temporary shortcut added to enable the metalayer experiment.
   ash::Shell::Get()->accelerator_controller()->Register(
-      {ui::Accelerator(ui::VKEY_A, ui::EF_COMMAND_DOWN | ui::EF_SHIFT_DOWN)},
-      this);
+      {ui::Accelerator(ui::VKEY_ASSISTANT, ui::EF_NONE)}, this);
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
