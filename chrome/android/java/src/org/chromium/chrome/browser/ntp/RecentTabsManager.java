@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.favicon.FaviconHelper;
 import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
@@ -353,6 +354,22 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
         if (mUpdatedCallback != null) {
             mUpdatedCallback.onUpdated();
         }
+    }
+
+    void recordRecentTabs() {
+        RecordHistogram.recordCountHistogram(
+                "Android.RecentTabsManager.RecentlyClosedTabs", mRecentlyClosedTabs.size());
+        RecordHistogram.recordCountHistogram(
+                "Android.RecentTabsManager.OtherDevices", mForeignSessions.size());
+
+        int totalCount = mRecentlyClosedTabs.size();
+        for (ForeignSession foreignSession : mForeignSessions) {
+            for (ForeignSessionHelper.ForeignSessionWindow foreignSessionWindow :
+                    foreignSession.windows) {
+                totalCount += foreignSessionWindow.tabs.size();
+            }
+        }
+        RecordHistogram.recordCountHistogram("Android.RecentTabsManager.TotalTabs", totalCount);
     }
 
     // SignInStateObserver
