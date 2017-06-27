@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "807aa77d_c5e5f32e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T00:54:27Z",
+      "side": 1,
+      "message": "lines 11-12 sound like the revert rationale, when it\u0027s really saying that \"This revert will break...\" Please add a revert rationale like \"This revert is necessary because the patch causes crashes on Canary, see bug.\"",
+      "revId": "5cdb2914315a5f4ab0a081be861d5be7e528c3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
