@@ -16,6 +16,24 @@
       "revId": "2f8d3688bd04844917054487c70d992944343a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7511fe87_c26ad90a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/git_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-27T00:27:28Z",
+      "side": 1,
+      "message": "I think they were in the original patch -- but also they look unnecessary, as if print was originally added for debugging and left in... will remove.",
+      "parentUuid": "20243d51_637d54bf",
+      "revId": "2f8d3688bd04844917054487c70d992944343a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
