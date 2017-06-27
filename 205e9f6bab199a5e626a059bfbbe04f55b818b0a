@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb3229b3_e8575262",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-27T15:31:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean... If the page scale changes with no pinch zoom, then we\u0027d hit line 1007 and return true, if we\u0027re under pinch zoom then either pinch case would\u0027ve returned true or the AdjustScale function would set the scale to the snapped scale. In all other cases, if the raster contents scale changed (due to source scale?) then we shouldn\u0027t adjust anything unless it falls below this, no?\n\nCan you elaborate on the case you\u0027re thinking of?",
+      "parentUuid": "9ea24caa_e5626ce3",
+      "revId": "205e9f6bab199a5e626a059bfbbe04f55b818b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c5584c5_eaeeb287",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "205e9f6bab199a5e626a059bfbbe04f55b818b0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61eeec33_c3444d50",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-27T15:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c5584c5_eaeeb287",
+      "revId": "205e9f6bab199a5e626a059bfbbe04f55b818b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
