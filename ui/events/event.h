@@ -500,7 +500,8 @@ class EVENTS_EXPORT MouseEvent : public LocatedEvent {
   MouseEvent(const MouseEvent& model, T* source, T* target)
       : LocatedEvent(model, source, target),
         changed_button_flags_(model.changed_button_flags_),
-        pointer_details_(model.pointer_details_) {}
+        pointer_details_(model.pointer_details_),
+        only_for_ui_hover_state_(model.only_for_ui_hover_state_) {}
 
   template <class T>
   MouseEvent(const MouseEvent& model,
@@ -510,7 +511,8 @@ class EVENTS_EXPORT MouseEvent : public LocatedEvent {
              int flags)
       : LocatedEvent(model, source, target),
         changed_button_flags_(model.changed_button_flags_),
-        pointer_details_(model.pointer_details_) {
+        pointer_details_(model.pointer_details_),
+        only_for_ui_hover_state_(model.only_for_ui_hover_state_) {
     SetType(type);
     set_flags(flags);
   }
@@ -588,6 +590,12 @@ class EVENTS_EXPORT MouseEvent : public LocatedEvent {
   // Event details common to MouseEvent and TouchEvent.
   const PointerDetails& pointer_details() const { return pointer_details_; }
 
+  // Set the event is for browser UI hover state update.
+  void set_only_for_ui_hover_state(bool yes) { only_for_ui_hover_state_ = yes; }
+
+  // Get the event is for browser UI hover state update.
+  bool only_for_ui_hover_state() const { return only_for_ui_hover_state_; }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(EventTest, DoubleClickRequiresRelease);
   FRIEND_TEST_ALL_PREFIXES(EventTest, SingleClickRightLeft);
@@ -611,6 +619,10 @@ class EVENTS_EXPORT MouseEvent : public LocatedEvent {
 
   // Structure for holding pointer details for implementing PointerEvents API.
   PointerDetails pointer_details_;
+
+  // ChOS dispatch a mouse event only for update UI hover state, event with
+  // this flag should be filter in Blink.
+  bool only_for_ui_hover_state_;
 };
 
 class ScrollEvent;
