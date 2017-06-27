@@ -21,53 +21,63 @@
     The "with dev msgs" in the title helps when debugging problems
     with the message replacer.
   -->
-  <h1 class="i18n" msgid="options_page_title">ChromeVox (with dev msgs)</h1>
+  <h1 class="i18n" msgid="options_page_title">
+    <div class="container">ChromeVox (with dev msgs)</div>
+  </h1>
 
   <div class="container">
 
   <p id="version"></p>
 
+  <h2 class="i18n description" msgid="options_when_speaking_description"
+      id="whenSpeakingDescription">
+    When ChromeVox is speaking
+  </h2>
+
   <div class="option">
     <input id="useVerboseMode" type="checkbox" class="checkbox pref"
            name="useVerboseMode">
     <label for="useVerboseMode" class="i18n" msgid="options_verbosity_verbose">
-      Enable verbose descriptions.
+      Use verbose descriptions.
     </label>
   </div>
 
   <div class="option">
     <input id="autoRead" type="checkbox" class="checkbox pref" name="autoRead">
     <label for="autoRead" class="i18n" msgid="options_auto_read">
-      Automatically read a page after it finishes loading.
+      Automatically read page after loading.
     </label>
+  </div>
+
+  <div class="option">
+    <span class="i18n description" msgid="options_voices_description"
+          id="voices_description">
+      Voice:
+    </span>
+    <select id="voices" aria-labelledby="voices_description"></select>
   </div>
 
   <h2 class="i18n description" msgid="options_audio_description"
       id="audioDescription">
-    When playing audio
+    When other audio sources are playing
   </h2>
 
   <div class="option">
-    <select id="audioStrategy" class="pref" aria-labelledby="audioDescription">
-      <option id="audioNormal" class="i18n" msgid="options_audio_normal">
-        play at normal volume even if ChromeVox is speaking
-      </option>
-      <option id="audioDuck" class="i18n" msgid="options_audio_duck">
-        play at lower volume when ChromeVox is speaking
-      </option>
-      <option id="audioSuspend" class="i18n" msgid="options_audio_suspend">
-        pause playback when ChromeVox is speaking
-      </option>
-    </select>
-  </div>
-
-  <h2 class="i18n" msgid="options_voices">Voices</h2>
-  <div class="option">
-    <span class="i18n description" msgid="options_voices_description"
-          id="voices_description">
-      Select current voice:
-    </span>
-    <select id="voices" aria-labelledby="voices_description"></select>
+    <div class="radio-option">
+      <input type="radio" id="audioNormal" name="audioNormal" class="i18n"
+         msgid="options_audio_normal">
+      <label for="audioNormal">Play at normal volume</label>
+    </div>
+    <div class="radio-option">
+      <input type="radio" id="audioDuck" name="audioDuck" class="i18n"
+         msgid="options_audio_duck">
+      <label for="audioDuck">Play at lower volume</label>
+    </div>
+    <div class="radio-option">
+      <input type="radio" id="audioSuspend" name="audioSuspend" class="i18n"
+         msgid="options_audio_suspend">
+      <label for="audioSuspend">Pause other source</label>
+    </div>
   </div>
 
   <h2 class="chromeos i18n" msgid="options_braille">Braille</h2>
