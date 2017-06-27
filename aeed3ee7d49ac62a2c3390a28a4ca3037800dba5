@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a5fc86_c9bd7e4d",
+        "filename": "ash/login/ui/lock_debug_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T16:04:57Z",
+      "side": 1,
+      "message": "bounds() -\u003e GetLocalBounds() to be more correct. bounds() is in parent view\u0027s coordinates. GetLocalBounds() is in the view\u0027s coordinates. The two are only the same when the view\u0027s origin is at (0, 0) of its parent.",
+      "range": {
+        "startLine": 171,
+        "startChar": 23,
+        "endLine": 171,
+        "endChar": 31
+      },
+      "revId": "aeed3ee7d49ac62a2c3390a28a4ca3037800dba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81867c60_6fe1c56d",
+        "filename": "ash/login/ui/lock_debug_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T16:04:57Z",
+      "side": 1,
+      "message": "nit: 1 -\u003e 1u",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "aeed3ee7d49ac62a2c3390a28a4ca3037800dba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
