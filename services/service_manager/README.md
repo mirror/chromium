@@ -107,7 +107,7 @@ class MyService : public service_manager::Service {
 
   // service_manager::Service:
   void OnStart() override;
-  void OnBindInterface(const service_manager::ServiceInfo& remote_info,
+  void OnBindInterface(const service_manager::EmbeddedServiceInfo& remote_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle handle) override;
  private:
@@ -130,7 +130,7 @@ MyService::~MyService() = default;
 void MyService::OnStart() {
 }
 
-void MyService::OnBindInterface(const service_manager::ServiceInfo& remote_info,
+void MyService::OnBindInterface(const service_manager::EmbeddedServiceInfo& remote_info,
                                 const std::string& interface_name,
                                 mojo::ScopedMessagePipeHandle handle) {
 }
@@ -229,7 +229,7 @@ method is called, the implementation can access its
 `service_manager::ServiceContext` via `context()`. This object itself exposes a
 few values:
 
-* `service_info()` is a `service_manager::ServiceInfo` structure describing the
+* `service_info()` is a `service_manager::EmbeddedServiceInfo` structure describing the
   running service from the Service Manager's perspective. This includes the
   `service_manager::Identity` which uniquely identifies the running instance,
   as well as the `service_manager::InterfaceProviderSpec` describing the
@@ -260,7 +260,7 @@ mutual constraints specified in each involved service's manifest.
 
 The arguments to `OnBindInterface` are as follows:
 
-* `remote_info` is the `service_manager::ServiceInfo` corresponding to the
+* `remote_info` is the `service_manager::EmbeddedServiceInfo` corresponding to the
   remote service which is requesting this interface. The information in this
   structure is provided authoritatively by the Service Manager and can be
   trusted in any context.
@@ -300,7 +300,7 @@ MyService::MyService() {
   registry_.AddInterface(base::Bind(&BindDatabase));
 }
 
-void MyService::OnBindInterface(const service_manager::ServiceInfo& remote_info,
+void MyService::OnBindInterface(const service_manager::EmbeddedServiceInfo& remote_info,
                                 const std::string& interface_name,
                                 mojo::ScopedMessagePipeHandle handle) {
   registry_.BindInterface(interface_name, std::move(handle));
