@@ -23,13 +23,14 @@ public class VirtualDisplayAndroid extends DisplayAndroid {
      */
     public void setTo(DisplayAndroid other) {
         update(new Point(other.getDisplayWidth(), other.getDisplayHeight()), other.getDipScale(),
-                other.getBitsPerPixel(), other.getBitsPerComponent(), other.getRotation());
+                other.getBitsPerPixel(), other.getBitsPerComponent(), other.getRotation(),
+                other.isWideColorGamut());
     }
 
     @Override
     public void update(Point size, Float dipScale, Integer bitsPerPixel, Integer bitsPerComponent,
-            Integer rotation) {
-        super.update(size, dipScale, bitsPerPixel, bitsPerComponent, rotation);
+            Integer rotation, Boolean isWideColorGamut) {
+        super.update(size, dipScale, bitsPerPixel, bitsPerComponent, rotation, isWideColorGamut);
     }
 
     /**

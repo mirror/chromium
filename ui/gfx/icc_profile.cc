@@ -129,6 +129,8 @@ ICCProfile ICCProfile::GetForcedProfile() {
           switches::kForceColorProfile);
   if (value == "srgb") {
     ColorSpace::CreateSRGB().GetICCProfile(&icc_profile);
+  } else if (value == "display-p3") {
+    ColorSpace::CreateDisplayP3D65().GetICCProfile(&icc_profile);
   } else if (value == "generic-rgb") {
     ColorSpace generic_rgb_color_space(ColorSpace::PrimaryID::APPLE_GENERIC_RGB,
                                        ColorSpace::TransferID::GAMMA18);

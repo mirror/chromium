@@ -15,8 +15,8 @@ const base::Feature kColorCorrectRendering{"ColorCorrectRendering",
 namespace switches {
 
 // Force all monitors to be treated as though they have the specified color
-// profile. Accepted values are "srgb" and "generic-rgb" (currently used by Mac
-// layout tests) and "color-spin-gamma24" (used by layout tests).
+// profile. Accepted values are "srgb", "display-p3", "generic-rgb" (formerly
+// used by Mac layout tests) and "color-spin-gamma24" (used by layout tests).
 const char kForceColorProfile[] = "force-color-profile";
 
 }  // namespace switches

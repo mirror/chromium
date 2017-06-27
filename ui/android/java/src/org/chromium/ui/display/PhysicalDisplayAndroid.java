@@ -100,6 +100,9 @@ import org.chromium.base.Log;
             display.getSize(size);
             display.getMetrics(displayMetrics);
         }
+        // TODO(ccameron): Populate isWideGamut based on the O APIs.
+        // https://crbug.com/735658
+        Boolean isWideGamut = false;
         if (hasForcedDIPScale()) displayMetrics.density = sForcedDIPScale.floatValue();
 
         // JellyBean MR1 and later always uses RGBA_8888.
@@ -108,6 +111,6 @@ import org.chromium.base.Log;
                 : PixelFormat.RGBA_8888;
         PixelFormat.getPixelFormatInfo(pixelFormatId, pixelFormat);
         super.update(size, displayMetrics.density, pixelFormat.bitsPerPixel,
-                bitsPerComponent(pixelFormatId), display.getRotation());
+                bitsPerComponent(pixelFormatId), display.getRotation(), isWideGamut);
     }
 }

@@ -54,6 +54,13 @@ extern "C" {
 #define EGL_OPENGL_ES3_BIT 0x00000040
 #endif
 
+// Not present egl/eglext.h yet.
+
+#ifndef EGL_EXT_gl_colorspace_display_p3
+#define EGL_EXT_gl_colorspace_display_p3 1
+#define EGL_GL_COLORSPACE_DISPLAY_P3_EXT 0x3363
+#endif /* EGL_EXT_gl_colorspace_display_p3 */
+
 // From ANGLE's egl/eglext.h.
 
 #ifndef EGL_ANGLE_platform_angle
@@ -134,6 +141,8 @@ bool g_egl_window_fixed_size_supported = false;
 bool g_egl_surfaceless_context_supported = false;
 bool g_egl_surface_orientation_supported = false;
 bool g_egl_context_priority_supported = false;
+bool g_egl_khr_colorspace = false;
+bool g_egl_ext_colorspace_display_p3 = false;
 bool g_use_direct_composition = false;
 
 class EGLSyncControlVSyncProvider : public SyncControlVSyncProvider {
@@ -543,6 +552,9 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
       HasEGLExtension("EGL_ANGLE_window_fixed_size");
   g_egl_surface_orientation_supported =
       HasEGLExtension("EGL_ANGLE_surface_orientation");
+  g_egl_khr_colorspace = HasEGLExtension("EGL_KHR_gl_colorspace");
+  g_egl_ext_colorspace_display_p3 =
+      HasEGLExtension("EGL_EXT_gl_colorspace_display_p3");
   // According to https://source.android.com/compatibility/android-cdd.html the
   // EGL_IMG_context_priority extension is mandatory for Virtual Reality High
   // Performance support, but due to a bug in Android Nougat the extension
@@ -816,6 +828,21 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     egl_window_attributes.push_back(EGL_TRUE);
     egl_window_attributes.push_back(EGL_DIRECT_COMPOSITION_ANGLE);
     egl_window_attributes.push_back(EGL_TRUE);
+  }
+
+  if (g_egl_khr_colorspace && g_egl_ext_colorspace_display_p3) {
+    switch (format_.GetColorSpace()) {
+      case GLSurfaceFormat::COLOR_SPACE_UNSPECIFIED:
+        break;
+      case GLSurfaceFormat::COLOR_SPACE_SRGB:
+        egl_window_attributes.push_back(EGL_GL_COLORSPACE_KHR);
+        egl_window_attributes.push_back(EGL_GL_COLORSPACE_SRGB_KHR);
+        break;
+      case GLSurfaceFormat::COLOR_SPACE_DISPLAY_P3:
+        egl_window_attributes.push_back(EGL_GL_COLORSPACE_KHR);
+        egl_window_attributes.push_back(EGL_GL_COLORSPACE_DISPLAY_P3_EXT);
+        break;
+    }
   }
 
   egl_window_attributes.push_back(EGL_NONE);
