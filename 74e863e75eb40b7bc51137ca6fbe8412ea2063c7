@@ -16,6 +16,41 @@
       "revId": "74e863e75eb40b7bc51137ca6fbe8412ea2063c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6633de99_3558b728",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T19:38:06Z",
+      "side": 1,
+      "message": "Yes, I feel they are quite similar, but don\u0027t have a great suggestion.\n\nI choose the Recorder suffix since that\u0027s what\u0027s used by UMA reporting; e.g. StatisticsRecorder. I also did not use Service for the reason you mention. I also don\u0027t like Impl for classes that only have a single implementation.",
+      "parentUuid": "a843baee_913f51be",
+      "revId": "74e863e75eb40b7bc51137ca6fbe8412ea2063c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc7153b_32d0a809",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T19:38:06Z",
+      "side": 1,
+      "message": "FYI, mlamouri@ I plan to replace these with a generic Finalize\u003cvector\u003cKeys\u003e\u003e methods after converting the WatchTimeKeys to a set of enums. This should help our finalize explosion.",
+      "revId": "74e863e75eb40b7bc51137ca6fbe8412ea2063c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
