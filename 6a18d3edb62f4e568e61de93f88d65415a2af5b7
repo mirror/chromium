@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f56fbabe_9557ad18",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-27T17:40:54Z",
+      "side": 1,
+      "message": "These 3 variables are used only inside the corresponding cases in the for loop below. They don\u0027t need to be declared outside of the loop.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 45
+      },
+      "revId": "6a18d3edb62f4e568e61de93f88d65415a2af5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cba1fd8_31cc26a8",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-27T17:40:54Z",
+      "side": 1,
+      "message": "Maybe call it \u0027have_screen_list\u0027?\nSame for the two other vars below",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 24
+      },
+      "revId": "6a18d3edb62f4e568e61de93f88d65415a2af5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2b008c_98f87912",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-27T17:40:54Z",
+      "side": 1,
+      "message": "I think continue; would make this line more readable and less ambiguous. In general it\u0027s better to use break statement inside a switch only at the end of each case.",
+      "range": {
+        "startLine": 114,
+        "startChar": 9,
+        "endLine": 114,
+        "endChar": 16
+      },
+      "revId": "6a18d3edb62f4e568e61de93f88d65415a2af5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251f8ffe_fca7606c",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-27T17:40:54Z",
+      "side": 1,
+      "message": "call it audio_capture_disabled to indicate the purpose of the flag",
+      "range": {
+        "startLine": 182,
+        "startChar": 13,
+        "endLine": 182,
+        "endChar": 21
+      },
+      "revId": "6a18d3edb62f4e568e61de93f88d65415a2af5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ea792d_91ce336b",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-27T17:40:54Z",
+      "side": 1,
+      "message": "if (!has_flag) {\n  request_audio \u003d true;\n}",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "6a18d3edb62f4e568e61de93f88d65415a2af5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
