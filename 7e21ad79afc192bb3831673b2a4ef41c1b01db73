@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "431f038b_f61154c4",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-27T05:00:37Z",
+      "side": 1,
+      "message": "Fixed.\n\n(I copied some old code which might contains some leftover horizontal-bt support.)",
+      "parentUuid": "485ccb3f_176109f1",
+      "revId": "7e21ad79afc192bb3831673b2a4ef41c1b01db73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "567f2555_1482b4b5",
         "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7e21ad79afc192bb3831673b2a4ef41c1b01db73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080dab6b_6916dc63",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-27T05:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "567f2555_1482b4b5",
+      "revId": "7e21ad79afc192bb3831673b2a4ef41c1b01db73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
