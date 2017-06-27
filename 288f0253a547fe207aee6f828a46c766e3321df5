@@ -123,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "1c12bb88_8a4ba1a3",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T22:49:35Z",
+      "side": 1,
+      "message": "That error exists because of this block. If you delete this entire is_mac block, it should be fine. I don\u0027t see anything requiring this dep.",
+      "parentUuid": "ee6516df_649b493b",
+      "revId": "288f0253a547fe207aee6f828a46c766e3321df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3186c266_13d5182d",
         "filename": "media/filters/BUILD.gn",
         "patchSetId": 7
