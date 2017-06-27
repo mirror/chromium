@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dce40923_d48615eb",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-27T19:42:38Z",
+      "side": 1,
+      "message": "This ends up not being a copy since we std::move it in. I\u0027m still learning the conventions around naming these. In a case where this calls cc::Layer::set_did_scroll_callback which just does a std::move, would we still want to name this SetDidScrollCallback? If so, should I rename all of the functions from set_did_scroll_callback to SetDidScrollCallback?",
+      "parentUuid": "7095ea4e_0f3539d4",
+      "range": {
+        "startLine": 371,
+        "startChar": 8,
+        "endLine": 371,
+        "endChar": 28
+      },
+      "revId": "754b4864ae362cad1e361914d67377e2dad5b879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ddf9a5e_da54c61d",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4d7c1cea_2fec6991",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-27T19:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ddf9a5e_da54c61d",
+      "range": {
+        "startLine": 377,
+        "startChar": 36,
+        "endLine": 377,
+        "endChar": 38
+      },
+      "revId": "754b4864ae362cad1e361914d67377e2dad5b879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3050c0fc_89e11f30",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-27T18:13:04Z",
       "side": 1,
       "message": "Would SetScrollableSize be a better name here?",
+      "range": {
+        "startLine": 242,
+        "startChar": 24,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "754b4864ae362cad1e361914d67377e2dad5b879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff6b5d0_620b7ac9",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-27T19:42:38Z",
+      "side": 1,
+      "message": "This is tough because there are really two scrolling sizes: the scroll container size and the scrollable layer\u0027s size. This was originally called SetScrollContainerBounds in cc::Layer but we ended up switching to SetScrollable(container bounds) (with comments) in this review. Do you think it makes sense to leave this as-is to match the cc::Layer name?",
+      "parentUuid": "3050c0fc_89e11f30",
       "range": {
         "startLine": 242,
         "startChar": 24,
