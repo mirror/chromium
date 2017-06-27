@@ -332,6 +332,24 @@
       "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185c8954_4b2ec88b",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "I prefer being consistent with how rest of iOS duplicates files in src/chrome. We do not include any files from src/chrome.\n\nOther BrowserStateKeedServiceFactories only namespace ios.",
+      "parentUuid": "749ed53d_b4c5cb6d",
+      "revId": "255b6d853c0f7a4c01a4e4e9df31d20ef44a4737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

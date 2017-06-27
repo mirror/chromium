@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87d593a4_b3494ce4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "CL description should not exceed 72 chars.\nSee link I sent out for writing good descriptions.",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a095374d_bcff4bae",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "Why do you need both feature_engagement_tracker and feature_engagement_tracker/public? /public is a public dep of feature_engagement_tracker.",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832b8193_2e4c7202",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "What class is /mojo/... providing?",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc50b99f_1bead8ea",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "What about GetBrowserStateToUse?",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe325e2c_752e23ac",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "Need to sort imports alphabetically.",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

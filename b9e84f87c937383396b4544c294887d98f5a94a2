@@ -37,6 +37,46 @@
     },
     {
       "key": {
+        "uuid": "e415599c_b0353866",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "What is this for? The rest of this CL does not touch //components.",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f609edcc_3b6a3f5e",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "You should not need both of these. /public is a public dep of feature_engagement_tracker.",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a48d5569_045926f3",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 3
@@ -104,6 +144,23 @@
       "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee80ae39_1eaaa765",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T05:57:40Z",
+      "side": 1,
+      "message": "This needs to be alphabetical.",
+      "revId": "b9e84f87c937383396b4544c294887d98f5a94a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
