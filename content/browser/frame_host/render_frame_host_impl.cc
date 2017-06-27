@@ -440,6 +440,8 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       is_waiting_for_swapout_ack_(false),
       render_frame_created_(false),
       navigations_suspended_(false),
+      has_beforeunload_handlers_(false),
+      has_unload_handlers_(false),
       is_waiting_for_beforeunload_ack_(false),
       unload_ack_is_for_navigation_(false),
       is_loading_(false),
@@ -458,6 +460,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      had_double_load_(false),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -829,6 +832,10 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_DocumentOnLoadCompleted,
                         OnDocumentOnLoadCompleted)
     IPC_MESSAGE_HANDLER(FrameHostMsg_BeforeUnload_ACK, OnBeforeUnloadACK)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_BeforeUnloadHandlersPresent,
+                        OnBeforeUnloadHandlersPresent)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UnloadHandlersPresent,
+                        OnUnloadHandlersPresent)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SwapOut_ACK, OnSwapOutACK)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ContextMenu, OnContextMenu)
     IPC_MESSAGE_HANDLER(FrameHostMsg_JavaScriptExecuteResponse,
@@ -1504,6 +1511,7 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
       frame_tree_node()->DidStartLoading(true, was_loading);
     }
     pending_commit_ = false;
+    had_double_load_ = false;
   }
 
   // Find the appropriate NavigationHandle for this navigation.
@@ -1594,6 +1602,8 @@ GlobalFrameRoutingId RenderFrameHostImpl::GetGlobalFrameRoutingId() {
 
 void RenderFrameHostImpl::SetNavigationHandle(
     std::unique_ptr<NavigationHandleImpl> navigation_handle) {
+  if (navigation_handle_ && IsBrowserSideNavigationEnabled())
+    had_double_load_ = true;
   navigation_handle_ = std::move(navigation_handle);
 }
 
@@ -2535,6 +2545,14 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
 
+  // LOG(WARNING) << "STATE WHEN ENTERING:";
+  // LOG(WARNING) << "IsBrowserSideNavigationEnabled(): " <<
+  // IsBrowserSideNavigationEnabled(); LOG(WARNING) << "is_loading_: " <<
+  // is_loading_; LOG(WARNING) << "navigation_handle_: " <<
+  // navigation_handle_.get(); LOG(WARNING) << "navigation_handle_ url: " <<
+  // (navigation_handle_.get() ? navigation_handle_->GetURL() : GURL(""));
+  // LOG(WARNING) << "is_active(): " << is_active();
+
   // This method should never be called when the frame is not loading.
   // Unfortunately, it can happen if a history navigation happens during a
   // BeforeUnload or Unload event.
@@ -2545,6 +2563,11 @@ void RenderFrameHostImpl::OnDidStopLoading() {
     return;
   }
 
+  if (had_double_load_) {
+    had_double_load_ = false;
+    return;
+  }
+
   is_loading_ = false;
   navigation_handle_.reset();
 
@@ -2552,6 +2575,14 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   // of this RenderFrameHost is being tracked.
   if (is_active())
     frame_tree_node_->DidStopLoading();
+
+  // LOG(WARNING) << "STATE WHEN LEAVING:";
+  // LOG(WARNING) << "IsBrowserSideNavigationEnabled(): " <<
+  // IsBrowserSideNavigationEnabled(); LOG(WARNING) << "is_loading_: " <<
+  // is_loading_; LOG(WARNING) << "navigation_handle_: " <<
+  // navigation_handle_.get(); LOG(WARNING) << "navigation_handle_ url: " <<
+  // (navigation_handle_.get() ? navigation_handle_->GetURL() : GURL(""));
+  // LOG(WARNING) << "is_active(): " << is_active();
 }
 
 void RenderFrameHostImpl::OnDidChangeLoadProgress(double load_progress) {
@@ -2596,6 +2627,14 @@ void RenderFrameHostImpl::OnSetHasReceivedUserGesture() {
 void RenderFrameHostImpl::OnSetDevToolsFrameId(
     const std::string& devtools_frame_id) {
   untrusted_devtools_frame_id_ = devtools_frame_id;
+}
+
+void RenderFrameHostImpl::OnBeforeUnloadHandlersPresent(bool present) {
+  has_beforeunload_handlers_ = present;
+}
+
+void RenderFrameHostImpl::OnUnloadHandlersPresent(bool present) {
+  has_unload_handlers_ = present;
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
@@ -3093,7 +3132,25 @@ void RenderFrameHostImpl::SimulateBeforeUnloadAck() {
 }
 
 bool RenderFrameHostImpl::ShouldDispatchBeforeUnload() {
-  return IsRenderFrameLive();
+  if (!IsRenderFrameLive())
+    return false;
+
+  for (FrameTreeNode* node : frame_tree_->SubtreeNodes(frame_tree_node_)) {
+    if (node->current_frame_host()->has_beforeunload_handlers_)
+      return true;
+  }
+  return false;
+}
+
+bool RenderFrameHostImpl::HasUnloadHandler() {
+  if (!IsRenderFrameLive())
+    return false;
+
+  for (FrameTreeNode* node : frame_tree_->SubtreeNodes(frame_tree_node_)) {
+    if (node->current_frame_host()->has_unload_handlers_)
+      return true;
+  }
+  return false;
 }
 
 void RenderFrameHostImpl::UpdateOpener() {

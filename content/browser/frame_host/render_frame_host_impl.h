@@ -435,6 +435,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // frame is the main frame.
   bool ShouldDispatchBeforeUnload();
 
+  // Returns true if the frame or any of its descendents have an onunload
+  // handler.
+  bool HasUnloadHandler();
+
   // Update the frame's opener in the renderer process in response to the
   // opener being modified (e.g., with window.open or being set to null) in
   // another renderer process.
@@ -783,6 +787,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                 base::string16 text,
                                 base::string16 html);
   void OnToggleFullscreen(bool enter_fullscreen);
+  void OnBeforeUnloadHandlersPresent(bool present);
+  void OnUnloadHandlersPresent(bool present);
   void OnDidStartLoading(bool to_different_document);
   void OnDidStopLoading();
   void OnDidChangeLoadProgress(double load_progress);
@@ -1063,6 +1069,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // When the last BeforeUnload message was sent.
   base::TimeTicks send_before_unload_start_time_;
 
+  // Used to track whether the frame has onbeforeunload and onunload handlers
+  bool has_beforeunload_handlers_;
+  bool has_unload_handlers_;
+
   // Set to true when there is a pending FrameMsg_BeforeUnload message.  This
   // ensures we don't spam the renderer with multiple beforeunload requests.
   // When either this value or IsWaitingForUnloadACK is true, the value of
@@ -1258,6 +1268,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   mojom::FrameInputHandlerPtr frame_input_handler_;
   std::unique_ptr<LegacyIPCFrameInputHandler> legacy_frame_input_handler_;
+
+  bool had_double_load_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;

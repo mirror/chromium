@@ -76,7 +76,7 @@ class FlashPermissionBrowserTest : public PermissionsBrowserTest {
       // Make a round trip to the renderer to flush any old did stop IPCs,
       // otherwise they can race with the next navigation and cause it to be
       // cancelled if it's the same URL.
-      EXPECT_TRUE(ExecuteScript(GetWebContents(), std::string()));
+      // EXPECT_TRUE(ExecuteScript(GetWebContents(), std::string()));
     }
   }
 
