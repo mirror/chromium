@@ -176,44 +176,104 @@ std::string RunClangTool(const base::FilePath& source_path,
                                 .Append(FILE_PATH_LITERAL("clang"))
                                 .Append(FILE_PATH_LITERAL("scripts"))
                                 .Append(FILE_PATH_LITERAL("run_tool.py")));
-  cmdline.AppendSwitch("generate-compdb");
-  cmdline.AppendSwitch("tool=traffic_annotation_extractor");
-  cmdline.AppendArg(
-      base::StringPrintf("-p=%s", build_path.MaybeAsASCII().c_str()));
-
-  if (full_run) {
-    for (const auto& path : path_filters)
-      cmdline.AppendArgNative(path);
-  } else {
-    TrafficAnnotationFileFilter filter;
-    std::vector<std::string> file_paths;
-
-    if (path_filters.size()) {
-      for (const auto& path_filter : path_filters) {
-        filter.GetRelevantFiles(source_path,
-#if defined(OS_WIN)
-                                base::UTF16ToASCII(path_filter),
-#else
-                                path_filter,
-#endif
-                                &file_paths);
-      }
-    } else {
-      filter.GetRelevantFiles(source_path, "", &file_paths);
-    }
-
-    if (!file_paths.size())
-      return "";
-    for (const auto& file_path : file_paths)
-      cmdline.AppendArg(file_path);
-  }
 
 #if defined(OS_WIN)
   cmdline.PrependWrapper(L"python");
 #endif
 
-  std::string results;
-  return base::GetAppOutput(cmdline, &results) ? results : "";
+  if (1) {
+    base::FilePath options_filepath;
+    if (!base::CreateTemporaryFile(&options_filepath)) {
+      LOG(ERROR) << "Could not create temporary file.";
+      return "";
+    }
+    FILE* options_file = base::OpenFile(options_filepath, "wt");
+    if (!options_file) {
+      LOG(ERROR) << "Could not create temporary file.";
+      return "";
+    }
+    fprintf(options_file,
+            "--generate-compdb --tool=traffic_annotation_extractor -p=%s ",
+            build_path.MaybeAsASCII().c_str());
+
+    if (full_run) {
+      for (const auto& file_path : path_filters)
+        fprintf(options_file, "%s ", file_path.c_str());
+    } else {
+      TrafficAnnotationFileFilter filter;
+      std::vector<std::string> file_paths;
+
+      if (path_filters.size()) {
+        for (const auto& path_filter : path_filters) {
+          filter.GetRelevantFiles(source_path,
+#if defined(OS_WIN)
+                                  base::UTF16ToASCII(path_filter),
+#else
+                                  path_filter,
+#endif
+                                  &file_paths);
+        }
+      } else {
+        filter.GetRelevantFiles(source_path, "", &file_paths);
+      }
+
+      if (!file_paths.size()) {
+        base::CloseFile(options_file);
+        base::DeleteFile(options_filepath, false);
+        return "";
+      }
+      for (const auto& file_path : file_paths)
+        fprintf(options_file, "%s ", file_path.c_str());
+    }
+    base::CloseFile(options_file);
+
+    cmdline.AppendArg(base::StringPrintf(
+        "--options-file=%s", options_filepath.MaybeAsASCII().c_str()));
+
+    std::string results;
+    if (!base::GetAppOutput(cmdline, &results))
+      results = "";
+
+    LOG(INFO) << "Options file is here: "
+              << options_filepath.MaybeAsASCII().c_str();
+    // base::DeleteFile(options_filepath, false);
+
+    return results;
+  } else {
+    cmdline.AppendSwitch("generate-compdb");
+    cmdline.AppendSwitch("tool=traffic_annotation_extractor");
+    cmdline.AppendArg(
+        base::StringPrintf("-p=%s", build_path.MaybeAsASCII().c_str()));
+
+    if (full_run) {
+      for (const auto& path : path_filters)
+        cmdline.AppendArgNative(path);
+    } else {
+      TrafficAnnotationFileFilter filter;
+      std::vector<std::string> file_paths;
+
+      if (path_filters.size()) {
+        for (const auto& path_filter : path_filters) {
+          filter.GetRelevantFiles(source_path,
+#if defined(OS_WIN)
+                                  base::UTF16ToASCII(path_filter),
+#else
+                                  path_filter,
+#endif
+                                  &file_paths);
+        }
+      } else {
+        filter.GetRelevantFiles(source_path, "", &file_paths);
+      }
+
+      if (!file_paths.size())
+        return "";
+      for (const auto& file_path : file_paths)
+        cmdline.AppendArg(file_path);
+    }
+    std::string results;
+    return base::GetAppOutput(cmdline, &results) ? results : "";
+  }
 }
 
 bool ParseClangToolRawOutput(const std::string& clang_output,
