@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c82d86_02582234",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-27T12:37:29Z",
+      "side": 1,
+      "message": "style nit: prefer std::string() over \"\" (here and below)",
+      "range": {
+        "startLine": 178,
+        "startChar": 11,
+        "endLine": 178,
+        "endChar": 13
+      },
+      "revId": "28d1b32d8842e356e159e5e6103fd93fd47dffbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddd9757_92ff5f63",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-27T12:37:29Z",
+      "side": 1,
+      "message": "The only problem is in the length of the filters, right? I think it would be a better interface to pass all flags normally, just instead of filters pass the filter file. In other words, the signature would change from:\n\nrun_tool.py --generate-compdb --tool\u003dtraffic_annotation_extractor -p\u003d\u003cbuild_path\u003e \u003cfilter1\u003e \u003cfilter2\u003e ...\n\nto\n\nrun_tool.py --generate-compdb --tool\u003dtraffic_annotation_extractor -p\u003d\u003cbuild_path\u003e \u003cfilter_file\u003e\n\nor even better\n\nrun_tool.py --generate-compdb --tool\u003dtraffic_annotation_extractor -p\u003d\u003cbuild_path\u003e --filter_file\u003d\u003cfilter_file\u003e",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 14
+      },
+      "revId": "28d1b32d8842e356e159e5e6103fd93fd47dffbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
