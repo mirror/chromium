@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a3e0a7_214aef8a",
+        "filename": "components/gcm_driver/crypto/gcm_decryption_result.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-27T15:20:44Z",
+      "side": 1,
+      "message": "Worth a comment to say where there\u0027s no value 7?",
+      "revId": "4dc6d1804678f5a6b051d61a7f5beb2e799eafae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2425e842_0fc6c885",
+        "filename": "components/gcm_driver/crypto/message_payload_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-27T15:20:44Z",
+      "side": 1,
+      "message": "little bit unclear to me what this has got to do with the *header* record size.. either distinguish this one from l43, or rename to just INVALID_BINARY_RECORD_SIZE ?",
+      "revId": "4dc6d1804678f5a6b051d61a7f5beb2e799eafae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c732c979_17d772d0",
+        "filename": "components/gcm_driver/crypto/message_payload_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-27T15:20:44Z",
+      "side": 1,
+      "message": "maybe mention public key must start with 0x04 here?",
+      "revId": "4dc6d1804678f5a6b051d61a7f5beb2e799eafae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
