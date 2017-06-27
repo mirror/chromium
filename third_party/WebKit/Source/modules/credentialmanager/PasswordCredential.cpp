@@ -137,6 +137,16 @@ const String& PasswordCredential::password() const {
       ->Password();
 }
 
+const String& PasswordCredential::name() const {
+  return static_cast<PlatformPasswordCredential*>(platform_credential_.Get())
+      ->Name();
+}
+
+const KURL& PasswordCredential::iconURL() const {
+  return static_cast<PlatformPasswordCredential*>(platform_credential_.Get())
+      ->IconURL();
+}
+
 PassRefPtr<EncodedFormData> PasswordCredential::EncodeFormData(
     String& content_type) const {
   if (additional_data_.isURLSearchParams()) {

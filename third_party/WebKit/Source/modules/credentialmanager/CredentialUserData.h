@@ -17,8 +17,8 @@ class MODULES_EXPORT CredentialUserData : public Credential {
 
  public:
   // CredentialUserData.idl
-  const String& name() const { return platform_credential_->GetName(); }
-  const KURL& iconURL() const { return platform_credential_->GetIconURL(); }
+  const String& name() const;
+  const KURL& iconURL() const;
 
  protected:
   CredentialUserData(PlatformCredential*);

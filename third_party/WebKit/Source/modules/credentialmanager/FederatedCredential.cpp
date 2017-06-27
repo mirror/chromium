@@ -57,4 +57,13 @@ const String FederatedCredential::provider() const {
       ->ToString();
 }
 
+const String& FederatedCredential::name() const {
+  return static_cast<PlatformFederatedCredential*>(platform_credential_.Get())
+      ->Name();
+}
+
+const KURL& FederatedCredential::iconURL() const {
+  return static_cast<PlatformFederatedCredential*>(platform_credential_.Get())
+      ->IconURL();
+}
 }  // namespace blink

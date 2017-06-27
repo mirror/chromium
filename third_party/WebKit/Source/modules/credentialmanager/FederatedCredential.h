@@ -27,6 +27,8 @@ class MODULES_EXPORT FederatedCredential final : public CredentialUserData {
 
   // FederatedCredential.idl
   const String provider() const;
+  const String& name() const;
+  const KURL& iconURL() const;
 
   // TODO(mkwst): This is a stub, as we don't yet have any support on the
   // Chromium-side.

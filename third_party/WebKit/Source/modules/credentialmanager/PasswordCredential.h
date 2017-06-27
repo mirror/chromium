@@ -46,6 +46,8 @@ class MODULES_EXPORT PasswordCredential final : public CredentialUserData {
   }
 
   const String& password() const;
+  const String& name() const;
+  const KURL& iconURL() const;
 
   // Internal methods
   PassRefPtr<EncodedFormData> EncodeFormData(String& content_type) const;
