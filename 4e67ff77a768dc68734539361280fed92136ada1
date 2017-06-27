@@ -16,6 +16,24 @@
       "revId": "4e67ff77a768dc68734539361280fed92136ada1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40852f4d_553af1f6",
+        "filename": "build/android/pylib/local/device/local_device_environment.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 0,
+      "message": "I think it shouldn\u0027t break anything; the .json output can still be used with the chrome://tracing viewer, it just can\u0027t be opened directly, like the HTML can. Do you think there is something that relies on that?",
+      "parentUuid": "781717a4_6d9470cb",
+      "revId": "4e67ff77a768dc68734539361280fed92136ada1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

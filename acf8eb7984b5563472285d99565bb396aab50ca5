@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ded8f476_90435987",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50efcd83_c42ad96a",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08135ad5_9edcdfc6",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b2bdf8a8_ca9b9cc4",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08135ad5_9edcdfc6",
+      "range": {
+        "startLine": 55,
+        "startChar": 28,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e533c8b1_872ed20b",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bca290f_49f3255f",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e533c8b1_872ed20b",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "841acb2d_cca3baac",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8f0886_f44217b0",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b69bdde_fc302240",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdafb3a_12dbfe88",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b69bdde_fc302240",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "5888ee52_f3cd0ea2",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9daed82_00a12bca",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b2b16bd_0ad3f80c",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 4
@@ -124,6 +238,24 @@
       "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834774c2_f635ecaf",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b2b16bd_0ad3f80c",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "2e91d158_951c2006",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "That makes sense, but I was basing it on this: https://cs.chromium.org/chromium/src/build/android/pylib/local/device/local_device_environment.py?l\u003d279\n\nShould I remove the .json there as well?",
+      "parentUuid": "7f507286_9e668be7",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81f17069_863c4536",
         "filename": "build/android/test_runner.py",
         "patchSetId": 4
@@ -158,6 +308,24 @@
       "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c99e1ee_cc0fb3f0",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-27T20:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81f17069_863c4536",
+      "revId": "acf8eb7984b5563472285d99565bb396aab50ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
