@@ -29,7 +29,8 @@ class ProgrammaticScrollAnimator : public ScrollAnimatorCompositorCoordinator {
 
   virtual ~ProgrammaticScrollAnimator();
 
-  void ScrollToOffsetWithoutAnimation(const ScrollOffset&);
+  void ScrollToOffsetWithoutAnimation(const ScrollOffset&,
+                                      bool sequenced_for_smooth_scroll);
   void AnimateToOffset(const ScrollOffset&,
                        bool sequenced_for_smooth_scroll = false);
 
