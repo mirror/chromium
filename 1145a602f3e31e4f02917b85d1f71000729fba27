@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "d1c8c560_097f567f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-27T15:58:25Z",
+      "side": 1,
+      "message": "Here\u0027s a thought: WebTouchEvent has a unique_touch_event_id, which I\u0027m not sure is always set, but could be useful here. If you add a field to the struct in the queue to store the id from the kTouchStart, and it is non-zero, then you can make sure the entry that we remove from the queue matches. That would make it resilient against any unexpected touch/gesture ordering sequences.",
+      "parentUuid": "0106ecfa_0855c492",
+      "range": {
+        "startLine": 390,
+        "startChar": 39,
+        "endLine": 390,
+        "endChar": 58
+      },
+      "revId": "1145a602f3e31e4f02917b85d1f71000729fba27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0391d617_60c4473e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-27T15:58:25Z",
+      "side": 1,
+      "message": "I think we need to put an equivalent clause in RenderWidgetHostViewAndroid::ProcessAckedTouchEvent, since Android would have the exact same bug.",
+      "revId": "1145a602f3e31e4f02917b85d1f71000729fba27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a266a16e_99086713",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 2
