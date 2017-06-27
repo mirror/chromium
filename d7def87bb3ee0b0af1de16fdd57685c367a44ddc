@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "89a686d3_9d63c304",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-27T15:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a3c439_2dceb703",
+      "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8118d73d_1746a4d1",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.h",
         "patchSetId": 15
@@ -69,6 +87,24 @@
       "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c6fea5_d45a4c7e",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-27T15:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "617eb180_8bd6aa1f",
+      "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

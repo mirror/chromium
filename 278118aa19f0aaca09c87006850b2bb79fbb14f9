@@ -305,6 +305,24 @@
     },
     {
       "key": {
+        "uuid": "98949713_3a52e022",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-27T15:03:36Z",
+      "side": 1,
+      "message": "I\u0027ve now modified the code to only set flat tree elements as last_display_contents_.",
+      "parentUuid": "daf87ac3_a4e56b39",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4832662f_f8ab2515",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13
