@@ -317,6 +317,7 @@ class TestAutofillManager : public AutofillManager {
   void RunRunLoop() { run_loop_->Run(); }
 
   void UploadFormDataAsyncCallback(const FormStructure* submitted_form,
+                                   const TimeTicks& form_parsed_time,
                                    const TimeTicks& load_time,
                                    const TimeTicks& interaction_time,
                                    const TimeTicks& submission_time,
@@ -324,8 +325,8 @@ class TestAutofillManager : public AutofillManager {
     run_loop_->Quit();
 
     AutofillManager::UploadFormDataAsyncCallback(
-        submitted_form, load_time, interaction_time, submission_time,
-        observed_submission);
+        submitted_form, form_parsed_time, load_time, interaction_time,
+        submission_time, observed_submission);
   }
 
  private:
@@ -2159,6 +2160,28 @@ TEST_F(AutofillMetricsTest, CreditCardCheckoutFlowUserActions) {
                      "Autofill_FormSubmitted_NonFillable"));
   }
 
+  // Reset the autofill manager state.
+  autofill_manager_->Reset();
+  autofill_manager_->AddSeenForm(form, field_types, field_types);
+
+  // Simulate submitting the credit card form. Form is submmitted and autofill
+  // manager is reset before UploadFormDataAsyncCallback is triggered.
+  {
+    base::UserActionTester user_action_tester;
+    autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
+    // autofill_manager_->SubmitForm(form, TimeTicks::Now());
+    autofill_manager_->ResetRunLoop();
+    autofill_manager_->OnWillSubmitForm(form, TimeTicks::Now());
+    autofill_manager_->OnFormSubmitted(form);
+    autofill_manager_->Reset();
+    // Trigger UploadFormDataAsyncCallback.
+    autofill_manager_->RunRunLoop();
+    EXPECT_EQ(1,
+              user_action_tester.GetActionCount("Autofill_OnWillSubmitForm"));
+    EXPECT_EQ(1, user_action_tester.GetActionCount(
+                     "Autofill_FormSubmitted_NonFillable"));
+  }
+
   VerifyFormInteractionUkm(
       form, &test_ukm_recorder_, internal::kUKMSuggestionsShownEntryName,
       {{{internal::kUKMMillisecondsSinceFormParsedMetricName, 0},
@@ -2264,6 +2287,28 @@ TEST_F(AutofillMetricsTest, ProfileCheckoutFlowUserActions) {
     base::UserActionTester user_action_tester;
     autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
     autofill_manager_->SubmitForm(form, TimeTicks::Now());
+    EXPECT_EQ(1,
+              user_action_tester.GetActionCount("Autofill_OnWillSubmitForm"));
+    EXPECT_EQ(1, user_action_tester.GetActionCount(
+                     "Autofill_FormSubmitted_NonFillable"));
+  }
+
+  // Reset the autofill manager state.
+  autofill_manager_->Reset();
+  autofill_manager_->AddSeenForm(form, field_types, field_types);
+
+  // Simulate submitting the profile form. Form is submmitted and autofill
+  // manager is reset before UploadFormDataAsyncCallback is triggered.
+  {
+    base::UserActionTester user_action_tester;
+    autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
+    // autofill_manager_->SubmitForm(form, TimeTicks::Now());
+    autofill_manager_->ResetRunLoop();
+    autofill_manager_->OnWillSubmitForm(form, TimeTicks::Now());
+    autofill_manager_->OnFormSubmitted(form);
+    autofill_manager_->Reset();
+    // Trigger UploadFormDataAsyncCallback.
+    autofill_manager_->RunRunLoop();
     EXPECT_EQ(1,
               user_action_tester.GetActionCount("Autofill_OnWillSubmitForm"));
     EXPECT_EQ(1, user_action_tester.GetActionCount(
@@ -3042,6 +3087,41 @@ TEST_F(AutofillMetricsTest, CreditCardSubmittedFormEvents) {
   autofill_manager_->AddSeenForm(form, field_types, field_types);
 
   {
+    // Simulating submission with suggestion shown. Form is submmitted and autofill
+    // manager is reset before UploadFormDataAsyncCallback is triggered.
+    base::HistogramTester histogram_tester;
+    autofill_manager_->DidShowSuggestions(true /* is_new_popup */, form, field);
+    autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
+    autofill_manager_->ResetRunLoop();
+    autofill_manager_->OnWillSubmitForm(form, TimeTicks::Now());
+    autofill_manager_->OnFormSubmitted(form);
+    autofill_manager_->Reset();
+    // Trigger UploadFormDataAsyncCallback.
+    autofill_manager_->RunRunLoop();
+    histogram_tester.ExpectBucketCount(
+        "Autofill.FormEvents.CreditCard",
+        AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_SUBMITTED_ONCE, 1);
+    histogram_tester.ExpectBucketCount(
+        "Autofill.FormEvents.CreditCard",
+        AutofillMetrics::FORM_EVENT_SUGGESTION_SHOWN_WILL_SUBMIT_ONCE, 1);
+
+    VerifyFormInteractionUkm(
+        form, &test_ukm_recorder_, internal::kUKMSuggestionsShownEntryName,
+        {{{internal::kUKMMillisecondsSinceFormParsedMetricName, 0},
+          {internal::kUKMHeuristicTypeMetricName, CREDIT_CARD_NUMBER},
+          {internal::kUKMHtmlFieldTypeMetricName, HTML_TYPE_UNSPECIFIED},
+          {internal::kUKMServerTypeMetricName, CREDIT_CARD_NUMBER}}});
+    VerifySubmitFormUkm(form, &test_ukm_recorder_,
+                        AutofillMetrics::NON_FILLABLE_FORM_OR_NEW_DATA);
+  }
+
+  // Reset the autofill manager state and purge UKM logs.
+  autofill_manager_->Reset();
+  test_ukm_recorder_.Purge();
+
+  autofill_manager_->AddSeenForm(form, field_types, field_types);
+
+  {
     // Simulating submission with filled local data.
     base::HistogramTester histogram_tester;
     autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
@@ -3728,6 +3808,34 @@ TEST_F(AutofillMetricsTest, AddressSubmittedFormEvents) {
     base::HistogramTester histogram_tester;
     autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
     autofill_manager_->SubmitForm(form, TimeTicks::Now());
+    histogram_tester.ExpectBucketCount(
+        "Autofill.FormEvents.Address",
+        AutofillMetrics::FORM_EVENT_NO_SUGGESTION_WILL_SUBMIT_ONCE, 1);
+    histogram_tester.ExpectBucketCount(
+        "Autofill.FormEvents.Address",
+        AutofillMetrics::FORM_EVENT_NO_SUGGESTION_SUBMITTED_ONCE, 1);
+
+    VerifySubmitFormUkm(form, &test_ukm_recorder_,
+                        AutofillMetrics::NON_FILLABLE_FORM_OR_NEW_DATA);
+  }
+
+  // Reset the autofill manager state and purge UKM logs.
+  autofill_manager_->Reset();
+  test_ukm_recorder_.Purge();
+
+  autofill_manager_->AddSeenForm(form, field_types, field_types);
+
+  {
+    // Simulating submission with no filled data. Form is submmitted and autofill
+    // manager is reset before UploadFormDataAsyncCallback is triggered.
+    base::HistogramTester histogram_tester;
+    autofill_manager_->OnQueryFormFieldAutofill(0, form, field, gfx::RectF());
+    autofill_manager_->ResetRunLoop();
+    autofill_manager_->OnWillSubmitForm(form, TimeTicks::Now());
+    autofill_manager_->OnFormSubmitted(form);
+    autofill_manager_->Reset();
+    // Trigger UploadFormDataAsyncCallback.
+    autofill_manager_->RunRunLoop();
     histogram_tester.ExpectBucketCount(
         "Autofill.FormEvents.Address",
         AutofillMetrics::FORM_EVENT_NO_SUGGESTION_WILL_SUBMIT_ONCE, 1);

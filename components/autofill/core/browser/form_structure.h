@@ -136,6 +136,7 @@ class FormStructure {
   // TODO(sebsg): We log more than quality metrics. Maybe rename or split
   // function?
   void LogQualityMetrics(
+      const base::TimeTicks& form_parsed_time,
       const base::TimeTicks& load_time,
       const base::TimeTicks& interaction_time,
       const base::TimeTicks& submission_time,

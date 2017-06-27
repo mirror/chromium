@@ -838,6 +838,7 @@ void AutofillMetrics::LogProfileActionOnFormSubmitted(
 // static
 void AutofillMetrics::LogAutofillFormSubmittedState(
     AutofillFormSubmittedState state,
+    const base::TimeTicks& form_parsed_time,
     AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger) {
   UMA_HISTOGRAM_ENUMERATION("Autofill.FormSubmittedState", state,
                             AUTOFILL_FORM_SUBMITTED_STATE_ENUM_SIZE);
@@ -872,7 +873,7 @@ void AutofillMetrics::LogAutofillFormSubmittedState(
       NOTREACHED();
       break;
   }
-  form_interactions_ukm_logger->LogFormSubmitted(state);
+  form_interactions_ukm_logger->LogFormSubmitted(state, form_parsed_time);
 }
 
 // static
@@ -1325,7 +1326,8 @@ void AutofillMetrics::FormInteractionsUkmLogger::LogTextFieldDidChange(
 }
 
 void AutofillMetrics::FormInteractionsUkmLogger::LogFormSubmitted(
-    AutofillFormSubmittedState state) {
+    AutofillFormSubmittedState state,
+    const base::TimeTicks& form_parsed_time) {
   if (!CanLog())
     return;
 
@@ -1337,13 +1339,13 @@ void AutofillMetrics::FormInteractionsUkmLogger::LogFormSubmitted(
                                      internal::kUKMFormSubmittedEntryName);
   builder->AddMetric(internal::kUKMAutofillFormSubmittedStateMetricName,
                      static_cast<int>(state));
-  if (form_parsed_timestamp_.is_null())
+  if (form_parsed_time.is_null())
     DCHECK(state == NON_FILLABLE_FORM_OR_NEW_DATA ||
            state == FILLABLE_FORM_AUTOFILLED_NONE_DID_NOT_SHOW_SUGGESTIONS)
         << state;
   else
     builder->AddMetric(internal::kUKMMillisecondsSinceFormParsedMetricName,
-                       MillisecondsSinceFormParsed());
+                       MillisecondsSinceFormParsed(form_parsed_time));
 }
 
 void AutofillMetrics::FormInteractionsUkmLogger::UpdateSourceURL(
@@ -1351,6 +1353,12 @@ void AutofillMetrics::FormInteractionsUkmLogger::UpdateSourceURL(
   url_ = url;
   if (CanLog())
     ukm_recorder_->UpdateSourceURL(source_id_, url_);
+}
+
+base::TimeTicks
+AutofillMetrics::FormInteractionsUkmLogger::GetFormParseTimeStamp() {
+  DCHECK(!form_parsed_timestamp_.is_null());
+  return form_parsed_timestamp_;
 }
 
 bool AutofillMetrics::FormInteractionsUkmLogger::CanLog() const {
@@ -1362,6 +1370,12 @@ AutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormParsed()
     const {
   DCHECK(!form_parsed_timestamp_.is_null());
   return (base::TimeTicks::Now() - form_parsed_timestamp_).InMilliseconds();
+}
+
+int64_t AutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormParsed(
+    const base::TimeTicks& form_parsed_time) const {
+  DCHECK(!form_parsed_time.is_null());
+  return (base::TimeTicks::Now() - form_parsed_time).InMilliseconds();
 }
 
 void AutofillMetrics::FormInteractionsUkmLogger::GetNewSourceID() {
