@@ -45,6 +45,30 @@
       "revId": "d676856bbee36e6b5bd7d9027eaeb0d11b1bc1d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9c9634_6f071757",
+        "filename": "base/android/java/src/org/chromium/base/TimezoneUtils.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-27T14:39:06Z",
+      "side": 1,
+      "message": "It won\u0027t cause disk accesses on basically any user device; it\u0027ll just be a property read. It only hits disk if the device skipped setup wizard entirely and has never been connected to a network to get its time/timezone set by network.\n\nIt might actually be okay to remove this entirely now, since it was added speculatively and wasn\u0027t the real problem (though it\u0027s possible this is *also* a problem?). Maybe we should just see if it makes it through the bots without it?",
+      "parentUuid": "83952cff_9a949e9e",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "d676856bbee36e6b5bd7d9027eaeb0d11b1bc1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
