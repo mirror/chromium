@@ -22,6 +22,30 @@
       "revId": "e497be3c4dc76b7c2658af57c33a8b99c86ec25f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c55812_23472a5d",
+        "filename": "media/gpu/video_decode_accelerator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-27T02:33:28Z",
+      "side": 1,
+      "message": "That\u0027s what I ultimately had in mind, but I\u0027d like to make sure I understand what I am doing before going that way. Could you look at questions I asked in my previous comment and see if you can enlighten me on these points? Thanks!",
+      "parentUuid": "bd0f17a9_d9e9c0b2",
+      "range": {
+        "startLine": 289,
+        "startChar": 28,
+        "endLine": 289,
+        "endChar": 63
+      },
+      "revId": "e497be3c4dc76b7c2658af57c33a8b99c86ec25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
