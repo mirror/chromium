@@ -48,6 +48,8 @@ DEFINE_VARIATION_PARAM(kIPHDummyFeature, "IPH_Dummy");
 DEFINE_VARIATION_PARAM(kIPHDataSaverPreviewFeature, "IPH_DataSaverPreview");
 DEFINE_VARIATION_PARAM(kIPHDataSaverDetailFeature, "IPH_DataSaverDetail");
 DEFINE_VARIATION_PARAM(kIPHDownloadPageFeature, "IPH_DownloadPage");
+DEFINE_VARIATION_PARAM(kIPHDownloadPageScreenshotFeature,
+                       "IPH_DownloadPageScreenshot");
 DEFINE_VARIATION_PARAM(kIPHDownloadHomeFeature, "IPH_DownloadHome");
 #endif  // OS_ANDROID
 #if defined(OS_WIN)
@@ -65,6 +67,7 @@ constexpr flags_ui::FeatureEntry::FeatureVariation
         VARIATION_ENTRY(kIPHDataSaverPreviewFeature),
         VARIATION_ENTRY(kIPHDataSaverDetailFeature),
         VARIATION_ENTRY(kIPHDownloadPageFeature),
+        VARIATION_ENTRY(kIPHDownloadPageScreenshotFeature),
         VARIATION_ENTRY(kIPHDownloadHomeFeature),
 #elif defined(OS_WIN)
         VARIATION_ENTRY(kIPHNewTabFeature),
