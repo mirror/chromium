@@ -234,9 +234,9 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       hidden_task_duration_reporter(
           "RendererScheduler.TaskDurationPerQueueType2.Hidden"),
       visible_task_duration_reporter(
-          "RendererScheduler.TaskDurationPerQueueType.Visible"),
+          "RendererScheduler.TaskDurationPerQueueType2.Visible"),
       hidden_music_task_duration_reporter(
-          "RendererScheduler.TaskDurationPerQueueType.HiddenMusic") {
+          "RendererScheduler.TaskDurationPerQueueType2.HiddenMusic") {
   foreground_main_thread_load_tracker.Resume(now);
 }
 
