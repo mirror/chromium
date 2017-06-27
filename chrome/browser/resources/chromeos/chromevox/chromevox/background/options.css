@@ -18,19 +18,22 @@ select {
 }
 
 h1 {
-    background: rgb(247, 152, 58);
+    background: rgb(255, 87, 34);
     color: white;
     display: block;
-    font-size: 16px;
-    height: 56px;
-    line-height: 56px;
-    text-align: center;
+    font-size: 15px;
+    height: 50px;
+    line-height: 50px;
+    width: 646px
+    margin-left: auto;
+    margin-right: auto;
+    text-align: margin-left;
     width: 100%;
 }
 
 h2 {
     color: rgb(97, 97, 97);
-    font-size: 13px;
+    font-size: 15px;
     height: 15px;
     margin-top: 21px;
 }
@@ -44,9 +47,9 @@ h2 {
 .option {
     background-color: #fff;
     border: 1px solid #ddd;
-    font-size: 13px;
-    line-height: 60px;
-    min-height: 60px;
+    font-size: 15px;
+    line-height: 50px;
+    min-height: 5 0px;
     padding: 0 20px;
     vertical-align: middle;
     width: 646px;
@@ -60,7 +63,7 @@ h2 {
     background-repeat: no-repeat;
     border: 0;
     float: right;
-    height: 60px;
+    height: 50px;
     margin: 0;
     padding: 0;
     width: 40px;
@@ -75,8 +78,8 @@ h2 {
     border-color: #ddd;
     border-width: 0 0 1px 0;
     height: 20px;
-    line-height: 60px;
-    margin: 20px 0;
+    line-height: 50px;
+    margin: 15px 0;
     padding: 0;
 }
 
@@ -98,4 +101,8 @@ h2 {
     height: 30px;
     margin-left: 20px;
     padding: 0 20px;
+}
+
+.radio-option {
+  line-height: 40px;
 }
