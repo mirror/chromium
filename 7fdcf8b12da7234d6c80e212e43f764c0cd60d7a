@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "986a0183_a0e4ecc6",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-27T21:58:00Z",
+      "side": 1,
+      "message": "these aren\u0027t histograms. I would just say metric",
+      "revId": "7fdcf8b12da7234d6c80e212e43f764c0cd60d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
