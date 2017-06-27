@@ -13,6 +13,7 @@ class OfflineMetricsCollector;
 class PrefetchDispatcher;
 class PrefetchGCMHandler;
 class PrefetchNetworkRequestFactory;
+class PrefetchStoreSQL;
 class SuggestedArticlesObserver;
 
 // Main class and entry point for the Offline Pages Prefetching feature, that
@@ -31,6 +32,7 @@ class PrefetchService : public KeyedService {
   virtual PrefetchDispatcher* GetPrefetchDispatcher() = 0;
   virtual PrefetchGCMHandler* GetPrefetchGCMHandler() = 0;
   virtual PrefetchNetworkRequestFactory* GetPrefetchNetworkRequestFactory() = 0;
+  virtual PrefetchStoreSQL* GetPrefetchStore() = 0;
 
   // May be |nullptr| in tests.  The PrefetchService does not depend on the
   // SuggestedArticlesObserver, it merely owns it for lifetime purposes.

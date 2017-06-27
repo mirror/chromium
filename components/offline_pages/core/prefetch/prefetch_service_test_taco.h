@@ -17,6 +17,7 @@ class PrefetchDispatcher;
 class PrefetchGCMHandler;
 class PrefetchService;
 class PrefetchNetworkRequestFactory;
+class PrefetchStoreSQL;
 class SuggestedArticlesObserver;
 
 // The taco class acts as a wrapper around the prefetch service making
@@ -42,6 +43,8 @@ class PrefetchServiceTestTaco {
   // Default type: TestNetworkRequestFactory.
   void SetPrefetchNetworkRequestFactory(
       std::unique_ptr<PrefetchNetworkRequestFactory> network_request_factory);
+  void SetPrefetchStoreSql(
+      std::unique_ptr<PrefetchStoreSQL> prefetch_store_sql);
   // Defaults to SuggestedArticlesObserver.  Initializes the testing suggestions
   // by default, so no ContentSuggestionsService is required..
   void SetSuggestedArticlesObserver(
@@ -67,6 +70,7 @@ class PrefetchServiceTestTaco {
   std::unique_ptr<PrefetchDispatcher> dispatcher_;
   std::unique_ptr<PrefetchGCMHandler> gcm_handler_;
   std::unique_ptr<PrefetchNetworkRequestFactory> network_request_factory_;
+  std::unique_ptr<PrefetchStoreSQL> prefetch_store_sql_;
   std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer_;
 
   std::unique_ptr<PrefetchService> prefetch_service_;
