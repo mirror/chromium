@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4cb4b59_134c2584",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-27T01:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "524ddc10_2a4bb35d",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a58005e_bc186734",
         "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.js",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-26T23:57:05Z",
       "side": 1,
       "message": "Hiding an element like this is a bit awkward. If it doesn\u0027t make sense to merge this with settings-android-apps-page, then we should put the show/hide logic in basic_page.js, similar to shouldShowAndroidApps_ in basic_page.js.",
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7365f1_31f6ebba",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-27T01:04:30Z",
+      "side": 1,
+      "message": "shouldShowAndroidApps_ is for one-time showing-hiding, IIUC. In this approach I update visibility once app settings appears in the system. Probably we can try to make it read-only instead of hiding (I don\u0027t have clear instructions here). One more idea why I did not move it to  basic_page.js that I tried to keep android app info update logic isolated out of root js file. WDYT?",
+      "parentUuid": "0a58005e_bc186734",
       "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3e2b7f42_85f9e2da",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-27T01:04:30Z",
+      "side": 1,
+      "message": "Without this code new section is invisible. I did it similar to L163-164 above.",
+      "parentUuid": "5aaf18e5_52c16515",
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4433aa0a_fe515109",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e06b4bec_efaf029e",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-27T01:04:30Z",
+      "side": 1,
+      "message": "Well, I agree with your confusion. Historically we had Android apps \u003d\u003d Google Play Store. Currently this is no longer true. AOSP image just hits this limitation. Actually we have Google Play Store section which is named here as \"androidApps\" and in case we don\u0027t have \"Google Play Store Section\" we need just Settings link. I tried rename this.",
+      "parentUuid": "4433aa0a_fe515109",
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdfb177b_37933a36",
         "filename": "chrome/test/data/webui/settings/android_apps_browser_proxy.js",
         "patchSetId": 4
@@ -87,6 +165,24 @@
       "writtenOn": "2017-06-26T23:57:05Z",
       "side": 1,
       "message": "can we name this test_android_apps_browser_proxy.js to reduce confusion with the real proxy (and for consistency with existing test proxies)?",
+      "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf17c76_0bd20858",
+        "filename": "chrome/test/data/webui/settings/android_apps_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-27T01:04:30Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "cdfb177b_37933a36",
       "revId": "68345f0a760ea067695ba68b403b1791d235bf6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
