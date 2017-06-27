@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c873e49_9de8ae11",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-27T22:05:54Z",
+      "side": 1,
+      "message": "nit: use { } here as well.  (From https://google.github.io/styleguide/cppguide.html: \"if one part of an if-else statement uses curly braces, the other part must too\")",
+      "revId": "7629cdf73e32e2b094c8e18ebc6dfcd0a2aa1f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341cf325_b5360200",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-27T22:05:54Z",
+      "side": 1,
+      "message": "I\u0027d also add a case to check that content::CLIENT_LOFI_ON by itself is transformed to PREVIEWS_OFF.",
+      "revId": "7629cdf73e32e2b094c8e18ebc6dfcd0a2aa1f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5a86bb_2a9000fe",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-27T22:05:54Z",
+      "side": 1,
+      "message": "nit: can this just use EXPECT_TRUE(NavigateToURL(shell(), embedded_test_server()-\u003eGetURL(\"/page_with_iframe.html\"))?",
+      "revId": "7629cdf73e32e2b094c8e18ebc6dfcd0a2aa1f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06411c96_d71f8f62",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-27T22:05:54Z",
+      "side": 1,
+      "message": "nit: s/preveiws/previews/",
+      "revId": "7629cdf73e32e2b094c8e18ebc6dfcd0a2aa1f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
