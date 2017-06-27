@@ -2580,6 +2580,19 @@ const char kClipboardLastModifiedTime[] = "ui.clipboard.last_modified_time";
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
 const char kOfflinePrefetchBackoff[] = "offline_prefetch.backoff";
+
+// The current accumulated usage of Chrome. It accumulates over a day and
+// eventually indicates whether the day is 'online' or 'offline'. It is used
+// by OfflinePageMetricsCollector to gather data on how Chrome is used while
+// offline and how various offline features affect that.
+const char kOfflineAccumulatedUsage[] = "offline_pages.accumulated_usage";
+const char kOfflineAccumulatedTimestamp[] =
+    "offline_pages.accumulated_timestamp";
+const char kOfflineUsageUnusedCount[] = "offline_pages.unused_count";
+const char kOfflineUsageStartedCount[] = "offline_pages.started_count";
+const char kOfflineUsageOfflineCount[] = "offline_pages.offline_count";
+const char kOfflineUsageOnlineCount[] = "offline_pages.online_count";
+const char kOfflineUsageMixedCount[] = "offline_pages.mixed_count";
 #endif
 
 }  // namespace prefs
