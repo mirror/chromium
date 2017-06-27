@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b896a366_0ea9724f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T20:55:32Z",
+      "side": 1,
+      "message": "I think you missed this one (it\u0027s not obvious in Gerrit though)",
+      "parentUuid": "fe6c95db_e41a6e40",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c4d9435_bc87e43c",
         "filename": "media/gpu/android/promotion_hint_aggregator.h",
         "patchSetId": 8
@@ -304,6 +328,30 @@
       "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b0aa02_256779f5",
+        "filename": "media/gpu/avda_codec_image.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T20:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a2744de_504039b3",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 21
+      },
+      "revId": "47dd6dfae681976ebd12ccc506adab43b60e66ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

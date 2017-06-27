@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87cf263d_0eb4da08",
+        "filename": "media/gpu/android/promotion_hint_aggregator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T20:55:32Z",
+      "side": 1,
+      "message": "NIT: s/enough frames/frames fast enough?",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "c0ec2244a3e1db3be12998f2b34651f30c4c2ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62b926d_5503bbf6",
+        "filename": "media/gpu/android/promotion_hint_aggregator_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-06-27T20:55:32Z",
+      "side": 1,
+      "message": "s/AndroidVideoSurfaceChooserImpl/PromotionHintAggregatorImpl/",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "c0ec2244a3e1db3be12998f2b34651f30c4c2ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
