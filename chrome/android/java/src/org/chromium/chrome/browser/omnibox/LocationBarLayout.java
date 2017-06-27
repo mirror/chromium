@@ -412,8 +412,9 @@ public class LocationBarLayout extends FrameLayout
             // omnibox results. There is one special case where the suggestion text was pasted,
             // where we want the transition type to be LINK.
             int transition = suggestionMatch.getType() == OmniboxSuggestionType.URL_WHAT_YOU_TYPED
-                    && mUrlBar.isPastedText() ? PageTransition.LINK
-                            : suggestionMatch.getTransition();
+                            && mUrlBar.wasLastEditPaste()
+                    ? PageTransition.LINK
+                    : suggestionMatch.getTransition();
 
             loadUrlFromOmniboxMatch(suggestionMatchUrl, transition, suggestionMatchPosition,
                     suggestionMatch.getType());
@@ -857,7 +858,7 @@ public class LocationBarLayout extends FrameLayout
         }
         mDeferredNativeRunnables.clear();
 
-        mUrlBar.onOmniboxFullyFunctional();
+        mUrlBar.onNativeLibraryReady();
         updateVisualsForState();
     }
 
