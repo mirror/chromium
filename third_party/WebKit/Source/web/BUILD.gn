@@ -101,7 +101,6 @@ test("webkit_unit_tests") {
     "tests/SpinLockTest.cpp",
     "tests/TimerPerfTest.cpp",
     "tests/VirtualTimeTest.cpp",
-    "tests/WebDocumentSubresourceFilterTest.cpp",
     "tests/WebFrameSerializerSanitizationTest.cpp",
     "tests/WebFrameTest.cpp",
     "tests/WebImageTest.cpp",
