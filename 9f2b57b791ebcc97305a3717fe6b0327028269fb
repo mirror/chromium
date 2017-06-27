@@ -16,6 +16,24 @@
       "revId": "9f2b57b791ebcc97305a3717fe6b0327028269fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23935c93_3c5d08aa",
+        "filename": "services/service_manager/embedder/runner/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-27T15:27:06Z",
+      "side": 1,
+      "message": "iOS can\u0027t build the stuff in //services/service_manager/embedder as-is. We went to pains on the earlier CL to avoid introducing ifdefs into those files. That\u0027s why I went with the separate target here, and once I had the separate target a separate dir seemed more clear than a separation of files in the same dir into two separate targets.",
+      "parentUuid": "0c654ca6_a33db6cf",
+      "revId": "9f2b57b791ebcc97305a3717fe6b0327028269fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
