@@ -34,6 +34,24 @@
       "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d6dd6f_8095716a",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-27T04:03:13Z",
+      "side": 1,
+      "message": "In Linux Environment, remember the PowerSaveBlocker can only run in the \"windowed\" unittest(with -xvfb), it crashs in some place of the DBUS in the \"console\" unittest. So in the service_unittest of wake lock, we add a static bool \"is_in_unittest_\" in WakeLockProvider and also a \"wake_lock_for_testing.cc\".\n\nNow it is the same. If we go with the TestServiceManagerContext, we have to set \"is_in_unittest_ \u003d true\" in current unittest. We also need to move the \"is_in_unittest_\" from WakeLockProvider into wake_lock/public/cpp/ to make it avaiable for the outer unittest.\n\nIt is not complex. I just feel that using SetFakeWakeLock() is much lightweight, unittests don\u0027t need to really Create the ServiceManagerContext and launch the DeviceService either.",
+      "parentUuid": "1c355a7c_56cd191a",
+      "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
