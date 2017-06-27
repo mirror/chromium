@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8e64bde0_5d8149ce",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T22:12:26Z",
+      "side": 1,
+      "message": "Since AddObserver could be skipped, how can we be sure the SearchBoxModel has correct color? We might need an explicit mojo call to get the color and set to SearchBoxModel when profile switching happens.",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be90bc3c_12949cd5",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 5

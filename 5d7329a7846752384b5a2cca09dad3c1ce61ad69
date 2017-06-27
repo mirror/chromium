@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "a6f9d051_f73ea749",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T22:12:26Z",
+      "side": 1,
+      "message": "Can you use observer_binding_.is_bound() ?",
+      "parentUuid": "73f82c7b_f86ea743",
+      "revId": "5d7329a7846752384b5a2cca09dad3c1ce61ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58bf3fc2_76ca628f",
         "filename": "components/wallpaper/wallpaper_color_profile.h",
         "patchSetId": 2
