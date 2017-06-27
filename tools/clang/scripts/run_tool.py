@@ -75,11 +75,13 @@ def _GetFilesFromGit(paths=None):
   else:
     args.append('git')
   args.append('ls-files')
-  if paths:
-    args.extend(paths)
   command = subprocess.Popen(args, stdout=subprocess.PIPE)
   output, _ = command.communicate()
-  return [os.path.realpath(p) for p in output.splitlines()]
+  all_files = [os.path.realpath(p) for p in output.splitlines()]
+  if paths:
+    paths = [os.path.abspath(p) for p in paths]
+    all_files = filter(lambda x: any(x.startswith(y) for y in paths), all_files)
+  return all_files
 
 
 def _GetFilesFromCompileDB(build_directory):
