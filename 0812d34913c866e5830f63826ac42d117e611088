@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b14e9420_c2d4d0f7",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T10:14:49Z",
+      "side": 1,
+      "message": "None of the other presubmit check describe their arguments nor return value.\n\nLeft as-is (because description of arguments would be \"input_api: input API object\", \"output_api: output API object\" which is not more descriptive than the argument names).",
+      "parentUuid": "469453d5_e370472b",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb49fd39_8e92d8df",
         "filename": "ios/PRESUBMIT.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0812d34913c866e5830f63826ac42d117e611088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cb8282_451e6475",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T10:14:49Z",
+      "side": 1,
+      "message": "I\u0027m using the same pattern as the other PRESUBMIT.py files to allow easily adding new presubmit checks. BTW, your recommendation would have been incorrect. Equivalent code with .extend is the following:\n\n  return _CheckBugInToDo(input_api, output_api)\n\nLeft as-is.",
+      "parentUuid": "eb49fd39_8e92d8df",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,48 @@
     },
     {
       "key": {
+        "uuid": "49dd8538_2338bbfd",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T10:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9cbcb14_25a874bb",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "675ccb4d_59e984dc",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T10:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c4256cb_604b26ab",
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8a11d8f_ee30109f",
         "filename": "ios/PRESUBMIT_test.py",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "0812d34913c866e5830f63826ac42d117e611088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd856b6_a32248c8",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T10:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a11d8f_ee30109f",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
