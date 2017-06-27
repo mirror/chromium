@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7b9a11e_932e7d9c",
+        "filename": "ios/performance/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T12:47:01Z",
+      "side": 1,
+      "message": "2017, here and in any other files.",
+      "revId": "c8324ef829a7c9ac77305582a6aad5da46945864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acaa8be9_c5800b2e",
+        "filename": "ios/performance/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T12:47:01Z",
+      "side": 1,
+      "message": "I think that ios/testing/perf/ (or ios/clean/testing/perf/) is a better location for this -- compare to /testing/perf/",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "c8324ef829a7c9ac77305582a6aad5da46945864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03776094_538a394a",
+        "filename": "ios/performance/startupLoggers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T12:47:01Z",
+      "side": 1,
+      "message": "ARC guard only goes into the .mm file, not the .h",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "c8324ef829a7c9ac77305582a6aad5da46945864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877fe442_0433eea8",
+        "filename": "ios/performance/startupLoggers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T12:47:01Z",
+      "side": 1,
+      "message": "Since this class doesn\u0027t have any internal state, I think it would be better to just implement this functionality as a set of free C functions grouped in a namespace. That means we also don\u0027t need to worry about allocating an object early in application launch.",
+      "range": {
+        "startLine": 12,
+        "startChar": 28,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "c8324ef829a7c9ac77305582a6aad5da46945864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a01a57_a578e748",
+        "filename": "ios/performance/startupLoggers.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T12:47:01Z",
+      "side": 1,
+      "message": "No need to override this method if there\u0027s no additional functionality.",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 15
+      },
+      "revId": "c8324ef829a7c9ac77305582a6aad5da46945864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6965d986_d50a7039",
+        "filename": "ios/performance/startupLoggers.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T12:47:01Z",
+      "side": 1,
+      "message": "Either remove this or make it a DLOG. It looks like it\u0027s just leftover from debugging.",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 7
+      },
+      "revId": "c8324ef829a7c9ac77305582a6aad5da46945864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

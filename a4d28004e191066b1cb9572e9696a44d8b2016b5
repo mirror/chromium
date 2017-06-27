@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd1a270_88ad4926",
+        "filename": "ios/clean/chrome/app/main.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-27T12:47:01Z",
+      "side": 0,
+      "message": "Does anything depend on this being called?",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "a4d28004e191066b1cb9572e9696a44d8b2016b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
