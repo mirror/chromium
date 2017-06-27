@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4aa0676_0e30a33d",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-27T00:51:54Z",
+      "side": 1,
+      "message": "\"minimum size (in px) of each dimension\"?",
+      "revId": "64f0c6cc413d8e51a81df2aedbf02a844999222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb84067_4242008c",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-27T00:51:54Z",
+      "side": 1,
+      "message": "I think you could drop this by adding methods in MediaEngagementContentsObserverTest.",
+      "revId": "64f0c6cc413d8e51a81df2aedbf02a844999222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
