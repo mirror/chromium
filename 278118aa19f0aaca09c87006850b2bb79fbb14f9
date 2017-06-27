@@ -287,6 +287,24 @@
     },
     {
       "key": {
+        "uuid": "daf87ac3_a4e56b39",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-27T11:36:22Z",
+      "side": 1,
+      "message": "You\u0027re right. If only \u003cslot\u003e and \u003ccontent\u003e were part of the flat tree.\n\nAn alternative could be to always traverse into \u003cslot\u003e and \u003ccontent\u003e and never set last_display_contents_ to such elements (until \u003cslot\u003e actually becomes part of the flat tree).",
+      "parentUuid": "3cb60946_2131e430",
+      "revId": "278118aa19f0aaca09c87006850b2bb79fbb14f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4832662f_f8ab2515",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
         "patchSetId": 13

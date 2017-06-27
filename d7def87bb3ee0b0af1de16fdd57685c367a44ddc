@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68a3c439_2dceb703",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-27T11:36:22Z",
+      "side": 1,
+      "message": "Yes, FirstLayoutChild() should handle that. I\u0027ll add more tests to WhitespaceAttacherTest.",
+      "parentUuid": "389d2e80_a3a34bf7",
+      "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8118d73d_1746a4d1",
         "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.h",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "617eb180_8bd6aa1f",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-27T11:36:22Z",
+      "side": 1,
+      "message": "I can rephrase to \"without traversing its flat-tree children\". As you noticed in another comment, we RebuildLayoutTree in the flat-tree order.",
+      "parentUuid": "8118d73d_1746a4d1",
+      "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "928f46d0_daf99331",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-27T08:21:41Z",
       "side": 1,
       "message": "Ah, we have already traversed distributed nodes before the children.\n\nIt looks that has been done in previous CLs. Nicely done!",
+      "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9457e310_b7760a63",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-27T11:36:22Z",
+      "side": 1,
+      "message": "Yes, the prerequisite for fixing correctness for all whitespace cases was to make RebuildLayoutTree() work in flat-tree order. That was done in https://codereview.chromium.org/2836753002/ which made sure (DCHECKed) that marking for rebuild and the actual rebuild is done on a distribution-clean tree.",
+      "parentUuid": "928f46d0_daf99331",
       "revId": "d7def87bb3ee0b0af1de16fdd57685c367a44ddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
