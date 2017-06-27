@@ -318,6 +318,13 @@ void ContentPasswordManagerDriver::RecordSavePasswordProgress(
   client_->GetLogManager()->LogSavePasswordProgress(log);
 }
 
+void ContentPasswordManagerDriver::UserModifiedPasswordField() {
+  GetPasswordManager()
+      ->client()
+      ->GetMetricsRecorder()
+      ->RecordUserModifiedPasswordField();
+}
+
 bool ContentPasswordManagerDriver::CheckChildProcessSecurityPolicy(
     const GURL& url,
     BadMessageReason reason) {

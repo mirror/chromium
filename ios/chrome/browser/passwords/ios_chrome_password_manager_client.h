@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #import "components/password_manager/core/browser/password_manager_client.h"
+#include "components/password_manager/core/browser/password_manager_metrics_recorder.h"
 #include "components/password_manager/sync/browser/sync_credentials_filter.h"
 #include "components/prefs/pref_member.h"
 
@@ -73,6 +74,8 @@ class IOSChromePasswordManagerClient
       const override;
   ukm::UkmRecorder* GetUkmRecorder() override;
   ukm::SourceId GetUkmSourceId() override;
+  password_manager::PasswordManagerMetricsRecorder* GetMetricsRecorder()
+      override;
 
  private:
   id<PasswordManagerClientDelegate> delegate_;  // (weak)
@@ -90,6 +93,9 @@ class IOSChromePasswordManagerClient
   // ukm::SourceId that is bound to the last committed navigation of the tab
   // owning this ChromePasswordManagerClient.
   ukm::SourceId ukm_source_id_;
+
+  std::unique_ptr<password_manager::PasswordManagerMetricsRecorder>
+      metrics_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(IOSChromePasswordManagerClient);
 };
