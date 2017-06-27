@@ -2636,8 +2636,21 @@ bool AutofillTable::MigrateToVersion73AddMaskedCardBankName() {
 }
 
 bool AutofillTable::MigrateToVersion74AddServerCardTypeColumn() {
-  return db_->Execute(
-      "ALTER TABLE masked_credit_cards ADD COLUMN type INTEGER DEFAULT 0");
+  // Version 73 was actually used by two different schemas; an attempt to add
+  // the "type" column (as in this version 74) was landed and reverted, and then
+  // the "bank_name" column was added (and stuck). Some clients may have been
+  // upgraded to one and some the other. Figure out which is the case.
+  const bool added_type_column_in_v73 =
+      db_->DoesColumnExist("masked_credit_cards", "type");
+
+  // If we previously added the "type" column, then it's already present with
+  // the correct semantics, but we now need to run the "bank_name" migration.
+  // Otherwise, we need to add "type" now.
+  return added_type_column_in_v73
+             ? MigrateToVersion73AddMaskedCardBankName()
+             : db_->Execute(
+                   "ALTER TABLE masked_credit_cards ADD COLUMN type"
+                   " INTEGER DEFAULT 0");
 }
 
 }  // namespace autofill
