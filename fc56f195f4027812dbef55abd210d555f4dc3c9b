@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c53914_342656f3",
+        "filename": "chrome/installer/util/google_update_settings.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-27T21:53:00Z",
+      "side": 1,
+      "message": "\"user visible\"?",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 15
+      },
+      "revId": "fc56f195f4027812dbef55abd210d555f4dc3c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ac1887_e6040d36",
+        "filename": "chrome/installer/util/google_update_settings.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-27T21:53:00Z",
+      "side": 1,
+      "message": "\"may\"?",
+      "range": {
+        "startLine": 83,
+        "startChar": 29,
+        "endLine": 83,
+        "endChar": 33
+      },
+      "revId": "fc56f195f4027812dbef55abd210d555f4dc3c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
