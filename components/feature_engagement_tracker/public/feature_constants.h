@@ -23,6 +23,7 @@ extern const base::Feature kIPHDummyFeature;
 extern const base::Feature kIPHDataSaverPreviewFeature;
 extern const base::Feature kIPHDataSaverDetailFeature;
 extern const base::Feature kIPHDownloadPageFeature;
+extern const base::Feature kIPHDownloadPageScreenshotFeature;
 extern const base::Feature kIPHDownloadHomeFeature;
 #endif  // OS_ANDROID
 
