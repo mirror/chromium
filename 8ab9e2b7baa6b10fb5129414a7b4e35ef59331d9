@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f00de25a_4967da5c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-27T22:35:50Z",
+      "side": 1,
+      "message": "\"Deselects any text in the active tab\u0027s web contents and dismisses the text controls.\"",
+      "range": {
+        "startLine": 1079,
+        "startChar": 7,
+        "endLine": 1080,
+        "endChar": 66
+      },
+      "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ef61c7_73d95e44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-27T22:35:50Z",
+      "side": 1,
+      "message": "Maybe \"dismissSelectedText\"?",
+      "range": {
+        "startLine": 1082,
+        "startChar": 17,
+        "endLine": 1082,
+        "endChar": 53
+      },
+      "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d755086_76ee60ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-27T22:35:50Z",
+      "side": 1,
+      "message": "This class has getActiveTab().",
+      "range": {
+        "startLine": 1085,
+        "startChar": 42,
+        "endLine": 1085,
+        "endChar": 51
+      },
+      "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed606905_494f447a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-27T22:35:50Z",
+      "side": 1,
+      "message": "What does base mean in this context? You can probably just exclude that.",
+      "range": {
+        "startLine": 1086,
+        "startChar": 12,
+        "endLine": 1086,
+        "endChar": 27
+      },
+      "revId": "8ab9e2b7baa6b10fb5129414a7b4e35ef59331d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
