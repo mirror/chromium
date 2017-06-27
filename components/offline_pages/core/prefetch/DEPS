@@ -3,5 +3,6 @@ include_rules = [
   "+components/gcm_driver",
   "+components/ntp_snippets",
   "+components/version_info",
+  "+components/prefs/testing_pref_service.h",
   "+net",
 ]
