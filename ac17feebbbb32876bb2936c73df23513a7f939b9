@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d79e1987_42071326",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T08:16:56Z",
+      "side": 1,
+      "message": "Does the name really need to be \"${target_name}-Runner\". Usually we avoid using characters outside of lowercase alpha and underscore in target names (as the target name is pasted verbatim in generated ninja files, Xcode files, ... and some characters may have special meaning).\n\nCan this be changed to \"${target_name}_runner\"?\n\nIf the file has to be named \"${target_name}-Runner\" then you can instead use product_name for that (this is why this variable exists to have a different name for the output and the target).",
+      "range": {
+        "startLine": 1622,
+        "startChar": 40,
+        "endLine": 1622,
+        "endChar": 61
+      },
+      "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578f6072_c4f0f34b",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T08:16:56Z",
+      "side": 1,
+      "message": "nit: testonly \u003d true",
+      "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a72f505_e80e11c8",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1644,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T08:16:56Z",
+      "side": 1,
+      "message": "nit: \"git cl format\" runs \"gn format\" on all BUILD.gn files. The \"gn format\" command sorts the content of the \"sources\", but it supports having multiple groups if you separate them with a blank line and put a comment. In that case, items are sorted alphabetically in each group, but the group themselves are not reordered. You can use this here to ensure that the order is never changed by moving the comment inside the sources declaration:\n\n  sources \u003d [\n    \"$_xctrunner_path/Info.plist\",\n\n    # NOTE: The XCTRunnerAddition+Info.plist must come after the Info.plist\n    # because it overrides the values under \"CFBundleIdentifier\" and\n    # \"CFBundleName\".\n    \"//ios/chrome/app/resources/XCTRunnerAddition+Info.plist\",\n  ]",
+      "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7bc4a0_6ae4fe62",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-27T08:16:56Z",
+      "side": 1,
+      "message": "nit: can you add the following to prevent accidental use of this incomplete template?\n\n  assert(false,\n      \"ios_xcuitest_test is incomplete and should not be used, \" +\n      \"see crbug.com/709289 for tracking\")",
+      "revId": "ac17feebbbb32876bb2936c73df23513a7f939b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
