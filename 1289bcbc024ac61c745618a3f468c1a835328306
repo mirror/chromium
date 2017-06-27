@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e446fdad_324babde",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12229,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-27T19:50:38Z",
+      "side": 1,
+      "message": "Yes, but it makes the usage a very ugly constructor, where all the leaf nodes need to be encapsulated by the explicit constructor. Here\u0027s what it would look like in the test below:\n\n  FrameTreeCreatorHelper tree(\n      FrameType::kLocal,\n      {FrameTreeCreatorHelper(FrameType::kLocal),\n       FrameTreeCreatorHelper(FrameType::kRemote),\n       FrameTreeCreatorHelper(FrameType::kLocal),\n       FrameTreeCreatorHelper(\n           FrameType::kRemote,\n           {FrameTreeCreatorHelper(FrameType::kLocal,\n                                   {FrameTreeCreatorHelper(FrameType::kLocal)}),\n            FrameTreeCreatorHelper(FrameType::kRemote)}),\n       FrameTreeCreatorHelper(FrameType::kLocal)});\n\n\nI\u0027d rather just leave it as implicit. The improvement I noticed is that the default argument is not needed, so I removed it.",
+      "parentUuid": "f92d6e84_f2acc9cf",
+      "range": {
+        "startLine": 12229,
+        "startChar": 2,
+        "endLine": 12229,
+        "endChar": 24
+      },
+      "revId": "1289bcbc024ac61c745618a3f468c1a835328306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13f2155f_9fb5ff38",
         "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1289bcbc024ac61c745618a3f468c1a835328306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c715efe9_17940d99",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12236,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-27T19:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f2155f_9fb5ff38",
+      "range": {
+        "startLine": 12236,
+        "startChar": 2,
+        "endLine": 12236,
+        "endChar": 71
+      },
+      "revId": "1289bcbc024ac61c745618a3f468c1a835328306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -80,6 +128,24 @@
       "revId": "1289bcbc024ac61c745618a3f468c1a835328306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fcda55c_10ba99a7",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12242,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-27T19:50:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5fa3ce5a_f417e651",
+      "revId": "1289bcbc024ac61c745618a3f468c1a835328306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
