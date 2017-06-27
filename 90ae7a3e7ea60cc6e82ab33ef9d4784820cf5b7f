@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bdf3c4e2_cd91fc61",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T21:23:21Z",
+      "side": 1,
+      "message": "Right, so my point is: do you want such things recorded as \"the user opened a new tab\"?  It seems unlikely that you do, in which case you\u0027d need to refactor.",
+      "parentUuid": "1bcb9ddc_8029abb8",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73d2ce97_ff462a40",
         "filename": "chrome/browser/ui/browser_commands.cc",
         "patchSetId": 2

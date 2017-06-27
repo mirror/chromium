@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4d65d2_cca9ab4b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T21:23:21Z",
+      "side": 1,
+      "message": "These API changes will necessitate fixing the other callsites to match, which I don\u0027t think you\u0027ve done?  I would expect tryjobs to fail as-is.",
+      "revId": "6c41b512e1f776f1562416d219e4533de7c37b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
