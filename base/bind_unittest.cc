@@ -309,6 +309,13 @@ int FunctionWithScopedRefptrFirstParam(const scoped_refptr<HasRef>& o, int n) {
   return n;
 }
 
+void baz(scoped_refptr<HasRef>) {}
+
+TEST(Foo, bar) {
+  HasRef* p = nullptr;
+  base::Bind(&baz, p);
+}
+
 void TakesACallback(const Closure& callback) {
   callback.Run();
 }
