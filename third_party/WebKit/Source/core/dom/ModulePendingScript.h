@@ -49,7 +49,7 @@ class ModulePendingScriptTreeClient final
 
 // PendingScript for a module script
 // https://html.spec.whatwg.org/#module-script.
-class CORE_EXPORT ModulePendingScript : public PendingScript {
+class CORE_EXPORT_N1669 ModulePendingScript : public PendingScript {
  public:
   static ModulePendingScript* Create(ScriptElementBase* element,
                                      ModulePendingScriptTreeClient* client) {

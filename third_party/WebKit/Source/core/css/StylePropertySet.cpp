@@ -138,9 +138,9 @@ int ImmutableStylePropertySet::FindPropertyIndex(T property) const {
 
   return -1;
 }
-template CORE_EXPORT int ImmutableStylePropertySet::FindPropertyIndex(
+template CORE_EXPORT_N1523 int ImmutableStylePropertySet::FindPropertyIndex(
     CSSPropertyID) const;
-template CORE_EXPORT int ImmutableStylePropertySet::FindPropertyIndex(
+template CORE_EXPORT_N1524 int ImmutableStylePropertySet::FindPropertyIndex(
     AtomicString) const;
 
 DEFINE_TRACE_AFTER_DISPATCH(ImmutableStylePropertySet) {
@@ -179,9 +179,9 @@ String StylePropertySet::GetPropertyValue(T property) const {
     return value->CssText();
   return SerializeShorthand(*this, property);
 }
-template CORE_EXPORT String
+template CORE_EXPORT_N1525 String
     StylePropertySet::GetPropertyValue<CSSPropertyID>(CSSPropertyID) const;
-template CORE_EXPORT String
+template CORE_EXPORT_N1526 String
     StylePropertySet::GetPropertyValue<AtomicString>(AtomicString) const;
 
 template <typename T>
@@ -191,9 +191,9 @@ const CSSValue* StylePropertySet::GetPropertyCSSValue(T property) const {
     return nullptr;
   return &PropertyAt(found_property_index).Value();
 }
-template CORE_EXPORT const CSSValue*
+template CORE_EXPORT_N1527 const CSSValue*
     StylePropertySet::GetPropertyCSSValue<CSSPropertyID>(CSSPropertyID) const;
-template CORE_EXPORT const CSSValue*
+template CORE_EXPORT_N1528 const CSSValue*
     StylePropertySet::GetPropertyCSSValue<AtomicString>(AtomicString) const;
 
 DEFINE_TRACE(StylePropertySet) {
@@ -249,9 +249,9 @@ bool MutableStylePropertySet::RemoveProperty(T property, String* return_text) {
   int found_property_index = FindPropertyIndex(property);
   return RemovePropertyAtIndex(found_property_index, return_text);
 }
-template CORE_EXPORT bool MutableStylePropertySet::RemoveProperty(CSSPropertyID,
+template CORE_EXPORT_N1529 bool MutableStylePropertySet::RemoveProperty(CSSPropertyID,
                                                                   String*);
-template CORE_EXPORT bool MutableStylePropertySet::RemoveProperty(AtomicString,
+template CORE_EXPORT_N1530 bool MutableStylePropertySet::RemoveProperty(AtomicString,
                                                                   String*);
 
 template <typename T>
@@ -576,9 +576,9 @@ int MutableStylePropertySet::FindPropertyIndex(T property) const {
 
   return (it == end) ? -1 : it - begin;
 }
-template CORE_EXPORT int MutableStylePropertySet::FindPropertyIndex(
+template CORE_EXPORT_N1531 int MutableStylePropertySet::FindPropertyIndex(
     CSSPropertyID) const;
-template CORE_EXPORT int MutableStylePropertySet::FindPropertyIndex(
+template CORE_EXPORT_N1532 int MutableStylePropertySet::FindPropertyIndex(
     AtomicString) const;
 
 DEFINE_TRACE_AFTER_DISPATCH(MutableStylePropertySet) {

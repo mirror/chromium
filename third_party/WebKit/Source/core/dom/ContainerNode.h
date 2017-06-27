@@ -84,7 +84,7 @@ using NodeVector = HeapVector<Member<Node>, kInitialNodeVectorSize>;
 // the corresponding methods on Node. This is a performance optimization, as it
 // avoids a virtual dispatch if the type is statically known to be
 // ContainerNode.
-class CORE_EXPORT ContainerNode : public Node {
+class CORE_EXPORT_N1616 ContainerNode : public Node {
  public:
   ~ContainerNode() override;
 

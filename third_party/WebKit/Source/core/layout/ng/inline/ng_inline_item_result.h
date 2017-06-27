@@ -20,7 +20,7 @@ namespace blink {
 // to create line boxes.
 //
 // NGLineBreaker produces, and NGInlineLayoutAlgorithm consumes.
-struct CORE_EXPORT NGInlineItemResult {
+struct CORE_EXPORT_N2428 NGInlineItemResult {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

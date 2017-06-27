@@ -26,7 +26,7 @@ class WebTaskRunner;
 //
 // This observes LocalFrame lifecycle only for in-process worker cases (i.e.
 // only when a non-null LocalFrame is given).
-class CORE_EXPORT ParentFrameTaskRunners final
+class CORE_EXPORT_N2646 ParentFrameTaskRunners final
     : public GarbageCollectedFinalized<ParentFrameTaskRunners>,
       public ContextLifecycleObserver {
   USING_GARBAGE_COLLECTED_MIXIN(ParentFrameTaskRunners);

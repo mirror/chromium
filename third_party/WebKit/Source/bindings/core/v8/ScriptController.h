@@ -58,7 +58,7 @@ typedef WTF::Vector<v8::Extension*> V8Extensions;
 // This class exposes methods to run script in a frame (in the main world and
 // in isolated worlds). An instance can be obtained by using
 // LocalFrame::GetScriptController().
-class CORE_EXPORT ScriptController final
+class CORE_EXPORT_N48 ScriptController final
     : public GarbageCollected<ScriptController> {
   WTF_MAKE_NONCOPYABLE(ScriptController);
 

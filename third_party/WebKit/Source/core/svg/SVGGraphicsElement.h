@@ -34,7 +34,7 @@ class AffineTransform;
 class SVGMatrixTearOff;
 class SVGRectTearOff;
 
-class CORE_EXPORT SVGGraphicsElement : public SVGElement, public SVGTests {
+class CORE_EXPORT_N2606 SVGGraphicsElement : public SVGElement, public SVGTests {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(SVGGraphicsElement);
 

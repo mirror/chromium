@@ -47,7 +47,7 @@ class TextCheckingParagraph;
 struct TextCheckingResult;
 class TypingCommand;
 
-class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
+class CORE_EXPORT_N1956 SpellChecker final : public GarbageCollected<SpellChecker> {
   WTF_MAKE_NONCOPYABLE(SpellChecker);
 
  public:

@@ -15,7 +15,7 @@ namespace blink {
 class Document;
 class Event;
 
-class CORE_EXPORT DeviceSingleWindowEventController
+class CORE_EXPORT_N2027 DeviceSingleWindowEventController
     : public GarbageCollectedFinalized<DeviceSingleWindowEventController>,
       public PlatformEventController,
       public LocalDOMWindow::EventListenerObserver {

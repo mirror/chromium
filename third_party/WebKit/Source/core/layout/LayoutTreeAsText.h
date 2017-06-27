@@ -65,11 +65,11 @@ typedef unsigned LayoutAsTextBehavior;
 
 // You don't need pageWidthInPixels if you don't specify
 // LayoutAsTextInPrintingMode.
-CORE_EXPORT String
+CORE_EXPORT_N2328 String
 ExternalRepresentation(LocalFrame*,
                        LayoutAsTextBehavior = kLayoutAsTextBehaviorNormal,
                        const PaintLayer* marked_layer = nullptr);
-CORE_EXPORT String
+CORE_EXPORT_N2329 String
 ExternalRepresentation(Element*,
                        LayoutAsTextBehavior = kLayoutAsTextBehaviorNormal);
 void Write(TextStream&,
@@ -102,9 +102,9 @@ class LayoutTreeAsText {
 // Helper function shared with SVGLayoutTreeAsText
 String QuoteAndEscapeNonPrintables(const String&);
 
-CORE_EXPORT String CounterValueForElement(Element*);
+CORE_EXPORT_N2330 String CounterValueForElement(Element*);
 
-CORE_EXPORT String MarkerTextForListItem(Element*);
+CORE_EXPORT_N2331 String MarkerTextForListItem(Element*);
 
 TextStream& operator<<(TextStream&, const Color&);
 

@@ -36,7 +36,7 @@ class TestObject;
 class TestInterfaceImplementation;
 class Element;
 
-class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
+class CORE_EXPORT_N225 TestDictionary : public IDLDictionaryBase {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestDictionary();

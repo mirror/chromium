@@ -50,7 +50,7 @@ class ResourceResponse;
 class ExecutionContext;
 class TextResourceDecoder;
 
-class CORE_EXPORT WorkerScriptLoader final
+class CORE_EXPORT_N2670 WorkerScriptLoader final
     : public RefCounted<WorkerScriptLoader>,
       public ThreadableLoaderClient {
   USING_FAST_MALLOC(WorkerScriptLoader);

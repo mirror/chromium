@@ -139,7 +139,7 @@ ImageCandidate BestFitSourceForSrcsetAttribute(float device_scale_factor,
                                                const String& srcset_attribute,
                                                Document* = nullptr);
 
-CORE_EXPORT ImageCandidate
+CORE_EXPORT_N2210 ImageCandidate
 BestFitSourceForImageAttributes(float device_scale_factor,
                                 float source_size,
                                 const String& src_attribute,

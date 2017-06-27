@@ -38,7 +38,7 @@ class MutableStylePropertySet;
 class Node;
 class ComputedStyle;
 
-class CORE_EXPORT CSSComputedStyleDeclaration final
+class CORE_EXPORT_N1474 CSSComputedStyleDeclaration final
     : public CSSStyleDeclaration {
  public:
   static CSSComputedStyleDeclaration* Create(

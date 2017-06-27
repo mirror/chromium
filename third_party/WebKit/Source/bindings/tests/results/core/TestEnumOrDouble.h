@@ -21,7 +21,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TestEnumOrDouble final {
+class CORE_EXPORT_N227 TestEnumOrDouble final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestEnumOrDouble();
@@ -53,15 +53,15 @@ class CORE_EXPORT TestEnumOrDouble final {
   double m_double;
   String m_testEnum;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const TestEnumOrDouble&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N228 v8::Local<v8::Value> ToV8(const TestEnumOrDouble&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8TestEnumOrDouble final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestEnumOrDouble&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N229 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestEnumOrDouble&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const TestEnumOrDouble&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N230 v8::Local<v8::Value> ToV8(const TestEnumOrDouble&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestEnumOrDouble& impl) {
@@ -75,7 +75,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestEnumOrDouble&
 
 template <>
 struct NativeValueTraits<TestEnumOrDouble> : public NativeValueTraitsBase<TestEnumOrDouble> {
-  CORE_EXPORT static TestEnumOrDouble NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N231 static TestEnumOrDouble NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

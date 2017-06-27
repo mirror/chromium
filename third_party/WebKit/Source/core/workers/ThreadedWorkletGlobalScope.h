@@ -12,7 +12,7 @@ namespace blink {
 
 class WorkerThread;
 
-class CORE_EXPORT ThreadedWorkletGlobalScope : public WorkletGlobalScope {
+class CORE_EXPORT_N2654 ThreadedWorkletGlobalScope : public WorkletGlobalScope {
  public:
   ~ThreadedWorkletGlobalScope() override;
   void Dispose() override;

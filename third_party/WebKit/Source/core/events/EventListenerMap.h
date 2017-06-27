@@ -46,7 +46,7 @@ class EventTarget;
 
 using EventListenerVector = HeapVector<RegisteredEventListener, 1>;
 
-class CORE_EXPORT EventListenerMap {
+class CORE_EXPORT_N1970 EventListenerMap {
   WTF_MAKE_NONCOPYABLE(EventListenerMap);
   DISALLOW_NEW();
 

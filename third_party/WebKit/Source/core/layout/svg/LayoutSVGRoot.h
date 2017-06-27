@@ -30,7 +30,7 @@ namespace blink {
 class SVGElement;
 enum class SVGTransformChange;
 
-class CORE_EXPORT LayoutSVGRoot final : public LayoutReplaced {
+class CORE_EXPORT_N2440 LayoutSVGRoot final : public LayoutReplaced {
  public:
   explicit LayoutSVGRoot(SVGElement*);
   ~LayoutSVGRoot() override;

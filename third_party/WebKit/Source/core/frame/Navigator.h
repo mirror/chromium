@@ -35,7 +35,7 @@ namespace blink {
 
 class LocalFrame;
 
-class CORE_EXPORT Navigator final : public GarbageCollected<Navigator>,
+class CORE_EXPORT_N2049 Navigator final : public GarbageCollected<Navigator>,
                                     public NavigatorConcurrentHardware,
                                     public NavigatorID,
                                     public NavigatorLanguage,

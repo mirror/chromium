@@ -41,7 +41,7 @@ enum PreferPlugInsForImagesOption {
   kShouldNotPreferPlugInsForImages
 };
 
-class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
+class CORE_EXPORT_N2134 HTMLPlugInElement : public HTMLFrameOwnerElement {
  public:
   ~HTMLPlugInElement() override;
   DECLARE_VIRTUAL_TRACE();

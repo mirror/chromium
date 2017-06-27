@@ -14,7 +14,7 @@ namespace blink {
 class LocalFrame;
 class Page;
 
-class CORE_EXPORT PageAnimator final : public GarbageCollected<PageAnimator> {
+class CORE_EXPORT_N2508 PageAnimator final : public GarbageCollected<PageAnimator> {
  public:
   static PageAnimator* Create(Page&);
   DECLARE_TRACE();

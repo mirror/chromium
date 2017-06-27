@@ -100,7 +100,7 @@ struct CompositedSelection;
 
 typedef unsigned long long DOMTimeStamp;
 
-class CORE_EXPORT LocalFrameView final
+class CORE_EXPORT_N2047 LocalFrameView final
     : public GarbageCollectedFinalized<LocalFrameView>,
       public PlatformFrameView,
       public FrameView,

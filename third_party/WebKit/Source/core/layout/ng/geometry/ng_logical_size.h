@@ -17,7 +17,7 @@ struct NGPhysicalSize;
 
 // NGLogicalSize is the size of rect (typically a fragment) in the logical
 // coordinate system.
-struct CORE_EXPORT NGLogicalSize {
+struct CORE_EXPORT_N2412 NGLogicalSize {
   NGLogicalSize() {}
   NGLogicalSize(LayoutUnit inline_size, LayoutUnit block_size)
       : inline_size(inline_size), block_size(block_size) {}
@@ -39,7 +39,7 @@ inline NGLogicalSize& operator-=(NGLogicalSize& a, const NGBoxStrut& b) {
   return a;
 }
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGLogicalSize&);
+CORE_EXPORT_N2413 std::ostream& operator<<(std::ostream&, const NGLogicalSize&);
 
 }  // namespace blink
 

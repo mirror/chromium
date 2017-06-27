@@ -48,7 +48,7 @@ struct HeapInfo {
   size_t js_heap_size_limit;
 };
 
-class CORE_EXPORT MemoryInfo final : public GarbageCollected<MemoryInfo>,
+class CORE_EXPORT_N2621 MemoryInfo final : public GarbageCollected<MemoryInfo>,
                                      public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
@@ -67,7 +67,7 @@ class CORE_EXPORT MemoryInfo final : public GarbageCollected<MemoryInfo>,
   HeapInfo info_;
 };
 
-CORE_EXPORT size_t QuantizeMemorySize(size_t);
+CORE_EXPORT_N2622 size_t QuantizeMemorySize(size_t);
 
 }  // namespace blink
 

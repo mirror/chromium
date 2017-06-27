@@ -30,7 +30,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DocumentFragment : public ContainerNode {
+class CORE_EXPORT_N1627 DocumentFragment : public ContainerNode {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT NavigatorLanguage {
+class CORE_EXPORT_N2052 NavigatorLanguage {
  public:
   NavigatorLanguage();
 

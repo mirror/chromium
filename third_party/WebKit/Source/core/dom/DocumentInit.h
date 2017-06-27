@@ -45,7 +45,7 @@ class LocalFrame;
 class HTMLImportsController;
 class Settings;
 
-class CORE_EXPORT DocumentInit final {
+class CORE_EXPORT_N1628 DocumentInit final {
   STACK_ALLOCATED();
 
  public:

@@ -21,7 +21,7 @@ class ComputedStyle;
 class Document;
 class FontCachePurgePreventer;
 
-class CORE_EXPORT CanvasFontCache final
+class CORE_EXPORT_N2166 CanvasFontCache final
     : public GarbageCollectedFinalized<CanvasFontCache>,
       public WebThread::TaskObserver {
  public:

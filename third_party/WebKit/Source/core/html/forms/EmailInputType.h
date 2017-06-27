@@ -40,11 +40,11 @@ class EmailInputType final : public BaseTextInputType {
   static InputType* Create(HTMLInputElement&);
 
   // They are public for unit testing.
-  CORE_EXPORT static String ConvertEmailAddressToASCII(const ScriptRegexp&,
+  CORE_EXPORT_N2176 static String ConvertEmailAddressToASCII(const ScriptRegexp&,
                                                        const String&);
-  CORE_EXPORT static bool IsValidEmailAddress(const ScriptRegexp&,
+  CORE_EXPORT_N2177 static bool IsValidEmailAddress(const ScriptRegexp&,
                                               const String&);
-  CORE_EXPORT static std::unique_ptr<ScriptRegexp> CreateEmailRegexp();
+  CORE_EXPORT_N2178 static std::unique_ptr<ScriptRegexp> CreateEmailRegexp();
 
  private:
   explicit EmailInputType(HTMLInputElement&);

@@ -33,7 +33,7 @@
 
 namespace blink {
 
-class CORE_EXPORT Attr final : public Node {
+class CORE_EXPORT_N1602 Attr final : public Node {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

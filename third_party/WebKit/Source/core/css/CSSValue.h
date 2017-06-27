@@ -31,7 +31,7 @@ namespace blink {
 class Document;
 class Length;
 
-class CORE_EXPORT CSSValue : public GarbageCollectedFinalized<CSSValue> {
+class CORE_EXPORT_N1497 CSSValue : public GarbageCollectedFinalized<CSSValue> {
  public:
   // Override operator new to allocate CSSValue subtype objects onto
   // a dedicated heap.

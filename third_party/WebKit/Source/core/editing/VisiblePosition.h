@@ -138,17 +138,17 @@ using VisiblePosition = VisiblePositionTemplate<EditingStrategy>;
 using VisiblePositionInFlatTree =
     VisiblePositionTemplate<EditingInFlatTreeStrategy>;
 
-CORE_EXPORT VisiblePosition
+CORE_EXPORT_N1816 VisiblePosition
 CreateVisiblePosition(const Position&, TextAffinity = VP_DEFAULT_AFFINITY);
-CORE_EXPORT VisiblePosition CreateVisiblePosition(const PositionWithAffinity&);
-CORE_EXPORT VisiblePositionInFlatTree
+CORE_EXPORT_N1817 VisiblePosition CreateVisiblePosition(const PositionWithAffinity&);
+CORE_EXPORT_N1818 VisiblePositionInFlatTree
 CreateVisiblePosition(const PositionInFlatTree&,
                       TextAffinity = VP_DEFAULT_AFFINITY);
-CORE_EXPORT VisiblePositionInFlatTree
+CORE_EXPORT_N1819 VisiblePositionInFlatTree
 CreateVisiblePosition(const PositionInFlatTreeWithAffinity&);
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const VisiblePosition&);
-CORE_EXPORT std::ostream& operator<<(std::ostream&,
+CORE_EXPORT_N1820 std::ostream& operator<<(std::ostream&, const VisiblePosition&);
+CORE_EXPORT_N1821 std::ostream& operator<<(std::ostream&,
                                      const VisiblePositionInFlatTree&);
 
 }  // namespace blink

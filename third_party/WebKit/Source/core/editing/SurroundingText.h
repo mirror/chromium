@@ -40,7 +40,7 @@ namespace blink {
 
 class Range;
 
-class CORE_EXPORT SurroundingText {
+class CORE_EXPORT_N1814 SurroundingText {
   USING_FAST_MALLOC(SurroundingText);
   WTF_MAKE_NONCOPYABLE(SurroundingText);
 

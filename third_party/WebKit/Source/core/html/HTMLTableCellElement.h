@@ -31,7 +31,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLTableCellElement final : public HTMLTablePartElement {
+class CORE_EXPORT_N2141 HTMLTableCellElement final : public HTMLTablePartElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

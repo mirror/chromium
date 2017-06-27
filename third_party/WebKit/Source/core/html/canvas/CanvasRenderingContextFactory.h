@@ -17,7 +17,7 @@ namespace blink {
 class HTMLCanvasElement;
 class OffscreenCanvas;
 
-class CORE_EXPORT CanvasRenderingContextFactory {
+class CORE_EXPORT_N2169 CanvasRenderingContextFactory {
   USING_FAST_MALLOC(CanvasRenderingContextFactory);
   WTF_MAKE_NONCOPYABLE(CanvasRenderingContextFactory);
 

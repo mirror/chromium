@@ -39,7 +39,7 @@ class ExceptionState;
 class MediaList;
 class MediaQuery;
 
-class CORE_EXPORT MediaQuerySet : public RefCounted<MediaQuerySet> {
+class CORE_EXPORT_N1507 MediaQuerySet : public RefCounted<MediaQuerySet> {
  public:
   static RefPtr<MediaQuerySet> Create() {
     return AdoptRef(new MediaQuerySet());

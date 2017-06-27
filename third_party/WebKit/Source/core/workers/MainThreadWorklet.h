@@ -20,7 +20,7 @@ class ScriptPromiseResolver;
 // TODO(nhiroki): This is a temporary class to support module loading for main
 // thread worklets. This and ThreadedWorklet will be merged into the base
 // Worklet class once threaded worklets are ready to use module loading.
-class CORE_EXPORT MainThreadWorklet : public Worklet {
+class CORE_EXPORT_N2644 MainThreadWorklet : public Worklet {
   USING_GARBAGE_COLLECTED_MIXIN(MainThreadWorklet);
   WTF_MAKE_NONCOPYABLE(MainThreadWorklet);
 

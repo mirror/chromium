@@ -22,7 +22,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT PreloadRequest {
+class CORE_EXPORT_N2214 PreloadRequest {
   USING_FAST_MALLOC(PreloadRequest);
 
  public:

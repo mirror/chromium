@@ -38,7 +38,7 @@ class CSSFontFace;
 class FontDescription;
 class SimpleFontData;
 
-class CORE_EXPORT CSSFontFaceSource
+class CORE_EXPORT_N1477 CSSFontFaceSource
     : public GarbageCollectedFinalized<CSSFontFaceSource> {
   WTF_MAKE_NONCOPYABLE(CSSFontFaceSource);
 

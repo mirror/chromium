@@ -15,7 +15,7 @@ namespace blink {
 
 class SourceLocation;
 
-class CORE_EXPORT ConsoleMessage final
+class CORE_EXPORT_N2247 ConsoleMessage final
     : public GarbageCollectedFinalized<ConsoleMessage> {
  public:
   // Location must be non-null.

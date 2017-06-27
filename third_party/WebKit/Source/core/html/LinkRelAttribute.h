@@ -39,7 +39,7 @@
 
 namespace blink {
 
-class CORE_EXPORT LinkRelAttribute {
+class CORE_EXPORT_N2151 LinkRelAttribute {
   DISALLOW_NEW();
 
  public:

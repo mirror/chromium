@@ -38,7 +38,7 @@ namespace blink {
 
 class ExecutionContext;
 
-class CORE_EXPORT DOMTimer final : public GarbageCollectedFinalized<DOMTimer>,
+class CORE_EXPORT_N2028 DOMTimer final : public GarbageCollectedFinalized<DOMTimer>,
                                    public SuspendableTimer {
   USING_GARBAGE_COLLECTED_MIXIN(DOMTimer);
 

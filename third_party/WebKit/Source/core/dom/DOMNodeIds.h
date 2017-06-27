@@ -18,7 +18,7 @@ DECLARE_WEAK_IDENTIFIER_MAP(Node, DOMNodeId);
 
 static const DOMNodeId kInvalidDOMNodeId = 0;
 
-class CORE_EXPORT DOMNodeIds {
+class CORE_EXPORT_N1641 DOMNodeIds {
   STATIC_ONLY(DOMNodeIds);
 
  public:

@@ -22,7 +22,7 @@ class ModuleScript;
 // the specifier, and the module identified by 'x' is the descendant.
 // ScriptModuleResolver, given a referrer and specifier, can look up the
 // descendant.
-class CORE_EXPORT ScriptModuleResolver
+class CORE_EXPORT_N1698 ScriptModuleResolver
     : public GarbageCollectedFinalized<ScriptModuleResolver> {
  public:
   virtual ~ScriptModuleResolver() {}

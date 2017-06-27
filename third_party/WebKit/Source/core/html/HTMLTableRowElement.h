@@ -34,7 +34,7 @@ namespace blink {
 
 class ExceptionState;
 
-class CORE_EXPORT HTMLTableRowElement final : public HTMLTablePartElement {
+class CORE_EXPORT_N2144 HTMLTableRowElement final : public HTMLTablePartElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

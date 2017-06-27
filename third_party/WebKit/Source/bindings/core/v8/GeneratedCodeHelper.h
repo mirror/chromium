@@ -22,11 +22,11 @@ namespace blink {
 class ScriptState;
 class SerializedScriptValue;
 
-CORE_EXPORT void V8ConstructorAttributeGetter(
+CORE_EXPORT_N26 void V8ConstructorAttributeGetter(
     v8::Local<v8::Name> property_name,
     const v8::PropertyCallbackInfo<v8::Value>&);
 
-CORE_EXPORT v8::Local<v8::Value> V8Deserialize(
+CORE_EXPORT_N27 v8::Local<v8::Value> V8Deserialize(
     v8::Isolate*,
     PassRefPtr<SerializedScriptValue>);
 
@@ -36,7 +36,7 @@ CORE_EXPORT v8::Local<v8::Value> V8Deserialize(
 // Promise-returning DOM operations are required to always return a promise
 // and to never throw an exception.
 // See also http://heycam.github.io/webidl/#es-operations
-class CORE_EXPORT ExceptionToRejectPromiseScope {
+class CORE_EXPORT_N28 ExceptionToRejectPromiseScope {
   STACK_ALLOCATED();
 
  public:

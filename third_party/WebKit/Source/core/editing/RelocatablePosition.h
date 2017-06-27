@@ -15,7 +15,7 @@ namespace blink {
 // anchor node is moved out of document. The class is implemented by using a
 // temporary |Range| object to keep track of the |Position|, and disposing the
 // |Range| when out of scope.
-class CORE_EXPORT RelocatablePosition final {
+class CORE_EXPORT_N1806 RelocatablePosition final {
   STACK_ALLOCATED();
 
  public:

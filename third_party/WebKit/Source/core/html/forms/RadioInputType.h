@@ -39,7 +39,7 @@ namespace blink {
 class RadioInputType final : public BaseCheckableInputType {
  public:
   static InputType* Create(HTMLInputElement&);
-  CORE_EXPORT static HTMLInputElement* NextRadioButtonInGroup(HTMLInputElement*,
+  CORE_EXPORT_N2184 static HTMLInputElement* NextRadioButtonInGroup(HTMLInputElement*,
                                                               bool forward);
 
  private:

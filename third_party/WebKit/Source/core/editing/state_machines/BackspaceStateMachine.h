@@ -14,7 +14,7 @@
 
 namespace blink {
 
-class CORE_EXPORT BackspaceStateMachine {
+class CORE_EXPORT_N1958 BackspaceStateMachine {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(BackspaceStateMachine);
 

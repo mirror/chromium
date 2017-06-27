@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSResourceValue : public CSSStyleValue {
+class CORE_EXPORT_N1550 CSSResourceValue : public CSSStyleValue {
   WTF_MAKE_NONCOPYABLE(CSSResourceValue);
   DEFINE_WRAPPERTYPEINFO();
 

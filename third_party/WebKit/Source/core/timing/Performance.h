@@ -45,7 +45,7 @@ namespace blink {
 class ScriptState;
 class ScriptValue;
 
-class CORE_EXPORT Performance final : public PerformanceBase,
+class CORE_EXPORT_N2623 Performance final : public PerformanceBase,
                                       public PerformanceMonitor::Client,
                                       public DOMWindowClient {
   DEFINE_WRAPPERTYPEINFO();

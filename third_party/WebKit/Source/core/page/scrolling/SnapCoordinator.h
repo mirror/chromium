@@ -29,7 +29,7 @@ struct LengthPoint;
 //   containing block chain) scroll container.
 //
 // For more information see spec: https://drafts.csswg.org/css-snappoints/
-class CORE_EXPORT SnapCoordinator final
+class CORE_EXPORT_N2525 SnapCoordinator final
     : public GarbageCollectedFinalized<SnapCoordinator> {
   WTF_MAKE_NONCOPYABLE(SnapCoordinator);
 

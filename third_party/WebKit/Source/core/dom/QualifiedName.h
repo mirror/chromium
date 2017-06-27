@@ -46,9 +46,9 @@ struct QualifiedNameData {
   bool is_static_;
 };
 
-CORE_EXPORT extern const class QualifiedName& g_null_name;
+CORE_EXPORT_N1684 extern const class QualifiedName& g_null_name;
 
-class CORE_EXPORT QualifiedName {
+class CORE_EXPORT_N1685 QualifiedName {
   USING_FAST_MALLOC(QualifiedName);
 
  public:
@@ -196,7 +196,7 @@ inline unsigned HashComponents(const QualifiedNameComponents& buf) {
   return StringHasher::HashMemory<sizeof(QualifiedNameComponents)>(&buf);
 }
 
-struct CORE_EXPORT QualifiedNameHash {
+struct CORE_EXPORT_N1686 QualifiedNameHash {
   STATIC_ONLY(QualifiedNameHash);
   static unsigned GetHash(const QualifiedName& name) {
     return GetHash(name.Impl());

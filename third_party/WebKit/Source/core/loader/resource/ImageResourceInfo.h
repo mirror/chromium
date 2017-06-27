@@ -24,7 +24,7 @@ class SecurityOrigin;
 // Do not add new members or new call sites unless really needed.
 // TODO(hiroshige): reduce the members of this class to further decouple
 // ImageResource and ImageResourceContent.
-class CORE_EXPORT ImageResourceInfo : public GarbageCollectedMixin {
+class CORE_EXPORT_N2486 ImageResourceInfo : public GarbageCollectedMixin {
  public:
   ~ImageResourceInfo() {}
   virtual const KURL& Url() const = 0;

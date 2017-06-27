@@ -16,7 +16,7 @@ namespace blink {
 class Document;
 class ExceptionState;
 
-class CORE_EXPORT StaticRange final : public GarbageCollected<StaticRange>,
+class CORE_EXPORT_N1703 StaticRange final : public GarbageCollected<StaticRange>,
                                       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

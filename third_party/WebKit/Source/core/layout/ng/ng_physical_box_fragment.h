@@ -14,7 +14,7 @@
 
 namespace blink {
 
-class CORE_EXPORT NGPhysicalBoxFragment final : public NGPhysicalFragment {
+class CORE_EXPORT_N2394 NGPhysicalBoxFragment final : public NGPhysicalFragment {
  public:
   // This modifies the passed-in children vector.
   NGPhysicalBoxFragment(LayoutObject* layout_object,

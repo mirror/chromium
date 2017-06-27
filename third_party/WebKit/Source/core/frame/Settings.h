@@ -51,7 +51,7 @@
 
 namespace blink {
 
-class CORE_EXPORT Settings {
+class CORE_EXPORT_N2066 Settings {
   WTF_MAKE_NONCOPYABLE(Settings);
   USING_FAST_MALLOC(Settings);
 

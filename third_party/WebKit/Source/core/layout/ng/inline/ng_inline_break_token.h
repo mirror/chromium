@@ -13,7 +13,7 @@ namespace blink {
 class NGInlineNode;
 
 // Represents a break token for an inline node.
-class CORE_EXPORT NGInlineBreakToken : public NGBreakToken {
+class CORE_EXPORT_N2426 NGInlineBreakToken : public NGBreakToken {
  public:
   // Creates a break token for a node which did fragment, and can potentially
   // produce more fragments.

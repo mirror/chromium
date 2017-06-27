@@ -25,7 +25,7 @@ class ComputedStyle;
 // Represents a user specificed keyframe in a KeyframeEffect.
 // http://w3c.github.io/web-animations/#keyframe
 // FIXME: Make Keyframe immutable
-class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
+class CORE_EXPORT_N1451 Keyframe : public RefCounted<Keyframe> {
   USING_FAST_MALLOC(Keyframe);
   WTF_MAKE_NONCOPYABLE(Keyframe);
 

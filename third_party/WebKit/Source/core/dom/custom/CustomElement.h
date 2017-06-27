@@ -23,7 +23,7 @@ class CustomElementDefinition;
 class CustomElementReaction;
 class CustomElementRegistry;
 
-class CORE_EXPORT CustomElement {
+class CORE_EXPORT_N1721 CustomElement {
   STATIC_ONLY(CustomElement);
 
  public:

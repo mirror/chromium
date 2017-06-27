@@ -45,7 +45,7 @@ template <typename NodeType>
 class StaticNodeTypeList;
 using StaticElementList = StaticNodeTypeList<Element>;
 
-class CORE_EXPORT SelectorQuery {
+class CORE_EXPORT_N1702 SelectorQuery {
   WTF_MAKE_NONCOPYABLE(SelectorQuery);
   USING_FAST_MALLOC(SelectorQuery);
 

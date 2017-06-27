@@ -39,7 +39,7 @@ class DocumentMarkerDetails;
 // in the user interface. It also optionally includes a flag specifying whether
 // the match is active, which is ignored for all types other than type
 // TextMatch.
-class CORE_EXPORT DocumentMarker : public GarbageCollected<DocumentMarker> {
+class CORE_EXPORT_N1945 DocumentMarker : public GarbageCollected<DocumentMarker> {
  public:
   enum MarkerTypeIndex {
     kSpellingMarkerIndex = 0,

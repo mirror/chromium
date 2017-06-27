@@ -47,7 +47,7 @@ class Element;
 class FloatBox;
 class KeyframeEffectModelBase;
 
-class CORE_EXPORT CompositorAnimations {
+class CORE_EXPORT_N1437 CompositorAnimations {
   STATIC_ONLY(CompositorAnimations);
 
  public:

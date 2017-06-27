@@ -16,7 +16,7 @@ class Element;
 class ResizeObserver;
 
 // ResizeObservation represents an element that is being observed.
-class CORE_EXPORT ResizeObservation final
+class CORE_EXPORT_N1690 ResizeObservation final
     : public GarbageCollected<ResizeObservation> {
  public:
   ResizeObservation(Element* target, ResizeObserver*);

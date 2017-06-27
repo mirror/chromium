@@ -20,7 +20,7 @@ struct PrePaintTreeWalkContext;
 // LocalFrameView, across frame boundaries. Helper classes are called for each
 // tree node to perform actual actions.  It expects to be invoked in InPrePaint
 // phase.
-class CORE_EXPORT PrePaintTreeWalk {
+class CORE_EXPORT_N2558 PrePaintTreeWalk {
  public:
   PrePaintTreeWalk() {}
   void Walk(LocalFrameView& root_frame);

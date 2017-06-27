@@ -42,7 +42,7 @@ class InlineTextBox;
 class LayoutText;
 class LayoutTextFragment;
 
-CORE_EXPORT String
+CORE_EXPORT_N1937 String
 PlainText(const EphemeralRange&,
           const TextIteratorBehavior& = TextIteratorBehavior());
 

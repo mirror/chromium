@@ -79,7 +79,7 @@ class ScopedStyleResolver final
   void SetNeedsAppendAllSheets() { needs_append_all_sheets_ = true; }
   static void KeyframesRulesAdded(const TreeScope&);
   static ContainerNode& InvalidationRootForTreeScope(const TreeScope&);
-  CORE_EXPORT static bool HaveSameStyles(const ScopedStyleResolver*,
+  CORE_EXPORT_N1594 static bool HaveSameStyles(const ScopedStyleResolver*,
                                          const ScopedStyleResolver*);
 
   DECLARE_TRACE();

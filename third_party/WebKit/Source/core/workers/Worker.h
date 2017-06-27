@@ -13,7 +13,7 @@ class ExceptionState;
 class ExecutionContext;
 class InProcessWorkerMessagingProxy;
 
-class CORE_EXPORT Worker final : public InProcessWorkerBase {
+class CORE_EXPORT_N2657 Worker final : public InProcessWorkerBase {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Worker);
 

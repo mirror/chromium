@@ -19,7 +19,7 @@ class SecurityOrigin;
 enum class ScriptType { kClassic, kModule };
 
 // https://html.spec.whatwg.org/#concept-script
-class CORE_EXPORT Script : public GarbageCollectedFinalized<Script> {
+class CORE_EXPORT_N1692 Script : public GarbageCollectedFinalized<Script> {
  public:
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 

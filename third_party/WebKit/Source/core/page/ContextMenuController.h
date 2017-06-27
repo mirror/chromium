@@ -45,7 +45,7 @@ class Event;
 class LocalFrame;
 class Page;
 
-class CORE_EXPORT ContextMenuController final
+class CORE_EXPORT_N2500 ContextMenuController final
     : public GarbageCollectedFinalized<ContextMenuController> {
   WTF_MAKE_NONCOPYABLE(ContextMenuController);
 

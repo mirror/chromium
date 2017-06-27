@@ -16,7 +16,7 @@ class StyleSheetContents;
 
 // A specialization of Keyframe that associates user specified keyframe
 // properties with either CSS properties or SVG attributes.
-class CORE_EXPORT StringKeyframe : public Keyframe {
+class CORE_EXPORT_N1457 StringKeyframe : public Keyframe {
  public:
   static PassRefPtr<StringKeyframe> Create() {
     return AdoptRef(new StringKeyframe);

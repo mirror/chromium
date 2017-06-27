@@ -28,7 +28,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSValueList : public CSSValue {
+class CORE_EXPORT_N1498 CSSValueList : public CSSValue {
   WTF_MAKE_NONCOPYABLE(CSSValueList);
 
  public:

@@ -13,7 +13,7 @@ namespace blink {
 // |SelectionAdjuster| adjusts positions in |VisibleSelection| directly without
 // calling |validate()|. Users of |SelectionAdjuster| should keep invariant of
 // |VisibleSelection|, e.g. all positions are canonicalized.
-class CORE_EXPORT SelectionAdjuster final {
+class CORE_EXPORT_N1808 SelectionAdjuster final {
   STATIC_ONLY(SelectionAdjuster);
 
  public:

@@ -13,7 +13,7 @@ namespace blink {
 
 class DataTransfer;
 
-class CORE_EXPORT DragEvent final : public MouseEvent {
+class CORE_EXPORT_N1967 DragEvent final : public MouseEvent {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

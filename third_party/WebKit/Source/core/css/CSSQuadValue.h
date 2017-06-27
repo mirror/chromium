@@ -27,7 +27,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSQuadValue : public CSSValue {
+class CORE_EXPORT_N1487 CSSQuadValue : public CSSValue {
  public:
   enum TypeForSerialization { kSerializeAsRect, kSerializeAsQuad };
 

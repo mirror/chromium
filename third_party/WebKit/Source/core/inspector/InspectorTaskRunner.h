@@ -16,7 +16,7 @@
 
 namespace blink {
 
-class CORE_EXPORT InspectorTaskRunner final {
+class CORE_EXPORT_N2273 InspectorTaskRunner final {
   WTF_MAKE_NONCOPYABLE(InspectorTaskRunner);
   USING_FAST_MALLOC(InspectorTaskRunner);
 
@@ -35,7 +35,7 @@ class CORE_EXPORT InspectorTaskRunner final {
 
   void Kill();
 
-  class CORE_EXPORT IgnoreInterruptsScope final {
+  class CORE_EXPORT_N2274 IgnoreInterruptsScope final {
     USING_FAST_MALLOC(IgnoreInterruptsScope);
 
    public:

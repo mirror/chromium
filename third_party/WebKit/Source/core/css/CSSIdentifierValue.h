@@ -16,7 +16,7 @@ namespace blink {
 // 'lower-roman'.
 // TODO(sashab): Rename this class to CSSKeywordValue once it no longer
 // conflicts with CSSOM's CSSKeywordValue class.
-class CORE_EXPORT CSSIdentifierValue : public CSSValue {
+class CORE_EXPORT_N1480 CSSIdentifierValue : public CSSValue {
  public:
   static CSSIdentifierValue* Create(CSSValueID);
 

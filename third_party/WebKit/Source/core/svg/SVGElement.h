@@ -47,7 +47,7 @@ class SVGUseElement;
 
 typedef HeapHashSet<Member<SVGElement>> SVGElementSet;
 
-class CORE_EXPORT SVGElement : public Element {
+class CORE_EXPORT_N2604 SVGElement : public Element {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

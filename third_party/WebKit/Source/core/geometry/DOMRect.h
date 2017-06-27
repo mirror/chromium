@@ -14,7 +14,7 @@ namespace blink {
 class DOMRect;
 class DOMRectInit;
 
-class CORE_EXPORT DOMRect final : public DOMRectReadOnly {
+class CORE_EXPORT_N2091 DOMRect final : public DOMRectReadOnly {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

@@ -25,7 +25,7 @@ namespace blink {
 class ScriptState;
 class TestInterfaceImplementation;
 
-class CORE_EXPORT VoidCallbackFunctionTestInterfaceSequenceArg final : public GarbageCollectedFinalized<VoidCallbackFunctionTestInterfaceSequenceArg>, public TraceWrapperBase {
+class CORE_EXPORT_N1419 VoidCallbackFunctionTestInterfaceSequenceArg final : public GarbageCollectedFinalized<VoidCallbackFunctionTestInterfaceSequenceArg>, public TraceWrapperBase {
  public:
   static VoidCallbackFunctionTestInterfaceSequenceArg* Create(ScriptState*, v8::Local<v8::Value> callback);
 
@@ -49,7 +49,7 @@ class CORE_EXPORT VoidCallbackFunctionTestInterfaceSequenceArg final : public Ga
 
 template <>
 struct NativeValueTraits<VoidCallbackFunctionTestInterfaceSequenceArg> : public NativeValueTraitsBase<VoidCallbackFunctionTestInterfaceSequenceArg> {
-  CORE_EXPORT static VoidCallbackFunctionTestInterfaceSequenceArg* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N1420 static VoidCallbackFunctionTestInterfaceSequenceArg* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 }  // namespace blink

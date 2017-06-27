@@ -25,7 +25,7 @@ class NGLayoutResult;
 // It should be used together with NGFragmentBuilder.
 // See NGFragmentBuilder::AddOutOfFlowChildCandidate documentation
 // for example of using these classes together.
-class CORE_EXPORT NGOutOfFlowLayoutPart {
+class CORE_EXPORT_N2393 NGOutOfFlowLayoutPart {
   STACK_ALLOCATED();
 
  public:

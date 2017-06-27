@@ -22,7 +22,7 @@ class NGInlineLayoutAlgorithm;
 //
 // This class measures each NGInlineItem and determines items to form a line,
 // so that NGInlineLayoutAlgorithm can build a line box from the output.
-class CORE_EXPORT NGLineBreaker {
+class CORE_EXPORT_N2434 NGLineBreaker {
  public:
   NGLineBreaker(NGInlineNode*,
                 const NGConstraintSpace*,

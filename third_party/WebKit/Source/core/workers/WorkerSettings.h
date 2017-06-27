@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT WorkerSettings {
+class CORE_EXPORT_N2671 WorkerSettings {
  public:
   explicit WorkerSettings(Settings*);
 

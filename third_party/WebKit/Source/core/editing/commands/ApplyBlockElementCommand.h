@@ -36,7 +36,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ApplyBlockElementCommand : public CompositeEditCommand {
+class CORE_EXPORT_N1913 ApplyBlockElementCommand : public CompositeEditCommand {
  protected:
   ApplyBlockElementCommand(Document&,
                            const QualifiedName& tag_name,

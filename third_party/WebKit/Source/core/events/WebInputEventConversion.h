@@ -53,7 +53,7 @@ class WebKeyboardEvent;
 // These classes are used to convert from WebInputEvent subclasses to
 // corresponding WebCore events.
 
-class CORE_EXPORT WebMouseEventBuilder
+class CORE_EXPORT_N1992 WebMouseEventBuilder
     : NON_EXPORTED_BASE(public WebMouseEvent) {
  public:
   // Converts a MouseEvent to a corresponding WebMouseEvent.
@@ -72,7 +72,7 @@ class CORE_EXPORT WebMouseEventBuilder
 // NOTE: For KeyboardEvent, this is only implemented for keydown,
 // keyup, and keypress. If the event mapping fails, the event type will be set
 // to Undefined.
-class CORE_EXPORT WebKeyboardEventBuilder
+class CORE_EXPORT_N1993 WebKeyboardEventBuilder
     : NON_EXPORTED_BASE(public WebKeyboardEvent) {
  public:
   WebKeyboardEventBuilder(const KeyboardEvent&);
@@ -81,7 +81,7 @@ class CORE_EXPORT WebKeyboardEventBuilder
 // Converts a TouchEvent to a corresponding WebTouchEvent.
 // NOTE: WebTouchEvents have a cap on the number of WebTouchPoints. Any points
 // exceeding that cap will be dropped.
-class CORE_EXPORT WebTouchEventBuilder
+class CORE_EXPORT_N1994 WebTouchEventBuilder
     : NON_EXPORTED_BASE(public WebTouchEvent) {
  public:
   WebTouchEventBuilder(const LayoutItem, const TouchEvent&);
@@ -89,15 +89,15 @@ class CORE_EXPORT WebTouchEventBuilder
 
 // Return a new transformed WebGestureEvent by applying the Widget's scale
 // and translation.
-CORE_EXPORT WebGestureEvent TransformWebGestureEvent(LocalFrameView*,
+CORE_EXPORT_N1995 WebGestureEvent TransformWebGestureEvent(LocalFrameView*,
                                                      const WebGestureEvent&);
-CORE_EXPORT WebMouseEvent TransformWebMouseEvent(LocalFrameView*,
+CORE_EXPORT_N1996 WebMouseEvent TransformWebMouseEvent(LocalFrameView*,
                                                  const WebMouseEvent&);
 
-CORE_EXPORT WebMouseWheelEvent
+CORE_EXPORT_N1997 WebMouseWheelEvent
 TransformWebMouseWheelEvent(LocalFrameView*, const WebMouseWheelEvent&);
 
-CORE_EXPORT WebTouchEvent TransformWebTouchEvent(LocalFrameView*,
+CORE_EXPORT_N1998 WebTouchEvent TransformWebTouchEvent(LocalFrameView*,
                                                  const WebTouchEvent&);
 
 Vector<WebMouseEvent> CORE_EXPORT

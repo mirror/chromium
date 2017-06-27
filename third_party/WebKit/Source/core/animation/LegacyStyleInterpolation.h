@@ -15,7 +15,7 @@ namespace blink {
 
 class StyleResolverState;
 
-class CORE_EXPORT LegacyStyleInterpolation : public Interpolation {
+class CORE_EXPORT_N1455 LegacyStyleInterpolation : public Interpolation {
  public:
   static PassRefPtr<LegacyStyleInterpolation> Create(
       PassRefPtr<AnimatableValue> start,

@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TransitionKeyframe : public Keyframe {
+class CORE_EXPORT_N1459 TransitionKeyframe : public Keyframe {
  public:
   static PassRefPtr<TransitionKeyframe> Create(const PropertyHandle& property) {
     return AdoptRef(new TransitionKeyframe(property));

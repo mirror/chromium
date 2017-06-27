@@ -40,7 +40,7 @@
 
 namespace blink {
 
-class CORE_EXPORT DataObjectItem
+class CORE_EXPORT_N1466 DataObjectItem
     : public GarbageCollectedFinalized<DataObjectItem> {
  public:
   enum ItemKind { kStringKind, kFileKind };

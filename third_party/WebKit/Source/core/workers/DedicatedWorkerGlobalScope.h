@@ -44,7 +44,7 @@ class InProcessWorkerObjectProxy;
 class ScriptState;
 class WorkerThreadStartupData;
 
-class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
+class CORE_EXPORT_N2636 DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

@@ -36,7 +36,7 @@ namespace blink {
 
 class LayoutObject;
 
-class CORE_EXPORT LayoutTreeBuilderTraversal {
+class CORE_EXPORT_N1661 LayoutTreeBuilderTraversal {
  public:
   static const int32_t kTraverseAllSiblings = -2;
   class ParentDetails {

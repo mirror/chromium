@@ -50,7 +50,7 @@ namespace blink {
 //         return self->bindToV8Function();
 //     }
 // };
-class CORE_EXPORT ScriptFunction
+class CORE_EXPORT_N51 ScriptFunction
     : public GarbageCollectedFinalized<ScriptFunction> {
  public:
   virtual ~ScriptFunction() {}

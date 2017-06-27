@@ -31,7 +31,7 @@ namespace blink {
 // NGPhysicalFragment* fragment2 = node->Layout(space, fragment->BreakToken());
 //
 // The break token should encapsulate enough information to "resume" the layout.
-class CORE_EXPORT NGBreakToken : public RefCounted<NGBreakToken> {
+class CORE_EXPORT_N2358 NGBreakToken : public RefCounted<NGBreakToken> {
  public:
   virtual ~NGBreakToken() {}
 

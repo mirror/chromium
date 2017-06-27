@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT IdleDeadline : public GarbageCollected<IdleDeadline>,
+class CORE_EXPORT_N1656 IdleDeadline : public GarbageCollected<IdleDeadline>,
                                  public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

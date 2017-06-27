@@ -41,7 +41,7 @@ class ResourceFetcher;
 class FontCustomPlatformData;
 class FontResourceClient;
 
-class CORE_EXPORT FontResource final : public Resource {
+class CORE_EXPORT_N2483 FontResource final : public Resource {
  public:
   using ClientType = FontResourceClient;
 

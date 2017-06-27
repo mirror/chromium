@@ -34,7 +34,7 @@ class MediaList;
 class Node;
 class StyleSheet;
 
-class CORE_EXPORT StyleSheet : public GarbageCollectedFinalized<StyleSheet>,
+class CORE_EXPORT_N1541 StyleSheet : public GarbageCollectedFinalized<StyleSheet>,
                                public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

@@ -24,12 +24,12 @@ namespace blink {
 //
 // To construct |SelectionTemplate| object, please use |Builder| class.
 template <typename Strategy>
-class CORE_EXPORT SelectionTemplate final {
+class CORE_EXPORT_N1810 SelectionTemplate final {
   DISALLOW_NEW();
 
  public:
   // |Builder| is a helper class for constructing |SelectionTemplate| object.
-  class CORE_EXPORT Builder final {
+  class CORE_EXPORT_N1811 Builder final {
     DISALLOW_NEW();
 
    public:
@@ -141,8 +141,8 @@ extern template class CORE_EXTERN_TEMPLATE_EXPORT
 using SelectionInDOMTree = SelectionTemplate<EditingStrategy>;
 using SelectionInFlatTree = SelectionTemplate<EditingInFlatTreeStrategy>;
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const SelectionInDOMTree&);
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const SelectionInFlatTree&);
+CORE_EXPORT_N1812 std::ostream& operator<<(std::ostream&, const SelectionInDOMTree&);
+CORE_EXPORT_N1813 std::ostream& operator<<(std::ostream&, const SelectionInFlatTree&);
 
 }  // namespace blink
 

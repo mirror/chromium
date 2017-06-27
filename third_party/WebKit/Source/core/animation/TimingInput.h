@@ -19,7 +19,7 @@ class UnrestrictedDoubleOrString;
 class UnrestrictedDoubleOrKeyframeAnimationOptions;
 class UnrestrictedDoubleOrKeyframeEffectOptions;
 
-class CORE_EXPORT TimingInput {
+class CORE_EXPORT_N1458 TimingInput {
   STATIC_ONLY(TimingInput);
 
  public:

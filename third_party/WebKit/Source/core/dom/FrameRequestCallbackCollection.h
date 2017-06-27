@@ -13,7 +13,7 @@ namespace blink {
 class ExecutionContext;
 class FrameRequestCallback;
 
-class CORE_EXPORT FrameRequestCallbackCollection final {
+class CORE_EXPORT_N1654 FrameRequestCallbackCollection final {
   DISALLOW_NEW();
 
  public:

@@ -38,7 +38,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TouchEvent final : public UIEventWithKeyState {
+class CORE_EXPORT_N1988 TouchEvent final : public UIEventWithKeyState {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

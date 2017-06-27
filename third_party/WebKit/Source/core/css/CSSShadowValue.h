@@ -32,7 +32,7 @@ class CSSIdentifierValue;
 class CSSPrimitiveValue;
 
 // Used for text-shadow and box-shadow
-class CORE_EXPORT CSSShadowValue : public CSSValue {
+class CORE_EXPORT_N1491 CSSShadowValue : public CSSValue {
  public:
   static CSSShadowValue* Create(CSSPrimitiveValue* x,
                                 CSSPrimitiveValue* y,

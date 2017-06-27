@@ -35,7 +35,7 @@
 namespace blink {
 class CSSStyleSheetResource;
 
-class CORE_EXPORT StyleSheetResourceClient : public ResourceClient {
+class CORE_EXPORT_N2493 StyleSheetResourceClient : public ResourceClient {
  public:
   static bool IsExpectedType(ResourceClient* client) {
     return client->GetResourceClientType() == kStyleSheetType;

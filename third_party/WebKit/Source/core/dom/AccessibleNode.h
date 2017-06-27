@@ -72,7 +72,7 @@ enum class AOMFloatProperty { kValueMax, kValueMin, kValueNow };
 // Accessibility Object Model node
 // Explainer: https://github.com/WICG/aom/blob/master/explainer.md
 // Spec: https://wicg.github.io/aom/spec/
-class CORE_EXPORT AccessibleNode
+class CORE_EXPORT_N1600 AccessibleNode
     : public GarbageCollectedFinalized<AccessibleNode>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

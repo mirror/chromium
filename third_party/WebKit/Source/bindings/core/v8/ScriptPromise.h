@@ -49,7 +49,7 @@ class DOMException;
 // So holding a ScriptPromise as a member variable in DOM object causes
 // memory leaks since it has a reference from C++ to V8.
 //
-class CORE_EXPORT ScriptPromise final {
+class CORE_EXPORT_N53 ScriptPromise final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
@@ -118,7 +118,7 @@ class CORE_EXPORT ScriptPromise final {
 
   // This is a utility class intended to be used internally.
   // ScriptPromiseResolver is for general purpose.
-  class CORE_EXPORT InternalResolver final {
+  class CORE_EXPORT_N54 InternalResolver final {
     DISALLOW_NEW();
 
    public:

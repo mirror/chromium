@@ -26,7 +26,7 @@ class SubresourceFilter;
 
 // A core-level implementaiton of FetchContext that does not depend on
 // Frame. This class provides basic default implementation for some methods.
-class CORE_EXPORT BaseFetchContext : public FetchContext {
+class CORE_EXPORT_N2442 BaseFetchContext : public FetchContext {
  public:
   void AddAdditionalRequestHeaders(ResourceRequest&,
                                    FetchResourceType) override;

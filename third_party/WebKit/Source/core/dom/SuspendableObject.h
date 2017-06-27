@@ -33,7 +33,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SuspendableObject : public ContextLifecycleObserver {
+class CORE_EXPORT_N1709 SuspendableObject : public ContextLifecycleObserver {
  public:
   explicit SuspendableObject(ExecutionContext*);
 

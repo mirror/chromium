@@ -19,7 +19,7 @@ class ThreadedMessagingProxyBase;
 // the main thread, and used on the worker thread for proxying messages to the
 // ThreadedMessagingProxyBase on the main thread. ThreadedMessagingProxyBase
 // always outlives this proxy.
-class CORE_EXPORT ThreadedObjectProxyBase : public WorkerReportingProxy {
+class CORE_EXPORT_N2652 ThreadedObjectProxyBase : public WorkerReportingProxy {
   USING_FAST_MALLOC(ThreadedObjectProxyBase);
   WTF_MAKE_NONCOPYABLE(ThreadedObjectProxyBase);
 

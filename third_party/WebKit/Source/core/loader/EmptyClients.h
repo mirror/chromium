@@ -74,7 +74,7 @@
 
 namespace blink {
 
-class CORE_EXPORT EmptyChromeClient : public ChromeClient {
+class CORE_EXPORT_N2446 EmptyChromeClient : public ChromeClient {
  public:
   static EmptyChromeClient* Create() { return new EmptyChromeClient; }
 
@@ -245,7 +245,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
       BlameContext*) override;
 };
 
-class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
+class CORE_EXPORT_N2447 EmptyLocalFrameClient : public LocalFrameClient {
   WTF_MAKE_NONCOPYABLE(EmptyLocalFrameClient);
 
  public:
@@ -390,7 +390,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   ContentSettingsClient content_settings_client_;
 };
 
-class CORE_EXPORT EmptyTextCheckerClient : public TextCheckerClient {
+class CORE_EXPORT_N2448 EmptyTextCheckerClient : public TextCheckerClient {
   WTF_MAKE_NONCOPYABLE(EmptyTextCheckerClient);
   USING_FAST_MALLOC(EmptyTextCheckerClient);
 
@@ -449,7 +449,7 @@ class EmptyContextMenuClient final : public ContextMenuClient {
   void ClearContextMenu() override {}
 };
 
-class CORE_EXPORT EmptyRemoteFrameClient
+class CORE_EXPORT_N2449 EmptyRemoteFrameClient
     : NON_EXPORTED_BASE(public RemoteFrameClient) {
   WTF_MAKE_NONCOPYABLE(EmptyRemoteFrameClient);
 
@@ -483,7 +483,7 @@ class CORE_EXPORT EmptyRemoteFrameClient
   void FrameFocused() const override {}
 };
 
-CORE_EXPORT void FillWithEmptyClients(Page::PageClients&);
+CORE_EXPORT_N2450 void FillWithEmptyClients(Page::PageClients&);
 
 }  // namespace blink
 

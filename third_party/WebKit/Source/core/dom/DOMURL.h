@@ -58,7 +58,7 @@ class DOMURL final : public GarbageCollectedFinalized<DOMURL>,
   }
   ~DOMURL();
 
-  CORE_EXPORT static String CreatePublicURL(ExecutionContext*,
+  CORE_EXPORT_N1646 static String CreatePublicURL(ExecutionContext*,
                                             URLRegistrable*,
                                             const String& uuid = String());
   static void RevokeObjectUUID(ExecutionContext*, const String&);

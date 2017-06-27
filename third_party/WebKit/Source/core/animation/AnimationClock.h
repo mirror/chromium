@@ -43,7 +43,7 @@ namespace blink {
 // Maintains a stationary clock time during script execution.  Tries to track
 // the glass time (the moment photons leave the screen) of the current animation
 // frame.
-class CORE_EXPORT AnimationClock {
+class CORE_EXPORT_N1431 AnimationClock {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(AnimationClock);
 

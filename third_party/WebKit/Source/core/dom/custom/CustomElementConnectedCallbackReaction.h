@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CustomElementConnectedCallbackReaction final
+class CORE_EXPORT_N1724 CustomElementConnectedCallbackReaction final
     : public CustomElementReaction {
   WTF_MAKE_NONCOPYABLE(CustomElementConnectedCallbackReaction);
 

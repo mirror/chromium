@@ -39,7 +39,7 @@ class DataObject;
 class Image;
 class KURL;
 
-class CORE_EXPORT Pasteboard {
+class CORE_EXPORT_N1470 Pasteboard {
   WTF_MAKE_NONCOPYABLE(Pasteboard);
   USING_FAST_MALLOC(Pasteboard);
 

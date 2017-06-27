@@ -39,7 +39,7 @@ namespace blink {
 
 class LocalFrame;
 
-class CORE_EXPORT Screen final : public GarbageCollected<Screen>,
+class CORE_EXPORT_N2064 Screen final : public GarbageCollected<Screen>,
                                  public ScriptWrappable,
                                  public DOMWindowClient,
                                  public Supplementable<Screen> {

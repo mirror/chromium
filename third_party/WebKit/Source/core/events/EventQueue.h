@@ -36,7 +36,7 @@ namespace blink {
 
 class Event;
 
-class CORE_EXPORT EventQueue : public GarbageCollectedFinalized<EventQueue> {
+class CORE_EXPORT_N1972 EventQueue : public GarbageCollectedFinalized<EventQueue> {
  public:
   virtual ~EventQueue() {}
   DEFINE_INLINE_VIRTUAL_TRACE() {}

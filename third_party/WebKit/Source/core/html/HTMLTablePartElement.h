@@ -33,7 +33,7 @@ namespace blink {
 
 class HTMLTableElement;
 
-class CORE_EXPORT HTMLTablePartElement : public HTMLElement {
+class CORE_EXPORT_N2143 HTMLTablePartElement : public HTMLElement {
  protected:
   HTMLTablePartElement(const QualifiedName& tag_name, Document& document)
       : HTMLElement(tag_name, document) {}

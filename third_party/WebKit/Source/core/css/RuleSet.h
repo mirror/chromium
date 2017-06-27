@@ -72,7 +72,7 @@ WTF_ALLOW_MOVE_AND_INIT_WITH_MEM_FUNCTIONS(blink::MinimalRuleData);
 
 namespace blink {
 
-class CORE_EXPORT RuleData {
+class CORE_EXPORT_N1521 RuleData {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
@@ -154,7 +154,7 @@ struct SameSizeAsRuleData {
 static_assert(sizeof(RuleData) == sizeof(SameSizeAsRuleData),
               "RuleData should stay small");
 
-class CORE_EXPORT RuleSet : public GarbageCollectedFinalized<RuleSet> {
+class CORE_EXPORT_N1522 RuleSet : public GarbageCollectedFinalized<RuleSet> {
   WTF_MAKE_NONCOPYABLE(RuleSet);
 
  public:

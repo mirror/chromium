@@ -16,7 +16,7 @@ class ExecutionContext;
 // ContextFeatureSettings attaches to an ExecutionContext some basic flags
 // pertaining to the enabled/disabled state of any platform API features which
 // are gated behind a ContextEnabled extended attribute in IDL.
-class CORE_EXPORT ContextFeatureSettings final
+class CORE_EXPORT_N1471 ContextFeatureSettings final
     : public GarbageCollectedFinalized<ContextFeatureSettings>,
       public Supplement<ExecutionContext> {
   USING_GARBAGE_COLLECTED_MIXIN(ContextFeatureSettings)

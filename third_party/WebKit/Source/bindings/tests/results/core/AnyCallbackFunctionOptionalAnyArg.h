@@ -24,7 +24,7 @@ namespace blink {
 
 class ScriptState;
 
-class CORE_EXPORT AnyCallbackFunctionOptionalAnyArg final : public GarbageCollectedFinalized<AnyCallbackFunctionOptionalAnyArg>, public TraceWrapperBase {
+class CORE_EXPORT_N124 AnyCallbackFunctionOptionalAnyArg final : public GarbageCollectedFinalized<AnyCallbackFunctionOptionalAnyArg>, public TraceWrapperBase {
  public:
   static AnyCallbackFunctionOptionalAnyArg* Create(ScriptState*, v8::Local<v8::Value> callback);
 
@@ -48,7 +48,7 @@ class CORE_EXPORT AnyCallbackFunctionOptionalAnyArg final : public GarbageCollec
 
 template <>
 struct NativeValueTraits<AnyCallbackFunctionOptionalAnyArg> : public NativeValueTraitsBase<AnyCallbackFunctionOptionalAnyArg> {
-  CORE_EXPORT static AnyCallbackFunctionOptionalAnyArg* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N125 static AnyCallbackFunctionOptionalAnyArg* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 }  // namespace blink

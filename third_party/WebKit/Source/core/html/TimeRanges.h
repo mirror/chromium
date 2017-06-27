@@ -39,7 +39,7 @@ namespace blink {
 
 class ExceptionState;
 
-class CORE_EXPORT TimeRanges final
+class CORE_EXPORT_N2161 TimeRanges final
     : public GarbageCollectedFinalized<TimeRanges>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

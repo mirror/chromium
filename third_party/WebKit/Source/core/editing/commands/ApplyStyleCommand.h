@@ -38,7 +38,7 @@ class StyleChange;
 
 enum ShouldIncludeTypingStyle { kIncludeTypingStyle, kIgnoreTypingStyle };
 
-class CORE_EXPORT ApplyStyleCommand final : public CompositeEditCommand {
+class CORE_EXPORT_N1914 ApplyStyleCommand final : public CompositeEditCommand {
  public:
   enum EPropertyLevel { kPropertyDefault, kForceBlockProperties };
   enum InlineStyleRemovalMode { kRemoveIfNeeded, kRemoveAlways, kRemoveNone };

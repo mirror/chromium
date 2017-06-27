@@ -36,7 +36,7 @@ class DocumentLoader;
 class KURL;
 class LocalFrame;
 
-class CORE_EXPORT DocumentLoadTiming final {
+class CORE_EXPORT_N2444 DocumentLoadTiming final {
   DISALLOW_NEW();
 
  public:

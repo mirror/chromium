@@ -15,7 +15,7 @@ struct NGLogicalSize;
 
 // NGPhysicalSize is the size of a rect (typically a fragment) in the physical
 // coordinate system.
-struct CORE_EXPORT NGPhysicalSize {
+struct CORE_EXPORT_N2423 NGPhysicalSize {
   NGPhysicalSize() {}
   NGPhysicalSize(LayoutUnit width, LayoutUnit height)
       : width(width), height(height) {}
@@ -30,7 +30,7 @@ struct CORE_EXPORT NGPhysicalSize {
   String ToString() const;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGPhysicalSize&);
+CORE_EXPORT_N2424 std::ostream& operator<<(std::ostream&, const NGPhysicalSize&);
 
 }  // namespace blink
 

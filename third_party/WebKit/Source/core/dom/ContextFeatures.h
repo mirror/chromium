@@ -81,7 +81,7 @@ class ContextFeaturesClient {
   virtual void UrlDidChange(Document*) {}
 };
 
-CORE_EXPORT void ProvideContextFeaturesTo(
+CORE_EXPORT_N1617 void ProvideContextFeaturesTo(
     Page&,
     std::unique_ptr<ContextFeaturesClient>);
 void ProvideContextFeaturesToDocumentFrom(Document&, Page&);

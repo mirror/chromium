@@ -53,7 +53,7 @@ struct ViewportDescriptionWrapper {
   ViewportDescriptionWrapper() : set(false) {}
 };
 
-struct CORE_EXPORT CachedDocumentParameters {
+struct CORE_EXPORT_N2207 CachedDocumentParameters {
   USING_FAST_MALLOC(CachedDocumentParameters);
 
  public:
@@ -172,7 +172,7 @@ class TokenPreloadScanner {
   Vector<Checkpoint> checkpoints_;
 };
 
-class CORE_EXPORT HTMLPreloadScanner {
+class CORE_EXPORT_N2208 HTMLPreloadScanner {
   WTF_MAKE_NONCOPYABLE(HTMLPreloadScanner);
   USING_FAST_MALLOC(HTMLPreloadScanner);
 

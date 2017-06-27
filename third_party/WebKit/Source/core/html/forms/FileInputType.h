@@ -44,7 +44,7 @@ namespace blink {
 class DragData;
 class FileList;
 
-class CORE_EXPORT FileInputType final : public InputType,
+class CORE_EXPORT_N2179 FileInputType final : public InputType,
                                         public KeyboardClickableInputTypeView,
                                         private FileChooserClient {
   USING_GARBAGE_COLLECTED_MIXIN(FileInputType);

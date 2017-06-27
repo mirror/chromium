@@ -49,7 +49,7 @@ namespace blink {
 
 class LayoutBoxModelObject;
 
-struct CORE_EXPORT PaintInfo {
+struct CORE_EXPORT_N2535 PaintInfo {
   USING_FAST_MALLOC(PaintInfo);
 
  public:

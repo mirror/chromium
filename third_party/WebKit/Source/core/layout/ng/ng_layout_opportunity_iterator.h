@@ -24,7 +24,7 @@ NGLayoutOpportunity FindLayoutOpportunityForFragment(
     const NGBoxStrut& margins,
     const NGLogicalSize& size);
 
-class CORE_EXPORT NGLayoutOpportunityIterator final {
+class CORE_EXPORT_N2372 NGLayoutOpportunityIterator final {
  public:
   // Default constructor.
   //

@@ -48,7 +48,7 @@ enum SourceImageStatus {
   kInvalidSourceImageStatus,
 };
 
-class CORE_EXPORT CanvasImageSource {
+class CORE_EXPORT_N2167 CanvasImageSource {
  public:
   virtual PassRefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
                                                     AccelerationHint,

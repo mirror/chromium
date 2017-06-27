@@ -22,7 +22,7 @@ enum ActiveSheetsChange {
   kActiveSheetsAppended    // Only additions, and all appended.
 };
 
-CORE_EXPORT ActiveSheetsChange
+CORE_EXPORT_N1472 ActiveSheetsChange
 CompareActiveStyleSheets(const ActiveStyleSheetVector& old_style_sheets,
                          const ActiveStyleSheetVector& new_style_sheets,
                          HeapHashSet<Member<RuleSet>>& changed_rule_sets);

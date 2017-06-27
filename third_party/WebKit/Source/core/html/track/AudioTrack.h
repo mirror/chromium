@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT AudioTrack final
+class CORE_EXPORT_N2226 AudioTrack final
     : public GarbageCollectedFinalized<AudioTrack>,
       public TrackBase,
       public ScriptWrappable {

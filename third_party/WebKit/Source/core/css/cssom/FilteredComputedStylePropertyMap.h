@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT FilteredComputedStylePropertyMap
+class CORE_EXPORT_N1564 FilteredComputedStylePropertyMap
     : public ComputedStylePropertyMap {
   WTF_MAKE_NONCOPYABLE(FilteredComputedStylePropertyMap);
 

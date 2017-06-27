@@ -15,7 +15,7 @@ class DOMRectInit;
 class ScriptValue;
 class ScriptState;
 
-class CORE_EXPORT DOMRectReadOnly : public GarbageCollected<DOMRectReadOnly>,
+class CORE_EXPORT_N2092 DOMRectReadOnly : public GarbageCollected<DOMRectReadOnly>,
                                     public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

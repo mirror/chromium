@@ -16,7 +16,7 @@ class NGInlineNode;
 class NGPhysicalFragment;
 class NGPhysicalLineBoxFragment;
 
-class CORE_EXPORT NGLineBoxFragmentBuilder final {
+class CORE_EXPORT_N2433 NGLineBoxFragmentBuilder final {
   STACK_ALLOCATED();
 
  public:

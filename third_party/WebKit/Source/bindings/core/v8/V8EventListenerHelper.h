@@ -66,7 +66,7 @@ class V8EventListenerHelper {
                                               bool is_attribute,
                                               ScriptState*);
 
-  CORE_EXPORT static EventListener* GetEventListener(ScriptState*,
+  CORE_EXPORT_N103 static EventListener* GetEventListener(ScriptState*,
                                                      v8::Local<v8::Value>,
                                                      bool is_attribute,
                                                      ListenerLookupType);

@@ -18,7 +18,7 @@ class DocumentMarker;
 // to handle different MarkerTypes (e.g. to provide more optimized handling of
 // MarkerTypes with different insertion/retrieval patterns, or to provide
 // different behavior for certain MarkerTypes).
-class CORE_EXPORT DocumentMarkerList
+class CORE_EXPORT_N1947 DocumentMarkerList
     : public GarbageCollectedFinalized<DocumentMarkerList> {
  public:
   virtual ~DocumentMarkerList();

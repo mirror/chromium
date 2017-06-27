@@ -146,7 +146,7 @@ class StyleDifference {
  private:
   static constexpr int kPropertyDifferenceCount = 7;
 
-  friend CORE_EXPORT std::ostream& operator<<(std::ostream&,
+  friend CORE_EXPORT_N2592 std::ostream& operator<<(std::ostream&,
                                               const StyleDifference&);
 
   enum PaintInvalidationType {
@@ -164,7 +164,7 @@ class StyleDifference {
   unsigned scroll_anchor_disabling_property_changed_ : 1;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const StyleDifference&);
+CORE_EXPORT_N2593 std::ostream& operator<<(std::ostream&, const StyleDifference&);
 
 }  // namespace blink
 

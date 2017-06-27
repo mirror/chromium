@@ -16,7 +16,7 @@ namespace blink {
 
 class CSSValue;
 
-class CORE_EXPORT CSSParserFastPaths {
+class CORE_EXPORT_N1577 CSSParserFastPaths {
   STATIC_ONLY(CSSParserFastPaths);
 
  public:

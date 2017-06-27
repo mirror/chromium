@@ -43,7 +43,7 @@ class Document;
 class Element;
 class Locale;
 
-class CORE_EXPORT PagePopupClient {
+class CORE_EXPORT_N2509 PagePopupClient {
  public:
   // Provide an HTML source to the specified buffer. The HTML
   // source is rendered in a PagePopup.

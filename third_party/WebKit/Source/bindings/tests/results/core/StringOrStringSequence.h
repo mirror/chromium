@@ -21,7 +21,7 @@
 
 namespace blink {
 
-class CORE_EXPORT StringOrStringSequence final {
+class CORE_EXPORT_N218 StringOrStringSequence final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   StringOrStringSequence();
@@ -53,15 +53,15 @@ class CORE_EXPORT StringOrStringSequence final {
   String m_string;
   Vector<String> m_stringSequence;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const StringOrStringSequence&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N219 v8::Local<v8::Value> ToV8(const StringOrStringSequence&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8StringOrStringSequence final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, StringOrStringSequence&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N220 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, StringOrStringSequence&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const StringOrStringSequence&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N221 v8::Local<v8::Value> ToV8(const StringOrStringSequence&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, StringOrStringSequence& impl) {
@@ -75,7 +75,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, StringOrStringSeq
 
 template <>
 struct NativeValueTraits<StringOrStringSequence> : public NativeValueTraitsBase<StringOrStringSequence> {
-  CORE_EXPORT static StringOrStringSequence NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N222 static StringOrStringSequence NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

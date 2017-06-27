@@ -41,7 +41,7 @@ enum TranslateAttributeMode {
   kTranslateAttributeInherit
 };
 
-class CORE_EXPORT HTMLElement : public Element {
+class CORE_EXPORT_N2107 HTMLElement : public Element {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

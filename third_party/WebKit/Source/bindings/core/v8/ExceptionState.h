@@ -50,7 +50,7 @@ class ScriptState;
 // ExceptionState is a scope-like class and provides a way to throw an exception
 // with an option to cancel it.  An exception message may be auto-generated.
 // You can convert an exception to a reject promise.
-class CORE_EXPORT ExceptionState {
+class CORE_EXPORT_N23 ExceptionState {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(ExceptionState);
 
@@ -160,7 +160,7 @@ class CORE_EXPORT ExceptionState {
 
 // NonThrowableExceptionState never allow call sites to throw an exception.
 // Should be used if an exception must not be thrown.
-class CORE_EXPORT NonThrowableExceptionState final : public ExceptionState {
+class CORE_EXPORT_N24 NonThrowableExceptionState final : public ExceptionState {
  public:
   NonThrowableExceptionState();
   NonThrowableExceptionState(const char*, int);
@@ -194,7 +194,7 @@ class CORE_EXPORT NonThrowableExceptionState final : public ExceptionState {
 // use DummyExceptionStateForTesting in production code, where you need to
 // handle all exceptions properly. If you really need to ignore exceptions in
 // production code for some special reason, explicitly call clearException().
-class CORE_EXPORT DummyExceptionStateForTesting final : public ExceptionState {
+class CORE_EXPORT_N25 DummyExceptionStateForTesting final : public ExceptionState {
  public:
   DummyExceptionStateForTesting()
       : ExceptionState(nullptr,

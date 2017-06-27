@@ -36,7 +36,7 @@ class DocumentLoader;
 class LocalFrame;
 class InspectedFrames;
 
-class CORE_EXPORT IdentifiersFactory {
+class CORE_EXPORT_N2250 IdentifiersFactory {
   STATIC_ONLY(IdentifiersFactory);
 
  public:

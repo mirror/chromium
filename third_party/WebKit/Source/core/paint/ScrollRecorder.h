@@ -17,7 +17,7 @@ class GraphicsContext;
 
 // Emits display items which represent a region which is scrollable, so that it
 // can be translated by the scroll offset.
-class CORE_EXPORT ScrollRecorder {
+class CORE_EXPORT_N2561 ScrollRecorder {
   USING_FAST_MALLOC(ScrollRecorder);
 
  public:

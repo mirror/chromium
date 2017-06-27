@@ -17,7 +17,7 @@ class ObjectPaintProperties;
 // Only LayoutObjects with a self-painting PaintLayer may have more than one
 // FragmentDeta, and even then only when they are inside of multicol.
 // See README.md.
-class CORE_EXPORT FragmentData {
+class CORE_EXPORT_N2529 FragmentData {
  public:
   static std::unique_ptr<FragmentData> Create() {
     return WTF::WrapUnique(new FragmentData());

@@ -40,7 +40,7 @@ namespace blink {
 class Document;
 class Node;
 
-class CORE_EXPORT TreeScopeStyleSheetCollection : public StyleSheetCollection {
+class CORE_EXPORT_N1717 TreeScopeStyleSheetCollection : public StyleSheetCollection {
  public:
   void AddStyleSheetCandidateNode(Node&);
   void RemoveStyleSheetCandidateNode(Node& node) {

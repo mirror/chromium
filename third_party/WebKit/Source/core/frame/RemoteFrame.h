@@ -18,7 +18,7 @@ class RemoteFrameClient;
 class WebLayer;
 struct FrameLoadRequest;
 
-class CORE_EXPORT RemoteFrame final : public Frame {
+class CORE_EXPORT_N2060 RemoteFrame final : public Frame {
  public:
   static RemoteFrame* Create(RemoteFrameClient*, Page&, FrameOwner*);
 

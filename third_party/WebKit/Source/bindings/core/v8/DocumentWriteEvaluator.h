@@ -20,7 +20,7 @@ namespace blink {
 // execute inline Javascript and preload resources that would have been written
 // by document.write(). It takes a script string and outputs a vector of start
 // tag tokens.
-class CORE_EXPORT DocumentWriteEvaluator {
+class CORE_EXPORT_N19 DocumentWriteEvaluator {
   WTF_MAKE_NONCOPYABLE(DocumentWriteEvaluator);
   USING_FAST_MALLOC(DocumentWriteEvaluator);
 

@@ -14,7 +14,7 @@
 namespace blink {
 
 // Provides utility functions to create and/or throw DOM Exceptions.
-class CORE_EXPORT V8ThrowDOMException {
+class CORE_EXPORT_N112 V8ThrowDOMException {
   STATIC_ONLY(V8ThrowDOMException);
 
  public:

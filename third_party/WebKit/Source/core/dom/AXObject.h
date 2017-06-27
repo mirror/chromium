@@ -284,7 +284,7 @@ enum AXDescriptionFrom {
 
 // TODO(sashab): Add pure virtual methods to this class to remove dependencies
 // on AXObjectImpl from outside of modules/.
-class CORE_EXPORT AXObject {};
+class CORE_EXPORT_N1603 AXObject {};
 
 }  // namespace blink
 

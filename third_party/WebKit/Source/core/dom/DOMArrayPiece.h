@@ -22,7 +22,7 @@ class ArrayBufferOrArrayBufferView;
 //
 // IMPORTANT: The data contained by ArrayPiece is NOT OWNED, so caution must be
 //            taken to ensure it is kept alive.
-class CORE_EXPORT DOMArrayPiece : public WTF::ArrayPiece {
+class CORE_EXPORT_N1637 DOMArrayPiece : public WTF::ArrayPiece {
   DISALLOW_NEW();
 
  public:

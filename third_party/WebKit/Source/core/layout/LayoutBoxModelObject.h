@@ -134,7 +134,7 @@ struct LayoutBoxModelObjectRareData {
 //   LayoutBox::noOverflowRect.
 //
 // For more, see Source/core/layout/README.md ### Coordinate Spaces.
-class CORE_EXPORT LayoutBoxModelObject : public LayoutObject {
+class CORE_EXPORT_N2297 LayoutBoxModelObject : public LayoutObject {
  public:
   LayoutBoxModelObject(ContainerNode*);
   ~LayoutBoxModelObject() override;

@@ -19,7 +19,7 @@ class ResizeObservation;
 
 // ResizeObserver represents ResizeObserver javascript api:
 // https://github.com/WICG/ResizeObserver/
-class CORE_EXPORT ResizeObserver final
+class CORE_EXPORT_N1691 ResizeObserver final
     : public GarbageCollectedFinalized<ResizeObserver>,
       public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();

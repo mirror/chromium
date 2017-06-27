@@ -62,7 +62,7 @@ class MultiColumnLayoutState {
 // layout directly to screen. Instead, LayoutMultiColumnSet objects will
 // redirect their paint and nodeAtPoint methods to this object. Each
 // LayoutMultiColumnSet will actually be a viewPort of the LayoutFlowThread.
-class CORE_EXPORT LayoutFlowThread : public LayoutBlockFlow {
+class CORE_EXPORT_N2300 LayoutFlowThread : public LayoutBlockFlow {
  public:
   LayoutFlowThread();
   ~LayoutFlowThread() override {}

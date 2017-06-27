@@ -59,7 +59,7 @@ class Node;
 class LayoutObject;
 class StyleRuleUsageTracker;
 
-class CORE_EXPORT InspectorCSSAgent final
+class CORE_EXPORT_N2256 InspectorCSSAgent final
     : public InspectorBaseAgent<protocol::CSS::Metainfo>,
       public InspectorDOMAgent::DOMListener,
       public InspectorStyleSheetBase::Listener {

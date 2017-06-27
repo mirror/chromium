@@ -34,7 +34,7 @@ namespace blink {
 class HTMLInputStream;
 class PendingScript;
 
-class CORE_EXPORT HTMLParserScriptRunnerHost : public GarbageCollectedMixin {
+class CORE_EXPORT_N2206 HTMLParserScriptRunnerHost : public GarbageCollectedMixin {
  public:
   virtual ~HTMLParserScriptRunnerHost() {}
   DEFINE_INLINE_VIRTUAL_TRACE() {}

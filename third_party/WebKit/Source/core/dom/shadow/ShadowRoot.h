@@ -47,7 +47,7 @@ class SlotAssignment;
 
 enum class ShadowRootType { kUserAgent, V0, kOpen, kClosed };
 
-class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
+class CORE_EXPORT_N1743 ShadowRoot final : public DocumentFragment, public TreeScope {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(ShadowRoot);
 
@@ -206,7 +206,7 @@ DEFINE_TYPE_CASTS(ShadowRoot,
                   treeScope.RootNode().IsShadowRoot());
 DEFINE_TYPE_CASTS(TreeScope, ShadowRoot, shadowRoot, true, true);
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const ShadowRootType&);
+CORE_EXPORT_N1744 std::ostream& operator<<(std::ostream&, const ShadowRootType&);
 
 }  // namespace blink
 

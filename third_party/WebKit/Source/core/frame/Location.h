@@ -48,7 +48,7 @@ class LocalDOMWindow;
 // remote frames.
 //
 // HTML standard: https://whatwg.org/C/browsers.html#the-location-interface
-class CORE_EXPORT Location final : public GarbageCollected<Location>,
+class CORE_EXPORT_N2048 Location final : public GarbageCollected<Location>,
                                    public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 

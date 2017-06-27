@@ -38,7 +38,7 @@ namespace blink {
 
 class ElementShadowV0;
 
-class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
+class CORE_EXPORT_N1739 ElementShadow final : public GarbageCollected<ElementShadow>,
                                         public TraceWrapperBase {
   WTF_MAKE_NONCOPYABLE(ElementShadow);
 

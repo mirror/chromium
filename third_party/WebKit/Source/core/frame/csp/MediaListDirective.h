@@ -14,7 +14,7 @@ namespace blink {
 
 class ContentSecurityPolicy;
 
-class CORE_EXPORT MediaListDirective final : public CSPDirective {
+class CORE_EXPORT_N2084 MediaListDirective final : public CSPDirective {
   WTF_MAKE_NONCOPYABLE(MediaListDirective);
 
  public:

@@ -46,7 +46,7 @@ namespace blink {
 class ComputedStyle;
 class LayoutFullScreen;
 
-class CORE_EXPORT Fullscreen final
+class CORE_EXPORT_N1655 Fullscreen final
     : public GarbageCollectedFinalized<Fullscreen>,
       public Supplement<Document>,
       public ContextLifecycleObserver {

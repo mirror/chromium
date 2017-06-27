@@ -15,7 +15,7 @@ namespace blink {
 // the split). This means we can keep the list in sorted order to do some
 // operations more efficiently, while still being able to do inserts in O(1)
 // time at the end of the list.
-class CORE_EXPORT CompositionMarkerListImpl final : public DocumentMarkerList {
+class CORE_EXPORT_N1944 CompositionMarkerListImpl final : public DocumentMarkerList {
  public:
   CompositionMarkerListImpl() = default;
 

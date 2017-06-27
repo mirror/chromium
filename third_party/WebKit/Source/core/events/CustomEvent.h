@@ -34,7 +34,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CustomEvent final : public Event {
+class CORE_EXPORT_N1966 CustomEvent final : public Event {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

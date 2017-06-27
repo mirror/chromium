@@ -40,7 +40,7 @@ class ErrorEvent;
 class SourceLocation;
 class WorkerThread;
 
-class CORE_EXPORT WorkerThreadDebugger final : public ThreadDebugger {
+class CORE_EXPORT_N2287 WorkerThreadDebugger final : public ThreadDebugger {
   WTF_MAKE_NONCOPYABLE(WorkerThreadDebugger);
 
  public:

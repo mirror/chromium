@@ -17,7 +17,7 @@ namespace blink {
 // It watches page visibility and calls stopUpdating when page is not visible.
 // It provides a didUpdateData() callback method which is called when new data
 // it available.
-class CORE_EXPORT PlatformEventController : public PageVisibilityObserver {
+class CORE_EXPORT_N2058 PlatformEventController : public PageVisibilityObserver {
  public:
   void StartUpdating();
   void StopUpdating();

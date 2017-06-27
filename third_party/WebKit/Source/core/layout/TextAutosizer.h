@@ -55,7 +55,7 @@ class SubtreeLayoutScope;
 // Single-pass text autosizer. Documentation at:
 // http://tinyurl.com/TextAutosizer
 
-class CORE_EXPORT TextAutosizer final
+class CORE_EXPORT_N2337 TextAutosizer final
     : public GarbageCollectedFinalized<TextAutosizer> {
   WTF_MAKE_NONCOPYABLE(TextAutosizer);
 
@@ -95,7 +95,7 @@ class CORE_EXPORT TextAutosizer final
     explicit TableLayoutScope(LayoutTable*);
   };
 
-  class CORE_EXPORT DeferUpdatePageInfo {
+  class CORE_EXPORT_N2338 DeferUpdatePageInfo {
     STACK_ALLOCATED();
 
    public:

@@ -62,7 +62,7 @@ static inline bool IsLineOverSide(LineVerticalPositionType type) {
 
 // InlineBox represents a rectangle that occurs on a line.  It corresponds to
 // some LayoutObject (i.e., it represents a portion of that LayoutObject).
-class CORE_EXPORT InlineBox : public DisplayItemClient {
+class CORE_EXPORT_N2345 InlineBox : public DisplayItemClient {
   WTF_MAKE_NONCOPYABLE(InlineBox);
 
  public:

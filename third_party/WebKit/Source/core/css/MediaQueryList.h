@@ -41,7 +41,7 @@ class MediaQuerySet;
 // to retrieve the current value of the given media query and to add/remove
 // listeners that will be called whenever the value of the query changes.
 
-class CORE_EXPORT MediaQueryList final
+class CORE_EXPORT_N1511 MediaQueryList final
     : public EventTargetWithInlineData,
       public ActiveScriptWrappable<MediaQueryList>,
       public ContextLifecycleObserver {

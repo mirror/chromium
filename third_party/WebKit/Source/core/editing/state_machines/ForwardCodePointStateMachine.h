@@ -13,7 +13,7 @@
 
 namespace blink {
 
-class CORE_EXPORT ForwardCodePointStateMachine {
+class CORE_EXPORT_N1961 ForwardCodePointStateMachine {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(ForwardCodePointStateMachine);
 

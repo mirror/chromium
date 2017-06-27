@@ -42,7 +42,7 @@ class ScriptResource;
 class Modulator;
 class ModulePendingScriptTreeClient;
 
-class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
+class CORE_EXPORT_N1697 ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
                                  public PendingScriptClient {
   USING_GARBAGE_COLLECTED_MIXIN(ScriptLoader);
 

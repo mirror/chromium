@@ -68,7 +68,7 @@ enum class CaretVisibility;
 
 enum class HandleVisibility { kNotVisible, kVisible };
 
-class CORE_EXPORT FrameSelection final
+class CORE_EXPORT_N1795 FrameSelection final
     : public GarbageCollectedFinalized<FrameSelection>,
       public SynchronousMutationObserver {
   WTF_MAKE_NONCOPYABLE(FrameSelection);

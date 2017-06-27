@@ -23,7 +23,7 @@ namespace blink {
 
 class XMLHttpRequest;
 
-class CORE_EXPORT XMLHttpRequestOrString final {
+class CORE_EXPORT_N1423 XMLHttpRequestOrString final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   XMLHttpRequestOrString();
@@ -55,15 +55,15 @@ class CORE_EXPORT XMLHttpRequestOrString final {
   String m_string;
   Member<XMLHttpRequest> m_xmlHttpRequest;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const XMLHttpRequestOrString&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N1424 v8::Local<v8::Value> ToV8(const XMLHttpRequestOrString&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8XMLHttpRequestOrString final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, XMLHttpRequestOrString&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N1425 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, XMLHttpRequestOrString&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const XMLHttpRequestOrString&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N1426 v8::Local<v8::Value> ToV8(const XMLHttpRequestOrString&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, XMLHttpRequestOrString& impl) {
@@ -77,7 +77,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, XMLHttpRequestOrS
 
 template <>
 struct NativeValueTraits<XMLHttpRequestOrString> : public NativeValueTraitsBase<XMLHttpRequestOrString> {
-  CORE_EXPORT static XMLHttpRequestOrString NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N1427 static XMLHttpRequestOrString NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

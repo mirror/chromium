@@ -59,7 +59,7 @@ class UserTiming;
 using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 using PerformanceObservers = HeapListHashSet<Member<PerformanceObserver>>;
 
-class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
+class CORE_EXPORT_N2624 PerformanceBase : public EventTargetWithInlineData {
 
  public:
   ~PerformanceBase() override;

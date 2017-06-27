@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT InlineStylePropertyMap final : public StylePropertyMap {
+class CORE_EXPORT_N1565 InlineStylePropertyMap final : public StylePropertyMap {
   WTF_MAKE_NONCOPYABLE(InlineStylePropertyMap);
 
  public:

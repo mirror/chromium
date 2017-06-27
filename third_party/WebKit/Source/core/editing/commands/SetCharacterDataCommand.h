@@ -9,7 +9,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SetCharacterDataCommand final : public SimpleEditCommand {
+class CORE_EXPORT_N1926 SetCharacterDataCommand final : public SimpleEditCommand {
  public:
   static SetCharacterDataCommand* Create(Text* node,
                                          unsigned offset,

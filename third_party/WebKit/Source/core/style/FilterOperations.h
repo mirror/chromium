@@ -34,7 +34,7 @@ namespace blink {
 
 class SVGResourceClient;
 
-class CORE_EXPORT FilterOperations {
+class CORE_EXPORT_N2589 FilterOperations {
   DISALLOW_NEW();
 
  public:

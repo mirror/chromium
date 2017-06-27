@@ -59,7 +59,7 @@ class KURL;
 //
 // The ping loader is used by audit pings, beacon transmissions and image loads
 // during page unloading.
-class CORE_EXPORT PingLoader {
+class CORE_EXPORT_N2464 PingLoader {
  public:
   enum ViolationReportType {
     kContentSecurityPolicyViolationReport,

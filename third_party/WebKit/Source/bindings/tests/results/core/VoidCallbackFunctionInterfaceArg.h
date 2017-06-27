@@ -25,7 +25,7 @@ namespace blink {
 class ScriptState;
 class HTMLDivElement;
 
-class CORE_EXPORT VoidCallbackFunctionInterfaceArg final : public GarbageCollectedFinalized<VoidCallbackFunctionInterfaceArg>, public TraceWrapperBase {
+class CORE_EXPORT_N1417 VoidCallbackFunctionInterfaceArg final : public GarbageCollectedFinalized<VoidCallbackFunctionInterfaceArg>, public TraceWrapperBase {
  public:
   static VoidCallbackFunctionInterfaceArg* Create(ScriptState*, v8::Local<v8::Value> callback);
 
@@ -49,7 +49,7 @@ class CORE_EXPORT VoidCallbackFunctionInterfaceArg final : public GarbageCollect
 
 template <>
 struct NativeValueTraits<VoidCallbackFunctionInterfaceArg> : public NativeValueTraitsBase<VoidCallbackFunctionInterfaceArg> {
-  CORE_EXPORT static VoidCallbackFunctionInterfaceArg* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N1418 static VoidCallbackFunctionInterfaceArg* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 }  // namespace blink

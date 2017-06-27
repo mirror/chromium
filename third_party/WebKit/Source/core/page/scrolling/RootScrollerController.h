@@ -34,7 +34,7 @@ class PaintLayer;
 // rules for what makes an element a valid root scroller are set in
 // isValidRootScroller(). The validity of the current root scroller is
 // re-checked after each layout.
-class CORE_EXPORT RootScrollerController
+class CORE_EXPORT_N2521 RootScrollerController
     : public GarbageCollected<RootScrollerController> {
  public:
   // Creates a RootScrollerController for the given document. Note: instances

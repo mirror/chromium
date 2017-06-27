@@ -21,7 +21,7 @@ class UnrestrictedDoubleOrKeyframeEffectOptions;
 
 // Represents the effect of an Animation on an Element's properties.
 // http://w3c.github.io/web-animations/#the-keyframeeffect-interfaces
-class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
+class CORE_EXPORT_N1454 KeyframeEffectReadOnly : public AnimationEffectReadOnly {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

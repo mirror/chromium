@@ -102,7 +102,7 @@ class CSSCalcExpressionNode : public GarbageCollected<CSSCalcExpressionNode> {
   bool is_integer_;
 };
 
-class CORE_EXPORT CSSCalcValue : public GarbageCollected<CSSCalcValue> {
+class CORE_EXPORT_N1473 CSSCalcValue : public GarbageCollected<CSSCalcValue> {
  public:
   static CSSCalcValue* Create(const CSSParserTokenRange&, ValueRange);
   static CSSCalcValue* Create(CSSCalcExpressionNode*,

@@ -20,7 +20,7 @@ struct MinMaxContentSize;
 // Represents the input to a layout algorithm for a given node. The layout
 // engine should use the style, node type to determine which type of layout
 // algorithm to use to produce fragments for this node.
-class CORE_EXPORT NGLayoutInputNode
+class CORE_EXPORT_N2371 NGLayoutInputNode
     : public GarbageCollectedFinalized<NGLayoutInputNode> {
  public:
   enum NGLayoutInputNodeType { kLegacyBlock = 0, kLegacyInline = 1 };

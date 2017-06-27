@@ -22,7 +22,7 @@ class MouseEventManager;
 
 // This class takes care of gestures and delegating the action based on the
 // gesture to the responsible class.
-class CORE_EXPORT GestureManager
+class CORE_EXPORT_N2239 GestureManager
     : public GarbageCollectedFinalized<GestureManager> {
   WTF_MAKE_NONCOPYABLE(GestureManager);
 

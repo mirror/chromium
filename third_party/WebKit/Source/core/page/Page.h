@@ -78,7 +78,7 @@ typedef uint64_t LinkHash;
 
 float DeviceScaleFactorDeprecated(LocalFrame*);
 
-class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
+class CORE_EXPORT_N2506 Page final : public GarbageCollectedFinalized<Page>,
                                public Supplementable<Page>,
                                public PageVisibilityNotifier,
                                public SettingsDelegate {
@@ -89,7 +89,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
  public:
   // It is up to the platform to ensure that non-null clients are provided where
   // required.
-  struct CORE_EXPORT PageClients final {
+  struct CORE_EXPORT_N2507 PageClients final {
     STACK_ALLOCATED();
     WTF_MAKE_NONCOPYABLE(PageClients);
 

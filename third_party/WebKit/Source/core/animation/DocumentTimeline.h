@@ -39,7 +39,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT DocumentTimeline final : public AnimationTimeline {
+class CORE_EXPORT_N1440 DocumentTimeline final : public AnimationTimeline {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

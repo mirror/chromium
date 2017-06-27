@@ -52,7 +52,7 @@ class InputTypeView;
 // Do not expose instances of InputType and classes derived from it to classes
 // other than HTMLInputElement.
 // FIXME: InputType should not inherit InputTypeView. It's conceptually wrong.
-class CORE_EXPORT InputType : public GarbageCollectedFinalized<InputType> {
+class CORE_EXPORT_N2180 InputType : public GarbageCollectedFinalized<InputType> {
   WTF_MAKE_NONCOPYABLE(InputType);
 
  public:

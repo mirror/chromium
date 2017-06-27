@@ -10,7 +10,7 @@
 
 namespace blink {
 
-class CORE_EXPORT AudioTrackList final : public TrackListBase<AudioTrack> {
+class CORE_EXPORT_N2227 AudioTrackList final : public TrackListBase<AudioTrack> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

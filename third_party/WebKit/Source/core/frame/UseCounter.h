@@ -59,7 +59,7 @@ class StyleSheetContents;
 // http://www.google.com/chrome/intl/en/privacy.html
 //
 // Changes on UseCounter are observable by UseCounter::Observer.
-class CORE_EXPORT UseCounter {
+class CORE_EXPORT_N2073 UseCounter {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(UseCounter);
 
@@ -1714,7 +1714,7 @@ class CORE_EXPORT UseCounter {
   // Encapsulates the work to preserve the old "FeatureObserver" histogram with
   // original semantics
   // TODO(rbyers): remove this - http://crbug.com/676837
-  class CORE_EXPORT LegacyCounter {
+  class CORE_EXPORT_N2074 LegacyCounter {
    public:
     LegacyCounter();
     ~LegacyCounter();

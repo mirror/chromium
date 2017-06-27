@@ -19,7 +19,7 @@ struct PaintInvalidatorContext;
 // invalidation code.
 // TODO(wangxianzhu): Combine this into PaintLayerScrollableArea when
 // root-layer-scrolls launches.
-class CORE_EXPORT PaintInvalidationCapableScrollableArea
+class CORE_EXPORT_N2536 PaintInvalidationCapableScrollableArea
     : public ScrollableArea {
  public:
   PaintInvalidationCapableScrollableArea()

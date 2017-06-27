@@ -22,7 +22,7 @@ class WebContentSettingsClient;
 // whether each feature is allowed. Most of the methods return the
 // given default values if embedder doesn't provide their own
 // content settings client implementation (via m_client).
-class CORE_EXPORT ContentSettingsClient {
+class CORE_EXPORT_N2025 ContentSettingsClient {
  public:
   ContentSettingsClient();
 

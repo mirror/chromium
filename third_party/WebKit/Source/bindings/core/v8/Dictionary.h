@@ -43,7 +43,7 @@ class ExecutionContext;
 // Dictionary class provides ways to retrieve property values as C++ objects
 // from a V8 object. Instances of this class must not outlive V8's handle scope
 // because they hold a V8 value without putting it on persistent handles.
-class CORE_EXPORT Dictionary final {
+class CORE_EXPORT_N5 Dictionary final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:

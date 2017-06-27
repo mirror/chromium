@@ -35,7 +35,7 @@ class ComputedStyle;
 
 // ElementResolveContext is immutable and serves as an input to the style
 // resolve process.
-class CORE_EXPORT ElementResolveContext {
+class CORE_EXPORT_N1589 ElementResolveContext {
   STACK_ALLOCATED();
 
  public:

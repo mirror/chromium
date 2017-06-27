@@ -46,7 +46,7 @@ class WebPluginContainerBase;
 // TODO(joelhockey): Remove this class.
 // The only implementation of this class is web/WebPluginContainerImpl.
 // It can be used directly.
-class CORE_EXPORT PluginView : public FrameOrPlugin {
+class CORE_EXPORT_N2565 PluginView : public FrameOrPlugin {
  public:
   virtual ~PluginView() {}
 

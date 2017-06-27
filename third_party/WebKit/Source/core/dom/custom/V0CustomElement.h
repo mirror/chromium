@@ -44,7 +44,7 @@ class V0CustomElementMicrotaskImportStep;
 class Document;
 class HTMLImportChild;
 
-class CORE_EXPORT V0CustomElement {
+class CORE_EXPORT_N1737 V0CustomElement {
   STATIC_ONLY(V0CustomElement);
 
  public:

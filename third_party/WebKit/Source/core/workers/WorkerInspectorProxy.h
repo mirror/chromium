@@ -18,7 +18,7 @@ class KURL;
 
 // A proxy for talking to the worker inspector on the worker thread.
 // All of these methods should be called on the main thread.
-class CORE_EXPORT WorkerInspectorProxy final
+class CORE_EXPORT_N2663 WorkerInspectorProxy final
     : public GarbageCollectedFinalized<WorkerInspectorProxy> {
  public:
   static WorkerInspectorProxy* Create();
@@ -26,7 +26,7 @@ class CORE_EXPORT WorkerInspectorProxy final
   ~WorkerInspectorProxy();
   DECLARE_TRACE();
 
-  class CORE_EXPORT PageInspector {
+  class CORE_EXPORT_N2664 PageInspector {
    public:
     virtual ~PageInspector() {}
     virtual void DispatchMessageFromWorker(WorkerInspectorProxy*,

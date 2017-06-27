@@ -18,7 +18,7 @@ namespace blink {
 
 class NGLayoutResult;
 
-class CORE_EXPORT NGFragmentBuilder final {
+class CORE_EXPORT_N2369 NGFragmentBuilder final {
   DISALLOW_NEW();
 
  public:

@@ -35,7 +35,7 @@ namespace blink {
 
 class KURL;
 
-class CORE_EXPORT DOMURLUtils : public DOMURLUtilsReadOnly {
+class CORE_EXPORT_N1647 DOMURLUtils : public DOMURLUtilsReadOnly {
  public:
   virtual void SetURL(const KURL&) = 0;
   virtual void SetInput(const String&) = 0;

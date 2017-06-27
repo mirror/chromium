@@ -27,7 +27,7 @@ namespace blink {
 
 class TestInterface2;
 
-class CORE_EXPORT TestInterface2OrUint8Array final {
+class CORE_EXPORT_N232 TestInterface2OrUint8Array final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestInterface2OrUint8Array();
@@ -59,15 +59,15 @@ class CORE_EXPORT TestInterface2OrUint8Array final {
   Member<TestInterface2> m_testInterface2;
   Member<DOMUint8Array> m_uint8Array;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const TestInterface2OrUint8Array&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N233 v8::Local<v8::Value> ToV8(const TestInterface2OrUint8Array&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8TestInterface2OrUint8Array final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestInterface2OrUint8Array&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N234 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestInterface2OrUint8Array&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const TestInterface2OrUint8Array&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N235 v8::Local<v8::Value> ToV8(const TestInterface2OrUint8Array&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestInterface2OrUint8Array& impl) {
@@ -81,7 +81,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestInterface2OrU
 
 template <>
 struct NativeValueTraits<TestInterface2OrUint8Array> : public NativeValueTraitsBase<TestInterface2OrUint8Array> {
-  CORE_EXPORT static TestInterface2OrUint8Array NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N236 static TestInterface2OrUint8Array NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

@@ -50,7 +50,7 @@ class ExceptionState;
 class ExecutionContext;
 class ScriptState;
 
-class CORE_EXPORT Blob : public GarbageCollectedFinalized<Blob>,
+class CORE_EXPORT_N2005 Blob : public GarbageCollectedFinalized<Blob>,
                          public ScriptWrappable,
                          public URLRegistrable,
                          public ImageBitmapSource {

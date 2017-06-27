@@ -28,7 +28,7 @@ namespace blink {
 
 class Page;
 
-class CORE_EXPORT ScopedPageSuspender final {
+class CORE_EXPORT_N2517 ScopedPageSuspender final {
   WTF_MAKE_NONCOPYABLE(ScopedPageSuspender);
   USING_FAST_MALLOC(ScopedPageSuspender);
 

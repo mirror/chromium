@@ -27,7 +27,7 @@
 namespace blink {
 
 // SVGAnimateElement implements superset of the functionality.
-class CORE_EXPORT SVGSetElement final : public SVGAnimateElement {
+class CORE_EXPORT_N2614 SVGSetElement final : public SVGAnimateElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

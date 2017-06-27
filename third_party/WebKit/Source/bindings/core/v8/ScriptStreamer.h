@@ -30,7 +30,7 @@ class SourceStream;
 // while we're streaming. It is possible, though, that Document and the
 // ClassicPendingScript are destroyed while the streaming is in progress, and
 // ScriptStreamer handles it gracefully.
-class CORE_EXPORT ScriptStreamer final
+class CORE_EXPORT_N59 ScriptStreamer final
     : public GarbageCollectedFinalized<ScriptStreamer> {
   WTF_MAKE_NONCOPYABLE(ScriptStreamer);
 

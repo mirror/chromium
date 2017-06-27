@@ -37,7 +37,7 @@ class HTMLTableCaptionElement;
 class HTMLTableRowsCollection;
 class HTMLTableSectionElement;
 
-class CORE_EXPORT HTMLTableElement final : public HTMLElement {
+class CORE_EXPORT_N2142 HTMLTableElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

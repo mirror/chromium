@@ -22,7 +22,7 @@ class LayoutPoint;
 //
 // See PainterLayer SELF-PAINTING LAYER section about what 'self-painting'
 // means and how it impacts this class.
-class CORE_EXPORT PaintLayerPainter {
+class CORE_EXPORT_N2542 PaintLayerPainter {
   STACK_ALLOCATED();
 
  public:

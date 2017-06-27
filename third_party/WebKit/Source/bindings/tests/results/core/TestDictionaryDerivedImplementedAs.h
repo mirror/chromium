@@ -21,7 +21,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TestDictionaryDerivedImplementedAs : public TestDictionary {
+class CORE_EXPORT_N226 TestDictionaryDerivedImplementedAs : public TestDictionary {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestDictionaryDerivedImplementedAs();

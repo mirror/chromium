@@ -31,7 +31,7 @@ class SVGElement;
 class SVGStaticStringList;
 class SVGStringListTearOff;
 
-class CORE_EXPORT SVGTests : public GarbageCollectedMixin {
+class CORE_EXPORT_N2615 SVGTests : public GarbageCollectedMixin {
  public:
   // JS API
   SVGStringListTearOff* requiredExtensions();

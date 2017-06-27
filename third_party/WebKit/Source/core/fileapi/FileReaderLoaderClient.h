@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class CORE_EXPORT FileReaderLoaderClient {
+class CORE_EXPORT_N2023 FileReaderLoaderClient {
  public:
   virtual ~FileReaderLoaderClient() {}
 

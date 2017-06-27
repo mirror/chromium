@@ -14,7 +14,7 @@ class IntRect;
 // Implementation of DocumentMarkerList for TextMatch markers.
 // Markers are kept sorted by start offset, under the assumption that
 // TextMatch markers are typically inserted in an order.
-class CORE_EXPORT TextMatchMarkerListImpl final : public DocumentMarkerList {
+class CORE_EXPORT_N1951 TextMatchMarkerListImpl final : public DocumentMarkerList {
  public:
   TextMatchMarkerListImpl() = default;
 

@@ -81,7 +81,7 @@ class Page;
 //     +- PLC::m_layerForVerticalScrollbar
 //     +- PLC::m_layerForScrollCorner (non-overlay only)
 //
-class CORE_EXPORT VisualViewport final
+class CORE_EXPORT_N2075 VisualViewport final
     : public GarbageCollectedFinalized<VisualViewport>,
       public GraphicsLayerClient,
       public ScrollableArea {

@@ -35,7 +35,7 @@ class PaintLayer;
 //
 // See Source/core/paint/README.md#Paint-invalidation for more details.
 
-class CORE_EXPORT PaintInvalidationState {
+class CORE_EXPORT_N2334 PaintInvalidationState {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
   WTF_MAKE_NONCOPYABLE(PaintInvalidationState);
 

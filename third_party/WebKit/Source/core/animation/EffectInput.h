@@ -19,7 +19,7 @@ class Element;
 class ExceptionState;
 class ExecutionContext;
 
-class CORE_EXPORT EffectInput {
+class CORE_EXPORT_N1441 EffectInput {
   STATIC_ONLY(EffectInput);
 
  public:

@@ -14,7 +14,7 @@ namespace blink {
 
 class Element;
 
-class CORE_EXPORT CustomElementUpgradeReaction final
+class CORE_EXPORT_N1735 CustomElementUpgradeReaction final
     : public CustomElementReaction {
   WTF_MAKE_NONCOPYABLE(CustomElementUpgradeReaction);
 

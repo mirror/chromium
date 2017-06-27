@@ -28,9 +28,9 @@ namespace blink {
 class V8ArrayBufferView {
   STATIC_ONLY(V8ArrayBufferView);
  public:
-  CORE_EXPORT static TestArrayBufferView* toImpl(v8::Local<v8::Object> object);
-  CORE_EXPORT static TestArrayBufferView* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N269 static TestArrayBufferView* toImpl(v8::Local<v8::Object> object);
+  CORE_EXPORT_N270 static TestArrayBufferView* toImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
+  CORE_EXPORT_N271 static const WrapperTypeInfo wrapperTypeInfo;
   static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
     visitor->Trace(scriptWrappable->ToImpl<TestArrayBufferView>());
   }
@@ -41,14 +41,14 @@ class V8ArrayBufferView {
 
   // Callback functions
 
-  CORE_EXPORT static void bufferAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
-  CORE_EXPORT static void byteOffsetAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
-  CORE_EXPORT static void byteLengthAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N272 static void bufferAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N273 static void byteOffsetAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N274 static void byteLengthAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>&);
 };
 
 template <>
 struct NativeValueTraits<TestArrayBufferView> : public NativeValueTraitsBase<TestArrayBufferView> {
-  CORE_EXPORT static TestArrayBufferView* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N275 static TestArrayBufferView* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

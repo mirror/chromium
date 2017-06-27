@@ -111,7 +111,7 @@ class LayoutBlockFlow;
 //
 // This section was inspired by an older article by Dave Hyatt:
 // https://www.webkit.org/blog/115/webcore-rendering-ii-blocks-and-inlines/
-class CORE_EXPORT LayoutInline : public LayoutBoxModelObject {
+class CORE_EXPORT_N2304 LayoutInline : public LayoutBoxModelObject {
  public:
   explicit LayoutInline(Element*);
 

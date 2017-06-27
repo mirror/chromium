@@ -42,7 +42,7 @@ namespace blink {
 class Document;
 class TextResourceDecoder;
 
-class CORE_EXPORT TextResourceDecoderBuilder {
+class CORE_EXPORT_N2469 TextResourceDecoderBuilder {
   DISALLOW_NEW();
 
  public:

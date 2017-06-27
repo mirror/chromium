@@ -44,7 +44,7 @@ class ExceptionState;
 class KURL;
 class ExecutionContext;
 
-class CORE_EXPORT AbstractWorker : public EventTargetWithInlineData,
+class CORE_EXPORT_N2635 AbstractWorker : public EventTargetWithInlineData,
                                    public ContextLifecycleObserver {
   USING_GARBAGE_COLLECTED_MIXIN(AbstractWorker);
 

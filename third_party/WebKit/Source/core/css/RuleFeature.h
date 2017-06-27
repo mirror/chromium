@@ -63,7 +63,7 @@ WTF_ALLOW_MOVE_AND_INIT_WITH_MEM_FUNCTIONS(blink::RuleFeature);
 
 namespace blink {
 
-class CORE_EXPORT RuleFeatureSet {
+class CORE_EXPORT_N1520 RuleFeatureSet {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(RuleFeatureSet);
 

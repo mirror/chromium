@@ -36,7 +36,7 @@ class HTMLFormElement;
 // is still kept here so that legacy APIs such as form attribute can keep
 // working according to the spec.  See:
 // https://html.spec.whatwg.org/multipage/embedded-content.html#the-object-element
-class CORE_EXPORT HTMLObjectElement final : public HTMLPlugInElement,
+class CORE_EXPORT_N2129 HTMLObjectElement final : public HTMLPlugInElement,
                                             public ListedElement,
                                             public FormAssociated {
   DEFINE_WRAPPERTYPEINFO();

@@ -19,7 +19,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TestInterfaceEventInit : public EventInit {
+class CORE_EXPORT_N237 TestInterfaceEventInit : public EventInit {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestInterfaceEventInit();

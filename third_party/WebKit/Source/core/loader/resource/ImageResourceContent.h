@@ -40,7 +40,7 @@ class SecurityOrigin;
 // word 'observer' from ImageResource.
 // TODO(hiroshige): Rename local variables of type ImageResourceContent to
 // e.g. |imageContent|. Currently they have Resource-like names.
-class CORE_EXPORT ImageResourceContent final
+class CORE_EXPORT_N2485 ImageResourceContent final
     : public GarbageCollectedFinalized<ImageResourceContent>,
       public ImageObserver {
   USING_GARBAGE_COLLECTED_MIXIN(ImageResourceContent);

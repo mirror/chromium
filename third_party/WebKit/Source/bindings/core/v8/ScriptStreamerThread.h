@@ -18,7 +18,7 @@ namespace blink {
 class ScriptStreamer;
 
 // A singleton thread for running background tasks for script streaming.
-class CORE_EXPORT ScriptStreamerThread {
+class CORE_EXPORT_N60 ScriptStreamerThread {
   USING_FAST_MALLOC(ScriptStreamerThread);
   WTF_MAKE_NONCOPYABLE(ScriptStreamerThread);
 

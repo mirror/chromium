@@ -38,7 +38,7 @@ class Document;
 class Page;
 class WebMouseEvent;
 
-class CORE_EXPORT PointerLockController final
+class CORE_EXPORT_N2514 PointerLockController final
     : public GarbageCollected<PointerLockController> {
   WTF_MAKE_NONCOPYABLE(PointerLockController);
 

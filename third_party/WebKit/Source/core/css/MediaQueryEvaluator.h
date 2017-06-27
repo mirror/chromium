@@ -54,7 +54,7 @@ using MediaQueryResultList = Vector<MediaQueryResult>;
 // the device characteristics are not known. This can be used to prune the
 // loading of stylesheets to only those which are probable to match.
 
-class CORE_EXPORT MediaQueryEvaluator final
+class CORE_EXPORT_N1509 MediaQueryEvaluator final
     : public GarbageCollectedFinalized<MediaQueryEvaluator> {
   WTF_MAKE_NONCOPYABLE(MediaQueryEvaluator);
 

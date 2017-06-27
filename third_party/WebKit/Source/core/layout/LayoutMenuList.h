@@ -34,7 +34,7 @@ namespace blink {
 class HTMLSelectElement;
 class LayoutText;
 
-class CORE_EXPORT LayoutMenuList final : public LayoutFlexibleBox {
+class CORE_EXPORT_N2305 LayoutMenuList final : public LayoutFlexibleBox {
  public:
   explicit LayoutMenuList(Element*);
   ~LayoutMenuList() override;

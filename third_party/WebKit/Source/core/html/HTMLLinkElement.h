@@ -43,7 +43,7 @@ namespace blink {
 class KURL;
 class LinkImport;
 
-class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
+class CORE_EXPORT_N2124 HTMLLinkElement final : public HTMLElement,
                                           public LinkLoaderClient,
                                           private DOMTokenListObserver {
   DEFINE_WRAPPERTYPEINFO();

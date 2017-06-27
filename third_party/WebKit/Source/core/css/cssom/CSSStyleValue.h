@@ -19,7 +19,7 @@ class ScriptValue;
 
 // The base class for all CSS values returned by the Typed OM.
 // See CSSStyleValue.idl for additional documentation about this class.
-class CORE_EXPORT CSSStyleValue
+class CORE_EXPORT_N1555 CSSStyleValue
     : public GarbageCollectedFinalized<CSSStyleValue>,
       public ScriptWrappable {
   WTF_MAKE_NONCOPYABLE(CSSStyleValue);

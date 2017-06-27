@@ -43,7 +43,7 @@ class InProcessWorkerMessagingProxy;
 class Page;
 class Worker;
 
-class CORE_EXPORT DedicatedWorkerMessagingProxyProvider
+class CORE_EXPORT_N2638 DedicatedWorkerMessagingProxyProvider
     : public Supplement<Page> {
   WTF_MAKE_NONCOPYABLE(DedicatedWorkerMessagingProxyProvider);
 
@@ -58,7 +58,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxyProvider
   static const char* SupplementName();
 };
 
-CORE_EXPORT void ProvideDedicatedWorkerMessagingProxyProviderTo(
+CORE_EXPORT_N2639 void ProvideDedicatedWorkerMessagingProxyProviderTo(
     Page&,
     DedicatedWorkerMessagingProxyProvider*);
 

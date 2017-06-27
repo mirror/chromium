@@ -48,7 +48,7 @@ class HTMLContentSelectFilter
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
-class CORE_EXPORT HTMLContentElement final : public InsertionPoint {
+class CORE_EXPORT_N2101 HTMLContentElement final : public InsertionPoint {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

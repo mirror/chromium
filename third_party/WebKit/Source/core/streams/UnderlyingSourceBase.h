@@ -20,7 +20,7 @@ namespace blink {
 
 class ReadableStreamController;
 
-class CORE_EXPORT UnderlyingSourceBase
+class CORE_EXPORT_N2577 UnderlyingSourceBase
     : public GarbageCollectedFinalized<UnderlyingSourceBase>,
       public ScriptWrappable,
       public ActiveScriptWrappable<UnderlyingSourceBase>,

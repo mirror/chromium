@@ -31,7 +31,7 @@
 
 namespace blink {
 
-class CORE_EXPORT UIEventWithKeyState : public UIEvent {
+class CORE_EXPORT_N1991 UIEventWithKeyState : public UIEvent {
  public:
   bool ctrlKey() const { return modifiers_ & WebInputEvent::kControlKey; }
   bool shiftKey() const { return modifiers_ & WebInputEvent::kShiftKey; }

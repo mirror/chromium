@@ -19,7 +19,7 @@ namespace blink {
 class NGPhysicalBoxFragment;
 
 // Struct that keeps all information needed to position floats in LayoutNG.
-struct CORE_EXPORT NGUnpositionedFloat
+struct CORE_EXPORT_N2401 NGUnpositionedFloat
     : public RefCounted<NGUnpositionedFloat> {
  public:
   static RefPtr<NGUnpositionedFloat> Create(NGLogicalSize available_size,

@@ -28,7 +28,7 @@ namespace blink {
 
 class HTMLProgressElement;
 
-class CORE_EXPORT LayoutProgress final : public LayoutBlockFlow {
+class CORE_EXPORT_N2315 LayoutProgress final : public LayoutBlockFlow {
  public:
   explicit LayoutProgress(HTMLProgressElement*);
   ~LayoutProgress() override;

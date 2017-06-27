@@ -99,7 +99,7 @@ class CSSPreloadScanner {
 // Each CSSPreloaderResourceClient keeps track of a single CSS resource, and
 // drives a CSSPreloadScanner as raw data arrives for it. This lets us preload
 // @import tags before parsing.
-class CORE_EXPORT CSSPreloaderResourceClient
+class CORE_EXPORT_N2199 CSSPreloaderResourceClient
     : public GarbageCollectedFinalized<CSSPreloaderResourceClient>,
       public StyleSheetResourceClient {
   USING_GARBAGE_COLLECTED_MIXIN(CSSPreloaderResourceClient);

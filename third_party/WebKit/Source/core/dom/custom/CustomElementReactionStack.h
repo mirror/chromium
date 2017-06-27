@@ -17,7 +17,7 @@ class CustomElementReactionQueue;
 class Element;
 
 // https://html.spec.whatwg.org/multipage/scripting.html#custom-element-reactions
-class CORE_EXPORT CustomElementReactionStack final
+class CORE_EXPORT_N1732 CustomElementReactionStack final
     : public GarbageCollected<CustomElementReactionStack>,
       public TraceWrapperBase {
   WTF_MAKE_NONCOPYABLE(CustomElementReactionStack);
@@ -53,7 +53,7 @@ class CORE_EXPORT CustomElementReactionStack final
   void Enqueue(Member<ElementQueue>&, Element*, CustomElementReaction*);
 };
 
-class CORE_EXPORT CustomElementReactionStackTestSupport final {
+class CORE_EXPORT_N1733 CustomElementReactionStackTestSupport final {
  private:
   friend class ResetCustomElementReactionStackForTest;
 

@@ -22,7 +22,7 @@ class WebKeyboardEvent;
 
 enum class OverrideCapsLockState { kDefault, kOn, kOff };
 
-class CORE_EXPORT KeyboardEventManager
+class CORE_EXPORT_N2241 KeyboardEventManager
     : public GarbageCollectedFinalized<KeyboardEventManager> {
   WTF_MAKE_NONCOPYABLE(KeyboardEventManager);
 

@@ -32,7 +32,7 @@
 
 namespace blink {
 
-class CORE_EXPORT V8Initializer {
+class CORE_EXPORT_N106 V8Initializer {
   STATIC_ONLY(V8Initializer);
 
  public:

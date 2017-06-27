@@ -17,7 +17,7 @@ class RemoteFrame;
 class WebRemoteFrameBase : public GarbageCollectedFinalized<WebRemoteFrameBase>,
                            public WebRemoteFrame {
  public:
-  CORE_EXPORT static WebRemoteFrameBase* FromFrame(RemoteFrame&);
+  CORE_EXPORT_N2079 static WebRemoteFrameBase* FromFrame(RemoteFrame&);
 
   virtual void InitializeCoreFrame(Page&,
                                    FrameOwner*,

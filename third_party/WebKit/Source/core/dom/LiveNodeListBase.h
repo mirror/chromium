@@ -39,7 +39,7 @@ enum class NodeListRootType {
   kTreeScope,
 };
 
-class CORE_EXPORT LiveNodeListBase : public GarbageCollectedMixin {
+class CORE_EXPORT_N1663 LiveNodeListBase : public GarbageCollectedMixin {
  public:
   LiveNodeListBase(ContainerNode& owner_node,
                    NodeListRootType root_type,

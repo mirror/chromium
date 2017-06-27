@@ -19,7 +19,7 @@ class ModuleTreeLinkerRegistry;
 // for "internal module script graph fetching procedure" for a module graph tree
 // node.
 // https://html.spec.whatwg.org/multipage/webappapis.html#internal-module-script-graph-fetching-procedure
-class CORE_EXPORT ModuleTreeLinker final
+class CORE_EXPORT_N2478 ModuleTreeLinker final
     : public GarbageCollectedFinalized<ModuleTreeLinker>,
       public SingleModuleClient {
   USING_GARBAGE_COLLECTED_MIXIN(ModuleTreeLinker);

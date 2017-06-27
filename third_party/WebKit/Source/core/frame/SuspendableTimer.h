@@ -33,7 +33,7 @@
 
 namespace blink {
 
-class CORE_EXPORT SuspendableTimer : public TimerBase,
+class CORE_EXPORT_N2072 SuspendableTimer : public TimerBase,
                                      public SuspendableObject {
  public:
   explicit SuspendableTimer(ExecutionContext*, TaskType);

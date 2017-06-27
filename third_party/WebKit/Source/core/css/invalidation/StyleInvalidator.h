@@ -59,7 +59,7 @@ class InvalidationSet;
 // for more detailed overviews of style invalidation.
 // TODO: unify these documents into an .md file in the repo.
 
-class CORE_EXPORT StyleInvalidator {
+class CORE_EXPORT_N1573 StyleInvalidator {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(StyleInvalidator);
 

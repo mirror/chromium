@@ -34,7 +34,7 @@ namespace blink {
 // size of 1.
 #define HIT_TEST_CACHE_SIZE (2)
 
-class CORE_EXPORT HitTestCache final
+class CORE_EXPORT_N2289 HitTestCache final
     : public GarbageCollectedFinalized<HitTestCache> {
   WTF_MAKE_NONCOPYABLE(HitTestCache);
 

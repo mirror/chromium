@@ -19,7 +19,7 @@ class ShadowRoot;
 
 // MediaControls is an interface to abstract the HTMLMediaElement controls. The
 // implementation will be used using a Factory (see below).
-class CORE_EXPORT MediaControls : public GarbageCollectedMixin {
+class CORE_EXPORT_N2194 MediaControls : public GarbageCollectedMixin {
  public:
   // Factory class that HTMLMediaElement uses to create the MediaControls
   // instance. MediaControls implementations are expected to implement a factory

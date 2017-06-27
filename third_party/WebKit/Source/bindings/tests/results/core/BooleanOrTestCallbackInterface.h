@@ -23,7 +23,7 @@ namespace blink {
 
 class TestCallbackInterface;
 
-class CORE_EXPORT BooleanOrTestCallbackInterface final {
+class CORE_EXPORT_N141 BooleanOrTestCallbackInterface final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   BooleanOrTestCallbackInterface();
@@ -55,15 +55,15 @@ class CORE_EXPORT BooleanOrTestCallbackInterface final {
   bool m_boolean;
   Member<TestCallbackInterface> m_testCallbackInterface;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const BooleanOrTestCallbackInterface&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N142 v8::Local<v8::Value> ToV8(const BooleanOrTestCallbackInterface&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8BooleanOrTestCallbackInterface final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, BooleanOrTestCallbackInterface&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N143 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, BooleanOrTestCallbackInterface&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const BooleanOrTestCallbackInterface&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N144 v8::Local<v8::Value> ToV8(const BooleanOrTestCallbackInterface&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, BooleanOrTestCallbackInterface& impl) {
@@ -77,7 +77,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, BooleanOrTestCall
 
 template <>
 struct NativeValueTraits<BooleanOrTestCallbackInterface> : public NativeValueTraitsBase<BooleanOrTestCallbackInterface> {
-  CORE_EXPORT static BooleanOrTestCallbackInterface NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N145 static BooleanOrTestCallbackInterface NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

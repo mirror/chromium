@@ -64,7 +64,7 @@ static const unsigned kMaxRowIndex = 0x7FFFFFFE;  // 2,147,483,646
 // LayoutTableRow is also positioned with respect to the enclosing
 // LayoutTableSection. See LayoutTableSection::layoutRows() for the placement
 // logic.
-class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
+class CORE_EXPORT_N2321 LayoutTableRow final : public LayoutTableBoxComponent {
  public:
   explicit LayoutTableRow(Element*);
 

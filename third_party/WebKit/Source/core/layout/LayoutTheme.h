@@ -47,7 +47,7 @@ class PlatformChromeClient;
 class Theme;
 class ThemePainter;
 
-class CORE_EXPORT LayoutTheme : public RefCounted<LayoutTheme> {
+class CORE_EXPORT_N2325 LayoutTheme : public RefCounted<LayoutTheme> {
  protected:
   explicit LayoutTheme(Theme*);
 

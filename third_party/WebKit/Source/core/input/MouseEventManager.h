@@ -32,7 +32,7 @@ enum class DragInitiator;
 
 // This class takes care of dispatching all mouse events and keeps track of
 // positions and states of mouse.
-class CORE_EXPORT MouseEventManager final
+class CORE_EXPORT_N2242 MouseEventManager final
     : public GarbageCollectedFinalized<MouseEventManager>,
       public SynchronousMutationObserver {
   WTF_MAKE_NONCOPYABLE(MouseEventManager);

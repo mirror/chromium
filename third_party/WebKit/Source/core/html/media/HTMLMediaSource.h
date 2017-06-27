@@ -44,7 +44,7 @@ class HTMLMediaElement;
 class TimeRanges;
 class TrackBase;
 
-class CORE_EXPORT HTMLMediaSource : public URLRegistrable,
+class CORE_EXPORT_N2193 HTMLMediaSource : public URLRegistrable,
                                     public GarbageCollectedMixin {
  public:
   static void SetRegistry(URLRegistry*);

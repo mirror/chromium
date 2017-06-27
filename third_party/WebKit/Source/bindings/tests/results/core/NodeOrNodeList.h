@@ -24,7 +24,7 @@ namespace blink {
 class Node;
 class NodeList;
 
-class CORE_EXPORT NodeOrNodeList final {
+class CORE_EXPORT_N203 NodeOrNodeList final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   NodeOrNodeList();
@@ -56,15 +56,15 @@ class CORE_EXPORT NodeOrNodeList final {
   Member<Node> m_node;
   Member<NodeList> m_nodeList;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const NodeOrNodeList&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N204 v8::Local<v8::Value> ToV8(const NodeOrNodeList&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8NodeOrNodeList final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, NodeOrNodeList&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N205 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, NodeOrNodeList&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const NodeOrNodeList&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N206 v8::Local<v8::Value> ToV8(const NodeOrNodeList&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, NodeOrNodeList& impl) {
@@ -78,7 +78,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, NodeOrNodeList& i
 
 template <>
 struct NativeValueTraits<NodeOrNodeList> : public NativeValueTraitsBase<NodeOrNodeList> {
-  CORE_EXPORT static NodeOrNodeList NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N207 static NodeOrNodeList NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

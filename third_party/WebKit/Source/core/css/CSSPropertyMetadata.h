@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class CORE_EXPORT CSSPropertyMetadata {
+class CORE_EXPORT_N1486 CSSPropertyMetadata {
   STATIC_ONLY(CSSPropertyMetadata);
 
  public:

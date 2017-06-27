@@ -18,7 +18,7 @@ namespace blink {
 
 class EventQueue;
 
-class CORE_EXPORT WorkletGlobalScope
+class CORE_EXPORT_N2677 WorkletGlobalScope
     : public GarbageCollectedFinalized<WorkletGlobalScope>,
       public SecurityContext,
       public WorkerOrWorkletGlobalScope,

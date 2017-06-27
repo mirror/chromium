@@ -22,7 +22,7 @@ class WebTouchEvent;
 
 // This class takes care of dispatching all touch events and
 // maintaining related states.
-class CORE_EXPORT TouchEventManager
+class CORE_EXPORT_N2246 TouchEventManager
     : public GarbageCollectedFinalized<TouchEventManager> {
   WTF_MAKE_NONCOPYABLE(TouchEventManager);
 

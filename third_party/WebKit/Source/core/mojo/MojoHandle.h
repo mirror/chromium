@@ -32,7 +32,7 @@ class MojoHandle final : public GarbageCollectedFinalized<MojoHandle>,
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  CORE_EXPORT static MojoHandle* Create(mojo::ScopedHandle);
+  CORE_EXPORT_N2495 static MojoHandle* Create(mojo::ScopedHandle);
 
   void close();
   MojoWatcher* watch(ScriptState*,

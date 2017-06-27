@@ -31,17 +31,17 @@ enum class LengthResolveType {
 // pass them to ResolveInlineLength / ComputeInlineSizeForFragment.
 // If this function returns false, it is safe to pass an empty
 // MinMaxContentSize struct to those functions.
-CORE_EXPORT bool NeedMinMaxContentSize(const NGConstraintSpace&,
+CORE_EXPORT_N2375 bool NeedMinMaxContentSize(const NGConstraintSpace&,
                                        const ComputedStyle&);
 
 // Like NeedMinMaxContentSize, but for use when calling
 // ComputeMinAndMaxContentContribution.
-CORE_EXPORT bool NeedMinMaxContentSizeForContentContribution(
+CORE_EXPORT_N2376 bool NeedMinMaxContentSizeForContentContribution(
     const ComputedStyle&);
 
 // Convert an inline-axis length to a layout unit using the given constraint
 // space.
-CORE_EXPORT LayoutUnit
+CORE_EXPORT_N2377 LayoutUnit
 ResolveInlineLength(const NGConstraintSpace&,
                     const ComputedStyle&,
                     const WTF::Optional<MinMaxContentSize>&,
@@ -50,7 +50,7 @@ ResolveInlineLength(const NGConstraintSpace&,
 
 // Convert a block-axis length to a layout unit using the given constraint
 // space and content size.
-CORE_EXPORT LayoutUnit ResolveBlockLength(const NGConstraintSpace&,
+CORE_EXPORT_N2378 LayoutUnit ResolveBlockLength(const NGConstraintSpace&,
                                           const ComputedStyle&,
                                           const Length&,
                                           LayoutUnit content_size,
@@ -63,14 +63,14 @@ CORE_EXPORT LayoutUnit ResolveBlockLength(const NGConstraintSpace&,
 // to zero) and that an auto inline size resolves to the respective min/max
 // content size.
 // Also, the min/max contribution does include the inline margins as well.
-CORE_EXPORT MinMaxContentSize
+CORE_EXPORT_N2379 MinMaxContentSize
 ComputeMinAndMaxContentContribution(const ComputedStyle&,
                                     const WTF::Optional<MinMaxContentSize>&);
 
 // Resolves the given length to a layout unit, constraining it by the min
 // logical width and max logical width properties from the ComputedStyle
 // object.
-CORE_EXPORT LayoutUnit
+CORE_EXPORT_N2380 LayoutUnit
 ComputeInlineSizeForFragment(const NGConstraintSpace&,
                              const ComputedStyle&,
                              const WTF::Optional<MinMaxContentSize>&);
@@ -78,49 +78,49 @@ ComputeInlineSizeForFragment(const NGConstraintSpace&,
 // Resolves the given length to a layout unit, constraining it by the min
 // logical height and max logical height properties from the ComputedStyle
 // object.
-CORE_EXPORT LayoutUnit ComputeBlockSizeForFragment(const NGConstraintSpace&,
+CORE_EXPORT_N2381 LayoutUnit ComputeBlockSizeForFragment(const NGConstraintSpace&,
                                                    const ComputedStyle&,
                                                    LayoutUnit content_size);
 
 // Based on available inline size, CSS computed column-width, CSS computed
 // column-count and CSS used column-gap, return CSS used column-count.
-CORE_EXPORT int ResolveUsedColumnCount(int computed_count,
+CORE_EXPORT_N2382 int ResolveUsedColumnCount(int computed_count,
                                        LayoutUnit computed_size,
                                        LayoutUnit used_gap,
                                        LayoutUnit available_size);
 
 // Based on available inline size, CSS computed column-width, CSS computed
 // column-count and CSS used column-gap, return CSS used column-width.
-CORE_EXPORT LayoutUnit ResolveUsedColumnInlineSize(int computed_count,
+CORE_EXPORT_N2383 LayoutUnit ResolveUsedColumnInlineSize(int computed_count,
                                                    LayoutUnit computed_size,
                                                    LayoutUnit used_gap,
                                                    LayoutUnit available_size);
-CORE_EXPORT LayoutUnit ResolveUsedColumnInlineSize(LayoutUnit available_size,
+CORE_EXPORT_N2384 LayoutUnit ResolveUsedColumnInlineSize(LayoutUnit available_size,
                                                    const ComputedStyle&);
 
-CORE_EXPORT LayoutUnit ResolveUsedColumnGap(const ComputedStyle&);
+CORE_EXPORT_N2385 LayoutUnit ResolveUsedColumnGap(const ComputedStyle&);
 
-CORE_EXPORT NGBoxStrut ComputeMargins(const NGConstraintSpace&,
+CORE_EXPORT_N2386 NGBoxStrut ComputeMargins(const NGConstraintSpace&,
                                       const ComputedStyle&,
                                       const NGWritingMode writing_mode,
                                       const TextDirection direction);
 
-CORE_EXPORT NGBoxStrut ComputeBorders(const NGConstraintSpace& constraint_space,
+CORE_EXPORT_N2387 NGBoxStrut ComputeBorders(const NGConstraintSpace& constraint_space,
                                       const ComputedStyle&);
 
-CORE_EXPORT NGBoxStrut ComputePadding(const NGConstraintSpace&,
+CORE_EXPORT_N2388 NGBoxStrut ComputePadding(const NGConstraintSpace&,
                                       const ComputedStyle&);
 
 // Resolves margin: auto in the inline direction.
 // This uses the available size from the constraint space and inline size to
 // compute the margins that are auto, if any, and adjusts
 // the given NGBoxStrut accordingly.
-CORE_EXPORT void ApplyAutoMargins(const NGConstraintSpace&,
+CORE_EXPORT_N2389 void ApplyAutoMargins(const NGConstraintSpace&,
                                   const ComputedStyle&,
                                   const LayoutUnit& inline_size,
                                   NGBoxStrut* margins);
 
-CORE_EXPORT LayoutUnit ConstrainByMinMax(LayoutUnit length,
+CORE_EXPORT_N2390 LayoutUnit ConstrainByMinMax(LayoutUnit length,
                                          Optional<LayoutUnit> min,
                                          Optional<LayoutUnit> max);
 

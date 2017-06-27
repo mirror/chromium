@@ -33,7 +33,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT HTMLParserOptions {
+class CORE_EXPORT_N2205 HTMLParserOptions {
   DISALLOW_NEW();
 
  public:

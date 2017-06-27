@@ -52,7 +52,7 @@ namespace blink {
 class Element;
 class KeyframeEffectModelTest;
 
-class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
+class CORE_EXPORT_N1453 KeyframeEffectModelBase : public EffectModel {
  public:
   // FIXME: Implement accumulation.
 

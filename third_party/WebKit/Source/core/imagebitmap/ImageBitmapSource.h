@@ -19,7 +19,7 @@ namespace blink {
 class ImageBitmap;
 class ImageBitmapOptions;
 
-class CORE_EXPORT ImageBitmapSource {
+class CORE_EXPORT_N2236 ImageBitmapSource {
  public:
   virtual IntSize BitmapSourceSize() const { return IntSize(); }
   virtual ScriptPromise CreateImageBitmap(ScriptState*,

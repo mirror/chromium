@@ -39,7 +39,7 @@ namespace blink {
 
 class Settings;
 
-class CORE_EXPORT SettingsDelegate {
+class CORE_EXPORT_N2067 SettingsDelegate {
   DISALLOW_NEW();
 
  public:

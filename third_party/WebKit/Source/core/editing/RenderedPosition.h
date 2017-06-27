@@ -137,7 +137,7 @@ inline RenderedPosition::RenderedPosition(LayoutObject* layout_object,
       prev_leaf_child_(UncachedInlineBox()),
       next_leaf_child_(UncachedInlineBox()) {}
 
-CORE_EXPORT bool LayoutObjectContainsPosition(LayoutObject*, const Position&);
+CORE_EXPORT_N1807 bool LayoutObjectContainsPosition(LayoutObject*, const Position&);
 
 }  // namespace blink
 

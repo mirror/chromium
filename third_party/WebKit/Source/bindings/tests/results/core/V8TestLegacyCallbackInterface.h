@@ -23,8 +23,8 @@ class V8TestLegacyCallbackInterface final {
   STATIC_ONLY(V8TestLegacyCallbackInterface);
  public:
   static v8::Local<v8::FunctionTemplate> DomTemplate(v8::Isolate*, const DOMWrapperWorld&);
-  CORE_EXPORT  static const WrapperTypeInfo wrapperTypeInfo;
-  CORE_EXPORT  static void TypeErrorConstructorCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  CORE_EXPORT_N786  static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT_N787  static void TypeErrorConstructorCallback(const v8::FunctionCallbackInfo<v8::Value>&);
 };
 }
 #endif  // V8TestLegacyCallbackInterface_h

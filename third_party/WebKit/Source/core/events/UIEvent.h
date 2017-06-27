@@ -37,7 +37,7 @@ class InputDeviceCapabilities;
 // FIXME: Get rid of this type alias.
 using AbstractView = DOMWindow;
 
-class CORE_EXPORT UIEvent : public Event {
+class CORE_EXPORT_N1990 UIEvent : public Event {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

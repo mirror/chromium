@@ -61,7 +61,7 @@ using MutationObserverRegistrationSet =
 using MutationObserverVector = HeapVector<Member<MutationObserver>>;
 using MutationRecordVector = HeapVector<Member<MutationRecord>>;
 
-class CORE_EXPORT MutationObserver final
+class CORE_EXPORT_N1671 MutationObserver final
     : public GarbageCollectedFinalized<MutationObserver>,
       public ActiveScriptWrappable<MutationObserver>,
       public ScriptWrappable {

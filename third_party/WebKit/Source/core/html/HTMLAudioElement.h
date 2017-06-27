@@ -34,7 +34,7 @@ namespace blink {
 
 class Document;
 
-class CORE_EXPORT HTMLAudioElement final : public HTMLMediaElement {
+class CORE_EXPORT_N2096 HTMLAudioElement final : public HTMLMediaElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

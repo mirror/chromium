@@ -13,7 +13,7 @@
 
 namespace blink {
 
-class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
+class CORE_EXPORT_N2436 NGPhysicalTextFragment final : public NGPhysicalFragment {
  public:
   NGPhysicalTextFragment(LayoutObject* layout_object,
                          const NGInlineNode* node,

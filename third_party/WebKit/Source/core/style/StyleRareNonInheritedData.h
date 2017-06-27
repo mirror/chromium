@@ -80,7 +80,7 @@ enum PageSizeType {
 // TODO(sashab): Move this into a private class on ComputedStyle, and remove
 // all methods on it, merging them into copy/creation methods on ComputedStyle
 // instead. Keep the allocation logic, only allocating a new object if needed.
-class CORE_EXPORT StyleRareNonInheritedData
+class CORE_EXPORT_N2597 StyleRareNonInheritedData
     : public RefCounted<StyleRareNonInheritedData> {
  public:
   static PassRefPtr<StyleRareNonInheritedData> Create() {

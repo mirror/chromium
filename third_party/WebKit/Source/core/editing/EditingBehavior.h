@@ -28,7 +28,7 @@
 namespace blink {
 class KeyboardEvent;
 
-class CORE_EXPORT EditingBehavior {
+class CORE_EXPORT_N1749 EditingBehavior {
   STACK_ALLOCATED();
 
  public:

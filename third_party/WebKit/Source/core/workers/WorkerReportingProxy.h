@@ -44,7 +44,7 @@ class SourceLocation;
 class WorkerOrWorkletGlobalScope;
 
 // APIs used by workers to report console and worker activity.
-class CORE_EXPORT WorkerReportingProxy {
+class CORE_EXPORT_N2669 WorkerReportingProxy {
  public:
   virtual ~WorkerReportingProxy() {}
 

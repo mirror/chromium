@@ -14,7 +14,7 @@ namespace blink {
 class NGBlockNode;
 
 // Represents a break token for a block node.
-class CORE_EXPORT NGBlockBreakToken : public NGBreakToken {
+class CORE_EXPORT_N2353 NGBlockBreakToken : public NGBreakToken {
  public:
   // Creates a break token for a node which did fragment, and can potentially
   // produce more fragments.

@@ -28,7 +28,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLImageLoader final : public ImageLoader {
+class CORE_EXPORT_N2121 HTMLImageLoader final : public ImageLoader {
  public:
   static HTMLImageLoader* Create(Element* element) {
     return new HTMLImageLoader(element);

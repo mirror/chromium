@@ -44,7 +44,7 @@ class TextTrackCue;
 class TextTrackCueList;
 class TextTrackList;
 
-class CORE_EXPORT TextTrack : public EventTargetWithInlineData,
+class CORE_EXPORT_N2228 TextTrack : public EventTargetWithInlineData,
                               public TrackBase {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(TextTrack);

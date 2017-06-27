@@ -20,7 +20,7 @@ class LocalFrameView;
 // It is needed when the layout viewport grows (causing its own scroll position
 // to be clamped) and also when it shrinks (causing the visual viewport's scroll
 // position to be clamped).
-class CORE_EXPORT ResizeViewportAnchor final
+class CORE_EXPORT_N2061 ResizeViewportAnchor final
     : public GarbageCollected<ResizeViewportAnchor> {
   WTF_MAKE_NONCOPYABLE(ResizeViewportAnchor);
 

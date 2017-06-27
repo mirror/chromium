@@ -51,7 +51,7 @@ class MediaQueryData {
   inline void SetMediaFeature(const String& str) { media_feature_ = str; }
 };
 
-class CORE_EXPORT MediaQueryParser {
+class CORE_EXPORT_N1586 MediaQueryParser {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(MediaQueryParser);
 

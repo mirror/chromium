@@ -23,7 +23,7 @@ namespace blink {
 
 class LongOrBoolean;
 
-class CORE_EXPORT DoubleOrLongOrBooleanSequence final {
+class CORE_EXPORT_N156 DoubleOrLongOrBooleanSequence final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   DoubleOrLongOrBooleanSequence();
@@ -55,15 +55,15 @@ class CORE_EXPORT DoubleOrLongOrBooleanSequence final {
   double m_double;
   HeapVector<LongOrBoolean> m_longOrBooleanSequence;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const DoubleOrLongOrBooleanSequence&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N157 v8::Local<v8::Value> ToV8(const DoubleOrLongOrBooleanSequence&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8DoubleOrLongOrBooleanSequence final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, DoubleOrLongOrBooleanSequence&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N158 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, DoubleOrLongOrBooleanSequence&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const DoubleOrLongOrBooleanSequence&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N159 v8::Local<v8::Value> ToV8(const DoubleOrLongOrBooleanSequence&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, DoubleOrLongOrBooleanSequence& impl) {
@@ -77,7 +77,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, DoubleOrLongOrBoo
 
 template <>
 struct NativeValueTraits<DoubleOrLongOrBooleanSequence> : public NativeValueTraitsBase<DoubleOrLongOrBooleanSequence> {
-  CORE_EXPORT static DoubleOrLongOrBooleanSequence NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N160 static DoubleOrLongOrBooleanSequence NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

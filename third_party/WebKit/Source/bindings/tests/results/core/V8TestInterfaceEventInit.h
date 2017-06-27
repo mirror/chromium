@@ -25,10 +25,10 @@ class ExceptionState;
 
 class V8TestInterfaceEventInit {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestInterfaceEventInit&, ExceptionState&);
+  CORE_EXPORT_N674 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, TestInterfaceEventInit&, ExceptionState&);
 };
 
-CORE_EXPORT bool toV8TestInterfaceEventInit(const TestInterfaceEventInit&, v8::Local<v8::Object> dictionary, v8::Local<v8::Object> creationContext, v8::Isolate*);
+CORE_EXPORT_N675 bool toV8TestInterfaceEventInit(const TestInterfaceEventInit&, v8::Local<v8::Object> dictionary, v8::Local<v8::Object> creationContext, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestInterfaceEventInit& impl) {
@@ -42,7 +42,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, TestInterfaceEven
 
 template <>
 struct NativeValueTraits<TestInterfaceEventInit> : public NativeValueTraitsBase<TestInterfaceEventInit> {
-  CORE_EXPORT static TestInterfaceEventInit NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N676 static TestInterfaceEventInit NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

@@ -37,7 +37,7 @@ namespace blink {
 class FontSelector;
 class ComputedStyle;
 
-class CORE_EXPORT FontBuilder {
+class CORE_EXPORT_N1591 FontBuilder {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(FontBuilder);
 

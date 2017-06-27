@@ -12,7 +12,7 @@
 namespace blink {
 class PlatformEventController;
 
-class CORE_EXPORT PlatformEventDispatcher : public GarbageCollectedMixin {
+class CORE_EXPORT_N2059 PlatformEventDispatcher : public GarbageCollectedMixin {
  public:
   void AddController(PlatformEventController*);
   void RemoveController(PlatformEventController*);

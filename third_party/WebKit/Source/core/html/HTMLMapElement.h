@@ -30,7 +30,7 @@ namespace blink {
 
 class HTMLImageElement;
 
-class CORE_EXPORT HTMLMapElement final : public HTMLElement {
+class CORE_EXPORT_N2125 HTMLMapElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

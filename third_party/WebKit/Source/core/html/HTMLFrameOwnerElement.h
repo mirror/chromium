@@ -39,7 +39,7 @@ class Frame;
 class FrameOrPlugin;
 class LayoutPart;
 
-class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
+class CORE_EXPORT_N2114 HTMLFrameOwnerElement : public HTMLElement,
                                           public FrameOwner {
   USING_GARBAGE_COLLECTED_MIXIN(HTMLFrameOwnerElement);
 
@@ -185,7 +185,7 @@ class SubframeLoadingDisabler {
   // resolved.
   using SubtreeRootSet = HashCountedSet<UntracedMember<Node>>;
 
-  CORE_EXPORT static SubtreeRootSet& DisabledSubtreeRoots();
+  CORE_EXPORT_N2115 static SubtreeRootSet& DisabledSubtreeRoots();
 
   Member<Node> root_;
 };

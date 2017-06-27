@@ -25,7 +25,7 @@ class StyleSheetContents;
 class CSSValue;
 
 // This class serves as the public API for the css/parser subsystem
-class CORE_EXPORT CSSParser {
+class CORE_EXPORT_N1574 CSSParser {
   STATIC_ONLY(CSSParser);
 
  public:

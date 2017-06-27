@@ -11,14 +11,14 @@
 
 namespace blink {
 
-struct CORE_EXPORT MinMaxContentSize {
+struct CORE_EXPORT_N2391 MinMaxContentSize {
   LayoutUnit min_content;
   LayoutUnit max_content;
   LayoutUnit ShrinkToFit(LayoutUnit available_size) const;
   bool operator==(const MinMaxContentSize& other) const;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const MinMaxContentSize&);
+CORE_EXPORT_N2392 std::ostream& operator<<(std::ostream&, const MinMaxContentSize&);
 
 }  // namespace blink
 

@@ -36,7 +36,7 @@
 
 namespace blink {
 
-class CORE_EXPORT HTMLOutputElement final : public HTMLFormControlElement,
+class CORE_EXPORT_N2132 HTMLOutputElement final : public HTMLFormControlElement,
                                             private DOMTokenListObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(HTMLOutputElement);

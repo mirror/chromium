@@ -47,7 +47,7 @@ namespace blink {
 // For CSS Animations, used to synchronize the start of main-thread animations
 // with compositor animations when both classes of CSS Animations are triggered
 // by the same recalc
-class CORE_EXPORT CompositorPendingAnimations final
+class CORE_EXPORT_N1438 CompositorPendingAnimations final
     : public GarbageCollectedFinalized<CompositorPendingAnimations> {
  public:
   explicit CompositorPendingAnimations(Document& document)

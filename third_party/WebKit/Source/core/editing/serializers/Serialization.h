@@ -85,18 +85,18 @@ void ReplaceChildrenWithFragment(ContainerNode*,
                                  ExceptionState&);
 void ReplaceChildrenWithText(ContainerNode*, const String&, ExceptionState&);
 
-CORE_EXPORT String CreateMarkup(const Node*,
+CORE_EXPORT_N1952 String CreateMarkup(const Node*,
                                 EChildrenOnly = kIncludeNode,
                                 EAbsoluteURLs = kDoNotResolveURLs);
 
-CORE_EXPORT String
+CORE_EXPORT_N1953 String
 CreateMarkup(const Position& start,
              const Position& end,
              EAnnotateForInterchange = kDoNotAnnotateForInterchange,
              ConvertBlocksToInlines = ConvertBlocksToInlines::kNotConvert,
              EAbsoluteURLs = kDoNotResolveURLs,
              Node* constraining_ancestor = nullptr);
-CORE_EXPORT String
+CORE_EXPORT_N1954 String
 CreateMarkup(const PositionInFlatTree& start,
              const PositionInFlatTree& end,
              EAnnotateForInterchange = kDoNotAnnotateForInterchange,

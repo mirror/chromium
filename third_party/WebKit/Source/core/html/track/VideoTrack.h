@@ -11,7 +11,7 @@
 
 namespace blink {
 
-class CORE_EXPORT VideoTrack final
+class CORE_EXPORT_N2232 VideoTrack final
     : public GarbageCollectedFinalized<VideoTrack>,
       public TrackBase,
       public ScriptWrappable {

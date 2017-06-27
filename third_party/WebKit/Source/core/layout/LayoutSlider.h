@@ -36,7 +36,7 @@ class LayoutSlider final : public LayoutFlexibleBox {
   explicit LayoutSlider(HTMLInputElement*);
   ~LayoutSlider() override;
 
-  CORE_EXPORT bool InDragMode() const;
+  CORE_EXPORT_N2317 bool InDragMode() const;
 
   const char* GetName() const override { return "LayoutSlider"; }
 

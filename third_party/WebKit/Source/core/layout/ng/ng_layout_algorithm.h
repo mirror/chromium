@@ -20,7 +20,7 @@ class NGLayoutResult;
 
 // Base class for all LayoutNG algorithms.
 template <typename NGInputNodeType, typename NGBreakTokenType>
-class CORE_EXPORT NGLayoutAlgorithm {
+class CORE_EXPORT_N2370 NGLayoutAlgorithm {
   STACK_ALLOCATED();
  public:
   NGLayoutAlgorithm(NGInputNodeType* node,

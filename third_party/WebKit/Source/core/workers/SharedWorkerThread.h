@@ -39,7 +39,7 @@ namespace blink {
 
 class WorkerThreadStartupData;
 
-class CORE_EXPORT SharedWorkerThread : public WorkerThread {
+class CORE_EXPORT_N2650 SharedWorkerThread : public WorkerThread {
  public:
   static std::unique_ptr<SharedWorkerThread> Create(
       const String& name,

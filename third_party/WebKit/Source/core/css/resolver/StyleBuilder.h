@@ -40,7 +40,7 @@ namespace blink {
 class CSSValue;
 class StyleResolverState;
 
-class CORE_EXPORT StyleBuilder {
+class CORE_EXPORT_N1596 StyleBuilder {
   STATIC_ONLY(StyleBuilder);
 
  public:

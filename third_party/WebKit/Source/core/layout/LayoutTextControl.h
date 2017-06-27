@@ -31,7 +31,7 @@ namespace blink {
 
 class TextControlElement;
 
-class CORE_EXPORT LayoutTextControl : public LayoutBlockFlow {
+class CORE_EXPORT_N2324 LayoutTextControl : public LayoutBlockFlow {
  public:
   ~LayoutTextControl() override;
 

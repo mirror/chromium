@@ -168,7 +168,7 @@ class UnzoomedLength {
   Length length_;
 };
 
-class CORE_EXPORT StyleStrokeData : public RefCounted<StyleStrokeData> {
+class CORE_EXPORT_N2599 StyleStrokeData : public RefCounted<StyleStrokeData> {
  public:
   static PassRefPtr<StyleStrokeData> Create() {
     return AdoptRef(new StyleStrokeData);
@@ -225,7 +225,7 @@ class StyleStopData : public RefCounted<StyleStopData> {
 };
 
 // Note: the rule for this class is, *no inheritance* of these props
-class CORE_EXPORT StyleMiscData : public RefCounted<StyleMiscData> {
+class CORE_EXPORT_N2600 StyleMiscData : public RefCounted<StyleMiscData> {
  public:
   static PassRefPtr<StyleMiscData> Create() {
     return AdoptRef(new StyleMiscData);

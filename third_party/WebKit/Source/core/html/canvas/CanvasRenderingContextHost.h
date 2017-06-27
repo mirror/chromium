@@ -21,7 +21,7 @@ namespace blink {
 class StaticBitmapImage;
 class KURL;
 
-class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
+class CORE_EXPORT_N2170 CanvasRenderingContextHost : public GarbageCollectedMixin {
  public:
   CanvasRenderingContextHost();
 

@@ -54,7 +54,7 @@ class ExecutionContext;
 
 using FontFaceSetIterable = SetlikeIterable<Member<FontFace>>;
 
-class CORE_EXPORT FontFaceSet final : public EventTargetWithInlineData,
+class CORE_EXPORT_N1506 FontFaceSet final : public EventTargetWithInlineData,
                                       public Supplement<Document>,
                                       public SuspendableObject,
                                       public FontFaceSetIterable,

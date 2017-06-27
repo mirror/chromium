@@ -43,7 +43,7 @@ class Document;
 class KURL;
 class SharedWorker;
 
-class CORE_EXPORT SharedWorkerRepositoryClient {
+class CORE_EXPORT_N2649 SharedWorkerRepositoryClient {
   WTF_MAKE_NONCOPYABLE(SharedWorkerRepositoryClient);
   DISALLOW_NEW();
 

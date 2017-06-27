@@ -22,7 +22,7 @@ struct NGLogicalOffset;
 struct MinMaxContentSize;
 
 // Represents a node to be laid out.
-class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
+class CORE_EXPORT_N2356 NGBlockNode final : public NGLayoutInputNode {
   friend NGLayoutInputNode;
 
  public:

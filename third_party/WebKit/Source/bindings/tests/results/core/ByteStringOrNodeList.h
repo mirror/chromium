@@ -23,7 +23,7 @@ namespace blink {
 
 class NodeList;
 
-class CORE_EXPORT ByteStringOrNodeList final {
+class CORE_EXPORT_N146 ByteStringOrNodeList final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   ByteStringOrNodeList();
@@ -55,15 +55,15 @@ class CORE_EXPORT ByteStringOrNodeList final {
   String m_byteString;
   Member<NodeList> m_nodeList;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const ByteStringOrNodeList&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N147 v8::Local<v8::Value> ToV8(const ByteStringOrNodeList&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8ByteStringOrNodeList final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, ByteStringOrNodeList&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N148 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, ByteStringOrNodeList&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const ByteStringOrNodeList&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N149 v8::Local<v8::Value> ToV8(const ByteStringOrNodeList&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, ByteStringOrNodeList& impl) {
@@ -77,7 +77,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, ByteStringOrNodeL
 
 template <>
 struct NativeValueTraits<ByteStringOrNodeList> : public NativeValueTraitsBase<ByteStringOrNodeList> {
-  CORE_EXPORT static ByteStringOrNodeList NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N150 static ByteStringOrNodeList NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

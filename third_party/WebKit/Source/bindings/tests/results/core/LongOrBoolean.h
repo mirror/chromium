@@ -21,7 +21,7 @@
 
 namespace blink {
 
-class CORE_EXPORT LongOrBoolean final {
+class CORE_EXPORT_N183 LongOrBoolean final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   LongOrBoolean();
@@ -53,15 +53,15 @@ class CORE_EXPORT LongOrBoolean final {
   bool m_boolean;
   int32_t m_long;
 
-  friend CORE_EXPORT v8::Local<v8::Value> ToV8(const LongOrBoolean&, v8::Local<v8::Object>, v8::Isolate*);
+  friend CORE_EXPORT_N184 v8::Local<v8::Value> ToV8(const LongOrBoolean&, v8::Local<v8::Object>, v8::Isolate*);
 };
 
 class V8LongOrBoolean final {
  public:
-  CORE_EXPORT static void toImpl(v8::Isolate*, v8::Local<v8::Value>, LongOrBoolean&, UnionTypeConversionMode, ExceptionState&);
+  CORE_EXPORT_N185 static void toImpl(v8::Isolate*, v8::Local<v8::Value>, LongOrBoolean&, UnionTypeConversionMode, ExceptionState&);
 };
 
-CORE_EXPORT v8::Local<v8::Value> ToV8(const LongOrBoolean&, v8::Local<v8::Object>, v8::Isolate*);
+CORE_EXPORT_N186 v8::Local<v8::Value> ToV8(const LongOrBoolean&, v8::Local<v8::Object>, v8::Isolate*);
 
 template <class CallbackInfo>
 inline void V8SetReturnValue(const CallbackInfo& callbackInfo, LongOrBoolean& impl) {
@@ -75,7 +75,7 @@ inline void V8SetReturnValue(const CallbackInfo& callbackInfo, LongOrBoolean& im
 
 template <>
 struct NativeValueTraits<LongOrBoolean> : public NativeValueTraitsBase<LongOrBoolean> {
-  CORE_EXPORT static LongOrBoolean NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT_N187 static LongOrBoolean NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

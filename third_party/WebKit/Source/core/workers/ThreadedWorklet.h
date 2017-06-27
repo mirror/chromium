@@ -21,7 +21,7 @@ class LocalFrame;
 // threaded worklets while module loading is being implemented for main thread
 // worklets. This and MainThreadWorklet will be merged into the base Worklet
 // class once threaded worklets are also ready to use module loading.
-class CORE_EXPORT ThreadedWorklet : public Worklet,
+class CORE_EXPORT_N2653 ThreadedWorklet : public Worklet,
                                     public WorkletScriptLoader::Client {
   USING_GARBAGE_COLLECTED_MIXIN(ThreadedWorklet);
   WTF_MAKE_NONCOPYABLE(ThreadedWorklet);

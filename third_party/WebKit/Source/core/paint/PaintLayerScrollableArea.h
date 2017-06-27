@@ -70,7 +70,7 @@ class SubtreeLayoutScope;
 typedef WTF::HashMap<PaintLayer*, StickyPositionScrollingConstraints>
     StickyConstraintsMap;
 
-struct CORE_EXPORT PaintLayerScrollableAreaRareData {
+struct CORE_EXPORT_N2543 PaintLayerScrollableAreaRareData {
   WTF_MAKE_NONCOPYABLE(PaintLayerScrollableAreaRareData);
   USING_FAST_MALLOC(PaintLayerScrollableAreaRareData);
 
@@ -115,7 +115,7 @@ struct CORE_EXPORT PaintLayerScrollableAreaRareData {
 // to be painted on top of everything. Hardware accelerated overlay scrollbars
 // are painted by their associated GraphicsLayer that sets the paint flag
 // PaintLayerPaintingOverlayScrollbars.
-class CORE_EXPORT PaintLayerScrollableArea final
+class CORE_EXPORT_N2544 PaintLayerScrollableArea final
     : public GarbageCollectedFinalized<PaintLayerScrollableArea>,
       public PaintInvalidationCapableScrollableArea {
   USING_GARBAGE_COLLECTED_MIXIN(PaintLayerScrollableArea);

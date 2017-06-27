@@ -16,7 +16,7 @@ class IntRect;
 
 // FrameOrPlugin is a pure virtual class which is implemented by LocalFrameView,
 // RemoteFrameView, and PluginView.
-class CORE_EXPORT FrameOrPlugin : public GarbageCollectedMixin {
+class CORE_EXPORT_N2034 FrameOrPlugin : public GarbageCollectedMixin {
  public:
   virtual ~FrameOrPlugin() {}
 

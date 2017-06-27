@@ -57,7 +57,7 @@ class SourceLocation;
 //
 // Current mixed content W3C draft that drives this implementation:
 // https://w3c.github.io/webappsec-mixed-content/
-class CORE_EXPORT MixedContentChecker final {
+class CORE_EXPORT_N2461 MixedContentChecker final {
   WTF_MAKE_NONCOPYABLE(MixedContentChecker);
   DISALLOW_NEW();
 

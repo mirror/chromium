@@ -62,7 +62,7 @@ enum WorkerThreadStartMode {
 // Used for notifying observers on the main thread of worker thread termination.
 // The lifetime of this class is equal to that of WorkerThread. Created and
 // destructed on the main thread.
-class CORE_EXPORT WorkerThreadLifecycleContext final
+class CORE_EXPORT_N2672 WorkerThreadLifecycleContext final
     : public GarbageCollectedFinalized<WorkerThreadLifecycleContext>,
       public LifecycleNotifier<WorkerThreadLifecycleContext,
                                WorkerThreadLifecycleObserver> {
@@ -93,7 +93,7 @@ class CORE_EXPORT WorkerThreadLifecycleContext final
 //    If the running task is for debugger, it's guaranteed to finish without
 //    any interruptions.
 //  - Queued tasks never run.
-class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
+class CORE_EXPORT_N2673 WorkerThread : public WebThread::TaskObserver {
  public:
   // Represents how this thread is terminated. Used for UMA. Append only.
   enum class ExitCode {

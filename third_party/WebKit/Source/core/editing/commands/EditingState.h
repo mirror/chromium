@@ -22,7 +22,7 @@ namespace blink {
 //  if (editingState.isAborted())
 //      return;
 //
-class CORE_EXPORT EditingState final {
+class CORE_EXPORT_N1919 EditingState final {
   STACK_ALLOCATED();
   WTF_MAKE_NONCOPYABLE(EditingState);
 
