@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbdc03cf_6a0ade87",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3411,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T18:25:15Z",
+      "side": 1,
+      "message": "nit: auto gpu_mailbox \u003d gpu::Mailbox::Generate(); ?",
+      "revId": "81b582341113604530c7d1dc326934dad7157c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
