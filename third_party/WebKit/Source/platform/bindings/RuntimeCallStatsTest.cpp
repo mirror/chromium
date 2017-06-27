@@ -52,7 +52,7 @@ TEST_F(RuntimeCallStatsTest, InitialCountShouldBeZero) {
 
 TEST_F(RuntimeCallStatsTest, StatsCounterNameIsCorrect) {
   RuntimeCallStats stats;
-  EXPECT_STREQ("BlinkRCS_TestCounter1",
+  EXPECT_STREQ("Blink_TestCounter1",
                stats.GetCounter(test_counter_1_id)->GetName());
 }
 
@@ -60,7 +60,7 @@ TEST_F(RuntimeCallStatsTest, TestBindingsCountersForMethods) {
   RuntimeCallStats stats;
   RuntimeCallCounter* method_counter =
       stats.GetCounter(RuntimeCallStats::CounterId::kBindingsMethodTestCounter);
-  EXPECT_STREQ("BlinkRCS_BindingsMethodTestCounter", method_counter->GetName());
+  EXPECT_STREQ("Blink_BindingsMethodTestCounter", method_counter->GetName());
 }
 
 TEST_F(RuntimeCallStatsTest, TestBindingsCountersForReadOnlyAttributes) {
@@ -68,7 +68,7 @@ TEST_F(RuntimeCallStatsTest, TestBindingsCountersForReadOnlyAttributes) {
   RuntimeCallCounter* getter_counter =
       stats.GetCounter(RuntimeCallStats::CounterId::
                            kBindingsReadOnlyAttributeTestCounter_Getter);
-  EXPECT_STREQ("BlinkRCS_BindingsReadOnlyAttributeTestCounter_Getter",
+  EXPECT_STREQ("Blink_BindingsReadOnlyAttributeTestCounter_Getter",
                getter_counter->GetName());
 }
 
@@ -78,9 +78,9 @@ TEST_F(RuntimeCallStatsTest, TestBindingsCountersForAttributes) {
       RuntimeCallStats::CounterId::kBindingsAttributeTestCounter_Getter);
   RuntimeCallCounter* setter_counter = stats.GetCounter(
       RuntimeCallStats::CounterId::kBindingsAttributeTestCounter_Setter);
-  EXPECT_STREQ("BlinkRCS_BindingsAttributeTestCounter_Getter",
+  EXPECT_STREQ("Blink_BindingsAttributeTestCounter_Getter",
                getter_counter->GetName());
-  EXPECT_STREQ("BlinkRCS_BindingsAttributeTestCounter_Setter",
+  EXPECT_STREQ("Blink_BindingsAttributeTestCounter_Setter",
                setter_counter->GetName());
 }
 
