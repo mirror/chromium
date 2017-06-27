@@ -16,6 +16,24 @@
       "revId": "fc63a25048ef890739467b477b7c72d92520ec00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd64b13f_9656791f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/usecounted-features.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-27T09:56:45Z",
+      "side": 1,
+      "message": "\"window\" needs to be controlled because counts are notified only to controlled documents. How about calling claim() in SW or opening another window (openWindow()) to be controlled?",
+      "parentUuid": "f951d58c_14099cf5",
+      "revId": "fc63a25048ef890739467b477b7c72d92520ec00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
