@@ -218,6 +218,7 @@ class AutofillManager : public AutofillHandler,
   // indicates whether the upload is a result of an observed submission event.
   virtual void UploadFormDataAsyncCallback(
       const FormStructure* submitted_form,
+      const base::TimeTicks& form_parsed_time,
       const base::TimeTicks& load_time,
       const base::TimeTicks& interaction_time,
       const base::TimeTicks& submission_time,
