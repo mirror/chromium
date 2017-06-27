@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "140a6d7e_cb9e229d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T14:10:46Z",
+      "side": 1,
+      "message": "It kinda surprises me that this works; doesn\u0027t gtest mangle the class name in some way? I thought that\u0027s why we had the FRIEND_TEST_ALL_PREFIXES macro... I never actually looked into it. *cough*",
+      "revId": "88ba126e1147bdf2e917349b5c89555d181ae63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be92692_36ee7732",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T14:10:46Z",
+      "side": 1,
+      "message": "1.  Don\u0027t fear long lines. :)\n2.  Prefer something like `using CORSStatus; using Resource::Type;`",
+      "revId": "88ba126e1147bdf2e917349b5c89555d181ae63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

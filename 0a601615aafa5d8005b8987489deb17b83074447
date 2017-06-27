@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9106e0b6_5a01ec17",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T14:10:46Z",
+      "side": 1,
+      "message": "I\u0027d suggest changing the counter here to do the same check we\u0027re going to do later when determining whether or not we can actually load the resource. Otherwise, we\u0027re pretending that the load is going to succeed, even though it isn\u0027t.",
+      "parentUuid": "4ba6dfa1_f5c3ec18",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbfa1f4c_b582acca",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
         "patchSetId": 20
@@ -69,6 +87,24 @@
       "revId": "0a601615aafa5d8005b8987489deb17b83074447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d3f4ae_bf4e1924",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-27T14:10:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fff43258_17e65369",
+      "revId": "0a601615aafa5d8005b8987489deb17b83074447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
