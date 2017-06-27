@@ -33,6 +33,9 @@
       <include name="IDR_MOJO_INTERFACE_ENDPOINT_HANDLE_JS" file="../../mojo/public/js/lib/interface_endpoint_handle.js" flattenhtml="true" type="BINDATA" />
       <include name="IDR_MOJO_PIPE_CONTROL_MESSAGE_HANDLER_JS" file="../../mojo/public/js/lib/pipe_control_message_handler.js" flattenhtml="true" type="BINDATA" />
       <include name="IDR_MOJO_PIPE_CONTROL_MESSAGE_PROXY_JS" file="../../mojo/public/js/lib/pipe_control_message_proxy.js" flattenhtml="true" type="BINDATA" />
+      <include name="IDR_MOJO_CATALOG_MANIFEST" file="../../services/catalog/manifest.json" type="BINDATA" />
+      <include name="IDR_MOJO_WEB_BROWSER_MANIFEST" file="${root_gen_dir}/ios/web/public/app/browser_manifest.json" use_base_dir="false" type="BINDATA" />
+      <include name="IDR_MOJO_WEB_PACKAGED_SERVICES_MANIFEST" file="${root_gen_dir}/ios/web/public/app/packaged_services_manifest.json" use_base_dir="false" type="BINDATA" />
     </includes>
   </release>
 </grit>

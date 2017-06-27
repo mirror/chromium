@@ -15,13 +15,14 @@ group("all_tests") {
 ios_eg_test("ios_web_shell_egtests") {
   info_plist = "//ios/web/shell/Info.plist"
   sources = [
-    "context_menu_egtest.mm",
-    "meta_tags_egtest.mm",
-    "navigation_egtest.mm",
-    "page_state_egtest.mm",
-    "pdf_egtest.mm",
-    "plugin_placeholder_egtest.mm",
-    "redirect_egtest.mm",
+    #"context_menu_egtest.mm",
+    #"meta_tags_egtest.mm",
+    #"navigation_egtest.mm",
+    #"page_state_egtest.mm",
+    #"pdf_egtest.mm",
+    #"plugin_placeholder_egtest.mm",
+    #"redirect_egtest.mm",
+    "service_manager_egtest.mm",
   ]
 
   deps = [
@@ -30,12 +31,15 @@ ios_eg_test("ios_web_shell_egtests") {
     "//base/test:test_support",
     "//ios/testing:ios_test_support",
     "//ios/testing/earl_grey:earl_grey_support",
+    "//ios/web",
     "//ios/web:earl_grey_test_support",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
     "//ios/web/public/test/http_server",
     "//ios/web/shell",
     "//net",
+    "//services/service_manager/public/cpp",
+    "//services/test/echo/public/interfaces",
     "//url",
 
     # All shared libraries must have the sanitizer deps to properly link in
