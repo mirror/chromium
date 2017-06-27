@@ -240,7 +240,7 @@ inline bool operator!=(const IntRect& a, const IntRect& b) {
 #if OS(MACOSX)
 PLATFORM_EXPORT IntRect EnclosingIntRect(const CGRect&);
 #if defined(__OBJC__) && !defined(NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES)
-PLATFORM_EXPORT IntRect enclosingIntRect(const NSRect&);
+PLATFORM_EXPORT IntRect EnclosingIntRect(const NSRect&);
 #endif
 #endif
 

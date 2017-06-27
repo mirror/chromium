@@ -33,7 +33,7 @@ IntRect::operator NSRect() const {
   return NSMakeRect(x(), y(), width(), height());
 }
 
-IntRect enclosingIntRect(const NSRect& rect) {
+IntRect EnclosingIntRect(const NSRect& rect) {
   int l = static_cast<int>(floorf(rect.origin.x));
   int t = static_cast<int>(floorf(rect.origin.y));
   int r = static_cast<int>(ceilf(NSMaxX(rect)));
