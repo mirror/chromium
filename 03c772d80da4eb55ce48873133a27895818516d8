@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "8d4ab33c_ab8f2f0c",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-27T16:22:21Z",
+      "side": 1,
+      "message": "I misunderstood LocalMidnight to go forward in time to midnight, I think your calculations were actually OK.  But operating on midnights only is clearer, thanks!",
+      "parentUuid": "932c14a1_9501aaf1",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 21
+      },
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38e76c2_3a3b2e58",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
         "patchSetId": 4
@@ -186,6 +210,24 @@
       "revId": "03c772d80da4eb55ce48873133a27895818516d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9558549_4dabd2c0",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-27T16:22:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5f7c89bc_7948adbe",
+      "revId": "03c772d80da4eb55ce48873133a27895818516d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
