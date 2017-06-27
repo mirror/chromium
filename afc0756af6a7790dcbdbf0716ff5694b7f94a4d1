@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68a69dde_146c4983",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-27T15:01:31Z",
+      "side": 0,
+      "message": "So basically non of these properties is necessary anymore?\nIf so, the ToDo captures all cases?\nIf not, can we bring (e.g. one combined) test back that ensures no regressions?",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 102,
+        "endChar": 1
+      },
+      "revId": "afc0756af6a7790dcbdbf0716ff5694b7f94a4d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

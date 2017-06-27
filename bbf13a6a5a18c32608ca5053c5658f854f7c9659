@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7472d90_46a075a1",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-27T15:01:31Z",
+      "side": 1,
+      "message": "So would this would this still work anyway?\nIn the CL where it was introduced, there was a problem with devices needing pixels instead of DPI [1]. I wouldn\u0027t want to regress here.\n\n[1] https://codereview.chromium.org/1028393003",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "bbf13a6a5a18c32608ca5053c5658f854f7c9659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
