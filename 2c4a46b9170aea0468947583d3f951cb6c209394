@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b0b56a6f_4bcff600",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-27T05:07:07Z",
+      "side": 1,
+      "message": "\u003e What is the best way to set mojo.config.autoLoadMojomDeps to false?\n\nMaybe we could change the mojo/public/js/new_bindings/base.js code to set this value to false by default if it is loaded in workers?\n\n\u003e I can throw an error in this function if I detect that internal.global is a WorkerGlobalScope.\n\nSGTM",
+      "parentUuid": "a55282c3_ce397e17",
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86f807db_42844b94",
         "filename": "third_party/WebKit/LayoutTests/mojo/resources/worker.js",
         "patchSetId": 5
