@@ -1112,7 +1112,7 @@ void XMLHttpRequest::ClearVariablesForLoading() {
     response_document_parser_ = nullptr;
   }
 
-  final_response_charset_ = String();
+  override_response_charset_ = String();
 }
 
 bool XMLHttpRequest::InternalAbort() {
@@ -1284,8 +1284,12 @@ void XMLHttpRequest::overrideMimeType(const AtomicString& mime_type,
         "MimeType cannot be overridden when the state is LOADING or DONE.");
     return;
   }
-
-  mime_type_override_ = mime_type;
+  mime_type_override_ = "application/octet-stream";
+  if (ParsedContentType(mime_type).IsValid()) {
+    mime_type_override_ = mime_type;
+    override_response_charset_ =
+        ExtractCharsetFromMediaType(mime_type_override_);
+  }
 }
 
 // https://xhr.spec.whatwg.org/#the-setrequestheader()-method
@@ -1375,6 +1379,7 @@ String XMLHttpRequest::getAllResponseHeaders() const {
     string_builder.Append(it->key.LowerASCII());
     string_builder.Append(':');
     string_builder.Append(' ');
+
     string_builder.Append(it->value);
     string_builder.Append('\r');
     string_builder.Append('\n');
@@ -1431,6 +1436,12 @@ AtomicString XMLHttpRequest::FinalResponseMIMETypeWithFallback() const {
   // FIXME: This fallback is not specified in the final MIME type algorithm
   // of the XHR spec. Move this to more appropriate place.
   return AtomicString("text/xml");
+}
+
+AtomicString XMLHttpRequest::FinalResponseCharset() const {
+  if (!override_response_charset_.IsEmpty())
+    return AtomicString(override_response_charset_);
+  return AtomicString(response_.TextEncodingName());
 }
 
 void XMLHttpRequest::UpdateContentTypeAndCharset(
@@ -1668,13 +1679,6 @@ void XMLHttpRequest::DidReceiveResponse(
   ScopedEventDispatchProtect protect(&event_dispatch_recursion_level_);
 
   response_ = response;
-  if (!mime_type_override_.IsEmpty()) {
-    response_.SetHTTPHeaderField(HTTPNames::Content_Type, mime_type_override_);
-    final_response_charset_ = ExtractCharsetFromMediaType(mime_type_override_);
-  }
-
-  if (final_response_charset_.IsEmpty())
-    final_response_charset_ = response.TextEncodingName();
 }
 
 void XMLHttpRequest::ParseDocumentChunk(const char* data, unsigned len) {
@@ -1702,10 +1706,11 @@ std::unique_ptr<TextResourceDecoder> XMLHttpRequest::CreateDecoder() const {
         TextResourceDecoderOptions::kPlainTextContent, UTF8Encoding()));
   }
 
-  if (!final_response_charset_.IsEmpty()) {
+  String final_response_charset = FinalResponseCharset();
+  if (!final_response_charset.IsEmpty()) {
     return TextResourceDecoder::Create(TextResourceDecoderOptions(
         TextResourceDecoderOptions::kPlainTextContent,
-        WTF::TextEncoding(final_response_charset_)));
+        WTF::TextEncoding(final_response_charset)));
   }
 
   // allow TextResourceDecoder to look inside the m_response if it's XML or HTML
