@@ -69,6 +69,24 @@
       "revId": "b0e36951a180c160a5857706e452f747a8bce886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22205f30_d4dcb3f4",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T22:42:22Z",
+      "side": 1,
+      "message": "I suspect it breaks because you didn\u0027t pull the #include into the .cc file.\n\nYou need the full #include by the time the code using this class (in the .cc file) is compiled.  But other files that include this header don\u0027t need that #include, which is why we don\u0027t want to put it here unless we need to.\n\n#including tab.h looks like a bug to me too (but don\u0027t fix it in this CL, fix it in a followup).  tab_controller.h is needed here because we subclass it, and it isn\u0027t forward-declared.",
+      "parentUuid": "d986877f_d787b501",
+      "revId": "b0e36951a180c160a5857706e452f747a8bce886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
