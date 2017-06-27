@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7167c78_6fc80894",
+        "filename": "components/offline_pages/core/prefetch/test_offline_metrics_collector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-27T20:30:42Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "2590abee0010391128bc2655ffabd7a54564387b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
