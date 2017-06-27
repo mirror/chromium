@@ -11,11 +11,13 @@
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_folder_item.h"
 #include "ui/app_list/app_list_switches.h"
+#include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/app_list/views/app_list_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/apps_grid_view.h"
 #include "ui/app_list/views/folder_background_view.h"
+#include "ui/app_list/views/suggestions_container_view.h"
 #include "ui/events/event.h"
 
 namespace app_list {
@@ -23,6 +25,12 @@ namespace app_list {
 AppsContainerView::AppsContainerView(AppListMainView* app_list_main_view,
                                      AppListModel* model)
     : show_state_(SHOW_NONE), top_icon_animation_pending_count_(0) {
+  AppListViewDelegate* delegate = app_list_main_view->view_delegate();
+  suggestions_container_ = new SuggestionsContainerView(
+      app_list_main_view->contents_view(), nullptr, delegate);
+  AddChildView(suggestions_container_);
+  suggestions_container_->SetResults(delegate->GetModel()->results());
+
   apps_grid_view_ = new AppsGridView(app_list_main_view);
   apps_grid_view_->SetLayout(kPreferredCols, kPreferredRows);
   AddChildView(apps_grid_view_);
@@ -61,6 +69,8 @@ void AppsContainerView::ShowActiveFolder(AppListFolderItem* folder_item) {
 void AppsContainerView::ShowApps(AppListFolderItem* folder_item) {
   if (top_icon_animation_pending_count_)
     return;
+  suggestions_container_->ClearSelectedIndex();
+  suggestions_container_->Update();
 
   PrepareToShowApps(folder_item);
   SetShowState(SHOW_APPS, true);
@@ -113,6 +123,10 @@ void AppsContainerView::Layout() {
 
   switch (show_state_) {
     case SHOW_APPS:
+      rect.set_height(suggestions_container_->GetHeightForWidth(rect.width()));
+      suggestions_container_->SetBoundsRect(rect);
+      rect.set_y(rect.bottom());
+      rect.set_height(apps_grid_view_->GetHeightForWidth(rect.width()));
       apps_grid_view_->SetBoundsRect(rect);
       break;
     case SHOW_ACTIVE_FOLDER:

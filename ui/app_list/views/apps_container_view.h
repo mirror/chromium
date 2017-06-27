@@ -27,6 +27,7 @@ class AppListFolderView;
 class AppListMainView;
 class AppListModel;
 class FolderBackgroundView;
+class SuggestionsContainerView;
 
 // AppsContainerView contains a root level AppsGridView to render the root level
 // app items, and a AppListFolderView to render the app items inside the
@@ -106,8 +107,10 @@ class AppsContainerView : public AppListPage, public TopIconAnimationObserver {
 
   void PrepareToShowApps(AppListFolderItem* folder_item);
 
-  AppsGridView* apps_grid_view_;  // Owned by views hierarchy.
-  AppListFolderView* app_list_folder_view_;  // Owned by views hierarchy.
+  SuggestionsContainerView*
+      suggestions_container_;                     // Owned by views hierarchy.
+  AppsGridView* apps_grid_view_;                  // Owned by views hierarchy.
+  AppListFolderView* app_list_folder_view_;       // Owned by views hierarchy.
   FolderBackgroundView* folder_background_view_;  // Owned by views hierarchy.
   ShowState show_state_;
 
