@@ -13,6 +13,7 @@
 #include "content/common/content_export.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
+#include "third_party/WebKit/public/platform/WebFeature.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/web/WebMeaningfulLayout.h"
@@ -114,6 +115,8 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
   // load. This is used for metrics collection.
   virtual void DidObserveLoadingBehavior(
       blink::WebLoadingBehaviorFlag behavior) {}
+
+  virtual void DidObserveNewFeatureUsage(blink::WebFeature feature) {}
 
   // Called when the focused node has changed to |node|.
   virtual void FocusedNodeChanged(const blink::WebNode& node) {}

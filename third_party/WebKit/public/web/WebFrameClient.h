@@ -57,6 +57,7 @@
 #include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebEffectiveConnectionType.h"
+#include "public/platform/WebFeature.h"
 #include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebFileSystem.h"
 #include "public/platform/WebFileSystemType.h"
@@ -636,6 +637,12 @@ class BLINK_EXPORT WebFrameClient {
   // Blink exhibited a certain loading behavior that the browser process will
   // use for segregated histograms.
   virtual void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) {}
+
+  // Blink hit the code path for a certain feature for the first time on this
+  // frame. As a performance optimization, features already hit on other frames
+  // associated with the same page in the renderer are not currently reported.
+  // This is use for reporting UseCounter histograms.
+  virtual void DidObserveNewFeatureUsage(WebFeature) {}
 
   // Script notifications ------------------------------------------------
 
