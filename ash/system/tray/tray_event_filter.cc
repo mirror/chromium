@@ -10,6 +10,7 @@
 #include "ash/system/tray/tray_bubble_wrapper.h"
 #include "ash/wm/container_finder.h"
 #include "ui/aura/window.h"
+#include "ui/gfx/native_widget_types.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
@@ -38,16 +39,17 @@ void TrayEventFilter::RemoveWrapper(TrayBubbleWrapper* wrapper) {
 void TrayEventFilter::OnPointerEventObserved(
     const ui::PointerEvent& event,
     const gfx::Point& location_in_screen,
-    views::Widget* target) {
+    gfx::NativeView target) {
   if (event.type() == ui::ET_POINTER_DOWN)
     ProcessPressedEvent(location_in_screen, target);
 }
 
 void TrayEventFilter::ProcessPressedEvent(const gfx::Point& location_in_screen,
-                                          views::Widget* target) {
+                                          gfx::NativeView target) {
+  views::Widget* target_widget =
+      views::Widget::GetTopLevelWidgetForNativeView(target);
   if (target) {
-    aura::Window* window = target->GetNativeWindow();
-    int container_id = wm::GetContainerForWindow(window)->id();
+    int container_id = wm::GetContainerForWindow(target)->id();
     // Don't process events that occurred inside an embedded menu, for example
     // the right-click menu in a popup notification.
     if (container_id == kShellWindowId_MenuContainer)
@@ -55,10 +57,13 @@ void TrayEventFilter::ProcessPressedEvent(const gfx::Point& location_in_screen,
     // Don't process events that occurred inside a popup notification
     // from message center.
     if (container_id == kShellWindowId_StatusContainer &&
-        window->type() == aura::client::WINDOW_TYPE_POPUP &&
-        target->IsAlwaysOnTop()) {
+        target->type() == aura::client::WINDOW_TYPE_POPUP &&
+        (target_widget && target_widget->IsAlwaysOnTop())) {
       return;
     }
+    // Don't process events that occurred inside a virtual keyboard.
+    if (container_id == kShellWindowId_VirtualKeyboardContainer)
+      return;
   }
 
   std::set<TrayBackgroundView*> trays;
