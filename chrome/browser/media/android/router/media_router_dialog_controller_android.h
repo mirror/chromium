@@ -57,6 +57,8 @@ class MediaRouterDialogControllerAndroid
   explicit MediaRouterDialogControllerAndroid(
       content::WebContents* web_contents);
 
+  content::WebContents* const web_contents_;
+
   // MediaRouterDialogController:
   void CreateMediaRouterDialog() override;
   void CloseMediaRouterDialog() override;
