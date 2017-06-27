@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3df7dd63_6b620adc",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-27T01:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb26f486_3cd7f8ee",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f180c0a4_268acc45",
         "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T22:25:22Z",
       "side": 1,
       "message": "Inline?",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc94e6ea_b8478a6f",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-27T01:42:28Z",
+      "side": 1,
+      "message": "Just to be sure, are you suggesting make the dump function inline?",
+      "parentUuid": "f180c0a4_268acc45",
       "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "312aeb56_0f2be35a",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-27T01:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5d54963_57b152e8",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "854e4338_ea62db98",
         "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-26T22:25:22Z",
       "side": 1,
       "message": "So does the worklet run in the main world or in another isolated world? If former, I wonder whether we should be setting isDEfault to true in line 149 above, and if latter, why not just use SetIsolatedWorldHumanReadableName() when creating the world?",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927119d7_e939d00f",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-27T01:42:28Z",
+      "side": 1,
+      "message": "In the paintworklet case, it is neither main world, nor isolated world, it is a worker world. So the human_readable_name will be null here without this change.",
+      "parentUuid": "854e4338_ea62db98",
       "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f236585_3a1821f8",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-27T01:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec186ebb_dd3cf6d8",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
