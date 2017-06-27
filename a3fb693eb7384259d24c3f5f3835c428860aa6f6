@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181bf5d1_c6e05f8a",
+        "filename": "extensions/browser/api/api_resource_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-27T21:38:20Z",
+      "side": 0,
+      "message": "YAY!",
+      "revId": "a3fb693eb7384259d24c3f5f3835c428860aa6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
