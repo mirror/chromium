@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "000ddd59_3b40e470",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T19:08:57Z",
+      "side": 1,
+      "message": "FYI, I just adapted this code from tray_brightness.cc: https://cs.chromium.org/chromium/src/ash/system/brightness/tray_brightness.cc?type\u003dcs\u0026q\u003dcreatemultitargetrowview\u0026l\u003d98",
+      "parentUuid": "1d6c3693_3fb4e3d2",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f810ba1b_ae0d79f3",
         "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "writtenOn": "2017-06-27T02:03:14Z",
       "side": 1,
       "message": "consider moving the body of this method into KeyboardBrightnessChanged, since it looks like it\u0027s the only caller and it doesn\u0027t do anything besides calling this method.",
+      "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1144e1d9_80c0a47b",
+        "filename": "ash/system/keyboard_brightness/tray_keyboard_brightness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-06-27T19:08:57Z",
+      "side": 1,
+      "message": "Sure, I was just blindly copying TrayBrightness.",
+      "parentUuid": "f810ba1b_ae0d79f3",
       "revId": "ae749901d6e06674ddfb3df74509fbc66b4094e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
