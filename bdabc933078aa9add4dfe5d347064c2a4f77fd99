@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09851e1_ecfc59d8",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-27T00:33:57Z",
+      "side": 1,
+      "message": "Clarification: Do we still need this special code path for login_screen instance?",
+      "revId": "bdabc933078aa9add4dfe5d347064c2a4f77fd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e04b0d_8f5e07cb",
+        "filename": "components/arc/arc_session_runner.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-27T00:33:57Z",
+      "side": 1,
+      "message": "Instead, could you call the observer in FakeSessionManagerClient::EmitLoginPromptVisible(), and use it for testing?",
+      "revId": "bdabc933078aa9add4dfe5d347064c2a4f77fd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
