@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1da37297_70d1edb3",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:55:13Z",
+      "side": 1,
+      "message": "Is this safe enough?\ndecoder_ has |this| as its client. That means that it might try to call VideoFrameReady or NotifyError on the IO thread as this is being destroyed.",
+      "revId": "e5bd68f343d377764edc46481ebdaa19c29677e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec51372d_fbaa8da9",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T21:55:13Z",
+      "side": 1,
+      "message": "I think BindInterfaceInGpuProcess is meant to be called from the IO thread (since it calls GpuProcessHost::Get()).\n\nSo maybe we can skip the hop to the client thread for FinishInitialization:\n\nInitialize (client thread)\n-\u003e RequestGPUInfoOnIOThread  (posted task on IO thread)\n-\u003e DidReceiveGPUInfoOnIOThread (callback on IO thread)\n-\u003e FinishInitialization (called directly on IO thread, or folded into DidReceiveGPUInfoOnIOThread)\n-\u003e media::JpegDecodeAccelerator::InitializeDecoder (called directly on IO thread)\n-\u003e OnInitializationDone (posted on client thread)\n\nThat even simplifies things a bit, because then GpuJpegDecodeAcceleratorHost is created on the IO thread (which means you don\u0027t need to explicitly pass the task runner, and in fact you can just use a SequenceChecker there)",
+      "revId": "e5bd68f343d377764edc46481ebdaa19c29677e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
