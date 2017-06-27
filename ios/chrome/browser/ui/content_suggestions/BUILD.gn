@@ -4,6 +4,9 @@
 
 source_set("content_suggestions") {
   sources = [
+    "content_suggestions_alerter.h",
+    "content_suggestions_alerter.mm",
+    "content_suggestions_alerter_commands.h",
     "content_suggestions_collection_updater.h",
     "content_suggestions_collection_updater.mm",
     "content_suggestions_commands.h",
@@ -21,13 +24,16 @@ source_set("content_suggestions") {
     ":resources",
     "//base",
     "//components/strings",
+    "//ios/chrome/app/strings",
     "//ios/chrome/browser/ui",
+    "//ios/chrome/browser/ui/alert_coordinator",
     "//ios/chrome/browser/ui/collection_view",
     "//ios/chrome/browser/ui/content_suggestions/cells:cells_ui",
     "//ios/chrome/browser/ui/content_suggestions/identifier",
     "//ios/chrome/browser/ui/favicon:favicon_ui",
     "//ios/chrome/browser/ui/ntp:ntp_header",
     "//ui/base",
+    "//ui/strings",
   ]
   public_deps = [
     "//ios/third_party/material_components_ios",
