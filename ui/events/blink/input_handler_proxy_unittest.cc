@@ -575,7 +575,8 @@ class InputHandlerProxyEventQueueTest : public testing::TestWithParam<bool> {
       InputHandlerProxy::EventDisposition event_disposition,
       WebScopedInputEvent input_event,
       const ui::LatencyInfo& latency_info,
-      std::unique_ptr<ui::DidOverscrollParams> overscroll_params) {
+      std::unique_ptr<ui::DidOverscrollParams> overscroll_params,
+      std::unique_ptr<cc::TouchAction> touch_action) {
     event_disposition_recorder_.push_back(event_disposition);
   }
 

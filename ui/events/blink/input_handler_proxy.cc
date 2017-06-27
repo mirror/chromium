@@ -270,6 +270,7 @@ InputHandlerProxy::InputHandlerProxy(
       touch_result_(kEventDispositionUndefined),
       mouse_wheel_result_(kEventDispositionUndefined),
       current_overscroll_params_(nullptr),
+      current_touch_action_(nullptr),
       has_ongoing_compositor_scroll_fling_pinch_(false),
       tick_clock_(base::MakeUnique<base::DefaultTickClock>()) {
   DCHECK(client);
@@ -385,6 +386,7 @@ void InputHandlerProxy::DispatchSingleInputEvent(
           &monitored_latency_info);
 
   current_overscroll_params_.reset();
+  current_touch_action_.reset();
   InputHandlerProxy::EventDisposition disposition =
       HandleInputEvent(event_with_callback->event());
 
@@ -408,7 +410,8 @@ void InputHandlerProxy::DispatchSingleInputEvent(
 
   // Will run callback for every original events.
   event_with_callback->RunCallbacks(disposition, monitored_latency_info,
-                                    std::move(current_overscroll_params_));
+                                    std::move(current_overscroll_params_),
+                                    std::move(current_touch_action_));
 }
 
 void InputHandlerProxy::DispatchQueuedInputEvents() {
