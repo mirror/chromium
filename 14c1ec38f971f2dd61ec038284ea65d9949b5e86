@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da74458e_c92cf31f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-27T20:20:40Z",
+      "side": 1,
+      "message": "style: Please line-wrap the description at 72 columns.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 150
+      },
+      "revId": "14c1ec38f971f2dd61ec038284ea65d9949b5e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225fda2d_ceb4a0e9",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-27T20:20:40Z",
+      "side": 1,
+      "message": "After this point, I think the return statement on L177 is wrong. Shouldn\u0027t we add a return statement here for the OUTPUT parameters?",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "14c1ec38f971f2dd61ec038284ea65d9949b5e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
