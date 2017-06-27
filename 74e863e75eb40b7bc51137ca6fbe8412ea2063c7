@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a843baee_913f51be",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-27T18:41:09Z",
+      "side": 1,
+      "message": "naming nit: It\u0027s a bit confusing to have both WatchTimeRecorder and WatchTimeReporter. \n\nHow about media::WatchTimeRecorder -\u003e media::mojom::WatchTimeRecorder -\u003e content::WatchTimeRecorderImpl or content::WatchTimeRecorderService? Though recently we try to stay away from \"Service\" since \"mojo Service\" has a totally different meaning now (as in \"ServiceManager\").",
+      "revId": "74e863e75eb40b7bc51137ca6fbe8412ea2063c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
