@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c86de6ec_0dae5ea9",
+        "filename": "android_webview/tools/cts_config/webview_cts_gcs_path.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-27T17:20:26Z",
+      "side": 1,
+      "message": "What about having both arm64 and arm_64 entries here to avoid requiring simultaneous landing?",
+      "revId": "60b7332ae587120ece89a5670eb71c0994b93e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8c8901_ba0ca377",
+        "filename": "android_webview/tools/cts_config/webview_cts_gcs_path.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-27T17:20:26Z",
+      "side": 1,
+      "message": "How many of these paths do we want to update?",
+      "revId": "60b7332ae587120ece89a5670eb71c0994b93e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
