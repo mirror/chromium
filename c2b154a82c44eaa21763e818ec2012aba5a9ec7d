@@ -16,6 +16,23 @@
       "revId": "c2b154a82c44eaa21763e818ec2012aba5a9ec7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326a447d_0a90330b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21465,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-27T17:00:14Z",
+      "side": 1,
+      "message": "Ok, that is clearer. I\u0027ll use that phrase.",
+      "revId": "c2b154a82c44eaa21763e818ec2012aba5a9ec7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
