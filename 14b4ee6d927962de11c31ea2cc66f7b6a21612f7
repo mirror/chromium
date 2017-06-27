@@ -222,6 +222,24 @@
     },
     {
       "key": {
+        "uuid": "f0c6960f_56fba04d",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-27T18:32:44Z",
+      "side": 1,
+      "message": "If we want to match what was done for the src/chrome one, it should be overridden to return the normal browser state in incognito mode as well.",
+      "parentUuid": "d8a3a4af_a7cb0a82",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d66f0ee0_69d8153b",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
         "patchSetId": 7
