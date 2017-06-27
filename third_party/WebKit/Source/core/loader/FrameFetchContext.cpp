@@ -986,8 +986,11 @@ String FrameFetchContext::GetOutgoingReferrer() const {
 }
 
 const KURL& FrameFetchContext::Url() const {
+  DEFINE_STATIC_LOCAL(KURL, static_null_url, ());
   if (IsDetached())
     return frozen_state_->url;
+  if (!document_)
+    return static_null_url;
   return document_->Url();
 }
 
