@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9ec7d71_4aa44973",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-chain.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Using sentences SGTM. I think I was following imaginary rules when I stuck to single sentence descriptions.",
+      "parentUuid": "9ba89f3e_50b27b49",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61a2a785_3f33b475",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e833f74_23d77c61",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Renamed toAnimation to referencedAnimation.",
+      "parentUuid": "61a2a785_3f33b475",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4b2633ad_9948bef2",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "905a32c8_72737e74",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0a54e4d_4f8491dd",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1e0bbe_3b420ed6",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0a54e4d_4f8491dd",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "29c594ac_84fba934",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-transitioning.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a2b8c92_83a3171d",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "631d6045_001a8861",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered.html",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6ae021_3b8c3d92",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "631d6045_001a8861",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "62eff63a_947fdc69",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered-animating.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab5fe81c_37fcecfa",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada8a85b_2299e67a",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered.html",
         "patchSetId": 12
@@ -135,6 +261,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afaaabfb_0c2f0a55",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-unregistered.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ada8a85b_2299e67a",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "bd3dfbbf_8d7eec5e",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationEnvironment.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f52ff739_6b506ead",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f0943f_92560322",
         "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
         "patchSetId": 12
@@ -169,6 +331,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f226741_81b82cd6",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s ever desirable to refactor an assert into a non-asserting code path. It only results in a dead code path.",
+      "parentUuid": "23f0943f_92560322",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "f2e46af0_0658d975",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8cbe76a_acfdcdfe",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7063ff9_24c19286",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 12
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "26e5875f_146047a1",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "This dependency is captured in code form by the asserts in this function. I too would be worried about it if there were no asserts for it.",
+      "parentUuid": "f7063ff9_24c19286",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ae8a4f4_14b9893c",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 12
@@ -217,6 +433,24 @@
       "writtenOn": "2017-06-27T04:27:18Z",
       "side": 1,
       "message": "I think this function should be able to handle the case where it\u0027s asked to fetch the active interpolations for a property that doesn\u0027t have any (i.e. the property doesn\u0027t appear in either map).",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01b8d8d_fba55363",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "This is a helper method internal to this file. Such a code path would be a dead code path. No reason to have it.",
+      "parentUuid": "0ae8a4f4_14b9893c",
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "c87f899a_30a52866",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "This code is beyond the scope of the core animation engine, it\u0027s specific to CSS animations.\nThis code is also not identical to what\u0027s in ApplyAnimatedStandardProperties(), it asserts that there are no LegacyStyleInterpolations polluting custom property animations. The commonality between them is so minimal I don\u0027t consider it worth factoring out given their differences.",
+      "parentUuid": "1e4084c2_353bffa8",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a74d2d62_d18a4968",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
         "patchSetId": 12
@@ -254,6 +506,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ccb9dc_6b3ce076",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74d2d62_d18a4968",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "d864adb8_e7e5aad9",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "This seems out of scope for this change.\n\nI\u0027m not really seeing the naming problem though. There are many ways to slice up the set of properties that need to be applied at a time during style resolve and the names seem sensible to me. Are there any in particular that appear non-obvious?\n\nMoving them to be together in a following patch SGTM.",
+      "parentUuid": "9058d16d_6eb099c9",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "058f0526_60bc74bf",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolverState.h",
         "patchSetId": 12
@@ -288,6 +576,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd5dacd_871099b7",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolverState.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-27T06:15:37Z",
+      "side": 1,
+      "message": "I suspect the latter and I\u0027m okay with that. Immutability of the HashSet itself is what I intended to enforce. PropertyHandles are semantically immutable anyway.",
+      "parentUuid": "058f0526_60bc74bf",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
