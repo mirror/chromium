@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b14e6d59_72e753b5",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3315,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-27T21:10:22Z",
+      "side": 1,
+      "message": "enable_feature AsmJsToWebAssembly",
+      "revId": "4f65b77a02c1d4eef3c50ec8fc67d9cff6737943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16ed55c_407c043e",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3318,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-27T21:10:22Z",
+      "side": 1,
+      "message": "you don\u0027t need Control here - we just test the experiment arm",
+      "revId": "4f65b77a02c1d4eef3c50ec8fc67d9cff6737943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
