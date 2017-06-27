@@ -277,6 +277,7 @@
 
 #if defined(OS_WIN) || defined(OS_MACOSX) || \
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+#include "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #endif
 
@@ -1632,6 +1633,10 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   // called inside PostProfileInit.
   content::WebUIControllerFactory::RegisterFactory(
       ChromeWebUIControllerFactory::GetInstance());
+
+#if defined(OS_WIN) || defined(OS_MACOSX)
+  feature_engagement_tracker::NewTabFeatureEngagementTracker::Initialize();
+#endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
 #if !defined(DISABLE_NACL)
   // NaClBrowserDelegateImpl is accessed inside PostProfileInit().
