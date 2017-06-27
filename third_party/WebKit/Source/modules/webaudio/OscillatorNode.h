@@ -60,6 +60,10 @@ class OscillatorHandler final : public AudioScheduledSourceHandler {
   // AudioHandler
   void Process(size_t frames_to_process) override;
 
+  // AudioNode
+  double TailTime() const override { return 0; }
+  double LatencyTime() const override { return 0; }
+
   String GetType() const;
   void SetType(const String&, ExceptionState&);
 

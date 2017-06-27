@@ -82,6 +82,10 @@ class AnalyserHandler final : public AudioBasicInspectorHandler {
   // correct time data.
   void UpdatePullStatus() override;
 
+  // AudioNode
+  double TailTime() const override { return 0; }
+  double LatencyTime() const override { return 0; }
+
  private:
   AnalyserHandler(AudioNode&, float sample_rate);
   bool PropagatesSilence() const {

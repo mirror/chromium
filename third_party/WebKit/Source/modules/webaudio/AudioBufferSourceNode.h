@@ -97,6 +97,10 @@ class AudioBufferSourceHandler final : public AudioScheduledSourceHandler {
 
   void HandleStoppableSourceNode();
 
+  // AudioNode
+  double TailTime() const override { return 0; }
+  double LatencyTime() const override { return 0; }
+
  private:
   AudioBufferSourceHandler(AudioNode&,
                            float sample_rate,

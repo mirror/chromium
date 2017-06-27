@@ -49,6 +49,10 @@ class MediaStreamAudioDestinationHandler final
   void Process(size_t frames_to_process) override;
   void SetChannelCount(unsigned long, ExceptionState&) override;
 
+  // AudioNode
+  double TailTime() const override { return 0; }
+  double LatencyTime() const override { return 0; }
+
   unsigned long MaxChannelCount() const;
 
  private:
