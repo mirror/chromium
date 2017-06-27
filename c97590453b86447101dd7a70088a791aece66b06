@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e193a12_2098207a",
+        "filename": "chrome/common/chrome_paths_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-27T18:39:17Z",
+      "side": 1,
+      "message": "It looks like you want to save this and restore it later. How do you distinguish the following pre-existing conditions?\n1) $FOO is not set\n2) $FOO is set to \"\"",
+      "revId": "c97590453b86447101dd7a70088a791aece66b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
