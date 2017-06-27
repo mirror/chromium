@@ -46,6 +46,30 @@
       "revId": "d4542d87580bf05b6dcdb4cea6c45f99a9aef3cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba2a865_22303856",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-27T15:04:43Z",
+      "side": 1,
+      "message": "But the DCHECK would always be hit when switching to views screen locker since that only sends back the hashed password [1]. Let\u0027s combine the DCHECK with the if above to skip TGT refresh if key type is not expected. And add a TODO, either to refresh TGT from views screen locker code in ash directly or change how the password is sent back (maybe use a pipe as authpolicy client and send the pipe fd via mojo).\n\n[1]: https://cs.chromium.org/chromium/src/ash/login/lock_screen_controller.cc?rcl\u003d997b71924f38eb831ba87cf97a07371100715268\u0026l\u003d147",
+      "parentUuid": "5df36079_ca346a8d",
+      "range": {
+        "startLine": 426,
+        "startChar": 34,
+        "endLine": 426,
+        "endChar": 78
+      },
+      "revId": "d4542d87580bf05b6dcdb4cea6c45f99a9aef3cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
