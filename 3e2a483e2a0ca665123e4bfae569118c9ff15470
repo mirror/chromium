@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ff3c7d7_1509f516",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T22:01:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3238b950_ab37bd93",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 68
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1798f75c_1a16a80d",
         "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457ae909_70bf92bf",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T22:01:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1798f75c_1a16a80d",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 21
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2d0a8270_481eec57",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T22:01:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd7bf746_4512aa4f",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 3
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76fac10f_b5853e7f",
         "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9b810c61_e70d5747",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T22:01:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76fac10f_b5853e7f",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 38
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2327ac6a_0534c652",
         "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
         "patchSetId": 12
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-27T21:33:20Z",
       "side": 1,
       "message": "This while loop should be unnecessary, but that can be fixed later.",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 256,
+        "endChar": 35
+      },
+      "revId": "3e2a483e2a0ca665123e4bfae569118c9ff15470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "467b5861_24cd1a55",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-27T22:01:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2327ac6a_0534c652",
       "range": {
         "startLine": 256,
         "startChar": 2,
