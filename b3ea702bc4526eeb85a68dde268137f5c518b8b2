@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6833aa81_a7cd7f62",
+        "filename": "components/autofill/core/browser/webdata/autofill_table.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-27T21:05:10Z",
+      "side": 1,
+      "message": "Actually, now I\u0027m wondering if the DoesColumnExist() call should even be here.  Why would we be running this migration function if that column already existed?",
+      "revId": "b3ea702bc4526eeb85a68dde268137f5c518b8b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
