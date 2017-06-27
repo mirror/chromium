@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b5cccae_0cb40eb9",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-27T18:31:44Z",
+      "side": 1,
+      "message": "Hm. We create a system modal on non-Mac platforms if there\u0027s no parent specified; if there\u0027s no parent specified on mac, we instead create a window modal dialog. If we didn\u0027t keep it on top, it would be blocking input to a window without any way to see the modal, which would be bad.\n\nI looked, and I believe we *can* reach this code path on Mac without a window: it appears that ExtensionErrorReporter::ReportError() can be called some time during the browser startup process, and it passes in a NULL window. On other platforms, that creates a system modal... I don\u0027t know what it should do on Mac, nor do I know how to trigger that code path at all. :(",
+      "parentUuid": "7bcf5b60_1c4c841e",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e233b55_a9ef6be9",
         "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153041ff_bf0b7b78",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-27T18:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e233b55_a9ef6be9",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "601afb92_d192d718",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-27T18:31:44Z",
+      "side": 1,
+      "message": "Done - I hoisted ShowMessageBoxAsyncImpl into this class too, and made the constructor private.",
+      "parentUuid": "ee37470f_d0949d9b",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8952c049_eb16d06e",
         "filename": "chrome/browser/ui/views/simple_message_box_views.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0d37dbb7_e10034b6",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-27T18:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8952c049_eb16d06e",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5de67db_c971a46f",
         "filename": "chrome/browser/ui/views/simple_message_box_views.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7940463c_9ec89f88",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-27T18:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5de67db_c971a46f",
+      "revId": "2c4ee302f2ddd20ffd323710b82dc6034b7bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
