@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "583ebd4f_efb35956",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/BufferingDataPipeWriterTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-27T11:28:31Z",
+      "side": 1,
+      "message": "I feel just \"i % 0xff\" is enough to find an error, but this is also fine.",
+      "range": {
+        "startLine": 41,
+        "startChar": 38,
+        "endLine": 41,
+        "endChar": 44
+      },
+      "revId": "58cce08a139c8c968067585635726b4518645f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba88105_7f79e836",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/BufferingDataPipeWriterTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-27T11:28:31Z",
+      "side": 1,
+      "message": "call with a temporary buffer, and free or break data after calling Write() would check if data is correctly copied inside the method. though this is trivial once we look implementation.",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "58cce08a139c8c968067585635726b4518645f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
