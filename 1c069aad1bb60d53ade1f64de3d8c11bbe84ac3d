@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1b0765_2b33b584",
+        "filename": "headless/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-27T09:36:01Z",
+      "side": 1,
+      "message": "can you move this to renderer/?",
+      "revId": "1c069aad1bb60d53ade1f64de3d8c11bbe84ac3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
