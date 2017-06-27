@@ -174,6 +174,24 @@
       "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd1a4bf_d5300640",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-27T17:58:33Z",
+      "side": 1,
+      "message": "Oh, sounds good and nice that cl format will now help make this consistent.",
+      "parentUuid": "b6a01e51_643d3bc0",
+      "revId": "4e18fecdb93defba1a1ab8fca521bd59a7862b20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
