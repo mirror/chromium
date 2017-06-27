@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbef4905_2b1755e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-27T20:15:40Z",
+      "side": 1,
+      "message": "nit: Let\u0027s also document what happens if showMenuOnUp is false e.g. \"If showMenuOnUp is false, the app menu will be shown on the down action.\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 59,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "b0b6eee96b14f988352f60832dbabc53646d5158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cebfb33_191d1e26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-27T20:15:40Z",
+      "side": 1,
+      "message": "We probably want to leave the view as unpressed and mIsTouchEventsBeingProcessed \u003d false. Can you try this:\n\nCase MotionEvent.ACTION_UP:\n    if (mShowMenuOnUp) showAppMenu(view, false);\nCase MotionEvent.ACTION_CANCEL:\n    mIsTouchEventsBeingProcessed \u003d false;\n    isTouchEventConsumed |\u003d true;\n    ....",
+      "range": {
+        "startLine": 110,
+        "startChar": 25,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "b0b6eee96b14f988352f60832dbabc53646d5158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
