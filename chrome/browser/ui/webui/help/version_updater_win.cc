@@ -5,8 +5,9 @@
 #include "chrome/browser/ui/webui/help/version_updater_win.h"
 
 #include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
 #include "base/task_runner_util.h"
-#include "base/threading/sequenced_worker_pool.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/win/win_util.h"
 #include "base/win/windows_version.h"
 #include "chrome/browser/browser_process.h"
@@ -40,7 +41,7 @@ void VersionUpdaterWin::CheckForUpdate(const StatusCallback& callback,
         (base::win::OSInfo::GetInstance()->service_pack().major == 0) &&
         !base::win::UserAccountControlIsEnabled())) {
     callback_.Run(CHECKING, 0, std::string(), 0, base::string16());
-    BeginUpdateCheckOnFileThread(false /* !install_update_if_possible */);
+    BeginUpdateCheckInBackground(false /* !install_update_if_possible */);
   }
 }
 
@@ -52,11 +53,10 @@ void VersionUpdaterWin::OnUpdateCheckComplete(
     // Google Update says that no new version is available. Check to see if a
     // restart is needed for a previously-applied update to take effect.
     if (base::PostTaskAndReplyWithResult(
-            content::BrowserThread::GetBlockingPool(),
-            FROM_HERE,
-            base::Bind(&upgrade_util::IsUpdatePendingRestart),
-            base::Bind(&VersionUpdaterWin::OnPendingRestartCheck,
-                       weak_factory_.GetWeakPtr()))) {
+            task_runner_.get(), FROM_HERE,
+            base::BindOnce(&upgrade_util::IsUpdatePendingRestart),
+            base::BindOnce(&VersionUpdaterWin::OnPendingRestartCheck,
+                           weak_factory_.GetWeakPtr()))) {
       // Early exit since callback_ will be Run in OnPendingRestartCheck.
       return;
     }
@@ -67,7 +67,7 @@ void VersionUpdaterWin::OnUpdateCheckComplete(
   } else {
     // Notify the caller that the update is now beginning and initiate it.
     status = UPDATING;
-    BeginUpdateCheckOnFileThread(true /* install_update_if_possible */);
+    BeginUpdateCheckInBackground(true /* install_update_if_possible */);
   }
   callback_.Run(status, 0, std::string(), 0, base::string16());
 }
@@ -114,13 +114,16 @@ void VersionUpdaterWin::OnError(GoogleUpdateErrorCode error_code,
   callback_.Run(status, 0, std::string(), 0, message);
 }
 
-void VersionUpdaterWin::BeginUpdateCheckOnFileThread(
+void VersionUpdaterWin::BeginUpdateCheckInBackground(
     bool install_update_if_possible) {
   // Disconnect from any previous attempts to avoid redundant callbacks.
   weak_factory_.InvalidateWeakPtrs();
-  BeginUpdateCheck(content::BrowserThread::GetTaskRunnerForThread(
-                       content::BrowserThread::FILE),
-                   g_browser_process->GetApplicationLocale(),
+  if (!task_runner_) {
+    task_runner_ = base::CreateCOMSTATaskRunnerWithTraits(
+        (base::TaskPriority::USER_VISIBLE, base::MayBlock(),
+         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN));
+  }
+  BeginUpdateCheck(task_runner_, g_browser_process->GetApplicationLocale(),
                    install_update_if_possible, owner_widget_,
                    weak_factory_.GetWeakPtr());
 }
