@@ -34,6 +34,24 @@
       "revId": "0fca6dc3ba6d07a3c2588532b7e28df24bea91c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8a7890_fcbed2b6",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T20:35:10Z",
+      "side": 1,
+      "message": "Right, the vector should be empty if !UNKNOWN (you can add a DCHECK for the invariant)",
+      "parentUuid": "a381fc87_d2742aa9",
+      "revId": "0fca6dc3ba6d07a3c2588532b7e28df24bea91c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
