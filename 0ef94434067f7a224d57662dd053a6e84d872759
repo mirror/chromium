@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2582b25_4b586dba",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-27T15:56:45Z",
+      "side": 1,
+      "message": "Can this be defined in AudioBasicInspectorNode?",
+      "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274c16a0_660dc575",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-27T15:56:45Z",
+      "side": 1,
+      "message": "Can\u0027t this be defined in AudioScheduledSourceNode instead?",
+      "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ceefb0_687c66ef",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ConstantSourceNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-27T15:56:45Z",
+      "side": 1,
+      "message": "Likewise, this is an AudioScheduledSourceNode, so can it inherit from that?",
+      "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9184b50b_d6a8f2c3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OscillatorNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-27T15:56:45Z",
+      "side": 1,
+      "message": "Inherit from AudioScheduledSourceNode?",
+      "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
