@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4479071d_fbbcf918",
+        "filename": "components/history/core/browser/top_sites_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T18:06:57Z",
+      "side": 1,
+      "message": "Can this be a sequenced task runner?",
+      "range": {
+        "startLine": 28,
+        "startChar": 28,
+        "endLine": 28,
+        "endChar": 66
+      },
+      "revId": "610fe460303f0335f98a8a781a6a6372cd1c6fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd5c3ad_a43f013d",
+        "filename": "components/history/core/browser/top_sites_backend.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T18:06:57Z",
+      "side": 1,
+      "message": "remove explicit",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "610fe460303f0335f98a8a781a6a6372cd1c6fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
