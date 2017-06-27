@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acfec754_7d6eac29",
+        "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-27T21:21:22Z",
+      "side": 1,
+      "message": "I\u0027d prefer we keep this comment up where |options| is declared as otherwise it is unclear what defaults it is referring to.",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 46
+      },
+      "revId": "52d1c7d17d56cb3e90bdcbd48c35b234784b62a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
