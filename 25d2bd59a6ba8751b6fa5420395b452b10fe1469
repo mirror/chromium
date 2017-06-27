@@ -16,6 +16,24 @@
       "revId": "25d2bd59a6ba8751b6fa5420395b452b10fe1469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d86a27f_3acd15ac",
+        "filename": "ash/system/overview/overview_button_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-27T17:12:49Z",
+      "side": 1,
+      "message": "Hey James, I played around with this a bit but it doesn\u0027t work without the explicit set opacity call. My guess is that this is called from the window selector page (where all windows are hidden and smaller versions are shown) and the on this page hides the main windows differently than using the minimize button, but I did not confirm. WDYT?",
+      "parentUuid": "f3da9cc7_4f56cf01",
+      "revId": "25d2bd59a6ba8751b6fa5420395b452b10fe1469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
