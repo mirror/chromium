@@ -51,6 +51,8 @@ class PaymentInstrument {
   virtual base::string16 GetLabel() const = 0;
   virtual base::string16 GetSublabel() const = 0;
 
+  virtual bool IsValidForForMethod(const std::string& method) const = 0;
+
   const std::string& method_name() const { return method_name_; }
   int icon_resource_id() const { return icon_resource_id_; }
   Type type() { return type_; }

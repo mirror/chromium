@@ -183,6 +183,9 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // generation has begun. False otherwise.
   bool IsPaymentAppInvoked() const;
 
+  const mojom::PaymentItemPtr& GetTotal() const;
+  const std::vector<const mojom::PaymentItemPtr*>& GetDisplayItems() const;
+
  private:
   // Fetches the Autofill Profiles for this user from the PersonalDataManager,
   // and stores copies of them, owned by this PaymentRequestState, in
@@ -192,6 +195,10 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // Sets the initial selections for instruments and profiles, and notifies
   // observers.
   void SetDefaultProfileSelections();
+
+  void UpdateDisplayItems();
+
+  const mojom::PaymentDetailsModifierPtr* GetApplicableModifier() const;
 
   // Uses the user-selected information as well as the merchant spec to update
   // |is_ready_to_pay_| with the current state, by validating that all the
@@ -224,6 +231,7 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   autofill::AutofillProfile* selected_shipping_option_error_profile_;
   autofill::AutofillProfile* selected_contact_profile_;
   PaymentInstrument* selected_instrument_;
+  std::vector<const mojom::PaymentItemPtr*> display_items_;
 
   // Profiles may change due to (e.g.) sync events, so profiles are cached after
   // loading and owned here. They are populated once only, and ordered by
