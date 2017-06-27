@@ -21,11 +21,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
+#include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_byteorder.h"
 #include "base/sys_info.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/default_tick_clock.h"
 #include "base/trace_event/memory_allocator_dump.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_provider.h"
@@ -210,15 +212,23 @@ class VpxVideoDecoder::MemoryPool
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                     base::trace_event::ProcessMemoryDump* pmd) override;
 
+  void Shutdown();
+
   // Reference counted frame buffers used for VP9 decoding. Reference counting
   // is done manually because both chromium and libvpx has to release this
   // before a buffer can be re-used.
   struct VP9FrameBuffer {
-    VP9FrameBuffer() : ref_cnt(0) {}
     std::vector<uint8_t> data;
     std::vector<uint8_t> alpha_data;
-    uint32_t ref_cnt;
+    uint32_t ref_cnt = 0;
+    base::TimeTicks last_use_time;
   };
+
+  size_t get_pool_size_for_testing() const { return frame_buffers_.size(); }
+
+  void set_tick_clock_for_testing(base::TickClock* tick_clock) {
+    tick_clock_ = tick_clock;
+  }
 
  private:
   friend class base::RefCountedThreadSafe<VpxVideoDecoder::MemoryPool>;
@@ -234,17 +244,25 @@ class VpxVideoDecoder::MemoryPool
   // Frame buffers to be used by libvpx for VP9 Decoding.
   std::vector<std::unique_ptr<VP9FrameBuffer>> frame_buffers_;
 
+  bool in_shutdown_ = false;
+
+  // |tick_clock_| is always &|default_tick_clock_| outside of testing.
+  base::DefaultTickClock default_tick_clock_;
+  base::TickClock* tick_clock_;
+
   DISALLOW_COPY_AND_ASSIGN(MemoryPool);
 };
 
-VpxVideoDecoder::MemoryPool::MemoryPool() {
-}
+VpxVideoDecoder::MemoryPool::MemoryPool() : tick_clock_(&default_tick_clock_) {}
 
 VpxVideoDecoder::MemoryPool::~MemoryPool() {
+  DCHECK(in_shutdown_);
 }
 
 VpxVideoDecoder::MemoryPool::VP9FrameBuffer*
 VpxVideoDecoder::MemoryPool::GetFreeFrameBuffer(size_t min_size) {
+  DCHECK(!in_shutdown_);
+
   // Check if a free frame buffer exists.
   size_t i = 0;
   for (; i < frame_buffers_.size(); ++i) {
@@ -274,7 +292,7 @@ int32_t VpxVideoDecoder::MemoryPool::GetVP9FrameBuffer(
       static_cast<VpxVideoDecoder::MemoryPool*>(user_priv);
 
   VP9FrameBuffer* fb_to_use = memory_pool->GetFreeFrameBuffer(min_size);
-  if (fb_to_use == NULL)
+  if (!fb_to_use)
     return -1;
 
   fb->data = &fb_to_use->data[0];
@@ -297,6 +315,14 @@ int32_t VpxVideoDecoder::MemoryPool::ReleaseVP9FrameBuffer(
 
   VP9FrameBuffer* frame_buffer = static_cast<VP9FrameBuffer*>(fb->priv);
   --frame_buffer->ref_cnt;
+
+  if (!frame_buffer->ref_cnt) {
+    // TODO(dalecurtis): This should be |tick_clock_| but we don't have access
+    // to the main class from this static function and its only needed for tests
+    // which all hit the OnVideoFrameDestroyed() path below instead.
+    frame_buffer->last_use_time = base::TimeTicks::Now();
+  }
+
   return 0;
 }
 
@@ -337,9 +363,42 @@ bool VpxVideoDecoder::MemoryPool::OnMemoryDump(
   return true;
 }
 
+void VpxVideoDecoder::MemoryPool::Shutdown() {
+  in_shutdown_ = true;
+  for (auto& buf : frame_buffers_) {
+    if (buf->ref_cnt) {
+      // A VideoFrame should be the only ref left; destruction will be handled
+      // later upon return to the pool.
+      DCHECK_EQ(buf->ref_cnt, 1u);
+      buf.release();
+    }
+  }
+  frame_buffers_.clear();
+}
+
 void VpxVideoDecoder::MemoryPool::OnVideoFrameDestroyed(
     VP9FrameBuffer* frame_buffer) {
   --frame_buffer->ref_cnt;
+
+  if (in_shutdown_) {
+    // The MemoryPool is always released after libvpx gives up all its refs.
+    DCHECK(!frame_buffer->ref_cnt);
+
+    // If we're in shutdown this was leaked earlier and needs cleanup.
+    delete frame_buffer;
+    return;
+  }
+
+  const base::TimeTicks now = tick_clock_->NowTicks();
+  if (!frame_buffer->ref_cnt)
+    frame_buffer->last_use_time = now;
+
+  base::EraseIf(
+      frame_buffers_, [now](const std::unique_ptr<VP9FrameBuffer>& buf) {
+        constexpr base::TimeDelta kStaleFrameLimit =
+            base::TimeDelta::FromSeconds(10);
+        return !buf->ref_cnt && now - buf->last_use_time > kStaleFrameLimit;
+      });
 }
 
 VpxVideoDecoder::VpxVideoDecoder()
@@ -462,6 +521,14 @@ void VpxVideoDecoder::Reset(const base::Closure& closure) {
   ResetHelper(BindToCurrentLoop(closure));
 }
 
+size_t VpxVideoDecoder::GetPoolSizeForTesting() const {
+  return memory_pool_->get_pool_size_for_testing();
+}
+
+void VpxVideoDecoder::SetTickClockForTesting(base::TickClock* tick_clock) {
+  memory_pool_->set_tick_clock_for_testing(tick_clock);
+}
+
 void VpxVideoDecoder::ResetHelper(const base::Closure& closure) {
   DCHECK(thread_checker_.CalledOnValidThread());
   state_ = kNormal;
@@ -540,9 +607,13 @@ void VpxVideoDecoder::CloseDecoder() {
     vpx_codec_destroy(vpx_codec_);
     delete vpx_codec_;
     vpx_codec_ = nullptr;
-    base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
-        memory_pool_.get());
-    memory_pool_ = nullptr;
+
+    if (memory_pool_) {
+      base::trace_event::MemoryDumpManager::GetInstance()
+          ->UnregisterDumpProvider(memory_pool_.get());
+      memory_pool_->Shutdown();
+      memory_pool_ = nullptr;
+    }
   }
   if (vpx_codec_alpha_) {
     vpx_codec_destroy(vpx_codec_alpha_);
