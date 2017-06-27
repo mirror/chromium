@@ -134,6 +134,7 @@ SafeBrowsingBlockingPage::SafeBrowsingBlockingPage(
         g_browser_process->safe_browsing_service()
             ->trigger_manager()
             ->StartCollectingThreatDetails(
+                SafeBrowsingTriggerType::SB_TRIGGER_SECURITY_INTERSTITIAL,
                 web_contents, unsafe_resources[0], profile->GetRequestContext(),
                 HistoryServiceFactory::GetForProfile(
                     profile, ServiceAccessType::EXPLICIT_ACCESS),
@@ -204,11 +205,13 @@ void SafeBrowsingBlockingPage::FinishThreatDetails(const base::TimeDelta& delay,
 
   // Finish computing threat details. TriggerManager will decide if its safe to
   // send the report.
-  bool report_sent = g_browser_process->safe_browsing_service()
-                         ->trigger_manager()
-                         ->FinishCollectingThreatDetails(
-                             web_contents(), delay, did_proceed, num_visits,
-                             sb_error_ui()->get_error_display_options());
+  bool report_sent =
+      g_browser_process->safe_browsing_service()
+          ->trigger_manager()
+          ->FinishCollectingThreatDetails(
+              SafeBrowsingTriggerType::SB_TRIGGER_SECURITY_INTERSTITIAL,
+              web_contents(), delay, did_proceed, num_visits,
+              sb_error_ui()->get_error_display_options());
 
   if (report_sent) {
     controller()->metrics_helper()->RecordUserInteraction(
