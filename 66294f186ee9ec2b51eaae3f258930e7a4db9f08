@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d5692f_602fdd51",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-27T12:15:23Z",
+      "side": 1,
+      "message": "nit: The convention is to just \"typedef ::testing::Test TrafficAnnotationAuditorTest\" if you don\u0027t need to override everything.",
+      "revId": "66294f186ee9ec2b51eaae3f258930e7a4db9f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd0dbcd_bc5348fd",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-27T12:15:23Z",
+      "side": 1,
+      "message": "#define inside a test is an unusual pattern. The convention is to just have these at the top of a file. (Often in an anonymous namespace, not that it matters for #define-s, more like a signal that we\u0027re defining some file-scoped helper thingies).",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "66294f186ee9ec2b51eaae3f258930e7a4db9f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
