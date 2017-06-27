@@ -277,6 +277,9 @@ GpuChannelMessageQueue::~GpuChannelMessageQueue() = default;
 void GpuChannelMessageQueue::Destroy() {
   // There's no need to reply to sync messages here because the channel is being
   // destroyed and the client Sends will fail.
+  base::AutoLock lock(channel_lock_);
+  channel_ = nullptr;
+
   sync_point_order_data_->Destroy();
 
   if (preempting_flag_)
@@ -286,8 +289,6 @@ void GpuChannelMessageQueue::Destroy() {
   io_task_runner_->PostTask(
       FROM_HERE, base::Bind([](std::unique_ptr<base::OneShotTimer>) {},
                             base::Passed(&timer_)));
-
-  channel_ = nullptr;
 }
 
 bool GpuChannelMessageQueue::IsScheduled() const {
@@ -687,9 +688,6 @@ void GpuChannelMessageFilter::RemoveChannelFilter(
 
 bool GpuChannelMessageFilter::OnMessageReceived(const IPC::Message& message) {
   DCHECK(ipc_channel_);
-
-  if (!gpu_channel_)
-    return MessageErrorHandler(message, "Channel destroyed");
 
   if (message.should_unblock() || message.is_reply())
     return MessageErrorHandler(message, "Unexpected message type");
