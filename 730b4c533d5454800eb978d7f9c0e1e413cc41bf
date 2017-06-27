@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6db6ec46_132c75ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T18:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "262dc352_d38b9b54",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "730b4c533d5454800eb978d7f9c0e1e413cc41bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5bab784_a4570a51",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-27T17:57:36Z",
       "side": 1,
       "message": "In the non-ChromeHome case, I think we want MotionEvent.ACTION_UP to fall through still. If you put the break; inside the if-block, then regular Chrome should retain its current behavior.",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 113,
+        "endChar": 21
+      },
+      "revId": "730b4c533d5454800eb978d7f9c0e1e413cc41bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2e1c6b_85bd074c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuButtonHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-27T18:33:16Z",
+      "side": 1,
+      "message": "Oh right, nice catch:) But style check won\u0027t let me fall through previous branch of switch statement, so I just make a copy to action_up.",
+      "parentUuid": "a5bab784_a4570a51",
       "range": {
         "startLine": 113,
         "startChar": 16,
