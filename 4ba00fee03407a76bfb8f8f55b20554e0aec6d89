@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ca31af9_92d914da",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-27T09:18:48Z",
+      "side": 1,
+      "message": "marq@: the value returned by this method can change based on parameters owned by the mediator and a view controller. The return value is used by the two view controller (header and suggestions).",
+      "range": {
+        "startLine": 410,
+        "startChar": 6,
+        "endLine": 411,
+        "endChar": 68
+      },
+      "revId": "4ba00fee03407a76bfb8f8f55b20554e0aec6d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb5fd3a_cde4e96d",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-27T09:18:48Z",
+      "side": 1,
+      "message": "marq@: The property is owned and set by the HeaderController and read by the SuggestionsVC.",
+      "range": {
+        "startLine": 421,
+        "startChar": 31,
+        "endLine": 421,
+        "endChar": 45
+      },
+      "revId": "4ba00fee03407a76bfb8f8f55b20554e0aec6d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e30b79_07f8e9c0",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-27T09:18:48Z",
+      "side": 1,
+      "message": "marq@: use of a delegate to get a value with a pull pattern.",
+      "range": {
+        "startLine": 416,
+        "startChar": 49,
+        "endLine": 416,
+        "endChar": 65
+      },
+      "revId": "4ba00fee03407a76bfb8f8f55b20554e0aec6d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340a952d_14978fd1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-27T09:18:48Z",
+      "side": 1,
+      "message": "marq@: use of a delegate to get a value with a pull pattern.",
+      "range": {
+        "startLine": 419,
+        "startChar": 52,
+        "endLine": 419,
+        "endChar": 65
+      },
+      "revId": "4ba00fee03407a76bfb8f8f55b20554e0aec6d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
