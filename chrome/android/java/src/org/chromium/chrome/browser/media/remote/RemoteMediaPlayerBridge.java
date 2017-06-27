@@ -11,6 +11,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.blink_public.platform.modules.remoteplayback.WebRemotePlaybackAvailability;
 import org.chromium.chrome.browser.media.remote.RemoteVideoInfo.PlayerState;
+import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 
 /**
  * Acts as a proxy between the remotely playing video and the HTMLMediaElement.
@@ -202,6 +203,10 @@ public class RemoteMediaPlayerBridge {
     @CalledByNative
     private void requestRemotePlayback(long startPositionMillis) {
         Log.d(TAG, "requestRemotePlayback at t=%d", startPositionMillis);
+        if (VrShellDelegate.isInVr()) {
+            mMediaStateListener.onRouteDialogCancelled();
+            return;
+        }
         if (mRouteController == null) return;
         // Clear out the state
         mPauseRequested = false;
@@ -217,6 +222,10 @@ public class RemoteMediaPlayerBridge {
     @CalledByNative
     private void requestRemotePlaybackControl() {
         Log.d(TAG, "requestRemotePlaybackControl");
+        if (VrShellDelegate.isInVr()) {
+            mMediaStateListener.onRouteDialogCancelled();
+            return;
+        }
         RemoteMediaPlayerController.instance().requestRemotePlaybackControl(mMediaStateListener);
     }
 
