@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d8d7b9_2c51cc99",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-27T00:54:25Z",
+      "side": 1,
+      "message": "Re-use https://cs.chromium.org/chromium/src/ui/webui/resources/js/promise_resolver.js instead?",
+      "revId": "ceb74991686fa221d41cd43e908be224edd1c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1eca5f_49bf6231",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-27T00:54:25Z",
+      "side": 1,
+      "message": "Mojo JS bindings are in the process of migrating away from AMD, see details at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d699569. Can this UI use the new way of doing Mojo bindings instead?",
+      "revId": "ceb74991686fa221d41cd43e908be224edd1c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
