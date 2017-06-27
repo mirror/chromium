@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d48e39ed_d129da76",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-27T17:47:35Z",
+      "side": 1,
+      "message": "This is not needed. The Job destructor already resets |connection_|",
+      "revId": "265e061883ce0651c09f273e136a701d8f1f1a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e52e03c_eed9b753",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-27T17:47:35Z",
+      "side": 1,
+      "message": "Optional:\nmaybe just do \nmain_job_.reset();\nalternative_job_.reset();",
+      "revId": "265e061883ce0651c09f273e136a701d8f1f1a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
