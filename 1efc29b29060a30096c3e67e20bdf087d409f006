@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a138d116_718a9202",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "I probably just don\u0027t see it but why is this only done when !HasProcess()? RegisterProcessforSite calls AddObserver if !HasProcess then seems to add it to the process set. So after RegisterProcessForSite isn\u0027t HasProcess(host) going to be true?",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3aafb0_ed1ff64a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "Should this be s/Processes/Process, since it\u0027s returning a single RPH?",
+      "range": {
+        "startLine": 827,
+        "startChar": 21,
+        "endLine": 827,
+        "endChar": 49
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5dcdd5_66f6eb19",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "I found this naming confusing, it sounds like it\u0027s asking if |host| has a process. It\u0027d be more straightforward if this is used like HasProcessId(host-\u003eGetID()) or IsProcessRegistered(host-\u003eGetID()) for symmetry with RegisterProcessForSite. But I guess it\u0027s good to be symmetrical with SiteProcessCountTracker above. So maybe it\u0027s OK to leave as-is with a comment like:\n\n// Returns true if this tracker contains the process ID |host-\u003eGetID()|.",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cccef5_4d1f2af5",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "First sentence is a bit confusing: \"use XXX not to YYY\" is ambiguous grammar. Maybe:\n\n// Use std::set because duplicates don\u0027t need to be tracked separately (e.g., service...)",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15fae6e6_feec40d9",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "\"If none exists\"... if no what exists?",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082dcb2c_b8d2d872",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "ditto: \"If no RenderProcessHost exists\"?",
+      "range": {
+        "startLine": 55,
+        "startChar": 61,
+        "endLine": 55,
+        "endChar": 65
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd142aed_cfa0673b",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "\"the newest process\" means \"the newest unmatched service worker process\"?",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0736f35a_a6b74860",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "s/doesn\u0027t/don\u0027t",
+      "range": {
+        "startLine": 74,
+        "startChar": 35,
+        "endLine": 74,
+        "endChar": 42
+      },
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a552281_37f63031",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-27T05:39:52Z",
+      "side": 1,
+      "message": "s/is reused same as other policy/is reused as in the other policies/.\n\nBut that seems to imply that, for all policies, when the process limit is reached, a randomly chosen RPH is used, which means we don\u0027t need to mention it for this particular policy value?",
+      "revId": "1efc29b29060a30096c3e67e20bdf087d409f006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
