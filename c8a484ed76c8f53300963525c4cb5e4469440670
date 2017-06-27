@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60889a7e_aa47c436",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-27T16:46:36Z",
+      "side": 1,
+      "message": "Update CL title.",
+      "revId": "c8a484ed76c8f53300963525c4cb5e4469440670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f0bf0e_bf3cdd87",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-27T16:46:36Z",
+      "side": 1,
+      "message": "Any reason we don\u0027t put this in the if (is_android) block below?",
+      "range": {
+        "startLine": 131,
+        "startChar": 5,
+        "endLine": 131,
+        "endChar": 39
+      },
+      "revId": "c8a484ed76c8f53300963525c4cb5e4469440670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1ea38c_2e2bd9d8",
+        "filename": "media/gpu/android/media_codec_video_decoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-27T16:46:36Z",
+      "side": 1,
+      "message": "It\u0027s odd that some android files are under media/gpu/android and some are directly under media/gpu. We should probably clean this up at some point. Not in this CL though.",
+      "revId": "c8a484ed76c8f53300963525c4cb5e4469440670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9e2579_78132ec2",
+        "filename": "media/gpu/android/media_codec_video_decoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-27T16:46:36Z",
+      "side": 1,
+      "message": "nit: In the spirit of encapsulation, you don\u0027t need to mention \"mojo\" here...",
+      "range": {
+        "startLine": 185,
+        "startChar": 47,
+        "endLine": 185,
+        "endChar": 51
+      },
+      "revId": "c8a484ed76c8f53300963525c4cb5e4469440670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d661ebd_60d1c1ea",
+        "filename": "media/gpu/android_overlay_with_token_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-27T16:46:36Z",
+      "side": 1,
+      "message": "Update these guards.",
+      "revId": "c8a484ed76c8f53300963525c4cb5e4469440670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
