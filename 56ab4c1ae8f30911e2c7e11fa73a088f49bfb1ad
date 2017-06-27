@@ -16,6 +16,24 @@
       "revId": "56ab4c1ae8f30911e2c7e11fa73a088f49bfb1ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc38abb_030f62eb",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-27T17:50:42Z",
+      "side": 0,
+      "message": "Done.  I added a check to the media router dialog controller android.  I had to save a reference to the web contents, but the base class already does as well (so maybe I should just make that protected?).\n\nAnd it looks like I can just call \u0027CancelPresentationRequest\u0027 which is what OnDialogCancelled does and doesn\u0027t requiring getting the jvm env.",
+      "parentUuid": "21d9395f_320203dc",
+      "revId": "56ab4c1ae8f30911e2c7e11fa73a088f49bfb1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

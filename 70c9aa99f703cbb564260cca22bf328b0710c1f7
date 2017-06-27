@@ -16,6 +16,24 @@
       "revId": "70c9aa99f703cbb564260cca22bf328b0710c1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e45429_d4ec360a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/remote/RemoteMediaPlayerBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-27T17:50:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a9a63ca_472d27ce",
+      "revId": "70c9aa99f703cbb564260cca22bf328b0710c1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
