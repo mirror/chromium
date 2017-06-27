@@ -17,3 +17,5 @@ const base::FilePath::CharType kIOSChromeCRLSetFilename[] =
     FILE_PATH_LITERAL("Certificate Revocation Lists");
 const base::FilePath::CharType kIOSChromeNetworkPersistentStateFilename[] =
     FILE_PATH_LITERAL("Network Persistent State");
+const base::FilePath::CharType kIOSFeatureEngagementTrackerStorageDirname[] =
+    FILE_PATH_LITERAL("Feature Engagement Tracker");
