@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7095ea4e_0f3539d4",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T18:13:04Z",
+      "side": 1,
+      "message": "unix_hacker_style is used for inline cheap functions. The implementation is going to copy a callback, which I don\u0027t think is cheap. Please use SetDidScrollCallback().",
+      "range": {
+        "startLine": 371,
+        "startChar": 8,
+        "endLine": 371,
+        "endChar": 28
+      },
+      "revId": "754b4864ae362cad1e361914d67377e2dad5b879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ddf9a5e_da54c61d",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T18:13:04Z",
+      "side": 1,
+      "message": "Name the argument.",
+      "range": {
+        "startLine": 377,
+        "startChar": 36,
+        "endLine": 377,
+        "endChar": 38
+      },
+      "revId": "754b4864ae362cad1e361914d67377e2dad5b879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3050c0fc_89e11f30",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-27T18:13:04Z",
+      "side": 1,
+      "message": "Would SetScrollableSize be a better name here?",
+      "range": {
+        "startLine": 242,
+        "startChar": 24,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "754b4864ae362cad1e361914d67377e2dad5b879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
