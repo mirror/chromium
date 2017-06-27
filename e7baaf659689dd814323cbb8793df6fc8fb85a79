@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c7786a8_1ed49984",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-27T03:33:49Z",
+      "side": 1,
+      "message": "nit: whatever name we choose for this mode, can you update the trace value too?",
+      "range": {
+        "startLine": 523,
+        "startChar": 37,
+        "endLine": 523,
+        "endChar": 61
+      },
+      "revId": "e7baaf659689dd814323cbb8793df6fc8fb85a79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f897ca70_d3d35199",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-27T03:33:49Z",
+      "side": 1,
+      "message": "There might be issues with aborted commits (main thread has no updates). In that case, active_tree_is_ready_to_draw_ which should be true after the first frame. I don\u0027t know if the value matters for the first frame.",
+      "range": {
+        "startLine": 736,
+        "startChar": 4,
+        "endLine": 736,
+        "endChar": 33
+      },
+      "revId": "e7baaf659689dd814323cbb8793df6fc8fb85a79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc1bb76_66bc9c09",
+        "filename": "cc/scheduler/scheduler_state_machine_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2858,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-27T03:33:49Z",
+      "side": 1,
+      "message": "Can you add a test for aborted commits (no main thread updates)?",
+      "range": {
+        "startLine": 2858,
+        "startChar": 1,
+        "endLine": 2858,
+        "endChar": 2
+      },
+      "revId": "e7baaf659689dd814323cbb8793df6fc8fb85a79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
