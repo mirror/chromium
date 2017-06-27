@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c27ba70_62568db4",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-27T06:52:02Z",
+      "side": 1,
+      "message": "This should come after ChangeList and DirectoryFetchInfo.",
+      "revId": "4d62e663fe9fb942a418343af2dbbc404d9221f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77178a76_30407bab",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-27T06:52:02Z",
+      "side": 1,
+      "message": "No need to have this in ChangeListProcessor.",
+      "range": {
+        "startLine": 171,
+        "startChar": 4,
+        "endLine": 171,
+        "endChar": 25
+      },
+      "revId": "4d62e663fe9fb942a418343af2dbbc404d9221f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf13025b_58d10d1b",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-27T06:52:02Z",
+      "side": 1,
+      "message": "How about putting a forward declaration here to keep the class definition in the .cc file?",
+      "revId": "4d62e663fe9fb942a418343af2dbbc404d9221f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84b6b8e_42060f6a",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-27T06:52:02Z",
+      "side": 1,
+      "message": "No need to have this in ChangeListProcessor.",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 27
+      },
+      "revId": "4d62e663fe9fb942a418343af2dbbc404d9221f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
