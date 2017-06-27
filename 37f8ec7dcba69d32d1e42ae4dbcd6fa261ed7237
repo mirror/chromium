@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b4c62ab_333ed2a6",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-27T00:49:22Z",
+      "side": 1,
+      "message": "Optional nit: Mind adding a note as to why you needed to move this in the CL description for future reference? You don\u0027t need to document it here unless it\u0027s muy importante or if you want to.",
+      "revId": "37f8ec7dcba69d32d1e42ae4dbcd6fa261ed7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18987e4_34fa2ba4",
+        "filename": "testing/android/native_test/java/src/org/chromium/native_test/MainRunner.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-27T00:49:22Z",
+      "side": 1,
+      "message": "Optional nit: If you\u0027re going down that path, feel free to change to \u0027instantiation\u0027 too :-)",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "37f8ec7dcba69d32d1e42ae4dbcd6fa261ed7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
