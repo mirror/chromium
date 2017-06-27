@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ea3c52e_f3dd083c",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-06-27T23:53:38Z",
+      "side": 1,
+      "message": "wait, I think we should make this positive meaning instead of negative. So either \"--dry-run\", or \"--update-sharding-file\"",
+      "revId": "9c7ce99de0239a612cbfd9ca23e31341641435d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
