@@ -55,10 +55,12 @@ TransportSocketParams::TransportSocketParams(
     const HostPortPair& host_port_pair,
     bool disable_resolver_cache,
     const OnHostResolutionCallback& host_resolution_callback,
-    CombineConnectAndWritePolicy combine_connect_and_write_if_supported)
+    CombineConnectAndWritePolicy combine_connect_and_write_if_supported,
+    const SocketTag& socket_tag)
     : destination_(host_port_pair),
       host_resolution_callback_(host_resolution_callback),
-      combine_connect_and_write_(combine_connect_and_write_if_supported) {
+      combine_connect_and_write_(combine_connect_and_write_if_supported),
+      socket_tag_(socket_tag) {
   if (disable_resolver_cache)
     destination_.set_allow_cached_response(false);
   // combine_connect_and_write currently translates to TCP FastOpen.
