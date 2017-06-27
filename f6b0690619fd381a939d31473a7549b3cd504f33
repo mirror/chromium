@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c476f14_3d4bc90a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-27T15:30:06Z",
+      "side": 1,
+      "message": "Should you ObjCCastStrict? Since you said in the comment that it must be a most visited item. Idem for the other methods.",
+      "range": {
+        "startLine": 277,
+        "startChar": 17,
+        "endLine": 277,
+        "endChar": 25
+      },
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c925ed74_9c18a969",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-27T15:30:06Z",
+      "side": 1,
+      "message": "Can you add a comment saying touchLocation is in the VC\u0027s view\u0027s coordinates?",
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab73ece7_74f38e04",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-27T15:30:06Z",
+      "side": 1,
+      "message": "atIndexPath",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355c4834_948d7be2",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-27T15:30:06Z",
+      "side": 1,
+      "message": "Nit: Opens",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcec6a24_25e60301",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-27T15:30:06Z",
+      "side": 1,
+      "message": "Has to what? Be? Idem for the two below.",
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
