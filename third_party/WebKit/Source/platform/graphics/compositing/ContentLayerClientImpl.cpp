@@ -153,20 +153,24 @@ void ContentLayerClientImpl::GenerateRasterInvalidations(
     }
 
     old_chunks_matched[matched] = true;
-    if (matched == old_index) {
-      // TODO(wangxianzhu): Also fully invalidate for paint property changes.
+
+    bool properties_changed =
+        new_chunk.properties != paint_chunks_info_[matched].properties ||
+        new_chunk.properties.property_tree_state.Changed(layer_state);
+    if (!properties_changed && matched == old_index) {
       // Add the raster invalidations found by PaintController within the chunk.
       AddDisplayItemRasterInvalidations(new_chunk, layer_state);
     } else {
-      // Invalidate both old and new bounds of the chunk if the chunk is
-      // reordered and may expose area that was previously covered by it.
+      // Invalidate both old and new bounds of the chunk if the chunk's paint
+      // properties changed, or is moved backward and may expose area that was
+      // previously covered by it.
       const auto& old_chunks_info = paint_chunks_info_[matched];
-      InvalidateRasterForOldChunk(old_chunks_info,
-                                  PaintInvalidationReason::kChunkReordered);
-      if (old_chunks_info.bounds_in_layer != new_chunk_info.bounds_in_layer) {
-        InvalidateRasterForNewChunk(new_chunk_info,
-                                    PaintInvalidationReason::kChunkReordered);
-      }
+      PaintInvalidationReason reason =
+          properties_changed ? PaintInvalidationReason::kPaintProperty
+                             : PaintInvalidationReason::kChunkReordered;
+      InvalidateRasterForOldChunk(old_chunks_info, reason);
+      if (old_chunks_info.bounds_in_layer != new_chunk_info.bounds_in_layer)
+        InvalidateRasterForNewChunk(new_chunk_info, reason);
       // Ignore the display item raster invalidations because we have fully
       // invalidated the chunk.
     }
@@ -275,6 +279,12 @@ scoped_refptr<cc::PictureLayer> ContentLayerClientImpl::UpdateCcPictureLayer(
 
   bool layer_bounds_was_empty = layer_bounds_.IsEmpty();
   bool layer_origin_changed = layer_bounds_.origin() != layer_bounds.origin();
+  bool layer_state_changed =
+      PropertyTreeState(layer_transform_.Get(), layer_clip_.Get(),
+                        layer_effect_.Get()) != layer_state;
+  layer_transform_ = layer_state.Transform();
+  layer_clip_ = layer_state.Clip();
+  layer_effect_ = layer_state.Effect();
   layer_bounds_ = layer_bounds;
   cc_picture_layer_->SetBounds(layer_bounds.size());
   cc_picture_layer_->SetIsDrawable(true);
@@ -293,7 +303,7 @@ scoped_refptr<cc::PictureLayer> ContentLayerClientImpl::UpdateCcPictureLayer(
   }
 
   if (!layer_bounds_was_empty && !layer_bounds_.IsEmpty()) {
-    if (layer_origin_changed)
+    if (layer_origin_changed || layer_state_changed)
       InvalidateRasterForWholeLayer();
     else
       GenerateRasterInvalidations(paint_chunks, new_chunks_info, layer_state);
@@ -315,14 +325,6 @@ scoped_refptr<cc::PictureLayer> ContentLayerClientImpl::UpdateCcPictureLayer(
     raster_invalidation_tracking_info_->old_client_debug_names.clear();
     std::swap(raster_invalidation_tracking_info_->old_client_debug_names,
               raster_invalidation_tracking_info_->new_client_debug_names);
-  }
-
-  for (const auto* chunk : paint_chunks) {
-    // TODO(wangxianzhu): This will be unnecessary if we don't call
-    // PaintArtifactCompositor::Update() when paint artifact is unchanged.
-    chunk->client_is_just_created = false;
-    chunk->raster_invalidation_rects.clear();
-    chunk->raster_invalidation_tracking.clear();
   }
 
   return cc_picture_layer_;
