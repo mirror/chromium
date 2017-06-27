@@ -40,6 +40,7 @@
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_server_id.h"
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/socket/socket_tag.h"
 #include "net/ssl/ssl_config_service.h"
 
 namespace base {
@@ -116,6 +117,7 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
   // QuicConnection.  This can be different than HostPortPair::FromURL(url).
   int Request(const HostPortPair& destination,
               PrivacyMode privacy_mode,
+              const SocketTag& socket_tag,
               int cert_verify_flags,
               const GURL& url,
               QuicStringPiece method,
@@ -142,6 +144,7 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
  private:
   QuicStreamFactory* factory_;
   QuicServerId server_id_;
+  SocketTag socket_tag_;
   NetLogWithSource net_log_;
   CompletionCallback callback_;
   std::unique_ptr<QuicChromiumClientSession::Handle> session_;
