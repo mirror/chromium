@@ -976,7 +976,7 @@ void ServiceWorkerDispatcherHost::OnProviderCreated(
   } else {
     if (ServiceWorkerUtils::IsBrowserAssignedProviderId(info.provider_id)) {
       bad_message::ReceivedBadMessage(
-          this, bad_message::SWDH_PROVIDER_CREATED_BAD_ID);
+          this, bad_message::SWDH_PROVIDER_CREATED_NO_HOST);
       return;
     }
     GetContext()->AddProviderHost(ServiceWorkerProviderHost::Create(
