@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95200dec_3ac2ac34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-06-27T18:29:53Z",
+      "side": 1,
+      "message": "note that this is for the iOS one.",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "238d3c3a5e64927d9db131ff1c186c4e00507d35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -22,6 +22,30 @@
       "revId": "55e4d9a48a1965626872aabca38484814f0d063a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728106c7_9b666a3b",
+        "filename": "net/cert/x509_util_ios.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-06-27T18:29:53Z",
+      "side": 0,
+      "message": "Seems reasonable, but maybe in a separate CL? (Simplify any possible merges, etc)",
+      "parentUuid": "2ffea709_24826fd1",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "55e4d9a48a1965626872aabca38484814f0d063a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
