@@ -34,6 +34,24 @@
       "revId": "9f2b57b791ebcc97305a3717fe6b0327028269fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafbdb08_1e8e4d0a",
+        "filename": "services/service_manager/embedder/runner/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-27T15:30:18Z",
+      "side": 1,
+      "message": "Can\u0027t //services/service_manager/embedder include these sources, but exclude all others on iOS?",
+      "parentUuid": "23935c93_3c5d08aa",
+      "revId": "9f2b57b791ebcc97305a3717fe6b0327028269fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
