@@ -634,6 +634,12 @@ bool CanBeScrolledIntoView(WebFocusType type, const FocusCandidate& candidate) {
   LayoutRect candidate_rect = candidate.rect;
   for (Node& parent_node :
        NodeTraversal::AncestorsOf(*candidate.visible_node)) {
+    if (UNLIKELY(!parent_node.GetLayoutObject())) {
+      DCHECK(parent_node.IsElementNode() &&
+             ToElement(parent_node).HasDisplayContentsStyle());
+      continue;
+    }
+
     LayoutRect parent_rect = NodeRectInAbsoluteCoordinates(&parent_node);
     if (!candidate_rect.Intersects(parent_rect)) {
       if (((type == kWebFocusTypeLeft || type == kWebFocusTypeRight) &&
