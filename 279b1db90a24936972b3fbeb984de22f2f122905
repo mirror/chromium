@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "539d2fed_9455af4c",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-27T20:22:44Z",
+      "side": 1,
+      "message": "nit: feel free to ignore. How about just SB_INTERSTITIAL?",
+      "revId": "279b1db90a24936972b3fbeb984de22f2f122905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
