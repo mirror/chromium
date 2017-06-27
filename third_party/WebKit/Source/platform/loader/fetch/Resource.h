@@ -90,13 +90,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   };
   static const int kLastResourceType = kMock + 1;
 
-  // Whether a resource client for a preload should mark the preload as
-  // referenced.
-  enum PreloadReferencePolicy {
-    kMarkAsReferenced,
-    kDontMarkAsReferenced,
-  };
-
   // Used by reloadIfLoFiOrPlaceholderImage().
   enum ReloadLoFiOrPlaceholderPolicy {
     kReloadIfNeeded,
@@ -153,21 +146,18 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
     return ResourcePriority();
   }
 
-  // The reference policy indicates that the client should not affect whether
-  // a preload is considered referenced or not. This allows for "passive"
-  // resource clients that simply observe the resource.
-  void AddClient(ResourceClient*, PreloadReferencePolicy = kMarkAsReferenced);
+  void AddClient(ResourceClient*);
   void RemoveClient(ResourceClient*);
 
-  void AddFinishObserver(ResourceFinishObserver*,
-                         PreloadReferencePolicy = kMarkAsReferenced);
+  void AddFinishObserver(ResourceFinishObserver*);
   void RemoveFinishObserver(ResourceFinishObserver*);
 
-  enum PreloadResult : uint8_t {
+  enum PreloadState : uint8_t {
+    kNotPreload,
     kPreloadNotReferenced,
     kPreloadReferenced,
   };
-  PreloadResult GetPreloadResult() const { return preload_result_; }
+  PreloadState GetPreloadState() const { return preload_state_; }
 
   ResourceStatus GetStatus() const { return status_; }
   void SetStatus(ResourceStatus status) { status_ = status; }
@@ -250,18 +240,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
   void SetDataBufferingPolicy(DataBufferingPolicy);
 
-  // The IsPreloaded() flag is using a counter in order to make sure that even
-  // when multiple ResourceFetchers are preloading the resource, it will remain
-  // marked as preloaded until *all* of them have used it.
-  bool IsUnusedPreload() const {
-    return IsPreloaded() && GetPreloadResult() == kPreloadNotReferenced;
-  }
-  bool IsPreloaded() const { return preload_count_; }
-  void IncreasePreloadCount() { ++preload_count_; }
-  void DecreasePreloadCount() {
-    DCHECK(preload_count_);
-    --preload_count_;
-  }
+  void MarkAsPreload();
+  void MatchPreload();
 
   bool CanReuseRedirectChain() const;
   bool MustRevalidateDueToCacheHeaders() const;
@@ -375,7 +355,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   void FinishPendingClients();
 
   virtual void DidAddClient(ResourceClient*);
-  void WillAddClientOrObserver(PreloadReferencePolicy);
+  void WillAddClientOrObserver();
 
   void DidRemoveClientOrObserver();
   virtual void AllClientsAndObserversRemoved();
@@ -435,7 +415,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   // MemoryCoordinatorClient overrides:
   void OnPurgeMemory() override;
 
-  PreloadResult preload_result_;
+  PreloadState preload_state_;
   Type type_;
   ResourceStatus status_;
 
@@ -448,7 +428,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   unsigned long identifier_;
 
-  unsigned preload_count_;
   double preload_discovery_time_;
 
   size_t encoded_size_;
