@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8245ad63_edbe229f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-27T17:17:38Z",
+      "side": 1,
+      "message": "I like this idea, and it has the potential to resolve some known problems -- the only (potential) problem is that I\u0027m not sure that the unique id attached to the gesture event will match the id that was on the kTouchStart (i.e. it might be a different, subsequent touch event). There might be a way around that, it might need some thought.",
+      "parentUuid": "e0ddabe6_5280ab61",
+      "range": {
+        "startLine": 390,
+        "startChar": 39,
+        "endLine": 390,
+        "endChar": 58
+      },
+      "revId": "1145a602f3e31e4f02917b85d1f71000729fba27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0391d617_60c4473e",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 2
