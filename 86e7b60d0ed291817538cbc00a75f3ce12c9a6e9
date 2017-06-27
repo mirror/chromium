@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c334d19a_915a5dce",
+        "filename": "third_party/WebKit/Source/core/editing/WebSubstringUtil.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-27T02:32:25Z",
+      "side": 1,
+      "message": "Let\u0027s move this change in another patch since this change doesn\u0027t relater to include directive cleanup.",
+      "parentUuid": "12534978_686bb022",
+      "revId": "86e7b60d0ed291817538cbc00a75f3ce12c9a6e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c6beabf_250f0e5c",
         "filename": "third_party/WebKit/Source/core/editing/WebSubstringUtil.mm",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-26T17:54:22Z",
       "side": 1,
       "message": "Range::BoundingBox() is implemented via ComputeTextRect() function, and it looks like we don\u0027t need to create a Range object anymore.",
+      "revId": "86e7b60d0ed291817538cbc00a75f3ce12c9a6e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c57d433_78454f60",
+        "filename": "third_party/WebKit/Source/core/editing/WebSubstringUtil.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-27T02:32:25Z",
+      "side": 1,
+      "message": "Good catch!\nCould you move this part in another patch for ease of tracking?\nThanks!",
+      "parentUuid": "5c6beabf_250f0e5c",
       "revId": "86e7b60d0ed291817538cbc00a75f3ce12c9a6e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
