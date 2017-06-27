@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c6fa2e_d15c9eae",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-27T10:56:42Z",
+      "side": 1,
+      "message": "Unrelated, but when you already look at this: Is it still our intention to disable generating if the user needed to edit the username? Do we know whether this will change at some point?",
+      "range": {
+        "startLine": 750,
+        "startChar": 7,
+        "endLine": 752,
+        "endChar": 76
+      },
+      "revId": "1a3c8ea237dab9f8a9c996d8f81c4ceb3931fa9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
