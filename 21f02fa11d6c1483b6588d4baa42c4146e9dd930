@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1c6709b_80bbeb28",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-27T00:24:33Z",
+      "side": 1,
+      "message": "Please add support, it should be as simple as making request_gpu_info_cb_ a std::vector, and running all elements in the list in the DidInitialize/DidFailInitialize callbacks.",
+      "revId": "21f02fa11d6c1483b6588d4baa42c4146e9dd930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
