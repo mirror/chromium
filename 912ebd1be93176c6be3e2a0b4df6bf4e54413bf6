@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69e2ff3c_8f104157",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "Explain this parameter in the comments for this function.",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9263013_755fa639",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "Are the touchactions in this map disjoint sets of bits, or do some of them overlap? IOW would this ever be non-0 if it found two matching touchactions? These would be good examples in unit tests for this function.\n\nI appreciate there\u0027s tests of the LTHI api, but it would be nice to cover corner cases of this method more directly, then verify LTHI behaviours from the LTHI tests, rather than testing every corner case of this class through it. Then if we use this class elsewhere, or move it off LTHI, we don\u0027t lose test coverage of this class by accident along the way, and refactoring or changing this class can be covered by tests close by that are easy to find.\n\nIf we add tests for this class directly, then I\u0027m not sure if it makes sense to have as many test cases on LTHI as you have or not, if they are testing behaviour in the LTHI class then they do but maybe some could go, you could have a look and see what you think.",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05089f6a_2d0cc481",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "Please add comment explaining what this does.",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ca57ab_bfebe473",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "Do we need to support null touch_action here? Can the caller just throw away the result when it doesn\u0027t need it? That would be simpler here and less branches. The cost of a branch \u003e\u003e the cost of an assignment.",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a500828_dcd3dec5",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "why is max returned in this case and not 0, perhaps the comment in InputHandler would explain this for me.",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6471e47e_fe85348e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "need {} for multiline bodies",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3725fc23_1042a223",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "nit: Some temp vars might help break this up into easier to read chunks. For eg const auto\u0026 region \u003d layer_im..-\u003etouch_action_region(); And computing the int point as a separate step.",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d8019a_7cb6db79",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "This is doing implicit float-\u003eint narrowing, which is not good. Use something from here that is appropriate: https://cs.chromium.org/chromium/src/ui/gfx/geometry/point_conversions.h?type\u003dcs",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60d3c5a_13067cb9",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "maybe prefix as out_touch_action, to clarify this is only an output? same for in InputHandler. The comment there should help clarify that too.",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8039727_66811401",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-27T18:58:19Z",
+      "side": 1,
+      "message": "add a bit more context to this name, touch action for what/when what? maybe _during_touch_ or something? I\u0027m not super sure, but this is just the name of the type right now",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
