@@ -16,6 +16,24 @@
       "revId": "50732f9df05faae3c6c949dbb132d582a249de44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910d528b_41333a29",
+        "filename": "components/offline_pages/core/background/request_queue_store_sql.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-27T18:13:15Z",
+      "side": 1,
+      "message": "I\u0027m ok with it, but we already have request_origin listed as VARCHAR NOT NULL DEFAULT \u0027\u0027 in the column definition. I wonder if explicitly inserting would be extraneous...",
+      "parentUuid": "8b509e31_92e40b04",
+      "revId": "50732f9df05faae3c6c949dbb132d582a249de44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
