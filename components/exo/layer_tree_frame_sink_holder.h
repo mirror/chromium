@@ -40,6 +40,8 @@ class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient,
     return weak_factory_.GetWeakPtr();
   }
 
+  int AllocateResourceId() { return next_resource_id_++; }
+
   // Overridden from cc::LayerTreeFrameSinkClient:
   void SetBeginFrameSource(cc::BeginFrameSource* source) override;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
@@ -64,6 +66,9 @@ class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient,
 
   Surface* surface_;
   std::unique_ptr<cc::LayerTreeFrameSink> frame_sink_;
+
+  // The next resource id the buffer is attached to.
+  int next_resource_id_ = 0;
 
   base::WeakPtrFactory<LayerTreeFrameSinkHolder> weak_factory_;
 
