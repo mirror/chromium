@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cba962c_5af5ce74",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-27T23:40:40Z",
+      "side": 1,
+      "message": "I\u0027m assuming this vector is small? You might want to DCHECK the size",
+      "range": {
+        "startLine": 816,
+        "startChar": 24,
+        "endLine": 816,
+        "endChar": 61
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea8a888_eb26227e",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-27T23:40:40Z",
+      "side": 1,
+      "message": "So you plan on limiting simultaneously outstanding requests depending on BDP. I would describe this very differently.\n\nstruct MaxRequestsForBDPRange {\n  int64_t min_bdp_kbits;\n  int64_t max_bdp_kbits;\n  size_t max_requests;\n}\n\nAlso, say if the bounds are inclusive.",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 32
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
