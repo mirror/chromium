@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "453a5636_4f599d2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-27T17:21:34Z",
+      "side": 1,
+      "message": "Super nit: use \u0027:\u0027 to join these clauses instead of using and",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "5130bfcbf7a29d1ed9af957d186395a57d87e8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db909d16_8ab14b48",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-27T17:21:34Z",
+      "side": 1,
+      "message": "Nit: run_tool",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "5130bfcbf7a29d1ed9af957d186395a57d87e8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3222d0e6_c733cb6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-27T17:21:34Z",
+      "side": 1,
+      "message": "Nit: in order",
+      "range": {
+        "startLine": 10,
+        "startChar": 47,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "5130bfcbf7a29d1ed9af957d186395a57d87e8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8d47de_fcd423d3",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-27T17:21:34Z",
+      "side": 1,
+      "message": "I have some concerns about the runtime of this. I suppose it\u0027s simpler to just do the naive thing for now though.\n\nDo you have any numbers about the runtime overhead of this for large N, where N is the length of the filter list?",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 80
+      },
+      "revId": "5130bfcbf7a29d1ed9af957d186395a57d87e8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
