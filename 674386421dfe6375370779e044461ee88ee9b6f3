@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5436ac9b_4e5b4370",
+        "filename": "third_party/WebKit/Source/platform/geometry/mac/IntRectMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-06-27T13:57:55Z",
+      "side": 1,
+      "message": "That function seems to be unused at the moment.\nCan we remove it?",
+      "revId": "674386421dfe6375370779e044461ee88ee9b6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
