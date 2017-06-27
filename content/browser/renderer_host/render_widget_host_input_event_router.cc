@@ -385,6 +385,13 @@ unsigned CountChangedTouchPoints(const blink::WebTouchEvent& event) {
 
 }  // namespace
 
+// Any time a touch start event is handled/consumed/default prevented it is
+// removed from the gesture queue, because it will never create a gesture
+void RenderWidgetHostInputEventRouter::OnHandledTouchStart() {
+  if (!touchscreen_gesture_target_queue_.empty())
+    touchscreen_gesture_target_queue_.pop_front();
+}
+
 void RenderWidgetHostInputEventRouter::RouteTouchEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebTouchEvent* event,

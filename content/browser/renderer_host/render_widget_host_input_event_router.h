@@ -67,6 +67,7 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   void RouteGestureEvent(RenderWidgetHostViewBase* root_view,
                          blink::WebGestureEvent* event,
                          const ui::LatencyInfo& latency);
+  void OnHandledTouchStart();
   void RouteTouchEvent(RenderWidgetHostViewBase* root_view,
                        blink::WebTouchEvent *event,
                        const ui::LatencyInfo& latency);
