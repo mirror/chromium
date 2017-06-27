@@ -22,6 +22,30 @@
       "revId": "3017206edc45e7026eedc905b46f39b5ba06d810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19221aca_f493b80d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-27T18:53:08Z",
+      "side": 1,
+      "message": "The subject of this sentence is \"The logic\", with a compound object in the prepositional phrase introduced by \"for\".  Therefore a singular verb is correct.",
+      "parentUuid": "4fff627e_87ded43c",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "3017206edc45e7026eedc905b46f39b5ba06d810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
