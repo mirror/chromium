@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9719df24_cfa41e20",
+        "filename": "media/base/video_frame_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T21:38:17Z",
+      "side": 1,
+      "message": "Don\u0027t know about this, but deque is effectively vector in most cases. Have a link?",
+      "parentUuid": "a6736bba_290b9aa3",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a792eb3_fcb1c549",
         "filename": "media/base/video_frame_pool.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-27T21:28:13Z",
       "side": 1,
       "message": "I\u0027d consider moving this to the top (or I suppose a comment about it would be fine too), just to remind readers that this behavior exists.",
+      "range": {
+        "startLine": 128,
+        "startChar": 28,
+        "endLine": 128,
+        "endChar": 44
+      },
+      "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d2a54c_649383fc",
+        "filename": "media/base/video_frame_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T21:38:17Z",
+      "side": 1,
+      "message": "Instead I\u0027ve added some method level comments explaining this behavior.",
+      "parentUuid": "1a792eb3_fcb1c549",
       "range": {
         "startLine": 128,
         "startChar": 28,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "acaaf63c_63efed9d",
+        "filename": "media/base/video_frame_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T21:38:17Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "3c4ee4c0_c90e1bd1",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 70
+      },
+      "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3545b4f9_2831ae3e",
         "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
         "patchSetId": 2
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "5d95dd3d_c2f6892d",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T21:38:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3545b4f9_2831ae3e",
+      "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8c13502_50c7c780",
         "filename": "media/video/gpu_memory_buffer_video_frame_pool_unittest.cc",
         "patchSetId": 2
@@ -102,6 +192,24 @@
       "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df10c1ec_559b21f9",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-27T21:38:17Z",
+      "side": 1,
+      "message": "Done; but means giving them accessors, which they should have anyway.",
+      "parentUuid": "e8c13502_50c7c780",
+      "revId": "d4d061b16fa7f1bfb65e62e98ecb7ab29b62e6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
