@@ -12,7 +12,6 @@ import android.print.PageRange;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
-import android.webkit.ValueCallback;
 
 import java.util.ArrayList;
 
@@ -73,18 +72,25 @@ public class AwPrintDocumentAdapter extends PrintDocumentAdapter {
             return;
         }
 
-        mPdfExporter.exportToPdf(
-                destination, mAttributes, normalizeRanges(pages), new ValueCallback<Boolean>() {
+        mPdfExporter.exportToPdf(destination, mAttributes,
+                normalizeRanges(pages), new AwPdfExporter.AwPdfExporterCallback() {
                     @Override
-                    public void onReceiveValue(Boolean value) {
-                        if (value) {
-                            callback.onWriteFinished(pages);
+                    public void pdfWritingDone(boolean success, int pageCount) {
+                        if (success) {
+                            callback.onWriteFinished(validatePageRanges(pages, pageCount));
                         } else {
                             // TODO(sgurun) provide a localized error message
                             callback.onWriteFailed(null);
                         }
                     }
                 }, cancellationSignal);
+    }
+
+    private PageRange[] validatePageRanges(PageRange[] pages, int pageCount) {
+        if (pages.length == 1 && PageRange.ALL_PAGES.equals(pages[0])) {
+            return new PageRange[] {new PageRange(0, pageCount - 1)};
+        }
+        return pages;
     }
 
     private int[] normalizeRanges(final PageRange[] ranges) {

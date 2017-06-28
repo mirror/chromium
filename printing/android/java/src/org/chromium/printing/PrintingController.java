@@ -56,9 +56,13 @@ public interface PrintingController {
     /**
      * This method is called by the native side to signal PDF writing process is completed.
      *
-     * @param success Whether the PDF is written into the provided file descriptor successfully.
+     * @param success Whether the PDF file is written to the provided file descriptor successfully.
+     * @param pageCount Native side reports how many pages needed for the whole web page to be
+     *                  printed to PDF under certain layout configuration. Note that it is not how
+     * many pages will actually be written to PDF, though they will be the same when we select all
+     * pages to print.
      */
-    void pdfWritingDone(boolean success);
+    void pdfWritingDone(boolean success, int pageCount);
 
     /**
      * Sets PrintingContext currently associated with the controller.
