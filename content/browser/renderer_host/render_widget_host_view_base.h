@@ -437,8 +437,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // selection editing (TSE), currently Aura and (soon) Android.
   // TODO(wjmaclean): update this comment when OOPIF TSE is implemented on
   // Android.
-  virtual TouchSelectionControllerClientManager*
-  touch_selection_controller_client_manager();
+  TouchSelectionControllerClientManager*
+  GetTouchSelectionControllerClientManager() override;
 
   // Exposed for testing.
   virtual bool IsChildFrameForTesting() const;
