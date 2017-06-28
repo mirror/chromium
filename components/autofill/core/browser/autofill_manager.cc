@@ -476,6 +476,10 @@ void AutofillManager::StartUploadProcess(
     FormStructure* raw_form = form_structure.get();
     TimeTicks loaded_timestamp =
         forms_loaded_timestamps_[raw_form->ToFormData()];
+    // Needs to make a copy of form_parsed_time because
+    // form_interactions_ukm_logger_ may be reset before callback is triggered.
+    TimeTicks form_parsed_time =
+        form_interactions_ukm_logger_->GetFormParseTimeStamp();
     base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
         base::BindOnce(&AutofillManager::DeterminePossibleFieldTypesForUpload,
@@ -483,9 +487,9 @@ void AutofillManager::StartUploadProcess(
                        raw_form),
         base::BindOnce(&AutofillManager::UploadFormDataAsyncCallback,
                        weak_ptr_factory_.GetWeakPtr(),
-                       base::Owned(form_structure.release()), loaded_timestamp,
-                       initial_interaction_timestamp_, timestamp,
-                       observed_submission));
+                       base::Owned(form_structure.release()), form_parsed_time,
+                       loaded_timestamp, initial_interaction_timestamp_,
+                       timestamp, observed_submission));
   }
 }
 
@@ -1519,12 +1523,13 @@ void AutofillManager::CollectRapporSample(
 // get reset before this method executes.
 void AutofillManager::UploadFormDataAsyncCallback(
     const FormStructure* submitted_form,
+    const TimeTicks& form_parsed_time,
     const TimeTicks& load_time,
     const TimeTicks& interaction_time,
     const TimeTicks& submission_time,
     bool observed_submission) {
   submitted_form->LogQualityMetrics(
-      load_time, interaction_time, submission_time,
+      form_parsed_time, load_time, interaction_time, submission_time,
       client_->GetRapporServiceImpl(), form_interactions_ukm_logger_.get(),
       did_show_suggestions_, observed_submission);
   if (submitted_form->ShouldBeCrowdsourced())
