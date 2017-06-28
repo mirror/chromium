@@ -28138,6 +28138,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Media.Audio.InputDevicePropertyChangedMac"
     enum="AudioDevicePropertyResult">
+  <obsolete>
+    Deprecated Jun 2017.
+  </obsolete>
   <owner>henrika@chromium.org</owner>
   <summary>
     Lists device properties that have been changed during an audio input stream
@@ -28149,6 +28152,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Media.Audio.InputDevicePropertyChangedStartupFailedMac"
     enum="AudioDevicePropertyResult">
+  <obsolete>
+    Deprecated Jun 2017.
+  </obsolete>
   <owner>henrika@chromium.org</owner>
   <summary>
     Lists device properties that have been changed during an audio input stream
