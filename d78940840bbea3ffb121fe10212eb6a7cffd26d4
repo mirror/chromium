@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09ba8896_943d21a4",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-28T08:40:16Z",
+      "side": 1,
+      "message": "Pass base::Time by value.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "d78940840bbea3ffb121fe10212eb6a7cffd26d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca55fb1e_8ef2cbc5",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-28T08:40:16Z",
+      "side": 1,
+      "message": "GURLs OTOH should be passed by const-ref :)",
+      "range": {
+        "startLine": 169,
+        "startChar": 32,
+        "endLine": 169,
+        "endChar": 36
+      },
+      "revId": "d78940840bbea3ffb121fe10212eb6a7cffd26d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
