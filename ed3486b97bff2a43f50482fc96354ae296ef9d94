@@ -16,6 +16,24 @@
       "revId": "ed3486b97bff2a43f50482fc96354ae296ef9d94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b7a644_20379b4a",
+        "filename": "services/service_manager/public/cpp/binder_registry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-28T18:32:43Z",
+      "side": 1,
+      "message": "Doc link isn\u0027t needed, just seemed nice to have and I didn\u0027t want to duplicate info here. I\u0027m happy to drop it if you\u0027re concerned it\u0027ll go stale, but if it does it seems anyone who cares could fix it.\n\nAs for why comment: I was reviewing code. I had an itch to understand how it worked, because the type inference wasn\u0027t obvious and it looked fishy that setup was being done correctly. So did a quick code search and found the declaration for AddInterface. It didn\u0027t rapidly satisfy my \"how does this calling code even work?\". I don\u0027t think a few hundred call sites would fix that, it\u0027s better to have code not be surprising.",
+      "parentUuid": "ccfee2e6_d520f350",
+      "revId": "ed3486b97bff2a43f50482fc96354ae296ef9d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
