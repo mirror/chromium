@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b5f42e1_416b3136",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-28T09:51:56Z",
+      "side": 1,
+      "message": "Instead of holding Member\u003cHeapHashMap\u003e and Vector\u003cString\u003e, how about holding Vector\u003cHeapHashMap\u003e and Vector\u003cString\u003e?\n\nI\u0027m worried about holding Member\u003cHeapHashMap\u003e because someone may manipulate the entry while the iteration is running.",
+      "revId": "7b06073af3b40ab64557dc0df01b78825575363a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a0a2bea_f17a6e81",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
         "patchSetId": 3
@@ -132,6 +149,30 @@
       "side": 1,
       "message": "Since String can not be used for the key to find AudioParam, that would not be suitable?\nFYI, if architecture team can add LinkedHashMap, I will be another user in webmidi :)",
       "parentUuid": "fe0f9677_5e97ac10",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "7b06073af3b40ab64557dc0df01b78825575363a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e773d6de_07f51b13",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-28T09:51:56Z",
+      "side": 1,
+      "message": "Agreed. Would you file a bug to implement LinkedHashMap?\n\nGiven that we already have LinkedHashSet, it wouldn\u0027t be that hard to implement LinkedHashMap.",
+      "parentUuid": "c0c75aad_0f1bb8c7",
       "range": {
         "startLine": 46,
         "startChar": 8,
