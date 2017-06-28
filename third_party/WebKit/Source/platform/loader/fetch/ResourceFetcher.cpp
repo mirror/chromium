@@ -920,7 +920,7 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
     return resource;
   }
 
-  if (!IsReusableAlsoForPreloading(params, resource, false))
+  if (!IsReusableResourceCommon(params, resource, false))
     return nullptr;
 
   resource->DecreasePreloadCount();
@@ -948,10 +948,11 @@ void ResourceFetcher::InsertAsPreloadIfNecessary(Resource* resource,
   }
 }
 
-bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
-                                                  Resource* existing_resource,
-                                                  bool is_static_data) const {
+bool ResourceFetcher::IsReusableResourceCommon(const FetchParameters& params,
+                                               Resource* existing_resource,
+                                               bool is_static_data) const {
   const ResourceRequest& request = params.GetResourceRequest();
+
   // Do not load from cache if images are not enabled. There are two general
   // cases:
   //
@@ -1117,10 +1118,8 @@ ResourceFetcher::DetermineRevalidationPolicy(
     return kReload;
   }
 
-  // If |existing_resource| is not reusable as a preloaded resource, it should
-  // not be reusable as a normal resource as well.
-  if (!IsReusableAlsoForPreloading(fetch_params, existing_resource,
-                                   is_static_data)) {
+  if (!IsReusableResourceCommon(fetch_params, existing_resource,
+                                is_static_data)) {
     return kReload;
   }
 
