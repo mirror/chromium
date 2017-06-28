@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44cfe101_cafc301e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-28T13:42:20Z",
+      "side": 1,
+      "message": "What\u0027s the advantage of putting this check here?\n\nThis is a rare case so we can move the check to the bottom? Or even remove it?",
+      "revId": "2e1e120f20bfe725f174204bbe5d0f95dac48fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
