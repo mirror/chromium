@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c2313eb_a8229d30",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-06-28T06:34:05Z",
+      "side": 1,
+      "message": "One note is this _can_ throw an exception, but _theoretically_ never should.  It would signal a bug around unique_touch_event_id not being unique or incorrectly assuming that a gesture would not be created when in fact it was.  Is there a recommended way to handle these scenarios?\n\nEither way, we\u0027d have no way to route the event, as we wouldn\u0027t know where it should go.\n\nAlso, simply using [] would prevent the exception here, but then would cause oddness/exceptions later when trying to access the target property.",
+      "revId": "1109bd071367148702eb13e5ad13d16f7cedb85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
