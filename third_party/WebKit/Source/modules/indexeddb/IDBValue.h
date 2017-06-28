@@ -38,6 +38,8 @@ class MODULES_EXPORT IDBValue final : public RefCounted<IDBValue> {
 
   ~IDBValue();
 
+  size_t DataSize() const { return data_ ? data_->size() : 0; }
+
   bool IsNull() const;
   Vector<String> GetUUIDs() const;
   RefPtr<SerializedScriptValue> CreateSerializedValue() const;
