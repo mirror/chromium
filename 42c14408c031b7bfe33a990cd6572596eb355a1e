@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81d5bc8a_86b88172",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 60755,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-28T15:37:47Z",
+      "side": 1,
+      "message": "Please define a custom boolean, with labels specific to this histogram, in enums.xml, and use it here.",
+      "range": {
+        "startLine": 60755,
+        "startChar": 10,
+        "endLine": 60755,
+        "endChar": 24
+      },
+      "revId": "42c14408c031b7bfe33a990cd6572596eb355a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
