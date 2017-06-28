@@ -107,6 +107,7 @@ void RemoteWindowProxy::CreateContext() {
   else
     DCHECK(global_proxy_.Get() == global_proxy);
   CHECK(!global_proxy_.IsEmpty());
+  DCHECK_NE(global_proxy->InternalFieldCount(), 0);
 
 #if DCHECK_IS_ON()
   DidAttachGlobalObject();

@@ -174,6 +174,7 @@ bool WorkerOrWorkletScriptController::InitializeContextIfNeeded() {
   }
   if (context.IsEmpty())
     return false;
+  DCHECK_NE(context->Global()->InternalFieldCount(), 0);
 
   script_state_ = ScriptState::Create(context, world_);
 

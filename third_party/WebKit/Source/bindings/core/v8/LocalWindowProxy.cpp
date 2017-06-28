@@ -199,6 +199,7 @@ void LocalWindowProxy::CreateContext() {
                          global_template, global_proxy_.NewLocal(GetIsolate()));
   }
   CHECK(!context.IsEmpty());
+  DCHECK_NE(context->Global()->InternalFieldCount(), 0);
 
 #if DCHECK_IS_ON()
   DidAttachGlobalObject();
