@@ -16,6 +16,24 @@
       "revId": "c21bbd152585ba3e442053c989745be7703f16a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e6de5f_60397c3a",
+        "filename": "third_party/WebKit/Source/modules/mediasource/MediaSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-28T21:29:06Z",
+      "side": 1,
+      "message": "So long as our IDL bindings generator continues to enforce JS caller can\u0027t do endOfStream(\"\"), and we have https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-endofstream-invaliderror.html?rcl\u003df9295c391265f2d6cf4e5c39e08102de6208e96b\u0026l\u003d36 testing this, we\u0027re fine.\n\nDone.",
+      "parentUuid": "edb5a0e8_27cbf50c",
+      "revId": "c21bbd152585ba3e442053c989745be7703f16a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
