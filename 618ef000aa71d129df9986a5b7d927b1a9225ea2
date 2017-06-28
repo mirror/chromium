@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19e7d3da_f5a4b632",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-28T17:45:50Z",
+      "side": 1,
+      "message": "Remove \"Commit\"",
+      "range": {
+        "startLine": 1719,
+        "startChar": 39,
+        "endLine": 1719,
+        "endChar": 68
+      },
+      "revId": "618ef000aa71d129df9986a5b7d927b1a9225ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
