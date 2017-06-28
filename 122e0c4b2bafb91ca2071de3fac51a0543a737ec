@@ -680,6 +680,24 @@
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca1bf85_0220f020",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:41:55Z",
+      "side": 1,
+      "message": "Also, what would we break?\n\n\"Focusable\" in accessibility includes things that have focus via activedescendant.",
+      "parentUuid": "93e7457e_40202777",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
