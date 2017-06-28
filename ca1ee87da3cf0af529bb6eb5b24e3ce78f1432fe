@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e940cb9_714dd2f0",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed0929f_44bfbb71",
+      "range": {
+        "startLine": 321,
+        "startChar": 37,
+        "endLine": 321,
+        "endChar": 58
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f461199f_636e7ad2",
         "filename": "ios/web/app/web_main_runner.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf18b229_b22ad9c2",
+        "filename": "ios/web/app/web_main_runner.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f461199f_636e7ad2",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "02662c32_4166d17d",
+        "filename": "ios/web/app/web_main_runner.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "This actually isn\u0027t relevant on iOS, as it\u0027s used only when going across process boundaries. Removed.",
+      "parentUuid": "0ad07414_233d5e60",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8e75f4d_6d341041",
         "filename": "ios/web/merge_dictionary.cc",
         "patchSetId": 2
@@ -88,6 +148,30 @@
       "writtenOn": "2017-06-27T21:38:02Z",
       "side": 1,
       "message": "Do we want to limit the stack depth somehow?",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a59e789_31b9397e",
+        "filename": "ios/web/merge_dictionary.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "As noted on the .h file, this will disappear from this CL.",
+      "parentUuid": "d8e75f4d_6d341041",
       "range": {
         "startLine": 20,
         "startChar": 8,
@@ -123,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "5f830340_915e380f",
+        "filename": "ios/web/merge_dictionary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Actually going to move this to share between iOS and //content in a CL that this will become dependent on, so this will disappear from this CL. (This is code I copied from //content, so I\u0027m not familiar with the discussion that happened there).",
+      "parentUuid": "8cd085d1_dc88e4d6",
+      "range": {
+        "startLine": 14,
+        "startChar": 59,
+        "endLine": 14,
+        "endChar": 67
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed3fbaaf_8d715fb3",
         "filename": "ios/web/merge_dictionary_unittest.cc",
         "patchSetId": 2
@@ -134,6 +242,30 @@
       "writtenOn": "2017-06-27T21:38:02Z",
       "side": 1,
       "message": "nit: Add a linebreak after first include.",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bd171f_9052fee2",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Going to move this to share between iOS and //content in a CL that this will become dependent on. (This is code I copied from //content).",
+      "parentUuid": "ed3fbaaf_8d715fb3",
       "range": {
         "startLine": 5,
         "startChar": 34,
@@ -163,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "55eb0708_78349baa",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Going to move this to share between iOS and //content in a CL that this will become dependent on. (This is code I copied from //content).",
+      "parentUuid": "1ce3e11e_c537c939",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "709583bd_222d8fe9",
         "filename": "ios/web/merge_dictionary_unittest.cc",
         "patchSetId": 2
@@ -174,6 +324,24 @@
       "writtenOn": "2017-06-27T14:22:57Z",
       "side": 1,
       "message": "Can you test merging dictionaries of different shapes? Like {a: {b: []}, c: \"hello\"} with {a: \"world\", b: \"bye\"}.\n\nReading the code, it should work properly but this is not exercised by the test.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b8d978_eb5da53e",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Going to move this to share between iOS and //content in a CL that this will become dependent on. (This is code I copied from //content).",
+      "parentUuid": "709583bd_222d8fe9",
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -194,6 +362,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7ee5b8_cbddcb41",
+        "filename": "ios/web/public/app/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "340b1fcc_f92ff1b5",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -244,6 +430,30 @@
     },
     {
       "key": {
+        "uuid": "7851e90e_57358f84",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "This comment is wrong, removed.",
+      "parentUuid": "e839d7d0_8005d526",
+      "range": {
+        "startLine": 39,
+        "startChar": 43,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cb9a4ed_3a419186",
         "filename": "ios/web/public/service_manager_connection.h",
         "patchSetId": 2
@@ -255,6 +465,24 @@
       "writtenOn": "2017-06-27T14:22:57Z",
       "side": 1,
       "message": "I\u0027m confused by what \"Process\" means here. Chrome on iOS (like all iOS application) is single process, so what kind of process does this method name refers to?\n\nMoreover, the documentation mention the value is stored in thread local storage. So can I call SetForProcess multiple time from a single process if I call it in different threads each time?\n\nMaybe this is something obvious for someone working with mojo, but then maybe this file should have a pointer to the documentation that should explain those terminology and how mojo and threads interact.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c125352a_b1011782",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "This is a //content-ism that is just not relevant on iOS. Removed \"ForProcess\" everywhere.",
+      "parentUuid": "0cb9a4ed_3a419186",
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -275,6 +503,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269d7da4_a2691bd8",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "937ab19b_2e532aec",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +547,30 @@
     },
     {
       "key": {
+        "uuid": "8d9938e2_81076240",
+        "filename": "ios/web/public/service_names.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f315238_8220ee2e",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca8dff3_09857092",
         "filename": "ios/web/public/service_names.mojom",
         "patchSetId": 2
@@ -315,6 +585,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934ccfbd_f57cb16d",
+        "filename": "ios/web/public/service_names.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fca8dff3_09857092",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +629,30 @@
     },
     {
       "key": {
+        "uuid": "7a4bbbe5_5f33e251",
+        "filename": "ios/web/public/web_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "745a2712_95a40421",
+      "range": {
+        "startLine": 125,
+        "startChar": 5,
+        "endLine": 125,
+        "endChar": 10
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "707e7c99_a8f08169",
         "filename": "ios/web/service_manager_connection_impl.cc",
         "patchSetId": 2
@@ -352,6 +664,30 @@
       "writtenOn": "2017-06-27T21:38:02Z",
       "side": 1,
       "message": "How is this method threadsafe? It does use any synchronization for ivars.",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313ab51f_893f3cdd",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "It\u0027s a good question. With the caveat that I didn\u0027t write this code, the intent is that it should only be called once, and that that one call can be from whatever thread you wish. I added a DCHECK in StartOnIOThread() that that method only gets executed once; that DCHECK will fire if Start() is ever called multiple times from different threads because the multiple invocations of StartOnIOThread() are guaranteed to be ordered with each other.",
+      "parentUuid": "707e7c99_a8f08169",
       "range": {
         "startLine": 58,
         "startChar": 18,
@@ -381,6 +717,24 @@
     },
     {
       "key": {
+        "uuid": "21e43abb_02871765",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ff7dacb_0946cf15",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a26e4f3_87869eb0",
         "filename": "ios/web/service_manager_connection_impl.cc",
         "patchSetId": 2
@@ -395,6 +749,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98438f1a_3d157645",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a26e4f3_87869eb0",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -415,6 +787,24 @@
     },
     {
       "key": {
+        "uuid": "79728d27_66ec46dc",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b7814c6_59088a65",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf196c3a_c5187833",
         "filename": "ios/web/service_manager_connection_impl.cc",
         "patchSetId": 2
@@ -432,6 +822,24 @@
     },
     {
       "key": {
+        "uuid": "c0aab1f7_aa50c181",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf196c3a_c5187833",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "719580fe_2bdb43ee",
         "filename": "ios/web/service_manager_connection_impl.cc",
         "patchSetId": 2
@@ -443,6 +851,24 @@
       "writtenOn": "2017-06-27T14:22:57Z",
       "side": 1,
       "message": "This is not consistent with the documentation. Documentation states that this is store in thread local storage and all calls need to be made from the same thread (i.e. GetForProcess and DestroyForProcess) but the implementation store in a global, so not in thread local storage and GetForProcess will return the value in any thread.\n\nIf the object is only valid from a single thread, then it should either be in TLS or there should be DCHECK() that the thread is the expected one.",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60c2135_712cefde",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Yep, changed the documentation which was wrong. This method should only be called once, and all these methods should be called on the UI thread. Updated.",
+      "parentUuid": "719580fe_2bdb43ee",
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -466,6 +892,24 @@
     },
     {
       "key": {
+        "uuid": "1814a9c8_cba30660",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "context_ is a WeakPtr.",
+      "parentUuid": "1a4a532d_23e099e6",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03bf552b_4a38c49b",
         "filename": "ios/web/service_manager_connection_impl.h",
         "patchSetId": 2
@@ -480,6 +924,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888eec67_459cca05",
+        "filename": "ios/web/service_manager_connection_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03bf552b_4a38c49b",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -503,6 +965,30 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc79ecd_928f88d2",
+        "filename": "ios/web/service_manager_connection_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69310f59_91c79cbf",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -541,6 +1027,24 @@
     },
     {
       "key": {
+        "uuid": "c94d7d3c_dd8d13f8",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "I tend to agree with Ken here, especially as I just changed this flow so that it\u0027s necessary to call .get() on manifest_value just below. However, I ultimately defer to Sylvain as //ios OWNER; if you feel strongly about it, let me know and I\u0027ll make the change.",
+      "parentUuid": "b459cbd8_60808dbd",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef298f36_4c059e0f",
         "filename": "ios/web/service_manager_context.mm",
         "patchSetId": 2
@@ -552,6 +1056,24 @@
       "writtenOn": "2017-06-27T14:22:57Z",
       "side": 1,
       "message": "ditto",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef3c16a_4fde4bd3",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Same as above: deferred for now due to calling .get() below, but let me know if you feel strongly.",
+      "parentUuid": "ef298f36_4c059e0f",
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -598,6 +1120,30 @@
     },
     {
       "key": {
+        "uuid": "020dc044_b142aa45",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3597532e_1cf98634",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 22
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70039d55_8bfc210e",
         "filename": "ios/web/service_manager_context.mm",
         "patchSetId": 2
@@ -612,6 +1158,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b60e4ff_0219046b",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70039d55_8bfc210e",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -632,6 +1196,24 @@
     },
     {
       "key": {
+        "uuid": "6e4f1d48_06681c17",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a6b0049_015a0e11",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32fbe0f2_68a41d80",
         "filename": "ios/web/shell/shell_web_client.mm",
         "patchSetId": 2
@@ -646,6 +1228,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a09e31d_388c2fad",
+        "filename": "ios/web/shell/shell_web_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32fbe0f2_68a41d80",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -672,6 +1272,30 @@
     },
     {
       "key": {
+        "uuid": "565c76e7_a74af7ee",
+        "filename": "ios/web/shell/test/service_manager_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b8c1ffb_fea9a62b",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee7cf6f_278d5c97",
         "filename": "ios/web/web_state/web_state_impl.mm",
         "patchSetId": 2
@@ -686,6 +1310,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb62e85_4c86d45d",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee7cf6f_278d5c97",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
