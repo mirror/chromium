@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "2f6e6abf_0b2d7ab8",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "Delete this part. Not needed since you start the sequence with \"Note that \u0027sequence\u0027 mode...\"",
+      "range": {
+        "startLine": 656,
+        "startChar": 7,
+        "endLine": 656,
+        "endChar": 41
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa17737_3797fbf4",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "nit: would delete the hypothetical?",
+      "range": {
+        "startLine": 707,
+        "startChar": 5,
+        "endLine": 708,
+        "endChar": 64
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90dbc9c3_e8544917",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "I don\u0027t follow this block. I don\u0027t see that you\u0027re using an append window in this test (nor why you would want to?).\n\nI\u0027m also confused about why this is seemingly not affecting CheckRangesByTimestamp on lines 727 \u0026\u0026 728 below",
+      "range": {
+        "startLine": 718,
+        "startChar": 2,
+        "endLine": 722,
+        "endChar": 3
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd260882_def76626",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -25,6 +94,76 @@
     },
     {
       "key": {
+        "uuid": "e0b60037_0f6e376b",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bd260882_def76626",
+      "range": {
+        "startLine": 760,
+        "startChar": 2,
+        "endLine": 760,
+        "endChar": 15
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2c21c4e_22da101f",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "I don\u0027t follow. What is the symptom of a \"triggered\" discontinuity? From POV of ranges by timestamp, this latest append *has* created a discontinuity.\n\nEdit: I get what you mean after reading more of this test. What I think you intend is to say that this does not trigger a new *cfg* for video, meaning video does not require an additional key frame after this audio append. Maybe rephrase",
+      "range": {
+        "startLine": 764,
+        "startChar": 54,
+        "endLine": 765,
+        "endChar": 19
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f16d369_4fc36a57",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "I\u0027m confused. Why is timestamp offset at -20? I assume this is what caused the audio range to now start at 30?",
+      "range": {
+        "startLine": 769,
+        "startChar": 4,
+        "endLine": 769,
+        "endChar": 13
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3b8cf58_bf130417",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -36,6 +175,70 @@
       "writtenOn": "2017-06-24T05:11:11Z",
       "side": 1,
       "message": "In sequence mode, this line previously caused the following CHECK failure:\nFATAL:source_buffer_stream.cc(226)] Check failed: !new_coded_frame_group_ || buffers.front()-\u003eis_key_frame().",
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c087b634_80246c56",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3b8cf58_bf130417",
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "789236f6_c9faaa4c",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "Why is that? I\u0027m surprised we satisfy the seek at all with seek time being so far from buffered start.",
+      "range": {
+        "startLine": 789,
+        "startChar": 68,
+        "endLine": 790,
+        "endChar": 47
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5942bfb_a06d33ab",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T23:34:43Z",
+      "side": 1,
+      "message": "nit: I would just use the literal 100 here and in other seeks. There isn\u0027t really a relationship between where you\u0027re seeking and frame_duration_.\n\nSame goes for any checks of manually specified timestamp offsets. Perhaps for checks of timestamp offsets in general (when not manually specified, they\u0027re a function of PTS gaps, but not duration).",
+      "range": {
+        "startLine": 797,
+        "startChar": 28,
+        "endLine": 797,
+        "endChar": 43
+      },
       "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
