@@ -2711,7 +2711,9 @@ TEST_F(TraceEventTestFixture, TraceRecordAsMuchAsPossibleMode) {
 void BlockUntilStopped(WaitableEvent* task_start_event,
                        WaitableEvent* task_stop_event) {
   task_start_event->Signal();
+  LOG(INFO) << "___ task_start signaled, waiting for stop";
   task_stop_event->Wait();
+  LOG(INFO) << "___ task_stop";
 }
 
 TEST_F(TraceEventTestFixture, SetCurrentThreadBlocksMessageLoopBeforeTracing) {
@@ -2815,6 +2817,8 @@ TEST_F(TraceEventTestFixture, ThreadOnceBlocking) {
                                  WaitableEvent::InitialState::NOT_SIGNALED);
   WaitableEvent task_stop_event(WaitableEvent::ResetPolicy::AUTOMATIC,
                                 WaitableEvent::InitialState::NOT_SIGNALED);
+  LOG(INFO) << "StartEvent = " << &task_start_event;
+  LOG(INFO) << "StopEvent = " << &task_stop_event;
   thread.task_runner()->PostTask(
       FROM_HERE,
       BindOnce(&BlockUntilStopped, &task_start_event, &task_stop_event));

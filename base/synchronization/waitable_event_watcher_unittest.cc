@@ -179,6 +179,35 @@ void RunTest_SignalAndDelete(MessageLoop::Type message_loop_type,
   }
 }
 
+void RunTest_SignaledAtStart(MessageLoop::Type message_loop_type) {
+  MessageLoop message_loop(message_loop_type);
+
+  WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+
+  WaitableEventWatcher watcher;
+
+  RunLoop run_loop;
+
+  bool signaled = false;
+  WaitableEventWatcher::EventCallback watcher_callback =
+      base::BindOnce([](const base::Closure& quit_closure,
+                        bool* signaled,
+                        WaitableEvent*) {
+        *signaled = true;
+        quit_closure.Run();
+      },
+      run_loop.QuitClosure(),
+      base::Unretained(&signaled));
+
+  event.Signal();
+  watcher.StartWatching(&event, std::move(watcher_callback));
+
+  run_loop.Run();
+
+  EXPECT_TRUE(signaled);
+}
+
 }  // namespace
 
 //-----------------------------------------------------------------------------
@@ -218,6 +247,12 @@ TEST(WaitableEventWatcherTest, SignalAndDelete) {
   for (int i = 0; i < kNumTestingMessageLoops; i++) {
     RunTest_SignalAndDelete(testing_message_loops[i], false);
     RunTest_SignalAndDelete(testing_message_loops[i], true);
+  }
+}
+
+TEST(WaitableEventWatcherTest, SignaledAtStart) {
+  for (int i = 0; i < kNumTestingMessageLoops; i++) {
+    RunTest_SignaledAtStart(testing_message_loops[i]);
   }
 }
 
