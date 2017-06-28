@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10030b3b_10633b6c",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-28T17:28:06Z",
+      "side": 1,
+      "message": "Can/Should the return be const?",
+      "revId": "b3c181a1c028d9e1743da11a3cdaf4479ba7690d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
