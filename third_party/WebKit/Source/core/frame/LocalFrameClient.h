@@ -182,6 +182,10 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   // propogates renderer loading behavior to the browser process for histograms.
   virtual void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) {}
 
+  // Will be called when a new feature is observed UseCounter. This propogates
+  // renderer feature usage to the browser process for histograms.
+  virtual void DidObserveNewFeatureUsage(WebFeature) {}
+
   // Transmits the change in the set of watched CSS selectors property that
   // match any element on the frame.
   virtual void SelectorMatchChanged(

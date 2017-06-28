@@ -5,10 +5,12 @@
 #ifndef CHROME_RENDERER_PAGE_LOAD_METRICS_PAGE_TIMING_METRICS_SENDER_H_
 #define CHROME_RENDERER_PAGE_LOAD_METRICS_PAGE_TIMING_METRICS_SENDER_H_
 
+#include <bitset>
 #include <memory>
 
 #include "base/macros.h"
 #include "chrome/common/page_load_metrics/page_load_timing.h"
+#include "third_party/WebKit/public/platform/WebFeature.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 
 namespace base {
@@ -30,6 +32,7 @@ class PageTimingMetricsSender {
   ~PageTimingMetricsSender();
 
   void DidObserveLoadingBehavior(blink::WebLoadingBehaviorFlag behavior);
+  void DidObserveNewFeatureUsage(blink::WebFeature feature);
   void Send(mojom::PageLoadTimingPtr timing);
 
  protected:
@@ -38,6 +41,7 @@ class PageTimingMetricsSender {
  private:
   void EnsureSendTimer();
   void SendNow();
+  void ClearNewFeatures();
 
   std::unique_ptr<PageTimingSender> sender_;
   std::unique_ptr<base::Timer> timer_;
@@ -46,6 +50,15 @@ class PageTimingMetricsSender {
   // The the sender keep track of metadata as it comes in, because the sender is
   // scoped to a single committed load.
   mojom::PageLoadMetadataPtr metadata_;
+
+  // The bitmap keeps track of features that has been measured on the current
+  // page so far, as each feature should be measured exactly once.
+  std::bitset<static_cast<int>(blink::WebFeature::kNumberOfFeatures)>
+      features_sent_;
+
+  // A list of newly measured features on the current page, to be sent to the
+  // browser.
+  mojom::PageLoadFeaturesPtr new_features_;
 
   bool have_sent_ipc_ = false;
 

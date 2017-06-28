@@ -733,6 +733,11 @@ void LocalFrameClientImpl::DidObserveLoadingBehavior(
     web_frame_->Client()->DidObserveLoadingBehavior(behavior);
 }
 
+void LocalFrameClientImpl::DidObserveNewFeatureUsage(WebFeature feature) {
+  if (web_frame_->Client())
+    web_frame_->Client()->DidObserveNewFeatureUsage(feature);
+}
+
 void LocalFrameClientImpl::SelectorMatchChanged(
     const Vector<String>& added_selectors,
     const Vector<String>& removed_selectors) {

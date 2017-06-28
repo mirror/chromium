@@ -80,7 +80,23 @@ void PageLoadMetricsObserverTestHarness::SimulateTimingUpdate(
 void PageLoadMetricsObserverTestHarness::SimulateTimingAndMetadataUpdate(
     const mojom::PageLoadTiming& timing,
     const mojom::PageLoadMetadata& metadata) {
-  observer_->OnTimingUpdated(web_contents()->GetMainFrame(), timing, metadata);
+  SimulateTimingAndMetadataAndFeaturesUpdate(timing, metadata,
+                                             mojom::PageLoadFeatures());
+}
+
+void PageLoadMetricsObserverTestHarness::SimulateFeaturesUpdate(
+    const mojom::PageLoadFeatures& features) {
+  SimulateTimingAndMetadataAndFeaturesUpdate(
+      mojom::PageLoadTiming(), mojom::PageLoadMetadata(), features);
+}
+
+void PageLoadMetricsObserverTestHarness::
+    SimulateTimingAndMetadataAndFeaturesUpdate(
+        const mojom::PageLoadTiming& timing,
+        const mojom::PageLoadMetadata& metadata,
+        const mojom::PageLoadFeatures& features) {
+  observer_->OnTimingUpdated(web_contents()->GetMainFrame(), timing, metadata,
+                             features);
   // If sending the timing update caused the PageLoadMetricsUpdateDispatcher to
   // schedule a buffering timer, then fire it now so metrics are dispatched to
   // observers.
