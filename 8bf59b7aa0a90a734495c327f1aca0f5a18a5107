@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ebed8bb_25ffb057",
+        "filename": "chrome/browser/ui/webui/ntp/app_launcher_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-28T20:12:23Z",
+      "side": 1,
+      "message": "maybe s/Get/Create?\n\nIdeally, we\u0027d also be able to reset() the member after the dialog finishes so that we could DCHECK(!extension_uninstall_dialog_) here, but I\u0027m not sure if there will be more complications with that.",
+      "revId": "8bf59b7aa0a90a734495c327f1aca0f5a18a5107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
