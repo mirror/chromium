@@ -299,6 +299,30 @@
     },
     {
       "key": {
+        "uuid": "cf1c0293_1542fead",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T12:43:05Z",
+      "side": 1,
+      "message": "(Just to note what I said offline: RawScriptData and ScriptData works for me, but more descriptive comments would be really appreciated. I\u0027m also fine with other alternative names, like TransferredScriptData or IncomingScriptData or whatever... given that it comes with a good class-level comment :))",
+      "parentUuid": "8e702913_6409906d",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9708ba51_e21f313c",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
