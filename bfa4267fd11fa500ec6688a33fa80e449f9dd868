@@ -16,6 +16,24 @@
       "revId": "bfa4267fd11fa500ec6688a33fa80e449f9dd868",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e36718_aa6b3fd1",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2191,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-28T06:02:53Z",
+      "side": 1,
+      "message": "\u003e Would this be counted somewhere else?\n\nNo, and IIUC, if the bitmap is not mmap-ed, it is fine not to count the bitmap since memory-infra dumps mainly represent resident memory size.\n\n+ssid@, +primiano@, what do you think?",
+      "parentUuid": "dafd2a92_11670f83",
+      "revId": "bfa4267fd11fa500ec6688a33fa80e449f9dd868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
