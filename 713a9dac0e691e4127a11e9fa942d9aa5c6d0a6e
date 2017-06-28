@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f192d54_9fa970ce",
+        "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-06-28T21:08:38Z",
+      "side": 1,
+      "message": "I didn\u0027t know RunLoop::Quit was thread-safe. It is! Wow.",
+      "range": {
+        "startLine": 1433,
+        "startChar": 41,
+        "endLine": 1433,
+        "endChar": 55
+      },
+      "revId": "713a9dac0e691e4127a11e9fa942d9aa5c6d0a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
