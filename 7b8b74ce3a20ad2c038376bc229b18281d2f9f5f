@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7df4a42_ce804229",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "How can this method return null?",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9668606_4c6d6f70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "If androidMediaRouter is null, is there a point to even constructing a RemotingMediaRouteProvider?",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c8695c_b0c49490",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "Can this check go first?",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2452fdac_30b732ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "Do you want to log here as well?",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67113eb_67c55196",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "Is this actually a URL?",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1557a47_bd75e06c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "@Nullable?",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fb712e_f0e5703e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "It\u0027s usually not good style to catch and swallow exceptions unless they are something that is expected to happen and the upper layers don\u0027t need to know about it.",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

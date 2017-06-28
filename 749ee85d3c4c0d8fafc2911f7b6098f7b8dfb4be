@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f9c7165d_adaeeb4a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "Should this be assert source !\u003d null then?  Not sure what the Android style is for assertions.",
+      "parentUuid": "e6fd2cd1_de4b3a9f",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab7d2a7a_e79405f2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
         "patchSetId": 3
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "7a48e023_2315eade",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cec866ad_cd7ab3d8",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "941353c7_a31904aa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
         "patchSetId": 3
@@ -244,6 +280,24 @@
       "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4143d6_ac5736c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "39e7bca3_5b0df770",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "76f252a5_60c21ad2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "Can you use TODO(crbug.com/XXX) to associate with a tracking bug?",
+      "parentUuid": "48906bf1_a06f652c",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "426b8682_070c8c0f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
         "patchSetId": 3
@@ -311,6 +383,24 @@
       "side": 1,
       "message": "Not sure what the benefits are? Strings are probably easier to store and compare.",
       "parentUuid": "426b8682_070c8c0f",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06ab6179_caf2f24b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-28T22:12:16Z",
+      "side": 1,
+      "message": "The benefit is using the URL parsing methods instead of rolling your own.  Not sure what you mean about storage as both String and URL are objects held by reference.",
+      "parentUuid": "40531d4c_ca617b94",
       "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
