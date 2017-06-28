@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe4b43b2_ff58a18c",
+        "filename": "components/web_contents_delegate_android/android/java/src/org/chromium/components/web_contents_delegate_android/ValidationMessageBubble.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-28T16:24:16Z",
+      "side": 1,
+      "message": "You can remove this as well as it isn\u0027t needed either",
+      "range": {
+        "startLine": 31,
+        "startChar": 14,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "817e0dfb7b27fef54313aa8d7c3e68df146f2f87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
