@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37410d09_523bfee3",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T18:38:44Z",
+      "side": 1,
+      "message": "Can you leave a comment here that sometimes this falls back to software, and this is why this the subnormal disabler still applies? I think that\u0027s a bit non-obvious why GLRenderer would need this.",
+      "revId": "d8db7f2a2d45e2151e8f4d41b251a8eb4943d79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
