@@ -516,6 +516,30 @@
       "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bae624_a5969d23",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-28T21:02:13Z",
+      "side": 1,
+      "message": "Mojo internally selects between InlinedStructPtr and StructPtr as appropriate. I don\u0027t know the heuristics it uses to pick, but I don\u0027t think there\u0027s any guarantee that you\u0027ll get StructPtr vs InlinedStructPtr.",
+      "parentUuid": "7d172306_c72695e5",
+      "range": {
+        "startLine": 579,
+        "startChar": 0,
+        "endLine": 586,
+        "endChar": 38
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
