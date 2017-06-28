@@ -355,6 +355,20 @@ TimelineModel.TracingLayer = class {
 
   /**
    * @override
+   * @return {!Protocol.LayerTree.StickyPositionConstraint}
+   */
+  stickyPositionConstraint() {
+    // TODO(smcgruer): Determine how this works & implement properly
+    return {
+      stickyBoxRect: {x: 0, y: 0, height: 0, width: 0},
+      containingBlockRect: {x: 0, y: 0, height: 0, width: 0},
+      nearestLayerShiftingStickyBox: '-1',
+      nearestLayerShiftingContainingBlock: '-1'
+    };
+  }
+
+  /**
+   * @override
    * @return {number}
    */
   gpuMemoryUsage() {

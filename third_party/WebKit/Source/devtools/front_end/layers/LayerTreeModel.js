@@ -389,6 +389,14 @@ Layers.AgentLayer = class {
 
   /**
    * @override
+   * @return {!Protocol.LayerTree.StickyPositionConstraint}
+   */
+  stickyPositionConstraint() {
+    return this._layerPayload.stickyPositionConstraint;
+  }
+
+  /**
+   * @override
    * @return {!Promise<!Array<string>>}
    */
   async requestCompositingReasons() {
