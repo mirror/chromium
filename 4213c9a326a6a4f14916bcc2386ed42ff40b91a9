@@ -16,6 +16,24 @@
       "revId": "4213c9a326a6a4f14916bcc2386ed42ff40b91a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ae660e_b390aa4e",
+        "filename": "ui/ozone/platform/drm/common/drm_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-06-28T19:04:23Z",
+      "side": 1,
+      "message": "What you say is sound.\nMost of the helpers in drm_util.{h,cc} seem to be used only from the gpu process already though.\n\nWDYT if we leave this here for now (this CL will have to be merged too and moving files is never nice with potential conflicts) and then we\u0027ll put up another CL to move all the helpers used only by the gpu to drm/gpu?",
+      "parentUuid": "30902bdd_83a3fb1b",
+      "revId": "4213c9a326a6a4f14916bcc2386ed42ff40b91a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
