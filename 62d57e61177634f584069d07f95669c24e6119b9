@@ -16,6 +16,24 @@
       "revId": "62d57e61177634f584069d07f95669c24e6119b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fa86c4_4a95c98c",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-28T22:43:22Z",
+      "side": 1,
+      "message": ":-)\n\nI mean, it\u0027s only SHA-1 you could easily predict, that right?",
+      "parentUuid": "bfc23e7a_bda02934",
+      "revId": "62d57e61177634f584069d07f95669c24e6119b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
