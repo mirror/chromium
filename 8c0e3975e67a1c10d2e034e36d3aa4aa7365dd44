@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7721b628_46684648",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-28T21:00:58Z",
+      "side": 1,
+      "message": "Please do not use \"IPH\" since it has not been defined here. \nI think this can be replaced with \"feature engagement events\"\n\nAlso, s/\"redirects to\"/\"returns\".",
+      "revId": "8c0e3975e67a1c10d2e034e36d3aa4aa7365dd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77280c9_03376b3f",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-28T21:00:58Z",
+      "side": 1,
+      "message": "Please remove unused includes.",
+      "revId": "8c0e3975e67a1c10d2e034e36d3aa4aa7365dd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f911534_fc7ca78c",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-28T21:00:58Z",
+      "side": 1,
+      "message": "I think this needs an ARC guard for the sake of posterity.",
+      "revId": "8c0e3975e67a1c10d2e034e36d3aa4aa7365dd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
