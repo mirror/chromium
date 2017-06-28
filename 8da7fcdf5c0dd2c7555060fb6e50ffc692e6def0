@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43086ead_0716e084",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-28T18:15:27Z",
+      "side": 1,
+      "message": "These methods are called by the browser. The renderer just implements this method to write to whatever file the browser provided it.",
+      "parentUuid": "4d1f8096_5e5f8a53",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 43
+      },
+      "revId": "8da7fcdf5c0dd2c7555060fb6e50ffc692e6def0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ea7783_df7f607c",
         "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.h",
         "patchSetId": 10
