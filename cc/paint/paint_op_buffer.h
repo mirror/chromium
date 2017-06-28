@@ -770,12 +770,9 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 
   void Reset();
 
-  // Replays the paint op buffer into the canvas. If |indices| is specified, it
-  // contains indices in an increasing order and only the indices specified in
-  // the vector will be replayed.
+  // Replays the paint op buffer into the canvas.
   void Playback(SkCanvas* canvas,
-                SkPicture::AbortCallback* callback = nullptr,
-                const std::vector<size_t>* indices = nullptr) const;
+                SkPicture::AbortCallback* callback = nullptr) const;
 
   // Returns the size of the paint op buffer. That is, the number of ops
   // contained in it.
@@ -784,6 +781,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   size_t bytes_used() const {
     return sizeof(*this) + reserved_ + subrecord_bytes_used_;
   }
+  size_t next_op_offset() const { return used_; }
   int numSlowPaths() const { return num_slow_paths_; }
   bool HasDiscardableImages() const { return has_discardable_images_; }
 
@@ -855,73 +853,105 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 #endif
   }
 
+  void PlaybackForTesting(SkCanvas* canvas,
+                          const std::vector<size_t>* offsets) const {
+    Playback(canvas, nullptr, offsets);
+  }
+
   class Iterator {
    public:
-    explicit Iterator(const PaintOpBuffer* buffer,
-                      const std::vector<size_t>* indices = nullptr)
-        : buffer_(buffer), ptr_(buffer_->data_.get()), indices_(indices) {
-      if (indices) {
-        if (indices->empty()) {
-          *this = end();
-          return;
-        }
-        target_idx_ = (*indices)[0];
-      }
-      ++(*this);
-    }
+    explicit Iterator(const PaintOpBuffer* buffer)
+        : Iterator(buffer, nullptr) {}
 
     PaintOp* operator->() const { return reinterpret_cast<PaintOp*>(ptr_); }
     PaintOp* operator*() const { return operator->(); }
-    Iterator begin() { return Iterator(buffer_, indices_); }
+    Iterator begin() { return Iterator(buffer_, offsets_); }
     Iterator end() {
+      // End iterator has size_t max op offset and target offset.
       return Iterator(buffer_, buffer_->data_.get() + buffer_->used_,
-                      buffer_->size());
+                      std::numeric_limits<size_t>::max());
     }
     bool operator!=(const Iterator& other) {
       // Not valid to compare iterators on different buffers.
       DCHECK_EQ(other.buffer_, buffer_);
-      return other.op_idx_ != op_idx_;
+      return other.op_offset_ != op_offset_;
     }
     Iterator& operator++() {
-      if (target_idx_ == std::numeric_limits<size_t>::max()) {
+      // If we're already past the buffer (ie *this is false), or if our target
+      // is the "end" target, then just set this to be the end.
+      if (!*this || target_offset_ == std::numeric_limits<size_t>::max()) {
         *this = end();
         return *this;
       }
 
-      while (*this && target_idx_ != op_idx_) {
-        PaintOp* op = **this;
-        uint32_t type = op->type;
-        CHECK_LE(type, static_cast<uint32_t>(PaintOpType::LastPaintOpType));
-        ptr_ += op->skip;
-        op_idx_++;
-      }
+      // Sanity check.
+      CHECK_GE(target_offset_, op_offset_);
+      // Advance the iterator to the target offset.
+      ptr_ += (target_offset_ - op_offset_);
+      op_offset_ = target_offset_;
 
-      if (indices_) {
-        if (++indices_index_ >= indices_->size())
-          target_idx_ = std::numeric_limits<size_t>::max();
+      // Now determine the next target. If we're using offsets, that's just the
+      // next offset specified (or max if we're past the end). If we're not
+      // using offsets, then the above code could've taken us past the end, in
+      // which case set *this to be end(). Otherwise, just advance the target by
+      // the current op's |skip|.
+      if (offsets_) {
+        if (++offsets_index_ >= offsets_->size())
+          target_offset_ = std::numeric_limits<size_t>::max();
         else
-          target_idx_ = (*indices_)[indices_index_];
+          target_offset_ = (*offsets_)[offsets_index_];
       } else {
-        ++target_idx_;
+        if (!*this)
+          *this = end();
+        else
+          target_offset_ += (**this)->skip;
       }
       return *this;
     }
-    operator bool() const { return op_idx_ < buffer_->size(); }
-    size_t op_idx() const { return op_idx_; }
+    operator bool() const { return op_offset_ < buffer_->next_op_offset(); }
 
    private:
-    Iterator(const PaintOpBuffer* buffer, char* ptr, size_t op_idx)
-        : buffer_(buffer), ptr_(ptr), op_idx_(op_idx) {}
+    friend class PaintOpBuffer;
+    friend class SolidColorAnalyzer;
+
+    Iterator(const PaintOpBuffer* buffer, char* ptr, size_t op_offset)
+        : buffer_(buffer),
+          ptr_(ptr),
+          op_offset_(op_offset),
+          target_offset_(op_offset) {}
+
+    // We only trust with the offsets from the friend classes.
+    Iterator(const PaintOpBuffer* buffer, const std::vector<size_t>* offsets)
+        : buffer_(buffer), ptr_(buffer_->data_.get()), offsets_(offsets) {
+      // If we're using offsets, then set |target_offset_| to the first one.
+      if (offsets) {
+        if (offsets->empty()) {
+          *this = end();
+          return;
+        }
+        target_offset_ = (*offsets)[0];
+      }
+      ++(*this);
+    }
 
     const PaintOpBuffer* buffer_ = nullptr;
     char* ptr_ = nullptr;
-    const std::vector<size_t>* indices_ = nullptr;
-    size_t op_idx_ = 0;
-    size_t target_idx_ = 0;
-    size_t indices_index_ = 0;
+    const std::vector<size_t>* offsets_ = nullptr;
+    size_t op_offset_ = 0;
+    size_t target_offset_ = 0;
+    size_t offsets_index_ = 0;
   };
 
  private:
+  friend class DisplayItemList;
+
+  // Replays the paint op buffer into the canvas. If |indices| is specified, it
+  // contains indices in an increasing order and only the indices specified in
+  // the vector will be replayed.
+  void Playback(SkCanvas* canvas,
+                SkPicture::AbortCallback* callback,
+                const std::vector<size_t>* indices) const;
+
   void ReallocBuffer(size_t new_size);
   // Returns the allocated op and the number of bytes to skip in |data_| to get
   // to the next op.

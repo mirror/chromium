@@ -42,10 +42,41 @@ class CC_PAINT_EXPORT DisplayItemList
   void Raster(SkCanvas* canvas,
               SkPicture::AbortCallback* callback = nullptr) const;
 
-  PaintOpBuffer* StartPaint() {
+  // TODO(vmpstr): This is only used to keep track of debugging info, so we can
+  // probably remove it? But it would be nice to delimit painting in a block
+  // somehow (RAII object maybe).
+  void StartPaint() {
     DCHECK(!in_painting_);
     in_painting_ = true;
-    return &paint_op_buffer_;
+  }
+
+  // Push functions construct a new op on the paint op buffer, while maintaining
+  // bookkeeping information. Must be called after invoking StartPaint().
+  template <typename T, typename... Args>
+  void push(Args&&... args) {
+    DCHECK(in_painting_);
+    offsets_.push_back(paint_op_buffer_.next_op_offset());
+    paint_op_buffer_.push<T>(std::forward<Args>(args)...);
+  }
+
+  template <typename T, typename... Args>
+  void push_with_data(const void* data, size_t bytes, Args&&... args) {
+    DCHECK(in_painting_);
+    offsets_.push_back(paint_op_buffer_.next_op_offset());
+    paint_op_buffer_.push_with_data<T>(data, bytes,
+                                       std::forward<Args>(args)...);
+  }
+
+  template <typename T, typename M, typename... Args>
+  void push_with_array(const void* data,
+                       size_t bytes,
+                       const M* array,
+                       size_t count,
+                       Args&&... args) {
+    DCHECK(in_painting_);
+    offsets_.push_back(paint_op_buffer_.next_op_offset());
+    paint_op_buffer_.push_with_array<T>(data, bytes, array, count,
+                                        std::forward<Args>(args)...);
   }
 
   void EndPaintOfUnpaired(const gfx::Rect& visual_rect) {
@@ -165,6 +196,8 @@ class CC_PAINT_EXPORT DisplayItemList
   // display item list. These rects are intentionally kept separate because they
   // are used to decide which ops to walk for raster.
   std::vector<gfx::Rect> visual_rects_;
+  // Byte offsets associated with each of the op.
+  std::vector<size_t> offsets_;
   // A stack of pairs of indices and counts. The indices are into the
   // |visual_rects_| for each paired begin range that hasn't been closed. The
   // counts refer to the number of visual rects in that begin sequence that end
