@@ -166,8 +166,18 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
     score.Commit();
   }
 
+  void SetLastMediaPlaybackTime(GURL url, base::Time last_media_playback_time) {
+    MediaEngagementScore score = service_->CreateEngagementScore(url);
+    score.SetLastMediaPlaybackTime(last_media_playback_time);
+    score.Commit();
+  }
+
   double GetTotalScore(GURL url) {
     return service_->CreateEngagementScore(url).GetTotalScore();
+  }
+
+  void ClearDataBetweenTime(base::Time begin, base::Time end) {
+    service_->ClearDataBetweenTime(begin, end);
   }
 
   std::map<GURL, double> GetScoreMap() const { return service_->GetScoreMap(); }
@@ -383,4 +393,42 @@ TEST_F(MediaEngagementServiceTest, CleanupOriginsOnHistoryDeletion) {
     ExpectScores(origin4, MediaEngagementScore::kScoreMinVisits, 2,
                  TimeNotSet());
   }
+}
+
+TEST_F(MediaEngagementServiceTest, CleanupDataOnSiteDataCleanup) {
+  GURL origin1("http://www.google.com");
+  GURL origin2("http://example.com");
+  GURL origin3("http://example.org");
+  GURL origin4("http://www.google.co.uk");
+
+  base::Time today = GetReferenceTime();
+  base::Time yesterday = today - base::TimeDelta::FromDays(1);
+  base::Time two_days = today - base::TimeDelta::FromDays(2);
+  SetNow(today);
+
+  // origin1 and origin2 will have last playback times that are in
+  // the last two days, origin3 will have an empty last playback time
+  // and origin4 will have a last playback time today.
+  SetScores(origin1, 1, 1);
+  SetScores(origin2, 1, 1);
+  SetScores(origin3, 1, 0);
+  SetScores(origin4, 1, 1);
+  SetLastMediaPlaybackTime(origin1, yesterday);
+  SetLastMediaPlaybackTime(origin2, two_days);
+  SetLastMediaPlaybackTime(origin4, today);
+
+  ExpectScores(origin1, 1, 1, yesterday);
+  ExpectScores(origin2, 1, 1, two_days);
+  ExpectScores(origin3, 1, 0, TimeNotSet());
+  ExpectScores(origin4, 1, 1, today);
+
+  // Delete the last two days.
+  ClearDataBetweenTime(two_days, yesterday);
+
+  // origin1 and origin2 should be deleted, the rest should remain
+  // the same.
+  ExpectScores(origin1, 0, 0, TimeNotSet());
+  ExpectScores(origin2, 0, 0, TimeNotSet());
+  ExpectScores(origin3, 1, 0, TimeNotSet());
+  ExpectScores(origin4, 1, 1, today);
 }
