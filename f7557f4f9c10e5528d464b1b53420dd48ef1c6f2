@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d66a4213_a79bd17c",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-28T20:54:01Z",
+      "side": 1,
+      "message": "nit: \"Exit and ...\" reads a bit funny. how about just:\n    // callback_ will be Run in OnPendingRestartCheck.\n    return;",
+      "revId": "f7557f4f9c10e5528d464b1b53420dd48ef1c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8124d208_a4b43fd2",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-28T20:54:01Z",
+      "side": 1,
+      "message": "omit \"else\" when the \"if\" clause returns, so:\n  }\n  // An update is available, so start the update and notify the caller.\n  BeginUpdateCheckInBackground(true /* install_update_if_possible */);\n  callback_.Run(UPDATING, 0, std::string(), 0, base::string16());\n}",
+      "revId": "f7557f4f9c10e5528d464b1b53420dd48ef1c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
