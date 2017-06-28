@@ -1055,6 +1055,9 @@ extern const char kOfflinePagesAsyncDownloadDescription[];
 extern const char kOfflinePagesCtName[];
 extern const char kOfflinePagesCtDescription[];
 
+extern const char kOfflinePagesCtV2Name[];
+extern const char kOfflinePagesCtV2Description[];
+
 extern const char kOfflinePagesLoadSignalCollectingName[];
 extern const char kOfflinePagesLoadSignalCollectingDescription[];
 
