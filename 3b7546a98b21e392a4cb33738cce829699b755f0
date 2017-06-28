@@ -22,6 +22,30 @@
       "revId": "3b7546a98b21e392a4cb33738cce829699b755f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44a0909_fd14004a",
+        "filename": "chrome/installer/util/google_update_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-28T16:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f05db1_78b9c998",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 39
+      },
+      "revId": "3b7546a98b21e392a4cb33738cce829699b755f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
