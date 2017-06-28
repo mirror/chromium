@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "base/ios/block_types.h"
+
 @protocol ContentSuggestionsHeaderControllerDelegate
 
 - (BOOL)isContextMenuVisible;
@@ -16,8 +18,8 @@
 
 @protocol ContentSuggestionsHeaderControllerCommandHandler
 
-- (void)shiftTilesDown;
-- (void)shiftTilesUp;
+// Dismisses all presented modals.
+- (void)dismissModals;
 
 @end
 

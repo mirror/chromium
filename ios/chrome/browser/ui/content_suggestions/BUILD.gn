@@ -4,12 +4,17 @@
 
 source_set("content_suggestions") {
   sources = [
+    "content_suggestions_audience.h",
+    "content_suggestions_collection_commands.h",
     "content_suggestions_collection_updater.h",
     "content_suggestions_collection_updater.mm",
     "content_suggestions_commands.h",
     "content_suggestions_data_sink.h",
     "content_suggestions_data_source.h",
+    "content_suggestions_header_collection_command_handler.h",
+    "content_suggestions_header_collection_command_handler.mm",
     "content_suggestions_header_commands.h",
+    "content_suggestions_header_controller.h",
     "content_suggestions_image_fetcher.h",
     "content_suggestions_layout.h",
     "content_suggestions_layout.mm",
