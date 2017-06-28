@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb51c98d_ea0c9c28",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "What do you think about moving the state transitions into the On... functions?\n\nvoid OfflineMetricsCollectorImpl::OnSuccessfulNavigationOnline() {\n  EnsureLoaded();\n  if (current_state_ \u003d\u003d UsageType::STARTED)\n    SetState(UsageType::ONLINE);\n  else if (current_state_ \u003d\u003d UsageType::OFFLINE)\n    SetState(UsageType::MIXED);\n}\n\nvoid OfflineMetricsCollectorImpl::SetState(UsageType usage_type) {\n  // First, see if today is a new day and we need to update past days counters.\n  bool changed \u003d UpdatePastDaysIfNeeded();\n  if (usage_type !\u003d current_state_) {\n    current_state_ \u003d usage_type;\n    SaveToPrefs();\n  }\n}",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5bc466_649a56f5",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "What does \"ac\" stand for?",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2114f3de_beca2738",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "nit: ro -\u003e or",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc46e9c5_544cd575",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "Maybe \"Tracks\" instead of \"Accumulates\"? I had the perception that you add up samples but I think you are not.\n\nHere is a proposal for a description:\n\nTracks the types of usage (offline/online etc.) of Chrome observed throughout a day with a state machine. At the end of each day, the state is recorded. These end-of-day states are accumulated over time and reported via UMA when network connectivity is likely given.\n\nThe objective of the state machine is to count\n- Days on which the browser was not started\n- Days on which the browser was started but no navigations happend\n- Days on which the browser observed only successful online navigations\n- Days on which the browser observed only successful offline navigations\n- Days on which the browser observed both successful online and offline navigations\n\nThe state machine behaves as follows:\n1. Start state: UNKNOWN\n2. On browser start: UNKNOWN -\u003e STARTED\n3. On successful online navigation: STARTED -\u003e ONLINE, OFFLINE -\u003e MIXED\n4. On successful offline navigation: STARTED -\u003e OFFLINE, ONLINE -\u003e MIXED\n\n----\n\nAn even simpler way of modelling and describing this could be to store three boolean flags \"start observed\", \"online navigation observed\", \"offline navigation observed\". But the state machine is fine with me as well.",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331a326d_5594a43d",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "nit: double space before \u0027when\u0027",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5574f3_4cdc0491",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "What\u0027s an \"Incoming STARTED\"?",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157e6127_58458ad4",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "I think that this description is confusing because you are mixing the state of a state machine (\"Only successful offline navigations happened\") and with events (\"A successful offline navigation has just happened\").\n\nWhat do you think of using this only as a state, not for transitions? That would mean that the \"On...\" are responsible for the transitions.",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e3b291_1ea7f23b",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "Document what these two functions do? They sound as if they do the same.",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1d7291_3c27ef87",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "The meaning of this function is unclear to me from the function name.",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4211a3cf_f85bfd28",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "beginning or and of the day?",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7adbbd_bd335b70",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "Nit: extra space.",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1771e78_efcdcf3f",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "Count the number of days in which the state machine ended in the respective states.",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cbce70_7f584b8f",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "GetTodaysUsageFromPrefs ?",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09deae1_ec2d90bd",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbdc193_15e9807f",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "What is the metric? navigations? seconds?",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3284bcd0_b934a012",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "Can you describe the meaning of this event?",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffabef05_8d26f73b",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2574,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "Can you describe the meaning of these events? What do they count and for what period?",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9ab95a_71f1e5f6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 47499,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-28T08:39:19Z",
+      "side": 1,
+      "message": "Unfortunately, I don\u0027t get what is being recorded from this. It is unclear to me what a \"counter of a day\" is.",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
