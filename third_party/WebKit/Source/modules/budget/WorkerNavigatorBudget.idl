@@ -7,5 +7,5 @@
 [
     RuntimeEnabled=Budget
 ] partial interface WorkerNavigator {
-    [SameObject] readonly attribute BudgetService budget;
+    [SameObject, CallWith=ScriptState] readonly attribute BudgetService budget;
 };
