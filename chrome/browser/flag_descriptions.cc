@@ -2545,6 +2545,12 @@ const char kFramebustingDescription[] =
     "unless they are same-origin or the iframe is processing a user "
     "gesture.";
 
+const char kFullscreenExitUIName[] = "Fullscreen Exit UI Experience";
+
+const char kFullscreenExitUIDescription[] =
+    "Displays UI to allow the mouse and touch input methods to exit fullscreen "
+    "UI.";
+
 const char kVibrateRequiresUserGestureName[] =
     "Requiring user gesture for the Vibration API";
 

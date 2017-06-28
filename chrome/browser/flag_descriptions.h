@@ -360,6 +360,9 @@ extern const char kForceUiDirectionDescription[];
 extern const char kFramebustingName[];
 extern const char kFramebustingDescription[];
 
+extern const char kFullscreenExitUIName[];
+extern const char kFullscreenExitUIDescription[];
+
 extern const char kGamepadExtensionsName[];
 extern const char kGamepadExtensionsDescription[];
 

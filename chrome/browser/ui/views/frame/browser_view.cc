@@ -72,6 +72,7 @@
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/frame/top_container_view.h"
 #include "chrome/browser/ui/views/frame/web_contents_close_handler.h"
+#include "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h"
 #include "chrome/browser/ui/views/ime/ime_warning_bubble_view.h"
 #include "chrome/browser/ui/views/infobars/infobar_container_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
@@ -1951,9 +1952,23 @@ void BrowserView::OnGestureEvent(ui::GestureEvent* event) {
 
 void BrowserView::ViewHierarchyChanged(
     const ViewHierarchyChangedDetails& details) {
-  if (!initialized_ && details.is_add && details.child == this && GetWidget()) {
-    InitViews();
-    initialized_ = true;
+  if (details.child == this) {
+    if (!initialized_ && details.is_add && GetWidget()) {
+      InitViews();
+      initialized_ = true;
+      if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+              switches::kEnableFullscreenExitUI)) {
+        GetWidget()->GetNativeView()->AddPreTargetHandler(
+            GetFullscreenControlHost());
+      }
+    } else if (initialized_ && !details.is_add && details.parent->GetWidget() &&
+               details.parent->GetWidget()->GetNativeView() &&
+               fullscreen_control_host_) {
+      // This might not have a widget anymore, so get the NativeView from the
+      // parent.
+      details.parent->GetWidget()->GetNativeView()->RemovePreTargetHandler(
+          fullscreen_control_host_.get());
+    }
   }
 }
 
@@ -2331,6 +2346,8 @@ void BrowserView::ProcessFullscreen(bool fullscreen,
     // Hide the fullscreen bubble as soon as possible, since the mode toggle can
     // take enough time for the user to notice.
     exclusive_access_bubble_.reset();
+    if (fullscreen_control_host_)
+      fullscreen_control_host_->Hide(false);
   }
 
   // Toggle fullscreen mode.
@@ -2589,6 +2606,18 @@ int BrowserView::GetMaxTopInfoBarArrowHeight() {
     top_arrow_height = infobar_top.y() - icon_bottom.y();
   }
   return top_arrow_height;
+}
+
+FullscreenControlHost* BrowserView::GetFullscreenControlHost() {
+  if (!fullscreen_control_host_) {
+    auto* fullscreen_exit_host_view = new View();
+    // AddChildView() takes ownership of |fullscreen_exit_host_view|.
+    AddChildView(fullscreen_exit_host_view);
+    fullscreen_control_host_ = base::MakeUnique<FullscreenControlHost>(
+        this, fullscreen_exit_host_view);
+  }
+
+  return fullscreen_control_host_.get();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
