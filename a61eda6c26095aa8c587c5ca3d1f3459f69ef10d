@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5ddcc65_c2c65659",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-28T07:47:52Z",
+      "side": 1,
+      "message": "Add TODO comment to post task for setting ContentSecurityPolicy and ReferrerPolicy of the shadow page document to the main thread.",
+      "revId": "a61eda6c26095aa8c587c5ca3d1f3459f69ef10d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddc59d1_83d5ad64",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-28T07:47:52Z",
+      "side": 1,
+      "message": "Please add comments.\nThis method blocks the worker thread while receiving the script from the browser process.",
+      "revId": "a61eda6c26095aa8c587c5ca3d1f3459f69ef10d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
