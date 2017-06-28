@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04cc8a1_c1871c4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-06-28T17:08:24Z",
+      "side": 1,
+      "message": "invoked",
+      "range": {
+        "startLine": 7,
+        "startChar": 41,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "27d550bebdaa1f51a391c5ee6b9a88375169c56a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cf63d8_aed3a51d",
+        "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-06-28T17:08:24Z",
+      "side": 1,
+      "message": "This is sooo evil, I love it.",
+      "range": {
+        "startLine": 1422,
+        "startChar": 29,
+        "endLine": 1422,
+        "endChar": 52
+      },
+      "revId": "27d550bebdaa1f51a391c5ee6b9a88375169c56a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
