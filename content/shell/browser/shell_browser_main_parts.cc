@@ -111,9 +111,7 @@ base::StringPiece PlatformResourceProvider(int key) {
 
 ShellBrowserMainParts::ShellBrowserMainParts(
     const MainFunctionParams& parameters)
-    : parameters_(parameters),
-      run_message_loop_(true) {
-}
+    : parameters_(parameters), ran_ui_task_(false) {}
 
 ShellBrowserMainParts::~ShellBrowserMainParts() {
 }
@@ -195,12 +193,12 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
   if (parameters_.ui_task) {
     parameters_.ui_task->Run();
     delete parameters_.ui_task;
-    run_message_loop_ = false;
+    ran_ui_task_ = true;
   }
 }
 
 bool ShellBrowserMainParts::MainMessageLoopRun(int* result_code)  {
-  return !run_message_loop_;
+  return ran_ui_task_ || parameters_.ui_task;
 }
 
 void ShellBrowserMainParts::PostMainMessageLoopRun() {

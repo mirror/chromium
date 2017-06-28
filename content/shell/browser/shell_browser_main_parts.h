@@ -61,7 +61,7 @@ class ShellBrowserMainParts : public BrowserMainParts {
 
   // For running content_browsertests.
   const MainFunctionParams parameters_;
-  bool run_message_loop_;
+  bool ran_ui_task_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellBrowserMainParts);
 };
