@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "292c1b3c_f7b9ae9f",
+        "filename": "third_party/WebKit/Source/core/clipboard/Pasteboard.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-28T14:12:26Z",
+      "side": 1,
+      "message": "Instead, this line can be simply removed. The caller is just passing a KURL constructed with the default constructor.",
+      "parentUuid": "9ac4bad2_deb975e6",
+      "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f7e0076_8f48ddd0",
         "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
         "patchSetId": 3
