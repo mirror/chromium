@@ -36,9 +36,9 @@
     DoNotCheckConstants
 ] exception DOMException {
 
-    readonly attribute unsigned short   code;
-    readonly attribute DOMString        name;
-    readonly attribute DOMString        message;
+    [NotEnumerable] readonly attribute unsigned short   code;
+    [NotEnumerable] readonly attribute DOMString        name;
+    [NotEnumerable] readonly attribute DOMString        message;
 
     // Override in a Mozilla compatible format
     [NotEnumerable] DOMString toString();
