@@ -67,6 +67,24 @@
       "revId": "a47f53039f158ce64539cd275d2019adef96a6c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905ef334_458ba6b8",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-28T05:59:59Z",
+      "side": 1,
+      "message": "OK, I guess this is necessary so that in this \u0027simple\u0027 mode, if you overscroll a lot, then start scrolling in the reverse direction, you want the arrow to start going back immediately, instead of having to undo the extra amount you have scrolled first.\n\nWould it be simpler to remember the previous delta_x/delta_y in GestureNavSimple::OnOverscrollUpdate() instead? i.e. derive the incremental delta at each step, from the total delta it receives from OvscrollController, and incrementally update the affordance accordingly.",
+      "parentUuid": "d103c9a4_dfbe479f",
+      "revId": "a47f53039f158ce64539cd275d2019adef96a6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
