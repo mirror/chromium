@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "342dd76a_7083de5e",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-28T16:28:57Z",
+      "side": 1,
+      "message": "Does this need to live elsewhere?  iPad remembers the last opened ntp selected tab, so will this fix it for home, but not for bookmarks or recent tabs?",
+      "revId": "a268ff157ae98b81e98d60331761f0daeeee172b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
