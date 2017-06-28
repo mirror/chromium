@@ -266,6 +266,10 @@ class Manager(object):
         tests_to_skip = self._finder.skip_tests(paths, test_names, self._expectations, self._http_tests(test_names))
         tests_to_run = [test for test in test_names if test not in tests_to_skip]
 
+        # Something before this is adding duplicates in css/CSS2/floats-clear to tests_to_run
+        # tests_to_run = list(set(tests_to_run))
+        # Trying to see if things still work here without being uniquified
+
         return tests_to_run, tests_to_skip
 
     def _test_input_for_file(self, test_file):
