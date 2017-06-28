@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11e9c68f_4ab01448",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-28T05:43:37Z",
+      "side": 1,
+      "message": "This method is sadly quite confusing, but we should only use the intent if the conditions are met from above ((mIsOnFirstRun || getSavedInstanceState() \u003d\u003d null) \u0026\u0026 intent !\u003d null).  If we are doing a cold start of chrome, the same intent is sent here that originally launched chrome (even if the previous intent was a view intent and now you clicked on the launcher icon).\n\nI think we could do this by moving activeTabBeingRestored up and setting it to false by default.\n\nThen we could do this check in the if block above doing:\n\nactiveTabBeingRestored |\u003d getBottomSheet() !\u003d null\n                    \u0026\u0026 NewTabPage.isNTPUrl(IntentHandler.getUrlFromIntent(intent));\n\nthen down here it would be |\u003d !mIntentWithEffect.",
+      "range": {
+        "startLine": 968,
+        "startChar": 43,
+        "endLine": 968,
+        "endChar": 56
+      },
+      "revId": "f2e605d7989e0a74077f9b8cec7978b0deef6c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
