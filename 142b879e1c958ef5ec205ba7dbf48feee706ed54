@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2beb575c_7663d13e",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-28T23:58:51Z",
+      "side": 1,
+      "message": "Why specifically 20, and not some other number like, say, 1, or 5? Did you run some analysis? Is this a guess? How much does this choice matter?",
+      "range": {
+        "startLine": 1033,
+        "startChar": 42,
+        "endLine": 1033,
+        "endChar": 44
+      },
+      "revId": "142b879e1c958ef5ec205ba7dbf48feee706ed54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc562991_f5882ec9",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-28T23:58:51Z",
+      "side": 1,
+      "message": "I find code easier to read when there\u0027s a blank line after each early return.",
+      "range": {
+        "startLine": 1043,
+        "startChar": 4,
+        "endLine": 1043,
+        "endChar": 10
+      },
+      "revId": "142b879e1c958ef5ec205ba7dbf48feee706ed54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc69591_80e507dd",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-28T23:58:51Z",
+      "side": 1,
+      "message": "I don\u0027t find this blank line to be necessary.",
+      "revId": "142b879e1c958ef5ec205ba7dbf48feee706ed54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147314aa_ef10d8c6",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-28T23:58:51Z",
+      "side": 1,
+      "message": "Add to the comment something about where the BDP is stored and how it is accessed.",
+      "range": {
+        "startLine": 502,
+        "startChar": 7,
+        "endLine": 502,
+        "endChar": 35
+      },
+      "revId": "142b879e1c958ef5ec205ba7dbf48feee706ed54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678b17d4_a2966a29",
+        "filename": "net/nqe/network_quality_estimator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-28T23:58:51Z",
+      "side": 1,
+      "message": "atleast -\u003e at least",
+      "range": {
+        "startLine": 3096,
+        "startChar": 29,
+        "endLine": 3096,
+        "endChar": 36
+      },
+      "revId": "142b879e1c958ef5ec205ba7dbf48feee706ed54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
