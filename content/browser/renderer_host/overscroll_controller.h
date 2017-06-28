@@ -134,6 +134,12 @@ class OverscrollController {
   float overscroll_delta_x_;
   float overscroll_delta_y_;
 
+  // If |cap_overscroll_delta_| is set to true, the absolute value of overscroll
+  // delta would be capped to |overscroll_delta_cap_|. Depending on the current
+  // overscroll mode, it would cap the vertical or horizontal delta.
+  bool cap_overscroll_delta_ = false;
+  float overscroll_delta_cap_ = 0.f;
+
   // The delegate that receives the overscroll updates. The delegate is not
   // owned by this controller.
   OverscrollControllerDelegate* delegate_;

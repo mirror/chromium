@@ -89,13 +89,14 @@ class OverscrollWindowDelegateTest : public aura::test::AuraTestBase,
     overscroll_complete_ = true;
   }
 
-  void OnOverscrollModeChange(OverscrollMode old_mode,
-                              OverscrollMode new_mode,
-                              OverscrollSource source) override {
+  float OnOverscrollModeChange(OverscrollMode old_mode,
+                               OverscrollMode new_mode,
+                               OverscrollSource source) override {
     mode_changed_ = true;
     current_mode_ = new_mode;
     if (current_mode_ != OVERSCROLL_NONE)
       overscroll_started_ = true;
+    return 0.f;
   }
 
   // Window in which the overscroll window delegate is installed.
