@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "2c6cc0e9_417fa7c9",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T07:44:57Z",
+      "side": 1,
+      "message": "Maybe easier to understand as just \"InstalledScriptsManager\"?",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "279cfbaa_aa6ba27b",
         "filename": "third_party/WebKit/Source/core/workers/WorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -76,6 +93,40 @@
     },
     {
       "key": {
+        "uuid": "0fe3f917_ae6baacb",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T07:44:57Z",
+      "side": 1,
+      "message": "Think this should be moved directly under line 460, to guard against using uninitialized |source_code| or |cached_meta_data|.",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291b14ef_48ecf498",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T07:44:57Z",
+      "side": 1,
+      "message": "Is there any class or interface called InstalledScriptsManager in the design? If not I recommend renaming WorkerInstalledScriptsManager to InstalledScriptsManager.",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4f3690c_d093f5ff",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 2
@@ -87,6 +138,23 @@
       "writtenOn": "2017-06-28T07:14:31Z",
       "side": 1,
       "message": "nit: please note that this can return nullptr",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5328fc_d3e01d71",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T07:44:57Z",
+      "side": 1,
+      "message": "grammar nit: \"Kick start\" or \"Kickstart\"",
       "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +178,23 @@
         "endLine": 340,
         "endChar": 28
       },
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274d3c56_5d05db15",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T07:44:57Z",
+      "side": 1,
+      "message": "The word \"script streaming\" doesn\u0027t seem to be used in other comments. Suggest aligning with the classes like \"if the InstalledScriptsManager had the script\".",
       "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +235,40 @@
     },
     {
       "key": {
+        "uuid": "cd2a0f2a_ec9c6cf1",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T07:44:57Z",
+      "side": 1,
+      "message": "s/the creation/the worker thread is created/",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42cf4bd_e09dba39",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T07:44:57Z",
+      "side": 1,
+      "message": "s/will be/is",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63f1a5f4_e5c4174e",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -184,6 +303,23 @@
         "endLine": 25,
         "endChar": 14
       },
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0b2ce7_42937135",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T07:44:57Z",
+      "side": 1,
+      "message": "\"even though it\u0027s installed\" is strange... I thought the manager can *only* serve installed scripts.",
       "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
