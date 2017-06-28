@@ -84,27 +84,26 @@ gfx::Point PointerWatcherAdapter::GetLocationInScreen(
   return location_in_screen;
 }
 
-views::Widget* PointerWatcherAdapter::GetTargetWidget(
+gfx::NativeView PointerWatcherAdapter::GetTargetWindow(
     const ui::LocatedEvent& event) const {
-  aura::Window* window = static_cast<aura::Window*>(event.target());
-  return views::Widget::GetTopLevelWidgetForNativeView(window);
+  return static_cast<aura::Window*>(event.target());
 }
 
 void PointerWatcherAdapter::NotifyWatchers(
     const ui::PointerEvent& event,
     const ui::LocatedEvent& original_event) {
   const gfx::Point screen_location(GetLocationInScreen(original_event));
-  views::Widget* target_widget = GetTargetWidget(original_event);
+  aura::Window* target = GetTargetWindow(original_event);
   for (auto& observer : drag_watchers_)
-    observer.OnPointerEventObserved(event, screen_location, target_widget);
+    observer.OnPointerEventObserved(event, screen_location, target);
   if (original_event.type() != ui::ET_TOUCH_MOVED &&
       original_event.type() != ui::ET_MOUSE_DRAGGED) {
     for (auto& observer : move_watchers_)
-      observer.OnPointerEventObserved(event, screen_location, target_widget);
+      observer.OnPointerEventObserved(event, screen_location, target);
   }
   if (event.type() != ui::ET_POINTER_MOVED) {
     for (auto& observer : non_move_watchers_)
-      observer.OnPointerEventObserved(event, screen_location, target_widget);
+      observer.OnPointerEventObserved(event, screen_location, target);
   }
 }
 

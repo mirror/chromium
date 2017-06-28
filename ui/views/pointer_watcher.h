@@ -6,6 +6,7 @@
 #define UI_VIEWS_POINTER_WATCHER_H_
 
 #include "base/macros.h"
+#include "ui/gfx/native_widget_types.h"
 #include "ui/views/views_export.h"
 
 namespace gfx {
@@ -17,7 +18,6 @@ class PointerEvent;
 }
 
 namespace views {
-class Widget;
 
 // When a PointerWatcher is added the types of events desired is specified by
 // way of PointerWatcherEventTypes.
@@ -49,7 +49,7 @@ class VIEWS_EXPORT PointerWatcher {
 
   virtual void OnPointerEventObserved(const ui::PointerEvent& event,
                                       const gfx::Point& location_in_screen,
-                                      Widget* target) = 0;
+                                      gfx::NativeView target) = 0;
 
  protected:
   virtual ~PointerWatcher() {}
