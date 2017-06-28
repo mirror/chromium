@@ -22,6 +22,30 @@
       "revId": "c8daf646d34e26f958d508f6611b9b0d2df35e3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45aec8aa_bfc593d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-28T01:05:51Z",
+      "side": 1,
+      "message": "Yes it would. Done.",
+      "parentUuid": "8fe72014_683913e4",
+      "range": {
+        "startLine": 403,
+        "startChar": 36,
+        "endLine": 403,
+        "endChar": 48
+      },
+      "revId": "c8daf646d34e26f958d508f6611b9b0d2df35e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
