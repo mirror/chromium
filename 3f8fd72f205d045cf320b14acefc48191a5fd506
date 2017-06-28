@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d86990ad_e0517b20",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T19:58:54Z",
+      "side": 1,
+      "message": "High level thought is: we should remain unmarried to these being the same push\u003cT\u003e templates as POB too, so we can consider diverging and making higher level things here that generate more/less ops. (like deferred saves)\n\nI have a nagging feeling that we need *some* outer API and this seems as good as any other. The assumption is blink/ui continue building POBs not DILs though, right? IOW DIL would only appear at the root of the recording APIs? Can you add some comments on the top of the class explaining its role vs POB?",
+      "parentUuid": "c2609b43_acadea8c",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93b8c6da_872631bb",
         "filename": "cc/paint/display_item_list.h",
         "patchSetId": 4
