@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12702841_7cfa7b02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-06-28T23:02:04Z",
+      "side": 1,
+      "message": "use raster-pipeline bicubic?\n\n(we\u0027re already using bicubic/Michell for hq)",
+      "revId": "025bc7b3f4fe4e1e88ee625ffad77c29ff56ad14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
