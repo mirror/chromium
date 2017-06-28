@@ -22,6 +22,30 @@
       "revId": "2b9fd7904fe15a48527bbb449642fa23b968b15e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc80590_9b5bbe7c",
+        "filename": "ui/app_list/views/suggestions_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-28T22:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8358c65_6749b7df",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 7
+      },
+      "revId": "2b9fd7904fe15a48527bbb449642fa23b968b15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
