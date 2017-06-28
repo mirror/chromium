@@ -26,6 +26,7 @@
           "blink::mojom::OffscreenCanvasProvider",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
+	  "blink::mojom::PerformanceTiming",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FrameSinkProvider",
           "content::mojom::MemoryCoordinatorHandle",
@@ -102,6 +103,7 @@
           "blink::mojom::SensitiveInputVisibilityService",
           "blink::mojom::WebBluetoothService",
           "blink::mojom::WebSocket",
+	  "blink::mojom::PerformanceTiming",
           // TODO(beng): figure out how to overlay test interfaces like this.
           "content::mojom::BrowserTarget",
           "content::mojom::RendererAudioOutputStreamFactory",

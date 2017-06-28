@@ -37,6 +37,7 @@
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/frame_host/navigator_impl.h"
 #include "content/browser/frame_host/render_frame_host_delegate.h"
+#include "content/browser/frame_host/render_frame_performance_timing.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
 #include "content/browser/image_capture/image_capture_impl.h"
@@ -2786,6 +2787,10 @@ void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
 void RenderFrameHostImpl::RegisterMojoInterfaces() {
   device::GeolocationServiceContext* geolocation_service_context =
       delegate_ ? delegate_->GetGeolocationServiceContext() : NULL;
+
+  GetInterfaceRegistry()->AddInterface<blink::mojom::PerformanceTiming>(
+      base::Bind(&RenderFramePerformanceTiming::CreateService,
+                 base::Unretained(this)));
 
 #if !defined(OS_ANDROID)
   // The default (no-op) implementation of InstalledAppProvider. On Android, the
