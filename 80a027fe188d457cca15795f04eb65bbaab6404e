@@ -16,6 +16,24 @@
       "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3450b46_13d26cf9",
+        "filename": "chromecast/app/cast_test_launcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-06-28T17:12:22Z",
+      "side": 1,
+      "message": "The same logic is not used in all cases- eg in base/test/launcher/unit_test_launcher.cc the result is not divided by 2.",
+      "parentUuid": "7fd18135_eb688a30",
+      "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
