@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbf26178_4f31ef74",
+        "filename": "testing/buildbot/filters/fuchsia.base_unittests.filter",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-28T23:49:40Z",
+      "side": 0,
+      "message": "I think these 3 (and maybe the last one) were just flaky... or do I misremember and they use persistent?\n\nIf they seem to pass after a bunch of runs we can try to enable and see how it goes though.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 71
+      },
+      "revId": "a1755c304ab86df45ca7796be7adff070cd61d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
