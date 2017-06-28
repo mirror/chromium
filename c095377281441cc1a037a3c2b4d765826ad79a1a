@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c8f3668_bcf88ed7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-28T12:49:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea69c87e_8bb94555",
+      "range": {
+        "startLine": 401,
+        "startChar": 34,
+        "endLine": 401,
+        "endChar": 70
+      },
+      "revId": "c095377281441cc1a037a3c2b4d765826ad79a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7705578f_f306fb14",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-28T02:09:16Z",
       "side": 1,
       "message": "I like this simple state transition assumption, but isn\u0027t the following scenario possible?\n(I\u0027m not sure though)\n\n1. Preload is started on ResourceFetcher A, a Resource X is created, and its loading is done (but isn\u0027t matched yet).\n2. Resource X is reused and revalidated on ResourceFetcher B via MemoryCache. X\u0027s preload_state_ is set to kNotPreload.\n3. The preload is matched on ResourceFetcher B and thus this DCHECK fails.",
+      "range": {
+        "startLine": 968,
+        "startChar": 2,
+        "endLine": 968,
+        "endChar": 51
+      },
+      "revId": "c095377281441cc1a037a3c2b4d765826ad79a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1635e2_f7fee16e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-28T12:49:54Z",
+      "side": 1,
+      "message": "You\u0027re right, I updated a transition DCHECK and add some modification to DetermineRevalidationPolicy.\n\n - A resource whose preload state is kPreloadNotReferenced must not be revalidated.\n - A resource whose preload state is kPreloadNotReferenced can be in MemoryCache, but it doesn\u0027t match with another preload requests.",
+      "parentUuid": "7705578f_f306fb14",
       "range": {
         "startLine": 968,
         "startChar": 2,
