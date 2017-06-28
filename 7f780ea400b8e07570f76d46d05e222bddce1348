@@ -22,6 +22,30 @@
       "revId": "7f780ea400b8e07570f76d46d05e222bddce1348",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace29ce2_89354020",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T14:11:13Z",
+      "side": 1,
+      "message": "base::PostTaskWithTraitsAndReplyWithResult returns void. How important is the\"if\" to check the post failure during shutdown? Is it okay to get rid of it?",
+      "parentUuid": "213dff7f_bdb8bfd6",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "7f780ea400b8e07570f76d46d05e222bddce1348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
