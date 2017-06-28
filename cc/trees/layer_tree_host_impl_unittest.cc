@@ -568,6 +568,43 @@ class LayerTreeHostImplTest : public testing::Test,
     host_impl_->DidDrawAllLayers(frame);
   }
 
+  void TestGPUMemoryForTilings(const gfx::Size& layer_size) {
+    LayerTreeSettings settings = DefaultSettings();
+    CreateHostImpl(settings, CreateLayerTreeFrameSink());
+
+    std::unique_ptr<FakeRecordingSource> recording_source =
+        FakeRecordingSource::CreateFilledRecordingSource(layer_size);
+    PaintImage checkerable_image = PaintImage(
+        PaintImage::GetNextId(), CreateDiscardableImage(gfx::Size(500, 500)));
+    recording_source->add_draw_image(checkerable_image, gfx::Point(0, 0));
+
+    recording_source->Rerecord();
+    scoped_refptr<FakeRasterSource> raster_source =
+        FakeRasterSource::CreateFromRecordingSource(recording_source.get(),
+                                                    false);
+
+    // Create the pending tree.
+    host_impl_->BeginCommit();
+    LayerTreeImpl* pending_tree = host_impl_->pending_tree();
+    host_impl_->SetViewportSize(layer_size);
+    pending_tree->SetRootLayerForTesting(
+        FakePictureLayerImpl::CreateWithRasterSource(pending_tree, 1,
+                                                     raster_source));
+    auto* root = static_cast<FakePictureLayerImpl*>(*pending_tree->begin());
+    root->SetBounds(layer_size);
+    root->SetDrawsContent(true);
+    pending_tree->BuildPropertyTreesForTesting();
+
+    // CompleteCommit which should perform a PrepareTiles, adding tilings for
+    // the root layer, each one having a raster task.
+    host_impl_->CommitComplete();
+    // Activate the pending tree and ensure that all tiles are rasterized.
+    while (!did_notify_ready_to_activate_)
+      base::RunLoop().RunUntilIdle();
+
+    DrawFrame();
+  }
+
   void pinch_zoom_pan_viewport_forces_commit_redraw(float device_scale_factor);
   void pinch_zoom_pan_viewport_test(float device_scale_factor);
   void pinch_zoom_pan_viewport_and_scroll_test(float device_scale_factor);
@@ -905,6 +942,26 @@ TEST_F(LayerTreeHostImplTest, ScrollerSizeOfCCScrollingHistogramRecordingTest) {
                                      10000, 1);
   histogram_tester.ExpectTotalCount("Event.Scroll.ScrollerSize.OnScroll_Wheel",
                                     1);
+}
+
+TEST_F(LayerTreeHostImplTest, GPUMemoryForSmallLayerHistogramTest) {
+  base::HistogramTester histogram_tester;
+  // With default tile size being set to 256 * 256, the following layer needs
+  // one tile only which costs 256 * 256 * 4 / 1024 = 256KB memory.
+  TestGPUMemoryForTilings(gfx::Size(200, 200));
+  histogram_tester.ExpectBucketCount("Event.Scroll.GPUMemoryForTilingsInKB",
+                                     256, 1);
+  histogram_tester.ExpectTotalCount("Event.Scroll.GPUMemoryForTilingsInKB", 1);
+}
+
+TEST_F(LayerTreeHostImplTest, GPUMemoryForLargeLayerHistogramTest) {
+  base::HistogramTester histogram_tester;
+  // With default tile size being set to 256 * 256, the following layer needs
+  // 4 tiles which cost 256 * 256 * 4 * 4 / 1024 = 1024KB memory.
+  TestGPUMemoryForTilings(gfx::Size(500, 500));
+  histogram_tester.ExpectBucketCount("Event.Scroll.GPUMemoryForTilingsInKB",
+                                     1024, 1);
+  histogram_tester.ExpectTotalCount("Event.Scroll.GPUMemoryForTilingsInKB", 1);
 }
 
 TEST_F(LayerTreeHostImplTest, ScrollRootCallsCommitAndRedraw) {
