@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb81748b_08843000",
+        "filename": "chrome/browser/ui/cocoa/subresource_filter/subresource_filter_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-28T21:51:47Z",
+      "side": 1,
+      "message": "FYI: Mac should be using views soon, you may not have to actually do this.",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 9
+      },
+      "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
