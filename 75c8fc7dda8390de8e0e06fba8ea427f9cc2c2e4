@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d2ea909_05f18333",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T08:14:02Z",
+      "side": 1,
+      "message": "base::MakeUnique?",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6113925_a4608166",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T08:14:02Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7b582f_8f3c12c8",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T08:14:02Z",
+      "side": 1,
+      "message": "final?",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06de6f94_f378edc9",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T08:14:02Z",
+      "side": 1,
+      "message": "// TODO(shimazu): Add thread check.",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd15cbca_2b7c35b6",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T08:14:02Z",
+      "side": 1,
+      "message": "// TODO(shimazu): Add thread check.",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d515a4e_7081d97d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T08:14:02Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c47c919_87159417",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T08:14:02Z",
+      "side": 1,
+      "message": "Since this can be accessed from both the main thread and worker thread, can you add a lock protection, or add a TODO comment about it?",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ab3c32_ba350737",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T08:14:02Z",
+      "side": 1,
+      "message": "RawScriptData could sound ambiguous. How about InstalledScriptData?",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
