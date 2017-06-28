@@ -54,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "bf752089_e9a05895",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounterTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-28T15:12:12Z",
+      "side": 1,
+      "message": "Just noticed that the url argument of UseCounter::DidCommitLoad() is not const KURL\u0026 but KURL. You might want to change it to const KURL\u0026 using this opportunity. I can take it if you don\u0027t.",
+      "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "154e6d23_95fd3862",
         "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLParser.cpp",
         "patchSetId": 3
@@ -65,6 +82,24 @@
       "writtenOn": "2017-06-28T13:59:01Z",
       "side": 1,
       "message": "I wonder if this ought to be returning `const KURL\u0026` rather than a copy?",
+      "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda39668_2dc3fa07",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLParser.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-28T15:12:12Z",
+      "side": 1,
+      "message": "It\u0027s gonna make this return a reference to a temporary object at L390, which is generally discouraged?",
+      "parentUuid": "154e6d23_95fd3862",
       "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
