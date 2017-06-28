@@ -181,6 +181,24 @@
       "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "035c4cbb_e80092e6",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-28T18:03:28Z",
+      "side": 1,
+      "message": "So I should have read about MakeUnique first.\n\nMakeUnique works on arrays because it has an overload for it. But it differs from new T[] in that it value-initializes the array (which is  std::make_unique. I went back to your suggestion.",
+      "parentUuid": "3ecb5f52_6b1070f5",
+      "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
