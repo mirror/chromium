@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93ae5aa8_186470db",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2017-06-28T22:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49ad2289_ddfc8115",
+      "revId": "4c2f135998c6aff33cce1e3d12280ba45e9f96c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb6b3733_29d75272",
         "filename": "media/audio/audio_system_impl.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8bdac355_4855a5e9",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2017-06-28T22:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb6b3733_29d75272",
+      "revId": "4c2f135998c6aff33cce1e3d12280ba45e9f96c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2acdf93_e2e809b1",
         "filename": "media/audio/audio_system_impl.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "4c2f135998c6aff33cce1e3d12280ba45e9f96c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0eee2f_ccca400b",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2017-06-28T22:15:02Z",
+      "side": 1,
+      "message": "Done\n\nAs for loopback capture, we turn an output stream into an input stream, so there must be a place where both terms appear, and cause confusion at the first glance.",
+      "parentUuid": "a2acdf93_e2e809b1",
+      "revId": "4c2f135998c6aff33cce1e3d12280ba45e9f96c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
