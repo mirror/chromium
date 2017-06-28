@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11f05db1_78b9c998",
+        "filename": "chrome/installer/util/google_update_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-06-28T15:48:41Z",
+      "side": 1,
+      "message": "I don\u0027t see class Product used anywhere. Might not need?",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 39
+      },
+      "revId": "3b7546a98b21e392a4cb33738cce829699b755f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
