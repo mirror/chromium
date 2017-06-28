@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d547549b_ca5ff5f3",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-28T08:44:15Z",
+      "side": 1,
+      "message": "I think it should instead be named \"Callback consumeLonghandItem\".",
+      "parentUuid": "75891521_ecdc5ef5",
+      "revId": "125ef4f3772cdc63a5b6b234e2a1f9eb78570421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc6aa560_c7700ef1",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
         "patchSetId": 5
