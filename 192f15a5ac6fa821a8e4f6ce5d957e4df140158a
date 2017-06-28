@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "601879f6_def4bea0",
+        "filename": "chrome/browser/ui/views/payments/order_summary_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-28T15:30:26Z",
+      "side": 1,
+      "message": "Not sure what this comment means to convey",
+      "revId": "192f15a5ac6fa821a8e4f6ce5d957e4df140158a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
