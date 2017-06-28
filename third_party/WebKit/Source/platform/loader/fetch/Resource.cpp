@@ -525,6 +525,7 @@ void Resource::SetRevalidatingRequest(const ResourceRequest& request) {
   SECURITY_CHECK(redirect_chain_.IsEmpty());
   DCHECK(!request.IsNull());
   CHECK(!is_revalidation_start_forbidden_);
+  SECURITY_CHECK(CacheIdentifier() == MemoryCache::DefaultCacheIdentifier());
   is_revalidating_ = true;
   resource_request_ = request;
   status_ = ResourceStatus::kNotStarted;
@@ -548,6 +549,10 @@ void Resource::SetResponse(const ResourceResponse& response) {
 
 void Resource::ResponseReceived(const ResourceResponse& response,
                                 std::unique_ptr<WebDataConsumerHandle>) {
+  if (CacheIdentifier() == MemoryCache::DefaultCacheIdentifier()) {
+    SECURITY_CHECK(!response.WasFetchedViaServiceWorker());
+  }
+
   response_timestamp_ = CurrentTime();
   if (preload_discovery_time_) {
     int time_since_discovery = static_cast<int>(
@@ -559,6 +564,7 @@ void Resource::ResponseReceived(const ResourceResponse& response,
   }
 
   if (is_revalidating_) {
+    SECURITY_CHECK(CacheIdentifier() == MemoryCache::DefaultCacheIdentifier());
     if (response.HttpStatusCode() == 304) {
       RevalidationSucceeded(response);
       return;

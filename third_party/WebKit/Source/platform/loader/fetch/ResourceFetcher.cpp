@@ -693,6 +693,14 @@ Resource* ResourceFetcher::RequestResource(
 
   UpdateMemoryCacheStats(resource, policy, params, factory, is_static_data);
 
+  // If the context is not controlled by service worker, then we must never
+  // obtain serviceworker-fetched responses.
+  if (resource && !Context().IsControlledByServiceWorker()) {
+    SECURITY_CHECK(!resource->GetResponse().WasFetchedViaServiceWorker());
+    SECURITY_CHECK(resource->CacheIdentifier() ==
+                   MemoryCache::DefaultCacheIdentifier());
+  }
+
   switch (policy) {
     case kReload:
       GetMemoryCache()->Remove(resource);
@@ -800,7 +808,7 @@ void ResourceFetcher::InitializeRevalidation(
   DCHECK(resource->IsLoaded());
   DCHECK(resource->CanUseCacheValidator());
   DCHECK(!resource->IsCacheValidator());
-  DCHECK(!Context().IsControlledByServiceWorker());
+  SECURITY_CHECK(!Context().IsControlledByServiceWorker());
 
   const AtomicString& last_modified =
       resource->GetResponse().HttpHeaderField(HTTPNames::Last_Modified);
