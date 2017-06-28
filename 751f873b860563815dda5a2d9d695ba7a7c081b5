@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cef197ca_f161612a",
+        "filename": "content/public/browser/touch_selection_controller_client_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-28T20:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c63929f_bc3830a5",
+      "revId": "751f873b860563815dda5a2d9d695ba7a7c081b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5644b97_89ad2eb5",
         "filename": "content/public/browser/touch_selection_controller_client_manager.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "751f873b860563815dda5a2d9d695ba7a7c081b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b512000a_ebabea95",
+        "filename": "content/public/browser/touch_selection_controller_client_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-28T20:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5644b97_89ad2eb5",
+      "revId": "751f873b860563815dda5a2d9d695ba7a7c081b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
