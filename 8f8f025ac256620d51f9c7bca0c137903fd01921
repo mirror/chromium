@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc430e96_7ef7aa5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-28T04:55:34Z",
+      "side": 1,
+      "message": "Done. The stacktrace comes from com.android.systemui process, I don\u0027t think it\u0027s fixable by the support library (well, unless they work around platform bugs for us by doing a similar \"empty metadata\" thing -- is that what you meant?).",
+      "parentUuid": "9c10c1e8_85e49649",
+      "revId": "8f8f025ac256620d51f9c7bca0c137903fd01921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bb0c2fe_6aaaee45",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8f8f025ac256620d51f9c7bca0c137903fd01921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9658faa4_3ab79fdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-28T04:55:34Z",
+      "side": 1,
+      "message": "Done. I agree that setting metadata is probably more correct.\n\nI hope using an empty metadata doesn\u0027t cause some other null crash somewhere. Reading the up-to-date Android code from the stacktrace it seems like it shouldn\u0027t.",
+      "parentUuid": "1bb0c2fe_6aaaee45",
+      "revId": "8f8f025ac256620d51f9c7bca0c137903fd01921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
