@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86a9732a_c1868088",
+        "filename": "chromecast/browser/memory_pressure_controller_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-28T17:12:54Z",
+      "side": 1,
+      "message": "I do not know much about base::MemoryPressureListener. Is it not possible to use this directly from the renderer process? If so, why do need to notify renderers from the browser process?\n\nLooks like WebMediaPlayerImpl already uses it from the renderer process:\nhttps://cs.chromium.org/chromium/src/media/blink/webmediaplayer_impl.cc?l\u003d1953",
+      "revId": "0d797008f2ff15db6d459f4e1c9250e78b85f9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
