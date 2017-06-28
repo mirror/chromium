@@ -15,7 +15,7 @@ namespace ui {
 class TouchSelectionController;
 class TouchSelectionControllerClient;
 class TouchSelectionMenuClient;
-}
+}  // namespace ui
 
 namespace content {
 
