@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9166b08_b0dc4828",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_data_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-28T10:34:49Z",
+      "side": 1,
+      "message": "We\u0027re inconsistent with whether we supply parameter names or not in block declaration. We should at least strive to be consistent in each file, so if you\u0027re adding parameter names for this block, you should add them for imageCallback as well.\n\nThe comment describing this method should probably document what the parameters mean.\n\nOptional: move the block declarations into typedefs for better readability.",
+      "range": {
+        "startLine": 69,
+        "startChar": 44,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "5971f7d73771331e6052cdac27708b989adb13d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
