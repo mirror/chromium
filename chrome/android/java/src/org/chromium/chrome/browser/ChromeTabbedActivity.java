@@ -964,6 +964,13 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             // it will trigger the notification that tab restore is complete which is needed by
             // other parts of Chrome such as sync.
             boolean activeTabBeingRestored = !mIntentWithEffect;
+            if (getBottomSheet() != null
+                    && NewTabPage.isNTPUrl(IntentHandler.getUrlFromIntent(intent))) {
+                // Allow the active tab to be restored so that the correct tab is selected when
+                // the bottom sheet NTP UI is closed.
+                activeTabBeingRestored = true;
+            }
+
             mMainIntentMetrics.setIgnoreEvents(true);
             mTabModelSelectorImpl.restoreTabs(activeTabBeingRestored);
             mMainIntentMetrics.setIgnoreEvents(false);
