@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d443bf3_6143c922",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-28T17:02:20Z",
+      "side": 1,
+      "message": "I wonder why we can\u0027t use const pointer, if we are only reading values. Maybe it\u0027s worth to change a couple of getters to const?",
+      "revId": "f12a52410ca6d66d4ec03efc8c5cb6a78c595fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
