@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "29fb18a4_f0bff431",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-28T17:44:47Z",
+      "side": 1,
+      "message": "yes, except that the use of seq lock can be tricky, e.g. it wasn\u0027t used correctly in ::TryReadFromBuffer below.. but indeed it looks like we don\u0027t have specific tests for the links mentioned. Maybe something to consider though in the future to avoid potential issues with concurrency.",
+      "parentUuid": "42fe787d_99bce3a2",
+      "range": {
+        "startLine": 31,
+        "startChar": 73,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a53fb829_612961be",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 4
