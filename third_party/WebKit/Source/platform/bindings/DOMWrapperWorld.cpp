@@ -205,7 +205,7 @@ void DOMWrapperWorld::SetIsolatedWorldHumanReadableName(
     int world_id,
     const String& human_readable_name) {
 #if DCHECK_IS_ON()
-  DCHECK(IsIsolatedWorldId(world_id));
+  DCHECK(!IsMainWorld());
 #endif
   IsolatedWorldHumanReadableNames().Set(world_id, human_readable_name);
 }
