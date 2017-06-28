@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48d8df93_882f0062",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T21:00:33Z",
+      "side": 1,
+      "message": "Why are we excluding the new tab page URL here?",
+      "revId": "8caa9d0f8106bb8ed5e12abcf4b2ddb07c561254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648a94f0_f4cac32a",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T21:00:33Z",
+      "side": 1,
+      "message": "You should change IsHomePage() too while you\u0027re changing IsNewTabPage(), as you were doing before.",
+      "revId": "8caa9d0f8106bb8ed5e12abcf4b2ddb07c561254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
