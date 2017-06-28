@@ -22,6 +22,142 @@
       "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d1e6fa_8ecefc83",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-28T17:27:30Z",
+      "side": 1,
+      "message": "Note: There is a bug right now where we can have both this.androidAppsInfo.settingsAppAvailable \u003d\u003d false and allowRemove_() \u003d\u003d false, resulting in an empty subpage. I see this currently on my Chromebook with my Google account. We should probably add a message here or something? (We don\u0027t need to do that here, and I haven\u0027t gotten around to filing a bug for this yet).",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cba27ea_5948afed",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-28T17:27:30Z",
+      "side": 1,
+      "message": "I don\u0027t think that we really need a separate page for this; I think we could have this embedded in settings-android-apps-page:\n\n\u003cif havePlayStoreApp\u003e\n  \u003cdiv id\u003d\"android-apps\" ...\u003e\n    ...\n    \u003cif playStoreEnabled\u003e\n      ...\n    \u003cif !playStoreEnabled\u003e\n      ...\n\u003c/if\u003e\n\n\u003cif !havePlayStoreApp\u003e\n  \u003csettings-android-settings-element\u003e\n\u003c/if\u003e\n\n\u003cif route-path\u003d\"/androidApps/details\"\u003e\n  \u003csettings-subpage\n\u003c/if\u003e\n\nThat said, I won\u0027t insist on that; this is definitely easier to follow than before, so thanks for doing the cleanup.",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26034998_978a50f6",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-28T17:27:30Z",
+      "side": 1,
+      "message": "Especially since we don\u0027t have any custom JS for this element, it really would be nicer just to embed it in \u003csettings-android-settings-page\u003e.\n\nI would leave all of the havePlayStoreApp logic in \u003csettings-basic-page\u003e, just so that it is next to the showAndroidApps logic.",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7b2ef2_03037f3b",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-28T17:27:30Z",
+      "side": 1,
+      "message": "We could just add here:\n  have-play-store-app\u003d\"[[havePlayStoreApp]]\"\n\nThen do the dom-if within \u003csettings-android-apps-page\u003e and have all of the logic in one place.",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f92883_9745feb9",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-28T17:27:30Z",
+      "side": 1,
+      "message": "/** @type {!AndroidAppsInfo|undefined} */",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa19ee2_11a47ebc",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-28T17:27:30Z",
+      "side": 1,
+      "message": "@param {!AndroidAppsInfo} info",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d588c720_3cabf0e6",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-28T17:27:30Z",
+      "side": 1,
+      "message": "nit: This logic is a bit confusing, maybe add a comment as to what this means? \n\nActually, it looks like it might be clear enough as:\n\nreturn this.havePlayStoreApp || \n       (this.androidAppsInfo \u0026\u0026 this.androidAppsInfo.settingsAppAvailable)",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70788b49_347c48ab",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-28T17:27:30Z",
+      "side": 1,
+      "message": "Can we add a comment above each of these describing what they mean? I mostly understand but I\u0027ve worked with this code before; I don\u0027t think it will be very clear to the next dev.",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
