@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2b75a1b_991c8f5f",
+        "filename": "device/generic_sensor/android/java/src/org/chromium/device/sensors/PlatformSensorProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-28T17:07:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd992a2c_c6e2cbea",
+      "range": {
+        "startLine": 139,
+        "startChar": 49,
+        "endLine": 139,
+        "endChar": 56
+      },
+      "revId": "21d01036e083beb281c610cbd0cb8e8d6d036a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24741195_9945098d",
         "filename": "device/generic_sensor/platform_sensor_provider_android.cc",
         "patchSetId": 4
@@ -53,6 +77,30 @@
       "writtenOn": "2017-06-28T00:05:24Z",
       "side": 1,
       "message": "The documentation for CoCreateInstance indicates that |sensor_manager_| should be valid if S_OK is returned.",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 41
+      },
+      "revId": "21d01036e083beb281c610cbd0cb8e8d6d036a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b379b526_da5196b0",
+        "filename": "device/generic_sensor/platform_sensor_provider_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-28T17:07:09Z",
+      "side": 1,
+      "message": "The documentation indicates that, but I think here it\u0027s better to add this extra checking since relying only on the return code is somehow risky. Also //device/sensors does the same checking:\nhttps://cs.chromium.org/chromium/src/device/sensors/data_fetcher_shared_memory_win.cc?l\u003d315-319\nto make sure sensor manager is not nullptr.",
+      "parentUuid": "f86b5594_97b9fcbf",
       "range": {
         "startLine": 57,
         "startChar": 22,
