@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de0d7fd_f92abea5",
+        "filename": "content/browser/service_manager/merge_dictionary_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:07:00Z",
+      "side": 0,
+      "message": "I wasn\u0027t sure what existing target to put this into, and it seemed a little silly to create a target just for this. Should I fold it into services_unittests?",
+      "revId": "b53707058233012ea4ac5efae690506e111bde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
