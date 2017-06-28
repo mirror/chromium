@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77ac46d0_113c2e18",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-06-28T05:26:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2582b25_4b586dba",
+      "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274c16a0_660dc575",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c06b0a5_16c0e33e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-06-28T05:26:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274c16a0_660dc575",
+      "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73574f71_cef55809",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ConstantSourceNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-06-28T05:26:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13ceefb0_687c66ef",
+      "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9184b50b_d6a8f2c3",
         "filename": "third_party/WebKit/Source/modules/webaudio/OscillatorNode.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876579ce_46ef8bcf",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OscillatorNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-06-28T05:26:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9184b50b_d6a8f2c3",
+      "revId": "0ef94434067f7a224d57662dd053a6e84d872759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
