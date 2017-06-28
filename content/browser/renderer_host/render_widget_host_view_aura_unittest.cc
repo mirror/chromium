@@ -136,12 +136,15 @@ class TestOverscrollDelegate : public OverscrollControllerDelegate {
  public:
   explicit TestOverscrollDelegate(RenderWidgetHostView* view)
       : view_(view),
+        delta_cap_(0.f),
         current_mode_(OVERSCROLL_NONE),
         completed_mode_(OVERSCROLL_NONE),
         delta_x_(0.f),
         delta_y_(0.f) {}
 
   ~TestOverscrollDelegate() override {}
+
+  void set_delta_cap(float delta_cap) { delta_cap_ = delta_cap; }
 
   OverscrollMode current_mode() const { return current_mode_; }
   OverscrollMode completed_mode() const { return completed_mode_; }
@@ -172,15 +175,17 @@ class TestOverscrollDelegate : public OverscrollControllerDelegate {
     current_mode_ = OVERSCROLL_NONE;
   }
 
-  void OnOverscrollModeChange(OverscrollMode old_mode,
-                              OverscrollMode new_mode,
-                              OverscrollSource source) override {
+  float OnOverscrollModeChange(OverscrollMode old_mode,
+                               OverscrollMode new_mode,
+                               OverscrollSource source) override {
     EXPECT_EQ(current_mode_, old_mode);
     current_mode_ = new_mode;
     delta_x_ = delta_y_ = 0.f;
+    return delta_cap_;
   }
 
   RenderWidgetHostView* view_;
+  float delta_cap_;
   OverscrollMode current_mode_;
   OverscrollMode completed_mode_;
   float delta_x_;
@@ -992,17 +997,15 @@ class RenderWidgetHostViewAuraOverscrollTest
   }
 
   void SimulateWheelEventPossiblyIncludingPhase(
-      bool ignore_phase,
       float dX,
       float dY,
       int modifiers,
       bool precise,
       WebMouseWheelEvent::Phase phase) {
-    if (ignore_phase) {
-      SimulateWheelEvent(dX, dY, modifiers, precise);
-    } else {
+    if (wheel_scroll_latching_enabled_)
       SimulateWheelEventWithPhase(dX, dY, modifiers, precise, phase);
-    }
+    else
+      SimulateWheelEvent(dX, dY, modifiers, precise);
   }
 
   void SimulateWheelEventWithLatencyInfo(float dX,
@@ -3800,11 +3803,9 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelNotPreciseScrollEvent() {
 
   // Simulate wheel events.
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -5, 0, 0, false,
-      WebMouseWheelEvent::kPhaseBegan);  // sent directly
+      -5, 0, 0, false, WebMouseWheelEvent::kPhaseBegan);  // sent directly
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -60, 1, 0, false,
-      WebMouseWheelEvent::kPhaseChanged);  // enqueued
+      -60, 1, 0, false, WebMouseWheelEvent::kPhaseChanged);  // enqueued
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
 
@@ -3862,22 +3863,20 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollEventOverscrolls() {
 
   // Simulate wheel events.
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -5, 0, 0, true,
-      WebMouseWheelEvent::kPhaseBegan);  // sent directly
+      -5, 0, 0, true, WebMouseWheelEvent::kPhaseBegan);  // sent directly
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -1, 1, 0, true,
-      WebMouseWheelEvent::kPhaseChanged);  // enqueued
+      -1, 1, 0, true, WebMouseWheelEvent::kPhaseChanged);  // enqueued
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -10, -3, 0, true,
+      -10, -3, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -15, -1, 0, true,
+      -15, -1, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -30, -3, 0, true,
+      -30, -3, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -20, 6, 1, true,
+      -20, 6, 1, true,
       WebMouseWheelEvent::kPhaseChanged);  // enqueued, different modifiers
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
@@ -3953,22 +3952,20 @@ void RenderWidgetHostViewAuraOverscrollTest::
 
   // Simulate wheel events.
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -5, 0, 0, true,
-      WebMouseWheelEvent::kPhaseBegan);  // sent directly
+      -5, 0, 0, true, WebMouseWheelEvent::kPhaseBegan);  // sent directly
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -1, -1, 0, true,
-      WebMouseWheelEvent::kPhaseChanged);  // enqueued
+      -1, -1, 0, true, WebMouseWheelEvent::kPhaseChanged);  // enqueued
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -10, -3, 0, true,
+      -10, -3, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -15, -1, 0, true,
+      -15, -1, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -30, -3, 0, true,
+      -30, -3, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -20, 6, 1, true,
+      -20, 6, 1, true,
       WebMouseWheelEvent::kPhaseChanged);  // enqueued, different modifiers
 
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
@@ -4046,8 +4043,7 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollOverscrollToggle() {
 
   // Send a wheel event. ACK the event as not processed. This should not
   // initiate an overscroll gesture since it doesn't cross the threshold yet.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 10,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(10, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseBegan);
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
   SendInputEventACK(WebInputEvent::kMouseWheel,
@@ -4062,8 +4058,7 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollOverscrollToggle() {
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
 
   // Scroll some more so as to not overscroll.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 10,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(10, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
     ExpectGestureScrollUpdateAfterNonBlockingMouseWheelACK(false);
@@ -4082,8 +4077,7 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollOverscrollToggle() {
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
 
   // Scroll some more to initiate an overscroll.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 40,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(40, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
     ExpectGestureScrollUpdateAfterNonBlockingMouseWheelACK(false);
@@ -4105,8 +4099,7 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollOverscrollToggle() {
   EXPECT_EQ(0.f, overscroll_delegate()->delta_y());
 
   // Scroll in the reverse direction enough to abort the overscroll.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, -20,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(-20, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
   SendInputEventACK(WebInputEvent::kMouseWheel,
@@ -4121,8 +4114,7 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollOverscrollToggle() {
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
 
   // Continue to scroll in the reverse direction.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, -20,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(-20, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
 
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
@@ -4143,8 +4135,7 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollOverscrollToggle() {
 
   // Continue to scroll in the reverse direction enough to initiate overscroll
   // in that direction.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, -55,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(-55, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
     ExpectGestureScrollUpdateAfterNonBlockingMouseWheelACK(false);
@@ -4193,8 +4184,7 @@ void RenderWidgetHostViewAuraOverscrollTest::ScrollEventsOverscrollWithFling() {
 
   // Send a wheel event. ACK the event as not processed. This should not
   // initiate an overscroll gesture since it doesn't cross the threshold yet.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 10,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(10, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseBegan);
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
   SendInputEventACK(WebInputEvent::kMouseWheel,
@@ -4209,8 +4199,7 @@ void RenderWidgetHostViewAuraOverscrollTest::ScrollEventsOverscrollWithFling() {
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
 
   // Scroll some more so as to not overscroll.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 20,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(20, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
     ExpectGestureScrollUpdateAfterNonBlockingMouseWheelACK(false);
@@ -4227,8 +4216,7 @@ void RenderWidgetHostViewAuraOverscrollTest::ScrollEventsOverscrollWithFling() {
   sink_->ClearMessages();
 
   // Scroll some more to initiate an overscroll.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 30,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(30, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
     ExpectGestureScrollUpdateAfterNonBlockingMouseWheelACK(false);
@@ -4282,8 +4270,7 @@ void RenderWidgetHostViewAuraOverscrollTest::
 
   // Send a wheel event. ACK the event as not processed. This should not
   // initiate an overscroll gesture since it doesn't cross the threshold yet.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 10,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(10, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseBegan);
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
   SendInputEventACK(WebInputEvent::kMouseWheel,
@@ -4298,8 +4285,7 @@ void RenderWidgetHostViewAuraOverscrollTest::
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
 
   // Scroll some more so as to not overscroll.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 20,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(20, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
     ExpectGestureScrollUpdateAfterNonBlockingMouseWheelACK(false);
@@ -4318,8 +4304,7 @@ void RenderWidgetHostViewAuraOverscrollTest::
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
 
   // Scroll some more to initiate an overscroll.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 30,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(30, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
     ExpectGestureScrollUpdateAfterNonBlockingMouseWheelACK(false);
@@ -4453,6 +4438,60 @@ TEST_F(RenderWidgetHostViewAuraOverscrollTest, GestureScrollOverscrolls) {
   // Now send a scroll end. This should cancel the overscroll gesture, and send
   // the event to the renderer. The gesture-event filter should receive this
   // event.
+  SimulateGestureEvent(WebInputEvent::kGestureScrollEnd,
+                       blink::kWebGestureDeviceTouchscreen);
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+  EXPECT_EQ(1U, sink_->message_count());
+}
+
+// Tests that when a cap is set for overscroll delta, extra overscroll delta is
+// ignored.
+TEST_F(RenderWidgetHostViewAuraOverscrollTest, OverscrollDeltaCap) {
+  SetUpOverscrollEnvironment();
+
+  // Set overscroll cap and start scrolling.
+  overscroll_delegate()->set_delta_cap(50);
+  SimulateGestureEvent(WebInputEvent::kGestureScrollBegin,
+                       blink::kWebGestureDeviceTouchscreen);
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
+  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+  EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
+
+  // Scroll enough to initiate the overscrolling.
+  SimulateGestureScrollUpdateEvent(55, -5, 0);
+  SendInputEventACK(WebInputEvent::kGestureScrollUpdate,
+                    INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_mode());
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_delegate()->current_mode());
+  EXPECT_EQ(55.f, overscroll_delta_x());
+  EXPECT_EQ(-5.f, overscroll_delta_y());
+  EXPECT_EQ(5.f, overscroll_delegate()->delta_x());
+  EXPECT_EQ(-5.f, overscroll_delegate()->delta_y());
+  EXPECT_EQ(2U, GetSentMessageCountAndResetSink());
+
+  // Scroll beyond overscroll cap. Overscroll delta should not surpass the cap.
+  SimulateGestureScrollUpdateEvent(75, -5, 0);
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_mode());
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_delegate()->current_mode());
+  EXPECT_EQ(100.f, overscroll_delta_x());
+  EXPECT_EQ(-10.f, overscroll_delta_y());
+  EXPECT_EQ(50.f, overscroll_delegate()->delta_x());
+  EXPECT_EQ(-10.f, overscroll_delegate()->delta_y());
+  EXPECT_EQ(0U, sink_->message_count());
+
+  // Scroll back a bit. Since the extra scroll after cap in previous step is
+  // ignored, scrolling back should immediately reduce overscroll delta.
+  SimulateGestureScrollUpdateEvent(-10, -5, 0);
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_mode());
+  EXPECT_EQ(OVERSCROLL_EAST, overscroll_delegate()->current_mode());
+  EXPECT_EQ(90.f, overscroll_delta_x());
+  EXPECT_EQ(-15.f, overscroll_delta_y());
+  EXPECT_EQ(40.f, overscroll_delegate()->delta_x());
+  EXPECT_EQ(-15.f, overscroll_delegate()->delta_y());
+  EXPECT_EQ(0U, sink_->message_count());
+
+  // End overscrolling.
   SimulateGestureEvent(WebInputEvent::kGestureScrollEnd,
                        blink::kWebGestureDeviceTouchscreen);
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
@@ -4816,8 +4855,7 @@ void RenderWidgetHostViewAuraOverscrollTest::
   SetUpOverscrollEnvironment();
 
   // Send wheel event and receive ack as not consumed.
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, 125,
-                                           -5, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(125, -5, 0, true,
                                            WebMouseWheelEvent::kPhaseBegan);
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
   SendInputEventACK(WebInputEvent::kMouseWheel,
@@ -4835,8 +4873,7 @@ void RenderWidgetHostViewAuraOverscrollTest::
   // controller will not consume the event, because it is not triggering
   // gesture-nav.
 
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_,
-                                           -260, 0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(-260, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
     ExpectGestureScrollUpdateAfterNonBlockingMouseWheelACK(false);
@@ -4857,8 +4894,7 @@ void RenderWidgetHostViewAuraOverscrollTest::
   EXPECT_EQ(OVERSCROLL_WEST, overscroll_mode());
   EXPECT_EQ(OVERSCROLL_WEST, overscroll_delegate()->current_mode());
 
-  SimulateWheelEventPossiblyIncludingPhase(!wheel_scroll_latching_enabled_, -20,
-                                           0, 0, true,
+  SimulateWheelEventPossiblyIncludingPhase(-20, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
   if (wheel_scrolling_mode_ != kAsyncWheelEvents) {
@@ -4895,19 +4931,17 @@ void RenderWidgetHostViewAuraOverscrollTest::OverscrollMouseMoveCompletion() {
   SetUpOverscrollEnvironment();
 
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, 5, 0, 0, true,
-      WebMouseWheelEvent::kPhaseBegan);  // sent directly
+      5, 0, 0, true, WebMouseWheelEvent::kPhaseBegan);  // sent directly
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -1, 0, 0, true,
-      WebMouseWheelEvent::kPhaseChanged);  // enqueued
+      -1, 0, 0, true, WebMouseWheelEvent::kPhaseChanged);  // enqueued
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -10, -3, 0, true,
+      -10, -3, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -15, -1, 0, true,
+      -15, -1, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -30, -3, 0, true,
+      -30, -3, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
 
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
@@ -5012,16 +5046,14 @@ void RenderWidgetHostViewAuraOverscrollTest::
   SetUpOverscrollEnvironment();
 
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, 0, 5, 0, true,
-      WebMouseWheelEvent::kPhaseBegan);  // sent directly
+      0, 5, 0, true, WebMouseWheelEvent::kPhaseBegan);  // sent directly
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, 0, 30, 0, true,
-      WebMouseWheelEvent::kPhaseChanged);  // enqueued
+      0, 30, 0, true, WebMouseWheelEvent::kPhaseChanged);  // enqueued
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, 0, 40, 0, true,
+      0, 40, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, 0, 10, 0, true,
+      0, 10, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
   EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
@@ -5081,13 +5113,11 @@ void RenderWidgetHostViewAuraOverscrollTest::
   EXPECT_EQ(2U, GetSentMessageCountAndResetSink());
 
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -5, 0, 0, true,
-      WebMouseWheelEvent::kPhaseBegan);  // sent directly
+      -5, 0, 0, true, WebMouseWheelEvent::kPhaseBegan);  // sent directly
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -60, 0, 0, true,
-      WebMouseWheelEvent::kPhaseChanged);  // enqueued
+      -60, 0, 0, true, WebMouseWheelEvent::kPhaseChanged);  // enqueued
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -100, 0, 0, true,
+      -100, 0, 0, true,
       WebMouseWheelEvent::kPhaseChanged);  // coalesced into previous event
 
   EXPECT_TRUE(ScrollStateIsUnknown());
@@ -5403,8 +5433,7 @@ void RenderWidgetHostViewAuraOverscrollTest::ScrollDeltasResetOnEnd() {
   SetUpOverscrollEnvironment();
   // Wheel event scroll ending with mouse move.
   SimulateWheelEventPossiblyIncludingPhase(
-      !wheel_scroll_latching_enabled_, -30, -10, 0, true,
-      WebMouseWheelEvent::kPhaseBegan);  // sent directly
+      -30, -10, 0, true, WebMouseWheelEvent::kPhaseBegan);  // sent directly
   SendInputEventACK(WebInputEvent::kMouseWheel,
                     INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
   SendInputEventACK(WebInputEvent::kGestureScrollUpdate,
