@@ -30,8 +30,8 @@
 #include "cc/output/context_provider.h"
 #include "cc/output/latency_info_swap_promise.h"
 #include "cc/scheduler/begin_frame_source.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
-#include "cc/surfaces/surface_manager.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "components/viz/host/host_frame_sink_manager.h"
@@ -67,7 +67,7 @@ Compositor::Compositor(const cc::FrameSinkId& frame_sink_id,
       weak_ptr_factory_(this),
       lock_timeout_weak_ptr_factory_(this) {
   if (context_factory_private) {
-    context_factory_private->GetSurfaceManager()->RegisterFrameSinkId(
+    context_factory_private->GetFrameSinkManager()->RegisterFrameSinkId(
         frame_sink_id_);
   }
   root_web_layer_ = cc::Layer::Create();
@@ -206,7 +206,7 @@ Compositor::~Compositor() {
       DCHECK(client.is_valid());
       manager->UnregisterFrameSinkHierarchy(frame_sink_id_, client);
     }
-    context_factory_private_->GetSurfaceManager()->InvalidateFrameSinkId(
+    context_factory_private_->GetFrameSinkManager()->InvalidateFrameSinkId(
         frame_sink_id_);
   }
 }

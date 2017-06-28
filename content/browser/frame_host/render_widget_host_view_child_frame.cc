@@ -16,8 +16,8 @@
 #include "cc/output/copy_output_request.h"
 #include "cc/output/copy_output_result.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
-#include "cc/surfaces/surface_manager.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
@@ -65,7 +65,7 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       background_color_(SK_ColorWHITE),
       weak_factory_(this) {
   if (!service_manager::ServiceManagerIsRemote()) {
-    GetSurfaceManager()->RegisterFrameSinkId(frame_sink_id_);
+    GetFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
     CreateCompositorFrameSinkSupport();
   }
 }
@@ -73,8 +73,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
 RenderWidgetHostViewChildFrame::~RenderWidgetHostViewChildFrame() {
   if (!service_manager::ServiceManagerIsRemote()) {
     ResetCompositorFrameSinkSupport();
-    if (GetSurfaceManager())
-      GetSurfaceManager()->InvalidateFrameSinkId(frame_sink_id_);
+    if (GetFrameSinkManager())
+      GetFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
   }
 }
 
@@ -462,7 +462,7 @@ void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
     return;
   cc::SurfaceSequence sequence =
       cc::SurfaceSequence(frame_sink_id_, next_surface_sequence_++);
-  cc::SurfaceManager* manager = GetSurfaceManager();
+  cc::FrameSinkManager* manager = GetFrameSinkManager();
   cc::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
   // The renderer process will satisfy this dependency when it creates a
   // SurfaceLayer.
@@ -817,7 +817,7 @@ void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
   constexpr bool handles_frame_sink_id_invalidation = false;
   constexpr bool needs_sync_points = true;
   support_ = cc::CompositorFrameSinkSupport::Create(
-      this, GetSurfaceManager(), frame_sink_id_, is_root,
+      this, GetFrameSinkManager(), frame_sink_id_, is_root,
       handles_frame_sink_id_invalidation, needs_sync_points);
   if (parent_frame_sink_id_.is_valid()) {
     GetHostFrameSinkManager()->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
