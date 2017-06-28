@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "620d042c_2df9a6c3",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 0,
+      "message": "Why\u0027d these comments get deleted? Can they be fixored somehow instead?",
+      "revId": "8d0adb0a32053ae5be48a551c6f59abff6b89a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

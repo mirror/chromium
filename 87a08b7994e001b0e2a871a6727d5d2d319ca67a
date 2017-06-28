@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2609d1c8_299bd5ed",
+        "filename": "cc/surfaces/compositor_frame_sink_support.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "nit: no temp var needed",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8aa6ba_3dec34e6",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "move() weakptr",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1101735_5324aa4a",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "explicit for 1arg constructors",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297d5a80_97f05d66",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "frame_sink_id isn\u0027t in the code",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a126d954_c7dde5d7",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "This is keeping ownership of the thing it returns right? So return const\u0026?",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b441e856_fd6ea533",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "Is this strategically placed below the 2 maps? Can you leave comment hints?",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9990ec70_dbdb03f8",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "this should be const\u0026, it\u0027s not giving up its own ownership",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd76da54_202ccb55",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "returning a non-const pointer is uncommon.. normally you\u0027d return a const\u0026 and expose methods to mutate the structure, otherwise it can change out from under the SurfaceManager and makes me wonder why it lives on SurfaceManager then.\n\nCan this be const\u0026? What reason for the pointer?",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11a41ca_47b03c85",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "nit: s/framesink Ids/FrameSinkIds/ for future grep/sed-ing. Double space in here also.",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d6f036_7ad9d5e9",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "FrameSinkId ?",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9419ce_b5c17af4",
+        "filename": "cc/test/test_layer_tree_frame_sink.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "nit: no () needed",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb49d41_8f17495c",
+        "filename": "content/browser/browser_main_loop.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T21:30:25Z",
+      "side": 1,
+      "message": "FrameSinkManagerImpl?",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
