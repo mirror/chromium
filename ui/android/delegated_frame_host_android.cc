@@ -11,9 +11,9 @@
 #include "cc/layers/surface_layer.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/copy_output_result.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_id.h"
-#include "cc/surfaces/surface_manager.h"
 #include "ui/android/view_android.h"
 #include "ui/android/window_android_compositor.h"
 #include "ui/display/display.h"
@@ -25,11 +25,11 @@ namespace ui {
 namespace {
 
 scoped_refptr<cc::SurfaceLayer> CreateSurfaceLayer(
-    cc::SurfaceManager* surface_manager,
+    cc::FrameSinkManager* surface_manager,
     cc::SurfaceInfo surface_info,
     bool surface_opaque) {
   // manager must outlive compositors using it.
-  auto layer = cc::SurfaceLayer::Create(surface_manager->reference_factory());
+  auto layer = cc::SurfaceLayer::Create(surface_manager->GetReferenceFactory());
   layer->SetPrimarySurfaceInfo(surface_info);
   layer->SetFallbackSurfaceInfo(surface_info);
   layer->SetBounds(surface_info.size_in_pixels());
@@ -51,18 +51,18 @@ void CopyOutputRequestCallback(
 
 DelegatedFrameHostAndroid::DelegatedFrameHostAndroid(
     ui::ViewAndroid* view,
-    cc::SurfaceManager* surface_manager,
+    cc::FrameSinkManager* frame_sink_manager,
     Client* client,
     const cc::FrameSinkId& frame_sink_id)
     : frame_sink_id_(frame_sink_id),
       view_(view),
-      surface_manager_(surface_manager),
+      frame_sink_manager_(frame_sink_manager),
       client_(client),
       begin_frame_source_(this) {
   DCHECK(view_);
   DCHECK(client_);
 
-  surface_manager_->RegisterFrameSinkId(frame_sink_id_);
+  frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_);
   CreateNewCompositorFrameSinkSupport();
 }
 
@@ -70,7 +70,7 @@ DelegatedFrameHostAndroid::~DelegatedFrameHostAndroid() {
   DestroyDelegatedContent();
   DetachFromCompositor();
   support_.reset();
-  surface_manager_->InvalidateFrameSinkId(frame_sink_id_);
+  frame_sink_manager_->InvalidateFrameSinkId(frame_sink_id_);
 }
 
 void DelegatedFrameHostAndroid::SubmitCompositorFrame(
@@ -90,7 +90,7 @@ void DelegatedFrameHostAndroid::SubmitCompositorFrame(
         support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
     DCHECK(result);
 
-    content_layer_ = CreateSurfaceLayer(surface_manager_, surface_info_,
+    content_layer_ = CreateSurfaceLayer(frame_sink_manager_, surface_info_,
                                         !has_transparent_background_);
     view_->GetLayer()->AddChild(content_layer_);
   } else {
@@ -115,7 +115,7 @@ void DelegatedFrameHostAndroid::RequestCopyOfSurface(
   DCHECK(!result_callback.is_null());
 
   scoped_refptr<cc::Layer> readback_layer = CreateSurfaceLayer(
-      surface_manager_, surface_info_, !has_transparent_background_);
+      frame_sink_manager_, surface_info_, !has_transparent_background_);
   readback_layer->SetHideLayerAndSubtree(true);
   compositor->AttachLayerForReadback(readback_layer);
   std::unique_ptr<cc::CopyOutputRequest> copy_output_request =
@@ -198,7 +198,7 @@ void DelegatedFrameHostAndroid::CreateNewCompositorFrameSinkSupport() {
   constexpr bool needs_sync_points = true;
   support_.reset();
   support_ = cc::CompositorFrameSinkSupport::Create(
-      this, surface_manager_, frame_sink_id_, is_root,
+      this, frame_sink_manager_, frame_sink_id_, is_root,
       handles_frame_sink_id_invalidation, needs_sync_points);
 }
 
