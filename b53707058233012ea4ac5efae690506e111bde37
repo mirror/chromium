@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f186bed7_e2ad0179",
+        "filename": "content/browser/service_manager/merge_dictionary.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:36:01Z",
+      "side": 0,
+      "message": "whoops, didn\u0027t delete the cc file. Will do that and add the unittest into service_manager_unittests tomorrow.",
+      "range": {
+        "startLine": 1,
+        "startChar": 60,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "b53707058233012ea4ac5efae690506e111bde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9de0d7fd_f92abea5",
         "filename": "content/browser/service_manager/merge_dictionary_unittest.cc",
         "patchSetId": 1
