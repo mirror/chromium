@@ -98,6 +98,8 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   void NotifyChildContentsCreated(HeadlessWebContentsImpl* parent,
                                   HeadlessWebContentsImpl* child);
 
+  void NotifyUrlRequestFailed(net::URLRequest* request, int net_error);
+
  private:
   HeadlessBrowserContextImpl(
       HeadlessBrowserImpl* browser,
@@ -111,6 +113,7 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   std::unique_ptr<HeadlessBrowserContextOptions> context_options_;
   std::unique_ptr<HeadlessResourceContext> resource_context_;
   base::FilePath path_;
+  base::Lock observers_lock_;
   base::ObserverList<Observer> observers_;
 
   std::unordered_map<std::string, std::unique_ptr<HeadlessWebContents>>
