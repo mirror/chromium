@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01df59c1_f60cd326",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-28T00:13:14Z",
+      "side": 1,
+      "message": "It doesn\u0027t make sense to me that mNativeTask would be nonzero if native is not already loaded.",
+      "parentUuid": "188c2865_fa8f93f6",
+      "range": {
+        "startLine": 105,
+        "startChar": 30,
+        "endLine": 105,
+        "endChar": 36
+      },
+      "revId": "bba114b6de9b9062099ee891ac675aee1bb40ae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c8eea74_be4a91ec",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-27T22:48:32Z",
       "side": 1,
       "message": "Do you understand implications of returning false here?\n\nFrom https://cs.chromium.org/chromium/src/components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTask.java?rcl\u003d1caf74b3fa2e801138207bae19471d408298268b\u0026l\u003d65\n\n     * @return true if the task needs to be rescheduled according to the rescheduling criteria\n     * specified when the task was scheduled initially. False if the taskshould not be rescheduled.\n     * Regardless of the value returned, your task must stop executing.\n     * @see TaskInfo\n     */\n    @MainThread\n    boolean onStopTask(Context context, TaskParameters taskParameters);",
+      "range": {
+        "startLine": 120,
+        "startChar": 37,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "bba114b6de9b9062099ee891ac675aee1bb40ae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f620612d_f57eb512",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-28T00:13:14Z",
+      "side": 1,
+      "message": "Returning here /should/ be impossible.  However, it may be better to just call nativeOnStopTask and let the JNI DCHECK() if mNativeTask is 0.",
+      "parentUuid": "9c8eea74_be4a91ec",
       "range": {
         "startLine": 120,
         "startChar": 37,
@@ -68,6 +116,30 @@
       "revId": "bba114b6de9b9062099ee891ac675aee1bb40ae4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3264db_6c3d29a7",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-28T00:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b733332_56c3fc56",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 49
+      },
+      "revId": "bba114b6de9b9062099ee891ac675aee1bb40ae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
