@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1ae06767_03173c84",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-28T13:27:52Z",
+      "side": 1,
+      "message": "This results in a double-lookup in the case of the key being present (once to determine if it\u0027s present, once to log it).\n\nPrefer\nauto iter \u003d request_time_logs_.find(request_id);\nif (iter !\u003d request_time_logs_.end())\n  iter-\u003esecond.request_start_time \u003d start_time;",
+      "revId": "bf0c352bee215464caff3a4b596e4026fa6cae74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28120f53_1c222ca3",
         "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
         "patchSetId": 3
@@ -13,6 +30,40 @@
       "writtenOn": "2017-06-27T18:11:45Z",
       "side": 1,
       "message": "optional nit: It is possible to prevent a double map lookup (in AnalyzeLogRequest and in erase), by something like:\nauto it \u003d request_time_logs_.find(request_id);\nAnalyzeLogRequest(it-\u003esecond, end_time);\nrequest_time_logs_.erase(it);",
+      "revId": "bf0c352bee215464caff3a4b596e4026fa6cae74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b73be8_1b35e3a1",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-28T13:27:52Z",
+      "side": 1,
+      "message": "This is a behavior match, so we probably shouldn\u0027t change this in this cl, but I wonder if this the right thing to do.  For instance, if 99% of extensions fall under this threshold, it gives us a very skewed and inaccurate sense of how fast/slow the API in general is.  Wouldn\u0027t it be more useful to see all the numbers, and make judgments based on the data?\n\n(Probably good to do this in a followup)",
+      "revId": "bf0c352bee215464caff3a4b596e4026fa6cae74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c90779d_f7053e0a",
+        "filename": "extensions/browser/api/web_request/web_request_time_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-28T13:27:52Z",
+      "side": 1,
+      "message": "ditto re double-lookup",
       "revId": "bf0c352bee215464caff3a4b596e4026fa6cae74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
