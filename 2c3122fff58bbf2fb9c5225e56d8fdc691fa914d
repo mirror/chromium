@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6aac6ec_2221f0f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-28T17:29:24Z",
+      "side": 0,
+      "message": "Do I get it right that before this CL, we\u0027ve also recorded the metric only after all the load tasks have been completed but _before_ updating the icon type info for the last tile to load?",
+      "range": {
+        "startLine": 415,
+        "startChar": 42,
+        "endLine": 415,
+        "endChar": 61
+      },
+      "revId": "2c3122fff58bbf2fb9c5225e56d8fdc691fa914d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
