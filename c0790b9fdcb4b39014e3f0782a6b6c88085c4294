@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab0ecb7_080de50a",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/outdent-break-with-style-expected.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-28T04:42:37Z",
+      "side": 1,
+      "message": "Why are these quotes being added?",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "c0790b9fdcb4b39014e3f0782a6b6c88085c4294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203815b3_e23b9819",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Element/scroll-width-hidden-expected.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-28T04:42:37Z",
+      "side": 1,
+      "message": "I see a lot of these expectations are losing a whitespace, is that expected?",
+      "revId": "c0790b9fdcb4b39014e3f0782a6b6c88085c4294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8f8899_550f291f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 2140,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-28T04:42:37Z",
+      "side": 1,
+      "message": "nit: continue should be capitalized",
+      "revId": "c0790b9fdcb4b39014e3f0782a6b6c88085c4294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad19c5c_2f4eb7a0",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-28T04:42:37Z",
+      "side": 1,
+      "message": "Nit: The references to last_display_contents_ here seem out of context (only references to the layout_object in the code itself). Was this comment meant to go up with DCHECK(!last_display_contents_ ? Or possibly below in DidVisitText?",
+      "revId": "c0790b9fdcb4b39014e3f0782a6b6c88085c4294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afd0b4e_a9dfbfe9",
+        "filename": "third_party/WebKit/Source/core/dom/WhitespaceAttacher.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-28T04:42:37Z",
+      "side": 1,
+      "message": "nit: Please add a comment for why this should be null here?",
+      "revId": "c0790b9fdcb4b39014e3f0782a6b6c88085c4294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
