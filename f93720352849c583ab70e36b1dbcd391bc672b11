@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fce9ba69_859afeb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-28T05:46:13Z",
+      "side": 1,
+      "message": "Would you document the specific change?\n\nEssentially, the CL desc should answer the following questions:\n- What was the behavior before this CL?\n- How did you change it? What is the behavior after the CL?\n- Why did you introduce the change?",
+      "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "921c30cc_2e1d2e67",
         "filename": "third_party/WebKit/LayoutTests/http/tests/xmlhttprequest/xmlhttprequest-overridemimetype-content-type-header-expected.txt",
         "patchSetId": 7
@@ -13,6 +30,23 @@
       "writtenOn": "2017-06-28T05:36:06Z",
       "side": 1,
       "message": "Please make this line PASS (i.e., please fix the test).",
+      "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dced636a_2c678aea",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-28T05:46:13Z",
+      "side": 1,
+      "message": "Would you add references to XHR spec?\nhttps://xhr.spec.whatwg.org/#the-overridemimetype()-method",
       "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
