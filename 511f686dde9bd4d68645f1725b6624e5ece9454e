@@ -22,6 +22,30 @@
       "revId": "511f686dde9bd4d68645f1725b6624e5ece9454e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dfa100e_41584cca",
+        "filename": "content/renderer/media_recorder/video_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-06-28T19:41:05Z",
+      "side": 1,
+      "message": "As we discussed offline, I am changing it to 10 for this patch. Fingers crossed it won\u0027t cause any test regressions on the ones relying on the infinite queue. I am also adding a TODO about LIFO design for the next patch.",
+      "parentUuid": "c00ba297_5f806012",
+      "range": {
+        "startLine": 78,
+        "startChar": 39,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "511f686dde9bd4d68645f1725b6624e5ece9454e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
