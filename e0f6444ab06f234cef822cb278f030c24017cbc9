@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1495e9e_9ee10113",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_store.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-06-28T20:13:25Z",
+      "side": 1,
+      "message": "Nit (for all messages): IMO sentences should end with a period.",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9dcd33_a15f7412",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_store.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-06-28T20:13:25Z",
+      "side": 1,
+      "message": "Nit: \"Bad policy type for domain: \" \u003c\u003c ns.domain \u003c\u003c \".\"\nCould you also log the policy type or do you want to avoid exposing it?",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9dba6f_5c3e261b",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-06-28T20:13:25Z",
+      "side": 1,
+      "message": "I\u0027d add the max size here. E.g.\n\n     \u003c\u003c serialized_response.size() \u003c\u003c \" bytes (max \" \u003c\u003c kPolicyProtoMaxSize \u003c\u003c \").\"",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b79b5ae_a8978530",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-06-28T20:13:25Z",
+      "side": 1,
+      "message": "The \"try again soon\" may indicate a DVLOG() could be enough, but depending on the server error it could be persistent. So I think warning is probably appropriate here. Same for HTTP_ERROR?",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6f857a_19092b36",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-06-28T20:13:25Z",
+      "side": 1,
+      "message": "Should the expected hash be logged or is it not useful here?",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bba5061_2651e0c9",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-06-28T20:13:25Z",
+      "side": 1,
+      "message": "Nit: \"an existing job\" not \"the existing job\"\n\nAlso, I think \"skipping\" is misleading. The fetching will happen. What about just saying \"Fetching already scheduled\" or something like this?",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
