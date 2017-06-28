@@ -448,21 +448,21 @@
     },
     {
       name: "font-stretch",
+      converter: "ConvertFontStretch",
       is_descriptor: true,
       font: true,
       inherited: true,
       name_for_methods: "Stretch",
       priority: "High",
-      type_name: "FontStretch",
     },
     {
       name: "font-style",
+      converter: "ConvertFontStyle",
       is_descriptor: true,
       font: true,
       inherited: true,
       name_for_methods: "Style",
       priority: "High",
-      type_name: "FontStyle",
     },
     {
       name: "font-variant-ligatures",
@@ -506,7 +506,6 @@
       interpolable: true,
       name_for_methods: "Weight",
       priority: "High",
-      type_name: "FontWeight",
     },
     {
       name: "font-feature-settings",

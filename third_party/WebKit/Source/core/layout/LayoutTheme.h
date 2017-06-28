@@ -28,7 +28,6 @@
 #include "platform/ThemeTypes.h"
 #include "platform/fonts/Font.h"
 #include "platform/fonts/FontDescription.h"
-#include "platform/fonts/FontTraits.h"
 #include "platform/graphics/Color.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/text/PlatformLocale.h"
@@ -156,8 +155,8 @@ class CORE_EXPORT LayoutTheme : public RefCounted<LayoutTheme> {
 
   // System fonts and colors for CSS.
   virtual void SystemFont(CSSValueID system_font_id,
-                          FontStyle&,
-                          FontWeight&,
+                          FontSelectionValue& font_slope,
+                          FontSelectionValue& font_weight,
                           float& font_size,
                           AtomicString& font_family) const = 0;
   void SystemFont(CSSValueID system_font_id, FontDescription&);

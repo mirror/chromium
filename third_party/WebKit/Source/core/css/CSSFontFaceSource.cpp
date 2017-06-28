@@ -48,10 +48,8 @@ PassRefPtr<SimpleFontData> CSSFontFaceSource::GetFontData(
     return CreateFontData(font_description);
   }
 
-  // See if we have a mapping in our FontData cache.
-  // TODO(drott): Check whether losing traits information here is problematic.
-  // crbug.com/516677
-  FontCacheKey key = font_description.CacheKey(FontFaceCreationParams());
+  FontCacheKey key = font_description.CacheKey(
+      FontFaceCreationParams(), font_description.GetFontSelectionRequest());
 
   RefPtr<SimpleFontData>& font_data =
       font_data_table_.insert(key, nullptr).stored_value->value;

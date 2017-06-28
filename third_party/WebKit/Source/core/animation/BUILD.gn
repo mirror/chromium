@@ -121,8 +121,6 @@ blink_core_sources("animation") {
     "FilterInterpolationFunctions.cpp",
     "FilterInterpolationFunctions.h",
     "FilterListPropertyFunctions.h",
-    "FontWeightConversion.cpp",
-    "FontWeightConversion.h",
     "ImageListPropertyFunctions.h",
     "ImagePropertyFunctions.h",
     "ImageSlicePropertyFunctions.h",
