@@ -66,7 +66,9 @@ class LargeIconService;
                     size:(CGFloat)size
                 useCache:(BOOL)useCache
            imageCallback:(void (^)(UIImage*))imageCallback
-        fallbackCallback:(void (^)(UIColor*, UIColor*, BOOL))fallbackCallback;
+        fallbackCallback:(void (^)(UIColor* textColor,
+                                   UIColor* backgroundColor,
+                                   BOOL isDefaultColor))fallbackCallback;
 
 @end
 
