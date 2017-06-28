@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb007ae6_b434f2e7",
+        "filename": "content/browser/service_manager/merge_dictionary.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T19:35:17Z",
+      "side": 1,
+      "message": "oops, this deletion should have been in the previous CL. Will move it to that CL tomorrow, you can ignore this.",
+      "range": {
+        "startLine": 1,
+        "startChar": 31,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "df2f67351dfc2992ccfed7d7f947bcff08ea9e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
