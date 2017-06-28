@@ -78,6 +78,7 @@ def _CommonChecks(input_api, output_api):
     results.extend(_CheckForNonBlinkVariantMojomIncludes(input_api, output_api))
     results.extend(_CheckTestExpectations(input_api, output_api))
     results.extend(_CheckChromiumPlatformMacros(input_api, output_api))
+    results.extend(_CheckWtfOsMacros(input_api, output_api))
     results.extend(_CheckWatchlist(input_api, output_api))
     return results
 
@@ -132,15 +133,42 @@ def _CheckStyle(input_api, output_api):
 
 
 def _CheckChromiumPlatformMacros(input_api, output_api, source_file_filter=None):
-    """Ensures that Blink code uses WTF's platform macros instead of
-    Chromium's. Using the latter has resulted in at least one subtle
-    build breakage."""
+    """Ensures including platform/wtf/build_config.h if OS_ macro is used."""
     os_macro_re = input_api.re.compile(r'^\s*#(el)?if.*\bOS_')
+    include_re = input_api.re.compile(
+        r'^#include\s.*platform/wtf/build_config.h\b')
+    errors = []
+    for f in input_api.AffectedFiles():
+        found_line_numbers = []
+        for line_num, line in f.ChangedContents():
+            if os_macro_re.search(line):
+                found_line_numbers.append(line_num)
+        if not found_line_numbers:
+            continue
+        found_include = False
+        for line in f.NewContents():
+            if include_re.search(line):
+                found_include = True
+                break
+        if not found_include:
+            for line_num in found_line_numbers:
+                errors.append('%s:%d OS_* macro is used without including '
+                              'platform/wtf/build_config.h.'
+                              % (f.LocalPath(), line_num))
+    if errors:
+        return [output_api.PresubmitPromptWarning('\n'.join(errors))]
+    return []
+
+
+def _CheckWtfOsMacros(input_api, output_api, source_file_filter=None):
+    """Ensures that Blink code uses no WTF's OS macros."""
+    os_macro_re = input_api.re.compile(r'^\s*#(el)?if.*\bOS\(')
     errors = input_api.canned_checks._FindNewViolationsOfRule(
         lambda _, x: not os_macro_re.search(x),
         input_api, source_file_filter)
-    errors = ['Found use of Chromium OS_* macro in %s. '
-        'Use WTF platform macros instead.' % violation for violation in errors]
+    errors = ['Found deprecated OS() macro in %s. Include platform/wtf/'
+              'build_config.h and use OS_* macros instead.'
+              % violation for violation in errors]
     if errors:
         return [output_api.PresubmitPromptWarning('\n'.join(errors))]
     return []
