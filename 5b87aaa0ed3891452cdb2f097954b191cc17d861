@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "1fc26c56_5c0a0c37",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T18:01:18Z",
+      "side": 1,
+      "message": "Add options_when_speaking_description to strings/chromevox_strings.grd",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc113f7f_96ab8469",
         "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
         "patchSetId": 2
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "edc556ce_6d5ba12a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T18:01:18Z",
+      "side": 1,
+      "message": "You need to change the strings resources (and all of the strings below).",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47fc553b_9c8959a4",
         "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
         "patchSetId": 2
@@ -47,6 +81,23 @@
       "writtenOn": "2017-06-28T17:53:17Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df283203_7713bdf9",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T18:01:18Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this radio group won\u0027t work correctly without changes in the js.",
       "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
