@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb81c38e_bd4d32e2",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-28T18:06:38Z",
+      "side": 1,
+      "message": "That will break the specific magnifying-glass alignment mentioned in the comment, though? It would also involve some changes to FirstRunBubbleController to support using an absolute anchor point in screen coordinates (which is supported by BaseBubbleController, but.)",
+      "parentUuid": "9493e46f_06afcad2",
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ab39206_3988ad28",
         "filename": "chrome/browser/ui/views/first_run_bubble.h",
         "patchSetId": 3
@@ -90,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "f69b8145_c2a00890",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-28T18:06:38Z",
+      "side": 1,
+      "message": "Okay, I have moved these out into c/b/ui/views/bubble_anchor_util.{h,cc} and added implementations in c/b/ui/cocoa/bubble_anchor_util_views.mm. The only thing now added to browser_dialogs.h is ShowFirstRunBubbleViews(), which is a shim that calls FirstRunBubble::ShowBubble().",
+      "parentUuid": "1bf3511f_3f9b58a3",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dc0d9a1_59ba57c6",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 3
@@ -104,6 +146,24 @@
       "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68db3f6_eaf1c187",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-28T18:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc0d9a1_59ba57c6",
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -130,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "d46581d4_fc5ff64d",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-28T18:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e70af86_4436dc49",
+      "range": {
+        "startLine": 859,
+        "startChar": 5,
+        "endLine": 859,
+        "endChar": 9
+      },
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9b900ec_56b1c5a7",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 3
@@ -150,6 +234,30 @@
       "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e215e3_bf6af247",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-28T18:06:38Z",
+      "side": 1,
+      "message": "Done - this became c/b/ui/first_run_bubble_presenter.{h,cc} :)",
+      "parentUuid": "d9b900ec_56b1c5a7",
+      "range": {
+        "startLine": 1095,
+        "startChar": 4,
+        "endLine": 1095,
+        "endChar": 22
+      },
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
