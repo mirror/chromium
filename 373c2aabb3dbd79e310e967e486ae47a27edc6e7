@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b8968b4_9f3b71a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-28T15:47:28Z",
+      "side": 1,
+      "message": "nit: platform",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "373c2aabb3dbd79e310e967e486ae47a27edc6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbaf966_16f8176d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-28T15:47:28Z",
+      "side": 1,
+      "message": "nit: dependent",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "373c2aabb3dbd79e310e967e486ae47a27edc6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772cf7a2_edf42a9d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29591,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-28T15:47:28Z",
+      "side": 1,
+      "message": "Is this histogram still useful?  If so, how would you expect it to be used?",
+      "range": {
+        "startLine": 29588,
+        "startChar": 4,
+        "endLine": 29591,
+        "endChar": 74
+      },
+      "revId": "373c2aabb3dbd79e310e967e486ae47a27edc6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
