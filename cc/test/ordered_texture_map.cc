@@ -19,6 +19,7 @@ OrderedTextureMap::~OrderedTextureMap() {}
 
 void OrderedTextureMap::Append(GLuint id,
                                scoped_refptr<TestTexture> texture) {
+  printf("append %d\n", (int)id);
   DCHECK(texture.get());
   DCHECK(!ContainsId(id));
 
@@ -28,6 +29,7 @@ void OrderedTextureMap::Append(GLuint id,
 
 void OrderedTextureMap::Replace(GLuint id,
                                 scoped_refptr<TestTexture> texture) {
+  printf("replace %d\n", (int)id);
   DCHECK(texture.get());
   DCHECK(ContainsId(id));
 
@@ -40,6 +42,7 @@ void OrderedTextureMap::Remove(GLuint id) {
   // nothing to remove in that case.
   if (map_it == textures_.end())
     return;
+  printf("remove %d\n", (int)id);
   textures_.erase(map_it);
 
   TextureList::iterator list_it =
