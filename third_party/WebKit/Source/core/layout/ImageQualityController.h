@@ -36,6 +36,7 @@
 #include "core/CoreExport.h"
 #include "platform/Timer.h"
 #include "platform/geometry/LayoutSize.h"
+#include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/Image.h"
 #include "platform/wtf/HashMap.h"
 
