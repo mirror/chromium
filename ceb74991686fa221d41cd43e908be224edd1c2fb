@@ -140,6 +140,24 @@
       "revId": "ceb74991686fa221d41cd43e908be224edd1c2fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a1f348_8ee0c57a",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-28T06:49:35Z",
+      "side": 1,
+      "message": "Thanks for adding me to the thread.\n\nBecca: what were the issues that you ran into?  I think all known blocking issues for using the new bindings have been resolved. I would be happy to help resolving the issues that you have met.\n\nAll usage of the old-style bindings are being removed. I would recommend that you upgrade now.",
+      "parentUuid": "17fb5309_354fdab1",
+      "revId": "ceb74991686fa221d41cd43e908be224edd1c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
