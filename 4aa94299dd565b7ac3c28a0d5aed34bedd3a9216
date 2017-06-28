@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f37d4b45_f0316226",
+        "filename": "gpu/ipc/host/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-28T04:19:30Z",
+      "side": 1,
+      "message": "why not: \n\n#if defined(OS_MACOSX) || (defined(OS_CHROMEOS) \u0026\u0026 defined(ARCH_CPU_X86_FAMILY))\n\nI\u0027m assuming we\u0027ll remove all traces of the use flag after this lands, right?",
+      "revId": "4aa94299dd565b7ac3c28a0d5aed34bedd3a9216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
