@@ -22,6 +22,30 @@
       "revId": "a4d28004e191066b1cb9572e9696a44d8b2016b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c9013d_d42a128e",
+        "filename": "ios/clean/chrome/app/main.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127220
+      },
+      "writtenOn": "2017-06-28T04:07:38Z",
+      "side": 0,
+      "message": "I don\u0027t think so. It seems like leftover from previous performance work.  Hmmmm I\u0027ll add it back in case we need it somewhere.",
+      "parentUuid": "dcd1a270_88ad4926",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "a4d28004e191066b1cb9572e9696a44d8b2016b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
