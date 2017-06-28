@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e20267e_0d5cce81",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-28T19:13:07Z",
+      "side": 1,
+      "message": "defined(OS_ANDROID) (see below)",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "f890dd2092a076454ca1e849fa2982e899942856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ead132b_ee48d910",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-28T19:13:07Z",
+      "side": 1,
+      "message": "Nit: Go ahead and fix this line to \"// defined(OS_WIN) || defined(OS_LINUX)\"\n\nThe ending comment should basically be character-for-character the same as the #if statement above.\n\nApply this rule to the rest of the change as well.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "f890dd2092a076454ca1e849fa2982e899942856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
