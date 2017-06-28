@@ -533,6 +533,8 @@ void RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kImportHomepage, false);
   registry->RegisterBooleanPref(prefs::kImportSavedPasswords, false);
   registry->RegisterBooleanPref(prefs::kImportSearchEngine, false);
+  registry->RegisterBooleanPref(prefs::kNewTabInProductHelp, false);
+  registry->RegisterIntegerPref(prefs::kSessionTimeTotal, 0);
 }
 
 bool IsChromeFirstRun() {
