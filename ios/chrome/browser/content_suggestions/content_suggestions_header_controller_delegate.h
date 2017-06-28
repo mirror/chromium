@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "base/ios/block_types.h"
+
 @protocol ContentSuggestionsHeaderControllerDelegate
 
 - (BOOL)isContextMenuVisible;
@@ -16,8 +18,10 @@
 
 @protocol ContentSuggestionsHeaderControllerCommandHandler
 
-- (void)shiftTilesDown;
-- (void)shiftTilesUp;
+// TODO: one protocol to allow the header controller to send commands to the
+// collection, another to allow the collection to send commands to the header
+// controller. They should be implemented in the same object.
+- (void)dismissModals;
 
 @end
 
