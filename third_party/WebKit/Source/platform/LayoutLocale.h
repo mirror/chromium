@@ -26,7 +26,7 @@ class PLATFORM_EXPORT LayoutLocale : public RefCounted<LayoutLocale> {
   static const LayoutLocale* Get(const AtomicString& locale);
   static const LayoutLocale& GetDefault();
   static const LayoutLocale& GetSystem();
-  static const LayoutLocale& ValueOrDefault(const LayoutLocale* locale) {
+  static inline const LayoutLocale& ValueOrDefault(const LayoutLocale* locale) {
     return locale ? *locale : GetDefault();
   }
 
@@ -54,7 +54,6 @@ class PLATFORM_EXPORT LayoutLocale : public RefCounted<LayoutLocale> {
   UScriptCode GetScriptForHan() const;
   bool HasScriptForHan() const;
   static const LayoutLocale* LocaleForHan(const LayoutLocale*);
-  static void InvalidateLocaleForHan() { default_for_han_computed_ = false; }
   const char* LocaleForHanForSkFontMgr() const;
 
   Hyphenation* GetHyphenation() const;
@@ -70,7 +69,6 @@ class PLATFORM_EXPORT LayoutLocale : public RefCounted<LayoutLocale> {
   explicit LayoutLocale(const AtomicString&);
 
   void ComputeScriptForHan() const;
-  static void ComputeLocaleForHan();
 
   AtomicString string_;
   mutable CString string_for_sk_font_mgr_;
@@ -84,11 +82,6 @@ class PLATFORM_EXPORT LayoutLocale : public RefCounted<LayoutLocale> {
 
   mutable unsigned has_script_for_han_ : 1;
   mutable unsigned hyphenation_computed_ : 1;
-
-  static const LayoutLocale* default_;
-  static const LayoutLocale* system_;
-  static const LayoutLocale* default_for_han_;
-  static bool default_for_han_computed_;
 };
 
 }  // namespace blink
