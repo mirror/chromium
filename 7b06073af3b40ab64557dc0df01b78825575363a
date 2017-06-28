@@ -182,6 +182,30 @@
       "revId": "7b06073af3b40ab64557dc0df01b78825575363a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfd52f88_6a5232fb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-28T10:42:36Z",
+      "side": 1,
+      "message": "Done! crbug.com/737522",
+      "parentUuid": "e773d6de_07f51b13",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "7b06073af3b40ab64557dc0df01b78825575363a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
