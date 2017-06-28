@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ea7783_df7f607c",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-28T01:46:07Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "8da7fcdf5c0dd2c7555060fb6e50ffc692e6def0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
