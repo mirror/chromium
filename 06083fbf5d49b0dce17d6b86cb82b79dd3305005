@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8633040_feb02671",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-28T09:07:45Z",
+      "side": 1,
+      "message": "There\u0027s a StyleRef() method for this. You should have used that instead of adding random DCHECK(Style()) checks to the code. It really looks weird to DCHECK(Style()) here, in the middle of layout.",
+      "revId": "06083fbf5d49b0dce17d6b86cb82b79dd3305005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
