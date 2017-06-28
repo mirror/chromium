@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181594e6_d0b72e4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-28T16:51:40Z",
+      "side": 1,
+      "message": "Please keep lines in commit descriptions (especially the first one) under 80 columns.",
+      "revId": "da6cfc673385465efd1f058203672abc08490467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac955ac6_9fcb0e54",
+        "filename": "services/device/generic_sensor/linux/sensor_data_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-28T16:51:40Z",
+      "side": 1,
+      "message": "nit: Newline after this line.",
+      "revId": "da6cfc673385465efd1f058203672abc08490467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a200fd_e20bbd84",
+        "filename": "services/device/generic_sensor/linux/sensor_device_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-28T16:51:40Z",
+      "side": 1,
+      "message": "nit: not your change but if you\u0027re cleaning up includes you might as well remove this extraneous newline",
+      "revId": "da6cfc673385465efd1f058203672abc08490467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
