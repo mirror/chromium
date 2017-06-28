@@ -34,6 +34,24 @@
       "revId": "1109bd071367148702eb13e5ad13d16f7cedb85c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43ff07b_0153a5df",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-28T16:58:12Z",
+      "side": 1,
+      "message": "Gestures from a touchscreen device that are not associated with touch events should have unique_touch_event_id \u003d\u003d 0 (the documentation on WebGestureEvent says that, at least). This should be fine as long as we explicitly cover that case; the change that I landed yesterday directly hit tests (via FindEventTarget()) for those gestures.",
+      "parentUuid": "0f291d7b_7740c0e0",
+      "revId": "1109bd071367148702eb13e5ad13d16f7cedb85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
