@@ -64,8 +64,8 @@ void HardwareDisplayControllerTest::SetUp() {
   crtcs.push_back(kSecondaryCrtc);
   drm_ = new ui::MockDrmDevice(false, crtcs, kPlanesPerCrtc);
   controller_.reset(new ui::HardwareDisplayController(
-      std::unique_ptr<ui::CrtcController>(
-          new ui::CrtcController(drm_.get(), kPrimaryCrtc, kPrimaryConnector)),
+      std::unique_ptr<ui::CrtcController>(new ui::CrtcController(
+          drm_.get(), kPrimaryCrtc, kPrimaryConnector, true)),
       gfx::Point()));
 }
 
@@ -227,8 +227,9 @@ TEST_F(HardwareDisplayControllerTest, RejectUnderlays) {
 }
 
 TEST_F(HardwareDisplayControllerTest, PageflipMirroredControllers) {
-  controller_->AddCrtc(std::unique_ptr<ui::CrtcController>(
-      new ui::CrtcController(drm_.get(), kSecondaryCrtc, kSecondaryConnector)));
+  controller_->AddCrtc(
+      std::unique_ptr<ui::CrtcController>(new ui::CrtcController(
+          drm_.get(), kSecondaryCrtc, kSecondaryConnector, true)));
 
   ui::OverlayPlane plane1(scoped_refptr<ui::ScanoutBuffer>(
       new ui::MockScanoutBuffer(kDefaultModeSize)));
@@ -317,8 +318,9 @@ TEST_F(HardwareDisplayControllerTest, PlaneStateAfterDestroyingCrtc) {
 }
 
 TEST_F(HardwareDisplayControllerTest, PlaneStateAfterAddCrtc) {
-  controller_->AddCrtc(std::unique_ptr<ui::CrtcController>(
-      new ui::CrtcController(drm_.get(), kSecondaryCrtc, kSecondaryConnector)));
+  controller_->AddCrtc(
+      std::unique_ptr<ui::CrtcController>(new ui::CrtcController(
+          drm_.get(), kSecondaryCrtc, kSecondaryConnector, true)));
 
   ui::OverlayPlane plane1(scoped_refptr<ui::ScanoutBuffer>(
       new ui::MockScanoutBuffer(kDefaultModeSize)));
@@ -427,8 +429,9 @@ TEST_F(HardwareDisplayControllerTest, AddCrtcMidPageFlip) {
       planes, base::Bind(&HardwareDisplayControllerTest::PageFlipCallback,
                          base::Unretained(this)));
 
-  controller_->AddCrtc(std::unique_ptr<ui::CrtcController>(
-      new ui::CrtcController(drm_.get(), kSecondaryCrtc, kSecondaryConnector)));
+  controller_->AddCrtc(
+      std::unique_ptr<ui::CrtcController>(new ui::CrtcController(
+          drm_.get(), kSecondaryCrtc, kSecondaryConnector, true)));
 
   drm_->RunCallbacks();
   EXPECT_EQ(gfx::SwapResult::SWAP_ACK, last_swap_result_);

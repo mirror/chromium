@@ -116,7 +116,8 @@ void ScreenManager::AddDisplayController(const scoped_refptr<DrmDevice>& drm,
   }
 
   controllers_.push_back(base::MakeUnique<HardwareDisplayController>(
-      std::unique_ptr<CrtcController>(new CrtcController(drm, crtc, connector)),
+      std::unique_ptr<CrtcController>(new CrtcController(
+          drm, crtc, connector, IsConnectorEDP(drm->get_fd(), connector))),
       gfx::Point()));
 }
 

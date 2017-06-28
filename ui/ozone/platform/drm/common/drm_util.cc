@@ -252,6 +252,12 @@ HardwareDisplayControllerInfo::HardwareDisplayControllerInfo(
 HardwareDisplayControllerInfo::~HardwareDisplayControllerInfo() {
 }
 
+bool IsConnectorEDP(int fd, int connector_id) {
+  ScopedDrmConnectorPtr connector(drmModeGetConnector(fd, connector_id));
+  DCHECK(connector);
+  return connector->connector_type == DRM_MODE_CONNECTOR_eDP;
+}
+
 std::vector<std::unique_ptr<HardwareDisplayControllerInfo>>
 GetAvailableDisplayControllerInfos(int fd) {
   ScopedDrmResourcesPtr resources(drmModeGetResources(fd));

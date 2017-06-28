@@ -213,7 +213,7 @@ TEST(HardwareDisplayPlaneManagerLegacyTest, UnusedPlanesAreReleased) {
   assigns.push_back(ui::OverlayPlane(primary_buffer));
   assigns.push_back(ui::OverlayPlane(overlay_buffer));
   ui::HardwareDisplayPlaneList hdpl;
-  ui::CrtcController crtc(drm, crtcs[0], 0);
+  ui::CrtcController crtc(drm, crtcs[0], 0, true);
   drm->plane_manager()->BeginFrame(&hdpl);
   EXPECT_TRUE(drm->plane_manager()->AssignOverlayPlanes(&hdpl, assigns,
                                                         crtcs[0], &crtc));

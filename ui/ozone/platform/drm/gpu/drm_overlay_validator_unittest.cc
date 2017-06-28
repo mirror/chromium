@@ -429,8 +429,9 @@ TEST_F(DrmOverlayValidatorTest,
   std::vector<uint32_t> xrgb_yuv_packed_formats{DRM_FORMAT_XRGB8888,
                                                 DRM_FORMAT_UYVY};
   ui::HardwareDisplayController* controller = window_->GetController();
-  controller->AddCrtc(std::unique_ptr<ui::CrtcController>(
-      new ui::CrtcController(drm_.get(), kSecondaryCrtc, kSecondaryConnector)));
+  controller->AddCrtc(
+      std::unique_ptr<ui::CrtcController>(new ui::CrtcController(
+          drm_.get(), kSecondaryCrtc, kSecondaryConnector, true)));
   ui::OverlayPlane plane1(scoped_refptr<ui::ScanoutBuffer>(
       new ui::MockScanoutBuffer(primary_rect_.size())));
   EXPECT_TRUE(controller->Modeset(plane1, kDefaultMode));
@@ -501,8 +502,9 @@ TEST_F(DrmOverlayValidatorTest, OptimalFormatYUV_MirroredControllers) {
   overlay_validator_->ClearCache();
 
   ui::HardwareDisplayController* controller = window_->GetController();
-  controller->AddCrtc(std::unique_ptr<ui::CrtcController>(
-      new ui::CrtcController(drm_.get(), kSecondaryCrtc, kSecondaryConnector)));
+  controller->AddCrtc(
+      std::unique_ptr<ui::CrtcController>(new ui::CrtcController(
+          drm_.get(), kSecondaryCrtc, kSecondaryConnector, true)));
   ui::OverlayPlane plane1(scoped_refptr<ui::ScanoutBuffer>(
       new ui::MockScanoutBuffer(primary_rect_.size())));
   EXPECT_TRUE(controller->Modeset(plane1, kDefaultMode));

@@ -14,10 +14,9 @@ namespace ui {
 
 CrtcController::CrtcController(const scoped_refptr<DrmDevice>& drm,
                                uint32_t crtc,
-                               uint32_t connector)
-    : drm_(drm),
-      crtc_(crtc),
-      connector_(connector) {}
+                               uint32_t connector,
+                               bool edp)
+    : drm_(drm), crtc_(crtc), connector_(connector), edp_(edp) {}
 
 CrtcController::~CrtcController() {
   if (!is_disabled_) {
@@ -87,6 +86,12 @@ bool CrtcController::SchedulePageFlip(
     return true;
   }
   DCHECK(primary->buffer.get());
+
+  // TODO(dcastagna): HW overlays on a non embedded displays are behaving
+  // incorrectly. crbug.com/709105
+  if (!edp_ && overlays.size() > 1) {
+    return false;
+  }
 
   if (primary->buffer->GetSize() != gfx::Size(mode_.hdisplay, mode_.vdisplay)) {
     VLOG(2) << "Trying to pageflip a buffer with the wrong size. Expected "
