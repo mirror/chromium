@@ -4,6 +4,9 @@
 
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
 
+#import "base/ios/block_types.h"
+#include "base/logging.h"
+#import "ios/chrome/browser/procedural_block_types.h"
 #import "ios/clean/chrome/browser/ui/ui_types.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -14,6 +17,171 @@ namespace {
 CGFloat kToolbarHeight = 56.0f;
 CGFloat kTabStripHeight = 120.0f;
 }
+
+//#define SOLUTION_A  // New dedicated method, similar to detach/add in one go.
+//#define SOLUTION_B  // Improvement to detach/add APIs to handle animations.
+#define SOLUTION_C  // Custom generic child controller transition API.
+
+#ifdef SOLUTION_C
+@interface FindInPageAnimator : NSObject<UIViewControllerAnimatedTransitioning>
+@end
+
+@implementation FindInPageAnimator
+
+#pragma mark - UIViewControllerAnimatedTransitioning
+
+- (NSTimeInterval)transitionDuration:
+    (id<UIViewControllerContextTransitioning>)transitionContext {
+  return 0.25;
+}
+
+- (void)animateTransition:
+    (id<UIViewControllerContextTransitioning>)transitionContext {
+  UIViewController* toViewController = [transitionContext
+      viewControllerForKey:UITransitionContextToViewControllerKey];
+  UIViewController* fromViewController = [transitionContext
+      viewControllerForKey:UITransitionContextFromViewControllerKey];
+  [transitionContext.containerView addSubview:toViewController.view];
+  CGRect insideFrame = transitionContext.containerView.bounds;
+  CGRect outsideFrame =
+      CGRectOffset(insideFrame, 0, -CGRectGetHeight(insideFrame));
+  toViewController.view.frame = outsideFrame;
+
+  [UIView animateWithDuration:[self transitionDuration:transitionContext]
+      animations:^{
+        fromViewController.view.frame = outsideFrame;
+        toViewController.view.frame = insideFrame;
+      }
+      completion:^(BOOL finished) {
+        [transitionContext
+            completeTransition:![transitionContext transitionWasCancelled]];
+      }];
+}
+
+@end
+
+@interface ChildViewControllerTransitionContext
+    : NSObject<UIViewControllerContextTransitioning>
+- (instancetype)initWithFromViewController:(UIViewController*)fromViewController
+                          toViewController:(UIViewController*)toViewController
+                      parentViewController:
+                          (UIViewController*)parentViewController
+                                    inView:(UIView*)containerView
+                                completion:(ProceduralBlockWithBool)completion;
+- (void)startTransition;
+@end
+
+@interface ChildViewControllerTransitionContext ()
+@property(nonatomic, strong) UIView* containerView;
+@property(nonatomic, strong) UIViewController* parentViewController;
+@property(nonatomic, copy) ProceduralBlockWithBool completion;
+@property(nonatomic, strong) NSDictionary* viewControllers;
+@property(nonatomic, strong) NSDictionary* views;
+@end
+
+@implementation ChildViewControllerTransitionContext
+@synthesize animated = _animated;
+@synthesize interactive = _interactive;
+@synthesize transitionWasCancelled = _transitionWasCancelled;
+@synthesize presentationStyle = _presentationStyle;
+@synthesize targetTransform = _targetTransform;
+@synthesize containerView = _containerView;
+@synthesize parentViewController = _parentViewController;
+@synthesize completion = _completion;
+@synthesize viewControllers = _viewControllers;
+@synthesize views = _views;
+
+- (instancetype)initWithFromViewController:(UIViewController*)fromViewController
+                          toViewController:(UIViewController*)toViewController
+                      parentViewController:
+                          (UIViewController*)parentViewController
+                                    inView:(UIView*)containerView
+                                completion:(ProceduralBlockWithBool)completion {
+  self = [super init];
+  if (self) {
+    DCHECK(parentViewController);
+    DCHECK(!fromViewController ||
+           fromViewController.parentViewController == parentViewController);
+    DCHECK(!toViewController || toViewController.parentViewController == nil);
+    _animated = YES;
+    _interactive = NO;
+    _presentationStyle = UIModalPresentationCustom;
+    _targetTransform = CGAffineTransformIdentity;
+    NSMutableDictionary* viewControllers = [NSMutableDictionary dictionary];
+    NSMutableDictionary* views = [NSMutableDictionary dictionary];
+    if (fromViewController) {
+      viewControllers[UITransitionContextFromViewControllerKey] =
+          fromViewController;
+      views[UITransitionContextFromViewKey] = fromViewController.view;
+    }
+    if (toViewController) {
+      viewControllers[UITransitionContextToViewControllerKey] =
+          toViewController;
+      views[UITransitionContextToViewKey] = toViewController.view;
+    }
+    _viewControllers = [viewControllers copy];
+    _views = [views copy];
+    _parentViewController = parentViewController;
+    _containerView = containerView;
+    _completion = [completion copy];
+  }
+  return self;
+}
+
+- (void)startTransition {
+  [self.viewControllers[UITransitionContextFromViewControllerKey]
+      willMoveToParentViewController:nil];
+  UIViewController* toViewController =
+      self.viewControllers[UITransitionContextToViewControllerKey];
+  if (toViewController) {
+    [self.parentViewController addChildViewController:toViewController];
+  }
+}
+
+#pragma mark - UIViewControllerContextTransitioning
+
+- (void)updateInteractiveTransition:(CGFloat)percentComplete {
+}
+
+- (void)finishInteractiveTransition {
+}
+
+- (void)cancelInteractiveTransition {
+}
+
+- (void)pauseInteractiveTransition {
+}
+
+- (void)completeTransition:(BOOL)didComplete {
+  [[self viewForKey:UITransitionContextFromViewKey] removeFromSuperview];
+  [[self viewControllerForKey:UITransitionContextFromViewControllerKey]
+      removeFromParentViewController];
+  [[self viewControllerForKey:UITransitionContextToViewControllerKey]
+      didMoveToParentViewController:self.parentViewController];
+  if (self.completion) {
+    self.completion(didComplete);
+  }
+}
+
+- (UIViewController*)viewControllerForKey:
+    (UITransitionContextViewControllerKey)key {
+  return self.viewControllers[key];
+}
+
+- (UIView*)viewForKey:(UITransitionContextViewKey)key {
+  return self.views[key];
+}
+
+- (CGRect)initialFrameForViewController:(UIViewController*)viewController {
+  return CGRectZero;
+}
+
+- (CGRect)finalFrameForViewController:(UIViewController*)viewController {
+  return CGRectZero;
+}
+
+@end
+#endif
 
 @interface TabContainerViewController ()
 
@@ -67,10 +235,11 @@ CGFloat kTabStripHeight = 120.0f;
   self.toolbarView.translatesAutoresizingMaskIntoConstraints = NO;
   self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
   self.view.backgroundColor = [UIColor blackColor];
-  self.findBarView.backgroundColor = [UIColor greenColor];
+  self.findBarView.backgroundColor = [UIColor clearColor];
   self.tabStripView.backgroundColor = [UIColor blackColor];
   self.toolbarView.backgroundColor = [UIColor blackColor];
   self.contentView.backgroundColor = [UIColor blackColor];
+  self.findBarView.clipsToBounds = YES;
 
   // Views that are added last have the highest z-order.
   [self.view addSubview:self.tabStripView];
@@ -115,12 +284,63 @@ CGFloat kTabStripHeight = 120.0f;
   if (self.findBarViewController == findBarViewController)
     return;
   if ([self isViewLoaded]) {
-    [self detachChildViewController:self.findBarViewController];
-    [self addChildViewController:findBarViewController
-                       toSubview:self.findBarView];
+#ifdef SOLUTION_A
+    [self swapFromViewController:self.findBarViewController
+                toViewController:findBarViewController
+                 inContainerView:self.findBarView];
+#else
+  #ifdef SOLUTION_B
+    UIViewController* fromViewController = self.findBarViewController;
+    UIViewController* toViewController = findBarViewController;
+
+    self.findBarView.hidden = NO;
+    CGRect insideFrame = self.findBarView.bounds;
+    CGRect outsideFrame =
+        CGRectOffset(insideFrame, 0, -CGRectGetHeight(insideFrame));
+    toViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
+    toViewController.view.autoresizingMask =
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    toViewController.view.frame = outsideFrame;
+    [self detachChildViewController:fromViewController
+        withAnimations:^{
+          fromViewController.view.frame = outsideFrame;
+        }
+        completion:^(BOOL finished) {
+          if (!toViewController)
+            self.findBarView.hidden = YES;
+        }];
+    [self addChildViewController:toViewController
+                       toSubview:self.findBarView
+                  withAnimations:^{
+                    toViewController.view.frame = insideFrame;
+                  }
+                      completion:nil];
+  #else
+    #ifdef SOLUTION_C
+    self.findBarView.hidden = NO;
+    findBarViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
+    findBarViewController.view.autoresizingMask =
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
+    ChildViewControllerTransitionContext* context =
+        [[ChildViewControllerTransitionContext alloc]
+            initWithFromViewController:self.findBarViewController
+                      toViewController:findBarViewController
+                  parentViewController:self
+                                inView:self.findBarView
+                            completion:^(BOOL finished) {
+                              self.findBarView.hidden =
+                                  (findBarViewController == nil);
+                            }];
+    [context startTransition];
+
+    FindInPageAnimator* animator = [[FindInPageAnimator alloc] init];
+    [animator animateTransition:context];
+    #endif
+  #endif
+#endif
   }
   _findBarViewController = findBarViewController;
-  self.findBarView.hidden = (_findBarViewController == nil);
 }
 
 - (void)setToolbarViewController:(UIViewController*)toolbarViewController {
@@ -156,6 +376,7 @@ CGFloat kTabStripHeight = 120.0f;
 
 #pragma mark - ChildViewController helper methods
 
+#ifndef SOLUTION_B
 - (void)addChildViewController:(UIViewController*)viewController
                      toSubview:(UIView*)subview {
   if (!viewController || !subview) {
@@ -177,6 +398,62 @@ CGFloat kTabStripHeight = 120.0f;
   [viewController.view removeFromSuperview];
   [viewController removeFromParentViewController];
 }
+#else
+- (void)addChildViewController:(UIViewController*)viewController
+                     toSubview:(UIView*)subview {
+  if (!viewController || !subview) {
+    return;
+  }
+  viewController.view.translatesAutoresizingMaskIntoConstraints = YES;
+  viewController.view.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  viewController.view.frame = subview.bounds;
+  return [self addChildViewController:viewController
+                            toSubview:subview
+                       withAnimations:nil
+                           completion:nil];
+}
+
+- (void)addChildViewController:(UIViewController*)viewController
+                     toSubview:(UIView*)subview
+                withAnimations:(ProceduralBlock)animations
+                    completion:(ProceduralBlockWithBool)completion {
+  if (!viewController || !subview) {
+    return;
+  }
+  [self addChildViewController:viewController];
+  [subview addSubview:viewController.view];
+  [UIView animateWithDuration:animations ? 0.25 : 0
+                   animations:animations
+                   completion:^(BOOL finished) {
+                     [viewController didMoveToParentViewController:self];
+                     if (completion)
+                       completion(finished);
+                   }];
+}
+
+- (void)detachChildViewController:(UIViewController*)viewController {
+  return [self detachChildViewController:viewController
+                          withAnimations:nil
+                              completion:nil];
+}
+
+- (void)detachChildViewController:(UIViewController*)viewController
+                   withAnimations:(ProceduralBlock)animations
+                       completion:(ProceduralBlockWithBool)completion {
+  if (viewController.parentViewController != self)
+    return;
+  [viewController willMoveToParentViewController:nil];
+  [UIView animateWithDuration:animations ? 0.25 : 0
+                   animations:animations
+                   completion:^(BOOL finished) {
+                     [viewController.view removeFromSuperview];
+                     [viewController removeFromParentViewController];
+                     if (completion)
+                       completion(finished);
+                   }];
+}
+#endif  // SOLUTION_B
 
 #pragma mark - MenuPresentationDelegate
 
@@ -240,6 +517,40 @@ CGFloat kTabStripHeight = 120.0f;
       format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
   return nil;
 }
+
+#ifdef SOLUTION_A
+#pragma mark - Private
+
+- (void)swapFromViewController:(UIViewController*)fromViewController
+              toViewController:(UIViewController*)toViewController
+               inContainerView:(UIView*)containerView {
+  containerView.hidden = NO;
+  [fromViewController willMoveToParentViewController:nil];
+  if (toViewController)
+    [self addChildViewController:toViewController];
+  toViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
+  toViewController.view.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  CGRect insideFrame = containerView.bounds;
+  CGRect outsideFrame =
+      CGRectOffset(insideFrame, 0, -CGRectGetHeight(insideFrame));
+  toViewController.view.frame = outsideFrame;
+  [containerView addSubview:toViewController.view];
+  [toViewController didMoveToParentViewController:self];
+
+  [UIView animateWithDuration:0.25
+      animations:^{
+        fromViewController.view.frame = outsideFrame;
+        toViewController.view.frame = insideFrame;
+      }
+      completion:^(BOOL finished) {
+        [fromViewController.view removeFromSuperview];
+        [fromViewController removeFromParentViewController];
+        [toViewController didMoveToParentViewController:self];
+        containerView.hidden = (toViewController == nil);
+      }];
+}
+#endif
 
 @end
 
