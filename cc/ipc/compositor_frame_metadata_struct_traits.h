@@ -130,6 +130,11 @@ struct StructTraits<cc::mojom::CompositorFrameMetadataDataView,
     return metadata.frame_token;
   }
 
+  static int64_t frame_submit_time(
+      const cc::CompositorFrameMetadata& metadata) {
+    return metadata.frame_submit_time;
+  }
+
   static bool Read(cc::mojom::CompositorFrameMetadataDataView data,
                    cc::CompositorFrameMetadata* out);
 };

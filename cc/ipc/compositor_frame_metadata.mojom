@@ -36,4 +36,5 @@ struct CompositorFrameMetadata {
   uint32 content_source_id;
   BeginFrameAck begin_frame_ack;
   uint32 frame_token;
+  int64 frame_submit_time;
 };

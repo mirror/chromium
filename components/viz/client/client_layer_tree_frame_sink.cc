@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/trace_event/trace_event.h"
 #include "cc/output/begin_frame_args.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/layer_tree_frame_sink_client.h"
@@ -114,6 +115,10 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(
         local_surface_id_provider_->GetLocalSurfaceIdForFrame(frame);
   }
 
+  frame.metadata.frame_submit_time = base::TimeTicks::Now().ToInternalValue();
+  TRACE_EVENT_FLOW_BEGIN0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
+                          "SubmitCompositorFrame",
+                          frame.metadata.frame_submit_time);
   compositor_frame_sink_->SubmitCompositorFrame(local_surface_id_,
                                                 std::move(frame));
 }
