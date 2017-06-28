@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3495494f_97c34a24",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-28T14:16:53Z",
+      "side": 1,
+      "message": "oh. I don\u0027t know of any docs. There\u0027s nothing super special about DEFINE_THREAD_SAFE_STATIC_LOCAL. It\u0027s a regular static variable (similar to \"static MyType type\" except it\u0027s wrapped on a StaticSingleton. The \"THREAD_SAFE\" just skips the thread checks.\n\nThe ThreadSpecific part is a bit more complicated, because it does store values on TLS. That\u0027s one of the main needs for FontGlobalContext, so we only store one pointer on TLS and everything else is inside.\n\nIf you want, feel free to write a doc/email on your plans to me an jbroman@ and we can review it. Ideally, we try to avoid locks, but if we have a big data set, maybe it\u0027s worth sharing. And maybe we can come up with some smart way of not having to lock (if it\u0027s read-only).",
+      "parentUuid": "31627b64_31c02f00",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8cb419_c598b1ce",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d950c206_f7a40ff4",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-28T14:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca8cb419_c598b1ce",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f5ef9d9b_1bf81f3e",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-28T14:16:53Z",
+      "side": 1,
+      "message": "is this good enough? Or is there a case where there\u0027s no default but you are still calling this every time?",
+      "parentUuid": "972e8bd1_fe6cfb09",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a5d85ad_2cbec2fb",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3e75e6_068ec814",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-28T14:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a5d85ad_2cbec2fb",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
