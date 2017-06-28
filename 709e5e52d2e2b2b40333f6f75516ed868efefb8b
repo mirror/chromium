@@ -70,6 +70,24 @@
       "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc346e3c_7e388e75",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-28T07:34:33Z",
+      "side": 1,
+      "message": "Make sense!\nDone.",
+      "parentUuid": "899752db_3197b8a4",
+      "revId": "709e5e52d2e2b2b40333f6f75516ed868efefb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
