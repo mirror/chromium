@@ -19,10 +19,17 @@ namespace {
 
 bool CreateDirectoryIfNotExists(const base::FilePath& dir_path) {
   bool success = base::PathExists(dir_path);
+  base::File::Error error;
   if (!success) {
-    base::File::Error error;
     success = base::CreateDirectoryAndGetError(dir_path, &error);
   }
+
+  if (success) {
+    stats::LogFileDirDiskUtilization(dir_path);
+  } else {
+    stats::LogsFileDirectoryCreationError(error);
+  }
+
   return success;
 }
 
@@ -72,6 +79,10 @@ std::vector<Entry*> FileMonitorImpl::CleanupFilesForCompletedEntries(
 
     entries_to_remove.push_back(entry);
     files_to_remove.push_back(entry->target_file_path);
+
+    // TODO(xingliu): Consider logs life time after the file being deleted on
+    // the file thread.
+    stats::LogFileLifeTime(base::Time::Now() - entry->completion_time);
   }
 
   file_thread_task_runner_->PostTask(

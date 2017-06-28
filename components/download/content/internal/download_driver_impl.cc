@@ -7,6 +7,7 @@
 #include <set>
 #include <vector>
 
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/driver_entry.h"
 #include "content/public/browser/download_interrupt_reasons.h"
@@ -55,6 +56,10 @@ FailureType FailureTypeFromInterruptReason(
     default:
       return FailureType::RECOVERABLE;
   }
+}
+
+void LogDownloadInterruptReason(content::DownloadInterruptReason reason) {
+  UMA_HISTOGRAM_SPARSE_SLOWLY("DownloadService.Driver.InterruptReason", reason);
 }
 
 }  // namespace
@@ -226,6 +231,7 @@ void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
     client_->OnDownloadUpdated(entry);
   } else if (reason !=
              content::DownloadInterruptReason::DOWNLOAD_INTERRUPT_REASON_NONE) {
+    LogDownloadInterruptReason(reason);
     client_->OnDownloadFailed(entry, FailureTypeFromInterruptReason(reason));
   }
 }
