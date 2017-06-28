@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7220f7_ed33b554",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-28T01:58:33Z",
+      "side": 0,
+      "message": "This comment was also outdated. Removed, sorry.",
+      "revId": "f5164d047a34e983671dfd2c6a30954ba92d2ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7909a404_18926e06",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-28T01:58:33Z",
+      "side": 0,
+      "message": "Will land this after CL:*396753 (currently in CQ) lands and goldeneye picks it up.",
+      "revId": "f5164d047a34e983671dfd2c6a30954ba92d2ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
