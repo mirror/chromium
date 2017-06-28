@@ -118,6 +118,11 @@ bool CreateMenuItem(const PropertyWithEnumT& create_properties,
     return false;
   }
 
+  // Visibility state.
+  bool visible = true;
+  if (create_properties.visible.get())
+    visible = *create_properties.visible;
+
   // Checked state.
   bool checked = false;
   if (create_properties.checked.get())
@@ -129,7 +134,7 @@ bool CreateMenuItem(const PropertyWithEnumT& create_properties,
     enabled = *create_properties.enabled;
 
   std::unique_ptr<MenuItem> item(
-      new MenuItem(item_id, title, checked, enabled, type, contexts));
+      new MenuItem(item_id, title, checked, visible, enabled, type, contexts));
 
   // URL Patterns.
   if (!item->PopulateURLPatterns(
@@ -214,6 +219,10 @@ bool UpdateMenuItem(const PropertyWithEnumT& update_properties,
       radio_item_updated = true;
     }
   }
+
+  // Visibility state.
+  if (update_properties.visible.get())
+    item->set_visible(*update_properties.visible);
 
   // Enabled.
   if (update_properties.enabled.get())

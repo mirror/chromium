@@ -60,6 +60,7 @@ const char kStringUIDKey[] = "string_uid";
 const char kTargetURLPatternsKey[] = "target_url_patterns";
 const char kTitleKey[] = "title";
 const char kTypeKey[] = "type";
+const char kVisibleKey[] = "visible";
 
 void SetIdKeyValue(base::DictionaryValue* properties,
                    const char* key,
@@ -123,6 +124,7 @@ bool GetStringList(const base::DictionaryValue& dict,
 MenuItem::MenuItem(const Id& id,
                    const std::string& title,
                    bool checked,
+                   bool visible,
                    bool enabled,
                    Type type,
                    const ContextList& contexts)
@@ -130,6 +132,7 @@ MenuItem::MenuItem(const Id& id,
       title_(title),
       type_(type),
       checked_(checked),
+      visible_(visible),
       enabled_(enabled),
       contexts_(contexts) {}
 
@@ -242,6 +245,9 @@ std::unique_ptr<MenuItem> MenuItem::Populate(const std::string& extension_id,
       !value.GetBoolean(kCheckedKey, &checked)) {
     return nullptr;
   }
+  bool visible = true;
+  if (!value.GetBoolean(kVisibleKey, &visible))
+    return nullptr;
   bool enabled = true;
   if (!value.GetBoolean(kEnabledKey, &enabled))
     return nullptr;
@@ -252,8 +258,8 @@ std::unique_ptr<MenuItem> MenuItem::Populate(const std::string& extension_id,
   if (!contexts.Populate(*contexts_value))
     return nullptr;
 
-  std::unique_ptr<MenuItem> result =
-      base::MakeUnique<MenuItem>(id, title, checked, enabled, type, contexts);
+  std::unique_ptr<MenuItem> result = base::MakeUnique<MenuItem>(
+      id, title, checked, visible, enabled, type, contexts);
 
   std::vector<std::string> document_url_patterns;
   if (!GetStringList(value, kDocumentURLPatternsKey, &document_url_patterns))

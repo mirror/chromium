@@ -82,6 +82,7 @@ class MenuBuilder {
         extension_.get(),
         base::MakeUnique<MenuItem>(id, kTestExtensionItemLabel,
                                    false,  // check`ed
+                                   true,   // visible
                                    true,   // enabled
                                    MenuItem::NORMAL,
                                    MenuItem::ContextList(context)));

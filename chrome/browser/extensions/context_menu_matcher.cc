@@ -160,6 +160,13 @@ bool ContextMenuMatcher::IsCommandIdChecked(int command_id) const {
   return item->checked();
 }
 
+bool ContextMenuMatcher::IsCommandIdVisible(int command_id) const {
+  MenuItem* item = GetExtensionMenuItem(command_id);
+  if (!item)
+    return false;
+  return item->visible();
+}
+
 bool ContextMenuMatcher::IsCommandIdEnabled(int command_id) const {
   MenuItem* item = GetExtensionMenuItem(command_id);
   if (!item)
@@ -235,6 +242,10 @@ void ContextMenuMatcher::RecursivelyAppendExtensionItems(
   for (auto i = items.begin(); i != items.end(); ++i) {
     MenuItem* item = *i;
 
+    // Do not display an item if its visibility property is set to false.
+    if (!item->visible())
+      continue;
+
     // If last item was of type radio but the current one isn't, auto-insert
     // a separator.  The converse case is handled below.
     if (last_type == MenuItem::RADIO &&
@@ -245,7 +256,7 @@ void ContextMenuMatcher::RecursivelyAppendExtensionItems(
 
     int menu_id = ConvertToExtensionsCustomCommandId(*index);
     // Action context menus have a limit for top level extension items to
-    // prevent control items from being pushed off the screen, since extension
+    // prevent control items from being pushed off the screen, sine extension
     // items will not be placed in a submenu.
     const int top_level_limit = api::context_menus::ACTION_MENU_TOP_LEVEL_LIMIT;
     if (menu_id >= extensions_context_custom_last ||

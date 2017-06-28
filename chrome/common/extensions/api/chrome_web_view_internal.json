@@ -79,6 +79,11 @@
                 "optional": true,
                 "description": "List of contexts this menu item will appear in. Defaults to ['page'] if not specified."
               },
+              "visible": {
+                "type": "boolean",
+                "optional": true,
+                "description": "The visibility state of an item: true for shown and false for hidden."
+              },
               "onclick": {
                 "type": "function",
                 "optional": true,
@@ -170,6 +175,11 @@
                 "minItems": 1,
                 "optional": true,
                 "description": "List of contexts this menu item will appear in. Defaults to ['page'] if not specified."
+              },
+              "visible": {
+                "type": "boolean",
+                "optional": true,
+                "description": "The visibility state of an item: true for shown and false for hidden."
               },
               "onclick": {
                 "type": "function",

@@ -370,6 +370,7 @@ bool SimpleMenuModel::IsVisibleAt(int index) const {
   int command_id = GetCommandIdAt(index);
   if (!delegate_ || command_id == kSeparatorId || GetButtonMenuItemAt(index))
     return true;
+  // DOUBLE CHECK
   return delegate_->IsCommandIdVisible(command_id);
 }
 
