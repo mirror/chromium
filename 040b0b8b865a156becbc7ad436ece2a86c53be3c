@@ -16,6 +16,24 @@
       "revId": "040b0b8b865a156becbc7ad436ece2a86c53be3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b291edd1_c26868f6",
+        "filename": "third_party/WebKit/Source/core/core_idl_files.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-28T07:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d4d110f_f0a0101b",
+      "revId": "040b0b8b865a156becbc7ad436ece2a86c53be3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
