@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3eddb4a_3ba85038",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-06-28T02:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b59ab60_6ad940c6",
+      "revId": "2f2a52b62d79e2b0494436c4a0e5894a74135ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc9f45f4_b1af63a8",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "24f74b0a_ed650469",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-06-28T02:17:50Z",
+      "side": 1,
+      "message": "Is it safe to do that? The original code only sets the flag to true, so I wasn\u0027t sure if the value could have possibly already been true before. i.e. if pre loading is invoked after a request to bring up the keyboard that hasn\u0027t finished, it would actually cancel the keyboard from showing up by setting the value to false. I\u0027m not sure if this situation exists, though.",
+      "parentUuid": "cc9f45f4_b1af63a8",
+      "revId": "2f2a52b62d79e2b0494436c4a0e5894a74135ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26ea4c83_de490de7",
         "filename": "ui/keyboard/keyboard_controller.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-27T22:13:38Z",
       "side": 1,
       "message": "Nit: Prefer UI over Ui.\nhttps://google.github.io/styleguide/cppguide.html#Function_Names",
+      "revId": "2f2a52b62d79e2b0494436c4a0e5894a74135ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4213a92_0c199532",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-06-28T02:17:50Z",
+      "side": 1,
+      "message": "After reading the style guideline link, it seems like Ui is preferred.",
+      "parentUuid": "26ea4c83_de490de7",
       "revId": "2f2a52b62d79e2b0494436c4a0e5894a74135ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
