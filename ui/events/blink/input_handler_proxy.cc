@@ -21,6 +21,7 @@
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
+#include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebTouchEvent.h"
 #include "ui/events/blink/blink_event_util.h"
 #include "ui/events/blink/compositor_thread_event_queue.h"
@@ -1162,6 +1163,12 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
       fling_curve_ && !fling_may_be_active_on_main_thread_;
   if (is_flinging_on_impl && is_touching_scrolling_layer)
     result = DID_NOT_HANDLE_NON_BLOCKING_DUE_TO_FLING;
+
+  if (result == DID_NOT_HANDLE &&
+      blink::WebRuntimeFeatures::IsCompositorTouchActionEnabled()) {
+    // TODO(sunxd): Bundle touch action bits to browser.
+    result = DID_HANDLE_NON_BLOCKING;
+  }
 
   return result;
 }

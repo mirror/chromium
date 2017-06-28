@@ -92,6 +92,10 @@ void WebRuntimeFeatures::EnableCompositorTouchAction(bool enable) {
   RuntimeEnabledFeatures::SetCompositorTouchActionEnabled(enable);
 }
 
+bool WebRuntimeFeatures::IsCompositorTouchActionEnabled() {
+  return RuntimeEnabledFeatures::CompositorTouchActionEnabled();
+}
+
 void WebRuntimeFeatures::EnableDatabase(bool enable) {
   RuntimeEnabledFeatures::SetDatabaseEnabled(enable);
 }
