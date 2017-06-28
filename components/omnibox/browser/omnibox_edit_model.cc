@@ -1361,13 +1361,13 @@ OmniboxEventProto::PageClassification OmniboxEditModel::ClassifyPage() const {
   const GURL& gurl = client_->GetURL();
   if (!gurl.is_valid())
     return OmniboxEventProto::INVALID_SPEC;
-  const std::string& url = gurl.spec();
-  if (client_->IsNewTabPage(url))
+  if (client_->IsNewTabPage(gurl))
     return OmniboxEventProto::NTP;
+  if (client_->IsHomePage(gurl))
+    return OmniboxEventProto::HOME_PAGE;
+  const std::string& url = gurl.spec();
   if (url == url::kAboutBlankURL)
     return OmniboxEventProto::BLANK;
-  if (client_->IsHomePage(url))
-    return OmniboxEventProto::HOME_PAGE;
   if (client_->IsSearchResultsPage())
     return OmniboxEventProto::SEARCH_RESULT_PAGE_NO_SEARCH_TERM_REPLACEMENT;
   return OmniboxEventProto::OTHER;
