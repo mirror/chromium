@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a25c5442_40b17006",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-28T22:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acaf3a16_2e1b0bd6",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef56d60_c60dce7b",
         "filename": "media/blink/cdm_result_promise_helper.h",
         "patchSetId": 2
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "a51da21d_43a8981b",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-28T22:27:03Z",
+      "side": 1,
+      "message": "Added (deprecated) to the 3 values no longer used.\n\nAlso want to note that although the code used INVALID_ACCESS_ERROR, it was always reported to JavaScript as TYPE_ERROR. This is just renaming it to match what users see.",
+      "parentUuid": "c86d0f66_7291b2e7",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97cff61e_d314306c",
         "filename": "media/cdm/cdm_adapter.cc",
         "patchSetId": 2
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "91a08a6d_cefcac1f",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-28T22:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97cff61e_d314306c",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "931daa16_ccc16327",
         "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
         "patchSetId": 2
@@ -121,6 +175,24 @@
       "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b37f26_9b594720",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-28T22:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "931daa16_ccc16327",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +228,24 @@
       "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda8b720_882cdac2",
+        "filename": "media/remoting/proto_enum_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-28T22:27:03Z",
+      "side": 1,
+      "message": "[deprecated\u003dtrue] appears to work. Done.",
+      "parentUuid": "eabdaa15_832a86ae",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
