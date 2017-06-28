@@ -1,0 +1,11 @@
+CONSOLE WARNING: Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are blocked. See https://www.chromestatus.com/feature/5669008342777856 for more details.
+JSRegress/object-with-invalid-url
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+PASS no exception thrown
+PASS successfullyParsed is true
+
+TEST COMPLETE
+
