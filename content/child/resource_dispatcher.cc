@@ -676,8 +676,9 @@ int ResourceDispatcher::StartAsync(
     pending_requests_[request_id]->url_loader = std::move(url_loader);
     pending_requests_[request_id]->url_loader_client = std::move(client);
   } else {
-    message_sender_->Send(
-        new ResourceHostMsg_RequestResource(routing_id, request_id, *request));
+    message_sender_->Send(new ResourceHostMsg_RequestResource(
+        routing_id, request_id, *request,
+        net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET)));
   }
 
   return request_id;
