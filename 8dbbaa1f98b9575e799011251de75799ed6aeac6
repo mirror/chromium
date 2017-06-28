@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba6adbd4_a17e125c",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-28T13:30:03Z",
+      "side": 1,
+      "message": "Use the `explicit` keyword.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "8dbbaa1f98b9575e799011251de75799ed6aeac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684d0c43_37cbf4a9",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-28T13:30:03Z",
+      "side": 1,
+      "message": "style nit: static methods go before all the other methods (including the constructor)",
+      "revId": "8dbbaa1f98b9575e799011251de75799ed6aeac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ab5d96_eb4f28d9",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-28T13:30:03Z",
+      "side": 1,
+      "message": "style nit: no {}",
+      "range": {
+        "startLine": 658,
+        "startChar": 3,
+        "endLine": 658,
+        "endChar": 0
+      },
+      "revId": "8dbbaa1f98b9575e799011251de75799ed6aeac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
