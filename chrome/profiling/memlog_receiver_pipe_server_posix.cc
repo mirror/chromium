@@ -10,6 +10,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/common/profiling/memlog_stream.h"
 
+#include "mojo/edk/embedder/platform_channel_pair.h"
+
 namespace profiling {
 
 MemlogReceiverPipeServer::MemlogReceiverPipeServer(
@@ -22,6 +24,19 @@ MemlogReceiverPipeServer::MemlogReceiverPipeServer(
 
 MemlogReceiverPipeServer::~MemlogReceiverPipeServer() {}
 
-void MemlogReceiverPipeServer::Start() {}
+void MemlogReceiverPipeServer::Start() {
+  // Connect to the pipe_id_ on IO thread.
+  /*
+  mojo::edk::SetParentPipeHandle(
+      mojo::edk::PlatformChannelPair::PassClientHandleFromParentProcess(
+          command_line));
+  mojo::edk::ScopedPlatformHandle parent_pipe =
+      mojo::edk::PlatformChannelPair::PassClientHandleFromParentProcess(
+          *command_line);
+
+  std::string token = command_line.GetSwitchValueASCII("primordial-pipe");
+  mojo::ScopedMessagePipeHandle pipe = mojo::edk::CreateChildMessagePipe(token);
+  */
+}
 
 }  // namespace profiling
