@@ -109,10 +109,25 @@ public class DownloadSharedPreferenceHelper {
 
     /**
      * Gets a list of stored SharedPreference entries.
-     * return A list of DownloadSharedPreferenceEntry stored in SharedPrefs.
+     * @return A list of DownloadSharedPreferenceEntry stored in SharedPrefs.
      */
     public List<DownloadSharedPreferenceEntry> getEntries() {
         return mDownloadSharedPreferenceEntries;
+    }
+
+    /**
+     * Gets a list of stored SharedPreference entries, excluding those marked isSuccessful.
+     * @return list of SharedPreference entries that are not marked isSuccessful.
+     */
+    public List<DownloadSharedPreferenceEntry> getPendingEntries() {
+        List<DownloadSharedPreferenceEntry> pendingEntries =
+                new ArrayList<DownloadSharedPreferenceEntry>();
+        for (DownloadSharedPreferenceEntry entry : mDownloadSharedPreferenceEntries) {
+            if (!entry.isSuccessful) {
+                pendingEntries.add(entry);
+            }
+        }
+        return pendingEntries;
     }
 
     /**

@@ -331,10 +331,9 @@ void DownloadManagerService::OnDownloadRemoved(
     return;
 
   JNIEnv* env = base::android::AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> j_item = CreateJavaDownloadItem(env, item);
   Java_DownloadManagerService_onDownloadItemRemoved(
-      env,
-      java_ref_.obj(),
-      ConvertUTF8ToJavaString(env, item->GetGuid()),
+      env, java_ref_.obj(), j_item,
       item->GetBrowserContext()->IsOffTheRecord());
 }
 

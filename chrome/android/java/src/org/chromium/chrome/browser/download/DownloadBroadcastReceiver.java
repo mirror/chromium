@@ -34,6 +34,7 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
             case DownloadNotificationService.ACTION_DOWNLOAD_PAUSE:
             case DownloadNotificationService.ACTION_DOWNLOAD_OPEN:
             case DownloadNotificationService.ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON:
+            case DownloadNotificationService.ACTION_DOWNLOAD_REMOVED:
                 performDownloadOperation(context, intent);
                 break;
             default:
