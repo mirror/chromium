@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "d4f5343b_ddd495bd",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T21:32:10Z",
+      "side": 1,
+      "message": "Yep, need to get approval. Let do it separate CL",
+      "parentUuid": "39c26abf_f2e80f7c",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cba27ea_5948afed",
         "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.html",
         "patchSetId": 6
