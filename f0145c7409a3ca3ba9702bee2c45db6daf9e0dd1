@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69eb0bc2_1038e4c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38331c05_2d3547fa",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d79857b_f47d3e94",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2545bcd9_4e345b26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d79857b_f47d3e94",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "33cf3a00_39b83c97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c99532b3_90f2cd09",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c50ceadb_13de575d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e171ab50_46d2e749",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c50ceadb_13de575d",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e85a48e7_2a41ef15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d6c77d9_96482415",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c7afaa8_5efcf81a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b0ccb4_31766a70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Good point. So far I haven\u0027t really thought about how to separate out Span part of the MVC.\nI\u0027ve refactored the related logic into SpanController class now.",
+      "parentUuid": "5c7afaa8_5efcf81a",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0a81c527_e205d222",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "The logic has been revamped now.",
+      "parentUuid": "9f0a4e30_f85b7b40",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1b3e635_65dd6d88",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24df55be_6aa51d28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "The logic has been revamped now.",
+      "parentUuid": "d1b3e635_65dd6d88",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "21431e73_626cc2dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "The logic has been revamped now.",
+      "parentUuid": "74d35610_6d904468",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "858d507f_8a9f2c6f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 9
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "a90d6b6c_02b78cc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Hmm... Combining is a bit unclear in the case of Korean and Japanese. Also, latin character has combining diacritics. I\u0027ve changed it to isNonCompositionalText().",
+      "parentUuid": "858d507f_8a9f2c6f",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3151cf9_e06316f3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 9
@@ -186,6 +366,24 @@
       "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82b45fb_0502b2d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "The logic has been revamped.",
+      "parentUuid": "d3151cf9_e06316f3",
+      "revId": "f0145c7409a3ca3ba9702bee2c45db6daf9e0dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

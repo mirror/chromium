@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "018b8c54_c125cf8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Hmm.. Actually after some logic change, I\u0027ve merged them as you suggested in the new model. However, I had to keep the old logic in old model and UrlBar.java.",
+      "parentUuid": "2314ba9d_8373c4e1",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d18ff3_3077ccf9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 2
@@ -210,6 +228,24 @@
       "revId": "e193697550b818d0902238cbe82ce3128708564d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228e5e02_a1ec2fce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Fixed now.",
+      "parentUuid": "b20afb99_7a5c4424",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -408,6 +444,24 @@
     },
     {
       "key": {
+        "uuid": "c015752d_dd840dcb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Actually, the approach we discussed offline does not apply here - Span is not a separate View. I\u0027ve moved the logic to AutocompleteEditText.java.",
+      "parentUuid": "e05750e2_2d935805",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50ad7f0a_6e781376",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 2
@@ -455,6 +509,24 @@
       "side": 1,
       "message": "As discussed offline, it\u0027s safer and cleaner to add additional \"naturally non-combining\" scripts (which I would define as, \"scripts that have a small number of characters which do not need to be decomposed into parts during entry\" -- maybe write that verbatim in a comment) to the initial list: all variations of Latin, Cyrillic, Hebrew, Greek, and any others you discover.",
       "parentUuid": "eeb2d987_e9fd1acd",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1330a6_667e52a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:09:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0c2f7672_046c0f07",
       "revId": "e193697550b818d0902238cbe82ce3128708564d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
