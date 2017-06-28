@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "3ea47ea9_f5ee59bb",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-28T02:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "503a265e_47f0f840",
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef9b8a65_c4571f97",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 2
@@ -62,6 +80,30 @@
       "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c131b4_985074f4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-28T02:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef9b8a65_c4571f97",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +154,54 @@
     },
     {
       "key": {
+        "uuid": "046a235f_7875a3c3",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-28T02:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4698134b_34ced834",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b6222ec_5c7ece57",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-28T02:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3cfd852_994711f1",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a3c4b9d_5965961e",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
         "patchSetId": 2
@@ -146,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "98e780f8_dcb2769f",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-28T02:01:49Z",
+      "side": 1,
+      "message": "I think I have fixed this by adding ClarifyPromo. Let me know if this doesn\u0027t resolve the issue you were getting at.",
+      "parentUuid": "8e5f039c_8658d66a",
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4159cf49_51cf0845",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
         "patchSetId": 2
@@ -166,6 +274,30 @@
       "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a37955_6f803f21",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-28T02:01:49Z",
+      "side": 1,
+      "message": "newtab_promo_ is a member of Tabstrip so it is taken care of. Does it still need to be a std::unique_ptr?",
+      "parentUuid": "4159cf49_51cf0845",
+      "range": {
+        "startLine": 1391,
+        "startChar": 22,
+        "endLine": 1391,
+        "endChar": 33
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +324,30 @@
     },
     {
       "key": {
+        "uuid": "e00981c2_3bc4685b",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-28T02:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddd38f31_4c8dcdd4",
+      "range": {
+        "startLine": 1407,
+        "startChar": 15,
+        "endLine": 1407,
+        "endChar": 29
+      },
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aaa356d_32a744f6",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
         "patchSetId": 2
@@ -203,6 +359,24 @@
       "writtenOn": "2017-06-24T01:31:48Z",
       "side": 1,
       "message": "Use the minimum visibility necessary. Do these need to be public? Also, comments for all methods please.",
+      "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78885f09_806e75ca",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-28T02:01:49Z",
+      "side": 1,
+      "message": "I do think that all of these need to be public, as they are all used by classes (NewTabPromo and NewTabButton) that have tabstrips as member variables.\n\nIf you think there is a better way to do this that would minimize visibility I would be happy to discuss it!",
+      "parentUuid": "9aaa356d_32a744f6",
       "revId": "22581a41db342a0026c43c6ae677b9ce6a5fcf64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
