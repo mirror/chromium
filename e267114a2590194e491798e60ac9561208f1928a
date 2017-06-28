@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6638e085_97226d81",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:27:33Z",
+      "side": 1,
+      "message": "nit: Doing this implicitly is strange, because it\u0027s not apparent that resetting will have the effect of setting it in use, or dumping will turn it off (both I could imagine doing at other times).\n\nHow about simple SetInUse setter in the header?",
+      "revId": "e267114a2590194e491798e60ac9561208f1928a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7241f029_aff0c65f",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:27:33Z",
+      "side": 1,
+      "message": "nit: Mostly because I\u0027ve very recently looked at this for ScopedFrameBlamer: it might be worthwhile to inline at least the RCS-off fast path in the header, so that we don\u0027t need to branch to a function call in order to see if REF::BRCSEnabled is true or whether stats_ is set.\n\nIs it easy to measure?\n\nIf you don\u0027t do that this time, I or someone else may well take a similar look when we profile this in the future.",
+      "revId": "e267114a2590194e491798e60ac9561208f1928a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20e0c9c_b9fe54ad",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:27:33Z",
+      "side": 1,
+      "message": "If these aren\u0027t going to be used in the header, you don\u0027t need to make them members. They can just live in an anonymous namespace in the .cpp file or equivalent.",
+      "revId": "e267114a2590194e491798e60ac9561208f1928a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
