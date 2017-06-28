@@ -20,6 +20,10 @@ Polymer({
 
     showAndroidApps: Boolean,
 
+    havePlayStoreApp: Boolean,
+
+    androidAppsInfo: Object,
+
     showChromeCleanup: {
       type: Boolean,
       value: function() {
@@ -93,6 +97,10 @@ Polymer({
     this.addEventListener('chrome-cleanup-dismissed', function(e) {
       this.showChromeCleanup = false;
     }.bind(this));
+
+    cr.addWebUIListener(
+        'android-apps-info-update', this.androidAppsInfoUpdate_.bind(this));
+    settings.AndroidAppsBrowserProxyImpl.getInstance().requestAndroidAppsInfo();
   },
 
   /**
@@ -179,13 +187,28 @@ Polymer({
   },
 
   /**
+   * @param {!AndroidAppsInfo}
+   * @private
+   */
+  androidAppsInfoUpdate_: function(info) {
+    this.androidAppsInfo = info;
+  },
+
+  /**
    * @return {boolean}
    * @private
    */
   shouldShowAndroidApps_: function() {
     var visibility = /** @type {boolean|undefined} */ (
         this.get('pageVisibility.androidApps'));
-    return this.showAndroidApps && this.showPage_(visibility);
+    if (!this.showAndroidApps || !this.showPage_(visibility)) {
+      return false;
+    }
+    if (!this.havePlayStoreApp &&
+        (!this.androidAppsInfo || !this.androidAppsInfo.settingsAppAvailable)) {
+      return false;
+    }
+    return true;
   },
 
   /**

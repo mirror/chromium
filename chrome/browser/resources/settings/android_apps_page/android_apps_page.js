@@ -19,8 +19,7 @@ Polymer({
       notify: true,
     },
 
-    /** @private {!AndroidAppsInfo|undefined} */
-    androidAppsInfo_: Object,
+    androidAppsInfo: Object,
 
     /** @private {!Map<string, string>} */
     focusConfig_: {
@@ -33,37 +32,6 @@ Polymer({
         return map;
       },
     },
-  },
-
-  /** @private {?settings.AndroidAppsBrowserProxy} */
-  browserProxy_: null,
-
-  /** @private {?WebUIListener} */
-  listener_: null,
-
-  /** @override */
-  created: function() {
-    this.browserProxy_ = settings.AndroidAppsBrowserProxyImpl.getInstance();
-  },
-
-  /** @override */
-  attached: function() {
-    this.listener_ = cr.addWebUIListener(
-        'android-apps-info-update', this.androidAppsInfoUpdate_.bind(this));
-    this.browserProxy_.requestAndroidAppsInfo();
-  },
-
-  /** @override */
-  detached: function() {
-    cr.removeWebUIListener(this.listener_);
-  },
-
-  /**
-   * @param {AndroidAppsInfo} info
-   * @private
-   */
-  androidAppsInfoUpdate_: function(info) {
-    this.androidAppsInfo_ = info;
   },
 
   /**
@@ -82,7 +50,7 @@ Polymer({
 
   /** @private */
   onSubpageTap_: function() {
-    if (this.androidAppsInfo_.playStoreEnabled)
+    if (this.androidAppsInfo.playStoreEnabled)
       settings.navigateTo(settings.Route.ANDROID_APPS_DETAILS);
   },
 });

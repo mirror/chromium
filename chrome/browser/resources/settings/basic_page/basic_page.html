@@ -15,6 +15,7 @@
 
 <if expr="chromeos">
 <link rel="import" href="../android_apps_page/android_apps_page.html">
+<link rel="import" href="../android_apps_page/android_settings_page.html">
 <link rel="import" href="../bluetooth_page/bluetooth_page.html">
 <link rel="import" href="../device_page/device_page.html">
 <link rel="import" href="../internet_page/internet_page.html">
@@ -159,12 +160,19 @@
         </template>
 <if expr="chromeos">
         <template is="dom-if"
-            if="[[shouldShowAndroidApps_(showAndroidApps, pageVisibility)]]"
+            if="[[shouldShowAndroidApps_(showAndroidApps, androidAppsInfo, pageVisibility)]]"
             restamp>
           <settings-section page-title="$i18n{androidAppsPageTitle}"
               section="androidApps">
-            <settings-android-apps-page prefs="{{prefs}}">
-            </settings-android-apps-page>
+            <template is="dom-if" if="[[havePlayStoreApp]]" restamp>
+                <settings-android-apps-page prefs="{{prefs}}"
+                    android-apps-info="[[androidAppsInfo]]">
+                </settings-android-apps-page>
+            </template>
+            <template is="dom-if" if="[[!havePlayStoreApp]]" restamp>
+                <settings-android-settings-page>
+                </settings-android-settings-page>
+            </template>
           </settings-section>
         </template>
 </if>
