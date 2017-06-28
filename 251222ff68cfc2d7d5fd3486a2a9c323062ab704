@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "388de8c5_7748dcec",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-28T16:43:17Z",
+      "side": 1,
+      "message": "Could you instead set the value in the ukm_logger here? That way you wouldn\u0027t need to pass it around and duplicate the MillisecondsSinceFormParsed methods?\n\nYou could overwrite it only if it\u0027s null/empty for example.",
+      "revId": "251222ff68cfc2d7d5fd3486a2a9c323062ab704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
