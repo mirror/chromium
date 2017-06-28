@@ -3,7 +3,11 @@
 // found in the LICENSE file.
 
 enum PermissionName {
+    "accelerometer",
+    "ambient-light-sensor",
     "geolocation",
+    "gyroscope",
+    "magnetometer",
     "midi",
     "notifications",
     "push",

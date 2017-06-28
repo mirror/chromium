@@ -67,6 +67,14 @@ enum ContentSettingsType {
   // verdicts of each origin.
   CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION,
 
+  // These are special-cased in the permissions layer to always block for now.
+  CONTENT_SETTINGS_TYPE_AMBIENT_LIGHT_SENSOR,
+  CONTENT_SETTINGS_TYPE_MAGNETOMETER,
+
+  // These are special-cased in the permissions layer to always allow.
+  CONTENT_SETTINGS_TYPE_ACCELEROMETER,
+  CONTENT_SETTINGS_TYPE_GYROSCOPE,
+
   // WARNING: This enum is going to be removed soon. Do not depend on NUM_TYPES.
   CONTENT_SETTINGS_NUM_TYPES_DO_NOT_USE,
 };

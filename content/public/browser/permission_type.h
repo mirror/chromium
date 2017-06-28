@@ -24,6 +24,10 @@ enum class PermissionType {
   VIDEO_CAPTURE = 9,
   BACKGROUND_SYNC = 10,
   FLASH = 11,
+  ACCELEROMETER = 12,
+  AMBIENT_LIGHT_SENSOR = 13,
+  GYROSCOPE = 14,
+  MAGNETOMETER = 15,
 
   // Always keep this at the end.
   NUM,
