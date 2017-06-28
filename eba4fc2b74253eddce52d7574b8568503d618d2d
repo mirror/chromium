@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "224930b2_c4a5ca11",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-28T17:45:02Z",
+      "side": 1,
+      "message": "Thanks for the info, I\u0027m actually not very familiar with TLS lifecycles. I\u0027ll learn a bit more.\n\nFor the moment, you don\u0027t plan to use hyphenation in threads, correct?",
+      "parentUuid": "3495494f_97c34a24",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8cb419_c598b1ce",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "is this good enough? Or is there a case where there\u0027s no default but you are still calling this every time?",
       "parentUuid": "972e8bd1_fe6cfb09",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfcb76ed_fcdf9898",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-28T17:45:02Z",
+      "side": 1,
+      "message": "Yes, |default_locale_for_han_| is nullptr for non ideographic-script OS (see the last \"else\" below), but font fallback code calls this function to check that on every character.",
+      "parentUuid": "f5ef9d9b_1bf81f3e",
       "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
