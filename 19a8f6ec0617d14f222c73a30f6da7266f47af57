@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "c6a7a38f_9f19facb",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T22:11:02Z",
+      "side": 1,
+      "message": "The destructor will run only when fetch_sub shows that it decremented from 1 to 0, which implies:\n- this was the last reference\n- (informally, since it\u0027s an acquire operation and all previous threads did a release when they dropped their references) all other changes to the object are now visible\n- this thread will be the only thread to run the destructor\n\nIf it makes you feel better, this is a very common idiom, so I\u0027m not having to reason through this myself.",
+      "parentUuid": "77127947_8dc57aef",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f992d6f_5e1e0a09",
         "filename": "base/atomic_ref_count.h",
         "patchSetId": 4
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "Oh didn\u0027t realize that you\u0027d have to call volatile methods, makes sense. And the methods don\u0027t need to be volatile because their content is only an atomic op, which deals correctly with volatility?",
       "parentUuid": "a17241d9_7fdaf106",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f8e71f_7f470d3f",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T22:11:02Z",
+      "side": 1,
+      "message": "The atomic operations suffice. We could propagate volatile everywhere (std::atomic does have volatile versions of its member functions), but it\u0027s unnecessary as compilers are required to give us the guarantees we need without it.",
+      "parentUuid": "705c3ce4_34bef4a1",
       "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
