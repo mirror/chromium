@@ -169,6 +169,24 @@
       "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c515acf1_ebd46c84",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T15:57:42Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me why this is stored here? Can\u0027t it just be stack allocated and passed back in the handling of the touch start?",
+      "parentUuid": "f8039727_66811401",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
