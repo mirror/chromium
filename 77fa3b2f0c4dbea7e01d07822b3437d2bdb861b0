@@ -45,6 +45,40 @@
       "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f4327a_560add3f",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-28T21:47:05Z",
+      "side": 1,
+      "message": "can you just pass the scale down? it looks kinda dangerous passing a raw pointer without ownership implications, even though this thing doesn\u0027t keep a reference to it",
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe61e84c_4de7967d",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-28T21:47:05Z",
+      "side": 1,
+      "message": "this is a problem. afaict, nothing has a strong ref to the java object, so it could get gc-ed at any point\n\nI don\u0027t really know what the right fix is, because I don\u0027t know what this is used for. So what is this used for? By devtools sending events? What does VR use this for?",
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

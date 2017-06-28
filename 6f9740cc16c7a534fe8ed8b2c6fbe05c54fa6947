@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78511061_9c47c2f1",
+        "filename": "chrome/browser/android/vr_shell/android_ui_gesture_target.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-28T21:47:05Z",
+      "side": 0,
+      "message": "can this dependency be removed now?\nhttps://cs.chromium.org/chromium/src/chrome/browser/android/vr_shell/BUILD.gn?rcl\u003d6489fe94c6edc435f5f0b291032c0e8883212afd\u0026l\u003d159",
+      "revId": "6f9740cc16c7a534fe8ed8b2c6fbe05c54fa6947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ba1761_045a24aa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/MotionEventSynthesizer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-28T21:47:05Z",
+      "side": 0,
+      "message": "why is this removed?",
+      "revId": "6f9740cc16c7a534fe8ed8b2c6fbe05c54fa6947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
