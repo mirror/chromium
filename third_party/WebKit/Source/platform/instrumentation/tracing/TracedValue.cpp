@@ -42,6 +42,10 @@ void TracedValue::BeginArray(const char* name) {
   traced_value_.BeginArrayWithCopiedName(name);
 }
 
+void TracedValue::BeginArrayWithNonCopiedName(const char* name) {
+  traced_value_.BeginArray(name);
+}
+
 void TracedValue::EndDictionary() {
   traced_value_.EndDictionary();
 }

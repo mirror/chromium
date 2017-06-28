@@ -226,6 +226,7 @@ class PLATFORM_EXPORT RuntimeCallStats {
   void Dump(TracedValue&);
 
   bool InUse() const { return in_use_; }
+  void SetInUse(bool in_use) { in_use_ = in_use; }
 
   RuntimeCallCounter* GetCounter(CounterId id) {
     return &(counters_[static_cast<uint16_t>(id)]);
@@ -263,10 +264,29 @@ class PLATFORM_EXPORT RuntimeCallTimerScope {
 
 class PLATFORM_EXPORT RuntimeCallStatsScopedTracer {
  public:
-  RuntimeCallStatsScopedTracer(v8::Isolate*);
-  ~RuntimeCallStatsScopedTracer();
+  RuntimeCallStatsScopedTracer(v8::Isolate* isolate) {
+    bool category_group_enabled;
+    TRACE_EVENT_CATEGORY_GROUP_ENABLED(s_category_group_,
+                                       &category_group_enabled);
+    RuntimeCallStats* stats = RuntimeCallStats::From(isolate);
+    if (category_group_enabled &&
+        RuntimeEnabledFeatures::BlinkRuntimeCallStatsEnabled() &&
+        !stats->InUse()) {
+      stats_ = stats;
+      AddBeginTraceEvent();
+    }
+  }
+
+  ~RuntimeCallStatsScopedTracer() {
+    if (stats_) {
+      AddEndTraceEvent();
+    }
+  }
 
  private:
+  void AddBeginTraceEvent();
+  void AddEndTraceEvent();
+
   static const char* const s_category_group_;
   static const char* const s_name_;
 
