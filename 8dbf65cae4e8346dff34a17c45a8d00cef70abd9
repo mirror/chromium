@@ -93,6 +93,29 @@
     },
     {
       "key": {
+        "uuid": "219878ec_f94d9daa",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:34:10Z",
+      "side": 1,
+      "message": "Should we do the same thing with line 395 and line 408-411?\n\n  worker_context_client_-\u003eWorkerScriptLoaded();\n\n  if (pause_after_download_state_ \u003d\u003d kDoPauseAfterDownload) {\n    pause_after_download_state_ \u003d kIsPausedAfterDownload;\n    return;\n  }",
+      "range": {
+        "startLine": 340,
+        "startChar": 10,
+        "endLine": 340,
+        "endChar": 28
+      },
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e10af9cf_f4c27c24",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
         "patchSetId": 2
