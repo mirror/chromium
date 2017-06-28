@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac3729b4_baba4395",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-28T22:19:11Z",
+      "side": 1,
+      "message": "Mistakenly removed the \u0027c\u0027 character. Will add back in next CL.",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9041e2d7_4a1305a7",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-28T22:19:11Z",
+      "side": 1,
+      "message": "Does this method need to be added? It\u0027s later used in SimpleMenuModel here (https://chromium-review.googlesource.com/c/553578/1/ui/base/models/simple_menu_model.cc#374) in IsVisibleAt(...), and IsVisibleAt() doesn\u0027t seem to be used anywhere else that is directly related to this CL. \n\nThe only use that I see for this new method IsCommandIdVisible(...) is for testing in extension_context_menu_model_unittest.cc.",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd77b77_812659fe",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-28T22:19:11Z",
+      "side": 1,
+      "message": "I noticed that IsCommandIdEnabled and IsCommandIdChecked have additional checks. \nLet me know if similar checks are needed in this method.",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d0bcf6_462ec012",
+        "filename": "chrome/common/extensions/api/context_menus.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-28T22:19:11Z",
+      "side": 1,
+      "message": "The other properties under updateProperties do not include a description. I added one just for completeness, but let me know if I should follow the existing pattern and exclude the description.",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5bac23_7c89de90",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-28T22:19:11Z",
+      "side": 1,
+      "message": "Just wanted to double check if additional work needs to be done in this file.\n\nI assume that the delegate_ object below would refer to ExtensionContextMenuModel delegate at the correct times, and not always default to the SimpleMenuModel::Delegate.",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
