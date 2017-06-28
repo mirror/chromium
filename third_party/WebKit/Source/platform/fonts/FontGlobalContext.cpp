@@ -4,9 +4,13 @@
 
 #include "platform/fonts/FontGlobalContext.h"
 
+#include "platform/Language.h"
+#include "platform/fonts/AcceptLanguagesResolver.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/ThreadSpecific.h"
+
+#include <unicode/locid.h>
 
 namespace blink {
 
@@ -19,13 +23,24 @@ FontGlobalContext* FontGlobalContext::Get(CreateIfNeeded create_if_needed) {
   return *font_persistent;
 }
 
-FontGlobalContext::FontGlobalContext() {}
+FontGlobalContext::FontGlobalContext()
+    : default_locale_(nullptr),
+      system_locale_(nullptr),
+      default_locale_for_han_(nullptr) {}
 
 void FontGlobalContext::ClearMemory() {
   if (!Get(kDoNotCreate))
     return;
 
   GetFontCache().Invalidate();
+}
+
+void FontGlobalContext::ClearForTesting() {
+  FontGlobalContext* ctx = Get();
+  ctx->default_locale_ = nullptr;
+  ctx->system_locale_ = nullptr;
+  ctx->default_locale_for_han_ = nullptr;
+  ctx->layout_locale_map_.clear();
 }
 
 }  // namespace blink
