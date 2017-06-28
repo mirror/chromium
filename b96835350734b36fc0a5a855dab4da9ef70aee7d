@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cfbba5e_7346e167",
+        "filename": "content/browser/indexed_db/indexed_db_callbacks.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-28T20:12:25Z",
+      "side": 1,
+      "message": "So instead of this route (which works and matches the other usages) - we can avoid going through a callbacks object by using the async return value system in mojo. This should be generated when you specify \" \u003d\u003e (Status);\" in the mojom.",
+      "revId": "b96835350734b36fc0a5a855dab4da9ef70aee7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e8f766_6725388f",
+        "filename": "content/browser/indexed_db/indexed_db_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-28T20:12:25Z",
+      "side": 1,
+      "message": "So instead of creating the IDB Callbacks object here - you\u0027ll be given a callback argument from mojo for just status.\n\nYou definitely need to do the threadhop to IDBSequenceHelper - but instead of passing the callbacks, do something like this:\n\nnamespace {\nvoid CallStatusCallbackOnIOThread(scoped_refptr\u003cSequencedTaskRunner\u003e io_runner, __mojo callback type__ mojo_callback, mojo::leveldb::Status status) {\n  io_runner-\u003ePostTask(base::Bind(mojo_callback, status));\n}\n}\n\nCallback\u003cvoid(Status)\u003e callback_on_io \u003d base::BindOnce(\u0026CallStatusCallbackOnIOThread, base::ThreadTaskRunnerHandle::Get(), mojo_callback);\n\nidb_runner_-\u003ePostTask(\n      FROM_HERE, base::BindOnce(\u0026IDBSequenceHelper::CompactDatabaseOnIDBThread,\n                                base::Unretained(idb_helper_),\n                                base::Passed(\u0026callback_on_io), origin));\n\nSee https://cs.chromium.org/chromium/src/base/threading/thread_task_runner_handle.h?dr\u003dCSs\u0026q\u003dthreadtaskrunn\u0026l\u003d24",
+      "revId": "b96835350734b36fc0a5a855dab4da9ef70aee7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deac7788_ca382fdb",
+        "filename": "content/browser/indexed_db/indexed_db_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-28T20:12:25Z",
+      "side": 1,
+      "message": "So this should be giving you a callback instead of the IDBCallbacks thing.",
+      "revId": "b96835350734b36fc0a5a855dab4da9ef70aee7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
