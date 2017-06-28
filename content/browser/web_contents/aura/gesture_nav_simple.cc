@@ -395,7 +395,7 @@ void GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
   aura::Window* window = web_contents_->GetNativeView();
   const gfx::Rect& window_bounds = window->bounds();
   DCHECK_NE(source, OverscrollSource::NONE);
-  float start_threshold = GetOverscrollConfig(
+  const float start_threshold = GetOverscrollConfig(
       source == OverscrollSource::TOUCHPAD
           ? OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHPAD
           : OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHSCREEN);
@@ -415,6 +415,12 @@ void GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
   ui::Layer* parent = window->layer()->parent();
   parent->Add(affordance_->root_layer());
   parent->StackAtTop(affordance_->root_layer());
+}
+
+base::Optional<float> GestureNavSimple::GetMaxOverscrollDelta() const {
+  if (affordance_)
+    return completion_threshold_;
+  return base::nullopt;
 }
 
 }  // namespace content
