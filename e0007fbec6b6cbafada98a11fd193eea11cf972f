@@ -16,6 +16,24 @@
       "revId": "e0007fbec6b6cbafada98a11fd193eea11cf972f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bab556_eaae68ea",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-28T15:14:19Z",
+      "side": 1,
+      "message": "Good point I think I\u0027m relying on an indirect dependency, lets make it explicit.",
+      "parentUuid": "4fdd97a4_3d1a3a08",
+      "revId": "e0007fbec6b6cbafada98a11fd193eea11cf972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
