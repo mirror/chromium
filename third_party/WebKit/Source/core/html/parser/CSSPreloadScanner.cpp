@@ -266,7 +266,7 @@ CSSPreloaderResourceClient::CSSPreloaderResourceClient(
                   : kScanOnly),
       preloader_(preloader),
       resource_(ToCSSStyleSheetResource(resource)) {
-  resource_->AddClient(this, Resource::kDontMarkAsReferenced);
+  resource_->AddClient(this);
 }
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}
@@ -353,7 +353,8 @@ void CSSPreloaderResourceClient::ClearResource() {
   // Note: Speculative preloads which remain unused for their lifetime will
   // never have this client removed. This should be fine because we only hold
   // weak references to the resource.
-  if (resource_ && resource_->IsUnusedPreload() &&
+  if (resource_ &&
+      resource_->GetPreloadState() == Resource::kPreloadNotReferenced &&
       !resource_->IsLinkPreload()) {
     return;
   }
