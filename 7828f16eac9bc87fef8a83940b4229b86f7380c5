@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d44b98b8_4c577356",
+        "filename": "chrome/browser/extensions/api/identity/identity_signin_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-28T12:28:15Z",
+      "side": 1,
+      "message": "This makes total sense. I realized after your comment and after followup discussion with Mihai that an observer interface isn\u0027t what makes sense for this use case. This use case is simply \"notify me when the primary account is available, either now or later\". Changed to just expose that as a method on IdentityManager.",
+      "parentUuid": "077e48e2_5fb57685",
+      "revId": "7828f16eac9bc87fef8a83940b4229b86f7380c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22977f4c_b208a56f",
         "filename": "services/identity/identity_manager.cc",
         "patchSetId": 2
