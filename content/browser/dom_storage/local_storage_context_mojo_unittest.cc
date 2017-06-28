@@ -787,10 +787,7 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
                      const std::string& name) override {
     if (name == file::mojom::kServiceName) {
       file_service_context_.reset(new service_manager::ServiceContext(
-          file::CreateFileService(
-              BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
-              BrowserThread::GetTaskRunnerForThread(BrowserThread::DB)),
-          std::move(request)));
+          file::CreateFileService(), std::move(request)));
     }
   }
 
@@ -813,8 +810,7 @@ class LocalStorageContextMojoTestWithService
     : public service_manager::test::ServiceTest {
  public:
   LocalStorageContextMojoTestWithService()
-      : ServiceTest("content_unittests", false),
-        thread_bundle_(TestBrowserThreadBundle::REAL_FILE_THREAD) {}
+      : ServiceTest("content_unittests", false) {}
   ~LocalStorageContextMojoTestWithService() override {}
 
  protected:
@@ -868,7 +864,6 @@ class LocalStorageContextMojoTestWithService
   }
 
  private:
-  TestBrowserThreadBundle thread_bundle_;
   base::ScopedTempDir temp_path_;
 
   DISALLOW_COPY_AND_ASSIGN(LocalStorageContextMojoTestWithService);

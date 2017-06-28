@@ -92,9 +92,9 @@ ScopedTaskEnvironment::ScopedTaskEnvironment(
       task_tracker_(new TestTaskTracker()) {
   CHECK(!TaskScheduler::GetInstance());
 
-  // Instantiate a TaskScheduler with 1 thread in each of its 4 pools. Threads
+  // Instantiate a TaskScheduler with 2 threads in each of its 4 pools. Threads
   // stay alive even when they don't have work.
-  constexpr int kMaxThreads = 1;
+  constexpr int kMaxThreads = 2;
   const TimeDelta kSuggestedReclaimTime = TimeDelta::Max();
   const SchedulerWorkerPoolParams worker_pool_params(
       SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE, kMaxThreads,
