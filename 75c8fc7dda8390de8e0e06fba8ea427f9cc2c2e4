@@ -127,6 +127,23 @@
     },
     {
       "key": {
+        "uuid": "e0acfe4d_761ff983",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T09:10:25Z",
+      "side": 1,
+      "message": "Please add a class-level comment.",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03ab3c32_ba350737",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -144,6 +161,23 @@
         "endLine": 21,
         "endChar": 21
       },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a98eef_d53a157f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T09:10:25Z",
+      "side": 1,
+      "message": "I think we\u0027ll need a little more data from ResourceResponseInfo (e.g. we need socket address / IP address info for CORS check), should we just use WebURLResponse here (while majority of fields could be unset)?\n\nHm, also-- HTTPHeaderMap is not thread-safe since it uses AtomicString, I suspect we might need to just use Vector\u003cstd::pair\u003c ... \u003e\u003e type of data struct (see CrossThreadHTTPHeaderMapData).",
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
