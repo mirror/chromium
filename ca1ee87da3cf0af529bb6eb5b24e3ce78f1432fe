@@ -523,6 +523,24 @@
     },
     {
       "key": {
+        "uuid": "b459cbd8_60808dbd",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-28T16:54:02Z",
+      "side": 1,
+      "message": "counter-nit: why would we use auto for typenames that are both short and non-obvious from their assignment? Someone unfamiliar with JSONReader::Read cannot reasonably infer that it must return a unique_ptr\u003cbase::Value\u003e",
+      "parentUuid": "38dc7467_15696731",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef298f36_4c059e0f",
         "filename": "ios/web/service_manager_context.mm",
         "patchSetId": 2
