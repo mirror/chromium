@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bcc4bf0_547c2733",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T16:56:32Z",
+      "side": 1,
+      "message": "no need in production but need for tests.",
+      "range": {
+        "startLine": 18,
+        "startChar": 72,
+        "endLine": 18,
+        "endChar": 79
+      },
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
