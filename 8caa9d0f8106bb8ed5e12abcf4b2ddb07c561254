@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8a961cd_693c0b0a",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-28T22:55:04Z",
+      "side": 1,
+      "message": "The NTP is expected to be \"clobbered\" where the user navigates away almost instantly. This was decided in design to avoid notifying the backend that the omnibox was used on the NTP for that reason.",
+      "parentUuid": "48d8df93_882f0062",
+      "revId": "8caa9d0f8106bb8ed5e12abcf4b2ddb07c561254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "648a94f0_f4cac32a",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "8caa9d0f8106bb8ed5e12abcf4b2ddb07c561254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f917fb9_0ee2e51a",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-28T22:55:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "648a94f0_f4cac32a",
+      "revId": "8caa9d0f8106bb8ed5e12abcf4b2ddb07c561254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
