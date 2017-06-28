@@ -34,6 +34,24 @@
       "revId": "608a78176c1694132ba965977940b7148b2069c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b466d4c9_16e7813e",
+        "filename": "ios/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-28T20:32:47Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "117ff38b_fe3fadf4",
+      "revId": "608a78176c1694132ba965977940b7148b2069c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
