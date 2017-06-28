@@ -10,6 +10,7 @@
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/field_types.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/currency_formatter.h"
 #include "components/payments/core/payment_method_data.h"
 #include "ios/chrome/browser/application_context.h"
@@ -249,8 +250,9 @@ TEST_F(PaymentRequestTest, SupportedMethods_BasicCard_WithSupportedNetworks) {
   EXPECT_EQ("unionpay", payment_request.supported_card_networks()[1]);
 }
 
-// Tests that a credit card can be added to the list of available credit cards.
-TEST_F(PaymentRequestTest, AddCreditCard) {
+// Tests that an autofill payment instrumnt e.g. credit cards can be added
+// to the list of available payment methods.
+TEST_F(PaymentRequestTest, AddAutofillPaymentInstrument) {
   web::PaymentRequest web_payment_request;
   payments::PaymentMethodData method_datum;
   method_datum.supported_methods.push_back("basic-card");
@@ -265,14 +267,15 @@ TEST_F(PaymentRequestTest, AddCreditCard) {
 
   TestPaymentRequest payment_request(web_payment_request,
                                      &personal_data_manager);
-  EXPECT_EQ(1U, payment_request.credit_cards().size());
+  EXPECT_EQ(1U, payment_request.payment_methods().size());
 
   autofill::CreditCard credit_card_2 = autofill::test::GetCreditCard2();
-  autofill::CreditCard* added_credit_card =
-      payment_request.AddCreditCard(credit_card_2);
+  payments::AutofillPaymentInstrument* added_credit_card =
+      static_cast<payments::AutofillPaymentInstrument*>(
+          payment_request.AddAutofillPaymentInstrument(credit_card_2));
 
-  EXPECT_EQ(2U, payment_request.credit_cards().size());
-  EXPECT_EQ(credit_card_2, *added_credit_card);
+  EXPECT_EQ(2U, payment_request.payment_methods().size());
+  EXPECT_EQ(credit_card_2, *added_credit_card->credit_card());
 }
 
 // Tests that a profile can be added to the list of available profiles.
@@ -475,7 +478,7 @@ TEST_F(PaymentRequestTest, SelectedPaymentMethod_NoPaymentMethods) {
   // No payment methods are selected because none are available!
   TestPaymentRequest payment_request(web_payment_request,
                                      &personal_data_manager);
-  EXPECT_EQ(nullptr, payment_request.selected_credit_card());
+  EXPECT_EQ(nullptr, payment_request.selected_payment_method());
 }
 
 // Test that loading expired credit cards works as expected.
@@ -494,7 +497,10 @@ TEST_F(PaymentRequestTest, SelectedPaymentMethod_ExpiredCard) {
   // credit_card is selected because expired cards are valid for payment.
   TestPaymentRequest payment_request(web_payment_request,
                                      &personal_data_manager);
-  EXPECT_EQ(credit_card.guid(), payment_request.selected_credit_card()->guid());
+  payments::AutofillPaymentInstrument* paymentInstrument =
+      static_cast<payments::AutofillPaymentInstrument*>(
+          payment_request.selected_payment_method());
+  EXPECT_EQ(credit_card.guid(), paymentInstrument->credit_card()->guid());
 }
 
 // Test that loading complete payment methods works as expected.
@@ -518,8 +524,10 @@ TEST_F(PaymentRequestTest, SelectedPaymentMethod_Complete) {
   // model).
   TestPaymentRequest payment_request(web_payment_request,
                                      &personal_data_manager);
-  EXPECT_EQ(credit_card2.guid(),
-            payment_request.selected_credit_card()->guid());
+  payments::AutofillPaymentInstrument* paymentInstrument =
+      static_cast<payments::AutofillPaymentInstrument*>(
+          payment_request.selected_payment_method());
+  EXPECT_EQ(credit_card2.guid(), paymentInstrument->credit_card()->guid());
 }
 
 // Test that loading incomplete payment methods works as expected.
@@ -542,5 +550,8 @@ TEST_F(PaymentRequestTest, SelectedPaymentMethod_Incomplete) {
   // because it is complete.
   TestPaymentRequest payment_request(web_payment_request,
                                      &personal_data_manager);
-  EXPECT_EQ(credit_card.guid(), payment_request.selected_credit_card()->guid());
+  payments::AutofillPaymentInstrument* paymentInstrument =
+      static_cast<payments::AutofillPaymentInstrument*>(
+          payment_request.selected_payment_method());
+  EXPECT_EQ(credit_card.guid(), paymentInstrument->credit_card()->guid());
 }
