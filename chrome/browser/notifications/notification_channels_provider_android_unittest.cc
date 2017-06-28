@@ -4,10 +4,17 @@
 
 #include "chrome/browser/notifications/notification_channels_provider_android.h"
 
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/task_scheduler/task_scheduler.h"
+#include "base/test/scoped_feature_list.h"
+#include "base/test/simple_test_clock.h"
+#include "base/time/clock.h"
+#include "base/time/default_clock.h"
 #include "base/values.h"
 #include "chrome/browser/content_settings/content_settings_mock_observer.h"
+#include "chrome/common/chrome_features.h"
+#include "chrome/test/base/testing_profile.h"
 #include "components/content_settings/core/browser/content_settings_pref.h"
 #include "components/content_settings/core/browser/content_settings_rule.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
@@ -45,20 +52,32 @@ class NotificationChannelsProviderAndroidTest : public testing::Test {
   ~NotificationChannelsProviderAndroidTest() override {
     channels_provider_->ShutdownOnUIThread();
   }
+  void SetUp() override {
+    base::test::ScopedFeatureList scoped_feature_list;
+    scoped_feature_list.InitAndEnableFeature(
+        features::kSiteNotificationChannels);
+  }
 
  protected:
   void InitChannelsProvider(bool should_use_channels) {
+    InitChannelsProvider(should_use_channels,
+                         base::MakeUnique<base::DefaultClock>());
+  }
+
+  void InitChannelsProvider(bool should_use_channels,
+                            std::unique_ptr<base::Clock> clock) {
     EXPECT_CALL(*mock_bridge_, ShouldUseChannelSettings())
         .WillOnce(Return(should_use_channels));
     ON_CALL(*mock_bridge_, GetChannelStatus(_))
         .WillByDefault(Return(NotificationChannelStatus::UNAVAILABLE));
 
+    TestingProfile profile;
     // Can't use base::MakeUnique because the provider's constructor is private.
     channels_provider_ =
         base::WrapUnique(new NotificationChannelsProviderAndroid(
-            base::WrapUnique(mock_bridge_)));
+            profile.GetPrefs(),
+            base::WrapUnique(mock_bridge_), std::move(clock)));
   }
-
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
 
   // No leak because ownership is passed to channels_provider_ in constructor.
@@ -351,4 +370,49 @@ TEST_F(NotificationChannelsProviderAndroidTest,
 
   channels_provider_->ClearAllContentSettingsRules(
       CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
+}
+
+TEST_F(NotificationChannelsProviderAndroidTest,
+       GetWebsiteSettingLastModifiedReturnsNullIfNoModifications) {
+  InitChannelsProvider(true /* should_use_channels */);
+
+  auto result = channels_provider_->GetWebsiteSettingLastModified(
+      ContentSettingsPattern::FromString(kTestOrigin), ContentSettingsPattern(),
+      CONTENT_SETTINGS_TYPE_NOTIFICATIONS, std::string());
+
+  EXPECT_TRUE(result.is_null());
+}
+
+TEST_F(NotificationChannelsProviderAndroidTest,
+       GetWebsiteSettingLastModifiedReturnsMostRecentTimestamp) {
+  auto test_clock = base::MakeUnique<base::SimpleTestClock>();
+  base::Time t1 = base::Time::Now();
+  test_clock->SetNow(t1);
+  base::SimpleTestClock* clock = test_clock.get();
+  InitChannelsProvider(true /* should_use_channels */, std::move(test_clock));
+
+  EXPECT_CALL(*mock_bridge_, CreateChannel(kTestOrigin, true));
+  channels_provider_->SetWebsiteSetting(
+      ContentSettingsPattern::FromString(kTestOrigin), ContentSettingsPattern(),
+      CONTENT_SETTINGS_TYPE_NOTIFICATIONS, std::string(),
+      new base::Value(CONTENT_SETTING_ALLOW));
+
+  base::Time last_modified = channels_provider_->GetWebsiteSettingLastModified(
+      ContentSettingsPattern::FromString(kTestOrigin), ContentSettingsPattern(),
+      CONTENT_SETTINGS_TYPE_NOTIFICATIONS, std::string());
+  EXPECT_EQ(last_modified, t1);
+
+  // Emulate time passing by one second.
+  clock->Advance(base::TimeDelta::FromSeconds(1));
+  base::Time t2 = clock->Now();
+
+  channels_provider_->SetWebsiteSetting(
+      ContentSettingsPattern::FromString(kTestOrigin), ContentSettingsPattern(),
+      CONTENT_SETTINGS_TYPE_NOTIFICATIONS, std::string(),
+      new base::Value(CONTENT_SETTING_ALLOW));
+
+  last_modified = channels_provider_->GetWebsiteSettingLastModified(
+      ContentSettingsPattern::FromString(kTestOrigin), ContentSettingsPattern(),
+      CONTENT_SETTINGS_TYPE_NOTIFICATIONS, std::string());
+  EXPECT_EQ(last_modified, t2);
 }
