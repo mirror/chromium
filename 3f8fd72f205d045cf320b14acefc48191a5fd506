@@ -174,6 +174,24 @@
       "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2af6425_6a0212ec",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T19:01:03Z",
+      "side": 1,
+      "message": "Does that case in SolidColorAnalyzer where the rect contains the entire rtree and you optimize by not using all the offsets happen often? \u003c_\u003c",
+      "parentUuid": "8a7923b3_47bc6288",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
