@@ -109,6 +109,7 @@ public class UrlBar extends AutocompleteEditText {
     private final int mLightHighlightColor;
 
     private Boolean mUseDarkColors;
+    private boolean mLastEditWasPaste;
 
     private OmniboxLivenessListener mOmniboxLivenessListener;
 
@@ -773,6 +774,22 @@ public class UrlBar extends AutocompleteEditText {
         } else {
             return TextView.class.getName();
         }
+    }
+
+    @Override
+    public void onPaste() {
+        mLastEditWasPaste = true;
+        super.onPaste();
+    }
+
+    @Override
+    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+        mLastEditWasPaste = false;
+        super.onTextChanged(text, start, lengthBefore, lengthAfter);
+    }
+
+    public boolean wasLastEditPaste() {
+        return mLastEditWasPaste;
     }
 
     @Override

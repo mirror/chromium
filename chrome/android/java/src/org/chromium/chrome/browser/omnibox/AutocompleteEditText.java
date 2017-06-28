@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.omnibox;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.StrictMode;
+import android.support.annotation.CallSuper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -22,6 +23,8 @@ import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.widget.VerticallyFixedEditText;
 
+import java.util.concurrent.Callable;
+
 /**
  * An {@link EditText} that shows autocomplete text at the end.
  */
@@ -30,6 +33,8 @@ public class AutocompleteEditText
     private static final String TAG = "cr_AutocompleteEdit";
 
     private static final boolean DEBUG = false;
+    // TODO(changwan): use a feature flag instead.
+    private static final boolean USE_SPANNABLE_MODEL = true;
 
     private final AccessibilityManager mAccessibilityManager;
 
@@ -54,7 +59,16 @@ public class AutocompleteEditText
     private void ensureModel() {
         // Lazy initialization here to ensure that model methods get called even in View's
         // constructor.
-        if (mModel == null) mModel = new AutocompleteEditTextModel(this);
+        if (mModel == null) mModel = createModel();
+    }
+
+    @VisibleForTesting
+    protected AutocompleteEditTextModelBase createModel() {
+        if (USE_SPANNABLE_MODEL) {
+            return new SpannableAutocompleteEditTextModel(this);
+        } else {
+            return new AutocompleteEditTextModel(this);
+        }
     }
 
     /**
@@ -135,6 +149,7 @@ public class AutocompleteEditText
     }
 
     /** Call this when text is pasted. */
+    @CallSuper
     public void onPaste() {
         ensureModel();
         mModel.onPaste();
@@ -241,17 +256,14 @@ public class AutocompleteEditText
     }
 
     @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
+    public boolean dispatchKeyEvent(final KeyEvent event) {
         if (mIgnoreImeForTest) return true;
-        return super.dispatchKeyEvent(event);
-    }
-
-    /**
-     * @return Whether the current UrlBar input has been pasted from the clipboard.
-     */
-    public boolean isPastedText() {
-        ensureModel();
-        return mModel.isPastedText();
+        return mModel.dispatchKeyEvent(event, new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return AutocompleteEditText.super.dispatchKeyEvent(event);
+            }
+        });
     }
 
     @Override
@@ -280,4 +292,7 @@ public class AutocompleteEditText
             sendAccessibilityEventUnchecked(event);
         }
     }
+
+    @Override
+    public void onUpdateSelectionForTesting(int selStart, int selEnd) {}
 }
