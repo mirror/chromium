@@ -36,7 +36,7 @@ using net::URLFetcher;
 using net::URLRequestContextGetter;
 using net::HttpRequestHeaders;
 using net::URLRequestStatus;
-using translate::LanguageModel;
+using language::UrlLanguageHistogram;
 
 namespace ntp_snippets {
 
@@ -239,7 +239,7 @@ RemoteSuggestionsFetcher::RemoteSuggestionsFetcher(
     OAuth2TokenService* token_service,
     scoped_refptr<URLRequestContextGetter> url_request_context_getter,
     PrefService* pref_service,
-    LanguageModel* language_model,
+    UrlLanguageHistogram* language_histogram,
     const ParseJSONCallback& parse_json_callback,
     const GURL& api_endpoint,
     const std::string& api_key,
@@ -247,7 +247,7 @@ RemoteSuggestionsFetcher::RemoteSuggestionsFetcher(
     : signin_manager_(signin_manager),
       token_service_(token_service),
       url_request_context_getter_(std::move(url_request_context_getter)),
-      language_model_(language_model),
+      language_histogram_(language_histogram),
       parse_json_callback_(parse_json_callback),
       fetch_url_(api_endpoint),
       api_key_(api_key),
@@ -271,7 +271,7 @@ void RemoteSuggestionsFetcher::FetchSnippets(
   }
 
   JsonRequest::Builder builder;
-  builder.SetLanguageModel(language_model_)
+  builder.SetLanguageHistogram(language_histogram_)
       .SetParams(params)
       .SetParseJsonCallback(parse_json_callback_)
       .SetClock(clock_.get())
