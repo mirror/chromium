@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e8fd0cd_86c44eae",
+        "filename": "chromecast/renderer/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-28T20:17:57Z",
+      "side": 1,
+      "message": "Don\u0027t you need to add mojo/public/cpp/bindings here?",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 3
+      },
+      "revId": "62a7d1a54cd8aab813e29e69082de891138b3a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
