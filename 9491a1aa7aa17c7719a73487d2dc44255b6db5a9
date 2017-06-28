@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c04318dd_68dfa03e",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-28T04:28:17Z",
+      "side": 1,
+      "message": "Yeah, I prefer initializing it in Platform::Initialize.",
+      "parentUuid": "8c80424b_ffc7fd2d",
+      "revId": "9491a1aa7aa17c7719a73487d2dc44255b6db5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "236da2d3_4f12aa57",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
         "patchSetId": 4
