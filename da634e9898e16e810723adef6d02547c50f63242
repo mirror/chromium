@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1d592f3_90c2397e",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-28T19:21:02Z",
+      "side": 1,
+      "message": "Please move this check to PaymentRequest::show() right before payment_provider_-\u003eShow(). It should look like this:\n\n// VR mode uses popup suppression setting to disable comboboxes, date pickers, etc.\nif (GetFrame()-\u003eGetDocument()-\u003eGetSettings()-\u003eGetPagePopupsSuppressed()) {\n  return ScriptPromise::RejectWithDOMException(script_state, DOMException::Create(kInvalidStateError, \"Page popups are suppressed\"));\n}",
+      "range": {
+        "startLine": 1003,
+        "startChar": 2,
+        "endLine": 1004,
+        "endChar": 11
+      },
+      "revId": "da634e9898e16e810723adef6d02547c50f63242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
