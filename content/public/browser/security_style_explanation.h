@@ -17,20 +17,32 @@ namespace content {
 // with a description along the lines of "This site's certificate chain
 // contains errors (net::CERT_DATE_INVALID)".
 struct SecurityStyleExplanation {
+  enum MixedContentType {
+    NO_MIXED_CONTENT,
+    PASSIVE_OPTIONALLY_BLOCKABLE,
+    ACTIVE_BLOCKABLE
+  };
   CONTENT_EXPORT SecurityStyleExplanation(){};
   CONTENT_EXPORT SecurityStyleExplanation(const std::string& summary,
                                           const std::string& description)
-      : summary(summary), description(description), has_certificate(false) {}
+      : summary(summary),
+        description(description),
+        has_certificate(false),
+        mixed_content_type(MixedContentType::NO_MIXED_CONTENT) {}
   CONTENT_EXPORT SecurityStyleExplanation(const std::string& summary,
                                           const std::string& description,
-                                          bool has_certificate)
-      : summary(summary), description(description),
-        has_certificate(has_certificate) {}
+                                          bool has_certificate,
+                                          MixedContentType mixed_content_type)
+      : summary(summary),
+        description(description),
+        has_certificate(has_certificate),
+        mixed_content_type(mixed_content_type) {}
   CONTENT_EXPORT ~SecurityStyleExplanation() {}
 
   std::string summary;
   std::string description;
   bool has_certificate;
+  MixedContentType mixed_content_type;
 };
 
 }  // namespace content
