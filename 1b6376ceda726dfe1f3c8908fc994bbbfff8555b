@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a18b5834_cad37a01",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T19:07:10Z",
+      "side": 1,
+      "message": "An argument in favor of this is that it enables the host to register a factory based on policy (this would be useful for something like SecurityKey).  I don\u0027t feel strongly on whether it should be introduced in this CL or later (i.e. when needed).",
+      "parentUuid": "ed94a117_336c6ebf",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4163df43_b8cafd49",
         "filename": "remoting/host/chromoting_host.h",
         "patchSetId": 1
@@ -222,6 +246,24 @@
       "writtenOn": "2017-06-28T18:37:23Z",
       "side": 1,
       "message": "I would suggest to use this pattern\nif (name \u003d\u003d event_dispatcher_-\u003echannel_name() ...) {\n  event_dispatcher_-\u003eInit(...);\n  return\n}\n\nevent_handler_-\u003eOnIncomingWebrtcDataChannel(name, std::move(pipe));",
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f868ebfd_95448b16",
+        "filename": "remoting/protocol/webrtc_connection_to_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T19:07:10Z",
+      "side": 1,
+      "message": "Actually, we could take this one step further and move the EventDispatcher creation logic into factory which is provided to the DataChannelManager.  That way the code would look like this:\nevent_handler_-\u003eOnIncomingDataChannel(name, std::move(pipe));\n\nAnd your CL would include an example usage of the DCM.  WDYT?",
+      "parentUuid": "b18af64f_9669886f",
       "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
