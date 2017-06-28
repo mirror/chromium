@@ -120,13 +120,22 @@ class Manager(object):
             all_test_names.sort()
             random.Random(self._options.seed).shuffle(all_test_names)
 
+        if len(all_test_names) > len(set(all_test_names)):
+            print 'all_test_names is not unique desu!!!!!'
+
         test_names, tests_in_other_chunks = self._finder.split_into_chunks(all_test_names)
 
         self._printer.write_update('Parsing expectations ...')
         self._expectations = test_expectations.TestExpectations(self._port, test_names)
 
         tests_to_run, tests_to_skip = self._prepare_lists(paths, test_names)
-
+        '''
+        with open('/usr/local/google/home/jeffcarp/tests-to-run.json', 'w') as f:
+            import json
+            json.dump(tests_to_run, f)
+        print 'stopping'
+        import sys; sys.exit()
+        '''
         self._expectations.remove_tests_from_expectations(tests_in_other_chunks)
 
         self._printer.print_found(
@@ -263,8 +272,24 @@ class Manager(object):
         return self.PERF_SUBDIR == test or (self.PERF_SUBDIR + self._port.TEST_PATH_SEPARATOR) in test
 
     def _prepare_lists(self, paths, test_names):
+        # test_names is not unique!
+
+        if len(test_names) > len(set(test_names)):
+            print 'test_names is not unique'
+
         tests_to_skip = self._finder.skip_tests(paths, test_names, self._expectations, self._http_tests(test_names))
         tests_to_run = [test for test in test_names if test not in tests_to_skip]
+
+        # Something before this is adding duplicates in css/CSS2/floats-clear to tests_to_run
+        tests_to_run = list(set(tests_to_run))
+
+        if len(tests_to_run) > len(set(tests_to_run)):
+            print 'tests_to_run is not unique'
+            already_seen_tests = []
+            for test in tests_to_run:
+                if test in already_seen_tests:
+                    print 'DUPE', test
+                already_seen_tests.append(test)
 
         return tests_to_run, tests_to_skip
 
