@@ -16,6 +16,24 @@
       "revId": "467e6ce8ac4e6c5245f335a648b1478130ed24bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e3b597_5d9cea33",
+        "filename": "ash/accelerators/accelerator_table.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-06-28T20:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a1701e7_b71c080d",
+      "revId": "467e6ce8ac4e6c5245f335a648b1478130ed24bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

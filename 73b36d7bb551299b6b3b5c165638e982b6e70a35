@@ -22,6 +22,30 @@
       "revId": "73b36d7bb551299b6b3b5c165638e982b6e70a35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b59097a_3bd2ff20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-06-28T20:51:29Z",
+      "side": 1,
+      "message": "As far as I understand the feature the key has nothing to do with voice interaction. Here is what I am sending to add a new Linux input event keycode:\n\n    Input: introduce KEY_ASSISTANT\n    \n    This adds a new keycode to allow users invoke a context-aware desktop\n    assistant application.\n\nWe already have KEY_VOICECOMMAND defined in Linux/ChromeOS, but that suggests that we actually want to activate voice interface to tell the device what to do, whereas assistant is \"magic\" and knows what to do without actually needing prompts/control.",
+      "parentUuid": "68f0fbba_3f9d10f7",
+      "range": {
+        "startLine": 9,
+        "startChar": 39,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "73b36d7bb551299b6b3b5c165638e982b6e70a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
