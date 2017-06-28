@@ -38,7 +38,8 @@ ContentsView::ContentsView(AppListMainView* app_list_main_view,
       custom_page_view_(nullptr),
       app_list_main_view_(app_list_main_view),
       app_list_view_(app_list_view),
-      page_before_search_(0) {
+      page_before_search_(0),
+      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
   pagination_model_.SetTransitionDurations(kPageTransitionDurationInMs,
                                            kOverscrollPageTransitionDurationMs);
   pagination_model_.AddObserver(this);
@@ -210,7 +211,7 @@ void ContentsView::ActivePageChanged() {
   DCHECK(start_page_view_);
 
   // Set the visibility of the search box's back button.
-  if (!features::IsFullscreenAppListEnabled()) {
+  if (!is_fullscreen_app_list_enabled_) {
     app_list_main_view_->search_box_view()->back_button()->SetVisible(
         state != AppListModel::STATE_START);
     app_list_main_view_->search_box_view()->Layout();
@@ -365,10 +366,19 @@ int ContentsView::AddLauncherPage(AppListPage* view,
 }
 
 gfx::Rect ContentsView::GetDefaultSearchBoxBounds() const {
-  gfx::Rect search_box_bounds(0, 0, GetDefaultContentsSize().width(),
-                              GetSearchBoxView()->GetPreferredSize().height());
-  search_box_bounds.set_y(kSearchBoxPadding);
-  search_box_bounds.Inset(kSearchBoxPadding, 0);
+  gfx::Rect search_box_bounds;
+  if (is_fullscreen_app_list_enabled_) {
+    search_box_bounds.set_size(GetSearchBoxView()->GetPreferredSize());
+    search_box_bounds.Offset(
+        (GetDefaultContentsSize().width() - search_box_bounds.width()) / 2, 0);
+    search_box_bounds.set_y(kSearchBoxTopPadding);
+  } else {
+    search_box_bounds =
+        gfx::Rect(0, 0, GetDefaultContentsSize().width(),
+                  GetSearchBoxView()->GetPreferredSize().height());
+    search_box_bounds.set_y(kSearchBoxPadding);
+    search_box_bounds.Inset(kSearchBoxPadding, 0);
+  }
   return search_box_bounds;
 }
 
@@ -379,7 +389,10 @@ gfx::Rect ContentsView::GetSearchBoxBoundsForState(
 }
 
 gfx::Rect ContentsView::GetDefaultContentsBounds() const {
-  gfx::Rect bounds(gfx::Point(0, GetDefaultSearchBoxBounds().bottom()),
+  gfx::Rect bounds(gfx::Point(0, GetDefaultSearchBoxBounds().bottom() +
+                                     (is_fullscreen_app_list_enabled_
+                                          ? kSearchBoxBottomPadding
+                                          : 0)),
                    GetDefaultContentsSize());
   return bounds;
 }

@@ -207,6 +207,8 @@ class APP_LIST_EXPORT ContentsView : public views::View,
   // Manages the pagination for the launcher pages.
   PaginationModel pagination_model_;
 
+  const bool is_fullscreen_app_list_enabled_;
+
   DISALLOW_COPY_AND_ASSIGN(ContentsView);
 };
 
