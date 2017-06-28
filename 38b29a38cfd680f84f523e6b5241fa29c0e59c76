@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39280c33_50787620",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-28T20:16:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "434cfb0b_116d1724",
+      "range": {
+        "startLine": 829,
+        "startChar": 10,
+        "endLine": 829,
+        "endChar": 27
+      },
+      "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f18fb163_d8fa9129",
         "filename": "chrome/browser/ui/ash/sort_windows_by_z_index.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7db8443_6c760ac7",
+        "filename": "chrome/browser/ui/ash/sort_windows_by_z_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-28T20:16:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f18fb163_d8fa9129",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "682dcb38_617504b6",
+        "filename": "chrome/browser/ui/ash/sort_windows_by_z_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-28T20:16:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5c66d08_bba56759",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 36
+      },
+      "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c0fc4d_1c246d79",
         "filename": "chrome/browser/ui/sort_windows_by_z_index.h",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65a08fe_c8846386",
+        "filename": "chrome/browser/ui/sort_windows_by_z_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-28T20:16:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3c0fc4d_1c246d79",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "482e54a0_41270556",
+        "filename": "chrome/browser/ui/sort_windows_by_z_index_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-28T20:16:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b06edac_74be45af",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 12
+      },
+      "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99c9362d_3d712b3e",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4106fd_726b570a",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-28T20:16:15Z",
+      "side": 1,
+      "message": "Moved to use_ash section for now.\n\nThe test is not ChromeOS specific. We should be able to run the test as-is on other platforms as they implement SortWindowsByZIndex.",
+      "parentUuid": "99c9362d_3d712b3e",
+      "range": {
+        "startLine": 1512,
+        "startChar": 14,
+        "endLine": 1512,
+        "endChar": 45
+      },
+      "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
