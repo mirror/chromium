@@ -22,6 +22,30 @@
       "revId": "b2e30f46ffd1260175bfe3b61d901d4486ae3846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e8d8dd7_5449fa34",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-28T17:27:06Z",
+      "side": 1,
+      "message": "The main issue was we tried to register non-main dex functions when IsSelectiveJniRegistrationEnabled(env) is false. Without this change, we may end up registering non-main dex ones even on a GPU process.",
+      "parentUuid": "78d641a3_7cd99a6e",
+      "range": {
+        "startLine": 92,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 23
+      },
+      "revId": "b2e30f46ffd1260175bfe3b61d901d4486ae3846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
