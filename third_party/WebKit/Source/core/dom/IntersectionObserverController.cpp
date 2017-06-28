@@ -73,6 +73,9 @@ void IntersectionObserverController::ComputeTrackedIntersectionObservations() {
   TRACE_EVENT0(
       "blink",
       "IntersectionObserverController::computeTrackedIntersectionObservations");
+  // TODO(szager): Based on crash reports, it's possible that Disconnect() has
+  // been called on an IntersectionObserver which is still tracked.
+  // Investigate why/how that happens.
   for (auto& observer : tracked_intersection_observers_) {
     observer->ComputeIntersectionObservations();
     if (observer->HasEntries())
