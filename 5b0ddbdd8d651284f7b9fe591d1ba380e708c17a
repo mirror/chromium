@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d641e558_84bef481",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-28T14:23:27Z",
+      "side": 1,
+      "message": "OK. It might be a bug in clang format.",
+      "parentUuid": "6e3ff096_8cb43fcd",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a274f9c_aa4477ad",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
         "patchSetId": 25
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "It does (apparently) spin up some mocked scheduler support upon construction. Without it, the call to RawResource::CreateForTest causes an error (SEGV).",
       "parentUuid": "e4dd4d7f_644cebb0",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d85e1d0_74c2a332",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-28T14:23:27Z",
+      "side": 1,
+      "message": "Sorry. I see that just instantiation is important.",
+      "parentUuid": "2476bfb7_d2b9991f",
       "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -416,6 +452,23 @@
       "side": 1,
       "message": "ResourceLoader::DetermineCORSStatus L333 uses it for the same origin check. I could also put the origin into the resource options. I understood that Context would be the more recent way to set the origin, but I might be wrong. I guess could also alter this test to make sure the CORS check works with origins via context and via resource options?",
       "parentUuid": "f7730e08_a32c6fe8",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f506cc95_a4eaf931",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-28T14:23:27Z",
+      "side": 1,
+      "message": "Oh, OK. I saw the newly added MockFetchContext::GetSecurityOrigin() is not annotated with override and thought it\u0027s a new thing and needs to be used somewhere.\n\nAm I missing something or the GetSecurityOrigin() should be annotated with override?",
       "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
