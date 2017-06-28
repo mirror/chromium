@@ -16,6 +16,24 @@
       "revId": "1109bd071367148702eb13e5ad13d16f7cedb85c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f291d7b_7740c0e0",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-06-28T16:10:57Z",
+      "side": 1,
+      "message": "Scratch this one.  Based on some new commits, on Android there will be some gestures that aren\u0027t caused by touch, and won\u0027t be in the map.  Looks like the correct way forward is to check the map, and re-calculate the target if the key isn\u0027t found.",
+      "parentUuid": "8c2313eb_a8229d30",
+      "revId": "1109bd071367148702eb13e5ad13d16f7cedb85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
