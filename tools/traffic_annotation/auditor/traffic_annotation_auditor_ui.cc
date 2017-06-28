@@ -112,6 +112,7 @@ int main(int argc, char* argv[]) {
           raw_output, &annotation_instances, &call_instances, &errors)) {
     return 1;
   }
+  std::sort(errors.begin(), errors.end());
 
   // Write the summary file.
   if (!summary_file.empty()) {
@@ -119,7 +120,6 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> items;
 
     report = "[Errors]\n";
-    std::sort(errors.begin(), errors.end());
     for (const std::string& error : errors)
       report += error + "\n";
 
@@ -184,9 +184,9 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  LOG(INFO) << "Extracted " << annotation_instances.size() << " annotations & "
-            << call_instances.size() << " calls, with " << errors.size()
-            << " errors.";
+  // Dump Errors and Warnings to stdout.
+  for (const std::string& error : errors)
+    printf("Error: %s\n", error.c_str());
 
   return 0;
 }
