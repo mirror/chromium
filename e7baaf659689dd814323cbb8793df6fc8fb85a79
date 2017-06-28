@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2948da59_ca5b01e9",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-28T12:05:16Z",
+      "side": 1,
+      "message": "renamed to \"blocked\".",
+      "parentUuid": "8c7786a8_1ed49984",
+      "range": {
+        "startLine": 523,
+        "startChar": 37,
+        "endLine": 523,
+        "endChar": 61
+      },
+      "revId": "e7baaf659689dd814323cbb8793df6fc8fb85a79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f897ca70_d3d35199",
         "filename": "cc/scheduler/scheduler_state_machine.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-27T03:33:49Z",
       "side": 1,
       "message": "There might be issues with aborted commits (main thread has no updates). In that case, active_tree_is_ready_to_draw_ which should be true after the first frame. I don\u0027t know if the value matters for the first frame.",
+      "range": {
+        "startLine": 736,
+        "startChar": 4,
+        "endLine": 736,
+        "endChar": 33
+      },
+      "revId": "e7baaf659689dd814323cbb8793df6fc8fb85a79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67207b59_fa7f5fc2",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-28T12:05:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s possible for the first main frame not to have updates? Anyhow, we should probably cover this for completeness sake and avoid blocking then. I think we can fix this simply by setting active_tree_is_ready_to_draw_ \u003d true initially. If the first commit is successful, we will set it to false here. Otherwise, we won\u0027t block as it is already true.\n\nWe probably need to do something for commits without updates from main but with concurrent updates on impl (e.g. impl-side animations/scroll), since the active tree may require new tiles in that case.\n\nCurrently, in such a case, SetNeedsPrepareTiles and ShouldPrepareTiles only fire during/after the draw inside the deadline - which is too late for us. We\u0027ll probably have to trigger UpdateDrawProperties + PrepareTiles (and wait for ReadyToDraw) before the deadline somehow.\n\nThat said, I think we can get away without this initially and add support for this in a subsequent patch.",
+      "parentUuid": "f897ca70_d3d35199",
       "range": {
         "startLine": 736,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "e7baaf659689dd814323cbb8793df6fc8fb85a79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb5e5e5_a380135b",
+        "filename": "cc/scheduler/scheduler_state_machine_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2858,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-28T12:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbc1bb76_66bc9c09",
+      "range": {
+        "startLine": 2858,
+        "startChar": 1,
+        "endLine": 2858,
+        "endChar": 2
+      },
+      "revId": "e7baaf659689dd814323cbb8793df6fc8fb85a79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
