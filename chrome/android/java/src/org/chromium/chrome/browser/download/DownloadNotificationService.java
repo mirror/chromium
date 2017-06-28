@@ -100,6 +100,8 @@ public class DownloadNotificationService extends Service {
             "org.chromium.chrome.browser.download.DOWNLOAD_UPDATE_SUMMARY_ICON";
     public static final String ACTION_DOWNLOAD_FAIL_SAFE =
             "org.chromium.chrome.browser.download.ACTION_SUMMARY_FAIL_SAFE";
+    public static final String ACTION_DOWNLOAD_REMOVED =
+            "org.chromium.chrome.browser.download.DOWNLOAD_REMOVED";
 
     static final String NOTIFICATION_NAMESPACE = "DownloadNotificationService";
     private static final String TAG = "DownloadNotification";
@@ -669,6 +671,7 @@ public class DownloadNotificationService extends Service {
      *                               active notifications isn't synchronous.  Pass a notification id
      *                               here if there is a notification that should be assumed gone.
      *                               Or pass -1 if no notification fits that criteria.
+     * @return boolean that indicates whether to stop the service.
      */
     @SuppressWarnings("NewApi")
     @SuppressLint("NewApi")
@@ -707,7 +710,7 @@ public class DownloadNotificationService extends Service {
         } else {
             // If we're not using a foreground service, just shut down after we are no longer
             // tracking any downloads.
-            if (mDownloadSharedPreferenceHelper.getEntries().size() > 0) return false;
+            if (mDownloadSharedPreferenceHelper.getPendingEntries().size() > 0) return false;
         }
 
         // Stop the service which should start the destruction process.  At this point we should be
@@ -1012,7 +1015,10 @@ public class DownloadNotificationService extends Service {
         }
         builder.setDeleteIntent(buildSummaryIconIntent(notificationId));
         builder.setLargeIcon(icon != null ? icon : mDownloadSuccessLargeIcon);
-        updateNotification(notificationId, builder.build(), id, null);
+        DownloadSharedPreferenceEntry entry =
+                mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
+        entry.isSuccessful = true;
+        updateNotification(notificationId, builder.build(), id, entry);
         stopTrackingInProgressDownload(id, true);
         return notificationId;
     }
@@ -1201,6 +1207,9 @@ public class DownloadNotificationService extends Service {
             // User canceled a download by dismissing its notification from earlier versions, ignore
             // it. TODO(qinmin): remove this else-if block after M60.
             return;
+        } else if (ACTION_DOWNLOAD_REMOVED.equals(intent.getAction())) {
+            cancelNotification(entry.notificationId, entry.id);
+            return;
         }
 
         BrowserParts parts = new EmptyBrowserParts() {
@@ -1355,7 +1364,8 @@ public class DownloadNotificationService extends Service {
         if (!ACTION_DOWNLOAD_CANCEL.equals(intent.getAction())
                 && !ACTION_DOWNLOAD_RESUME.equals(intent.getAction())
                 && !ACTION_DOWNLOAD_PAUSE.equals(intent.getAction())
-                && !ACTION_DOWNLOAD_OPEN.equals(intent.getAction())) {
+                && !ACTION_DOWNLOAD_OPEN.equals(intent.getAction())
+                && !ACTION_DOWNLOAD_REMOVED.equals(intent.getAction())) {
             return false;
         }
 

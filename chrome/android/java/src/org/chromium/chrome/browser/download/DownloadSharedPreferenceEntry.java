@@ -35,6 +35,8 @@ public class DownloadSharedPreferenceEntry {
     public final ContentId id;
     public final boolean isTransient;
 
+    public boolean isSuccessful; // Whether the download has been completed successfully.
+
     static final DownloadSharedPreferenceEntry INVALID_ENTRY =
             new DownloadSharedPreferenceEntry(new ContentId(), -1, false, false, "", false, false);
 
@@ -362,7 +364,8 @@ public class DownloadSharedPreferenceEntry {
         return id.equals(other.id) && TextUtils.equals(fileName, other.fileName)
                 && notificationId == other.notificationId && isOffTheRecord == other.isOffTheRecord
                 && canDownloadWhileMetered == other.canDownloadWhileMetered
-                && isAutoResumable == other.isAutoResumable && isTransient == other.isTransient;
+                && isAutoResumable == other.isAutoResumable && isTransient == other.isTransient
+                && isSuccessful == other.isSuccessful;
     }
 
     @Override
@@ -375,6 +378,7 @@ public class DownloadSharedPreferenceEntry {
         hash = 37 * hash + id.hashCode();
         hash = 37 * hash + fileName.hashCode();
         hash = 37 * hash + (isTransient ? 1 : 0);
+        hash = 37 * hash + (isSuccessful ? 1 : 0);
         return hash;
     }
 }
