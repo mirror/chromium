@@ -1060,6 +1060,11 @@ void RenderWidgetHostViewAura::ProcessAckedTouchEvent(
       host->dispatcher()->ProcessedTouchEvent(
           touch.event.unique_touch_event_id, window_, result,
           InputEventAckStateIsSetNonBlocking(ack_result));
+      if (touch.event.GetType() == blink::WebInputEvent::kTouchStart &&
+          result == ui::ER_HANDLED && host_->delegate() &&
+          host_->delegate()->GetInputEventRouter())
+        host_->delegate()->GetInputEventRouter()->OnHandledTouchStart(
+            touch.event.unique_touch_event_id);
       sent_ack = true;
     }
   }

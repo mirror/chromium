@@ -56,12 +56,12 @@ void RenderWidgetHostInputEventRouter::OnRenderWidgetHostViewBaseDestroyed(
     active_touches_ = 0;
   }
 
-  // If the target that's being destroyed is in the gesture target queue, we
+  // If the target that's being destroyed is in the gesture target map, we
   // replace it with nullptr so that we maintain the 1:1 correspondence between
-  // queue entries and the touch sequences that underly them.
-  for (size_t i = 0; i < touchscreen_gesture_target_queue_.size(); ++i) {
-    if (touchscreen_gesture_target_queue_[i].target == view)
-      touchscreen_gesture_target_queue_[i].target = nullptr;
+  // map entries and the touch sequences that underly them.
+  for (auto it : touchscreen_gesture_target_map_) {
+    if (it.second.target == view)
+      it.second.target = nullptr;
   }
 
   if (view == mouse_capture_target_.target)
@@ -385,6 +385,13 @@ unsigned CountChangedTouchPoints(const blink::WebTouchEvent& event) {
 
 }  // namespace
 
+// Any time a touch start event is handled/consumed/default prevented it is
+// removed from the gesture map, because it will never create a gesture
+void RenderWidgetHostInputEventRouter::OnHandledTouchStart(
+    uint32_t unique_touch_event_id) {
+  touchscreen_gesture_target_map_.erase(unique_touch_event_id);
+}
+
 void RenderWidgetHostInputEventRouter::RouteTouchEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebTouchEvent* event,
@@ -408,7 +415,8 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
         // might be to always transform each point to the |touch_target_.target|
         // for the duration of the sequence.
         touch_target_.delta = transformed_point - original_point;
-        touchscreen_gesture_target_queue_.push_back(touch_target_);
+        touchscreen_gesture_target_map_[event->unique_touch_event_id] =
+            touch_target_;
 
         if (!touch_target_.target)
           return;
@@ -796,10 +804,10 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
   // GestureTapDown is sent to the previous target, in case it is still in a
   // fling.
   if (event->GetType() == blink::WebInputEvent::kGestureTapDown) {
-    bool no_target = touchscreen_gesture_target_queue_.empty();
+    bool no_target = touchscreen_gesture_target_map_.empty();
     // This UMA metric is temporary, and will be removed once it has fulfilled
     // it's purpose, namely telling us when the incidents of empty
-    // gesture-queues has dropped to zero. https://crbug.com/642008
+    // gesture-map has dropped to zero. https://crbug.com/642008
     UMA_HISTOGRAM_BOOLEAN("Event.FrameEventRouting.NoGestureTarget", no_target);
     if (no_target) {
       LOG(ERROR) << "Gesture sequence start detected with no target available.";
@@ -810,8 +818,9 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
       return;
     }
 
-    touchscreen_gesture_target_ = touchscreen_gesture_target_queue_.front();
-    touchscreen_gesture_target_queue_.pop_front();
+    touchscreen_gesture_target_ =
+        touchscreen_gesture_target_map_.at(event->unique_touch_event_id);
+    touchscreen_gesture_target_map_.erase(event->unique_touch_event_id);
 
     // Abort any scroll bubbling in progress to avoid double entry.
     if (touchscreen_gesture_target_.target &&
