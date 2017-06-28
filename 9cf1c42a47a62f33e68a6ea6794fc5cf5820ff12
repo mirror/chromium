@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ee0fa10_57dba60b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-28T16:38:00Z",
+      "side": 1,
+      "message": "I would say recordRecentTab[Metrics]",
+      "range": {
+        "startLine": 359,
+        "startChar": 9,
+        "endLine": 359,
+        "endChar": 25
+      },
+      "revId": "9cf1c42a47a62f33e68a6ea6794fc5cf5820ff12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120ca070_41006bdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-28T16:38:00Z",
+      "side": 1,
+      "message": "nit, but we normally use the for (int i \u003d 0; i \u003c ...) iteration for List objects on Android as it will avoid the iterator object allocation that the foreach syntax incurs.\n\nThe caveat is that this only works when we assume a list w/ constant lookup for items (i.e. an ArrayList which we use most often).",
+      "range": {
+        "startLine": 366,
+        "startChar": 28,
+        "endLine": 366,
+        "endChar": 42
+      },
+      "revId": "9cf1c42a47a62f33e68a6ea6794fc5cf5820ff12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
