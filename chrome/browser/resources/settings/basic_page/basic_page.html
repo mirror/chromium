@@ -159,11 +159,13 @@
         </template>
 <if expr="chromeos">
         <template is="dom-if"
-            if="[[shouldShowAndroidApps_(showAndroidApps, pageVisibility)]]"
+            if="[[shouldShowAndroidApps_(showAndroidApps, androidAppsInfo, pageVisibility)]]"
             restamp>
           <settings-section page-title="$i18n{androidAppsPageTitle}"
               section="androidApps">
-            <settings-android-apps-page prefs="{{prefs}}">
+            <settings-android-apps-page prefs="{{prefs}}"
+                android-apps-info="[[androidAppsInfo]]"
+                have-play-store-app="[[havePlayStoreApp]]">
             </settings-android-apps-page>
           </settings-section>
         </template>
