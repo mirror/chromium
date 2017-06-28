@@ -25,6 +25,12 @@ class CC_EXPORT TouchActionRegion {
   const Region& region() const { return *region_; }
   const Region& GetRegionForTouchAction(TouchAction);
 
+  // Returns the most restricted touch action by iterating through
+  // |map_| and finding the intersection of all touch actions whose
+  // regions contain the given point. In the case the map is empty,
+  // |kTouchActionMax| is returned since no touch actions have been
+  // explicitely defined and the default touch action is auto.
+  TouchAction GetWhiteListedTouchAction(const gfx::Point&) const;
   TouchActionRegion& operator=(const TouchActionRegion& other);
   TouchActionRegion& operator=(TouchActionRegion&& other);
   bool operator==(const TouchActionRegion& other) const;
