@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc8aa9b7_0afe5813",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBCursor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T23:21:37Z",
+      "side": 1,
+      "message": "typo: \u0027a a\u0027",
+      "range": {
+        "startLine": 124,
+        "startChar": 43,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "b8b96fe67d4af5b2002b8793cafcfa5376368a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a426bf97_9d825f95",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBIndex.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T23:21:37Z",
+      "side": 1,
+      "message": "Maybe this is still pending but: no std::string in Blink\n\n(also, ascii is insufficient)",
+      "range": {
+        "startLine": 119,
+        "startChar": 13,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "b8b96fe67d4af5b2002b8793cafcfa5376368a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6f075d_fdcbd7ec",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T23:21:37Z",
+      "side": 1,
+      "message": "typo: \u0027a a\u0027 - but now that I think about it maybe these comments are overkill.",
+      "range": {
+        "startLine": 222,
+        "startChar": 5,
+        "endLine": 222,
+        "endChar": 75
+      },
+      "revId": "b8b96fe67d4af5b2002b8793cafcfa5376368a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb31f96c_c544f90c",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T23:21:37Z",
+      "side": 1,
+      "message": "nit: can drop the {} here if desired",
+      "range": {
+        "startLine": 460,
+        "startChar": 35,
+        "endLine": 460,
+        "endChar": 36
+      },
+      "revId": "b8b96fe67d4af5b2002b8793cafcfa5376368a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
