@@ -16,6 +16,24 @@
       "revId": "9c7ce99de0239a612cbfd9ca23e31341641435d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f38efc_bf9c7fd9",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-06-28T00:12:54Z",
+      "side": 1,
+      "message": "I kinda want the default to be a dry run. I think that\u0027s better for a new user, to have it print out what it does before it does anything.\nIt\u0027s confusing when it runs and prints nothing, and you have to figure out what it\u0027s supposed to do? Although maybe that\u0027s a bad concern, and the user should just run with -h and read that.\n\nWDYT?",
+      "parentUuid": "0ea3c52e_f3dd083c",
+      "revId": "9c7ce99de0239a612cbfd9ca23e31341641435d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
