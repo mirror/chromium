@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8317813a_1967e800",
+        "filename": "ui/webui/resources/cr_elements/chromeos/network/network_icons.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-06-28T23:05:01Z",
+      "side": 1,
+      "message": "It looks like the close \u0027\u003e\u0027 on \u003cpath\u003e is missing here and elsewhere in this file.",
+      "revId": "a3f2b78d244255dcbed0418b0ad4604d575d9fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
