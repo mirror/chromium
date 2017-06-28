@@ -77,6 +77,10 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Returns the size of a tile view including its padding.
   static gfx::Size GetTotalTileSize();
 
+  // Returns the size of a tile view including its padding when
+  // |is_fullscreen_app_list_enabled_| is enabled.
+  static gfx::Size GetTotalTileSizeFullscreen();
+
   // This resets the grid view to a fresh state for showing the app list.
   void ResetForShowApps();
 
