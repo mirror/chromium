@@ -5,11 +5,13 @@
 #ifndef COMPONENTS_EXO_KEYBOARD_H_
 #define COMPONENTS_EXO_KEYBOARD_H_
 
+#include <map>
 #include <vector>
 
 #include "base/macros.h"
 #include "components/exo/surface_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/events/event.h"
 #include "ui/events/event_handler.h"
 
 namespace ui {
@@ -19,6 +21,7 @@ class KeyEvent;
 
 namespace exo {
 class KeyboardDelegate;
+class KeyboardExtensionDelegate;
 class KeyboardDeviceConfigurationDelegate;
 class Surface;
 
@@ -36,6 +39,9 @@ class Keyboard : public ui::EventHandler,
   bool HasDeviceConfigurationDelegate() const;
   void SetDeviceConfigurationDelegate(
       KeyboardDeviceConfigurationDelegate* delegate);
+
+  bool HasKeyboardExtensionDelegate() const;
+  void SetKeyboardExtensionDelegate(KeyboardExtensionDelegate* delegate);
 
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
@@ -55,6 +61,8 @@ class Keyboard : public ui::EventHandler,
   void OnMaximizeModeEnding() override;
   void OnMaximizeModeEnded() override;
 
+  void OnAckKeyEvent(uint32_t serial, bool handled);
+
  private:
   // Returns the effective focus for |window|.
   Surface* GetEffectiveFocus(aura::Window* window) const;
@@ -67,6 +75,9 @@ class Keyboard : public ui::EventHandler,
   // to.
   KeyboardDeviceConfigurationDelegate* device_configuration_delegate_ = nullptr;
 
+  // The delegate instance that sends ack_key events to this instance.
+  KeyboardExtensionDelegate* keyboard_extension_delegate_ = nullptr;
+
   // The current focus surface for the keyboard.
   Surface* focus_ = nullptr;
 
@@ -75,6 +86,8 @@ class Keyboard : public ui::EventHandler,
 
   // Current set of modifier flags.
   int modifier_flags_ = 0;
+
+  std::map<uint32_t, ui::KeyEvent> sent_key_events_;
 
   DISALLOW_COPY_AND_ASSIGN(Keyboard);
 };
