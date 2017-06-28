@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "77127947_8dc57aef",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T22:02:44Z",
+      "side": 1,
+      "message": "\u003e but all that ref counting needs to ensure is that the destructor is called exactly once after\n\u003e the last reference is dropped, with all previous memory operations on the object visible.\n\nAnd since that destructor is running on one thread only, acq_rel is enough, right?",
+      "parentUuid": "b9536d16_061318b4",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f992d6f_5e1e0a09",
         "filename": "base/atomic_ref_count.h",
         "patchSetId": 4
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "To drop the volatile qualifier. const_cast (despite the name) is used for removing both cv-qualifiers (const and volatile). Otherwise the member functions would have to be declared volatile (since, like const, it\u0027s illegal to call a non-volatile function through a volatile reference).",
       "parentUuid": "79be222b_320b87ad",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705c3ce4_34bef4a1",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T22:02:44Z",
+      "side": 1,
+      "message": "Oh didn\u0027t realize that you\u0027d have to call volatile methods, makes sense. And the methods don\u0027t need to be volatile because their content is only an atomic op, which deals correctly with volatility?",
+      "parentUuid": "a17241d9_7fdaf106",
       "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
