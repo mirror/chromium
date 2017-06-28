@@ -12,10 +12,19 @@
 #include "chrome/browser/ui/autofill/popup_constants.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/border.h"
+#include "ui/views/controls/scroll_view.h"
 #include "ui/views/focus/focus_manager.h"
 #include "ui/views/widget/widget.h"
 
 namespace autofill {
+
+namespace {
+
+// The minimum vertical space between the bottom of the autofill popup and the
+// bottom of the Chrome frame.
+const int kPopupBottomMargin = 10;
+
+}  // namespace
 
 AutofillPopupBaseView::AutofillPopupBaseView(
     AutofillPopupViewDelegate* delegate,
@@ -55,13 +64,19 @@ void AutofillPopupBaseView::DoShow() {
     params.parent = parent_widget_->GetNativeView();
     widget->Init(params);
 
+    scroll_area_ = new views::ScrollView;
+    scroll_area_->set_hide_horizontal_scrollbar(true);
+    scroll_area_->SetContents(this);
+
+    widget->SetContentsView(scroll_area_);
+
     // No animation for popup appearance (too distracting).
     widget->SetVisibilityAnimationTransition(views::Widget::ANIMATE_HIDE);
 
     show_time_ = base::Time::Now();
   }
 
-  SetBorder(views::CreateSolidBorder(
+  GetWidget()->GetRootView()->SetBorder(views::CreateSolidBorder(
       kPopupBorderThickness,
       GetNativeTheme()->GetSystemColor(
           ui::NativeTheme::kColorId_UnfocusedBorderColor)));
@@ -105,7 +120,35 @@ void AutofillPopupBaseView::RemoveObserver() {
 }
 
 void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
-  GetWidget()->SetBounds(delegate_->popup_bounds());
+  gfx::Rect bounds = delegate_->popup_bounds();
+
+  // |bounds| is in screen space and we want the bounds relative to the parent
+  // view. Since the parent is the scroll container, this will always be at
+  // position 0, 0 with dimensions specified by |bounds|.
+  this->SetBounds(0, 0, bounds.width(), bounds.height());
+
+  gfx::Rect widget_bounds = bounds;
+
+  // Compute the space available for the popup. It's the space between its top
+  // and the bottom of its parent view, minus some margin space.
+  int available_vertical_space =
+      parent_widget_->GetClientAreaBoundsInScreen().height() -
+      (bounds.y() - parent_widget_->GetClientAreaBoundsInScreen().y()) -
+      kPopupBottomMargin;
+
+  if (available_vertical_space < widget_bounds.height()) {
+    // The available space is not enough for the full popup so clamp the widget
+    // to what available. Since the scroll view will show a scroll bar, increase
+    // the width so that the content isn't partially hidden.
+    widget_bounds.set_width(widget_bounds.width() +
+                            scroll_area_->GetScrollBarLayoutWidth());
+    widget_bounds.set_height(available_vertical_space);
+  }
+
+  // Account for the scroll view's border so that the content has enough space.
+  widget_bounds.set_height(widget_bounds.height() + 2 * kPopupBorderThickness);
+  widget_bounds.set_width(widget_bounds.width() + 2 * kPopupBorderThickness);
+  GetWidget()->SetBounds(widget_bounds);
   SchedulePaint();
 }
 
