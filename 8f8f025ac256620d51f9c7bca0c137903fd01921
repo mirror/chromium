@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2f0145be_085fdeb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-28T22:13:25Z",
+      "side": 1,
+      "message": "I filed b/63096887 against the code owners, will see what they say and whether the support library will fix that.",
+      "parentUuid": "958e2f58_cacc9461",
+      "revId": "8f8f025ac256620d51f9c7bca0c137903fd01921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bb0c2fe_6aaaee45",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
         "patchSetId": 2

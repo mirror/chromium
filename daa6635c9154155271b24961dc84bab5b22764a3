@@ -16,6 +16,24 @@
       "revId": "daa6635c9154155271b24961dc84bab5b22764a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0565f736_e91b2ed8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-28T22:13:25Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d04da9b0_6dc92d9b",
+      "revId": "daa6635c9154155271b24961dc84bab5b22764a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
