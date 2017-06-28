@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc6aa560_c7700ef1",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-28T01:13:07Z",
+      "side": 1,
+      "message": "I dislike 8 appearing three times in the code here. Let\u0027s use a constexpr size_t variable instead.",
+      "revId": "125ef4f3772cdc63a5b6b234e2a1f9eb78570421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
