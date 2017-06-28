@@ -7,6 +7,7 @@
 #include <set>
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/driver_entry.h"
 #include "content/public/browser/download_interrupt_reasons.h"
@@ -85,11 +86,8 @@ DownloadDriverImpl::DownloadDriverImpl(content::DownloadManager* manager)
 }
 
 DownloadDriverImpl::~DownloadDriverImpl() {
-  // TODO(xingliu): We should maintain a list of observing download items, and
-  // remove the observer here. This can be fixed if we use
+  // TODO(xingliu): See if we need to do something after using
   // AllDownloadItemNotifier.
-  if (download_manager_)
-    download_manager_->RemoveObserver(this);
 }
 
 void DownloadDriverImpl::Initialize(DownloadDriver::Client* client) {
@@ -103,9 +101,8 @@ void DownloadDriverImpl::Initialize(DownloadDriver::Client* client) {
     return;
   }
 
-  download_manager_->AddObserver(this);
-  if (download_manager_->IsManagerInitialized())
-    client_->OnDriverReady(true);
+  notifier_ =
+      base::MakeUnique<AllDownloadItemNotifier>(download_manager_, this);
 }
 
 bool DownloadDriverImpl::IsReady() const {
@@ -209,7 +206,8 @@ std::set<std::string> DownloadDriverImpl::GetActiveDownloads() {
   return guids;
 }
 
-void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
+void DownloadDriverImpl::OnDownloadUpdated(content::DownloadManager* manager,
+                                           content::DownloadItem* item) {
   DCHECK(client_);
   // Blocks the observer call if we asked to remove the download.
   if (guid_to_remove_.find(item->GetGuid()) != guid_to_remove_.end())
@@ -230,7 +228,8 @@ void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
   }
 }
 
-void DownloadDriverImpl::OnDownloadRemoved(content::DownloadItem* download) {
+void DownloadDriverImpl::OnDownloadRemoved(content::DownloadManager* manager,
+                                           content::DownloadItem* download) {
   guid_to_remove_.erase(download->GetGuid());
   // |download| is about to be deleted.
 }
@@ -238,7 +237,6 @@ void DownloadDriverImpl::OnDownloadRemoved(content::DownloadItem* download) {
 void DownloadDriverImpl::OnDownloadCreated(content::DownloadManager* manager,
                                            content::DownloadItem* item) {
   // Listens to all downloads.
-  item->AddObserver(this);
   DCHECK(client_);
   DriverEntry entry = CreateDriverEntry(item);
 
@@ -248,14 +246,17 @@ void DownloadDriverImpl::OnDownloadCreated(content::DownloadManager* manager,
     client_->OnDownloadCreated(entry);
 }
 
-void DownloadDriverImpl::OnManagerInitialized() {
+void DownloadDriverImpl::OnManagerInitialized(
+    content::DownloadManager* manager) {
+  DCHECK_EQ(download_manager_, manager);
   DCHECK(client_);
   DCHECK(download_manager_);
   client_->OnDriverReady(true);
 }
 
-void DownloadDriverImpl::ManagerGoingDown(content::DownloadManager* manager) {
+void DownloadDriverImpl::OnManagerGoingDown(content::DownloadManager* manager) {
   DCHECK_EQ(download_manager_, manager);
+  notifier_.reset();
   download_manager_ = nullptr;
 }
 
