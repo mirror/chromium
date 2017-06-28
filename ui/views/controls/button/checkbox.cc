@@ -14,6 +14,8 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/native_theme/native_theme.h"
+#include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/animation/ink_drop_ripple.h"
 #include "ui/views/animation/square_ink_drop_ripple.h"
@@ -128,12 +130,16 @@ void Checkbox::OnFocus() {
   LabelButton::OnFocus();
   if (!UseMd())
     UpdateImage();
+  else
+    IconFocusRing::Install(this);
 }
 
 void Checkbox::OnBlur() {
   LabelButton::OnBlur();
   if (!UseMd())
     UpdateImage();
+  else
+    IconFocusRing::Uninstall(this);
 }
 
 void Checkbox::OnNativeThemeChanged(const ui::NativeTheme* theme) {
@@ -165,21 +171,6 @@ SkColor Checkbox::GetInkDropBaseColor() const {
       ui::NativeTheme::kColorId_ButtonEnabledColor);
 }
 
-void Checkbox::PaintButtonContents(gfx::Canvas* canvas) {
-  if (!UseMd() || !HasFocus())
-    return;
-
-  cc::PaintFlags focus_flags;
-  focus_flags.setAntiAlias(true);
-  focus_flags.setColor(
-      SkColorSetA(GetNativeTheme()->GetSystemColor(
-                      ui::NativeTheme::kColorId_FocusedBorderColor),
-                  0x66));
-  focus_flags.setStyle(cc::PaintFlags::kStroke_Style);
-  focus_flags.setStrokeWidth(2);
-  PaintFocusRing(canvas, focus_flags);
-}
-
 gfx::ImageSkia Checkbox::GetImage(ButtonState for_state) const {
   if (UseMd()) {
     return gfx::CreateVectorIcon(
@@ -208,10 +199,22 @@ void Checkbox::SetCustomImage(bool checked,
   UpdateImage();
 }
 
-void Checkbox::PaintFocusRing(gfx::Canvas* canvas,
+void Checkbox::PaintFocusRing(BaseFocusRing* focus_ring, gfx::Canvas* canvas) {
+  cc::PaintFlags focus_flags;
+  focus_flags.setAntiAlias(true);
+  focus_flags.setColor(
+      SkColorSetA(GetNativeTheme()->GetSystemColor(
+                      ui::NativeTheme::kColorId_FocusedBorderColor),
+                  0x66));
+  focus_flags.setStyle(cc::PaintFlags::kStroke_Style);
+  focus_flags.setStrokeWidth(2);
+  PaintFocusRing(focus_ring, canvas, focus_flags);
+}
+
+void Checkbox::PaintFocusRing(BaseFocusRing* focus_ring,
+                              gfx::Canvas* canvas,
                               const cc::PaintFlags& flags) {
-  gfx::RectF focus_rect(image()->bounds());
-  canvas->DrawRoundRect(focus_rect, 2.f, flags);
+  canvas->DrawRoundRect(focus_ring->GetLocalBounds(), 2.f, flags);
 }
 
 const gfx::VectorIcon& Checkbox::GetVectorIcon() const {
@@ -230,6 +233,45 @@ ui::NativeTheme::Part Checkbox::GetThemePart() const {
 void Checkbox::GetExtraParams(ui::NativeTheme::ExtraParams* params) const {
   LabelButton::GetExtraParams(params);
   params->button.checked = checked_;
+}
+
+const char Checkbox::IconFocusRing::kViewClassName[] = "IconFocusRing";
+
+Checkbox::IconFocusRing::IconFocusRing(Checkbox* check_box)
+    : check_box_(check_box) {}
+
+Checkbox::IconFocusRing::~IconFocusRing() {}
+
+// static
+void Checkbox::IconFocusRing::Install(Checkbox* check_box) {
+  IconFocusRing* ring =
+      static_cast<IconFocusRing*>(GetFocusRing(check_box, kViewClassName));
+  if (!ring) {
+    ring = new IconFocusRing(check_box);
+    check_box->AddChildView(ring);
+  }
+  ring->check_box_ = check_box;
+  ring->Layout();
+  ring->SchedulePaint();
+}
+
+// static
+void Checkbox::IconFocusRing::Uninstall(Checkbox* check_box) {
+  delete GetFocusRing(check_box, kViewClassName);
+}
+
+const char* Checkbox::IconFocusRing::GetClassName() const {
+  return kViewClassName;
+}
+
+void Checkbox::IconFocusRing::Layout() {
+  gfx::Rect focus_bounds = check_box_->image()->bounds();
+  focus_bounds.Inset(gfx::Insets(-2.f));
+  SetBoundsRect(focus_bounds);
+}
+
+void Checkbox::IconFocusRing::OnPaint(gfx::Canvas* canvas) {
+  check_box_->PaintFocusRing(this, canvas);
 }
 
 }  // namespace views

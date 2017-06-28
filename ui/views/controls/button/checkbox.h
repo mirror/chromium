@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "cc/paint/paint_flags.h"
+#include "ui/views/controls/base_focus_ring.h"
 #include "ui/views/controls/button/label_button.h"
 
 namespace gfx {
@@ -49,7 +50,6 @@ class VIEWS_EXPORT Checkbox : public LabelButton {
   std::unique_ptr<InkDrop> CreateInkDrop() override;
   std::unique_ptr<InkDropRipple> CreateInkDropRipple() const override;
   SkColor GetInkDropBaseColor() const override;
-  void PaintButtonContents(gfx::Canvas* canvas) override;
   gfx::ImageSkia GetImage(ButtonState for_state) const override;
 
   // Set the image shown for each button state depending on whether it is
@@ -59,15 +59,41 @@ class VIEWS_EXPORT Checkbox : public LabelButton {
                       ButtonState for_state,
                       const gfx::ImageSkia& image);
 
-  // Paints a focus indicator for the view.
-  virtual void PaintFocusRing(gfx::Canvas* canvas, const cc::PaintFlags& flags);
+  // Paints a focus indicator for the view. Overridden in Radiobutton
+  // descendant.
+  virtual void PaintFocusRing(BaseFocusRing* focus_ring,
+                              gfx::Canvas* canvas,
+                              const cc::PaintFlags& flags);
 
   // Gets the vector icon to use based on the current state of |checked_|.
   virtual const gfx::VectorIcon& GetVectorIcon() const;
 
  private:
+  class IconFocusRing : public BaseFocusRing {
+   public:
+    IconFocusRing(Checkbox* check_box);
+    ~IconFocusRing() override;
+
+    static const char kViewClassName[];
+    static void Install(Checkbox* check_box);
+    static void Uninstall(Checkbox* check_box);
+
+   private:
+    // View:
+    const char* GetClassName() const override;
+    void Layout() override;
+    void OnPaint(gfx::Canvas* canvas) override;
+
+    Checkbox* check_box_;
+
+    DISALLOW_COPY_AND_ASSIGN(IconFocusRing);
+  };
+
   // Button:
   void NotifyClick(const ui::Event& event) override;
+
+  // Called from FocusRing private class.
+  void PaintFocusRing(BaseFocusRing* focus_ring, gfx::Canvas* canvas);
 
   ui::NativeTheme::Part GetThemePart() const override;
   void GetExtraParams(ui::NativeTheme::ExtraParams* params) const override;

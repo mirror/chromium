@@ -5,7 +5,6 @@
 #include "ui/views/controls/focus_ring.h"
 
 #include "ui/gfx/canvas.h"
-#include "ui/native_theme/native_theme.h"
 #include "ui/views/controls/focusable_border.h"
 
 namespace views {
@@ -21,14 +20,6 @@ constexpr float kFocusHaloThicknessDp = 2.f;
 constexpr float kFocusHaloCornerRadiusDp =
     FocusableBorder::kCornerRadiusDp + kFocusHaloThicknessDp / 2.f;
 
-FocusRing* GetFocusRing(views::View* parent) {
-  for (int i = 0; i < parent->child_count(); ++i) {
-    if (parent->child_at(i)->GetClassName() == FocusRing::kViewClassName)
-      return static_cast<FocusRing*>(parent->child_at(i));
-  }
-  return nullptr;
-}
-
 }  // namespace
 
 const char FocusRing::kViewClassName[] = "FocusRing";
@@ -36,7 +27,8 @@ const char FocusRing::kViewClassName[] = "FocusRing";
 // static
 views::View* FocusRing::Install(views::View* parent,
                                 ui::NativeTheme::ColorId override_color_id) {
-  FocusRing* ring = GetFocusRing(parent);
+  FocusRing* ring =
+      static_cast<FocusRing*>(GetFocusRing(parent, kViewClassName));
   if (!ring) {
     ring = new FocusRing();
     parent->AddChildView(ring);
@@ -49,15 +41,11 @@ views::View* FocusRing::Install(views::View* parent,
 
 // static
 void FocusRing::Uninstall(views::View* parent) {
-  delete GetFocusRing(parent);
+  delete GetFocusRing(parent, kViewClassName);
 }
 
 const char* FocusRing::GetClassName() const {
   return kViewClassName;
-}
-
-bool FocusRing::CanProcessEventsWithinSubtree() const {
-  return false;
 }
 
 void FocusRing::Layout() {
@@ -85,11 +73,7 @@ void FocusRing::OnPaint(gfx::Canvas* canvas) {
 }
 
 FocusRing::FocusRing()
-    : override_color_id_(ui::NativeTheme::kColorId_NumColors) {
-  // A layer is necessary to paint beyond the parent's bounds.
-  SetPaintToLayer();
-  layer()->SetFillsBoundsOpaquely(false);
-}
+    : override_color_id_(ui::NativeTheme::kColorId_NumColors) {}
 
 FocusRing::~FocusRing() {}
 
