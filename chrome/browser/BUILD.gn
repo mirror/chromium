@@ -1500,7 +1500,7 @@ split_static_library("browser") {
     "//components/dom_distiller/content/browser",
     "//components/domain_reliability",
     "//components/doodle",
-    "//components/download/content/factory",
+    "//components/download/content/public",
     "//components/download/public",
     "//components/error_page/common",
     "//components/favicon/content",
