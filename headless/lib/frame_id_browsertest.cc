@@ -190,15 +190,25 @@ const char* kStyle3Css = R"(
 }  // namespace
 
 class FrameIdTest : public HeadlessAsyncDevTooledBrowserTest,
-                    public network::Observer,
+                    public network::ExperimentalObserver,
                     public page::Observer {
  public:
   void RunDevTooledTest() override {
     http_handler_->SetHeadlessBrowserContext(browser_context_);
 
     EXPECT_TRUE(embedded_test_server()->Start());
-    devtools_client_->GetNetwork()->AddObserver(this);
+    devtools_client_->GetNetwork()->GetExperimental()->AddObserver(this);
     devtools_client_->GetNetwork()->Enable();
+
+    if (EnableInterception()) {
+      devtools_client_->GetNetwork()
+          ->GetExperimental()
+          ->EnableRequestInterception(
+              network::EnableRequestInterceptionParams::Builder()
+                  .SetEnabled(true)
+                  .Build());
+    }
+
     devtools_client_->GetPage()->AddObserver(this);
 
     base::RunLoop run_loop;
@@ -253,11 +263,32 @@ class FrameIdTest : public HeadlessAsyncDevTooledBrowserTest,
     FinishAsynchronousTest();
   }
 
+  virtual bool EnableInterception() const { return false; }
+
  private:
   std::map<std::string, std::string> url_to_frame_id_;
   TestProtocolHandler* http_handler_;  // NOT OWNED
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(FrameIdTest);
+
+// Frame IDs should still be available with network request interception enabled
+class FrameIdWithDevtoolsRequestInterceptionTest : public FrameIdTest {
+ public:
+  void OnRequestIntercepted(
+      const network::RequestInterceptedParams& params) override {
+    // Allow the request to continue.
+    devtools_client_->GetNetwork()
+        ->GetExperimental()
+        ->ContinueInterceptedRequest(
+            network::ContinueInterceptedRequestParams::Builder()
+                .SetInterceptionId(params.GetInterceptionId())
+                .Build());
+  }
+
+  bool EnableInterception() const override { return true; }
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(FrameIdWithDevtoolsRequestInterceptionTest);
 
 }  // namespace headless
