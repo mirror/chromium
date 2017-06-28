@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "711154d2_a11976a7",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T21:33:05Z",
+      "side": 1,
+      "message": "The ChromotingHost does not know about policies either.  \n\nAs I said above, I\u0027m fine removing it for this CL, but I could see a case where we would want to create and register a factory based on the machine\u0027s policies.  In fact I\u0027m pretty sure we will want to do that for File Transfer as well.\n\nWe can easily add this later when we get closer to having an impl.",
+      "parentUuid": "389eccbb_4d36c000",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4163df43_b8cafd49",
         "filename": "remoting/host/chromoting_host.h",
         "patchSetId": 1
