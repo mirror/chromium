@@ -51,7 +51,7 @@ class LaserPointerView : public views::View {
   void DidReceiveCompositorFrameAck();
 
   // Call this to return resources so they can be reused or freed.
-  void ReclaimResources(const cc::ReturnedResourceArray& resources);
+  void ReclaimResources(const std::vector<cc::ReturnedResource>& resources);
 
  private:
   friend class LaserPointerControllerTestApi;
