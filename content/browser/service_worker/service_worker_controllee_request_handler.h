@@ -46,6 +46,7 @@ class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
       base::WeakPtr<storage::BlobStorageContext> blob_storage_context,
       FetchRequestMode request_mode,
       FetchCredentialsMode credentials_mode,
+      FetchCacheMode cache_mode,
       FetchRedirectMode redirect_mode,
       ResourceType resource_type,
       RequestContextType request_context_type,
@@ -123,6 +124,7 @@ class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
   std::unique_ptr<ServiceWorkerURLJobWrapper> url_job_;
   FetchRequestMode request_mode_;
   FetchCredentialsMode credentials_mode_;
+  FetchCacheMode cache_mode_;
   FetchRedirectMode redirect_mode_;
   RequestContextType request_context_type_;
   RequestContextFrameType frame_type_;

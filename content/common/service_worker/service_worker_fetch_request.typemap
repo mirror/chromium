@@ -16,6 +16,7 @@ sources = [
 ]
 type_mappings = [
   "blink.mojom.FetchCredentialsMode=::content::FetchCredentialsMode",
+  "blink.mojom.FetchCacheMode=::content::FetchCacheMode",
   "blink.mojom.FetchRedirectMode=::content::FetchRedirectMode",
   "blink.mojom.FetchRequestMode=::content::FetchRequestMode",
   "blink.mojom.FetchAPIRequest=::content::ServiceWorkerFetchRequest",

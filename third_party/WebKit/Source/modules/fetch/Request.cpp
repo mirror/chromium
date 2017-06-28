@@ -262,17 +262,17 @@ Request* Request::CreateRequestWithRequestOrString(
 
   // "If |init|'s cache member is present, set |request|'s cache mode to it."
   if (init.cache == "default") {
-    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeDefault);
+    request->SetCacheMode(WebURLRequest::kFetchCacheModeDefault);
   } else if (init.cache == "no-store") {
-    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeNoStore);
+    request->SetCacheMode(WebURLRequest::kFetchCacheModeNoStore);
   } else if (init.cache == "reload") {
-    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeReload);
+    request->SetCacheMode(WebURLRequest::kFetchCacheModeReload);
   } else if (init.cache == "no-cache") {
-    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeNoCache);
+    request->SetCacheMode(WebURLRequest::kFetchCacheModeNoCache);
   } else if (init.cache == "force-cache") {
-    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeForceCache);
+    request->SetCacheMode(WebURLRequest::kFetchCacheModeForceCache);
   } else if (init.cache == "only-if-cached") {
-    request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeOnlyIfCached);
+    request->SetCacheMode(WebURLRequest::kFetchCacheModeOnlyIfCached);
   }
 
   // "If |init|'s redirect member is present, set |request|'s redirect mode
@@ -656,17 +656,17 @@ String Request::credentials() const {
 String Request::cache() const {
   // "The cache attribute's getter must return request's cache mode."
   switch (request_->CacheMode()) {
-    case WebURLRequest::kFetchRequestCacheModeDefault:
+    case WebURLRequest::kFetchCacheModeDefault:
       return "default";
-    case WebURLRequest::kFetchRequestCacheModeNoStore:
+    case WebURLRequest::kFetchCacheModeNoStore:
       return "no-store";
-    case WebURLRequest::kFetchRequestCacheModeReload:
+    case WebURLRequest::kFetchCacheModeReload:
       return "reload";
-    case WebURLRequest::kFetchRequestCacheModeNoCache:
+    case WebURLRequest::kFetchCacheModeNoCache:
       return "no-cache";
-    case WebURLRequest::kFetchRequestCacheModeForceCache:
+    case WebURLRequest::kFetchCacheModeForceCache:
       return "force-cache";
-    case WebURLRequest::kFetchRequestCacheModeOnlyIfCached:
+    case WebURLRequest::kFetchCacheModeOnlyIfCached:
       return "only-if-cached";
   }
   NOTREACHED();

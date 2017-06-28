@@ -61,6 +61,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
       ServiceWorkerMode service_worker_mode,
       FetchRequestMode request_mode,
       FetchCredentialsMode credentials_mode,
+      FetchCacheMode cache_mode,
       FetchRedirectMode redirect_mode,
       ResourceType resource_type,
       RequestContextType request_context_type,
@@ -91,6 +92,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
       base::WeakPtr<storage::BlobStorageContext> blob_storage_context,
       FetchRequestMode request_mode,
       FetchCredentialsMode credentials_mode,
+      FetchCacheMode cache_mode,
       FetchRedirectMode redirect_mode,
       ResourceType resource_type,
       RequestContextType request_context_type,
@@ -125,6 +127,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
   ResourceType resource_type_;
   FetchRequestMode request_mode_;
   FetchCredentialsMode credentials_mode_;
+  FetchCacheMode cache_mode_;
   FetchRedirectMode redirect_mode_;
   RequestContextType request_context_type_;
   RequestContextFrameType frame_type_;

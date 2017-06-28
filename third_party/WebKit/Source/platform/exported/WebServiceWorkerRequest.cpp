@@ -20,7 +20,7 @@ class WebServiceWorkerRequestPrivate
       : mode_(WebURLRequest::kFetchRequestModeNoCORS),
         is_main_resource_load_(false),
         credentials_mode_(WebURLRequest::kFetchCredentialsModeOmit),
-        cache_mode_(WebURLRequest::kFetchRequestCacheModeDefault),
+        cache_mode_(WebURLRequest::kFetchCacheModeDefault),
         redirect_mode_(WebURLRequest::kFetchRedirectModeFollow),
         request_context_(WebURLRequest::kRequestContextUnspecified),
         frame_type_(WebURLRequest::kFrameTypeNone),
@@ -34,7 +34,7 @@ class WebServiceWorkerRequestPrivate
   WebURLRequest::FetchRequestMode mode_;
   bool is_main_resource_load_;
   WebURLRequest::FetchCredentialsMode credentials_mode_;
-  WebURLRequest::FetchRequestCacheMode cache_mode_;
+  WebURLRequest::FetchCacheMode cache_mode_;
   WebURLRequest::FetchRedirectMode redirect_mode_;
   WebURLRequest::RequestContext request_context_;
   WebURLRequest::FrameType frame_type_;
@@ -157,12 +157,11 @@ WebURLRequest::FetchCredentialsMode WebServiceWorkerRequest::CredentialsMode()
 }
 
 void WebServiceWorkerRequest::SetCacheMode(
-    WebURLRequest::FetchRequestCacheMode cache_mode) {
+    WebURLRequest::FetchCacheMode cache_mode) {
   private_->cache_mode_ = cache_mode;
 }
 
-WebURLRequest::FetchRequestCacheMode WebServiceWorkerRequest::CacheMode()
-    const {
+WebURLRequest::FetchCacheMode WebServiceWorkerRequest::CacheMode() const {
   return private_->cache_mode_;
 }
 

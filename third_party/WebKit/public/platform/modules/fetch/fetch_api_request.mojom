@@ -72,6 +72,17 @@ enum FetchCredentialsMode {
   PASSWORD,
 };
 
+// The cache mode indicating how cache should be handled.
+// https://fetch.spec.whatwg.org/#concept-request-redirect-mode
+enum FetchCacheMode {
+  DEFAULT,
+  NO_STORE,
+  RELOAD,
+  NO_CACHE,
+  FORCE_CACHE,
+  ONLY_IF_CACHED,
+}; 
+
 // The redirect mode indicating how redirects should be handled.
 // https://fetch.spec.whatwg.org/#concept-request-redirect-mode
 enum FetchRedirectMode {
@@ -98,6 +109,7 @@ struct FetchAPIRequest {
   uint64 blob_size;
   Referrer referrer;
   FetchCredentialsMode credentials_mode;
+  FetchCacheMode cache_mode;
   FetchRedirectMode redirect_mode;
   string? client_id;
   bool is_reload;
