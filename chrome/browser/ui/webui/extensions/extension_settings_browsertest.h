@@ -29,6 +29,8 @@ class ExtensionSettingsUIBrowserTest : public WebUIBrowserTest {
 
   void InstallErrorsExtension();
 
+  void InstallGuestViewOptionsExtension();
+
   void InstallSharedModule();
 
   void InstallPackagedApp();
