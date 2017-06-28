@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de738cca_7064e99d",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-28T23:24:47Z",
+      "side": 1,
+      "message": "The issue that you get a \"not an handle\" is because the \"handle\" of the old/new-style bindings is not compatible.\n\nWith the new bindings, please use the new way of binding to interface:\nMojo.bindInterface()\n\nAnd if you need to intercept the request to do testing, you could use\nMojoInterfaceIntercepteor\n\nAn example for both APIs:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/mojo/bind-interface.html?rcl\u003d9b345e436c2687898d7a9d8bcff509230b903607\u0026l\u003d10",
+      "revId": "d584620bf8286f4476f273545c7c870ad03fdb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
