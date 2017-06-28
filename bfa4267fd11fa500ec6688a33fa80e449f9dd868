@@ -52,6 +52,24 @@
       "revId": "bfa4267fd11fa500ec6688a33fa80e449f9dd868",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbff66a_f43b32ff",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2191,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T16:47:00Z",
+      "side": 1,
+      "message": "okay. It\u0027s possible it\u0027s not read and never mapped I guess, which would be some weird edge case, but just don\u0027t want to create holes for leaks to hide :)",
+      "parentUuid": "2cc68af6_1f603367",
+      "revId": "bfa4267fd11fa500ec6688a33fa80e449f9dd868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
