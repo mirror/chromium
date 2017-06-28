@@ -16,6 +16,24 @@
       "revId": "3ec72e311893f27f58aded17ff71deeb667cfddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd578ce_3ceabe66",
+        "filename": "media/gpu/android/video_frame_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-28T23:19:41Z",
+      "side": 1,
+      "message": "Without full context, I don\u0027t think that\u0027s true.\n\nThe TextureManager is shared between all contexts in the same client-side share group. Also, the stub may be gone simply because it is destroyed, without being lost.\n\nSo the TextureManager may still be alive and well, and destroying the TextureRef could then attempt to destroy a texture without a context being current (or the wrong one).\n\n\nYou\u0027re correct that if decoder-\u003eMakeCurrent() fails then *eventually* the TextureManager will be marked as not having a context, and therefore not attempting to destroy the texture (because we will destroy all contexts in the share group, which will guarantee to free resources). However that won\u0027t happen right away (not until we destroy the decoder). What you can do in that particular case is call ref-\u003eForceContextLost() which means it won\u0027t try to delete it.\n\nHowever I think you need higher level logic to make sure you can drop the TextureRef when the stub goes away (e.g. by registering as a destructor observer).",
+      "parentUuid": "ec5fd55b_8df02230",
+      "revId": "3ec72e311893f27f58aded17ff71deeb667cfddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
