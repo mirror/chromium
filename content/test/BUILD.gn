@@ -1249,6 +1249,7 @@ test("content_unittests") {
     "../browser/renderer_host/compositor_resize_lock_unittest.cc",
     "../browser/renderer_host/dwrite_font_proxy_message_filter_win_unittest.cc",
     "../browser/renderer_host/input/gesture_event_queue_unittest.cc",
+    "../browser/renderer_host/input/input_router_impl_unittest.cc",
     "../browser/renderer_host/input/legacy_input_router_impl_unittest.cc",
     "../browser/renderer_host/input/legacy_touch_event_queue_unittest.cc",
     "../browser/renderer_host/input/mock_input_ack_handler.cc",
