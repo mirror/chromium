@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "163b1b99_54e13fd7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e8b79dd_025a11dd",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e75e62c7_579dad67",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 25
@@ -33,6 +51,24 @@
       "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca7e152_873f428f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75e62c7_579dad67",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6e3ff096_8cb43fcd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done. However, git cl format keeps removing it - is that a bug or am I doing it wrong?",
+      "parentUuid": "c5e6d01f_02589a98",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a274f9c_aa4477ad",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
         "patchSetId": 25
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0f56d6b0_dbbd06fd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a274f9c_aa4477ad",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4dd4d7f_644cebb0",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
         "patchSetId": 25
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-28T10:07:56Z",
       "side": 1,
       "message": "not used?",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2476bfb7_d2b9991f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "It does (apparently) spin up some mocked scheduler support upon construction. Without it, the call to RawResource::CreateForTest causes an error (SEGV).",
+      "parentUuid": "e4dd4d7f_644cebb0",
       "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c270d26e_56526e85",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bc99fe9_b45ff2a7",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5513c261_fbc929d8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
         "patchSetId": 25
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d2b33e9d_a46accea",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5513c261_fbc929d8",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98a889da_6826072c",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
         "patchSetId": 25
@@ -132,6 +258,24 @@
       "writtenOn": "2017-06-28T10:07:56Z",
       "side": 1,
       "message": "What\u0027s the reason to use BaseAsString than GetString()?",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c895d5fa_147b7b20",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Right, should be using GetString().",
+      "parentUuid": "98a889da_6826072c",
       "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0cf621ca_7e3bd235",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "192178ba_8a175ec6",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56f7d5d2_46266aa5",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
         "patchSetId": 25
@@ -169,6 +331,24 @@
       "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919a235c_0958eaf0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f7d5d2_46266aa5",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "280d0814_5d547941",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0f57e61_2a0edd2c",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7730e08_a32c6fe8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
         "patchSetId": 25
@@ -200,6 +398,24 @@
       "writtenOn": "2017-06-28T10:07:56Z",
       "side": 1,
       "message": "who\u0027s using this?",
+      "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2088a4_362ac9d3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderTest.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-28T14:07:56Z",
+      "side": 1,
+      "message": "ResourceLoader::DetermineCORSStatus L333 uses it for the same origin check. I could also put the origin into the resource options. I understood that Context would be the more recent way to set the origin, but I might be wrong. I guess could also alter this test to make sure the CORS check works with origins via context and via resource options?",
+      "parentUuid": "f7730e08_a32c6fe8",
       "revId": "5b0ddbdd8d651284f7b9fe591d1ba380e708c17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
