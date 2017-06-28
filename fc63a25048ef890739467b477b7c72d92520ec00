@@ -34,6 +34,24 @@
       "revId": "fc63a25048ef890739467b477b7c72d92520ec00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920c8f7a_59883dda",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/usecounted-features.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T01:48:27Z",
+      "side": 1,
+      "message": "I thought that the top-level window shares its use counter with iframes in the window, and the iframe is controlled.\n\nBut I think I found a root cause of the bug:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d737355\n\nEven when changing to use a window and observing the UseCounter on that, the count was never observed. It looks like this is due to the ProviderClient not yet existing when the use count is propagated to the controllee, because the page has not yet been created.\n\nI uploaded a new patch to workaround this, but it seems like a bug we should fix for accurate numbers.",
+      "parentUuid": "fd64b13f_9656791f",
+      "revId": "fc63a25048ef890739467b477b7c72d92520ec00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
