@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a65fe9e_cb17cd73",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestHTMLView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-28T18:23:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2e5226c_202e3f4b",
+      "revId": "8843a5f77167fe0f1ad43705d737e9c80f6c0a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "543a7575_63a90782",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8843a5f77167fe0f1ad43705d737e9c80f6c0a21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74f6adb_7c892b83",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-28T18:23:54Z",
+      "side": 1,
+      "message": "Looks like it can be avoided with a conditional operator.",
+      "parentUuid": "543a7575_63a90782",
+      "revId": "8843a5f77167fe0f1ad43705d737e9c80f6c0a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
