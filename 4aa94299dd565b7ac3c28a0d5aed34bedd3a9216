@@ -16,6 +16,24 @@
       "revId": "4aa94299dd565b7ac3c28a0d5aed34bedd3a9216",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724205aa_035d6f1c",
+        "filename": "gpu/ipc/host/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-06-28T04:52:58Z",
+      "side": 1,
+      "message": "Done. yes, I\u0027ll remove \u0027USE\u003d\"${USE} native_gpu_memory_buffers\"\u0027 in all overlay :)",
+      "parentUuid": "f37d4b45_f0316226",
+      "revId": "4aa94299dd565b7ac3c28a0d5aed34bedd3a9216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
