@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a0ce427_571e3887",
+        "filename": "ui/aura/mus/client_surface_embedder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-28T05:31:14Z",
+      "side": 1,
+      "message": "Since StubSurfaceReferenceFactory lives in cc, can this code just send a nullptr, and have cc::SurfaceLayer create the stub impl?",
+      "revId": "7061c5f2731ad536279abe5e89613ac198793c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
