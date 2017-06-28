@@ -16,9 +16,9 @@
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
-#import "ios/web/navigation/navigation_manager_impl.h"
 #include "ios/web/public/navigation_item.h"
-#import "ios/web/web_state/web_state_impl.h"
+#import "ios/web/public/navigation_manager.h"
+#import "ios/web/public/web_state/web_state.h"
 #import "net/base/mac/url_conversions.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -83,14 +83,14 @@ sessions::LiveTab* TabRestoreServiceDelegateImplIOS::AddRestoredTab(
   DCHECK_LT(selected_navigation, static_cast<int>(navigations.size()));
 
   web::WebState::CreateParams params(browser_state_);
-  std::unique_ptr<web::WebStateImpl> web_state(new web::WebStateImpl(params));
-  std::vector<std::unique_ptr<web::NavigationItem>> items =
-      sessions::IOSSerializedNavigationBuilder::ToNavigationItems(navigations);
-  web_state->GetNavigationManagerImpl().ReplaceSessionHistory(
-      std::move(items), selected_navigation);
+  auto web_state = web::WebState::Create(params);
+  web_state->GetNavigationManager()->Restore(
+      selected_navigation,
+      sessions::IOSSerializedNavigationBuilder::ToNavigationItems(navigations));
 
   WebStateList* web_state_list = [tab_model() webStateList];
   web_state_list->InsertWebState(tab_index, std::move(web_state));
+
   // TODO(crbug.com/661636): Handle tab-switch animation somehow...
   web_state_list->ActivateWebStateAt(tab_index);
   return nullptr;
@@ -105,13 +105,16 @@ sessions::LiveTab* TabRestoreServiceDelegateImplIOS::ReplaceRestoredTab(
     const std::string& user_agent_override) {
   DCHECK_LT(selected_navigation, static_cast<int>(navigations.size()));
 
-  // Desktop Chrome creates a new tab and deletes the old one. The net result
-  // is that the NTP is not in the session history of the restored tab. Do
-  // the same by replacing the tab's navigation history which will also force it
-  // to reload.
-  Tab* tab = tab_model().currentTab;
-  [tab replaceHistoryWithNavigations:navigations
-                        currentIndex:selected_navigation];
+  web::WebState::CreateParams params(browser_state_);
+  auto web_state = web::WebState::Create(params);
+  web_state->GetNavigationManager()->Restore(
+      selected_navigation,
+      sessions::IOSSerializedNavigationBuilder::ToNavigationItems(navigations));
+
+  WebStateList* web_state_list = [tab_model() webStateList];
+  web_state_list->ReplaceWebStateAt(web_state_list->active_index(),
+                                    std::move(web_state));
+
   return nullptr;
 }
 
