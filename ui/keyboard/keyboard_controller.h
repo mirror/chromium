@@ -53,7 +53,8 @@ enum class KeyboardControllerState {
   SHOWN,
   // Keyboard is being shown via animation.
   SHOWING,
-  // Waiting for an extension to be loaded and then move to SHOWING.
+  // Waiting for an extension to be loaded. Will move to HIDDEN if this is
+  // loading pre-emptively, otherwise will move to SHOWING.
   LOADING_EXTENSION,
   // Keyboard is still shown, but will move to HIDING in a short period, or if
   // an input element gets focused again, will move to SHOWN.
@@ -107,6 +108,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Notifies the keyboard observer for keyboard bounds changed.
   void NotifyKeyboardBoundsChanging(const gfx::Rect& new_bounds);
 
+  // Notifies that the extension has completed loading
+  void NotifyKeyboardLoadingComplete();
+
   // Management of the observer list.
   void AddObserver(KeyboardControllerObserver* observer);
   bool HasObserver(KeyboardControllerObserver* observer);
@@ -125,6 +129,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Force the keyboard to show up if not showing and lock the keyboard if
   // |lock| is true.
   void ShowKeyboard(bool lock);
+
+  // Loads the keyboard UI contents in the background, but does not display
+  // the keyboard.
+  void LoadKeyboardUiInBackground();
 
   // Force the keyboard to show up in the specific display if not showing and
   // lock the keyboard
@@ -178,6 +186,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   // Show virtual keyboard immediately with animation.
   void ShowKeyboardInternal(int64_t display_id);
+  void ShowKeyboardInternalImpl(int64_t display_id, bool load_only);
 
   // Returns true if keyboard is scheduled to hide.
   bool WillHideKeyboard() const;
