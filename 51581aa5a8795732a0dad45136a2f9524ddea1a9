@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea6ce6e_5cb64f77",
+        "filename": "content/public/browser/render_widget_host_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-28T20:00:46Z",
+      "side": 1,
+      "message": "Is there a bug number you can cite here?",
+      "revId": "51581aa5a8795732a0dad45136a2f9524ddea1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
