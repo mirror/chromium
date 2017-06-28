@@ -235,4 +235,28 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestCompletionStatusMetricsTest,
       JourneyLogger::ABORT_REASON_USER_NAVIGATION, 1);
 }
 
+class PaymentRequestInitiatedCompletionStatusMetricsTest
+    : public PaymentRequestBrowserTestBase {
+ protected:
+  PaymentRequestInitiatedCompletionStatusMetricsTest()
+      : PaymentRequestBrowserTestBase("/initiated_test.html") {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PaymentRequestInitiatedCompletionStatusMetricsTest);
+};
+
+IN_PROC_BROWSER_TEST_F(PaymentRequestInitiatedCompletionStatusMetricsTest,
+                       Aborted_NotShown) {
+  base::HistogramTester histogram_tester;
+
+  // The Payment Request will have been initiated on page load, so it won't be
+  // logged.
+
+  // Navigate away.
+  NavigateTo("/payment_request_email_test.html");
+
+  // No abort reason should be logged.
+  histogram_tester.ExpectTotalCount("PaymentRequest.CheckoutFunnel.Aborted", 0);
+}
+
 }  // namespace payments
