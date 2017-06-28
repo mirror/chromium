@@ -205,6 +205,7 @@ RequestCoordinator::SavePageLaterParams::SavePageLaterParams(
   user_requested = other.user_requested;
   availability = other.availability;
   original_url = other.original_url;
+  request_origin = other.request_origin;
 }
 
 RequestCoordinator::RequestCoordinator(
@@ -263,6 +264,7 @@ int64_t RequestCoordinator::SavePageLater(
       id, save_page_later_params.url, save_page_later_params.client_id,
       base::Time::Now(), save_page_later_params.user_requested);
   request.set_original_url(save_page_later_params.original_url);
+  request.set_request_origin(save_page_later_params.request_origin);
 
   // If the download manager is not done with the request, put it on the
   // disabled list.
