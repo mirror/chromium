@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "402adfa9_5110929c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T05:46:59Z",
+      "side": 1,
+      "message": "nit: no other reqs should not -\u003e no other reqs should",
+      "revId": "93176db29acf987fb9d80011ad755367c27e91ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23a74cc_e2cdbcec",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T05:46:59Z",
+      "side": 1,
+      "message": "nit: scheduler_client_id_ for clarity?",
+      "revId": "93176db29acf987fb9d80011ad755367c27e91ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
