@@ -67,6 +67,9 @@ class CONTENT_EXPORT IndexedDBCallbacks
   virtual void OnSuccess(std::unique_ptr<IndexedDBConnection> connection,
                          const content::IndexedDBDatabaseMetadata& metadata);
 
+  // IndexedDBFactory::CompactDatabase
+  virtual void OnSuccessStatus(::indexed_db::mojom::Status status);
+
   // IndexedDBDatabase::OpenCursor
   virtual void OnSuccess(std::unique_ptr<IndexedDBCursor> cursor,
                          const IndexedDBKey& key,

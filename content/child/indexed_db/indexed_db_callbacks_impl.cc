@@ -162,6 +162,12 @@ void IndexedDBCallbacksImpl::SuccessDatabase(
                                         base::Passed(&database), metadata));
 }
 
+void IndexedDBCallbacksImpl::SuccessStatus(indexed_db::mojom::Status status) {
+  callback_runner_->PostTask(
+      FROM_HERE, base::Bind(&InternalState::SuccessStatus,
+                            base::Unretained(internal_state_), status));
+}
+
 void IndexedDBCallbacksImpl::SuccessCursor(
     indexed_db::mojom::CursorAssociatedPtrInfo cursor,
     const IndexedDBKey& key,
@@ -294,6 +300,12 @@ void IndexedDBCallbacksImpl::InternalState::SuccessDatabase(
   WebIDBMetadata web_metadata;
   ConvertDatabaseMetadata(metadata, &web_metadata);
   callbacks_->OnSuccess(database, web_metadata);
+  callbacks_.reset();
+}
+
+void IndexedDBCallbacksImpl::InternalState::SuccessStatus(
+    indexed_db::mojom::Status status) {
+  // callbacks_->OnSuccess(status);
   callbacks_.reset();
 }
 

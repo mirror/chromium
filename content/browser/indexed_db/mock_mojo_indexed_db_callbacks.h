@@ -58,6 +58,11 @@ class MockMojoIndexedDBCallbacks : public ::indexed_db::mojom::Callbacks {
     MockedSuccessDatabase(&database_info, metadata);
   }
 
+  MOCK_METHOD1(MockedSuccessStatus, void(::indexed_db::mojom::Status status));
+  void SuccessStatus(::indexed_db::mojom::Status status) override {
+    MockedSuccessStatus(status);
+  }
+
   MOCK_METHOD4(MockedSuccessCursor,
                void(::indexed_db::mojom::CursorAssociatedPtrInfo* cursor,
                     const IndexedDBKey& key,

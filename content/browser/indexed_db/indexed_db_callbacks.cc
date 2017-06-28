@@ -151,6 +151,7 @@ class IndexedDBCallbacks::IOThreadHelper {
                          const std::vector<IndexedDBBlobInfo>& blob_info);
   void SendSuccessValue(::indexed_db::mojom::ReturnValuePtr value,
                         const std::vector<IndexedDBBlobInfo>& blob_info);
+  void SendSuccessStatus(::indexed_db::mojom::Status status);
   void SendSuccessCursorContinue(
       const IndexedDBKey& key,
       const IndexedDBKey& primary_key,
@@ -324,6 +325,20 @@ void IndexedDBCallbacks::OnSuccess(
         base::TimeTicks::Now() - connection_open_start_time_);
     connection_open_start_time_ = base::TimeTicks();
   }
+}
+
+void IndexedDBCallbacks::OnSuccessStatus(::indexed_db::mojom::Status status) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(!complete_);
+  DCHECK(io_helper_);
+
+  scoped_refptr<IndexedDBCallbacks> self(this);
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&IOThreadHelper::SendSuccessStatus,
+                     base::Unretained(io_helper_.get()), status));
+  complete_ = true;
 }
 
 void IndexedDBCallbacks::OnSuccess(std::unique_ptr<IndexedDBCursor> cursor,
@@ -630,6 +645,19 @@ void IndexedDBCallbacks::IOThreadHelper::SendSuccessValue(
 
   if (!value || CreateAllBlobs(blob_info, &value->value->blob_or_file_info))
     callbacks_->SuccessValue(std::move(value));
+}
+
+void IndexedDBCallbacks::IOThreadHelper::SendSuccessStatus(
+    ::indexed_db::mojom::Status status) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!callbacks_)
+    return;
+  if (!dispatcher_host_) {
+    OnConnectionError();
+    return;
+  }
+
+  callbacks_->SuccessStatus(std::move(status));
 }
 
 void IndexedDBCallbacks::IOThreadHelper::SendSuccessArray(

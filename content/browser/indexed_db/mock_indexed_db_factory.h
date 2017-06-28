@@ -53,6 +53,10 @@ class MockIndexedDBFactory : public IndexedDBFactory {
            const url::Origin& origin,
            const base::FilePath& data_directory,
            bool force_close));
+  MOCK_METHOD2(CompactDatabase,
+               void(scoped_refptr<IndexedDBCallbacks> callbacks,
+                    const url::Origin& origin));
+
   MOCK_METHOD1(HandleBackingStoreFailure, void(const url::Origin& origin));
   MOCK_METHOD2(HandleBackingStoreCorruption,
                void(const url::Origin& origin,

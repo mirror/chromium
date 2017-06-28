@@ -59,6 +59,8 @@ class IndexedDBDispatcherHost::IDBSequenceHelper {
                                  const url::Origin& origin,
                                  const base::string16& name,
                                  bool force_close);
+  void CompactDatabaseOnIDBThread(scoped_refptr<IndexedDBCallbacks> callbacks,
+                                  const url::Origin& origin);
 
  private:
   const int ipc_process_id_;
@@ -229,6 +231,24 @@ void IndexedDBDispatcherHost::DeleteDatabase(
                      origin, name, force_close));
 }
 
+void IndexedDBDispatcherHost::CompactDatabase(
+    ::indexed_db::mojom::CallbacksAssociatedPtrInfo callbacks_info,
+    const url::Origin& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (!IsValidOrigin(origin)) {
+    mojo::ReportBadMessage(kInvalidOrigin);
+    return;
+  }
+
+  scoped_refptr<IndexedDBCallbacks> callbacks(new IndexedDBCallbacks(
+      this->AsWeakPtr(), origin, std::move(callbacks_info), idb_runner_));
+  idb_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&IDBSequenceHelper::CompactDatabaseOnIDBThread,
+                                base::Unretained(idb_helper_),
+                                base::Passed(&callbacks), origin));
+}
+
 void IndexedDBDispatcherHost::InvalidateWeakPtrsAndClearBindings() {
   weak_factory_.InvalidateWeakPtrs();
   cursor_bindings_.CloseAllBindings();
@@ -282,6 +302,14 @@ void IndexedDBDispatcherHost::IDBSequenceHelper::DeleteDatabaseOnIDBThread(
   indexed_db_context_->GetIDBFactory()->DeleteDatabase(
       name, request_context_getter_, callbacks, origin, indexed_db_path,
       force_close);
+}
+
+void IndexedDBDispatcherHost::IDBSequenceHelper::CompactDatabaseOnIDBThread(
+    scoped_refptr<IndexedDBCallbacks> callbacks,
+    const url::Origin& origin) {
+  DCHECK(indexed_db_context_->TaskRunner()->RunsTasksInCurrentSequence());
+
+  indexed_db_context_->GetIDBFactory()->CompactDatabase(callbacks, origin);
 }
 
 }  // namespace content

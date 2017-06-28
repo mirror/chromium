@@ -106,6 +106,9 @@ class CONTENT_EXPORT IndexedDBDispatcherHost
       const url::Origin& origin,
       const base::string16& name,
       bool force_close) override;
+  void CompactDatabase(
+      ::indexed_db::mojom::CallbacksAssociatedPtrInfo callbacks_info,
+      const url::Origin& origin) override;
 
   void InvalidateWeakPtrsAndClearBindings();
 

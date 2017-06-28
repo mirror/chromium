@@ -297,6 +297,24 @@ void IndexedDBFactoryImpl::DatabaseDeleted(
   context_->DatabaseDeleted(identifier.first);
 }
 
+void IndexedDBFactoryImpl::CompactDatabase(
+    scoped_refptr<IndexedDBCallbacks> callbacks,
+    const url::Origin& origin) {
+  IDB_TRACE("IndexedDBFactoryImpl::CompactDatabase");
+  scoped_refptr<IndexedDBBackingStore> backing_store =
+      backing_store_map_[origin];
+  if (!backing_store) {
+    callbacks->OnError(IndexedDBDatabaseError(
+        blink::kWebIDBDatabaseExceptionUnknownError,
+        ASCIIToUTF16("Internal error opening backing store for "
+                     "indexedDB.compactDatabase.")));
+    return;
+  }
+  // abort all pending transactions? IndexedDBConnection::AbortAllTransactions
+  backing_store->Compact();
+  callbacks->OnSuccessStatus(::indexed_db::mojom::Status::Ok);
+}
+
 void IndexedDBFactoryImpl::HandleBackingStoreFailure(const Origin& origin) {
   // NULL after ContextDestroyed() called, and in some unit tests.
   if (!context_)

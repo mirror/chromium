@@ -45,6 +45,7 @@ class IndexedDBCallbacksImpl : public indexed_db::mojom::Callbacks {
                        const content::IndexedDBDatabaseMetadata& metadata);
     void SuccessDatabase(indexed_db::mojom::DatabaseAssociatedPtrInfo database,
                          const content::IndexedDBDatabaseMetadata& metadata);
+    void SuccessStatus(indexed_db::mojom::Status status);
     void SuccessCursor(indexed_db::mojom::CursorAssociatedPtrInfo cursor,
                        const IndexedDBKey& key,
                        const IndexedDBKey& primary_key,
@@ -92,6 +93,7 @@ class IndexedDBCallbacksImpl : public indexed_db::mojom::Callbacks {
   void SuccessDatabase(
       indexed_db::mojom::DatabaseAssociatedPtrInfo database_info,
       const content::IndexedDBDatabaseMetadata& metadata) override;
+  void SuccessStatus(indexed_db::mojom::Status status) override;
   void SuccessCursor(indexed_db::mojom::CursorAssociatedPtrInfo cursor,
                      const IndexedDBKey& key,
                      const IndexedDBKey& primary_key,

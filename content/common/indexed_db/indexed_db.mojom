@@ -90,6 +90,11 @@ enum TransactionMode {
   VersionChange,
 };
 
+enum Status {
+  Ok,
+  Error,
+};
+
 struct IndexMetadata {
   int64 id;
   mojo.common.mojom.String16 name;
@@ -182,6 +187,9 @@ interface Callbacks {
                 DataLoss data_loss, string data_loss_message,
                 DatabaseMetadata db_metadata);
   SuccessDatabase(associated Database? database, DatabaseMetadata metadata);
+
+  // Factory::CompactDatabase
+  SuccessStatus(Status status);
 
   // Database::OpenCursor
   SuccessCursor(associated Cursor cursor,
@@ -330,4 +338,6 @@ interface Factory {
        mojo.common.mojom.String16 name, int64 version, int64 transaction_id);
   DeleteDatabase(associated Callbacks callbacks, url.mojom.Origin origin,
                  mojo.common.mojom.String16 name, bool force_close);
+  CompactDatabase(associated Callbacks callbacks,
+                  url.mojom.Origin origin);
 };
