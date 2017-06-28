@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5836d219_e5dd9e07",
+        "filename": "third_party/WebKit/Source/core/core_idl_files.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-28T07:41:51Z",
+      "side": 0,
+      "message": "\u003e That was already done. I\u0027ve sorted the whole list.\n\nIt doesn\u0027t look so. All of entries for geometry/*.idl should be put after frame/VisualViewport.idl.",
+      "parentUuid": "d7b69f27_485e0cfc",
+      "revId": "4ce57e66544e783efe1ae05548c2e00e0fd0ebed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17a60e7f_334d1f34",
         "filename": "third_party/WebKit/Source/core/core_idl_files.gni",
         "patchSetId": 5
