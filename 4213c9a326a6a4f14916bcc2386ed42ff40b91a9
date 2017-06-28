@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30902bdd_83a3fb1b",
+        "filename": "ui/ozone/platform/drm/common/drm_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-06-28T17:26:05Z",
+      "side": 1,
+      "message": "You only run this function in the gpu process so maybe it could be in drm/gpu instead of drm/common? All code in drm/common is suppose to be usable from both host and gpu processes.",
+      "revId": "4213c9a326a6a4f14916bcc2386ed42ff40b91a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
