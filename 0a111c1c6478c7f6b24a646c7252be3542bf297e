@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "869ad49d_9b2bb7a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-28T12:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7955628c_e0784497",
+      "revId": "0a111c1c6478c7f6b24a646c7252be3542bf297e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a9cbd3_ac6fb96b",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "0a111c1c6478c7f6b24a646c7252be3542bf297e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd84b235_bb205850",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/SuggestionsBottomSheetTestRule.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-28T12:31:14Z",
+      "side": 1,
+      "message": "This method is there to provide easy migration path while we are refactoring tests, see http://crrev.com/c/541442\n\nAdded deprecation notice and explanations.",
+      "parentUuid": "21a9cbd3_ac6fb96b",
+      "range": {
+        "startLine": 17,
+        "startChar": 61,
+        "endLine": 17,
+        "endChar": 72
+      },
+      "revId": "0a111c1c6478c7f6b24a646c7252be3542bf297e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
