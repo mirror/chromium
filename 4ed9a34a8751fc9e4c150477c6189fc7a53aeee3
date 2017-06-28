@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec6c1842_cc5625e4",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-28T18:32:48Z",
+      "side": 1,
+      "message": "without this change I\u0027m getting deadlocks when my one WithBaseSyncPrimitives runner tries to wait for my other sequenced task runner to complete a task... But I would have expected that passing in WithBasySyncPrimitives would have been enough to make TaskScheduler make sure not to deadlock like this...",
+      "revId": "4ed9a34a8751fc9e4c150477c6189fc7a53aeee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
