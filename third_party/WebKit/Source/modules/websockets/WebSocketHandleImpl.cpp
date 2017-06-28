@@ -14,8 +14,8 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 namespace {
@@ -36,7 +36,8 @@ WebSocketHandleImpl::~WebSocketHandleImpl() {
     websocket_->StartClosingHandshake(kAbnormalShutdownOpCode, g_empty_string);
 }
 
-void WebSocketHandleImpl::Initialize(InterfaceProvider* interface_provider) {
+void WebSocketHandleImpl::Initialize(
+    service_manager::InterfaceProvider* interface_provider) {
   NETWORK_DVLOG(1) << this << " initialize(...)";
 
   DCHECK(!websocket_);

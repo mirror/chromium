@@ -56,6 +56,7 @@
 #include "public/platform/WebScreenInfo.h"
 #include "public/platform/WebSpellCheckPanelHostClient.h"
 #include "public/platform/WebURLLoader.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "v8/include/v8.h"
 
 /*
@@ -356,6 +357,10 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
 
   WebCookieJar* CookieJar() const override { return 0; }
 
+  service_manager::InterfaceProvider* GetInterfaceProvider() {
+    return &interface_provider_;
+  }
+
   WebSpellCheckPanelHostClient* SpellCheckPanelHostClient() const override {
     return nullptr;
   }
@@ -378,6 +383,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   EmptyLocalFrameClient() {}
 
   ContentSettingsClient content_settings_client_;
+  service_manager::InterfaceProvider interface_provider_;
 };
 
 class CORE_EXPORT EmptyTextCheckerClient : public TextCheckerClient {

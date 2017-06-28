@@ -62,6 +62,7 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebMessagePortChannel.h"
@@ -80,6 +81,16 @@ namespace blink {
 // TODO(toyoshim): Share implementation with WebEmbeddedWorkerImpl as much as
 // possible.
 
+namespace {
+
+void ForwardInterfaceRequest(const std::string& name,
+                             mojo::ScopedMessagePipeHandle handle) {
+  Platform::Current()->GetInterfaceProvider()->GetInterface(name.c_str(),
+                                                            std::move(handle));
+}
+
+}  // namespace
+
 template class CORE_TEMPLATE_EXPORT
     WorkerClientsInitializer<WebSharedWorkerImpl>;
 
@@ -93,6 +104,8 @@ WebSharedWorkerImpl::WebSharedWorkerImpl(WebSharedWorkerClient* client)
       is_paused_on_start_(false),
       creation_address_space_(kWebAddressSpacePublic) {
   DCHECK(IsMainThread());
+  interface_provider_.Forward(
+      ConvertToBaseCallback(WTF::Bind(&ForwardInterfaceRequest)));
 }
 
 WebSharedWorkerImpl::~WebSharedWorkerImpl() {
@@ -139,7 +152,7 @@ void WebSharedWorkerImpl::InitializeLoader(bool data_saver_enabled) {
   // Browser process when the worker is created (similar to
   // RenderThread::OnCreateNewView).
   main_frame_ = WebFactory::GetInstance().CreateMainWebLocalFrameBase(
-      web_view_, this, Platform::Current()->GetInterfaceProvider(), nullptr);
+      web_view_, this, nullptr);
   main_frame_->SetDevToolsAgentClient(this);
 
   // If we were asked to pause worker context on start and wait for debugger
@@ -157,6 +170,11 @@ WebSharedWorkerImpl::CreateApplicationCacheHost(
     WebApplicationCacheHostClient* appcache_host_client) {
   DCHECK(IsMainThread());
   return client_->CreateApplicationCacheHost(appcache_host_client);
+}
+
+service_manager::InterfaceProvider*
+WebSharedWorkerImpl::GetInterfaceProvider() {
+  return &interface_provider_;
 }
 
 void WebSharedWorkerImpl::LoadShadowPage() {

@@ -66,6 +66,7 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebURLRequest.h"
@@ -79,6 +80,16 @@
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 
 namespace blink {
+
+namespace {
+
+void ForwardInterfaceRequest(const std::string& name,
+                             mojo::ScopedMessagePipeHandle handle) {
+  Platform::Current()->GetInterfaceProvider()->GetInterface(name.c_str(),
+                                                            std::move(handle));
+}
+
+}  // namespace
 
 template class MODULES_EXPORT WorkerClientsInitializer<WebEmbeddedWorkerImpl>;
 
@@ -107,6 +118,8 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
       pause_after_download_state_(kDontPauseAfterDownload),
       waiting_for_debugger_state_(kNotWaitingForDebugger) {
   RunningWorkerInstances().insert(this);
+  interface_provider_.Forward(
+      ConvertToBaseCallback(WTF::Bind(&ForwardInterfaceRequest)));
 }
 
 WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
@@ -287,7 +300,7 @@ void WebEmbeddedWorkerImpl::PrepareShadowPageForLoader() {
   settings->SetAllowRunningOfInsecureContent(false);
   settings->SetDataSaverEnabled(worker_start_data_.data_saver_enabled);
   main_frame_ = WebFactory::GetInstance().CreateMainWebLocalFrameBase(
-      web_view_, this, nullptr, nullptr);
+      web_view_, this, nullptr);
   main_frame_->SetDevToolsAgentClient(this);
 
   // If we were asked to wait for debugger then it is the good time to do that.
@@ -311,6 +324,11 @@ void WebEmbeddedWorkerImpl::LoadShadowPage() {
   main_frame_->GetFrame()->Loader().Load(
       FrameLoadRequest(0, ResourceRequest(worker_start_data_.script_url),
                        SubstituteData(buffer, "text/html", "UTF-8", KURL())));
+}
+
+service_manager::InterfaceProvider*
+WebEmbeddedWorkerImpl::GetInterfaceProvider() {
+  return &interface_provider_;
 }
 
 void WebEmbeddedWorkerImpl::FrameDetached(WebLocalFrame* frame,

@@ -43,7 +43,7 @@ class WebSocketHandleImpl : public WebSocketHandle,
   WebSocketHandleImpl();
   ~WebSocketHandleImpl() override;
 
-  void Initialize(InterfaceProvider*) override;
+  void Initialize(service_manager::InterfaceProvider*) override;
   void Connect(const KURL&,
                const Vector<String>& protocols,
                SecurityOrigin*,

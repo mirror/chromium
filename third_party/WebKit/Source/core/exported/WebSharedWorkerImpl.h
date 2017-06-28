@@ -46,6 +46,7 @@
 #include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebSharedWorkerClient.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -74,6 +75,7 @@ class CORE_EXPORT WebSharedWorkerImpl final
   // WebFrameClient methods to support resource loading thru the 'shadow page'.
   std::unique_ptr<WebApplicationCacheHost> CreateApplicationCacheHost(
       WebApplicationCacheHostClient*) override;
+  service_manager::InterfaceProvider* GetInterfaceProvider() override;
   void FrameDetached(WebLocalFrame*, DetachType) override;
   void DidFinishDocumentLoad() override;
 
@@ -142,6 +144,11 @@ class CORE_EXPORT WebSharedWorkerImpl final
   WebView* web_view_;
   Persistent<WebLocalFrameBase> main_frame_;
   bool asked_to_terminate_;
+
+  // InterfaceProvider which handles interface requests from the shadow page.
+  // TODO(https://crbug.com/734210): This should also be provided as part of
+  // the WorkerThreadStartupData to handle requests from the worker itself.
+  service_manager::InterfaceProvider interface_provider_;
 
   std::unique_ptr<WebServiceWorkerNetworkProvider> network_provider_;
 
