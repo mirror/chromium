@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4019aee_491d1dca",
+        "filename": "third_party/WebKit/Source/core/core_idl_files.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 0,
+      "message": "Looks like you should move all geometry/* files below?\nAs geometry/* is not relevant to this change, it could be done separately.",
+      "revId": "4ce57e66544e783efe1ae05548c2e00e0fd0ebed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a60e7f_334d1f34",
+        "filename": "third_party/WebKit/Source/core/core_idl_files.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 0,
+      "message": "Ditto",
+      "revId": "4ce57e66544e783efe1ae05548c2e00e0fd0ebed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

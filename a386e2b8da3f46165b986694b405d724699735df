@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "604a0d25_bb085833",
+        "filename": "third_party/WebKit/Source/core/core_idl_files.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "a386e2b8da3f46165b986694b405d724699735df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524ef905_572822f1",
+        "filename": "third_party/WebKit/Source/core/core_idl_files.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "a386e2b8da3f46165b986694b405d724699735df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca02309_116362f2",
+        "filename": "third_party/WebKit/Source/core/dom/InsertionPoint.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 1,
+      "message": "It\u0027s not good to mix style fix in this CL.",
+      "revId": "a386e2b8da3f46165b986694b405d724699735df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dad04d5_4736d2bb",
+        "filename": "third_party/WebKit/Source/core/dom/SelectorQueryTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 1,
+      "message": "It\u0027s better to separate style changes to another CL.",
+      "revId": "a386e2b8da3f46165b986694b405d724699735df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244f3d75_72a427ea",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 1,
+      "message": "Do not include style fix.",
+      "revId": "a386e2b8da3f46165b986694b405d724699735df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420e6584_f0fca49b",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "a386e2b8da3f46165b986694b405d724699735df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26729401_98440632",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-28T06:57:25Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "a386e2b8da3f46165b986694b405d724699735df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
