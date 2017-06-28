@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "567524ab_b7cdc18c",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-06-28T22:37:26Z",
+      "side": 1,
+      "message": "Why are we using volatile? My understanding is that std::atomic *supports* volatile objects but does not require them. I would expect that we would not ourselves be requiring volatile, so can we get rid of this keyword? It should (I believe) only be needed for hardware access.\n\nThat then would presumably let us avoid the const_cast as well.",
+      "revId": "ad02065c464d18335fa6eed07125d17d8697c62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
