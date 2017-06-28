@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "958e2f58_cacc9461",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-28T17:53:44Z",
+      "side": 1,
+      "message": "Yes, I think the support library is meant to fix bugs like this. I sent them a patch in the past to fix a bug in a Acer Android K system. If the bug is in a non-supported Android system, the support library would be the only real fix possible.",
+      "parentUuid": "dc430e96_7ef7aa5d",
+      "revId": "8f8f025ac256620d51f9c7bca0c137903fd01921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bb0c2fe_6aaaee45",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
         "patchSetId": 2

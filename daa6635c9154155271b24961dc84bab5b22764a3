@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d04da9b0_6dc92d9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-28T17:53:44Z",
+      "side": 0,
+      "message": "Can you add @NonNull",
+      "revId": "daa6635c9154155271b24961dc84bab5b22764a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
