@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
@@ -609,6 +610,7 @@ class PreviewsStateResourceDispatcherHostDelegate
         subresource_url_seen_(false),
         iframe_url_seen_(false),
         previews_state_(PREVIEWS_OFF),
+        adjusted_previews_state_(PREVIEWS_OFF),
         should_get_previews_state_called_(false) {}
 
   ~PreviewsStateResourceDispatcherHostDelegate() override {}
@@ -637,7 +639,20 @@ class PreviewsStateResourceDispatcherHostDelegate
       EXPECT_FALSE(iframe_url_seen_);
       iframe_url_seen_ = true;
     }
-    EXPECT_EQ(previews_state_, info->GetPreviewsState());
+    PreviewsState found_previews_state = info->GetPreviewsState();
+    EXPECT_TRUE(previews_state_ == found_previews_state ||
+                adjusted_previews_state_ == found_previews_state);
+  }
+
+  void OnResponseStarted(net::URLRequest* request,
+                         content::ResourceContext* resource_context,
+                         content::ResourceResponse* response) override {
+    DVLOG(0) << "@@@@@@ entry - previews_state " << previews_state_ << " "
+             << __func__;
+    const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
+    previews_state_ = info->GetPreviewsState();
+    DVLOG(0) << "@@@@@@ exit -  previews_state " << previews_state_ << " "
+             << __func__;
   }
 
   void SetDelegate() {
@@ -665,12 +680,20 @@ class PreviewsStateResourceDispatcherHostDelegate
   }
 
   void CheckResourcesRequested(bool should_get_previews_state_called) {
+    DVLOG(0) << "@@@@@@ PSRDHD " << __func__;
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     EXPECT_EQ(should_get_previews_state_called,
               should_get_previews_state_called_);
     EXPECT_TRUE(main_frame_url_seen_);
     EXPECT_TRUE(subresource_url_seen_);
     EXPECT_TRUE(iframe_url_seen_);
+  }
+
+  PreviewsState previews_state() { return previews_state_; }
+  // This is used to let the delegate know that the previews state was adjusted
+  // elsewhere (typically by the PreviewsStateWebContentsDelegate).
+  void set_adjusted_previews_state(PreviewsState adjusted_previews_state) {
+    adjusted_previews_state_ = adjusted_previews_state;
   }
 
  private:
@@ -682,9 +705,30 @@ class PreviewsStateResourceDispatcherHostDelegate
   bool subresource_url_seen_;
   bool iframe_url_seen_;
   PreviewsState previews_state_;
+  PreviewsState adjusted_previews_state_;
   bool should_get_previews_state_called_;
 
   DISALLOW_COPY_AND_ASSIGN(PreviewsStateResourceDispatcherHostDelegate);
+};
+
+// Testing version of a web contents delegate which implements
+// AdjustPreviewsStateForNavigation, and can control the previews_state when
+// AdjustPreviewsState is called.
+class PreviewsStateWebContentsDelegate : public WebContentsDelegate {
+ public:
+  PreviewsStateWebContentsDelegate() : previews_state_(PREVIEWS_UNSPECIFIED) {}
+
+  void AdjustPreviewsStateForNavigation(
+      PreviewsState* previews_state) override {
+    *previews_state = previews_state_;
+  }
+
+  void set_previews_state(PreviewsState previews_state) {
+    previews_state_ = previews_state;
+  }
+
+ private:
+  PreviewsState previews_state_;
 };
 
 }  // namespace
@@ -721,12 +765,19 @@ class PreviewsStateResourceDispatcherHostBrowserTest
 
   void CheckResourcesRequested(
       bool should_get_previews_state_called) {
+    DVLOG(0) << "@@@@@@ PSRDHBT " << __func__;
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
         base::Bind(&PreviewsStateResourceDispatcherHostDelegate::
                        CheckResourcesRequested,
                    base::Unretained(delegate_.get()),
                    should_get_previews_state_called));
+  }
+
+  PreviewsState previews_state() { return delegate_->previews_state(); }
+
+  void set_adjusted_previews_state(PreviewsState adjusted_previews_state) {
+    delegate_->set_adjusted_previews_state(adjusted_previews_state);
   }
 
  private:
@@ -771,6 +822,7 @@ IN_PROC_BROWSER_TEST_F(PreviewsStateResourceDispatcherHostBrowserTest,
 // the Previews state.
 IN_PROC_BROWSER_TEST_F(PreviewsStateResourceDispatcherHostBrowserTest,
                        ShouldEnableLoFiModeNavigateBackThenForward) {
+  DVLOG(0) << "@@@@@@ ShouldEnableLoFiModeNavigateBackThenForward";
   // Navigate with GetPreviewsState returning false.
   NavigateToURLBlockUntilNavigationsComplete(
       shell(), embedded_test_server()->GetURL("/page_with_iframe.html"), 1);
@@ -784,6 +836,7 @@ IN_PROC_BROWSER_TEST_F(PreviewsStateResourceDispatcherHostBrowserTest,
   TestNavigationObserver tab_observer(shell()->web_contents(), 1);
   shell()->GoBackOrForward(-1);
   tab_observer.Wait();
+  DVLOG(0) << "@@@@@@ checking for requested - true " << __func__;
   CheckResourcesRequested(true);
 }
 
@@ -804,6 +857,41 @@ IN_PROC_BROWSER_TEST_F(PreviewsStateResourceDispatcherHostBrowserTest,
                                                   true);
   tab_observer.Wait();
   CheckResourcesRequested(false);
+}
+
+// Test that navigating calls GetPreviewsState with SERVER_LOFI_ON when
+// we have a web contents delegate responding to
+// AdjustPreviewsStateForNavigation.
+IN_PROC_BROWSER_TEST_F(PreviewsStateResourceDispatcherHostBrowserTest,
+                       PreviewsStateLimiting) {
+  DVLOG(0) << "@@@@@@ PreviewsStateLimiting ";
+  // Navigate with ShouldEnableLoFiMode returning true.
+  Reset(SERVER_LOFI_ON | CLIENT_LOFI_ON | SERVER_LITE_PAGE_ON);
+
+  // Set up the web contents delegate to respond to
+  // AdjustPreviewsStateForNavigation, and to return a specified
+  // previews_state_to_allow.
+  PreviewsState allowed_previews_states = SERVER_LOFI_ON;
+  PreviewsStateWebContentsDelegate previews_state_web_contents_delegate;
+  previews_state_web_contents_delegate.set_previews_state(
+      allowed_previews_states);
+  shell()->web_contents()->SetDelegate(&previews_state_web_contents_delegate);
+
+  // Make sure the DispatcherHostDelegate knows about the adjusted previews
+  // state.
+  set_adjusted_previews_state(allowed_previews_states);
+
+  // EXPECT_TRUE(NavigateToURL(
+  //     shell(), embedded_test_server()->GetURL("/page_with_iframe.html")));
+  NavigateToURLBlockUntilNavigationsComplete(
+      shell(), embedded_test_server()->GetURL("/page_with_iframe.html"), 1);
+
+  CheckResourcesRequested(true);
+
+  // Check preview_state got limited to allowed states.  The OnResponseStarted()
+  // override should catch the previews state, and set the member variable, so
+  // we can check it here.
+  EXPECT_EQ(SERVER_LOFI_ON, previews_state());
 }
 
 namespace {
