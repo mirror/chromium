@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad98e10_7142d769",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-28T06:42:51Z",
+      "side": 1,
+      "message": "It seems like we bounce between const char* and std::string several times... it\u0027d be nice if we didn\u0027t need to do these conversions\n\nIt\u0027s unclear to me if this code is safe: Platform::GetInterfaceProvider() returns a blink::InterfaceProvider*. content::BlinkInterfaceProviderImpl posts a task to the main thread if called from off the main thread--and passes onwards the const char*. I\u0027m not sure how |name| is guaranteed to stay live in that case.\n\nI tried to prove/disprove this locally, but I appear to be hitting a check--do I need to be running the layout tests in this CL with a special flag?",
+      "range": {
+        "startLine": 75,
+        "startChar": 60,
+        "endLine": 75,
+        "endChar": 72
+      },
+      "revId": "a5b6f6353747e01e3ac8e43c2db53840a4bedf1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

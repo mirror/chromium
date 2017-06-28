@@ -184,6 +184,30 @@
     },
     {
       "key": {
+        "uuid": "496d1086_34d84572",
+        "filename": "third_party/WebKit/Source/core/mojo/Mojo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-28T06:42:51Z",
+      "side": 1,
+      "message": "I think it would be helpful to document how we can reach the various cases here.\n\nPresumably, this is only getting reached when we fall out of the if (context-\u003eIsDocument()) block due to there being no frame--or is ExecutionContext::From() just returning a nullptr?\n\n(Same comment about documenting the exceptional cases applies for my other comment in the previous PS)",
+      "parentUuid": "47d4b722_ff7c2c08",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 80
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8bce702_515d6e44",
         "filename": "third_party/WebKit/Source/core/mojo/test/MojoInterfaceInterceptor.cpp",
         "patchSetId": 5
