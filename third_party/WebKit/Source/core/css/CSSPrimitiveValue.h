@@ -26,6 +26,7 @@
 #include "core/CSSValueKeywords.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSValue.h"
+#include "platform/fonts/FontSelectionTypes.h"
 #include "platform/wtf/BitVector.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/MathExtras.h"
@@ -224,6 +225,8 @@ class CORE_EXPORT CSSPrimitiveValue : public CSSValue {
   // TODO(sashab): Remove this.
   template <typename T>
   static CSSPrimitiveValue* Create(T value) {
+    static_assert(!std::is_same<T, blink::FontSelectionValue>::value,
+                  "evil instance");
     return new CSSPrimitiveValue(value);
   }
 

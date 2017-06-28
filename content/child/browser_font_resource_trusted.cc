@@ -148,12 +148,13 @@ WebFontDescription PPFontDescToWebFontDesc(
     const PP_BrowserFont_Trusted_Description& font,
     const ppapi::Preferences& prefs) {
   // Verify that the enums match so we can just static cast.
-  static_assert(static_cast<int>(WebFontDescription::kWeight100) ==
-                    static_cast<int>(PP_BROWSERFONT_TRUSTED_WEIGHT_100),
-                "font Weight100");
-  static_assert(static_cast<int>(WebFontDescription::kWeight900) ==
-                    static_cast<int>(PP_BROWSERFONT_TRUSTED_WEIGHT_900),
-                "font Weight900");
+  // TODO(drott): backconvert those to enums here as closely as possible?
+  // static_assert(static_cast<int>(WebFontDescription::kWeight100) ==
+  //                   static_cast<int>(PP_BROWSERFONT_TRUSTED_WEIGHT_100),
+  //               "font Weight100");
+  // static_assert(static_cast<int>(WebFontDescription::kWeight900) ==
+  //                   static_cast<int>(PP_BROWSERFONT_TRUSTED_WEIGHT_900),
+  //               "font Weight900");
   static_assert(
       WebFontDescription::kGenericFamilyStandard ==
           PP_FAMILY_TO_WEB_FAMILY(PP_BROWSERFONT_TRUSTED_FAMILY_DEFAULT),
@@ -222,7 +223,8 @@ WebFontDescription PPFontDescToWebFontDesc(
 
   result.italic = font.italic != PP_FALSE;
   result.small_caps = font.small_caps != PP_FALSE;
-  result.weight = static_cast<WebFontDescription::Weight>(font.weight);
+  // TODO(drott): Fix this conversion.
+  result.weight = font.weight * 100;
   result.letter_spacing = static_cast<short>(font.letter_spacing);
   result.word_spacing = static_cast<short>(font.word_spacing);
   return result;

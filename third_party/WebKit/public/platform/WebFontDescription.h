@@ -55,26 +55,12 @@ struct WebFontDescription {
     kSmoothingSubpixel
   };
 
-  enum Weight {
-    kWeight100,
-    kWeight200,
-    kWeight300,
-    kWeight400,
-    kWeight500,
-    kWeight600,
-    kWeight700,
-    kWeight800,
-    kWeight900,
-    kWeightNormal = kWeight400,
-    kWeightBold = kWeight700
-  };
-
   WebFontDescription()
       : generic_family(kGenericFamilyNone),
         size(0),
         italic(false),
         small_caps(false),
-        weight(kWeightNormal),
+        weight(400),
         smoothing(kSmoothingAuto),
         letter_spacing(0),
         word_spacing(0) {}
@@ -84,7 +70,7 @@ struct WebFontDescription {
   float size;
   bool italic;
   bool small_caps;
-  Weight weight;
+  float weight;
   Smoothing smoothing;
 
   short letter_spacing;

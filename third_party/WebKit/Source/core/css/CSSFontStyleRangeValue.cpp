@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006, 2008 Apple Inc.  All rights reserved.
- * Copyright (C) 2007 Nicholas Shanks <webkit@nickshanks.com>
+ * Copyright (C) 2017 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -11,10 +10,10 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE INC. OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -24,24 +23,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef FontFamilyMatcherMac_h
-#define FontFamilyMatcherMac_h
+#include "CSSFontStyleRangeValue.h"
 
-#include <AppKit/NSFontManager.h>
-#include "platform/PlatformExport.h"
-#include "platform/fonts/FontSelectionTypes.h"
-#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-PLATFORM_EXPORT NSFont* MatchNSFontFamily(const AtomicString& desired_family,
-                                          NSFontTraitMask desired_traits,
-                                          FontSelectionValue desired_weight,
-                                          float size);
+String CSSFontStyleRangeValue::CustomCSSText() const {
+  if (!oblique_values_)
+    return font_style_value_->CssText();
 
-// Converts ablink::FontSelectionValue to the nearest AppKit font weight if
-// possible, otherwise returns the default font weight.
-int ToAppKitFontWeight(FontSelectionValue);
+  StringBuilder builder;
+  builder.Append(font_style_value_->CssText());
+  builder.Append(" ");
+  builder.Append(oblique_values_->CssText());
+  return builder.ToString();
 }
 
-#endif  // FontFamilyMatcherMac_h
+bool CSSFontStyleRangeValue::Equals(const CSSFontStyleRangeValue& other) const {
+  if (!oblique_values_)
+    return font_style_value_ == other.font_style_value_;
+  return font_style_value_ == other.font_style_value_ &&
+         *oblique_values_ == *other.oblique_values_;
+}
+
+DEFINE_TRACE_AFTER_DISPATCH(CSSFontStyleRangeValue) {
+  visitor->Trace(font_style_value_);
+  visitor->Trace(oblique_values_);
+  CSSValue::TraceAfterDispatch(visitor);
+}
+
+}  // namespace blink
