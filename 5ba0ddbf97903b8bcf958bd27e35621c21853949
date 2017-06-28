@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a1f848a_e5702951",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-06-28T20:05:11Z",
+      "side": 1,
+      "message": "// This test should crash the *browser process* with CHECK failures if the\n// component is faulty. The CHECK assumes that crash URL and other debug URLs\n// do not create a throttle. See crbug.com/736658.",
+      "revId": "5ba0ddbf97903b8bcf958bd27e35621c21853949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
