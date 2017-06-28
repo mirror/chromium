@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d4f459_c3cc1d0f",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-28T03:31:12Z",
+      "side": 1,
+      "message": "Can we add explicit here?",
+      "revId": "a59726ebbc73ba952826777a0870c332ae6eab38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
