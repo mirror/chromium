@@ -6,12 +6,14 @@
 #define UI_COMPOSITOR_PAINT_CACHE_H_
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/optional.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "ui/compositor/compositor_export.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace cc {
+class DisplayItemList;
 class PaintOpBuffer;
 }
 
@@ -36,12 +38,16 @@ class COMPOSITOR_EXPORT PaintCache {
   // Only PaintRecorder can modify these.
   friend PaintRecorder;
 
-  // Resets the cache to be empty, and returns a PaintOpBuffer that is the new
-  // empty cache. Adding PaintOps to the buffer will put them in the cache.
-  cc::PaintOpBuffer* ResetCache();
+  // Resets the cache to be empty, and returns a DisplayItemList that is the new
+  // empty cache. Adding PaintOps to the list will put them in the cache.
+  cc::DisplayItemList* ResetCache();
 
   // Call when done recording into the cache's PaintOpBuffer.
   void FinalizeCache();
+
+  // Display item list that is used while recording a new cache entry. Only set
+  // between ResetCache() and FinalizeCache() calls.
+  scoped_refptr<cc::DisplayItemList> display_item_list_;
 
   // Stored in an sk_sp because PaintOpBuffer requires this to append the cached
   // items into it.
