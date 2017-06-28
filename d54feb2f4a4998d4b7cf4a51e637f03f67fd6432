@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ecc6b842_0913f221",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-28T22:01:01Z",
+      "side": 1,
+      "message": "Changed to Kbits.",
+      "parentUuid": "17f5948e_aadbc6ba",
+      "range": {
+        "startLine": 135,
+        "startChar": 50,
+        "endLine": 135,
+        "endChar": 54
+      },
+      "revId": "d54feb2f4a4998d4b7cf4a51e637f03f67fd6432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "144ef9cd_aa300e91",
         "filename": "net/nqe/network_quality_estimator.h",
         "patchSetId": 14
@@ -139,6 +163,30 @@
       "revId": "d54feb2f4a4998d4b7cf4a51e637f03f67fd6432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa3c1c1_2e23eba8",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-28T22:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "144ef9cd_aa300e91",
+      "range": {
+        "startLine": 501,
+        "startChar": 45,
+        "endLine": 501,
+        "endChar": 50
+      },
+      "revId": "d54feb2f4a4998d4b7cf4a51e637f03f67fd6432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
