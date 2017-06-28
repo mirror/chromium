@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64ea6d94_15c80748",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBCursor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T20:26:30Z",
+      "side": 1,
+      "message": "Since this looks really weird (integer plus pointer WAT????) can you make the constructor take (char* name, void* ptr, int64_t id) and compose the pointer and id there?",
+      "range": {
+        "startLine": 142,
+        "startChar": 38,
+        "endLine": 142,
+        "endChar": 68
+      },
+      "revId": "84934c5ca8bc3b26a09422b3445f0d31afabc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30c6198_98a55a16",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBCursor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T20:26:30Z",
+      "side": 1,
+      "message": "Add comment about what this is for (i.e. cursor requests get re-used so we need to have ids for each operation)\n\nAlso, \u0027next_id\u0027 rather than \u0027number\u0027 maybe?",
+      "range": {
+        "startLine": 124,
+        "startChar": 10,
+        "endLine": 124,
+        "endChar": 31
+      },
+      "revId": "84934c5ca8bc3b26a09422b3445f0d31afabc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8d9929_187181e5",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBFactory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T20:26:30Z",
+      "side": 1,
+      "message": "Add comment (and also \u0027number\u0027 -\u003e \u0027next_id\u0027 maybe?)",
+      "revId": "84934c5ca8bc3b26a09422b3445f0d31afabc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cbaf37_2b771cdb",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBIndex.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T20:26:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be using std::string in Blink.",
+      "range": {
+        "startLine": 119,
+        "startChar": 13,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "84934c5ca8bc3b26a09422b3445f0d31afabc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e15f624_aa446e20",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBIndex.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T20:26:30Z",
+      "side": 1,
+      "message": "Can we move the tracing out of GetInternal entirely, and just have it in the methods exposed via IDL? It looks like we probably have double-tracing now.",
+      "range": {
+        "startLine": 292,
+        "startChar": 14,
+        "endLine": 292,
+        "endChar": 29
+      },
+      "revId": "84934c5ca8bc3b26a09422b3445f0d31afabc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfc7631_7c63d3dc",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKey.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T20:26:30Z",
+      "side": 1,
+      "message": "Just RefPtr\u003c\u003e now - is this a merge glitch?",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "84934c5ca8bc3b26a09422b3445f0d31afabc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c539991_d7dbb144",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T20:26:30Z",
+      "side": 1,
+      "message": "I\u0027d prefer \"store_name\" but that\u0027s just me. Other opinions welcome!",
+      "range": {
+        "startLine": 122,
+        "startChar": 44,
+        "endLine": 122,
+        "endChar": 51
+      },
+      "revId": "84934c5ca8bc3b26a09422b3445f0d31afabc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb04f57_f97113b6",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-28T20:26:30Z",
+      "side": 1,
+      "message": "Given that other accessors are CamelCase this should probably match.",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "84934c5ca8bc3b26a09422b3445f0d31afabc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
