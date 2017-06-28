@@ -625,8 +625,17 @@ bool MenuController::OnMouseDragged(SubmenuView* source,
         mouse_menu = part.menu;
       SetSelection(part.menu ? part.menu : state_.item, SELECTION_OPEN_SUBMENU);
     }
-  } else if (part.type == MenuPart::NONE) {
-    ShowSiblingMenu(source, event.location());
+  } else if (part.type == MenuPart::NONE &&
+             !ShowSiblingMenu(source, event.location()) &&
+             // If there is a sibling menu, show it and exit if condition
+             !part.is_scroll() && pending_state_.item &&
+             (pending_state_.item->GetParentMenuItem() &&
+              (!pending_state_.item->HasSubmenu() ||
+               !pending_state_.item->GetSubmenu()->IsShowing()))) {
+    // If the user has selected a menu item with no accompaning sibling menu
+    // or submenu, on exit move selection back to the parent menu item
+    SetSelection(pending_state_.item->GetParentMenuItem(),
+                 SELECTION_OPEN_SUBMENU);
   }
   UpdateActiveMouseView(source, event, mouse_menu);
 
