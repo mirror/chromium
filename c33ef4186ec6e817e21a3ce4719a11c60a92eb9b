@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9359f00b_da01a648",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T21:57:22Z",
+      "side": 1,
+      "message": "Ok, now I feel like I can understand this class.  I think the extra iterators are wordy, but it\u0027s a lot easier to read the logic, in my opinion.\n\nI feel like there\u0027s like four variables too many in this class.  It seems like the unique pieces of information here are:\n  PaintOpBuffer*\n  offsets\n  size_t current offset index\n\n....right? ++ just increments the offset index.  If the offset index is bigger than the number of offsets, you\u0027re at the end.  And the current PaintOp is buffer_-\u003edata() + offsets[index]?\n\nI\u0027m not sure I\u0027m following what the difference is between op_offset and target_offset.",
+      "revId": "c33ef4186ec6e817e21a3ce4719a11c60a92eb9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
