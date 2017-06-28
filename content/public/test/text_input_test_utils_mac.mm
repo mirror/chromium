@@ -38,7 +38,10 @@ void TestTextInputClientMessageFilter::WaitForStringFromRange() {
 
 bool TestTextInputClientMessageFilter::OnMessageReceived(
     const IPC::Message& message) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (message.type() == TextInputClientReplyMsg_GotStringForRange::ID) {
+    if (!string_for_range_callback_.is_null())
+      string_for_range_callback_.Run();
     received_string_from_range_ = true;
 
     // Now decode the string to get the word.
@@ -59,6 +62,11 @@ bool TestTextInputClientMessageFilter::OnMessageReceived(
 
   // unhandled - leave it for the actual TextInputClientMessageFilter to handle.
   return false;
+}
+
+void TestTextInputClientMessageFilter::SetStringForRangeCallback(
+    const base::Closure& callback) {
+  string_for_range_callback_ = callback;
 }
 
 void AskForLookUpDictionaryForRange(RenderWidgetHostView* tab_view,
