@@ -14,12 +14,6 @@
       readonly attribute DOMString type;
     };
 
-    [NoInterfaceObject, SecureContext]
-    interface CredentialUserData {
-      readonly attribute USVString name;
-      readonly attribute USVString iconURL;
-    };
-
     dictionary PasswordCredentialData : CredentialData {
       USVString name;
       USVString iconURL;
@@ -77,8 +71,10 @@
      SecureContext]
     interface PasswordCredential : Credential {
       readonly attribute DOMString password;
+      readonly attribute USVString name;
+      readonly attribute USVString iconURL;
     };
-    PasswordCredential implements CredentialUserData;
+    PasswordCredential;
 
     [Constructor(FederatedCredentialInit data),
      Exposed=Window,
@@ -86,8 +82,10 @@
     interface FederatedCredential : Credential {
       readonly attribute USVString provider;
       readonly attribute DOMString? protocol;
+      readonly attribute USVString name;
+      readonly attribute USVString iconURL;
     };
-    FederatedCredential implements CredentialUserData;
+    FederatedCredential;
 </script>
 <script>
     "use strict";
@@ -101,4 +99,3 @@
     });
     idl_array.test();
 </script>
-
