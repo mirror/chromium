@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//media/gpu/args.gni")
@@ -106,6 +107,13 @@ config("gpu_config") {
   }
 }
 
+buildflag_header("features") {
+  header = "features.h"
+
+  flags =
+      [ "ENABLE_MEDIA_CODEC_VIDEO_DECODER=$enable_media_codec_video_decoder" ]
+}
+
 component("gpu") {
   output_name = "media_gpu"
 
@@ -116,6 +124,7 @@ component("gpu") {
     "//content/gpu:*",
     "//content/renderer:*",
     "//media/gpu/ipc/*",
+    "//media/mojo/services/*",
     ":*",
   ]
 
