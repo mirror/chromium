@@ -63,7 +63,7 @@
         "content_renderer": [ "browser" ],
         "content_utility": [ "browser" ],
         "data_decoder": [ "image_decoder" ],
-        "device": [ "device:nfc", "device:wake_lock" ],
+        "device": [ "device:generic_sensor", "device:nfc", "device:wake_lock" ],
         "file": [ "file:filesystem", "file:leveldb" ],
         "media": [ "media:media" ],
         "network": [
@@ -108,6 +108,7 @@
           "device::mojom::VRService",
           "device::mojom::GeolocationService",
           "device::mojom::NFC",
+          "device::mojom::SensorProvider",
           "device::mojom::WakeLock",
           "device::usb::DeviceManager",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",

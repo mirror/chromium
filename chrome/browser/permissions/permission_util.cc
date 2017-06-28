@@ -43,6 +43,14 @@ std::string PermissionUtil::GetPermissionString(
       return "BackgroundSync";
     case CONTENT_SETTINGS_TYPE_PLUGINS:
       return "Flash";
+    case CONTENT_SETTINGS_TYPE_ACCELEROMETER:
+      return "Accelerometer";
+    case CONTENT_SETTINGS_TYPE_AMBIENT_LIGHT_SENSOR:
+      return "AmbientLightSensor";
+    case CONTENT_SETTINGS_TYPE_GYROSCOPE:
+      return "Gyroscope";
+    case CONTENT_SETTINGS_TYPE_MAGNETOMETER:
+      return "Magnetometer";
     default:
       break;
   }
