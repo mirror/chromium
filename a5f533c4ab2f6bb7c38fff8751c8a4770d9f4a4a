@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28391223_3861d62c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-28T04:01:17Z",
+      "side": 1,
+      "message": "Could you refere 388681?\n\nhttp://crbug.com/388681 Avoid registering temporary Range object for updating on the Document",
+      "revId": "a5f533c4ab2f6bb7c38fff8751c8a4770d9f4a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
