@@ -16,6 +16,24 @@
       "revId": "cf0a5a90d667edbe4b15917dd10175b84e6523f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efad10b4_27ceebee",
+        "filename": "base/win/com_init_check_hook.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-28T22:25:38Z",
+      "side": 1,
+      "message": "Added a similar TODO from the test to the lines below. I suspect this is going to crop up again, so having an easy escape hatch seems valuable at this point.",
+      "parentUuid": "900584cb_ee5c8b6d",
+      "revId": "cf0a5a90d667edbe4b15917dd10175b84e6523f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
