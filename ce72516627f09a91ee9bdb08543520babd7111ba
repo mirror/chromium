@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acd25916_d0293afd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/support/report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-06-28T11:47:58Z",
+      "side": 1,
+      "message": "Renamed this from cookie_key because it overrides the cookie_key above. Did not want to upload a whole patch for this change only.",
+      "revId": "ce72516627f09a91ee9bdb08543520babd7111ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
