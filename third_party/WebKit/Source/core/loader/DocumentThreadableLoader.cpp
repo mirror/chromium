@@ -423,7 +423,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
     // security, we must reject forbidden headers/methods at the point we
     // accept user's input. Not here.
     if (FetchUtils::IsCORSSafelistedMethod(request.HttpMethod()) &&
-        FetchUtils::ContainsOnlyCORSSafelistedOrForbiddenHeaders(
+        FetchUtils::ContainsOnlyCORSSafelistedHeaders(
             request.HttpHeaderFields())) {
       PrepareCrossOriginRequest(cross_origin_request);
       LoadRequest(cross_origin_request, cross_origin_options);
