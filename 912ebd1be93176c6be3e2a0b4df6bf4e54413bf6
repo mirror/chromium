@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "d0569e8e_50aaf143",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T20:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a50044_ecfc24c8",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a500828_dcd3dec5",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 11
@@ -418,6 +436,24 @@
       "side": 1,
       "message": "The reason I put touch_action_ here originally was mirroring how current_overscroll_params is dealt with in terms of bundling the bit with the event ack. That being said, that will be another step beyond this CL, so I moved it to HandleTouchStart for now.",
       "parentUuid": "c515acf1_ebd46c84",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1d6b996_e1b5168f",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T20:20:32Z",
+      "side": 1,
+      "message": "Per offline discussion, this was a misunderstanding on my part. The bit will not be bundled with an ACK, rather it will be sent in a separate message.",
+      "parentUuid": "b21edc14_6800a3b5",
       "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
