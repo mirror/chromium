@@ -177,6 +177,7 @@ const struct NonPrintableCodeEntry {
     {DomCode::LANG5, DomKey::ZENKAKU_HANKAKU},
     {DomCode::LAUNCH_APP1, DomKey::LAUNCH_MY_COMPUTER},
     {DomCode::LAUNCH_APP2, DomKey::LAUNCH_CALCULATOR},
+    {DomCode::LAUNCH_ASSISTANT, DomKey::LAUNCH_ASSISTANT},
     {DomCode::LAUNCH_AUDIO_BROWSER, DomKey::LAUNCH_MUSIC_PLAYER},
     {DomCode::LAUNCH_CALENDAR, DomKey::LAUNCH_CALENDAR},
     {DomCode::LAUNCH_CONTACTS, DomKey::LAUNCH_CONTACTS},
@@ -308,6 +309,7 @@ const struct DomKeyToKeyboardCodeEntry {
     // Device Keys
     // http://www.w3.org/TR/DOM-Level-3-Events-key/#keys-device
 #if defined(OS_POSIX)
+    {DomKey::LAUNCH_ASSISTANT, VKEY_ASSISTANT},
     {DomKey::BRIGHTNESS_DOWN, VKEY_BRIGHTNESS_DOWN},
     {DomKey::BRIGHTNESS_UP, VKEY_BRIGHTNESS_UP},
     {DomKey::POWER, VKEY_POWER},
@@ -594,6 +596,10 @@ const struct DomCodeToKeyboardCodeEntry {
      VKEY_MEDIA_LAUNCH_APP2},                   // 0x0C0192 LaunchApp2
     {DomCode::LAUNCH_APP1,
      VKEY_MEDIA_LAUNCH_APP1},                   // 0x0C0194 LaunchApp1
+#if defined(OS_POSIX)
+    {DomCode::LAUNCH_ASSISTANT,
+     VKEY_ASSISTANT},                           // 0x0C01C8 Launch Assistant
+#endif
     {DomCode::BROWSER_SEARCH,
      VKEY_BROWSER_SEARCH},                      // 0x0C0221 BrowserSearch
     {DomCode::BROWSER_HOME, VKEY_BROWSER_HOME}, // 0x0C0223 BrowserHome
