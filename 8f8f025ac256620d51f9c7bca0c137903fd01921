@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c10c1e8_85e49649",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-28T04:21:30Z",
+      "side": 1,
+      "message": "nit: no need to mention the bug. Though, we might want to check if this is allowed by AndroidCompat and file a bug against them.",
+      "revId": "8f8f025ac256620d51f9c7bca0c137903fd01921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb0c2fe_6aaaee45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaNotificationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-28T04:21:30Z",
+      "side": 1,
+      "message": "I\u0027m afraid that will avoid us actually updating the metadata. Would it make sense to instead, in `createMetadata()`, do:\n```\nMediaMetadataCompat.Builder metadataBuilder \u003d new MediaMetadataCompat.Builder();\nif (mMediaNotificationInfo.isPrivate) return metadataBuilder.build();\n\n// ...\n```",
+      "revId": "8f8f025ac256620d51f9c7bca0c137903fd01921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
