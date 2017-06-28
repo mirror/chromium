@@ -1033,6 +1033,10 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
   // securityOrigin has more complicated checks which callers are responsible
   // for.
 
+  if (params.GetResourceRequest().GetFetchCredentialsMode() !=
+      existing_resource->GetResourceRequest().GetFetchCredentialsMode())
+    return false;
+
   // TODO(yhirano): Clean up this condition. This is generated to keep the old
   // behavior across refactoring.
   //
