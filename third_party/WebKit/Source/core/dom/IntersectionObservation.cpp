@@ -24,8 +24,7 @@ IntersectionObservation::IntersectionObservation(IntersectionObserver& observer,
 
 void IntersectionObservation::ComputeIntersectionObservations(
     DOMHighResTimeStamp timestamp) {
-  DCHECK(Observer());
-  if (!target_)
+  if (!target_ || !observer_)
     return;
   Vector<Length> root_margin(4);
   root_margin[0] = observer_->TopMargin();
