@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "269007c8_def0c9f2",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-28T22:36:33Z",
+      "side": 1,
+      "message": "\u003e I understand the motivation behind this check, but it\u0027s surprising to me it\u0027s in third_party/WebKit/PRESUBMIT. Shouldn\u0027t we have globally consistent behavior here?\n\nYeah, I think //PRESUBMIT.py should have a similar check. This CL adds the check to WebKit/PRESUBMIT.py because difference between build/build_config.h and platform/wtf/build_config.h.\n\n\u003e Finally, build_config is in build/, not base/ -- do we really need a wtf wrapper header for this? Can\u0027t blink include build/build_config.h directly?\n\nGood point.  build/ is harmless than base/.  haraken@, do you think it\u0027s ok to add build/build_config.h to Source/DEPS, and remove wtf/build_config.h in the future?",
+      "parentUuid": "1b3f7b3e_a322ec6e",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 19
+      },
+      "revId": "747e25b8323830f757d3e6174fa7346f971759c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c7df0d_e4da352f",
         "filename": "third_party/WebKit/PRESUBMIT.py",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-28T13:06:14Z",
       "side": 1,
       "message": "Do we really have to check for this? Won\u0027t using OS(FOO) just be a compile error? Or are we not yet done replacing them?",
+      "revId": "747e25b8323830f757d3e6174fa7346f971759c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea910000_aa9784bf",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-28T22:36:33Z",
+      "side": 1,
+      "message": "We haven\u0027t replaced OS(FOO) instances yet.\nThis function should be removed when the replacement is done.",
+      "parentUuid": "a3c7df0d_e4da352f",
       "revId": "747e25b8323830f757d3e6174fa7346f971759c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
