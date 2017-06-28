@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6447b4f9_e53fc653",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1005361
+      },
+      "writtenOn": "2017-06-28T00:05:48Z",
+      "side": 1,
+      "message": "estark@: I know you wanted to get rid of weird blink:: stuff from SecurityStyleExplanations, but what do you think of reusing https://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebMixedContentContextType.h?type\u003dcs\u0026l\u003d37 instead?",
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
