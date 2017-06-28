@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c5b0cf5_d4086fc0",
+        "filename": "content/browser/notifications/notification_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-28T15:58:30Z",
+      "side": 1,
+      "message": "nit: simplify to \u0027return permission_status \u003d\u003d blink::mojom::PermissionStatus::GRANTED\u0027?\n\nAlso the comment on this method in the header file needs to be updated. Right now it states a bad message will have been received if permission is not granted.",
+      "revId": "4084d00093952fa115922cbe10ca01ffe242fc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
