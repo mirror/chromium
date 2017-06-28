@@ -124,6 +124,38 @@ gfx::NativeCursor SurfaceTreeHost::GetCursor(const gfx::Point& point) const {
   return root_surface_ ? root_surface_->GetCursor() : ui::CursorType::kNull;
 }
 
+void SurfaceTreeHost::DidReceiveCompositorFrameAck() {
+  active_frame_callbacks_.splice(active_frame_callbacks_.end(),
+                                 frame_callbacks_);
+  swapping_presentation_callbacks_.splice(
+      swapping_presentation_callbacks_.end(), presentation_callbacks_);
+  UpdateNeedsBeginFrame();
+}
+
+void SurfaceTreeHost::SetBeginFrameSource(
+    cc::BeginFrameSource* begin_frame_source) {
+  if (needs_begin_frame_) {
+    DCHECK(begin_frame_source_);
+    begin_frame_source_->RemoveObserver(this);
+    needs_begin_frame_ = false;
+  }
+  begin_frame_source_ = begin_frame_source;
+  UpdateNeedsBeginFrame();
+}
+
+void SurfaceTreeHost::UpdateNeedsBeginFrame() {
+  if (!begin_frame_source_)
+    return;
+  bool needs_begin_frame = !active_frame_callbacks_.empty();
+  if (needs_begin_frame == needs_begin_frame_)
+    return;
+  needs_begin_frame_ = needs_begin_frame;
+  if (needs_begin_frame_)
+    begin_frame_source_->AddObserver(this);
+  else
+    begin_frame_source_->RemoveObserver(this);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // SurfaceDelegate overrides:
 
@@ -138,6 +170,67 @@ bool SurfaceTreeHost::IsSurfaceSynchronized() const {
   // To host a surface tree, the root surface has to be desynchronized.
   DCHECK(root_surface_);
   return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// aura::WindowObserver overrides:
+
+void SurfaceTreeHost::OnWindowAddedToRootWindow(aura::Window* window) {
+  DCHECK_EQ(window, host_window());
+  window->layer()->GetCompositor()->vsync_manager()->AddObserver(this);
+}
+
+void SurfaceTreeHost::OnWindowRemovingFromRootWindow(aura::Window* window,
+                                                     aura::Window* new_root) {
+  DCHECK_EQ(window, host_window());
+  window->layer()->GetCompositor()->vsync_manager()->RemoveObserver(this);
+}
+
+void SurfaceTreeHost::OnWindowDestroying(aura::Window* window) {
+  DCHECK_EQ(window, host_window());
+  window->RemoveObserver(this);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// cc::BeginFrameObserverBase overrides:
+
+bool SurfaceTreeHost::OnBeginFrameDerivedImpl(const cc::BeginFrameArgs& args) {
+  current_begin_frame_ack_ = cc::BeginFrameAck(
+      args.source_id, args.sequence_number, args.sequence_number, false);
+  while (!active_frame_callbacks_.empty()) {
+    active_frame_callbacks_.front().Run(args.frame_time);
+    active_frame_callbacks_.pop_front();
+  }
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ui::CompositorVSyncManager::Observer overrides:
+
+void SurfaceTreeHost::OnUpdateVSyncParameters(base::TimeTicks timebase,
+                                              base::TimeDelta interval) {
+  // Use current time if platform doesn't provide an accurate timebase.
+  if (timebase.is_null())
+    timebase = base::TimeTicks::Now();
+  while (!swapped_presentation_callbacks_.empty()) {
+    swapped_presentation_callbacks_.front().Run(timebase, interval);
+    swapped_presentation_callbacks_.pop_front();
+  }
+  // VSync parameters updates are generated at the start of a new swap. Move
+  // the swapping presentation callbacks to swapped callbacks so they fire
+  // at the next VSync parameters update as that will contain the presentation
+  // time for the previous frame.
+  swapped_presentation_callbacks_.splice(swapped_presentation_callbacks_.end(),
+                                         swapping_presentation_callbacks_);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ui::ContextFactoryObserver overrides:
+
+void SurfaceTreeHost::OnLostResources() {
+  if (!host_window_->GetSurfaceId().is_valid())
+    return;
+  // root_surface_->OnLostResources(compositor_frame_sink_holder_.get());
 }
 
 }  // namespace exo
