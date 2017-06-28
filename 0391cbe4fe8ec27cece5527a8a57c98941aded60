@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40f61d4b_3e4e7e8f",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-06-28T14:25:51Z",
+      "side": 1,
+      "message": "Ask garykac@ about this.",
+      "range": {
+        "startLine": 364,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 47
+      },
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d0f195_7b57ac7e",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-06-28T14:25:51Z",
+      "side": 1,
+      "message": "0C:01C8 is already in use; see #33 at http://www.usb.org/developers/hidpage#Approved_Usage_Table_Review_Requests\n\nIf there really is no appropriate existing code (I don\u0027t know what the key does), avoid collision by using the ‘Non-USB codes’ section at the top of the file, and/or propose a HID usage id at http://www.usb.org/developers/hidpage/#New_Usage_Table_Review_Requests\n\nSimilarly, is the evdev code 0x247 being upstreamed to avoid future collision?",
+      "range": {
+        "startLine": 536,
+        "startChar": 5,
+        "endLine": 536,
+        "endChar": 8
+      },
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc711b6e_ec041c3e",
+        "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-06-28T14:25:51Z",
+      "side": 1,
+      "message": "This is OK (style: add braces) though I do think it would be better to have this key in the xkb tables to avoid having it be a special case. (I can help with that.)",
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
