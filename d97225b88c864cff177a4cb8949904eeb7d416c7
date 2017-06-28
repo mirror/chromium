@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c1318b_bd26b6e3",
+        "filename": "ios/clean/chrome/test/performance/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-28T09:55:57Z",
+      "side": 1,
+      "message": "maybe \"ios_clean_skeleton_perf_egtests\", to distinguish this from other tests?",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "d97225b88c864cff177a4cb8949904eeb7d416c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6afe44c_3e320fbb",
+        "filename": "ios/clean/chrome/test/performance/startup_egtests.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-28T09:55:57Z",
+      "side": 1,
+      "message": "nit: although we generally prefer not to use abbreviated names, it\u0027s \"/testing/perf\" for chromium as a whole, so maybe we should follow that.",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "d97225b88c864cff177a4cb8949904eeb7d416c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfd931a_3e658a06",
+        "filename": "ios/testing/performance/startupLoggers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-28T09:55:57Z",
+      "side": 1,
+      "message": "This should follow C++ naming conventions, so namespaces should be named in snake_case -- |startup_loggers|.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "d97225b88c864cff177a4cb8949904eeb7d416c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1983ffe_538ac90b",
+        "filename": "ios/testing/performance/startupLoggers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-28T09:55:57Z",
+      "side": 1,
+      "message": "Comments should be phrased as descriptions, not commands. So this should be something like:\n\n// Registers the current time variable. This function should be called when the app is launched.",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "d97225b88c864cff177a4cb8949904eeb7d416c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0252005e_15c4e6cf",
+        "filename": "ios/testing/performance/startupLoggers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-28T09:55:57Z",
+      "side": 1,
+      "message": "Free function names should start with capital letters -- RegisterAppStartTime(), etc.",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "d97225b88c864cff177a4cb8949904eeb7d416c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd3b1f1_35e2323f",
+        "filename": "ios/testing/performance/startupLoggers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-28T09:55:57Z",
+      "side": 1,
+      "message": "Document what the return value means.",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "d97225b88c864cff177a4cb8949904eeb7d416c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ed30a0_6594c7f0",
+        "filename": "ios/testing/performance/startupLoggers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-28T09:55:57Z",
+      "side": 1,
+      "message": "s/BOOL/bool/ for a C++ file.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "d97225b88c864cff177a4cb8949904eeb7d416c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
