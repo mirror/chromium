@@ -15,6 +15,13 @@ namespace {
 RuntimeCallStats* g_runtime_call_stats_for_testing = nullptr;
 }
 
+void RuntimeCallCounter::Dump(TracedValue& value) {
+  value.BeginArray(name_);
+  value.PushDouble(count_);
+  value.PushDouble(time_.InMicroseconds());
+  value.EndArray();
+}
+
 void RuntimeCallTimer::Start(RuntimeCallCounter* counter,
                              RuntimeCallTimer* parent) {
   DCHECK(!IsRunning());
@@ -38,7 +45,7 @@ RuntimeCallTimer* RuntimeCallTimer::Stop() {
 
 RuntimeCallStats::RuntimeCallStats() {
   static const char* const names[] = {
-#define COUNTER_NAME_ENTRY(name) #name,
+#define COUNTER_NAME_ENTRY(name) "Blink_" #name,
       FOR_EACH_COUNTER(COUNTER_NAME_ENTRY)
 #undef COUNTER_NAME_ENTRY
   };
@@ -59,6 +66,15 @@ void RuntimeCallStats::Reset() {
   for (int i = 0; i < number_of_counters_; i++) {
     counters_[i].Reset();
   }
+  in_use_ = true;
+}
+
+void RuntimeCallStats::Dump(TracedValue& value) {
+  for (int i = 0; i < number_of_counters_; i++) {
+    if (counters_[i].GetCount() > 0)
+      counters_[i].Dump(value);
+  }
+  in_use_ = false;
 }
 
 String RuntimeCallStats::ToString() const {
@@ -86,6 +102,35 @@ void RuntimeCallStats::SetRuntimeCallStatsForTesting() {
 // static
 void RuntimeCallStats::ClearRuntimeCallStatsForTesting() {
   g_runtime_call_stats_for_testing = nullptr;
+}
+
+const char* const RuntimeCallStatsScopedTracer::s_category_group_ =
+    TRACE_DISABLED_BY_DEFAULT("v8.runtime_stats");
+const char* const RuntimeCallStatsScopedTracer::s_name_ =
+    "BlinkRuntimeCallStats";
+
+RuntimeCallStatsScopedTracer::RuntimeCallStatsScopedTracer(
+    v8::Isolate* isolate) {
+  bool category_group_enabled;
+  TRACE_EVENT_CATEGORY_GROUP_ENABLED(s_category_group_,
+                                     &category_group_enabled);
+  RuntimeCallStats* stats = RuntimeCallStats::From(isolate);
+  if (category_group_enabled &&
+      RuntimeEnabledFeatures::BlinkRuntimeCallStatsEnabled() &&
+      !stats->InUse()) {
+    stats->Reset();
+    stats_ = stats;
+    TRACE_EVENT_BEGIN0(s_category_group_, s_name_);
+  }
+}
+
+RuntimeCallStatsScopedTracer::~RuntimeCallStatsScopedTracer() {
+  if (stats_) {
+    std::unique_ptr<TracedValue> value = TracedValue::Create();
+    stats_->Dump(*value);
+    TRACE_EVENT_END1(s_category_group_, s_name_, "runtime-call-stats",
+                     std::move(value));
+  }
 }
 
 }  // namespace blink
