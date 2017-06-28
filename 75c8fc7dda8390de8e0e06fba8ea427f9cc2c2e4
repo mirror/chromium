@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "0b7d557f_c880ddf7",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "\"WebServiceWorkerInstalledScriptsManagerImpl::...\"",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be7b582f_8f3c12c8",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
         "patchSetId": 2
@@ -47,6 +64,23 @@
       "writtenOn": "2017-06-28T08:14:02Z",
       "side": 1,
       "message": "final?",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bf0819_e8d82789",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "This is documented on the super class, so you can remove lines 23-25.",
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +127,40 @@
     },
     {
       "key": {
+        "uuid": "f68785be_f9b63f13",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "\"This blocks until the script is received from the browser.\"\n\n?",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c530a4a_3c9eb390",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "might be nice to comment that this is from WorkerScriptLoader::DidReceiveData, or to factor out a helper function somehow.",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d515a4e_7081d97d",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -110,6 +178,29 @@
     },
     {
       "key": {
+        "uuid": "c6eb7283_6e5b6ee1",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "Where is ScriptData defined? Is it an existing Blink type?",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c47c919_87159417",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -121,6 +212,23 @@
       "writtenOn": "2017-06-28T08:14:02Z",
       "side": 1,
       "message": "Since this can be accessed from both the main thread and worker thread, can you add a lock protection, or add a TODO comment about it?",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc69ae1_207c37ae",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "Add a class level comment.",
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +269,64 @@
         "endLine": 21,
         "endChar": 21
       },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e702913_6409906d",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "Yea I\u0027m getting confused why there is both WebServiceWorkerInstalledScriptsManager::RawScriptData and WorkerInstalledScriptsManager::ScriptData.\n\nCan the naming give a bigger hint about the difference between the two?\n\nI guess RawScriptData contains the script stream payload from the browser and is later converted to ScriptData. \n\nI\u0027m wondering if WebScriptData may give a better hint that it\u0027s about the interface between browser and Blink. At least, could you add a comment for this class?",
+      "parentUuid": "03ab3c32_ba350737",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9708ba51_e21f313c",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "Can you describe these Vectors? Is each item one script file? I assume they are ordered so that the script text and metadata vectors are in the same order.",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a665be4_0b67b0f4",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T09:19:33Z",
+      "side": 1,
+      "message": "Are these Headers only the headers for the main script response? Would be good to have documentation.",
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
