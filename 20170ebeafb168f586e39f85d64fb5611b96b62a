@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5ccc272_0e9002c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-28T15:32:31Z",
+      "side": 1,
+      "message": "Should we check if the the sheet is open before setting it to peek here? Probably not entirely necessary, but could avoid an unnecessary animation.",
+      "range": {
+        "startLine": 507,
+        "startChar": 8,
+        "endLine": 507,
+        "endChar": 21
+      },
+      "revId": "20170ebeafb168f586e39f85d64fb5611b96b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd4f3df_e34996af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-28T15:32:31Z",
+      "side": 1,
+      "message": "This class has a setLayoutManager() call that I\u0027m using in a different CL to hold onto the ChromeLayoutManager. We can query that directly instead of getting the activity via the current tab to check if we are in overview mode. Or, this class already has a ChromeActivity, so we could check that directly as well. Unless there is a case I\u0027m not considering where the tab is null but we\u0027re not in overview mode and we want to prohibit the sheet moving..?",
+      "range": {
+        "startLine": 1377,
+        "startChar": 78,
+        "endLine": 1377,
+        "endChar": 94
+      },
+      "revId": "20170ebeafb168f586e39f85d64fb5611b96b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a215f1a_190cb77a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetBackBehaviorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-28T15:32:31Z",
+      "side": 1,
+      "message": "Great to see all of these tests!",
+      "range": {
+        "startLine": 54,
+        "startChar": 13,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "20170ebeafb168f586e39f85d64fb5611b96b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
