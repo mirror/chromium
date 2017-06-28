@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "63091c30_fc786980",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T18:29:26Z",
+      "side": 1,
+      "message": "Alternative ideas, we might have \u0027disabled\u0027 version of settings link here. Once settings app is available link gets enable. Yet another idea is to have settings link enabled all the time. In this case we might have spinning animation on shelf icon until settings finally appears in the system.",
+      "parentUuid": "b2d1e6fa_8ecefc83",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cba27ea_5948afed",
         "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.html",
         "patchSetId": 6
@@ -53,6 +71,24 @@
       "writtenOn": "2017-06-28T17:27:30Z",
       "side": 1,
       "message": "I don\u0027t think that we really need a separate page for this; I think we could have this embedded in settings-android-apps-page:\n\n\u003cif havePlayStoreApp\u003e\n  \u003cdiv id\u003d\"android-apps\" ...\u003e\n    ...\n    \u003cif playStoreEnabled\u003e\n      ...\n    \u003cif !playStoreEnabled\u003e\n      ...\n\u003c/if\u003e\n\n\u003cif !havePlayStoreApp\u003e\n  \u003csettings-android-settings-element\u003e\n\u003c/if\u003e\n\n\u003cif route-path\u003d\"/androidApps/details\"\u003e\n  \u003csettings-subpage\n\u003c/if\u003e\n\nThat said, I won\u0027t insist on that; this is definitely easier to follow than before, so thanks for doing the cleanup.",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbde4956_a1f1dada",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T18:29:26Z",
+      "side": 1,
+      "message": "this makes sense. we can do this way too. I don\u0027t like many if if enclosed by for this case this looks nice :)",
+      "parentUuid": "4cba27ea_5948afed",
       "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "7a304896_f1584cbb",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_settings_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T18:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26034998_978a50f6",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e7b2ef2_03037f3b",
         "filename": "chrome/browser/resources/settings/basic_page/basic_page.html",
         "patchSetId": 6
@@ -90,6 +144,24 @@
       "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ba493c_214ff314",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T18:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e7b2ef2_03037f3b",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "861bae1a_ea221808",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T18:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7f92883_9745feb9",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fa19ee2_11a47ebc",
         "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
         "patchSetId": 6
@@ -124,6 +214,24 @@
       "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49f3bc4_cfc36c51",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T18:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fa19ee2_11a47ebc",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +252,24 @@
     },
     {
       "key": {
+        "uuid": "f7b64f14_066e2c0c",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T18:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d588c720_3cabf0e6",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70788b49_347c48ab",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 6
@@ -158,6 +284,24 @@
       "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa5c658_76a41a00",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-28T18:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70788b49_347c48ab",
+      "revId": "4f29aa73e123b1848a24af44e94c18f134f614b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
