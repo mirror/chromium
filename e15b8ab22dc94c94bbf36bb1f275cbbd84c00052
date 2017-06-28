@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e430ecbf_977220e1",
+        "filename": "chrome/browser/extensions/api/identity/identity_signin_flow.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-28T14:54:08Z",
+      "side": 1,
+      "message": "I think this may be private now.",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "e15b8ab22dc94c94bbf36bb1f275cbbd84c00052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a10aabc_58ec640d",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-28T14:54:08Z",
+      "side": 1,
+      "message": "Remember to change the name of the tests following the change of the name of the function.",
+      "range": {
+        "startLine": 224,
+        "startChar": 28,
+        "endLine": 224,
+        "endChar": 67
+      },
+      "revId": "e15b8ab22dc94c94bbf36bb1f275cbbd84c00052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2806ac37_64047161",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-28T14:54:08Z",
+      "side": 1,
+      "message": "Also add a test that does the following:\n* set authenticated account (do not update credentials yet)\n* check that NotifyOnPrimaryAccountAvailable callback is not yet called\n\n* update credentials\n* check that NotifyOnPrimaryAccountAvailable callback is called",
+      "range": {
+        "startLine": 249,
+        "startChar": 28,
+        "endLine": 249,
+        "endChar": 70
+      },
+      "revId": "e15b8ab22dc94c94bbf36bb1f275cbbd84c00052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3f3d82_3ad9549f",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-28T14:54:08Z",
+      "side": 1,
+      "message": "GetPrimaryAccountWhenAvailable",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "e15b8ab22dc94c94bbf36bb1f275cbbd84c00052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
