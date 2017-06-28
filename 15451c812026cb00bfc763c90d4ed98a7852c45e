@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac920ed_cef70e19",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-06-28T17:27:28Z",
+      "side": 1,
+      "message": "This can be simplify to \"if buildername not in builder_names\" by setting builder_names to [] if it\u0027s None above.\n\nThough your naming style should be consistent. Should either be:\nbuilder_names_list, builder_name\n\nOr\n\nbuilder_names, builder",
+      "revId": "15451c812026cb00bfc763c90d4ed98a7852c45e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
