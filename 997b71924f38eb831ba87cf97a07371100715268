@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0860adb_ae355921",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-28T09:11:15Z",
+      "side": 0,
+      "message": "Yes and I moved the comment to the method implementation to be consistent with the other private methods of this file.",
+      "parentUuid": "af4b9217_77d7df88",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "997b71924f38eb831ba87cf97a07371100715268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2569c297_10680bd7",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "997b71924f38eb831ba87cf97a07371100715268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df80dbe_a98fe86a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-28T09:11:15Z",
+      "side": 0,
+      "message": "The NewTabPageController is stopping the coordinator now. This change should not be part of this CL, but I made me crash when testing it.",
+      "parentUuid": "2569c297_10680bd7",
+      "range": {
+        "startLine": 166,
+        "startChar": 14,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "997b71924f38eb831ba87cf97a07371100715268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

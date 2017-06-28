@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b756ecce_56d489b8",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-28T09:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c476f14_3d4bc90a",
+      "range": {
+        "startLine": 277,
+        "startChar": 17,
+        "endLine": 277,
+        "endChar": 25
+      },
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c925ed74_9c18a969",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967b7f68_b373a385",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-28T09:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c925ed74_9c18a969",
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d77c2b6f_091083d9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-28T09:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab73ece7_74f38e04",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "355c4834_948d7be2",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter_commands.h",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "fea2ef24_18a335ca",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-28T09:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "355c4834_948d7be2",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcec6a24_25e60301",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter_commands.h",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f81cc9d_c61bdcba",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_alerter_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-28T09:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcec6a24_25e60301",
+      "revId": "f6b0690619fd381a939d31473a7549b3cd504f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
