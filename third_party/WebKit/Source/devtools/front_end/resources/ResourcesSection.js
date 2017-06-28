@@ -247,8 +247,8 @@ Resources.FrameResourceTreeElement = class extends Resources.BaseStorageTreeElem
     this._panel = storagePanel;
     /** @type {!SDK.Resource} */
     this._resource = resource;
-    /** @type {?SourceFrame.ResourceSourceFrame} */
-    this._sourceFrame = null;
+    /** @type {?Promise<!UI.Widget>} */
+    this._previewPromise = null;
     this.tooltip = resource.url;
     this._resource[Resources.FrameResourceTreeElement._symbol] = this;
 
@@ -265,30 +265,15 @@ Resources.FrameResourceTreeElement = class extends Resources.BaseStorageTreeElem
     return resource[Resources.FrameResourceTreeElement._symbol];
   }
 
-  /**
-   * @param {!SDK.Resource} resource
-   * @return {?UI.Widget}
-   */
-  static resourceViewForResource(resource) {
-    if (resource.hasTextContent()) {
-      var treeElement = Resources.FrameResourceTreeElement.forResource(resource);
-      if (!treeElement)
-        return null;
-      return treeElement._sourceView();
-    }
-
-    switch (resource.resourceType()) {
-      case Common.resourceTypes.Image:
-        return new SourceFrame.ImageView(resource.mimeType, resource);
-      case Common.resourceTypes.Font:
-        return new SourceFrame.FontView(resource.mimeType, resource);
-      default:
-        return new UI.EmptyWidget(resource.url);
-    }
-  }
-
   get itemURL() {
     return this._resource.url;
+  }
+
+  async _preparePreview() {
+    var view = await SourceFrame.PreviewFactory.createPreview(this._resource, this._resource.mimeType);
+    if (view)
+      return view;
+    return new UI.EmptyWidget(this._resource.url);
   }
 
   /**
@@ -297,7 +282,9 @@ Resources.FrameResourceTreeElement = class extends Resources.BaseStorageTreeElem
    */
   onselect(selectedByUser) {
     super.onselect(selectedByUser);
-    this.showView(Resources.FrameResourceTreeElement.resourceViewForResource(this._resource));
+    if (!this._previewPromise)
+      this._previewPromise = this._preparePreview();
+    this._panel.scheduleShowView(this._previewPromise);
     return false;
   }
 
@@ -337,14 +324,17 @@ Resources.FrameResourceTreeElement = class extends Resources.BaseStorageTreeElem
   }
 
   /**
-   * @return {!SourceFrame.ResourceSourceFrame}
+   * @param {number=} line
+   * @param {number=} column
    */
-  _sourceView() {
-    if (!this._sourceFrame) {
-      this._sourceFrame = new SourceFrame.ResourceSourceFrame(this._resource);
-      this._sourceFrame.setHighlighterType(this._resource.canonicalMimeType());
-    }
-    return this._sourceFrame;
+  async revealResource(line, column) {
+    this.revealAndSelect(true);
+    if (typeof line !== 'number')
+      return;
+    var view = await this._previewPromise;
+    if (!(view instanceof SourceFrame.ResourceSourceFrame))
+      return;
+    view.revealPosition(line, column, true);
   }
 };
 

@@ -12,6 +12,9 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
     /** @type {?UI.Widget} */
     this.visibleView = null;
 
+    /** @type {?Promise<!UI.Widget>} */
+    this._pendingViewPromise = null;
+
     /** @type {?Resources.StorageCategoryView} */
     this._categoryView = null;
 
@@ -82,6 +85,7 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
    * @param {?UI.Widget} view
    */
   showView(view) {
+    this._pendingViewPromise = null;
     if (this.visibleView === view)
       return;
 
@@ -97,6 +101,17 @@ Resources.ResourcesPanel = class extends UI.PanelWithSidebar {
     for (var i = 0; i < toolbarItems.length; ++i)
       this._storageViewToolbar.appendToolbarItem(toolbarItems[i]);
     this._storageViewToolbar.element.classList.toggle('hidden', !toolbarItems.length);
+  }
+
+  /**
+   * @param {!Promise<!UI.Widget>} viewPromise
+   */
+  async scheduleShowView(viewPromise) {
+    this._pendingViewPromise = viewPromise;
+    var view = await viewPromise;
+    if (this._pendingViewPromise !== viewPromise)
+      return;
+    this.showView(view);
   }
 
   /**
