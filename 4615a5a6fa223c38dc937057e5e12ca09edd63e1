@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "497e1350_d43e4666",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwPrintDocumentAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-28T21:11:15Z",
+      "side": 1,
+      "message": "Ack\n\nreturn a single element array would be a better idea.\n\nI am considering share normalizeRanges too, want to do this in a later CL.",
+      "parentUuid": "95cbfef2_ea7b9a05",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "4615a5a6fa223c38dc937057e5e12ca09edd63e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03704e79_640fdc53",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwPrintDocumentAdapter.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-28T18:25:14Z",
       "side": 1,
       "message": "Is there an upper limit to pageCount? If not, a bad IPC could allocate a large amount of memory here and cause Out of Memory in the webview. It\u0027d be a Denial of Service and not a security issue, but might be nice to prevent.\n\nAlso, a negative number will throw an exception.",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "4615a5a6fa223c38dc937057e5e12ca09edd63e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a10c078_d071af6c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwPrintDocumentAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-28T21:11:15Z",
+      "side": 1,
+      "message": "`pageCount` is given by internal pdf generation function, unless the web page is super long, this number won\u0027t be too large. It also checked in native side that won\u0027t be \u003c\u003d 0, that will be considered as a printing failure and be taken care of by onWriteFailed callback.\n\nFor the Out of Memory issue, it will be addressed per dgn@\u0027s comment, I will return an array with only one element `PageRange(0, pageCount - 1)`;",
+      "parentUuid": "03704e79_640fdc53",
       "range": {
         "startLine": 91,
         "startChar": 50,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "faf249e4_aaa48a12",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-28T21:11:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e8b06c0_ee4387e1",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "4615a5a6fa223c38dc937057e5e12ca09edd63e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fc05564_e42e83a0",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "4615a5a6fa223c38dc937057e5e12ca09edd63e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6134ac_859e9a20",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-28T21:11:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4fc05564_e42e83a0",
+      "range": {
+        "startLine": 342,
+        "startChar": 29,
+        "endLine": 342,
+        "endChar": 38
+      },
+      "revId": "4615a5a6fa223c38dc937057e5e12ca09edd63e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
