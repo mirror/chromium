@@ -21,6 +21,7 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/surfaces/frame_sink_id.h"
+#include "cc/surfaces/surface_dependency_deadline.h"
 #include "cc/surfaces/surface_info.h"
 #include "cc/surfaces/surface_sequence.h"
 #include "cc/surfaces/surfaces_export.h"
@@ -36,7 +37,7 @@ class CompositorFrameSinkSupport;
 class CopyOutputRequest;
 class SurfaceManager;
 
-class CC_SURFACES_EXPORT Surface {
+class CC_SURFACES_EXPORT Surface : public SurfaceDeadlineObserver {
  public:
   using WillDrawCallback =
       base::RepeatingCallback<void(const LocalSurfaceId&, const gfx::Rect&)>;
@@ -50,6 +51,8 @@ class CC_SURFACES_EXPORT Surface {
   const SurfaceId& previous_frame_surface_id() const {
     return previous_frame_surface_id_;
   }
+
+  bool has_deadline() const { return deadline_.has_deadline(); }
 
   void SetPreviousFrameSurface(Surface* surface);
 
@@ -117,8 +120,12 @@ class CC_SURFACES_EXPORT Surface {
                : nullptr;
   }
 
-  const base::flat_set<SurfaceId>& blocking_surfaces() const {
-    return blocking_surfaces_;
+  const base::flat_set<SurfaceId>& activation_dependencies() const {
+    return activation_dependencies_;
+  }
+
+  const base::flat_set<SurfaceId>& late_activation_dependencies() const {
+    return late_activation_dependencies_;
   }
 
   bool HasActiveFrame() const { return active_frame_data_.has_value(); }
@@ -129,6 +136,9 @@ class CC_SURFACES_EXPORT Surface {
 
   bool destroyed() const { return destroyed_; }
   void set_destroyed(bool destroyed) { destroyed_ = destroyed; }
+
+  // SurfaceDeadlineObserver implementation:
+  void OnDeadline() override;
 
  private:
   struct FrameData {
@@ -150,8 +160,12 @@ class CC_SURFACES_EXPORT Surface {
   void ActivatePendingFrame();
   // Called when all of the surface's dependencies have been resolved.
   void ActivateFrame(FrameData frame_data);
-  void UpdateBlockingSurfaces(bool has_previous_pending_frame,
-                              const CompositorFrame& current_frame);
+  void UpdateActivationDependencies(const CompositorFrame& current_frame);
+  void ComputeChangeInDependencies(
+      const base::flat_set<SurfaceId>& existing_dependencies,
+      const base::flat_set<SurfaceId>& new_dependencies,
+      base::flat_set<SurfaceId>* added_dependencies,
+      base::flat_set<SurfaceId>* removed_dependencies);
 
   void UnrefFrameResourcesAndRunDrawCallback(
       base::Optional<FrameData> frame_data);
@@ -167,6 +181,7 @@ class CC_SURFACES_EXPORT Surface {
   SurfaceId previous_frame_surface_id_;
   base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support_;
   SurfaceManager* const surface_manager_;
+  SurfaceDependencyDeadline deadline_;
 
   base::Optional<FrameData> pending_frame_data_;
   base::Optional<FrameData> active_frame_data_;
@@ -175,7 +190,8 @@ class CC_SURFACES_EXPORT Surface {
   bool destroyed_;
   std::vector<SurfaceSequence> destruction_dependencies_;
 
-  base::flat_set<SurfaceId> blocking_surfaces_;
+  base::flat_set<SurfaceId> activation_dependencies_;
+  base::flat_set<SurfaceId> late_activation_dependencies_;
 
   DISALLOW_COPY_AND_ASSIGN(Surface);
 };
