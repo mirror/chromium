@@ -196,16 +196,16 @@ static IsolatedWorldHumanReadableNameMap& IsolatedWorldHumanReadableNames() {
   return map;
 }
 
-String DOMWrapperWorld::IsolatedWorldHumanReadableName() {
+String DOMWrapperWorld::NonMainWorldHumanReadableName() {
   DCHECK(this->IsIsolatedWorld());
   return IsolatedWorldHumanReadableNames().at(GetWorldId());
 }
 
-void DOMWrapperWorld::SetIsolatedWorldHumanReadableName(
+void DOMWrapperWorld::SetNonMainWorldHumanReadableName(
     int world_id,
     const String& human_readable_name) {
 #if DCHECK_IS_ON()
-  DCHECK(IsIsolatedWorldId(world_id));
+  DCHECK(!IsMainWorld());
 #endif
   IsolatedWorldHumanReadableNames().Set(world_id, human_readable_name);
 }

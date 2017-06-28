@@ -29,7 +29,10 @@ PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
       new PaintWorkletGlobalScope(frame, url, user_agent,
                                   std::move(security_origin), isolate,
                                   pending_generator_registry);
-  paint_worklet_global_scope->ScriptController()->InitializeContextIfNeeded();
+  // TODO(xidachen): When we implment two PaintWorkletGlobalScope, we should
+  // change the last parameter.
+  paint_worklet_global_scope->ScriptController()->InitializeContextIfNeeded(
+      String("PaintWorkletGlobalScope"));
   MainThreadDebugger::Instance()->ContextCreated(
       paint_worklet_global_scope->ScriptController()->GetScriptState(),
       paint_worklet_global_scope->GetFrame(),
