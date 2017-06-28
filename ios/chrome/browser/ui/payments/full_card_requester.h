@@ -13,6 +13,7 @@
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/payments/full_card_request.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller_impl.h"
+#include "components/payments/core/payment_instrument.h"
 
 namespace autofill {
 class AutofillManager;
@@ -27,7 +28,7 @@ class ChromeBrowserState;
 
 // Receives the full credit card details. Also displays the unmask prompt UI.
 class FullCardRequester
-    : public autofill::payments::FullCardRequest::ResultDelegate,
+    : public payments::PaymentInstrument::Delegate,
       public autofill::payments::FullCardRequest::UIDelegate,
       public base::SupportsWeakPtr<FullCardRequester> {
  public:
@@ -35,14 +36,17 @@ class FullCardRequester
                     UIViewController* base_view_controller,
                     ios::ChromeBrowserState* browser_state);
 
-  void GetFullCard(autofill::CreditCard* card,
-                   autofill::AutofillManager* autofill_manager);
-
-  // payments::FullCardRequest::ResultDelegate:
-  void OnFullCardRequestSucceeded(
+  void GetFullCard(
       const autofill::CreditCard& card,
-      const base::string16& verificationCode) override;
-  void OnFullCardRequestFailed() override;
+      autofill::AutofillManager* autofill_manager,
+      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
+          result_delegate);
+
+  // payments::PaymentInstrument::Delegate:
+  void OnInstrumentDetailsReady(
+      const std::string& method_name,
+      const std::string& stringified_details) override;
+  void OnInstrumentDetailsError() override{};
 
   // payments::FullCardRequest::UIDelegate:
   void ShowUnmaskPrompt(
