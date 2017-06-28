@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1987f1_f9e66352",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-28T23:35:12Z",
+      "side": 1,
+      "message": "Does it make sense to comment out line 27-29, so that they are removed from the code, but we also make sure people will not reuse those values in the future?",
+      "revId": "ffd619b78ac75109857e6638535012cbd1baafe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
