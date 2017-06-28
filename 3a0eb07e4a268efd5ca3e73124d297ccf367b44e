@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebdca025_3c20b261",
+        "filename": "android_webview/browser/aw_safe_browsing_blocking_page.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-28T22:36:59Z",
+      "side": 1,
+      "message": "git cl format wanted IsMainPageLoadBlocked() and extended_reporting_allowed on the same line. I can override formatting if you prefer.",
+      "revId": "3a0eb07e4a268efd5ca3e73124d297ccf367b44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

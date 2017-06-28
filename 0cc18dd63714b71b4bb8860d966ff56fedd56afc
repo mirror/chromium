@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75570312_e822ef6d",
+        "filename": "android_webview/browser/aw_contents_client_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-28T22:36:59Z",
+      "side": 0,
+      "message": "It looks like this was an unused import. It\u0027s harmless to remove.",
+      "revId": "0cc18dd63714b71b4bb8860d966ff56fedd56afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
