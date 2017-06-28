@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62aa684f_b5664d41",
+        "filename": "chrome/browser/android/vr_shell/ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-28T16:46:42Z",
+      "side": 1,
+      "message": "Looking at how many indicators we have, it would probably be better to have a struct with a boolean per indicator.  That could be used to keep state, as well as pass state through to the UI.  Ie, you wouldn\u0027t need additional cross-thread plumbing with every new indicator.\n\nUp to you on this though, it\u0027s just my opinion.",
+      "revId": "51d3bdf09fe9e2a7fe78a5cd844b96481e74d0a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
