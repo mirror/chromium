@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45224d74_6c3c1276",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T23:42:43Z",
+      "side": 1,
+      "message": "The documentation looks nice, while I feel \u0027Common\u0027 suffix is slighly less clear (we don\u0027t have non-common equivalent method, doesn\u0027t feel it adds much info?).",
+      "revId": "60257a533f4569066f16590c8e27aebd39fccc5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
