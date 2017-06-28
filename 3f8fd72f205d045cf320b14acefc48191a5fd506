@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbb65591_b632a8b5",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T18:17:10Z",
+      "side": 1,
+      "message": "This could probably just be identity here, since this is tracing.  It doesn\u0027t really make conceptual sense to ask for the total matrix at each op.  It\u0027s supposed to be the matrix on the canvas when you started rastering an entire recorded set of ops.",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d774506_10b90177",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T18:17:10Z",
+      "side": 1,
+      "message": "It\u0027s a little sad to me to have to push all this templating goop out another level, but I don\u0027t really have a better thought here.  It is nice to use this level of indirection to make sure offsets are always pushed, though.",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b8c6da_872631bb",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T18:17:10Z",
+      "side": 1,
+      "message": "typo: op \u003d\u003e ops?",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f098a13_e8fa942d",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T18:17:10Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure I understand why this function exists.  Are you trying to say that the only way to playback with offsets is via Iterator?",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5de054b_1c0b19da",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T18:17:10Z",
+      "side": 1,
+      "message": "Do you think it makes sense to have two iterators? One that handles offsets and one that doesn\u0027t? I think they behave pretty differently internally and having them both in the same Iterator seems like it might make it more complicated.",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
