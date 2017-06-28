@@ -1,10 +1,10 @@
 rootWebArea
 ++genericContainer
-++++textField
+++++textField controlMode=enabled
 ++++++genericContainer
 ++++++++staticText name='Editable text'
 ++++++++++inlineTextBox name='Editable text'
-++++textField ariaReadonly=true
+++++textField controlMode=readOnly
 ++++++genericContainer
 ++++++++staticText name='Uneditable text'
 ++++++++++inlineTextBox name='Uneditable text'
