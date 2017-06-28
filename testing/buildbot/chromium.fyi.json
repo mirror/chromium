@@ -12352,10 +12352,5 @@
         "test": "views_unittests"
       }
     ]
-  },
-  "Win Builder (ANGLE)": {
-    "additional_compile_targets": [
-      "all"
-    ]
   }
 }
