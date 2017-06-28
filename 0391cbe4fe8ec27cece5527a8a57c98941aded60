@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e594441_b2726b36",
+        "filename": "ash/accelerators/accelerator_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-28T00:05:54Z",
+      "side": 0,
+      "message": "I don\u0027t think we are ready to remove the current shortcut yet. Can you just add a new one?",
+      "range": {
+        "startLine": 163,
+        "startChar": 23,
+        "endLine": 163,
+        "endChar": 42
+      },
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68f0fbba_3f9d10f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-28T00:05:54Z",
+      "side": 1,
+      "message": "We were avoiding using this, can you change it to voice interaction instead? maybe it\u0027s already too late.",
+      "range": {
+        "startLine": 9,
+        "startChar": 39,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "73b36d7bb551299b6b3b5c165638e982b6e70a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
