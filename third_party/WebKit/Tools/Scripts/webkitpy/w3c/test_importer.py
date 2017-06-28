@@ -367,7 +367,13 @@ class TestImporter(object):
         ] + self._cc_part(directory_owners))
 
     def _upload_patchset(self, message):
-        self.git_cl.run(['upload', '-f', '-t', message, '--gerrit'])
+        self.git_cl.run([
+            'upload',
+            '-f',
+            '-t', message,
+            '--gerrit',
+            '--send-mail',  # Turn off WIP mode.
+        ])
 
     @staticmethod
     def _cc_part(directory_owners):
