@@ -188,6 +188,9 @@ void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
   ash::Shell::Get()->accelerator_controller()->Register(
       {ui::Accelerator(ui::VKEY_A, ui::EF_COMMAND_DOWN | ui::EF_SHIFT_DOWN)},
       this);
+
+  ash::Shell::Get()->accelerator_controller()->Register(
+      {ui::Accelerator(ui::VKEY_ASSISTANT, ui::EF_NONE)}, this);
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
