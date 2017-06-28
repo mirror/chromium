@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "809b4303_11771a35",
+        "filename": "cc/resources/transferable_resource.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T22:49:51Z",
+      "side": 1,
+      "message": "I made this function return vector instead of take vector*.\n\nThe rest of the CL is search and replace to match these two things.",
+      "revId": "9f9e3ab9afca554ea62ffd82826532708c31eaa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

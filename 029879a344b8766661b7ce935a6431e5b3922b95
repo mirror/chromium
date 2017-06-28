@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4591e35_d280aa0f",
+        "filename": "cc/resources/transferable_resource.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T22:49:51Z",
+      "side": 0,
+      "message": "This is the typedefs I removed.",
+      "revId": "029879a344b8766661b7ce935a6431e5b3922b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
