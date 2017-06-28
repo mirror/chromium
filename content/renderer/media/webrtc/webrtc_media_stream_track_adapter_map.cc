@@ -100,8 +100,10 @@ WebRtcMediaStreamTrackAdapterMap::GetOrCreateRemoteTrackAdapter(
   DCHECK(!main_thread_->BelongsToCurrentThread());
   return GetOrCreateTrackAdapter(
       AdapterRef::Type::kRemote,
-      base::Bind(&WebRtcMediaStreamTrackAdapter::CreateRemoteTrackAdapter,
-                 factory_, main_thread_, webrtc_track),
+      base::Bind(
+          &WebRtcMediaStreamTrackAdapter::CreateRemoteTrackAdapter, factory_,
+          main_thread_,
+          rtc::scoped_refptr<webrtc::MediaStreamTrackInterface>(webrtc_track)),
       webrtc_track->id());
 }
 
