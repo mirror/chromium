@@ -85,6 +85,24 @@
       "revId": "a47f53039f158ce64539cd275d2019adef96a6c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a9b3e3_778a1ecf",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-28T14:15:31Z",
+      "side": 1,
+      "message": "The controller will not be sending the proper Mode Change events with this approach - the client will have to figure out when mode changes on its own, which doesn\u0027t seem good.",
+      "parentUuid": "905ef334_458ba6b8",
+      "revId": "a47f53039f158ce64539cd275d2019adef96a6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
