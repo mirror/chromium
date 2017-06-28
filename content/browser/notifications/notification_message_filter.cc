@@ -190,7 +190,6 @@ void NotificationMessageFilter::OnShowPersistentNotification(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (GetPermissionForOriginOnIO(origin) !=
       blink::mojom::PermissionStatus::GRANTED) {
-    bad_message::ReceivedBadMessage(this, bad_message::NMF_NO_PERMISSION_SHOW);
     return;
   }
 
@@ -338,7 +337,6 @@ void NotificationMessageFilter::OnClosePersistentNotification(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (GetPermissionForOriginOnIO(origin) !=
       blink::mojom::PermissionStatus::GRANTED) {
-    bad_message::ReceivedBadMessage(this, bad_message::NMF_NO_PERMISSION_CLOSE);
     return;
   }
 
@@ -393,7 +391,6 @@ bool NotificationMessageFilter::VerifyNotificationPermissionGranted(
   if (permission_status == blink::mojom::PermissionStatus::GRANTED)
     return true;
 
-  bad_message::ReceivedBadMessage(this, bad_message::NMF_NO_PERMISSION_VERIFY);
   return false;
 }
 
