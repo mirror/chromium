@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f0827ac_83e9ba41",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-28T11:38:35Z",
+      "side": 0,
+      "message": "Could we keep \"ValueOfDefault\" function? It\u0027s ok for thread-safety, no?\n\nI saw several incorrect usage because \"if null, use default locale\" is too verbose, I hope us to keep it simple to code.",
+      "revId": "56f9a641544d2cafa37142545bb39254f7bd98b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd1f637_7ad37bf2",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-28T11:38:35Z",
+      "side": 0,
+      "message": "Could we keep these as wrapper? I think class owning static functions is more natural APIs. Impl can go FontGlobalContext.",
+      "revId": "56f9a641544d2cafa37142545bb39254f7bd98b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

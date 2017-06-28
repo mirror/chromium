@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31627b64_31c02f00",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-28T11:38:35Z",
+      "side": 1,
+      "message": "Could you mind to point me a doc about this, or explain how Blink thread-static is allocated/deleted?\n\nI\u0027m asking because one of the API, hyphenation dictionary, is rather heavy, could be ~300kb/lang and involves one sync IPC to get it. I\u0027d like to understand how it is created for each thread and when they are deleted.\n\nSince it involves sync IPC, maybe we need to consider sharing across threads. I\u0027d like to understand how thread-static works in Blink to consider this.",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8cb419_c598b1ce",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-28T11:38:35Z",
+      "side": 1,
+      "message": "I wish FontGlobalContext to provide just a context or storage, and logic belongs to each class. This structure makes me harder to maintain LayoutLocale because logic are now separate in two files/classes.\n\nCould we move these impls to LayoutLocale, or create a small struct that FontGlobalContext owns, and keep the logic in LayoutLocale.cpp?",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972e8bd1_fe6cfb09",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-28T11:38:35Z",
+      "side": 1,
+      "message": "Why did you remove |default_for_han_computed_|? Is that risky for threads?\n\nThis function is rather hot, called on every character when font fallback occurs, and |AcceptLanguagesResolver::LocaleForHan()| isn\u0027t really cheap. Can we keep it?",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5d85ad_2cbec2fb",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-28T11:38:35Z",
+      "side": 1,
+      "message": "As the line above indicates, |default_locale_for_han_| can be nullptr. Can we avoid de-referrincing nullptr?",
+      "revId": "eba4fc2b74253eddce52d7574b8568503d618d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
