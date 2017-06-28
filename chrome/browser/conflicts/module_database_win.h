@@ -120,6 +120,10 @@ class ModuleDatabase {
   void AddObserver(ModuleDatabaseObserver* observer);
   void RemoveObserver(ModuleDatabaseObserver* observer);
 
+  // Makes it so that module inspection tasks are run at an higher priority to
+  // ensure the ModuleDatabase becomes idle ASAP.
+  void IncreaseInspectionPriority();
+
  private:
   friend class TestModuleDatabase;
   friend class ModuleDatabaseTest;

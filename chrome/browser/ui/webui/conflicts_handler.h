@@ -33,6 +33,7 @@ class ConflictsHandler : public content::WebUIMessageHandler,
   ScopedObserver<EnumerateModulesModel, EnumerateModulesModel::Observer>
       observer_;
 
+  // The id of the callback that will get invoked with the module list.
   std::string module_list_callback_id_;
 
   DISALLOW_COPY_AND_ASSIGN(ConflictsHandler);
