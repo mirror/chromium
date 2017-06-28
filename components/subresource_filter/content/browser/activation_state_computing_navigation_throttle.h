@@ -67,7 +67,7 @@ class ActivationStateComputingNavigationThrottle
 
   AsyncDocumentSubresourceFilter* filter() { return async_filter_.get(); }
 
-  void WillSendActivationToRenderer();
+  void CouldSendActivationToRenderer();
 
  private:
   void OnActivationStateComputed(ActivationState state);
@@ -93,10 +93,12 @@ class ActivationStateComputingNavigationThrottle
   base::TimeTicks defer_timestamp_;
 
   // Becomes true when the throttle manager reaches ReadyToCommitNavigation and
-  // sends an activation IPC to the render process. Makes sure a caller cannot
-  // take ownership of the subresource filter unless an activation IPC is sent
-  // to the renderer.
-  bool will_send_activation_to_renderer_ = false;
+  // can send an activation IPC to the render process. Note that an IPC is not
+  // always sent in case this activation is ignoring ruleset rules.
+  //
+  // Makes sure a caller cannot take ownership of the subresource filter unless
+  // the throttle has reached this point.
+  bool could_send_activation_to_renderer_ = false;
 
   base::WeakPtrFactory<ActivationStateComputingNavigationThrottle>
       weak_ptr_factory_;
