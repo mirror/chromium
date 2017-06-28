@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.crash;
 import android.annotation.TargetApi;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
+import android.app.job.JobWorkItem;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -60,6 +61,10 @@ public class LogcatExtractionRunnableTest extends CrashTestCase {
         @Override
         public void cancelAll() {}
 
+        @Override
+        public int enqueue(JobInfo job, JobWorkItem work) {
+            return 0;
+        }
         @Override
         public List<JobInfo> getAllPendingJobs() {
             return null;
