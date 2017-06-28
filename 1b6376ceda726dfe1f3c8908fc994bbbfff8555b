@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "866a7bc0_6a7a4ce8",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T15:58:00Z",
+      "side": 1,
+      "message": "Add a comment for this:\n\n// Registers a factory to create WebRTC data channels handlers.",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4163df43_b8cafd49",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T15:58:00Z",
+      "side": 1,
+      "message": "nit: You could make an aliased type for this, it is a bit long and is used several times.",
+      "range": {
+        "startLine": 186,
+        "startChar": 14,
+        "endLine": 187,
+        "endChar": 76
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae45ff9d_2a5aff56",
+        "filename": "remoting/host/client_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T15:58:00Z",
+      "side": 1,
+      "message": "Can you move this up to ~line 238 (just under the extension manager)?  They are loosely related so I think it would be good for them to be in close proximity of each other.",
+      "range": {
+        "startLine": 261,
+        "startChar": 31,
+        "endLine": 261,
+        "endChar": 52
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932a3221_b7fbd7a4",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T15:58:00Z",
+      "side": 1,
+      "message": "You can remove this test handler : )",
+      "range": {
+        "startLine": 1436,
+        "startChar": 12,
+        "endLine": 1436,
+        "endChar": 29
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa93ff1_f22404b8",
+        "filename": "remoting/protocol/connection_to_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T15:58:00Z",
+      "side": 1,
+      "message": "Can you forward declare MessagePipe instead of including the header (similar to how DesktopCapturer is done below)?  In Chromium fwd declares are preferred over including the header in .h files.",
+      "range": {
+        "startLine": 12,
+        "startChar": 28,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc1eb73_54a8d3bb",
+        "filename": "remoting/protocol/connection_to_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-28T15:58:00Z",
+      "side": 1,
+      "message": "Can we drop the WebRTC name from the comment and method name?  In the future, the plans are to remove the ICE connection code and only use WebRTC so we can keep the handler name generic.",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
