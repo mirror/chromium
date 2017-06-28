@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "705194f5_d28e5488",
+        "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-28T19:24:34Z",
+      "side": 1,
+      "message": "So here is what I believe happens now:\n1- We send the request on line 1447.\n2- We start the wait on line 1449.\n3- |child_message_filter| receives the IPC on IO and posts task the custom handler of lines 1423-1433 to UI.\n4- TextInputClientMac posts the handler to UI.\n5- When handling custom handler we post the quit closure to IO. This should guarantee that the call to quit occurs after step 4.\n6- Based on 4-5 it should be guaranteed that the wait on line 1449 is over AFTER TextInputClientMac finished running its handler.",
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44e81e6_caea4cca",
+        "filename": "content/public/test/text_input_test_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-28T19:24:34Z",
+      "side": 1,
+      "message": "Since the goal is to destory the widget, we need to make sure we are detaching the local root. In my test it was fine before since the RenderFrameHost of the \u003ciframe\u003e was itself a local root.",
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1042303c_91c5c7f3",
+        "filename": "content/public/test/text_input_test_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-28T19:24:34Z",
+      "side": 1,
+      "message": "This seems cleaner as it is part of public API.",
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc8b4c3_471698ec",
+        "filename": "content/public/test/text_input_test_utils_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-28T19:24:34Z",
+      "side": 1,
+      "message": "I had forgotten to post task! Apologies!",
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
