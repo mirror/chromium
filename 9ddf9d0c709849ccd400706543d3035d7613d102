@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c10b6101_e0e1cf9e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-06-28T20:21:45Z",
+      "side": 1,
+      "message": ".nit can you do:\n\nNGBlockNode node(out_of_flow_item.item-\u003eGetLayoutObject());\n...\nif (node.Style().IsOriginalDisplayInlineType())\n...\netc.\n\ninstead?",
+      "range": {
+        "startLine": 285,
+        "startChar": 10,
+        "endLine": 285,
+        "endChar": 21
+      },
+      "revId": "9ddf9d0c709849ccd400706543d3035d7613d102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
