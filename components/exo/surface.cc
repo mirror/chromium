@@ -744,7 +744,8 @@ void Surface::BufferAttachment::Reset(base::WeakPtr<Buffer> buffer) {
 void Surface::UpdateResource(bool client_usage) {
   if (current_buffer_.buffer() &&
       current_buffer_.buffer()->ProduceTransferableResource(
-          layer_tree_frame_sink_holder_.get(), next_resource_id_++,
+          layer_tree_frame_sink_holder_.get(),
+          layer_tree_frame_sink_holder_->AllocateResourceId(),
           state_.only_visible_on_secure_output, client_usage,
           &current_resource_)) {
     current_resource_has_alpha_ =
