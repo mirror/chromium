@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d737853_08c5743b",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFace.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-06-28T15:59:42Z",
+      "side": 1,
+      "message": "How are these BooleanHistograms counted/reported for workers?",
+      "revId": "b970a20781863c804fd17de4731924bbcdb9f658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005330b5_db1e69b5",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-06-28T15:59:42Z",
+      "side": 1,
+      "message": "Why is this here? HarfBuzzShaper is create with a Font object, then retrieves HarfBuzzFace from it (indirectly via FontPlatformData).",
+      "revId": "b970a20781863c804fd17de4731924bbcdb9f658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
