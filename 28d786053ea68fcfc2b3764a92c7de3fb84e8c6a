@@ -22,6 +22,30 @@
       "revId": "28d786053ea68fcfc2b3764a92c7de3fb84e8c6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b3ed50_81182b45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-28T18:34:50Z",
+      "side": 1,
+      "message": "Whoops, this wasn\u0027t supposed to change back. Done.",
+      "parentUuid": "41327755_58dbaab6",
+      "range": {
+        "startLine": 1395,
+        "startChar": 21,
+        "endLine": 1395,
+        "endChar": 30
+      },
+      "revId": "28d786053ea68fcfc2b3764a92c7de3fb84e8c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
