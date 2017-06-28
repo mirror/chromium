@@ -16,6 +16,24 @@
       "revId": "15451c812026cb00bfc763c90d4ed98a7852c45e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2276a982_e9b3734c",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-06-28T19:08:46Z",
+      "side": 1,
+      "message": "Changed to builder_names, builder",
+      "parentUuid": "eac920ed_cef70e19",
+      "revId": "15451c812026cb00bfc763c90d4ed98a7852c45e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
