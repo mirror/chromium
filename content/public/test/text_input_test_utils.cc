@@ -6,7 +6,10 @@
 
 #include <unordered_set>
 
+#include "content/browser/frame_host/frame_tree.h"
+#include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
@@ -305,6 +308,22 @@ void SendImeSetCompositionTextToWidget(
   RenderWidgetHostImpl::From(rwh)->ImeSetComposition(
       text, web_composition_underlines, replacement_range, selection_start,
       selection_end);
+}
+
+bool DestroyRenderWidgetHost(int32_t process_id,
+                             int32_t local_root_routing_id) {
+  RenderFrameHostImpl* rfh =
+      RenderFrameHostImpl::FromID(process_id, local_root_routing_id);
+  if (!rfh)
+    return false;
+
+  FrameTreeNode* ftn = rfh->frame_tree_node();
+  if (ftn->IsMainFrame()) {
+    rfh->render_view_host()->ShutdownAndDestroy();
+  } else {
+    ftn->frame_tree()->RemoveFrame(ftn);
+  }
+  return true;
 }
 
 size_t GetRegisteredViewsCountFromTextInputManager(WebContents* web_contents) {
