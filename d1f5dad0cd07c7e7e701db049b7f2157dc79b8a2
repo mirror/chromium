@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "dd9e67ca_1adce7dd",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-28T20:27:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87a63581_ec7b3424",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c0604a2_c3f38540",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
         "patchSetId": 1
@@ -378,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "22cf408c_4d74285a",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-28T20:27:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a646786_7d92ddae",
+      "range": {
+        "startLine": 33,
+        "startChar": 37,
+        "endLine": 33,
+        "endChar": 52
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf1ffc81_81d5f7f0",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
         "patchSetId": 1
@@ -460,6 +508,30 @@
       "side": 1,
       "message": "I cannot make it const because I had to introduce a move constructor for storing the PasswordManagerMetricsRecorder in a base::Optional.",
       "parentUuid": "898fdc45_403a60b5",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f18a5dc_e8c8d7ae",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-28T20:27:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8cfec8d_51a49e5e",
       "range": {
         "startLine": 55,
         "startChar": 7,
@@ -601,6 +673,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "53bff315_b3b9ea44",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 55
+      },
+      "revId": "d1f5dad0cd07c7e7e701db049b7f2157dc79b8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31d0e053_ce390299",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-28T20:27:53Z",
+      "side": 1,
+      "message": "nit: I meant the blank line to separate the line with \"kTestUrl\" from the line with \"namespace {\". :)",
+      "parentUuid": "9d3f56a6_56d91eff",
       "range": {
         "startLine": 16,
         "startChar": 0,
