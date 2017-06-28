@@ -92,7 +92,7 @@ Element* AXImageMapLink::AnchorElement() const {
 
 KURL AXImageMapLink::Url() const {
   if (!AreaElement())
-    return KURL();
+    return NullURL();
 
   return AreaElement()->Href();
 }

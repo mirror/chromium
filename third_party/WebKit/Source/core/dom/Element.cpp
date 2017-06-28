@@ -3573,7 +3573,7 @@ KURL Element::HrefURL() const {
     return GetURLAttribute(hrefAttr);
   if (isSVGAElement(*this))
     return toSVGAElement(*this).LegacyHrefURL(GetDocument());
-  return KURL();
+  return NullURL();
 }
 
 KURL Element::GetURLAttribute(const QualifiedName& name) const {
@@ -3596,7 +3596,7 @@ KURL Element::GetNonEmptyURLAttribute(const QualifiedName& name) const {
 #endif
   String value = StripLeadingAndTrailingHTMLSpaces(getAttribute(name));
   if (value.IsEmpty())
-    return KURL();
+    return NullURL();
   return GetDocument().CompleteURL(value);
 }
 

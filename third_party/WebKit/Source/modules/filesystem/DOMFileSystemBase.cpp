@@ -101,7 +101,7 @@ KURL DOMFileSystemBase::CreateFileSystemRootURL(const String& origin,
   else if (type == kFileSystemTypeExternal)
     type_string = kExternalPathPrefix;
   else
-    return KURL();
+    return NullURL();
 
   String result = "filesystem:" + origin + "/" + type_string + "/";
   return KURL(kParsedURLString, result);

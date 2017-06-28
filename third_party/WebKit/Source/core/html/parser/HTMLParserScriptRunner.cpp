@@ -135,12 +135,12 @@ void TraceParserBlockingScript(const PendingScript* pending_script,
 
 static KURL DocumentURLForScriptExecution(Document* document) {
   if (!document)
-    return KURL();
+    return NullURL();
 
   if (!document->GetFrame()) {
     if (document->ImportsController())
       return document->Url();
-    return KURL();
+    return NullURL();
   }
 
   // Use the URL of the currently active document for this frame.

@@ -587,7 +587,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   virtual AXObjectVector RadioButtonsInGroup() const {
     return AXObjectVector();
   }
-  virtual KURL Url() const { return KURL(); }
+  virtual KURL Url() const { return NullURL(); }
 
   // Load inline text boxes for just this node, even if
   // settings->inlineTextBoxAccessibilityEnabled() is false.

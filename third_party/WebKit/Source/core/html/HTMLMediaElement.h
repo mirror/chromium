@@ -346,7 +346,7 @@ class CORE_EXPORT HTMLMediaElement
   void RemovedFrom(ContainerNode*) override;
 
   void DidMoveToNewDocument(Document& old_document) override;
-  virtual KURL PosterImageURL() const { return KURL(); }
+  virtual KURL PosterImageURL() const { return NullURL(); }
 
   enum DisplayMode { kUnknown, kPoster, kVideo };
   DisplayMode GetDisplayMode() const { return display_mode_; }

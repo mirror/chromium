@@ -568,7 +568,7 @@ void ResourceResponse::SetResourceLoadInfo(RefPtr<ResourceLoadInfo> load_info) {
 
 KURL ResourceResponse::OriginalURLViaServiceWorker() const {
   if (url_list_via_service_worker_.IsEmpty())
-    return KURL();
+    return NullURL();
   return url_list_via_service_worker_.back();
 }
 

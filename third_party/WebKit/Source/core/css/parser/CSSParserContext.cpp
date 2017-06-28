@@ -159,7 +159,7 @@ const CSSParserContext* StrictCSSParserContext() {
 
 KURL CSSParserContext::CompleteURL(const String& url) const {
   if (url.IsNull())
-    return KURL();
+    return NullURL();
   if (!Charset().IsValid())
     return KURL(BaseURL(), url);
   return KURL(BaseURL(), url, Charset());
