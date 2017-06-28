@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95c6dd61_91215a5d",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T22:55:41Z",
+      "side": 1,
+      "message": "Yes, this is for completeness. Will use it soon when converting more code using these templates.",
+      "parentUuid": "5d4d7b38_1c70049d",
+      "revId": "e354d931ee0022bb938a1b0a65357f7ccb7dc5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f92bf361_74a2c9df",
         "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "e354d931ee0022bb938a1b0a65357f7ccb7dc5f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980bd48b_99a656e9",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T22:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f92bf361_74a2c9df",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 19
+      },
+      "revId": "e354d931ee0022bb938a1b0a65357f7ccb7dc5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
