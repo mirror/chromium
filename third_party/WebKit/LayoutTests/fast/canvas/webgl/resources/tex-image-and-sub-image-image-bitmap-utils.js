@@ -5,6 +5,7 @@ function checkCanvasRect(buf, x, y, width, height, color, tolerance, bufWidth, r
             var offset = (py * bufWidth + px) * 4;
             for (var j = 0; j < color.length; j++) {
                 if (Math.abs(buf[offset + j] - color[j]) > tolerance) {
+                    console.log(color[j] + " ---> " + buf[offset + j]);
                     retVal.testPassed = false;
                     return;
                 }
