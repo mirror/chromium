@@ -55,7 +55,8 @@ class WebRtcMediaStreamTrackAdapterMapTest : public ::testing::Test {
         FROM_HERE,
         base::Bind(&WebRtcMediaStreamTrackAdapterMapTest::
                        GetOrCreateRemoteTrackAdapterOnSignalingThread,
-                   base::Unretained(this), webrtc_track, &adapter));
+                   base::Unretained(this), base::Unretained(webrtc_track),
+                   &adapter));
     RunMessageLoopsUntilIdle();
     return adapter;
   }

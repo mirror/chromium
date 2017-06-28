@@ -46,19 +46,6 @@ namespace internal {
 //  BindState<> -- Stores the curried parameters, and is the main entry point
 //                 into the Bind() system.
 
-template <typename...>
-struct make_void {
-  using type = void;
-};
-
-// A clone of C++17 std::void_t.
-// Unlike the original version, we need |make_void| as a helper struct to avoid
-// a C++14 defect.
-// ref: http://en.cppreference.com/w/cpp/types/void_t
-// ref: http://open-std.org/JTC1/SC22/WG21/docs/cwg_defects.html#1558
-template <typename... Ts>
-using void_t = typename make_void<Ts...>::type;
-
 template <typename Callable,
           typename Signature = decltype(&Callable::operator())>
 struct ExtractCallableRunTypeImpl;
@@ -482,7 +469,8 @@ struct MakeBindStateTypeImpl;
 
 template <typename Functor, typename... BoundArgs>
 struct MakeBindStateTypeImpl<false, Functor, BoundArgs...> {
-  static_assert(!HasRefCountedTypeAsRawPtr<BoundArgs...>::value,
+  static_assert(!HasRefCountedTypeAsRawPtr<
+                    typename std::decay<BoundArgs>::type...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
   using Type = BindState<typename std::decay<Functor>::type,
                          typename std::decay<BoundArgs>::type...>;
@@ -498,7 +486,8 @@ struct MakeBindStateTypeImpl<true, Functor, Receiver, BoundArgs...> {
   static_assert(
       !std::is_array<typename std::remove_reference<Receiver>::type>::value,
       "First bound argument to a method cannot be an array.");
-  static_assert(!HasRefCountedTypeAsRawPtr<BoundArgs...>::value,
+  static_assert(!HasRefCountedTypeAsRawPtr<
+                    typename std::decay<BoundArgs>::type...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
 
  private:
