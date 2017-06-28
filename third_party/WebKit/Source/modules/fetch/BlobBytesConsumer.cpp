@@ -160,7 +160,7 @@ void BlobBytesConsumer::Cancel() {
   }
   if (!blob_url_.IsEmpty()) {
     BlobRegistry::RevokePublicBlobURL(blob_url_);
-    blob_url_ = KURL();
+    blob_url_ = NullURL();
   }
   blob_data_handle_ = nullptr;
 }

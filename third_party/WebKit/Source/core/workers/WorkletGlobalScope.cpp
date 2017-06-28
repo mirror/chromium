@@ -77,7 +77,7 @@ KURL WorkletGlobalScope::VirtualCompleteURL(const String& url) const {
   // TODO(ikilpatrick): Should we change the KURL constructor to have this
   // behavior?
   if (url.IsNull())
-    return KURL();
+    return NullURL();
   // Always use UTF-8 in Worklets.
   return KURL(url_, url);
 }

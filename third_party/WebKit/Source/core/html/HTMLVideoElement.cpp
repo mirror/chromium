@@ -423,7 +423,7 @@ unsigned HTMLVideoElement::webkitDroppedFrameCount() const {
 KURL HTMLVideoElement::PosterImageURL() const {
   String url = StripLeadingAndTrailingHTMLSpaces(ImageSourceURL());
   if (url.IsEmpty())
-    return KURL();
+    return NullURL();
   return GetDocument().CompleteURL(url);
 }
 

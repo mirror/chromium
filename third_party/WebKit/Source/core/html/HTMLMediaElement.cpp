@@ -2898,7 +2898,7 @@ KURL HTMLMediaElement::SelectNextSourceChild(
     if (should_log)
       BLINK_MEDIA_LOG << "selectNextSourceChild(" << (void*)this
                       << ") -> 0x0000, \"\"";
-    return KURL();
+    return NullURL();
   }
 
   KURL media_url;
