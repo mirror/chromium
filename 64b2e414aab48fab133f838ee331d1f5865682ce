@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9618c937_8cb53e36",
+        "filename": "chrome/browser/metrics/thread_watcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-28T16:02:49Z",
+      "side": 1,
+      "message": "Hmm, is the IO thread not also going away?  I know the doc only mentions the DB thread, but I\u0027ve been generalizing a bit.  Maybe I shouldn\u0027t be!",
+      "range": {
+        "startLine": 248,
+        "startChar": 20,
+        "endLine": 248,
+        "endChar": 33
+      },
+      "revId": "64b2e414aab48fab133f838ee331d1f5865682ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
