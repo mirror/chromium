@@ -46,6 +46,30 @@
       "revId": "7f780ea400b8e07570f76d46d05e222bddce1348",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09214050_790df0ea",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-28T14:24:02Z",
+      "side": 1,
+      "message": "it\u0027s fine to delete the else clause. in practice, it doesn\u0027t matter even if it is hit since we don\u0027t block shutdown on the IsUpdatePendingRestart call.",
+      "parentUuid": "ace29ce2_89354020",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "7f780ea400b8e07570f76d46d05e222bddce1348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
