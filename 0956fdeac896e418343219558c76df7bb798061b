@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29dcb82c_c084cb65",
+        "filename": "media/filters/chunk_demuxer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4783,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-28T22:40:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a05e3a_3c61c0b5",
+      "range": {
+        "startLine": 4783,
+        "startChar": 25,
+        "endLine": 4783,
+        "endChar": 57
+      },
+      "revId": "0956fdeac896e418343219558c76df7bb798061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dccaf63_70c1bd58",
         "filename": "media/filters/frame_processor.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-28T21:24:48Z",
       "side": 1,
       "message": "Make this WARNING instead of DEBUG?\n\nAlso, I think this is too much spec-speak. I would revise to:\n\n\"\"\"\nUsing MSE \u0027sequence\u0027 AppendMode with a multiple tracks in a single SourceBuffer may cause loss of track synchronization. In some cases, buffered range gaps and playback stalls can occur. It is recommended to instead use \u0027segments\u0027 mode for multitrack SourceBuffers.\n\"\"\"",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 20
+      },
+      "revId": "0956fdeac896e418343219558c76df7bb798061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1200ee_d0dd9f0e",
+        "filename": "media/filters/frame_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-28T22:40:32Z",
+      "side": 1,
+      "message": "From offline chat, there is no WARNING MediaLog level; I\u0027ll put \"Warning:\" as a prefix to a slightly modified version of your suggested updated log text.\n\nI\u0027d like to make it clearer that this support is likely to become deprecated in the spec and implementations. That can come in a later CL along with UMA/UKM/RAPPOR to help us understand if/when we can fully drop support for muxed \u0027sequence\u0027 append mode. I\u0027ve filed https://crbug.com/737757 to track such work, now that it\u0027s obtained support from Mozilla on the MSE spec issue.\n\nFrom further thought, I\u0027ve filed https://crbug.com/737768 to track documenting those levels better (and perhaps reclassify many of the existing DEBUG to be INFO and change the DEBUG MediaLog level type name/text to be WARNING).\n\nDone.",
+      "parentUuid": "4dccaf63_70c1bd58",
       "range": {
         "startLine": 214,
         "startChar": 12,
