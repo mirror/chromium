@@ -35,6 +35,7 @@
 #include "chrome/browser/net/prediction_options.h"
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/notifications/extension_welcome_notification.h"
+#include "chrome/browser/notifications/notification_channels_provider_android.h"
 #include "chrome/browser/notifications/notifier_state_tracker.h"
 #include "chrome/browser/pepper_flash_settings_manager.h"
 #include "chrome/browser/plugins/plugin_finder.h"
@@ -647,6 +648,10 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
   offline_pages::RegisterPrefetchBackgroundTaskPrefs(registry);
+#endif
+
+#if defined(OS_ANDROID)
+  NotificationChannelsProviderAndroid::RegisterProfilePrefs(registry);
 #endif
 }
 
