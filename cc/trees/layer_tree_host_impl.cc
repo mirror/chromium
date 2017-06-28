@@ -1117,6 +1117,15 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
         base::saturated_cast<int>(active_tree_->NumLayers()), 1, 400, 20);
   }
 
+  size_t total_gpu_memory_for_tilings_in_kb = 0;
+  for (const PictureLayerImpl* layer : active_tree()->picture_layers())
+    total_gpu_memory_for_tilings_in_kb += layer->GPUMemoryUsageInBytes() / 1024;
+  if (total_gpu_memory_for_tilings_in_kb > 0) {
+    UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Scroll.GPUMemoryForTilingsInKB",
+                                total_gpu_memory_for_tilings_in_kb, 1,
+                                kGPUMemoryLargestBucket, kGPUMemoryBucketCount);
+  }
+
   bool update_lcd_text = false;
   bool ok = active_tree_->UpdateDrawProperties(update_lcd_text);
   DCHECK(ok) << "UpdateDrawProperties failed during draw";
