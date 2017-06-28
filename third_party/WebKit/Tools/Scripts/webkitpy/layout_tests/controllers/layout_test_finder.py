@@ -77,6 +77,12 @@ class LayoutTestFinder(object):
             test_files = all_tests
             running_all_tests = True
 
+        print 'in LayoutTestFinder.find_tests, all_tests is...'
+        if len(all_tests) > len(set(all_tests)):
+            print 'NOT UNIQUE'
+        else:
+            print 'uniqueeeee'
+
         return (paths, test_files, running_all_tests)
 
     def _times_trie(self):

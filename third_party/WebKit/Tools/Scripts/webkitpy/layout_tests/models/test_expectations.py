@@ -607,13 +607,11 @@ class TestExpectationsModel(object):
 
     def merge_model(self, other):
         self._merge_test_map(self._test_to_expectations, other._test_to_expectations)
-
         # merge_expectation_lines is O(tests per line). Therefore, this loop
         # is O((tests per line)^2) which is really expensive when a line
         # contains a lot of tests. Cache the output of merge_expectation_lines
         # so that we only call that n^2 in the number of *lines*.
         merge_lines_cache = defaultdict(dict)
-
         for test, other_line in other._test_to_expectation_line.items():
             merged_line = None
             if test in self._test_to_expectation_line:
@@ -676,8 +674,13 @@ class TestExpectationsModel(object):
         """Returns the expectations for the given test as an uppercase string.
         If there are no expectations for the test, then "PASS" is returned.
         """
-        if self.get_expectation_line(test).is_extra_skipped_test:
-            return 'NOTRUN'
+        try:
+            if self.get_expectation_line(test).is_extra_skipped_test:
+                return 'NOTRUN'
+        except AttributeError as e:
+            print e
+            print test
+            raise
 
         expectations = self.get_expectations(test)
         retval = []
@@ -702,7 +705,16 @@ class TestExpectationsModel(object):
         if not self.has_test(test.name):
             return
         self._clear_expectations_for_test(test)
-        del self._test_to_expectation_line[test]
+
+        print 'TEST      IN', test in self._test_to_expectation_line, test.name
+        print 'TEST.NAME IN', test.name in self._test_to_expectation_line, test.name
+
+        try:
+            del self._test_to_expectation_line[test.name]
+        except KeyError as e:
+            print 'KeyError', test.name
+            print e
+            raise
 
     def add_expectation_line(self, expectation_line,
                              model_all_expectations=False):
@@ -1185,6 +1197,7 @@ class TestExpectations(object):
         self._model.merge_model(model)
 
     def remove_tests_from_expectations(self, tests_to_remove):
+        print 'remove_tests_from_expectations ------------------------------'
         for test in self._expectations:
             if not test.name:
                 continue
@@ -1194,6 +1207,7 @@ class TestExpectations(object):
             if not self._model.has_test(test.name):
                 continue
             line = self._model.get_expectation_line(test.name)
+            print 'line', line
             self._model.remove_expectation_line(line)
 
     def add_expectations_from_bot(self):
