@@ -70,6 +70,9 @@ class MediaEngagementScore final {
   void SetMediaPlaybacks(int media_playbacks) {
     media_playbacks_ = media_playbacks;
   }
+  void SetLastMediaPlaybackTime(base::Time last_media_playback_time) {
+    last_media_playback_time_ = last_media_playback_time;
+  }
 
  private:
   friend class MediaEngagementScoreTest;
