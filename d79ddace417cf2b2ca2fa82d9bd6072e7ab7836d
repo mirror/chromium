@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3bdeac42_bc6b18ee",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-28T20:38:36Z",
+      "side": 1,
+      "message": "Okay, this is so much simpler :) I think combining the events just reduces the number of events sent by half, but if the event is disabled by default this shouldn\u0027t be much of a problem. Updated patch.",
+      "parentUuid": "8c44af75_f1670569",
+      "revId": "d79ddace417cf2b2ca2fa82d9bd6072e7ab7836d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a94d872_23074a72",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 3
