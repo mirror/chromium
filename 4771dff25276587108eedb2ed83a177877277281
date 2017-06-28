@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "a9c5b3a6_a1e4db3c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-28T05:15:18Z",
+      "side": 1,
+      "message": "That\u0027s true. This is a flag to bypass the ResourceLoadScheduler\u0027s throttling/scheduling, and we would pass options here eventually to do more smart shceduling and throttling in the ResourceLoadScheduler. Even though, we may still keep this bypass flag.",
+      "parentUuid": "c1b612a0_5c56ce57",
+      "revId": "4771dff25276587108eedb2ed83a177877277281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f39d2b_39e48b03",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 11

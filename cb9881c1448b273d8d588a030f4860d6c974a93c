@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6e13f56_daa7a3f4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-28T05:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "893da966_74168a4e",
+      "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37e1d0fb_87416c55",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc8a3b1_da25fc1c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-28T05:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37e1d0fb_87416c55",
+      "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "d3ce9c30_d72c011f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-28T05:15:18Z",
+      "side": 1,
+      "message": "Thanks. This should not happen any more in the last patch set. Let me change this to DCHECK.\n\nIn the previous design, Request() does not take a RequestId pointer, but returns a RequestId.\nIn the design, I need to manage to call Release() from many places, and this was hit by the case when sync request failed.",
+      "parentUuid": "f4e8423d_ce2370a2",
+      "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0671cec_75e784aa",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 14
@@ -84,6 +138,24 @@
       "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f217f496_8192d468",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-28T05:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0671cec_75e784aa",
+      "revId": "cb9881c1448b273d8d588a030f4860d6c974a93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
