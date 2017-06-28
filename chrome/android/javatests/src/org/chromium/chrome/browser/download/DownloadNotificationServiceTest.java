@@ -311,13 +311,13 @@ public class DownloadNotificationServiceTest extends
                 id1, "/path/to/success", "success", 100L, false, false, true, null);
         entries = DownloadManagerService.getStoredDownloadInfo(
                 sharedPrefs, DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS);
-        assertEquals(2, entries.size());
+        assertEquals(3, entries.size());
 
         ContentId id2 = LegacyHelpers.buildLegacyContentId(false, guid2);
         service.notifyDownloadFailed(id2, "failed", null);
         entries = DownloadManagerService.getStoredDownloadInfo(
                 sharedPrefs, DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS);
-        assertEquals(1, entries.size());
+        assertEquals(2, entries.size());
 
         service.notifyDownloadCanceled(id3);
         assertEquals(2, getService().getNotificationIds().size());
