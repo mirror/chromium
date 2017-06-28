@@ -22,6 +22,30 @@
       "revId": "52d1c7d17d56cb3e90bdcbd48c35b234784b62a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27086575_e53d1914",
+        "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-28T02:55:11Z",
+      "side": 1,
+      "message": "Got it! Given that after this patch what controls the modes is WebURLRequest, no longer |options|, I\u0027d move this to right above it i.e. L157.",
+      "parentUuid": "acfec754_7d6eac29",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 46
+      },
+      "revId": "52d1c7d17d56cb3e90bdcbd48c35b234784b62a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
