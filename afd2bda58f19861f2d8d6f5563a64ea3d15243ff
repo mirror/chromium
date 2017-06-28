@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "2c280ed8_649be4a0",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-28T16:42:05Z",
+      "side": 1,
+      "message": "s/override_//",
+      "range": {
+        "startLine": 480,
+        "startChar": 11,
+        "endLine": 480,
+        "endChar": 50
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ddf95c_de869bf3",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-28T16:42:05Z",
+      "side": 1,
+      "message": "s/max_delayable_requests_by_bdp_ranges/max_delayable_requests_by_bdp/",
+      "range": {
+        "startLine": 481,
+        "startChar": 41,
+        "endLine": 481,
+        "endChar": 77
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f145ca_b1c54276",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-28T16:42:05Z",
+      "side": 1,
+      "message": "Add method comments.",
+      "range": {
+        "startLine": 505,
+        "startChar": 9,
+        "endLine": 505,
+        "endChar": 51
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892f7952_60f4989c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-28T16:42:05Z",
+      "side": 1,
+      "message": "s/const net::URLRequest*/const net::URLRequest\u0026/",
+      "range": {
+        "startLine": 506,
+        "startChar": 6,
+        "endLine": 506,
+        "endChar": 28
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cba962c_5af5ce74",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 25
@@ -25,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "8dc87f30_8597845a",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-28T16:42:05Z",
+      "side": 1,
+      "message": "stale comment?",
+      "range": {
+        "startLine": 1096,
+        "startChar": 9,
+        "endLine": 1096,
+        "endChar": 12
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ea8a888_eb26227e",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 25
@@ -41,6 +156,52 @@
         "startChar": 7,
         "endLine": 33,
         "endChar": 32
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29738de2_28298501",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-28T16:42:05Z",
+      "side": 1,
+      "message": "s/bandwidth delay product (BDP) information\n  // obtained from the network quality estimator module/network quality estimates./",
+      "range": {
+        "startLine": 163,
+        "startChar": 39,
+        "endLine": 163,
+        "endChar": 48
+      },
+      "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8481cbe3_37602565",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-28T16:42:05Z",
+      "side": 1,
+      "message": "may be:\ns/max_delayable_requests_network_override_max_ect_/max_delayable_requests_threshold_/",
+      "range": {
+        "startLine": 167,
+        "startChar": 6,
+        "endLine": 167,
+        "endChar": 54
       },
       "revId": "afd2bda58f19861f2d8d6f5563a64ea3d15243ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
