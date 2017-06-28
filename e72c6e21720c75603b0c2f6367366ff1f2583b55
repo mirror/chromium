@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da02bdbe_3a44b3c3",
+        "filename": "build/linux/bin/eu-strip",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-06-28T15:15:39Z",
+      "side": 1,
+      "message": "Yeah I thought this was strange as well. It does show up on a diff check with master. Not sure how it got there, but I deleted it.",
+      "parentUuid": "4e27d6bb_e9aaf265",
+      "revId": "e72c6e21720c75603b0c2f6367366ff1f2583b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8b12ed7_2f79a97d",
         "filename": "ui/views/controls/menu/menu_controller.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-28T13:19:50Z",
       "side": 1,
       "message": "Nice work identifying a method that can handle the edge case.\n\nWhat are your thoughts on HandleMouseLocation duplicating some of the work being done in thie method, before we call into it?",
+      "range": {
+        "startLine": 629,
+        "startChar": 50,
+        "endLine": 629,
+        "endChar": 0
+      },
+      "revId": "e72c6e21720c75603b0c2f6367366ff1f2583b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e59744_3ad22727",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-06-28T15:15:39Z",
+      "side": 1,
+      "message": "I agree. There is definitely extra work. Made a new fix that has some code duplication but should achieve the correct result without the extra work.",
+      "parentUuid": "f8b12ed7_2f79a97d",
       "range": {
         "startLine": 629,
         "startChar": 50,
