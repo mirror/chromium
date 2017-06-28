@@ -143,7 +143,7 @@ constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
             "chrome URLs, resources for installed extensions, as well as "
             "downloads."
           trigger:
-            "Navigating to a URL or downloading a file.  A webpage, "
+            "Navigating to a URL or downloading a file. A webpage, "
             "ServiceWorker, chrome:// page, or extension may also initiate "
             "requests in the background."
           data: "Anything the initiator wants to send."
@@ -875,9 +875,11 @@ void ResourceDispatcherHostImpl::OnRequestResource(
     ResourceRequesterInfo* requester_info,
     int routing_id,
     int request_id,
-    const ResourceRequest& request_data) {
-  OnRequestResourceInternal(requester_info, routing_id, request_id,
-                            request_data, nullptr, nullptr);
+    const ResourceRequest& request_data,
+    net::MutableNetworkTrafficAnnotationTag traffic_annotation) {
+  OnRequestResourceInternal(
+      requester_info, routing_id, request_id, request_data, nullptr, nullptr,
+      net::NetworkTrafficAnnotationTag(traffic_annotation));
 }
 
 void ResourceDispatcherHostImpl::OnRequestResourceInternal(
@@ -886,7 +888,8 @@ void ResourceDispatcherHostImpl::OnRequestResourceInternal(
     int request_id,
     const ResourceRequest& request_data,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   // TODO(pkasting): Remove ScopedTracker below once crbug.com/477117 is fixed.
   tracked_objects::ScopedTracker tracking_profile(
@@ -906,7 +909,7 @@ void ResourceDispatcherHostImpl::OnRequestResourceInternal(
   }
   BeginRequest(requester_info, request_id, request_data,
                SyncLoadResultCallback(), routing_id, std::move(mojo_request),
-               std::move(url_loader_client));
+               std::move(url_loader_client), traffic_annotation);
 }
 
 // Begins a resource request with the given params on behalf of the specified
@@ -926,7 +929,7 @@ void ResourceDispatcherHostImpl::OnSyncLoad(
       base::Bind(&HandleSyncLoadResult, requester_info->filter()->GetWeakPtr(),
                  base::Passed(WrapUnique(sync_result)));
   BeginRequest(requester_info, request_id, request_data, callback,
-               sync_result->routing_id(), nullptr, nullptr);
+               sync_result->routing_id(), nullptr, nullptr, kTrafficAnnotation);
 }
 
 bool ResourceDispatcherHostImpl::IsRequestIDInUse(
@@ -1088,7 +1091,8 @@ void ResourceDispatcherHostImpl::BeginRequest(
     const SyncLoadResultCallback& sync_result_handler,  // only valid for sync
     int route_id,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   int child_id = requester_info->child_id();
 
@@ -1206,7 +1210,8 @@ void ResourceDispatcherHostImpl::BeginRequest(
                   base::Unretained(this), make_scoped_refptr(requester_info),
                   request_id, request_data, sync_result_handler, route_id,
                   headers, base::Passed(std::move(mojo_request)),
-                  base::Passed(std::move(url_loader_client))));
+                  base::Passed(std::move(url_loader_client)),
+                  traffic_annotation));
           return;
         }
       }
@@ -1215,7 +1220,7 @@ void ResourceDispatcherHostImpl::BeginRequest(
   ContinuePendingBeginRequest(
       requester_info, request_id, request_data, sync_result_handler, route_id,
       headers, std::move(mojo_request), std::move(url_loader_client),
-      HeaderInterceptorResult::CONTINUE);
+      traffic_annotation, HeaderInterceptorResult::CONTINUE);
 }
 
 void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
@@ -1227,6 +1232,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     const net::HttpRequestHeaders& headers,
     mojom::URLLoaderAssociatedRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
     HeaderInterceptorResult interceptor_result) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   if (interceptor_result != HeaderInterceptorResult::CONTINUE) {
@@ -1272,7 +1278,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   std::unique_ptr<net::URLRequest> new_request = request_context->CreateRequest(
       is_navigation_stream_request ? request_data.resource_body_stream_url
                                    : request_data.url,
-      request_data.priority, nullptr, kTrafficAnnotation);
+      request_data.priority, nullptr, traffic_annotation);
 
   if (is_navigation_stream_request) {
     // PlzNavigate: Always set the method to GET when gaining access to the
@@ -2237,10 +2243,11 @@ void ResourceDispatcherHostImpl::OnRequestResourceWithMojo(
     int request_id,
     const ResourceRequest& request,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   OnRequestResourceInternal(requester_info, routing_id, request_id, request,
                             std::move(mojo_request),
-                            std::move(url_loader_client));
+                            std::move(url_loader_client), traffic_annotation);
 }
 
 void ResourceDispatcherHostImpl::OnSyncLoadWithMojo(
@@ -2250,7 +2257,7 @@ void ResourceDispatcherHostImpl::OnSyncLoadWithMojo(
     const ResourceRequest& request_data,
     const SyncLoadResultCallback& result_handler) {
   BeginRequest(requester_info, request_id, request_data, result_handler,
-               routing_id, nullptr, nullptr);
+               routing_id, nullptr, nullptr, kTrafficAnnotation);
 }
 
 // static
