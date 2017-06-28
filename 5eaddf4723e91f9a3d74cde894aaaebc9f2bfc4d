@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1072d60d_e2e3c1a1",
+        "filename": "chrome/browser/ui/libgtkui/gtk_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-06-28T18:05:41Z",
+      "side": 1,
+      "message": "Maybe it would be better to push this back into GetRawDeviceScaleFactor instead?",
+      "range": {
+        "startLine": 1042,
+        "startChar": 2,
+        "endLine": 1042,
+        "endChar": 71
+      },
+      "revId": "5eaddf4723e91f9a3d74cde894aaaebc9f2bfc4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
