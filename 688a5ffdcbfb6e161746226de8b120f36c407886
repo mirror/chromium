@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0da73506_1cf52604",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T17:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "067724d3_2580fe48",
+      "revId": "688a5ffdcbfb6e161746226de8b120f36c407886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0db08681_bf41e231",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f57dcd07_6c129c8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T17:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0db08681_bf41e231",
+      "revId": "688a5ffdcbfb6e161746226de8b120f36c407886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a013248e_dfc9a627",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-28T10:53:06Z",
       "side": 1,
       "message": "How does this change (and the ones below) relate to the rest of this CL? It looks like something else to me.",
+      "revId": "688a5ffdcbfb6e161746226de8b120f36c407886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433eea51_8560aaeb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T17:55:00Z",
+      "side": 1,
+      "message": "This comes from the removed PaddingStart() and PaddingEnd() (from LayoutTable.h: https://chromium-review.googlesource.com/c/551106/3/third_party/WebKit/Source/core/layout/LayoutTable.h#b298) which truncated value of paddings.",
+      "parentUuid": "a013248e_dfc9a627",
       "revId": "688a5ffdcbfb6e161746226de8b120f36c407886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
