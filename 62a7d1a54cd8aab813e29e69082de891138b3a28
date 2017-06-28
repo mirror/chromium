@@ -22,6 +22,30 @@
       "revId": "62a7d1a54cd8aab813e29e69082de891138b3a28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586c793c_2d764786",
+        "filename": "chromecast/renderer/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-06-28T20:55:52Z",
+      "side": 1,
+      "message": "Done.  I guess gn check allowed it because it\u0027s in public_deps for service_manager/public/cpp which is in deps above?",
+      "parentUuid": "1e8fd0cd_86c44eae",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 3
+      },
+      "revId": "62a7d1a54cd8aab813e29e69082de891138b3a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
