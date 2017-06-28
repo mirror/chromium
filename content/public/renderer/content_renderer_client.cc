@@ -257,4 +257,8 @@ bool ContentRendererClient::AllowMediaSuspend() {
   return true;
 }
 
+bool ContentRendererClient::AllowCriticalMemoryPressureHandlingInForeground() {
+  return false;
+}
+
 }  // namespace content

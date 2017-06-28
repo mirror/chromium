@@ -370,6 +370,11 @@ class CONTENT_EXPORT ContentRendererClient {
 
   // Returns true if the media pipeline can be suspended, or false otherwise.
   virtual bool AllowMediaSuspend();
+
+  // Returns true if critical memory pressure handling may run in foreground.
+  // This may impact performance.  If false, memory pressure is downgraded to
+  // moderate when in foreground.
+  virtual bool AllowCriticalMemoryPressureHandlingInForeground();
 };
 
 }  // namespace content
