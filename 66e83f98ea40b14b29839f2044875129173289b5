@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95244b46_38c33ed1",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-28T17:47:36Z",
+      "side": 0,
+      "message": "Feel apps grid view should not have enlarged size of page_switcher_width. It will make ContentsView::GetDefaultContentsSize() returns a width with page_switcher\u0027s width.",
+      "revId": "66e83f98ea40b14b29839f2044875129173289b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

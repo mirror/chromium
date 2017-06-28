@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3480921_e73b87fc",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-28T17:47:36Z",
+      "side": 1,
+      "message": "for the first row of app tiles, we already have 6px top padding, thus we only need the extra 2px for total 8px padding.",
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
