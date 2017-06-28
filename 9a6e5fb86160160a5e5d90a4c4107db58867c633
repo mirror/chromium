@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0a3f227a_18e9ada8",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-28T20:25:01Z",
+      "side": 1,
+      "message": "Um, I do not think we want to write a script to generate this stuff. The script would have to:\n\n  - Parse a C++ enum definition\n  - Generate a mojom equivalent\n  - Generate EnumTraits\n\nIf you want to go in the other direction instead (parsing a mojom enum to generate a C++ enum)... well, that is already done by the mojom bindings generator.\n\nIn this case I think you\u0027re in luck because WebFeature is already an enum class, so you can get away with an alias and not have to update all uses of the existing type. I would just move the definition into mojom, and replace the existing definition with:\n\n  using WebFeature \u003d mojom::WebFeature;\n\nThere should be no issues with this AFAICT",
+      "parentUuid": "ced97718_8699a932",
+      "revId": "9a6e5fb86160160a5e5d90a4c4107db58867c633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be7d5b86_54a9eefa",
         "filename": "chrome/renderer/page_load_metrics/page_timing_metrics_sender.h",
         "patchSetId": 2
