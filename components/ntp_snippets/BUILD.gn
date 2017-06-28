@@ -105,6 +105,7 @@ static_library("ntp_snippets") {
     "//components/favicon_base",
     "//components/history/core/browser",
     "//components/image_fetcher/core",
+    "//components/language/core/browser",
     "//components/metrics",
     "//components/ntp_snippets/remote/proto",
     "//components/offline_pages/core",

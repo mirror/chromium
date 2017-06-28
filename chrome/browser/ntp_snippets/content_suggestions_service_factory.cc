@@ -16,12 +16,12 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/favicon/large_icon_service_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
+#include "chrome/browser/language/url_language_histogram_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/suggestions/image_decoder_impl.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
-#include "chrome/browser/translate/language_model_factory.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
@@ -32,6 +32,7 @@
 #include "components/image_fetcher/core/image_fetcher_impl.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/core/service_access_type.h"
+#include "components/language/core/browser/url_language_histogram.h"
 #include "components/ntp_snippets/bookmarks/bookmark_suggestions_provider.h"
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
 #include "components/ntp_snippets/content_suggestions_service.h"
@@ -50,7 +51,6 @@
 #include "components/safe_json/safe_json_parser.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
-#include "components/translate/core/browser/language_model.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -90,6 +90,7 @@ using bookmarks::BookmarkModel;
 using content::BrowserThread;
 using history::HistoryService;
 using image_fetcher::ImageFetcherImpl;
+using language::UrlLanguageHistogram;
 using ntp_snippets::BookmarkSuggestionsProvider;
 using ntp_snippets::CategoryRanker;
 using ntp_snippets::ContentSuggestionsService;
@@ -105,7 +106,6 @@ using ntp_snippets::TabDelegateSyncAdapter;
 using ntp_snippets::UserClassifier;
 using suggestions::ImageDecoderImpl;
 using syncer::SyncService;
-using translate::LanguageModel;
 
 // For now, ContentSuggestionsService must only be instantiated on Android.
 // See also crbug.com/688366.
@@ -193,7 +193,7 @@ void RegisterPhysicalWebPageProvider(
 void RegisterArticleProvider(SigninManagerBase* signin_manager,
                              OAuth2TokenService* token_service,
                              ContentSuggestionsService* service,
-                             LanguageModel* language_model,
+                             UrlLanguageHistogram* language_histogram,
                              UserClassifier* user_classifier,
                              PrefService* pref_service,
                              Profile* profile) {
@@ -227,7 +227,7 @@ void RegisterArticleProvider(SigninManagerBase* signin_manager,
   }
   auto suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcher>(
       signin_manager, token_service, request_context, pref_service,
-      language_model, base::Bind(&safe_json::SafeJsonParser::Parse),
+      language_histogram, base::Bind(&safe_json::SafeJsonParser::Parse),
       GetFetchEndpoint(chrome::GetChannel()), api_key, user_classifier);
   auto provider = base::MakeUnique<RemoteSuggestionsProviderImpl>(
       service, pref_service, g_browser_process->GetApplicationLocale(),
@@ -386,11 +386,12 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
   if (base::FeatureList::IsEnabled(ntp_snippets::kArticleSuggestionsFeature)) {
     OAuth2TokenService* token_service =
         ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
-    LanguageModel* language_model =
-        LanguageModelFactory::GetInstance()->GetForBrowserContext(profile);
+    UrlLanguageHistogram* language_histogram =
+        UrlLanguageHistogramFactory::GetInstance()->GetForBrowserContext(
+            profile);
     RegisterArticleProvider(signin_manager, token_service, service,
-                            language_model, user_classifier_raw, pref_service,
-                            profile);
+                            language_histogram, user_classifier_raw,
+                            pref_service, profile);
   }
 
   if (base::FeatureList::IsEnabled(
