@@ -91,6 +91,7 @@
 #include "net/http/http_network_session.h"
 #include "net/http/http_server_properties_impl.h"
 #include "net/http/http_transaction_factory.h"
+#include "net/log/log_urls_to_file.h"
 #include "net/net_features.h"
 #include "net/nqe/external_estimate_provider.h"
 #include "net/nqe/network_quality_estimator_params.h"
@@ -533,6 +534,13 @@ void IOThread::Init() {
       net_log_));
   globals_->network_quality_observer = content::CreateNetworkQualityObserver(
       globals_->network_quality_estimator.get());
+
+  if (command_line.HasSwitch(switches::kLogUrlsLog)) {
+    base::FilePath log_urls_path =
+        base::CommandLine::ForCurrentProcess()->GetSwitchValuePath(
+            switches::kLogUrlsLog);
+    net_log::LogUrlsToFile::GetInstance()->SetPath(log_urls_path);
+  }
 
   std::vector<scoped_refptr<const net::CTLogVerifier>> ct_logs(
       net::ct::CreateLogVerifiersForKnownLogs());
