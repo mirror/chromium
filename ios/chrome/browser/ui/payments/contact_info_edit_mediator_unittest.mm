@@ -15,6 +15,7 @@
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type_util.h"
 #import "ios/chrome/browser/ui/payments/payment_request_edit_consumer.h"
 #import "ios/chrome/browser/ui/payments/payment_request_editor_field.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/OCMock/OCMock.h"
@@ -31,6 +32,8 @@ class PaymentRequestContactInfoEditMediatorTest : public PlatformTest {
       : payment_request_(base::MakeUnique<TestPaymentRequest>(
             payment_request_test_util::CreateTestWebPaymentRequest(),
             &personal_data_manager_)) {}
+
+  web::TestWebThreadBundle thread_bundle_;
 
   autofill::TestPersonalDataManager personal_data_manager_;
   std::unique_ptr<TestPaymentRequest> payment_request_;

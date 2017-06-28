@@ -28,6 +28,7 @@
 #import "ios/chrome/browser/ui/payments/payment_request_view_controller_data_source.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/web/public/payments/payment_request.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -144,6 +145,8 @@ class PaymentRequestViewControllerTest : public CollectionViewControllerTest {
     // Add testing profile and credit card to autofill::TestPersonalDataManager.
     personal_data_manager_.AddTestingProfile(&autofill_profile_);
     personal_data_manager_.AddTestingCreditCard(&credit_card_);
+
+    web::TestWebThreadBundle thread_bundle_;
 
     payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),

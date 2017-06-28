@@ -16,6 +16,7 @@
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
+#include "ios/chrome/browser/payments/test_payment_request.h"
 #import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/test/scoped_key_window.h"
 #import "ios/testing/ocmock_complex_type_helper.h"
@@ -83,7 +84,7 @@ class PaymentRequestCoordinatorTest : public PlatformTest {
     personal_data_manager_.AddTestingProfile(&autofill_profile_);
     personal_data_manager_.AddTestingCreditCard(&credit_card_);
 
-    payment_request_ = base::MakeUnique<PaymentRequest>(
+    payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
         &personal_data_manager_);
 

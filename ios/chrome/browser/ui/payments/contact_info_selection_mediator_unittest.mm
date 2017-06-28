@@ -13,6 +13,7 @@
 #import "ios/chrome/browser/payments/payment_request_util.h"
 #include "ios/chrome/browser/payments/test_payment_request.h"
 #import "ios/chrome/browser/ui/payments/cells/autofill_profile_item.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/gtest_support.h"
@@ -49,6 +50,8 @@ class PaymentRequestContactInfoSelectionMediatorTest : public PlatformTest {
   }
 
   ContactInfoSelectionMediator* GetMediator() { return mediator_; }
+
+  web::TestWebThreadBundle thread_bundle_;
 
   ContactInfoSelectionMediator* mediator_;
 

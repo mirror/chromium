@@ -35,11 +35,13 @@ source_set("unit_tests") {
     ":payments",
     ":test_support",
     "//base",
+    "//base/test:test_support",
     "//components/autofill/core/browser",
     "//components/autofill/core/browser:test_support",
     "//components/payments/core",
     "//ios/chrome/browser",
     "//ios/web",
+    "//ios/web/public/test",
     "//testing/gtest",
   ]
 }
