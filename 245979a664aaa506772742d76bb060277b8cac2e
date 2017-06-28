@@ -16,6 +16,24 @@
       "revId": "245979a664aaa506772742d76bb060277b8cac2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10cb211_3289c180",
+        "filename": "chrome/browser/ui/views/payments/credit_card_editor_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-28T18:43:36Z",
+      "side": 1,
+      "message": "I agree the interface is not super great for now (it grew into a multi-purpose monster!). I\u0027ll think of ways to make it smaller/better. For now I don\u0027t want to add ValidateValue to the interface because it\u0027s not always the right method to call.",
+      "parentUuid": "89de44c3_37483df6",
+      "revId": "245979a664aaa506772742d76bb060277b8cac2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
