@@ -4,6 +4,8 @@
 
 #import "ios/web/navigation/navigation_manager_impl.h"
 
+#include <array>
+
 #include "base/logging.h"
 #include "base/mac/bind_objc_block.h"
 #import "ios/web/navigation/crw_session_controller+private_constructors.h"
@@ -1401,6 +1403,27 @@ TEST_P(NavigationManagerTest, GetIndexOfItem) {
   EXPECT_EQ(0, navigation_manager()->GetIndexOfItem(item0));
   EXPECT_EQ(1, navigation_manager()->GetIndexOfItem(item1));
   EXPECT_EQ(-1, navigation_manager()->GetIndexOfItem(item_not_found.get()));
+}
+
+// Tests that Restore() creates the correct navigation state.
+TEST_P(NavigationManagerTest, Restore) {
+  // Create some NavigationItems and keep a raw pointer to them.
+  std::array<const NavigationItem*, 3> raw_items;
+  std::vector<std::unique_ptr<NavigationItem>> items;
+  for (size_t index = 0; index < raw_items.size(); ++index) {
+    items.push_back(NavigationItem::Create());
+    raw_items[index] = items.back().get();
+  }
+
+  // Call Restore() and check that the NavigationItems are in the correct order
+  // and that the last committed index is correct too.
+  navigation_manager()->Restore(1, std::move(items));
+
+  EXPECT_EQ(3, navigation_manager()->GetItemCount());
+  EXPECT_EQ(1, navigation_manager()->GetLastCommittedItemIndex());
+  for (size_t i = 0; i < raw_items.size(); ++i) {
+    EXPECT_EQ(raw_items[i], navigation_manager()->GetItemAtIndex(i));
+  }
 }
 
 INSTANTIATE_TEST_CASE_P(
