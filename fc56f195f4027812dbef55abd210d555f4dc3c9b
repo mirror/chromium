@@ -45,6 +45,54 @@
       "revId": "fc56f195f4027812dbef55abd210d555f4dc3c9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128ea449_9c977c16",
+        "filename": "chrome/installer/util/google_update_settings.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-28T15:45:57Z",
+      "side": 1,
+      "message": "No they \"will\" per the BLOCK_SHUTDOWN trait (well except fast shutdown paths... but then nothing ever blocks there so we couldn\u0027t document anything as blocking shutdown if we followed that rule).\n\nThis is intentional to make sure UMA preferences are saved after first run, accepting a bubble, etc. even if the browser is closed shortly after.",
+      "parentUuid": "b0ac1887_e6040d36",
+      "range": {
+        "startLine": 83,
+        "startChar": 29,
+        "endLine": 83,
+        "endChar": 33
+      },
+      "revId": "fc56f195f4027812dbef55abd210d555f4dc3c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbe423d_fa60d408",
+        "filename": "chrome/installer/util/google_update_settings.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-28T15:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c53914_342656f3",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 15
+      },
+      "revId": "fc56f195f4027812dbef55abd210d555f4dc3c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
