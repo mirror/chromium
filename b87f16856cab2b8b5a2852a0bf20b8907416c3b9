@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdfe3c7a_4911966a",
+        "filename": "ui/webui/resources/cr_elements/policy/compiled_resources2.gyp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-28T00:06:06Z",
+      "side": 1,
+      "message": "cr_policy_network_behavior.js is using enums defined in cr_onc_types.js, but it does not depend on it at runtime. Is this accidentally working because of a transitive dependency? See [1] and [2]. Shlould an explicit HTML import for cr_onc_types.html exist?\n\n[1] https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/policy/cr_policy_network_behavior.js?l\u003d79-80\n[2]  https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/network/cr_onc_types.js?l\u003d178",
+      "revId": "b87f16856cab2b8b5a2852a0bf20b8907416c3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484d00f6_5e7263be",
+        "filename": "ui/webui/resources/cr_elements_resources.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-28T00:06:06Z",
+      "side": 1,
+      "message": "Should this be IDR_CR_ELEMENTS_CHROMEOS_CR_ONC_TYPES_HTML ? Similar question for the two following entries.",
+      "revId": "b87f16856cab2b8b5a2852a0bf20b8907416c3b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
