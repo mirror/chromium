@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "777596ca_6271c484",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesSection.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-28T22:38:50Z",
+      "side": 1,
+      "message": "JSDoc please",
+      "revId": "4b6312f6d21613062f0a11f910683a0c07ffa051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535d8829_6273e189",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesSection.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-28T22:38:50Z",
+      "side": 1,
+      "message": "So, you rely on onselect calling _preparePreview here.\nLet\u0027s make _preparePreview() cache the promise itself. This way, we can use this._previewPromise() everywhere instead of this._previewPromise.",
+      "range": {
+        "startLine": 334,
+        "startChar": 26,
+        "endLine": 334,
+        "endChar": 41
+      },
+      "revId": "4b6312f6d21613062f0a11f910683a0c07ffa051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
