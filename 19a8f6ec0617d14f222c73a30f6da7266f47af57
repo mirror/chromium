@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bedf2ed5_00b06a71",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T15:41:26Z",
+      "side": 1,
+      "message": "Should we return the new value here like NoBarrier_AtomicIncrement did, to avoid needing to load() if you want to read it? Is there no case where that happens?",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc818c86_ca2701d9",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T15:41:26Z",
+      "side": 1,
+      "message": "This matches atomicops_internals_portable.h, but on windows we did Barrier_AtomicIncrement() in this case (https://cs.chromium.org/chromium/src/base/atomicops_internals_x86_msvc.h?rcl\u003d1210a1e9dba536eee2edcc05e0f9c40528178065\u0026l\u003d56) which did InterlockedExchangeAdd64.\n\nDouble checking windows isn\u0027t going to have problems with this change? Is there something we could verify?",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb872b2_f6e9928e",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T15:41:26Z",
+      "side": 1,
+      "message": "This used to be memory_order_seq_cst (the default), which gives cross-thread guarantees that acq_rel does not, is this what you wanted, why?",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f992d6f_5e1e0a09",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T15:41:26Z",
+      "side": 1,
+      "message": "Can we put subtle and scary things in the function name?",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79be222b_320b87ad",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T15:41:26Z",
+      "side": 1,
+      "message": "Why are these const_casts needed?",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ee2bf2_9fb07b60",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T15:41:26Z",
+      "side": 1,
+      "message": "Why does {0} work here, when (0) wouldn\u0027t right? This isn\u0027t struct init, cuz the member is private, can you explain?",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
