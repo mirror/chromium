@@ -103,7 +103,9 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
   SkPath fill;
   const float fill_bottom = (visible_height - 2) * scale;
   const float diag_height = fill_bottom - 3.5 * scale;
-  const float diag_width = diag_height * Tab::GetInverseDiagonalSlope();
+  const float diag_width =
+      diag_height * Tab::GetInverseDiagonalSlopeForEndcapWidth(
+                        tab_strip_->GetTabEndcapWidth());
   fill.moveTo(diag_width + 4 * scale, fill_bottom);
   fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
                 -1.5 * scale);
@@ -160,7 +162,8 @@ void NewTabButton::GetBorderPath(float button_y,
                                  float scale,
                                  bool extend_to_top,
                                  SkPath* path) const {
-  const float inverse_slope = Tab::GetInverseDiagonalSlope();
+  const float inverse_slope = Tab::GetInverseDiagonalSlopeForEndcapWidth(
+      tab_strip_->GetTabEndcapWidth());
   const float fill_bottom =
       (GetLayoutSize(NEW_TAB_BUTTON).height() - 2) * scale;
   const float stroke_bottom = button_y + fill_bottom + 1;
