@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5858b80e_a141e544",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-28T18:46:36Z",
+      "side": 1,
+      "message": "Eek, I just realized LayoutObject::ScrollRectToVisible is hidden, not overridden, by LayoutBox::ScrollRectToVisible. This is really misleading as, in this case, we\u0027d be calling a different method if we did\n\nToLayoutBox(GetLayoutObject())-\u003eScrollRectToVisible(...)\n\nWe should either change the name on one of them or make LayoutBox override it. Lets make sure we do that in a followup patch.",
+      "range": {
+        "startLine": 532,
+        "startChar": 21,
+        "endLine": 532,
+        "endChar": 40
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cc392ea_d06247aa",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 3
@@ -18,6 +41,29 @@
         "startChar": 24,
         "endLine": 654,
         "endChar": 46
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ee99ce_27b3fafa",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-28T18:46:36Z",
+      "side": 1,
+      "message": "Why does it help to move these here? RunQueuedAnimations was the next call in Element::scrollIntoViewWithOptions after this call. Also, why did we lose the `if(behavior \u003d\u003d kScrollBehaviorSmooth)`?",
+      "range": {
+        "startLine": 640,
+        "startChar": 55,
+        "endLine": 640,
+        "endChar": 74
       },
       "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -105,6 +151,30 @@
       "writtenOn": "2017-06-28T17:29:11Z",
       "side": 1,
       "message": "What happens in the reversed case? When the outer scroller is smooth but the inner scroller is instant?",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 34
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18d546a_ecad3d0c",
+        "filename": "third_party/WebKit/Source/web/tests/SmoothScrollTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-28T18:46:36Z",
+      "side": 1,
+      "message": "As mentioned offline, we\u0027ll perform all instant scrolls at the time of the API call and queue only the smooth scrolls. Giving it some thought, I think this is fine but lets add a test here that does this.",
+      "parentUuid": "fd9a48e8_a8eee550",
       "range": {
         "startLine": 313,
         "startChar": 2,
