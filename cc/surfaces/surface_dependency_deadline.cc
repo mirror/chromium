@@ -33,9 +33,24 @@ void SurfaceDependencyDeadline::Cancel() {
   number_of_frames_to_deadline_.reset();
 }
 
+void SurfaceDependencyDeadline::InheritFrom(
+    const SurfaceDependencyDeadline& other) {
+  Cancel();
+  last_begin_frame_args_ = other.last_begin_frame_args_;
+  begin_frame_source_ = other.begin_frame_source_;
+  number_of_frames_to_deadline_ = other.number_of_frames_to_deadline_;
+  if (number_of_frames_to_deadline_)
+    begin_frame_source_->AddObserver(this);
+}
+
 // BeginFrameObserver implementation.
 void SurfaceDependencyDeadline::OnBeginFrame(const BeginFrameArgs& args) {
   last_begin_frame_args_ = args;
+  // OnBeginFrame might get called immediately after cancellation if some other
+  // deadline triggered this deadline to be canceled.
+  if (!number_of_frames_to_deadline_ || args.type == BeginFrameArgs::MISSED)
+    return;
+
   if (--(*number_of_frames_to_deadline_) > 0)
     return;
 

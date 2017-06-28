@@ -31,6 +31,8 @@ class SurfaceDependencyDeadline : public BeginFrameObserver {
     return number_of_frames_to_deadline_.has_value();
   }
 
+  void InheritFrom(const SurfaceDependencyDeadline& other);
+
   // BeginFrameObserver implementation.
   void OnBeginFrame(const BeginFrameArgs& args) override;
   const BeginFrameArgs& LastUsedBeginFrameArgs() const override;
