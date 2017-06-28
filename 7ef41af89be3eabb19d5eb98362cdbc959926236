@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d53dee91_cd5675f0",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-28T15:06:13Z",
+      "side": 1,
+      "message": "nit: I wonder if it would make more sense to merge the two new tests together?",
+      "revId": "7ef41af89be3eabb19d5eb98362cdbc959926236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93004f72_89794505",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-28T15:06:13Z",
+      "side": 1,
+      "message": "nit:s/WCO/WebContentsObserver",
+      "revId": "7ef41af89be3eabb19d5eb98362cdbc959926236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
