@@ -456,7 +456,13 @@ SchedulerSingleThreadTaskRunnerManager::CreateTaskRunnerWithTraitsImpl(
 }
 
 void SchedulerSingleThreadTaskRunnerManager::JoinForTesting() {
-  ReleaseSharedSchedulerWorkers();
+  auto released_shared_workers = ReleaseSharedSchedulerWorkers();
+  for (const auto& worker : released_shared_workers) {
+    // Shared SchedulerWorkers should never come back as nullptr from
+    // UnregisterSchedulerWorker().
+    DCHECK(worker);
+    worker->JoinForTesting();
+  }
 
   decltype(workers_) local_workers;
   {
@@ -523,7 +529,8 @@ SchedulerSingleThreadTaskRunnerManager::GetSharedSchedulerWorkerForTraits<
 }
 #endif  // defined(OS_WIN)
 
-void SchedulerSingleThreadTaskRunnerManager::UnregisterSchedulerWorker(
+scoped_refptr<SchedulerWorker>
+SchedulerSingleThreadTaskRunnerManager::UnregisterSchedulerWorker(
     SchedulerWorker* worker) {
   // Cleanup uses a SchedulerLock, so call Cleanup() after releasing
   // |lock_|.
@@ -537,7 +544,7 @@ void SchedulerSingleThreadTaskRunnerManager::UnregisterSchedulerWorker(
 #if DCHECK_IS_ON()
       subtle::NoBarrier_AtomicIncrement(&workers_unregistered_during_join_, 1);
 #endif
-      return;
+      return nullptr;
     }
 
     auto worker_iter =
@@ -550,9 +557,11 @@ void SchedulerSingleThreadTaskRunnerManager::UnregisterSchedulerWorker(
     workers_.erase(worker_iter);
   }
   worker_to_destroy->Cleanup();
+  return worker_to_destroy;
 }
 
-void SchedulerSingleThreadTaskRunnerManager::ReleaseSharedSchedulerWorkers() {
+std::vector<scoped_refptr<SchedulerWorker>>
+SchedulerSingleThreadTaskRunnerManager::ReleaseSharedSchedulerWorkers() {
   decltype(shared_scheduler_workers_) local_shared_scheduler_workers;
 #if defined(OS_WIN)
   decltype(shared_com_scheduler_workers_) local_shared_com_scheduler_workers;
@@ -569,14 +578,22 @@ void SchedulerSingleThreadTaskRunnerManager::ReleaseSharedSchedulerWorkers() {
     }
   }
 
+  std::vector<scoped_refptr<SchedulerWorker>> unregistered_workers;
+
   for (size_t i = 0; i < arraysize(local_shared_scheduler_workers); ++i) {
-    if (local_shared_scheduler_workers[i])
-      UnregisterSchedulerWorker(local_shared_scheduler_workers[i]);
+    if (local_shared_scheduler_workers[i]) {
+      unregistered_workers.push_back(
+          UnregisterSchedulerWorker(local_shared_scheduler_workers[i]));
+    }
 #if defined(OS_WIN)
-    if (local_shared_com_scheduler_workers[i])
-      UnregisterSchedulerWorker(local_shared_com_scheduler_workers[i]);
+    if (local_shared_com_scheduler_workers[i]) {
+      unregistered_workers.push_back(
+          UnregisterSchedulerWorker(local_shared_com_scheduler_workers[i]));
+    }
 #endif
   }
+
+  return unregistered_workers;
 }
 
 }  // namespace internal
