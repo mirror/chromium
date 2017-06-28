@@ -228,6 +228,24 @@
       "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e621a0_46d75009",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-28T20:39:09Z",
+      "side": 1,
+      "message": "WDYT about Iterator (all ops), OffsetIterator (mandatory offsets), CompositeIterator { optional\u003cIterator\u003e optional\u003cOffsetIterator\u003e } (which could just live in SolidColorAnalyzer)? That way the logic\u0027s easier to read, and SolidColorAnalyzer can still get the composition it needs.  Am I overthinking this?  I just find the Iterator here hard to read because it\u0027s in two different modes.",
+      "parentUuid": "d293c1e2_8671484f",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
