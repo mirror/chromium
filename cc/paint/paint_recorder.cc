@@ -4,7 +4,8 @@
 
 #include "cc/paint/paint_recorder.h"
 
-#include "cc/paint/paint_op_buffer.h"
+#include "cc/paint/display_item_list.h"
+#include "ui/gfx/skia_util.h"
 
 namespace cc {
 
@@ -13,8 +14,10 @@ PaintRecorder::PaintRecorder() = default;
 PaintRecorder::~PaintRecorder() = default;
 
 PaintCanvas* PaintRecorder::beginRecording(const SkRect& bounds) {
-  buffer_ = sk_make_sp<PaintOpBuffer>();
-  canvas_.emplace(buffer_.get(), bounds);
+  display_item_list_ = base::MakeRefCounted<DisplayItemList>();
+  display_item_list_->StartPaint();
+  bounds_ = bounds;
+  canvas_.emplace(display_item_list_.get(), bounds);
   return getRecordingCanvas();
 }
 
@@ -32,8 +35,10 @@ sk_sp<PaintRecord> PaintRecorder::finishRecordingAsPicture() {
   // to know if recording is finished, so reset it here.
   canvas_.reset();
 
-  buffer_->ShrinkToFit();
-  return std::move(buffer_);
+  display_item_list_->EndPaintOfUnpaired(
+      gfx::ToEnclosingRect(gfx::SkRectToRectF(bounds_)));
+  display_item_list_->Finalize();
+  return display_item_list_->ReleaseAsRecord();
 }
 
 }  // namespace cc

@@ -53,8 +53,8 @@ void DisplayItemList::Raster(SkCanvas* canvas,
   if (!GetCanvasClipBounds(canvas, &canvas_playback_rect))
     return;
 
-  std::vector<size_t> indices = rtree_.Search(canvas_playback_rect);
-  paint_op_buffer_.Playback(canvas, callback, &indices);
+  std::vector<size_t> offsets = rtree_.Search(canvas_playback_rect);
+  paint_op_buffer_.Playback(canvas, callback, &offsets);
 }
 
 void DisplayItemList::GrowCurrentBeginItemVisualRect(
@@ -70,12 +70,24 @@ void DisplayItemList::Finalize() {
   // If this fails we had more calls to EndPaintOfPairedBegin() than
   // to EndPaintOfPairedEnd().
   DCHECK_EQ(0, in_paired_begin_count_);
+  DCHECK_EQ(visual_rects_.size(), offsets_.size());
 
   paint_op_buffer_.ShrinkToFit();
-  rtree_.Build(visual_rects_);
+  rtree_.Build(visual_rects_,
+               [](const std::vector<gfx::Rect>& rects, size_t index) {
+                 return rects[index];
+               },
+               [this](const std::vector<gfx::Rect>& rects, size_t index) {
+                 // Ignore the given rects, since the payload comes from
+                 // offsets. However, the indices match, so we can just index
+                 // into offsets.
+                 return offsets_[index];
+               });
 
   visual_rects_.clear();
   visual_rects_.shrink_to_fit();
+  offsets_.clear();
+  offsets_.shrink_to_fit();
   begin_paired_indices_.shrink_to_fit();
 }
 
@@ -203,16 +215,16 @@ sk_sp<PaintRecord> DisplayItemList::ReleaseAsRecord() {
 
 bool DisplayItemList::GetColorIfSolidInRect(const gfx::Rect& rect,
                                             SkColor* color) {
-  std::vector<size_t>* indices_to_use = nullptr;
-  std::vector<size_t> indices;
+  std::vector<size_t>* offsets_to_use = nullptr;
+  std::vector<size_t> offsets;
   if (!rect.Contains(rtree_.GetBounds())) {
-    indices = rtree_.Search(rect);
-    indices_to_use = &indices;
+    offsets = rtree_.Search(rect);
+    offsets_to_use = &offsets;
   }
 
   base::Optional<SkColor> solid_color =
       SolidColorAnalyzer::DetermineIfSolidColor(&paint_op_buffer_, rect,
-                                                indices_to_use);
+                                                offsets_to_use);
   if (solid_color) {
     *color = *solid_color;
     return true;

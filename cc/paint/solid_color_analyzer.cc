@@ -133,8 +133,8 @@ void CheckIfSolidRect(const SkCanvas& canvas,
 base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
     const PaintOpBuffer* buffer,
     const gfx::Rect& rect,
-    const std::vector<size_t>* indices) {
-  if (buffer->size() == 0 || (indices && indices->empty()))
+    const std::vector<size_t>* offsets) {
+  if (buffer->size() == 0 || (offsets && offsets->empty()))
     return SK_ColorTRANSPARENT;
 
   bool is_solid = false;
@@ -161,7 +161,7 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
   // We expect to see at least one DrawRecordOp because of the way items are
   // constructed. Reserve this to 2, and go from there.
   stack.reserve(2);
-  stack.emplace_back(PaintOpBuffer::Iterator(buffer, indices),
+  stack.emplace_back(PaintOpBuffer::Iterator(buffer, offsets),
                      canvas.getTotalMatrix(), canvas.getSaveCount());
 
   int num_ops = 0;
