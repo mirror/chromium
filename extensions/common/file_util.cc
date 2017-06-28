@@ -279,7 +279,7 @@ bool ValidateExtension(const Extension* extension,
   // not on the reserved list. We only warn, and do not block the loading of the
   // extension.
   std::string warning;
-  if (!CheckForIllegalFilenames(extension->path(), &warning))
+  if (CheckForIllegalFilenames(extension->path(), &warning) && !warning.empty())
     warnings->push_back(InstallWarning(warning));
 
   // Check that the extension does not include any Windows reserved filenames.
@@ -343,7 +343,9 @@ bool CheckForIllegalFilenames(const base::FilePath& extension_path,
                               std::string* error) {
   // Reserved underscore names.
   static const base::FilePath::CharType* reserved_names[] = {
-      kLocaleFolder, kPlatformSpecificFolder, FILE_PATH_LITERAL("__MACOSX"), };
+      kMetadataFolder, kLocaleFolder, kPlatformSpecificFolder,
+      FILE_PATH_LITERAL("__MACOSX"),
+  };
   CR_DEFINE_STATIC_LOCAL(
       std::set<base::FilePath::StringType>,
       reserved_underscore_names,
@@ -363,6 +365,13 @@ bool CheckForIllegalFilenames(const base::FilePath& extension_path,
     // Skip all that don't start with "_".
     if (filename.find_first_of(FILE_PATH_LITERAL("_")) != 0)
       continue;
+    // Treat inclusion of the kMetadataFolder as a warning, not a hard error.
+    if (filename == kMetadataFolder) {
+      *error = base::StringPrintf(
+          "_metadata is a reserved directory that will not be allowed at the "
+          "time of Chrome Web Store upload.");
+      return true;
+    }
     if (reserved_underscore_names.find(filename) ==
         reserved_underscore_names.end()) {
       *error = base::StringPrintf(
