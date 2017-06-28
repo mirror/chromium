@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb42a7fb_7a868fcd",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T18:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb65591_b632a8b5",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d774506_10b90177",
         "filename": "cc/paint/display_item_list.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-28T18:17:10Z",
       "side": 1,
       "message": "It\u0027s a little sad to me to have to push all this templating goop out another level, but I don\u0027t really have a better thought here.  It is nice to use this level of indirection to make sure offsets are always pushed, though.",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2609b43_acadea8c",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T18:47:38Z",
+      "side": 1,
+      "message": "Yeah I initially felt that it was a bit of a hack, but I do really like the property that DIL doesn\u0027t expose POB anymore, which means that there is no way to do anything with the rtree/pob unless you go through these functions.",
+      "parentUuid": "6d774506_10b90177",
       "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4291c233_5cb101c0",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T18:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93b8c6da_872631bb",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f098a13_e8fa942d",
         "filename": "cc/paint/paint_op_buffer.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3fefc997_e92bc4d9",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T18:47:38Z",
+      "side": 1,
+      "message": "This is my attempt at protecting access to the offset iteration. Both the Iterator ctor(with offsets) and PaintOpBuffer::Playback(with offsets) are private with only DisplayItemList and SolidColorAnalyzer as friends. This just means that outside code can only do full playback (no offsets). For testing, I could\u0027ve friended each test but this seemed better? Or maybe I can just friend PaintOpBufferOffsetsTest... I did that instead.",
+      "parentUuid": "0f098a13_e8fa942d",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5de054b_1c0b19da",
         "filename": "cc/paint/paint_op_buffer.h",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-28T18:17:10Z",
       "side": 1,
       "message": "Do you think it makes sense to have two iterators? One that handles offsets and one that doesn\u0027t? I think they behave pretty differently internally and having them both in the same Iterator seems like it might make it more complicated.",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7923b3_47bc6288",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T18:47:38Z",
+      "side": 1,
+      "message": "Hmm, it makes it a bit awkward for things like SolidColorAnalyzer that takes the offsets as a parameter. Then it would have to either create this Iterator or OffsetIterator depending on whether things are null or not. I\u0027d kind of prefer to leave it as is, unless you feel strongly about it.",
+      "parentUuid": "a5de054b_1c0b19da",
       "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
