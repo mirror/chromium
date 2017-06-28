@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89de44c3_37483df6",
+        "filename": "chrome/browser/ui/views/payments/credit_card_editor_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-28T15:35:52Z",
+      "side": 1,
+      "message": "Why not just call ValidateWhatever in the places where you need the string instead. I\u0027m not sure the relationship between all those functions is clear/well built.",
+      "revId": "245979a664aaa506772742d76bb060277b8cac2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
