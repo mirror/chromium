@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afc4da34_49cf8e35",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/tracing/TracedValue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:37:05Z",
+      "side": 1,
+      "message": "Hmm. If we\u0027re going to do this, we should actually expose all of the non-copied variants in base::trace_event::TracedValue. (Ideally we would match the names there to avoid confusion, rather than setting an opposite convention.)",
+      "revId": "9127f1642ac1e147e854a1eda6c8d20cb07ebe71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
