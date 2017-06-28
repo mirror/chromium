@@ -34,6 +34,24 @@
       "revId": "9c7ce99de0239a612cbfd9ca23e31341641435d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe73bfaa_e713750e",
+        "filename": "tools/perf/core/sharding_map_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-06-28T00:20:23Z",
+      "side": 1,
+      "message": "\"Users\" here mean you, me \u0026 Emily, so don\u0027t stress out too much here.\n\nThough can you rename the flag to {\"--also-update-sharding-file\", \"-u\"} if you want dry run to be the default? In general, flag should not use negative sense to avoid unnecessary cognitive load on users.",
+      "parentUuid": "d7f38efc_bf9c7fd9",
+      "revId": "9c7ce99de0239a612cbfd9ca23e31341641435d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
