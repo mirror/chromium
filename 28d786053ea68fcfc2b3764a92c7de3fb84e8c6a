@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41327755_58dbaab6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-28T17:56:42Z",
+      "side": 1,
+      "message": "nit: let\u0027s use BottomSheet#isInOverviewMode() here just in case canMoveSheet() gets called before mActivity is set.",
+      "range": {
+        "startLine": 1395,
+        "startChar": 21,
+        "endLine": 1395,
+        "endChar": 30
+      },
+      "revId": "28d786053ea68fcfc2b3764a92c7de3fb84e8c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
