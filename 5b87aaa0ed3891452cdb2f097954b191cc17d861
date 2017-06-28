@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78accda0_6cea0e80",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T17:53:17Z",
+      "side": 1,
+      "message": "Did you need to add this string?",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc113f7f_96ab8469",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T17:53:17Z",
+      "side": 1,
+      "message": "This isn\u0027t actually going to be shown. The Msgs.js module looks up the msgid  and subs the localized string.",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47fc553b_9c8959a4",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T17:53:17Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82c381e6_0541484f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T17:53:17Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "106f18dd_44a45a2f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T17:53:17Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5819af5_df3d627a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T17:53:17Z",
+      "side": 1,
+      "message": "Did the mock make this into a radio group? Does this still work without any code changes to options.js?",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4126f7d1_bfa4cadc",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-28T17:53:17Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5b87aaa0ed3891452cdb2f097954b191cc17d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
