@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd33781f_fc21e756",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T17:24:01Z",
+      "side": 1,
+      "message": "The control flow here for initialization is quite complicated, and I think it can be simplified. Would something like the following work (and just require that InitializePlatformLanguage() be called once)\n\nnamespace {\n\n// Main thread AtomicString. IsolatedCopy needed for any other thread.\nconst AtomicString* g_platform_language \u003d nullptr;\n\nconst AtomicString\u0026 PlatformLanguage() {\n  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific\u003cAtomicString\u003e, thread_specific_language, ());\n  AtomicString\u0026 this_thread_language \u003d *thread_specific_language;\n  if (this_thread_language.IsNull())\n    this_thread_language \u003d g_platform_language-\u003eGetString().IsolatedCopy();\n  return this_thread_language;\n}\n\n}  // namespace\n\nvoid InitializePlatformLanguage() {\n  DEFINE_STATIC_LOCAL(const AtomicString, platform_language,\n      CanonicalizeLanguageIdentifier(Platform::Current()-\u003eDefaultLocale());\n  g_platform_language \u003d \u0026platform_language;\n}\n\nIt could maybe be finagled to share FontGlobalContext instead of a separate ThreadSpecific, if you prefer, but I\u0027d rather this not get too messy.",
+      "revId": "6e256e6a148aa5a4e5270f04bf4b903035863d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e83448_af84cca6",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T17:24:01Z",
+      "side": 1,
+      "message": "anonymous namespace please",
+      "revId": "6e256e6a148aa5a4e5270f04bf4b903035863d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60667c2_b6bbf83d",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T17:24:01Z",
+      "side": 1,
+      "message": "nit: perferred -\u003e preferred",
+      "revId": "6e256e6a148aa5a4e5270f04bf4b903035863d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
