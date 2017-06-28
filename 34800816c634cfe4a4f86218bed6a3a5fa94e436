@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e9b50c6_a8576b13",
+        "filename": "ash/metrics/user_metrics_action.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-28T23:53:48Z",
+      "side": 0,
+      "message": "Presumably, nothing actually uses the underlying numeric enum values in UMA logging, since these are all action counts and not histograms, so removing these two entries (and thus renumbering the subsequent entries) should be okay, right?",
+      "revId": "34800816c634cfe4a4f86218bed6a3a5fa94e436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
