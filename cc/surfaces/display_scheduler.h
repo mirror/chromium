@@ -32,6 +32,7 @@ class CC_SURFACES_EXPORT DisplaySchedulerClient {
   virtual bool SurfaceDamaged(const SurfaceId& surface_id,
                               const BeginFrameAck& ack) = 0;
   virtual void SurfaceDiscarded(const SurfaceId& surface_id) = 0;
+  virtual const RendererSettings& GetRendererSettings() const = 0;
 };
 
 class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
@@ -73,7 +74,9 @@ class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
   void OnSurfaceWillDraw(const SurfaceId& surface_id) override;
 
  protected:
+  enum class BeginFrameDeadlineMode { IMMEDIATE, REGULAR, LATE };
   base::TimeTicks DesiredBeginFrameDeadlineTime();
+  BeginFrameDeadlineMode DesiredBeginFrameDeadlineMode();
   virtual void ScheduleBeginFrameDeadline();
   bool AttemptDrawAndSwap();
   void OnBeginFrameDeadline();
