@@ -185,7 +185,8 @@ class InputHandlerProxy
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
 
   EventDisposition HitTestTouchEvent(const blink::WebTouchEvent& touch_event,
-                                     bool* is_touching_scrolling_layer);
+                                     bool* is_touching_scrolling_layer,
+                                     cc::TouchAction* touch_action);
 
   std::unique_ptr<blink::WebGestureCurve> fling_curve_;
   // Parameters for the active fling animation, stored in case we need to
