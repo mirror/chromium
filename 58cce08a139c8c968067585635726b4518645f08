@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c9936a_bfecb536",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-28T02:09:16Z",
+      "side": 0,
+      "message": "[Separate issue] Why do we need to Remove() here?\nI feel there\u0027s no reason to prevent |resource| from reusing here, and now Remove() doesn\u0027t affect the lifetime of the Resource. Not-referenced resources are likely to GC\u0027ed and thus removed from MemoryCache automatically after they are removed from |preloads_| (which holds strong references).",
+      "range": {
+        "startLine": 1311,
+        "startChar": 8,
+        "endLine": 1311,
+        "endChar": 43
+      },
+      "revId": "58cce08a139c8c968067585635726b4518645f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

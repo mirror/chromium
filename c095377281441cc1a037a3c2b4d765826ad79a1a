@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea69c87e_8bb94555",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-28T02:09:16Z",
+      "side": 1,
+      "message": "[Separate issue] \nI expect this preloading condition for Remove() can be removed, because this was originally to avoid loading error response twice in preload and the actual load, and now we process preloading not via MemoryCache and thus we can safely remove the Resource from MemoryCache, while keeping it in the preload table.",
+      "range": {
+        "startLine": 401,
+        "startChar": 34,
+        "endLine": 401,
+        "endChar": 70
+      },
+      "revId": "c095377281441cc1a037a3c2b4d765826ad79a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7705578f_f306fb14",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-28T02:09:16Z",
+      "side": 1,
+      "message": "I like this simple state transition assumption, but isn\u0027t the following scenario possible?\n(I\u0027m not sure though)\n\n1. Preload is started on ResourceFetcher A, a Resource X is created, and its loading is done (but isn\u0027t matched yet).\n2. Resource X is reused and revalidated on ResourceFetcher B via MemoryCache. X\u0027s preload_state_ is set to kNotPreload.\n3. The preload is matched on ResourceFetcher B and thus this DCHECK fails.",
+      "range": {
+        "startLine": 968,
+        "startChar": 2,
+        "endLine": 968,
+        "endChar": 51
+      },
+      "revId": "c095377281441cc1a037a3c2b4d765826ad79a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
