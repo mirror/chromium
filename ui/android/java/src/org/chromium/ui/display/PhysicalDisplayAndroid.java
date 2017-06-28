@@ -114,8 +114,9 @@ import java.lang.reflect.Method;
             try {
                 Configuration config =
                         ContextUtils.getApplicationContext().getResources().getConfiguration();
-                if (sIsScreenWideColorGamut == null)
+                if (sIsScreenWideColorGamut == null) {
                     sIsScreenWideColorGamut = config.getClass().getMethod("isScreenWideColorGamut");
+                }
                 isWideColorGamut = (Boolean) sIsScreenWideColorGamut.invoke(config);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 Log.e(TAG, "Error invoking isScreenWideColorGamut:", e);
