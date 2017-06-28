@@ -16,6 +16,47 @@
       "revId": "1a7edb62700924b7c3bb35387cc6eecdff110ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49adfa2c_ee6358d5",
+        "filename": "chrome/browser/ui/window_visibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-28T00:04:34Z",
+      "side": 1,
+      "message": "I like the simplistic approach of only checking browser windows. Checking all windows is indeed better, but I think it\u0027ll prove subtle and particularly tricky. For example, the code you have below doesn\u0027t deal with shaped windows and/or transparent windows.\n\nSo, I would be inclined to change this function to take a set of windows and then return a vector based on order (or take a vector and have it reorder in place, either one).\n\nAlso, please make this take a callback as in the mash world this will be an async operation.",
+      "parentUuid": "efe6cc78_e51989cf",
+      "revId": "1a7edb62700924b7c3bb35387cc6eecdff110ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bf34f8_00079861",
+        "filename": "chrome/browser/ui/window_visibility_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-28T00:04:34Z",
+      "side": 1,
+      "message": "Move this file into the ash directory.",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "1a7edb62700924b7c3bb35387cc6eecdff110ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
