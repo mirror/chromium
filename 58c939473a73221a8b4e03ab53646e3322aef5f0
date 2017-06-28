@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7a0b026_61fed29b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queue_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-28T17:05:42Z",
+      "side": 1,
+      "message": "Not needed for this patch?",
+      "range": {
+        "startLine": 6,
+        "startChar": 6,
+        "endLine": 6,
+        "endChar": 19
+      },
+      "revId": "58c939473a73221a8b4e03ab53646e3322aef5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
