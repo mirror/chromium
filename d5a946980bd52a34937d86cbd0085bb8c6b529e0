@@ -16,6 +16,24 @@
       "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1debd3f_a3ff7552",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/overridemimetype-blob-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-28T12:48:07Z",
+      "side": 1,
+      "message": "Sorry, I just heard from yhirano@ that you decided to postpone fixing this. So, never mind.",
+      "parentUuid": "39c53dff_f60cb27a",
+      "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
