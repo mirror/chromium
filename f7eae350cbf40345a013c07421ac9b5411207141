@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b17d998d_7a46966c",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-28T15:28:08Z",
+      "side": 1,
+      "message": "Let\u0027s use a similar message as the one from line 481.",
+      "revId": "f7eae350cbf40345a013c07421ac9b5411207141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd0eef3_f390a1cd",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-28T15:28:08Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of explicitly stating which parameters need to change when in this comment.\nInstead, let\u0027s just remove this sentence as the comments below describe when to call the functions well enough.",
+      "revId": "f7eae350cbf40345a013c07421ac9b5411207141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
