@@ -15,13 +15,13 @@
 #include "base/optional.h"
 #include "base/time/clock.h"
 #include "base/time/tick_clock.h"
+#include "components/language/core/browser/url_language_histogram.h"
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/category_info.h"
 #include "components/ntp_snippets/remote/json_request.h"
 #include "components/ntp_snippets/remote/remote_suggestion.h"
 #include "components/ntp_snippets/remote/request_params.h"
 #include "components/ntp_snippets/status.h"
-#include "components/translate/core/browser/language_model.h"
 #include "components/version_info/version_info.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -86,7 +86,7 @@ class RemoteSuggestionsFetcher {
       OAuth2TokenService* token_service,
       scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
       PrefService* pref_service,
-      translate::LanguageModel* language_model,
+      language::UrlLanguageHistogram* language_histogram,
       const ParseJSONCallback& parse_json_callback,
       const GURL& api_endpoint,
       const std::string& api_key,
@@ -175,7 +175,7 @@ class RemoteSuggestionsFetcher {
       pending_requests_;
 
   // Weak reference, not owned.
-  translate::LanguageModel* const language_model_;
+  language::UrlLanguageHistogram* const language_histogram_;
 
   const ParseJSONCallback parse_json_callback_;
 

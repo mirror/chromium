@@ -12,7 +12,7 @@ include_rules = [
   "+components/signin",
   "+components/strings/grit/components_strings.h",
   "+components/sync/driver",
-  "+components/translate/core/browser",
+  "+components/language/core/browser",
   "+components/url_formatter",
   "+components/variations",
   "+components/version_info",
