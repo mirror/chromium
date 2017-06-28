@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d3b7b87_58ef6fb2",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "I guess enabled in Android means !disabled, but !enabled only means disabled if it\u0027s a control?",
+      "parentUuid": "fe3658ac_1aff547a",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0b957b1_56647ec6",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
         "patchSetId": 12
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "e04ca532_5215f6ab",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "Enabled means something can take input, so it\u0027s generally a control. A paragraph normally isn\u0027t enabled (unless it\u0027s editable). This may be different from how OS X or Android defines enabled, but I believe it\u0027s compatible with ATK (the header docs are unclear to me there).\n\nI guess one downside of the control mode enum we came up with is that controls that manually set node data need need to be marked as enabled (rather than having that determination be in another layer based on the role).",
+      "parentUuid": "13676290_d4063d72",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56a3a1ee_80c18e60",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 12
@@ -64,6 +100,24 @@
       "writtenOn": "2017-06-27T21:13:58Z",
       "side": 1,
       "message": "Ditto. This looks more verbose.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0857f35_cb72a953",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "I agree, it is a downside of the approach the team came up with. I think the upsides are elsewhere in the code.",
+      "parentUuid": "56a3a1ee_80c18e60",
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "693b62ab_931cdc88",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "Was a merge error, I\u0027ll fix.",
+      "parentUuid": "982bc1d0_77569f3e",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cdcd1b8_52d5624a",
         "filename": "chrome/test/data/extensions/api_test/automation/tests/tabs/find.js",
         "patchSetId": 12
@@ -98,6 +170,24 @@
       "writtenOn": "2017-06-27T21:13:58Z",
       "side": 1,
       "message": "We use single quotes in js \"\u0027\" for string literals.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef1a3cfc_98336370",
+        "filename": "chrome/test/data/extensions/api_test/automation/tests/tabs/find.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "Ok, good, thank you.",
+      "parentUuid": "2cdcd1b8_52d5624a",
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "a480c522_12df3991",
+        "filename": "chrome/test/data/extensions/api_test/automation/tests/tabs/sanity_check.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "It is, I\u0027ll add that assertion.",
+      "parentUuid": "d373c87a_9b462337",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a1d9719_8886cd4f",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_blink.cc",
         "patchSetId": 12
@@ -132,6 +240,24 @@
       "writtenOn": "2017-06-27T21:13:58Z",
       "side": 1,
       "message": "Move this comment downward to what I think it applies to?",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44e38f3b_454135b0",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_blink.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a1d9719_8886cd4f",
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "9c69e0da_80025623",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep it less verbose. If someone tries to add a new control mode they will break tests until everything is right.",
+      "parentUuid": "fcb869d4_1f7f3e82",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8726626_b84ac7f5",
         "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
         "patchSetId": 12
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "fd31385f_ee9d6c83",
+        "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "Let me check into this more.",
+      "parentUuid": "e8726626_b84ac7f5",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76695ef7_b8f8fe7a",
         "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
         "patchSetId": 12
@@ -183,6 +345,24 @@
       "writtenOn": "2017-06-27T21:13:58Z",
       "side": 1,
       "message": "Explain \"doc structs like list item\". nit: period at the end of comment.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f1ca1ad_774c22e5",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5477,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "Ok, although this has all been moved to ax_platform_node_win.cc after rebasing, because of dft\u0027s state work.",
+      "parentUuid": "76695ef7_b8f8fe7a",
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "cf05ca8b_32f37663",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5479,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "A readonly text field would reach the AX_CONTROL_MODE_READ_ONLY case above. \n\nWe don\u0027t want to mark an editable paragraph or list as readonly, as it\u0027s clearly not readonly. \nHowever, we do want to mark a non-editable paragraph or list as readonly. That\u0027s what MSAA wants.",
+      "parentUuid": "897c718c_4b06bf2e",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e0f726_1ca4c978",
         "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
         "patchSetId": 12
@@ -217,6 +415,24 @@
       "writtenOn": "2017-06-27T21:13:58Z",
       "side": 1,
       "message": "Do you need to handle enabled in any special way?",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57b59974_d6f2cc92",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5480,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "Not in MSAA/IA2. There is no special enabled state.",
+      "parentUuid": "84e0f726_1ca4c978",
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -257,6 +473,24 @@
     },
     {
       "key": {
+        "uuid": "6d7581b6_27f419de",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "I improved the comment, let me know if that helps.",
+      "parentUuid": "897095b3_91762408",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ada9f3d_b9ab7324",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 12
@@ -268,6 +502,24 @@
       "writtenOn": "2017-06-27T21:13:58Z",
       "side": 1,
       "message": "Why CanSetFocusAttribute here? Does that matter.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9a50c1b_5641f0e0",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "According to CORE-AAM, any focusable descendant of a disabled ancestor is also disabled.",
+      "parentUuid": "7ada9f3d_b9ab7324",
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -288,6 +540,24 @@
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e52243b_2878e728",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "A control is something that, when enabled, can receive user input. Would you prefer we create an IsControl() method and use a giant switch? I don\u0027t believe there is a spec for this, but I also don\u0027t think it needs one.",
+      "parentUuid": "96aa347e_ec8eb6c5",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -325,6 +595,24 @@
     },
     {
       "key": {
+        "uuid": "dbc635a9_dbfa5964",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "The TODO is not necessary. \n\nThe ARIA stuff goes first because a grouping can have aria-disabled.",
+      "parentUuid": "c21b7934_2034a691",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5d8774e_7bd7f3d5",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 12
@@ -336,6 +624,24 @@
       "writtenOn": "2017-06-27T21:13:58Z",
       "side": 1,
       "message": "Is this something you\u0027re stating here? If so, then it should probably be fixed in input.IsReadOnly(). Otherwise, just use input.IsReadOnly.",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7297d738_490af8e3",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "I tend to agree, but I wonder how much pain it will cause to try to get that change in, and whether it\u0027s worth it.\n\nThis is copy/pasted from our previous code, although that doesn\u0027t make it right.",
+      "parentUuid": "b5d8774e_7bd7f3d5",
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -356,6 +662,24 @@
       "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93e7457e_40202777",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-28T17:39:43Z",
+      "side": 1,
+      "message": "How would the user select something that is not focusable?",
+      "parentUuid": "c7106c9f_fc34887a",
+      "revId": "122e0c4b2bafb91ca2071de3fac51a0543a737ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
