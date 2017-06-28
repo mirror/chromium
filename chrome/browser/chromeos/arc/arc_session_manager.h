@@ -332,6 +332,8 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   std::unique_ptr<ArcAppLauncher> playstore_launcher_;
   bool reenable_arc_ = false;
   bool provisioning_reported_ = false;
+  // In case ARC is started from OOBE |oobe_start_| set to true.
+  bool oobe_start_ = false;
   base::OneShotTimer arc_sign_in_timer_;
 
   std::unique_ptr<ArcSupportHost> support_host_;
