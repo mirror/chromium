@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d16b6378_2c2bb475",
+        "filename": "chrome/browser/ui/sort_windows_by_z_index.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-28T20:24:06Z",
+      "side": 1,
+      "message": "const std::vector...\u0026",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "4bc8e18c39c2c0e501e45f64e5aed7c9820b57be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

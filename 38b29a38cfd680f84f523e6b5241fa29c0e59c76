@@ -281,6 +281,30 @@
       "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd32810b_569444b3",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-28T20:24:06Z",
+      "side": 1,
+      "message": "I get that, but given you don\u0027t have an implementation of the function for other os\u0027s you need to move to ash/chromeos section for this to build on other platforms.",
+      "parentUuid": "1f4106fd_726b570a",
+      "range": {
+        "startLine": 1512,
+        "startChar": 14,
+        "endLine": 1512,
+        "endChar": 45
+      },
+      "revId": "38b29a38cfd680f84f523e6b5241fa29c0e59c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
