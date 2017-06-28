@@ -93,6 +93,8 @@ class KEYBOARD_EXPORT KeyboardUIContent : public KeyboardUI,
 
   const aura::Window* GetKeyboardRootWindow() const;
 
+  virtual content::WebContents* CreateWebContents();
+
  private:
   friend class TestApi;
 
