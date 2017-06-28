@@ -9,6 +9,7 @@
 
 #include <string>
 
+#include "remoting/protocol/message_pipe.h"
 #include "remoting/protocol/transport.h"
 
 namespace webrtc {
@@ -55,6 +56,11 @@ class ConnectionToClient {
     // channel is connected.
     virtual void OnRouteChange(const std::string& channel_name,
                                const TransportRoute& route) = 0;
+
+    // Called when a new WebRTC Data Channel has been created by the client.
+    virtual void OnIncomingWebrtcDataChannel(
+        const std::string& channel_name,
+        std::unique_ptr<MessagePipe> pipe) = 0;
 
    protected:
     virtual ~EventHandler() {}

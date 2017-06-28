@@ -92,6 +92,10 @@ class ChromotingHost : public ClientSession::EventHandler,
   // Registers a host extension.
   void AddExtension(std::unique_ptr<HostExtension> extension);
 
+  void AddDataChannelHandler(
+      const std::string& prefix,
+      protocol::DataChannelManager::CreateHandlerCallback callback);
+
   // Sets the authenticator factory to use for incoming
   // connections. Incoming connections are rejected until
   // authenticator factory is set. Must be called on the network
@@ -177,6 +181,11 @@ class ChromotingHost : public ClientSession::EventHandler,
 
   // List of host extensions.
   std::vector<std::unique_ptr<HostExtension>> extensions_;
+
+  // List of WebRTC Data Channel Handlers.
+  std::vector<std::pair<std::string,
+                        protocol::DataChannelManager::CreateHandlerCallback>>
+      data_channel_callbacks_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

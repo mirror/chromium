@@ -1433,6 +1433,11 @@ void HostProcess::StartHostIfReady() {
   }
 }
 
+static void JarharTestHandler(const std::string& name,
+                              std::unique_ptr<protocol::MessagePipe> pipe) {
+  LOG(INFO) << "jarhar@ " << __FUNCTION__ << " name: \"" << name << "\"";
+}
+
 void HostProcess::StartHost() {
   DCHECK(context_->network_task_runner()->BelongsToCurrentThread());
   DCHECK(!host_);
@@ -1494,6 +1499,8 @@ void HostProcess::StartHost() {
   }
 
   host_->AddExtension(base::MakeUnique<TestEchoExtension>());
+
+  host_->AddDataChannelHandler("jarhar", base::Bind(JarharTestHandler));
 
   // TODO(simonmorris): Get the maximum session duration from a policy.
 #if defined(OS_LINUX)

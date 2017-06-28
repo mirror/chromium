@@ -128,6 +128,14 @@ void ChromotingHost::AddExtension(std::unique_ptr<HostExtension> extension) {
   extensions_.push_back(std::move(extension));
 }
 
+void ChromotingHost::AddDataChannelHandler(
+    const std::string& prefix,
+    protocol::DataChannelManager::CreateHandlerCallback callback) {
+  std::pair<std::string, protocol::DataChannelManager::CreateHandlerCallback>
+      pair(prefix, callback);
+  data_channel_callbacks_.push_back(pair);
+}
+
 void ChromotingHost::SetAuthenticatorFactory(
     std::unique_ptr<protocol::AuthenticatorFactory> authenticator_factory) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -263,7 +271,7 @@ void ChromotingHost::OnIncomingSession(
   clients_.push_back(base::MakeUnique<ClientSession>(
       this, std::move(connection), desktop_environment_factory_,
       desktop_environment_options_, max_session_duration_, pairing_registry_,
-      extension_ptrs));
+      extension_ptrs, data_channel_callbacks_));
 }
 
 }  // namespace remoting
