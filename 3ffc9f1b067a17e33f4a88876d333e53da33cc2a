@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "114a2505_fbba2760",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-28T17:10:17Z",
+      "side": 1,
+      "message": "Moved to lastest patch.",
+      "parentUuid": "3e898dc3_b13585f2",
+      "range": {
+        "startLine": 1434,
+        "startChar": 36,
+        "endLine": 1434,
+        "endChar": 0
+      },
+      "revId": "3ffc9f1b067a17e33f4a88876d333e53da33cc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a602c7d_91b535a4",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3ffc9f1b067a17e33f4a88876d333e53da33cc2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db39a9b3_6ef5636c",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-28T17:10:17Z",
+      "side": 1,
+      "message": "Addressed offline.",
+      "parentUuid": "0a602c7d_91b535a4",
+      "range": {
+        "startLine": 1629,
+        "startChar": 56,
+        "endLine": 1629,
+        "endChar": 0
+      },
+      "revId": "3ffc9f1b067a17e33f4a88876d333e53da33cc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

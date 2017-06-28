@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0210d1b8_67aaf0e5",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-28T17:10:17Z",
+      "side": 1,
+      "message": "The executable_name here actually only determines the bundle name of the generated Info.plist file, which is used as the app name displayed on the iPhone home screen. Since this is a loadable module, not an app, the bundle name doesn\u0027t matter at all (unless it\u0027s used somewhere that I\u0027m not aware of). So, I\u0027m changing the |executable_name| to |_target_name| to avoid having to pass in |host_output| from the wrapper application.",
+      "range": {
+        "startLine": 1434,
+        "startChar": 24,
+        "endLine": 1434,
+        "endChar": 36
+      },
+      "revId": "31cf899d6d0e9b6f44950d9c14aab4d8494a6adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac58bf30_b319be70",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1694,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-28T17:10:17Z",
+      "side": 1,
+      "message": "if ios_automatically_manage_certs is true, the original code produces an Info.plist with both its bundle name and bundle identifier being something like \"ios-generic-unit-test\", however, the bundle name will be the app name displayed on home screen, so shouldn\u0027t be affected.",
+      "range": {
+        "startLine": 1694,
+        "startChar": 13,
+        "endLine": 1694,
+        "endChar": 28
+      },
+      "revId": "31cf899d6d0e9b6f44950d9c14aab4d8494a6adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
