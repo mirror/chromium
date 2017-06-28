@@ -16,6 +16,24 @@
       "revId": "4a58b710481ae1fcffb397db63303fdae2db2429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e41370_3811377e",
+        "filename": "content/browser/renderer_host/overscroll_controller_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-28T14:10:08Z",
+      "side": 1,
+      "message": "One (small) consideration here is that we\u0027d like to use the OverscrollController for Android as well in the future. Not having to deal with the Android ViewAndroid and aura::Window separately will probably be easier.",
+      "parentUuid": "5705e262_bbbef142",
+      "revId": "4a58b710481ae1fcffb397db63303fdae2db2429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
