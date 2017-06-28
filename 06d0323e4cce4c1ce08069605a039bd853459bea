@@ -16,6 +16,24 @@
       "revId": "06d0323e4cce4c1ce08069605a039bd853459bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711c5528_e2a8ced6",
+        "filename": "components/metrics/machine_id_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-28T15:20:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "104a4d7e_51289d46",
+      "revId": "06d0323e4cce4c1ce08069605a039bd853459bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
