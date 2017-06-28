@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2531654c_5595c406",
+        "filename": "content/app/android/content_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-06-28T15:43:33Z",
+      "side": 1,
+      "message": "is my brain backwards? DCHECK(!..) cause it shouldn\u0027t be set?",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 9
+      },
+      "revId": "97a2516de92a0280b9c8ce38cadf0297cfa6d6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
