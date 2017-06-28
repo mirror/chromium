@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f7cc6f6_077f4ff6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-28T16:56:48Z",
+      "side": 1,
+      "message": "The bug here is that Shared SchedulerWorkers will unregister themselves from the worker list if the SchedulerSingleThreadTaskRunnerManager held the last reference to them.\n\nThis prevents them from being joined in a test.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 56
+      },
+      "revId": "0f62c4acd2afdd7732b7c9cb00150caee094555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f7ebf7_2a71b8dc",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-28T16:56:48Z",
+      "side": 1,
+      "message": "I think it will be simpler to std::move the shared scheduler workers into a single vector to hold the last ref and then release this ref at the very end of JoinForTesting(). WDYT?",
+      "range": {
+        "startLine": 581,
+        "startChar": 2,
+        "endLine": 592,
+        "endChar": 5
+      },
+      "revId": "0f62c4acd2afdd7732b7c9cb00150caee094555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
