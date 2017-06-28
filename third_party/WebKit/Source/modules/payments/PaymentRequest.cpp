@@ -21,6 +21,7 @@
 #include "core/events/EventQueue.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/FrameOwner.h"
+#include "core/frame/Settings.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleTypes.h"
@@ -998,6 +999,9 @@ PaymentRequest::PaymentRequest(ExecutionContext* execution_context,
     exception_state.ThrowTypeError("ID cannot be longer than 1024 characters");
     return;
   }
+
+  if (GetFrame()->GetDocument()->GetSettings()->GetPagePopupsSuppressed())
+    return;
 
   PaymentDetailsPtr validated_details =
       payments::mojom::blink::PaymentDetails::New();
