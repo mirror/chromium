@@ -85,6 +85,7 @@
 using content::NavigationEntry;
 using content::NavigationController;
 using content::WebContents;
+using content::WebContentsImpl;
 
 namespace chrome {
 
@@ -260,6 +261,11 @@ void BrowserCommandController::FullscreenStateChanged() {
 
 void BrowserCommandController::PrintingStateChanged() {
   UpdatePrintingState();
+}
+
+void BrowserCommandController::DisplayWebContentsInTouchbar(
+    content::WebContents* contents) {
+  window()->DisplayWebContentsInTouchbar(contents);
 }
 
 void BrowserCommandController::LoadingStateChanged(bool is_loading,

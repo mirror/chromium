@@ -10,6 +10,7 @@
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
+#include "third_party/WebKit/public/platform/WebTouchEvent.h"
 
 @class NSEvent;
 @class NSView;
@@ -23,6 +24,12 @@ class CONTENT_EXPORT WebKeyboardEventBuilder {
 
 class CONTENT_EXPORT WebMouseEventBuilder {
  public:
+  static blink::WebMouseEvent BuildMouseEventFromTouchEvent(
+      NSEvent* theEvent,
+      NSView* view,
+      blink::WebInputEvent::Type webInputEvent,
+      blink::WebInputEvent::Modifiers webInputEventModifier);
+
   static blink::WebMouseEvent Build(
       NSEvent* event,
       NSView* view,

@@ -61,6 +61,7 @@ class BrowserCommandController : public CommandUpdaterDelegate,
   void ContentRestrictionsChanged();
   void FullscreenStateChanged();
   void PrintingStateChanged();
+  void DisplayWebContentsInTouchbar(content::WebContents* contents);
   void LoadingStateChanged(bool is_loading, bool force);
   void ExtensionStateChanged();
 

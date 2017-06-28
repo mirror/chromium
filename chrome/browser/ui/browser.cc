@@ -1517,6 +1517,10 @@ void Browser::VisibleSecurityStateChanged(WebContents* source) {
   helper->VisibleSecurityStateChanged();
 }
 
+void Browser::DisplayWebContentsInTouchbar(content::WebContents* contents) {
+  command_controller_->DisplayWebContentsInTouchbar(contents);
+}
+
 void Browser::AddNewContents(WebContents* source,
                              WebContents* new_contents,
                              WindowOpenDisposition disposition,

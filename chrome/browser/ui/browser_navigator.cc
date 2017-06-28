@@ -442,6 +442,7 @@ void Navigate(NavigateParams* params) {
   }
 
   params->browser = GetBrowserForDisposition(params);
+
   if (!params->browser)
     return;
 

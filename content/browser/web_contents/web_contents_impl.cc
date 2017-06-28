@@ -118,6 +118,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/result_codes.h"
@@ -526,6 +527,8 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       showing_context_menu_(false),
       loading_weak_factory_(this),
       weak_factory_(this) {
+  is_error_page = false;
+  popup_contents = nullptr;
   frame_tree_.SetFrameRemoveListener(
       base::Bind(&WebContentsImpl::OnFrameRemoved,
                  base::Unretained(this)));
@@ -1464,6 +1467,14 @@ base::TimeTicks WebContentsImpl::GetLastHiddenTime() const {
 }
 
 void WebContentsImpl::WasShown() {
+  if (delegate_) {
+    if (is_error_page && popup_contents) {
+      delegate_->DisplayWebContentsInTouchbar(popup_contents);
+    } else {
+      delegate_->DisplayWebContentsInTouchbar(nullptr);
+    }
+  }
+
   controller_.SetActive(true);
 
   for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree()) {
@@ -2414,9 +2425,24 @@ void WebContentsImpl::ShowCreatedWindow(int process_id,
                                         bool user_gesture) {
   WebContentsImpl* popup =
       GetCreatedWindow(process_id, main_frame_widget_route_id);
+
   if (popup) {
     WebContentsDelegate* delegate = GetDelegate();
     popup->is_resume_pending_ = true;
+
+    if (disposition == WindowOpenDisposition::NEW_POPUP && is_error_page &&
+        IsTouchbarDinoGameEnabled()) {
+      disposition = WindowOpenDisposition::IGNORE_ACTION;
+
+      WebContentsImpl* parent = static_cast<WebContentsImpl*>(
+          WebContents::FromRenderFrameHost(popup->GetOpener()));
+
+      if (parent) {
+        parent->popup_contents = popup;
+        parent->GetDelegate()->DisplayWebContentsInTouchbar(popup);
+      }
+    }
+
     if (!delegate || delegate->ShouldResumeRequestsForCreatedWindow())
       popup->ResumeLoadingCreatedWebContents();
 
@@ -2433,6 +2459,14 @@ void WebContentsImpl::ShowCreatedWindow(int process_id,
     DCHECK_EQ(main_frame_widget_route_id, rwh->GetRoutingID());
     rwh->Send(new ViewMsg_Move_ACK(rwh->GetRoutingID()));
   }
+}
+
+bool WebContentsImpl::IsTouchbarDinoGameEnabled() {
+#if defined(OS_MACOSX)
+  return base::FeatureList::IsEnabled(features::kTouchbarDinoGame);
+#else
+  return false;
+#endif
 }
 
 void WebContentsImpl::ShowCreatedWidget(int process_id,
@@ -3601,8 +3635,18 @@ void WebContentsImpl::ReadyToCommitNavigation(
 }
 
 void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.DidFinishNavigation(navigation_handle);
+  }
+
+  if (delegate_ && navigation_handle) {
+    if (navigation_handle->IsErrorPage()) {
+      is_error_page = true;
+    } else {
+      is_error_page = false;
+      delegate_->DisplayWebContentsInTouchbar(nullptr);
+    }
+  }
 
   if (navigation_handle->HasCommitted()) {
     BrowserAccessibilityManager* manager =

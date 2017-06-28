@@ -593,6 +593,7 @@ class Browser : public TabStripModelObserver,
   void NavigationStateChanged(content::WebContents* source,
                               content::InvalidateTypes changed_flags) override;
   void VisibleSecurityStateChanged(content::WebContents* source) override;
+  void DisplayWebContentsInTouchbar(content::WebContents* contents) override;
   void AddNewContents(content::WebContents* source,
                       content::WebContents* new_contents,
                       WindowOpenDisposition disposition,

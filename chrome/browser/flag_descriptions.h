@@ -1220,6 +1220,9 @@ extern const char kTabDetachingInFullscreenDescription[];
 extern const char kTabStripKeyboardFocusName[];
 extern const char kTabStripKeyboardFocusDescription[];
 
+extern const char kTouchbarDinoGameName[];
+extern const char kTouchbarDinoGameDescription[];
+
 extern const char kTranslateNewUxName[];
 extern const char kTranslateNewUxDescription[];
 

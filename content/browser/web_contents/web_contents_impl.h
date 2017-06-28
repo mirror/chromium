@@ -128,6 +128,7 @@ class CONTENT_EXPORT WebContentsImpl
       public NON_EXPORTED_BASE(NavigationControllerDelegate),
       public NON_EXPORTED_BASE(NavigatorDelegate) {
  public:
+  WebContentsImpl* popup_contents;
   class FriendWrapper;
 
   ~WebContentsImpl() override;
@@ -888,6 +889,8 @@ class CONTENT_EXPORT WebContentsImpl
 #endif
 
  private:
+  bool is_error_page;
+  bool IsTouchbarDinoGameEnabled();
   friend class WebContentsObserver;
   friend class WebContents;  // To implement factory methods.
 
