@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96b86617_4563fdd7",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:49:39Z",
+      "side": 1,
+      "message": "It\u0027s easy enough to avoid the repeated double-access even in the fast path. (In the slow path we could save even more with some care, but that\u0027s slightly more work.)\n\nif (const LayoutLocale* locale \u003d FontGlobalContext::GetDefaultLayoutLocale())\n  return *locale;\n\nconst AtomicString\u0026 language \u003d DefaultLanguage();  // aside: can this actually be empty in Chromium?\nconst LayoutLocale* locale \u003d Get(language.IsEmpty() ? locale : \"en\");\nFontGlobalContext::SetDefaultLocale(locale);\nreturn *locale;",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42599ca7_af38f27f",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:49:39Z",
+      "side": 1,
+      "message": "Same comments as GetDefault.",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c794942e_70e99ea5",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:49:39Z",
+      "side": 1,
+      "message": "Why remove the use of ValueOrDefault? This change seems unrelated.",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c36c37_cc4c5bda",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:49:39Z",
+      "side": 1,
+      "message": "FWIW, this is eligible for inlining either way. (Shrug.)",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ad66bd_ffa126c4",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T21:49:39Z",
+      "side": 1,
+      "message": "What does this clear? It doesn\u0027t seem to clear FontCache? If it\u0027s clearing only a subset of things, it should clarify what exactly it is that it is clearing.",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
