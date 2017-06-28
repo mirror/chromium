@@ -21,7 +21,7 @@ class PLATFORM_EXPORT FontGlobalContext {
  public:
   static FontGlobalContext* Get(CreateIfNeeded = kCreate);
 
-  static inline FontCache& GetFontCache() { return Get()->font_cache; }
+  static inline FontCache& GetFontCache() { return Get()->font_cache_; }
 
   // Called by MemoryCoordinator to clear memory.
   static void ClearMemory();
@@ -30,8 +30,9 @@ class PLATFORM_EXPORT FontGlobalContext {
   friend class WTF::ThreadSpecific<FontGlobalContext>;
 
   FontGlobalContext();
+  ~FontGlobalContext() {}
 
-  FontCache font_cache;
+  FontCache font_cache_;
 };
 
 }  // namespace blink
