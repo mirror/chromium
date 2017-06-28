@@ -135,6 +135,14 @@ var GetState = requireNative('automationInternal').GetState;
 /**
  * @param {number} axTreeID The id of the accessibility tree.
  * @param {number} nodeID The id of a node.
+ * @return {string} The control mode, one of
+ * "enabled", "disabled", "readOnly" or undefined if not a control
+ */
+var GetControlMode = requireNative('automationInternal').GetControlMode;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @param {number} nodeID The id of a node.
  * @return {string} The checked state, as undefined, "true", "false" or "mixed".
  */
 var GetChecked = requireNative('automationInternal').GetChecked;
@@ -324,6 +332,10 @@ AutomationNodeImpl.prototype = {
 
   get role() {
     return GetRole(this.treeID, this.id);
+  },
+
+  get controlMode() {
+    return GetControlMode(this.treeID, this.id);
   },
 
   get checked() {
@@ -777,7 +789,6 @@ var stringAttributes = [
     'value'];
 
 var boolAttributes = [
-    'ariaReadonly',
     'containerLiveAtomic',
     'containerLiveBusy',
     'liveAtomic',
@@ -1191,6 +1202,7 @@ utils.expose(AutomationNode, AutomationNodeImpl, {
       'isRootNode',
       'role',
       'checked',
+      'controlMode',
       'state',
       'location',
       'indexInParent',

@@ -251,7 +251,7 @@ AutomationPredicate.container = function(node) {
       AutomationPredicate.landmark, AutomationPredicate.structuralContainer,
       function(node) {
         // For example, crosh.
-        return (node.role == Role.TEXT_FIELD && node.state.readOnly);
+        return (node.role == Role.TEXT_FIELD && node.controlMode == 'readOnly');
       },
       function(node) {
         return (
