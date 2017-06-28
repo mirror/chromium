@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54d66504_bbaa1700",
+        "filename": "third_party/WebKit/LayoutTests/fast/sub-pixel/input-caret-on-subpixel-bound-expected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T05:05:36Z",
+      "side": 1,
+      "message": "With the new LayoutTable::PaddingXXX() code, we always truncate subpixel padding (which is consistent with table borders and cell paddings/borders). Let\u0027s leave the subpixel support work to crbug.com/377847.",
+      "revId": "494bc37df727f35ca99725ca888b6a8e16ca871f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0839de_0dd709f7",
+        "filename": "third_party/WebKit/LayoutTests/fast/table/table-in-table-percent-width-collapsing-border-expected.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T05:05:36Z",
+      "side": 1,
+      "message": "The new result is correct, perhaps because of the new consistent table paddings. Firefox also produces this result.",
+      "revId": "494bc37df727f35ca99725ca888b6a8e16ca871f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5819a922_64c38065",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/svg/zoom/page/zoom-img-preserveAspectRatio-support-1-expected.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T05:05:36Z",
+      "side": 1,
+      "message": "The difference is because of subpixel changes of table padding.",
+      "revId": "494bc37df727f35ca99725ca888b6a8e16ca871f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76076a95_fa14cf67",
+        "filename": "third_party/WebKit/Source/core/html/HTMLElement.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T05:05:36Z",
+      "side": 1,
+      "message": "This is because LayoutRectOutsets.h no longer includes TextDirection.h",
+      "revId": "494bc37df727f35ca99725ca888b6a8e16ca871f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ff7f29_28bf5ae6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3888,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-28T05:05:36Z",
+      "side": 1,
+      "message": "line-left is the formal name defined by css-writing-mode for this purpose (https://www.w3.org/TR/css-writing-modes-3/#line-orientation). logical-left is not precise globally, but I think we can still use it locally given that the meaning is clear: \u0027logical\u0027 means \u0027line-direction-logical\u0027 here.",
+      "revId": "494bc37df727f35ca99725ca888b6a8e16ca871f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
