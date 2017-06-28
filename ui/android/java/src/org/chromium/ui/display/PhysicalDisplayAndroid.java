@@ -93,6 +93,8 @@ import java.lang.reflect.Method;
         super(display.getDisplayId());
     }
 
+    static Method sIsScreenWideColorGamut;
+
     @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     /* package */ void updateFromDisplay(Display display) {
@@ -112,10 +114,11 @@ import java.lang.reflect.Method;
             try {
                 Configuration config =
                         ContextUtils.getApplicationContext().getResources().getConfiguration();
-                Method method = config.getClass().getMethod("isScreenWideColorGamut");
-                isWideColorGamut = (Boolean) method.invoke(config);
+                if (sIsScreenWideColorGamut == null)
+                    sIsScreenWideColorGamut = config.getClass().getMethod("isScreenWideColorGamut");
+                isWideColorGamut = (Boolean) sIsScreenWideColorGamut.invoke(config);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                Log.e(TAG, "Error invoking isWideColorGamut:", e);
+                Log.e(TAG, "Error invoking isScreenWideColorGamut:", e);
             }
         }
 
