@@ -34,6 +34,24 @@
       "revId": "50732f9df05faae3c6c949dbb132d582a249de44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a97b5b_12c6595a",
+        "filename": "components/offline_pages/core/background/request_queue_store_sql.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-28T19:47:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "910d528b_41333a29",
+      "revId": "50732f9df05faae3c6c949dbb132d582a249de44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
