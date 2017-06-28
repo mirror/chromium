@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "067724d3_2580fe48",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-28T10:53:06Z",
+      "side": 1,
+      "message": "\"Even if\"?",
+      "revId": "688a5ffdcbfb6e161746226de8b120f36c407886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db08681_bf41e231",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-28T10:53:06Z",
+      "side": 1,
+      "message": "\"while it overrides\"?",
+      "revId": "688a5ffdcbfb6e161746226de8b120f36c407886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a013248e_dfc9a627",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-28T10:53:06Z",
+      "side": 1,
+      "message": "How does this change (and the ones below) relate to the rest of this CL? It looks like something else to me.",
+      "revId": "688a5ffdcbfb6e161746226de8b120f36c407886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4463f74_2f3b45fa",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-28T10:53:06Z",
+      "side": 1,
+      "message": "So, at least in theory, the compiler will be able omit the code that would otherwise perform the 3 unnecessary evaluations?",
+      "revId": "688a5ffdcbfb6e161746226de8b120f36c407886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
