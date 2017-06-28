@@ -40,9 +40,11 @@ import org.chromium.chrome.browser.TabLoadStatus;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
+import org.chromium.chrome.browser.ntp.ChromeHomeNewTabPage;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel;
+import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.toolbar.ActionModeController.ActionBarDelegate;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
@@ -234,6 +236,9 @@ public class BottomSheet
 
     /** A delegate for when the action bar starts showing. */
     private ViewShiftingActionBarDelegate mActionBarDelegate;
+
+    /** Whether or not the back button was used to enter the tab switcher. */
+    private boolean mBackButtonDismissesChrome;
 
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
@@ -475,6 +480,32 @@ public class BottomSheet
                     @Override
                     public void onFailure() {}
                 });
+    }
+
+    /**
+     * Handle a back press event.
+     *     - If the navigation stack is empty, the sheet will be opened to the half state.
+     *         - If the tab switcher is visible, {@link ChromeActivity} will handle the event.
+     *     - If the sheet is open it will be closed unless it was opened by a back press.
+     * @return True if the sheet handled the back press.
+     */
+    public boolean handleBackPress() {
+        Tab tab = getActiveTab();
+        // TODO(mdjones): This var should be removed once the old bottom sheet NTP is removed.
+        boolean isNativeNtp = tab != null && tab.getNativePage() instanceof ChromeHomeNewTabPage;
+
+        if (!isSheetOpen() && tab != null && !tab.canGoBack() && !isInOverviewMode()
+                && tab.getLaunchType() == TabLaunchType.FROM_CHROME_UI) {
+            mBackButtonDismissesChrome = true;
+            setSheetState(SHEET_STATE_HALF, true);
+            return true;
+        } else if (isSheetOpen() && !isNativeNtp && !mBackButtonDismissesChrome) {
+            setSheetState(SHEET_STATE_PEEK, true);
+            return true;
+        }
+
+        setSheetState(SHEET_STATE_PEEK, true);
+        return false;
     }
 
     /**
@@ -942,6 +973,7 @@ public class BottomSheet
     private void onSheetClosed() {
         if (!mIsSheetOpen) return;
 
+        mBackButtonDismissesChrome = false;
         mIsSheetOpen = false;
         for (BottomSheetObserver o : mObservers) o.onSheetClosed();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_closed));
@@ -1337,6 +1369,15 @@ public class BottomSheet
     }
 
     /**
+     * @return Whether or not the browser is in overview mode.
+     */
+    private boolean isInOverviewMode() {
+        return mTabModelSelector != null
+                && (mTabModelSelector.getCurrentTab() == null
+                           || mTabModelSelector.getCurrentTab().getActivity().isInOverviewMode());
+    }
+
+    /**
      * @return Whether the Google 'G' logo should be shown in the location bar.
      */
     public boolean shouldShowGoogleGInLocationBar() {
@@ -1348,16 +1389,12 @@ public class BottomSheet
      * mode, when "find in page" is visible, or when the toolbar is hidden.
      */
     private boolean canMoveSheet() {
-        boolean isInOverviewMode = mTabModelSelector != null
-                && (mTabModelSelector.getCurrentTab() == null
-                           || mTabModelSelector.getCurrentTab().getActivity().isInOverviewMode());
-
         if (mFindInPageView == null) mFindInPageView = findViewById(R.id.find_toolbar);
         boolean isFindInPageVisible =
                 mFindInPageView != null && mFindInPageView.getVisibility() == View.VISIBLE;
 
         return !isToolbarAndroidViewHidden()
-                && (!isInOverviewMode || mNtpController.isShowingNewTabUi())
+                && (!isInOverviewMode() || mNtpController.isShowingNewTabUi())
                 && !isFindInPageVisible;
     }
 
