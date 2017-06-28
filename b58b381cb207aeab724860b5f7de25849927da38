@@ -22,6 +22,30 @@
       "revId": "b58b381cb207aeab724860b5f7de25849927da38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df50f7e_2e16e35e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-06-28T17:00:23Z",
+      "side": 1,
+      "message": "ContentViewCore#clearSelection works fine. I\u0027m not sure what happen in onFocusChanged.",
+      "parentUuid": "93a61097_8a16eabc",
+      "range": {
+        "startLine": 1087,
+        "startChar": 43,
+        "endLine": 1087,
+        "endChar": 53
+      },
+      "revId": "b58b381cb207aeab724860b5f7de25849927da38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
