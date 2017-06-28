@@ -40,7 +40,6 @@ class ManagePasswordsIconViews;
 class Profile;
 class SelectedKeywordView;
 class StarView;
-class TemplateURLService;
 class TranslateIconView;
 class ZoomView;
 
@@ -68,7 +67,6 @@ class LocationBarView : public LocationBar,
                         public gfx::AnimationDelegate,
                         public ChromeOmniboxEditController,
                         public DropdownBarHostDelegate,
-                        public TemplateURLServiceObserver,
                         public zoom::ZoomEventManagerObserver,
                         public views::ButtonListener {
  public:
@@ -350,9 +348,6 @@ class LocationBarView : public LocationBar,
   // DropdownBarHostDelegate:
   void SetFocusAndSelection(bool select_all) override;
 
-  // TemplateURLServiceObserver:
-  void OnTemplateURLServiceChanged() override;
-
   // The Browser this LocationBarView is in.  Note that at least
   // chromeos::SimpleWebViewDialog uses a LocationBarView outside any browser
   // window, so this may be NULL.
@@ -417,10 +412,6 @@ class LocationBarView : public LocationBar,
   // True if we should show a focus rect while the location entry field is
   // focused. Used when the toolbar is in full keyboard accessibility mode.
   bool show_focus_rect_ = false;
-
-  // This is in case we're destroyed before the model loads. We need to make
-  // Add/RemoveObserver calls.
-  TemplateURLService* template_url_service_ = nullptr;
 
   // Tracks this preference to determine whether bookmark editing is allowed.
   BooleanPrefMember edit_bookmarks_enabled_;

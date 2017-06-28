@@ -29,6 +29,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
+#include "chrome/browser/ui/first_run_bubble_presenter.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/omnibox/chrome_omnibox_client.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller.h"
@@ -132,9 +133,6 @@ LocationBarView::LocationBarView(Browser* browser,
 }
 
 LocationBarView::~LocationBarView() {
-  if (template_url_service_)
-    template_url_service_->RemoveObserver(this);
-
   zoom::ZoomEventManager::GetForBrowserContext(profile())
       ->RemoveZoomEventManagerObserver(this);
 }
@@ -804,9 +802,13 @@ void LocationBarView::ShowFirstRunBubbleInternal() {
   WebContents* web_contents = delegate_->GetWebContents();
   if (!web_contents)
     return;
+  // If the window isn't active, don't show the bubble, which would raise the
+  // window.
+  if (!omnibox_view_ || !omnibox_view_->GetWidget()->IsActive())
+    return;
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
   if (browser)
-    FirstRunBubble::ShowBubble(browser, GetSecurityBubbleAnchorView());
+    FirstRunBubble::ShowBubble(browser);
 #endif
 }
 
@@ -856,16 +858,9 @@ bool LocationBarView::ShouldAnimateLocationIconTextVisibilityChange() const {
 // LocationBarView, private LocationBar implementation:
 
 void LocationBarView::ShowFirstRunBubble() {
-  // Wait until search engines have loaded to show the first run bubble.
-  TemplateURLService* url_service =
-      TemplateURLServiceFactory::GetForProfile(profile());
-  if (!url_service->loaded()) {
-    template_url_service_ = url_service;
-    template_url_service_->AddObserver(this);
-    template_url_service_->Load();
-    return;
-  }
-  ShowFirstRunBubbleInternal();
+  FirstRunBubblePresenter::PresentWhenReady(
+      profile(), base::Bind(&LocationBarView::ShowFirstRunBubbleInternal,
+                            base::Unretained(this)));
 }
 
 GURL LocationBarView::GetDestinationURL() const {
@@ -1081,16 +1076,4 @@ const ToolbarModel* LocationBarView::GetToolbarModel() const {
 
 void LocationBarView::SetFocusAndSelection(bool select_all) {
   FocusLocation(select_all);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// LocationBarView, private TemplateURLServiceObserver implementation:
-
-void LocationBarView::OnTemplateURLServiceChanged() {
-  template_url_service_->RemoveObserver(this);
-  template_url_service_ = nullptr;
-  // If the browser is no longer active, let's not show the info bubble, as this
-  // would make the browser the active window again.
-  if (omnibox_view_ && omnibox_view_->GetWidget()->IsActive())
-    ShowFirstRunBubble();
 }

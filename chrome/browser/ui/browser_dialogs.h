@@ -127,6 +127,9 @@ void HideTaskManagerViews();
 // Show the Views "Chrome Update" dialog.
 void ShowUpdateChromeDialogViews(gfx::NativeWindow parent);
 
+// Show the Views first run bubble.
+void ShowFirstRunBubbleViews(Browser* browser);
+
 #endif  // OS_MACOSX
 
 #if defined(TOOLKIT_VIEWS)
