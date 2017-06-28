@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5701c966_6bfc9a98",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T23:15:34Z",
+      "side": 1,
+      "message": "Oh wait, you\u0027re trying to check that the old URL, not the new URL, is the NTP?  OK.  I suggest adding a comment here explaining why you don\u0027t want to notify in that case, ideally with a link to somewhere that explains what \"omnibox navigation\" is really trying to track, so it would be clear to a reader that the omnibox being used on the NTP doesn\u0027t fit with that concept.",
+      "parentUuid": "a8a961cd_693c0b0a",
+      "revId": "8caa9d0f8106bb8ed5e12abcf4b2ddb07c561254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "648a94f0_f4cac32a",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.h",
         "patchSetId": 7
