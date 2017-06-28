@@ -16,6 +16,24 @@
       "revId": "c33ef4186ec6e817e21a3ce4719a11c60a92eb9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfc1d41_8ff5512a",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T23:33:32Z",
+      "side": 1,
+      "message": "So target stuff is where we will go upon next iteration, which is maybe confusing. We can\u0027t use that to determine the current iterator\u0027s validity, since that\u0027s where we will be once we increment.\n\nBut you\u0027re right, that it\u0027s a bit confusing. I reworked it so that instead we only track the current offset (which we need to determine validity and to know how much to increment ptr_), but I removed the target and shuffled things in operator++ to first pull out what the target is locally and go there instead of first advancing to target and then figuring out the next target.",
+      "parentUuid": "9359f00b_da01a648",
+      "revId": "c33ef4186ec6e817e21a3ce4719a11c60a92eb9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
