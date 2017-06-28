@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d649779_81b96d69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-28T20:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87d593a4_b3494ce4",
+      "revId": "14b4ee6d927962de11c31ea2cc66f7b6a21612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a095374d_bcff4bae",
         "filename": "ios/chrome/browser/feature_engagement_tracker/BUILD.gn",
         "patchSetId": 7
