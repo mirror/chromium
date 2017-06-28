@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41460f03_33f80333",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-28T16:53:34Z",
+      "side": 1,
+      "message": "... to source_frame module",
+      "revId": "caea4dd8abada0f1fbc99dc59a9f9c5b0943ece1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
