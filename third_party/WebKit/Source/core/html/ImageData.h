@@ -109,13 +109,18 @@ class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
   static ImageData* CreateForTest(const IntSize&,
                                   DOMArrayBufferView*,
                                   const ImageDataColorSettings* = nullptr);
+  static ImageData* CreateForDeserialization(const IntSize&,
+                                             const uint32_t&,
+                                             const uint32_t&);
 
   ImageData* CropRect(const IntRect&, bool = false);
 
   static CanvasColorSpace GetCanvasColorSpace(const String&);
   static String CanvasColorSpaceName(const CanvasColorSpace&);
   static ImageDataStorageFormat GetImageDataStorageFormat(const String&);
+  static String GetImageDataStorageFormatName(const ImageDataStorageFormat&);
   static unsigned StorageFormatDataSize(const String&);
+  static unsigned StorageFormatDataSize(const uint32_t&);
   static DOMArrayBufferView*
   ConvertPixelsFromCanvasPixelFormatToImageDataStorageFormat(
       WTF::ArrayBufferContents&,
@@ -134,7 +139,10 @@ class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
 
   DOMArrayBufferBase* BufferBase() const;
 
+  ImageDataStorageFormat GetImageDataStorageFormat();
   CanvasColorParams GetCanvasColorParams();
+  bool HasImageDataColorSettingsForSerialization();
+
   bool ImageDataInCanvasColorSettings(const CanvasColorSpace&,
                                       const CanvasPixelFormat&,
                                       std::unique_ptr<uint8_t[]>&);

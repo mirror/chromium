@@ -261,23 +261,33 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
       return transferred_image_bitmaps[index].Get();
     }
     case kImageDataTag: {
-      uint32_t width = 0, height = 0, pixel_length = 0;
+      uint32_t width = 0, height = 0, pixel_length = 0, canvas_color_space = 0,
+               image_data_storage_format = 0;
       const void* pixels = nullptr;
       if (!ReadUint32(&width) || !ReadUint32(&height) ||
           !ReadUint32(&pixel_length) || !ReadRawBytes(pixel_length, &pixels))
         return nullptr;
+      bool has_color_info = false;
+      if (ReadUint32(&canvas_color_space) &&
+          ReadUint32(&image_data_storage_format))
+        has_color_info = true;
+
       CheckedNumeric<uint32_t> computed_pixel_length = width;
       computed_pixel_length *= height;
       computed_pixel_length *= 4;
+      computed_pixel_length *=
+          ImageData::StorageFormatDataSize(image_data_storage_format);
       if (!computed_pixel_length.IsValid() ||
           computed_pixel_length.ValueOrDie() != pixel_length)
         return nullptr;
-      ImageData* image_data = ImageData::Create(IntSize(width, height));
+      ImageData* image_data = ImageData::CreateForDeserialization(
+          IntSize(width, height), canvas_color_space,
+          image_data_storage_format);
       if (!image_data)
         return nullptr;
-      DOMUint8ClampedArray* pixel_array = image_data->data();
-      DCHECK_EQ(pixel_array->length(), pixel_length);
-      memcpy(pixel_array->Data(), pixels, pixel_length);
+      DOMArrayBufferBase* buffer_base = image_data->BufferBase();
+      DCHECK_EQ(buffer_base->ByteLength(), pixel_length);
+      memcpy(buffer_base->Data(), pixels, pixel_length);
       return image_data;
     }
     case kDOMPointTag: {
