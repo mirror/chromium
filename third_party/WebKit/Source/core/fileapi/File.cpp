@@ -371,7 +371,7 @@ void File::close(ScriptState* script_state, ExceptionState& exception_state) {
   // available.
   has_backing_file_ = false;
   path_ = String();
-  file_system_url_ = KURL();
+  file_system_url_ = NullURL();
   InvalidateSnapshotMetadata();
   relative_path_ = String();
   Blob::close(script_state, exception_state);

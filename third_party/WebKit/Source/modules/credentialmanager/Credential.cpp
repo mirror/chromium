@@ -20,8 +20,8 @@ Credential::Credential(const String& id, const String& name, const KURL& icon)
 KURL Credential::ParseStringAsURL(const String& url,
                                   ExceptionState& exception_state) {
   if (url.IsEmpty())
-    return KURL();
-  KURL parsed_url = KURL(KURL(), url);
+    return NullURL();
+  KURL parsed_url = KURL(NullURL(), url);
   if (!parsed_url.IsValid())
     exception_state.ThrowDOMException(kSyntaxError,
                                       "'" + url + "' is not a valid URL.");

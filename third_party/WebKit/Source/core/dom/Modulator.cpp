@@ -75,7 +75,7 @@ KURL Modulator::ResolveModuleSpecifier(const String& module_request,
                                        const KURL& base_url) {
   // Step 1. Apply the URL parser to specifier. If the result is not failure,
   // return the result.
-  KURL url(KURL(), module_request);
+  KURL url(NullURL(), module_request);
   if (url.IsValid())
     return url;
 
@@ -85,7 +85,7 @@ KURL Modulator::ResolveModuleSpecifier(const String& module_request,
   // (../), return failure and abort these steps.
   if (!module_request.StartsWith("/") && !module_request.StartsWith("./") &&
       !module_request.StartsWith("../"))
-    return KURL();
+    return NullURL();
 
   // Step 3. Return the result of applying the URL parser to specifier with
   // script's base URL as the base URL.
@@ -94,7 +94,7 @@ KURL Modulator::ResolveModuleSpecifier(const String& module_request,
   if (absolute_url.IsValid())
     return absolute_url;
 
-  return KURL();
+  return NullURL();
 }
 
 }  // namespace blink

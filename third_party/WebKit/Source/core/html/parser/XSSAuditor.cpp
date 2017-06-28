@@ -406,7 +406,7 @@ void XSSAuditor::Init(Document* document,
                                               xss_protection_report_url)) {
         error_details = "insecure reporting URL for secure page";
         xss_protection_header = kReflectedXSSInvalid;
-        xss_protection_report_url = KURL();
+        xss_protection_report_url = NullURL();
       }
     }
     if (xss_protection_header == kReflectedXSSInvalid) {

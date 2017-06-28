@@ -80,7 +80,7 @@ KURL WorkerGlobalScope::CompleteURL(const String& url) const {
   // Always return a null URL when passed a null string.
   // FIXME: Should we change the KURL constructor to have this behavior?
   if (url.IsNull())
-    return KURL();
+    return NullURL();
   // Always use UTF-8 in Workers.
   return KURL(url_, url);
 }

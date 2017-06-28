@@ -168,7 +168,7 @@ TEST_F(ModuleMapTest, sequentialRequests) {
       platform;
   platform->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
 
-  KURL url(KURL(), "https://example.com/foo.js");
+  KURL url(NullURL(), "https://example.com/foo.js");
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
 
@@ -215,7 +215,7 @@ TEST_F(ModuleMapTest, concurrentRequestsShouldJoin) {
       platform;
   platform->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
 
-  KURL url(KURL(), "https://example.com/foo.js");
+  KURL url(NullURL(), "https://example.com/foo.js");
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
 

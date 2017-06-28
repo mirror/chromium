@@ -51,7 +51,7 @@ KURL AbstractWorker::ResolveURL(const String& url,
   if (!script_url.IsValid()) {
     exception_state.ThrowDOMException(kSyntaxError,
                                       "'" + url + "' is not a valid URL.");
-    return KURL();
+    return NullURL();
   }
 
   // We can safely expose the URL in the following exceptions, as these checks
@@ -64,7 +64,7 @@ KURL AbstractWorker::ResolveURL(const String& url,
         "Script at '" + script_url.ElidedString() +
         "' cannot be accessed from origin '" +
         GetExecutionContext()->GetSecurityOrigin()->ToString() + "'.");
-    return KURL();
+    return NullURL();
   }
 
   if (GetExecutionContext()->GetContentSecurityPolicy() &&
@@ -77,7 +77,7 @@ KURL AbstractWorker::ResolveURL(const String& url,
     exception_state.ThrowSecurityError(
         "Access to the script at '" + script_url.ElidedString() +
         "' is denied by the document's Content Security Policy.");
-    return KURL();
+    return NullURL();
   }
 
   return script_url;

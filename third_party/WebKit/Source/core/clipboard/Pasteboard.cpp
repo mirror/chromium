@@ -112,7 +112,7 @@ String Pasteboard::ReadHTML(KURL& url,
     url = web_url;
     // fragmentStart and fragmentEnd are populated by WebClipboard::readHTML.
   } else {
-    url = KURL();
+    url = NullURL();
     fragment_start = 0;
     fragment_end = 0;
   }

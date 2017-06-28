@@ -99,7 +99,7 @@ static Image* RenderableImageForCSSValue(CSSValue* value,
 
 static KURL UrlForCSSValue(const CSSValue* value) {
   if (!value->IsImageValue())
-    return KURL();
+    return NullURL();
 
   return KURL(kParsedURLString, ToCSSImageValue(*value).Url());
 }

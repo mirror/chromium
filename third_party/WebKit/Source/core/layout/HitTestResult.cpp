@@ -323,7 +323,7 @@ IntRect HitTestResult::ImageRect() const {
 KURL HitTestResult::AbsoluteImageURL() const {
   Node* inner_node_or_image_map_image = this->InnerNodeOrImageMapImage();
   if (!inner_node_or_image_map_image)
-    return KURL();
+    return NullURL();
 
   AtomicString url_string;
   // Always return a url for image elements and input elements with type=image,
@@ -342,7 +342,7 @@ KURL HitTestResult::AbsoluteImageURL() const {
             isSVGImageElement(*inner_node_or_image_map_image)))
     url_string = ToElement(*inner_node_or_image_map_image).ImageSourceURL();
   if (url_string.IsEmpty())
-    return KURL();
+    return NullURL();
 
   return inner_node_or_image_map_image->GetDocument().CompleteURL(
       StripLeadingAndTrailingHTMLSpaces(url_string));
@@ -351,7 +351,7 @@ KURL HitTestResult::AbsoluteImageURL() const {
 KURL HitTestResult::AbsoluteMediaURL() const {
   if (HTMLMediaElement* media_elt = MediaElement())
     return media_elt->currentSrc();
-  return KURL();
+  return NullURL();
 }
 
 HTMLMediaElement* HitTestResult::MediaElement() const {
@@ -369,7 +369,7 @@ HTMLMediaElement* HitTestResult::MediaElement() const {
 
 KURL HitTestResult::AbsoluteLinkURL() const {
   if (!inner_url_element_)
-    return KURL();
+    return NullURL();
   return inner_url_element_->HrefURL();
 }
 

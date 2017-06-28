@@ -3519,7 +3519,7 @@ KURL Document::ValidBaseElementURL() const {
   if (base_element_url_.IsValid())
     return base_element_url_;
 
-  return KURL();
+  return NullURL();
 }
 
 void Document::UpdateBaseURL() {
@@ -3539,7 +3539,7 @@ void Document::UpdateBaseURL() {
   GetSelectorQueryCache().Invalidate();
 
   if (!base_url_.IsValid())
-    base_url_ = KURL();
+    base_url_ = NullURL();
 
   if (elem_sheet_) {
     // Element sheet is silly. It never contains anything.
@@ -5040,7 +5040,7 @@ const KURL Document::FirstPartyForCookies() const {
     SecurityOrigin* origin = top.GetSecurityContext()->GetSecurityOrigin();
     // TODO(yhirano): Ideally |origin| should not be null here.
     if (origin)
-      top_document_url = KURL(KURL(), origin->ToString());
+      top_document_url = KURL(NullURL(), origin->ToString());
     else
       top_document_url = SecurityOrigin::UrlWithUniqueSecurityOrigin();
   }
@@ -5310,7 +5310,7 @@ KURL Document::CompleteURLWithOverride(const String& url,
   // FIXME: Should we change the KURL constructor to have this behavior?
   // See also [CSS]StyleSheet::completeURL(const String&)
   if (url.IsNull())
-    return KURL();
+    return NullURL();
   // This logic is deliberately spread over many statements in an attempt to
   // track down http://crbug.com/312410.
   const KURL& base_url = BaseURLForOverride(base_url_override);
@@ -5355,14 +5355,14 @@ KURL Document::OpenSearchDescriptionURL() {
 
   // FIXME: Why do only top-level frames have openSearchDescriptionURLs?
   if (!GetFrame() || GetFrame()->Tree().Parent())
-    return KURL();
+    return NullURL();
 
   // FIXME: Why do we need to wait for load completion?
   if (!LoadEventFinished())
-    return KURL();
+    return NullURL();
 
   if (!head())
-    return KURL();
+    return NullURL();
 
   for (HTMLLinkElement* link_element =
            Traversal<HTMLLinkElement>::FirstChild(*head());
@@ -5394,7 +5394,7 @@ KURL Document::OpenSearchDescriptionURL() {
     return link_element->Href();
   }
 
-  return KURL();
+  return NullURL();
 }
 
 void Document::currentScriptForBinding(

@@ -82,7 +82,7 @@ KURL HTMLBaseElement::href() const {
                         GetDocument().Encoding());
 
   if (!url.IsValid())
-    return KURL();
+    return NullURL();
 
   return url;
 }

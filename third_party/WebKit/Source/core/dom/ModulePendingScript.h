@@ -81,7 +81,7 @@ class CORE_EXPORT ModulePendingScript : public PendingScript {
   void StartStreamingIfPossible(Document*, ScriptStreamer::Type) override {}
   KURL UrlForClassicScript() const override {
     NOTREACHED();
-    return KURL();
+    return NullURL();
   }
   void RemoveFromMemoryCache() override { NOTREACHED(); }
 

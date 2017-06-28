@@ -62,7 +62,7 @@ void DOMURL::SetInput(const String& value) {
     url_ = url;
     input_ = String();
   } else {
-    url_ = KURL();
+    url_ = NullURL();
     input_ = value;
   }
   Update();

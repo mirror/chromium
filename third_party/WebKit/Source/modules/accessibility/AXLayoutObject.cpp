@@ -1061,7 +1061,7 @@ KURL AXLayoutObject::Url() const {
   if (IsInputImage())
     return toHTMLInputElement(layout_object_->GetNode())->Src();
 
-  return KURL();
+  return NullURL();
 }
 
 //
