@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "269ffe8f_a2ad2f62",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-28T17:39:06Z",
+      "side": 1,
+      "message": "What does Mutable do here?  It doesn\u0027t look to be documented.",
+      "range": {
+        "startLine": 64,
+        "startChar": 40,
+        "endLine": 64,
+        "endChar": 58
+      },
+      "revId": "b784a01f88e355af79d49b5a80d47c0df946bfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
