@@ -790,6 +790,49 @@ void ServiceWorkerMetrics::RecordTimeToEvaluateScript(
                                     duration);
 }
 
+void ServiceWorkerMetrics::RecordEmbeddedWorkerStartTiming(
+    mojom::EmbeddedWorkerStartTimingPtr start_timing,
+    base::TimeTicks start_worker_sent_time,
+    StartSituation situation) {
+  if (!base::TimeTicks::IsHighResolution() ||
+      !base::TimeTicks::IsConsistentAcrossProcesses()) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "EmbeddedWorkerInstance.Start.StartMessageLatency.Type",
+        CrossProcessTimeDelta::INACCURATE_CLOCK,
+        CrossProcessTimeDelta::NUM_TYPES);
+    return;
+  }
+  if (start_timing->start_worker_received_time < start_worker_sent_time) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "EmbeddedWorkerInstance.Start.StartMessageLatency.Type",
+        CrossProcessTimeDelta::NEGATIVE, CrossProcessTimeDelta::NUM_TYPES);
+    return;
+  }
+
+  UMA_HISTOGRAM_ENUMERATION(
+      "EmbeddedWorkerInstance.Start.StartMessageLatency.Type",
+      CrossProcessTimeDelta::NORMAL, CrossProcessTimeDelta::NUM_TYPES);
+
+  const base::TimeDelta start_worker_message_latency =
+      start_timing->start_worker_received_time - start_worker_sent_time;
+  UMA_HISTOGRAM_MEDIUM_TIMES("EmbeddedWorkerInstance.Start.StartMessageLatency",
+                             start_worker_message_latency);
+  RecordSuffixedMediumTimeHistogram(
+      "EmbeddedWorkerInstance.Start.StartMessageLatency",
+      StartSituationToSuffix(situation), start_worker_message_latency);
+
+  if (start_worker_sent_time < start_timing->blink_initialized_time) {
+    UMA_HISTOGRAM_BOOLEAN("EmbeddedWorkerInstance.Start.WaitedForRendererSetup",
+                          true);
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "EmbeddedWorkerInstance.Start.WaitedForRendererSetup.Time",
+        (start_timing->blink_initialized_time - start_worker_sent_time));
+  } else {
+    UMA_HISTOGRAM_BOOLEAN("EmbeddedWorkerInstance.Start.WaitedForRendererSetup",
+                          false);
+  }
+}
+
 const char* ServiceWorkerMetrics::LoadSourceToString(LoadSource source) {
   switch (source) {
     case LoadSource::NETWORK:
