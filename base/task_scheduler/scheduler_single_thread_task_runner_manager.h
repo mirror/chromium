@@ -103,9 +103,16 @@ class BASE_EXPORT SchedulerSingleThreadTaskRunnerManager final {
   template <typename DelegateType>
   SchedulerWorker*& GetSharedSchedulerWorkerForTraits(const TaskTraits& traits);
 
-  void UnregisterSchedulerWorker(SchedulerWorker* worker);
+  // Unregisters |worker| from |workers_| and returns the last reference to that
+  // worker (if it was present in |workers_| at this time) should the caller
+  // want to do something with it before it's destroyed.
+  scoped_refptr<SchedulerWorker> UnregisterSchedulerWorker(
+      SchedulerWorker* worker);
 
-  void ReleaseSharedSchedulerWorkers();
+  // Releases shared SchedulerWorkers and returns a vector of the last reference
+  // to each one should the caller want to do something with them before they
+  // are destroyed.
+  std::vector<scoped_refptr<SchedulerWorker>> ReleaseSharedSchedulerWorkers();
 
   TaskTracker* const task_tracker_;
   DelayedTaskManager* const delayed_task_manager_;
