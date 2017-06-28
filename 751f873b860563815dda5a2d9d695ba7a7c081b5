@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c63929f_bc3830a5",
+        "filename": "content/public/browser/touch_selection_controller_client_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-28T20:00:36Z",
+      "side": 1,
+      "message": "nit: Add blanks lines between all methods in public interface.",
+      "revId": "751f873b860563815dda5a2d9d695ba7a7c081b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5644b97_89ad2eb5",
+        "filename": "content/public/browser/touch_selection_controller_client_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-28T20:00:36Z",
+      "side": 1,
+      "message": "nit: Add comments to all methods in public interface.",
+      "revId": "751f873b860563815dda5a2d9d695ba7a7c081b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
