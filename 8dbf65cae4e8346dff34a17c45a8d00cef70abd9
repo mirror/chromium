@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "5993efba_1e83862d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:59:47Z",
+      "side": 1,
+      "message": "Can you add DCHECKs conservatively, just in case?\n\nif (script_data) {\n  DCHECK(!source_code);\n  DCHECK(!cached_meta_data);\n  source_code \u003d std::move(script_data-\u003esource_text);\n  cached_meta_data \u003d std::move(script_data-\u003emeta_data);\n}\nDCHECK(source_code);\nDCHECK(cached_meta_data);",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "540ecd75_a90e1cff",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 2
@@ -104,6 +121,24 @@
       "writtenOn": "2017-06-28T07:44:57Z",
       "side": 1,
       "message": "Think this should be moved directly under line 460, to guard against using uninitialized |source_code| or |cached_meta_data|.",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae05374_0b81b66d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:59:47Z",
+      "side": 1,
+      "message": "+1 to falken\u0027s comment. It\u0027s nice to avoid the possibility to use uninitialized values.",
+      "parentUuid": "0fe3f917_ae6baacb",
       "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
