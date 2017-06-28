@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e5226c_202e3f4b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestHTMLView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-28T17:55:58Z",
+      "side": 1,
+      "message": "just add a parameter to a similar call two lines below.",
+      "revId": "8843a5f77167fe0f1ad43705d737e9c80f6c0a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543a7575_63a90782",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-28T17:55:58Z",
+      "side": 1,
+      "message": "Do we really need a case here? Weird...",
+      "revId": "8843a5f77167fe0f1ad43705d737e9c80f6c0a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
