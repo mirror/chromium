@@ -707,16 +707,21 @@ class AutofillMetrics {
     void LogSelectedMaskedServerCard();
     void LogDidFillSuggestion(int record_type);
     void LogTextFieldDidChange(const AutofillField& field);
-    void LogFormSubmitted(AutofillFormSubmittedState state);
+    void LogFormSubmitted(AutofillFormSubmittedState state,
+                          const base::TimeTicks& form_parsed_time);
 
     // We initialize |url_| with the form's URL when we log the first form
     // interaction. Later, we may update |url_| with the |source_url()| for the
     // submitted form.
     void UpdateSourceURL(const GURL& url);
 
+    base::TimeTicks GetFormParseTimeStamp();
+
    private:
     bool CanLog() const;
     int64_t MillisecondsSinceFormParsed() const;
+    int64_t MillisecondsSinceFormParsed(
+        const base::TimeTicks& form_parsed_time) const;
     void GetNewSourceID();
 
     ukm::UkmRecorder* ukm_recorder_;  // Weak reference.
@@ -866,6 +871,7 @@ class AutofillMetrics {
   // state of the form.
   static void LogAutofillFormSubmittedState(
       AutofillFormSubmittedState state,
+      const base::TimeTicks& form_parsed_time,
       FormInteractionsUkmLogger* form_interactions_ukm_logger);
 
   // This should be called when determining the heuristic types for a form's
