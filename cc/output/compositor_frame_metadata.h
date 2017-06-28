@@ -116,6 +116,9 @@ class CC_EXPORT CompositorFrameMetadata {
   // the embedder wants to do something after a particular frame is processed.
   uint32_t frame_token = 0;
 
+  // Used for tracing id to identify compositor frame to record tracing flow.
+  int64_t frame_submit_time = 0;
+
  private:
   CompositorFrameMetadata(const CompositorFrameMetadata& other);
   CompositorFrameMetadata operator=(const CompositorFrameMetadata&) = delete;

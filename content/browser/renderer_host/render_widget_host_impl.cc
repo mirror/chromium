@@ -2592,6 +2592,16 @@ void RenderWidgetHostImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
 void RenderWidgetHostImpl::SubmitCompositorFrame(
     const cc::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
+  TRACE_EVENT_FLOW_END0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
+                        "SubmitCompositorFrame",
+                        frame.metadata.frame_submit_time);
+  base::TimeDelta elapsed =
+      base::TimeTicks::Now() -
+      base::TimeTicks::FromInternalValue(frame.metadata.frame_submit_time);
+  TRACE_EVENT_INSTANT1(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
+                       "SubmitCompositorFrame::TimeElapsed",
+                       TRACE_EVENT_SCOPE_THREAD,
+                       "elapsed time:", elapsed.InMicroseconds());
   auto new_surface_properties =
       RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
 
