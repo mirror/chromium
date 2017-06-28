@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40bbbed5_1647ce04",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-28T11:56:25Z",
+      "side": 1,
+      "message": "Done, also updated the comment because now it isn\u0027t quite clear.",
+      "parentUuid": "adcdb7ec_4cf4d182",
+      "range": {
+        "startLine": 430,
+        "startChar": 14,
+        "endLine": 430,
+        "endChar": 19
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdd04f9f_9bcf00c7",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c8d686b2_4ba039b3",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-28T11:56:25Z",
+      "side": 1,
+      "message": "Yeah boolean is much nicer. Done",
+      "parentUuid": "cdd04f9f_9bcf00c7",
+      "range": {
+        "startLine": 440,
+        "startChar": 22,
+        "endLine": 440,
+        "endChar": 37
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccb9f8be_4c72be6b",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f034e7_d60ca6fb",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-28T11:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccb9f8be_4c72be6b",
+      "range": {
+        "startLine": 442,
+        "startChar": 24,
+        "endLine": 442,
+        "endChar": 40
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +187,30 @@
       "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c557d5a3_2ff29876",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-28T11:56:25Z",
+      "side": 1,
+      "message": "I think many of the bubbles use the manage link (governed by \"manage_text\"), am I missing something? \n\nIn the current CL I moved the manage text to the content area.",
+      "parentUuid": "22eeb1c7_92b61ebf",
+      "range": {
+        "startLine": 456,
+        "startChar": 4,
+        "endLine": 456,
+        "endChar": 10
+      },
+      "revId": "820138ed6f5235ce61e4fbf22100c9a4db68625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
