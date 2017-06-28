@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4d7b38_1c70049d",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-28T20:48:29Z",
+      "side": 1,
+      "message": "I didn\u0027t patch and test locally but ctrl-f shows this is unused? It\u0027s here for completeness or did I miss the call site?",
+      "revId": "e354d931ee0022bb938a1b0a65357f7ccb7dc5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92bf361_74a2c9df",
+        "filename": "third_party/WebKit/Source/platform/text/WritingModeUtils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-28T20:48:29Z",
+      "side": 1,
+      "message": "Can you add a short comment noting that this (\"PhysicalToLogical\") is correct, even though it\u0027s the opposite of the class name?",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 19
+      },
+      "revId": "e354d931ee0022bb938a1b0a65357f7ccb7dc5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
