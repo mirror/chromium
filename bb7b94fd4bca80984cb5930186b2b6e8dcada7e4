@@ -1,0 +1,429 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e3029c4_a55ed23e",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3042,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Since we already have fullscreen exit UI (the existing UI), I find this terminology a little confusing.  Is there another phrase that might more clearly indicate this specific UI experiment?  \"Fullscreen corner UI\", for example?",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32290492_bba6050e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2548,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: \"experience\"?  How about \"Fullscreen exit corner UI\" or something?  This is similar to the question about names.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741ee5c2_92f9b4eb",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2551,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: Remove \"the\"",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43653ec_a82a832f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2552,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: UI -\u003e mode",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80b4c2a_2730b780",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: This phrasing is slightly more verbose, but feels more readable to me by not having such long conditionals, and by not repeating various calls.\n\n  if (details.child !\u003d this)\n    return;\n\n  // When we\u0027re not initializing, we might not have a widget anymore, so get the\n  // widget from the parent.\n  const bool should_initialize \u003d !initialized_ \u0026\u0026 details.is_add;\n  auto* widget \u003d should_initialize ? GetWidget() : details.parent-\u003eGetWidget();\n  if (!widget)\n    return;\n    \n  if (should_initialize) {\n    InitViews();\n    initialized_ \u003d true;\n    if (base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(\n            switches::kEnableFullscreenExitUI))\n      widget-\u003eGetNativeView()-\u003eAddPreTargetHandler(GetFullscreenControlHost());\n  } else if (fullscreen_control_host_) {\n    auto native_view \u003d parent_widget-\u003eGetNativeView();\n    if (native_view)\n      native_view-\u003eRemovePreTargetHandler(fullscreen_control_host_.get());\n  }",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31877d2d_98a2815a",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2613,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "It seems worth a comment as to what this view actually is.  The various names here are beginning to read like FullscreenWidgetHostRenderViewNewServiceProviderHostDropdownBar to me.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3f6899_1dcfc074",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2617,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: Slightly safer against future modification, avoids bare new, more self-explanatory:\n\n    auto fullscreen_exit_host_view \u003d base::MakeUnique\u003cView\u003e();\n    fullscreen_control_host_ \u003d base::MakeUnique\u003cFullscreenControlHost\u003e(\n        this, fullscreen_exit_host_view.get());\n    AddChildView(fullscreen_exit_host_view.release());",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89de956d_56b01b8f",
+        "filename": "chrome/browser/ui/views/frame/browser_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "It looks as if the test would compile without this if GetFullscreenControlHost() were public.  I would just make it public; I don\u0027t see where the win is in making this private.\n\nThe cases for the similar accessors in the FullscreenControlXXX classes are trickier.  I might consider making them public as well, I\u0027m not sure.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1135c6c1_c9e1c2af",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: |preferred_size|",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7a8c32_64a5ad93",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "How come we only clamp the width and not the height?  Is that intentional?  Or should we just use prefsize.SetToMin(widget_bounds.size());?",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243f1475_156fe4c8",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  gfx::Point origin \u003d widget_bounds.origin();\n  if (!base::i18n::IsRTL())\n    origin.set_x(widget_bounds.right() - prefsize.width());\n  return gfx::Rect(origin, prefsize);",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9fd961_1fab7d19",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  if (event-\u003etype() \u003d\u003d ui::ET_GESTURE_LONG_PRESS \u0026\u0026 !IsAnimating() \u0026\u0026\n      browser_view_-\u003eIsFullscreen() \u0026\u0026 !IsVisible())\n    Show(true);",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04901c91_defce029",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: Do we expect insets?  If not, then just view()-\u003eheight() would be a lot simpler.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f537be47_3946871b",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  const float y_limit \u003d view()-\u003eGetContentsBounds().height() * 1.5f;\n\nI might pull the 1.5 out into a named constant though, since it seems a bit magic.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccfda54_f385da00",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: 3.f, or just 3.  But I might pull this into a named constant too.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea337cb9_27af8f8b",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: You don\u0027t directly subclass this class, put these overrides under the class you do subclass.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d683b478_a9a2311a",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: Blank line above this",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b210d3_2161c499",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "This will be accessible to end users via a flag, so the string needs to go in a .grd file.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2411410_cb77304c",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Where do these 10s come from?",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8068944c_51c0e20e",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Is this ultimately supposed to be controlled by the system theme or something?  (That\u0027d be a TODO for later if we want to proceed.)\n\nAlso #FEFEFE is a pretty unusual color choice.  Where does that come from?",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2387b7_af8def12",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: Trailing colon (2 places)",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3966aff6_f4a71c43",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: |exit_fullscreen_button_| (similarly with the accessor)",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d69ff9_89b3373e",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "Nit: I wouldn\u0027t mind some comments on some of these blocks indicating what we\u0027re doing (e.g. \"move to the corner of the window\").",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7077b2e_3ddfeae1",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "1.0 -\u003e 1?  Point() takes ints.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0420bba5_1df52616",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-28T01:25:41Z",
+      "side": 1,
+      "message": "In the long run, it may be better to key this off \"toolkit is views\" than the OS we\u0027re on.",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
