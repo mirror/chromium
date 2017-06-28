@@ -88,6 +88,7 @@ source_set("browser") {
     "//chromecast/base:cast_version",
     "//chromecast/browser:resources",
     "//chromecast/common",
+    "//chromecast/common:interfaces",
     "//chromecast/common/media",
     "//chromecast/common/media:interfaces",
     "//chromecast/graphics",
@@ -132,6 +133,8 @@ source_set("browser") {
       "cast_content_window_linux.h",
       "cast_memory_pressure_monitor.cc",
       "cast_memory_pressure_monitor.h",
+      "memory_pressure_controller_impl.cc",
+      "memory_pressure_controller_impl.h",
       "metrics/external_metrics.cc",
       "metrics/external_metrics.h",
     ]
