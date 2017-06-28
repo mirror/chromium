@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5705e262_bbbef142",
+        "filename": "content/browser/renderer_host/overscroll_controller_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-28T05:45:21Z",
+      "side": 1,
+      "message": "Should this delegate just return the NativeWindow/aura::Window? That should be all the information the OverscrollController needs to get the view-size vs the display-size. That way, we don\u0027t need to replicate the same overrides for the various delegates.",
+      "revId": "4a58b710481ae1fcffb397db63303fdae2db2429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
