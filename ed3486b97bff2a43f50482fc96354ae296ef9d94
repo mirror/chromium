@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccfee2e6_d520f350",
+        "filename": "services/service_manager/public/cpp/binder_registry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-28T04:50:12Z",
+      "side": 1,
+      "message": "I\u0027d kind of prefer that we avoid linking into the docs here since it seems likely that the link will go stale quickly. Is it really necessary? There are nearly 200 call sites to this method already.",
+      "revId": "ed3486b97bff2a43f50482fc96354ae296ef9d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
