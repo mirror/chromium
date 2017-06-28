@@ -39,6 +39,7 @@ source_set("tab_ui") {
     "//ios/clean/chrome/browser/ui",
     "//ios/clean/chrome/browser/ui/animators",
     "//ios/clean/chrome/browser/ui/presenters",
+    "//ios/clean/chrome/browser/ui/transitions",
   ]
   libs = [ "UIKit.framework" ]
   configs += [ "//build/config/compiler:enable_arc" ]
