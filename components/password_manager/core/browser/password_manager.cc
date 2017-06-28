@@ -225,9 +225,8 @@ void PasswordManager::SetGenerationElementAndReasonForForm(
 
   PasswordFormManager* form_manager = GetMatchingPendingManager(form);
   if (form_manager) {
-    form_manager->set_generation_element(generation_element);
-    form_manager->set_is_manual_generation(is_manually_triggered);
-    form_manager->set_generation_popup_was_shown(true);
+    form_manager->vote_uploader()->NotifyGenerationPopupShown(
+        generation_element, is_manually_triggered);
     return;
   }
 
@@ -247,8 +246,10 @@ void PasswordManager::SaveGenerationFieldDetectedByClassifier(
   if (!client_->IsSavingAndFillingEnabledForCurrentPage())
     return;
   PasswordFormManager* form_manager = GetMatchingPendingManager(form);
-  if (form_manager)
-    form_manager->SaveGenerationFieldDetectedByClassifier(generation_field);
+  if (form_manager) {
+    form_manager->vote_uploader()->SaveGenerationFieldDetectedByClassifier(
+        generation_field);
+  }
 }
 
 void PasswordManager::ProvisionallySavePassword(
