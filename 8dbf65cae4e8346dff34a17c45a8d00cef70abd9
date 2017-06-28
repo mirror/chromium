@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02e948db_f20d105c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:13:25Z",
+      "side": 1,
+      "message": "Can you add class-level comments?",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540ecd75_a90e1cff",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:13:25Z",
+      "side": 1,
+      "message": "Can we do these replacements immediately before script evaluation, that is, around line 525?",
+      "range": {
+        "startLine": 479,
+        "startChar": 3,
+        "endLine": 479,
+        "endChar": 0
+      },
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10af9cf_f4c27c24",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:13:25Z",
+      "side": 1,
+      "message": "MakeUnique?",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641b7dc7_08073c97",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:13:25Z",
+      "side": 1,
+      "message": "Can you factor out the common code among line 450-479 and line 481-498?",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f1a5f4_e5c4174e",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:13:25Z",
+      "side": 1,
+      "message": "- \"the main script and imported scripts which are running\" sounds strange because they are NOT running at this point.\n- Can you explain about what \"installed scripts\" is and how this class work from a high-level POV?\n\nFor example,\n\n// ServiceWorkerInstalledScriptsManager provides the main script and imported scripts already installed in the service worker script cache. The scripts are streamed from the script cache in parallel with worker thread initialization.",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c3b79d_608ec2d5",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-28T07:13:25Z",
+      "side": 1,
+      "message": "// This can be blocked if the script is not streamed yet.",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
