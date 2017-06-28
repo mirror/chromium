@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dd58679_bc1a70fb",
+        "filename": "components/payments/core/address_normalization_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-28T14:14:32Z",
+      "side": 1,
+      "message": "address_normalizer_ should be a unique_ptr now that AddressNormalizationManager doesn\u0027t take ownership of the instance it receives. Initialize will look like this:\n\n  void Initialize(const std::string\u0026 country_code) {\n    address_normalizer_ \u003d base::MakeUnique\u003cTestAddressNormalizer\u003e();\n    manager_ \u003d base::MakeUnique\u003cAddressNormalizationManager\u003e(\n        address_normalizer.get(), country_code);\n  }",
+      "range": {
+        "startLine": 34,
+        "startChar": 25,
+        "endLine": 34,
+        "endChar": 44
+      },
+      "revId": "e4a88c39c44bd0d230231a7958a0e572af1f395e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f156d310_a6a866c6",
+        "filename": "ios/chrome/browser/payments/payment_request_unittest.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-28T14:14:32Z",
+      "side": 1,
+      "message": "Your inquiry prompted a very detailed response from sdefresne@. Thank you for that! Let\u0027s follow his advice and use ScopedTaskEnvironment where possible. I know it\u0027s painful to modify all these tests again :/",
+      "revId": "e4a88c39c44bd0d230231a7958a0e572af1f395e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121092f1_96d81871",
+        "filename": "ios/chrome/browser/ui/payments/payment_items_display_view_controller_unittest.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-28T14:14:32Z",
+      "side": 1,
+      "message": "Please change the type to TestPaymentRequest as well so that TestPaymentRequest\u0027s API is available throughout the test.",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 32
+      },
+      "revId": "e4a88c39c44bd0d230231a7958a0e572af1f395e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
