@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95cbfef2_ea7b9a05",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwPrintDocumentAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-28T13:03:20Z",
+      "side": 1,
+      "message": "shouldn\u0027t you return a single page range from 0 (or 1, however it\u0027s indexed) to pageCount instead of multiple 1-page ranges?\n\nMaybe share the ALL_PAGES -\u003e explicit range conversion from the //printing component?",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "4615a5a6fa223c38dc937057e5e12ca09edd63e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8b06c0_ee4387e1",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-28T13:03:20Z",
+      "side": 1,
+      "message": "Can you reword or add more details to this comment? It reads a bit confusing to me. Are readers of this doc supposed to know what \"frame\" is in this context? I guess that relates to the fact that you can print iframes and not the whole page.\n\nAlso, it looks to me like that number of pages printed, so if you select a smaller range for the frame, you still get less pages than needed for the frame right? So the current description would be inaccurate.\n\n\nalso s/not page number/not the page count",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "4615a5a6fa223c38dc937057e5e12ca09edd63e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc05564_e42e83a0",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-28T13:03:20Z",
+      "side": 1,
+      "message": "shouldn\u0027t you return a single page range from 0 (or 1, however it\u0027s indexed) to pageCount instead of multiple 1-page ranges?",
+      "range": {
+        "startLine": 342,
+        "startChar": 29,
+        "endLine": 342,
+        "endChar": 38
+      },
+      "revId": "4615a5a6fa223c38dc937057e5e12ca09edd63e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
