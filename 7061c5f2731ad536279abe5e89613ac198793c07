@@ -16,6 +16,24 @@
       "revId": "7061c5f2731ad536279abe5e89613ac198793c07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5075502_904da8b9",
+        "filename": "ui/aura/mus/client_surface_embedder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-28T14:29:54Z",
+      "side": 1,
+      "message": "Something like that could work, but it\u0027s a bit ambiguous with regards to was SurfaceReferencyFactory supposed to be null or did you just forget to create it? Anyways, my plan is to use StubSurfaceReferenceFactory everywhere once surface references are on and then just delete all of the related code, so I\u0027d prefer not to change the semantics of how it works now.",
+      "parentUuid": "6a0ce427_571e3887",
+      "revId": "7061c5f2731ad536279abe5e89613ac198793c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
