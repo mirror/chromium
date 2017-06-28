@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "d5220502_1b71fc36",
+        "filename": "ios/web/app/web_main_runner.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "02662c32_4166d17d",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8e75f4d_6d341041",
         "filename": "ios/web/merge_dictionary.cc",
         "patchSetId": 2
@@ -181,6 +199,30 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0038cfb1_fc869628",
+        "filename": "ios/web/merge_dictionary.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a59e789_31b9397e",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "11f71f04_82c32f7c",
+        "filename": "ios/web/merge_dictionary.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5f830340_915e380f",
+      "range": {
+        "startLine": 14,
+        "startChar": 59,
+        "endLine": 14,
+        "endChar": 67
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed3fbaaf_8d715fb3",
         "filename": "ios/web/merge_dictionary_unittest.cc",
         "patchSetId": 2
@@ -278,6 +344,30 @@
     },
     {
       "key": {
+        "uuid": "2e270e7e_b9ffc3e7",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4bd171f_9052fee2",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ce3e11e_c537c939",
         "filename": "ios/web/merge_dictionary_unittest.cc",
         "patchSetId": 2
@@ -313,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "37255785_aa5374ac",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55eb0708_78349baa",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "709583bd_222d8fe9",
         "filename": "ios/web/merge_dictionary_unittest.cc",
         "patchSetId": 2
@@ -345,6 +453,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0604f71a_507beabb",
+        "filename": "ios/web/merge_dictionary_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "10b8d978_eb5da53e",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -454,6 +580,30 @@
     },
     {
       "key": {
+        "uuid": "4d112a6a_5be00b43",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7851e90e_57358f84",
+      "range": {
+        "startLine": 39,
+        "startChar": 43,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cb9a4ed_3a419186",
         "filename": "ios/web/public/service_manager_connection.h",
         "patchSetId": 2
@@ -486,6 +636,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f131f647_49128544",
+        "filename": "ios/web/public/service_manager_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c125352a_b1011782",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -700,6 +868,30 @@
     },
     {
       "key": {
+        "uuid": "4d4a7d2a_f9890c54",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Maybe expand the comment saying something approaching:\n\n  // Safe to call from any thread but will bind the object to that\n  // thread sequence.",
+      "parentUuid": "313ab51f_893f3cdd",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff7dacb_0946cf15",
         "filename": "ios/web/service_manager_connection_impl.cc",
         "patchSetId": 2
@@ -875,6 +1067,24 @@
     },
     {
       "key": {
+        "uuid": "baebd8e4_21d6522f",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b60c2135_712cefde",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a4a532d_23e099e6",
         "filename": "ios/web/service_manager_connection_impl.cc",
         "patchSetId": 2
@@ -907,6 +1117,24 @@
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5305e102_b08773fd",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Ack (but maybe you can use base::MakeRefCounted\u003cIOThreadContext\u003e(...) then ^_^).",
+      "parentUuid": "1814a9c8_cba30660",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1045,6 +1273,24 @@
     },
     {
       "key": {
+        "uuid": "1ef0638f_2c7bd684",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "I accept the counter-nit and the current code.",
+      "parentUuid": "c94d7d3c_dd8d13f8",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef298f36_4c059e0f",
         "filename": "ios/web/service_manager_context.mm",
         "patchSetId": 2
@@ -1080,6 +1326,24 @@
     },
     {
       "key": {
+        "uuid": "15bf4eb7_5d73ef6e",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Same, counter-nit accepted.",
+      "parentUuid": "4ef3c16a_4fde4bd3",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f81b068_08f0d341",
         "filename": "ios/web/service_manager_context.mm",
         "patchSetId": 2
@@ -1091,6 +1355,24 @@
       "writtenOn": "2017-06-27T14:22:57Z",
       "side": 1,
       "message": "result → insertion_result",
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb759ed0_136728dc",
+        "filename": "ios/web/service_manager_context.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "\u003e result → insertion_result\n\nStill relevant.",
+      "parentUuid": "1f81b068_08f0d341",
       "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

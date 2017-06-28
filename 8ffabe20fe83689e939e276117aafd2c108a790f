@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a320e93_96be6f5f",
+        "filename": "ios/web/service_manager_connection_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T22:37:17Z",
+      "side": 1,
+      "message": "Can\u0027t you use a web::TestWebThreadBundle here with REAL_IO_THREAD as option to the constructor? It will create both a base::MessageLoop for UI thread and a real IO thread.",
+      "revId": "8ffabe20fe83689e939e276117aafd2c108a790f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
