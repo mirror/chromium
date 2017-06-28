@@ -1291,6 +1291,7 @@ source_set("unit_tests") {
     "fileapi/FileTest.cpp",
     "frame/BrowserControlsTest.cpp",
     "frame/DOMTimerTest.cpp",
+    "frame/DocumentLoadingRenderingTest.cpp",
     "frame/FrameSerializerTest.cpp",
     "frame/FrameTest.cpp",
     "frame/FrameTestHelpers.cpp",
