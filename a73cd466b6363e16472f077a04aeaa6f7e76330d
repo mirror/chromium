@@ -16,6 +16,24 @@
       "revId": "a73cd466b6363e16472f077a04aeaa6f7e76330d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6644a010_bdf9b426",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFace.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-28T16:53:10Z",
+      "side": 1,
+      "message": "yeah, so HistogramCounters are threadsafe-ish. Which means that yes, if two of those are called at the same time, we may sometimes lose a count. But they won\u0027t explode and they are designed like that.",
+      "parentUuid": "3e3cdd6e_1aad4085",
+      "revId": "a73cd466b6363e16472f077a04aeaa6f7e76330d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
