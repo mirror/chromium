@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb5a0e8_27cbf50c",
+        "filename": "third_party/WebKit/Source/modules/mediasource/MediaSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T19:05:20Z",
+      "side": 1,
+      "message": "I think we can eliminate some code/comments duplication. Can you make this method simply call the endOfStream(\"\", exception_state). The replace NOTREACHED in that method with the call to EndOfStreamAlgorithm(WebMediaSource::kEndOfStreamStatusNoError)?",
+      "revId": "c21bbd152585ba3e442053c989745be7703f16a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
