@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "170fa796_7182ca52",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-28T22:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6638e085_97226d81",
+      "revId": "e267114a2590194e491798e60ac9561208f1928a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7241f029_aff0c65f",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e1d0824c_8397e6ae",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-28T22:12:58Z",
+      "side": 1,
+      "message": "Ok, I inlined the if statements in both constructor and destructor.",
+      "parentUuid": "7241f029_aff0c65f",
+      "revId": "e267114a2590194e491798e60ac9561208f1928a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d20e0c9c_b9fe54ad",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-28T21:27:33Z",
       "side": 1,
       "message": "If these aren\u0027t going to be used in the header, you don\u0027t need to make them members. They can just live in an anonymous namespace in the .cpp file or equivalent.",
+      "revId": "e267114a2590194e491798e60ac9561208f1928a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecf09a0_2d9c46e8",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-28T22:12:58Z",
+      "side": 1,
+      "message": "s_category_group_ is now used in the header file, but s_name_ isn\u0027t. I think I\u0027m going to still keep them both as members.",
+      "parentUuid": "d20e0c9c_b9fe54ad",
       "revId": "e267114a2590194e491798e60ac9561208f1928a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
