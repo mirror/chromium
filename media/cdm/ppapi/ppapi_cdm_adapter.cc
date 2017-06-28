@@ -262,19 +262,20 @@ PP_CdmExceptionCode CdmExceptionTypeToPpCdmExceptionType(cdm::Error error) {
     case cdm::kInvalidStateError:
       return PP_CDMEXCEPTIONCODE_INVALIDSTATEERROR;
     case cdm::kInvalidAccessError:
-      return PP_CDMEXCEPTIONCODE_INVALIDACCESSERROR;
+      return PP_CDMEXCEPTIONCODE_TYPEERROR;
     case cdm::kQuotaExceededError:
       return PP_CDMEXCEPTIONCODE_QUOTAEXCEEDEDERROR;
+
+    // TODO(jrummell): Remove these once CDM_8 is no longer supported.
+    // https://crbug.com/737296.
     case cdm::kUnknownError:
-      return PP_CDMEXCEPTIONCODE_UNKNOWNERROR;
     case cdm::kClientError:
-      return PP_CDMEXCEPTIONCODE_CLIENTERROR;
     case cdm::kOutputError:
-      return PP_CDMEXCEPTIONCODE_OUTPUTERROR;
+      return PP_CDMEXCEPTIONCODE_NOTSUPPORTEDERROR;
   }
 
   PP_NOTREACHED();
-  return PP_CDMEXCEPTIONCODE_UNKNOWNERROR;
+  return PP_CDMEXCEPTIONCODE_INVALIDSTATEERROR;
 }
 
 PP_CdmMessageType CdmMessageTypeToPpMessageType(cdm::MessageType message) {
