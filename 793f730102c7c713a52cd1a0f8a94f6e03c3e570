@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b05910a_682fa696",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-28T21:22:04Z",
+      "side": 1,
+      "message": "Finally decided to add logging with component_id (which is often the extension ID) in case of errors.\nIn order to mitigate privacy and log spamming concerns, this is DLOG.",
+      "range": {
+        "startLine": 211,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 49
+      },
+      "revId": "793f730102c7c713a52cd1a0f8a94f6e03c3e570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

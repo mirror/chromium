@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa7dc547_4a87ffd4",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_store.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-28T21:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1495e9e_9ee10113",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea9dcd33_a15f7412",
         "filename": "components/policy/core/common/cloud/component_cloud_policy_store.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f35af4_fd7a02c4",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_store.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-28T21:22:04Z",
+      "side": 1,
+      "message": "Ack: I\u0027d rather leave the current \"policy type\", because the \"domain\" is an artificial construct used in the code: the actual value in case of fetching still originates from the \"policy_type\" proto field.",
+      "parentUuid": "ea9dcd33_a15f7412",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "198ae15a_6ba61121",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-28T21:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c9dba6f_5c3e261b",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b79b5ae_a8978530",
         "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-28T20:13:25Z",
       "side": 1,
       "message": "The \"try again soon\" may indicate a DVLOG() could be enough, but depending on the server error it could be persistent. So I think warning is probably appropriate here. Same for HTTP_ERROR?",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc84248_b3979344",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-28T21:22:04Z",
+      "side": 1,
+      "message": "Note that all errors here have the retrying logic.\nRegarding this - my feeling is that inability of Google\u0027s server to respond to the static data request is severe enough for emitting logging. Let\u0027s maybe land it like this, and if later it turns out that this happens very often - then I\u0027ll transform this into DLOG/DVLOG.",
+      "parentUuid": "3b79b5ae_a8978530",
       "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8c2e6627_6dce86ed",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-28T21:22:04Z",
+      "side": 1,
+      "message": "Not sure whether printing SHA256 values will be useful - how could one use this? Even verifying it manually will be tricky.\nI\u0027d say that it\u0027s should be enough to know the type of the error from here.",
+      "parentUuid": "cf6f857a_19092b36",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bba5061_2651e0c9",
         "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
         "patchSetId": 6
@@ -101,6 +191,47 @@
       "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd53495_36c76994",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-28T21:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bba5061_2651e0c9",
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e0b9966_4e57c4b6",
+        "filename": "components/policy/core/common/cloud/external_policy_data_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-28T21:22:04Z",
+      "side": 1,
+      "message": "nit (for myself): swap \"|\" and \"s\".",
+      "range": {
+        "startLine": 397,
+        "startChar": 50,
+        "endLine": 397,
+        "endChar": 51
+      },
+      "revId": "e0f6444ab06f234cef822cb278f030c24017cbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
