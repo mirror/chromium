@@ -616,7 +616,7 @@ class MidiManagerWinrt::MidiPortManager {
               task_runner->PostTask(
                   FROM_HERE,
                   base::Bind(&MidiPortManager::OnCompletedGetPortFromIdAsync,
-                             weak_ptr, async_op));
+                             weak_ptr, base::Unretained(async_op)));
 
               return S_OK;
             })
