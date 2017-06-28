@@ -760,6 +760,45 @@ TEST(V8ScriptValueSerializerTest, RoundTripImageData) {
   EXPECT_EQ(200, new_image_data->data()->Data()[0]);
 }
 
+TEST(V8ScriptValueSerializerTest, RoundTripImageDataWithColorSpaceInfo) {
+  // set up run time flags
+  bool experimental_canvas_features =
+      RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
+  bool color_canvas_extensions =
+      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
+  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+  // ImageData objects with color space information should serialize and
+  // deserialize correctly.
+  V8TestingScope scope;
+  ImageDataColorSettings color_settings;
+  color_settings.setColorSpace("p3");
+  color_settings.setStorageFormat("float32");
+  ImageData* image_data =
+      ImageData::CreateImageData(2, 1, color_settings, ASSERT_NO_EXCEPTION);
+  static_cast<unsigned char*>(image_data->BufferBase()->Data())[0] = 200;
+  v8::Local<v8::Value> wrapper =
+      ToV8(image_data, scope.GetContext()->Global(), scope.GetIsolate());
+  v8::Local<v8::Value> result = RoundTrip(wrapper, scope);
+  ASSERT_TRUE(V8ImageData::hasInstance(result, scope.GetIsolate()));
+  ImageData* new_image_data = V8ImageData::toImpl(result.As<v8::Object>());
+  EXPECT_NE(image_data, new_image_data);
+  EXPECT_EQ(image_data->Size(), new_image_data->Size());
+  EXPECT_EQ(kP3CanvasColorSpace,
+            new_image_data->GetCanvasColorParams().color_space());
+  EXPECT_EQ(kFloat32ArrayStorageFormat,
+            new_image_data->GetImageDataStorageFormat());
+  EXPECT_EQ(image_data->BufferBase()->ByteLength(),
+            new_image_data->BufferBase()->ByteLength());
+  EXPECT_EQ(200, static_cast<unsigned char*>(
+                     new_image_data->BufferBase()->Data())[0]);
+  // restore run time flags
+  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
+      experimental_canvas_features);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
+      color_canvas_extensions);
+}
+
 TEST(V8ScriptValueSerializerTest, DecodeImageDataV9) {
   // Backward compatibility with existing serialized ImageData objects must be
   // maintained. Add more cases if the format changes; don't remove tests for

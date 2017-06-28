@@ -255,12 +255,14 @@ bool V8ScriptValueSerializer::WriteDOMObject(ScriptWrappable* wrappable,
   }
   if (wrapper_type_info == &V8ImageData::wrapperTypeInfo) {
     ImageData* image_data = wrappable->ToImpl<ImageData>();
-    DOMUint8ClampedArray* pixels = image_data->data();
     WriteTag(kImageDataTag);
     WriteUint32(image_data->width());
     WriteUint32(image_data->height());
-    WriteUint32(pixels->length());
-    WriteRawBytes(pixels->Data(), pixels->length());
+    WriteUint32(image_data->BufferBase()->ByteLength());
+    WriteRawBytes(image_data->BufferBase()->Data(),
+                  image_data->BufferBase()->ByteLength());
+    WriteUint32(image_data->GetCanvasColorParams().color_space());
+    WriteUint32(image_data->GetImageDataStorageFormat());
     return true;
   }
   if (wrapper_type_info == &V8DOMPoint::wrapperTypeInfo) {

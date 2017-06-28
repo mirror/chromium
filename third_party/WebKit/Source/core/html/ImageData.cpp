@@ -463,6 +463,14 @@ DOMUint8ClampedArray* ImageData::data() {
   return nullptr;
 }
 
+ImageDataStorageFormat ImageData::GetImageDataStorageFormat() {
+  if (data_u16_)
+    return kUint16ArrayStorageFormat;
+  if (data_f32_)
+    return kFloat32ArrayStorageFormat;
+  return kUint8ClampedArrayStorageFormat;
+}
+
 CanvasColorSpace ImageData::GetCanvasColorSpace(
     const String& color_space_name) {
   if (color_space_name == kLegacyCanvasColorSpaceName)
@@ -503,12 +511,46 @@ ImageDataStorageFormat ImageData::GetImageDataStorageFormat(
   return kUint8ClampedArrayStorageFormat;
 }
 
+String ImageData::GetImageDataStorageFormatName(
+    const ImageDataStorageFormat& storage_format) {
+  if (storage_format == kUint8ClampedArrayStorageFormat)
+    return kUint8ClampedArrayStorageFormatName;
+  if (storage_format == kUint16ArrayStorageFormat)
+    return kUint16ArrayStorageFormatName;
+  if (storage_format == kFloat32ArrayStorageFormat)
+    return kFloat32ArrayStorageFormatName;
+  NOTREACHED();
+  return kUint8ClampedArrayStorageFormatName;
+}
+
+ImageData* ImageData::CreateForV8Deserializer(const IntSize& size,
+                                              const uint32_t& color_space,
+                                              const uint32_t& storage_format) {
+  ImageDataColorSettings color_settings;
+  color_settings.setColorSpace(ImageData::CanvasColorSpaceName(
+      static_cast<CanvasColorSpace>(color_space)));
+  color_settings.setStorageFormat(ImageData::GetImageDataStorageFormatName(
+      static_cast<ImageDataStorageFormat>(storage_format)));
+  return ImageData::Create(size, &color_settings);
+}
+
 unsigned ImageData::StorageFormatDataSize(const String& storage_format_name) {
   if (storage_format_name == kUint8ClampedArrayStorageFormatName)
     return 1;
   if (storage_format_name == kUint16ArrayStorageFormatName)
     return 2;
   if (storage_format_name == kFloat32ArrayStorageFormatName)
+    return 4;
+  NOTREACHED();
+  return 1;
+}
+
+unsigned ImageData::StorageFormatDataSize(const uint32_t& storage_format) {
+  if (storage_format == kUint8ClampedArrayStorageFormat)
+    return 1;
+  if (storage_format == kUint16ArrayStorageFormat)
+    return 2;
+  if (storage_format == kFloat32ArrayStorageFormat)
     return 4;
   NOTREACHED();
   return 1;
