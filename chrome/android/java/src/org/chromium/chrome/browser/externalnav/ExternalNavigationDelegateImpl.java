@@ -502,7 +502,15 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
             loadUrlParams.setReferrer(referrer);
         }
         if (tab != null) {
-            tab.loadUrl(loadUrlParams);
+            // Loading URL will start a new navigation which cancels the current one
+            // that this clobbering is being done for. It leads to UAF. To avoid that,
+            // we're loading URL asynchronously. See https://crbug.com/732260.
+            ThreadUtils.postOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tab.loadUrl(params);
+                }
+            });
             return OverrideUrlLoadingResult.OVERRIDE_WITH_CLOBBERING_TAB;
         } else {
             assert false : "clobberCurrentTab was called with an empty tab.";
