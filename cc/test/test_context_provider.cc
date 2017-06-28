@@ -17,6 +17,7 @@
 #include "cc/output/context_cache_controller.h"
 #include "cc/test/test_gles2_interface.h"
 #include "cc/test/test_web_graphics_context_3d.h"
+#include "gpu/skia_bindings/grcontext_for_gles2_interface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLInterface.h"
 
@@ -141,20 +142,17 @@ class GrContext* TestContextProvider::GrContext() {
   DCHECK(context_thread_checker_.CalledOnValidThread());
 
   if (gr_context_)
-    return gr_context_.get();
+    return gr_context_->get();
 
-  sk_sp<const GrGLInterface> gl_interface(GrGLCreateNullInterface());
-  gr_context_ = sk_sp<::GrContext>(GrContext::Create(
-      kOpenGL_GrBackend,
-      reinterpret_cast<GrBackendContext>(gl_interface.get())));
-
-  cache_controller_->SetGrContext(gr_context_.get());
+  gr_context_ = base::MakeUnique<skia_bindings::GrContextForGLES2Interface>(
+      context_gl_.get(), context3d_->test_capabilities());
+  cache_controller_->SetGrContext(gr_context_->get());
 
   // If GlContext is already lost, also abandon the new GrContext.
   if (ContextGL()->GetGraphicsResetStatusKHR() != GL_NO_ERROR)
-    gr_context_->abandonContext();
+    gr_context_->get()->abandonContext();
 
-  return gr_context_.get();
+  return gr_context_->get();
 }
 
 ContextCacheController* TestContextProvider::CacheController() {
@@ -167,7 +165,7 @@ void TestContextProvider::InvalidateGrContext(uint32_t state) {
   DCHECK(context_thread_checker_.CalledOnValidThread());
 
   if (gr_context_)
-    gr_context_.get()->resetContext(state);
+    gr_context_->get()->resetContext(state);
 }
 
 base::Lock* TestContextProvider::GetLock() {
@@ -179,7 +177,7 @@ void TestContextProvider::OnLostContext() {
   if (!lost_context_callback_.is_null())
     lost_context_callback_.Run();
   if (gr_context_)
-    gr_context_->abandonContext();
+    gr_context_->get()->abandonContext();
 }
 
 TestWebGraphicsContext3D* TestContextProvider::TestContext3d() {
