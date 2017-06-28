@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c6a563f_2f91511a",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-28T15:04:59Z",
+      "side": 1,
+      "message": "nit: Please name this variable.",
+      "range": {
+        "startLine": 66,
+        "startChar": 43,
+        "endLine": 66,
+        "endChar": 47
+      },
+      "revId": "a14f4b44759ae889e546f1ec78dbfe77e19b7ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
