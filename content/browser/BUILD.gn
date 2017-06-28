@@ -746,6 +746,8 @@ source_set("browser") {
     "frame_host/render_frame_host_manager.h",
     "frame_host/render_frame_message_filter.cc",
     "frame_host/render_frame_message_filter.h",
+    "frame_host/render_frame_performance_timing.cc",
+    "frame_host/render_frame_performance_timing.h",
     "frame_host/render_frame_proxy_host.cc",
     "frame_host/render_frame_proxy_host.h",
     "frame_host/render_widget_host_view_child_frame.cc",
