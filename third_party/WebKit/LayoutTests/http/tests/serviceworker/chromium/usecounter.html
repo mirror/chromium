@@ -31,6 +31,29 @@ function openWindow(url) {
 }
 
 promise_test(t => {
+    const kFetchEventIsReload = 2029;
+    const kUrl = 'resources/use-isReload-worker.js';
+    const kScope = 'resources/usecounter-window.html?isReload';
+    var win1;
+    return service_worker_unregister_and_register(t, kUrl, kScope)
+      .then(registration => {
+          add_completion_callback(function() { registration.unregister(); });
+          worker = registration.installing;
+          return wait_for_state(t, registration.installing, 'activated');
+        })
+      .then(() => { return openWindow(kScope); })
+      .then(win => {
+        win1 = win;
+        var pro = observeUseCounter(win1, kFetchEventIsReload);
+        win1.fetch('doit');
+        return pro;
+      })
+      .then(() => {
+          assert_true(isUseCounted(win1, kFetchEventIsReload));
+      });
+}, 'blah');
+
+promise_test(t => {
     const kUrl = 'resources/usecounter-worker.js';
     const kScope = 'resources/usecounter-window.html?basic';
     let worker;
