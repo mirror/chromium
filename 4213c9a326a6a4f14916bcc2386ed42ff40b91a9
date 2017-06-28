@@ -52,6 +52,24 @@
       "revId": "4213c9a326a6a4f14916bcc2386ed42ff40b91a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff1098d_5aca57e1",
+        "filename": "ui/ozone/platform/drm/common/drm_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-06-28T22:25:10Z",
+      "side": 1,
+      "message": "Actually, we investigated a little bit more and figured out the issue is with overlays downscaling and not specific to external monitors (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d709105#c17). I\u0027m going to abandon this patch but I\u0027ll follow up on the drm_util thing.\nTnx!",
+      "parentUuid": "673d0b17_30cec597",
+      "revId": "4213c9a326a6a4f14916bcc2386ed42ff40b91a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
