@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b381a3d_2cc7e5d0",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-28T00:31:57Z",
+      "side": 1,
+      "message": "nit: s/new base::MessageLoopForUI()/new base::MessageLoopForUI/",
+      "revId": "ce956be07261834c873af914cf3c309c1e7d6abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
