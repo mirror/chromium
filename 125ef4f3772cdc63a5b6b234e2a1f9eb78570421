@@ -16,6 +16,23 @@
       "revId": "125ef4f3772cdc63a5b6b234e2a1f9eb78570421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fa9fc9_9267eab4",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIAnimation.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-28T04:54:47Z",
+      "side": 1,
+      "message": "the CSSParserContext arg should be changed from pointer to ref instead",
+      "revId": "125ef4f3772cdc63a5b6b234e2a1f9eb78570421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
