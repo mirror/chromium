@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e7df5d5_e8311646",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T21:56:15Z",
+      "side": 1,
+      "message": "I guess that there is some bug tracking the feature that require adding this code (if not, it should exist). Please update reference with said bug number.",
+      "revId": "2d0b64870e28c17b81127a810d3cbc9cd129feef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8862cf_818fc777",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T21:56:15Z",
+      "side": 1,
+      "message": "No need to comment overridden methods. Please remove this comment or move it to the implementation to explain why non-otr BrowserState is returned if context is otr.",
+      "revId": "2d0b64870e28c17b81127a810d3cbc9cd129feef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd030316_d365dbd2",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T21:56:15Z",
+      "side": 1,
+      "message": "I think you can put a real implementation for this method. The KeyedServiceFactory infrastructure supports a BuildServiceInstanceFor() method that returns nullptr.\n\n  return static_cast\u003cfeature_engagement_tracker::FeatureEngagementTracker*\u003e(\n      GetInstance()-\u003eGetServiceForBrowserState(browser_state, true));",
+      "revId": "2d0b64870e28c17b81127a810d3cbc9cd129feef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e56e41_c886847e",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-28T21:56:15Z",
+      "side": 1,
+      "message": "Implementation should be a call to GetBrowserStateRedirectedInIncognito() from ios/chrome/browser/browser_state/browser_state_otr_helper.h.",
+      "revId": "2d0b64870e28c17b81127a810d3cbc9cd129feef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
