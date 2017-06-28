@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f0e57cb5_4b30142f",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-28T19:07:24Z",
+      "side": 1,
+      "message": "Agree. I filed an issue for consideration in the future:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d737681",
+      "parentUuid": "29fb18a4_f0bff431",
+      "range": {
+        "startLine": 31,
+        "startChar": 73,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "e260f7c7a3ed2d7bfd729fe340e07746ac40da3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a53fb829_612961be",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 4

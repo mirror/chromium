@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a81c91fb_c3c597fb",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-28T19:07:24Z",
+      "side": 1,
+      "message": "The disadvantage of making |reading_data| a member of SensorReadingSharedBuffer is that it will increase the size of the SensorReadingSharedBuffer struct.\n\nThe disadvantage of making |seq_lock| a member of SensorReadingSharedBuffer is that it will make the size of the SensorReadingSharedBuffer depend on platform, since |seq_lock| is a const reference and its size can be 32 bits or 64 bits. And that will make some test code more complicated:\nhttps://cs.chromium.org/chromium/src/device/generic_sensor/public/interfaces/sensor_provider.mojom?l\u003d30-33",
+      "parentUuid": "dc820a85_66abc6a3",
+      "range": {
+        "startLine": 49,
+        "startChar": 61,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10db0dc6_38b318ee",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "90aa4edd_40c1fcda",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-28T19:07:24Z",
+      "side": 1,
+      "message": "Changed variable name to be |temp_reading_data|.\n\nThe above comment explains the disadvantage of making |reading_data| a member of SensorReadingSharedBuffer.",
+      "parentUuid": "10db0dc6_38b318ee",
+      "range": {
+        "startLine": 51,
+        "startChar": 30,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b93cd7fa_64ad8b3e",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.h",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-28T17:44:47Z",
       "side": 1,
       "message": "does it have to be a SensorReadingField? just store seqlock?",
+      "range": {
+        "startLine": 107,
+        "startChar": 47,
+        "endLine": 107,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b73c8c_e1864798",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-28T19:07:24Z",
+      "side": 1,
+      "message": "I think the OneWriterSeqLock is put into SensorReadingField to make sure it has a fixed size of 64 bits on every platform and this can simplify sensors shared buffer memory calculation:\nhttps://cs.chromium.org/chromium/src/device/generic_sensor/public/cpp/sensor_reading.h?l\u003d14-15",
+      "parentUuid": "b93cd7fa_64ad8b3e",
       "range": {
         "startLine": 107,
         "startChar": 47,
