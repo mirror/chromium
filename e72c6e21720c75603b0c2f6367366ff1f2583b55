@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e27d6bb_e9aaf265",
+        "filename": "build/linux/bin/eu-strip",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-06-28T13:19:50Z",
+      "side": 1,
+      "message": "It looks like an empty file was pulled into your review. Does it show up when you diff files vs master?\n\ngit diff master --name-only",
+      "revId": "e72c6e21720c75603b0c2f6367366ff1f2583b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b12ed7_2f79a97d",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-06-28T13:19:50Z",
+      "side": 1,
+      "message": "Nice work identifying a method that can handle the edge case.\n\nWhat are your thoughts on HandleMouseLocation duplicating some of the work being done in thie method, before we call into it?",
+      "range": {
+        "startLine": 629,
+        "startChar": 50,
+        "endLine": 629,
+        "endChar": 0
+      },
+      "revId": "e72c6e21720c75603b0c2f6367366ff1f2583b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
