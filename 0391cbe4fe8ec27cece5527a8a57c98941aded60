@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "139e5c14_9d4f4904",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-06-28T20:58:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "40f61d4b_3e4e7e8f",
+      "range": {
+        "startLine": 364,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 47
+      },
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1d0f195_7b57ac7e",
         "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "abf7bea2_7f6366f5",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-06-28T20:58:02Z",
+      "side": 1,
+      "message": "Hmm, #33 is \"Water cooling and computer chassis\" and I do not see it there. Must be some other update form that list. Anyway, I have switched to a Non-USB code for now, we can adjust if and when we get though HID update process.\n\nAs far as evdev I will be posting the patch shortly; 0x247 is unused and I do not have any pending requests for the new evdev codes.",
+      "parentUuid": "a1d0f195_7b57ac7e",
+      "range": {
+        "startLine": 536,
+        "startChar": 5,
+        "endLine": 536,
+        "endChar": 8
+      },
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc711b6e_ec041c3e",
         "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2017-06-28T14:25:51Z",
       "side": 1,
       "message": "This is OK (style: add braces) though I do think it would be better to have this key in the xkb tables to avoid having it be a special case. (I can help with that.)",
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb97767_95631207",
+        "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-06-28T20:58:02Z",
+      "side": 1,
+      "message": "Adjusted the style.\n\nAs far as XKB goes, if this sticks and is useful outside of ChromeOS I\u0027d be happy to update the code once we get a new XKB definition.\n\nI wonder though, are we going to continue using xkb translations on ChromeOS or we\u0027ll eventually switch to direct evdev-\u003edom?",
+      "parentUuid": "cc711b6e_ec041c3e",
       "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
