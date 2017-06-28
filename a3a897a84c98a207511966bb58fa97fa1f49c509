@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76295099_aebe1c70",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-28T22:13:03Z",
+      "side": 1,
+      "message": "Make ring a member, that way you don\u0027t need BaseFocusRing::GetFocusRing() or this install/uninstall functions.",
+      "revId": "a3a897a84c98a207511966bb58fa97fa1f49c509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
