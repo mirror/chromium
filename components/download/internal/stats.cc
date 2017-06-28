@@ -3,11 +3,50 @@
 // found in the LICENSE file.
 
 #include "components/download/internal/stats.h"
+#include "base/logging.h"
 
 #include "components/download/internal/startup_status.h"
 
 namespace download {
 namespace stats {
+
+std::string DownloadClientToString(DownloadClient& client) {
+  switch (client) {
+    case DownloadClient::INVALID:
+      return "DownloadClient::INVALID";
+    case DownloadClient::TEST:
+      return "DownloadClient::TEST";
+    case DownloadClient::TEST_2:
+      return "DownloadClient::TEST_2";
+    case DownloadClient::TEST_3:
+      return "DownloadClient::TEST_3";
+    case DownloadClient::OFFLINE_PAGE_PREFETCH:
+      return "DownloadClient::OFFLINE_PAGE_PREFETCH";
+    case DownloadClient::BOUNDARY:
+      return "DownloadClient::BOUNDARY";
+  }
+  NOTREACHED();
+  return "";
+}
+
+std::string ServiceApiActionToString(ServiceApiAction& action) {
+  switch (action) {
+    case ServiceApiAction::START_DOWNLOAD:
+      return "ServiceApiAction::START_DOWNLOAD";
+    case ServiceApiAction::PAUSE_DOWNLOAD:
+      return "ServiceApiAction::PAUSE_DOWNLOAD";
+    case ServiceApiAction::RESUME_DOWNLOAD:
+      return "ServiceApiAction::RESUME_DOWNLOAD";
+    case ServiceApiAction::CANCEL_DOWNLOAD:
+      return "ServiceApiAction::CANCEL_DOWNLOAD";
+    case ServiceApiAction::CHANGE_CRITERIA:
+      return "ServiceApiAction::CHANGE_CRITERIA";
+    case ServiceApiAction::COUNT:
+      return "ServiceApiAction::COUNT";
+  }
+  NOTREACHED();
+  return "";
+}
 
 void LogControllerStartupStatus(const StartupStatus& status) {
   DCHECK(status.Complete());
@@ -17,7 +56,8 @@ void LogControllerStartupStatus(const StartupStatus& status) {
 }
 
 void LogServiceApiAction(DownloadClient client, ServiceApiAction action) {
-  // TODO(dtrainor): Log |action| for |client|.
+  LOG(ERROR) << DownloadClientToString(client) << " "
+             << ServiceApiActionToString(action);
 }
 
 void LogStartDownloadResult(DownloadClient client,
