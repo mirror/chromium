@@ -7,12 +7,8 @@
 
 #include "base/logging.h"
 #include "cc/cc_export.h"
+#include "third_party/khronos/GLES2/gl2.h"
 #include "ui/gfx/buffer_types.h"
-
-// TODO(prashant.n): Including third_party/khronos/GLES2/gl2.h causes
-// redefinition errors as macros/functions defined in it conflict with
-// macros/functions defined in ui/gl/gl_bindings.h. (http://crbug.com/512833).
-typedef unsigned int GLenum;
 
 namespace cc {
 
