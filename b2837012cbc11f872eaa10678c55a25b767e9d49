@@ -179,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "e02be720_1fd23012",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-28T04:20:57Z",
+      "side": 1,
+      "message": "Per offline discussions, changed the cap to be in terms of overscroll_delta_x_/y_. Also added a boolean to keep track of whether a cap is set or not.",
+      "parentUuid": "da865baa_64684b7e",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 32
+      },
+      "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb313db4_b449c87a",
         "filename": "content/browser/renderer_host/overscroll_controller_delegate.h",
         "patchSetId": 4
