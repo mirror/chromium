@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4db0863_564ff0f1",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-28T14:15:03Z",
+      "side": 1,
+      "message": "nit: s/provide/provide a/",
+      "range": {
+        "startLine": 245,
+        "startChar": 63,
+        "endLine": 245,
+        "endChar": 70
+      },
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0dd8a9_bf5319d0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-28T14:15:03Z",
+      "side": 1,
+      "message": "\"through its lifetime\" is confusing. Maybe replace with \"(and detached on teardown)\"",
+      "range": {
+        "startLine": 247,
+        "startChar": 5,
+        "endLine": 247,
+        "endChar": 12
+      },
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
