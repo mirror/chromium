@@ -365,6 +365,24 @@
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc1a40f_c787e5ee",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T09:27:14Z",
+      "side": 1,
+      "message": "Um, reg: threading concern, if RawScriptData instantiation only happens on the worker thread when GetScriptData is called we should be fine.  Sorry for the noise if that\u0027s the case.",
+      "parentUuid": "f612d616_009b2f95",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
