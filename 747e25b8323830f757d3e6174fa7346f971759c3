@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b3f7b3e_a322ec6e",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-28T13:06:14Z",
+      "side": 1,
+      "message": "I understand the motivation behind this check, but it\u0027s surprising to me it\u0027s in third_party/WebKit/PRESUBMIT. Shouldn\u0027t we have globally consistent behavior here?\n\nIn Chromium, most files happen to include build/build_config.h transitively, so the check would fire a lot there I suppose. But maybe that\u0027s worth doing anyhow – and if not, maybe it\u0027s not worth doing for blink either.\n\nFinally, build_config is in build/, not base/ -- do we really need a wtf wrapper header for this? Can\u0027t blink include build/build_config.h directly?",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 19
+      },
+      "revId": "747e25b8323830f757d3e6174fa7346f971759c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c7df0d_e4da352f",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-28T13:06:14Z",
+      "side": 1,
+      "message": "Do we really have to check for this? Won\u0027t using OS(FOO) just be a compile error? Or are we not yet done replacing them?",
+      "revId": "747e25b8323830f757d3e6174fa7346f971759c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
