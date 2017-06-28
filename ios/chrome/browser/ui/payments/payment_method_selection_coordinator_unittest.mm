@@ -11,6 +11,7 @@
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/payments/core/payment_instrument.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #include "ios/chrome/browser/payments/test_payment_request.h"
@@ -43,7 +44,7 @@ class PaymentRequestPaymentMethodSelectionCoordinatorTest
     personal_data_manager_.AddTestingCreditCard(&credit_card2_);
     payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
   }
 
   web::TestWebThreadBundle thread_bundle_;
@@ -52,6 +53,7 @@ class PaymentRequestPaymentMethodSelectionCoordinatorTest
   autofill::CreditCard credit_card1_;
   autofill::CreditCard credit_card2_;
   autofill::TestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<PaymentRequest> payment_request_;
 };
 
@@ -106,10 +108,10 @@ TEST_F(PaymentRequestPaymentMethodSelectionCoordinatorTest,
       mockForProtocol:@protocol(PaymentMethodSelectionCoordinatorDelegate)];
   [[delegate expect]
       paymentMethodSelectionCoordinator:coordinator
-                 didSelectPaymentMethod:payment_request_->credit_cards()[0]];
+                 didSelectPaymentMethod:payment_request_->payment_methods()[0]];
   [[delegate reject]
       paymentMethodSelectionCoordinator:coordinator
-                 didSelectPaymentMethod:payment_request_->credit_cards()[1]];
+                 didSelectPaymentMethod:payment_request_->payment_methods()[1]];
   [coordinator setDelegate:delegate];
 
   EXPECT_EQ(1u, navigation_controller.viewControllers.count);

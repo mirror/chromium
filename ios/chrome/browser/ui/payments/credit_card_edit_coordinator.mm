@@ -15,6 +15,7 @@
 #include "components/autofill/core/common/autofill_clock.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #import "components/autofill/ios/browser/credit_card_util.h"
+#include "components/payments/core/payment_instrument.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -84,6 +85,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
 @implementation CreditCardEditCoordinator
 
 @synthesize creditCard = _creditCard;
+@synthesize paymentMethod = _paymentMethod;
 @synthesize paymentRequest = _paymentRequest;
 @synthesize delegate = _delegate;
 @synthesize billingAddressSelectionCoordinator =
@@ -224,8 +226,8 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
     if (saveCreditCard)
       _paymentRequest->GetPersonalDataManager()->AddCreditCard(creditCard);
 
-    // Add the credit card to the list of credit cards in |_paymentRequest|.
-    _creditCard = _paymentRequest->AddCreditCard(creditCard);
+    // Add the credit card to the list of payment methods in |_paymentRequest|.
+    _paymentMethod = _paymentRequest->AddAutofillPaymentInstrument(creditCard);
   } else {
     // Override the origin.
     creditCard.set_origin(autofill::kSettingsOrigin);
@@ -243,7 +245,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
   }
 
   [_delegate creditCardEditCoordinator:self
-            didFinishEditingCreditCard:_creditCard];
+            didFinishEditingCreditCard:_paymentMethod];
 }
 
 - (void)paymentRequestEditViewControllerDidCancel:

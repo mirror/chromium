@@ -48,7 +48,7 @@ class PaymentRequestPaymentItemsDisplayViewControllerTest
   CollectionViewController* InstantiateController() override {
     payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
-        &personal_data_manager_);
+        &personal_data_manager_, payment_request_delegate_);
     mediator_ = [[TestPaymentItemsDisplayMediator alloc] init];
     PaymentItemsDisplayViewController* viewController = [
         [PaymentItemsDisplayViewController alloc] initWithPayButtonEnabled:YES];
@@ -64,6 +64,7 @@ class PaymentRequestPaymentItemsDisplayViewControllerTest
   web::TestWebThreadBundle thread_bundle_;
 
   autofill::TestPersonalDataManager personal_data_manager_;
+  id<PaymentRequestUIDelegate> payment_request_delegate_;
   std::unique_ptr<PaymentRequest> payment_request_;
   TestPaymentItemsDisplayMediator* mediator_ = nil;
 };

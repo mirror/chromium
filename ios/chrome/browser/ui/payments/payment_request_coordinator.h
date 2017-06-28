@@ -9,6 +9,7 @@
 
 #include "base/ios/block_types.h"
 #include "base/strings/string16.h"
+#include "components/autofill/core/browser/payments/full_card_request.h"
 #import "ios/chrome/browser/chrome_coordinator.h"
 #import "ios/chrome/browser/ui/payments/address_edit_coordinator.h"
 #import "ios/chrome/browser/ui/payments/contact_info_edit_coordinator.h"
@@ -56,8 +57,8 @@ class PaymentShippingOption;
 
 // Notifies the delegate that the user has completed the payment request.
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
-    didCompletePaymentRequestWithCard:(const autofill::CreditCard&)card
-                     verificationCode:(const base::string16&)verificationCode;
+        didReceiveFullCardDetails:(autofill::CreditCard*)card
+                 verificationCode:(const base::string16&)verificationCode;
 
 // Notifies the delegate that the user has selected a shipping address.
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
@@ -115,8 +116,12 @@ class PaymentShippingOption;
 // The delegate to be notified when the user confirms or cancels the request.
 @property(nonatomic, weak) id<PaymentRequestCoordinatorDelegate> delegate;
 
-// Initiates the UI that will process payment with a payment method.
-- (void)sendPaymentResponse;
+// Initiates the UI that will request card details from the user.
+- (void)
+openFullCardRequestUI:(const autofill::CreditCard&)card
+       resultDelegate:
+           (base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>)
+               resultDelegate;
 
 // Updates the payment details of the PaymentRequest and updates the UI.
 - (void)updatePaymentDetails:(web::PaymentDetails)paymentDetails;
@@ -124,13 +129,9 @@ class PaymentShippingOption;
 // Displays an error message. Invokes |callback| when the message is dismissed.
 - (void)displayErrorWithCallback:(ProceduralBlock)callback;
 
-// Called when a credit card has been successfully unmasked. Note that |card|
-// may be different from what's returned by the selected_credit_card() method of
-// |paymentRequest|, because CVC unmasking process may update the credit card
-// number and expiration date.
-- (void)fullCardRequestDidSucceedWithCard:(const autofill::CreditCard&)card
-                         verificationCode:
-                             (const base::string16&)verificationCode;
+// Called when a credit card has been successfully unmasked.
+- (void)fullCardRequestDidSucceed:(const std::string&)methodName
+               stringifiedDetails:(const std::string&)stringifiedDetails;
 
 @end
 

@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/payments/payment_request.h"
+
 class ToolbarModelIOS;
 
 namespace ios {
