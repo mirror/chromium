@@ -11,6 +11,7 @@
 #include "platform/fonts/Font.h"
 #include "platform/fonts/FontCustomPlatformData.h"
 #include "platform/fonts/FontDescription.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/fonts/FontSelector.h"
 #include "platform/testing/FontTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -19,6 +20,11 @@
 using blink::testing::CreateTestFont;
 
 namespace blink {
+
+TSAN_TEST(FontObjectThreadedTest, Language) {
+  RunOnThreads(
+      []() { EXPECT_EQ(FontGlobalContext::GetPlatformLanguage(), "en-US"); });
+}
 
 TSAN_TEST(FontObjectThreadedTest, GetFontDefinition) {
   RunOnThreads([]() {

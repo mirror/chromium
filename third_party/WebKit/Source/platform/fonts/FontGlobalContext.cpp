@@ -4,11 +4,19 @@
 
 #include "platform/fonts/FontGlobalContext.h"
 
+#include "platform/Language.h"
 #include "platform/fonts/FontCache.h"
+#include "platform/wtf/Locker.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/ThreadSpecific.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 
 namespace blink {
+
+AtomicString& GlobalPlatformLanguage() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(AtomicString, platform_language, ());
+  return platform_language;
+}
 
 FontGlobalContext* FontGlobalContext::Get(CreateIfNeeded create_if_needed) {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<FontGlobalContext*>,
@@ -19,13 +27,26 @@ FontGlobalContext* FontGlobalContext::Get(CreateIfNeeded create_if_needed) {
   return *font_persistent;
 }
 
-FontGlobalContext::FontGlobalContext() {}
+void FontGlobalContext::SetPlatformLanguage(const AtomicString& language) {
+  Get()->platform_language_ = language;
+}
+
+FontGlobalContext::FontGlobalContext()
+    : platform_language_(
+          GlobalPlatformLanguage().Impl()
+              ? GlobalPlatformLanguage().Impl()->IsolatedCopy().Get()
+              : nullptr) {}
 
 void FontGlobalContext::ClearMemory() {
   if (!Get(kDoNotCreate))
     return;
 
   GetFontCache().Invalidate();
+}
+
+void FontGlobalContext::Initialize() {
+  AtomicString& global_lang = GlobalPlatformLanguage();
+  global_lang = AtomicString(DefaultLanguage().Impl()->IsolatedCopy().Get());
 }
 
 }  // namespace blink

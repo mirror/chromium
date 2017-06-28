@@ -38,6 +38,7 @@
 #include "platform/MemoryCoordinator.h"
 #include "platform/PartitionAllocMemoryDumpProvider.h"
 #include "platform/fonts/FontCacheMemoryDumpProvider.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/heap/BlinkGCMemoryDumpProvider.h"
 #include "platform/heap/GCTaskRunner.h"
 #include "platform/instrumentation/tracing/MemoryCacheDumpProvider.h"
@@ -122,6 +123,8 @@ void Platform::Initialize(Platform* platform) {
         base::ThreadTaskRunnerHandle::Get());
 
   ThreadState::AttachMainThread();
+
+  FontGlobalContext::Initialize();
 
   // TODO(ssid): remove this check after fixing crbug.com/486782.
   if (g_platform->main_thread_) {
