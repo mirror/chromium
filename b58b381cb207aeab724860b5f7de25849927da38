@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a61097_8a16eabc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-28T15:17:31Z",
+      "side": 1,
+      "message": "What happens if you remove this and the line below and just call ContentViewCore#clearSelection?\n (https://cs.chromium.org/chromium/src/content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java?rcl\u003d1314c3ca3713b6e774f240d56fba68bb93443363\u0026l\u003d1456)",
+      "range": {
+        "startLine": 1087,
+        "startChar": 43,
+        "endLine": 1087,
+        "endChar": 53
+      },
+      "revId": "b58b381cb207aeab724860b5f7de25849927da38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
