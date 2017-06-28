@@ -4,13 +4,16 @@
 
 #include "content/browser/loader/resource_scheduler.h"
 
+#include <map>
 #include <memory>
+#include <set>
 #include <utility>
 #include <vector>
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_param_associator.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/histogram_tester.h"
@@ -28,6 +31,8 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_server_properties_impl.h"
+#include "net/nqe/network_quality_estimator_test_util.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_test_util.h"
@@ -135,9 +140,10 @@ class FakeResourceContext : public ResourceContext {
 
 class ResourceSchedulerTest : public testing::Test {
  protected:
-  ResourceSchedulerTest() {
+  ResourceSchedulerTest() : field_trial_list_(nullptr) {
     InitializeScheduler();
     context_.set_http_server_properties(&http_server_properties_);
+    context_.set_network_quality_estimator(&network_quality_estimator_);
   }
 
   ~ResourceSchedulerTest() override {
@@ -171,7 +177,7 @@ class ResourceSchedulerTest : public testing::Test {
       int child_id,
       int route_id) {
     std::unique_ptr<net::URLRequest> url_request(context_.CreateRequest(
-        GURL(url), priority, NULL, TRAFFIC_ANNOTATION_FOR_TESTS));
+        GURL(url), priority, nullptr, TRAFFIC_ANNOTATION_FOR_TESTS));
     return url_request;
   }
 
@@ -254,15 +260,53 @@ class ResourceSchedulerTest : public testing::Test {
     mock_timer_->Fire();
   }
 
+  void InitializeMaxDelayableRequestsExperiment(
+      base::test::ScopedFeatureList* scoped_feature_list,
+      bool enabled) {
+    base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
+    const char kTrialName[] = "TrialName";
+    const char kGroupName[] = "GroupName";
+    const char kMaxDelayableRequestsNetworkOverride[] =
+        "MaxDelayableRequestsNetworkOverride";
+
+    std::map<std::string, std::string> params;
+    params["MaxEffectiveConnectionType"] = "2G";
+    params["BDPLowerBoundBits1"] = "100";
+    params["BDPUpperBoundBits1"] = "130";
+    params["MaxDelayableRequests1"] = "2";
+    params["BDPLowerBoundBits2"] = "130";
+    params["BDPUpperBoundBits2"] = "160";
+    params["MaxDelayableRequests2"] = "4";
+
+    base::AssociateFieldTrialParams(kTrialName, kGroupName, params);
+    base::FieldTrial* field_trial =
+        base::FieldTrialList::CreateFieldTrial(kTrialName, kGroupName);
+
+    std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
+    feature_list->RegisterFieldTrialOverride(
+        kMaxDelayableRequestsNetworkOverride,
+        enabled ? base::FeatureList::OVERRIDE_ENABLE_FEATURE
+                : base::FeatureList::OVERRIDE_DISABLE_FEATURE,
+        field_trial);
+    scoped_feature_list->InitWithFeatureList(std::move(feature_list));
+  }
+
   ResourceScheduler* scheduler() {
     return scheduler_.get();
   }
+
+  class LocalHttpTestServer : public net::EmbeddedTestServer {
+   public:
+    explicit LocalHttpTestServer(const base::FilePath& document_root);
+  };
 
   TestBrowserThreadBundle thread_bundle_;
   std::unique_ptr<ResourceScheduler> scheduler_;
   base::MockTimer* mock_timer_;
   net::HttpServerPropertiesImpl http_server_properties_;
+  net::TestNetworkQualityEstimator network_quality_estimator_;
   net::TestURLRequestContext context_;
+  base::FieldTrialList field_trial_list_;
 };
 
 TEST_F(ResourceSchedulerTest, OneIsolatedLowRequest) {
@@ -980,6 +1024,230 @@ TEST_F(ResourceSchedulerTest, RequestStartedAfterClientDeletedManyDelayable) {
   delayable_requests.clear();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(lowest->started());
+}
+
+// Test to see if the maximum number of delayable requests is overridden
+// when the experiment is enabled and not when it is disabled. The BDP buckets
+// are correct and the effective connection type is also in the configuration
+// bucket.
+TEST_F(ResourceSchedulerTest, RequestLimitOverrideConfigTest) {
+  for (bool exp_status : {true, false}) {
+    base::test::ScopedFeatureList scoped_feature_list;
+    InitializeMaxDelayableRequestsExperiment(&scoped_feature_list, exp_status);
+    InitializeScheduler();
+
+    // Set BDP to 120 kbits, which lies in the configuration bucket. Set the
+    // ECT to Slow-2G, which is slower than the threshold configured in
+    // |InitializeMaxDelayableRequestsExperiment|.
+    network_quality_estimator_.set_bandwidth_delay_product_kbits(120);
+    network_quality_estimator_.set_effective_connection_type(
+        net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
+
+    // For 2G, the typical values of RTT and BW should result in the override
+    // taking effect with the experiment enabled. For this case, the new limit
+    // is 2. The limit will matter only once the page has a body, since
+    // delayable requests are not loaded before that.
+    scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+    // Throw in one high priority request to ensure that it does not matter once
+    // a body exists.
+    std::unique_ptr<TestRequest> high2(
+        NewRequest("http://host/high2", net::HIGHEST));
+    EXPECT_TRUE(high2->started());
+
+    const int kOverriddenNumRequests =
+        2;  // Should match the configuration set by
+            // InitializeMaxDelayableRequestsExperiment
+
+    std::vector<std::unique_ptr<TestRequest>> lows_singlehost;
+    // Queue up to the per-host limit (we subtract the current high-pri
+    // request).
+    for (int i = 0; i < kOverriddenNumRequests; ++i) {
+      std::string url = "http://host/low" + base::IntToString(i);
+      lows_singlehost.push_back(NewRequest(url.c_str(), net::LOWEST));
+      EXPECT_TRUE(lows_singlehost[i]->started());
+    }
+
+    std::unique_ptr<TestRequest> second_last_singlehost(
+        NewRequest("http://host/s_last", net::LOWEST));
+    std::unique_ptr<TestRequest> last_singlehost(
+        NewRequest("http://host/last", net::LOWEST));
+
+    if (exp_status) {  // Experiment enabled, hence requests should be limited.
+      // Second last should not start because there are |kOverridenNumRequests|
+      // delayable requests already in-flight.
+      EXPECT_FALSE(second_last_singlehost->started());
+
+      // Completion of a delayable request must result in starting of the
+      // second-last request.
+      lows_singlehost.erase(lows_singlehost.begin());
+      base::RunLoop().RunUntilIdle();
+      EXPECT_TRUE(second_last_singlehost->started());
+      EXPECT_FALSE(last_singlehost->started());
+
+      // Completion of another delayable request must result in starting of the
+      // last request.
+      lows_singlehost.erase(lows_singlehost.begin());
+      base::RunLoop().RunUntilIdle();
+      EXPECT_TRUE(last_singlehost->started());
+    } else {  // Requests should start because the default limit is 10.
+      EXPECT_TRUE(second_last_singlehost->started());
+      EXPECT_TRUE(last_singlehost->started());
+    }
+  }
+}
+
+// Test to check that the limit is not overridden when the ECT is not equal to
+// any of the values provided in the experiment configuration.
+TEST_F(ResourceSchedulerTest, RequestLimitOverrideOutsideECTRange) {
+  for (net::EffectiveConnectionType ect :
+       {net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
+        net::EFFECTIVE_CONNECTION_TYPE_OFFLINE,
+        net::EFFECTIVE_CONNECTION_TYPE_3G, net::EFFECTIVE_CONNECTION_TYPE_4G}) {
+    base::test::ScopedFeatureList scoped_feature_list;
+    InitializeMaxDelayableRequestsExperiment(&scoped_feature_list, true);
+    InitializeScheduler();
+
+    // Set BDP to 120 kbits, which lies in the configuration bucket. Set the
+    // ECT to a value for which the experiment should not be run.
+    network_quality_estimator_.set_bandwidth_delay_product_kbits(120);
+    network_quality_estimator_.set_effective_connection_type(ect);
+
+    // The limit will matter only once the page has a body, since delayable
+    // requests are not loaded before that.
+    scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+    // Throw in one high priority request to ensure that it does not matter once
+    // a body exists.
+    std::unique_ptr<TestRequest> high(
+        NewRequest("http://host/high", net::HIGHEST));
+    EXPECT_TRUE(high->started());
+
+    const int kMaxNumDelayableRequestsPerClient =
+        10;  // Should be in sync with resource_scheduler.cc.
+
+    std::vector<std::unique_ptr<TestRequest>> lows_singlehost;
+    // Queue up to the maximum limit. Use different host names to prevent the
+    // per host limit from kicking in.
+    for (int i = 0; i < kMaxNumDelayableRequestsPerClient; ++i) {
+      // Keep unique hostnames to prevent the per host limit from kicking in.
+      std::string url = "http://host" + base::IntToString(i) + "/low";
+      lows_singlehost.push_back(NewRequest(url.c_str(), net::LOWEST));
+      EXPECT_TRUE(lows_singlehost[i]->started());
+    }
+
+    std::unique_ptr<TestRequest> last_singlehost(
+        NewRequest("http://host/last", net::LOWEST));
+
+    // Last should not start because the maximum requests that can be in-flight
+    // have already started.
+    EXPECT_FALSE(last_singlehost->started());
+  }
+}
+
+// Test to check that the limit is not overridden when the ECT is valid, but the
+// BDP does not lie in one of the buckets provided in the configuration.
+TEST_F(ResourceSchedulerTest, RequestLimitOverrideConfigOutsideBDPRange) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  InitializeMaxDelayableRequestsExperiment(&scoped_feature_list, true);
+  InitializeScheduler();
+
+  // The BDP should lie outside the provided ranges. Here, the BDP is set to
+  // 50, which lies outside the configuration BDP buckets.
+  // The effective connection type is set to Slow-2G.
+  network_quality_estimator_.set_bandwidth_delay_product_kbits(50);
+  network_quality_estimator_.set_effective_connection_type(
+      net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
+
+  // The limit should be the default limit, which is 10 delayable requests
+  // in-flight. The limit will matter only once the page has a body, since
+  // delayable requests are not loaded before that.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  // Throw in one high priority request to ensure that it does not matter once
+  // a body exists.
+  std::unique_ptr<TestRequest> high(
+      NewRequest("http://host/high", net::HIGHEST));
+  EXPECT_TRUE(high->started());
+
+  const int kMaxNumDelayableRequestsPerClient =
+      10;  // Should be in sync with resource_scheduler.cc.
+
+  std::vector<std::unique_ptr<TestRequest>> lows_singlehost;
+  // Queue up to the maximum limit. Use different host names to prevent the
+  // per host limit from kicking in.
+  for (int i = 0; i < kMaxNumDelayableRequestsPerClient; ++i) {
+    // Keep unique hostnames to prevent the per host limit from kicking in.
+    std::string url = "http://host" + base::IntToString(i) + "/low";
+    lows_singlehost.push_back(NewRequest(url.c_str(), net::LOWEST));
+    EXPECT_TRUE(lows_singlehost[i]->started());
+  }
+
+  std::unique_ptr<TestRequest> last_singlehost(
+      NewRequest("http://host/last", net::LOWEST));
+
+  // Last should not start because the maximum requests that can be in-flight
+  // have already started.
+  EXPECT_FALSE(last_singlehost->started());
+}
+
+// Test to check that a change in network conditions midway during loading does
+// not change the behaviour of the resource scheduler.
+TEST_F(ResourceSchedulerTest, RequestLimitOverrideFixedForPageLoad) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  InitializeMaxDelayableRequestsExperiment(&scoped_feature_list, true);
+  InitializeScheduler();
+
+  // BDP value is in range for which the limit must overridden to 2. The
+  // effective connection type is set to Slow-2G.
+  network_quality_estimator_.set_bandwidth_delay_product_kbits(120);
+  network_quality_estimator_.set_effective_connection_type(
+      net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
+
+  // The limit will matter only once the page has a body, since delayable
+  // requests are not loaded before that.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  // Throw in one high priority request to ensure that it does not matter once
+  // a body exists.
+  std::unique_ptr<TestRequest> high(
+      NewRequest("http://host/high", net::HIGHEST));
+  EXPECT_TRUE(high->started());
+
+  const int kOverriddenNumRequests =
+      2;  // Should be based on the value set by
+          // |InitializeMaxDelayableRequestsExperiment| for the given range.
+
+  std::vector<std::unique_ptr<TestRequest>> lows_singlehost;
+  // Queue up to the overridden limit.
+  for (int i = 0; i < kOverriddenNumRequests; ++i) {
+    // Keep unique hostnames to prevent the per host limit from kicking in.
+    std::string url = "http://host" + base::IntToString(i) + "/low";
+    lows_singlehost.push_back(NewRequest(url.c_str(), net::LOWEST));
+    EXPECT_TRUE(lows_singlehost[i]->started());
+  }
+
+  std::unique_ptr<TestRequest> second_last_singlehost(
+      NewRequest("http://host/slast", net::LOWEST));
+
+  // This new request should not start because the limit has been reached.
+  EXPECT_FALSE(second_last_singlehost->started());
+  lows_singlehost.erase(lows_singlehost.begin());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(second_last_singlehost->started());
+
+  // Change the BDP to go outside the experiment buckets and change the network
+  // type to 2G. This should not affect the limit calculated at the beginning of
+  // the page load.
+  network_quality_estimator_.set_bandwidth_delay_product_kbits(50);
+  network_quality_estimator_.set_effective_connection_type(
+      net::EFFECTIVE_CONNECTION_TYPE_2G);
+
+  std::unique_ptr<TestRequest> last_singlehost(
+      NewRequest("http://host/last", net::LOWEST));
+
+  // Last should not start because the limit should not have changed.
+  EXPECT_FALSE(last_singlehost->started());
 }
 
 }  // unnamed namespace
