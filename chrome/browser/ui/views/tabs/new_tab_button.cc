@@ -42,7 +42,10 @@ sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
 }  // namespace
 
 NewTabButton::NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener)
-    : views::ImageButton(listener), tab_strip_(tab_strip), destroyed_(NULL) {
+    : views::ImageButton(listener),
+      tab_strip_(tab_strip),
+      promo_(nullptr),
+      destroyed_(NULL) {
   set_animate_on_state_change(true);
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
   set_triggerable_event_flags(triggerable_event_flags() |
@@ -141,7 +144,11 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
       CreateShadowDrawLooper(SkColorSetA(stroke_color, shadow_alpha)));
   const SkAlpha path_alpha =
       static_cast<SkAlpha>(std::round((pressed ? 0.875f : 0.609375f) * alpha));
-  flags.setColor(SkColorSetA(stroke_color, path_alpha));
+  if (promo_)
+    flags.setColor(GetNativeTheme()->GetSystemColor(
+        ui::NativeTheme::kColorId_ProminentButtonColor));
+  else
+    flags.setColor(SkColorSetA(stroke_color, path_alpha));
   canvas->DrawPath(stroke, flags);
 }
 
@@ -233,7 +240,11 @@ void NewTabButton::PaintFill(bool pressed,
           x_scale * scale, scale, 0, 0, &flags);
       DCHECK(succeeded);
     } else {
-      flags.setColor(tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB));
+      if (promo_)
+        flags.setColor(GetNativeTheme()->GetSystemColor(
+            ui::NativeTheme::kColorId_ProminentButtonColor));
+      else
+        flags.setColor(tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB));
     }
     const SkColor stroke_color = tab_strip_->GetToolbarTopSeparatorColor();
     const SkAlpha alpha =
@@ -261,3 +272,30 @@ void NewTabButton::PaintFill(bool pressed,
     canvas->DrawPath(fill, flags);
   }
 }
+
+//////////////////////////////////////////////////////////////////////////////
+// NewTabPromo
+
+void NewTabButton::ShowPromo() {
+  promo_ = new NewTabPromo(this, NewTabButton::VisibleBounds());
+  NewTabButton::SchedulePaint();
+}
+
+void NewTabButton::ClosePromo() {
+  promo_ = NULL;
+  NewTabButton::SchedulePaint();
+}
+
+const gfx::Rect NewTabButton::VisibleBounds() {
+  const float scale = GetWidget()->GetCompositor()->device_scale_factor();
+  SkPath border;
+  GetBorderPath(GetTopOffset() * scale, scale, false, &border);
+  SkRect rect_sk = border.getBounds();
+  gfx::Point* top_left_point_ = new gfx::Point(rect_sk.left(), rect_sk.top());
+  gfx::Size* newtab_button_size_ =
+      new gfx::Size(rect_sk.width(), rect_sk.height());
+  View::ConvertPointToScreen(this, top_left_point_);
+  const gfx::Rect visible_rect_(*top_left_point_, *newtab_button_size_);
+  return visible_rect_;
+}
+///////////////////////////////////////////////////////////////////////////////

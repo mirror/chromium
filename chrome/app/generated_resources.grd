@@ -4983,7 +4983,7 @@ Keep your key file in a safe place. You will need it to create new versions of y
       </message>
       <message name="IDS_PREVIEWS_INFOBAR_TIMESTAMP_HOURS" desc="The desciption stating how old a preview version of a page is in hours. This is shown on the infobar notifying the user that a preview page has been shown.">
          Updated <ph name="HOURS">$1<ex>4</ex></ph>hrs ago
-      </message>      
+      </message>
       <message name="IDS_PREVIEWS_INFOBAR_TIMESTAMP_UPDATED_NOW" desc="The desciption stating that a preview version of a page was just updated. This is shown on the infobar notifying the user that a preview page has been shown.">
          Updated just now
       </message>
@@ -5516,6 +5516,9 @@ the Bookmarks menu.">
       </message>
       <message name="IDS_ACCNAME_NEWTAB" desc="The accessible name for the New Tab (+) button.">
         New Tab
+      </message>
+      <message name="IDS_ACCNAME_NEWTAB_PROMO" desc="The shown text for the New Tab Promo.">
+        Open a new tab with one click
       </message>
       <message name="IDS_ACCNAME_MINIMIZE" desc="The accessible name for the Minimize button.">
         Minimize
