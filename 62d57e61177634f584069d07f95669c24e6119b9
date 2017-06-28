@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc23e7a_bda02934",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-28T22:31:12Z",
+      "side": 1,
+      "message": "Sorry, I should\u0027ve realized that these are the right numbers the first time round.",
+      "revId": "62d57e61177634f584069d07f95669c24e6119b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
