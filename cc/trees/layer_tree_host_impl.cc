@@ -270,6 +270,10 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       settings.top_controls_hide_threshold);
 
   tile_manager_.SetDecodedImageTracker(&decoded_image_tracker_);
+  gpu_memory_usage_metric_ =
+      base::SingleSampleMetricsFactory::Get()->CreateCustomCountsMetric(
+          "Event.Scroll.GPUMemoryForTilingsInKB", 1, kGPUMemoryLargestBucket,
+          kGPUMemoryBucketCount);
 }
 
 LayerTreeHostImpl::~LayerTreeHostImpl() {
@@ -1116,6 +1120,12 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
         base::StringPrintf("Compositing.%s.NumActiveLayers", client_name),
         base::saturated_cast<int>(active_tree_->NumLayers()), 1, 400, 20);
   }
+
+  size_t total_gpu_memory_for_tilings_in_kb = 0;
+  for (const PictureLayerImpl* layer : active_tree()->picture_layers())
+    total_gpu_memory_for_tilings_in_kb += layer->GPUMemoryUsageInBytes() / 1024;
+  if (total_gpu_memory_for_tilings_in_kb > 0)
+    gpu_memory_usage_metric_->SetSample(total_gpu_memory_for_tilings_in_kb);
 
   bool update_lcd_text = false;
   bool ok = active_tree_->UpdateDrawProperties(update_lcd_text);
