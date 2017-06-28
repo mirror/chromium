@@ -61,6 +61,7 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       const ResourceRequest& url_request,
       mojom::URLLoaderClient* client,
+      const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner =
           base::ThreadTaskRunnerHandle::Get());
 

@@ -74,9 +74,10 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     const ResourceRequest& url_request,
     mojom::URLLoaderClient* client,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   std::unique_ptr<ThrottlingURLLoader> loader(new ThrottlingURLLoader(
-      std::move(throttles), client, net::MutableNetworkTrafficAnnotationTag()));
+      std::move(throttles), client, traffic_annotation));
   loader->Start(nullptr, 0, 0, mojom::kURLLoadOptionNone,
                 std::move(start_loader_callback), url_request,
                 std::move(task_runner));

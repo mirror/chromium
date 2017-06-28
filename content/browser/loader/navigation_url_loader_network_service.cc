@@ -61,8 +61,9 @@ WebContents* GetWebContentsFromFrameTreeNodeID(int frame_tree_node_id) {
   return WebContentsImpl::FromFrameTreeNode(frame_tree_node);
 }
 
-net::NetworkTrafficAnnotationTag kTrafficAnnotation =
-    net::DefineNetworkTrafficAnnotation("navigation_url_loader", R"(
+net::MutableNetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::MutableNetworkTrafficAnnotationTag(
+        net::DefineNetworkTrafficAnnotation("navigation_url_loader", R"(
         semantics {
           sender: "Navigation URL Loader"
           description:
@@ -84,7 +85,7 @@ net::NetworkTrafficAnnotationTag kTrafficAnnotation =
           policy_exception_justification:
             "Not implemented, without this type of request, Chrome would be "
             "unable to navigate to websites."
-        })");
+        })"));
 
 }  // namespace
 
@@ -139,7 +140,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
               web_contents_getter_),
           0 /* routing_id? */, 0 /* request_id? */,
           mojom::kURLLoadOptionSendSSLInfo, *resource_request_, this,
-          net::MutableNetworkTrafficAnnotationTag(kTrafficAnnotation));
+          kTrafficAnnotation);
       return;
     }
 
@@ -187,7 +188,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
           std::move(start_loader_callback),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_),
-          *resource_request_, this);
+          *resource_request_, this, kTrafficAnnotation);
 
       DCHECK_GT(handler_index_, 0U);
 
@@ -221,7 +222,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
             web_contents_getter_),
         0 /* routing_id? */, 0 /* request_id? */,
         mojom::kURLLoadOptionSendSSLInfo, *resource_request_, this,
-        net::MutableNetworkTrafficAnnotationTag(kTrafficAnnotation));
+        kTrafficAnnotation);
   }
 
   void FollowRedirect() {
