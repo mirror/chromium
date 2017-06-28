@@ -29,14 +29,20 @@ void ClientProcessImpl::CreateInstance(const Config& config) {
 
 ClientProcessImpl::ClientProcessImpl(const Config& config)
     : binding_(this), process_type_(config.process_type), task_runner_() {
-  config.connector->BindInterface(config.service_name,
-                                  mojo::MakeRequest(&coordinator_));
-  mojom::ClientProcessPtr process;
-  binding_.Bind(mojo::MakeRequest(&process));
-  coordinator_->RegisterClientProcess(std::move(process), config.process_type);
+  // |config.connector| can be null in tests.
+  if (config.connector) {
+    config.connector->BindInterface(config.service_name,
+                                    mojo::MakeRequest(&coordinator_));
+    mojom::ClientProcessPtr process;
+    binding_.Bind(mojo::MakeRequest(&process));
+    coordinator_->RegisterClientProcess(std::move(process),
+                                        config.process_type);
 
-  // Initialize the public-facing MemoryInstrumentation helper.
-  MemoryInstrumentation::CreateInstance(config.connector, config.service_name);
+    // Initialize the public-facing MemoryInstrumentation helper.
+    MemoryInstrumentation::CreateInstance(config.connector,
+                                          config.service_name);
+  }
+
   task_runner_ = base::ThreadTaskRunnerHandle::Get();
 
   // TODO(primiano): this is a temporary workaround to tell the
@@ -94,6 +100,12 @@ void ClientProcessImpl::RequestGlobalMemoryDump_NoCallback(
   }
   coordinator_->RequestGlobalMemoryDump(
       args, mojom::Coordinator::RequestGlobalMemoryDumpCallback());
+}
+
+void ClientProcessImpl::SetCoordinatorForTesting(Coordinator* coordinator) {
+  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  coordinator->BindCoordinatorRequest(service_manager::BindSourceInfo(),
+                                      mojo::MakeRequest(&coordinator_));
 }
 
 ClientProcessImpl::Config::Config(service_manager::Connector* connector,
