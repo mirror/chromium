@@ -8,6 +8,7 @@
 #include <list>
 #include <map>
 #include <set>
+#include <unordered_map>
 
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
@@ -81,6 +82,12 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
     // Collects the data received from OnProcessMemoryDumpResponse().
     std::vector<std::pair<base::ProcessId, std::unique_ptr<Response>>>
         responses;
+
+    // Collects the data received from OnOSMemoryDumpResponse().
+    std::vector<std::unordered_map<
+        base::ProcessId,
+        base::trace_event::MemoryDumpCallbackResult::OSMemDump>>
+        os_dump_responses;
   };
 
   // Holds the identity and remote reference of registered clients.
@@ -95,12 +102,20 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
     const mojom::ProcessType process_type;
   };
 
-  // Callback of RequestProcessMemoryInternalDump.
+  // Callback of RequestProcessMemoryDump.
   void OnProcessMemoryDumpResponse(
       mojom::ClientProcess*,
       uint64_t dump_guid,
       bool success,
       mojom::RawProcessMemoryDumpPtr process_memory_dump);
+
+  // Callback of RequestOSMemoryDump.
+  void OnOSMemoryDumpResponse(
+      mojom::ClientProcess*,
+      bool success,
+      const std::unordered_map<
+          base::ProcessId,
+          base::trace_event::MemoryDumpCallbackResult::OSMemDump>&);
 
   void PerformNextQueuedGlobalMemoryDump();
   void FinalizeGlobalMemoryDumpIfAllManagersReplied();
@@ -118,12 +133,15 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   // to the local dump request (via RequestProcessMemoryDump()) .
   std::set<mojom::ClientProcess*> pending_clients_for_current_dump_;
 
+  std::set<mojom::ClientProcess*> pending_clients_for_current_os_dump_;
+
   int failed_memory_dump_count_;
 
   // Maintains a map of service_manager::Identity -> pid for registered clients.
   std::unique_ptr<ProcessMap> process_map_;
 
   uint64_t next_dump_id_;
+  mojom::ClientProcess* browser_client_;
 
   THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(CoordinatorImpl);

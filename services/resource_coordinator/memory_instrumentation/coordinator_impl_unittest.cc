@@ -31,7 +31,9 @@ using ::testing::Property;
 using ::testing::Pointee;
 using ::testing::Field;
 using ::testing::Eq;
+using ::testing::AllOf;
 
+using OSMemDump = base::trace_event::MemoryDumpCallbackResult::OSMemDump;
 using RequestGlobalMemoryDumpCallback =
     memory_instrumentation::CoordinatorImpl::RequestGlobalMemoryDumpCallback;
 using memory_instrumentation::mojom::GlobalMemoryDumpPtr;
@@ -109,6 +111,13 @@ class MockClientProcess : public mojom::ClientProcess {
               callback.Run(args.dump_guid, true, nullptr);
 
             }));
+
+    ON_CALL(*this, RequestOSMemoryDump(_, _))
+        .WillByDefault(Invoke([](const std::vector<base::ProcessId> pids,
+                                 const RequestOSMemoryDumpCallback& callback) {
+          std::unordered_map<base::ProcessId, OSMemDump> results;
+          callback.Run(true, results);
+        }));
   }
 
   ~MockClientProcess() override {}
@@ -222,8 +231,10 @@ TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
 TEST_F(CoordinatorImplTest, GlobalMemoryDumpStruct) {
   base::RunLoop run_loop;
 
-  MockClientProcess client_process_1(this, 1, mojom::ProcessType::BROWSER);
-  MockClientProcess client_process_2(this, 2, mojom::ProcessType::RENDERER);
+  NiceMock<MockClientProcess> client_process_1(this, 1,
+                                               mojom::ProcessType::BROWSER);
+  NiceMock<MockClientProcess> client_process_2(this, 2,
+                                               mojom::ProcessType::RENDERER);
   EXPECT_CALL(client_process_1, RequestProcessMemoryDump(_, _))
       .WillOnce(
           Invoke([](const MemoryDumpRequestArgs& args,
@@ -264,6 +275,87 @@ TEST_F(CoordinatorImplTest, GlobalMemoryDumpStruct) {
                         Pointee(Field(&mojom::ProcessMemoryDump::process_type,
                                       Eq(mojom::ProcessType::RENDERER))))));
 
+        run_loop.Quit();
+      }));
+
+  base::trace_event::MemoryDumpRequestArgs args = {
+      0, base::trace_event::MemoryDumpType::SUMMARY_ONLY,
+      base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND};
+  RequestGlobalMemoryDump(args, callback.Get());
+  run_loop.Run();
+}
+
+TEST_F(CoordinatorImplTest, OsDumps) {
+  base::RunLoop run_loop;
+
+  MockClientProcess browser_client(this, 1, mojom::ProcessType::BROWSER);
+  MockClientProcess renderer_client(this, 2, mojom::ProcessType::RENDERER);
+
+  EXPECT_CALL(browser_client, RequestProcessMemoryDump(_, _))
+      .WillOnce(
+          Invoke([](const MemoryDumpRequestArgs& args,
+                    const MockClientProcess::RequestProcessMemoryDumpCallback&
+                        callback) {
+            auto dump = mojom::RawProcessMemoryDump::New();
+            dump->chrome_dump.malloc_total_kb = 1;
+            callback.Run(args.dump_guid, true, std::move(dump));
+          }));
+  EXPECT_CALL(renderer_client, RequestProcessMemoryDump(_, _))
+      .WillOnce(
+          Invoke([](const MemoryDumpRequestArgs& args,
+                    const MockClientProcess::RequestProcessMemoryDumpCallback&
+                        callback) {
+            auto dump = mojom::RawProcessMemoryDump::New();
+            dump->chrome_dump.malloc_total_kb = 2;
+            callback.Run(args.dump_guid, true, std::move(dump));
+          }));
+#if defined(OS_LINUX)
+  EXPECT_CALL(browser_client,
+              RequestOSMemoryDump(AllOf(Contains(1), Contains(2)), _))
+      .WillOnce(Invoke(
+          [](const std::vector<base::ProcessId>& pids,
+             const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
+            std::unordered_map<base::ProcessId, OSMemDump> results;
+            results[1].resident_set_kb = 1;
+            results[2].resident_set_kb = 2;
+            callback.Run(true, results);
+          }));
+  EXPECT_CALL(renderer_client, RequestOSMemoryDump(_, _)).Times(0);
+#else
+  EXPECT_CALL(browser_client, RequestOSMemoryDump(Contains(1), _))
+      .WillOnce(Invoke(
+          [](const std::vector<base::ProcessId>& pids,
+             const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
+            std::unordered_map<base::ProcessId, OSMemDump> results;
+            results[1].resident_set_kb = 1;
+            callback.Run(true, results);
+          }));
+  EXPECT_CALL(renderer_client, RequestOSMemoryDump(Contains(2), _))
+      .WillOnce(Invoke(
+          [](const std::vector<base::ProcessId>& pids,
+             const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
+            std::unordered_map<base::ProcessId, OSMemDump> results;
+            results[2].resident_set_kb = 2;
+            callback.Run(true, results);
+          }));
+#endif  // defined(OS_LINUX)
+
+  MockGlobalMemoryDumpCallback callback;
+  EXPECT_CALL(callback, OnCall(Ne(0u), true, NotNull()))
+      .WillOnce(Invoke([&run_loop](uint64_t dump_guid, bool success,
+                                   GlobalMemoryDump* global_dump) {
+        EXPECT_EQ(2U, global_dump->process_dumps.size());
+        mojom::ProcessMemoryDumpPtr browser_dump = nullptr;
+        mojom::ProcessMemoryDumpPtr renderer_dump = nullptr;
+        for (mojom::ProcessMemoryDumpPtr& dump : global_dump->process_dumps) {
+          if (dump->process_type == mojom::ProcessType::BROWSER) {
+            browser_dump = std::move(dump);
+          } else if (dump->process_type == mojom::ProcessType::RENDERER) {
+            renderer_dump = std::move(dump);
+          }
+        }
+        EXPECT_EQ(browser_dump->os_dump->resident_set_kb, 1u);
+        EXPECT_EQ(renderer_dump->os_dump->resident_set_kb, 2u);
         run_loop.Quit();
       }));
 

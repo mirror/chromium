@@ -84,7 +84,7 @@ CoordinatorImpl* CoordinatorImpl::GetInstance() {
 }
 
 CoordinatorImpl::CoordinatorImpl(service_manager::Connector* connector)
-    : failed_memory_dump_count_(0), next_dump_id_(0) {
+    : failed_memory_dump_count_(0), next_dump_id_(0), browser_client_(nullptr) {
   process_map_ = base::MakeUnique<ProcessMap>(connector);
   DCHECK(!g_coordinator_impl);
   g_coordinator_impl = this;
@@ -178,6 +178,10 @@ void CoordinatorImpl::RegisterClientProcess(
   auto iterator_and_inserted =
       clients_.emplace(client_process, std::move(client_info));
   DCHECK(iterator_and_inserted.second);
+
+  if (process_type == mojom::ProcessType::BROWSER) {
+    browser_client_ = client_process;
+  }
 }
 
 void CoordinatorImpl::UnregisterClientProcess(
@@ -188,6 +192,14 @@ void CoordinatorImpl::UnregisterClientProcess(
     OnProcessMemoryDumpResponse(
         client_process, queued_memory_dump_requests_.front().args.dump_guid,
         false /* success */, nullptr /* process_memory_dump */);
+  }
+  if (pending_clients_for_current_os_dump_.count(client_process)) {
+    DCHECK(!queued_memory_dump_requests_.empty());
+    std::unordered_map<base::ProcessId, OSMemDump> results;
+    OnOSMemoryDumpResponse(client_process, false /* success */, results);
+  }
+  if (browser_client_ == client_process) {
+    browser_client_ = nullptr;
   }
   size_t num_deleted = clients_.erase(client_process);
   DCHECK(num_deleted == 1);
@@ -206,10 +218,11 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
       "level_of_detail",
       base::trace_event::MemoryDumpLevelOfDetailToString(args.level_of_detail));
 
+  failed_memory_dump_count_ = 0;
+
   // Note: the service process itself is registered as a ClientProcess and
   // will be treated like any other process for the sake of memory dumps.
   pending_clients_for_current_dump_.clear();
-  failed_memory_dump_count_ = 0;
   for (const auto& kv : clients_) {
     mojom::ClientProcess* client = kv.second->client.get();
     pending_clients_for_current_dump_.insert(client);
@@ -217,6 +230,38 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
                                base::Unretained(this), client);
     client->RequestProcessMemoryDump(args, callback);
   }
+
+  // Note: the service process itself is registered as a ClientProcess and
+  // will be treated like any other process for the sake of memory dumps.
+  pending_clients_for_current_os_dump_.clear();
+
+#if defined(OS_LINUX)
+  std::vector<base::ProcessId> pids;
+  for (const auto& kv : clients_) {
+    service_manager::Identity client_identity = kv.second->identity;
+    const base::ProcessId pid = GetProcessIdForClientIdentity(client_identity);
+    pids.push_back(pid);
+  }
+  if (browser_client_) {
+    pending_clients_for_current_os_dump_.insert(browser_client_);
+    auto callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
+                               base::Unretained(this), browser_client_);
+    browser_client_->RequestOSMemoryDump(pids, callback);
+  }
+#else
+  for (const auto& kv : clients_) {
+    mojom::ClientProcess* client = kv.second->client.get();
+    service_manager::Identity client_identity = kv.second->identity;
+    const base::ProcessId pid = GetProcessIdForClientIdentity(client_identity);
+    pending_clients_for_current_os_dump_.insert(client);
+    auto callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
+                               base::Unretained(this), client);
+    std::vector<base::ProcessId> pids;
+    pids.push_back(pid);
+    client->RequestOSMemoryDump(pids, callback);
+  }
+#endif  // defined(OS_LINUX)
+
   // Run the callback in case there are no client processes registered.
   FinalizeGlobalMemoryDumpIfAllManagersReplied();
 }
@@ -269,8 +314,41 @@ void CoordinatorImpl::OnProcessMemoryDumpResponse(
   FinalizeGlobalMemoryDumpIfAllManagersReplied();
 }
 
+void CoordinatorImpl::OnOSMemoryDumpResponse(
+    mojom::ClientProcess* client_process,
+    bool success,
+    const std::unordered_map<base::ProcessId, OSMemDump>& os_dumps) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  auto it = pending_clients_for_current_os_dump_.find(client_process);
+
+  if (queued_memory_dump_requests_.empty() ||
+      it == pending_clients_for_current_os_dump_.end()) {
+    VLOG(1) << "Unexpected memory dump response";
+    return;
+  }
+
+  auto iter = clients_.find(client_process);
+  if (iter == clients_.end()) {
+    VLOG(1) << "Received a memory dump response from an unregistered client";
+    return;
+  }
+
+  queued_memory_dump_requests_.front().os_dump_responses.push_back(os_dumps);
+
+  pending_clients_for_current_os_dump_.erase(it);
+
+  if (!success) {
+    ++failed_memory_dump_count_;
+    VLOG(1) << "RequestGlobalMemoryDump() FAIL: NACK from client process";
+  }
+
+  FinalizeGlobalMemoryDumpIfAllManagersReplied();
+}
+
 void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
-  if (pending_clients_for_current_dump_.size() > 0)
+  if (pending_clients_for_current_dump_.size() +
+          pending_clients_for_current_os_dump_.size() >
+      0)
     return;
 
   DCHECK(!queued_memory_dump_requests_.empty());
@@ -284,6 +362,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   // opening /proc pseudo files.
 
   std::map<base::ProcessId, OSMemDump> os_dumps;
+  // TODO(hjd): Remove this for loop when we collect OS dumps separately.
   for (auto& response : request->responses) {
     const base::ProcessId pid = response.first;
     const OSMemDump dump = response.second->dump_ptr->os_dump;
@@ -299,6 +378,15 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
       const OSMemDump extra_dump = extra.second;
       DCHECK_EQ(0u, os_dumps.count(extra_pid));
       os_dumps[extra_pid] = extra_dump;
+    }
+  }
+
+  for (auto& os_dump_response : request->os_dump_responses) {
+    for (auto& kv : os_dump_response) {
+      const base::ProcessId pid = kv.first;
+      const OSMemDump dump = kv.second;
+      DCHECK_EQ(0u, os_dumps.count(pid));
+      os_dumps[pid] = dump;
     }
   }
 
