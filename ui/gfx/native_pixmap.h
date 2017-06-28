@@ -57,10 +57,6 @@ class NativePixmap : public base::RefCountedThreadSafe<NativePixmap> {
                               scoped_refptr<NativePixmap> target_pixmap)>
       ProcessingCallback;
 
-  // Set callback function for the pixmap used for post processing.
-  virtual void SetProcessingCallback(
-      const ProcessingCallback& processing_callback) = 0;
-
   // Export the buffer for sharing across processes.
   // Any file descriptors in the exported handle are owned by the caller.
   virtual gfx::NativePixmapHandle ExportHandle() = 0;
