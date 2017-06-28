@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6ea7bc5_7993f4ea",
+        "filename": "components/exo/layer_tree_frame_sink_holder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-28T18:56:24Z",
+      "side": 1,
+      "message": "nit: maybe move all these functions that are not simple getters or empty implementations to the .cc file",
+      "revId": "162c19b602580e539da365c2baeea1fd824e5676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
