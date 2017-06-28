@@ -18,5 +18,4 @@ extern const base::FilePath::CharType kIOSChromeCookieFilename[];
 extern const base::FilePath::CharType kIOSChromeCRLSetFilename[];
 extern const base::FilePath::CharType
     kIOSChromeNetworkPersistentStateFilename[];
-
 #endif  // IOS_CHROME_BROWSER_CHROME_CONSTANTS_H_
