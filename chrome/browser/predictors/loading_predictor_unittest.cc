@@ -186,8 +186,9 @@ TEST_F(LoadingPredictorTest, TestMainFrameRequestDoesntCancelExternalHint) {
 
   // To check that the hint is not replaced, set the start time in the past,
   // and check later that it didn't change.
-  base::TimeTicks start_time = it->second - base::TimeDelta::FromSeconds(10);
-  it->second = start_time;
+  base::TimeTicks start_time =
+      it->second.second - base::TimeDelta::FromSeconds(10);
+  it->second.second = start_time;
 
   auto summary = CreateURLRequestSummary(tab_id, url.spec());
   predictor_->OnMainFrameRequest(summary);
@@ -195,7 +196,7 @@ TEST_F(LoadingPredictorTest, TestMainFrameRequestDoesntCancelExternalHint) {
             active_navigations.end());
   it = active_hints.find(url);
   EXPECT_NE(it, active_hints.end());
-  EXPECT_EQ(start_time, it->second);
+  EXPECT_EQ(start_time, it->second.second);
 }
 
 TEST_F(LoadingPredictorTest, TestDontTrackNonPrefetchableUrls) {

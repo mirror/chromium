@@ -40,7 +40,8 @@ void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
     return;
 
   // To report hint durations.
-  active_hints_.emplace(url, base::TimeTicks::Now());
+  active_hints_.emplace(
+      url, std::make_pair(HintType::PREFETCH, base::TimeTicks::Now()));
 
   if (config_.IsPrefetchingEnabledForOrigin(profile_, origin))
     resource_prefetch_predictor_->StartPrefetching(url, prediction);
@@ -103,8 +104,8 @@ void LoadingPredictor::OnMainFrameResponse(const URLRequestSummary& summary) {
   }
 }
 
-std::map<GURL, base::TimeTicks>::iterator LoadingPredictor::CancelActiveHint(
-    std::map<GURL, base::TimeTicks>::iterator hint_it) {
+LoadingPredictor::HintMap::iterator LoadingPredictor::CancelActiveHint(
+    LoadingPredictor::HintMap::iterator hint_it) {
   if (hint_it == active_hints_.end())
     return hint_it;
 
@@ -113,7 +114,7 @@ std::map<GURL, base::TimeTicks>::iterator LoadingPredictor::CancelActiveHint(
 
   UMA_HISTOGRAM_TIMES(
       internal::kResourcePrefetchPredictorPrefetchingDurationHistogram,
-      base::TimeTicks::Now() - hint_it->second);
+      base::TimeTicks::Now() - hint_it->second.second);
   return active_hints_.erase(hint_it);
 }
 
@@ -125,7 +126,7 @@ void LoadingPredictor::CleanupAbandonedHintsAndNavigations(
 
   // Hints.
   for (auto it = active_hints_.begin(); it != active_hints_.end();) {
-    base::TimeDelta prefetch_age = time_now - it->second;
+    base::TimeDelta prefetch_age = time_now - it->second.second;
     if (prefetch_age > max_navigation_age) {
       // Will go to the last bucket in the duration reported in
       // CancelActiveHint() meaning that the duration was unlimited.
