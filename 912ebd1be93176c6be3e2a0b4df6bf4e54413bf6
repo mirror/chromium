@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "64e38147_2830a9a4",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T17:56:41Z",
+      "side": 1,
+      "message": "Sorry, bit of confusion here. While we don\u0027t handle null here now, on L636 we\u0027re still checking for null, and in InputHandlerProxy::HandleTouchMove we\u0027re still passing null.\n\nI was thinking to remove both branches, here and L636, and in InputHandlerProxy::HandleTouchMove pass non-null. wdyt?",
+      "parentUuid": "fa4e1d6c_c597bf7d",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a500828_dcd3dec5",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 11

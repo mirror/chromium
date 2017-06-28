@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9e1e620_8eb12e50",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T17:56:41Z",
+      "side": 1,
+      "message": "nit: I would avoid saying how the function is implemented too explicitly as that bitrots faster. You could say \"by finding the intersection of all touch actions whose regions contain\", or something, without mentioning the map_.",
+      "revId": "4d931c781c52fa74a37c5285137963d108f168e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6374c80e_4d427dda",
+        "filename": "cc/layers/touch_action_region_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T17:56:41Z",
+      "side": 1,
+      "message": "It\u0027s a good habit to write a comment on EXPECTs explaining why that expect is. For instance here, // The point is in both PanLeft and PanRight, and those actions have no common components, so the result is None.\n\nThat sort of thing makes updating tests in the future, or understanding failures, a lot easier than reverse engineering why the expect makes its claim.",
+      "revId": "4d931c781c52fa74a37c5285137963d108f168e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f903d2_7f41efa8",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T17:56:41Z",
+      "side": 1,
+      "message": "nit: ToRoundedPoint returns a new gfx::Point. While a const\u0026 will keep that thing alive, it restricts usage to being thru const, so I would just say \"auto point\" here, or maybe even \"gfx::Point point\" since the meaning of this line is to do a type conversion so the type is pretty meaningful.",
+      "revId": "4d931c781c52fa74a37c5285137963d108f168e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7343d69a_349ddbea",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T17:56:41Z",
+      "side": 1,
+      "message": "no _ suffix for locals",
+      "revId": "4d931c781c52fa74a37c5285137963d108f168e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
