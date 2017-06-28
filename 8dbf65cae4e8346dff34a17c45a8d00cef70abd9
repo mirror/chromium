@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "279cfbaa_aa6ba27b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T07:14:31Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35726e39_6826f6cc",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T07:14:31Z",
+      "side": 1,
+      "message": "Should check if GetInstalledScriptsManager returns nullptr?",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "540ecd75_a90e1cff",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 2
@@ -36,6 +70,23 @@
         "endLine": 479,
         "endChar": 0
       },
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f3690c_d093f5ff",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-28T07:14:31Z",
+      "side": 1,
+      "message": "nit: please note that this can return nullptr",
       "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
