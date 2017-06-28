@@ -693,11 +693,16 @@ static const PaintOp* GetNestedSingleDrawingOp(const PaintOp* op) {
 }
 
 void PaintOpBuffer::Playback(SkCanvas* canvas,
+                             SkPicture::AbortCallback* callback) const {
+  Playback(canvas, callback, nullptr);
+}
+
+void PaintOpBuffer::Playback(SkCanvas* canvas,
                              SkPicture::AbortCallback* callback,
-                             const std::vector<size_t>* indices) const {
+                             const std::vector<size_t>* offsets) const {
   if (!op_count_)
     return;
-  if (indices && indices->empty())
+  if (offsets && offsets->empty())
     return;
 
   // Prevent PaintOpBuffers from having side effects back into the canvas.
@@ -712,7 +717,7 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
 
   // FIFO queue of paint ops that have been peeked at.
   base::StackVector<const PaintOp*, 3> stack;
-  Iterator iter(this, indices);
+  Iterator iter(this, offsets);
   auto next_op = [&stack, &iter]() -> const PaintOp* {
     if (stack->size()) {
       const PaintOp* op = stack->front();
