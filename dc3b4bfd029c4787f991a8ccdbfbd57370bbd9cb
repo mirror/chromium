@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d92b5e1d_00e46d6c",
+        "filename": "chrome/browser/predictors/loading_predictor_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-28T09:08:31Z",
+      "side": 1,
+      "message": "Profile is unused, right?\n\nAlso, should it be disabled in incognito?\n\nFinally, since this and the matching one IsSpeculativeResourcePrefetchingEnabled() are quite misnamed, what about renaming them to something like:\n\nMaybeEnableResourcePrefetching()\nand\nMaybeEnableSpeculativePreconnect()",
+      "revId": "dc3b4bfd029c4787f991a8ccdbfbd57370bbd9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
