@@ -333,6 +333,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   TouchSelectionControllerClientManager*
   touch_selection_controller_client_manager() override;
 
+  void ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect);
+
  protected:
   ~RenderWidgetHostViewAura() override;
 

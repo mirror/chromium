@@ -773,11 +773,7 @@ blink::WebPageVisibilityState RenderFrameHostImpl::GetVisibilityState() {
 }
 
 bool RenderFrameHostImpl::Send(IPC::Message* message) {
-  if (IPC_MESSAGE_ID_CLASS(message->type()) == InputMsgStart) {
-    return GetRenderWidgetHost()->input_router()->SendInput(
-        base::WrapUnique(message));
-  }
-
+  DCHECK(IPC_MESSAGE_ID_CLASS(message->type()) != InputMsgStart);
   return GetProcess()->Send(message);
 }
 
@@ -3311,8 +3307,7 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   if (base::FeatureList::IsEnabled(features::kMojoInputMessages)) {
     GetRemoteInterfaces()->GetInterface(&frame_input_handler_);
   } else {
-    legacy_frame_input_handler_.reset(
-        new LegacyIPCFrameInputHandler(this, routing_id_));
+    legacy_frame_input_handler_.reset(new LegacyIPCFrameInputHandler(this));
   }
 }
 
