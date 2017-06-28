@@ -12,6 +12,7 @@
 namespace blink {
 
 class LocalFrame;
+class AudioWorkletMessagingProxy;
 
 class MODULES_EXPORT AudioWorklet final : public Worklet {
   WTF_MAKE_NONCOPYABLE(AudioWorklet);
@@ -19,6 +20,8 @@ class MODULES_EXPORT AudioWorklet final : public Worklet {
  public:
   static AudioWorklet* Create(LocalFrame*);
   ~AudioWorklet() override;
+
+  AudioWorkletMessagingProxy* GetWorkletMessagingProxy() const;
 
   DECLARE_VIRTUAL_TRACE();
 
