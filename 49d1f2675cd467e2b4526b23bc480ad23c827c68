@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "261a5ef3_e4151ffc",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-28T15:43:03Z",
+      "side": 0,
+      "message": "This previously (as well as all other calls + CreateTaskRunnerWithTraits) resulted in parallel, not sequenced tasks. Do you now prefer that they be sequenced? If so that\u0027s fine, but see other comment.",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 53
+      },
+      "revId": "49d1f2675cd467e2b4526b23bc480ad23c827c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3df7585_d0bc024b",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-28T15:43:03Z",
+      "side": 1,
+      "message": "We need to update lazy_task_runner.h\u0027s docs as we recently realized the suggested inline doc doesn\u0027t work when multiple traits are involved (the compiler is having trouble inferring base::TaskTraits from {} inside a macro when multiple traits are involved for some reason).\n\nBut you can use base::TaskTraits(...) inline instead of {...}.",
+      "revId": "668b00494f47fabfd4381e27968d1770aea0e60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18d296e_2f680894",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-28T15:43:03Z",
+      "side": 1,
+      "message": "Update ScreenshotGrabber\u0027s API to take a SequencedTaskRunner if running tasks in sequence is better than on a potentially parallel TaskRunner.",
+      "range": {
+        "startLine": 292,
+        "startChar": 14,
+        "endLine": 292,
+        "endChar": 35
+      },
+      "revId": "668b00494f47fabfd4381e27968d1770aea0e60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
