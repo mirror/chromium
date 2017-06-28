@@ -49,10 +49,13 @@ public class SafeBrowsingTest extends AwTestBase {
     private EmbeddedTestServer mTestServer;
 
     // These colors correspond to the body.background attribute in GREEN_HTML_PATH, SAFE_HTML_PATH,
-    // MALWARE_HTML_PATH, and IFRAME_HTML_PATH. They should only be changed if those values are
+    // MALWARE_HTML_PATH, IFRAME_HTML_PATH, etc. They should only be changed if those values are
     // changed as well
     private static final int GREEN_PAGE_BACKGROUND_COLOR = Color.rgb(0, 255, 0);
+    private static final int SAFE_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255);
+    private static final int PHISHING_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255);
     private static final int MALWARE_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255);
+    private static final int UNWANTED_SOFTWARE_PAGE_BACKGROUND_COLOR = Color.rgb(0, 0, 255);
     private static final int IFRAME_EMBEDDER_BACKGROUND_COLOR = Color.rgb(10, 10, 10);
 
     private static final String RESOURCE_PATH = "/android_webview/test/data";
@@ -272,7 +275,7 @@ public class SafeBrowsingTest extends AwTestBase {
         final String responseUrl = mTestServer.getURL(SAFE_HTML_PATH);
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), responseUrl);
         waitForVisualStateCallback(mAwContents);
-        assertEquals("Target page should be visible", MALWARE_PAGE_BACKGROUND_COLOR,
+        assertEquals("Target page should be visible", SAFE_PAGE_BACKGROUND_COLOR,
                 GraphicsTestUtils.getPixelColorAtCenterOfView(mAwContents, mContainerView));
     }
 
@@ -286,7 +289,7 @@ public class SafeBrowsingTest extends AwTestBase {
         final String responseUrl = mTestServer.getURL(UNWANTED_SOFTWARE_HTML_PATH);
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), responseUrl);
         waitForVisualStateCallback(mAwContents);
-        assertEquals("Target page should be visible", MALWARE_PAGE_BACKGROUND_COLOR,
+        assertEquals("Target page should be visible", UNWANTED_SOFTWARE_PAGE_BACKGROUND_COLOR,
                 GraphicsTestUtils.getPixelColorAtCenterOfView(mAwContents, mContainerView));
     }
 
@@ -304,7 +307,7 @@ public class SafeBrowsingTest extends AwTestBase {
                         != GraphicsTestUtils.getPixelColorAtCenterOfView(
                                    mAwContents, mContainerView));
         assertTrue("Target page should not be visible",
-                MALWARE_PAGE_BACKGROUND_COLOR
+                PHISHING_PAGE_BACKGROUND_COLOR
                         != GraphicsTestUtils.getPixelColorAtCenterOfView(
                                    mAwContents, mContainerView));
         // Assume that we are rendering the interstitial, since we see neither the previous page nor
@@ -540,7 +543,7 @@ public class SafeBrowsingTest extends AwTestBase {
                         != GraphicsTestUtils.getPixelColorAtCenterOfView(
                                    mAwContents, mContainerView));
         assertTrue("Target page should not be visible",
-                MALWARE_PAGE_BACKGROUND_COLOR
+                PHISHING_PAGE_BACKGROUND_COLOR
                         != GraphicsTestUtils.getPixelColorAtCenterOfView(
                                    mAwContents, mContainerView));
     }
@@ -559,7 +562,7 @@ public class SafeBrowsingTest extends AwTestBase {
         proceedThroughInterstitial();
         mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
         waitForVisualStateCallback(mAwContents);
-        assertEquals("Target page should be visible", MALWARE_PAGE_BACKGROUND_COLOR,
+        assertEquals("Target page should be visible", PHISHING_PAGE_BACKGROUND_COLOR,
                 GraphicsTestUtils.getPixelColorAtCenterOfView(mAwContents, mContainerView));
     }
 }
