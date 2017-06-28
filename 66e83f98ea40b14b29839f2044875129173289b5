@@ -16,6 +16,24 @@
       "revId": "66e83f98ea40b14b29839f2044875129173289b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb16aa0_6705817b",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "95244b46_38c33ed1",
+      "revId": "66e83f98ea40b14b29839f2044875129173289b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

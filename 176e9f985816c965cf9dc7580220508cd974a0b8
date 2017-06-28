@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "74ba3fe1_38f44ea6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 1,
+      "message": "alll -\u003e all",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7a6cf9_7214ccd8",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 1,
+      "message": "Drop the reference since it references a temp object returned.\ni.e.\n  const gfx::Size\u0026 -\u003e const gfx::Size",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 24
+      },
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1155e8_f81bd748",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 1,
+      "message": "nit: Can you make |indicator_rect| have correct width as well?\ne.g.\n  indicator_rect.Inset(\n      (indicator_rect.width() - indicator_size.width()) / 2, 0);",
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3480921_e73b87fc",
         "filename": "ui/app_list/views/apps_container_view.cc",
         "patchSetId": 4
@@ -13,6 +76,116 @@
       "writtenOn": "2017-06-28T17:47:36Z",
       "side": 1,
       "message": "for the first row of app tiles, we already have 6px top padding, thus we only need the extra 2px for total 8px padding.",
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4535c8a5_1b2d38ff",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3480921_e73b87fc",
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3402d4b0_a1c0c2fa",
+        "filename": "ui/app_list/views/apps_container_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 1,
+      "message": "0 -\u003e 0u",
+      "range": {
+        "startLine": 121,
+        "startChar": 45,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1788700e_57fcbfa3",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 1,
+      "message": "Drop reference here too",
+      "range": {
+        "startLine": 1216,
+        "startChar": 17,
+        "endLine": 1216,
+        "endChar": 18
+      },
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427d928f_c6a8c39e",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 1,
+      "message": "Drop reference",
+      "range": {
+        "startLine": 1882,
+        "startChar": 17,
+        "endLine": 1882,
+        "endChar": 18
+      },
+      "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bf736b_d6e15ef2",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1903,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T18:13:01Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1903,
+        "startChar": 17,
+        "endLine": 1903,
+        "endChar": 18
+      },
       "revId": "176e9f985816c965cf9dc7580220508cd974a0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
