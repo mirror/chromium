@@ -26,7 +26,6 @@
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/scoped_native_library.h"
-#include "base/sequenced_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
@@ -307,11 +306,9 @@ const base::FilePath::CharType PolicyLoaderWin::kPRegFileName[] =
     FILE_PATH_LITERAL("Registry.pol");
 
 PolicyLoaderWin::PolicyLoaderWin(
-    scoped_refptr<base::SequencedTaskRunner> task_runner,
     const base::string16& chrome_policy_key,
     AppliedGPOListProvider* gpo_provider)
-    : AsyncPolicyLoader(task_runner),
-      is_initialized_(false),
+    : is_initialized_(false),
       chrome_policy_key_(chrome_policy_key),
       gpo_provider_(gpo_provider),
       user_policy_changed_event_(
@@ -345,10 +342,9 @@ PolicyLoaderWin::~PolicyLoaderWin() {
 
 // static
 std::unique_ptr<PolicyLoaderWin> PolicyLoaderWin::Create(
-    scoped_refptr<base::SequencedTaskRunner> task_runner,
     const base::string16& chrome_policy_key) {
   return base::WrapUnique(new PolicyLoaderWin(
-      task_runner, chrome_policy_key, g_win_gpo_list_provider.Pointer()));
+      chrome_policy_key, g_win_gpo_list_provider.Pointer()));
 }
 
 void PolicyLoaderWin::InitOnBackgroundThread() {

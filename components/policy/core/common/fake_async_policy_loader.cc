@@ -6,14 +6,10 @@
 
 #include "base/bind.h"
 #include "base/location.h"
-#include "base/sequenced_task_runner.h"
 
 namespace policy {
 
-FakeAsyncPolicyLoader::FakeAsyncPolicyLoader(
-    const scoped_refptr<base::SequencedTaskRunner>& task_runner)
-    : AsyncPolicyLoader(task_runner) {
-}
+FakeAsyncPolicyLoader::FakeAsyncPolicyLoader() {}
 
 std::unique_ptr<PolicyBundle> FakeAsyncPolicyLoader::Load() {
   std::unique_ptr<PolicyBundle> result(new PolicyBundle());

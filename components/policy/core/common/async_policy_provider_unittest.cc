@@ -4,13 +4,11 @@
 
 #include "components/policy/core/common/async_policy_provider.h"
 
-#include "base/callback.h"
+#include <string>
+
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/memory/ref_counted.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/sequenced_task_runner.h"
 #include "base/values.h"
 #include "components/policy/core/common/async_policy_loader.h"
 #include "components/policy/core/common/external_data_fetcher.h"
@@ -40,8 +38,7 @@ void SetPolicy(PolicyBundle* bundle,
 
 class MockPolicyLoader : public AsyncPolicyLoader {
  public:
-  explicit MockPolicyLoader(
-      scoped_refptr<base::SequencedTaskRunner> task_runner);
+  MockPolicyLoader();
   ~MockPolicyLoader() override;
 
   // Load() returns a std::unique_ptr<PolicyBundle> but it can't be mocked
@@ -58,9 +55,7 @@ class MockPolicyLoader : public AsyncPolicyLoader {
   DISALLOW_COPY_AND_ASSIGN(MockPolicyLoader);
 };
 
-MockPolicyLoader::MockPolicyLoader(
-    scoped_refptr<base::SequencedTaskRunner> task_runner)
-    : AsyncPolicyLoader(task_runner) {}
+MockPolicyLoader::MockPolicyLoader() {}
 
 MockPolicyLoader::~MockPolicyLoader() {}
 
@@ -84,7 +79,6 @@ class AsyncPolicyProviderTest : public testing::Test {
   void SetUp() override;
   void TearDown() override;
 
-  base::MessageLoop loop_;
   SchemaRegistry schema_registry_;
   PolicyBundle initial_bundle_;
   MockPolicyLoader* loader_;
@@ -100,7 +94,7 @@ AsyncPolicyProviderTest::~AsyncPolicyProviderTest() {}
 
 void AsyncPolicyProviderTest::SetUp() {
   SetPolicy(&initial_bundle_, "policy", "initial");
-  loader_ = new MockPolicyLoader(loop_.task_runner());
+  loader_ = new MockPolicyLoader();
   EXPECT_CALL(*loader_, LastModificationTime())
       .WillRepeatedly(Return(base::Time()));
   EXPECT_CALL(*loader_, InitOnBackgroundThread()).Times(1);

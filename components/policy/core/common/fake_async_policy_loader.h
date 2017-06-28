@@ -12,10 +12,6 @@
 #include "components/policy/core/common/async_policy_loader.h"
 #include "components/policy/core/common/policy_bundle.h"
 
-namespace base {
-class SequencedTaskRunner;
-}  // namespace base
-
 namespace policy {
 
 // Fake AsyncPolicyLoader for testing with test-controlled policies.
@@ -25,8 +21,7 @@ namespace policy {
 // subsystem of the changes by calling PostReloadOnBackgroundThread.
 class FakeAsyncPolicyLoader : public AsyncPolicyLoader {
  public:
-  explicit FakeAsyncPolicyLoader(
-      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
+  FakeAsyncPolicyLoader();
 
   // Implementation of virtual methods from AsyncPolicyLoader base class.
   std::unique_ptr<PolicyBundle> Load() override;
