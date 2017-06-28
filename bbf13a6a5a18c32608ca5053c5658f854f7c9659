@@ -46,6 +46,30 @@
       "revId": "bbf13a6a5a18c32608ca5053c5658f854f7c9659",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cdbdc8_a80bb8fa",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-28T14:16:58Z",
+      "side": 1,
+      "message": "In this case, the todo should be fine as we shouldn\u0027t include too much information about non-existent stuff. \nThanks for the explanation!",
+      "parentUuid": "985cf78c_797be2f0",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "bbf13a6a5a18c32608ca5053c5658f854f7c9659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
