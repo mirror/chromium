@@ -54,7 +54,7 @@ bool PlatformSensorProviderWin::InitializeSensorManager() {
 
   HRESULT hr = ::CoCreateInstance(CLSID_SensorManager, nullptr, CLSCTX_ALL,
                                   IID_PPV_ARGS(&sensor_manager_));
-  return SUCCEEDED(hr);
+  return SUCCEEDED(hr) && sensor_manager_.Get();
 }
 
 void PlatformSensorProviderWin::AllSensorsRemoved() {
@@ -74,7 +74,6 @@ bool PlatformSensorProviderWin::StartSensorThread() {
 
 void PlatformSensorProviderWin::StopSensorThread() {
   if (sensor_thread_ && sensor_thread_->IsRunning()) {
-    sensor_manager_.Reset();
     sensor_thread_->Stop();
   }
 }
