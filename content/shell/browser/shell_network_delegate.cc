@@ -9,6 +9,7 @@
 #include "content/public/common/content_switches.h"
 #include "net/base/net_errors.h"
 #include "net/base/static_cookie_policy.h"
+#include "net/log/log_urls_to_file.h"
 #include "net/url_request/url_request.h"
 
 namespace content {
@@ -19,6 +20,12 @@ bool g_cancel_requests_with_referrer_policy_violation = false;
 }
 
 ShellNetworkDelegate::ShellNetworkDelegate() {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kLogUrlsLog)) {
+    net_log::LogUrlsToFile::GetInstance()->SetPath(
+        base::CommandLine::ForCurrentProcess()->GetSwitchValuePath(
+            switches::kLogUrlsLog));
+  }
 }
 
 ShellNetworkDelegate::~ShellNetworkDelegate() {
@@ -37,6 +44,9 @@ int ShellNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
+  if (net_log::LogUrlsToFile::GetInstance()) {
+    net_log::LogUrlsToFile::GetInstance()->LogURL(request->url());
+  }
   return net::OK;
 }
 
