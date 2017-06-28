@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ed86088e_667edaa1",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T20:13:04Z",
+      "side": 1,
+      "message": "Well, all of the unit tests and TSAN still pass, for one. :P\n\nFor what it\u0027s worth, MSVC 2015 and 2017 both compile this down to the same \"lock xadd\" instruction that clang does, which is the efficient way to do this on x86.\n\nInterlockedExchangeAdd64 has stronger guarantees (which happen to be inexpensive to provide on x86_64), but that strength isn\u0027t necessary here, because it isn\u0027t necessary that ref count increments be strongly ordered (and certainly isn\u0027t any more necessary on Windows than other x86 platforms).",
+      "parentUuid": "dc818c86_ca2701d9",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1eb872b2_f6e9928e",
         "filename": "base/atomic_ref_count.h",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2017-06-28T15:41:26Z",
       "side": 1,
       "message": "This used to be memory_order_seq_cst (the default), which gives cross-thread guarantees that acq_rel does not, is this what you wanted, why?",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9536d16_061318b4",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T20:13:04Z",
+      "side": 1,
+      "message": "Sequential consistency is a stronger guarantee than is needed for thread-safe reference counting (as I note in the TODO, this is actually still technically stronger than it needs to be).\n\nseq_cst would guarantee that all decrements as having a total order with respect to other sequentially consistent atomic operations, but all that ref counting needs to ensure is that the destructor is called exactly once after the last reference is dropped, with all previous memory operations on the object visible.\n\nUse of acquire/release semantics for reference counting is pretty standard. I believe this is currently seq_cst only because we didn\u0027t previously have an acq_rel atomic decrement in atomicops.h (and so used a full barrier, which we now map onto memory_order_seq_cst in \u003catomic\u003e).",
+      "parentUuid": "1eb872b2_f6e9928e",
       "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "87ff3f10_0afad5ea",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T20:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f992d6f_5e1e0a09",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79be222b_320b87ad",
         "filename": "base/atomic_ref_count.h",
         "patchSetId": 4
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a17241d9_7fdaf106",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T20:13:04Z",
+      "side": 1,
+      "message": "To drop the volatile qualifier. const_cast (despite the name) is used for removing both cv-qualifiers (const and volatile). Otherwise the member functions would have to be declared volatile (since, like const, it\u0027s illegal to call a non-volatile function through a volatile reference).",
+      "parentUuid": "79be222b_320b87ad",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58ee2bf2_9fb07b60",
         "filename": "base/memory/ref_counted.h",
         "patchSetId": 4
@@ -116,6 +188,24 @@
       "writtenOn": "2017-06-28T15:41:26Z",
       "side": 1,
       "message": "Why does {0} work here, when (0) wouldn\u0027t right? This isn\u0027t struct init, cuz the member is private, can you explain?",
+      "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a503b3_97200a77",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-28T20:13:04Z",
+      "side": 1,
+      "message": "This does invoke the declared constructor. Only {} and \u003d initialization are valid in default member initializers; this is purely a restriction of C++ syntax.\n\nI don\u0027t recall specifically why parentheses are disallowed here, but I suspect it\u0027s to avoid most-vexing-parse-type issues. e.g. this would otherwise be ambiguous:\n\nFoo x(Foo());\n\n(is this a function that takes a Foo-returning function and returns Foo, or is it a slightly silly default-initialized Foo member?)",
+      "parentUuid": "58ee2bf2_9fb07b60",
       "revId": "19a8f6ec0617d14f222c73a30f6da7266f47af57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
