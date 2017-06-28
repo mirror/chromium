@@ -8,13 +8,13 @@
 #include "base/memory/ptr_util.h"
 #include "cc/base/switches.h"
 #include "services/ui/public/cpp/gpu/gpu.h"
+#include "third_party/khronos/GLES2/gl2.h"
 #include "ui/aura/mus/window_port_mus.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/compositor_util.h"
 #include "ui/display/display_switches.h"
 #include "ui/gfx/switches.h"
-#include "ui/gl/gl_bindings.h"
 
 namespace aura {
 

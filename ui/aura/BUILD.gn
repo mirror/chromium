@@ -158,7 +158,6 @@ component("aura") {
     "//ui/events/platform",
     "//ui/gfx",
     "//ui/gfx/geometry",
-    "//ui/gl",
     "//ui/platform_window",
     "//ui/platform_window/mojo",
     "//ui/platform_window/stub",
