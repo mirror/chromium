@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2fb9ef7_19c3a21d",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd94fdf0_0bc18d36",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 1
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c782904_564d9d83",
         "filename": "content/common/input/input_event_struct_traits.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68763f52_9a17eacb",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c782904_564d9d83",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 73
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "43ad8d4d_d6089521",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Because WebInputEvents aren\u0027t virtual. You need to upcast them because you can only allocate them dynamically with a ui::ScopedWebInputEvent which has a special destructor for the unique_ptr. (ie; auto and MakeUnique don\u0027t work for it).\n\nSo this is logically the best code. I could put a ui::ScopedWebInputEvent on the stack and then cast it and move it. But that is just as ugly.",
+      "parentUuid": "d68bd33e_2d6c8f0d",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 71
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2da4990_26e8a912",
         "filename": "content/common/input/input_event_struct_traits.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-28T06:20:21Z",
       "side": 1,
       "message": "Prefer \u003d base::MakeUnique\u003cblink::WebGestureEvent(...)",
+      "range": {
+        "startLine": 171,
+        "startChar": 21,
+        "endLine": 171,
+        "endChar": 54
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748db078_c47f6501",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "see above comment.",
+      "parentUuid": "c2da4990_26e8a912",
       "range": {
         "startLine": 171,
         "startChar": 21,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5dbd9fd8_6bc3f8a9",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Not possible due to warnings. And there are like 38 types so listing them all is ugly.",
+      "parentUuid": "1f010dbe_0f187f4e",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 16
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53bb1ed1_93bbcb63",
         "filename": "content/common/input/input_event_struct_traits.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8268299_d4fa4dfe",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53bb1ed1_93bbcb63",
+      "range": {
+        "startLine": 428,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 17
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d807480e_11263de8",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70aa9ae2_bb7e26f2",
+      "range": {
+        "startLine": 433,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 66
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb39fa93_9c01c251",
         "filename": "content/common/input/input_event_struct_traits.cc",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "66b5699a_2cbeb03d",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb39fa93_9c01c251",
+      "range": {
+        "startLine": 457,
+        "startChar": 4,
+        "endLine": 458,
+        "endChar": 43
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c9700f2_1a4453bb",
         "filename": "content/common/input/input_event_struct_traits.cc",
         "patchSetId": 2
@@ -197,6 +389,30 @@
       "writtenOn": "2017-06-28T06:20:21Z",
       "side": 1,
       "message": "Nit: prefer to omit default if it\u0027s not needed (i.e. all cases are handled).\n\nEven if we don\u0027t want to handle all cases explicitly, it\u0027s often better to just list them with an explicit early break--this way, we get an automatic compiler warning if future values are added.",
+      "range": {
+        "startLine": 466,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 14
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd5dd72_79468b67",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "This code is compiled with -Werror,-Wswitch so you require the default or you have to list them all. There are like 38 types.",
+      "parentUuid": "1c9700f2_1a4453bb",
       "range": {
         "startLine": 466,
         "startChar": 0,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "89288d9d_98a6cc3f",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d7790c_7af13b24",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 559,
+        "endChar": 5
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72df2aca_fcf89293",
         "filename": "content/common/input/input_event_struct_traits.cc",
         "patchSetId": 2
@@ -243,6 +483,30 @@
       "writtenOn": "2017-06-28T06:20:21Z",
       "side": 1,
       "message": "Perhaps here as well.\n\n(Alternatively, check if there\u0027s any significant codegen difference on the simpler case in WebGestureEvent: it\u0027s possible that since most of this is inlined, that the compiler is smart enough to realize that things can just be constructed directly in the final location.",
+      "range": {
+        "startLine": 579,
+        "startChar": 0,
+        "endLine": 586,
+        "endChar": 38
+      },
+      "revId": "20b2d3bcf68ae21cdc69e104512c5e1a2def3984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d172306_c72695e5",
+        "filename": "content/common/input/input_event_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-28T16:43:20Z",
+      "side": 1,
+      "message": "Recall that StructPtrs are merely a struct with a unique_ptr inside (https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/struct_ptr.h?dr\u003dCSs\u0026q\u003dstructPtr\u0026l\u003d108). So the move of a mojo ptr should be really cheap because it is just a ptr swap.",
+      "parentUuid": "72df2aca_fcf89293",
       "range": {
         "startLine": 579,
         "startChar": 0,
