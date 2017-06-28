@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "23c11e0c_9715a004",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-28T20:14:40Z",
+      "side": 1,
+      "message": "Sorry, I meant Vector\u003cString\u003e and HeapVector\u003cMember\u003cAudioParam\u003e\u003e.\n\nTake a snapshot of both the keys and the values in the constructor of AudioParamMapIterationSource. Otherwise, the entry of the map may change while iterating...?",
+      "parentUuid": "fc5cfc9f_6b543ef7",
+      "revId": "7b06073af3b40ab64557dc0df01b78825575363a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a0a2bea_f17a6e81",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
         "patchSetId": 3
