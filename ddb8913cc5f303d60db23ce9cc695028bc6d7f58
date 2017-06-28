@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ab38d42_4b0f4a1f",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-06-28T03:19:58Z",
+      "side": 1,
+      "message": "These changes should probably be tested. Add a unit test to content_utils_unittest.cc to check that these explanations come out with mixed_content_type \u003d NO_MIXED_CONTENT?\n\nAlso, optional nit: it\u0027s a little confusing to see this NO_MIXED_CONTENT here when the page could have mixed content. You could instead have the constructor not take a MixedContentType and default to NO_MIXED_CONTENT, and then when you construct mixed content explanations, explicitly set the mixed_content_type on those explanations.",
+      "range": {
+        "startLine": 234,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 32
+      },
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6447b4f9_e53fc653",
         "filename": "content/public/browser/security_style_explanation.h",
         "patchSetId": 1
@@ -13,6 +36,70 @@
       "writtenOn": "2017-06-28T00:05:48Z",
       "side": 1,
       "message": "estark@: I know you wanted to get rid of weird blink:: stuff from SecurityStyleExplanations, but what do you think of reusing https://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebMixedContentContextType.h?type\u003dcs\u0026l\u003d37 instead?",
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b599dc_2d27ea0f",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-06-28T03:19:58Z",
+      "side": 1,
+      "message": "Sure, that seems fine. i wasn\u0027t trying to get rid of blink:: enums per se, I just thought it would be nice to get rid of the ran/displayed_insecure_content_style fields because they\u0027re pretty weird/confusing.",
+      "parentUuid": "6447b4f9_e53fc653",
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a416ce_fa057e37",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-06-28T03:19:58Z",
+      "side": 1,
+      "message": "Can you add a comment to this field (and maybe to |has_certificate| has well while we\u0027re at it)? Something along the lines of \"|mixed_content_type| indicates that the explanation relates to a particular type of mixed content. A value of NO_MIXED_CONTENT means that the explanation does not relate to mixed content. UI elements can use this to customize the display of mixed content explanations.\"",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e11652f_493ab556",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-06-28T03:19:58Z",
+      "side": 1,
+      "message": "nit: type \u003d\u003e type of",
+      "range": {
+        "startLine": 1042,
+        "startChar": 103,
+        "endLine": 1042,
+        "endChar": 108
+      },
       "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
