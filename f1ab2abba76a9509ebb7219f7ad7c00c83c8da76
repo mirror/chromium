@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "77cf334c_fa538221",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-28T22:51:26Z",
+      "side": 1,
+      "message": "\u003e \u003e\u003ewe need to atomically reset the client\n\u003e How do we do this?\n\nIt would involve locking inside the GpuJpegDecodeAcceleratorHost while accessing the client, so that it can be reset under lock\n\n\u003e \n\u003e \u003e\u003ewe need to synchronize with the IO thread\n\u003e So we need to wait here while we delete |decoder_| on IO thread? May be use a WaitableEvent?\n\nYes, a WaitableEvent would be the way to synchronize.\n\nA third alternative would be to separate the GpuJpegDecodeAcceleratorHost::Client part out of this class (together with the necessary state) into a tear-off, that would keep existing while either this or the decoder is alive (possibly needs thread-safe refcounting). More complex, but possibly requires the least amount of locking.",
+      "parentUuid": "f78e2cf2_99f49b25",
+      "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ebdaee2_f239080b",
         "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
         "patchSetId": 9
