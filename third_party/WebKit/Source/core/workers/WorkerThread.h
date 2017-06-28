@@ -51,6 +51,7 @@ class InspectorTaskRunner;
 class InterfaceProvider;
 class WorkerBackingThread;
 class WorkerInspectorController;
+class WorkerInstalledScriptsManager;
 class WorkerOrWorkletGlobalScope;
 class WorkerReportingProxy;
 class WorkerThreadStartupData;
@@ -177,6 +178,12 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   }
 
   InterfaceProvider* GetInterfaceProvider();
+
+  // Factory method for getting an InstalledScriptsManager to provide the main
+  // script to run on the worker thread.
+  virtual WorkerInstalledScriptsManager* installed_scripts_manager() {
+    return nullptr;
+  }
 
  protected:
   WorkerThread(ThreadableLoadingContext*, WorkerReportingProxy&);

@@ -111,6 +111,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // to start the worker.
   void Start(std::unique_ptr<EmbeddedWorkerStartParams> params,
              mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+             mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
              const StatusCallback& callback);
 
   // Stops the worker. It is invalid to call this when the worker is
@@ -292,6 +293,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // TODO(shimazu): Remove this after EmbeddedWorkerStartParams is changed to
   // a mojo struct.
   mojom::ServiceWorkerEventDispatcherRequest pending_dispatcher_request_;
+  mojom::ServiceWorkerInstalledScriptsInfoPtr pending_installed_scripts_info_;
 
   // Whether devtools is attached or not.
   bool devtools_attached_;
