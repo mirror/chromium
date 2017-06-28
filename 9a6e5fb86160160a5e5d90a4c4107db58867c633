@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab89c45b_039aa3dd",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-28T00:11:57Z",
+      "side": 1,
+      "message": "i think it\u0027d be better if we could figure out a way to use the typed enum here, for sure. a couple ideas:\n* consider moving the canonical definition of WebFeature to a mojom file (if we\u0027re lucky this could be done transparently, without having to update any existing users of WebFeature)\n* write a script that auto-generates the mojo type mapping code\n* check with the core mojo devs (rockot@ is a good person to ask) to see if there\u0027s a way to retain type safety here. maybe there\u0027s a lighter weight type mapping impl that doesn\u0027t require explicitly enumeriating all 2000 entries for example? seems unlikely but worth asking ken - maybe mojo team could add support for this to help us out.",
+      "revId": "9a6e5fb86160160a5e5d90a4c4107db58867c633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be7d5b86_54a9eefa",
+        "filename": "chrome/renderer/page_load_metrics/page_timing_metrics_sender.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-28T00:11:57Z",
+      "side": 1,
+      "message": "let\u0027s add comments to explain these 2 members",
+      "revId": "9a6e5fb86160160a5e5d90a4c4107db58867c633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a023532b_cd0f5046",
+        "filename": "chrome/renderer/page_load_metrics/page_timing_metrics_sender.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-28T00:11:57Z",
+      "side": 1,
+      "message": "nit: let\u0027s call this features_sent_ instead of features_recorded_ since this class\u0027s job isn\u0027t to record but rather to send.",
+      "revId": "9a6e5fb86160160a5e5d90a4c4107db58867c633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
