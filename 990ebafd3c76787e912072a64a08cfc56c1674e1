@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d0e527c_386e95f4",
+        "filename": "docs/mac_build_instructions.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-28T01:53:38Z",
+      "side": 1,
+      "message": "This will work, but `open` asks the user\u0027s login session to run the app, so it returns immediately and you won\u0027t see any logging output. I\u0027d use this command instead:\n\n    $ out/Release/Chromium.app/Contents/MacOS/Chromium",
+      "revId": "990ebafd3c76787e912072a64a08cfc56c1674e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
