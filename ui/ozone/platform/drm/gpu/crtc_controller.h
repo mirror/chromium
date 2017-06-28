@@ -31,7 +31,8 @@ class CrtcController : public base::SupportsWeakPtr<CrtcController> {
  public:
   CrtcController(const scoped_refptr<DrmDevice>& drm,
                  uint32_t crtc,
-                 uint32_t connector);
+                 uint32_t connector,
+                 bool edp);
   ~CrtcController();
 
   drmModeModeInfo mode() const { return mode_; }
@@ -102,6 +103,7 @@ class CrtcController : public base::SupportsWeakPtr<CrtcController> {
 
   // TODO(dnicoara) Add support for hardware mirroring (multiple connectors).
   uint32_t connector_;
+  bool edp_;
 
   drmModeModeInfo mode_;
 

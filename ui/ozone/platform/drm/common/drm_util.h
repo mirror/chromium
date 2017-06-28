@@ -51,6 +51,9 @@ class HardwareDisplayControllerInfo {
   DISALLOW_COPY_AND_ASSIGN(HardwareDisplayControllerInfo);
 };
 
+// Determine if |connector| is an embedded display.
+bool IsConnectorEDP(int fd, int connector_id);
+
 // Looks-up and parses the native display configurations returning all available
 // displays.
 std::vector<std::unique_ptr<HardwareDisplayControllerInfo>>
