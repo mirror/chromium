@@ -468,7 +468,8 @@ void WorkerThread::InitializeOnWorkerThread(
       startup_data->worker_v8_settings_.atomics_wait_mode_ ==
       WorkerV8Settings::AtomicsWaitMode::kAllow;
 
-  if (GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
+  if (GetInstalledScriptsManager() &&
+      GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
     // TODO(shimazu): Set ContentSecurityPolicy, ReferrerPolicy, AddressSpace
     // and OriginTrialTokens to |startup_data|.
     auto script_data = GetInstalledScriptsManager()->GetScriptData(script_url);

@@ -60,8 +60,10 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   WTF_MAKE_NONCOPYABLE(WebEmbeddedWorkerImpl);
 
  public:
-  WebEmbeddedWorkerImpl(std::unique_ptr<WebServiceWorkerContextClient>,
-                        std::unique_ptr<WebContentSettingsClient>);
+  WebEmbeddedWorkerImpl(
+      std::unique_ptr<WebServiceWorkerContextClient>,
+      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
+      std::unique_ptr<WebContentSettingsClient>);
   ~WebEmbeddedWorkerImpl() override;
 
   // WebEmbeddedWorker overrides.
