@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57a05e3a_3c61c0b5",
+        "filename": "media/filters/chunk_demuxer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4783,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T21:24:48Z",
+      "side": 1,
+      "message": "Maybe add \n\nEXPECT_MEDIA_LOG(MuxedSequenceModeWarning()).Times(0)\n\nI think this helps readability, even if its functionally equivalent",
+      "range": {
+        "startLine": 4783,
+        "startChar": 25,
+        "endLine": 4783,
+        "endChar": 57
+      },
+      "revId": "0956fdeac896e418343219558c76df7bb798061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dccaf63_70c1bd58",
+        "filename": "media/filters/frame_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-28T21:24:48Z",
+      "side": 1,
+      "message": "Make this WARNING instead of DEBUG?\n\nAlso, I think this is too much spec-speak. I would revise to:\n\n\"\"\"\nUsing MSE \u0027sequence\u0027 AppendMode with a multiple tracks in a single SourceBuffer may cause loss of track synchronization. In some cases, buffered range gaps and playback stalls can occur. It is recommended to instead use \u0027segments\u0027 mode for multitrack SourceBuffers.\n\"\"\"",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 20
+      },
+      "revId": "0956fdeac896e418343219558c76df7bb798061b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
