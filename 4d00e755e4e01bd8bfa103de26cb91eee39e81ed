@@ -163,6 +163,24 @@
       "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ecb5f52_6b1070f5",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-28T12:35:55Z",
+      "side": 1,
+      "message": "sweet - i didn\u0027t realize that MakeUnique had the power to new up arrays. TIL!",
+      "parentUuid": "8c476ee5_f77bd421",
+      "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
