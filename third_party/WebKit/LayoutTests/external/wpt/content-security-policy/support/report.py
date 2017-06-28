@@ -18,14 +18,25 @@ def main(request, response):
         return [("Content-Type", "application/json")], json.dumps({'error': 'No such report.' , 'guid' : key})
 
     if op == "cookies":
-        cval = request.server.stash.take(key=re.sub('^...', 'ccc', key))
+        timeout = float(request.GET.first("timeout"))
+        t0 = time.time()
+        while time.time() - t0 < timeout:
+            time.sleep(0.5)
+            cval = request.server.stash.take(key=re.sub('^...', 'ccc', key))
+            if cval is not None:
+                return [("Content-Type", "application/json")], "{ \"reportCookies\" : " + str(cval) + "}"
+
         if cval is None:
             cval = "\"None\""
 
-        return [("Content-Type", "application/json")], "{ \"reportCookies\" : " + cval + "}"
+        return [("Content-Type", "application/json")], "{ \"reportCookies\" : " + str(cval) + "}"
 
-    if hasattr(request, 'Cookies'):
-        request.server.stash.put(key=re.sub('^...', 'ccc', key), value=request.Cookies)
+    if hasattr(request, 'cookies') and len(request.cookies.keys()) > 0:
+      # convert everything into strings and dump it into a dict so it can be jsoned
+      temp_cookies_dict = {}
+      for cookie_key in request.cookies.keys():
+        temp_cookies_dict[str(cookie_key)] = str(request.cookies.get_list(cookie_key))
+      request.server.stash.put(key=re.sub('^...', 'ccc', key), value=json.dumps(temp_cookies_dict))
 
     report = request.body
     report.rstrip()
