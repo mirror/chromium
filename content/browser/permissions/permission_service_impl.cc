@@ -54,6 +54,14 @@ PermissionType PermissionDescriptorToPermissionType(
       return PermissionType::VIDEO_CAPTURE;
     case PermissionName::BACKGROUND_SYNC:
       return PermissionType::BACKGROUND_SYNC;
+    case PermissionName::AMBIENT_LIGHT_SENSOR:
+      return PermissionType::AMBIENT_LIGHT_SENSOR;
+    case PermissionName::ACCELEROMETER:
+      return PermissionType::ACCELEROMETER;
+    case PermissionName::GYROSCOPE:
+      return PermissionType::GYROSCOPE;
+    case PermissionName::MAGNETOMETER:
+      return PermissionType::MAGNETOMETER;
   }
 
   NOTREACHED();
@@ -79,6 +87,10 @@ blink::WebFeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
     case PermissionType::DURABLE_STORAGE:
     case PermissionType::BACKGROUND_SYNC:
     case PermissionType::FLASH:
+    case PermissionType::AMBIENT_LIGHT_SENSOR:
+    case PermissionType::ACCELEROMETER:
+    case PermissionType::GYROSCOPE:
+    case PermissionType::MAGNETOMETER:
     case PermissionType::NUM:
       // These aren't exposed by feature policy.
       return blink::WebFeaturePolicyFeature::kNotFound;

@@ -1,0 +1,4 @@
+file://device/generic_sensor/OWNERS
+
+# COMPONENT: Blink>Sensor
+# TEAM: device-dev@chromium.org
