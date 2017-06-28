@@ -2345,8 +2345,10 @@ WebFrameWidgetBase* WebLocalFrameImpl::FrameWidget() const {
   return frame_widget_;
 }
 
-std::unique_ptr<WebURLLoader> WebLocalFrameImpl::CreateURLLoader() {
-  return client_->CreateURLLoader();
+std::unique_ptr<WebURLLoader> WebLocalFrameImpl::CreateURLLoader(
+    const WebURLRequest& request,
+    base::SingleThreadTaskRunner* task_runner) {
+  return client_->CreateURLLoader(request, task_runner);
 }
 
 void WebLocalFrameImpl::CopyImageAt(const WebPoint& pos_in_viewport) {
