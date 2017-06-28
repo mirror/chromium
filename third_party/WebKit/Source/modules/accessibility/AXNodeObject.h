@@ -100,7 +100,6 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
 
   // Check object role or purpose.
   bool IsAnchor() const final;
-  bool IsControl() const override;
   bool IsControllingVideoElement() const;
   bool IsEditable() const override { return IsNativeTextControl(); }
   bool IsEmbeddedObject() const final;
@@ -128,16 +127,15 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
 
   // Check object state.
   bool IsClickable() const final;
-  bool IsEnabled() const override;
   AccessibilityExpanded IsExpanded() const override;
   bool IsModal() const final;
-  bool IsReadOnly() const override;
   bool IsRequired() const final;
+  AXControlMode ControlMode() const override;
 
   // Check whether certain properties can be modified.
-  bool CanSetFocusAttribute() const override;
-  bool CanSetValueAttribute() const override;
-  bool CanSetSelectedAttribute() const override;
+  bool CanSetSelectedAttribute() const override {
+    return AXObject::CanSetSelectedAttribute();
+  }
 
   // Properties of static elements.
   RGBA32 ColorValue() const final;

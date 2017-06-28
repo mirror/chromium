@@ -1,4 +1,4 @@
-[document web] enabled focusable focused<newline>
-++[section] enabled<newline>
+[document web] focusable focused<newline>
+++[section]<newline>
 ++++[link] name='normal link' enabled focusable<newline>
-++++++[text] name='normal link' enabled<newline>
+++++++[text] name='normal link'<newline>
