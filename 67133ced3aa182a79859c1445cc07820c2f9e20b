@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "98722954_745d404c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-28T09:43:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2392094_dbd0195e",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "67133ced3aa182a79859c1445cc07820c2f9e20b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12360dc8_71a3b42a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-28T09:43:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b2a325_bab7d7b9",
+      "range": {
+        "startLine": 10,
+        "startChar": 38,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "67133ced3aa182a79859c1445cc07820c2f9e20b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1048b35_9c6199eb",
         "filename": "components/password_manager/core/browser/sql_table_builder.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "67133ced3aa182a79859c1445cc07820c2f9e20b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef8ab44_1443a47b",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-28T09:43:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1048b35_9c6199eb",
+      "range": {
+        "startLine": 269,
+        "startChar": 22,
+        "endLine": 269,
+        "endChar": 36
+      },
+      "revId": "67133ced3aa182a79859c1445cc07820c2f9e20b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a5b1fb2a_40dc5814",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-28T09:43:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dafb9b71_0027759d",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 17
+      },
+      "revId": "67133ced3aa182a79859c1445cc07820c2f9e20b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd2cc317_70f4c944",
         "filename": "components/password_manager/core/browser/sql_table_builder.h",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "67133ced3aa182a79859c1445cc07820c2f9e20b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f7f517_ae701876",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-28T09:43:04Z",
+      "side": 1,
+      "message": "Done. In other words, the kCamelCase rule effectively only applies to constexpr variables, correct?",
+      "parentUuid": "bd2cc317_70f4c944",
+      "range": {
+        "startLine": 148,
+        "startChar": 20,
+        "endLine": 148,
+        "endChar": 31
+      },
+      "revId": "67133ced3aa182a79859c1445cc07820c2f9e20b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
