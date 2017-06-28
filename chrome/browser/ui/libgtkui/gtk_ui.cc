@@ -1040,6 +1040,10 @@ void GtkUi::UpdateDeviceScaleFactor() {
   // Blacklist scaling factors <120% (crbug.com/484400) and round
   // to 1 decimal to prevent rendering problems (crbug.com/485183).
   device_scale_factor_ = scale < 1.2f ? 1.0f : roundf(scale * 10) / 10;
+  // Otherwise we'd get a mismatch between cursor DIP coordinates
+  // and the DIP locations of the views/widgets.
+  if (display::Display::HasForceDeviceScaleFactor())
+    device_scale_factor_ = scale;
   UpdateDefaultFont();
 }
 
