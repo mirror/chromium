@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dae9cd8e_58a8130b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-28T13:13:38Z",
+      "side": 1,
+      "message": "Nit: Period at the end.",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 49
+      },
+      "revId": "a1a02525564d3320a698a9479b3a7cd694513b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6496f8d_503415c8",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_utils.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-28T13:13:38Z",
+      "side": 1,
+      "message": "Nit: capitalize and period.",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "a1a02525564d3320a698a9479b3a7cd694513b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
