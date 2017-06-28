@@ -11,6 +11,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/time/time.h"
 #include "components/policy/core/common/schema_map.h"
 #include "components/policy/policy_export.h"
@@ -35,8 +37,7 @@ class PolicyBundle;
 // LastModificationTime() is also invoked once on that thread at startup.
 class POLICY_EXPORT AsyncPolicyLoader {
  public:
-  explicit AsyncPolicyLoader(
-      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
+  AsyncPolicyLoader();
   virtual ~AsyncPolicyLoader();
 
   // Gets a SequencedTaskRunner backed by the background thread.
@@ -96,8 +97,10 @@ class POLICY_EXPORT AsyncPolicyLoader {
   // before retrying when this returns false.
   bool IsSafeToReload(const base::Time& now, base::TimeDelta* delay);
 
-  // Task runner to run background threads.
-  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  // Task runner to run background tasks.
+  const scoped_refptr<base::SequencedTaskRunner> task_runner_ =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND});
 
   // Callback for updates, passed in Init().
   UpdateCallback update_callback_;

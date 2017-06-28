@@ -12,6 +12,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/policy/core/common/cloud/mock_cloud_policy_client.h"
 #include "components/policy/core/common/cloud/mock_cloud_policy_store.h"
@@ -40,8 +42,7 @@ class TestHarness : public PolicyProviderTestHarness {
   void SetUp() override;
 
   ConfigurationPolicyProvider* CreateProvider(
-      SchemaRegistry* registry,
-      scoped_refptr<base::SequencedTaskRunner> task_runner) override;
+      SchemaRegistry* registry) override;
 
   void InstallEmptyPolicy() override;
   void InstallStringPolicy(const std::string& policy_name,
@@ -75,10 +76,11 @@ TestHarness::~TestHarness() {}
 void TestHarness::SetUp() {}
 
 ConfigurationPolicyProvider* TestHarness::CreateProvider(
-    SchemaRegistry* registry,
-    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+    SchemaRegistry* registry) {
   // Create and initialize the store.
   store_.NotifyStoreLoaded();
+  auto task_runner = base::CreateSequencedTaskRunnerWithTraits(
+      {base::MayBlock(), base::TaskPriority::BACKGROUND});
   ConfigurationPolicyProvider* provider =
       new CloudPolicyManager(dm_protocol::kChromeUserPolicyType, std::string(),
                              &store_, task_runner, task_runner, task_runner);
