@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e898dc3_b13585f2",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-28T01:07:14Z",
+      "side": 1,
+      "message": "The executable_name here actually only determines the bundle name of the generated Info.plist file, which is used as the app name displayed on the iPhone home screen. Since this is a loadable module, not an app, the bundle name doesn\u0027t matter at all (unless it\u0027s used somewhere that I\u0027m not aware of). So, I\u0027m changing the |executable_name| to |_target_name| to avoid having to pass in |host_output| from the wrapper application.",
+      "range": {
+        "startLine": 1434,
+        "startChar": 36,
+        "endLine": 1434,
+        "endChar": 0
+      },
+      "revId": "3ffc9f1b067a17e33f4a88876d333e53da33cc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a602c7d_91b535a4",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-28T01:07:14Z",
+      "side": 1,
+      "message": "Unfortunately, \"create_bundle\" doesn\u0027t support \"output_name\".",
+      "range": {
+        "startLine": 1629,
+        "startChar": 56,
+        "endLine": 1629,
+        "endChar": 0
+      },
+      "revId": "3ffc9f1b067a17e33f4a88876d333e53da33cc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

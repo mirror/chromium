@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d41494c_0a392b08",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-28T01:07:14Z",
+      "side": 0,
+      "message": "For XCUITest, we want the \"all\" target to depend on both the default target \"xcuitest\" and the test runner target \"xcuitest-Runner\", so need to make \"xcuitest\" visible.",
+      "range": {
+        "startLine": 1490,
+        "startChar": 41,
+        "endLine": 1490,
+        "endChar": 0
+      },
+      "revId": "9e5b22947914a1c0545a437bcb591985f0492339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c49c45_7b4ad278",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-28T01:07:14Z",
+      "side": 0,
+      "message": "if ios_automatically_manage_certs is true, the original code produces an Info.plist with both its bundle name and bundle identifier being something like \"ios-generic-unit-test\", however, the bundle name will be the app name displayed on home screen, so shouldn\u0027t be affected.",
+      "range": {
+        "startLine": 1681,
+        "startChar": 65,
+        "endLine": 1681,
+        "endChar": 0
+      },
+      "revId": "9e5b22947914a1c0545a437bcb591985f0492339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
