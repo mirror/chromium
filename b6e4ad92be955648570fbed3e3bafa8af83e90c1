@@ -22,6 +22,30 @@
       "revId": "b6e4ad92be955648570fbed3e3bafa8af83e90c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7bd5eb_0b760c76",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-28T12:04:05Z",
+      "side": 1,
+      "message": "This comment was nonsensical. Removed.",
+      "parentUuid": "3a2408d7_86ac7f38",
+      "range": {
+        "startLine": 560,
+        "startChar": 0,
+        "endLine": 560,
+        "endChar": 73
+      },
+      "revId": "b6e4ad92be955648570fbed3e3bafa8af83e90c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
