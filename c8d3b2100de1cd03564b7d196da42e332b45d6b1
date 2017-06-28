@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "6aa462ea_7f59b171",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-28T18:52:10Z",
+      "side": 1,
+      "message": "Ok, this is called from other places than just the Element method. Lets make sure we have a test case for at least the case causing trouble on this bug.",
+      "parentUuid": "55ee99ce_27b3fafa",
+      "range": {
+        "startLine": 640,
+        "startChar": 55,
+        "endLine": 640,
+        "endChar": 74
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8f0277f_28693706",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
