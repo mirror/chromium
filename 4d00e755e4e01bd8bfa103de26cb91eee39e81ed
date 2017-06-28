@@ -199,6 +199,24 @@
       "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56198851_d082e03e",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-28T20:47:13Z",
+      "side": 1,
+      "message": "Son of a gun. There\u0027s my L for T. Thanks for adding the comment.",
+      "parentUuid": "035c4cbb_e80092e6",
+      "revId": "4d00e755e4e01bd8bfa103de26cb91eee39e81ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
