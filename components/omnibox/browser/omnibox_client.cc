@@ -47,7 +47,7 @@ bool OmniboxClient::IsPasteAndGoEnabled() const {
   return false;
 }
 
-bool OmniboxClient::IsNewTabPage(const std::string& url) const {
+bool OmniboxClient::IsNewTabPage(const GURL& url) const {
   return false;
 }
 

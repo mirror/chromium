@@ -73,7 +73,7 @@ class OmniboxClient {
   virtual bool IsPasteAndGoEnabled() const;
 
   // Returns whether |url| corresponds to the new tab page.
-  virtual bool IsNewTabPage(const std::string& url) const;
+  virtual bool IsNewTabPage(const GURL& url) const;
 
   // Returns whether |url| corresponds to the user's home page.
   virtual bool IsHomePage(const std::string& url) const;
