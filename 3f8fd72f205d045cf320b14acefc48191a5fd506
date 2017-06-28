@@ -192,6 +192,24 @@
       "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d293c1e2_8671484f",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T19:51:09Z",
+      "side": 1,
+      "message": "The specific optimization may not be that common, but we also analyze the full layers if they have less than 10 ops and that\u0027s pretty common I think for pages with a lot of layers",
+      "parentUuid": "a2af6425_6a0212ec",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
