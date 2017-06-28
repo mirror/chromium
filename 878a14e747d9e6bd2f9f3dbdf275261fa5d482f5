@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "3df65adb_a6b4dcfb",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-28T13:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c6b1ca6_06b71e56",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5d54963_57b152e8",
         "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector.html",
         "patchSetId": 2
@@ -175,6 +193,24 @@
       "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038c937d_0a2f487f",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-28T13:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17758c4a_085717db",
+      "revId": "878a14e747d9e6bd2f9f3dbdf275261fa5d482f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
