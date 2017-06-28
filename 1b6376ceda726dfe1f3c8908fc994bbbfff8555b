@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed94a117_336c6ebf",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-28T18:37:23Z",
+      "side": 1,
+      "message": "I believe based on our discussion yesterday, this change is not necessary anymore. (Forwarding callbacks from ChromotingHost to ClientSession seems redundant: you need to register them anyway, directly in ClientSession would be cleaner.)",
+      "parentUuid": "866a7bc0_6a7a4ce8",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4163df43_b8cafd49",
         "filename": "remoting/host/chromoting_host.h",
         "patchSetId": 1
@@ -157,6 +181,47 @@
         "endLine": 60,
         "endChar": 31
       },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ce1490_9567b46c",
+        "filename": "remoting/protocol/connection_to_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-28T18:37:23Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "0cc1eb73_54a8d3bb",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18af64f_9669886f",
+        "filename": "remoting/protocol/webrtc_connection_to_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-28T18:37:23Z",
+      "side": 1,
+      "message": "I would suggest to use this pattern\nif (name \u003d\u003d event_dispatcher_-\u003echannel_name() ...) {\n  event_dispatcher_-\u003eInit(...);\n  return\n}\n\nevent_handler_-\u003eOnIncomingWebrtcDataChannel(name, std::move(pipe));",
       "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
