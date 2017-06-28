@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29112c9c_607d79d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T08:39:05Z",
+      "side": 1,
+      "message": "Wouldn\u0027t really mind actually, but went ahead and deleted it :)",
+      "parentUuid": "ff8b624b_7ddc75cb",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a58f4a89_37412885",
         "filename": "content/browser/service_worker/service_worker_metrics.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-27T15:27:07Z",
       "side": 1,
       "message": "nit: Please factor out a small wrapper for this, that\u0027s called along the lines of\n\n  RecordStartMessageLatencyType(CrossProcessTimeDelta::INACCURATE_CLOCK);",
+      "range": {
+        "startLine": 800,
+        "startChar": 64,
+        "endLine": 800,
+        "endChar": 0
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647efc94_0f5ce64e",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T08:39:05Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "a58f4a89_37412885",
       "range": {
         "startLine": 800,
         "startChar": 64,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee0d234a_9d9212d7",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T08:39:05Z",
+      "side": 1,
+      "message": "No, good catch. Done.",
+      "parentUuid": "64d56b71_c652e012",
+      "range": {
+        "startLine": 820,
+        "startChar": 0,
+        "endLine": 822,
+        "endChar": 71
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c28f54d_54db0771",
         "filename": "content/browser/service_worker/service_worker_metrics.cc",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-27T15:27:07Z",
       "side": 1,
       "message": "nit: Could you please factor out a wrapper for this histogram as well?  Each UMA_HISTOGRAM_* macro expands to a sizeable chunk of code, so it\u0027s nice to help the compiler avoid duplicating that.  Also, it helps avoid divergent typos in the parallel code paths.",
+      "range": {
+        "startLine": 831,
+        "startChar": 0,
+        "endLine": 832,
+        "endChar": 33
+      },
+      "revId": "f2ee292c031df43b30b23f2111302ca10201d184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c7a086_08b692cd",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-28T08:39:05Z",
+      "side": 1,
+      "message": "Sure, done. I think I was once bit by an unrelated thing where I reused the UMA_HISTOGRAM macro with a variable for the histogram name and it crashed because the histogram gets cached, so I tend to just write out UMA_HISTOGRAM with string literals every time (although I know logically it\u0027s just the histogram name that shouldn\u0027t be factored out to a variable).",
+      "parentUuid": "1c28f54d_54db0771",
       "range": {
         "startLine": 831,
         "startChar": 0,
