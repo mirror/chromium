@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cba901ce_16033cf4",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-28T06:40:32Z",
+      "side": 1,
+      "message": "Does it make sense to add DCHECK(container_ \u0026\u0026 container_-\u003echildren().empty()) here?",
+      "range": {
+        "startLine": 568,
+        "startChar": 55,
+        "endLine": 568,
+        "endChar": 0
+      },
+      "revId": "cb82d032de99ad1ffce4b1dbeb162794f936ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486b4744_bc23742e",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-28T06:40:32Z",
+      "side": 1,
+      "message": "Can we assume that the WebContents window is already loaded here? If so, let\u0027s add DCHECK(container_ \u0026\u0026 !container_-\u003echildren().empty()) here and move L:585 to L:592 into LoadKeyboardUiInBackground().",
+      "range": {
+        "startLine": 573,
+        "startChar": 67,
+        "endLine": 573,
+        "endChar": 0
+      },
+      "revId": "cb82d032de99ad1ffce4b1dbeb162794f936ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149b9410_3ed4de6a",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-28T06:40:32Z",
+      "side": 1,
+      "message": "This line should be moved into ShowKeyboardInternal() because we don\u0027t want to mark when just loading the keyboard.",
+      "range": {
+        "startLine": 587,
+        "startChar": 14,
+        "endLine": 587,
+        "endChar": 37
+      },
+      "revId": "cb82d032de99ad1ffce4b1dbeb162794f936ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2417b63_c6a85e19",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-28T06:40:32Z",
+      "side": 1,
+      "message": "container?",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 17
+      },
+      "revId": "cb82d032de99ad1ffce4b1dbeb162794f936ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0f6eb5_a5146f0b",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-28T06:40:32Z",
+      "side": 1,
+      "message": "optional: const",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 6
+      },
+      "revId": "cb82d032de99ad1ffce4b1dbeb162794f936ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f65098_81ef4892",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-28T06:40:32Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 6
+      },
+      "revId": "cb82d032de99ad1ffce4b1dbeb162794f936ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
