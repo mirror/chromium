@@ -213,5 +213,10 @@ void CastContentRendererClient::
   blink::WebRuntimeFeatures::EnableMediaControlsOverlayPlayButton(false);
 }
 
+bool CastContentRendererClient::
+    AllowCriticalMemoryPressureHandlingInForeground() {
+  return true;
+}
+
 }  // namespace shell
 }  // namespace chromecast

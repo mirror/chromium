@@ -47,6 +47,7 @@ class CastContentRendererClient : public content::ContentRendererClient {
                       const base::Closure& closure) override;
   bool AllowMediaSuspend() override;
   void SetRuntimeFeaturesDefaultsBeforeBlinkInitialization() override;
+  bool AllowCriticalMemoryPressureHandlingInForeground() override;
 
  protected:
   CastContentRendererClient();
