@@ -462,6 +462,24 @@
     },
     {
       "key": {
+        "uuid": "d2cb9b5d_ddf3c0be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-28T17:11:14Z",
+      "side": 1,
+      "message": "My bad, I did not move the logic. It\u0027s still here because the current ignoring logic is somewhat subtle - new notification will be checked against non-ignored latest notification. I don\u0027t want to change that in this CL.",
+      "parentUuid": "c015752d_dd840dcb",
+      "revId": "e193697550b818d0902238cbe82ce3128708564d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50ad7f0a_6e781376",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 2
