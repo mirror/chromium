@@ -39,9 +39,9 @@ MemlogConnectionManager::~MemlogConnectionManager() {
       base::RepeatingCallback<void(scoped_refptr<MemlogReceiverPipe>)>());
 }
 
-void MemlogConnectionManager::StartConnections(const std::string& pipe_id) {
+void MemlogConnectionManager::StartConnections(mojo::ScopedMessagePipeHandle control_pipe) {
   server_ = new MemlogReceiverPipeServer(
-      ProfilingGlobals::Get()->GetIORunner(), pipe_id,
+      ProfilingGlobals::Get()->GetIORunner(), std::move(control_pipe),
       base::BindRepeating(&MemlogConnectionManager::OnNewConnection,
                           base::Unretained(this)));
   server_->Start();

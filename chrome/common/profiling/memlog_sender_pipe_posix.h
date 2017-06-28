@@ -8,22 +8,19 @@
 #include <string>
 
 #include "base/macros.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 
 namespace profiling {
 
 class MemlogSenderPipe {
  public:
-  explicit MemlogSenderPipe(const std::string& pipe_id);
+  explicit MemlogSenderPipe(mojo::ScopedMessagePipeHandle control_pipe);
   ~MemlogSenderPipe();
-
-  bool Connect();
 
   bool Send(const void* data, size_t sz);
 
  private:
-  std::string pipe_id_;
-
-  int fd_;
+  mojo::ScopedMessagePipeHandle control_pipe_;
 
   DISALLOW_COPY_AND_ASSIGN(MemlogSenderPipe);
 };

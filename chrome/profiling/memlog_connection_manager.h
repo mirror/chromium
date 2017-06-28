@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 #include "chrome/profiling/backtrace_storage.h"
 #include "chrome/profiling/memlog_receiver_pipe_server.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -27,7 +28,7 @@ class MemlogConnectionManager {
   ~MemlogConnectionManager();
 
   // Starts listening for connections.
-  void StartConnections(const std::string& pipe_id);
+  void StartConnections(mojo::ScopedMessagePipeHandle control_pipe);
 
  private:
   struct Connection;
