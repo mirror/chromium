@@ -4,6 +4,8 @@
 
 #include "ui/ozone/platform/headless/ozone_platform_headless.h"
 
+#include <memory>
+
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
@@ -29,12 +31,11 @@ namespace ui {
 namespace {
 
 // A headless implementation of PlatformEventSource that we can instantiate to
-// make
-// sure that the PlatformEventSource has an instance while in unit tests.
+// make sure that the PlatformEventSource has an instance while in unit tests.
 class HeadlessPlatformEventSource : public ui::PlatformEventSource {
  public:
-  HeadlessPlatformEventSource() {}
-  ~HeadlessPlatformEventSource() override {}
+  HeadlessPlatformEventSource() = default;
+  ~HeadlessPlatformEventSource() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(HeadlessPlatformEventSource);
@@ -43,7 +44,7 @@ class HeadlessPlatformEventSource : public ui::PlatformEventSource {
 // OzonePlatform for headless mode
 class OzonePlatformHeadless : public OzonePlatform {
  public:
-  OzonePlatformHeadless(const base::FilePath& dump_file)
+  explicit OzonePlatformHeadless(const base::FilePath& dump_file)
       : file_path_(dump_file) {}
   ~OzonePlatformHeadless() override {}
 
@@ -69,8 +70,8 @@ class OzonePlatformHeadless : public OzonePlatform {
   std::unique_ptr<PlatformWindow> CreatePlatformWindow(
       PlatformWindowDelegate* delegate,
       const gfx::Rect& bounds) override {
-    return base::WrapUnique<PlatformWindow>(
-        new HeadlessWindow(delegate, window_manager_.get(), bounds));
+    return base::MakeUnique<HeadlessWindow>(delegate, window_manager_.get(),
+                                            bounds);
   }
   std::unique_ptr<display::NativeDisplayDelegate> CreateNativeDisplayDelegate()
       override {
@@ -78,24 +79,25 @@ class OzonePlatformHeadless : public OzonePlatform {
   }
 
   void InitializeUI(const InitParams& params) override {
-    window_manager_.reset(new HeadlessWindowManager(file_path_));
+    window_manager_ = base::MakeUnique<HeadlessWindowManager>(file_path_);
     window_manager_->Initialize();
-    surface_factory_.reset(new HeadlessSurfaceFactory(window_manager_.get()));
+    surface_factory_ =
+        base::MakeUnique<HeadlessSurfaceFactory>(window_manager_.get());
     // This unbreaks tests that create their own.
     if (!PlatformEventSource::GetInstance())
-      platform_event_source_.reset(new HeadlessPlatformEventSource);
+      platform_event_source_ = base::MakeUnique<HeadlessPlatformEventSource>();
     KeyboardLayoutEngineManager::SetKeyboardLayoutEngine(
         base::MakeUnique<StubKeyboardLayoutEngine>());
 
-    overlay_manager_.reset(new StubOverlayManager());
+    overlay_manager_ = base::MakeUnique<StubOverlayManager>();
     input_controller_ = CreateStubInputController();
-    cursor_factory_ozone_.reset(new BitmapCursorFactoryOzone);
+    cursor_factory_ozone_ = base::MakeUnique<BitmapCursorFactoryOzone>();
     gpu_platform_support_host_.reset(CreateStubGpuPlatformSupportHost());
   }
 
   void InitializeGPU(const InitParams& params) override {
     if (!surface_factory_)
-      surface_factory_.reset(new HeadlessSurfaceFactory());
+      surface_factory_ = base::MakeUnique<HeadlessSurfaceFactory>(nullptr);
   }
 
  private:
