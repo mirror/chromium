@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "389eccbb_4d36c000",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-28T20:59:28Z",
+      "side": 1,
+      "message": "But AFAIK, everything in ChromotingHost can be accessed directly or indirectly in ClientSession. And not like HostExtension, DataChannelManager does not need to be initialized in session negotiation stage: all optional data channels are created after ClientSession has been created.",
+      "parentUuid": "a18b5834_cad37a01",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4163df43_b8cafd49",
         "filename": "remoting/host/chromoting_host.h",
         "patchSetId": 1
