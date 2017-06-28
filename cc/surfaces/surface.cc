@@ -68,8 +68,8 @@ bool Surface::QueueFrame(CompositorFrame frame,
   }
 
   if (closed_) {
-    ReturnedResourceArray resources;
-    TransferableResource::ReturnResources(frame.resource_list, &resources);
+    std::vector<ReturnedResource> resources =
+        TransferableResource::ReturnResources(frame.resource_list);
     compositor_frame_sink_support_->ReturnResources(resources);
     callback.Run();
     return true;
@@ -334,9 +334,8 @@ void Surface::UnrefFrameResourcesAndRunDrawCallback(
   if (!frame_data || !compositor_frame_sink_support_)
     return;
 
-  ReturnedResourceArray resources;
-  TransferableResource::ReturnResources(frame_data->frame.resource_list,
-                                        &resources);
+  std::vector<ReturnedResource> resources =
+      TransferableResource::ReturnResources(frame_data->frame.resource_list);
   // No point in returning same sync token to sender.
   for (auto& resource : resources)
     resource.sync_token.Clear();
