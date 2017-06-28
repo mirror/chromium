@@ -215,6 +215,10 @@ def main():
                       help='GTest repeat value to use')
   parser.add_argument('--test-launcher-filter-file',
                       help='Pass filter file through to target process')
+  parser.add_argument('--test-launcher-summary-output',
+                      type=os.path.realpath,
+                      help='If set, will dump results in JSON form to '
+                           'specified file.')
   args = parser.parse_args()
 
   bootfs = BuildBootfs(args.output_directory, args.runtime_deps_path,
@@ -273,6 +277,31 @@ def main():
               '(inlined', ' ' * len(prefix) + '(inlined')
           processed_lines.append('%s%s' % (prefix, addr2line_filtered))
     qemu_popen.wait()
+    if options.test_launcher_summary_output:
+      with open(options.test_launcher_summary_output, 'w') as f:
+        f.write('''{
+  "global_tags": [],
+  "all_tests": [
+    "%(test_name)s",
+   ],
+  "disabled_tests": [],
+  "per_iteration_data": [
+    {
+      "%(test_name)s": [
+        {
+          "status": "%(result)s",
+          "elapsed_time_ms": 1,
+          "output_snippet": "",
+          "output_snippet_base64": "",
+          "losless_snippet": "",
+        },
+      ],
+    },
+  ],
+}
+''' % {'test_name': options.test_name,
+       'result': 'SUCCESS' if success else 'FAILURE'})
+
     return 0 if success else 1
 
   return 0
