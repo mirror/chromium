@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2188cbb_efa33cdc",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-28T20:53:03Z",
+      "side": 1,
+      "message": "Nit: consider using emplace_back to avoid the local and just construct directly in place.",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d410c3_3183aa46",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-28T20:53:03Z",
+      "side": 1,
+      "message": "Generally speaking, I think it would be nice if we could eventually:\n- group ipcs on the focused frame together, either just by shuffling the order of methods in the mojom around, or even having a separate interface\n- have a focused frame helper for ipcs that are only supposed to be routed to the focused frame (as it looks like there\u0027s a fair number of things that still get the focused frame, look up the input handler, then dispatch to the input handler)\n\n(It\u0027s not necessary to do either in this CL; the motivation would be trying to clean up focus in general, as today, some things go via widget, others go via frame--not to mention inconsistencies in how we resolve the focus races renderer side)",
+      "range": {
+        "startLine": 927,
+        "startChar": 0,
+        "endLine": 933,
+        "endChar": 75
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96701924_5ca119f7",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-28T20:53:03Z",
+      "side": 1,
+      "message": "Ditto: emplace_back here is probably a nice micro-optimization.",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868b2fdc_07fd1d2f",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-28T20:53:03Z",
+      "side": 1,
+      "message": "Nit: maybe put a comment here that we only expect to call these with mojofied input, so this should never be reached in the legacy shim.\n\n(I assume that\u0027s why they\u0027re notreached; otherwise, comment as appropriate \u003d)",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 14
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae786bc2_e76bf46f",
+        "filename": "content/browser/renderer_host/render_widget_host_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-28T20:53:03Z",
+      "side": 1,
+      "message": "I guess I forgot to ask this in an earlier PS, but why do these belong on RWHD?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
