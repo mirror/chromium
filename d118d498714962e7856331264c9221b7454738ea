@@ -16,6 +16,24 @@
       "revId": "d118d498714962e7856331264c9221b7454738ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6722b2_ee3a035d",
+        "filename": "ash/system/overview/overview_button_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-28T16:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fc0eb0b_0ac52ff5",
+      "revId": "d118d498714962e7856331264c9221b7454738ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
