@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0598a8e5_99132f7e",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69e2ff3c_8f104157",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9263013_755fa639",
         "filename": "cc/layers/touch_action_region.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab58ec1_d8005147",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "I added unit tests for GetWhiteListedTouchAction as suggested. I decided to also remove some of the extra test cases within LTHI.",
+      "parentUuid": "a9263013_755fa639",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "082dfc4b_f0946985",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05089f6a_2d0cc481",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ca57ab_bfebe473",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4e1d6c_c597bf7d",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ca57ab_bfebe473",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "60dc9f69_15df9921",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "Since there is no handler/touch action region, the touch action is assumed to be auto since the default touch action is auto.",
+      "parentUuid": "2a500828_dcd3dec5",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6471e47e_fe85348e",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2112a909_509b02e4",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6471e47e_fe85348e",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7f07c655_32fea017",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3725fc23_1042a223",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73d8019a_7cb6db79",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 11
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "33194b28_c8c9c267",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d8019a_7cb6db79",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60d3c5a_13067cb9",
         "filename": "cc/trees/layer_tree_host_impl.h",
         "patchSetId": 11
@@ -152,6 +296,24 @@
       "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0de707_75a897bf",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b60d3c5a_13067cb9",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +349,24 @@
       "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21edc14_6800a3b5",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-28T17:43:40Z",
+      "side": 1,
+      "message": "The reason I put touch_action_ here originally was mirroring how current_overscroll_params is dealt with in terms of bundling the bit with the event ack. That being said, that will be another step beyond this CL, so I moved it to HandleTouchStart for now.",
+      "parentUuid": "c515acf1_ebd46c84",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
