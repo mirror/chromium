@@ -82,6 +82,11 @@ class CORE_EXPORT TopDocumentRootScrollerController
   // controls adjustment and using the root LocalFrameView.
   IntSize RootScrollerVisibleArea() const;
 
+  // Returns the size we should use for the root scroller for painting. This is
+  // the size fo the root viewport since the last renderer resize. i.e. it does
+  // *not* account in real-time for top controls adjustment.
+  IntSize RootScrollerPaintArea() const;
+
  private:
   TopDocumentRootScrollerController(Page&);
 

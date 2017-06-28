@@ -10,12 +10,14 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutBoxModelObject.h"
+#include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerScrollableArea.h"
+#include "platform/geometry/LayoutRect.h"
 
 namespace blink {
 
@@ -74,14 +76,14 @@ bool IsEffective(const LayoutBox& box) {
          &box.GetDocument().GetRootScrollerController().EffectiveRootScroller();
 }
 
-bool IsGlobal(const LayoutBox& box) {
-  if (!box.GetNode() || !box.GetNode()->GetDocument().GetPage())
+bool IsGlobal(const LayoutObject& object) {
+  if (!object.GetNode() || !object.GetNode()->GetDocument().GetPage())
     return false;
 
-  return box.GetNode() == box.GetDocument()
-                              .GetPage()
-                              ->GlobalRootScrollerController()
-                              .GlobalRootScroller();
+  return object.GetNode() == object.GetDocument()
+                                 .GetPage()
+                                 ->GlobalRootScrollerController()
+                                 .GlobalRootScroller();
 }
 
 bool IsGlobal(const PaintLayer& layer) {
@@ -96,6 +98,15 @@ bool IsGlobal(const PaintLayer& layer) {
                                     .GlobalRootScroller());
 
   return &layer == root_scroller_layer;
+}
+
+LayoutRect ViewportPaintRect(const LayoutObject& object) {
+  DCHECK(object.GetDocument().GetPage());
+  IntSize size = object.GetDocument()
+                     .GetPage()
+                     ->GlobalRootScrollerController()
+                     .RootScrollerPaintArea();
+  return LayoutRect(LayoutPoint(), LayoutSize(size));
 }
 
 }  // namespace RootScrollerUtil

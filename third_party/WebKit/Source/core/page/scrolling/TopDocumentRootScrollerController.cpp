@@ -77,6 +77,17 @@ IntSize TopDocumentRootScrollerController::RootScrollerVisibleArea() const {
          IntSize(0, browser_controls_adjustment);
 }
 
+IntSize TopDocumentRootScrollerController::RootScrollerPaintArea() const {
+  if (!TopDocument() || !TopDocument()->View())
+    return IntSize();
+
+  return TopDocument()
+      ->View()
+      ->LayoutViewportScrollableArea()
+      ->VisibleContentRect(kExcludeScrollbars)
+      .Size();
+}
+
 Element* TopDocumentRootScrollerController::FindGlobalRootScrollerElement() {
   if (!TopDocument())
     return nullptr;
