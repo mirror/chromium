@@ -1521,8 +1521,8 @@ void NetworkQualityEstimator::OnUpdatedEstimateAvailable(
   if (downstream_throughput_kbps > 0) {
     RecordExternalEstimateProviderMetrics(
         EXTERNAL_ESTIMATE_PROVIDER_STATUS_DOWNLINK_BANDWIDTH_AVAILABLE);
-    UMA_HISTOGRAM_COUNTS("NQE.ExternalEstimateProvider.DownlinkBandwidth",
-                         downstream_throughput_kbps);
+    UMA_HISTOGRAM_COUNTS_1M("NQE.ExternalEstimateProvider.DownlinkBandwidth",
+                            downstream_throughput_kbps);
     ThroughputObservation throughput_observation(
         downstream_throughput_kbps, tick_clock_->NowTicks(),
         signal_strength_dbm_,
@@ -1715,7 +1715,7 @@ void NetworkQualityEstimator::OnPrefsRead(
                    nqe::internal::CachedNetworkQuality> read_prefs) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  UMA_HISTOGRAM_COUNTS("NQE.Prefs.ReadSize", read_prefs.size());
+  UMA_HISTOGRAM_COUNTS_1M("NQE.Prefs.ReadSize", read_prefs.size());
   for (auto& it : read_prefs) {
     EffectiveConnectionType effective_connection_type =
         it.second.effective_connection_type();
