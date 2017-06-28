@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80e898f9_11248a70",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-28T14:28:55Z",
+      "side": 1,
+      "message": "This seems need a comment.\n\nThe main purpose of this check is to avoid AddObsever twice. The code here is in AppListViewDelegate::SetProfile which is called on user switch. AppListViewDelegate is like a singleton and shared among all users.",
+      "parentUuid": "b3180903_c8298a19",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e64bde0_5d8149ce",
         "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
         "patchSetId": 5
