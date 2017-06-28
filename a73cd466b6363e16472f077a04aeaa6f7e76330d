@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e3cdd6e_1aad4085",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFace.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-06-28T16:41:39Z",
+      "side": 1,
+      "message": "So the counts for the zero_copy_success_histogram would be in the same bucket. But I am unsure if BooleanHistogram is indeed thread-safe or whether we would potentially miscount here if two threads hit the Count function at the same time, could you clarify that?",
+      "revId": "a73cd466b6363e16472f077a04aeaa6f7e76330d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
