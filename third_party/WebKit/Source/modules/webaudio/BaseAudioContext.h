@@ -56,6 +56,7 @@ class AudioBuffer;
 class AudioBufferSourceNode;
 class AudioContextOptions;
 class AudioListener;
+class AudioWorkletMessagingProxy;
 class BiquadFilterNode;
 class ChannelMergerNode;
 class ChannelSplitterNode;
@@ -510,6 +511,8 @@ class MODULES_EXPORT BaseAudioContext
 
   Optional<AutoplayStatus> autoplay_status_;
   AudioIOPosition output_position_;
+
+  Member<AudioWorkletMessagingProxy> worklet_messaging_proxy_;
 };
 
 }  // namespace blink

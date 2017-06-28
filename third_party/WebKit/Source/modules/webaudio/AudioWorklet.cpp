@@ -21,6 +21,11 @@ AudioWorklet::AudioWorklet(LocalFrame* frame) : Worklet(frame) {}
 
 AudioWorklet::~AudioWorklet() {}
 
+AudioWorkletMessagingProxy* AudioWorklet::GetWorkletMessagingProxy() const {
+  return static_cast<AudioWorkletMessagingProxy*>(
+      FindAvailableGlobalScope());
+}
+
 bool AudioWorklet::NeedsToCreateGlobalScope() {
   // For now, create only one global scope per document.
   // TODO(nhiroki): Revisit this later.

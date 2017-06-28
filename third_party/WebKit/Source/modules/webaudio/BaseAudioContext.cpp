@@ -49,6 +49,8 @@
 #include "modules/webaudio/AudioListener.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
+#include "modules/webaudio/AudioWorklet.h"
+#include "modules/webaudio/AudioWorkletMessagingProxy.h"
 #include "modules/webaudio/BiquadFilterNode.h"
 #include "modules/webaudio/ChannelMergerNode.h"
 #include "modules/webaudio/ChannelSplitterNode.h"
@@ -71,6 +73,7 @@
 #include "modules/webaudio/ScriptProcessorNode.h"
 #include "modules/webaudio/StereoPannerNode.h"
 #include "modules/webaudio/WaveShaperNode.h"
+#include "modules/webaudio/WindowAudioWorklet.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/audio/IIRFilter.h"
@@ -168,6 +171,11 @@ void BaseAudioContext::Initialize() {
     // only create the listener if the destination node exists.
     listener_ = AudioListener::Create(*this);
   }
+
+  // Get an instance of AudioWorkletMessagingProxy.
+  AudioWorklet* audioWorklet = WindowAudioWorklet::audioWorklet(
+      *(SuspendableObject::GetExecutionContext()->ExecutingWindow()));
+  worklet_messaging_proxy_ = audioWorklet->GetWorkletMessagingProxy();
 }
 
 void BaseAudioContext::Clear() {
@@ -984,18 +992,18 @@ void BaseAudioContext::StartRendering() {
 }
 
 DEFINE_TRACE(BaseAudioContext) {
-  visitor->Trace(destination_node_);
-  visitor->Trace(listener_);
   visitor->Trace(active_source_nodes_);
-  visitor->Trace(resume_resolvers_);
-  visitor->Trace(success_callbacks_);
-  visitor->Trace(error_callbacks_);
   visitor->Trace(decode_audio_resolvers_);
-
+  visitor->Trace(destination_node_);
+  visitor->Trace(error_callbacks_);
+  visitor->Trace(listener_);
+  visitor->Trace(periodic_wave_sawtooth_);
   visitor->Trace(periodic_wave_sine_);
   visitor->Trace(periodic_wave_square_);
-  visitor->Trace(periodic_wave_sawtooth_);
   visitor->Trace(periodic_wave_triangle_);
+  visitor->Trace(resume_resolvers_);
+  visitor->Trace(success_callbacks_);
+  visitor->Trace(worklet_messaging_proxy_);
   EventTargetWithInlineData::Trace(visitor);
   SuspendableObject::Trace(visitor);
 }
