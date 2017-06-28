@@ -985,6 +985,8 @@ component("net") {
       "log/trace_net_log_observer.h",
       "log/write_to_file_net_log_observer.cc",
       "log/write_to_file_net_log_observer.h",
+      "log/log_urls_to_file.cc",
+      "log/log_urls_to_file.h",
       "nqe/cached_network_quality.cc",
       "nqe/cached_network_quality.h",
       "nqe/effective_connection_type.cc",
