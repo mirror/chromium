@@ -666,6 +666,11 @@ if (!is_android) {
       if (use_aura || is_mac) {
         deps += [ "//ui/touch_selection" ]
       }
+
+      if (toolkit_views) {
+        # The Fullscreen Control is only available on platforms with views.
+        sources += [ "../browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc" ]
+      }
     }
 
     if (is_chromeos) {
