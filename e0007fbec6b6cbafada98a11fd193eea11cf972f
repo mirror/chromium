@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fdd97a4_3d1a3a08",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-28T07:41:17Z",
+      "side": 1,
+      "message": "you\u0027ll also need to depend on v8 here, no?",
+      "revId": "e0007fbec6b6cbafada98a11fd193eea11cf972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
