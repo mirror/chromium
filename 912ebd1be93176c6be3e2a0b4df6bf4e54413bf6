@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "e9a50044_ecfc24c8",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-28T19:18:20Z",
+      "side": 1,
+      "message": "Ah ok that\u0027s fair. Let\u0027s restore the if() here then so we don\u0027t crash if null.",
+      "parentUuid": "50064ba0_f8fe3710",
+      "revId": "912ebd1be93176c6be3e2a0b4df6bf4e54413bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a500828_dcd3dec5",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 11
