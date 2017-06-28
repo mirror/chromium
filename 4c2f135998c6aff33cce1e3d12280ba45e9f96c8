@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49ad2289_ddfc8115",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-06-28T17:21:21Z",
+      "side": 1,
+      "message": "Nit: can we have static bool AudioDeviceDescription::IsSystemAudioCaptureDevice(const std::string\u0026 device_id) for this? (Analog to IsDefaultDevice()  https://cs.chromium.org/chromium/src/media/audio/audio_device_description.h?q\u003dAudioDeviceDescription+package:%5Echromium$\u0026dr\u003dCSs\u0026l\u003d39)",
+      "revId": "4c2f135998c6aff33cce1e3d12280ba45e9f96c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6b3733_29d75272",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-06-28T17:21:21Z",
+      "side": 1,
+      "message": "This comment requires clarification (see below)",
+      "revId": "4c2f135998c6aff33cce1e3d12280ba45e9f96c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2acdf93_e2e809b1",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-06-28T17:21:21Z",
+      "side": 1,
+      "message": "Could you explain in a comment how GetInputStreamParameters work for loopback device id on Windows and on other platforms? (It will be returning some fallback input parameters instead of output ones on all platforms other than Windows, right?) Calling GetInputStreamParameters() after checking for output devices looks very confusing.",
+      "revId": "4c2f135998c6aff33cce1e3d12280ba45e9f96c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
