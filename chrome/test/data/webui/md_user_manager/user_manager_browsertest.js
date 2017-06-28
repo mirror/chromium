@@ -23,6 +23,9 @@ UserManagerBrowserTest.prototype = {
   /** @override */
   browsePreload: 'chrome://md-user-manager/',
 
+  commandLineSwitches: [{switchName: 'enable-features',
+                         switchValue: 'SupervisedUserCreation'}],
+
   /** @override */
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
     '../test_browser_proxy.js',
