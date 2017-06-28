@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b712e6a8_a91221f6",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T21:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d86990ad_e0517b20",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93b8c6da_872631bb",
         "filename": "cc/paint/display_item_list.h",
         "patchSetId": 4
@@ -243,6 +261,24 @@
       "side": 1,
       "message": "WDYT about Iterator (all ops), OffsetIterator (mandatory offsets), CompositeIterator { optional\u003cIterator\u003e optional\u003cOffsetIterator\u003e } (which could just live in SolidColorAnalyzer)? That way the logic\u0027s easier to read, and SolidColorAnalyzer can still get the composition it needs.  Am I overthinking this?  I just find the Iterator here hard to read because it\u0027s in two different modes.",
       "parentUuid": "d293c1e2_8671484f",
+      "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de93222a_dac70d1a",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-28T21:33:20Z",
+      "side": 1,
+      "message": "I\u0027ve added that. I\u0027m not too sure if it\u0027s simpler or more difficult. I have a writer\u0027s perspective though, so I\u0027ll defer to you.",
+      "parentUuid": "94e621a0_46d75009",
       "revId": "3f8fd72f205d045cf320b14acefc48191a5fd506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
