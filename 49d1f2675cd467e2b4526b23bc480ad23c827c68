@@ -22,6 +22,30 @@
       "revId": "49d1f2675cd467e2b4526b23bc480ad23c827c68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5b5147_acd01c2c",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-28T20:42:37Z",
+      "side": 0,
+      "message": "Switched to PostTaskWithTraits.",
+      "parentUuid": "261a5ef3_e4151ffc",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 53
+      },
+      "revId": "49d1f2675cd467e2b4526b23bc480ad23c827c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7574e6e_b37c835f",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-28T20:42:37Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d3df7585_d0bc024b",
+      "revId": "668b00494f47fabfd4381e27968d1770aea0e60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d18d296e_2f680894",
         "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "668b00494f47fabfd4381e27968d1770aea0e60a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cce3053_d93c60d8",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-28T20:42:37Z",
+      "side": 1,
+      "message": "Reverted this. Potentially parallel is OK (or at least equivalent to what it used to do with GetBlockingPool()).",
+      "parentUuid": "d18d296e_2f680894",
+      "range": {
+        "startLine": 292,
+        "startChar": 14,
+        "endLine": 292,
+        "endChar": 35
+      },
+      "revId": "668b00494f47fabfd4381e27968d1770aea0e60a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
