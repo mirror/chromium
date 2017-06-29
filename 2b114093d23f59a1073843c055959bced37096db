@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c540a3ef_220a0d49",
+        "filename": "chrome/browser/notifications/notification_interactive_uitest_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-06-29T14:15:33Z",
+      "side": 1,
+      "message": "It is not, but we need to land it before https://codereview.chromium.org/2876153002/. I can move them to SetUp in following patch.",
+      "parentUuid": "a6d9d1e9_b56ae6f8",
+      "range": {
+        "startLine": 126,
+        "startChar": 70,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "2b114093d23f59a1073843c055959bced37096db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17f9161e_48737378",
         "filename": "chrome/browser/notifications/notification_interactive_uitest_support.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T04:34:14Z",
       "side": 1,
       "message": "Hmm, why is it important to switch from feature_list_ to a param that\u0027s passed in?  Could all of these methods use feature_list_ rather than needing a param passed in?\n\n(If the reason you\u0027re passing a param is simply that feature_list_ is used above, please find a way to structure the code that keeps the change isolated to just this file, without a need to pass in a param.)",
+      "range": {
+        "startLine": 319,
+        "startChar": 2,
+        "endLine": 319,
+        "endChar": 21
+      },
+      "revId": "2b114093d23f59a1073843c055959bced37096db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a80175_2d630d37",
+        "filename": "chrome/browser/notifications/notification_interactive_uitest_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-06-29T14:15:33Z",
+      "side": 1,
+      "message": "We can not call them all in feature_list_ since ScopedFeatureList can only init once. For these test, it already init in SetUpDefaultCommandLine. It is not common to change feature list twice in one test. This is also a temporary fix. I think it is not worth to change ScopedFeatureList for this. \n\nIf we want to support this case (\"change feature list multi time in test\") we may be need to change ScopedFeatureList like this:\n\nScopedFeatureList : FeatureList {\n  ...\n  Map\u003cstring, boolean\u003e modified_features;\n  ...\n  IsFeatureEnabled(feature) {\n    modify \u003d modified_features.find\n    if (modify) {\n      return modify.second;\n    } else {\n      return original_feature_list_-\u003eIsFeatureEnabled(feature);\n    }\n  }\n  ...\n  AddFeature(feature, enable);\n  ...\n}",
+      "parentUuid": "17f9161e_48737378",
       "range": {
         "startLine": 319,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "2b114093d23f59a1073843c055959bced37096db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad3d094_822a04d4",
+        "filename": "chrome/browser/notifications/notification_interactive_uitest_support.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-06-29T14:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc550682_a2553c2b",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "2b114093d23f59a1073843c055959bced37096db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
