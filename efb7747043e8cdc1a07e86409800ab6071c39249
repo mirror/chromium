@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d1234b7_e7f30cba",
+        "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-29T23:05:58Z",
+      "side": 1,
+      "message": "Hmm, this flag is only for testing; is it really needed?",
+      "range": {
+        "startLine": 200,
+        "startChar": 14,
+        "endLine": 200,
+        "endChar": 32
+      },
+      "revId": "efb7747043e8cdc1a07e86409800ab6071c39249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89b8d76_9cdee075",
+        "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_picker_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-29T23:05:58Z",
+      "side": 1,
+      "message": "consider this instead:\n  for (size_t i \u003d 0; i \u003c source_types_.size(); ++i) {\n    if (source_types_[i] \u003d\u003d source_type) {\n       pane_-\u003eSelectTabAt(i);\n       return;\n    }\n  }",
+      "range": {
+        "startLine": 372,
+        "startChar": 13,
+        "endLine": 372,
+        "endChar": 26
+      },
+      "revId": "efb7747043e8cdc1a07e86409800ab6071c39249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
