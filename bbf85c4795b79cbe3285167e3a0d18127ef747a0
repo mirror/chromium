@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6afa162_f3bfc516",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-29T21:25:48Z",
+      "side": 0,
+      "message": "The getter NetworkHandler::ui_proxy_config_service() has a CHECK() for null. I\u0027m not sure how this code ever worked.",
+      "revId": "bbf85c4795b79cbe3285167e3a0d18127ef747a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
