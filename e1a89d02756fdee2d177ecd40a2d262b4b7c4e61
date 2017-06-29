@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f0825b_15d75c4a",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-29T00:58:40Z",
+      "side": 1,
+      "message": "nit: no need for the curly braces here.",
+      "range": {
+        "startLine": 177,
+        "startChar": 76,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323f4bbf_78ac6bf5",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-29T00:58:40Z",
+      "side": 1,
+      "message": "Use consistent names, i.e., kMaxDelayableRequestsPerClient.",
+      "range": {
+        "startLine": 512,
+        "startChar": 8,
+        "endLine": 512,
+        "endChar": 41
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7d982d_da075d73",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-29T00:58:40Z",
+      "side": 1,
+      "message": "Return this instead of assigning it. And on line 531, return kMaxDelayableRequestsPerClient.",
+      "range": {
+        "startLine": 528,
+        "startChar": 12,
+        "endLine": 528,
+        "endChar": 46
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75126ebd_48f83907",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-29T00:58:40Z",
+      "side": 1,
+      "message": "Change this name too, e.g., to MaxRequestsForBDPRanges",
+      "range": {
+        "startLine": 40,
+        "startChar": 44,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8378e531_57904a4d",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-29T00:58:40Z",
+      "side": 1,
+      "message": "Test -\u003e Tests\n\nDo the same for all tests.",
+      "range": {
+        "startLine": 1029,
+        "startChar": 3,
+        "endLine": 1029,
+        "endChar": 7
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63cd11d_bb9a6b44",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-29T00:58:40Z",
+      "side": 1,
+      "message": "I would put this comment above 1058",
+      "range": {
+        "startLine": 1059,
+        "startChar": 15,
+        "endLine": 1059,
+        "endChar": 21
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421838f4_8636242a",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-29T00:58:40Z",
+      "side": 1,
+      "message": "I find it odd that this doesn\u0027t return a BDP. Either return one, or rename the method, e.g., ComputeAndRecordBandwidthDelayProduct.",
+      "range": {
+        "startLine": 1025,
+        "startChar": 30,
+        "endLine": 1025,
+        "endChar": 58
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d26581e_19c6820b",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-06-29T00:58:40Z",
+      "side": 1,
+      "message": "I have deja vu. Does your other CL have the same code?",
+      "range": {
+        "startLine": 1042,
+        "startChar": 4,
+        "endLine": 1042,
+        "endChar": 10
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
