@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7ab1e5b_8b92fed6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T10:43:40Z",
+      "side": 1,
+      "message": "These two if conditions confuse me how these checks differ. (As I wrote earlier it doesn\u0027t feel the Common suffix adds useful info)",
+      "revId": "db3385cfc7411dc814b49d405d6719970c1ab0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591fdff1_96ed20a9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T10:43:40Z",
+      "side": 1,
+      "message": "\"(this is done by...\" part only refers to defer loading?",
+      "revId": "db3385cfc7411dc814b49d405d6719970c1ab0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5b2a2e_09251491",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T10:43:40Z",
+      "side": 1,
+      "message": "I saw multiple cleanups are happening so I\u0027m likely a bit lost, could you teach me if this slight reordering is the reason you separated out Resource::CanReuse or there are other reasons?",
+      "revId": "db3385cfc7411dc814b49d405d6719970c1ab0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
