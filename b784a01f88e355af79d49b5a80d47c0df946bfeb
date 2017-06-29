@@ -22,6 +22,30 @@
       "revId": "b784a01f88e355af79d49b5a80d47c0df946bfeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df002712_0ae597b8",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-29T05:05:59Z",
+      "side": 1,
+      "message": "The C++ code that is generated from mojom files includes an instance where a NetworkTrafficAnnotationTag is first created and then initialized. We do not want to allow it because it opens a door to create uninitialized (and meaningless) annotations.\nTo overcome it MutableNetworkTrafficAnnotationTag was added to be used in cases that annotation should be serialized. It can be created without value or initialized from an actual NetworkTrafficAnnotationTag, but our presubmit checks will prevent its uninitialized usage except in mojom.cc files. \nThere is a brief description on this in network_traffic_annotation.h, but I should expand it.",
+      "parentUuid": "269ffe8f_a2ad2f62",
+      "range": {
+        "startLine": 64,
+        "startChar": 40,
+        "endLine": 64,
+        "endChar": 58
+      },
+      "revId": "b784a01f88e355af79d49b5a80d47c0df946bfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
