@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "781cf961_364bd610",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-29T11:37:10Z",
+      "side": 1,
+      "message": "Ah, yes. This is confusing...\n\nI\u0027ve split IsReusableResourceCommon completely to make these clearer while keeping source code duplication small (as its contents have lots of comments).",
+      "parentUuid": "c7ab1e5b_8b92fed6",
+      "revId": "db3385cfc7411dc814b49d405d6719970c1ab0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591fdff1_96ed20a9",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a95cf948_134c617a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-29T11:37:10Z",
+      "side": 1,
+      "message": "yes. reorganized to clarify this connection.",
+      "parentUuid": "591fdff1_96ed20a9",
+      "revId": "db3385cfc7411dc814b49d405d6719970c1ab0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b5b2a2e_09251491",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-29T10:43:40Z",
       "side": 1,
       "message": "I saw multiple cleanups are happening so I\u0027m likely a bit lost, could you teach me if this slight reordering is the reason you separated out Resource::CanReuse or there are other reasons?",
+      "revId": "db3385cfc7411dc814b49d405d6719970c1ab0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a650215_dafd1506",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-29T11:37:10Z",
+      "side": 1,
+      "message": "I discussed with yhirano@ and agreed on that we don\u0027t want to keep the common logic factored out (to which we\u0027re struggling to give a good name) but have them inlined and do further clean up e.g. removing ones unnecessary for preload path. yhirano@ suggested inlining. But IsReusableResourceCommon() is still big to inline.\n\nI found that this part can be cleaned up like this. So for now, I did only that.\n\nResource::CanReuse() refactoring was just worth doing by itself for code reduction and having better structure by gathering existing vs. new comparison to fewer places (though it\u0027s still distributed). It wasn\u0027t so motivated with this clean up.",
+      "parentUuid": "0b5b2a2e_09251491",
       "revId": "db3385cfc7411dc814b49d405d6719970c1ab0ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
