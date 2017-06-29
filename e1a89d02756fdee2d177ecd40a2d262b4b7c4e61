@@ -183,6 +183,30 @@
       "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e4115f_8095b547",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-29T18:04:03Z",
+      "side": 1,
+      "message": "This CL is rebased to the other CL. For some reason the deltas show up here as well. I\u0027m going to land the first CL and rebase.",
+      "parentUuid": "8d26581e_19c6820b",
+      "range": {
+        "startLine": 1042,
+        "startChar": 4,
+        "endLine": 1042,
+        "endChar": 10
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
