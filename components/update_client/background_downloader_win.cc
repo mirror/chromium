@@ -22,6 +22,7 @@
 #include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/metrics/histogram_macros_local.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/win/scoped_co_mem.h"
@@ -255,9 +256,13 @@ HRESULT GetJobByteCount(IBackgroundCopyJob* job,
   return S_OK;
 }
 
-HRESULT GetJobDescription(IBackgroundCopyJob* job, const base::string16* name) {
+HRESULT GetJobDescription(IBackgroundCopyJob* job, base::string16* name) {
   ScopedCoMem<base::char16> description;
-  return job->GetDescription(&description);
+  const HRESULT hr = job->GetDescription(&description);
+  if (FAILED(hr))
+    return hr;
+  *name = description.get();
+  return S_OK;
 }
 
 // Returns the job error code in |error_code| if the job is in the transient
@@ -419,6 +424,20 @@ HRESULT CleanupStaleJobs(
   return S_OK;
 }
 
+// Returns the number of jobs in the BITS queue which were created by this
+// downloader.
+HRESULT GetBackgroundDownloaderJobCount(
+    const ScopedComPtr<IBackgroundCopyManager>& bits_manager,
+    size_t* num_jobs) {
+  std::vector<ScopedComPtr<IBackgroundCopyJob>> jobs;
+  const HRESULT hr = FindBitsJobIf([](IBackgroundCopyJob*) { return true; },
+                                   bits_manager.Get(), &jobs);
+  if (FAILED(hr))
+    return hr;
+  *num_jobs = jobs.size();
+  return S_OK;
+}
+
 }  // namespace
 
 BackgroundDownloader::BackgroundDownloader(
@@ -467,6 +486,10 @@ void BackgroundDownloader::BeginDownload(const GURL& url) {
     EndDownload(hr);
     return;
   }
+
+  size_t num_jobs = 0;
+  GetBackgroundDownloaderJobCount(bits_manager_, &num_jobs);
+  LOCAL_HISTOGRAM_COUNTS_100("UpdateClient.BackgroundDownloaderJobs", num_jobs);
 
   ResetInterfacePointers();
   main_task_runner()->PostTask(
