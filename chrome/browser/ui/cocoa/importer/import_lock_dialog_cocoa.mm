@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/ui/cocoa/importer/import_lock_dialog_cocoa.h"
+
 #import <Cocoa/Cocoa.h>
 
 #include "base/bind.h"
@@ -18,8 +20,8 @@ using base::UserMetricsAction;
 
 namespace importer {
 
-void ShowImportLockDialog(gfx::NativeWindow parent,
-                          const base::Callback<void(bool)>& callback) {
+void ShowImportLockDialogCocoa(gfx::NativeWindow parent,
+                               const base::Callback<void(bool)>& callback) {
   base::scoped_nsobject<NSAlert> lock_alert([[NSAlert alloc] init]);
   [lock_alert addButtonWithTitle:l10n_util::GetNSStringWithFixup(
       IDS_IMPORTER_LOCK_OK)];

@@ -17,6 +17,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/ui_features.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/widget/widget.h"
 
@@ -24,11 +25,12 @@ using base::UserMetricsAction;
 
 namespace importer {
 
+#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 void ShowImportLockDialog(gfx::NativeWindow parent,
                           const base::Callback<void(bool)>& callback) {
   ImportLockDialogView::Show(parent, callback);
-  base::RecordAction(UserMetricsAction("ImportLockDialogView_Shown"));
 }
+#endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
 
 }  // namespace importer
 
@@ -37,6 +39,7 @@ void ImportLockDialogView::Show(gfx::NativeWindow parent,
                                 const base::Callback<void(bool)>& callback) {
   views::DialogDelegate::CreateDialogWidget(
       new ImportLockDialogView(callback), NULL, NULL)->Show();
+  base::RecordAction(UserMetricsAction("ImportLockDialogView_Shown"));
 }
 
 ImportLockDialogView::ImportLockDialogView(
