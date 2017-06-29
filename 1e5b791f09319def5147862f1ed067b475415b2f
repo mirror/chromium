@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "18fa4fec_acbb5663",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T20:20:45Z",
+      "side": 1,
+      "message": "Yes, adding this method here is the right thing to do.  It allows the menu model to override the default behavior.",
+      "parentUuid": "9041e2d7_4a1305a7",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fd77b77_812659fe",
         "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
         "patchSetId": 1
@@ -47,6 +65,58 @@
       "writtenOn": "2017-06-28T22:19:11Z",
       "side": 1,
       "message": "I noticed that IsCommandIdEnabled and IsCommandIdChecked have additional checks. \nLet me know if similar checks are needed in this method.",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd778ca_59c30915",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T20:20:45Z",
+      "side": 1,
+      "message": "I don\u0027t think we necessarily need additional checks, but we might need to change the return value here.  In particular, I think that if we return false here, we\u0027ll automatically hide the other commands, which include things like uninstallation, etc.  Here too, if no tests fail, might indicate a place we could add a few more checks (e.g., the uninstallation check should never be hidden for a normal extension).",
+      "parentUuid": "0fd77b77_812659fe",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b8d171_d5ce1545",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T20:20:45Z",
+      "side": 1,
+      "message": "Hmm... my understanding is that this populates a menu item from a dictionary stored in the preferences, but this means that old menu items won\u0027t have a visibility key.  We need to make sure that this is backwards-compatible.  Does this work with old items?  (Another possible test case)",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca51b0a_4351a0bc",
+        "filename": "chrome/common/extensions/api/chrome_web_view_internal.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T20:20:45Z",
+      "side": 1,
+      "message": "nit: I think \"true for shown and false for hidden\" is probably self-evident.  What about something like: \"Whether the item is visible in the menu\"?",
       "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "3947800b_b3e2ecf3",
+        "filename": "chrome/common/extensions/api/context_menus.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T20:20:45Z",
+      "side": 1,
+      "message": "I think including one is fine.",
+      "parentUuid": "31d0bcf6_462ec012",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e5bac23_7c89de90",
         "filename": "ui/base/models/simple_menu_model.cc",
         "patchSetId": 1
@@ -81,6 +169,24 @@
       "writtenOn": "2017-06-28T22:19:11Z",
       "side": 1,
       "message": "Just wanted to double check if additional work needs to be done in this file.\n\nI assume that the delegate_ object below would refer to ExtensionContextMenuModel delegate at the correct times, and not always default to the SimpleMenuModel::Delegate.",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7903f964_1a3b55b6",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T20:20:45Z",
+      "side": 1,
+      "message": "Correct; for extension context menus, the delegate should already be the ExtensionContextMenuModel and this should \"just work\".",
+      "parentUuid": "5e5bac23_7c89de90",
       "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
