@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d777109f_cb26bb1e",
+        "filename": "content/browser/android/input_device_observer_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T18:22:12Z",
+      "side": 1,
+      "message": "these can be private",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b98e14_b089304e",
+        "filename": "content/browser/android/input_device_observer_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T18:22:12Z",
+      "side": 1,
+      "message": "private as well, there\u0027s no subclass",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e746643_5fa0242f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T18:22:12Z",
+      "side": 1,
+      "message": "this doesn\u0027t make sense, there can be lots of ContentViewCores, all with independent attached state. It can\u0027t just talk to a global thing without additional tracking. (Looking up, GamepadList is broken too)\n\nIf InputDeviceObserver really is global, then it should be ok to use the context from ContextUtils.",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e3ea64_5f56690b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/InputDeviceObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T18:22:12Z",
+      "side": 1,
+      "message": "convention is native methods at the very end, static things at the top",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be7a4f4_cee19fa9",
+        "filename": "ui/base/touch/touch_device_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T18:22:12Z",
+      "side": 1,
+      "message": "anything calls these two things?",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
