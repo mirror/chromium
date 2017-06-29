@@ -75,7 +75,7 @@ TEST(NinjaActionTargetWriter, ActionNoSources) {
 }
 
 
-// Tests an action with no sources and console = true
+// Tests an action with no sources and pool
 TEST(NinjaActionTargetWriter, ActionNoSourcesConsole) {
   Err err;
   TestWithScope setup;
@@ -90,7 +90,7 @@ TEST(NinjaActionTargetWriter, ActionNoSourcesConsole) {
       SubstitutionList::MakeForTest("//out/Debug/foo.out");
 
   Pool pool(setup.settings(), Label(SourceDir("//foo/"), "pool"));
-  pool.set_console(true);
+  pool.set_depth(5);
   target.action_values().set_pool(LabelPtrPair<Pool>(&pool));
 
   target.SetToolchain(setup.toolchain());
@@ -112,7 +112,7 @@ TEST(NinjaActionTargetWriter, ActionNoSourcesConsole) {
           "../../foo/included.txt\n"
       "\n"
       "build foo.out: __foo_bar___rule | obj/foo/bar.inputdeps.stamp\n"
-      "  pool = console\n"
+      "  pool = _foo_pool\n"
       "\n"
       "build obj/foo/bar.stamp: stamp foo.out\n";
   EXPECT_EQ(expected, out.str());
