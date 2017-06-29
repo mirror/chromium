@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe77ca1a_e5c6c570",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T21:58:07Z",
+      "side": 1,
+      "message": "Optional: At some point, we\u0027re probably going to want to get rid of the groups and alphabetize the file. I\u0027ll leave that decision to nyquist@.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "3a8195c892ea4dea835b8b789df91a2d29a9acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
