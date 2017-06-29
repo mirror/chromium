@@ -128,6 +128,10 @@ bool isAllowedStateStansition(keyboard::KeyboardControllerState from,
           //     .VirtualKeyboardOnTouchableDisplayOnly.
           {keyboard::KeyboardControllerState::LOADING_EXTENSION,
            keyboard::KeyboardControllerState::LOADING_EXTENSION},
+
+          // LOADING_EXTENSION -> HIDDEN occurs when the extension is pre-loaded
+          {keyboard::KeyboardControllerState::LOADING_EXTENSION,
+           keyboard::KeyboardControllerState::HIDDEN},
       };
   return kAllowedStateTransition.count(std::make_pair(from, to)) == 1;
 };
@@ -349,6 +353,13 @@ void KeyboardController::NotifyKeyboardBoundsChanging(
   }
 }
 
+void KeyboardController::NotifyKeyboardLoadingComplete() {
+  if (state_ != KeyboardControllerState::LOADING_EXTENSION)
+    return;
+
+  ChangeState(KeyboardControllerState::HIDDEN);
+}
+
 void KeyboardController::HideKeyboard(HideReason reason) {
   TRACE_EVENT0("vk", "HideKeyboard");
 
@@ -558,24 +569,38 @@ void KeyboardController::OnShowImeIfNeeded() {
     ShowKeyboardInternal(display::kInvalidDisplayId);
 }
 
-void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
+void KeyboardController::LoadKeyboardUiInBackground() {
+  // ShowKeyboardInternal may trigger RootControllerWindow::ActiveKeyboard which
+  // will cause LoadKeyboardUiInBackground to potentially run even though the
+  // keyboard has been initialized.
+  if (state_ != KeyboardControllerState::INITIAL)
+    return;
+
   // The container window should have been created already when
   // |Shell::CreateKeyboard| is called.
   DCHECK(container_.get());
-
-  TRACE_EVENT0("vk", "ShowKeyboardInternal");
-
-  // Add the WebContents window to the container if it has not been added.
   if (container_->children().empty()) {
-    keyboard::MarkKeyboardLoadStarted();
+    // Add the WebContents window to the container
     aura::Window* keyboard = ui_->GetKeyboardWindow();
     keyboard->Show();
     container_->AddChild(keyboard);
     keyboard->set_owned_by_parent(false);
   }
 
-  ui_->ReloadKeyboardIfNeeded();
+  ShowKeyboardInternalImpl(display::kInvalidDisplayId, true);
+}
 
+void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
+  DCHECK(container_.get() && !container_->children().empty());
+  keyboard::MarkKeyboardLoadStarted();
+  ShowKeyboardInternalImpl(display_id, false);
+}
+
+void KeyboardController::ShowKeyboardInternalImpl(int64_t display_id,
+                                                  bool load_only) {
+  TRACE_EVENT0("vk", "ShowKeyboardInternal");
+
+  ui_->ReloadKeyboardIfNeeded();
   if (layout_delegate_ != nullptr) {
     if (display_id != display::kInvalidDisplayId)
       layout_delegate_->MoveKeyboardToDisplay(display_id);
@@ -585,8 +610,11 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
 
   if (keyboard_visible_) {
     return;
-  } else if (ui_->GetKeyboardWindow()->bounds().height() == 0) {
-    show_on_resize_ = true;
+  } else if (load_only || ui_->GetKeyboardWindow()->bounds().height() == 0) {
+    if (!load_only) {
+      // show the keyboard once loading is complete.
+      show_on_resize_ = true;
+    }
     ChangeState(KeyboardControllerState::LOADING_EXTENSION);
     return;
   }
@@ -612,11 +640,11 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
            // KeyboardControllerTest.CloseKeyboard. Check if it's expected and
            // resolve it if not.
            || state_ == KeyboardControllerState::LOADING_EXTENSION
-           // TODO(oka): the state is INITIAL in
+           // TODO(oka): the state is HIDDEN in
            // VirtualKeyboardRootWindowControllerTest
            //     .EnsureCaretInWorkAreaWithMultipleDisplays.
            // Fix the test.
-           || state_ == KeyboardControllerState::INITIAL)
+           || state_ == KeyboardControllerState::HIDDEN)
         << StateToStr(state_);
     return;
   }
