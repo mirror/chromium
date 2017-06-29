@@ -14,6 +14,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "third_party/protobuf/src/google/protobuf/io/tokenizer.h"
 #include "third_party/protobuf/src/google/protobuf/text_format.h"
 #include "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h"
 
@@ -27,6 +28,37 @@ uint32_t recursive_hash(const char* str, int N) {
   else
     return (recursive_hash(str, N - 1) * 31 + str[N - 1]) % 138003713;
 }
+
+class SimpleErrorCollector : public google::protobuf::io::ErrorCollector {
+ public:
+  SimpleErrorCollector(int proto_starting_line)
+      : google::protobuf::io::ErrorCollector(),
+        line_offset_(proto_starting_line) {}
+
+  ~SimpleErrorCollector() override {}
+
+  void AddError(int line,
+                google::protobuf::io::ColumnNumber column,
+                const std::string& message) override {
+    message_ +=
+        base::StringPrintf(" Line %i, column %i, %s", line_offset_ + line,
+                           static_cast<int>(column), message.c_str());
+  }
+
+  void AddWarning(int line,
+                  google::protobuf::io::ColumnNumber column,
+                  const std::string& message) override {
+    message_ +=
+        base::StringPrintf(" Line %i, column %i, %s", line_offset_ + line,
+                           static_cast<int>(column), message.c_str());
+  }
+
+  std::string GetMessage() { return message_; }
+
+ private:
+  std::string message_;
+  int line_offset_;
+};
 
 }  // namespace
 
@@ -108,14 +140,16 @@ bool AnnotationInstance::Deserialize(
   while (start_line < end_line) {
     annotation_text += serialized_lines[start_line++] + "\n";
   }
-  if (!google::protobuf::TextFormat::ParseFromString(
-          annotation_text, (google::protobuf::Message*)&proto)) {
-    // TODO(rhalavati@): Find exact error message using:
-    // google::protobuf::io::ErrorCollector error_collector;
-    // google::protobuf::TextFormat::Parser::RecordErrorsTo(&error_collector);
-    *error_text =
-        base::StringPrintf("Could not parse protobuf for file '%s', line %i.",
-                           file_path.c_str(), line_number);
+
+  SimpleErrorCollector error_collector(line_number);
+  google::protobuf::TextFormat::Parser parser;
+  parser.RecordErrorsTo(&error_collector);
+
+  if (!parser.ParseFromString(annotation_text,
+                              (google::protobuf::Message*)&proto)) {
+    *error_text = base::StringPrintf(
+        "Could not parse protobuf for file '%s':%s", file_path.c_str(),
+        error_collector.GetMessage().c_str());
     return false;
   }
 
