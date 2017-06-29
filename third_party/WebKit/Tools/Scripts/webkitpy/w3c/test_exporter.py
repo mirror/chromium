@@ -225,8 +225,11 @@ class TestExporter(object):
             cl.post_comment((
                 'Exportable changes to web-platform-tests were detected in this CL '
                 'and a pull request in the upstream repo has been made: {pr_url}.\n\n'
-                'Travis CI has been kicked off and if it fails, we will let you know here. '
-                'If this CL lands and Travis CI is green, we will auto-merge the PR.'
+                'If this CL lands and Travis CI upstream is green, we will auto-merge the PR.\n\n'
+                'We would really appreciate it if you could check the Travis CI status '
+                'upstream before landing this CL and only land it if the status is green. '
+                'Otherwise a human needs to step in and resolve it manually, during which time '
+                'the WPT Importer is blocked from operating.'
             ).format(
                 pr_url='%spull/%d' % (WPT_GH_URL, response_data['number'])
             ))
