@@ -5,6 +5,7 @@
 #include "content/test/test_render_frame.h"
 
 #include "base/memory/ptr_util.h"
+#include "content/child/web_url_loader_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/navigation_params.h"
 #include "content/common/resource_request_body_impl.h"
@@ -120,6 +121,12 @@ blink::WebNavigationPolicy TestRenderFrame::DecidePolicyForNavigation(
     info.url_request.SetCheckForBrowserSideNavigation(false);
   }
   return RenderFrameImpl::DecidePolicyForNavigation(info);
+}
+
+std::unique_ptr<blink::WebURLLoader> TestRenderFrame::CreateURLLoader(
+    const blink::WebURLRequest& request,
+    base::SingleThreadTaskRunner* task_runner) {
+  return base::MakeUnique<WebURLLoaderImpl>(nullptr, nullptr);
 }
 
 mojom::FrameHostAssociatedPtr TestRenderFrame::GetFrameHost() {

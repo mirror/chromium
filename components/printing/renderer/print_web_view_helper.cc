@@ -868,8 +868,7 @@ std::unique_ptr<blink::WebURLLoader>
 PrepareFrameAndViewForPrint::CreateURLLoader(
     const blink::WebURLRequest& request,
     base::SingleThreadTaskRunner* task_runner) {
-  // TODO(yhirano): Stop using Platform::CreateURLLoader() here.
-  return blink::Platform::Current()->CreateURLLoader(request, task_runner);
+  return frame_.GetFrame()->CreateURLLoader(request, task_runner);
 }
 
 void PrepareFrameAndViewForPrint::CallOnReady() {
