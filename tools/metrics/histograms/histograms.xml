@@ -8398,7 +8398,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The number of times the component updater called UpdateClient::Install or
     UpdateClient::Update. These correspond to the number of manual component
     update checks performed as a result of a user action, and the number of
-    automated component update checks.
+    automated component update checks. The metric is recorded after a new
+    BITS job is created and inserted into BITS queue.
   </summary>
 </histogram>
 
@@ -80501,6 +80502,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The time spent in freeing the XML writer and tree when closing a metrics log
     (Chrome OS).
+  </summary>
+</histogram>
+
+<histogram name="UpdateClient.BackgroundDownloaderJobs" units="jobs">
+  <owner>sorin@chromium.org</owner>
+  <summary>
+    The number of download jobs found in the Windows BITS queue. This value is
+    expected to be one in most cases, or another small number most of the time.
+    Large values indicate a problem with the job creation or clean up code.
   </summary>
 </histogram>
 
