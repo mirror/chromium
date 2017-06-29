@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7faaa0_91fd2780",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T22:10:45Z",
+      "side": 1,
+      "message": "just say something like, view pointer is not owned, and should not be stored in this class",
+      "revId": "148a067d169a72587eaa366333395d6e83819f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

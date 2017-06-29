@@ -163,6 +163,24 @@
       "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a4cd05_aa50745d",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T22:10:45Z",
+      "side": 1,
+      "message": "It\u0027s used for benchmarking. Yes, that does need to work in webview as well. Java side is holding the container view, so using a strong ref here will lead to leaks in webview.\n\nSo the ideal solution is to have a java object like WebContentsImpl, then native side has to ask webcontents for it every time.",
+      "parentUuid": "f950e022_6b58f5ca",
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -69,6 +69,24 @@
       "revId": "6f9740cc16c7a534fe8ed8b2c6fbe05c54fa6947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76df7d1_ab952c2b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/MotionEventSynthesizer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T22:10:45Z",
+      "side": 0,
+      "message": "\u003e The annotation is used only for Java -\u003e JNI calls to add a correct namespace to the generated native glue methods. It is not necessary for this class since it doesn\u0027t have any.\n\nThat\u0027s not entirely true. It just puts everything generated in the content namespace. One side as you say is if the generated code calls something else in content, it doesn\u0027t need to be qualified. But there is still value in having other generated methods in the content namespace. For one, if something other component illegally includes the header, then they need to qualify with content, which should be a red alarm already.",
+      "parentUuid": "d0937e34_17c7f6ab",
+      "revId": "6f9740cc16c7a534fe8ed8b2c6fbe05c54fa6947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
