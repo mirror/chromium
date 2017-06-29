@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f08d1f9d_974866fb",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T12:25:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0210d1b8_67aaf0e5",
+      "range": {
+        "startLine": 1434,
+        "startChar": 24,
+        "endLine": 1434,
+        "endChar": 36
+      },
+      "revId": "31cf899d6d0e9b6f44950d9c14aab4d8494a6adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac58bf30_b319be70",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 3
@@ -42,6 +66,47 @@
         "endLine": 1694,
         "endChar": 28
       },
+      "revId": "31cf899d6d0e9b6f44950d9c14aab4d8494a6adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8080fa83_9b6e01c4",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1694,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T12:25:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac58bf30_b319be70",
+      "range": {
+        "startLine": 1694,
+        "startChar": 13,
+        "endLine": 1694,
+        "endChar": 28
+      },
+      "revId": "31cf899d6d0e9b6f44950d9c14aab4d8494a6adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4602694e_15fe1557",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1735,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T12:25:57Z",
+      "side": 1,
+      "message": "I think this is incorrect as:\n1. it will not re-sign the framework when copying it\n2. it will not force a rebuild if Xcode is updated\n\nInstead you should use \"extra_system_frameworks\" to have the code signing script copy and code-sign the system framework. Look at how this is done in ios_xctest_test template.",
       "revId": "31cf899d6d0e9b6f44950d9c14aab4d8494a6adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
