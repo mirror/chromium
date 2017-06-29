@@ -22,6 +22,7 @@
 #include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/win/scoped_co_mem.h"
@@ -423,6 +424,20 @@ HRESULT CleanupStaleJobs(
   return S_OK;
 }
 
+// Returns the number of jobs in the BITS queue which were created by this
+// downloader.
+HRESULT GetBackgroundDownloaderJobCount(
+    const ScopedComPtr<IBackgroundCopyManager>& bits_manager,
+    size_t* num_jobs) {
+  std::vector<ScopedComPtr<IBackgroundCopyJob>> jobs;
+  const HRESULT hr = FindBitsJobIf([](IBackgroundCopyJob*) { return true; },
+                                   bits_manager.Get(), &jobs);
+  if (FAILED(hr))
+    return hr;
+  *num_jobs = jobs.size();
+  return S_OK;
+}
+
 }  // namespace
 
 BackgroundDownloader::BackgroundDownloader(
@@ -471,6 +486,10 @@ void BackgroundDownloader::BeginDownload(const GURL& url) {
     EndDownload(hr);
     return;
   }
+
+  size_t num_jobs = 0;
+  GetBackgroundDownloaderJobCount(bits_manager_, &num_jobs);
+  LOCAL_HISTOGRAM_COUNTS_100("UpdateClient.BackgroundDownloaderJobs", num_jobs);
 
   ResetInterfacePointers();
   main_task_runner()->PostTask(
