@@ -8,8 +8,8 @@
 #include <sstream>
 #include <string>
 
-#include "third_party/webrtc/base/checks.h"
-#include "third_party/webrtc/base/scoped_ref_ptr.h"
+#include "third_party/webrtc/rtc_base/checks.h"
+#include "third_party/webrtc/rtc_base/scoped_ref_ptr.h"
 
 namespace rtc {
 
