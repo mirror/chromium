@@ -19,6 +19,29 @@ function waitForGreenOrRedTestResultAndEndTest(stream) {
   );
 }
 
+function waitForTabToCloseAndEndTest(stream) {
+  let timeoutId = window.setTimeout(() => {
+    let activeTrack = stream.getTracks().find(
+      track => track.readyState != 'ended');
+    stopAllTracks(stream);
+    if (activeTrack) {
+      chrome.test.fail();
+    } else {
+      chrome.test.succeed();
+    }
+  }, 3000);
+  let check = () => {
+    if (!stream.getTracks().find(track => track.readyState != 'ended')) {
+      window.clearTimeout(timeoutId);
+      chrome.test.succeed();
+    }
+  };
+  check();
+  stream.getTracks().forEach(track => {
+    track.onended = check;
+  });
+}
+
 chrome.test.runTests([
   function cannotAccessLocalResources() {
     chrome.tabCapture.captureOffscreenTab(
@@ -77,9 +100,20 @@ chrome.test.runTests([
       waitForGreenOrRedTestResultAndEndTest);
   },
 
+  function cannotNavigateWhenPresenting() {
+    const captureOptions = getCaptureOptions();
+    captureOptions.presentationId = 'presentation_id';
+    chrome.tabCapture.captureOffscreenTab(
+      makeDataUriFromDocument(
+        '<html><script>' +
+        'window.location = "http://example.com/some_url.html";' +
+        '</script></html>'),
+      captureOptions,
+      waitForTabToCloseAndEndTest);
+  },
+
   // NOTE: Before adding any more tests, the maximum off-screen tab limit would
   // have to be increased (or a design issue resolved).  This is because
   // off-screen tabs are not closed the instant the LocalMediaStream is stopped,
   // but approximately 1 second later.
-
 ]);
