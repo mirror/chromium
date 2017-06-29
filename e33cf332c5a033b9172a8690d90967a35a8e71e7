@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a82230bc_303179be",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-29T21:33:46Z",
+      "side": 1,
+      "message": "piman@ Do you have an opinion on ScopedCrashKey vs leaving the crash key set?",
+      "range": {
+        "startLine": 274,
+        "startChar": 10,
+        "endLine": 274,
+        "endChar": 17
+      },
+      "revId": "e33cf332c5a033b9172a8690d90967a35a8e71e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
