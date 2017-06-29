@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e392ecb9_0e0ba287",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-06-29T17:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "268c0477_5048be18",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "251222ff68cfc2d7d5fd3486a2a9c323062ab704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "388de8c5_7748dcec",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 6
