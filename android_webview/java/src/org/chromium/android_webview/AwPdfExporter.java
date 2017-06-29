@@ -10,7 +10,6 @@ import android.os.ParcelFileDescriptor;
 import android.print.PrintAttributes;
 import android.util.Log;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -27,7 +26,7 @@ public class AwPdfExporter {
     private long mNativeAwPdfExporter;
     // TODO(sgurun) result callback should return an int/object indicating errors.
     // potential errors: invalid print parameters, already pending, IO error
-    private ValueCallback<Boolean> mResultCallback;
+    private AwPdfExporterCallback mResultCallback;
     private PrintAttributes mAttributes;
     private ParcelFileDescriptor mFd;
     // Maintain a reference to the top level object (i.e. WebView) since in a common
@@ -38,6 +37,21 @@ public class AwPdfExporter {
     // be reflected there.
     private ViewGroup mContainerView;
 
+    /**
+     * AwPdfExporter callback used to call onWrite* callbacks in Android framework.
+     */
+    public interface AwPdfExporterCallback {
+        /**
+         * Called by the native side when PDF generation is done.
+         * @param pageCount Native side reports how many pages are needed for the entire print
+         *                  source to be printed to PDF with the user selected print settings. Note
+         *                  that it is not how many pages will actually be written to PDF, though
+         *                  they will be the same when user selects all pages to print. None
+         *                  positive value means pdfWritingDone failed.
+         */
+        public void pdfWritingDone(int pageCount);
+    }
+
     AwPdfExporter(ViewGroup containerView) {
         setContainerView(containerView);
     }
@@ -47,7 +61,7 @@ public class AwPdfExporter {
     }
 
     public void exportToPdf(final ParcelFileDescriptor fd, PrintAttributes attributes, int[] pages,
-            ValueCallback<Boolean> resultCallback, CancellationSignal cancellationSignal) {
+            AwPdfExporterCallback resultCallback, CancellationSignal cancellationSignal) {
         if (fd == null) {
             throw new IllegalArgumentException("fd cannot be null");
         }
@@ -67,7 +81,7 @@ public class AwPdfExporter {
             throw new IllegalArgumentException("attributes must specify margins");
         }
         if (mNativeAwPdfExporter == 0) {
-            resultCallback.onReceiveValue(false);
+            resultCallback.pdfWritingDone(0);
             return;
         }
         mResultCallback = resultCallback;
@@ -83,7 +97,7 @@ public class AwPdfExporter {
         // via Webview.Destroy) before it has a chance to complete the pdf exporting.
         if (nativePdfExporter == 0 && mResultCallback != null) {
             try {
-                mResultCallback.onReceiveValue(false);
+                mResultCallback.pdfWritingDone(0);
                 mResultCallback = null;
             } catch (IllegalStateException ex) {
                 // Swallow the illegal state exception here. It is possible that app
@@ -105,8 +119,8 @@ public class AwPdfExporter {
     }
 
     @CalledByNative
-    private void didExportPdf(boolean success) {
-        mResultCallback.onReceiveValue(success);
+    private void didExportPdf(int pageCount) {
+        mResultCallback.pdfWritingDone(pageCount);
         mResultCallback = null;
         mAttributes = null;
         // The caller should close the file.
