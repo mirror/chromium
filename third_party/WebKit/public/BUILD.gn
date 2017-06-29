@@ -739,6 +739,7 @@ mojom("mojo_bindings") {
     "platform/modules/websockets/websocket.mojom",
     "platform/referrer.mojom",
     "platform/site_engagement.mojom",
+    "platform/web_feature.mojom",
     "web/console_message.mojom",
     "web/window_features.mojom",
   ]
