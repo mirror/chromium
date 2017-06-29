@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1efce01_c2dadd27",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-29T15:16:09Z",
+      "side": 1,
+      "message": "Why not use kNewTabPageDistanceToFadeShadow to make this fade?",
+      "range": {
+        "startLine": 461,
+        "startChar": 11,
+        "endLine": 461,
+        "endChar": 0
+      },
+      "revId": "b030a0b8d609e1a013eb769a481c831bab308e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
