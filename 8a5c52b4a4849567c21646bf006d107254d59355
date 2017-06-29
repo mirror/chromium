@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e27882e5_e7dcd7cf",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-29T00:33:56Z",
+      "side": 1,
+      "message": "If I understand correctly, passing in the name:\n\n1) May do a string copy, if the metadata_ string happens to be a 16-bit string.\n2) May crash? Do you need TRACE_STR_COPY? How does the string make its way to the tracing system?",
+      "revId": "8a5c52b4a4849567c21646bf006d107254d59355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
