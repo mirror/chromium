@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c4bdaa4_20aaf857",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-29T22:22:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42a62731_1870d276",
+      "revId": "4e21702ac703e9e3817698fffd6b31cdf247f6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85f23db8_694dc1aa",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4e21702ac703e9e3817698fffd6b31cdf247f6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf561d4_01a333ab",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-29T22:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f23db8_694dc1aa",
+      "revId": "4e21702ac703e9e3817698fffd6b31cdf247f6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
