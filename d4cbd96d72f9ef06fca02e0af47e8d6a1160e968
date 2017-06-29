@@ -16,6 +16,24 @@
       "revId": "d4cbd96d72f9ef06fca02e0af47e8d6a1160e968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f68e4f_4a0e4896",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_textures.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-29T23:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c5e2236_c7842fe3",
+      "revId": "d4cbd96d72f9ef06fca02e0af47e8d6a1160e968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
