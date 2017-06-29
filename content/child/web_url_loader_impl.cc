@@ -366,6 +366,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
 
   Context(WebURLLoaderImpl* loader,
           ResourceDispatcher* resource_dispatcher,
+          scoped_refptr<base::SingleThreadTaskRunner> task_runner,
           mojom::URLLoaderFactory* factory);
 
   WebURLLoaderClient* client() const { return client_; }
@@ -453,13 +454,15 @@ class WebURLLoaderImpl::RequestPeerImpl : public RequestPeer {
 
 // WebURLLoaderImpl::Context --------------------------------------------------
 
-WebURLLoaderImpl::Context::Context(WebURLLoaderImpl* loader,
-                                   ResourceDispatcher* resource_dispatcher,
-                                   mojom::URLLoaderFactory* url_loader_factory)
+WebURLLoaderImpl::Context::Context(
+    WebURLLoaderImpl* loader,
+    ResourceDispatcher* resource_dispatcher,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    mojom::URLLoaderFactory* url_loader_factory)
     : loader_(loader),
       client_(NULL),
       resource_dispatcher_(resource_dispatcher),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      task_runner_(std::move(task_runner)),
       defers_loading_(NOT_DEFERRING),
       request_id_(-1),
       url_loader_factory_(url_loader_factory) {}
@@ -1061,9 +1064,14 @@ void WebURLLoaderImpl::RequestPeerImpl::OnCompletedRequest(
 
 // WebURLLoaderImpl -----------------------------------------------------------
 
-WebURLLoaderImpl::WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
-                                   mojom::URLLoaderFactory* url_loader_factory)
-    : context_(new Context(this, resource_dispatcher, url_loader_factory)) {}
+WebURLLoaderImpl::WebURLLoaderImpl(
+    ResourceDispatcher* resource_dispatcher,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    mojom::URLLoaderFactory* url_loader_factory)
+    : context_(new Context(this,
+                           resource_dispatcher,
+                           std::move(task_runner),
+                           url_loader_factory)) {}
 
 WebURLLoaderImpl::~WebURLLoaderImpl() {
   Cancel();
@@ -1284,11 +1292,6 @@ void WebURLLoaderImpl::SetDefersLoading(bool value) {
 void WebURLLoaderImpl::DidChangePriority(WebURLRequest::Priority new_priority,
                                          int intra_priority_value) {
   context_->DidChangePriority(new_priority, intra_priority_value);
-}
-
-void WebURLLoaderImpl::SetLoadingTaskRunner(
-    base::SingleThreadTaskRunner* loading_task_runner) {
-  context_->SetTaskRunner(loading_task_runner);
 }
 
 }  // namespace content
