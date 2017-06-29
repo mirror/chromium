@@ -6699,6 +6699,30 @@ blink::WebPageVisibilityState RenderFrameImpl::VisibilityState() const {
   return current_state;
 }
 
+blink::WebURL RenderFrameImpl::OverridePDFEmbedWithHTML(
+    const blink::WebURL& url,
+    const blink::WebString& orig_mime_type) {
+  if (!base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame))
+    return blink::WebURL();
+
+  if (orig_mime_type.Utf8() == "application/pdf" ||
+      orig_mime_type.Utf8() == "text/pdf") {
+    return GetContentClient()->renderer()->GetHandlerForPdfResource(url);
+  }
+
+  return blink::WebURL();
+}
+
+v8::Local<v8::Object> RenderFrameImpl::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+  if (!base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame))
+    return v8::Local<v8::Object>();
+
+  return GetContentClient()->renderer()->GetV8ScriptableObjectForPluginFrame(
+      isolate, frame);
+}
+
 std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
     const blink::WebURLRequest& request,
     base::SingleThreadTaskRunner* task_runner) {

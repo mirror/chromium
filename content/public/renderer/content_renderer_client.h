@@ -375,6 +375,15 @@ class CONTENT_EXPORT ContentRendererClient {
 
   // Returns true if the media pipeline can be suspended, or false otherwise.
   virtual bool AllowMediaSuspend();
+
+  // Returns a URL to the handler of the PDF resource at the provided |url|.
+  virtual GURL GetHandlerForPdfResource(const GURL& url);
+
+  // Returns an object which wraps the custom scripting API for the plugin
+  // element which owns |frame|.
+  virtual v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame);
 };
 
 }  // namespace content

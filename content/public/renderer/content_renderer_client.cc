@@ -262,4 +262,15 @@ bool ContentRendererClient::AllowMediaSuspend() {
   return true;
 }
 
+GURL ContentRendererClient::GetHandlerForPdfResource(const GURL& url) {
+  return GURL();
+}
+
+v8::Local<v8::Object>
+ContentRendererClient::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+  return v8::Local<v8::Object>();
+}
+
 }  // namespace content

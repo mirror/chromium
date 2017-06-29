@@ -199,6 +199,11 @@ const base::Feature kPassiveDocumentEventListeners{
 const base::Feature kPassiveEventListenersDueToFling{
     "PassiveEventListenersDueToFling", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Whether we should load PDF extension directly inside a frame rather than
+// embedding using a BrowserPlugin and GuestView.
+const base::Feature kPdfExtensionInOutOfProcessFrame{
+    "PdfExtensionInOutOfProcessFrame", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables Purge+Throttle on platforms except Android and MacOS.
 // (Android) Purge+Throttle depends on TabManager, but TabManager doesn't
 // support Android. Enable after Android is supported.

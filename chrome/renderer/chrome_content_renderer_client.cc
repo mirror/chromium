@@ -1605,6 +1605,26 @@ ChromeContentRendererClient::GetTaskSchedulerInitParams() {
       GetRendererTaskSchedulerInitParamsFromCommandLine();
 }
 
+GURL ChromeContentRendererClient::GetHandlerForPdfResource(const GURL& url) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetHandlerForPdfResource(url);
+#else
+  return GURL();
+#endif
+}
+
+v8::Local<v8::Object>
+ChromeContentRendererClient::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetV8ScriptableObjectForPluginFrame(
+      isolate, frame);
+#else
+  return GURL();
+#endif
+}
+
 bool ChromeContentRendererClient::UsingSafeBrowsingMojoService() {
   if (safe_browsing_)
     return true;
