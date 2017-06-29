@@ -51,6 +51,24 @@
       "revId": "632c6e14ae2a202d4b0dcd08fc423e15a6d61bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6c35bb_61620301",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-29T01:41:31Z",
+      "side": 1,
+      "message": "I suspect we\u0027ll attempt to ship this feature before we ship all of Web Animations API, I think having a flag for just frames() makes sense.",
+      "parentUuid": "d128f2c0_5e4f147f",
+      "revId": "632c6e14ae2a202d4b0dcd08fc423e15a6d61bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
