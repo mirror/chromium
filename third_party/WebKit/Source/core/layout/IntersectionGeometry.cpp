@@ -117,6 +117,8 @@ void IntersectionGeometry::InitializeRootRect() {
     root_rect_ =
         LayoutRect(ToLayoutView(root_)->GetFrameView()->VisibleContentRect());
     root_->MapToVisualRectInAncestorSpace(nullptr, root_rect_);
+    //   LOG(ERROR) << "MapToVisualRectInAncestorSpace: " <<
+    //   root_rect_.ToString();
   } else if (root_->IsBox() && root_->HasOverflowClip()) {
     root_rect_ = LayoutRect(ToLayoutBox(root_)->ContentBoxRect());
   } else {
@@ -150,6 +152,7 @@ void IntersectionGeometry::ClipToRoot() {
   does_intersect_ = target_->MapToVisualRectInAncestorSpace(
       (RootIsImplicit() ? nullptr : ancestor), intersection_rect_,
       kEdgeInclusive);
+  //  LOG(ERROR) << "rect: " << intersection_rect_.ToString();
   if (ancestor && ancestor->HasOverflowClip())
     intersection_rect_.Move(-ancestor->ScrolledContentOffset());
   if (!does_intersect_)
