@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445a6873_a20179f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T16:13:31Z",
+      "side": 1,
+      "message": "Can you add another paragraph to explain that this is implemented using PROJECT_DIR to allow the out/ directory to be relocatable. Maybe something like this:\n\n  Use $(PROJECT_DIR) to define the path. The variable is expanded to an\n  absolute path by Xcode and satisfy the XCUITest requirement but does\n  not include an explicit absolute path leaving src/ relocatable.",
+      "revId": "e910b21e7b90d51aa079ab2e8ad6d44da2a6d3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
