@@ -22,6 +22,30 @@
       "revId": "e33cf332c5a033b9172a8690d90967a35a8e71e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce86519b_7dc1f44b",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-29T21:51:39Z",
+      "side": 1,
+      "message": "No strong opinion... there\u0027s an argument for either. We just have to know that if we\u0027re not in a stack that\u0027s under OnMessageReceived, the value may not reflect what we actually have.",
+      "parentUuid": "a82230bc_303179be",
+      "range": {
+        "startLine": 274,
+        "startChar": 10,
+        "endLine": 274,
+        "endChar": 17
+      },
+      "revId": "e33cf332c5a033b9172a8690d90967a35a8e71e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
