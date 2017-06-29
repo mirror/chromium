@@ -16,6 +16,24 @@
       "revId": "8223ff83f7a9230f6a6548217222ac065c1b7221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb2f7e0_81593118",
+        "filename": "components/payments/core/journey_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-29T20:59:17Z",
+      "side": 1,
+      "message": "As discussed offline, will not add those as it would just be noise.",
+      "parentUuid": "83043ce6_9ca9e1ee",
+      "revId": "8223ff83f7a9230f6a6548217222ac065c1b7221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
