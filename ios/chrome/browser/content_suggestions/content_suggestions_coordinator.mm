@@ -455,8 +455,10 @@
 #pragma mark - NewTabPagePanelProtocol
 
 - (CGFloat)alphaForBottomShadow {
-  // TODO(crbug.com/700375): implement this.
-  return 0;
+  UICollectionView* collection = self.suggestionsViewController.collectionView;
+  if (CGRectGetMaxY(collection.bounds) >= collection.contentSize.height)
+    return 0;
+  return 1;
 }
 
 - (UIView*)view {
