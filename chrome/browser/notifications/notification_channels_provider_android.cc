@@ -10,15 +10,20 @@
 #include "base/android/jni_string.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
+#include "base/time/default_clock.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/pref_names.h"
 #include "components/content_settings/core/browser/content_settings_details.h"
 #include "components/content_settings/core/browser/content_settings_rule.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/browser/browser_thread.h"
 #include "jni/NotificationSettingsBridge_jni.h"
 #include "url/gurl.h"
@@ -120,14 +125,28 @@ class ChannelsRuleIterator : public content_settings::RuleIterator {
 
 }  // anonymous namespace
 
-NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid()
-    : NotificationChannelsProviderAndroid(
-          base::MakeUnique<NotificationChannelsBridgeImpl>()) {}
+// static
+void NotificationChannelsProviderAndroid::RegisterProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+  registry->RegisterDictionaryPref(
+      prefs::kSiteNotificationChannelCreationTimes);
+}
 
 NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid(
-    std::unique_ptr<NotificationChannelsBridge> bridge)
-    : bridge_(std::move(bridge)),
+    PrefService* prefs)
+    : NotificationChannelsProviderAndroid(
+          prefs,
+          base::MakeUnique<NotificationChannelsBridgeImpl>(),
+          base::MakeUnique<base::DefaultClock>()) {}
+
+NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid(
+    PrefService* prefs,
+    std::unique_ptr<NotificationChannelsBridge> bridge,
+    std::unique_ptr<base::Clock> clock)
+    : prefs_(prefs),
+      bridge_(std::move(bridge)),
       should_use_channels_(bridge_->ShouldUseChannelSettings()),
+      clock_(std::move(clock)),
       weak_factory_(this) {}
 
 NotificationChannelsProviderAndroid::~NotificationChannelsProviderAndroid() =
@@ -223,8 +242,36 @@ void NotificationChannelsProviderAndroid::ClearAllContentSettingsRules(
   }
 }
 
+base::Time NotificationChannelsProviderAndroid::GetWebsiteSettingLastModified(
+    const ContentSettingsPattern& primary_pattern,
+    const ContentSettingsPattern& secondary_pattern,
+    ContentSettingsType content_type,
+    const content_settings::ResourceIdentifier& resource_identifier) {
+  DCHECK(prefs_);
+  if (content_type != CONTENT_SETTINGS_TYPE_NOTIFICATIONS ||
+      !should_use_channels_) {
+    return base::Time();
+  }
+  url::Origin origin = url::Origin(GURL(primary_pattern.ToString()));
+  if (origin.unique())
+    return base::Time();
+  const std::string origin_string = origin.Serialize();
+  const base::DictionaryValue* timestamps_dictionary =
+      prefs_->GetDictionary(prefs::kSiteNotificationChannelCreationTimes);
+  std::string timestamp_str;
+  if (!timestamps_dictionary->GetStringWithoutPathExpansion(origin_string,
+                                                            &timestamp_str)) {
+    return base::Time();
+  }
+  int64_t timestamp = 0;
+  base::StringToInt64(timestamp_str, &timestamp);
+  base::Time last_modified = base::Time::FromInternalValue(timestamp);
+  return last_modified;
+}
+
 void NotificationChannelsProviderAndroid::ShutdownOnUIThread() {
   RemoveAllObservers();
+  prefs_ = nullptr;
 }
 
 void NotificationChannelsProviderAndroid::CreateChannelIfRequired(
@@ -234,12 +281,25 @@ void NotificationChannelsProviderAndroid::CreateChannelIfRequired(
   // channels are never created in incognito mode.
   auto old_channel_status = bridge_->GetChannelStatus(origin_string);
   if (old_channel_status == NotificationChannelStatus::UNAVAILABLE) {
+    base::Time timestamp = clock_->Now();
     bridge_->CreateChannel(
         origin_string,
         new_channel_status == NotificationChannelStatus::ENABLED);
+    StoreLastModifiedTimestamp(origin_string, timestamp);
   } else {
     // TODO(awdf): Maybe remove this DCHECK - channel status could change any
     // time so this may be vulnerable to a race condition.
     DCHECK(old_channel_status == new_channel_status);
   }
+}
+
+void NotificationChannelsProviderAndroid::StoreLastModifiedTimestamp(
+    const std::string& origin_string,
+    base::Time timestamp) {
+  DCHECK(prefs_);
+  DictionaryPrefUpdate update(prefs_,
+                              prefs::kSiteNotificationChannelCreationTimes);
+  base::DictionaryValue* timestamps_dictionary = update.Get();
+  timestamps_dictionary->SetStringWithoutPathExpansion(
+      origin_string, base::Int64ToString(timestamp.ToInternalValue()));
 }

@@ -11,12 +11,15 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/time/clock.h"
 #include "components/content_settings/core/browser/content_settings_observable_provider.h"
 #include "components/content_settings/core/browser/content_settings_observer.h"
 #include "components/content_settings/core/browser/content_settings_rule.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_service.h"
 
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.notifications
@@ -54,7 +57,9 @@ class NotificationChannelsProviderAndroid
     virtual std::vector<NotificationChannel> GetChannels() = 0;
   };
 
-  NotificationChannelsProviderAndroid();
+  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+
+  explicit NotificationChannelsProviderAndroid(PrefService* prefs);
   ~NotificationChannelsProviderAndroid() override;
 
   // ProviderInterface methods:
@@ -71,16 +76,33 @@ class NotificationChannelsProviderAndroid
   void ClearAllContentSettingsRules(ContentSettingsType content_type) override;
   void ShutdownOnUIThread() override;
 
+  base::Time GetWebsiteSettingLastModified(
+      const ContentSettingsPattern& primary_pattern,
+      const ContentSettingsPattern& secondary_pattern,
+      ContentSettingsType content_type,
+      const content_settings::ResourceIdentifier& resource_identifier);
+
  private:
   explicit NotificationChannelsProviderAndroid(
-      std::unique_ptr<NotificationChannelsBridge> bridge);
+      PrefService* prefs,
+      std::unique_ptr<NotificationChannelsBridge> bridge,
+      std::unique_ptr<base::Clock> clock);
   friend class NotificationChannelsProviderAndroidTest;
 
   void CreateChannelIfRequired(const std::string& origin_string,
                                NotificationChannelStatus new_channel_status);
+  void StoreLastModifiedTimestamp(const std::string& origin_string,
+                                  base::Time timestamp);
+
+  // Prefs are used to store channel creation timestamps.
+  // Weak; owned by the Profile and reset in ShutdownOnUIThread.
+  PrefService* prefs_;
 
   std::unique_ptr<NotificationChannelsBridge> bridge_;
+
   bool should_use_channels_;
+
+  std::unique_ptr<base::Clock> clock_;
 
   // This cache is updated every time GetRuleIterator is called. It is used to
   // check if any channels have changed their status since the previous call,
