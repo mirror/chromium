@@ -215,7 +215,8 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       suppress_adjust_view_size_(false),
       allows_layout_invalidation_after_layout_clean_(true),
       forcing_layout_parent_view_(false),
-      main_thread_scrolling_reasons_(0) {
+      main_thread_scrolling_reasons_(0),
+      scroller_size_metrics_recorded(false) {
   Init();
 }
 
@@ -2218,24 +2219,47 @@ void LocalFrameView::HandleLoadCompleted() {
   if (!NeedsLayout())
     ClearFragmentAnchor();
 
-  if (!scrollable_areas_)
+  scroller_size_metrics_recorded = false;
+}
+
+void LocalFrameView::RecordScrollerSizeRelatedMetrics() {
+  if (scroller_size_metrics_recorded || !scrollable_areas_ ||
+      Lifecycle().GetState() < DocumentLifecycle::kPaintClean)
     return;
+  scroller_size_metrics_recorded = true;
+  int total_size = 0;
+  int small_scroller_size = 0;
   for (const auto& scrollable_area : *scrollable_areas_) {
     if (!scrollable_area->IsPaintLayerScrollableArea())
       continue;
     PaintLayerScrollableArea* paint_layer_scrollable_area =
         ToPaintLayerScrollableArea(scrollable_area);
     if (paint_layer_scrollable_area->ScrollsOverflow() &&
-        !paint_layer_scrollable_area->Layer()->IsRootLayer() &&
         paint_layer_scrollable_area->VisibleContentRect().Size().Area() > 0) {
       CheckedNumeric<int> size =
           paint_layer_scrollable_area->VisibleContentRect().Width();
       size *= paint_layer_scrollable_area->VisibleContentRect().Height();
-      UMA_HISTOGRAM_CUSTOM_COUNTS(
-          "Event.Scroll.ScrollerSize.OnLoad",
-          size.ValueOrDefault(std::numeric_limits<int>::max()), 1,
-          kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+      int scroller_size = size.ValueOrDefault(std::numeric_limits<int>::max());
+
+      if (!paint_layer_scrollable_area->Layer()->IsRootLayer()) {
+        UMA_HISTOGRAM_CUSTOM_COUNTS(
+            "Event.Scroll.ScrollerSize.OnLoad", scroller_size, 1,
+            kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+      }
+
+      // We only want to record small scrollers that are about to be composited.
+      if (scroller_size <= kSmallScrollerThreshold &&
+          paint_layer_scrollable_area->NeedsCompositedScrolling()) {
+        small_scroller_size += scroller_size;
+      }
+      total_size += scroller_size;
     }
+  }
+  // This includes recording pages without small scrollers.
+  if (total_size > 0) {
+    UMA_HISTOGRAM_CUSTOM_COUNTS(
+        "Event.Scroll.ScrollerSize.SmallScrollerPercentage",
+        100.f * small_scroller_size / total_size, 1, 100, 101);
   }
 }
 
