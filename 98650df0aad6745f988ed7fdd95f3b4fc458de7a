@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b889db8_17271572",
+        "filename": "media/gpu/mojo/jpeg_decoder_typemap_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-29T18:13:05Z",
+      "side": 1,
+      "message": "Paranoia: can we also check here that memory_handle.IsValid() ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 4
+      },
+      "revId": "98650df0aad6745f988ed7fdd95f3b4fc458de7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
