@@ -5195,225 +5195,45 @@ should be able to be added at any place in this file.
   <description>The user dismissed the in-product help.</description>
 </action>
 
-<action name="InProductHelp.NotifyEvent.IPH_DataSaverDetail">
+<action name="InProductHelp.NotifyEvent">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyEvent.IPH_DataSaverPreview">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
+<!-- Name completed by action-suffix -->
   <description>
     A event related to the new tab in-product help experiment.
   </description>
 </action>
 
-<action name="InProductHelp.NotifyEvent.IPH_DownloadHome">
+<action name="InProductHelp.NotifyUsedEvent">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyEvent.IPH_DownloadPage">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyEvent.IPH_IncognitoWindow">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyEvent.IPH_NewTab">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyUsedEvent.IPH_DataSaverDetail">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
+<!-- Name completed by action-suffix -->
   <description>The user triggered a used event in in-product help.</description>
 </action>
 
-<action name="InProductHelp.NotifyUsedEvent.IPH_DataSaverPreview">
+<action name="InProductHelp.ShouldTriggerHelpUI">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyUsedEvent.IPH_DownloadHome">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyUsedEvent.IPH_DownloadPage">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyUsedEvent.IPH_IncognitoWindow">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyUsedEvent.IPH_NewTab">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.ShouldTriggerHelpUI.IPH_DataSaverDetail">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
+<!-- Name completed by action-suffix -->
   <description>
     The feature engagement tracker tried to determine whether in-product help
     should be shown to the user.
   </description>
 </action>
 
-<action name="InProductHelp.ShouldTriggerHelpUI.IPH_DataSaverPreview">
+<action name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
-  </description>
-</action>
-
-<action name="InProductHelp.ShouldTriggerHelpUI.IPH_DownloadHome">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
-  </description>
-</action>
-
-<action name="InProductHelp.ShouldTriggerHelpUI.IPH_DownloadPage">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
-  </description>
-</action>
-
-<action name="InProductHelp.ShouldTriggerHelpUI.IPH_IncognitoWindow">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
-  </description>
-</action>
-
-<action name="InProductHelp.ShouldTriggerHelpUI.IPH_NewTab">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
-  </description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_DataSaverDetail">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
+<!-- Name completed by action-suffix -->
   <description>
     A user action that could have triggered In-Product Help did not.
   </description>
 </action>
 
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_DataSaverPreview">
+<action name="InProductHelp.ShouldTriggerHelpUIResult.Triggered">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>
-    A user action that could have triggered In-Product Help did not.
-  </description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_DownloadHome">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>
-    A user action that could have triggered In-Product Help did not.
-  </description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_DownloadPage">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>
-    A user action that could have triggered In-Product Help did not.
-  </description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_IncognitoWindow">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>
-    A user action that could have triggered In-Product Help did not.
-  </description>
-</action>
-
-<action name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_NewTab">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>
-    A user action that could have triggered In-Product Help did not.
-  </description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DataSaverDetail">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DataSaverPreview">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DownloadHome">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DownloadPage">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
-</action>
-
-<action
-    name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_IncognitoWindow">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
-</action>
-
-<action name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_NewTab">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
+<!-- Name completed by action-suffix -->
   <description>A user action triggered In-Product Help.</description>
 </action>
 
@@ -17754,5 +17574,25 @@ should be able to be added at any place in this file.
     to keep a trend of whether the webapp also add meta tags.
   </description>
 </action>
+
+<actions-suffixes>
+
+  <action-suffix separator=".">
+    <suffix name="IPH_DataSaverPreview"
+        label="In product help data saver preview."/>
+    <suffix name="IPH_DataSaverDetail"
+        label="In product help data saver detail."/>
+    <suffix name="IPH_DownloadPage" label="In product help download page."/>
+    <suffix name="IPH_DownloadHome" label="In product help download home."/>
+    <suffix name="IPH_NewTab" label="In product help new tab."/>
+    <suffix name="IPH_IncognitoWindow" label="In product help incognito window."/>
+    <affected-action name="InProductHelp.NotifyEvent" />
+    <affected-action name="InProductHelp.NotifyUsedEvent" />
+    <affected-action name="InProductHelp.ShouldTriggerHelpUI" />
+    <affected-action name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered" />
+    <affected-action name="InProductHelp.ShouldTriggerHelpUIResult.Triggered" />
+  </action-suffix>
+
+</actions-suffixes>
 
 </actions>
