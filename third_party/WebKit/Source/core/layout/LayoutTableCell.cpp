@@ -252,11 +252,15 @@ void LayoutTableCell::AddLayerHitTestRects(
                                   adjusted_layer_offset, container_rect);
 }
 
-void LayoutTableCell::ComputeIntrinsicPadding(int row_height,
+void LayoutTableCell::ComputeIntrinsicPadding(int collapsed_height,
+                                              int row_height,
                                               EVerticalAlign vertical_align,
                                               SubtreeLayoutScope& layouter) {
+  row_height += collapsed_height;
+
   int old_intrinsic_padding_before = IntrinsicPaddingBefore();
   int old_intrinsic_padding_after = IntrinsicPaddingAfter();
+
   int logical_height_without_intrinsic_padding = PixelSnappedLogicalHeight() -
                                                  old_intrinsic_padding_before -
                                                  old_intrinsic_padding_after;
@@ -292,8 +296,9 @@ void LayoutTableCell::ComputeIntrinsicPadding(int row_height,
   int intrinsic_padding_after = row_height -
                                 logical_height_without_intrinsic_padding -
                                 intrinsic_padding_before;
+
   SetIntrinsicPaddingBefore(intrinsic_padding_before);
-  SetIntrinsicPaddingAfter(intrinsic_padding_after);
+  SetIntrinsicPaddingAfter(intrinsic_padding_after - collapsed_height);
 
   // FIXME: Changing an intrinsic padding shouldn't trigger a relayout as it
   // only shifts the cell inside the row but doesn't change the logical height.

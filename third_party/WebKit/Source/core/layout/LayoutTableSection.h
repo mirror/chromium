@@ -362,6 +362,9 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
                                               unsigned auto_rows_count);
   void DistributeRemainingExtraLogicalHeight(int& extra_logical_height);
 
+  // Check whether row or row group has visibility:collapse.
+  bool RowHasVisibilityCollapse(unsigned row) const;
+
   void UpdateBaselineForCell(LayoutTableCell*,
                              unsigned row,
                              int& baseline_descent);
@@ -414,6 +417,12 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   // To know a row's height at |rowIndex|, use the formula:
   // m_rowPos[rowIndex + 1] - m_rowPos[rowIndex]
   Vector<int> row_pos_;
+
+  // The amount of height collapsed in each row.
+  //
+  // This is used to adjust the padding of row-spanning cells. The padding
+  // should stay the same as if the row were not collapsed.
+  Vector<int> row_collapsed_height_;
 
   // The current insertion position in the grid.
   // The position is used when inserting a new cell into the section to
