@@ -21,6 +21,7 @@
 class ContextualSearchRankerLoggerImpl;
 class PluginInfoMessageFilter;
 class UkmPageLoadMetricsObserver;
+class LocalNetworkRequestsPageLoadMetricsObserver;
 
 namespace autofill {
 class AutofillMetrics;
@@ -89,6 +90,7 @@ class UKM_EXPORT UkmRecorder {
   friend ContextualSearchRankerLoggerImpl;
   friend PluginInfoMessageFilter;
   friend UkmPageLoadMetricsObserver;
+  friend LocalNetworkRequestsPageLoadMetricsObserver;
   friend translate::TranslateRankerImpl;
   friend TestRecordingHelper;
   friend UkmInterface;
