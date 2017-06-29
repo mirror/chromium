@@ -33,6 +33,24 @@
       "revId": "4cd7fcdd667421b15a8d30a853f525c629b182c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346159d7_2bbc5779",
+        "filename": "components/app_modal/views/javascript_app_modal_dialog_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-29T23:02:21Z",
+      "side": 1,
+      "message": "I present some of these reviews to also highlight some current deficiencies in the architecture. This is a case-in-point.",
+      "parentUuid": "9776d26b_8c281bbb",
+      "revId": "4cd7fcdd667421b15a8d30a853f525c629b182c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
