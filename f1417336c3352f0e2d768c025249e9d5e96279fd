@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdeeab2b_12ff1044",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17580,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-29T13:52:00Z",
+      "side": 1,
+      "message": "Surprised that you have to indent this. I assume this is what the formatter did (i.e. git cl format)?",
+      "range": {
+        "startLine": 17580,
+        "startChar": 17,
+        "endLine": 17580,
+        "endChar": 26
+      },
+      "revId": "f1417336c3352f0e2d768c025249e9d5e96279fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1558031c_90e29852",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17588,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-29T13:52:00Z",
+      "side": 1,
+      "message": "Probably OK to omit the \"In product help\" part of the labels since the histogram descriptions all mention that already. So can just be \"Incognito window\", \"Download page\", etc.",
+      "range": {
+        "startLine": 17588,
+        "startChar": 49,
+        "endLine": 17588,
+        "endChar": 56
+      },
+      "revId": "f1417336c3352f0e2d768c025249e9d5e96279fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
