@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "52a20fd8_3512768f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-29T16:24:47Z",
+      "side": 1,
+      "message": "The WebContents is used in https://cs.chromium.org/chromium/src/chrome/browser/android/favicon_helper.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d261 to download and decode the favicon image (via a Mojo ImageDownloader that is owned by the WebContents\u0027 RenderFrameHost). There isn\u0027t really such a thing as a browser-wide WebContents, but then again it also feels weird to require one just to download images. Maybe we could make the FaviconHelper use ImageFetcher instead?",
+      "parentUuid": "55b1ae82_b1e7bcd6",
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87d685f7_09dd30e9",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 25
