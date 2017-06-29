@@ -105,9 +105,6 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
         installed_scripts_manager,
     std::unique_ptr<WebContentSettingsClient> content_settings_client)
     : worker_context_client_(std::move(client)),
-      installed_scripts_manager_(
-          WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>(
-              std::move(installed_scripts_manager))),
       content_settings_client_(std::move(content_settings_client)),
       worker_inspector_proxy_(WorkerInspectorProxy::Create()),
       web_view_(nullptr),
@@ -117,6 +114,13 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
       pause_after_download_state_(kDontPauseAfterDownload),
       waiting_for_debugger_state_(kNotWaitingForDebugger) {
   RunningWorkerInstances().insert(this);
+
+  // |installed_scripts_manager| is possible to be nullptr when it's disabled.
+  if (installed_scripts_manager) {
+    installed_scripts_manager_ =
+        WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>(
+            std::move(installed_scripts_manager));
+  }
 }
 
 WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
@@ -342,7 +346,8 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
 
   // Kickstart the worker before loading the script when the script has been
   // installed.
-  if (installed_scripts_manager_->IsScriptInstalled(
+  if (installed_scripts_manager_ &&
+      installed_scripts_manager_->IsScriptInstalled(
           worker_start_data_.script_url)) {
     worker_context_client_->WorkerScriptLoaded();
     if (pause_after_download_state_ == kDoPauseAfterDownload) {
