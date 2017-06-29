@@ -69,9 +69,10 @@ MediaEngagementUI::MediaEngagementUI(content::WebUI* web_ui)
   std::unique_ptr<content::WebUIDataSource> source(
       content::WebUIDataSource::Create(chrome::kChromeUIMediaEngagementHost));
   source->AddResourcePath("media-engagement.js", IDR_MEDIA_ENGAGEMENT_JS);
-  source->AddResourcePath("chrome/browser/media/media_engagement_details.mojom",
-                          IDR_MEDIA_ENGAGEMENT_MOJO_JS);
-  source->AddResourcePath("url/mojo/url.mojom", IDR_URL_MOJO_JS);
+  source->AddResourcePath(
+      "chrome/browser/media/media_engagement_details.mojom.js",
+      IDR_MEDIA_ENGAGEMENT_MOJO_JS);
+  source->AddResourcePath("url/mojo/url.mojom.js", IDR_URL_MOJO_JS);
   source->SetDefaultResource(IDR_MEDIA_ENGAGEMENT_HTML);
   source->UseGzip(std::unordered_set<std::string>());
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), source.release());
