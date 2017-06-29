@@ -1,0 +1,5 @@
+include_rules = [
+  # Temporarily allow referring c/b/a stuff till OfflinePageModelFactory moves
+  # to platform-independent place.
+  "+chrome/browser/android",
+]

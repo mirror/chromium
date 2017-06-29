@@ -12,6 +12,7 @@
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
+#include "components/offline_pages/core/prefetch/prefetch_importer.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "components/offline_pages/core/prefetch/test_offline_metrics_collector.h"
@@ -84,7 +85,8 @@ void PrefetchServiceTestTaco::CreatePrefetchService() {
   prefetch_service_ = base::MakeUnique<PrefetchServiceImpl>(
       std::move(metrics_collector_), std::move(dispatcher_),
       std::move(gcm_handler_), std::move(network_request_factory_),
-      std::move(suggested_articles_observer_), std::move(prefetch_downloader_));
+      std::move(suggested_articles_observer_), std::move(prefetch_downloader_),
+      std::unique_ptr<PrefetchImporter>());
 }
 
 std::unique_ptr<PrefetchService>

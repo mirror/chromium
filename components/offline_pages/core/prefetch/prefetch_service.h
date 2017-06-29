@@ -13,6 +13,7 @@ class OfflineMetricsCollector;
 class PrefetchDispatcher;
 class PrefetchDownloader;
 class PrefetchGCMHandler;
+class PrefetchImporter;
 class PrefetchNetworkRequestFactory;
 class SuggestedArticlesObserver;
 
@@ -33,6 +34,7 @@ class PrefetchService : public KeyedService {
   virtual PrefetchGCMHandler* GetPrefetchGCMHandler() = 0;
   virtual PrefetchNetworkRequestFactory* GetPrefetchNetworkRequestFactory() = 0;
   virtual PrefetchDownloader* GetPrefetchDownloader() = 0;
+  virtual PrefetchImporter* GetPrefetchImporter() = 0;
 
   // May be |nullptr| in tests.  The PrefetchService does not depend on the
   // SuggestedArticlesObserver, it merely owns it for lifetime purposes.

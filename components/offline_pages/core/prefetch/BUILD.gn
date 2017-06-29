@@ -28,6 +28,7 @@ static_library("prefetch") {
     "prefetch_gcm_app_handler.cc",
     "prefetch_gcm_app_handler.h",
     "prefetch_gcm_handler.h",
+    "prefetch_importer.h",
     "prefetch_item.cc",
     "prefetch_item.h",
     "prefetch_network_request_factory.h",
