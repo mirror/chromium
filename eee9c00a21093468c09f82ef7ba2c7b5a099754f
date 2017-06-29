@@ -16,6 +16,24 @@
       "revId": "eee9c00a21093468c09f82ef7ba2c7b5a099754f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d39ab3_74a9dc99",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-29T14:10:08Z",
+      "side": 1,
+      "message": "CreateCOMSTATaskRunnerWithTraits has default thread mode as SHARED. So for our case here, it will use the thread for BACKGROUND_BLOCKING worker in shared_scheduler_workers_ [1]. That is, no new thread will be created.\n\nSharing a TaskRunner for the whole process is tricky. The TaskRunnner of task scheduler is not supposed to outlive the task environment. We would probably have to introduce a clean up function and call it before tearing down task environment. It does not seem to worth the effort.",
+      "parentUuid": "621570eb_89e2c812",
+      "revId": "eee9c00a21093468c09f82ef7ba2c7b5a099754f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
