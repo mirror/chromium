@@ -65,8 +65,12 @@ action("process_json") {
     args += [ "android" ]
   } else if (is_chromeos) {
     args += [ "chromeos" ]
-  } else {
+  } else if (is_linux) {
     args += [ "linux" ]
+  } else if (is_fuchsia) {
+    args += [ "fuchsia" ]
+  } else {
+    assert(false, "Unsupported platform")
   }
 }
 
