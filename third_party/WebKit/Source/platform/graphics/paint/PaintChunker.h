@@ -45,6 +45,8 @@ class PLATFORM_EXPORT PaintChunker final {
 
   void DecrementDisplayItemIndex();
 
+  const Vector<PaintChunk>& PaintChunks() const { return chunks_; }
+
   PaintChunk& PaintChunkAt(size_t i) { return chunks_[i]; }
   size_t LastChunkIndex() const {
     return chunks_.IsEmpty() ? kNotFound : chunks_.size() - 1;
