@@ -191,16 +191,12 @@ configuration:
 1.  Add feature to the histogram suffix `IPHFeatures` in:
     `//tools/metrics/histograms/histograms.xml`.
     *   The suffix must match the `base::Feature` `name` member of your feature.
-1.  Add feature to the actions file (actions do not support automatic suffixes):
+    *   `<suffix name="IPH_MyFun" label="In-Product Help for My Fun."/>`
+1.  Add feature to the suffix list in::
     `//tools/metrics/actions/actions.xml`.
     *   The suffix must match the `base::Feature` `name` member.
-    *   Use an old example to ensure you configure and describe it correctly.
-    *   For `IPH_MyFunFeature` it would look like this:
-        *   `<action name="InProductHelp.NotifyEvent.IPH_MyFunFeature">`
-        *   `<action name="InProductHelp.NotifyUsedEvent.IPH_MyFunFeature">`
-        *   `<action name="InProductHelp.ShouldTriggerHelpUI.IPH_MyFunFeature">`
-        *   `<action name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_MyFunFeature">`
-        *   `<action name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_MyFunFeature">`
+    *   Search for InProductHelp to find the `action-suffixes` (at the bottom).
+    *   `<suffix name="IPH_MyFun" label="In-Product Help for My Fun."/>`
 
 ## Demo mode
 

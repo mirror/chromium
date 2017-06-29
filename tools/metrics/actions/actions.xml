@@ -5195,13 +5195,7 @@ should be able to be added at any place in this file.
   <description>The user dismissed the in-product help.</description>
 </action>
 
-<action name="InProductHelp.NotifyEvent.IPH_DataSaverDetail">
-  <owner>nyquist@chromium.org</owner>
-  <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
-</action>
-
-<action name="InProductHelp.NotifyEvent.IPH_DataSaverPreview">
+<action name="InProductHelp.NotifyEvent">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
@@ -5209,72 +5203,134 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="InProductHelp.NotifyEvent.IPH_DataSaverDetail">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>
+     A event related to the new tab in-product help experiment. In product help
+    data saver detail.
+  </description>
+</action>
+
+<action name="InProductHelp.NotifyEvent.IPH_DataSaverPreview">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>
+     A event related to the new tab in-product help experiment. In product help
+    data saver preview.
+  </description>
+</action>
+
 <action name="InProductHelp.NotifyEvent.IPH_DownloadHome">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
+  <description>
+     A event related to the new tab in-product help experiment. In product help
+    download home.
+  </description>
 </action>
 
 <action name="InProductHelp.NotifyEvent.IPH_DownloadPage">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
+  <description>
+     A event related to the new tab in-product help experiment. In product help
+    download page.
+  </description>
 </action>
 
 <action name="InProductHelp.NotifyEvent.IPH_IncognitoWindow">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
+  <description>
+     A event related to the new tab in-product help experiment. In product help
+    incognito window.
+  </description>
 </action>
 
 <action name="InProductHelp.NotifyEvent.IPH_NewTab">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered an event in in-product help.</description>
+  <description>
+     A event related to the new tab in-product help experiment. In product help
+    new tab.
+  </description>
+</action>
+
+<action name="InProductHelp.NotifyUsedEvent">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>The user triggered a used event in in-product help.</description>
 </action>
 
 <action name="InProductHelp.NotifyUsedEvent.IPH_DataSaverDetail">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
+  <description>
+    The user triggered a used event in in-product help. In product help data
+    saver detail.
+  </description>
 </action>
 
 <action name="InProductHelp.NotifyUsedEvent.IPH_DataSaverPreview">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
+  <description>
+    The user triggered a used event in in-product help. In product help data
+    saver preview.
+  </description>
 </action>
 
 <action name="InProductHelp.NotifyUsedEvent.IPH_DownloadHome">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
+  <description>
+    The user triggered a used event in in-product help. In product help download
+    home.
+  </description>
 </action>
 
 <action name="InProductHelp.NotifyUsedEvent.IPH_DownloadPage">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
+  <description>
+    The user triggered a used event in in-product help. In product help download
+    page.
+  </description>
 </action>
 
 <action name="InProductHelp.NotifyUsedEvent.IPH_IncognitoWindow">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
+  <description>
+    The user triggered a used event in in-product help. In product help
+    incognito window.
+  </description>
 </action>
 
 <action name="InProductHelp.NotifyUsedEvent.IPH_NewTab">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>The user triggered a used event in in-product help.</description>
+  <description>
+    The user triggered a used event in in-product help. In product help new tab.
+  </description>
+</action>
+
+<action name="InProductHelp.ShouldTriggerHelpUI">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>
+    The feature engagement tracker tried to determine whether in-product help
+    should be shown to the user.
+  </description>
 </action>
 
 <action name="InProductHelp.ShouldTriggerHelpUI.IPH_DataSaverDetail">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
+     The feature engagement tracker tried to determine whether in-product help
+    should be shown to the user. In product help data saver detail.
   </description>
 </action>
 
@@ -5282,8 +5338,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
+     The feature engagement tracker tried to determine whether in-product help
+    should be shown to the user. In product help data saver preview.
   </description>
 </action>
 
@@ -5291,8 +5347,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
+     The feature engagement tracker tried to determine whether in-product help
+    should be shown to the user. In product help download home.
   </description>
 </action>
 
@@ -5300,8 +5356,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
+     The feature engagement tracker tried to determine whether in-product help
+    should be shown to the user. In product help download page.
   </description>
 </action>
 
@@ -5309,8 +5365,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
+     The feature engagement tracker tried to determine whether in-product help
+    should be shown to the user. In product help incognito window.
   </description>
 </action>
 
@@ -5318,8 +5374,16 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    The feature engagement tracker tried to determine whether in-product help
-    should be shown to the user.
+     The feature engagement tracker tried to determine whether in-product help
+    should be shown to the user. In product help new tab.
+  </description>
+</action>
+
+<action name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>
+    A user action that could have triggered In-Product Help did not.
   </description>
 </action>
 
@@ -5328,7 +5392,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    A user action that could have triggered In-Product Help did not.
+     A user action that could have triggered In-Product Help did not. In product
+    help data saver detail.
   </description>
 </action>
 
@@ -5337,7 +5402,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    A user action that could have triggered In-Product Help did not.
+     A user action that could have triggered In-Product Help did not. In product
+    help data saver preview.
   </description>
 </action>
 
@@ -5346,7 +5412,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    A user action that could have triggered In-Product Help did not.
+     A user action that could have triggered In-Product Help did not. In product
+    help download home.
   </description>
 </action>
 
@@ -5355,7 +5422,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    A user action that could have triggered In-Product Help did not.
+     A user action that could have triggered In-Product Help did not. In product
+    help download page.
   </description>
 </action>
 
@@ -5364,7 +5432,8 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    A user action that could have triggered In-Product Help did not.
+     A user action that could have triggered In-Product Help did not. In product
+    help incognito window.
   </description>
 </action>
 
@@ -5372,49 +5441,68 @@ should be able to be added at any place in this file.
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
-    A user action that could have triggered In-Product Help did not.
+     A user action that could have triggered In-Product Help did not. In product
+    help new tab.
   </description>
+</action>
+
+<action name="InProductHelp.ShouldTriggerHelpUIResult.Triggered">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>A user action triggered In-Product Help.</description>
 </action>
 
 <action
     name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DataSaverDetail">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
+  <description>
+    A user action triggered In-Product Help. In product help data saver detail.
+  </description>
 </action>
 
 <action
     name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DataSaverPreview">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
+  <description>
+    A user action triggered In-Product Help. In product help data saver preview.
+  </description>
 </action>
 
 <action
     name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DownloadHome">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
+  <description>
+    A user action triggered In-Product Help. In product help download home.
+  </description>
 </action>
 
 <action
     name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DownloadPage">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
+  <description>
+    A user action triggered In-Product Help. In product help download page.
+  </description>
 </action>
 
 <action
     name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_IncognitoWindow">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
+  <description>
+    A user action triggered In-Product Help. In product help incognito window.
+  </description>
 </action>
 
 <action name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_NewTab">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
-  <description>A user action triggered In-Product Help.</description>
+  <description>
+    A user action triggered In-Product Help. In product help new tab.
+  </description>
 </action>
 
 <action name="Indent">
