@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57ce2de_ba2c7067",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T07:38:00Z",
+      "side": 1,
+      "message": "Remove \"and stubs\".\n\nMaybe retitle to \"[ios] Add FeatureEngagementTracker factory.\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 47,
+        "endLine": 7,
+        "endChar": 57
+      },
+      "revId": "08e0e6d9faf2db9d3539e3f16855ee0610bc0fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b3fa40_48ec45b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T07:38:00Z",
+      "side": 1,
+      "message": "Please use \".\" at the end of the sentence.",
+      "revId": "08e0e6d9faf2db9d3539e3f16855ee0610bc0fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a36ff7d_514b30dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T07:38:00Z",
+      "side": 1,
+      "message": "Remove those two lines, they don\u0027t bring anything. The CL description must explain what and why, not how (at least not when how is obvious by looking at the CL body).",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "08e0e6d9faf2db9d3539e3f16855ee0610bc0fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c1beb3_c9b8fa88",
+        "filename": "ios/chrome/browser/chrome_constants.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T07:38:00Z",
+      "side": 1,
+      "message": "Please move to feature_engagement_tracker_factory.mm.\n\nI don\u0027t think there is any reason to have a global named constant for a value used only once in the codebase (in my opinion, desktop should also have put the constant in the factory implementation file).",
+      "revId": "08e0e6d9faf2db9d3539e3f16855ee0610bc0fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cc76a8_42d0eee6",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T07:38:00Z",
+      "side": 1,
+      "message": "Remove this comments (it was somehow resurrected when implementation was uploaded).",
+      "revId": "08e0e6d9faf2db9d3539e3f16855ee0610bc0fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b9fd7c_8874ffe4",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T07:38:00Z",
+      "side": 1,
+      "message": "nit: I prefer when this is named browser_state",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "08e0e6d9faf2db9d3539e3f16855ee0610bc0fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
