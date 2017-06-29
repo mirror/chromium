@@ -11,9 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "components/prefs/pref_value_store.h"
 
-namespace base {
-class SequencedWorkerPool;
-}
+class PersistentPrefStore;
 
 namespace service_manager {
 class Service;
@@ -21,9 +19,14 @@ class Service;
 
 namespace prefs {
 
-std::unique_ptr<service_manager::Service> CreatePrefService(
-    std::set<PrefValueStore::PrefStoreType> expected_pref_stores,
-    scoped_refptr<base::SequencedWorkerPool> worker_pool);
+// Creates a PrefService and a closure that can be used to shut it down.
+std::pair<std::unique_ptr<service_manager::Service>, base::OnceClosure>
+CreatePrefService(PrefStore* managed_prefs,
+                  PrefStore* supervised_user_prefs,
+                  PrefStore* extension_prefs,
+                  PrefStore* command_line_prefs,
+                  PersistentPrefStore* user_prefs,
+                  PrefStore* recommended_prefs);
 
 }  // namespace prefs
 

@@ -3062,7 +3062,7 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
     services->insert(std::make_pair(chromeos::kChromeServiceName, info));
   }
 
-  if (features::PrefServiceEnabled()) {
+  {
     content::ServiceInfo info;
     info.factory = base::Bind([] {
       return std::unique_ptr<service_manager::Service>(

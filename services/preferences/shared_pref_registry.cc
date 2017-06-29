@@ -52,7 +52,6 @@ SharedPrefRegistry::~SharedPrefRegistry() = default;
 scoped_refptr<ScopedPrefConnectionBuilder>
 SharedPrefRegistry::CreateConnectionBuilder(
     mojom::PrefRegistryPtr pref_registry,
-    std::set<PrefValueStore::PrefStoreType> required_types,
     const service_manager::Identity& identity,
     mojom::PrefStoreConnector::ConnectCallback callback) {
   bool is_initial_connection = connected_services_.insert(identity).second;
@@ -90,8 +89,7 @@ SharedPrefRegistry::CreateConnectionBuilder(
 #endif
 
   auto connection_builder = base::MakeRefCounted<ScopedPrefConnectionBuilder>(
-      std::move(observed_prefs), std::move(required_types),
-      std::move(callback));
+      std::move(observed_prefs), std::move(callback));
   if (remaining_foreign_registrations.empty()) {
     ProvideDefaultPrefs(connection_builder.get(),
                         pref_registry->foreign_registrations);
