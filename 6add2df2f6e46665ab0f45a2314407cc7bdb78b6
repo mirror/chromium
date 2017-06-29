@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c200e745_d93725c2",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a175ff99_6f67d6e4",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a98e5c8_a7aa7b2b",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-29T17:31:28Z",
       "side": 1,
       "message": "Can you leave a comment for the magic number",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78a966e_6344b5e5",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "I\u0027ll even make it a constant.",
+      "parentUuid": "8a98e5c8_a7aa7b2b",
       "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e72ff5a2_3835cfb3",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "Yup yup.",
+      "parentUuid": "cd1d91f7_953c783c",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "113b8d97_35fa6fcc",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3af53751_c87ecca9",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "Serialize functions skip these, since they don\u0027t know how much they need to write before they start.\n\nDeserialize rewrites skip because the size that\u0027s required isn\u0027t serialized, so it\u0027s not known until deserialization happens either for some types.  Also, because of TOCTOU reasons, the type and skip are read in the serialized buffer but the type can no longer be trusted as the shm could have its value changed under it.  So, the deserializing code uses its assumed knowledge of what type it\u0027s deserializing to update the type appropriately.",
+      "parentUuid": "113b8d97_35fa6fcc",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb6b372a_4ec2dbe5",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 12
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-29T17:31:28Z",
       "side": 1,
       "message": "Will this be needing a security review eventually?",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91f7560_888a23c6",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "I\u0027ll delete this function in the short term until I need it.",
+      "parentUuid": "fb6b372a_4ec2dbe5",
       "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "9b62c4f9_06674469",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "It\u0027s got very different parameters and if you called the \"wrong\" one it would do the same thing.  So, mostly not sure that it needs disambiguation.",
+      "parentUuid": "cc6258c1_75c48960",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "429fa3fc_35fb6aee",
         "filename": "cc/paint/paint_op_buffer.h",
         "patchSetId": 12
@@ -166,6 +274,24 @@
       "writtenOn": "2017-06-29T17:31:28Z",
       "side": 1,
       "message": "return 0 _and_ nothing? :)",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d0a537_d08ca802",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "\u003c_\u003c",
+      "parentUuid": "429fa3fc_35fb6aee",
       "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "0b72a2bd_7f82a2da",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa2c597e_cf460066",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd830034_a99654f2",
         "filename": "cc/paint/paint_op_buffer.h",
         "patchSetId": 12
@@ -206,6 +350,24 @@
     },
     {
       "key": {
+        "uuid": "0c3c853c_aefa6288",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": "Mmm...yah, I can do that!",
+      "parentUuid": "cd830034_a99654f2",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "356100a3_22311fdc",
         "filename": "cc/paint/paint_op_buffer_unittest.cc",
         "patchSetId": 12
@@ -217,6 +379,24 @@
       "writtenOn": "2017-06-29T17:31:28Z",
       "side": 1,
       "message": "tests \\o/",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efaa122d_fe70e513",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-29T18:31:37Z",
+      "side": 1,
+      "message": ":D :D :D",
+      "parentUuid": "356100a3_22311fdc",
       "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
