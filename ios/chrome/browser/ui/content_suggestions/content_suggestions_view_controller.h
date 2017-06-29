@@ -12,7 +12,8 @@
 @class ContentSuggestionsSectionInformation;
 @protocol ContentSuggestionsCommands;
 @protocol ContentSuggestionsDataSource;
-@protocol ContentSuggestionsHeaderCommands;
+@protocol ContentSuggestionsHeaderSynchronizing;
+@protocol ContentSuggestionsViewControllerAudience;
 @protocol ContentSuggestionsViewControllerDelegate;
 @protocol OverscrollActionsControllerDelegate;
 @protocol SuggestedContent;
@@ -31,10 +32,12 @@
 // Handler for the commands sent by the ContentSuggestionsViewController.
 @property(nonatomic, weak) id<ContentSuggestionsCommands>
     suggestionCommandHandler;
-@property(nonatomic, weak) id<ContentSuggestionsHeaderCommands>
+@property(nonatomic, weak) id<ContentSuggestionsHeaderSynchronizing>
     headerCommandHandler;
 @property(nonatomic, weak) id<ContentSuggestionsViewControllerDelegate>
     suggestionsDelegate;
+@property(nonatomic, weak) id<ContentSuggestionsViewControllerAudience>
+    audience;
 // Override from superclass to have a more specific type.
 @property(nonatomic, readonly)
     CollectionViewModel<CollectionViewItem<SuggestedContent>*>*
