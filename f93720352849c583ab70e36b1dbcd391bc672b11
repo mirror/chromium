@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5bc40d17_83553783",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-06-29T05:37:18Z",
+      "side": 1,
+      "message": "Thank you for the advice! I wasn\u0027t quite sure what to put, so those questions really help.\nLet me know if it\u0027s more acceptable the way it is now!",
+      "parentUuid": "fce9ba69_859afeb1",
+      "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921c30cc_2e1d2e67",
         "filename": "third_party/WebKit/LayoutTests/http/tests/xmlhttprequest/xmlhttprequest-overridemimetype-content-type-header-expected.txt",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21006e28_18075c34",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/xmlhttprequest/xmlhttprequest-overridemimetype-content-type-header-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-06-29T05:37:18Z",
+      "side": 1,
+      "message": "Thanks for the input! I\u0027ve changed the test now; let me know if it looks all right!",
+      "parentUuid": "921c30cc_2e1d2e67",
+      "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "511dc543_8a903012",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-06-29T05:37:18Z",
+      "side": 1,
+      "message": "Good idea! I put the link there; do you think that\u0027s good enough?",
+      "parentUuid": "dced636a_2c678aea",
+      "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15598ea1_3c7eab47",
         "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0738fd_1a2b97a6",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-06-29T05:37:18Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I\u0027ve made that change now! It would be great if you could check it again",
+      "parentUuid": "15598ea1_3c7eab47",
+      "revId": "f93720352849c583ab70e36b1dbcd391bc672b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "81b9c8bf_1adee952",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/overridemimetype-blob-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-06-29T05:37:18Z",
+      "side": 1,
+      "message": "Thanks for the comment! Yeah, I\u0027m going to try saving the blob test for later, but I\u0027ll definitely get to it as soon as I can!",
+      "parentUuid": "f1debd3f_a3ff7552",
+      "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cb92872_9088e3c8",
         "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
         "patchSetId": 9
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fd2307c5_7bf98809",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-06-29T05:37:18Z",
+      "side": 1,
+      "message": "Yeah, I just put the URL for the specs in there. Let me know if that works for what you wanted to have done there!",
+      "parentUuid": "2cb92872_9088e3c8",
+      "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dac026b2_1a956881",
         "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.h",
         "patchSetId": 9
@@ -68,6 +104,24 @@
       "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9967d388_c7d8126e",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-06-29T05:37:18Z",
+      "side": 1,
+      "message": "Got it, will do!",
+      "parentUuid": "dac026b2_1a956881",
+      "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
