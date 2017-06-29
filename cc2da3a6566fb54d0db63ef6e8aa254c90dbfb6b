@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9a5b7e_5b546ea9",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T12:44:45Z",
+      "side": 1,
+      "message": "base::TaskScheduler::InitParams is copyable, so you can change this method to return the object by value instead of doing an extra allocation.\n\nbase::TaskScheduler::InitParams GetDefaultTaskSchedulerInitParams() {\n  return base::TaskScheduler::InitParams(\n      ...\n}",
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16eec375_d5008fd9",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T12:44:45Z",
+      "side": 1,
+      "message": "This won\u0027t work as this would require the file to be built twice (one time with CRONET_BUILD set to 0, one time with it set to 1). I think it is bad practice to compile the same file twice.\n\n[Note: this does not create a compilation failure, because in an #if, undefined macros are treated as if they were defined to 0, so this test will always be false.]\n\nAn option is to declare an helper method GetTaskSchedulerName() but do not provide an implementation and say that code calling this must provide an implementation. This however would make this target incomplete which I don\u0027t really like.\n\nA better option, IMP, is to just change the prototype of Create to take this string and expand the comment to say that only the value passed to the first call will be honoured.",
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77924afd_97a054bd",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T12:44:45Z",
+      "side": 1,
+      "message": "Remove \"{}\" as there is no longer any need to limit the scope of local variables.",
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
