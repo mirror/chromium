@@ -6,14 +6,19 @@
 #define BASE_SYNCHRONIZATION_WAITABLE_EVENT_WATCHER_H_
 
 #include "base/base_export.h"
+#include "base/callback.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
 #include "base/win/object_watcher.h"
 #include "base/win/scoped_handle.h"
+#elif defined(OS_MACOSX)
+#include <dispatch/dispatch.h>
+
+#include "base/files/scoped_file.h"
+#include "base/mac/scoped_dispatch_object.h"
 #else
-#include "base/callback.h"
 #include "base/sequence_checker.h"
 #include "base/synchronization/waitable_event.h"
 #endif
@@ -101,6 +106,13 @@ class BASE_EXPORT WaitableEventWatcher
 
   EventCallback callback_;
   WaitableEvent* event_ = nullptr;
+#elif defined(OS_MACOSX)
+  void InvokeCallback();
+
+  OnceClosure callback_;
+
+  ScopedFD kqueue_;
+  ScopedDispatchObject<dispatch_source_t> source_;
 #else
   // Instantiated in StartWatching(). Set before the callback runs. Reset in
   // StopWatching() or StartWatching().

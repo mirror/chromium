@@ -22,10 +22,10 @@ namespace {
 
 // The message loops on which each waitable event timer should be tested.
 const MessageLoop::Type testing_message_loops[] = {
-  MessageLoop::TYPE_DEFAULT,
-  MessageLoop::TYPE_IO,
+    MessageLoop::TYPE_DEFAULT,
+    MessageLoop::TYPE_IO,
 #if !defined(OS_IOS)  // iOS does not allow direct running of the UI loop.
-  MessageLoop::TYPE_UI,
+    MessageLoop::TYPE_UI,
 #endif
 };
 
@@ -37,12 +37,12 @@ void QuitWhenSignaled(WaitableEvent* event) {
 
 class DecrementCountContainer {
  public:
-  explicit DecrementCountContainer(int* counter) : counter_(counter) {
-  }
+  explicit DecrementCountContainer(int* counter) : counter_(counter) {}
   void OnWaitableEventSignaled(WaitableEvent* object) {
     // NOTE: |object| may be already deleted.
     --(*counter_);
   }
+
  private:
   int* counter_;
 };
@@ -179,6 +179,51 @@ void RunTest_SignalAndDelete(MessageLoop::Type message_loop_type,
   }
 }
 
+void RunTest_SignaledAtStart(MessageLoop::Type message_loop_type) {
+  MessageLoop message_loop(message_loop_type);
+
+  WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+
+  WaitableEventWatcher watcher;
+
+  RunLoop run_loop;
+
+  bool signaled = false;
+  WaitableEventWatcher::EventCallback watcher_callback = base::BindOnce(
+      [](const base::Closure& quit_closure, bool* signaled, WaitableEvent*) {
+        *signaled = true;
+        quit_closure.Run();
+      },
+      run_loop.QuitClosure(), base::Unretained(&signaled));
+
+  event.Signal();
+  watcher.StartWatching(&event, std::move(watcher_callback));
+
+  run_loop.Run();
+
+  EXPECT_TRUE(signaled);
+}
+
+void RunTest_StartWatchInCallback(MessageLoop::Type message_loop_type) {
+  MessageLoop message_loop(message_loop_type);
+
+  // A manual-reset event that is not yet signaled.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+
+  WaitableEventWatcher watcher;
+  watcher.StartWatching(
+      &event, BindOnce(
+                  [](WaitableEventWatcher* watcher, WaitableEvent* event) {
+                    watcher->StartWatching(event, BindOnce(&QuitWhenSignaled));
+                  },
+                  base::Unretained(&watcher)));
+
+  event.Signal();
+
+  RunLoop().Run();
+}
 }  // namespace
 
 //-----------------------------------------------------------------------------
@@ -218,6 +263,18 @@ TEST(WaitableEventWatcherTest, SignalAndDelete) {
   for (int i = 0; i < kNumTestingMessageLoops; i++) {
     RunTest_SignalAndDelete(testing_message_loops[i], false);
     RunTest_SignalAndDelete(testing_message_loops[i], true);
+  }
+}
+
+TEST(WaitableEventWatcherTest, SignaledAtStart) {
+  for (int i = 0; i < kNumTestingMessageLoops; i++) {
+    RunTest_SignaledAtStart(testing_message_loops[i]);
+  }
+}
+
+TEST(WaitableEventWatcherTest, StartWatchInCallback) {
+  for (int i = 0; i < kNumTestingMessageLoops; i++) {
+    RunTest_StartWatchInCallback(testing_message_loops[i]);
   }
 }
 
