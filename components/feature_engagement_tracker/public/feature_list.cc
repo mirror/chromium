@@ -24,6 +24,11 @@ const base::Feature* kAllFeatures[] = {
     &kIPHIncognitoWindowFeature,
     &kIPHNewTabFeature,
 #endif  // defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_IOS)
+    &kIPHNewTabTipFeature,
+    &kIPHNewIncognitoTabTipFeature,
+    &kIPHBadgedReadingListFeature,
+#endif  // defined(OS_IOS)
 };
 }  // namespace
 
