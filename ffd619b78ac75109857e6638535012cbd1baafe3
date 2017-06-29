@@ -16,6 +16,24 @@
       "revId": "ffd619b78ac75109857e6638535012cbd1baafe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638886a7_8a88764f",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-29T23:52:53Z",
+      "side": 1,
+      "message": "Commented out 28-29. Left UNKNOWN_ERROR so it can be used if the CdmPromiseResult is not recognized.",
+      "parentUuid": "2a1987f1_f9e66352",
+      "revId": "ffd619b78ac75109857e6638535012cbd1baafe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
