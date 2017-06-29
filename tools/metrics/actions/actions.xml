@@ -5221,6 +5221,12 @@ should be able to be added at any place in this file.
   <description>The user triggered an event in in-product help.</description>
 </action>
 
+<action name="InProductHelp.NotifyEvent.IPH_DownloadPageScreenshot">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>The user triggered an event in in-product help.</description>
+</action>
+
 <action name="InProductHelp.NotifyEvent.IPH_IncognitoWindow">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
@@ -5252,6 +5258,12 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="InProductHelp.NotifyUsedEvent.IPH_DownloadPage">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>The user triggered a used event in in-product help.</description>
+</action>
+
+<action name="InProductHelp.NotifyUsedEvent.IPH_DownloadPageScreenshot">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>The user triggered a used event in in-product help.</description>
@@ -5297,6 +5309,15 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="InProductHelp.ShouldTriggerHelpUI.IPH_DownloadPage">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>
+    The feature engagement tracker tried to determine whether in-product help
+    should be shown to the user.
+  </description>
+</action>
+
+<action name="InProductHelp.ShouldTriggerHelpUI.IPH_DownloadPageScreenshot">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>
@@ -5360,6 +5381,15 @@ should be able to be added at any place in this file.
 </action>
 
 <action
+    name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_DownloadPageScreenshot">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>
+    A user action that could have triggered In-Product Help did not.
+  </description>
+</action>
+
+<action
     name="InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.IPH_IncognitoWindow">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
@@ -5399,6 +5429,13 @@ should be able to be added at any place in this file.
 
 <action
     name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DownloadPage">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <description>A user action triggered In-Product Help.</description>
+</action>
+
+<action
+    name="InProductHelp.ShouldTriggerHelpUIResult.Triggered.IPH_DownloadPageScreenshot">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
   <description>A user action triggered In-Product Help.</description>
