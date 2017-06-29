@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfb7d29d_08bf5a45",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a1bf77_63332016",
+      "range": {
+        "startLine": 1363,
+        "startChar": 0,
+        "endLine": 1363,
+        "endChar": 222
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89515747_1213197b",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T17:28:54Z",
       "side": 1,
       "message": "Can you check to see if a font-face is defined anywhere for this?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce721a5_395a86a4",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Can\u0027t seem to find a font-face defined for it - I tried to use and change up \n/usr/local/google/chromium/src/ui/webui/resources/css/robot.css but couldn\u0027t get it working :/ \ngot any ideas?",
+      "parentUuid": "89515747_1213197b",
       "range": {
         "startLine": 34,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "af7b2b90_9b380b50",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe35ad93_88c9b5f1",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f11e294_c834ba6e",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2b995b_2c7f16e0",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f11e294_c834ba6e",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fed58978_c636a9e3",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795e1ffd_649f0919",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 5
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ead034df_4d530f76",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb8811d_0f103ffa",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead034df_4d530f76",
+      "range": {
+        "startLine": 93,
+        "startChar": 22,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "9a3c3e82_091a81fd",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655bb152_829975a4",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81a9fd07_f7cd96e7",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853cd94a_6e11e0d2",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81a9fd07_f7cd96e7",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 30
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "bf33fd70_39f994d3",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b0c911_9e558ebf",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 21
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc9d5056_cacb435f",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
         "patchSetId": 2
@@ -229,6 +445,54 @@
       "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bf0a2d_20a52266",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9d5056_cacb435f",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 22
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92b762ae_d3b1daf8",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-29T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9d5056_cacb435f",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 22
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
