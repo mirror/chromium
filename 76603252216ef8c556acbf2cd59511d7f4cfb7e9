@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8da05fbc_3d827ffe",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-29T18:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7f6e651_17fbfdba",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "320db3a4_51068093",
         "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb9b165_6b1a6a01",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-29T18:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "320db3a4_51068093",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2e4e5cae_6e631935",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-29T18:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c06b8b_d2484030",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e48708a4_84fe1492",
         "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a368a7ed_d073e905",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-29T18:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e48708a4_84fe1492",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "26b01e80_33d59e07",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-29T18:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71c612d6_cf9cd703",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e446458_0d32a16d",
         "filename": "components/url_pattern_index/url_pattern_index.h",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-29T09:19:46Z",
       "side": 1,
       "message": "Shouldn\u0027t this be public? Otherwise, the whole change seems a no-op.",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdd929d_715613dd",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-29T18:27:12Z",
+      "side": 1,
+      "message": "I kept this as private for now, since it doesn\u0027t have any caller currently. Once a client needs it, we can make it public.",
+      "parentUuid": "1e446458_0d32a16d",
       "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
