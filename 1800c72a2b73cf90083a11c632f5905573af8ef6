@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "af68bcc4_f24abbd4",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-29T04:30:15Z",
+      "side": 1,
+      "message": "Weird, done.",
+      "parentUuid": "6fd737d5_664b1dbd",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "905a32c8_72737e74",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
         "patchSetId": 12
@@ -628,6 +646,24 @@
       "side": 1,
       "message": "I guess I was taken aback by there being ApplyAnimatedCustomProperties, 2x ApplyAnimatedCustomProperty (one public, one private) and 2x ApplyAnimatedStandardProperties, and then went ahead and read all the function names and felt confused/overwhelmed.\n\nReordering might be one option, and another might be using helper functions in the cpp file rather than extra functions on the StyleResolver class itself.\n\nI won\u0027t block this patch on it.",
       "parentUuid": "d864adb8_e7e5aad9",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5008cf03_1e010b40",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-29T04:30:15Z",
+      "side": 1,
+      "message": "Heh, one of the ApplyAnimatedCustomProperty()s didn\u0027t have an implementation and ApplyAnimatedCustomProperties() could be taken off the header file.\nI think the weird state was due to intermediate code states that don\u0027t make sense anymore. Now the header diff is much more straight forward; splitting ApplyAnimatedProperties() up by standard and custom properties.",
+      "parentUuid": "ad9bb346_b7802019",
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
