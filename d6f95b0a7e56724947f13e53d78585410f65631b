@@ -16,6 +16,24 @@
       "revId": "d6f95b0a7e56724947f13e53d78585410f65631b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a753d9d_bcc856b6",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-06-29T15:25:08Z",
+      "side": 1,
+      "message": "Yup, this was also my thinking, I opened https://bugs.chromium.org/p/chromium/issues/detail?id\u003d737990 right before requesting review from you :P.\n\nThanks for taking a look Rune.",
+      "parentUuid": "4da3bb47_8b861bc5",
+      "revId": "d6f95b0a7e56724947f13e53d78585410f65631b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
