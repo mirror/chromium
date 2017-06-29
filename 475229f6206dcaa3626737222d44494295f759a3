@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1791ea6_3549e25a",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T06:25:13Z",
+      "side": 1,
+      "message": "Yeah this looked awkward to me too. I changed a bit. What do you think of the newest version?",
+      "parentUuid": "24963599_d8a1f3e9",
+      "revId": "475229f6206dcaa3626737222d44494295f759a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "755874b7_c293e6c2",
         "filename": "content/browser/service_worker/service_worker_registration.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-29T04:50:02Z",
       "side": 1,
       "message": "How about instantiating |lame_duck_timer_| in the ctor so that we can remove |if (lame_duck_timer_)| checks?",
+      "revId": "475229f6206dcaa3626737222d44494295f759a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf8b0d9_584b7480",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T06:25:13Z",
+      "side": 1,
+      "message": "Done, I just made it an object. I originally planned to use tick_clock_ with it, but it turned out necessary.",
+      "parentUuid": "755874b7_c293e6c2",
       "revId": "475229f6206dcaa3626737222d44494295f759a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "383b52fa_aae08982",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T06:25:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b90c94fc_d8600f75",
+      "revId": "475229f6206dcaa3626737222d44494295f759a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cb607ac_76fe3342",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "475229f6206dcaa3626737222d44494295f759a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2066e0_0ec16868",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T06:25:13Z",
+      "side": 1,
+      "message": "I don\u0027t really like making it public just for the test. What do you think of this new version?",
+      "parentUuid": "5cb607ac_76fe3342",
+      "revId": "475229f6206dcaa3626737222d44494295f759a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
