@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "19c24666_473a93fb",
+        "filename": "net/socket/ssl_client_socket_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-29T17:14:46Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN()?",
+      "range": {
+        "startLine": 360,
+        "startChar": 2,
+        "endLine": 360,
+        "endChar": 0
+      },
+      "revId": "28a3f71d723fe9f75f267db312de7fa0c6a22161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8ecec8b_a7a1b133",
         "filename": "net/socket/ssl_client_socket_pool.cc",
         "patchSetId": 1
