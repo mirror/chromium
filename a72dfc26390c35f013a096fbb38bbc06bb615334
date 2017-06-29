@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcd736e9_86e06ca3",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-29T18:39:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4eb7cc6_2348e10f",
+      "revId": "a72dfc26390c35f013a096fbb38bbc06bb615334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "249270af_175add94",
         "filename": "chrome/browser/ui/views/simple_message_box_views.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "a72dfc26390c35f013a096fbb38bbc06bb615334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a5b8bd_97abbe93",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-29T18:39:18Z",
+      "side": 1,
+      "message": "It is possible, but it involves adding a new chrome::MessageBoxResult for \"you provided a callback so this is not the real result, which was/will be delivered through your callback\". I have done that.",
+      "parentUuid": "249270af_175add94",
+      "revId": "a72dfc26390c35f013a096fbb38bbc06bb615334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
