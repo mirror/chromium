@@ -18,6 +18,8 @@ int main(int argc, char** argv) {
       base::android::AttachCurrentThread());
 #endif  // defined(OS_ANDROID)
 
+  // Hi!
+
   base::TestSuite test_suite(argc, argv);
   return base::LaunchUnitTests(
       argc, argv,
