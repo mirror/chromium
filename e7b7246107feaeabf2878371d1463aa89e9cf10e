@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "334bf33f_6bd0a06c",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-29T21:27:09Z",
+      "side": 1,
+      "message": "nit: Think mojom script should create an alias for this. Probably called mojom::GetWallpaperColorsCallback. Check the generated header file. Prefer to use that instead.",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 59
+      },
+      "revId": "e7b7246107feaeabf2878371d1463aa89e9cf10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae68b3c7_efed3b39",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-29T21:27:09Z",
+      "side": 1,
+      "message": "Add a WeakPtrFactory member and GetWeakPtr here because there is no guarantee that mojo callback would happen before AppListViewDelegate goes away.",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 35
+      },
+      "revId": "e7b7246107feaeabf2878371d1463aa89e9cf10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
