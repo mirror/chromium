@@ -8,6 +8,7 @@ import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
+import org.chromium.chrome.browser.suggestions.SuggestionsBottomSheetContent;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 
@@ -99,6 +100,10 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
             mTabModelSelector.getModel(!isIncognito).setIsPendingTabAdd(false);
         }
 
+        if (mBottomSheet.getCurrentSheetContent() instanceof SuggestionsBottomSheetContent) {
+            ((SuggestionsBottomSheetContent) mBottomSheet.getCurrentSheetContent()).onNewTabShown();
+        }
+
         // Open the sheet if it isn't already open to the desired height.
         int sheetState = mTabModelSelector.getCurrentModel().getCount() == 0
                 ? BottomSheet.SHEET_STATE_FULL
@@ -155,6 +160,11 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
         if (!mIsShowingNewTabUi) return;
 
         mIsShowingNewTabUi = false;
+
+        if (mBottomSheet.getCurrentSheetContent() instanceof SuggestionsBottomSheetContent) {
+            ((SuggestionsBottomSheetContent) mBottomSheet.getCurrentSheetContent())
+                    .onNewTabHidden();
+        }
 
         if (mLayoutManager.overviewVisible()
                 && mTabModelSelector.isIncognitoSelected() != mSelectIncognitoModelOnClose

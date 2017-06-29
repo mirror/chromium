@@ -5,13 +5,10 @@
 package org.chromium.chrome.browser.suggestions;
 
 import android.annotation.SuppressLint;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -25,8 +22,6 @@ import org.chromium.chrome.browser.omnibox.LocationBar;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
-import org.chromium.chrome.browser.widget.FadingShadow;
-import org.chromium.chrome.browser.widget.FadingShadowView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
@@ -40,7 +35,6 @@ import java.util.Locale;
  */
 public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetContent {
     private final View mView;
-    private final FadingShadowView mShadowView;
     private final SuggestionsRecyclerView mRecyclerView;
     private final ContextMenuManager mContextMenuManager;
     private final SuggestionsUiDelegateImpl mSuggestionsUiDelegate;
@@ -50,7 +44,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     public SuggestionsBottomSheetContent(final ChromeActivity activity, final BottomSheet sheet,
             TabModelSelector tabModelSelector, SnackbarManager snackbarManager) {
         SuggestionsDependencyFactory depsFactory = SuggestionsDependencyFactory.getInstance();
-        Profile profile = Profile.getLastUsedProfile();
+        Profile profile = Profile.getLastUsedProfile().getOriginalProfile();
         SuggestionsNavigationDelegate navigationDelegate =
                 new SuggestionsNavigationDelegateImpl(activity, profile, sheet, tabModelSelector);
         mTileGroupDelegate = new TileGroupDelegateImpl(
@@ -123,19 +117,6 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             }
         };
 
-        mShadowView = (FadingShadowView) mView.findViewById(R.id.shadow);
-        mShadowView.init(
-                ApiCompatibilityUtils.getColor(mView.getResources(), R.color.toolbar_shadow_color),
-                FadingShadow.POSITION_TOP);
-
-        mRecyclerView.addOnScrollListener(new OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                boolean shadowVisible = mRecyclerView.canScrollVertically(-1);
-                mShadowView.setVisibility(shadowVisible ? View.VISIBLE : View.GONE);
-            }
-        });
-
         final LocationBar locationBar = (LocationBar) sheet.findViewById(R.id.location_bar);
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -186,6 +167,14 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     @Override
     public int getType() {
         return BottomSheetContentController.TYPE_SUGGESTIONS;
+    }
+
+    public void onNewTabShown() {
+        // Show logo and search box if applicable.
+    }
+
+    public void onNewTabHidden() {
+        // Hide logo and search box if applicable.
     }
 
     private void updateContextualSuggestions(String url) {

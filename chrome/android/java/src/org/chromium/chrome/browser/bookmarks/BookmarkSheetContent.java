@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.bookmarks;
 
 import android.view.View;
 
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
@@ -30,6 +31,12 @@ public class BookmarkSheetContent implements BottomSheetContent {
         mBookmarkManager = new BookmarkManager(activity, false, snackbarManager);
         mBookmarkManager.updateForUrl(BookmarkUtils.getLastUsedUrl(activity));
         mContentView = mBookmarkManager.getView();
+        mContentView.setPadding(mContentView.getPaddingLeft(),
+                mContentView.getPaddingTop()
+                        + mContentView.getResources().getDimensionPixelSize(
+                                  R.dimen.bottom_control_container_height),
+                mContentView.getPaddingRight(), mContentView.getPaddingBottom());
+
         mToolbarView = mBookmarkManager.detachToolbarView();
         mToolbarView.addObserver(new SelectableListToolbar.SelectableListToolbarObserver() {
             @Override

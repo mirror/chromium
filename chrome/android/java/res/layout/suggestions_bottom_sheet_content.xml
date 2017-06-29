@@ -3,21 +3,20 @@
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->
 
+<!-- remove padding to demonstrate SuggestionsBottomSheetContent drawing behind
+     toolbar -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ntp_bg" >
+    android:background="@color/ntp_bg"
+    android:paddingTop="@dimen/bottom_control_container_height" >
 
     <org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <org.chromium.chrome.browser.widget.FadingShadowView
-        android:id="@+id/shadow"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar_shadow_height"
-        android:visibility="gone" />
+    <!-- No shadow in the visual refresh -->
 
 </FrameLayout>

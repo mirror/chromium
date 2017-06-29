@@ -50,7 +50,7 @@ public class LogoDelegateImpl implements LogoView.Delegate {
     public LogoDelegateImpl(Tab tab, LogoView logoView) {
         mTab = tab;
         mLogoView = logoView;
-        mLogoBridge = new LogoBridge(tab.getProfile());
+        mLogoBridge = new LogoBridge(mTab.getProfile());
     }
 
     public void destroy() {
@@ -74,6 +74,7 @@ public class LogoDelegateImpl implements LogoView.Delegate {
         } else if (mOnLogoClickUrl != null) {
             RecordHistogram.recordSparseSlowlyHistogram(LOGO_CLICK_UMA_NAME,
                     isAnimatedLogoShowing ? ANIMATED_LOGO_CLICKED : STATIC_LOGO_CLICKED);
+            // TODO: make this work without a tab e.g. through NativePageHost.
             mTab.loadUrl(new LoadUrlParams(mOnLogoClickUrl, PageTransition.LINK));
         }
     }

@@ -681,7 +681,8 @@ public class ToolbarPhone extends ToolbarLayout
     }
 
     protected void updateToolbarBackground(int color) {
-        mToolbarBackground.setColor(color);
+        // TODO: this is obviously incorrect
+        mToolbarBackground.setColor(Color.TRANSPARENT);
         invalidate();
     }
 
@@ -983,8 +984,12 @@ public class ToolbarPhone extends ToolbarLayout
         setAncestorsShouldClipChildren(mUrlExpansionPercent == 0f);
         mToolbarShadow.setAlpha(0f);
 
+        // TODO: ToolbarPhone needs access to some NTP methods; expose them through
+        //       SuggestionsBottomSheetContent.
         NewTabPage ntp = getToolbarDataProvider().getNewTabPageForCurrentTab();
-        ntp.getSearchBoxBounds(mNtpSearchBoxBounds, mNtpSearchBoxTranslation);
+        if (ntp != null) {
+            ntp.getSearchBoxBounds(mNtpSearchBoxBounds, mNtpSearchBoxTranslation);
+        }
         int locationBarTranslationY =
                 Math.max(0, (mNtpSearchBoxBounds.top - mLocationBar.getTop()));
         mLocationBar.setTranslationY(locationBarTranslationY);
@@ -1018,7 +1023,7 @@ public class ToolbarPhone extends ToolbarLayout
         mLocationBar.setAlpha(relativeAlpha);
 
         // The search box on the NTP is visible if our omnibox is invisible, and vice-versa.
-        ntp.setSearchBoxAlpha(1f - relativeAlpha);
+        if (ntp != null) ntp.setSearchBoxAlpha(1f - relativeAlpha);
     }
 
     /**
@@ -2110,7 +2115,7 @@ public class ToolbarPhone extends ToolbarLayout
         return mTabSwitcherState == STATIC_TAB;
     }
 
-    private VisualState computeVisualState(boolean isInTabSwitcherMode) {
+    protected VisualState computeVisualState(boolean isInTabSwitcherMode) {
         if (isInTabSwitcherMode && isIncognito()) return VisualState.TAB_SWITCHER_INCOGNITO;
         if (isInTabSwitcherMode && !isIncognito()) return VisualState.TAB_SWITCHER_NORMAL;
         if (isLocationBarShownInNTP()) return VisualState.NEW_TAB_NORMAL;
