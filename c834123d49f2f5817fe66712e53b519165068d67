@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa2bccf4_39f4f91c",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-29T20:18:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "864af5c3_546b6264",
+      "range": {
+        "startLine": 805,
+        "startChar": 11,
+        "endLine": 805,
+        "endChar": 30
+      },
+      "revId": "c834123d49f2f5817fe66712e53b519165068d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a613172e_2a8b86cc",
         "filename": "ui/views/view.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T18:05:15Z",
       "side": 1,
       "message": "+1 to Peter\u0027s comments about (a) adding tests and (b) using this function somewhere.",
+      "range": {
+        "startLine": 815,
+        "startChar": 5,
+        "endLine": 815,
+        "endChar": 9
+      },
+      "revId": "c834123d49f2f5817fe66712e53b519165068d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570c0588_261ceab8",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-06-29T20:18:27Z",
+      "side": 1,
+      "message": "Added tests. I wasn\u0027t able to find an isntance of where ConvertRectFromScreen would be useful to replace some instance of ConvertPointFromScreen, as most instances of this are used for point hit targeting. We may want to just delete ConvertRectFromScreen if there\u0027s no need for it.",
+      "parentUuid": "a613172e_2a8b86cc",
       "range": {
         "startLine": 815,
         "startChar": 5,
