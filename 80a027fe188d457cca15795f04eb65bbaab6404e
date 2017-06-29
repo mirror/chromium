@@ -51,6 +51,24 @@
       "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7f414f_df240916",
+        "filename": "extensions/shell/test/shell_tests_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-06-29T23:05:51Z",
+      "side": 1,
+      "message": "I am trying to mimic the original behavior without using std::max which is in the slow-to-compile algorithm header (for some background, see the \"compilation time woes\" thread on blink-dev).  I am not sure why half the number of processors was chosen, but I suspect it was probably due to efficiency concerns re hyperthreading and then copy+pasted from one unit test main function to another.  This code should be cheaper at compile time and still end up with the same value for the number of jobs.\n\nAlok asked the same question re sharing this logic over here: https://chromium-review.googlesource.com/c/549342/7/chromecast%252Fapp%252Fcast_test_launcher.cc#47\nBut since there are instances where the unittest binary runs with N jobs rather than N/2 it would require adding either another function either in SysInfo or base/test/ somewhere- I\u0027m not sure if phajdan.jr (base/test OWNER) is interested in doing that.  @Paweł?",
+      "parentUuid": "64ba9d46_02e84562",
+      "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
