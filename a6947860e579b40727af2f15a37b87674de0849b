@@ -16,6 +16,24 @@
       "revId": "a6947860e579b40727af2f15a37b87674de0849b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ccbfb23_ae1444a7",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2683,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-06-29T22:08:54Z",
+      "side": 1,
+      "message": "OnMouseDragged and HandleMouseLocation are actually the only 2 functions that call ShowSiblingMenu, so I don\u0027t think the pattern has other occurrences. \n\nThat said, there\u0027s a function called SetSelectionOnPointerDown that abstracts Selection (and is only called in 2 places). I could abstract this logic/SetSelection pattern similarly (although it might not be worth it considering the SetSelectionOnPointerDown case encompasses quite a bit more logic/work than we would need in this case).",
+      "parentUuid": "4964b5fa_b869be33",
+      "revId": "a6947860e579b40727af2f15a37b87674de0849b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
