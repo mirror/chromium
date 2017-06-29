@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "2263d1fc_0c226d6e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T07:06:16Z",
+      "side": 1,
+      "message": "We\u0027re reading the main script, when could this return nullopt?  If this returns null should we fallback to the legacy path?",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f381820f_60faa647",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T07:06:16Z",
+      "side": 1,
+      "message": "Hm, I have the feeling that you could also address hiroki-san\u0027s initial comment as well, e.g. we can move all the line 458-474 down below right before they\u0027re used.  We have another blocking part between there, and we might be able to save another few ns.",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e816f951_8c27f354",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T07:06:16Z",
+      "side": 1,
+      "message": "Not related to this patch, but I think this could be early return\n\nif (!GlobalScope()-\u003eIsWorkerGlobalScope())\n  return;",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3225a5_8ef7248f",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T07:06:16Z",
+      "side": 1,
+      "message": "This may not be really accurate? (I assume it\u0027s fine?)",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bf488c3_17515922",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
         "patchSetId": 4
