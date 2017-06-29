@@ -58,14 +58,25 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
 
 using ExitCode = WorkerThread::ExitCode;
 
+namespace {
+
 // TODO(nhiroki): Adjust the delay based on UMA.
 const long long kForcibleTerminationDelayInMs = 2000;  // 2 secs
+
+void ForwardInterfaceRequest(const std::string& name,
+                             mojo::ScopedMessagePipeHandle handle) {
+  Platform::Current()->GetInterfaceProvider()->GetInterface(name.c_str(),
+                                                            std::move(handle));
+}
+
+}  // namespace
 
 static Mutex& ThreadSetMutex() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, mutex, ());
@@ -294,12 +305,11 @@ bool WorkerThread::IsForciblyTerminated() {
   return false;
 }
 
-InterfaceProvider* WorkerThread::GetInterfaceProvider() {
-  // TODO(https://crbug.com/734210): Instead of returning this interface
-  // provider, which maps to a RenderProcessHost in the browser process, this
-  // method should return an interface provider which maps to a specific worker
-  // context such as a SharedWorkerHost or EmbeddedWorkerInstance.
-  return Platform::Current()->GetInterfaceProvider();
+service_manager::InterfaceProvider& WorkerThread::GetInterfaceProvider() {
+  // TODO(https://crbug.com/734210): Instead of forwarding to the process-wide
+  // interface provider a worker-specific interface provider pipe should be
+  // passed in as part of the WorkerThreadStartupData.
+  return interface_provider_;
 }
 
 WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
@@ -316,6 +326,8 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
   DCHECK(IsMainThread());
   MutexLocker lock(ThreadSetMutex());
   WorkerThreads().insert(this);
+  interface_provider_.Forward(
+      ConvertToBaseCallback(WTF::Bind(&ForwardInterfaceRequest)));
 }
 
 void WorkerThread::TerminateInternal(TerminationMode mode) {
