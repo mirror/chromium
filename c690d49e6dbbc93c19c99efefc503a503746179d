@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2147fcf7_b156a289",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "doesn\u0027t this mean that we only ever set the elapsed session time once?",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88213a2_553a20da",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "this might show the promo after a session has ended?",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe53d86a_4385c445",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "is this used?",
+      "range": {
+        "startLine": 28,
+        "startChar": 41,
+        "endLine": 28,
+        "endChar": 47
+      },
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381a1fe9_42150dd2",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "do we need a separate directory for this? what would happen if we tried to reuse the directory from kFeatureEngagementTrackerStorageDirname.",
+      "range": {
+        "startLine": 51,
+        "startChar": 14,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a19ccd7_440f0092",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "since you have a static getter for the factory, all other methods don\u0027t need to be static.",
+      "range": {
+        "startLine": 33,
+        "startChar": 45,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b2b249_d68189ef",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "What is the goal of this test - to check that if a new tab is opened, and then promo isn\u0027t shown? Or that the promo *wouldn\u0027t* be shown? \n\nEven if you removed line 99, wouldn\u0027t this line evaluate to false?\n\nThe other tests that check first an EXPECT_FALSE, and then an EXPECT_TRUE are much more clear.",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99e28ce_986005c3",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "given that lines 116 through 125 are all calling test methods...I think this test and the ones above it only test the test class, not the class in question.\n\nFor each test, I recommend writing a comment indicating the behavior you\u0027re trying to test:\ne.g. test that a promo is shown if the session time is met and an omnibox navigation occurs.",
+      "range": {
+        "startLine": 125,
+        "startChar": 24,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5d8559_03f7712d",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "how is this test different from the one above it?",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c158ad3_af93504b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-29T22:45:13Z",
+      "side": 1,
+      "message": "can we check that the correction duration is recorded, even if UpdateSessionTime is called multiple times?",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
