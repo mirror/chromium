@@ -78,9 +78,7 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   void OnMemoryDump(WebMemoryDumpLevelOfDetail,
                     WebProcessMemoryDump*) const override;
 
-  void DestroyDecodedDataForFailedRevalidation() override;
-
-  const String& SourceText();
+  const String SourceText();
 
   static bool MimeTypeAllowedByNosniff(const ResourceResponse&);
 
@@ -104,8 +102,6 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   ScriptResource(const ResourceRequest&,
                  const ResourceLoaderOptions&,
                  const TextResourceDecoderOptions&);
-
-  AtomicString source_text_;
 };
 
 DEFINE_RESOURCE_TYPE_CASTS(Script);
