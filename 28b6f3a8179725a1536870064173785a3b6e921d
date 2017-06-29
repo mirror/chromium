@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf9ae3f7_7afff6e8",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-06-29T21:20:27Z",
+      "side": 1,
+      "message": "Plz grab the implementation from the overload that doesn\u0027t take any params (above) and then implement the other in terms of this one.\n\ni.e.,\n\nint64_t\nAutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormParsed()\n    const {\n return MillisecondsSinceFormParsed(form_parse_timestamp_);\n}\n\nint64_t\nAutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormParsed(\n    const base::TimeTicks\u0026 form_parsed_time) const {\n  DCHECK(!form_parsed_timestamp.is_null());\n  // Use the pinned timestamp as the current time if it\u0027s set.\n  base::TimeTicks now \u003d\n      pinned_timestamp_.is_null() ? base::TimeTicks::Now() : pinned_timestamp_;\n  return (now - form_parsed_timestamp).InMilliseconds();\n}",
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc677d7_1744c141",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-06-29T21:20:27Z",
+      "side": 1,
+      "message": "Perhaps this shouldn\u0027t be cached here? How much work is it to pull this out to a param for the other methods as well?\n\nIn particular, this bug you\u0027re fixing also applies to LogFieldType() and LogFieldFillStatus() which also get called in FormStructure::LogQualityMetrics() along-side LogFormSubmitted().\n\n:(\n\n[i.e., the bug will persist because LogFieldType() and LogFieldFillStatus() need the same fix as LogFormSubmitted.]",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 19
+      },
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
