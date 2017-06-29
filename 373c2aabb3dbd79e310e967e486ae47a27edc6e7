@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "596ec360_0a0113fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T06:15:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dbaf966_16f8176d",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "373c2aabb3dbd79e310e967e486ae47a27edc6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60d114da_d5016938",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T06:15:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b8968b4_9f3b71a7",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "373c2aabb3dbd79e310e967e486ae47a27edc6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "772cf7a2_edf42a9d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-28T15:47:28Z",
       "side": 1,
       "message": "Is this histogram still useful?  If so, how would you expect it to be used?",
+      "range": {
+        "startLine": 29588,
+        "startChar": 4,
+        "endLine": 29591,
+        "endChar": 74
+      },
+      "revId": "373c2aabb3dbd79e310e967e486ae47a27edc6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde75329_4c1217fe",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29591,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T06:15:47Z",
+      "side": 1,
+      "message": "This metric still can track real API call counts including footprint usage. This is still useful when permission metrics reports something curious then we need to confirm it from midi side.\n\nAlso, this can track unexpected platform dependent errors that can happen only on specific OS versions with a specific update, expecting to catch the case feature gets broken by Windows Update, or unintentionally disabled on some ChromeOS variants.",
+      "parentUuid": "772cf7a2_edf42a9d",
       "range": {
         "startLine": 29588,
         "startChar": 4,
