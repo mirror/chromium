@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a27cc99_1c69f689",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T19:10:48Z",
+      "side": 1,
+      "message": "Hmm... doesn\u0027t this mean we don\u0027t add warnings if CheckForIllegalFilenames() returns false, as it would for another reserved directory?\n\n(If no tests failed, this might also indicate an area we need more coverage. :))",
+      "revId": "e0fcc7f81103e96da852eba76d2481bd9af612e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8df191a_5722d753",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T19:10:48Z",
+      "side": 1,
+      "message": "Do we need this added to the list of reserved names if we handle it specially below?",
+      "revId": "e0fcc7f81103e96da852eba76d2481bd9af612e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7cbf09_9acd26ea",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T19:10:48Z",
+      "side": 1,
+      "message": "Do we need to use StringPrintf here?",
+      "revId": "e0fcc7f81103e96da852eba76d2481bd9af612e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
