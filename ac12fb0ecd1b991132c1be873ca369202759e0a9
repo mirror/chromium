@@ -68,6 +68,30 @@
       "revId": "ac12fb0ecd1b991132c1be873ca369202759e0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7db62b_536215f0",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-29T23:32:22Z",
+      "side": 1,
+      "message": "I think this code is more efficient than _FindNewViolationsOfRule().\nThis function needs to find only the first instance of target macros in a file. _FindNewViolationsOfRule() checks all of changed lines anyway.",
+      "parentUuid": "bd024980_48fd5643",
+      "range": {
+        "startLine": 2177,
+        "startChar": 20,
+        "endLine": 2177,
+        "endChar": 28
+      },
+      "revId": "ac12fb0ecd1b991132c1be873ca369202759e0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
