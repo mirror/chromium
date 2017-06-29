@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94efdf4f_2d780baa",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2145,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-29T23:40:53Z",
+      "side": 0,
+      "message": "1920 x 1 shard x 4 devices -\u003e 600 x 3 shards x 1 device? Was our timeout too high before?",
+      "revId": "35f9f27a8760a9bb9e803dacbc9e5903836cfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
