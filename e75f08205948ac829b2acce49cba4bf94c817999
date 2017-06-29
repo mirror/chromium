@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cc460e5_c500a4df",
+        "filename": "build/config/mac/mac_sdk.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-29T21:23:11Z",
+      "side": 1,
+      "message": "nit: 80 columns",
+      "revId": "e75f08205948ac829b2acce49cba4bf94c817999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
