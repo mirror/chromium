@@ -546,7 +546,7 @@ enum class WebFeature : uint32_t {
   kV8XPathEvaluator_CreateExpression_Method = 854,
   kV8XPathEvaluator_CreateNSResolver_Method = 855,
   kV8XPathEvaluator_Evaluate_Method = 856,
-  kRequestMIDIAccess = 857,
+  kRequestMIDIAccess_ObscuredByFootprinting = 857,
   kV8MouseEvent_LayerX_AttributeGetter = 858,
   kV8MouseEvent_LayerY_AttributeGetter = 859,
   kInnerTextWithShadowTree = 860,
@@ -801,7 +801,7 @@ enum class WebFeature : uint32_t {
   kEventComposed = 1140,
   kGeolocationInsecureOriginIframe = 1141,
   kGeolocationSecureOriginIframe = 1142,
-  kRequestMIDIAccessIframe = 1143,
+  kRequestMIDIAccessIframe_ObscuredByFootprinting = 1143,
   kGetUserMediaInsecureOriginIframe = 1144,
   kGetUserMediaSecureOriginIframe = 1145,
   kElementRequestPointerLockIframe = 1146,
@@ -1494,8 +1494,8 @@ enum class WebFeature : uint32_t {
   // The above items are available in M59 branch.
 
   kViewportFixedPositionUnderFilter = 1961,
-  kRequestMIDIAccessWithSysExOption = 1962,
-  kRequestMIDIAccessIframeWithSysExOption = 1963,
+  kRequestMIDIAccessWithSysExOption_ObscuredByFootprinting = 1962,
+  kRequestMIDIAccessIframeWithSysExOption_ObscuredByFootprinting = 1963,
   kGamepadAxes = 1964,
   kGamepadButtons = 1965,
   kVibrateWithoutUserGesture = 1966,
