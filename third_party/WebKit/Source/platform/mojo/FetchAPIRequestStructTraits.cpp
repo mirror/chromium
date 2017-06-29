@@ -7,6 +7,7 @@
 #include "mojo/public/cpp/bindings/map_traits_wtf_hash_map.h"
 #include "mojo/public/cpp/bindings/string_traits_wtf.h"
 #include "platform/blob/BlobData.h"
+#include "platform/mojo/FetchAPIRequestEnumTraits.h"
 #include "platform/mojo/KURLStructTraits.h"
 #include "platform/mojo/ReferrerStructTraits.h"
 #include "platform/weborigin/Referrer.h"
@@ -24,6 +25,8 @@ struct FetchAPIRequestStructTraitsContext {
 
   WTF::HashMap<WTF::String, WTF::String> headers;
 };
+
+// TODO(cmumford): Create a context for the Response as well.
 
 }  // namespace
 
@@ -498,6 +501,105 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   out->SetClientId(clientId);
   out->SetIsReload(data.is_reload());
   return true;
+}
+
+// static
+bool StructTraits<blink::mojom::FetchAPIResponseDataView,
+                  blink::WebServiceWorkerResponse>::
+    Read(blink::mojom::FetchAPIResponseDataView data,
+         blink::WebServiceWorkerResponse* out) {
+  NOTREACHED() << "Implement WebServiceWorkerResponse struct traits";
+#if 0
+  blink::WebURLResponse::FetchResponseMode mode;
+  blink::WebURLResponse::ResponseContext responseContext;
+  blink::WebURLResponse::FrameType frameType;
+  blink::KURL url;
+  WTF::String method;
+  WTF::HashMap<WTF::String, WTF::String> headers;
+  WTF::String blobUuid;
+  blink::Referrer referrer;
+  blink::WebURLResponse::FetchCredentialsMode credentialsMode;
+  blink::WebURLResponse::FetchRedirectMode redirectMode;
+  WTF::String clientId;
+
+  if (!data.ReadMode(&mode) || !data.ReadResponseContextType(&responseContext) ||
+      !data.ReadFrameType(&frameType) || !data.ReadUrl(&url) ||
+      !data.ReadMethod(&method) || !data.ReadHeaders(&headers) ||
+      !data.ReadBlobUuid(&blobUuid) || !data.ReadReferrer(&referrer) ||
+      !data.ReadCredentialsMode(&credentialsMode) ||
+      !data.ReadRedirectMode(&redirectMode) || !data.ReadClientId(&clientId)) {
+    return false;
+  }
+
+  out->SetMode(mode);
+  out->SetIsMainResourceLoad(data.is_main_resource_load());
+  out->SetResponseContext(responseContext);
+  out->SetFrameType(frameType);
+  out->SetURL(url);
+  out->SetMethod(method);
+  for (const auto& pair : headers)
+    out->SetHeader(pair.key, pair.value);
+  out->SetBlob(blobUuid, static_cast<long long>(data.blob_size()));
+  out->SetReferrer(referrer.referrer, static_cast<blink::WebReferrerPolicy>(
+                                          referrer.referrer_policy));
+  out->SetCredentialsMode(credentialsMode);
+  out->SetRedirectMode(redirectMode);
+  out->SetClientId(clientId);
+  out->SetIsReload(data.is_reload());
+#endif
+  return true;
+}
+
+// static
+WTF::Vector<blink::KURL> StructTraits<blink::mojom::FetchAPIResponseDataView,
+                                      blink::WebServiceWorkerResponse>::
+    url_list(const blink::WebServiceWorkerResponse& response) {
+  const blink::WebVector<blink::WebURL>& response_urls = response.UrlList();
+  WTF::Vector<blink::KURL> urls(response_urls.size());
+  for (size_t i = 0; i < response_urls.size(); i++)
+    urls[i] = response_urls[i];
+  return urls;
+}
+
+WTF::String StructTraits<blink::mojom::FetchAPIResponseDataView,
+                         blink::WebServiceWorkerResponse>::
+    status_text(const blink::WebServiceWorkerResponse& response) {
+  return response.StatusText();
+}
+
+WTF::HashMap<WTF::String, WTF::String>
+StructTraits<blink::mojom::FetchAPIResponseDataView,
+             blink::WebServiceWorkerResponse>::
+    headers(const blink::WebServiceWorkerResponse& response) {
+  WTF::HashMap<WTF::String, WTF::String> headers;
+
+  for (const blink::WebString& key : response.GetHeaderKeys())
+    headers.Set(key, response.GetHeader(key));
+
+  return headers;
+}
+
+WTF::String StructTraits<blink::mojom::FetchAPIResponseDataView,
+                         blink::WebServiceWorkerResponse>::
+    blob_uuid(const blink::WebServiceWorkerResponse& response) {
+  return response.BlobUUID();
+}
+
+WTF::String StructTraits<blink::mojom::FetchAPIResponseDataView,
+                         blink::WebServiceWorkerResponse>::
+    cache_storage_cache_name(const blink::WebServiceWorkerResponse& response) {
+  return response.CacheStorageCacheName();
+}
+
+WTF::Vector<WTF::String> StructTraits<blink::mojom::FetchAPIResponseDataView,
+                                      blink::WebServiceWorkerResponse>::
+    cors_exposed_header_names(const blink::WebServiceWorkerResponse& response) {
+  const blink::WebVector<blink::WebString>& response_names =
+      response.CorsExposedHeaderNames();
+  WTF::Vector<WTF::String> names(response_names.size());
+  for (size_t i = 0; i < response_names.size(); i++)
+    names[i] = response_names[i];
+  return names;
 }
 
 }  // namespace mojo

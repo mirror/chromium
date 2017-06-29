@@ -4,6 +4,7 @@
 
 module blink.mojom;
 
+import "mojo/common/time.mojom";
 import "third_party/WebKit/public/platform/referrer.mojom";
 import "url/mojo/url.mojom";
 
@@ -86,6 +87,33 @@ enum ServiceWorkerFetchType {
   FOREIGN_FETCH,
 };
 
+enum ResponseError {
+  Unknown,
+  PromiseRejected,
+  DefaultPrevented,
+  NoV8Instance,
+  ResponseTypeError,
+  ResponseTypeOpaque,
+  ResponseTypeNotBasicOrDefault,
+  BodyUsed,
+  ResponseTypeOpaqueForClientRequest,
+  ResponseTypeOpaqueRedirect,
+  BodyLocked,
+  NoForeignFetchResponse,
+  ForeignFetchHeadersWithoutOrigin,
+  ForeignFetchMismatchedOrigin,
+  RedirectedResponseForNotFollowRequest,
+};
+
+enum ServiceWorkerResponseType {
+  BASIC,
+  CORS,
+  DEFAULT,
+  ERROR,
+  OPAQUE,
+  OPAQUE_REDIRECT,
+};
+
 struct FetchAPIRequest {
   FetchRequestMode mode;
   bool is_main_resource_load;
@@ -102,4 +130,18 @@ struct FetchAPIRequest {
   string? client_id;
   bool is_reload;
   ServiceWorkerFetchType fetch_type;
+};
+
+struct FetchAPIResponse {
+  array<url.mojom.Url> url_list;
+  int32 status_code;
+  string status_text;
+  ServiceWorkerResponseType response_type;
+  map<string, string> headers;
+  string? blob_uuid;
+  uint64 blob_size;
+  ResponseError error;
+  mojo.common.mojom.Time response_time;
+  string cache_storage_cache_name;
+  array<string> cors_exposed_header_names;
 };

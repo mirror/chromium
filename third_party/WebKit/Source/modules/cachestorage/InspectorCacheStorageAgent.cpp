@@ -112,6 +112,8 @@ CString ServiceWorkerCacheErrorString(WebServiceWorkerCacheError error) {
       return CString("cache not found.");
     case kWebServiceWorkerCacheErrorTooLarge:
       return CString("operation too large.");
+    case kWebServiceWorkerCacheErrorStorage:
+      return CString("storage backend error.");
   }
   NOTREACHED();
   return "";

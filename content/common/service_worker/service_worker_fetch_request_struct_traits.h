@@ -7,6 +7,7 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "content/public/common/referrer.h"
+#include "third_party/WebKit/Source/platform/mojo/FetchAPIRequestEnumTraits.h"
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
 
 namespace mojo {
@@ -149,6 +150,63 @@ struct StructTraits<blink::mojom::FetchAPIRequestDataView,
 
   static bool Read(blink::mojom::FetchAPIRequestDataView data,
                    content::ServiceWorkerFetchRequest* out);
+};
+
+template <>
+struct StructTraits<blink::mojom::FetchAPIResponseDataView,
+                    content::ServiceWorkerResponse> {
+  static const std::vector<GURL>& url_list(
+      const content::ServiceWorkerResponse& response) {
+    return response.url_list;
+  }
+
+  static int status_code(const content::ServiceWorkerResponse& response) {
+    return response.status_code;
+  }
+
+  static const std::string& status_text(
+      const content::ServiceWorkerResponse& response) {
+    return response.status_text;
+  }
+
+  static blink::WebServiceWorkerResponseType response_type(
+      const content::ServiceWorkerResponse& response) {
+    return response.response_type;
+  }
+
+  static std::map<std::string, std::string> headers(
+      const content::ServiceWorkerResponse& response);
+
+  static std::string blob_uuid(const content::ServiceWorkerResponse& response) {
+    return response.blob_uuid;
+  }
+
+  static uint64_t blob_size(const content::ServiceWorkerResponse& response) {
+    return response.blob_size;
+  }
+
+  static blink::WebServiceWorkerResponseError error(
+      const content::ServiceWorkerResponse& response) {
+    return response.error;
+  }
+
+  static const base::Time& response_time(
+      const content::ServiceWorkerResponse& response) {
+    return response.response_time;
+  }
+
+  static const std::string& cache_storage_cache_name(
+      const content::ServiceWorkerResponse& response) {
+    return response.cache_storage_cache_name;
+  }
+
+  static const std::vector<std::string>& cors_exposed_header_names(
+      const content::ServiceWorkerResponse& response) {
+    return response.cors_exposed_header_names;
+  }
+
+  static bool Read(blink::mojom::FetchAPIResponseDataView,
+                   content::ServiceWorkerResponse* output);
 };
 
 }  // namespace mojo
