@@ -9,6 +9,7 @@ source_set("factory") {
   ]
 
   public_deps = [
+    "//components/download/content/public",
     "//components/download/public",
   ]
 
