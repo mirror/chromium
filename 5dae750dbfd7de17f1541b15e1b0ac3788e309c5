@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc127a7f_7fc78321",
+        "filename": "chrome/test/vr/perf/vr_test_arg_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-29T21:28:18Z",
+      "side": 1,
+      "message": "Intentional double-blank lines here and below?",
+      "revId": "5dae750dbfd7de17f1541b15e1b0ac3788e309c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
