@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad5196b1_a00a69d1",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-06-29T06:26:15Z",
+      "side": 0,
+      "message": "If we are already decided on removing support for 1 FD for all planes, shouldn\u0027t we rather change the check to (num_fds !\u003d num_planes)?",
+      "range": {
+        "startLine": 616,
+        "startChar": 0,
+        "endLine": 623,
+        "endChar": 3
+      },
+      "revId": "5f2725f68003a78440a8c381b258bc338e910232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

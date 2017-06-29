@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "418c10be_31868917",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-06-29T06:26:15Z",
+      "side": 1,
+      "message": "I think it could be a good idea to ensure that pixmap contains num_planes of FDs.",
+      "revId": "cf48b24635517cb15d6be5c3a72efef86926f341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc921ec_41e00e29",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-06-29T06:26:15Z",
+      "side": 1,
+      "message": "I wonder if DCHECK() is the right thing here. It probably could be if we had testing with DCHECKs enabled, but AFAIK we don\u0027t... Someone else to judge, though, as I\u0027m not an expert on Chromium (browser) coding practices.",
+      "revId": "cf48b24635517cb15d6be5c3a72efef86926f341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
