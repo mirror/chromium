@@ -22,6 +22,30 @@
       "revId": "2c3122fff58bbf2fb9c5225e56d8fdc691fa914d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90366ebc_bd44ba0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:51:49Z",
+      "side": 0,
+      "message": "Yes, that\u0027s it :)\n\nLooking at line 390, we also notified of tasks being completed before starting the image load tasks, so we might have logged completely uninitialised data depending on the timing with the view being attached to the window.",
+      "parentUuid": "c6aac6ec_2221f0f9",
+      "range": {
+        "startLine": 415,
+        "startChar": 42,
+        "endLine": 415,
+        "endChar": 61
+      },
+      "revId": "2c3122fff58bbf2fb9c5225e56d8fdc691fa914d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
