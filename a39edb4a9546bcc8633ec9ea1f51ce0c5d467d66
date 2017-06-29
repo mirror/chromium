@@ -22,6 +22,30 @@
       "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaec83f8_d9cdec99",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2017-06-29T16:46:13Z",
+      "side": 1,
+      "message": "One issue is that in general we consider \"loopback\" as an input device id in chrome. And \"loopback\" is not an id that OS can recognize (unlike those real microphone or speaker ids). So we must handle the special case in chrome somewhere, and now we handle that case in GetInputStreamParameters(), which is consistent with regarding \"loopback\" as input device. If you wish to move that implementation into GetOutputStreamParameters(), I think that\u0027s a big change. And inconsistency still exists, as why you plug an input device id \"loopback\" into GetOutputStreamParameters()?\n\nThe fallback only happens when the required device does not exist. Because in this case, we\u0027ve already verify the existence of the device, it will not be triggered. But it is unsafe to remove the fallback, as other code paths might rely on it.",
+      "parentUuid": "4bf933d9_1f92c85b",
+      "range": {
+        "startLine": 172,
+        "startChar": 1,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
