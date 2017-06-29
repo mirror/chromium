@@ -102,6 +102,7 @@ class SSLServerSocketImpl : public SSLServerSocket,
   void ClearConnectionAttempts() override {}
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override {}
   int64_t GetTotalReceivedBytes() const override;
+  void Tag(const SocketTag& tag) override;
   static int CertVerifyCallback(X509_STORE_CTX* store_ctx, void* arg);
 
   // SocketBIOAdapter::Delegate implementation.
@@ -369,6 +370,10 @@ void SSLServerSocketImpl::GetConnectionAttempts(ConnectionAttempts* out) const {
 
 int64_t SSLServerSocketImpl::GetTotalReceivedBytes() const {
   return transport_socket_->GetTotalReceivedBytes();
+}
+
+void SSLServerSocketImpl::Tag(const SocketTag& tag) {
+  return transport_socket_->Tag(tag);
 }
 
 void SSLServerSocketImpl::OnReadReady() {
