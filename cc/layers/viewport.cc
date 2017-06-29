@@ -21,8 +21,9 @@ std::unique_ptr<Viewport> Viewport::Create(LayerTreeHostImpl* host_impl) {
 }
 
 Viewport::Viewport(LayerTreeHostImpl* host_impl)
-    : host_impl_(host_impl)
-    , pinch_zoom_active_(false) {
+    : host_impl_(host_impl),
+      pinch_zoom_active_(false),
+      pulling_controls_from_bottom_(false) {
   DCHECK(host_impl_);
 }
 
@@ -30,6 +31,7 @@ void Viewport::Pan(const gfx::Vector2dF& delta) {
   gfx::Vector2dF pending_delta = delta;
   float page_scale = host_impl_->active_tree()->current_page_scale_factor();
   pending_delta.Scale(1 / page_scale);
+
   InnerScrollLayer()->ScrollBy(pending_delta);
 }
 
@@ -43,8 +45,18 @@ Viewport::ScrollResult Viewport::ScrollBy(const gfx::Vector2dF& delta,
 
   gfx::Vector2dF content_delta = delta;
 
-  if (affect_browser_controls && ShouldBrowserControlsConsumeScroll(delta))
-    content_delta -= ScrollBrowserControls(delta);
+  if (affect_browser_controls) {
+    if (BottomOverscrollShowsControls(delta)) {
+      // The content should not move and the browser controls move opposite
+      // their normal direction.
+      gfx::Vector2dF negative_delta_y(delta.x(), -delta.y());
+      gfx::Vector2dF applied_delta = ScrollBrowserControls(negative_delta_y);
+      content_delta.set_y(content_delta.y() + applied_delta.y());
+      content_delta.set_x(content_delta.x() - applied_delta.x());
+    } else if (ShouldBrowserControlsConsumeScroll(delta)) {
+      content_delta -= ScrollBrowserControls(delta);
+    }
+  }
 
   gfx::Vector2dF pending_content_delta = content_delta;
 
@@ -69,6 +81,7 @@ Viewport::ScrollResult Viewport::ScrollBy(const gfx::Vector2dF& delta,
   result.consumed_delta = delta - AdjustOverscroll(pending_content_delta);
 
   result.content_scrolled_delta = content_delta - pending_content_delta;
+
   return result;
 }
 
@@ -215,10 +228,37 @@ bool Viewport::ShouldBrowserControlsConsumeScroll(
   if (scroll_delta.y() < 0)
     return true;
 
-  if (TotalScrollOffset().y() < MaxTotalScrollOffset().y())
+  if (TotalScrollOffset().y() < MaxTotalScrollOffset().y()) {
     return true;
+  }
 
   return false;
+}
+
+bool Viewport::BottomOverscrollShowsControls(const gfx::Vector2dF& delta) {
+  bool has_bottom_controls =
+      host_impl_->browser_controls_manager()->BottomControlsHeight() > 0;
+  float controls_shown_ratio =
+      host_impl_->browser_controls_manager()->BottomControlsShownRatio();
+
+  // Only support this functionality if the bottom controls height is > 0 and
+  // the user is scrolling down. If the controls are already shown, no need to
+  // continue.
+  if (delta.y() < 0 || !has_bottom_controls || controls_shown_ratio == 1) {
+    pulling_controls_from_bottom_ = false;
+    return false;
+  }
+
+  // If it has been determined that we are pulling the controls up, continue to
+  // do so until the scroll switches directions.
+  if (pulling_controls_from_bottom_)
+    return true;
+
+  pulling_controls_from_bottom_ =
+      TotalScrollOffset().y() == MaxTotalScrollOffset().y();
+  if (pulling_controls_from_bottom_)
+    host_impl_->browser_controls_manager()->ResetBaseline();
+  return pulling_controls_from_bottom_;
 }
 
 gfx::Vector2dF Viewport::AdjustOverscroll(const gfx::Vector2dF& delta) const {

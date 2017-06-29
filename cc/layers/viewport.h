@@ -76,6 +76,9 @@ class CC_EXPORT Viewport {
                                     const gfx::Vector2dF& pending_delta);
   bool ShouldBrowserControlsConsumeScroll(
       const gfx::Vector2dF& scroll_delta) const;
+  // If the user has scrolled to the bottom of the page, determine if the
+  // browser controls should be shown.
+  bool BottomOverscrollShowsControls(const gfx::Vector2dF& delta);
   gfx::Vector2dF AdjustOverscroll(const gfx::Vector2dF& delta) const;
 
   // Sends the delta to the browser controls, returns the amount applied.
@@ -92,6 +95,7 @@ class CC_EXPORT Viewport {
   LayerTreeHostImpl* host_impl_;
 
   bool pinch_zoom_active_;
+  bool pulling_controls_from_bottom_;
 
   // The pinch zoom anchor point is adjusted by this amount during a pinch. This
   // is used to "snap" a pinch-zoom to the edge of the screen.
