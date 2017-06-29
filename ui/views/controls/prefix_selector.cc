@@ -10,7 +10,9 @@
 #include "ui/gfx/range/range.h"
 #include "ui/views/controls/prefix_delegate.h"
 #include "ui/views/view.h"
+#include "ui/views/views_delegate.h"
 #include "ui/views/widget/widget.h"
+#include "ui/wm/core/coordinate_conversion.h"
 
 namespace views {
 
