@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66605d09_38901d23",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-29T19:53:35Z",
+      "side": 1,
+      "message": "I think we can remove this from the host for this CL.  I think we will use it later, but it is easy to add in the CL that requires it.",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 30
+      },
+      "revId": "c45da6f293d01d055ca1dd43369cc2262861524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f178733d_21481875",
+        "filename": "remoting/host/client_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-29T19:53:35Z",
+      "side": 1,
+      "message": "Add comment please (can be as simple as line 235).",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 238,
+        "endChar": 53
+      },
+      "revId": "c45da6f293d01d055ca1dd43369cc2262861524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31b5a75_b0dd7da0",
+        "filename": "remoting/protocol/data_channel_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-29T19:53:35Z",
+      "side": 1,
+      "message": "nit: I\u0027d rename this from \u0027PrefixAndCallback\u0027 to something like \u0027CallbackDetails\u0027 or \u0027CallbackPair\u0027 so it flows better with the namespace and class name e.g. protocol::DataChannelManager::CallbackPair",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "c45da6f293d01d055ca1dd43369cc2262861524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

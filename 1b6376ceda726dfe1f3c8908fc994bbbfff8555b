@@ -501,6 +501,24 @@
       "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efc1594_fdeccec7",
+        "filename": "remoting/protocol/webrtc_connection_to_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-29T19:53:35Z",
+      "side": 1,
+      "message": "At the point I made the comment I was thinking this class would have access to the DCM, but that is no longer the case, sorry for any confusion : (",
+      "parentUuid": "07ca2e15_08551cdb",
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
