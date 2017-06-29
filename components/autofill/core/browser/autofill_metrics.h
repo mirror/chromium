@@ -714,6 +714,9 @@ class AutofillMetrics {
     // submitted form.
     void UpdateSourceURL(const GURL& url);
 
+    base::TimeTicks GetFormParseTimeStamp();
+    void SetFormParseTimeStamp(const base::TimeTicks& form_parsed_timestamp);
+
    private:
     bool CanLog() const;
     int64_t MillisecondsSinceFormParsed() const;
