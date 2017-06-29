@@ -35,8 +35,11 @@ import org.chromium.base.test.util.FlakyTest;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.ScalableTimeout;
+import org.chromium.base.test.util.parameter.Parameter;
+import org.chromium.base.test.util.parameter.ParameterizedTest;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.omnibox.AutocompleteController.OnSuggestionsReceivedListener;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout.OmniboxSuggestionsList;
@@ -70,6 +73,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@ParameterizedTest.Set(tests = {
+        @ParameterizedTest(parameters = {
+                @Parameter(
+                        tag = CommandLineFlags.Parameter.PARAMETER_TAG)}),
+        @ParameterizedTest(parameters = {
+                @Parameter(
+                        tag = CommandLineFlags.Parameter.PARAMETER_TAG,
+                        arguments = {
+                                @Parameter.Argument(
+                                        name = CommandLineFlags.Parameter.ADD_ARG,
+                                        stringArray = {"enable-features="
+                                                + ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE})
+        })})})
 public class OmniboxTest {
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
@@ -86,6 +102,13 @@ public class OmniboxTest {
             }
         });
     }
+
+    private static final OnSuggestionsReceivedListener sEmptySuggestionListener =
+            new OnSuggestionsReceivedListener() {
+                @Override
+                public void onSuggestionsReceived(
+                        List<OmniboxSuggestion> suggestions, String inlineAutocompleteText) {}
+            };
 
     /**
      * Sanity check of Omnibox.  The problem in http://b/5021723 would
@@ -168,8 +191,8 @@ public class OmniboxTest {
             }
         });
 
-        final TestAutocompleteController controller = new TestAutocompleteController(
-                locationBar, null, null);
+        final TestAutocompleteController controller = new TestAutocompleteController(locationBar,
+                sEmptySuggestionListener, new HashMap<String, List<SuggestionsResult>>());
 
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
@@ -208,17 +231,8 @@ public class OmniboxTest {
         final ImageButton deleteButton =
                 (ImageButton) mActivityTestRule.getActivity().findViewById(R.id.delete_button);
 
-        final OnSuggestionsReceivedListener emptySuggestionListener =
-                new OnSuggestionsReceivedListener() {
-                    @Override
-                    public void onSuggestionsReceived(
-                            List<OmniboxSuggestion> suggestions, String inlineAutocompleteText) {
-                    }
-                };
-
-        final TestAutocompleteController controller = new TestAutocompleteController(
-                locationBar, emptySuggestionListener,
-                new HashMap<String, List<SuggestionsResult>>());
+        final TestAutocompleteController controller = new TestAutocompleteController(locationBar,
+                sEmptySuggestionListener, new HashMap<String, List<SuggestionsResult>>());
 
         OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
@@ -244,12 +258,17 @@ public class OmniboxTest {
 
         TouchCommon.singleClickView(deleteButton);
 
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(1, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return controller.numZeroSuggestRequests();
-            }
-        }));
+        int expectedNumRequests = 2;
+        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE)) {
+            expectedNumRequests = 1;
+        }
+        CriteriaHelper.pollInstrumentationThread(
+                Criteria.equals(expectedNumRequests, new Callable<Integer>() {
+                    @Override
+                    public Integer call() {
+                        return controller.numZeroSuggestRequests();
+                    }
+                }));
     }
 
     @Test
@@ -260,17 +279,8 @@ public class OmniboxTest {
                 (LocationBarLayout) mActivityTestRule.getActivity().findViewById(R.id.location_bar);
         final UrlBar urlBar = (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
 
-        final OnSuggestionsReceivedListener emptySuggestionListener =
-                new OnSuggestionsReceivedListener() {
-                    @Override
-                    public void onSuggestionsReceived(List<OmniboxSuggestion> suggestions,
-                            String inlineAutocompleteText) {
-                    }
-                };
-
-        final TestAutocompleteController controller = new TestAutocompleteController(
-                locationBar, emptySuggestionListener,
-                new HashMap<String, List<SuggestionsResult>>());
+        final TestAutocompleteController controller = new TestAutocompleteController(locationBar,
+                sEmptySuggestionListener, new HashMap<String, List<SuggestionsResult>>());
 
         OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
 
@@ -552,7 +562,11 @@ public class OmniboxTest {
         Assert.assertEquals("URL Bar text not autocompleted as expected.", expectedAutocompleteText,
                 urlText.toString());
         Assert.assertEquals(expectedAutocompleteStart, Selection.getSelectionStart(urlText));
-        Assert.assertEquals(expectedAutocompleteEnd, Selection.getSelectionEnd(urlText));
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE)) {
+            Assert.assertEquals(expectedAutocompleteEnd, urlText.length());
+        } else {
+            Assert.assertEquals(expectedAutocompleteEnd, Selection.getSelectionEnd(urlText));
+        }
     }
 
     /**
