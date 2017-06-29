@@ -168,11 +168,9 @@ String HTMLScriptElement::IntegrityAttributeValue() const {
 }
 
 String HTMLScriptElement::TextFromChildren() {
-  return Element::TextFromChildren();
-}
-
-String HTMLScriptElement::TextContent() const {
-  return Element::textContent();
+  String text_from_children = Element::TextFromChildren();
+  DCHECK_EQ(text_from_children, Element::textContent());
+  return text_from_children;
 }
 
 bool HTMLScriptElement::AsyncAttributeValue() const {
