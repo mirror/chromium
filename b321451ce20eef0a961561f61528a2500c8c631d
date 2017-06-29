@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d1e022cd_c35b5cd9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-29T15:52:46Z",
+      "side": 1,
+      "message": "As per our private discussion, I meant non-consuming category builder and jkrcal@ is ok with the proposed approach.\n\nDone.",
+      "parentUuid": "fdfdb92e_5b84de4c",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 50
+      },
+      "revId": "b321451ce20eef0a961561f61528a2500c8c631d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd25f561_e3b2650a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 3
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8d9e937f_f1cb2041",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-29T15:52:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd25f561_e3b2650a",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 2
+      },
+      "revId": "b321451ce20eef0a961561f61528a2500c8c631d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be901278_346aa7d1",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 3
@@ -83,6 +131,30 @@
       "writtenOn": "2017-06-29T13:49:03Z",
       "side": 1,
       "message": "Hey, these two functions are a cool simplification of the tests, I like it.\n\nThough, I was a bit puzzled by the naming. The names closely correspond to the names in the provider so it is not clear to me that this function also takes care of returning the results.\n\nWhat about the following?\n FetchSuggestionsAndReturnResults\n FetchMoreSuggestionsAndReturnResults",
+      "range": {
+        "startLine": 870,
+        "startChar": 7,
+        "endLine": 870,
+        "endChar": 23
+      },
+      "revId": "b321451ce20eef0a961561f61528a2500c8c631d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1567333d_3e790b29",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-29T15:52:46Z",
+      "side": 1,
+      "message": "That\u0027s a fair argument.\n\nHowever, they were not intended to closely correspond to provider methods.\n\"AndReturnResults\" feels odd to me (implying that provider returns something) and \"Results\" is too general. \n\nI would go for FetchThisSuggestions/FetchMoreThisSuggestions to make it explicit that suggestions are passed as an argument.\n\nWDYT?",
+      "parentUuid": "be901278_346aa7d1",
       "range": {
         "startLine": 870,
         "startChar": 7,
