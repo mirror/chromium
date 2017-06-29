@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a69e71c1_b880e24b",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T20:53:05Z",
+      "side": 1,
+      "message": "I discussed offline with xiyuan. I am still keeping observers instead of client for:\nif we make clients, it doesn\u0027t make much sense for AppListViewDelegate as a wallpaper client. A better place might be WallpaperManager[1]. But WallpaperManager doesn\u0027t define observers, we still need either delegate or observers their to notify app list. Besides, right now both login screen (currently it is using a work around by wzang@) and app list observes wallpaper colors. For future usage, not sure if we have more observers.\n\nFor performance issue, it is not likely this will be called frequently in a short time.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h",
+      "parentUuid": "0e45a6bb_a54ba511",
+      "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23156308_10ec7bf1",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1da56d32_61fd90ab",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T20:53:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23156308_10ec7bf1",
+      "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b72cec7b_f265304b",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e930b7_5f360ad3",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T20:53:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b72cec7b_f265304b",
+      "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +139,24 @@
       "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a011f9_cbd29920",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T20:53:05Z",
+      "side": 1,
+      "message": "ack, thanks",
+      "parentUuid": "1accb63a_bed275f9",
+      "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

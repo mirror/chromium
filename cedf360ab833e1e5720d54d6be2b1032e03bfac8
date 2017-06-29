@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "f0e50614_ee1f9be2",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T20:53:05Z",
+      "side": 1,
+      "message": "done. I checked the generated mojom.h file, it should be\nvoid GetWallpaperColors(base::OnceCallback\u003cvoid(std::vector\u003cuint32_t\u003e\u0026\u003e)\u003e callback);",
+      "parentUuid": "420257c7_b19c0b74",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be90bc3c_12949cd5",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 5
