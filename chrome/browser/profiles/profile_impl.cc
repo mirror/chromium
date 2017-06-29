@@ -125,6 +125,7 @@
 #include "printing/features/features.h"
 #include "services/identity/identity_service.h"
 #include "services/identity/public/interfaces/constants.mojom.h"
+#include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/cpp/pref_service_main.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/preferences/public/interfaces/tracked_preference_validation_delegate.mojom.h"
@@ -419,18 +420,19 @@ void ProfileImpl::RegisterProfilePrefs(
   registry->RegisterIntegerPref(prefs::kMediaCacheSize, 0);
 }
 
-ProfileImpl::ProfileImpl(
-    const base::FilePath& path,
-    Delegate* delegate,
-    CreateMode create_mode,
-    base::SequencedTaskRunner* sequenced_task_runner)
+ProfileImpl::ProfileImpl(const base::FilePath& path,
+                         Delegate* delegate,
+                         CreateMode create_mode,
+                         base::SequencedTaskRunner* sequenced_task_runner)
     : path_(path),
       pref_registry_(new user_prefs::PrefRegistrySyncable),
       io_data_(this),
       last_session_exit_type_(EXIT_NORMAL),
       start_time_(Time::Now()),
       delegate_(delegate),
-      predictor_(NULL) {
+      predictor_(NULL),
+      pref_service_factory_(
+          base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
   TRACE_EVENT0("browser,startup", "ProfileImpl::ctor")
   DCHECK(!path.empty()) << "Using an empty path will attempt to write " <<
                             "profile files to the root directory!";
@@ -528,15 +530,11 @@ ProfileImpl::ProfileImpl(
   content::BrowserContext::Initialize(this, path_);
 
   {
-    service_manager::Connector* connector = nullptr;
-    if (features::PrefServiceEnabled()) {
-      connector = content::BrowserContext::GetConnectorFor(this);
-    }
     prefs_ = chrome_prefs::CreateProfilePrefs(
         path_, std::move(pref_validation_delegate),
         profile_policy_connector_->policy_service(), supervised_user_settings,
         CreateExtensionPrefStore(this, false), pref_registry_, async_prefs,
-        connector);
+        GetIOTaskRunner(), pref_service_factory_->CreateDelegate());
     // Register on BrowserContext.
     user_prefs::UserPrefs::Set(this, prefs_.get());
   }
@@ -983,11 +981,6 @@ Profile::ExitType ProfileImpl::GetLastSessionExitType() {
   return last_session_exit_type_;
 }
 
-scoped_refptr<base::SequencedTaskRunner>
-ProfileImpl::GetPrefServiceTaskRunner() {
-  return pref_service_task_runner_;
-}
-
 PrefService* ProfileImpl::GetPrefs() {
   return const_cast<PrefService*>(
       static_cast<const ProfileImpl*>(this)->GetPrefs());
@@ -1024,7 +1017,7 @@ PrefService* ProfileImpl::GetReadOnlyOffTheRecordPrefs() {
   if (!dummy_otr_prefs_) {
     dummy_otr_prefs_.reset(CreateIncognitoPrefServiceSyncable(
         prefs_.get(), CreateExtensionPrefStore(this, true),
-        std::set<PrefValueStore::PrefStoreType>(), nullptr, nullptr));
+        std::set<PrefValueStore::PrefStoreType>(), nullptr));
   }
   return dummy_otr_prefs_.get();
 }
@@ -1130,15 +1123,13 @@ ProfileImpl::CreateMediaRequestContextForStoragePartition(
 }
 
 void ProfileImpl::RegisterInProcessServices(StaticServiceMap* services) {
-  if (features::PrefServiceEnabled()) {
+  {
     service_manager::EmbeddedServiceInfo info;
-    info.factory = base::Bind(
-        &prefs::CreatePrefService, chrome::ExpectedPrefStores(),
-        make_scoped_refptr(content::BrowserThread::GetBlockingPool()));
-    info.task_runner = base::CreateSequencedTaskRunnerWithTraits(
-        {base::TaskShutdownBehavior::BLOCK_SHUTDOWN,
-         base::TaskPriority::USER_VISIBLE});
-    pref_service_task_runner_ = info.task_runner;
+    info.factory =
+        base::Bind(&prefs::InProcessPrefServiceFactory::CreatePrefService,
+                   base::Unretained(pref_service_factory_.get()));
+    info.task_runner = content::BrowserThread::GetTaskRunnerForThread(
+        content::BrowserThread::UI);
     services->insert(std::make_pair(prefs::mojom::kServiceName, info));
   }
 
