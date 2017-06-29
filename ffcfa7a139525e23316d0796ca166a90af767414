@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "494b8155_089c2f23",
+        "filename": "third_party/WebKit/Source/core/clipboard/Pasteboard.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-29T15:41:06Z",
+      "side": 1,
+      "message": "Both feedbacks are correct, but this is obsoleted by patch set 4.",
+      "parentUuid": "292c1b3c_f7b9ae9f",
+      "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f7e0076_8f48ddd0",
         "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e930205f_c0658f42",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-29T15:41:06Z",
+      "side": 1,
+      "message": "I agree, but I\u0027d prefer to not fight against clang-format. :-|",
+      "parentUuid": "5f7e0076_8f48ddd0",
+      "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -103,6 +139,24 @@
       "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1c4cb6_299e88ed",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLParser.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-29T15:41:06Z",
+      "side": 1,
+      "message": "I agree with Takeshi here.\n\nI think it would well in practice because of the copy-elision optimization for return values, but without that optimization we\u0027d then return a stack-allocated var by reference.",
+      "parentUuid": "fda39668_2dc3fa07",
+      "revId": "ffcfa7a139525e23316d0796ca166a90af767414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
