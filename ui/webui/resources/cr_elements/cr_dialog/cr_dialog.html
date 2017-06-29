@@ -102,7 +102,14 @@
       .top-container {
         align-items: flex-start;
         display: flex;
-        min-height: 47px;
+        max-height: 47px;
+        padding-top: 10px;
+      }
+
+      hr {
+        border-color: rgba(0,0,0,.14);
+        border-width: 1px;
+        margin: 0;
       }
 
       .title-container {
@@ -136,6 +143,7 @@
           hidden$="[[noCancel]]">
       </paper-icon-button>
     </div>
+    <hr>
     <div class="body-container">
       <span id="bodyTopMarker"></span>
       <content select=".body"></content>

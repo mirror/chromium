@@ -90,6 +90,32 @@ Polymer({
 
   /**
    * @param {!CrOnc.NetworkProperties} networkProperties The network properties.
+   * @return {string} To retrieve an confirmation image that corresponds to
+   * the signal strength of the tethering device.  This set of images is
+   * different because all contained images are blue.
+   */
+  getSignalStrength_: function(networkProperties) {
+    var percentage = this.get('Tether.SignalStrength', networkProperties);
+    var imageName = 'settings:signal-cellular-';
+    if (percentage === undefined || percentage > 100 || percentage < 0) {
+      return '';
+    } else if (percentage == 0) {
+      imageName += '0';
+    } else if (percentage > 0 && percentage <= 25) {
+      imageName += '1';
+    } else if (percentage > 25 && percentage <= 50) {
+      imageName += '2';
+    } else if (percentage > 50 && percentage <= 75) {
+      imageName += '3';
+    } else if (percentage > 75) {
+      imageName += '4';
+    }
+    imageName += '-bar';
+    return imageName;
+  },
+
+  /**
+   * @param {!CrOnc.NetworkProperties} networkProperties The network properties.
    * @return {string}
    * @private
    */
