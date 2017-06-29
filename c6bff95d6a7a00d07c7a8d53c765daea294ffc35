@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "698567e4_bd691f80",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-29T16:34:31Z",
+      "side": 0,
+      "message": "This old DCHECK does not have a equivalent in the new version. I thought a bit about it, but couldn\u0027t come up with a great solution. I thought about DCHECKing that |sealed_version_| is equal to kInvalidVersion within Seal{Column, Index} (ie there has been no call to |SealVersion| in the past), but I found this to be too restrictive and would break the current tests. What do you think?",
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
