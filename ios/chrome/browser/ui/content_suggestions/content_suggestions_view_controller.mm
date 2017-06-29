@@ -9,6 +9,7 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_cell.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_audience.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_commands.h"
@@ -49,6 +50,7 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 
 @implementation ContentSuggestionsViewController
 
+@synthesize audience = _audience;
 @synthesize suggestionCommandHandler = _suggestionCommandHandler;
 @synthesize headerCommandHandler = _headerCommandHandler;
 @synthesize suggestionsDelegate = _suggestionsDelegate;
@@ -330,7 +332,7 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   // TODO(crbug.com/635604): Once the headers support dynamic sizing, use it
   // instead of this.
   if ([self.collectionUpdater isHeaderSection:section])
-    return CGSizeMake(0, 270);
+    return CGSizeMake(0, 258);
   return [super collectionView:collectionView
                                layout:collectionViewLayout
       referenceSizeForHeaderInSection:section];
@@ -392,6 +394,7 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
   [super scrollViewDidScroll:scrollView];
   [self.overscrollActionsController scrollViewDidScroll:scrollView];
+  [self.audience contentSuggestionsDidScroll];
   [self.headerCommandHandler updateFakeOmniboxForScrollView:scrollView];
 }
 

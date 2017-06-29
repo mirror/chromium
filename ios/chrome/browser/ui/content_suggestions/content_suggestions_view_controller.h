@@ -10,6 +10,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller.h"
 
 @class ContentSuggestionsSectionInformation;
+@protocol ContentSuggestionsAudience;
 @protocol ContentSuggestionsCommands;
 @protocol ContentSuggestionsDataSource;
 @protocol ContentSuggestionsHeaderCommands;
@@ -35,6 +36,7 @@
     headerCommandHandler;
 @property(nonatomic, weak) id<ContentSuggestionsViewControllerDelegate>
     suggestionsDelegate;
+@property(nonatomic, weak) id<ContentSuggestionsAudience> audience;
 // Override from superclass to have a more specific type.
 @property(nonatomic, readonly)
     CollectionViewModel<CollectionViewItem<SuggestedContent>*>*

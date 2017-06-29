@@ -5,12 +5,17 @@
 #ifndef IOS_CHROME_BROWSER_UI_CONTENT_SUGGESTIONS_CONTENT_SUGGESTIONS_HEADER_COMMANDS_H_
 #define IOS_CHROME_BROWSER_UI_CONTENT_SUGGESTIONS_CONTENT_SUGGESTIONS_HEADER_COMMANDS_H_
 
+#import <UIKit/UIKit.h>
+
 // Commands protocol allowing the ContentSuggestionsViewController to send
 // commands related to the header, containing the fake omnibox and the logo.
 @protocol ContentSuggestionsHeaderCommands
 
 // Updates the fake omnibox to adapt to the current scrolling.
 - (void)updateFakeOmniboxForScrollView:(nonnull UIScrollView*)scrollView;
+
+// Unfocuses the omnibox.
+- (void)unfocusOmnibox;
 
 @end
 
