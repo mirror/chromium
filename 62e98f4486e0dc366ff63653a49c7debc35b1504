@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84d53f17_0e92b53c",
+        "filename": "ash/login/ui/lock_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-29T20:52:22Z",
+      "side": 1,
+      "message": "optional: Instead of doing this, how about passing an ash::Config parameter through the constructor? Chrome browser could use chromeos::GetAshConfig() to pass it in.",
+      "revId": "62e98f4486e0dc366ff63653a49c7debc35b1504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
