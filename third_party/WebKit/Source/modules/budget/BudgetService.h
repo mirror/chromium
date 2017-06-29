@@ -11,6 +11,7 @@
 
 namespace blink {
 
+class InterfaceProvider;
 class ScriptPromise;
 class ScriptPromiseResolver;
 class ScriptState;
@@ -23,7 +24,9 @@ class BudgetService final : public GarbageCollectedFinalized<BudgetService>,
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static BudgetService* Create() { return new BudgetService(); }
+  static BudgetService* Create(InterfaceProvider* interface_provider) {
+    return new BudgetService(interface_provider);
+  }
 
   ~BudgetService();
 
@@ -48,7 +51,7 @@ class BudgetService final : public GarbageCollectedFinalized<BudgetService>,
   // Error handler for use if mojo service doesn't connect.
   void OnConnectionError();
 
-  BudgetService();
+  explicit BudgetService(InterfaceProvider*);
 
   // Pointer to the Mojo service which will proxy calls to the browser.
   mojom::blink::BudgetServicePtr service_;
