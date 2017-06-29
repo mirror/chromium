@@ -141,6 +141,30 @@
       "revId": "9584c6e6419021fb0623121b397f2edf660e3c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c300317_ce5b40f1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/bindings/bindings_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-29T07:55:10Z",
+      "side": 1,
+      "message": "I don\u0027t think it make sense to display \"PASS\" for each file, either.\nSo I\u0027d suggest removing 246-247.",
+      "parentUuid": "85400dc3_46da9307",
+      "range": {
+        "startLine": 242,
+        "startChar": 32,
+        "endLine": 242,
+        "endChar": 33
+      },
+      "revId": "9584c6e6419021fb0623121b397f2edf660e3c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
