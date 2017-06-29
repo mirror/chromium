@@ -16,6 +16,24 @@
       "revId": "d584620bf8286f4476f273545c7c870ad03fdb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae9c9d7_381c14b5",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-29T00:52:51Z",
+      "side": 1,
+      "message": "Okay if I use bindInterface I get a new error:\n\nUncaught TypeError: Cannot read property \u0027validate\u0027 of undefined\n    at Validator.validateStructPointer (mojo_bindings.js:3684)\n    at Function.MediaEngagementDetails.validate (media_engagement_details.mojom.js:68)\n    at Validator.validateStructPointer (mojo_bindings.js:3684)\n    at Validator.validateStructElements (mojo_bindings.js:3929)\n    at Validator.validateArray (mojo_bindings.js:3827)\n    at Validator.validateArrayPointer (mojo_bindings.js:3670)\n    at Function.MediaEngagementDetailsProvider_GetMediaEngagementDetails_ResponseParams.validate (media_engagement_details.mojom.js:182)\n    at Array.validateMediaEngagementDetailsProviderResponse (media_engagement_details.mojom.js:316)\n    at InterfaceEndpointClient.handleIncomingMessage (mojo_bindings.js:2552)\n    at Router.accept (mojo_bindings.js:3136)",
+      "parentUuid": "de738cca_7064e99d",
+      "revId": "d584620bf8286f4476f273545c7c870ad03fdb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
