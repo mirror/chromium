@@ -32,6 +32,7 @@
 #define MIDIPort_h
 
 #include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ExceptionCode.h"
 #include "media/midi/midi_service.mojom-blink.h"
@@ -104,12 +105,15 @@ class MIDIPort : public EventTargetWithInlineData,
            const String& version,
            midi::mojom::PortState);
 
-  void open();
   MIDIAccess* midiAccess() const { return access_; }
+  bool IsOpening() const { return open_resolver_; }
 
  private:
   ScriptPromise Accept(ScriptState*);
   ScriptPromise Reject(ScriptState*, ExceptionCode, const String& message);
+
+  void DidOpened();
+  virtual void DidActuallyOpened() {}
 
   void SetStates(midi::mojom::PortState, ConnectionState);
 
@@ -121,6 +125,7 @@ class MIDIPort : public EventTargetWithInlineData,
   TraceWrapperMember<MIDIAccess> access_;
   midi::mojom::PortState state_;
   ConnectionState connection_;
+  Member<ScriptPromiseResolver> open_resolver_;
 };
 
 }  // namespace blink

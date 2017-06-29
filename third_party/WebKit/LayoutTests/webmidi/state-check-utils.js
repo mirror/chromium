@@ -13,30 +13,48 @@ function checkStateTransition(options) {
         shouldBeEqualToString("eventport.id", options.port.id);
         shouldBeEqualToString("eventport.connection", options.finalconnection);
     };
+    var listener_option = {
+        resolver: null,
+        wait_count: 0,
+        check: function() {
+            if (!this.resolver)
+                return;
+            if (--this.wait_count == 0) {
+                this.resolver();
+                this.resolver = null;
+            }
+        }
+    };
     port.onstatechange = function(e) {
         debug("- check port handler.");
         checkHandler(e);
+        listener_option.check();
     };
     access.onstatechange = function(e) {
         debug("- check access handler.");
         checkHandler(e);
+        listener_option.check();
     };
-    if (options.method == "send") {
-        port.send([]);
-    }
     if (options.method == "setonmidimessage") {
-        port.onmidimessage = function() {};
+        return new Promise(function(success, error) {
+            listener_option.resolver = success;
+            listener_option.wait_count = 2;
+            port.onmidimessage = function() {};
+        });
     }
     if (options.method == "addeventlistener") {
-        port.addEventListener("midimessage", function() {});
+        return new Promise(function(success, error) {
+            listener_option.resolver = success;
+            listener_option.wait_count = 2;
+            port.addEventListener("midimessage", function() {});
+        });
     }
-    if (options.method == "send" || options.method == "setonmidimessage" ||
-        options.method == "addeventlistener") {
-        // Following tests expect an implicit open finishes synchronously.
-        // But it will be asynchronous in the future.
-        debug("- check final state.");
-        shouldBeEqualToString("port.connection", options.finalconnection);
-        return Promise.resolve();
+    if (options.method == "send") {
+        return new Promise(function(success, error) {
+            listener_option.resolver = success;
+            listener_option.wait_count = 2;
+            port.send([]);
+        });
     }
     // |method| is expected to be "open" or "close".
     return port[options.method]().then(function(p) {
