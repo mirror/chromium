@@ -614,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "7fe19355_ef4df9c4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T01:08:16Z",
+      "side": 1,
+      "message": "Hmm, maybe not.  Maybe we actually do want something like this and we want the browser window + the dialog on it?  I\u0027m not sure.  Talk to tapted@.",
+      "parentUuid": "e1bb2f38_5e3b4ef7",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06188da1_c8a4c41e",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 5
