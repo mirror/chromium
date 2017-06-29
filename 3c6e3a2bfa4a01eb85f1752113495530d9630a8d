@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f83935a8_0f0aa656",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T08:47:14Z",
+      "side": 1,
+      "message": "Ah, I missed that std::move(startup_data) happens when creating a global scope. \nWhat do you think L458-474 is left as is?",
+      "parentUuid": "460b59bf_1896fea9",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e816f951_8c27f354",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 4
