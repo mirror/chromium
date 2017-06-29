@@ -345,6 +345,15 @@ void WebURLRequest::SetFetchCredentialsMode(
   return resource_request_->SetFetchCredentialsMode(mode);
 }
 
+WebURLRequest::FetchRequestCacheMode WebURLRequest::GetFetchCacheMode() const {
+  return resource_request_->GetFetchCacheMode();
+}
+
+void WebURLRequest::SetFetchCacheMode(
+    WebURLRequest::FetchRequestCacheMode mode) {
+  return resource_request_->SetFetchCacheMode(mode);
+}
+
 WebURLRequest::FetchRedirectMode WebURLRequest::GetFetchRedirectMode() const {
   return resource_request_->GetFetchRedirectMode();
 }

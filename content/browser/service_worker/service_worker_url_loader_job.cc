@@ -129,6 +129,7 @@ ServiceWorkerURLLoaderJob::CreateFetchRequest(const ResourceRequest& request) {
   new_request->blob_uuid = blob_uuid;
   new_request->blob_size = blob_size;
   new_request->credentials_mode = request.fetch_credentials_mode;
+  new_request->cache_mode = request.fetch_cache_mode;
   new_request->redirect_mode = request.fetch_redirect_mode;
   new_request->is_reload = ui::PageTransitionCoreTypeIs(
       request.transition_type, ui::PAGE_TRANSITION_RELOAD);

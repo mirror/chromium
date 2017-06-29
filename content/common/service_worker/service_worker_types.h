@@ -92,6 +92,16 @@ enum FetchCredentialsMode {
   FETCH_CREDENTIALS_MODE_LAST = FETCH_CREDENTIALS_MODE_PASSWORD
 };
 
+enum FetchCacheMode {
+  FETCH_CACHE_MODE_DEFAULT,
+  FETCH_CACHE_MODE_NO_STORE,
+  FETCH_CACHE_MODE_RELOAD,
+  FETCH_CACHE_MODE_NO_CACHE,
+  FETCH_CACHE_MODE_FORCE_CACHE,
+  FETCH_CACHE_MODE_ONLY_IF_CACHED,
+  FETCH_CACHE_MODE_LAST = FETCH_CACHE_MODE_ONLY_IF_CACHED
+};
+
 enum class FetchRedirectMode {
   FOLLOW_MODE,
   ERROR_MODE,
@@ -151,7 +161,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   ~ServiceWorkerFetchRequest();
   size_t EstimatedStructSize();
 
-  // Be sure to update EstimatedSize() when adding members.
+  // Be sure to update EstimatedStructSize() when adding members.
   FetchRequestMode mode;
   bool is_main_resource_load;
   RequestContextType request_context_type;
@@ -163,6 +173,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   uint64_t blob_size;
   Referrer referrer;
   FetchCredentialsMode credentials_mode;
+  FetchCacheMode cache_mode;
   FetchRedirectMode redirect_mode;
   std::string client_id;
   bool is_reload;
@@ -189,7 +200,7 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
   ~ServiceWorkerResponse();
   size_t EstimatedStructSize();
 
-  // Be sure to update EstimatedSize() when adding members.
+  // Be sure to update EstimatedStructSize() when adding members.
   std::vector<GURL> url_list;
   int status_code;
   std::string status_text;
