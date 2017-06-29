@@ -91,6 +91,9 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         Tab currentTab = getTab();
         if (currentTab != null && currentTab.getNativePage() instanceof NewTabPage) {
             return (NewTabPage) currentTab.getNativePage();
+        } else if (mBottomSheet != null && mBottomSheet.isShowingNewTab()
+                && mBottomSheet.getCurrentSheetContent() instanceof NewTabPage) {
+            return (NewTabPage) mBottomSheet.getCurrentSheetContent();
         }
         return null;
     }

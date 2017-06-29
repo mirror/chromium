@@ -68,18 +68,27 @@ public class BottomToolbarPhone extends ToolbarPhone {
             boolean isMovingUp = heightFraction > mLastHeightFraction;
             mLastHeightFraction = heightFraction;
 
+            boolean animateApperance =
+                    getToolbarDataProvider().getNewTabPageForCurrentTab() == null;
             // TODO(twellington): Ideally we would wait to kick off an animation until the sheet is
             // released if we know it was opened via swipe.
-            if (isMovingUp && !mAnimatingToolbarButtonDisappearance
+            if (animateApperance && isMovingUp && !mAnimatingToolbarButtonDisappearance
                     && mToolbarButtonVisibilityPercent != 0.f) {
                 animateToolbarButtonVisibility(false);
-            } else if (isMovingDown && heightFraction < 0.40f && !mAnimatingToolbarButtonAppearance
+            } else if (animateApperance && isMovingDown && heightFraction < 0.40f
+                    && !mAnimatingToolbarButtonAppearance
                     && mToolbarButtonVisibilityPercent != 1.f) {
                 // If the sheet is moving down and the height is less than 45% of the max, start
                 // showing the toolbar buttons. 45% is used rather than 50% so that the buttons
                 // aren't shown in the half height state if the user is dragging the sheet down
                 // slowly and releases at exactly the half way point.
                 animateToolbarButtonVisibility(true);
+            }
+
+            if (!animateApperance) {
+                mToggleTabStackButton.setVisibility(View.INVISIBLE);
+            } else {
+                mToggleTabStackButton.setVisibility(View.VISIBLE);
             }
 
             // The only time the omnibox should have focus is when the sheet is fully expanded. Any

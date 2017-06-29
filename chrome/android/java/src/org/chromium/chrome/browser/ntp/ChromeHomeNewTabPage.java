@@ -96,7 +96,8 @@ public class ChromeHomeNewTabPage
     private LogoDelegateImpl initializeLogoView() {
         TemplateUrlService.getInstance().addObserver(this);
 
-        final LogoDelegateImpl logoDelegate = new LogoDelegateImpl(mTab, mLogoView);
+        final LogoDelegateImpl logoDelegate =
+                new LogoDelegateImpl(mTab, mLogoView, mTab.getProfile());
         logoDelegate.getSearchProviderLogo(new LogoObserver() {
             @Override
             public void onLogoAvailable(Logo logo, boolean fromCache) {

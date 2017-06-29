@@ -11,6 +11,7 @@ import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.ThreadUtils;
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.download.ui.DownloadManagerUi;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
@@ -41,6 +42,11 @@ public class DownloadSheetContent implements BottomSheetContent {
         mDownloadManager = new DownloadManagerUi(
                 activity, isIncognito, activity.getComponentName(), false, snackbarManager);
         mContentView = mDownloadManager.getView();
+        mContentView.setPadding(mContentView.getPaddingLeft(),
+                mContentView.getPaddingTop()
+                        + mContentView.getResources().getDimensionPixelSize(
+                                  R.dimen.bottom_control_container_height),
+                mContentView.getPaddingRight(), mContentView.getPaddingBottom());
         mToolbarView = mDownloadManager.detachToolbarView();
         mToolbarView.addObserver(new SelectableListToolbar.SelectableListToolbarObserver() {
             @Override

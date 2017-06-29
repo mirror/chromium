@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.widget.bottomsheet;
 
+import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
@@ -19,6 +20,7 @@ import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
     private final BottomSheet mBottomSheet;
     private final BottomToolbarPhone mToolbar;
+    private final ChromeActivity mActivity;
 
     private LayoutManagerChrome mLayoutManager;
     private OverviewModeObserver mOverviewModeObserver;
@@ -35,10 +37,12 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
      * @param toolbar The {@link BottomToolbarPhone} that this controller will set state on as part
      *                of the new tab UI.
      */
-    public BottomSheetNewTabController(BottomSheet bottomSheet, BottomToolbarPhone toolbar) {
+    public BottomSheetNewTabController(
+            BottomSheet bottomSheet, BottomToolbarPhone toolbar, ChromeActivity activity) {
         mBottomSheet = bottomSheet;
         mBottomSheet.addObserver(this);
         mToolbar = toolbar;
+        mActivity = activity;
     }
 
     /**
@@ -97,6 +101,11 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
             mTabModelSelector.selectModel(isIncognito);
             mBottomSheet.endTransitionAnimations();
             mTabModelSelector.getModel(!isIncognito).setIsPendingTabAdd(false);
+        }
+
+        if (!isIncognito) {
+            mActivity.getBottomSheetContentController().showNtpContent(mToolbar);
+            mBottomSheet.endTransitionAnimations();
         }
 
         // Open the sheet if it isn't already open to the desired height.
@@ -165,7 +174,7 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
             // can be destroyed if necessary.
             mBottomSheet.endTransitionAnimations();
         }
-
+        mActivity.getBottomSheetContentController().hideNtpContent();
         mHideOverviewOnClose = mHideOverviewOnClose
                 && mTabModelSelector.getCurrentModel().getCount() > 0
                 && mLayoutManager.overviewVisible();

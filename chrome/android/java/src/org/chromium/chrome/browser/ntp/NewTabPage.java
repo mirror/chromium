@@ -54,7 +54,6 @@ import org.chromium.chrome.browser.tab.TabObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelUtils;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.content_public.browser.NavigationController;
@@ -179,6 +178,7 @@ public class NewTabPage
         @Override
         public boolean isLocationBarShownInNTP() {
             if (mIsDestroyed) return false;
+
             return isInSingleUrlBarMode() && !mNewTabPageView.urlFocusAnimationsDisabled();
         }
 
@@ -261,7 +261,7 @@ public class NewTabPage
             StartupMetrics.getInstance().recordOpenedNTP();
             NewTabPageUma.recordNTPImpression(NewTabPageUma.NTP_IMPRESSION_REGULAR);
             // If not visible when loading completes, wait until onShown is received.
-            if (!mTab.isHidden()) recordNTPShown();
+            if (mTab != null && mTab.isHidden()) recordNTPShown();
 
             if (isNtpOfflinePagesEnabled()) {
                 final int maxNumTiles = 12;
@@ -301,7 +301,8 @@ public class NewTabPage
 
         mTab = nativePageHost.getActiveTab();
         mTabModelSelector = tabModelSelector;
-        Profile profile = mTab.getProfile();
+        Profile profile =
+                activity.getToolbarManager().getToolbarDataProviderForTests().getProfile();
 
         SuggestionsDependencyFactory depsFactory = SuggestionsDependencyFactory.getInstance();
         SuggestionsSource suggestionsSource = depsFactory.createSuggestionSource(profile);
@@ -358,13 +359,13 @@ public class NewTabPage
                         Integer.toString(scrollPosition));
             }
         };
-        mTab.addObserver(mTabObserver);
+        if (mTab != null) mTab.addObserver(mTabObserver);
         updateSearchProviderHasLogo();
 
         LayoutInflater inflater = LayoutInflater.from(activity);
         mNewTabPageView = (NewTabPageView) inflater.inflate(R.layout.new_tab_page_view, null);
         mNewTabPageView.initialize(mNewTabPageManager, mTab, mTileGroupDelegate,
-                mSearchProviderHasLogo, getScrollPositionFromNavigationEntry());
+                mSearchProviderHasLogo, getScrollPositionFromNavigationEntry(), activity);
 
         eventReporter.onSurfaceOpened();
 
@@ -393,7 +394,6 @@ public class NewTabPage
 
     private boolean isInSingleUrlBarMode() {
         if (DeviceFormFactor.isTablet()) return false;
-        if (FeatureUtilities.isChromeHomeEnabled()) return false;
         return mSearchProviderHasLogo;
     }
 
@@ -502,7 +502,7 @@ public class NewTabPage
      * @return The adapter scroll position.
      */
     private int getScrollPositionFromNavigationEntry() {
-        if (mTab.getWebContents() == null) return RecyclerView.NO_POSITION;
+        if (mTab == null || mTab.getWebContents() == null) return RecyclerView.NO_POSITION;
 
         NavigationController controller = mTab.getWebContents().getNavigationController();
         int index = controller.getLastCommittedEntryIndex();
@@ -540,12 +540,12 @@ public class NewTabPage
         assert !mIsDestroyed;
         assert !ViewCompat
                 .isAttachedToWindow(getView()) : "Destroy called before removed from window";
-        if (mIsLoaded && !mTab.isHidden()) recordNTPHidden();
+        if (mIsLoaded && mTab != null && !mTab.isHidden()) recordNTPHidden();
 
         mNewTabPageManager.onDestroy();
         mTileGroupDelegate.destroy();
         TemplateUrlService.getInstance().removeObserver(this);
-        mTab.removeObserver(mTabObserver);
+        if (mTab != null) mTab.removeObserver(mTabObserver);
         mTabObserver = null;
         mIsDestroyed = true;
     }

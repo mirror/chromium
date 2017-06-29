@@ -711,7 +711,7 @@ public class BottomSheet
         mToolbarHolder = (FrameLayout) mControlContainer.findViewById(R.id.toolbar_holder);
         mDefaultToolbarView = (BottomToolbarPhone) mControlContainer.findViewById(R.id.toolbar);
 
-        mNtpController = new BottomSheetNewTabController(this, mDefaultToolbarView);
+        mNtpController = new BottomSheetNewTabController(this, mDefaultToolbarView, mActivity);
 
         mActivity.getFullscreenManager().addListener(new FullscreenListener() {
             @Override
@@ -872,7 +872,7 @@ public class BottomSheet
         // doesn't appear to show a hole in the toolbar.
         int colorId = content.isIncognitoThemedContent() ? R.color.incognito_primary_color
                                                          : R.color.default_primary_color;
-        mToolbarHolder.setBackgroundColor(ApiCompatibilityUtils.getColor(getResources(), colorId));
+        mToolbarHolder.setBackgroundColor(Color.TRANSPARENT);
         mBottomSheetContentContainer.setBackgroundColor(
                 ApiCompatibilityUtils.getColor(getResources(), colorId));
 
@@ -999,8 +999,8 @@ public class BottomSheet
         MarginLayoutParams sheetContentParams =
                 (MarginLayoutParams) mBottomSheetContentContainer.getLayoutParams();
         sheetContentParams.width = (int) mContainerWidth;
-        sheetContentParams.height = (int) contentHeight;
-        sheetContentParams.topMargin = (int) mToolbarHeight;
+        sheetContentParams.height = (int) (mContainerHeight * getFullRatio());
+        sheetContentParams.topMargin = mToolbarShadowHeight;
 
         MarginLayoutParams toolbarShadowParams =
                 (MarginLayoutParams) findViewById(R.id.toolbar_shadow).getLayoutParams();

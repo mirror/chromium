@@ -179,11 +179,12 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
      * @param tab The Tab that is showing this new tab page.
      * @param searchProviderHasLogo Whether the search provider has a logo.
      * @param scrollPosition The adapter scroll position to initialize to.
+     * @param activity
      */
     public void initialize(NewTabPageManager manager, Tab tab, TileGroup.Delegate tileGroupDelegate,
-            boolean searchProviderHasLogo, int scrollPosition) {
+            boolean searchProviderHasLogo, int scrollPosition, ChromeActivity activity) {
         TraceEvent.begin(TAG + ".initialize()");
-        mActivity = tab.getActivity();
+        mActivity = activity;
         mManager = manager;
         mTileGroupDelegate = tileGroupDelegate;
         mUiConfig = new UiConfig(this);
@@ -264,7 +265,8 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
             logoParams.height = dpToPx(experimentalLogoHeightDp);
             mSearchProviderLogoView.setLayoutParams(logoParams);
         }
-        mLogoDelegate = new LogoDelegateImpl(tab, mSearchProviderLogoView);
+        mLogoDelegate = new LogoDelegateImpl(tab, mSearchProviderLogoView,
+                mActivity.getToolbarManager().getToolbarDataProviderForTests().getProfile());
 
         mSearchBoxView = mNewTabPageLayout.findViewById(R.id.search_box);
         mNoSearchLogoSpacer = mNewTabPageLayout.findViewById(R.id.no_search_logo_spacer);
@@ -465,6 +467,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         // visible "border" of the search box is.
         searchBoxTop += mSearchBoxView.getPaddingTop();
 
+        // Looking for an offset that causes top value not to jump..
         final int scrollY = mRecyclerView.computeVerticalScrollOffset();
         final float transitionLength =
                 getResources().getDimension(R.dimen.ntp_search_box_transition_length);

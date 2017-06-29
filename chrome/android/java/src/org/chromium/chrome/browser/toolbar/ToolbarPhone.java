@@ -57,7 +57,6 @@ import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.omnibox.LocationBar;
 import org.chromium.chrome.browser.omnibox.LocationBarPhone;
 import org.chromium.chrome.browser.partnercustomizations.HomepageManager;
-import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -597,7 +596,8 @@ public class ToolbarPhone extends ToolbarLayout
         // those in this current layout pass as they are needed for animations.
         updateUnfocusedLocationBarLayoutParams();
 
-        if (mLayoutLocationBarInFocusedMode || mVisualState == VisualState.NEW_TAB_NORMAL) {
+        if (mLayoutLocationBarInFocusedMode || mVisualState == VisualState.NEW_TAB_NORMAL
+                || getToolbarDataProvider().getNewTabPageForCurrentTab() != null) {
             int priorVisibleWidth = 0;
             for (int i = 0; i < mLocationBar.getChildCount(); i++) {
                 View child = mLocationBar.getChildAt(i);
@@ -637,7 +637,8 @@ public class ToolbarPhone extends ToolbarLayout
     protected int getViewBoundsLeftOfLocationBar(VisualState visualState) {
         // Uses getMeasuredWidth()s instead of getLeft() because this is called in onMeasure
         // and the layout values have not yet been set.
-        if (visualState == VisualState.NEW_TAB_NORMAL) {
+        if (visualState == VisualState.NEW_TAB_NORMAL
+                || getToolbarDataProvider().getNewTabPageForCurrentTab() != null) {
             return 0;
         } else if (ApiCompatibilityUtils.isLayoutRtl(this)) {
             return getBoundsAfterAccountingForRightButtons();
@@ -663,7 +664,8 @@ public class ToolbarPhone extends ToolbarLayout
     protected int getViewBoundsRightOfLocationBar(VisualState visualState) {
         // Uses getMeasuredWidth()s instead of getRight() because this is called in onMeasure
         // and the layout values have not yet been set.
-        if (visualState == VisualState.NEW_TAB_NORMAL) {
+        if (visualState == VisualState.NEW_TAB_NORMAL
+                || getToolbarDataProvider().getNewTabPageForCurrentTab() != null) {
             return getMeasuredWidth();
         } else if (ApiCompatibilityUtils.isLayoutRtl(this)) {
             return getMeasuredWidth() - getBoundsAfterAccountingForLeftButton();
@@ -681,7 +683,7 @@ public class ToolbarPhone extends ToolbarLayout
     }
 
     protected void updateToolbarBackground(int color) {
-        mToolbarBackground.setColor(color);
+        mToolbarBackground.setColor(Color.TRANSPARENT);
         invalidate();
     }
 
@@ -816,7 +818,11 @@ public class ToolbarPhone extends ToolbarLayout
     }
 
     private float getExpansionPercentForVisualState(VisualState visualState) {
-        return visualState == VisualState.NEW_TAB_NORMAL ? 1 : mUrlExpansionPercent;
+        // TODO: this technically is not correct.
+        return visualState == VisualState.NEW_TAB_NORMAL
+                        || getToolbarDataProvider().getNewTabPageForCurrentTab() != null
+                ? 1
+                : mUrlExpansionPercent;
     }
 
     /**
@@ -877,20 +883,17 @@ public class ToolbarPhone extends ToolbarLayout
         mLocationBarNtpOffsetLeft = 0;
         mLocationBarNtpOffsetRight = 0;
 
-        Tab currentTab = getToolbarDataProvider().getTab();
-        if (currentTab != null) {
-            NewTabPage ntp = getToolbarDataProvider().getNewTabPageForCurrentTab();
-            if (ntp != null) {
-                ntp.setUrlFocusChangeAnimationPercent(mUrlFocusChangePercent);
-            }
+        NewTabPage ntp = getToolbarDataProvider().getNewTabPageForCurrentTab();
+        if (ntp != null) {
+            ntp.setUrlFocusChangeAnimationPercent(mUrlFocusChangePercent);
+        }
 
-            if (isLocationBarShownInNTP()) {
-                updateNtpTransitionAnimation();
-            } else {
-                // Reset these values in case we transitioned to a different page during the
-                // transition.
-                resetNtpAnimationValues();
-            }
+        if (isLocationBarShownInNTP()) {
+            updateNtpTransitionAnimation();
+        } else {
+            // Reset these values in case we transitioned to a different page during the
+            // transition.
+            resetNtpAnimationValues();
         }
 
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
@@ -978,7 +981,8 @@ public class ToolbarPhone extends ToolbarLayout
      */
     private void updateNtpTransitionAnimation() {
         // Skip if in or entering tab switcher mode.
-        if (mTabSwitcherState == TAB_SWITCHER || mTabSwitcherState == ENTERING_TAB_SWITCHER) return;
+        //        if (mTabSwitcherState == TAB_SWITCHER || mTabSwitcherState ==
+        //        ENTERING_TAB_SWITCHER) return;
 
         setAncestorsShouldClipChildren(mUrlExpansionPercent == 0f);
         mToolbarShadow.setAlpha(0f);
@@ -1026,7 +1030,7 @@ public class ToolbarPhone extends ToolbarLayout
      * the new tab page.
      */
     private void updateButtonsTranslationY() {
-        int transY = mTabSwitcherState == STATIC_TAB ? Math.min(mNtpSearchBoxTranslation.y, 0) : 0;
+        int transY = Math.min(mNtpSearchBoxTranslation.y, 0);
 
         mToolbarButtonsContainer.setTranslationY(transY);
         mHomeButton.setTranslationY(transY);
@@ -2184,7 +2188,8 @@ public class ToolbarPhone extends ToolbarLayout
         updateShadowVisibility();
         updateUrlExpansionAnimation();
         if (!visualStateChanged) {
-            if (mVisualState == VisualState.NEW_TAB_NORMAL) {
+            if (mVisualState == VisualState.NEW_TAB_NORMAL
+                    || getToolbarDataProvider().getNewTabPageForCurrentTab() != null) {
                 updateNtpTransitionAnimation();
             } else {
                 resetNtpAnimationValues();

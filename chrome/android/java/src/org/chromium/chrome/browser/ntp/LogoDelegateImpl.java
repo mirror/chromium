@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.ntp;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.ntp.LogoBridge.Logo;
 import org.chromium.chrome.browser.ntp.LogoBridge.LogoObserver;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.ui.base.PageTransition;
@@ -46,11 +47,12 @@ public class LogoDelegateImpl implements LogoView.Delegate {
      * Construct a new {@link LogoDelegateImpl}.
      * @param tab The tab showing the logo view.
      * @param logoView The view that shows the search provider logo.
+     * @param profile
      */
-    public LogoDelegateImpl(Tab tab, LogoView logoView) {
+    public LogoDelegateImpl(Tab tab, LogoView logoView, Profile profile) {
         mTab = tab;
         mLogoView = logoView;
-        mLogoBridge = new LogoBridge(tab.getProfile());
+        mLogoBridge = new LogoBridge(profile);
     }
 
     public void destroy() {
@@ -74,6 +76,7 @@ public class LogoDelegateImpl implements LogoView.Delegate {
         } else if (mOnLogoClickUrl != null) {
             RecordHistogram.recordSparseSlowlyHistogram(LOGO_CLICK_UMA_NAME,
                     isAnimatedLogoShowing ? ANIMATED_LOGO_CLICKED : STATIC_LOGO_CLICKED);
+            // TODO: make this work without a tab e.g. using NativePageHost.
             mTab.loadUrl(new LoadUrlParams(mOnLogoClickUrl, PageTransition.LINK));
         }
     }

@@ -235,10 +235,7 @@ public class LocationBarPhone extends LocationBarLayout {
         boolean isShownInRegularNtp = ntp != null && ntp.isLocationBarShownInNTP()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SHOW_GOOGLE_G_IN_OMNIBOX);
 
-        boolean isShownInBottomSheetNtp =
-                mBottomSheet != null && mBottomSheet.shouldShowGoogleGInLocationBar();
-
-        if (!isShownInRegularNtp && !isShownInBottomSheetNtp) {
+        if (!isShownInRegularNtp || mBottomSheet != null) {
             mGoogleGContainer.setVisibility(View.GONE);
             return;
         }

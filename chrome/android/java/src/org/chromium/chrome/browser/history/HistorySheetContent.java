@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.history;
 
 import android.view.View;
 
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
@@ -29,6 +30,11 @@ public class HistorySheetContent implements BottomSheetContent {
     public HistorySheetContent(final ChromeActivity activity, SnackbarManager snackbarManager) {
         mHistoryManager = new HistoryManager(activity, false, snackbarManager);
         mContentView = mHistoryManager.getView();
+        mContentView.setPadding(mContentView.getPaddingLeft(),
+                mContentView.getPaddingTop()
+                        + mContentView.getResources().getDimensionPixelSize(
+                                  R.dimen.bottom_control_container_height),
+                mContentView.getPaddingRight(), mContentView.getPaddingBottom());
         mToolbarView = mHistoryManager.detachToolbarView();
         mToolbarView.addObserver(new SelectableListToolbar.SelectableListToolbarObserver() {
             @Override

@@ -29,11 +29,13 @@ import org.chromium.chrome.browser.bookmarks.BookmarkSheetContent;
 import org.chromium.chrome.browser.download.DownloadSheetContent;
 import org.chromium.chrome.browser.history.HistorySheetContent;
 import org.chromium.chrome.browser.ntp.IncognitoBottomSheetContent;
+import org.chromium.chrome.browser.ntp.NewTabBottomSheetContent;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.suggestions.SuggestionsBottomSheetContent;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
+import org.chromium.chrome.browser.toolbar.ToolbarPhone;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 
@@ -72,6 +74,8 @@ public class BottomSheetContentController extends BottomNavigationView
     private static final int PLACEHOLDER_ID = -2;
 
     private final Map<Integer, BottomSheetContent> mBottomSheetContents = new HashMap<>();
+
+    private NewTabBottomSheetContent mNtpSheetContent;
 
     private final BottomSheetObserver mBottomSheetObserver = new EmptyBottomSheetObserver() {
         @Override
@@ -254,6 +258,23 @@ public class BottomSheetContentController extends BottomNavigationView
         return true;
     }
 
+    public void showNtpContent(ToolbarPhone toolbar) {
+        mNtpSheetContent = new NewTabBottomSheetContent(mActivity, mBottomSheet, mTabModelSelector);
+        mNtpSheetContent.setSearchBoxScrollListener(toolbar);
+        toolbar.getLocationBar().onTabLoadingNTP(mNtpSheetContent);
+        mBottomSheet.showContent(mNtpSheetContent);
+    }
+
+    public void hideNtpContent() {
+        if (mNtpSheetContent == null) return;
+
+        NewTabBottomSheetContent ntpContent = mNtpSheetContent;
+        mNtpSheetContent = null;
+        showBottomSheetContent(R.id.action_home);
+        mBottomSheet.endTransitionAnimations();
+        ntpContent.destroy();
+    }
+
     // TODO(twellington): remove this once the support library is updated to allow disabling
     //                    shifting mode or determines shifting mode based on the width of the
     //                    child views.
@@ -278,6 +299,9 @@ public class BottomSheetContentController extends BottomNavigationView
     private BottomSheetContent getSheetContentForId(int navItemId) {
         if (mTabModelSelector.isIncognitoSelected() && navItemId == R.id.action_home) {
             navItemId = INCOGNITO_HOME_ID;
+        }
+        if (navItemId == R.id.action_home && mNtpSheetContent != null) {
+            return mNtpSheetContent;
         }
 
         BottomSheetContent content = mBottomSheetContents.get(navItemId);
