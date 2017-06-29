@@ -23,8 +23,9 @@ class PRINTING_EXPORT PrintingContextAndroid : public PrintingContext {
   ~PrintingContextAndroid() override;
 
   // Called when the page is successfully written to a PDF using the file
-  // descriptor specified, or when the printing operation failed.
-  static void PdfWritingDone(int fd, bool success);
+  // descriptor specified, or when the printing operation failed. If failed,
+  // pass a none positive value to page_count.
+  static void PdfWritingDone(int fd, int page_count);
 
   // Called from Java, when printing settings from the user are ready or the
   // printing operation is canceled.
@@ -70,4 +71,3 @@ class PRINTING_EXPORT PrintingContextAndroid : public PrintingContext {
 }  // namespace printing
 
 #endif  // PRINTING_PRINTING_CONTEXT_ANDROID_H_
-
