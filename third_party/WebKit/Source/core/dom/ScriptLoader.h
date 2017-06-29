@@ -83,7 +83,9 @@ class CORE_EXPORT ScriptLoader : public PendingScriptClient,
   PendingScript* CreatePendingScript();
 
   // https://html.spec.whatwg.org/#execute-the-script-block
-  void ExecuteScriptBlock(PendingScript*, const KURL&);
+  // TODO(hiroshige): Currently this returns bool (true if success) only to
+  // preserve existing code structure and behavior. Clean up this.
+  bool ExecuteScriptBlock(PendingScript*, const KURL&);
 
   enum class ExecuteScriptResult {
     kShouldFireErrorEvent,
