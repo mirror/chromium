@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac113093_67ec8201",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3927,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-29T04:36:00Z",
+      "side": 1,
+      "message": "Just to confirm: Are you changing the semantics of this bucket, or just clarifying the label?",
+      "range": {
+        "startLine": 3927,
+        "startChar": 24,
+        "endLine": 3927,
+        "endChar": 33
+      },
+      "revId": "cd4ee2331f2b531ad69a5beb0eeed5d452cf6fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
