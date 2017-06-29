@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f81ed492_df724766",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-29T22:28:05Z",
+      "side": 1,
+      "message": "I think this is already done in the delegate.",
+      "revId": "98612dba183f76e27e27f7941d331062b99fa2b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
