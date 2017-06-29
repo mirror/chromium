@@ -148,12 +148,18 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // |workers_created_.IsSet()|).
   TimeDelta suggested_reclaim_time_;
 
+  SchedulerBackwardCompatibility backward_compatibility_;
+
   // Synchronizes access to |idle_workers_stack_|,
-  // |idle_workers_stack_cv_for_testing_| and |num_wake_ups_before_start_|. Has
-  // |shared_priority_queue_|'s lock as its predecessor so that a worker can be
-  // pushed to |idle_workers_stack_| within the scope of a Transaction (more
-  // details in GetWork()).
+  // and |num_wake_ups_before_start_|. Has |shared_priority_queue_|'s lock as
+  // its predecessor so that a worker can be pushed to |idle_workers_stack_|
+  // within the scope of a Transaction (more details in GetWork()).
   mutable SchedulerLock idle_workers_stack_lock_;
+
+  // Synchornizes accesses to |workers_| and |worker_capacity_|.
+  // Has |idle_workers_stack_lock_| as a predecessor since accesses to
+  // |idle_workers_stack_| usually occur whenever |workers_| is accessed.
+  mutable SchedulerLock workers_lock_;
 
   // Stack of idle workers. Initially, all workers are on this stack. A worker
   // is removed from the stack before its WakeUp() function is called and when
@@ -161,9 +167,6 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // timeout expires, even if its WakeUp() method hasn't been called). A worker
   // is pushed on this stack when it receives nullptr from GetWork().
   SchedulerWorkerStack idle_workers_stack_;
-
-  // Signaled when all workers become idle.
-  std::unique_ptr<ConditionVariable> idle_workers_stack_cv_for_testing_;
 
   // Number of wake ups that occurred before Start(). Never modified after
   // Start() (i.e. can be read without synchronization once
@@ -196,6 +199,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
 
   TaskTracker* const task_tracker_;
   DelayedTaskManager* const delayed_task_manager_;
+
+  // Workers can be added as needed up until there are |worker_capacity_|
+  // number of workers.
+  int worker_capacity_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerPoolImpl);
 };
