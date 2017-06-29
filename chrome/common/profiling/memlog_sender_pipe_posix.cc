@@ -9,23 +9,66 @@
 #include "base/logging.h"
 #include "base/posix/eintr_wrapper.h"
 #include "chrome/common/profiling/memlog_stream.h"
+#include "mojo/public/cpp/system/message.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 
 namespace profiling {
+namespace {
 
-MemlogSenderPipe::MemlogSenderPipe(const std::string& pipe_id)
-    : pipe_id_(pipe_id), fd_(-1) {}
+struct RawMessage {
+  size_t size;
+  const void* data;
+};
 
-MemlogSenderPipe::~MemlogSenderPipe() {
-  if (fd_ != -1)
-    IGNORE_EINTR(::close(fd_));
+void GetSerializedSize(uintptr_t context,
+                       size_t* num_bytes,
+                       size_t* num_handles) {
+  RawMessage* raw_message = reinterpret_cast<RawMessage*>(context);
+  *num_bytes = raw_message->size;
+  *num_handles = 0;
 }
 
-bool MemlogSenderPipe::Connect() {
-  return false;
+void SerializeHandles(uintptr_t context, MojoHandle* handles) {
+}
+
+void SerializePayload(uintptr_t context, void* buffer) {
+  LOG(ERROR) << "child: serializing.";
+  RawMessage* raw_message = reinterpret_cast<RawMessage*>(context);
+  memcpy(buffer, raw_message->data, raw_message->size);
+}
+
+void Destroy(uintptr_t context) {
+}
+
+MojoMessageOperationThunks g_thunks = {
+  sizeof(MojoMessageOperationThunks),
+  &GetSerializedSize,
+  &SerializeHandles,
+  &SerializePayload,
+  &Destroy,
+};
+}  // namespace
+
+MemlogSenderPipe::MemlogSenderPipe(mojo::ScopedMessagePipeHandle control_pipe)
+    : control_pipe_(std::move(control_pipe)) {}
+
+MemlogSenderPipe::~MemlogSenderPipe() {
 }
 
 bool MemlogSenderPipe::Send(const void* data, size_t sz) {
-  return false;
+  RawMessage raw_message = {sz, data};
+  mojo::ScopedMessageHandle message;
+
+  LOG(ERROR) << "child: Sending data.";
+  MojoResult result = mojo::CreateMessage(
+      reinterpret_cast<uintptr_t>(&raw_message), &g_thunks, &message);
+  if (result != MOJO_RESULT_OK) {
+    return false;
+  }
+
+  result = mojo::WriteMessageNew(control_pipe_.get(), std::move(message),
+                                 MOJO_WRITE_MESSAGE_FLAG_NONE);
+  return result == MOJO_RESULT_OK;
 }
 
 }  // namespace profiling

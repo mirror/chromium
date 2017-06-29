@@ -11,7 +11,10 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_pump_libevent.h"
+#include "base/threading/thread.h"
 #include "chrome/profiling/memlog_receiver_pipe_posix.h"
+#include "mojo/public/cpp/system/message_pipe.h"
+#include "mojo/public/cpp/system/simple_watcher.h"
 
 namespace base {
 class TaskRunner;
@@ -32,7 +35,7 @@ class MemlogReceiverPipeServer
   // |io_runner| is the task runner for the I/O thread. When a new connection is
   // established, the |on_new_conn| callback is called with the pipe.
   MemlogReceiverPipeServer(base::TaskRunner* io_runner,
-                           const std::string& pipe_id,
+                           mojo::ScopedMessagePipeHandle control_pipe,
                            NewConnectionCallback on_new_conn);
 
   void set_on_new_connection(NewConnectionCallback on_new_connection) {
@@ -46,9 +49,13 @@ class MemlogReceiverPipeServer
   friend class base::RefCountedThreadSafe<MemlogReceiverPipeServer>;
   ~MemlogReceiverPipeServer();
 
+  void StartWatchOnIO();
+  void OnReadable(MojoResult result);
+
   scoped_refptr<base::TaskRunner> io_runner_;
-  std::string pipe_id_;
+  mojo::ScopedMessagePipeHandle control_pipe_;
   NewConnectionCallback on_new_connection_;
+  std::unique_ptr<mojo::SimpleWatcher> watcher_;
 
   DISALLOW_COPY_AND_ASSIGN(MemlogReceiverPipeServer);
 };

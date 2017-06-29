@@ -119,7 +119,6 @@ int ChromeMain(int argc, const char** argv) {
   if (command_line->HasSwitch(switches::kMemlog))
     return profiling::ProfilingMain(*command_line);
 #endif
-  profiling::InitMemlogSenderIfNecessary(*command_line);
 #endif  // ENABLE_OOP_HEAP_PROFILING
 
 #if defined(OS_CHROMEOS) && BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
@@ -127,7 +126,9 @@ int ChromeMain(int argc, const char** argv) {
     params.env_mode = aura::Env::Mode::MUS;
 #endif  // BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
 
-  int rv = content::ContentMain(params);
+//  int rv = content::ContentMain(params);
+  // Wait for content to start up edk.
+  profiling::InitMemlogSenderIfNecessary(*command_line);
 
-  return rv;
+  return 0;
 }
