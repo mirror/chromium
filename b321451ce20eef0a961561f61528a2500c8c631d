@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "007b2d54_8dfa97ab",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-29T13:45:47Z",
+      "side": 1,
+      "message": "I am considering to take SuggestionBuilder as an input here and make Build non-consuming, so that one could reuse the same builder for the same output. WDYT?",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 50
+      },
+      "revId": "b321451ce20eef0a961561f61528a2500c8c631d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
