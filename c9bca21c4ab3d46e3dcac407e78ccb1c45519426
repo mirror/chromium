@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ad62242_3c91ea86",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/reporting/multiple-report-policies.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-29T08:42:30Z",
+      "side": 1,
+      "message": "The stability tests upstream are consistently showing this as flaky. Might be worth digging in a bit (or perhaps rewriting to look for violation events instead?)",
+      "revId": "c9bca21c4ab3d46e3dcac407e78ccb1c45519426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
