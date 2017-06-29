@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c98bfce5_9b011fc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T14:54:37Z",
+      "side": 1,
+      "message": "The first line of a commit description needs to be a single line or else it will confuse the tooling. This is why there is an upload warning when it is greater than 50 characters to ensure that there is room to add \"Revert: \" or \"Reland: \".",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "8545c26a2116bd35b7c5e1de95063d186fc3eb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
