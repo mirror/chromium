@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed200d2_153f3c8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T19:15:31Z",
+      "side": 1,
+      "message": "If you can squeeze the word \"printing\" in before PageRange, that would provide even better context for anyone reading the short commit messages.",
+      "revId": "adfb6cb8363540af942b3fa586b3bf18991da04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0d1e66_f7682420",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwPdfExporter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T19:15:31Z",
+      "side": 1,
+      "message": "Non-positive",
+      "range": {
+        "startLine": 49,
+        "startChar": 88,
+        "endLine": 49,
+        "endChar": 92
+      },
+      "revId": "adfb6cb8363540af942b3fa586b3bf18991da04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9167ce4_82387e0f",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T19:15:31Z",
+      "side": 1,
+      "message": "meacer@ can comment on this, but we probably want to reject bad values from (malicious) renderers.",
+      "revId": "adfb6cb8363540af942b3fa586b3bf18991da04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6923d3_96a4b393",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T19:15:31Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 62,
+        "startChar": 84,
+        "endLine": 62,
+        "endChar": 88
+      },
+      "revId": "adfb6cb8363540af942b3fa586b3bf18991da04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b910062_ab85ccb6",
+        "filename": "printing/printing_context_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T19:15:31Z",
+      "side": 1,
+      "message": "How about: On success, the PDF written to |fd| has |page_count| pages. Negative |fd| or non-positive |page_count| indicates failure.",
+      "range": {
+        "startLine": 26,
+        "startChar": 66,
+        "endLine": 26,
+        "endChar": 75
+      },
+      "revId": "adfb6cb8363540af942b3fa586b3bf18991da04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
