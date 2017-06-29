@@ -36,6 +36,8 @@ component("controller") {
     "ControllerExport.h",
     "WebDevToolsAgentImpl.cpp",
     "WebDevToolsAgentImpl.h",
+    "WebFrameWidgetImpl.cpp",
+    "WebFrameWidgetImpl.h",
   ]
 
   if (is_mac) {

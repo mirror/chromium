@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/WebFrameWidgetImpl.h"
+#include "controller/WebFrameWidgetImpl.h"
 
 #include <memory>
 
@@ -829,9 +829,10 @@ void WebFrameWidgetImpl::HandleMouseDown(LocalFrame& main_frame,
 
   PageWidgetEventHandler::HandleMouseDown(main_frame, event);
 
-  if (event.button == WebMouseEvent::Button::kLeft && mouse_capture_node_)
+  if (event.button == WebMouseEvent::Button::kLeft && mouse_capture_node_) {
     mouse_capture_gesture_token_ =
         main_frame.GetEventHandler().TakeLastMouseDownGestureToken();
+  }
 
   if (view_impl->GetPagePopup() && page_popup &&
       ToWebPagePopupImpl(view_impl->GetPagePopup())
@@ -1027,9 +1028,10 @@ WebInputEventResult WebFrameWidgetImpl::HandleCharEvent(
   suppress_next_keypress_event_ = false;
 
   LocalFrame* frame = ToLocalFrame(FocusedCoreFrame());
-  if (!frame)
+  if (!frame) {
     return suppress ? WebInputEventResult::kHandledSuppressed
                     : WebInputEventResult::kNotHandled;
+  }
 
   EventHandler& handler = frame->GetEventHandler();
 
@@ -1191,9 +1193,10 @@ HitTestResult WebFrameWidgetImpl::CoreHitTestResultAt(
 
 void WebFrameWidgetImpl::SetVisibilityState(
     WebPageVisibilityState visibility_state) {
-  if (layer_tree_view_)
+  if (layer_tree_view_) {
     layer_tree_view_->SetVisible(visibility_state ==
                                  kWebPageVisibilityStateVisible);
+  }
 }
 
 HitTestResult WebFrameWidgetImpl::HitTestResultForRootFramePos(
