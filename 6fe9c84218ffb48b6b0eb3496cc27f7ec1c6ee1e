@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bddfb35f_6b85241f",
+        "filename": "third_party/WebKit/Source/platform/graphics/Color.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-29T20:11:15Z",
+      "side": 1,
+      "message": "This is a little nonstandard. Why not just remove the declaration here and let ColorBlend.h declare and implement it?\n\nAnother option: how important is inlining here? Could we just move the impl to a cpp file and get the same benefit?\n\nIf not, I\u0027m okay with this, just want to make sure there isn\u0027t another way.",
+      "revId": "6fe9c84218ffb48b6b0eb3496cc27f7ec1c6ee1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
