@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "491465ee_e55f674b",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-29T16:12:48Z",
+      "side": 1,
+      "message": "It\u0027s pretty weird IMHO for random code to depend on this alias being defined by a non-obvious header, and it\u0027s not a good idea to have multiple headers define the same alias anyway.\n\nI would keep public/platform/WebFeature.h around and put the alias there. Should also reduce the size of this CL quite a bit.",
+      "revId": "b9b775ca924cb83e3e49e83c7e847b7e77ee1010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283fa6b8_9b7a1944",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-29T16:12:48Z",
+      "side": 1,
+      "message": "nit: Extensibility is only useful if this enum will need to support version skew, i.e. two binaries built against different versions of the enum needing to send/receive it between each other.\n\nIt will probably never be the case that the browser and renderer are shipped independently, and it will probably never be the case that this enum is used outside of the browser or renderer, so I don\u0027t think we need this attribute.\n\nYou can of course still add new values to a non-Extensible enum. As long as all users of the enum are building against the same definition (which they are), there\u0027s no problem.",
+      "revId": "b9b775ca924cb83e3e49e83c7e847b7e77ee1010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
