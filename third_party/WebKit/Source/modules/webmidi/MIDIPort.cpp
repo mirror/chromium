@@ -33,6 +33,7 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/UseCounter.h"
 #include "modules/webmidi/MIDIAccess.h"
 #include "modules/webmidi/MIDIConnectionEvent.h"
@@ -98,8 +99,19 @@ String MIDIPort::type() const {
 }
 
 ScriptPromise MIDIPort::open(ScriptState* script_state) {
-  open();
-  return Accept(script_state);
+  if (connection_ == kConnectionStateOpen)
+    return Accept(script_state);
+
+  if (!open_resolver_) {
+    if (script_state)
+      open_resolver_ = ScriptPromiseResolver::Create(script_state);
+    TaskRunnerHelper::Get(TaskType::kMiscPlatformAPI, GetExecutionContext())
+        ->PostTask(BLINK_FROM_HERE,
+                   WTF::Bind(&MIDIPort::DidOpened, WrapPersistent(this)));
+  }
+  if (open_resolver_)
+    return open_resolver_->Promise();
+  return ScriptPromise();
 }
 
 ScriptPromise MIDIPort::close(ScriptState* script_state) {
@@ -134,7 +146,7 @@ void MIDIPort::SetState(PortState state) {
           // We do not use |setStates| in order not to dispatch events twice.
           // |open| calls |setStates|.
           state_ = PortState::CONNECTED;
-          open();
+          open(nullptr);
           break;
         case kConnectionStateClosed:
           SetStates(PortState::CONNECTED, kConnectionStateClosed);
@@ -164,6 +176,7 @@ void MIDIPort::ContextDestroyed(ExecutionContext*) {
 
 DEFINE_TRACE(MIDIPort) {
   visitor->Trace(access_);
+  visitor->Trace(open_resolver_);
   EventTargetWithInlineData::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
 }
@@ -171,24 +184,6 @@ DEFINE_TRACE(MIDIPort) {
 DEFINE_TRACE_WRAPPERS(MIDIPort) {
   visitor->TraceWrappers(access_);
   EventTargetWithInlineData::TraceWrappers(visitor);
-}
-
-void MIDIPort::open() {
-  UseCounter::Count(*ToDocument(GetExecutionContext()),
-                    WebFeature::kMIDIPortOpen);
-  switch (state_) {
-    case PortState::DISCONNECTED:
-      SetStates(state_, kConnectionStatePending);
-      break;
-    case PortState::CONNECTED:
-      // TODO(toyoshim): Add blink API to perform a real open and close
-      // operation.
-      SetStates(state_, kConnectionStateOpen);
-      break;
-    case PortState::OPENED:
-      NOTREACHED();
-      break;
-  }
 }
 
 ScriptPromise MIDIPort::Accept(ScriptState* script_state) {
@@ -204,6 +199,28 @@ ScriptPromise MIDIPort::Reject(ScriptState* script_state,
       script_state, DOMException::Create(ec, message));
 }
 
+void MIDIPort::DidOpened() {
+  UseCounter::Count(*ToDocument(GetExecutionContext()),
+                    WebFeature::kMIDIPortOpen);
+  switch (state_) {
+    case PortState::DISCONNECTED:
+      SetStates(state_, kConnectionStatePending);
+      break;
+    case PortState::CONNECTED:
+      // TODO(toyoshim): Add blink API to perform a real open and close
+      // operation.
+      SetStates(state_, kConnectionStateOpen);
+      break;
+    case PortState::OPENED:
+      NOTREACHED();
+      break;
+  }
+  if (open_resolver_) {
+    open_resolver_->Resolve(this);
+    open_resolver_ = nullptr;
+  }
+}
+
 void MIDIPort::SetStates(PortState state, ConnectionState connection) {
   DCHECK(state != PortState::DISCONNECTED ||
          connection != kConnectionStateOpen);
@@ -211,6 +228,10 @@ void MIDIPort::SetStates(PortState state, ConnectionState connection) {
     return;
   state_ = state;
   connection_ = connection;
+
+  if (connection_ == kConnectionStateOpen)
+    DidActuallyOpened();
+
   DispatchEvent(MIDIConnectionEvent::Create(this));
   access_->DispatchEvent(MIDIConnectionEvent::Create(this));
 }

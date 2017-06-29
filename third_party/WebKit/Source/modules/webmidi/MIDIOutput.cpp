@@ -223,7 +223,8 @@ MIDIOutput::MIDIOutput(MIDIAccess* access,
 
 MIDIOutput::~MIDIOutput() {}
 
-void MIDIOutput::send(NotShared<DOMUint8Array> array,
+void MIDIOutput::send(ScriptState* script_state,
+                      NotShared<DOMUint8Array> array,
                       double timestamp,
                       ExceptionState& exception_state) {
   DCHECK(array);
@@ -236,16 +237,23 @@ void MIDIOutput::send(NotShared<DOMUint8Array> array,
 
   // Implicit open. It does nothing if the port is already opened.
   // This should be performed even if |array| is invalid.
-  open();
+  ScriptPromise promise = open(script_state);
 
   if (MessageValidator::Validate(array.View(), exception_state,
                                  midiAccess()->sysexEnabled())) {
-    midiAccess()->SendMIDIData(port_index_, array.View()->Data(),
-                               array.View()->length(), timestamp);
+    if (IsOpening()) {
+      pending_data_.push_back(std::make_pair(Vector<uint8_t>(), timestamp));
+      pending_data_.back().first.Append(array.View()->Data(),
+                                        array.View()->length());
+    } else {
+      midiAccess()->SendMIDIData(port_index_, array.View()->Data(),
+                                 array.View()->length(), timestamp);
+    }
   }
 }
 
-void MIDIOutput::send(Vector<unsigned> unsigned_data,
+void MIDIOutput::send(ScriptState* script_state,
+                      Vector<unsigned> unsigned_data,
                       double timestamp,
                       ExceptionState& exception_state) {
   if (timestamp == 0.0)
@@ -266,18 +274,30 @@ void MIDIOutput::send(Vector<unsigned> unsigned_data,
       array_data[i] = unsigned_data[i] & 0xff;
   }
 
-  send(NotShared<DOMUint8Array>(array), timestamp, exception_state);
+  send(script_state, NotShared<DOMUint8Array>(array), timestamp,
+       exception_state);
 }
 
-void MIDIOutput::send(NotShared<DOMUint8Array> data,
+void MIDIOutput::send(ScriptState* script_state,
+                      NotShared<DOMUint8Array> data,
                       ExceptionState& exception_state) {
   DCHECK(data);
-  send(data, 0.0, exception_state);
+  send(script_state, data, 0.0, exception_state);
 }
 
-void MIDIOutput::send(Vector<unsigned> unsigned_data,
+void MIDIOutput::send(ScriptState* script_state,
+                      Vector<unsigned> unsigned_data,
                       ExceptionState& exception_state) {
-  send(unsigned_data, 0.0, exception_state);
+  send(script_state, unsigned_data, 0.0, exception_state);
+}
+
+void MIDIOutput::DidActuallyOpened() {
+  while (!pending_data_.empty()) {
+    auto& front = pending_data_.front();
+    midiAccess()->SendMIDIData(port_index_, front.first.data(),
+                               front.first.size(), front.second);
+    pending_data_.TakeFirst();
+  }
 }
 
 DEFINE_TRACE(MIDIOutput) {

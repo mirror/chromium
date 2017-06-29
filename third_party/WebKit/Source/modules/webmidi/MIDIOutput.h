@@ -31,6 +31,7 @@
 #ifndef MIDIOutput_h
 #define MIDIOutput_h
 
+#include <utility>
 #include "core/dom/ArrayBufferViewHelpers.h"
 #include "core/dom/DOMTypedArray.h"
 #include "modules/webmidi/MIDIPort.h"
@@ -53,12 +54,15 @@ class MIDIOutput final : public MIDIPort {
                             midi::mojom::PortState);
   ~MIDIOutput() override;
 
-  void send(NotShared<DOMUint8Array>, double timestamp, ExceptionState&);
-  void send(Vector<unsigned>, double timestamp, ExceptionState&);
+  void send(ScriptState*,
+            NotShared<DOMUint8Array>,
+            double timestamp,
+            ExceptionState&);
+  void send(ScriptState*, Vector<unsigned>, double timestamp, ExceptionState&);
 
   // send() without optional |timestamp|.
-  void send(NotShared<DOMUint8Array>, ExceptionState&);
-  void send(Vector<unsigned>, ExceptionState&);
+  void send(ScriptState*, NotShared<DOMUint8Array>, ExceptionState&);
+  void send(ScriptState*, Vector<unsigned>, ExceptionState&);
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -71,7 +75,10 @@ class MIDIOutput final : public MIDIPort {
              const String& version,
              midi::mojom::PortState);
 
+  void DidActuallyOpened() override;
+
   unsigned port_index_;
+  Deque<std::pair<Vector<uint8_t>, double>> pending_data_;
 };
 
 }  // namespace blink
