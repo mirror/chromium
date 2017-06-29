@@ -16,6 +16,24 @@
       "revId": "ad02065c464d18335fa6eed07125d17d8697c62e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8838fd7c_8e0e79b3",
+        "filename": "base/atomic_ref_count.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-29T00:16:00Z",
+      "side": 1,
+      "message": "As I note a few lines up, I\u0027m presently preserving the existing signature of these functions. I\u0027m hoping to replace their call sites with ordinary (non-volatile) uses as appropriate if this sticks.",
+      "parentUuid": "567524ab_b7cdc18c",
+      "revId": "ad02065c464d18335fa6eed07125d17d8697c62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
