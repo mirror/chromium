@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "033d4bcd_be687b80",
+        "filename": "android_webview/browser/aw_contents_client_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "remove, unnecessary comment",
+      "range": {
+        "startLine": 470,
+        "startChar": 9,
+        "endLine": 470,
+        "endChar": 14
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6629ae30_d35fa2ab",
+        "filename": "android_webview/browser/aw_contents_client_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 475,
+        "startChar": 9,
+        "endLine": 475,
+        "endChar": 12
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b63a6fe_0a9bd92f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "it looks like having \"report\" as a separate flag is cleaner from API perspective. This unnecessarily expands the action space. \n\nThis also makes me think that the API design for returning an integer in a callback is not the best choice for this API. An interstitial is a user facing surface. This API carries the information that the interstitial can carry, which, in this case the user actions and the reporting flag. However, user facing surfaces change often. Therefore, the API has to be easier to modify in future. \n\nAndroid APIs use abstract classes for these cases. So the API should be similar to the earlier case. Looking at the old design, I also realize that there was an option for the application to be able to whitelist the URL, which would be great if we can add:\n\npublic abstract class Foo {\n\n     cancel();\n     showInterstitial(boolean report)\n     proceed(boolean report, boolean whitelist)\n}",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 68
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ca586b_385f0b7d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "change these to no_report suffix to be compatible with the top one.",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 79
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398a4b78_867682d7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "nit: Uws -\u003e don\u0027t use abbreviations that most people are not familiar with.",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c63470_e71a341a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "move default to the bottom. default should be an error I think.",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2e7efc_c6d3e9a8",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "don\u0027t leave commented out code even if you plan to enable in the future. You can file a bug and TODO. \n\nIn this case, it is ok to comment these in, I think?",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 60
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd663321_77ee2df9",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "is this test really different from testsafebrowsingshowsinterstitialformainframe?",
+      "range": {
+        "startLine": 620,
+        "startChar": 16,
+        "endLine": 620,
+        "endChar": 65
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020cf619_ae3d1c8c",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "I am imagining this test and \"back to safety\" or don\u0027t proceed kind of tests can share code as the main difference is one setting the action through interstitial",
+      "range": {
+        "startLine": 692,
+        "startChar": 0,
+        "endLine": 692,
+        "endChar": 84
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3875a4_57d4c6ab",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T18:23:16Z",
+      "side": 1,
+      "message": "does not look like the right place. The added thread values for Java is only for webview. we need to generate it in Aw I think.",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 278,
+        "endChar": 2
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
