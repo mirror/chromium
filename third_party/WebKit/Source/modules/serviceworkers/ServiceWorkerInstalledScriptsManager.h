@@ -6,6 +6,7 @@
 #define ServiceWorkerInstalledScriptsManager_h
 
 #include "core/workers/InstalledScriptsManager.h"
+#include "public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 
 namespace blink {
 
@@ -14,7 +15,8 @@ namespace blink {
 // streamed from the script cache in parallel with worker thread initialization.
 class ServiceWorkerInstalledScriptsManager : public InstalledScriptsManager {
  public:
-  ServiceWorkerInstalledScriptsManager();
+  ServiceWorkerInstalledScriptsManager(
+      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>);
 
   // Used on the main or worker thread. Returns true if the script has been
   // installed.
@@ -24,6 +26,9 @@ class ServiceWorkerInstalledScriptsManager : public InstalledScriptsManager {
   // script has already been served from this manager. This can be blocked if
   // the script is not streamed yet.
   Optional<ScriptData> GetScriptData(const KURL& script_url) override;
+
+ private:
+  std::unique_ptr<WebServiceWorkerInstalledScriptsManager> manager_;
 };
 
 }  // namespace blink
