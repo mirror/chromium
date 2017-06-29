@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// This file overrides the logging macros in WebRTC (webrtc/base/logging.h).
+// This file overrides the logging macros in WebRTC (webrtc/rtc_base/logging.h).
 // Instead of using WebRTC's logging implementation, the WebRTC macros are
 // mapped to DIAGNOSTIC_LOGING. In it's implementation (DiagnosticLogMessage in
-// third_party/webrtc_overrides/webrtc/base/logging.h), the corresponding
+// third_party/webrtc_overrides/webrtc/rtc_base/logging.h), the corresponding
 // base/logging.h macros (e.g. Chromium's VLOG) are used.
 // If this file is included outside of WebRTC/libjingle it should be included
 // after base/logging.h (if any) or compiler error or unexpected behavior may
@@ -21,10 +21,10 @@
 // The macros and classes declared in here are not described as they are
 // NOT TO BE USED outside of WebRTC/libjingle.
 
-#ifndef THIRD_PARTY_WEBRTC_OVERRIDES_WEBRTC_BASE_LOGGING_H_
-#define THIRD_PARTY_WEBRTC_OVERRIDES_WEBRTC_BASE_LOGGING_H_
+#ifndef THIRD_PARTY_WEBRTC_OVERRIDES_WEBRTC_RTC_BASE_LOGGING_H_
+#define THIRD_PARTY_WEBRTC_OVERRIDES_WEBRTC_RTC_BASE_LOGGING_H_
 
-#include "third_party/webrtc_overrides/webrtc/base/diagnostic_logging.h"
+#include "third_party/webrtc_overrides/webrtc/rtc_base/diagnostic_logging.h"
 
 //////////////////////////////////////////////////////////////////////
 // WebRTC macros which in DiagnosticLogMessage are mapped over to
@@ -92,4 +92,4 @@ bool CheckVlogIsOn(LoggingSeverity severity, const char (&file)[N]) {
 
 #endif  // LOGGING_INSIDE_WEBRTC
 
-#endif  // THIRD_PARTY_WEBRTC_OVERRIDES_WEBRTC_BASE_LOGGING_H_
+#endif  // THIRD_PARTY_WEBRTC_OVERRIDES_WEBRTC_RTC_BASE_LOGGING_H_
