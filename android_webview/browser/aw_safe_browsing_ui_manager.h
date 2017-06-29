@@ -47,6 +47,8 @@ class AwSafeBrowsingUIManager : public safe_browsing::BaseUIManager {
   // protocol buffer, so the service can send it over.
   void SendSerializedThreatDetails(const std::string& serialized) override;
 
+  void SetExtendedReportingAllowed(bool allowed);
+
  protected:
   ~AwSafeBrowsingUIManager() override;
 
@@ -60,6 +62,8 @@ class AwSafeBrowsingUIManager : public safe_browsing::BaseUIManager {
   // |url_request_context_|. Accessed on UI thread.
   scoped_refptr<safe_browsing::SafeBrowsingURLRequestContextGetter>
       url_request_context_getter_;
+
+  bool extended_reporting_allowed_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AwSafeBrowsingUIManager);
 };
