@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f4768b7_48c7442b",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-29T05:07:07Z",
+      "side": 1,
+      "message": "How about adding the flag check function in WebKit/public/platform/WebRuntimeFeatures.h and using it in both blink/ and content/renderer?",
+      "revId": "f5c7fd1540bd611a367f3f266ad4e38795ced86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
