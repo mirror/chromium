@@ -28,6 +28,8 @@ public interface LayoutRenderHost {
      */
     void didSwapFrame(int pendingFrameCount);
 
+    void onGpuChannelEstablished();
+
     /**
      * Indicates that the rendering surface has just been created.
      */

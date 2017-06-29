@@ -328,6 +328,11 @@ public class CompositorView
         runDrawFinishedCallbacks();
     }
 
+    @CalledByNative
+    private void onGpuChannelEstablished() {
+        mRenderHost.onGpuChannelEstablished();
+    }
+
     /**
      * Converts the layout into compositor layers. This is to be called on every frame the layout
      * is changing.

@@ -86,6 +86,7 @@ class CompositorView : public content::CompositorClient,
   void UpdateLayerTreeHost() override;
   void DidSwapFrame(int pending_frames) override;
   void DidSwapBuffers() override;
+  void OnGpuChannelEstablished() override;
   ui::UIResourceProvider* GetUIResourceProvider();
 
  private:

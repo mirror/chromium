@@ -255,6 +255,7 @@ BrowserGpuChannelHostFactory::AllocateSharedMemory(size_t size) {
 
 void BrowserGpuChannelHostFactory::EstablishGpuChannel(
     const gpu::GpuChannelEstablishedCallback& callback) {
+  LOG(ERROR) << "===bshe===establish gpu channel called====";
   DCHECK(!service_manager::ServiceManagerIsRemote());
   if (gpu_channel_.get() && gpu_channel_->IsLost()) {
     DCHECK(!pending_request_.get());
@@ -272,8 +273,10 @@ void BrowserGpuChannelHostFactory::EstablishGpuChannel(
   if (!callback.is_null()) {
     if (gpu_channel_.get())
       callback.Run(gpu_channel_);
-    else
+    else {
+      LOG(ERROR) << "===bshe===added callback to callbacks====";
       established_callbacks_.push_back(callback);
+    }
   }
 }
 

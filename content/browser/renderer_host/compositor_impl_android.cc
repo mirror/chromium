@@ -685,6 +685,7 @@ void CompositorImpl::HandlePendingLayerTreeFrameSinkRequest() {
       this, &CompositorImpl::OnGpuChannelTimeout);
 
   DCHECK(surface_handle_ != gpu::kNullSurfaceHandle);
+  LOG(ERROR) << "===bshe===try establish gpu channel===for " << surface_handle_;
   BrowserGpuChannelHostFactory::instance()->EstablishGpuChannel(base::Bind(
       &CompositorImpl::OnGpuChannelEstablished, weak_factory_.GetWeakPtr()));
 }
@@ -717,6 +718,7 @@ void CompositorImpl::CreateVulkanOutputSurface() {
 
 void CompositorImpl::OnGpuChannelEstablished(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host) {
+  LOG(ERROR) << "===bshe===GpuChannelEstablished===for " << surface_handle_;
   establish_gpu_channel_timeout_.Stop();
 
   // We might end up queing multiple GpuChannel requests for the same
@@ -769,6 +771,7 @@ void CompositorImpl::OnGpuChannelEstablished(
       base::Bind(&CompositorImpl::DidSwapBuffers, base::Unretained(this)));
   InitializeDisplay(std::move(display_output_surface), nullptr,
                     std::move(context_provider));
+  client_->OnGpuChannelEstablished();
 }
 
 void CompositorImpl::InitializeDisplay(

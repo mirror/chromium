@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.compositor;
 
+import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -589,6 +591,7 @@ public class CompositorViewHolder extends FrameLayout
                         controlContainer.setBackgroundResource(0);
                     }
                 }
+                Log.e("===bshe===", "swap out background resource");
             });
         }
 
@@ -598,6 +601,11 @@ public class CompositorViewHolder extends FrameLayout
 
         if (!mSkipInvalidation || pendingFrameCount == 0) flushInvalidation();
         mSkipInvalidation = !mSkipInvalidation;
+    }
+
+    @Override
+    public void onGpuChannelEstablished() {
+        VrShellDelegate.onGpuChannelEstablished();
     }
 
     @Override

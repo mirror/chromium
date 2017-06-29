@@ -463,6 +463,7 @@ void UiSceneManager::ConfigureScene() {
   scene_->set_showing_splash_screen(web_vr_autopresentation_expected_);
   splash_screen_icon_->SetEnabled(!web_vr_mode_ &&
                                   web_vr_autopresentation_expected_);
+  LOG(ERROR) << "===bshe===splash screen enabled===" << splash_screen_icon_->IsVisible();
 
   // Exit warning.
   exit_warning_->SetEnabled(scene_->is_exiting());

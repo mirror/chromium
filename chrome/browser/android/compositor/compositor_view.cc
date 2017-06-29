@@ -132,6 +132,12 @@ void CompositorView::DidSwapBuffers() {
   Java_CompositorView_didSwapBuffers(env, obj_);
 }
 
+void CompositorView::OnGpuChannelEstablished() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_CompositorView_onGpuChannelEstablished(env, obj_);
+}
+
+
 ui::UIResourceProvider* CompositorView::GetUIResourceProvider() {
   return compositor_ ? &compositor_->GetUIResourceProvider() : nullptr;
 }

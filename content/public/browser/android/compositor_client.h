@@ -23,6 +23,8 @@ class CONTENT_EXPORT CompositorClient {
   // This is called on all swap buffers, regardless of cause.
   virtual void DidSwapBuffers() {}
 
+  virtual void OnGpuChannelEstablished() {}
+
  protected:
   CompositorClient() {}
   virtual ~CompositorClient() {}

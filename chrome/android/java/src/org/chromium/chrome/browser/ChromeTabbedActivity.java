@@ -436,6 +436,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             if (state != null && state.containsKey(FRE_RUNNING)) {
                 mIsOnFirstRun = state.getBoolean(FRE_RUNNING);
             }
+
         } finally {
             TraceEvent.end("ChromeTabbedActivity.initializeCompositor");
         }
@@ -582,6 +583,8 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         } else {
             SuggestionsEventReporterBridge.onColdStart();
         }
+
+        //VrShellDelegate.onScreenShotDisappear();
     }
 
     @Override

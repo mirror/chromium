@@ -266,6 +266,18 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         }
     }
 
+    public static void onGpuChannelEstablished() {
+        boolean created_delegate = sInstance == null;
+        VrShellDelegate instance = getInstance();
+        Log.e("===bshe===", "should see Didn't return null");
+        if (instance == null) return;
+        Log.e("===bshe===", "Didn't return null");
+        if (instance.mAutopresentWebVr) {
+            Log.e("===bshe===", "try enter vr");
+            instance.enterVr(false);
+        }
+    }
+
     /**
      * Handles the result of the exit VR flow (DOFF).
      */
@@ -663,6 +675,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         boolean webVrMode = mRequestedWebVr || tentativeWebVrMode && !mAutopresentWebVr;
         mVrShell.initializeNative(mActivity.getActivityTab(), webVrMode, mAutopresentWebVr,
                 mActivity instanceof CustomTabActivity);
+        Log.e("===bshe===", "===mAutopresentWebVr===" + mAutopresentWebVr);
         mVrShell.setWebVrModeEnabled(webVrMode, false);
 
         // We're entering VR, but not in WebVr mode.
@@ -683,6 +696,8 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         assert !mInVr;
         mAutopresentWebVr = true;
         mDonSucceeded = true;
+        //addOverlayView();
+        //enterVr(false);
     }
 
     /**
@@ -690,9 +705,9 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
      */
     public static void onNewIntent(ChromeActivity activity, Intent intent) {
         if (IntentUtils.safeGetBooleanExtra(intent, DAYDREAM_VR_EXTRA, false)
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)
+                //&& ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)
                 && activitySupportsAutopresentation(activity)
-                && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE)) {
+                /*&& IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE)*/) {
             VrShellDelegate instance = getInstance(activity);
             if (instance == null) return;
             instance.onAutopresentIntent();
