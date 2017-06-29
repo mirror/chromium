@@ -193,9 +193,12 @@ class PLATFORM_EXPORT ResourceFetcher
                                   const FetchParameters& params,
                                   Resource::Type);
 
-  bool IsReusableAlsoForPreloading(const FetchParameters&,
-                                   Resource*,
-                                   bool is_static_data) const;
+  // This method contains a part of the logic to determine whether the Resource
+  // can be reused for the resource loading specified by the FetchParameters,
+  // that is common for both the normal loading logic and the preload cache
+  // matching.
+  bool IsReusableResourceCommon(const FetchParameters&, Resource*) const;
+
   // RevalidationPolicy enum values are used in UMAs https://crbug.com/579496.
   enum RevalidationPolicy { kUse, kRevalidate, kReload, kLoad };
   RevalidationPolicy DetermineRevalidationPolicy(Resource::Type,
