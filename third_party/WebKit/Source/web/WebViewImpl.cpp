@@ -31,6 +31,7 @@
 #include "web/WebViewImpl.h"
 
 #include <memory>
+#include "controller/WebDevToolsAgentImpl.h"
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
 #include "core/animation/CompositorMutatorImpl.h"
@@ -94,7 +95,6 @@
 #include "core/page/PageOverlay.h"
 #include "core/page/PagePopupClient.h"
 #include "core/page/PointerLockController.h"
-#include "core/page/ScopedPageSuspender.h"
 #include "core/page/TouchDisambiguation.h"
 #include "core/page/ValidationMessageClientImpl.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
@@ -172,7 +172,6 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 #if USE(DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"
@@ -218,16 +217,6 @@ const double WebView::kTextSizeMultiplierRatio = 1.2;
 const double WebView::kMinTextSizeMultiplier = 0.5;
 const double WebView::kMaxTextSizeMultiplier = 3.0;
 
-// Used to defer all page activity in cases where the embedder wishes to run
-// a nested event loop. Using a stack enables nesting of message loop
-// invocations.
-static Vector<std::unique_ptr<ScopedPageSuspender>>& PageSuspenderStack() {
-  DEFINE_STATIC_LOCAL(Vector<std::unique_ptr<ScopedPageSuspender>>,
-                      suspender_stack, ());
-  return suspender_stack;
-}
-
-static bool g_should_use_external_popup_menus = false;
 
 namespace {
 
@@ -280,29 +269,12 @@ WebViewBase* WebViewImpl::Create(WebViewClient* client,
   return AdoptRef(new WebViewImpl(client, visibility_state)).LeakRef();
 }
 
-const WebInputEvent* WebViewBase::CurrentInputEvent() {
-  return WebViewImpl::CurrentInputEvent();
-}
-
-void WebView::SetUseExternalPopupMenus(bool use_external_popup_menus) {
-  g_should_use_external_popup_menus = use_external_popup_menus;
-}
-
 void WebView::UpdateVisitedLinkState(unsigned long long link_hash) {
   Page::VisitedStateChanged(link_hash);
 }
 
 void WebView::ResetVisitedLinkState(bool invalidate_visited_link_hashes) {
   Page::AllVisitedStateChanged(invalidate_visited_link_hashes);
-}
-
-void WebView::WillEnterModalLoop() {
-  PageSuspenderStack().push_back(WTF::MakeUnique<ScopedPageSuspender>());
-}
-
-void WebView::DidExitModalLoop() {
-  DCHECK(PageSuspenderStack().size());
-  PageSuspenderStack().pop_back();
 }
 
 void WebViewImpl::SetCredentialManagerClient(
@@ -317,12 +289,6 @@ void WebViewImpl::SetPrerendererClient(
   DCHECK(page_);
   ProvidePrerendererClientTo(*page_,
                              new PrerendererClient(*page_, prerenderer_client));
-}
-
-// static
-HashSet<WebViewBase*>& WebViewBase::AllInstances() {
-  DEFINE_STATIC_LOCAL(HashSet<WebViewBase*>, all_instances, ());
-  return all_instances;
 }
 
 WebViewImpl::WebViewImpl(WebViewClient* client,
@@ -2133,8 +2099,6 @@ bool WebViewImpl::HasVerticalScrollbar() {
       ->VerticalScrollbar();
 }
 
-const WebInputEvent* WebViewImpl::current_input_event_ = nullptr;
-
 WebInputEventResult WebViewImpl::HandleInputEvent(
     const WebCoalescedInputEvent& coalesced_event) {
   const WebInputEvent& input_event = coalesced_event.Event();
@@ -3667,14 +3631,6 @@ void WebViewImpl::PageScaleFactorChanged() {
 
 void WebViewImpl::MainFrameScrollOffsetChanged() {
   dev_tools_emulator_->MainFrameScrollOrScaleChanged();
-}
-
-bool WebViewBase::UseExternalPopupMenus() {
-  return WebViewImpl::UseExternalPopupMenus();
-}
-
-bool WebViewImpl::UseExternalPopupMenus() {
-  return g_should_use_external_popup_menus;
 }
 
 void WebViewImpl::SetBackgroundColorOverride(WebColor color) {
