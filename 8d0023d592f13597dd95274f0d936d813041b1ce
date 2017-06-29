@@ -508,6 +508,30 @@
     },
     {
       "key": {
+        "uuid": "c3ff4a27_f3bee658",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T02:43:50Z",
+      "side": 1,
+      "message": "Chromium java style guide is same as Android Java style guide mostly\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/java/java.md\n\nwhich in turn follows standard java language style guides with some extra rules. I don\u0027t remember a rule against that.\n5.1.4 End-Of-Line Comments\nThe // comment delimiter can comment out a complete line or only a partial line. It shouldn\u0027t be used on consecutive multiple lines for text comments; however, it can be used in consecutive multiple lines for commenting out sections of code. Examples of all three styles follow:\n\nif (foo \u003e 1) {\n\n    // Do a double-flip.\n    ...\n}\nelse {\n    return false;          // Explain why here.\n}",
+      "parentUuid": "ae86661a_d0ff81ee",
+      "range": {
+        "startLine": 341,
+        "startChar": 17,
+        "endLine": 341,
+        "endChar": 19
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b8af069_c6e76d3d",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 2
