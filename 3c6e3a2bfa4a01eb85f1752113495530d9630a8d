@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "3a1b6498_65cc0f6c",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T15:39:15Z",
+      "side": 1,
+      "message": "This will confuse UMA metrics. Can you handle that somehow? Probably should just not log the metric when script streaming is enabled. Ideas: use a param or another method to signal that it\u0027s enabled, or keep track of whether it\u0027s enabled on browser process side.\n\nI think also trace events will get confused, because EmbeddedWorkerInstance::OnURLJobCreatedForMainScript is never called.",
+      "parentUuid": "6acc952c_aa51648d",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bf488c3_17515922",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
         "patchSetId": 4
