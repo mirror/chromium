@@ -161,6 +161,9 @@ IPC_ENUM_TRAITS_MAX_VALUE(content::FetchRequestMode,
 IPC_ENUM_TRAITS_MAX_VALUE(content::FetchCredentialsMode,
                           content::FETCH_CREDENTIALS_MODE_LAST)
 
+IPC_ENUM_TRAITS_MAX_VALUE(content::FetchCacheMode,
+                          content::FETCH_CACHE_MODE_LAST)
+
 IPC_ENUM_TRAITS_MAX_VALUE(content::FetchRedirectMode,
                           content::FetchRedirectMode::LAST)
 
@@ -264,6 +267,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceRequest)
   IPC_STRUCT_TRAITS_MEMBER(service_worker_mode)
   IPC_STRUCT_TRAITS_MEMBER(fetch_request_mode)
   IPC_STRUCT_TRAITS_MEMBER(fetch_credentials_mode)
+  IPC_STRUCT_TRAITS_MEMBER(fetch_cache_mode)
   IPC_STRUCT_TRAITS_MEMBER(fetch_redirect_mode)
   IPC_STRUCT_TRAITS_MEMBER(fetch_request_context_type)
   IPC_STRUCT_TRAITS_MEMBER(fetch_mixed_content_context_type)

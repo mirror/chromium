@@ -100,9 +100,9 @@ void ServiceWorkerRequestHandler::InitializeForNavigation(
   std::unique_ptr<ServiceWorkerRequestHandler> handler(
       provider_host->CreateRequestHandler(
           FETCH_REQUEST_MODE_NAVIGATE, FETCH_CREDENTIALS_MODE_INCLUDE,
-          FetchRedirectMode::MANUAL_MODE, resource_type, request_context_type,
-          frame_type, blob_storage_context->AsWeakPtr(), body,
-          skip_service_worker));
+          FETCH_CACHE_MODE_DEFAULT, FetchRedirectMode::MANUAL_MODE,
+          resource_type, request_context_type, frame_type,
+          blob_storage_context->AsWeakPtr(), body, skip_service_worker));
   if (handler)
     request->SetUserData(&kUserDataKey, std::move(handler));
 
@@ -155,9 +155,9 @@ ServiceWorkerRequestHandler::InitializeForNavigationNetworkService(
   std::unique_ptr<ServiceWorkerRequestHandler> handler(
       provider_host->CreateRequestHandler(
           FETCH_REQUEST_MODE_NAVIGATE, FETCH_CREDENTIALS_MODE_INCLUDE,
-          FetchRedirectMode::MANUAL_MODE, resource_type, request_context_type,
-          frame_type, blob_storage_context->AsWeakPtr(), body,
-          skip_service_worker));
+          FETCH_CACHE_MODE_DEFAULT, FetchRedirectMode::MANUAL_MODE,
+          resource_type, request_context_type, frame_type,
+          blob_storage_context->AsWeakPtr(), body, skip_service_worker));
 
   // Transfer ownership to the ServiceWorkerNavigationHandleCore.
   // In the case of a successful navigation, the SWProviderHost will be
@@ -178,6 +178,7 @@ void ServiceWorkerRequestHandler::InitializeHandler(
     bool skip_service_worker,
     FetchRequestMode request_mode,
     FetchCredentialsMode credentials_mode,
+    FetchCacheMode cache_mode,
     FetchRedirectMode redirect_mode,
     ResourceType resource_type,
     RequestContextType request_context_type,
@@ -202,9 +203,9 @@ void ServiceWorkerRequestHandler::InitializeHandler(
 
   std::unique_ptr<ServiceWorkerRequestHandler> handler(
       provider_host->CreateRequestHandler(
-          request_mode, credentials_mode, redirect_mode, resource_type,
-          request_context_type, frame_type, blob_storage_context->AsWeakPtr(),
-          body, skip_service_worker));
+          request_mode, credentials_mode, cache_mode, redirect_mode,
+          resource_type, request_context_type, frame_type,
+          blob_storage_context->AsWeakPtr(), body, skip_service_worker));
   if (handler)
     request->SetUserData(&kUserDataKey, std::move(handler));
 }

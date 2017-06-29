@@ -268,6 +268,13 @@ class PLATFORM_EXPORT ResourceRequest final {
     fetch_credentials_mode_ = mode;
   }
 
+  WebURLRequest::FetchRequestCacheMode GetFetchCacheMode() const {
+    return fetch_cache_mode_;
+  }
+  void SetFetchCacheMode(WebURLRequest::FetchRequestCacheMode mode) {
+    fetch_cache_mode_ = mode;
+  }
+
   WebURLRequest::FetchRedirectMode GetFetchRedirectMode() const {
     return fetch_redirect_mode_;
   }
@@ -363,6 +370,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   WebURLRequest::FrameType frame_type_;
   WebURLRequest::FetchRequestMode fetch_request_mode_;
   WebURLRequest::FetchCredentialsMode fetch_credentials_mode_;
+  WebURLRequest::FetchRequestCacheMode fetch_cache_mode_;
   WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
   ReferrerPolicy referrer_policy_;
   bool did_set_http_referrer_;
@@ -415,6 +423,7 @@ struct CrossThreadResourceRequestData {
   WebURLRequest::FrameType frame_type_;
   WebURLRequest::FetchRequestMode fetch_request_mode_;
   WebURLRequest::FetchCredentialsMode fetch_credentials_mode_;
+  WebURLRequest::FetchRequestCacheMode fetch_cache_mode_;
   WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
   WebURLRequest::PreviewsState previews_state_;
   ReferrerPolicy referrer_policy_;

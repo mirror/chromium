@@ -112,6 +112,9 @@ struct CONTENT_EXPORT ResourceRequest {
   // The credentials mode passed to the ServiceWorker.
   FetchCredentialsMode fetch_credentials_mode = FETCH_CREDENTIALS_MODE_OMIT;
 
+  // The cache mode passed to the ServiceWorker.
+  FetchCacheMode fetch_cache_mode = FETCH_CACHE_MODE_DEFAULT;
+
   // The redirect mode used in Fetch API.
   FetchRedirectMode fetch_redirect_mode = FetchRedirectMode::FOLLOW_MODE;
 
