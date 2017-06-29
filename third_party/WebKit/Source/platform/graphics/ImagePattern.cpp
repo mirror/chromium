@@ -20,13 +20,6 @@ PassRefPtr<ImagePattern> ImagePattern::Create(PassRefPtr<Image> image,
 
 ImagePattern::ImagePattern(PassRefPtr<Image> image, RepeatMode repeat_mode)
     : Pattern(repeat_mode), tile_image_(image->ImageForCurrentFrame()) {
-  previous_local_matrix_.setIdentity();
-}
-
-bool ImagePattern::IsLocalMatrixChanged(const SkMatrix& local_matrix) const {
-  if (IsRepeatXY())
-    return Pattern::IsLocalMatrixChanged(local_matrix);
-  return local_matrix != previous_local_matrix_;
 }
 
 std::unique_ptr<PaintShader> ImagePattern::CreateShader(
@@ -71,7 +64,6 @@ std::unique_ptr<PaintShader> ImagePattern::CreateShader(
       recorder.finishRecordingAsPicture(), tile_size, nullptr, nullptr,
       SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB());
 
-  previous_local_matrix_ = local_matrix;
   SkMatrix adjusted_matrix(local_matrix);
   adjusted_matrix.postTranslate(-border_pixel_x, -border_pixel_y);
 
