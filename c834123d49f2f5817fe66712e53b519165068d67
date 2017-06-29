@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "864af5c3_546b6264",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-29T18:05:15Z",
+      "side": 1,
+      "message": "Replace existing one-off functions and use this instead:\n ui/views/controls/prefix_selector.cc\n ui/views/controls/textfield/textfield.cc",
+      "range": {
+        "startLine": 805,
+        "startChar": 11,
+        "endLine": 805,
+        "endChar": 30
+      },
+      "revId": "c834123d49f2f5817fe66712e53b519165068d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a613172e_2a8b86cc",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-29T18:05:15Z",
+      "side": 1,
+      "message": "+1 to Peter\u0027s comments about (a) adding tests and (b) using this function somewhere.",
+      "range": {
+        "startLine": 815,
+        "startChar": 5,
+        "endLine": 815,
+        "endChar": 9
+      },
+      "revId": "c834123d49f2f5817fe66712e53b519165068d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
