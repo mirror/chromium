@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "f06bedf5_01a5a482",
+        "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-29T15:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddce2496_9e1d173e",
+      "range": {
+        "startLine": 1425,
+        "startChar": 14,
+        "endLine": 1425,
+        "endChar": 19
+      },
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49832f3e_be4cb84b",
         "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
         "patchSetId": 3
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "b9761fd7_298f2f4f",
+        "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-29T15:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49832f3e_be4cb84b",
+      "range": {
+        "startLine": 1430,
+        "startChar": 24,
+        "endLine": 1430,
+        "endChar": 29
+      },
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e10d710_1204da4e",
         "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
         "patchSetId": 3
@@ -79,6 +127,24 @@
       "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250e0e50_f7f9de7e",
+        "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-29T15:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e10d710_1204da4e",
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +171,30 @@
     },
     {
       "key": {
+        "uuid": "7570f408_62796d3a",
+        "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-29T15:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc85940a_346c595e",
+      "range": {
+        "startLine": 1496,
+        "startChar": 14,
+        "endLine": 1496,
+        "endChar": 19
+      },
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b021f1b_8b91359e",
         "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
         "patchSetId": 3
@@ -128,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "c4e926d2_2a5b343c",
+        "filename": "chrome/browser/renderer_host/site_per_process_text_input_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-29T15:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b021f1b_8b91359e",
+      "range": {
+        "startLine": 1501,
+        "startChar": 24,
+        "endLine": 1501,
+        "endChar": 29
+      },
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86276f9b_ed8b10c1",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 3
@@ -139,6 +253,24 @@
       "writtenOn": "2017-06-28T20:30:00Z",
       "side": 1,
       "message": "Shouldn\u0027t the check be before this line?  Looks like we\u0027d get a UaF here otherwise.",
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a14d46_65b9da76",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2500,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-29T15:41:26Z",
+      "side": 1,
+      "message": "Uh yes! My mistake. Seems like I pasted one line too far below! The test only verifies the GetStringFromRange case which is why UaF did not crash it. Thanks!\n\nThat being said, there might be not a lot of merit in adding another pair of tests just to cover this API, or is there?",
+      "parentUuid": "86276f9b_ed8b10c1",
       "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -193,6 +325,24 @@
       "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a1b3d0_be0cef2a",
+        "filename": "content/public/test/text_input_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-29T15:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "782b3226_28c4fcdd",
+      "revId": "49ff72dd6d1e4a1c3ac7f7227556e76a091809d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
