@@ -16,6 +16,24 @@
       "revId": "bbf85c4795b79cbe3285167e3a0d18127ef747a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d3d425_ecf59950",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-29T23:00:42Z",
+      "side": 0,
+      "message": "FWIW that CHECK seems like a bad idea so I\u0027d be happy just to remove that instead, but this seems fine also.\n\nThat code is absurdly complex BWT. At some point I am probably going to need to get in there, wrap my head around it, and clean it up, so you may not want to prioritize that bug :)",
+      "parentUuid": "f6afa162_f3bfc516",
+      "revId": "bbf85c4795b79cbe3285167e3a0d18127ef747a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
