@@ -42,7 +42,6 @@ class ScreenResolution;
 // sessions.
 class DaemonProcess
     : public ConfigWatcher::Delegate,
-      public HostStatusMonitor,
       public WorkerProcessIpcDelegate {
  public:
   typedef std::list<DesktopSession*> DesktopSessionList;
@@ -62,9 +61,7 @@ class DaemonProcess
   void OnConfigUpdated(const std::string& serialized_config) override;
   void OnConfigWatcherError() override;
 
-  // HostStatusMonitor interface.
-  void AddStatusObserver(HostStatusObserver* observer) override;
-  void RemoveStatusObserver(HostStatusObserver* observer) override;
+  scoped_refptr<HostStatusMonitor> status_monitor() { return status_monitor_; }
 
   // WorkerProcessIpcDelegate implementation.
   void OnChannelConnected(int32_t peer_pid) override;
@@ -183,6 +180,8 @@ class DaemonProcess
 
   // Writes host status updates to the system event log.
   std::unique_ptr<HostEventLogger> host_event_logger_;
+
+  scoped_refptr<HostStatusMonitor> status_monitor_;
 
   base::WeakPtrFactory<DaemonProcess> weak_factory_;
 

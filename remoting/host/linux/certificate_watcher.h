@@ -48,7 +48,7 @@ class CertificateWatcher : public remoting::HostStatusObserver {
   // the inhibit mode. Should be called after the watcher starts.
   // Adds |this| as an observer to the monitor.
   // Removes |this| as an observer from the old monitor if it is not null.
-  void SetMonitor(base::WeakPtr<HostStatusMonitor> monitor);
+  void SetMonitor(scoped_refptr<HostStatusMonitor> monitor);
 
   // HostStatusObserver interface.
   void OnClientConnected(const std::string& jid) override;
@@ -69,7 +69,7 @@ class CertificateWatcher : public remoting::HostStatusObserver {
   void DatabaseChanged();
 
   // Reference to the monitor
-  base::WeakPtr<HostStatusMonitor> monitor_;
+  scoped_refptr<HostStatusMonitor> monitor_ = nullptr;
 
   // Called when a restart is scheduled.
   base::Closure restart_action_;
