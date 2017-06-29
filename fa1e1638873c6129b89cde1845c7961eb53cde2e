@@ -1,0 +1,316 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a566dde3_2e8405ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "nit: inside the CDM adapter",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c894ca_259c5149",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "nit: We use kCamelCase style for new features\n\nhttps://cs.chromium.org/chromium/src/base/feature_list.h?rcl\u003d0c3a4d5c5221b6566421addb6c66b5ec5840535a\u0026l\u003d38",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96e1f05_dc4cc818",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "Will you rebase this on the other CL?",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1894939a_8417a663",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "Maybe we should return INVALID_STATE_ERROR since the input is \"invalid\"?",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5696d335_309c1c0a",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00e7f39_9f2b7803",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "Just for completeness, can you call OnRejectPromise(NOT_SUPPORTED_ERROR) here as well?",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09067b2_51a48286",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "nit: cdm::Host_8 is not obsolete yet..",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2eb7868_0cefde56",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "nit: /* legacy_destination_url */ for unused parameter",
+      "range": {
+        "startLine": 812,
+        "startChar": 46,
+        "endLine": 812,
+        "endChar": 68
+      },
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39867e2e_5712c361",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de2fd15_4a39fb8a",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "nit: Return an empty StorageId() here for now?",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bdae04_c00d1423",
+        "filename": "media/cdm/cdm_wrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "style nit: is_cdm_9_supported",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c2c962_2118e45f",
+        "filename": "media/cdm/cdm_wrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "nit: Wrap 276-285 into a helper function to avoid interrupt the flow of this function? When we enable CDM9 support by default, we can remove that function entirely.",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad1a7ac_793fad1e",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c404a2_943c7110",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cfdd131_60c446c2",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "This should be INVALID_STATE?",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d901680b_ba0e1de4",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10a3468_846bfe6f",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6aaa8a3_32c63b50",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T06:15:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fa1e1638873c6129b89cde1845c7961eb53cde2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
