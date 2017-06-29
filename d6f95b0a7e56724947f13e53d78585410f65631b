@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4da3bb47_8b861bc5",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-29T14:42:58Z",
+      "side": 1,
+      "message": "Yes, this seems wrong for Shadow DOM. I wonder if this code should walk the layout tree instead.",
+      "revId": "d6f95b0a7e56724947f13e53d78585410f65631b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
