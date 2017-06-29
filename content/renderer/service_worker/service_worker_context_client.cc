@@ -148,6 +148,11 @@ blink::WebURLRequest::FetchCredentialsMode GetBlinkFetchCredentialsMode(
       credentials_mode);
 }
 
+blink::WebURLRequest::FetchRequestCacheMode GetBlinkFetchCacheMode(
+    FetchCacheMode cache_mode) {
+  return static_cast<blink::WebURLRequest::FetchRequestCacheMode>(cache_mode);
+}
+
 blink::WebURLRequest::FetchRedirectMode GetBlinkFetchRedirectMode(
     FetchRedirectMode redirect_mode) {
   return static_cast<blink::WebURLRequest::FetchRedirectMode>(redirect_mode);
@@ -203,6 +208,7 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
   web_request->SetIsMainResourceLoad(request.is_main_resource_load);
   web_request->SetCredentialsMode(
       GetBlinkFetchCredentialsMode(request.credentials_mode));
+  web_request->SetCacheMode(GetBlinkFetchCacheMode(request.cache_mode));
   web_request->SetRedirectMode(
       GetBlinkFetchRedirectMode(request.redirect_mode));
   web_request->SetRequestContext(

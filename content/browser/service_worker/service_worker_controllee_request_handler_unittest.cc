@@ -62,6 +62,7 @@ class ServiceWorkerControlleeRequestHandlerTest : public testing::Test {
               base::WeakPtr<storage::BlobStorageContext>(),
               fetch_type,
               FETCH_CREDENTIALS_MODE_OMIT,
+              FETCH_CACHE_MODE_DEFAULT,
               FetchRedirectMode::FOLLOW_MODE,
               type,
               REQUEST_CONTEXT_TYPE_HYPERLINK,

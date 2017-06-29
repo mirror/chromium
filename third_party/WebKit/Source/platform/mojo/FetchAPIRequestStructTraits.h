@@ -16,6 +16,16 @@ class KURL;
 namespace mojo {
 
 template <>
+struct EnumTraits<blink::mojom::FetchCacheMode,
+                  blink::WebURLRequest::FetchRequestCacheMode> {
+  static blink::mojom::FetchCacheMode ToMojom(
+      blink::WebURLRequest::FetchRequestCacheMode input);
+
+  static bool FromMojom(blink::mojom::FetchCacheMode input,
+                        blink::WebURLRequest::FetchRequestCacheMode* out);
+};
+
+template <>
 struct EnumTraits<blink::mojom::FetchCredentialsMode,
                   blink::WebURLRequest::FetchCredentialsMode> {
   static blink::mojom::FetchCredentialsMode ToMojom(
@@ -105,6 +115,11 @@ struct StructTraits<blink::mojom::FetchAPIRequestDataView,
   static uint64_t blob_size(const blink::WebServiceWorkerRequest&);
 
   static const blink::Referrer& referrer(const blink::WebServiceWorkerRequest&);
+
+  static blink::WebURLRequest::FetchRequestCacheMode cache_mode(
+      const blink::WebServiceWorkerRequest& request) {
+    return request.CacheMode();
+  }
 
   static blink::WebURLRequest::FetchCredentialsMode credentials_mode(
       const blink::WebServiceWorkerRequest& request) {

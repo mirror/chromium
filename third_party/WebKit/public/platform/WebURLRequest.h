@@ -311,6 +311,10 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT FetchCredentialsMode GetFetchCredentialsMode() const;
   BLINK_PLATFORM_EXPORT void SetFetchCredentialsMode(FetchCredentialsMode);
 
+  // The cache mode which will be passed to the ServiceWorker.
+  BLINK_PLATFORM_EXPORT FetchRequestCacheMode GetFetchCacheMode() const;
+  BLINK_PLATFORM_EXPORT void SetFetchCacheMode(FetchRequestCacheMode);
+
   // The redirect mode which is used in Fetch API.
   BLINK_PLATFORM_EXPORT FetchRedirectMode GetFetchRedirectMode() const;
   BLINK_PLATFORM_EXPORT void SetFetchRedirectMode(FetchRedirectMode);

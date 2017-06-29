@@ -70,6 +70,7 @@ ResourceRequest::ResourceRequest(const KURL& url)
       frame_type_(WebURLRequest::kFrameTypeNone),
       fetch_request_mode_(WebURLRequest::kFetchRequestModeNoCORS),
       fetch_credentials_mode_(WebURLRequest::kFetchCredentialsModeInclude),
+      fetch_cache_mode_(WebURLRequest::kFetchRequestCacheModeDefault),
       fetch_redirect_mode_(WebURLRequest::kFetchRedirectModeFollow),
       referrer_policy_(kReferrerPolicyDefault),
       did_set_http_referrer_(false),
@@ -113,6 +114,7 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   SetFrameType(data->frame_type_);
   SetFetchRequestMode(data->fetch_request_mode_);
   SetFetchCredentialsMode(data->fetch_credentials_mode_);
+  SetFetchCacheMode(fetch_cache_mode_);
   SetFetchRedirectMode(data->fetch_redirect_mode_);
   referrer_policy_ = data->referrer_policy_;
   did_set_http_referrer_ = data->did_set_http_referrer_;
@@ -163,6 +165,7 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   data->frame_type_ = frame_type_;
   data->fetch_request_mode_ = fetch_request_mode_;
   data->fetch_credentials_mode_ = fetch_credentials_mode_;
+  data->fetch_cache_mode_ = fetch_cache_mode_;
   data->fetch_redirect_mode_ = fetch_redirect_mode_;
   data->referrer_policy_ = referrer_policy_;
   data->did_set_http_referrer_ = did_set_http_referrer_;

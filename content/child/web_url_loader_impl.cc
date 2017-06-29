@@ -584,6 +584,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       GetFetchRequestModeForWebURLRequest(request);
   resource_request->fetch_credentials_mode =
       GetFetchCredentialsModeForWebURLRequest(request);
+  resource_request->fetch_cache_mode =
+      GetFetchCacheModeForWebURLRequest(request);
   resource_request->fetch_redirect_mode =
       GetFetchRedirectModeForWebURLRequest(request);
   resource_request->fetch_request_context_type =
@@ -1214,6 +1216,7 @@ WebURLRequest WebURLLoaderImpl::PopulateURLRequestForRedirect(
   new_request.SetShouldResetAppCache(request.ShouldResetAppCache());
   new_request.SetFetchRequestMode(request.GetFetchRequestMode());
   new_request.SetFetchCredentialsMode(request.GetFetchCredentialsMode());
+  new_request.SetFetchCacheMode(request.GetFetchCacheMode());
   new_request.SetKeepalive(request.GetKeepalive());
 
   new_request.SetHTTPReferrer(WebString::FromUTF8(redirect_info.new_referrer),
