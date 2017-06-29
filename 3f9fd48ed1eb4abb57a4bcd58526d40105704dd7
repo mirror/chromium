@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e399f8aa_24e47e73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-29T00:03:14Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve uploaded https://chromium-review.googlesource.com/c/553724/ which is prerequisite to switching to a simpler workflow.",
+      "parentUuid": "72630b31_c7b35c6b",
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee5c2680_9237c9d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a10122f2_48b62a38",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-29T00:03:14Z",
+      "side": 1,
+      "message": "Hmm... I think it\u0027s up to date since I\u0027ve included \u0027European\u0027 character sets.",
+      "parentUuid": "ee5c2680_9237c9d2",
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acf9c2f8_0a37e507",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-28T22:25:50Z",
       "side": 1,
       "message": "Comment out of date",
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b9ea37_31a1843f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-29T00:03:14Z",
+      "side": 1,
+      "message": "This is not a finished task. I\u0027ll probably end up adding more char sets.",
+      "parentUuid": "acf9c2f8_0a37e507",
       "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
