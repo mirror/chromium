@@ -216,6 +216,9 @@ void RendererGpuVideoAcceleratorFactories::DeleteTexture(uint32_t texture_id) {
   gpu::gles2::GLES2Interface* gles2 = lock.ContextGL();
   gles2->DeleteTextures(1, &texture_id);
   DCHECK_EQ(gles2->GetError(), static_cast<GLenum>(GL_NO_ERROR));
+  // Flush the delete to the server, to avoid crbug.com/737992 .
+  // Note that the DCHECK above will flush in debug builds.
+  gles2->ShallowFlushCHROMIUM();
 }
 
 gpu::SyncToken RendererGpuVideoAcceleratorFactories::CreateSyncToken() {
