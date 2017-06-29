@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "479d6966_5f8064af",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T15:55:23Z",
+      "side": 1,
+      "message": "This is my first suggestion (\"An option is to declare an helper method GetTaskSchedulerName() but do not provide an implementation and say that code calling this must provide an implementation. This however would make this target incomplete which I don\u0027t really like.\").\n\nIf you do this, do not use a flag in BUILD.gn but tell the client that they should link to one of the two targets that implement the function (look at how //ios/chrome/app:tests_hooks, //ios/chrome/app:tests_fake_hook and //ios/chrome/test/earl_grey:hooks do this).\n\nThen //ios/web would link with //ios/web:ios_net_hooks and cronet would link against //ios/crnet:ios_net_hooks that have the implementation.",
+      "parentUuid": "77b7a80f_618f4f19",
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77924afd_97a054bd",
         "filename": "ios/web/app/web_main_loop.mm",
         "patchSetId": 4
