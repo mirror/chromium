@@ -32,7 +32,10 @@ runInlineStylePropertyMapTests( {
     // Translations
     // TODO(meade)
     // Scales
-    // TODO(meade)
+    new CSSTransformValue([new CSSScale(1, 2.2)]),
+    new CSSTransformValue([new CSSScale(1, 2.2, 3)]),
+    new CSSTransformValue([new CSSScale(-1, -2.2)]),
+    new CSSTransformValue([new CSSScale(-1, -2.2, -3)]),
     // Skews
     new CSSTransformValue([new CSSSkew(angleValue(30, 'deg'), zeroAngle)]),
     new CSSTransformValue([new CSSSkew(angleValue(10, 'rad'), zeroAngle)]),
@@ -57,6 +60,10 @@ runInlineStylePropertyMapTests( {
   // Values with these strings aren't used in Typed OM, but can also be
   // represented by the specified values.
   validStringMappings: {
+    // Scales
+    'scale(4)': new CSSTransformValue([new CSSScale(4, 4)]),
+    'scaleX(2)': new CSSTransformValue([new CSSScale(2, 1)]),
+    'scaleY(3)': new CSSTransformValue([new CSSScale(1, 3)]),
     // Skews
     'skew(45deg)':
       new CSSTransformValue([new CSSSkew(angleValue(45, 'deg'), zeroAngle)]),
