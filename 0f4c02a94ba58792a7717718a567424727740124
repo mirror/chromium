@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cbe962a1_54631d80",
+        "filename": "components/update_client/background_downloader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-29T22:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a60cc418_31d60d5a",
+      "revId": "0f4c02a94ba58792a7717718a567424727740124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c39d1eb_bb38a678",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0f4c02a94ba58792a7717718a567424727740124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187be2c8_347d8fa8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 80510,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-29T22:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c39d1eb_bb38a678",
+      "revId": "0f4c02a94ba58792a7717718a567424727740124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
