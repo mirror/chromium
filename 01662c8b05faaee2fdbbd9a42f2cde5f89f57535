@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "588a468b_c66f4f83",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-29T20:48:42Z",
+      "side": 0,
+      "message": "Does removing this mean that manually switching to a discarded tab won\u0027t automatically reload the tab contents? Please consider how this affects non-ChromeOS platforms if your other changes are ChromeOS-specific (ie. does something else now load discarded tabs, but only on ChromeOS?). Please describe this aspect of the change in the CL description.",
+      "range": {
+        "startLine": 1067,
+        "startChar": 15,
+        "endLine": 1067,
+        "endChar": 20
+      },
+      "revId": "01662c8b05faaee2fdbbd9a42f2cde5f89f57535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

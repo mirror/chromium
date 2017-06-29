@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4db35a18_d3928271",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-29T20:48:42Z",
+      "side": 1,
+      "message": "optional nit: remove |window_is_active| and replace it with stats_list.empty() here. Or, even better, move that logic and the relevant comment into TabManager::AddTabStats() and remove the |window_is_active| param there.",
+      "range": {
+        "startLine": 389,
+        "startChar": 30,
+        "endLine": 389,
+        "endChar": 46
+      },
+      "revId": "a44e60a14d0c839eef29f610e55b8e836fbad784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
