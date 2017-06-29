@@ -401,6 +401,11 @@
     "args": ["--disable-features=ServiceWorkerNavigationPreload"]
   },
   {
+    "prefix": "service-worker-script-streaming",
+    "base": "http/tests/serviceworker",
+    "args": ["--enable-features=ServiceWorkerScriptStreaming"]
+  },
+  {
     "prefix": "layout_ng",
     "base": "fast/block/basic",
     "args": ["--enable-blink-features=LayoutNG"]

@@ -37,10 +37,12 @@
 #include "core/inspector/WorkerThreadDebugger.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
+#include "core/workers/InstalledScriptsManager.h"
 #include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerInstalledScriptsManager.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
@@ -455,9 +457,24 @@ void WorkerThread::InitializeOnWorkerThread(
 
   KURL script_url = startup_data->script_url_;
   String source_code = startup_data->source_code_;
-  WorkerThreadStartMode start_mode = startup_data->start_mode_;
   std::unique_ptr<Vector<char>> cached_meta_data =
       std::move(startup_data->cached_meta_data_);
+  if (GetInstalledScriptsManager() &&
+      GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
+    // TODO(shimazu): Set ContentSecurityPolicy, ReferrerPolicy, AddressSpace
+    // and OriginTrialTokens to |startup_data|.
+    // TODO(shimazu): Add a post task to the main thread for setting
+    // ContentSecurityPolicy and ReferrerPolicy.
+    auto script_data = GetInstalledScriptsManager()->GetScriptData(script_url);
+    if (script_data) {
+      DCHECK(source_code.IsEmpty());
+      DCHECK(!cached_meta_data);
+      source_code = std::move(script_data->source_text);
+      cached_meta_data = std::move(script_data->meta_data);
+    }
+  }
+
+  WorkerThreadStartMode start_mode = startup_data->start_mode_;
   V8CacheOptions v8_cache_options =
       startup_data->worker_v8_settings_.v8_cache_options_;
   bool heap_limit_increased_for_debugging =
@@ -466,7 +483,6 @@ void WorkerThread::InitializeOnWorkerThread(
   bool allow_atomics_wait =
       startup_data->worker_v8_settings_.atomics_wait_mode_ ==
       WorkerV8Settings::AtomicsWaitMode::kAllow;
-
   {
     MutexLocker lock(thread_state_mutex_);
 
