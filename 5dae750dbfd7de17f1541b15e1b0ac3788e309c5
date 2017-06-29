@@ -16,6 +16,24 @@
       "revId": "5dae750dbfd7de17f1541b15e1b0ac3788e309c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a290886_bd9f4ad8",
+        "filename": "chrome/test/vr/perf/vr_test_arg_parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-29T21:40:39Z",
+      "side": 1,
+      "message": "Yes, there\u0027s supposed to be two blank lines between groups of top-level code blocks according to the Python style guide, although it seems inconsistent (for example, other files only have a single line between the copyright comment and the imports like in this file).",
+      "parentUuid": "fc127a7f_7fc78321",
+      "revId": "5dae750dbfd7de17f1541b15e1b0ac3788e309c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
