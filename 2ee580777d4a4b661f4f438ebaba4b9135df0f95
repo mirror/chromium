@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3acb0d5_14392282",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-29T04:57:13Z",
+      "side": 1,
+      "message": "Sorry for not clarifying. I understood that there was some net code that was shared as well. I put this code in ios/net still because net code will be added into this global_state class. I only moved the task scheduler creation and startup first I didn\u0027t want to add everything as I had in the prototype CL so that we could focus on each piece individually. (This CL alone will not fix the shared lib initialization issues.)",
+      "parentUuid": "5693d613_cbfb9832",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fdc4856_4b64fd4b",
         "filename": "ios/net/global_state/ios_global_state.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8af1992c_d84515e6",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-29T04:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdc4856_4b64fd4b",
+      "range": {
+        "startLine": 45,
+        "startChar": 25,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdec4ff3_631dde1f",
         "filename": "ios/net/global_state/ios_global_state.mm",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-29T00:43:01Z",
       "side": 1,
       "message": "This looks like a layering violation to me. ios/net or ios/web should not know anything about cronet. Is there a way to configure Create param via GN?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2088fe7_b486dfa0",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-29T04:57:13Z",
+      "side": 1,
+      "message": "I can probably use a different implementation file in the CRONET_BUILD case and choose the correct one in the global_state BUILD file. For example, have a global_state.mm and a global_state_cronet.mm. WDYT about that approach?",
+      "parentUuid": "cdec4ff3_631dde1f",
       "range": {
         "startLine": 47,
         "startChar": 4,
@@ -91,6 +163,30 @@
       "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d252ae_1c6530b2",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-29T04:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e30f70d_59249176",
+      "range": {
+        "startLine": 58,
+        "startChar": 25,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
