@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e413832e_62c5a01c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T21:19:52Z",
+      "side": 1,
+      "message": "we don\u0027t have to do whitelist piece if it needs refactoring. In future, if a demand comes, we can add an api to do that easily to class.\n\nboolean allowReporting seems ok.",
+      "parentUuid": "586231d5_c3ecd914",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 68
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75ca586b_385f0b7d",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
         "patchSetId": 6
