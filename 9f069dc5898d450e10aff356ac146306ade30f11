@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b874983b_ad0e7a66",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "933d9f0c_2896d01a",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 10
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75d97c56_8a0e0cd1",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 20
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T01:44:50Z",
       "side": 1,
       "message": "This boolean check looks wrong - won\u0027t it always return false since prefs::kNewTabInProductHelp is a const char *?",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 12
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f9f52b_c22e355f",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Good catch! I\u0027m going to adjust my unittests to test this properly.",
+      "parentUuid": "75d97c56_8a0e0cd1",
       "range": {
         "startLine": 102,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "273aa8eb_06d841ef",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Yeah, this might be a concern. What are people\u0027s thoughts?",
+      "parentUuid": "84bb2ad6_af66b907",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b936ddc1_d40a304b",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
         "patchSetId": 20
@@ -91,6 +163,30 @@
       "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd335a73_62aa17b3",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b936ddc1_d40a304b",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da75a97d_360f0d4e",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Ack, let me know if this comment is better.",
+      "parentUuid": "ce637443_92ed07af",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 10
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54cfc75a_3d8dc0b2",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 20
@@ -137,6 +257,30 @@
       "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f0cad3_f78eef6d",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54cfc75a_3d8dc0b2",
+      "range": {
+        "startLine": 90,
+        "startChar": 38,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "fb49a001_b21605b2",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61d6d36a_c410b7cb",
+      "range": {
+        "startLine": 107,
+        "startChar": 38,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f59f44fb_be78dd0f",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 20
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "5551915a_a4993672",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59f44fb_be78dd0f",
+      "range": {
+        "startLine": 129,
+        "startChar": 38,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e000be6_583b17ed",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 20
@@ -197,6 +389,30 @@
       "writtenOn": "2017-06-29T01:44:50Z",
       "side": 1,
       "message": "Perhaps it would be useful to have a test that manually calls OnSessionEnded(delta) to check that the preferences are written correctly?",
+      "range": {
+        "startLine": 142,
+        "startChar": 1,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e03205_ba77643c",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:24:14Z",
+      "side": 1,
+      "message": "Yep, I\u0027ll add that in the next patch.",
+      "parentUuid": "7e000be6_583b17ed",
       "range": {
         "startLine": 142,
         "startChar": 1,
