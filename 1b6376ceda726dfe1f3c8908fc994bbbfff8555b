@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "17fe3bb1_b9a67d14",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-29T19:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "711154d2_a11976a7",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4163df43_b8cafd49",
         "filename": "remoting/host/chromoting_host.h",
         "patchSetId": 1
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "5cb057a4_7a69e8e9",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-29T19:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4163df43_b8cafd49",
+      "range": {
+        "startLine": 186,
+        "startChar": 14,
+        "endLine": 187,
+        "endChar": 76
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43616f81_3acf0f38",
         "filename": "remoting/host/chromoting_host.h",
         "patchSetId": 1
@@ -155,6 +203,30 @@
       "writtenOn": "2017-06-28T16:01:41Z",
       "side": 1,
       "message": "Any reason not to use std::map for this?",
+      "range": {
+        "startLine": 188,
+        "startChar": 30,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a710db1_161fd6f4",
+        "filename": "remoting/host/chromoting_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-29T19:33:16Z",
+      "side": 1,
+      "message": "I chose this vector because its the same as the one in DataChannelManager: https://cs.chromium.org/chromium/src/remoting/protocol/data_channel_manager.h?l\u003d41\nI can see why std::map makes more sense though.",
+      "parentUuid": "43616f81_3acf0f38",
       "range": {
         "startLine": 188,
         "startChar": 30,
@@ -190,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "ed3f69cf_a2b2d55e",
+        "filename": "remoting/host/client_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-29T19:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae45ff9d_2a5aff56",
+      "range": {
+        "startLine": 261,
+        "startChar": 31,
+        "endLine": 261,
+        "endChar": 52
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "932a3221_b7fbd7a4",
         "filename": "remoting/host/remoting_me2me_host.cc",
         "patchSetId": 1
@@ -213,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "c807041f_ac63df1b",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-29T19:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "932a3221_b7fbd7a4",
+      "range": {
+        "startLine": 1436,
+        "startChar": 12,
+        "endLine": 1436,
+        "endChar": 29
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aa93ff1_f22404b8",
         "filename": "remoting/protocol/connection_to_client.h",
         "patchSetId": 1
@@ -233,6 +353,30 @@
       "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8f036f_784d74d7",
+        "filename": "remoting/protocol/connection_to_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-29T19:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa93ff1_f22404b8",
+      "range": {
+        "startLine": 12,
+        "startChar": 28,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +427,30 @@
     },
     {
       "key": {
+        "uuid": "47fcd8cb_78df6e66",
+        "filename": "remoting/protocol/connection_to_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-29T19:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ce1490_9567b46c",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b18af64f_9669886f",
         "filename": "remoting/protocol/webrtc_connection_to_client.cc",
         "patchSetId": 1
@@ -312,6 +480,24 @@
       "side": 1,
       "message": "Actually, we could take this one step further and move the EventDispatcher creation logic into factory which is provided to the DataChannelManager.  That way the code would look like this:\nevent_handler_-\u003eOnIncomingDataChannel(name, std::move(pipe));\n\nAnd your CL would include an example usage of the DCM.  WDYT?",
       "parentUuid": "b18af64f_9669886f",
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ca2e15_08551cdb",
+        "filename": "remoting/protocol/webrtc_connection_to_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-29T19:33:16Z",
+      "side": 1,
+      "message": "If the EventDispatcher is created by a static factory method, would it be somehow tied to the lifetime of the MessagePipe? Would WebrtcConnectionToClient no longer have event_dispatcher_? If so, how could it access the EventDispatcher in methods other than this one?",
+      "parentUuid": "f868ebfd_95448b16",
       "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
