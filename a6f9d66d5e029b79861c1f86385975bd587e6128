@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "71b2d922_7d937293",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T16:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a7d0191_bb9e08bd",
+      "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16173406_521a37d3",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
         "patchSetId": 2
@@ -78,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4c9192d5_628445d5",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T16:00:34Z",
+      "side": 1,
+      "message": "It is to log only once and only the ones we get from the first time |onMostVisitedURLsAvailable| is called. |_mostVisitedData| might change between the first call and the favicon callbacks.",
+      "parentUuid": "16173406_521a37d3",
+      "range": {
+        "startLine": 123,
+        "startChar": 61,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09e90134_b29df1a6",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
         "patchSetId": 2
@@ -98,6 +140,30 @@
       "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a326f42d_852c1078",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T16:00:34Z",
+      "side": 1,
+      "message": "In objective-C the convention is to use upper case for acronyms (and yes, it is a mess when you have C++ object in objective-C code).",
+      "parentUuid": "09e90134_b29df1a6",
+      "range": {
+        "startLine": 451,
+        "startChar": 40,
+        "endLine": 451,
+        "endChar": 0
+      },
+      "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
