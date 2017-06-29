@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0888ebd9_0e05c358",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:15:53Z",
+      "side": 1,
+      "message": "nit: One empty line above\nnit: // namespace",
+      "revId": "a916780b91eb16abb32713058016e7751ce30e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e178c8a_688ce46b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:15:53Z",
+      "side": 1,
+      "message": "nit: You\u0027re not really using it, since on line 18 you explicitly spell it out.",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 23
+      },
+      "revId": "a916780b91eb16abb32713058016e7751ce30e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
