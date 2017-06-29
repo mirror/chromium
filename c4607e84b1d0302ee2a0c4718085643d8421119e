@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "687aa9e0_93f9d78b",
+        "filename": "ipc/handle_attachment_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-29T23:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a156851b_0e8b9178",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "c4607e84b1d0302ee2a0c4718085643d8421119e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5fc47ab_bfc04bb7",
         "filename": "ipc/handle_attachment_fuchsia.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T23:28:39Z",
       "side": 1,
       "message": "nit: Mach port ???",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "c4607e84b1d0302ee2a0c4718085643d8421119e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe795d9_fe7fb9af",
+        "filename": "ipc/handle_attachment_fuchsia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-29T23:36:46Z",
+      "side": 1,
+      "message": "Doh, double copy/paste error since I copied from _win! Done.",
+      "parentUuid": "c5fc47ab_bfc04bb7",
       "range": {
         "startLine": 51,
         "startChar": 9,
@@ -68,6 +116,30 @@
       "revId": "c4607e84b1d0302ee2a0c4718085643d8421119e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47e2363_b0c9d8e6",
+        "filename": "ipc/handle_fuchsia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-29T23:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dddc115_1c416989",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "c4607e84b1d0302ee2a0c4718085643d8421119e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
