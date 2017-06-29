@@ -122,6 +122,11 @@ base::string16 AutofillPaymentInstrument::GetSublabel() const {
       autofill::AutofillType(autofill::CREDIT_CARD_NAME_FULL), app_locale_);
 }
 
+bool AutofillPaymentInstrument::IsValidForForMethod(
+    const std::string& method) const {
+  return method == "basic-card";
+}
+
 void AutofillPaymentInstrument::OnFullCardRequestSucceeded(
     const autofill::CreditCard& card,
     const base::string16& cvc) {

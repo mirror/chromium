@@ -191,15 +191,15 @@ void OrderSummaryViewController::FillContentView(views::View* content_view) {
 
   base::string16 total_label_value = l10n_util::GetStringFUTF16(
       IDS_PAYMENT_REQUEST_ORDER_SUMMARY_SHEET_TOTAL_FORMAT,
-      base::UTF8ToUTF16(spec()->details().total->amount->currency),
-      spec()->GetFormattedCurrencyAmount(spec()->details().total->amount));
+      base::UTF8ToUTF16(state()->GetTotal()->amount->currency),
+      spec()->GetFormattedCurrencyAmount(state()->GetTotal()->amount));
 
   content_view->AddChildView(
       CreateLineItemView(
-          base::UTF8ToUTF16(spec()->details().total->label),
-          base::UTF8ToUTF16(spec()->details().total->amount->currency),
-          spec()->GetFormattedCurrencyAmount(spec()->details().total->amount),
-          true, DialogViewID::ORDER_SUMMARY_TOTAL_CURRENCY_LABEL,
+          base::UTF8ToUTF16(state()->GetTotal()->label),
+          base::UTF8ToUTF16(state()->GetTotal()->amount->currency),
+          spec()->GetFormattedCurrencyAmount(state()->GetTotal()->amount), true,
+          DialogViewID::ORDER_SUMMARY_TOTAL_CURRENCY_LABEL,
           DialogViewID::ORDER_SUMMARY_TOTAL_AMOUNT_LABEL)
           .release());
 }

@@ -251,6 +251,46 @@ bool PaymentRequestState::IsPaymentAppInvoked() const {
   return !!response_helper_;
 }
 
+const mojom::PaymentItemPtr& PaymentRequestState::GetTotal() const {
+  const mojom::PaymentDetailsModifierPtr* modifier = GetApplicableModifier();
+  return modifier ? (*modifier)->total : spec_->details().total;
+}
+
+const std::vector<const mojom::PaymentItemPtr*>&
+PaymentRequestState::GetDisplayItems() const {
+  return display_items_;
+}
+
+void PaymentRequestState::UpdateDisplayItems() {
+  display_items_.clear();
+  const mojom::PaymentDetailsModifierPtr* modifier = GetApplicableModifier();
+  for (const auto& item : spec_->details().display_items) {
+    display_items_.push_back(&item);
+  }
+
+  if (modifier) {
+    for (const auto& additional_item : (*modifier)->additional_display_items) {
+      display_items_.push_back(&additional_item);
+    }
+  }
+}
+
+const mojom::PaymentDetailsModifierPtr*
+PaymentRequestState::GetApplicableModifier() const {
+  if (!selected_instrument())
+    return nullptr;
+
+  for (const auto& modifier : spec_->details().modifiers) {
+    for (const auto& supported_method :
+         modifier->method_data->supported_methods) {
+      if (selected_instrument()->IsValidForForMethod(supported_method)) {
+        return &modifier;
+      }
+    }
+  }
+  return nullptr;
+}
+
 void PaymentRequestState::PopulateProfileCache() {
   std::vector<autofill::AutofillProfile*> profiles =
       personal_data_manager_->GetProfilesToSuggest();
@@ -315,6 +355,7 @@ void PaymentRequestState::SetDefaultProfileSelections() {
 void PaymentRequestState::UpdateIsReadyToPayAndNotifyObservers() {
   is_ready_to_pay_ =
       ArePaymentDetailsSatisfied() && ArePaymentOptionsSatisfied();
+  UpdateDisplayItems();
   NotifyOnSelectedInformationChanged();
 }
 

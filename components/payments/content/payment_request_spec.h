@@ -112,13 +112,12 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
     return selected_shipping_option_error_;
   }
 
-  const mojom::PaymentDetails& details() const { return *details_.get(); }
-
   void StartWaitingForUpdateWith(UpdateReason reason);
-
   bool IsMixedCurrency() const;
 
   UpdateReason current_update_reason() const { return current_update_reason_; }
+
+  const mojom::PaymentDetails& details() const { return *details_.get(); }
 
  private:
   // Validates the |method_data| and fills |supported_card_networks_|,
