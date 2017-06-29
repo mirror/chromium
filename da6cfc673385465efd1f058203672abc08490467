@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5f89b4c_881cfc0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-29T08:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "181594e6_d0b72e4e",
+      "revId": "da6cfc673385465efd1f058203672abc08490467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac955ac6_9fcb0e54",
         "filename": "services/device/generic_sensor/linux/sensor_data_linux.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "519fdae7_939310ac",
+        "filename": "services/device/generic_sensor/linux/sensor_data_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-29T08:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac955ac6_9fcb0e54",
+      "revId": "da6cfc673385465efd1f058203672abc08490467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47a200fd_e20bbd84",
         "filename": "services/device/generic_sensor/linux/sensor_device_manager.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "da6cfc673385465efd1f058203672abc08490467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342aa0ba_c604d5fd",
+        "filename": "services/device/generic_sensor/linux/sensor_device_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-29T08:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a200fd_e20bbd84",
+      "revId": "da6cfc673385465efd1f058203672abc08490467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
