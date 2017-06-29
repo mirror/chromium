@@ -338,6 +338,8 @@ bool UtilityProcessHostImpl::StartProcess() {
       cmd_line->AppendSwitch(switches::kUtilityProcessRunningElevated);
 #endif
 
+    BrowserChildProcessHostImpl::CopyFeatureAndFieldTrialFlags(cmd_line.get());
+
     process_->Launch(base::MakeUnique<UtilitySandboxedProcessLauncherDelegate>(
                          exposed_dir_, run_elevated_, no_sandbox_, env_),
                      std::move(cmd_line), true);
