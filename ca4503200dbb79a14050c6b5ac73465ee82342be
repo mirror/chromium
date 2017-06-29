@@ -22,6 +22,30 @@
       "revId": "ca4503200dbb79a14050c6b5ac73465ee82342be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68566839_77b80bb0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 21462,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-29T17:50:40Z",
+      "side": 1,
+      "message": "My bad. I noticed examples of units\u003d\"boolean\" first before, just now, noticing examples for enum\u003d\"Boolean\" in the xml file. Let me know if the latter is the correct way.",
+      "parentUuid": "1d0fe03f_b9476a9b",
+      "range": {
+        "startLine": 21462,
+        "startChar": 4,
+        "endLine": 21462,
+        "endChar": 19
+      },
+      "revId": "ca4503200dbb79a14050c6b5ac73465ee82342be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
