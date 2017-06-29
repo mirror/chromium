@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd9c3ceb_349ccb80",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-29T06:36:20Z",
+      "side": 1,
+      "message": "Looks simpler :)",
+      "range": {
+        "startLine": 295,
+        "startChar": 11,
+        "endLine": 295,
+        "endChar": 17
+      },
+      "revId": "32684d00028dcf8ed6a99ccb5a32b5f9393f857b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
