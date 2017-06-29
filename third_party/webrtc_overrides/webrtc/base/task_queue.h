@@ -15,7 +15,7 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "third_party/webrtc/base/thread_annotations.h"
+#include "third_party/webrtc/rtc_base/thread_annotations.h"
 
 namespace rtc {
 
