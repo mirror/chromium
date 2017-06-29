@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03fe00dc_fefd9bd5",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "It\u0027s because MakeUnique cannot be used for a private constructor.",
+      "parentUuid": "3d2ea909_05f18333",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6113925_a4608166",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55682d1f_b9b08c1e",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6113925_a4608166",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f0f0ced1_43147860",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b7d557f_c880ddf7",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be7b582f_8f3c12c8",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4daa505e_79690285",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be7b582f_8f3c12c8",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87bf0819_e8d82789",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf96d45_76cd5fd9",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bf0819_e8d82789",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "23505897_1dd53ebf",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06de6f94_f378edc9",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd15cbca_2b7c35b6",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
         "patchSetId": 2
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "ce17fcce_bef3f5bb",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd15cbca_2b7c35b6",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f68785be_f9b63f13",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
         "patchSetId": 2
@@ -141,6 +273,24 @@
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fffdef_a301d0bf",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f68785be_f9b63f13",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "51a1fe73_b19f9ecb",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d515a4e_7081d97d",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6eb7283_6e5b6ee1",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -201,6 +369,30 @@
     },
     {
       "key": {
+        "uuid": "1ce38989_b80c0cde",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "This is defined in WorkerInstalledScriptsManager (now it\u0027s renamed to InstalledScriptsManager).",
+      "parentUuid": "c6eb7283_6e5b6ee1",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c47c919_87159417",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -215,6 +407,24 @@
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6c4304_2af00ef2",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "I\u0027m planning to add locks into a container used in WebSWInstalledScriptsManagerImpl (on the renderer side). \nIt\u0027d be WebServiceWorkerInstalledScriptsManagerImpl::ScriptData in the WIP patch.\nhttps://chromium-review.googlesource.com/c/538477/15/content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc#156",
+      "parentUuid": "9c47c919_87159417",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +445,24 @@
     },
     {
       "key": {
+        "uuid": "43007937_52cff372",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fc69ae1_207c37ae",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0acfe4d_761ff983",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -249,6 +477,24 @@
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5109bd_1c28c782",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0acfe4d_761ff983",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -323,6 +569,30 @@
     },
     {
       "key": {
+        "uuid": "9e6b3dcc_7b334327",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Thanks! \nI\u0027d kept RawScriptData (arrays of raw byte chunks) and ScriptData (encoded strings and HTTPHeaderMap) and add comments.",
+      "parentUuid": "cf1c0293_1542fead",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9708ba51_e21f313c",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -340,6 +610,24 @@
     },
     {
       "key": {
+        "uuid": "d1a44b0c_3fdf98ea",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "No, one RawScriptData owns only one script file. DataVector means a chunk. \nNow I feel it would be better to rename DataVector to BytesChunk.\nUpdated.",
+      "parentUuid": "9708ba51_e21f313c",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a665be4_0b67b0f4",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 2
@@ -351,6 +639,24 @@
       "writtenOn": "2017-06-28T09:19:33Z",
       "side": 1,
       "message": "Are these Headers only the headers for the main script response? Would be good to have documentation.",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0ce412_ab60edaf",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "No, this will be created for each script.",
+      "parentUuid": "3a665be4_0b67b0f4",
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -407,6 +713,24 @@
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b372b09_853f37ec",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T02:01:40Z",
+      "side": 1,
+      "message": "Ah, as you mentioned, HTTPHeaderMap isn\u0027t appropriate for this use-case, thanks!\nI didn\u0027t know the characteristics of AtomicString. Changed to use CrossThreadHTTPHeaderMapData.",
+      "parentUuid": "3fc1a40f_c787e5ee",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
