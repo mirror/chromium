@@ -46,6 +46,30 @@
       "revId": "b784a01f88e355af79d49b5a80d47c0df946bfeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b40f0ed_4874d217",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-29T16:23:32Z",
+      "side": 1,
+      "message": "I\u0027m still not following.  We don\u0027t need to serialize these annotations, no?  Why are we getting a mutable one in the first place?",
+      "parentUuid": "df002712_0ae597b8",
+      "range": {
+        "startLine": 64,
+        "startChar": 40,
+        "endLine": 64,
+        "endChar": 58
+      },
+      "revId": "b784a01f88e355af79d49b5a80d47c0df946bfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
