@@ -77,6 +77,8 @@ class ServiceWorkerControlleeRequestHandlerTest : public testing::Test {
 
     void ResetHandler() { handler_.reset(nullptr); }
 
+    net::URLRequest* request() const { return request_.get(); }
+
    private:
     ServiceWorkerControlleeRequestHandlerTest* test_;
     std::unique_ptr<net::URLRequest> request_;
@@ -376,5 +378,51 @@ TEST_F(ServiceWorkerControlleeRequestHandlerTest, FallbackWithNoFetchHandler) {
   EXPECT_FALSE(sub_cors_job->ShouldFallbackToNetwork());
   EXPECT_FALSE(sub_cors_job->ShouldForwardToServiceWorker());
 }
+
+#if defined(OS_ANDROID)
+TEST_F(ServiceWorkerControlleeRequestHandlerTest, FallbackWithOfflineHeader) {
+  version_->set_fetch_handler_existence(
+      ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
+  version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
+  registration_->SetActiveVersion(version_);
+  context()->storage()->StoreRegistration(
+      registration_.get(), version_.get(),
+      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  base::RunLoop().RunUntilIdle();
+  version_ = NULL;
+  registration_ = NULL;
+
+  ServiceWorkerRequestTestResources test_resources(
+      this, GURL("https://host/scope/doc"), RESOURCE_TYPE_MAIN_FRAME);
+  // Sets an offline header to indicate force loading offline page.
+  test_resources.request()->SetExtraRequestHeaderByName(
+      "X-Chrome-offline", "reason=download", true);
+  ServiceWorkerURLRequestJob* sw_job = test_resources.MaybeCreateJob();
+
+  EXPECT_FALSE(sw_job);
+}
+
+TEST_F(ServiceWorkerControlleeRequestHandlerTest, FallbackWithNoOfflineHeader) {
+  version_->set_fetch_handler_existence(
+      ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
+  version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
+  registration_->SetActiveVersion(version_);
+  context()->storage()->StoreRegistration(
+      registration_.get(), version_.get(),
+      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  base::RunLoop().RunUntilIdle();
+  version_ = NULL;
+  registration_ = NULL;
+
+  ServiceWorkerRequestTestResources test_resources(
+      this, GURL("https://host/scope/doc"), RESOURCE_TYPE_MAIN_FRAME);
+  // Empty offline header value should not cause fallback.
+  test_resources.request()->SetExtraRequestHeaderByName("X-Chrome-offline", "",
+                                                        true);
+  ServiceWorkerURLRequestJob* sw_job = test_resources.MaybeCreateJob();
+
+  EXPECT_TRUE(sw_job);
+}
+#endif  // defined(OS_ANDROID)
 
 }  // namespace content

@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/trace_event/trace_event.h"
+#include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_metrics.h"
 #include "content/browser/service_worker/service_worker_provider_host.h"
@@ -124,6 +125,20 @@ net::URLRequestJob* ServiceWorkerControlleeRequestHandler::MaybeCreateJob(
       use_network_ = false;
     return NULL;
   }
+
+#if defined(OS_ANDROID)
+  // If a specific header exists to force loading an offline page, we should
+  // honor it.
+  std::string offline_header_value;
+  if (request->extra_request_headers().GetHeader(
+          offline_pages::kOfflinePageHeader, &offline_header_value)) {
+    offline_pages::OfflinePageHeader offline_header(offline_header_value);
+    if (offline_header.reason ==
+        offline_pages::OfflinePageHeader::Reason::DOWNLOAD) {
+      return NULL;
+    }
+  }
+#endif  // defined(OS_ANDROID)
 
   // It's for original request (A) or redirect case (B-a or B-b).
   std::unique_ptr<ServiceWorkerURLRequestJob> job(
