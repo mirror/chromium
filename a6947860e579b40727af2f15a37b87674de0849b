@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4964b5fa_b869be33",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2683,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-06-29T14:21:57Z",
+      "side": 1,
+      "message": "I am also curious, both here and in onMouseDragged there is a pattern:\n\npart.type \u003d\u003d MenuPart::NONE \u0026\u0026 ShowSiblingMenu\nvs\nthis fallback to SetSelection on the parent.\n\nIs this pattern useful elsewhere?",
+      "revId": "a6947860e579b40727af2f15a37b87674de0849b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
