@@ -5,7 +5,7 @@
 // Redirect WebRTC's winsock initialization activity into Chromium's
 // singleton object that managest precisely that for the browser.
 
-#include "third_party/webrtc/base/win32socketinit.h"
+#include "third_party/webrtc/rtc_base/win32socketinit.h"
 
 #include "net/base/winsock_init.h"
 
