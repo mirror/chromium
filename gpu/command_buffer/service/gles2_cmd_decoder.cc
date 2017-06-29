@@ -13739,7 +13739,7 @@ error::Error GLES2DecoderImpl::HandleCompressedTexSubImage3D(
     }
     data = reinterpret_cast<const void*>(data_shm_offset);
   } else {
-    if (!data_shm_id && data_shm_offset) {
+    if (!data_shm_id) {
       return error::kInvalidArguments;
     }
     data = GetSharedMemoryAs<const void*>(
@@ -14108,7 +14108,7 @@ error::Error GLES2DecoderImpl::HandleCompressedTexSubImage2D(
     }
     data = reinterpret_cast<const void*>(data_shm_offset);
   } else {
-    if (!data_shm_id && data_shm_offset) {
+    if (!data_shm_id) {
       return error::kInvalidArguments;
     }
     data = GetSharedMemoryAs<const void*>(
@@ -14839,6 +14839,8 @@ error::Error GLES2DecoderImpl::HandleTexSubImage2D(
     }
     params = state_.GetUnpackParams(ContextState::k2D);
   } else {
+    if (!pixels_shm_id)
+      return error::kInvalidArguments;
     // When reading from client buffer, the command buffer client side took
     // the responsibility to take the pixels from the client buffer and
     // unpack them according to the full ES3 pack parameters as source, all
@@ -14930,6 +14932,8 @@ error::Error GLES2DecoderImpl::HandleTexSubImage3D(
     }
     params = state_.GetUnpackParams(ContextState::k3D);
   } else {
+    if (!pixels_shm_id)
+      return error::kInvalidArguments;
     // When reading from client buffer, the command buffer client side took
     // the responsibility to take the pixels from the client buffer and
     // unpack them according to the full ES3 pack parameters as source, all

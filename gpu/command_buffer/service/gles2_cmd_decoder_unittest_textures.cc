@@ -250,10 +250,14 @@ TEST_P(GLES2DecoderTest, TexSubImage2DBadArgs) {
                0,
                0);
   TexSubImage2D cmd;
+
+  // Invalid target.
   cmd.Init(GL_TEXTURE0, 1, 0, 0, kWidth, kHeight, GL_RGBA, GL_UNSIGNED_BYTE,
            shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_INVALID_ENUM, GetGLError());
+
+  // Invalid format / type.
   cmd.Init(GL_TEXTURE_2D, 1, 0, 0, kWidth, kHeight, GL_TRUE, GL_UNSIGNED_BYTE,
            shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
@@ -262,6 +266,8 @@ TEST_P(GLES2DecoderTest, TexSubImage2DBadArgs) {
            shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_INVALID_ENUM, GetGLError());
+
+  // Invalid offsets/sizes.
   cmd.Init(GL_TEXTURE_2D, 1, -1, 0, kWidth, kHeight, GL_RGBA, GL_UNSIGNED_BYTE,
            shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
@@ -286,6 +292,8 @@ TEST_P(GLES2DecoderTest, TexSubImage2DBadArgs) {
            GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+
+  // Incompatible format / type.
   cmd.Init(GL_TEXTURE_2D, 1, 0, 0, kWidth, kHeight, GL_RGB, GL_UNSIGNED_BYTE,
            shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
@@ -295,20 +303,95 @@ TEST_P(GLES2DecoderTest, TexSubImage2DBadArgs) {
            GL_FALSE);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_INVALID_OPERATION, GetGLError());
-  cmd.Init(GL_TEXTURE_2D,
-           1,
-           0,
-           0,
-           kWidth,
-           kHeight,
-           GL_RGBA,
-           GL_UNSIGNED_BYTE,
-           kInvalidSharedMemoryId,
-           kSharedMemoryOffset,
-           GL_FALSE);
+
+  // Invalid SHM / offset.
+  cmd.Init(GL_TEXTURE_2D, 1, 0, 0, kWidth, kHeight, GL_RGBA, GL_UNSIGNED_BYTE,
+           kInvalidSharedMemoryId, kSharedMemoryOffset, GL_FALSE);
   EXPECT_NE(error::kNoError, ExecuteCmd(cmd));
   cmd.Init(GL_TEXTURE_2D, 1, 0, 0, kWidth, kHeight, GL_RGBA, GL_UNSIGNED_BYTE,
            shared_memory_id_, kInvalidSharedMemoryOffset, GL_FALSE);
+  EXPECT_NE(error::kNoError, ExecuteCmd(cmd));
+  cmd.Init(GL_TEXTURE_2D, 1, 0, 0, kWidth, kHeight, GL_RGBA, GL_UNSIGNED_BYTE,
+           0, 0, GL_FALSE);
+  EXPECT_NE(error::kNoError, ExecuteCmd(cmd));
+}
+
+TEST_P(GLES3DecoderTest, TexSubImage3DBadArgs) {
+  const int kWidth = 4;
+  const int kHeight = 4;
+  const int kDepth = 2;
+  DoBindTexture(GL_TEXTURE_3D, client_texture_id_, kServiceTextureId);
+  DoTexImage3D(GL_TEXTURE_3D, 1, GL_RGBA, kWidth, kHeight, kDepth, 0, GL_RGBA,
+               GL_UNSIGNED_BYTE, 0, 0);
+  TexSubImage3D cmd;
+
+  // Invalid target.
+  cmd.Init(GL_TEXTURE0, 1, 0, 0, 0, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_ENUM, GetGLError());
+
+  // Invalid format.
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 0, kWidth, kHeight, kDepth, GL_TRUE,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_ENUM, GetGLError());
+
+  // Invalid offsets/sizes.
+  cmd.Init(GL_TEXTURE_3D, 1, -1, 0, 0, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+  cmd.Init(GL_TEXTURE_3D, 1, 1, 0, 0, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+  cmd.Init(GL_TEXTURE_3D, 1, 0, -1, 0, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 1, 0, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, -1, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 1, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 0, kWidth + 1, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 0, kWidth, kHeight + 1, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 0, kWidth, kHeight, kDepth + 1, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
+
+  // Incompatible format.
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 0, kWidth, kHeight, kDepth, GL_RGB,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kSharedMemoryOffset, GL_FALSE);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_INVALID_OPERATION, GetGLError());
+
+  // Invalid SHM / offset.
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 0, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, kInvalidSharedMemoryId, kSharedMemoryOffset,
+           GL_FALSE);
+  EXPECT_NE(error::kNoError, ExecuteCmd(cmd));
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 0, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, shared_memory_id_, kInvalidSharedMemoryOffset,
+           GL_FALSE);
+  EXPECT_NE(error::kNoError, ExecuteCmd(cmd));
+  cmd.Init(GL_TEXTURE_3D, 1, 0, 0, 0, kWidth, kHeight, kDepth, GL_RGBA,
+           GL_UNSIGNED_BYTE, 0, 0, GL_FALSE);
   EXPECT_NE(error::kNoError, ExecuteCmd(cmd));
 }
 
