@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "268c0477_5048be18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-06-29T17:51:00Z",
+      "side": 1,
+      "message": "Please describe (at a high level) the bug and the fix in the commit message.",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "251222ff68cfc2d7d5fd3486a2a9c323062ab704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "388de8c5_7748dcec",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 6
