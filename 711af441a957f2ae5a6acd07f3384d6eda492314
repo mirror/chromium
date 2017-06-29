@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663e6c33_2da3b838",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-29T22:19:46Z",
+      "side": 1,
+      "message": "It will add 1,500+ lines to each of 3,900+ compilation units.  I don\u0027t want to accept it.\nCan you make EventTarget::CheckTypeThenUseCount() a static function, not a member function of EventTarget?",
+      "revId": "711af441a957f2ae5a6acd07f3384d6eda492314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
