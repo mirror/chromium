@@ -689,6 +689,7 @@ void FormStructure::UpdateFromCache(const FormStructure& cached_form,
 }
 
 void FormStructure::LogQualityMetrics(
+    const base::TimeTicks& form_parsed_time,
     const base::TimeTicks& load_time,
     const base::TimeTicks& interaction_time,
     const base::TimeTicks& submission_time,
@@ -803,7 +804,7 @@ void FormStructure::LogQualityMetrics(
     if (form_interactions_ukm_logger->url() != source_url())
       form_interactions_ukm_logger->UpdateSourceURL(source_url());
     AutofillMetrics::LogAutofillFormSubmittedState(
-        state, form_interactions_ukm_logger);
+        state, form_parsed_time, form_interactions_ukm_logger);
   }
 }
 
