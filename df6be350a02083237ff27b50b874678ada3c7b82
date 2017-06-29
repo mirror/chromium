@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297e3a6d_88fe1221",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: Looks like most of these others are sentence case.",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85442f2_7c11c359",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: No caps on Experimental?",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82dab8a_dd72ca84",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Huh.  Can we just pass |this| for that argument, then?  Or do we really need a dummy child?",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5cc2f1_9416fae7",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure what the second half of this comment means.  AddChildView() is in the tree for FullscreenControlHost?",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c56ef8e_5c529c7e",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: This can move down now that we\u0027re not using it here.\n\nIt\u0027s not clear to me whether the name |should_initialize| is still worth pulling it out of the conditional below into its own temp, or if it should just be inlined.",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3047b7_cbd7089c",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: I\u0027d tend to prefer constants local to a function be declared in that function, though we do have a lot of Chromium code that does otherwise.",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b140ed1_920dcc52",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Both these pieces of ASCII art highlight that we don\u0027t check X coords below.  Should we?  For example, having the control stick around indefinitely when you\u0027re on the top left corner of the screen seems a bit bad?",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec29051_b1e35822",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: Lowercase Buffer?",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73d6069_dce6293d",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: Remove trailing period",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f6c665_b378953b",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: Could just say SK_ColorWHITE.",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf861a9_bac87205",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: a -\u003e the?",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dff7801_4156b10a",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Nit: mode and the -\u003e mode. The",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa23dcd_1238b8f9",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:52:09Z",
+      "side": 1,
+      "message": "Should maybe go up with the other toolkit_views sources.",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
