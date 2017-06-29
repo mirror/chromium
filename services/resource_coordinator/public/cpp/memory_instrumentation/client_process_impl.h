@@ -43,6 +43,8 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
 
   static void CreateInstance(const Config& config);
 
+  void SetCoordinatorForTesting(Coordinator* coordinator);
+
  private:
   friend std::default_delete<ClientProcessImpl>;  // For testing
   friend class ClientProcessImplTest;

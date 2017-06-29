@@ -8,9 +8,23 @@
 #include "base/bind.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_request_args.h"
+#include "testing/gmock/include/gmock/gmock.h"
 
 namespace base {
 namespace trace_event {
+
+// GTest matchers for MemoryDumpRequestArgs arguments.
+MATCHER(IsDetailedDump, "") {
+  return arg.level_of_detail == MemoryDumpLevelOfDetail::DETAILED;
+}
+
+MATCHER(IsLightDump, "") {
+  return arg.level_of_detail == MemoryDumpLevelOfDetail::LIGHT;
+}
+
+MATCHER(IsBackgroundDump, "") {
+  return arg.level_of_detail == MemoryDumpLevelOfDetail::BACKGROUND;
+}
 
 void RequestGlobalDumpForInProcessTesting(const MemoryDumpRequestArgs& args) {
   MemoryDumpManager::GetInstance()->CreateProcessDump(
