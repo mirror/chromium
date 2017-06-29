@@ -23,7 +23,13 @@ LockWindow::LockWindow() {
   params.show_state = ui::SHOW_STATE_FULLSCREEN;
   params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
   const int kLockContainer = ash::kShellWindowId_LockScreenContainer;
-  if (Shell::GetAshConfig() == Config::MASH) {
+
+  // LockWindow is still instantiated in browser process for webui based
+  // screen locker. Shell::GetAshConfig() CHECKs in such setup since it
+  // calls Shell::Get internally. Use Shell::HasInstance() as an alternative
+  // check for mash.
+  // TODO(xiyuan): Remove HasInstance() after switching to views screen locker .
+  if (!Shell::HasInstance() || Shell::GetAshConfig() == Config::MASH) {
     params.mus_properties[ui::mojom::WindowManager::kContainerId_InitProperty] =
         mojo::ConvertTo<std::vector<uint8_t>>(kLockContainer);
   } else {
