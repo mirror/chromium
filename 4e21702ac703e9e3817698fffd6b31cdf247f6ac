@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a62731_1870d276",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-29T20:51:36Z",
+      "side": 1,
+      "message": "I don\u0027t mind this changing to function, but why just this and not other getters in this class. Let\u0027s keep this class consistent, i.e. if you want to get rid of getters/setters, do it for everything.",
+      "revId": "4e21702ac703e9e3817698fffd6b31cdf247f6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f23db8_694dc1aa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-29T20:51:36Z",
+      "side": 1,
+      "message": "Please keep refactoring and changes of logic in separate CLs!",
+      "revId": "4e21702ac703e9e3817698fffd6b31cdf247f6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
