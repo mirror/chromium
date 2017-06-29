@@ -16,6 +16,24 @@
       "revId": "3322e2ac0b46f4616d96a2b8ef97fe7ae7ab7b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eaeca25_9e42d760",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-06-29T20:29:24Z",
+      "side": 1,
+      "message": "Definitively !!! Somehow, my CL generated that change when it was uploaded. I think I\u0027ll rebase it and upload it again before landing.",
+      "parentUuid": "480b9801_95b2776f",
+      "revId": "3322e2ac0b46f4616d96a2b8ef97fe7ae7ab7b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
