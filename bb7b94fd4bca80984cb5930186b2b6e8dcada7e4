@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f6fc2c4_6e23a512",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3042,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "The prototype is possibly going to change from the corner to go somewhere else, so I\u0027d like the name to be robust to that.\n\nHow does enable-experimental-fullscreen-exit-ui sound?",
+      "parentUuid": "7e3029c4_a55ed23e",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32290492_bba6050e",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df6913e_470a8503",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2548,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Changed to \"Experimental Fullscreen Exit UI\"",
+      "parentUuid": "32290492_bba6050e",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "697be3c0_6654bc58",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2551,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "741ee5c2_92f9b4eb",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43653ec_a82a832f",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78ee589_67a5edc0",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2552,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43653ec_a82a832f",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cda2699e_302afdf1",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "It makes it a bit more tricky to undo, but I do agree that the result is clearer. Changed\n\nThe only change I made to the suggestion is regarding the widget\u0027s ternary condition:\nauto* widget \u003d details.is_add ? GetWidget() : details.parent-\u003eGetWidget();\n               ^^^^^^^^^^^^^^",
+      "parentUuid": "c80b4c2a_2730b780",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31877d2d_98a2815a",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268691b4_79b791aa",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2613,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31877d2d_98a2815a",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "90ed3f4e_71a21e50",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2617,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "I had considered this, but went against to so that DropdownBarHost::Init() would receive a fully parented view instead of a not-yet-parented view. I\u0027ve added a comment.",
+      "parentUuid": "9c3f6899_1dcfc074",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89de956d_56b01b8f",
         "filename": "chrome/browser/ui/views/frame/browser_view.h",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed4ae91_01aeff63",
+        "filename": "chrome/browser/ui/views/frame/browser_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "That\u0027s fine by me.",
+      "parentUuid": "89de956d_56b01b8f",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "e078af8e_fdb00bac",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1135c6c1_c9e1c2af",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f7a8c32_64a5ad93",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8e30b7_2da47011",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "I just copied the code from FindBarHost::GetDialogPosition, but that\u0027s a good question.\nSetToMin() looks reasonable enough to me.",
+      "parentUuid": "9f7a8c32_64a5ad93",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "337e05e9_4b3c47b6",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Agreed. Done.",
+      "parentUuid": "243f1475_156fe4c8",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f9fd961_1fab7d19",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -203,6 +401,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25478192_80e2dfcc",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9fd961_1fab7d19",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "82245069_1c48fe67",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "height() would probably be fine here. We don\u0027t expect insets.",
+      "parentUuid": "04901c91_defce029",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f537be47_3946871b",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -237,6 +471,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48fd097_ce3d2071",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Indeed it is magical and arbitrary. I expect this to change as we iterate on the design.",
+      "parentUuid": "f537be47_3946871b",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "9aa5f832_fbadbd25",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ccfda54_f385da00",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea337cb9_27af8f8b",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
         "patchSetId": 3
@@ -271,6 +541,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04887bc6_373b469c",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Fair enough, but it\u0027s also not obvious that DropdownBarHost provides these either. It indeed picks them up through ui::AcceleratorTarget. How\u0027s the amended title of\n// ui::AcceleratorTarget via DropdownBarHost:\n\nArguably DropDownBarHost shouldn\u0027t even be bringing this in, but that\u0027s definitely a separate changelist.",
+      "parentUuid": "ea337cb9_27af8f8b",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "763abe96_af2077e6",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d683b478_a9a2311a",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5b210d3_2161c499",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
         "patchSetId": 3
@@ -305,6 +611,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61379e8e_37846030",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Good point. Changed.",
+      "parentUuid": "f5b210d3_2161c499",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "ab8bac1e_6b715293",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "These are arbitrary. Moved to constants.",
+      "parentUuid": "f2411410_cb77304c",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8068944c_51c0e20e",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
         "patchSetId": 3
@@ -339,6 +681,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4068a9_d4a4af03",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Added a TODO for this and switched to #FFFFFF.",
+      "parentUuid": "8068944c_51c0e20e",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "13f3f481_dd4ab1a5",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Old habits die hard. Done.",
+      "parentUuid": "0d2387b7_af8def12",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3966aff6_f4a71c43",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
         "patchSetId": 3
@@ -373,6 +751,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8ae083_26ded886",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3966aff6_f4a71c43",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +789,24 @@
     },
     {
       "key": {
+        "uuid": "21857dff_654d4ef0",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54d69ff9_89b3373e",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7077b2e_3ddfeae1",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
         "patchSetId": 3
@@ -410,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "11ed848e_0a1adc7c",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Indeed it does. Fixed.",
+      "parentUuid": "f7077b2e_3ddfeae1",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0420bba5_1df52616",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 3
@@ -424,6 +856,24 @@
       "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e2cf1c_ea40d7e8",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T00:01:44Z",
+      "side": 1,
+      "message": "Changed.",
+      "parentUuid": "0420bba5_1df52616",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
