@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "c1704871_bec56acc",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T09:22:52Z",
+      "side": 1,
+      "message": "Looks good. Updated.",
+      "parentUuid": "9c4c58eb_77433348",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e816f951_8c27f354",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 4
