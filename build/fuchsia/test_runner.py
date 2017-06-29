@@ -275,6 +275,39 @@ def main():
               '(inlined', ' ' * len(prefix) + '(inlined')
           processed_lines.append('%s%s' % (prefix, addr2line_filtered))
     qemu_popen.wait()
+    if args.test_launcher_summary_output:
+      with open(args.test_launcher_summary_output, 'w') as f:
+        # TODO(fuchsia): This is completely incorrect output. The test_name is
+        # supposed to be individual tests, not the test binary. We don't report
+        # SKIPPED, or disabled tests, etc. This being used as a stub only to get
+        # trybots to report correctly on success or failure (the waterfall uses
+        # the process exit code, but the trybots expect this json file). Once
+        # it's possible to copy files to/from the virtual machine over ssh, this
+        # will be removed in favor of generating the file in the C++ test
+        # harness and the exfiltrating it to the target location on the host
+        # system.
+        f.write('''{
+  "global_tags": [],
+  "all_tests": [
+    "%(test_name)s",
+   ],
+  "disabled_tests": [],
+  "per_iteration_data": [
+    {
+      "%(test_name)s": [
+        {
+          "status": "%(result)s",
+          "elapsed_time_ms": 1,
+          "output_snippet": "",
+          "output_snippet_base64": "",
+          "losless_snippet": "",
+        },
+      ],
+    },
+  ],
+}
+''' % {'test_name': os.path.basename(args.test_name),
+       'result': 'SUCCESS' if success else 'FAILURE'})
     return 0 if success else 1
 
   return 0
