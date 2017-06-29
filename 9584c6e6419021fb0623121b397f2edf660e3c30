@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "49a913ce_d94b5b97",
+        "filename": "third_party/WebKit/Source/bindings/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-29T07:15:43Z",
+      "side": 1,
+      "message": "My idea is:\n\n  if not verbose:\n    cmd.append(\u0027--suppress-diff\u0027)\n\nI\u0027m just fine to introduce --suppress-diff flag for run-bindings-tests.\nI just hoped that \"git cl presubmit -vv\" shows the diff.",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "9584c6e6419021fb0623121b397f2edf660e3c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516d40bb_8543189c",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/bindings/bindings_tests.py",
         "patchSetId": 1
