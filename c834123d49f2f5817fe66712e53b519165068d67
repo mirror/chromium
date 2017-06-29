@@ -93,6 +93,30 @@
       "revId": "c834123d49f2f5817fe66712e53b519165068d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264a1c42_a77c9082",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T20:21:36Z",
+      "side": 1,
+      "message": "I think it makes sense to not add ConvertRectFromScreen() if you don\u0027t have a need for now.  In principle it doesn\u0027t seem like we ought to need this, and in current practice there are a lot of other ConvertRectToX methods that aren\u0027t paired with corresponding Froms.",
+      "parentUuid": "570c0588_261ceab8",
+      "range": {
+        "startLine": 815,
+        "startChar": 5,
+        "endLine": 815,
+        "endChar": 9
+      },
+      "revId": "c834123d49f2f5817fe66712e53b519165068d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
