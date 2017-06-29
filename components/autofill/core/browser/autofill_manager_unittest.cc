@@ -605,6 +605,7 @@ class TestAutofillManager : public AutofillManager {
   }
 
   void UploadFormDataAsyncCallback(const FormStructure* submitted_form,
+                                   const base::TimeTicks& form_parsed_time,
                                    const base::TimeTicks& load_time,
                                    const base::TimeTicks& interaction_time,
                                    const base::TimeTicks& submission_time,
@@ -635,8 +636,8 @@ class TestAutofillManager : public AutofillManager {
     }
 
     AutofillManager::UploadFormDataAsyncCallback(
-        submitted_form, load_time, interaction_time, submission_time,
-        observed_submission);
+        submitted_form, form_parsed_time, load_time, interaction_time,
+        submission_time, observed_submission);
   }
 
   // Resets the run loop so that it can wait for an asynchronous form
