@@ -16,6 +16,24 @@
       "revId": "650c50466b2fec4e5eedd48aae7cde5d5cb7b237",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2325dc28_f7291636",
+        "filename": "third_party/WebKit/Source/core/dom/ModulatorImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-29T09:57:52Z",
+      "side": 1,
+      "message": "I think we can rely on DCHECK inside Scope ctor: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/bindings/ScriptState.h?type\u003dcs\u0026q\u003dScriptState::Scope\u0026sq\u003dpackage:chromium\u0026l\u003d80",
+      "parentUuid": "a7f4350b_4ac1de66",
+      "revId": "650c50466b2fec4e5eedd48aae7cde5d5cb7b237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
