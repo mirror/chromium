@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c32ea247_ed99372d",
+        "filename": "chrome/browser/profile_resetter/profile_resetter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-06-29T12:51:01Z",
+      "side": 1,
+      "message": "Should we rename the method?",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "6d8ef66e571f464e4ad974d741bbcb9f05bf3bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e967236_aeb27718",
+        "filename": "chrome/browser/profile_resetter/resettable_settings_snapshot.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-06-29T12:51:01Z",
+      "side": 1,
+      "message": "Should we also fix this or it\u0027s allowed?",
+      "range": {
+        "startLine": 135,
+        "startChar": 22,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "6d8ef66e571f464e4ad974d741bbcb9f05bf3bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2935edda_9d6e079f",
+        "filename": "chrome/browser/profile_resetter/resettable_settings_snapshot.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-06-29T12:51:01Z",
+      "side": 1,
+      "message": "I\u0027d use BindOnce and move(no_shortcuts)",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "6d8ef66e571f464e4ad974d741bbcb9f05bf3bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
