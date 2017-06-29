@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0d89ab3_78ca687a",
+        "filename": "ios/chrome/browser/browser_state/browser_state_keyed_service_factories.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-29T22:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5eb8de5_b385257b",
+      "revId": "8104863e253fe6ecd1120c46826d590f051fecd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f3c1ad0_2bba51fe",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "8104863e253fe6ecd1120c46826d590f051fecd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ef6988_9cf8a5d4",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-29T22:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f3c1ad0_2bba51fe",
+      "revId": "8104863e253fe6ecd1120c46826d590f051fecd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
