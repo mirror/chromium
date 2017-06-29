@@ -1,0 +1,650 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cac1128_c24edafe",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 5521,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "IDS_ACCNAME_* is for accessible names, rather than strings to show in a dialog.  You\u0027ll probably want to name this IDS_NEWTAB_PROMO and move it elsewhere.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe30c06_c44dc359",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Is this the color we use on the stroke of prominent buttons?  Or is it the fill?\n\nIt kind of worries me that you don\u0027t use any alpha at all here.  That seems like it\u0027s going to look pretty harsh.  I\u0027d have expected us to use some sort of similar alpha in this case as in the non-promo case.  Basically, I\u0027d have figured we\u0027d change how we set |stroke_color|, rather than overriding down here.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb88f5c_7b3ec4ca",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Less duplication:\n\n      const SkColor color \u003d\n          promo_ ? GetNativeTheme()-\u003eGetSystemColor(\n                       ui::NativeTheme::kColorId_ProminentButtonColor)\n                 : tp-\u003eGetColor(ThemeProperties::COLOR_BACKGROUND_TAB);\n      flags.setColor(color);\n\nThis also avoids a style violation you currently have (multi-line conditional body without {}).",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e778e1b2_3b2f1b1e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Rather than being in their own section, these functions should be in the same order relative to the other definitions as their declarations.  See https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting .",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb4569a_ef8473ae",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "There\u0027s no need to qualify SchedulePaint() with the current classname (2 places).",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3fd4fc1_ec60ce35",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Given that this doesn\u0027t actually close promo but seems to merely update state to note that there is no promo, perhaps OnPromoClosed() would be a better name.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234f7a40_4d1e9a18",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "It looks like you\u0027re trying to convert an SkRect to a Rect.\n\nI suggest using SkRectToRectF() in conjunction with ToEnclosingRect() to do this.\n\n(Your current code leaks memory besides.)",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379112b8_45bb18d6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "It makes sense to me (though not necessarily in this CL) to add a ConvertRectToScreen() function.  Various callers of ConvertPointToScreen() really want that and could be converted to use it; see e.g. https://cs.chromium.org/chromium/src/ui/views/controls/prefix_selector.cc?l\u003d21 .",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b1250e_94004cc4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Names with trailing underscores are used to indicate members.  Remove them for locals.\n\nYou need not construct a temp here just to return it; you can do things like \"return gfx::Rect(...);\".",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a56b99c_2de9a3ab",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "This isn\u0027t needed; you only refer to the class by pointer, so the forward-declaration below is enough.\n\nIf the .cc file needs the full definition, then #include this there.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd94fff9_22967a32",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Remove \"and\"",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71abeb35_6e2b2255",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Tabstrip -\u003e the tabstrip; Fittz -\u003e Fitts\u0027; an expanding -\u003e a maximized",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d3e031_8b232312",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: anchor point in -\u003e anchoring the",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504d3b4e_a19d2414",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "It doesn\u0027t usually make sense to return by value and mark the returned object const.  I would eliminate \"const\" here.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6c4a42_b1746787",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Saying \"The New Tab Promo\" doesn\u0027t tell the reader anything the code doesn\u0027t already say.  Either explain more what this is (if that\u0027s necessary), or just eliminate that phrase.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d677baaa_4bd354dd",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Normally if we own an object we hold it as a unique_ptr.  Having a raw pointer clashes with the claim that we own this object.\n\nIn reading the code, it\u0027s not clear who owns this.  It\u0027s possible the promo passes ownership of itself to the widget.  Otherwise it\u0027s leaked.  The latter would be a bug, the former is just unclear.  You\u0027ll want to make the ownership semantics much clearer here.\n\nIn terms of how the rest of this class uses this, it\u0027s just a boolean; so if you don\u0027t end up needing to hold this as a unique_ptr, I\u0027d change to a bool.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d56371_0e7f6ada",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: \"The amount of time the promo should stay onscreen if it is never hovered.\"",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c502ecf7_fe26ed7e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: FromSeconds(5) is clearer.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918961af_b16cdd1f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: \"The amount of time the promo should stay onscreen after the user stops hovering it.\"",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f8859f_6d505244",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: And I might use FromSecondsD(2.5) here.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd0c9ed_f3448b56",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Definition order must match declaration order.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7edb58_638b38e6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Why check this?",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e957ef40_588003c8",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this can be right.  The widget is clearly not owned by us, it seems to own itself.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56578129_5d7c44a4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think you should document base class behavior that you aren\u0027t changing in a child class like this.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece72b95_8a07bb3a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Hmm, this doesn\u0027t seem right.  We shouldn\u0027t be trying to close our widget in response to the widget being destroyed.\n\nIt seems to me like maybe you don\u0027t even want to override this, but rather OnWidgetClosing(); and move the NotifyNewTabButtonOnClose() from CloseBubble() to there.  That way, CloseBubble() just tells the widget to close, and any widget closure (no matter how it\u0027s triggered) notifies the NTB of the closure.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c036c1c6_00d0e986",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: This comment is implied by the code, remove it.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c28cf2c_20e44e13",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: No trailing underscore",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9623c7ed_3e8acc90",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Use \u003d MakeUnique instead of bare new.  Though in this case, since views is screwy, the following is fine:\n\n  AddChildView(new views::Label(...));",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bd8995_362f1463",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: I\u0027d inline this into the lone caller and remove the function.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19d3267_30f958b9",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Again, you don\u0027t need this #include here.  Put it in the .cc instead.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4d8123_88940046",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: This paragraph was confusing, probably because of long sentences, passive voice, and I think you meant \"prompted\" instead of \"promoted\".  Also, it doesn\u0027t actually say what the promo is, but seems to assume the reader knows, so it only talks about how it\u0027s shown.  Spend time talking about what the promo is actually doing.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00c0c2f_8aa3728f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: Did you mean to pass by const ref?",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614be165_8b954737",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "How come this is its own function?  It seems like we wouldn\u0027t want external people telling us to tell the new tab buttle we\u0027ve closed (if we haven\u0027t).",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee622a81_46e7b6d4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: You only subclass one class, so make all overrides be in one list, with just that class name heading it.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262790c5_0c091119",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1bb2f38_5e3b4ef7",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "This function doesn\u0027t exist, so this can\u0027t compile, AFAICT.\n\nIt seems like you want to construct the NewTabPromo object directly here.",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06188da1_c8a4c41e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d5b260_679e5875",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T00:33:58Z",
+      "side": 1,
+      "message": "This comment needs updating (it\u0027s been copy-and-pasted).",
+      "revId": "57ea54627bb29c5c55efaa582d666a012ebbcab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
