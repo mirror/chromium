@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8b5fdc4_dff37bc7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/application-panel/image.png",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-29T22:44:47Z",
+      "side": 1,
+      "message": "Helper files should go into resources/ subfolder.",
+      "revId": "579c7c5ec1aed49eac6b93e60385169e168e62a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a78303_da009919",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/application-panel/json-value.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-29T22:44:47Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "579c7c5ec1aed49eac6b93e60385169e168e62a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57417a12_e45b2a01",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesSection.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-29T22:44:47Z",
+      "side": 1,
+      "message": "I think you don\u0027t have to wait for this. It does not harm to reveal the correct line, even if the view is not shown anymore - line may come handy when it\u0027s shown next time.",
+      "range": {
+        "startLine": 338,
+        "startChar": 33,
+        "endLine": 338,
+        "endChar": 49
+      },
+      "revId": "579c7c5ec1aed49eac6b93e60385169e168e62a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
