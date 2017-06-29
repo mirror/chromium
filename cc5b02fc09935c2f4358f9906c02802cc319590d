@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b214f124_df592afd",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T07:35:15Z",
+      "side": 1,
+      "message": "nit: add \"// WebServiceWorkerInstalledScriptsManager implementation\"",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff049d07_9e94266b",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T07:35:15Z",
+      "side": 1,
+      "message": "nit: remove blank line 23 (we don\u0027t put blank lines between overrides for the same interface)",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2395b1_7a51a016",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T07:35:15Z",
+      "side": 1,
+      "message": "What is a thread check? \"Make threadsafe\" ?",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bee01bc_d63f1cb0",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T07:35:15Z",
+      "side": 1,
+      "message": "Avoid \"would be\" in comments without more context. It\u0027s sounds like it\u0027s saying \"This would normally be called, but it\u0027s not...\". What does \"would be\" mean here?",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889a60b2_9232a4e1",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T07:35:15Z",
+      "side": 1,
+      "message": "When talking about multiple complex things, sometimes small direct sentences are better. It\u0027s hard to parse where the commas and conjunctions split the words. Or in list form as \"This has:\n1) The encoding of the script text\n2) The HTTP headers of the script\n3) An array of raw byte chunks of the script text.\n4) An array of raw byte chunks of the the script\u0027s meta data from the script\u0027s V8 code cache.\n\nI tend to think at that level of detail, these are better as individual function comments, though.\n\nI think the class comment should be more direct to say something like \"The data received from the browser process about a single script. This includes the script text, the script text encoding, metadata (from the V8 code cache), and HTTP headers.\"",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afcf42a4_5837fa44",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T07:35:15Z",
+      "side": 1,
+      "message": "\"Drain\" sounds like it\u0027s doing a more complex reading task than just \"TakeHeaders\", Is there a reason for \"Drain\"?",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9fb674b_787af14f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-29T07:35:15Z",
+      "side": 1,
+      "message": "I think the comments from my comment above would work as individual function comments here.",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
