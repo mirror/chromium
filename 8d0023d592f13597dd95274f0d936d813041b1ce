@@ -68,6 +68,138 @@
       "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eb7ec0_7a79789e",
+        "filename": "components/printing/browser/print_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T01:24:13Z",
+      "side": 1,
+      "message": "Convert to:\n\nusing PdfWritingDoneCallback \u003d base::Callback\u003cvoid(bool, int, int)\u003e;\n\nwhile we are here?",
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca72552a_abb8efea",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T01:24:13Z",
+      "side": 1,
+      "message": "nit: The source isn\u0027t always a web page, right? It can be an image, and if this was desktop, a PDF. How about \"entire print source\" or something like that?",
+      "range": {
+        "startLine": 60,
+        "startChar": 74,
+        "endLine": 60,
+        "endChar": 88
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d21cdc0_f9c9e7bd",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T01:24:13Z",
+      "side": 1,
+      "message": "are needed",
+      "range": {
+        "startLine": 60,
+        "startChar": 59,
+        "endLine": 60,
+        "endChar": 65
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c060c7_57b030aa",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T01:24:13Z",
+      "side": 1,
+      "message": "This makes the behavior sound... uncertain. Do you really mean \"with the user selected print settings\" ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 73
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45de8b34_72b6fa50",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T01:24:13Z",
+      "side": 1,
+      "message": "\"users\"\n\nThe developers aren\u0027t the ones selecting all the pages.",
+      "range": {
+        "startLine": 62,
+        "startChar": 85,
+        "endLine": 62,
+        "endChar": 87
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0db74b_987e0e84",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T01:24:13Z",
+      "side": 1,
+      "message": "Given |pageCount| is signed, and negative page count does not make sense, should we combine these into just the page count, and use negative values to indicate failure?",
+      "range": {
+        "startLine": 65,
+        "startChar": 24,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
