@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f961f0a2_e96615d2",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T07:56:17Z",
+      "side": 1,
+      "message": "nit: move this line before line 464 (i.e. right before it\u0027s needed)",
+      "revId": "63d7a4455053ee3336f2fecfafa21b51ca88b0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3b4e1e_7f575887",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T07:56:17Z",
+      "side": 1,
+      "message": "nit: can you also add \u0027(i.e. the same script is read more than once)\u0027",
+      "revId": "63d7a4455053ee3336f2fecfafa21b51ca88b0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
