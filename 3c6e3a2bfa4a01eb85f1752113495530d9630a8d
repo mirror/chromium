@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf488c3_17515922",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-29T05:22:22Z",
+      "side": 1,
+      "message": "s/script_url/worker_start_data_.script_url/ (to make this consistent with the other as much as possible)",
+      "range": {
+        "startLine": 474,
+        "startChar": 8,
+        "endLine": 474,
+        "endChar": 18
+      },
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
