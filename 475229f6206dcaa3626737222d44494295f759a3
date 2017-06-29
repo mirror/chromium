@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24963599_d8a1f3e9",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-29T04:50:02Z",
+      "side": 1,
+      "message": "How about like this?\n\nif (!active-\u003eHasWork() \u0026\u0026 IsLameDuckActiveVersion())\n  return true;",
+      "revId": "475229f6206dcaa3626737222d44494295f759a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755874b7_c293e6c2",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-29T04:50:02Z",
+      "side": 1,
+      "message": "How about instantiating |lame_duck_timer_| in the ctor so that we can remove |if (lame_duck_timer_)| checks?",
+      "revId": "475229f6206dcaa3626737222d44494295f759a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90c94fc_d8600f75",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-29T04:50:02Z",
+      "side": 1,
+      "message": "Optional: A rawptr would be sufficient because |lame_duck_timer_| should be gone when |this| is gone.",
+      "revId": "475229f6206dcaa3626737222d44494295f759a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb607ac_76fe3342",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-29T04:50:02Z",
+      "side": 1,
+      "message": "Can we use kMaxLameDuckTime here or add a comment about where 5 mins comes from?",
+      "revId": "475229f6206dcaa3626737222d44494295f759a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
