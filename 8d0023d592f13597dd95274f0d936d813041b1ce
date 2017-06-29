@@ -437,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "bcabaae7_97a716e5",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-29T02:30:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76fa67dc_81dddff0",
+      "range": {
+        "startLine": 65,
+        "startChar": 24,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7608547_e39b877d",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 2
@@ -460,6 +484,30 @@
     },
     {
       "key": {
+        "uuid": "ae86661a_d0ff81ee",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-29T02:30:24Z",
+      "side": 1,
+      "message": "Ack\n\nJust checked once, there is no explicit rule, but there is an example for try catch, and the comment is placed inside catch block.",
+      "parentUuid": "b7608547_e39b877d",
+      "range": {
+        "startLine": 341,
+        "startChar": 17,
+        "endLine": 341,
+        "endChar": 19
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b8af069_c6e76d3d",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 2
@@ -471,6 +519,30 @@
       "writtenOn": "2017-06-29T02:09:26Z",
       "side": 1,
       "message": "Where in the call stack do we make sure |pageCount| \u003e\u003d 1? Calling android.print.PageRange() with a negative end value will raise an exception.",
+      "range": {
+        "startLine": 342,
+        "startChar": 59,
+        "endLine": 342,
+        "endChar": 72
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c81c23a_b5299e06",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-29T02:30:24Z",
+      "side": 1,
+      "message": "if it is \u003c 1, https://cs.chromium.org/chromium/src/components/printing/renderer/print_web_view_helper_linux.cc?l\u003d53 printed_pages vector will be empty, so the whole call stack won\u0027t be triggered.",
+      "parentUuid": "3b8af069_c6e76d3d",
       "range": {
         "startLine": 342,
         "startChar": 59,
