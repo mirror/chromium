@@ -16,6 +16,24 @@
       "revId": "62e98f4486e0dc366ff63653a49c7debc35b1504",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca155309_baf4d2da",
+        "filename": "ash/login/ui/lock_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-29T21:08:45Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "84d53f17_0e92b53c",
+      "revId": "62e98f4486e0dc366ff63653a49c7debc35b1504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
