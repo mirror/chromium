@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/files/scoped_file.h"
 
 namespace profiling {
 
@@ -21,9 +22,8 @@ class MemlogSenderPipe {
   bool Send(const void* data, size_t sz);
 
  private:
-  std::string pipe_id_;
-
-  int fd_;
+  base::ScopedFD fd_;
+  std::vector<int> dummy_for_send_;  // Make base::UnixDomainSocket::SendMsg happy.
 
   DISALLOW_COPY_AND_ASSIGN(MemlogSenderPipe);
 };
