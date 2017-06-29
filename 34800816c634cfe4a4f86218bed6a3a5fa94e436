@@ -16,6 +16,24 @@
       "revId": "34800816c634cfe4a4f86218bed6a3a5fa94e436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bcb5b3_6f0dd44c",
+        "filename": "ash/metrics/user_metrics_action.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-29T15:27:28Z",
+      "side": 0,
+      "message": "I can\u0027t find any code that uses the underlying values. It\u0027s all just action counts.",
+      "parentUuid": "3e9b50c6_a8576b13",
+      "revId": "34800816c634cfe4a4f86218bed6a3a5fa94e436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
