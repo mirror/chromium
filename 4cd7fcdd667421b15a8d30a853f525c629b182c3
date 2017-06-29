@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94b81b09_239c432a",
+        "filename": "components/app_modal/views/javascript_app_modal_dialog_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T20:06:23Z",
+      "side": 1,
+      "message": "Nit: No ()",
+      "revId": "4cd7fcdd667421b15a8d30a853f525c629b182c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9776d26b_8c281bbb",
+        "filename": "components/app_modal/views/javascript_app_modal_dialog_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T20:06:23Z",
+      "side": 1,
+      "message": "Note: It seems like at least long term, GetModalType/ShouldShowCloseButton/maybe some other stuff should all be condensed into some sort of single \"what kind of a thing is this\", and that thing should be e.g. \"popover\" vs. \"modal\".\n\nIn the short term, I don\u0027t think that kind of refactoring needs to block shipping phase 1, although it does mean we\u0027ll have to be vigilant about not letting modality, close buttons, a bottom button row, etc. get out of sync.",
+      "revId": "4cd7fcdd667421b15a8d30a853f525c629b182c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
