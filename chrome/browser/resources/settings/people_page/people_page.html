@@ -268,7 +268,10 @@
         <settings-subpage
           associated-control="[[$$('#picture-subpage-trigger')]]"
           page-title="$i18n{changePictureTitle}">
-          <settings-change-picture></settings-change-picture>
+          <settings-change-picture
+              flip-photo-label="$i18n{flipPhoto}"
+              take-photo-label="$i18n{takePhoto}">
+          </settings-change-picture>
         </settings-subpage>
       </template>
 </if>
