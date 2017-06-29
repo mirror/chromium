@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6572de89_b291c167",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T22:15:36Z",
+      "side": 1,
+      "message": "The path for workers continues to exist. The benefit of splitting these is that when an interface is requested from a frame we know the origin of the document it is rendering. This is a step towards being able to know the origin of the worker making interface requests as well.",
+      "parentUuid": "96b83894_c8c21368",
+      "revId": "1604a59de66d7f1c461326e1bd8e8f7eefed183b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93eb6d0b_f7e6bc5c",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8bf481d1_6db7d703",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T22:15:36Z",
+      "side": 1,
+      "message": "I don\u0027t know how many of these lines beng@\u0027s comment applies to. I assume it is only the autofill ones.",
+      "parentUuid": "93eb6d0b_f7e6bc5c",
+      "revId": "1604a59de66d7f1c461326e1bd8e8f7eefed183b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d3f8f1_8a4c9778",
         "filename": "third_party/WebKit/LayoutTests/http/tests/budget/budget-service-mock.js",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "1604a59de66d7f1c461326e1bd8e8f7eefed183b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f8077b_cbbf03cb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/budget/budget-service-mock.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T22:15:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d3f8f1_8a4c9778",
+      "revId": "1604a59de66d7f1c461326e1bd8e8f7eefed183b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "2a974e56_ee90dddd",
+        "filename": "third_party/WebKit/Source/modules/budget/BudgetService.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T22:15:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26010f73_b13e353a",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 15
+      },
+      "revId": "1604a59de66d7f1c461326e1bd8e8f7eefed183b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eadbe57e_6ebf85fe",
         "filename": "third_party/WebKit/Source/modules/budget/WorkerNavigatorBudget.idl",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "1604a59de66d7f1c461326e1bd8e8f7eefed183b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7961cc_e17532da",
+        "filename": "third_party/WebKit/Source/modules/budget/WorkerNavigatorBudget.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T22:15:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eadbe57e_6ebf85fe",
+      "revId": "1604a59de66d7f1c461326e1bd8e8f7eefed183b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
