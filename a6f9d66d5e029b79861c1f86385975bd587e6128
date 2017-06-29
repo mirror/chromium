@@ -34,6 +34,70 @@
       "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a7d0191_bb9e08bd",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-29T15:46:21Z",
+      "side": 1,
+      "message": "That seems a bit misleading. Maybe expand the comment to explain when it\u0027s expected to be used?",
+      "parentUuid": "ce83c6ae_e13188f2",
+      "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16173406_521a37d3",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-29T15:46:21Z",
+      "side": 1,
+      "message": "Maybe explain why we need another copy of the data for logging? (If it\u0027s just so that you can clear out the URLs to prevent double-logging, then maybe an array of bools would be simpler?)",
+      "range": {
+        "startLine": 123,
+        "startChar": 61,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e90134_b29df1a6",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-29T15:46:21Z",
+      "side": 1,
+      "message": "Should the variable name be \"url\" (lower case)?",
+      "range": {
+        "startLine": 451,
+        "startChar": 40,
+        "endLine": 451,
+        "endChar": 0
+      },
+      "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
