@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "199220c2_94ef2de2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-29T21:08:09Z",
+      "side": 1,
+      "message": "\u003e Yes it can be global and I can probably use ContextUtils. Where is a good place to instantiate InputDeviceObserver?\n\nLazily on first use probably? You could even be smart and unregister from context when all observers are removed.",
+      "parentUuid": "872d42fc_1ccefc09",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2e3ea64_5f56690b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/InputDeviceObserver.java",
         "patchSetId": 2
