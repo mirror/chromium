@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "062aafa8_efa56db6",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-29T01:34:17Z",
+      "side": 1,
+      "message": "OK. Deleted. It was adding a tiny bit of info, but I agree it\u0027s trivial from context (a potentially different case might be if the first frame was processed *before* switching to \u0027sequence\u0027 mode, but then the switch to \u0027sequence\u0027 mode would have started a new group.)",
+      "parentUuid": "2f6e6abf_0b2d7ab8",
+      "range": {
+        "startLine": 656,
+        "startChar": 7,
+        "endLine": 656,
+        "endChar": 41
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfa17737_3797fbf4",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "978ae159_e3ba50c0",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-29T01:34:17Z",
+      "side": 1,
+      "message": "Done -- restated more clearly I hope.",
+      "parentUuid": "cfa17737_3797fbf4",
+      "range": {
+        "startLine": 707,
+        "startChar": 5,
+        "endLine": 708,
+        "endChar": 64
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90dbc9c3_e8544917",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-28T23:34:43Z",
       "side": 1,
       "message": "I don\u0027t follow this block. I don\u0027t see that you\u0027re using an append window in this test (nor why you would want to?).\n\nI\u0027m also confused about why this is seemingly not affecting CheckRangesByTimestamp on lines 727 \u0026\u0026 728 below",
+      "range": {
+        "startLine": 718,
+        "startChar": 2,
+        "endLine": 722,
+        "endChar": 3
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65af767_349c079e",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-29T01:34:17Z",
+      "side": 1,
+      "message": "Segments mode: we\u0027re keeping timestampOffset default (0) here, so the appended media goes into the timeline without adjustment.\n\nSequence mode: to simplify the buffered range expectations later in this test for this first append so they\u0027re common across sequence and segments mode, set timestampOffset explicitly here to 100. This explicit setting puts the next appends at this time (rather than shifting them back to a coded frame group beginning at time 0, which is the current \"group end timestamp\").\n\nThe append window, by default is [0, +Infinity].\nFor sequence mode, if we hadn\u0027t moved the first coded frame group to begin at 100 in the buffered timeline, the append in l.760 (audio: 50K) [[shifted back by the timestampOffset determined earlier by the first track frame triggering/following the discontinuity appended in l.736 (video: 160K)--\u003etimestampOffset -20ms to move that 160K frame back to be continuous with last pre-discontinuity video frame ending at 140]] would have instead had a cumulative timestampOffset of -100 + -20 applied to it (making it -70K) and it would have been dropped since it\u0027s outside the [0, +Infinity] window.\n\nI see that the comment\u0027s \"last append in this test\" reference is incorrect. I\u0027ve made it clearer, I hope :)",
+      "parentUuid": "90dbc9c3_e8544917",
       "range": {
         "startLine": 718,
         "startChar": 2,
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "adcef490_3d3daa84",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-29T01:34:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2c21c4e_22da101f",
+      "range": {
+        "startLine": 764,
+        "startChar": 54,
+        "endLine": 765,
+        "endChar": 19
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f16d369_4fc36a57",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -152,6 +248,30 @@
       "writtenOn": "2017-06-28T23:34:43Z",
       "side": 1,
       "message": "I\u0027m confused. Why is timestamp offset at -20? I assume this is what caused the audio range to now start at 30?",
+      "range": {
+        "startLine": 769,
+        "startChar": 4,
+        "endLine": 769,
+        "endChar": 13
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d79ec7_790c7bb8",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-29T01:34:17Z",
+      "side": 1,
+      "message": "Your assumption is correct. The offset is -20, based on the (spec-compliant) timestampOffset update requirement following the last discontinuity (or explicit setting by the app). In this case, the most recent update was due to the video frame 160K appended in l.736. Note that started the group for *all* tracks. And the spec doesn\u0027t detect discontinuity for audio here with the 50K append because audio track\u0027s \"last decode timestamp\" is unset due to no audio yet appended since the discontinuity.\nInternally, this CL recognizes audio now has a new, earlier, group start time than video at this point, so as to make the rest of the SBS/SBR processing pass. This is also a point of complexity I hope to reduce as soon as we can deprecate support for sequence mode processing of muxed SourceBuffers!",
+      "parentUuid": "9f16d369_4fc36a57",
       "range": {
         "startLine": 769,
         "startChar": 4,
@@ -222,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "57b2222e_31f41bd1",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-29T01:34:17Z",
+      "side": 1,
+      "message": "This is long allowed in the MSE pipeline (and even is noted in the MSE REC spec); we take consideration of this in various unit tests already, too. From the spec:\n\"For the purposes of determining if HTMLMediaElement.buffered contains a TimeRange that includes the current playback position, implementations may choose to allow a current playback position at or after presentation start time and before the first TimeRange to play the first TimeRange if that TimeRange starts within a reasonably short time, like 1 second, after presentation start time. This allowance accommodates the reality that muxed streams commonly do not begin all tracks precisely at presentation start time. Implementations must report the actual buffered range, regardless of this allowance.\"",
+      "parentUuid": "789236f6_c9faaa4c",
+      "range": {
+        "startLine": 789,
+        "startChar": 68,
+        "endLine": 790,
+        "endChar": 47
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5942bfb_a06d33ab",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -233,6 +377,30 @@
       "writtenOn": "2017-06-28T23:34:43Z",
       "side": 1,
       "message": "nit: I would just use the literal 100 here and in other seeks. There isn\u0027t really a relationship between where you\u0027re seeking and frame_duration_.\n\nSame goes for any checks of manually specified timestamp offsets. Perhaps for checks of timestamp offsets in general (when not manually specified, they\u0027re a function of PTS gaps, but not duration).",
+      "range": {
+        "startLine": 797,
+        "startChar": 28,
+        "endLine": 797,
+        "endChar": 43
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff403d60_4c6d8b99",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-29T01:34:17Z",
+      "side": 1,
+      "message": "I don\u0027t understand that last sentence. Please restate if you meant something other than \"please use explicit base::TimeDelta::FromMilliseconds(some integer) for seek times, timestampOffset checking, and timestampOffset setting.\"\n\nIn this CL, I was just being consistent with the rest of the existing tests in this file (|frame_duration_| is 10ms by default). I tend to agree this needs fixing throughout, though I\u0027d prefer doing it in a separate CL. WDYT?",
+      "parentUuid": "c5942bfb_a06d33ab",
       "range": {
         "startLine": 797,
         "startChar": 28,
