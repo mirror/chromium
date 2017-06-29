@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f109fe94_890b8c2b",
+        "filename": "ui/views/examples/examples_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-29T20:25:52Z",
+      "side": 1,
+      "message": "Does it need to? Do we build this with OS_NACL? The builders seem happy with this.",
+      "parentUuid": "0236ff62_1474e856",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 54
+      },
+      "revId": "941e8290c8c303809c1fd7229b1dd43b93f19df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e259c131_be460914",
         "filename": "ui/views/examples/examples_main.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T18:18:30Z",
       "side": 1,
       "message": "It would be okay to use ScopedTaskEnvironment in views_examples, if that seems more correct to you (the examples executable is a manual testing environment), but either options seems okay to me.",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 21
+      },
+      "revId": "941e8290c8c303809c1fd7229b1dd43b93f19df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2511efd_7041a2ec",
+        "filename": "ui/views/examples/examples_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-29T20:25:52Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "e259c131_be460914",
       "range": {
         "startLine": 130,
         "startChar": 8,
