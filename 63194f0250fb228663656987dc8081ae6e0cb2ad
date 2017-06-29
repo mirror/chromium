@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ebfc86d_eedad008",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:33:12Z",
+      "side": 1,
+      "message": "Sorry to go against the a previous comment here, but I\u0027m not a big fan of taking the uiDelegate as input here. The ImageFetcher will be owned and created by the UiDelegate, and that creates a weird dependency cycle.\n\nWould you mind adding the SuggestionSource and the Host (to get WebContents) directly instead? That would allow to not care about the order of initialisation of the members in the UiDelegate, and avoid having to create UiDelegate mocks.",
+      "range": {
+        "startLine": 61,
+        "startChar": 11,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b1ae82_b1e7bcd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:33:12Z",
+      "side": 1,
+      "message": "Q: bauerb@ Do you know why we use this specific web contents if it\u0027s just to download a favicon? It\u0027s going to be cached somewhere anyway, we don\u0027t have a browser wide webcontent  to be used instead?",
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d685f7_09dd30e9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:33:12Z",
+      "side": 1,
+      "message": "revert the line swap?",
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddee3fc_f3d61cb4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:33:12Z",
+      "side": 1,
+      "message": "nit: why not final?",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 15
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb16011_43fa0475",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:33:12Z",
+      "side": 1,
+      "message": "register that one in the DepsFactory instead? Then you can also make the method private.",
+      "range": {
+        "startLine": 409,
+        "startChar": 36,
+        "endLine": 409,
+        "endChar": 56
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0da05ee_53b6f1f4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:33:12Z",
+      "side": 1,
+      "message": "TODO for a follow up patch:\n\nfake FaviconHelper and face LargeIconBridge that can be inserted in the deps factory to fake these operations instead of doing it at the image fetcher level? I don\u0027t mind too much this being here for now, as it\u0027s the old code, and I would like this one to land :D",
+      "range": {
+        "startLine": 417,
+        "startChar": 20,
+        "endLine": 417,
+        "endChar": 38
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6837c07_267d2692",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:33:12Z",
+      "side": 1,
+      "message": "Is this actually needed? The old code threw an exception when a large icon request was made",
+      "range": {
+        "startLine": 431,
+        "startChar": 20,
+        "endLine": 431,
+        "endChar": 40
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0f8116_2ad0dd33",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/ImageFetcherTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-29T13:33:12Z",
+      "side": 1,
+      "message": "this is not a test utility, I\u0027d avoid a static import there. Use ImageFetcher.getSnippetDomain() instead",
+      "range": {
+        "startLine": 131,
+        "startChar": 24,
+        "endLine": 131,
+        "endChar": 40
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
