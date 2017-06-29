@@ -16,6 +16,24 @@
       "revId": "6fe9c84218ffb48b6b0eb3496cc27f7ec1c6ee1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c2b567_c002ed8b",
+        "filename": "third_party/WebKit/Source/platform/graphics/Color.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-29T20:56:15Z",
+      "side": 1,
+      "message": "Doh, right. For some strange reason I was thinking that this was a class method. I just removed the declaration.",
+      "parentUuid": "bddfb35f_6b85241f",
+      "revId": "6fe9c84218ffb48b6b0eb3496cc27f7ec1c6ee1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
