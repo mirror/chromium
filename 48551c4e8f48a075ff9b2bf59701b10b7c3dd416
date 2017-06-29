@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2b3e0e0_0032b984",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-29T13:51:26Z",
+      "side": 1,
+      "message": "nit: Namespace prefix not needed due to `using` above.",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 229,
+        "endChar": 12
+      },
+      "revId": "48551c4e8f48a075ff9b2bf59701b10b7c3dd416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ff1678_2a0480ab",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-29T13:51:26Z",
+      "side": 1,
+      "message": "Could you please update this comment, and move most of it down to line 200?",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 52
+      },
+      "revId": "48551c4e8f48a075ff9b2bf59701b10b7c3dd416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
