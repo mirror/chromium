@@ -12,6 +12,8 @@ component("resource_coordinator_cpp") {
     "memory_instrumentation/coordinator.h",
     "memory_instrumentation/memory_instrumentation.cc",
     "memory_instrumentation/memory_instrumentation.h",
+    "memory_instrumentation/tracing_observer.cc",
+    "memory_instrumentation/tracing_observer.h",
     "resource_coordinator_features.cc",
     "resource_coordinator_features.h",
     "resource_coordinator_interface.cc",
