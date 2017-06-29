@@ -15,6 +15,7 @@
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/label_button.h"
+#include "ui/views/layout/layout_provider.h"
 #include "ui/views/native_theme_delegate.h"
 #include "ui/views/resources/grit/views_resources.h"
 
@@ -113,7 +114,7 @@ gfx::Insets LabelButtonAssetBorder::GetDefaultInsetsForStyle(
   if (style == Button::STYLE_BUTTON) {
     insets = gfx::Insets(8, 13);
   } else if (style == Button::STYLE_TEXTBUTTON) {
-    insets = gfx::Insets(5, 6);
+    insets = LayoutProvider::Get()->GetInsetsMetric(INSETS_STYLE_TEXT_BUTTON);
   } else {
     NOTREACHED();
   }
