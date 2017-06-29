@@ -892,6 +892,30 @@
     },
     {
       "key": {
+        "uuid": "214d1c30_51895049",
+        "filename": "ios/web/service_manager_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-29T16:52:06Z",
+      "side": 1,
+      "message": "Oops, missed this comment. Will do in a tiny followup.",
+      "parentUuid": "4d4a7d2a_f9890c54",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "ca1ee87da3cf0af529bb6eb5b24e3ce78f1432fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ff7dacb_0946cf15",
         "filename": "ios/web/service_manager_connection_impl.cc",
         "patchSetId": 2

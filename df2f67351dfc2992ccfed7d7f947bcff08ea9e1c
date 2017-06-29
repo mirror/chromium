@@ -22,6 +22,30 @@
       "revId": "df2f67351dfc2992ccfed7d7f947bcff08ea9e1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cb1d86_93fd6310",
+        "filename": "content/browser/service_manager/merge_dictionary.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-29T16:52:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb007ae6_b434f2e7",
+      "range": {
+        "startLine": 1,
+        "startChar": 31,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "df2f67351dfc2992ccfed7d7f947bcff08ea9e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
