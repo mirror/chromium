@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "814342ec_b8939b96",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T15:50:09Z",
+      "side": 1,
+      "message": "Why didn’t grey_nil() work? Now it seems that if the element exists but is just not in the view, the deleted entry could still be present and the test pass, no?",
+      "revId": "6a26caff87193d65f0667ee839c11a4125e443a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
