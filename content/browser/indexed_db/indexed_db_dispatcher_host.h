@@ -106,6 +106,8 @@ class CONTENT_EXPORT IndexedDBDispatcherHost
       const url::Origin& origin,
       const base::string16& name,
       bool force_close) override;
+  void CompactDatabase(const url::Origin& origin,
+                       CompactDatabaseCallback callback) override;
 
   void InvalidateWeakPtrsAndClearBindings();
 

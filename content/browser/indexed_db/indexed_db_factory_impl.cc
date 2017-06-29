@@ -297,6 +297,22 @@ void IndexedDBFactoryImpl::DatabaseDeleted(
   context_->DatabaseDeleted(identifier.first);
 }
 
+void IndexedDBFactoryImpl::CompactDatabase(
+    base::OnceCallback<void(leveldb::Status)> callback,
+    const url::Origin& origin) {
+  IDB_TRACE("IndexedDBFactoryImpl::CompactDatabase");
+  scoped_refptr<IndexedDBBackingStore> backing_store =
+      backing_store_map_[origin];
+  if (!backing_store) {
+    std::move(callback).Run(leveldb::Status::IOError(
+        "Internal error opening backing store for indexedDB.compactDatabase."));
+    return;
+  }
+
+  backing_store->Compact();
+  std::move(callback).Run(leveldb::Status::OK());
+}
+
 void IndexedDBFactoryImpl::HandleBackingStoreFailure(const Origin& origin) {
   // NULL after ContextDestroyed() called, and in some unit tests.
   if (!context_)

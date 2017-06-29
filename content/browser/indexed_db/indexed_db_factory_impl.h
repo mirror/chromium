@@ -51,6 +51,9 @@ class CONTENT_EXPORT IndexedDBFactoryImpl : public IndexedDBFactory {
       const base::FilePath& data_directory,
       bool force_close) override;
 
+  void CompactDatabase(base::OnceCallback<void(leveldb::Status)> callback,
+                       const url::Origin& origin) override;
+
   void HandleBackingStoreFailure(const url::Origin& origin) override;
   void HandleBackingStoreCorruption(
       const url::Origin& origin,
