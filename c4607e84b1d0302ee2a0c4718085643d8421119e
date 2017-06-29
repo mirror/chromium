@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca8b5bea_fb442cf2",
+        "filename": "mojo/public/cpp/system/platform_handle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-29T23:16:59Z",
+      "side": 1,
+      "message": "nitty nit: would you mind changing these to DCHECK_EQ while you\u0027re here? it\u0027s probably my fault that they\u0027re CHECK_EQ now, but i don\u0027t know what i was thinking.",
+      "revId": "c4607e84b1d0302ee2a0c4718085643d8421119e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
