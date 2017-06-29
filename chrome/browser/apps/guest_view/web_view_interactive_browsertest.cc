@@ -1738,17 +1738,7 @@ IN_PROC_BROWSER_TEST_P(WebViewImeInteractiveTest,
 }
 #endif  //  OS_MACOSX
 
-// This test verifies that focusing an input inside a <webview> will put the
-// guest process's render widget into a monitoring mode for composition range
-// changes.
-// Flaky on Mac (crbug.com/736759)
-#if defined(OS_MACOSX)
-#define MAYBE_CompositionRangeUpdates DISABLED_CompositionRangeUpdates
-#else
-#define MAYBE_CompositionRangeUpdates CompositionRangeUpdates
-#endif
-IN_PROC_BROWSER_TEST_P(WebViewImeInteractiveTest,
-                       MAYBE_CompositionRangeUpdates) {
+IN_PROC_BROWSER_TEST_P(WebViewImeInteractiveTest, CompositionRangeUpdates) {
   ASSERT_TRUE(StartEmbeddedTestServer());  // For serving guest pages.
   LoadAndLaunchPlatformApp("web_view/ime", "WebViewImeTest.Launched");
   ASSERT_TRUE(ui_test_utils::ShowAndFocusNativeWindow(GetPlatformAppWindow()));
@@ -1794,7 +1784,7 @@ IN_PROC_BROWSER_TEST_P(WebViewImeInteractiveTest,
 
   // Now set some composition text which should lead to an update in composition
   // range information.
-  CompositionRangeUpdateObserver observer(embedder_web_contents);
+  CompositionRangeUpdateObserver > observer(embedder_web_contents);
   content::SendImeSetCompositionTextToWidget(
       target_web_contents->GetRenderWidgetHostView()->GetRenderWidgetHost(),
       base::UTF8ToUTF16("ABC"), std::vector<ui::CompositionUnderline>(),
