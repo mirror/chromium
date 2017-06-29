@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17aa1f86_e96b371e",
+        "filename": "content/renderer/media_recorder/video_track_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-29T00:19:53Z",
+      "side": 1,
+      "message": "nit: remove \"encode\"? It makes no sense here and anyway \nthe DLOG has the file name (video_track_recorder.cc)\nprefixed which will give context. Otherwise just prefix\n__func__.",
+      "range": {
+        "startLine": 213,
+        "startChar": 22,
+        "endLine": 213,
+        "endChar": 58
+      },
+      "revId": "21fddb3ea66c2c179e7f2099cb51614c9a447918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
