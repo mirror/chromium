@@ -82,6 +82,22 @@ class AutoSchedulerLock {
   DISALLOW_COPY_AND_ASSIGN(AutoSchedulerLock);
 };
 
+// Provides the same functionality as base::AutoUnlock for SchedulerLock.
+class AutoSchedulerUnlock {
+ public:
+  explicit AutoSchedulerUnlock(SchedulerLock& lock) : lock_(lock) {
+    lock_.AssertAcquired();
+    lock_.Release();
+  }
+
+  ~AutoSchedulerUnlock() { lock_.Acquire(); }
+
+ private:
+  SchedulerLock& lock_;
+
+  DISALLOW_COPY_AND_ASSIGN(AutoSchedulerUnlock);
+};
+
 }  // namespace internal
 }  // namespace base
 
