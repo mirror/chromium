@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2918d85f_a25be00b",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-29T22:47:31Z",
+      "side": 0,
+      "message": "I double-checked that a long title wraps correctly instead of being truncated.",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "6609d04f50475d06e8c34f2d1f293d07c2a92059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
