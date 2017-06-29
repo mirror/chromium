@@ -149,6 +149,12 @@ class PaintArtifactCompositorTestWithPropertyTrees
         .get();
   }
 
+  cc::Layer* ScrollLayerAt(unsigned index) {
+    return paint_artifact_compositor_->GetExtraDataForTesting()
+        ->scroll_layers[index]
+        .get();
+  }
+
   void AddSimpleRectChunk(TestPaintArtifact& artifact) {
     artifact
         .Chunk(TransformPaintPropertyNode::Root(),
@@ -768,10 +774,14 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneScrollNode) {
   EXPECT_EQ(MainThreadScrollingReason::kNotScrollingOnMain,
             scroll_node.main_thread_scrolling_reasons);
 
-  auto* layer = ContentLayerAt(0);
-  EXPECT_EQ(layer->id(), scroll_node.owning_layer_id);
-  auto scroll_node_index = layer->scroll_tree_index();
-  EXPECT_EQ(scroll_node_index, scroll_node.id);
+  auto* content_layer = ContentLayerAt(0);
+  EXPECT_TRUE(content_layer->DrawsContent());
+  EXPECT_FALSE(content_layer->scrollable());
+  EXPECT_EQ(content_layer->scroll_tree_index(), scroll_node.id);
+
+  auto* scroll_layer = ScrollLayerAt(0);
+  EXPECT_TRUE(scroll_layer->scrollable());
+  EXPECT_EQ(scroll_layer->scroll_tree_index(), scroll_node.id);
 
   // Only one content layer, and the first child layer is the dummy layer for
   // the transform node.
@@ -780,10 +790,7 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneScrollNode) {
   EXPECT_EQ(transform_node_index, transform_node.id);
 
   EXPECT_EQ(0u, scroll_client.did_scroll_count);
-  // TODO(pdr): The PaintArtifactCompositor should set the scrolling content
-  // bounds so the Layer is scrollable. This call should be removed.
-  layer->SetScrollable(gfx::Size(1, 1));
-  layer->SetScrollOffsetFromImplSide(gfx::ScrollOffset(1, 2));
+  scroll_layer->SetScrollOffsetFromImplSide(gfx::ScrollOffset(1, 2));
   EXPECT_EQ(1u, scroll_client.did_scroll_count);
   EXPECT_EQ(gfx::ScrollOffset(1, 2), scroll_client.last_scroll_offset);
 }
@@ -1791,8 +1798,9 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
   Update(artifact.Build());
 
   // Two content layers for the differentiated rect drawings and three dummy
-  // layers for each of the transform, clip and effect nodes.
-  EXPECT_EQ(5u, RootLayer()->children().size());
+  // layers for each of the transform, clip and effect nodes, and one scroll
+  // layer for the root.
+  EXPECT_EQ(6u, RootLayer()->children().size());
   int sequence_number = GetPropertyTrees().sequence_number;
   EXPECT_GT(sequence_number, 0);
   for (auto layer : RootLayer()->children()) {
@@ -1801,7 +1809,7 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
 
   Update(artifact.Build());
 
-  EXPECT_EQ(5u, RootLayer()->children().size());
+  EXPECT_EQ(6u, RootLayer()->children().size());
   sequence_number++;
   EXPECT_EQ(sequence_number, GetPropertyTrees().sequence_number);
   for (auto layer : RootLayer()->children()) {
@@ -1810,7 +1818,7 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
 
   Update(artifact.Build());
 
-  EXPECT_EQ(5u, RootLayer()->children().size());
+  EXPECT_EQ(6u, RootLayer()->children().size());
   sequence_number++;
   EXPECT_EQ(sequence_number, GetPropertyTrees().sequence_number);
   for (auto layer : RootLayer()->children()) {
