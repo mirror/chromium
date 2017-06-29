@@ -153,6 +153,8 @@ const base::FilePath::CharType kGCMStoreDirname[] = FPL("GCM Store");
 const base::FilePath::CharType kLocalStateFilename[] = FPL("Local State");
 const base::FilePath::CharType kLocalStorePoolName[] = FPL("LocalStorePool");
 const base::FilePath::CharType kMediaCacheDirname[] = FPL("Media Cache");
+const base::FilePath::CharType kNewTabFeatureEngagementTrackerStorageDirname[] =
+    FPL("New Tab Feature Engagement Tracker");
 const base::FilePath::CharType kOfflinePageArchivesDirname[] =
     FPL("Offline Pages/archives");
 const base::FilePath::CharType kOfflinePageMetadataDirname[] =
