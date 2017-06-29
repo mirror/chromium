@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "621570eb_89e2c812",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:20:28Z",
+      "side": 1,
+      "message": "this will create a new task runner each time chrome://help is refreshed. i\u0027m not sure if this is a good thing or a bad thing. could you check with one of the task scheduler folks (gab, fdoray, robliao, etc) to see if this means a new thread is created for each and if they recommend reducing the number of runners? maybe holding the runner in a member variable is a better choice so that there is at most one runner per chrome://help tab. maybe it\u0027s also worth considering if there should be one for the whole process rather than one per tab. this would be more work, of course, so hopefully one of the other approaches is good enough. thanks.",
+      "revId": "eee9c00a21093468c09f82ef7ba2c7b5a099754f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
