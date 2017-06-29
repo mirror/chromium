@@ -14,7 +14,6 @@
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
-#include "base/single_thread_task_runner.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "components/policy/core/common/async_policy_loader.h"
@@ -385,8 +384,7 @@ std::unique_ptr<PolicyWatcher> PolicyWatcher::CreateFromPolicyLoader(
 }
 
 std::unique_ptr<PolicyWatcher> PolicyWatcher::Create(
-    policy::PolicyService* policy_service,
-    const scoped_refptr<base::SingleThreadTaskRunner>& file_task_runner) {
+    policy::PolicyService* policy_service) {
 #if defined(OS_CHROMEOS)
   // On Chrome OS the PolicyService is owned by the browser.
   DCHECK(policy_service);
@@ -401,17 +399,15 @@ std::unique_ptr<PolicyWatcher> PolicyWatcher::Create(
   std::unique_ptr<policy::AsyncPolicyLoader> policy_loader;
 #if defined(OS_WIN)
   policy_loader.reset(new policy::PolicyLoaderWin(
-      file_task_runner, L"SOFTWARE\\Policies\\Google\\Chrome",
+      L"SOFTWARE\\Policies\\Google\\Chrome",
       nullptr));  // nullptr = don't use GPO / always read from the registry.
 #elif defined(OS_MACOSX)
   CFStringRef bundle_id = CFSTR("com.google.Chrome");
   policy_loader.reset(new policy::PolicyLoaderMac(
-      file_task_runner,
       policy::PolicyLoaderMac::GetManagedPolicyPath(bundle_id),
       new MacPreferences(), bundle_id));
 #elif defined(OS_POSIX) && !defined(OS_ANDROID)
   policy_loader.reset(new policy::ConfigDirPolicyLoader(
-      file_task_runner,
       base::FilePath(FILE_PATH_LITERAL("/etc/opt/chrome/policies")),
       policy::POLICY_SCOPE_MACHINE));
 #elif defined(OS_ANDROID)

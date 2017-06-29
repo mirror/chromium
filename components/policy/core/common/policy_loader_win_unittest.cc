@@ -26,7 +26,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/process/process_handle.h"
-#include "base/sequenced_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -187,8 +186,7 @@ class RegistryTestHarness : public PolicyProviderTestHarness,
   void SetUp() override;
 
   ConfigurationPolicyProvider* CreateProvider(
-      SchemaRegistry* registry,
-      scoped_refptr<base::SequencedTaskRunner> task_runner) override;
+      SchemaRegistry* registry) override;
 
   void InstallEmptyPolicy() override;
   void InstallStringPolicy(const std::string& policy_name,
@@ -236,8 +234,7 @@ class PRegTestHarness : public PolicyProviderTestHarness,
   void SetUp() override;
 
   ConfigurationPolicyProvider* CreateProvider(
-      SchemaRegistry* registry,
-      scoped_refptr<base::SequencedTaskRunner> task_runner) override;
+      SchemaRegistry* registry) override;
 
   void InstallEmptyPolicy() override;
   void InstallStringPolicy(const std::string& policy_name,
@@ -374,11 +371,10 @@ void RegistryTestHarness::SetUp() {
 }
 
 ConfigurationPolicyProvider* RegistryTestHarness::CreateProvider(
-    SchemaRegistry* registry,
-    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+    SchemaRegistry* registry) {
   base::win::SetDomainStateForTesting(true);
   std::unique_ptr<AsyncPolicyLoader> loader(
-      new PolicyLoaderWin(task_runner, kTestPolicyKey, this));
+      new PolicyLoaderWin(kTestPolicyKey, this));
   return new AsyncPolicyProvider(registry, std::move(loader));
 }
 
@@ -509,10 +505,9 @@ void PRegTestHarness::SetUp() {
 }
 
 ConfigurationPolicyProvider* PRegTestHarness::CreateProvider(
-    SchemaRegistry* registry,
-    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+    SchemaRegistry* registry) {
   std::unique_ptr<AsyncPolicyLoader> loader(
-      new PolicyLoaderWin(task_runner, kTestPolicyKey, this));
+      new PolicyLoaderWin(kTestPolicyKey, this));
   return new AsyncPolicyProvider(registry, std::move(loader));
 }
 
@@ -779,8 +774,7 @@ class PolicyLoaderWinTest : public PolicyTestBase,
   }
 
   bool Matches(const PolicyBundle& expected) {
-    PolicyLoaderWin loader(loop_.task_runner(), kTestPolicyKey,
-                           gpo_list_provider_);
+    PolicyLoaderWin loader(kTestPolicyKey, gpo_list_provider_);
     std::unique_ptr<PolicyBundle> loaded(
         loader.InitialLoad(schema_registry_.schema_map()));
     return loaded->Equals(expected);

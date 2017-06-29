@@ -11,21 +11,16 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/message_loop/message_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/core/common/schema.h"
 #include "components/policy/core/common/schema_registry.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-#if defined(OS_POSIX)
-#include "base/files/file_descriptor_watcher_posix.h"
-#endif
-
 namespace base {
 class DictionaryValue;
 class ListValue;
-class SequencedTaskRunner;
 class Value;
 }
 
@@ -58,12 +53,7 @@ class PolicyTestBase : public testing::Test {
 
   SchemaRegistry schema_registry_;
 
-  // Needed by FilePathWatcher, which is used by ConfigDirPolicyLoader and
-  // PolicyLoaderMac.
-  base::MessageLoopForIO loop_;
-#if defined(OS_POSIX)
-  base::FileDescriptorWatcher file_descriptor_watcher_;
-#endif
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PolicyTestBase);
@@ -86,8 +76,7 @@ class PolicyProviderTestHarness {
 
   // Create a new policy provider.
   virtual ConfigurationPolicyProvider* CreateProvider(
-      SchemaRegistry* registry,
-      scoped_refptr<base::SequencedTaskRunner> task_runner) = 0;
+      SchemaRegistry* registry) = 0;
 
   // Returns the policy level, scope and source set by the policy provider.
   PolicyLevel policy_level() const;

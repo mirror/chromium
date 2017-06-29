@@ -15,7 +15,6 @@
 
 namespace base {
 class DictionaryValue;
-class SingleThreadTaskRunner;
 }  // namespace base
 
 namespace policy {
@@ -70,19 +69,13 @@ class PolicyWatcher : public policy::PolicyService::Observer {
   // PolicyService (on other OS-es). PolicyWatcher must be used on the thread on
   // which it is created. |policy_service| is called on the same thread.
   //
-  // When |policy_service| is null, then |file_task_runner| is used for reading
-  // the policy from files / registry / preferences (which are blocking
-  // operations). |file_task_runner| should be of TYPE_IO type.
+  // A SequencedTaskRunner is used for reading the policy from files / registry
+  // / preferences (which are blocking operations).
   //
-  // When |policy_service| is specified then |file_task_runner| argument is
-  // ignored and 1) BrowserThread::UI is used for PolicyUpdatedCallback and
-  // PolicyErrorCallback and 2) BrowserThread::FILE is used for reading the
-  // policy from files / registry / preferences (although (2) is just an
-  // implementation detail and should likely be ignored outside of
-  // PolicyWatcher).
+  // When |policy_service| is specified then BrowserThread::UI is used for
+  // PolicyUpdatedCallback and PolicyErrorCallback.
   static std::unique_ptr<PolicyWatcher> Create(
-      policy::PolicyService* policy_service,
-      const scoped_refptr<base::SingleThreadTaskRunner>& file_task_runner);
+      policy::PolicyService* policy_service);
 
   // Creates a PolicyWatcher from the given loader instead of loading the policy
   // from the default location.

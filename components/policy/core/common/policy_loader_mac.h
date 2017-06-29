@@ -18,10 +18,6 @@
 
 class MacPreferences;
 
-namespace base {
-class SequencedTaskRunner;
-}  // namespace base
-
 namespace policy {
 
 class PolicyBundle;
@@ -32,14 +28,12 @@ class Schema;
 // watches the managed preferences files for updates.
 class POLICY_EXPORT PolicyLoaderMac : public AsyncPolicyLoader {
  public:
-  PolicyLoaderMac(scoped_refptr<base::SequencedTaskRunner> task_runner,
-                  const base::FilePath& managed_policy_path,
+  PolicyLoaderMac(const base::FilePath& managed_policy_path,
                   MacPreferences* preferences);
 
   // |application_id| will be passed into Mac's Preference Utilities API
   // instead of the default value of kCFPreferencesCurrentApplication.
-  PolicyLoaderMac(scoped_refptr<base::SequencedTaskRunner> task_runner,
-                  const base::FilePath& managed_policy_path,
+  PolicyLoaderMac(const base::FilePath& managed_policy_path,
                   MacPreferences* preferences,
                   CFStringRef application_id);
 
