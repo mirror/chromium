@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e30202_c9cea9c3",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "Where is this method called?",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68acaccc_97dcd4d2",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "It seems there is no need for local variable |guid|, you can call GetOrCreateGUID() right there.",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6596b741_0cfd4f69",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "If you pass nullptr you need to add the null check everywhere it is called in VariationSeedManager. I think it\u0027s better to create a dummy object here and pass the valid pointer.",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde97b4c_b4fe8ff1",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "nit: I think it would be more readable to have a static method AwVariationsServiceClient::Create() which returns a unique_ptr and call it here.",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819902d6_c518aefa",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "Why not a static member of the class?",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462df480_aaa85a56",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "I think you meant DCHECK(guid.length() \u003d\u003d GUID_SIZE);",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30b6c90_927dfac7",
+        "filename": "android_webview/browser/metrics/variations/aw_variations_service_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "nit: Try to describe this current class, not some other which is similar in purpouse or structure. E.g. \"this is a variation service client for Android WebView\".",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86eb6611_71ce87ac",
+        "filename": "components/variations/field_trial_config/field_trial_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "Can this function be a method of VariationSeedManager instead?",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ed180a_17806f61",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-29T23:03:59Z",
+      "side": 1,
+      "message": "Please remove the commented lines.",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
