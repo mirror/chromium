@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "768b1836_ad2bb729",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-29T04:51:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4db0863_564ff0f1",
+      "range": {
+        "startLine": 245,
+        "startChar": 63,
+        "endLine": 245,
+        "endChar": 70
+      },
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c0dd8a9_bf5319d0",
         "filename": "chrome/browser/android/vr_shell/vr_shell.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3f8285a6_7296c579",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-29T04:51:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c0dd8a9_bf5319d0",
+      "range": {
+        "startLine": 247,
+        "startChar": 5,
+        "endLine": 247,
+        "endChar": 12
+      },
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f4327a_560add3f",
         "filename": "content/browser/android/motion_event_synthesizer_impl.cc",
         "patchSetId": 6
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "26869248_e3341286",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-29T04:51:07Z",
+      "side": 1,
+      "message": "That will work, but your concern applies to |view-\u003eGetContainerView()| below too, and it\u0027s not clear if it can be replaced with something else. As you said this class doesn\u0027t keep a reference to it, so there won\u0027t be a side effect on who owns who. Added a comment here on the caution to use. Please see if it helps address your concern.",
+      "parentUuid": "b0f4327a_560add3f",
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe61e84c_4de7967d",
         "filename": "content/browser/android/motion_event_synthesizer_impl.h",
         "patchSetId": 6
@@ -76,6 +142,24 @@
       "writtenOn": "2017-06-28T21:47:05Z",
       "side": 1,
       "message": "this is a problem. afaict, nothing has a strong ref to the java object, so it could get gc-ed at any point\n\nI don\u0027t really know what the right fix is, because I don\u0027t know what this is used for. So what is this used for? By devtools sending events? What does VR use this for?",
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f950e022_6b58f5ca",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-29T04:51:07Z",
+      "side": 1,
+      "message": "mthiesse@ will know better but scaning through the code tells me it is used to transform VR user actions to various input events and inject them.\n\nIf it is not used by webview (looks like it isn\u0027t. vrshell is not webview - does devtools get activated on webview?), maybe we could hold a strong reference.",
+      "parentUuid": "fe61e84c_4de7967d",
       "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
