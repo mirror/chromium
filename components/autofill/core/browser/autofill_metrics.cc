@@ -1353,6 +1353,17 @@ void AutofillMetrics::FormInteractionsUkmLogger::UpdateSourceURL(
     ukm_recorder_->UpdateSourceURL(source_id_, url_);
 }
 
+base::TimeTicks
+AutofillMetrics::FormInteractionsUkmLogger::GetFormParseTimeStamp() {
+  return form_parsed_timestamp_;
+}
+
+void AutofillMetrics::FormInteractionsUkmLogger::SetFormParseTimeStamp(
+    const base::TimeTicks& form_parsed_timestamp) {
+  DCHECK(!form_parsed_timestamp.is_null());
+  form_parsed_timestamp_ = form_parsed_timestamp;
+}
+
 bool AutofillMetrics::FormInteractionsUkmLogger::CanLog() const {
   return ukm_recorder_ && url_.is_valid();
 }
