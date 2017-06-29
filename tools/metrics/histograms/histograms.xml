@@ -80504,6 +80504,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="UpdateClient.BackgroundDownloaderJobs" units="jobs">
+  <owner>sorin@chromium.org</owner>
+  <summary>
+    The number of download jobs found in the Windows BITS queue. This value is
+    expected to be one in most cases, or another small number most of the time.
+    Large values indicate a problem with the job creation or clean up code.
+    The metric is recorded after a new BITS job is created and inserted
+    into BITS queue.
+  </summary>
+</histogram>
+
 <histogram name="UpdateEngine.Attempt.ConnectionType"
     enum="UpdateEngineConnectionType">
   <owner>zeuthen@chromium.org</owner>
