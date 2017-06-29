@@ -132,6 +132,9 @@ class ClientSessionTest : public testing::Test {
   // ownership of the HostExtensions themselves.
   std::vector<HostExtension*> extensions_;
 
+  std::vector<protocol::DataChannelManager::PrefixAndCallback>
+      data_channel_callbacks_;
+
   // ClientSession instance under test.
   std::unique_ptr<ClientSession> client_session_;
 
@@ -180,11 +183,11 @@ void ClientSessionTest::CreateClientSession(
   connection->set_client_stub(&client_stub_);
   connection_ = connection.get();
 
-  client_session_.reset(
-      new ClientSession(&session_event_handler_, std::move(connection),
-                        desktop_environment_factory_.get(),
-                        DesktopEnvironmentOptions::CreateDefault(),
-                        base::TimeDelta(), nullptr, extensions_));
+  client_session_.reset(new ClientSession(
+      &session_event_handler_, std::move(connection),
+      desktop_environment_factory_.get(),
+      DesktopEnvironmentOptions::CreateDefault(), base::TimeDelta(), nullptr,
+      extensions_, data_channel_callbacks_));
 }
 
 void ClientSessionTest::CreateClientSession() {

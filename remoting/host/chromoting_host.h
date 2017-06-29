@@ -178,6 +178,9 @@ class ChromotingHost : public ClientSession::EventHandler,
   // List of host extensions.
   std::vector<std::unique_ptr<HostExtension>> extensions_;
 
+  std::vector<protocol::DataChannelManager::PrefixAndCallback>
+      data_channel_callbacks_;
+
   SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<ChromotingHost> weak_factory_;

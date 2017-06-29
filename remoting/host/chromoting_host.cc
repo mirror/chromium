@@ -263,7 +263,7 @@ void ChromotingHost::OnIncomingSession(
   clients_.push_back(base::MakeUnique<ClientSession>(
       this, std::move(connection), desktop_environment_factory_,
       desktop_environment_options_, max_session_duration_, pairing_registry_,
-      extension_ptrs));
+      extension_ptrs, data_channel_callbacks_));
 }
 
 }  // namespace remoting

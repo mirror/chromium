@@ -24,6 +24,8 @@ class DataChannelManager final {
       const std::string& name,
       std::unique_ptr<MessagePipe> pipe)>;
 
+  using PrefixAndCallback = std::pair<std::string, CreateHandlerCallback>;
+
   DataChannelManager();
   ~DataChannelManager();
 
@@ -38,7 +40,7 @@ class DataChannelManager final {
                              std::unique_ptr<MessagePipe> pipe);
 
  private:
-  std::vector<std::pair<std::string, CreateHandlerCallback>> constructors_;
+  std::vector<PrefixAndCallback> constructors_;
 };
 
 }  // namespace protocol

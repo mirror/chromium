@@ -19,12 +19,13 @@ namespace remoting {
 
 namespace protocol {
 
-class AudioStream;
 class AudioSource;
+class AudioStream;
 class ClientStub;
 class ClipboardStub;
 class HostStub;
 class InputStub;
+class MessagePipe;
 class Session;
 class VideoStream;
 
@@ -55,6 +56,10 @@ class ConnectionToClient {
     // channel is connected.
     virtual void OnRouteChange(const std::string& channel_name,
                                const TransportRoute& route) = 0;
+
+    // Called when a new Data Channel has been created by the client.
+    virtual void OnIncomingDataChannel(const std::string& channel_name,
+                                       std::unique_ptr<MessagePipe> pipe) = 0;
 
    protected:
     virtual ~EventHandler() {}
