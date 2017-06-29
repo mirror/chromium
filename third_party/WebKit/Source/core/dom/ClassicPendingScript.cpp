@@ -102,8 +102,7 @@ static bool CheckScriptResourceIntegrity(Resource* resource,
       return false;
 
     case ResourceIntegrityDisposition::kNotChecked: {
-      if (!resource->ResourceBuffer())
-        return true;
+      CHECK(resource->ResourceBuffer());
 
       bool passed = SubresourceIntegrity::CheckSubresourceIntegrity(
           script_resource->IntegrityMetadata(), element->GetDocument(),
