@@ -1,0 +1,300 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30393dc9_29c31018",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "nit: Add ~\"|browser| must be ready to show the bubble.\"",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e267e0d3_e55f799e",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "did you try deleting this?\n\nmy theory is that pulling that thread will just end up at a call site that can do ShowFirstRunBubble(Browser*)",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ce4ed2_98025d45",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "This logic should move to first_run_bubble_controller.mm",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4766bb98_0a2a4665",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "Note this |field_| might be contorting things / making the problem harder than it needs to be. showForView calls initWithWindowNibPath:relativeToView:, but that\u0027s just a wrapper around initWithWindowNibPath:parentWindow:\n\ni.e. the NSView* isn\u0027t needed for anchoring - it\u0027s just used for converting coordinates. It would be simpler to just use window coordinates like all the other cocoa bubbles. Then we can use the same PageInfoBubbleAnchorPoint() as permissions bubbles.",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b4cc7f_8d6b3455",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "these two lines should be in the destructor. OnTemplateURLServiceShuttingDown() should also `delete this`",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71463046_d3513395",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "nit: forward declare",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9feb5bb7_28dd2122",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "Can we just pass a Browser* in here? Then\n\n - Use browser-\u003eprofile() to subscribe to TemplateUrlService\n - Also subscribe to OnTemplateURLServiceShuttingDown() in case the presenter outlives it\n - save browser-\u003esession_id() to a data member\n\nThen, instead of a callback, just use\n\nchrome::FindBrowserWithID(session_id) to get back a Browser* \n\nIf it\u0027s not null (i.e. window closed before the template url service responds?), then show the dialog on it. i.e. ShowFirstRunBubble(browser);\n\nThen we don\u0027t need weak_ptrs and more can be consolidated in FirstRunBubblePresenter",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9898dc3d_e87d01e7",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "nit: explicit not needed",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b909497_9440de47",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "nit: disallow_Copy_and_Assign, #include base/macros.h",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98af96ca_5b78059d",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "can we exclude this file in .gn instead?",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c754b05e_6d7b4706",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "nit: the closing namespace comments aren\u0027t typically used for forward declares",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc3e541_88808ac0",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "I actually thought about suggesting something like this, but hesitated... I think there are currently 4 \"standard\" browser anchors that have bubbles -- page info, app menu, home button, bookmark star. When harmony is default, bookmark star can do a lot more, but for now we need individual content settings icons. We also need individual anchors for extension icons.\n\nSo, because there are a lot of anchors that can\u0027t be represented in an enum (like extensions), I was wary of defining an API like this, since it couldn\u0027t meet all the anchoring requirements. I\u0027m still unsure :/. Maybe it\u0027s OK.",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419c447e_823654bd",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "DISALLOW_IMPLICIT_CONSTRUCTORS\n\nbut also the style guide discourages interfaces like this - https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Nonmember,_Static_Member,_and_Global_Functions",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2e256f_b4dd2710",
+        "filename": "chrome/browser/ui/views/first_run_bubble_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "can we avoid renaming this file? It confuses gerrit :/. But also I don\u0027t think we need two files. The things in FirstRunBubble can just be defined in here I think (hopefully my comments in browser_dialogs.h cover the other cases where it may have been useful to split)",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca245cbc_daef3ff7",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "none of this is doing anything useful - I think the presenter can obtain a Browser* and jump straight to the last line of this method. ShowFirstRunBubbleInternal() can be deleted.",
+      "range": {
+        "startLine": 802,
+        "startChar": 0,
+        "endLine": 810,
+        "endChar": 14
+      },
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48dd009_51b4abfd",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure that deleting this, and following the compile errors will get to a point where something has a Browser* and can call FirstRunBubblePresenter::PresentWhenReady(browser)",
+      "revId": "75a04b5f34ff7d4e8d61face822d20d92288877a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

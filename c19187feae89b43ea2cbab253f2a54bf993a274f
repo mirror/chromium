@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2c1d3a07_a9d72200",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T11:33:15Z",
+      "side": 1,
+      "message": "I think we can just drop that magnifying-glass alignment and resolve that bug by picking the more generic alignment that also works for the padlock icon in the corner case where it comes up.",
+      "parentUuid": "fb81c38e_bd4d32e2",
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ab39206_3988ad28",
         "filename": "chrome/browser/ui/views/first_run_bubble.h",
         "patchSetId": 3
