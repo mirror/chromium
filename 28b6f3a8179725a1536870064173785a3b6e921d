@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "80ab75d8_330c0a2d",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-06-29T23:13:04Z",
+      "side": 1,
+      "message": "s/Parse/Parsed ?",
+      "range": {
+        "startLine": 1469,
+        "startChar": 51,
+        "endLine": 1469,
+        "endChar": 56
+      },
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf9ae3f7_7afff6e8",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 12
@@ -35,6 +58,29 @@
         "startChar": 10,
         "endLine": 763,
         "endChar": 19
+      },
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91f8e77_004629eb",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3120,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-06-29T23:13:04Z",
+      "side": 1,
+      "message": "Should there be some sort of \"autofill_manager_-\u003eReset()\" here to simulate that it\u0027s actually reset but the cached data should still work?  Otherwise I figure it\u0027s a toss-up if -\u003eReset() is actually called fast enough or not...\n\n(Ditto below I guess)",
+      "range": {
+        "startLine": 3120,
+        "startChar": 36,
+        "endLine": 3120,
+        "endChar": 0
       },
       "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
