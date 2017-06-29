@@ -34,6 +34,23 @@
       "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ba9d46_02e84562",
+        "filename": "extensions/shell/test/shell_tests_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-29T21:22:53Z",
+      "side": 1,
+      "message": "Why /2 here?  Also, it looks like this is pretty similar to logic used in other test suites - can we combine them somewhere?",
+      "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
