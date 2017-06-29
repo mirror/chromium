@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5a721c4_80fbac60",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-29T23:34:10Z",
+      "side": 1,
+      "message": "ClosePage sends an IPC to call the unload handler on the page, then closes the WebContents.\n\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_view_host_impl.cc?rcl\u003ddda3acb809c43e2d633c335778ff4a1522927e59\u0026l\u003d565\n\nIn the other cases I think it\u0027s assumed the page is already unloaded?  Maybe the lifecycle assumptions for the offscreen WebContents should be looked at again, it seems there are different tear-down paths here.",
+      "parentUuid": "5afc847c_63054cbe",
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b173295a_e39863c4",
         "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7eca3f68_c091bf37",
+        "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-29T23:34:10Z",
+      "side": 1,
+      "message": "I need to check the state of the media stream tracks after the following async events:\n\n1. page loads\n2. tab capture begins\n3. page attempts to navigate\n4. page is closed\n5. tracks are ended\n\nMy assumption is that these can complete in 3000 ms...",
+      "parentUuid": "b173295a_e39863c4",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1584906e_58bd6672",
         "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-21T03:52:44Z",
       "side": 1,
       "message": "I think you meant \"check\" and not \"check()\" here (i.e., you want the reference to the function, not the result of calling the function).",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c49dba_bb7a9cd3",
+        "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-29T23:34:10Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "1584906e_58bd6672",
       "range": {
         "startLine": 41,
         "startChar": 4,
