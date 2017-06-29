@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6fd737d5_664b1dbd",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-29T03:56:32Z",
+      "side": 1,
+      "message": "Doesn\u0027t appear to have uploaded to the CL.",
+      "parentUuid": "0e833f74_23d77c61",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "905a32c8_72737e74",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-to-registered-animating.html",
         "patchSetId": 12
@@ -457,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "70dc3307_bb45c292",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-29T03:56:32Z",
+      "side": 1,
+      "message": "Ack, did not recognise that this was a completely internal helper.",
+      "parentUuid": "a01b8d8d_fba55363",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e4084c2_353bffa8",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 12
@@ -489,6 +525,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf4a539_e35554bc",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-29T03:56:32Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "c87f899a_30a52866",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -559,6 +613,24 @@
       "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9bb346_b7802019",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-29T03:56:32Z",
+      "side": 1,
+      "message": "I guess I was taken aback by there being ApplyAnimatedCustomProperties, 2x ApplyAnimatedCustomProperty (one public, one private) and 2x ApplyAnimatedStandardProperties, and then went ahead and read all the function names and felt confused/overwhelmed.\n\nReordering might be one option, and another might be using helper functions in the cpp file rather than extra functions on the StyleResolver class itself.\n\nI won\u0027t block this patch on it.",
+      "parentUuid": "d864adb8_e7e5aad9",
+      "revId": "1800c72a2b73cf90083a11c632f5905573af8ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
