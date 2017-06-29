@@ -4,7 +4,7 @@
 
 // NOTE:
 // Since this file includes Chromium headers, it must not include
-// third_party/webrtc/base/logging.h since it defines some of the same macros as
+// third_party/webrtc/rtc_base/logging.h since it defines some of the same macros as
 // Chromium does and we'll run into conflicts.
 
 #if defined(WEBRTC_MAC) && !defined(WEBRTC_IOS)
@@ -18,12 +18,12 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "base/threading/platform_thread.h"
-#include "third_party/webrtc/base/stringencode.h"
-#include "third_party/webrtc/base/stringutils.h"
+#include "third_party/webrtc/rtc_base/stringencode.h"
+#include "third_party/webrtc/rtc_base/stringutils.h"
 
 // This needs to be included after base/logging.h.
-#include "third_party/webrtc_overrides/webrtc/base/diagnostic_logging.h"
-#include "third_party/webrtc_overrides/webrtc/base/logging.h"
+#include "third_party/webrtc_overrides/webrtc/rtc_base/diagnostic_logging.h"
+#include "third_party/webrtc_overrides/webrtc/rtc_base/logging.h"
 
 #if defined(WEBRTC_MAC)
 #include "base/mac/mac_logging.h"
