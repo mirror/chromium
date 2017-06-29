@@ -1,0 +1,273 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "640e0240_ae58ab9a",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "typo: annotation",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1667d1f_aceea877",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "Please add a short comment above explaining the purpose of this class.",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d605675_51a663e7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "Should this be \\n ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 51,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8552a8_21476d97",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "Can we avoid the duplication?\n\npublic:\n  AddError() { AddMessage() }\n  AddWarning() { AddMessage() }\n\nprivate:\n  AddMessage() { ... }",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5a38f5_9afb0b9d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "Could we add the space here (between the colon and %s) instead of at the beginning of the string in AddError()?",
+      "range": {
+        "startLine": 151,
+        "startChar": 48,
+        "endLine": 151,
+        "endChar": 49
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83d9cb9_c3cd13dc",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "What is this for?",
+      "range": {
+        "startLine": 192,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 56
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c761b9a_47925271",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "Despite this code being temporary, please explain this logic in the comment.",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 60
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8edf921c_e2b15b44",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "nit: Can you add one empty line above here? Otherwise it reads like one if/else block.",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8667bd42_be509953",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "typo: its (possessive pronoun)",
+      "range": {
+        "startLine": 51,
+        "startChar": 66,
+        "endLine": 51,
+        "endChar": 70
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904516ab_9df6438d",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "style: break\n\nAB and \\\nCD\n\nor (my preference)\n\n(AB and\n CD):\n\ninstead of\n\nAB and C\nD",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6b386b_593530ce",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "How about\n\nlimit: int (0 for unlimited, default is 5)",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 21
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139d95f7_bdbf2a7d",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "Technically, we could add this on all platforms, no?\n\n\"#!/usr/bin/env python\" means that OS knows to execute this as a python, I wonder if explicitly starting \"python\" wouldn\u0027t even be slightly faster.\n\nAnd we don\u0027t have to deal with win32/win64 etc.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 31
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd83399_4394c8a5",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-29T13:45:23Z",
+      "side": 1,
+      "message": "style: offset",
+      "range": {
+        "startLine": 130,
+        "startChar": 30,
+        "endLine": 130,
+        "endChar": 53
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
