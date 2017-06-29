@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c0a1c4c_8ad8dd8c",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-29T08:31:24Z",
+      "side": 1,
+      "message": "// Moves tracking_day_midnight_ to the midnight that starts the current day if necessary and updates the usage counters accordingly.\n// Returns \u0027true\u0027 ...",
+      "revId": "543fe7c82df4957b00ba4ac339a990291e6708fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ef9479_70e6eabb",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-29T08:31:24Z",
+      "side": 1,
+      "message": "opt: Should these two be regular instances instead of pointers?",
+      "revId": "543fe7c82df4957b00ba4ac339a990291e6708fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c9801a_667e3edc",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-29T08:31:24Z",
+      "side": 1,
+      "message": "\"in Chrome during the day that started at |kOfflineUsageTrackingDay|\"?",
+      "revId": "543fe7c82df4957b00ba4ac339a990291e6708fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
