@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6751d51_2b33f717",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T12:24:57Z",
+      "side": 1,
+      "message": "I could break this initializer in properties set on the context if preferred.",
+      "revId": "6ab56b0093792342ac89312a1710c4b0de5aa98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b946d1_e496f219",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T12:24:57Z",
+      "side": 1,
+      "message": "In containment cases, I think it would be weird to completely delegate to a coordinator (or coordinator layer object), wouldn\u0027t it? Should we still keep the delegation, even though the container view controller might always be the delegate?",
+      "revId": "6ab56b0093792342ac89312a1710c4b0de5aa98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
