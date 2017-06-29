@@ -22,7 +22,7 @@ class CC_PAINT_EXPORT SolidColorAnalyzer {
   static base::Optional<SkColor> DetermineIfSolidColor(
       const PaintOpBuffer* buffer,
       const gfx::Rect& rect,
-      const std::vector<size_t>* indices = nullptr);
+      const std::vector<size_t>* offsets = nullptr);
 };
 
 }  // namespace cc
