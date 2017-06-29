@@ -204,13 +204,13 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
     }
 
     @Override
-    public void pdfWritingDone(boolean success) {
+    public void pdfWritingDone(boolean success, int pageCount) {
         if (mPrintingState == PRINTING_STATE_FINISHED) return;
         mPrintingState = PRINTING_STATE_READY;
         closeFileDescriptor(mFileDescriptor);
         mFileDescriptor = -1;
         if (success) {
-            PageRange[] pageRanges = convertIntegerArrayToPageRanges(mPages);
+            PageRange[] pageRanges = convertIntegerArrayToPageRanges(mPages, pageCount);
             mOnWriteCallback.onWriteFinished(pageRanges);
         } else {
             mOnWriteCallback.onWriteFailed(mErrorMessage);
@@ -328,7 +328,7 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
         }
     }
 
-    private static PageRange[] convertIntegerArrayToPageRanges(int[] pagesArray) {
+    private static PageRange[] convertIntegerArrayToPageRanges(int[] pagesArray, int pageCount) {
         PageRange[] pageRanges;
         if (pagesArray != null) {
             pageRanges = new PageRange[pagesArray.length];
@@ -336,9 +336,8 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
                 int page = pagesArray[i];
                 pageRanges[i] = new PageRange(page, page);
             }
-        } else {
-            // null corresponds to all pages in Chromium printing logic.
-            pageRanges = new PageRange[] { PageRange.ALL_PAGES };
+        } else { // null corresponds to all pages in Chromium printing logic.
+            pageRanges = new PageRange[] {new PageRange(0, pageCount - 1)};
         }
         return pageRanges;
     }

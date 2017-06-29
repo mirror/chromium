@@ -67,9 +67,11 @@ std::unique_ptr<PrintingContext> PrintingContext::Create(Delegate* delegate) {
 }
 
 // static
-void PrintingContextAndroid::PdfWritingDone(int fd, bool success) {
+void PrintingContextAndroid::PdfWritingDone(bool success,
+                                            int fd,
+                                            int page_count) {
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_PrintingContext_pdfWritingDone(env, fd, success);
+  Java_PrintingContext_pdfWritingDone(env, success, fd, page_count);
 }
 
 PrintingContextAndroid::PrintingContextAndroid(Delegate* delegate)
