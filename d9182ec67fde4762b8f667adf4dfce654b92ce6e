@@ -22,6 +22,30 @@
       "revId": "d9182ec67fde4762b8f667adf4dfce654b92ce6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2bf01c_2fee29e8",
+        "filename": "ios/build/bots/tests/ui_tests.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-06-29T07:55:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed326e43_eee5836d",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "d9182ec67fde4762b8f667adf4dfce654b92ce6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
