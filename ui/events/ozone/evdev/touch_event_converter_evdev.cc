@@ -154,6 +154,24 @@ void TouchEventConverterEvdev::Initialize(const EventDeviceInfo& info) {
     current_slot_ = 0;
   }
 
+  // Wacom devices (0x2d1f) report at an inconsistent rate, which causes
+  // the pen speed to be very unstable.
+  // We cannot fix the location to match the timestamp without either adding
+  // latency or extrapolating. But we can smooth the timestamps to be
+  // consistent with locations.
+  // Note: While this might add 'latency' in measurements that use the timestamp
+  // as a reference, it will not actually add latency for the user.
+  if (info.vendor_id() == 0x2d1f) {
+    uint16_t pid = info.product_id();
+    if (pid == 0x0163) {
+      // Kevin / Caroline: Every other event is delayed due to tilt scan.
+      quirk_timestamp_smoothing_distance_ = 2;
+    } else if (pid == 0x5134) {
+      // Eve: Every 4th event is delayed due to touch scan.
+      quirk_timestamp_smoothing_distance_ = 4;
+    }
+  }
+
   quirk_left_mouse_button_ =
       !has_mt_ && !info.HasKeyEvent(BTN_TOUCH) && info.HasKeyEvent(BTN_LEFT);
 
@@ -441,6 +459,38 @@ void TouchEventConverterEvdev::ProcessAbs(const input_event& input) {
   events_[current_slot_].altered = true;
 }
 
+base::TimeTicks TouchEventConverterEvdev::ApplyTimestampSmoothingQuirk(
+    base::TimeTicks timestamp) {
+  // Clear history when there was a jump in time.
+  if (quirk_previous_timestamps_.size() > 0 &&
+      (timestamp - quirk_previous_timestamps_[0]).InMilliseconds() > 12) {
+    quirk_previous_timestamps_.clear();
+  }
+
+  quirk_previous_timestamps_.push_front(timestamp);
+  while (quirk_previous_timestamps_.size() >
+         quirk_timestamp_smoothing_distance_) {
+    quirk_previous_timestamps_.pop_back();
+  }
+
+  if (quirk_previous_timestamps_.size() < 2) {
+    return timestamp;
+  }
+
+  // Calculate timestamp rolling average.
+  // We do all calculation with TimeDeltas relative to the latest timestamp
+  // to prevent overflows.
+  base::TimeTicks base = quirk_previous_timestamps_[0];
+  base::TimeDelta delta_accum;
+  for (int i = 1; i < quirk_previous_timestamps_.size(); ++i) {
+    base::TimeDelta delta = base - quirk_previous_timestamps_[i];
+    delta_accum += delta;
+  }
+  auto mean_delta = delta_accum / quirk_previous_timestamps_.size();
+  auto mean_timestamp = base - mean_delta;
+  return mean_timestamp;
+}
+
 void TouchEventConverterEvdev::ProcessSyn(const input_event& input) {
   switch (input.code) {
     case SYN_REPORT:
@@ -494,6 +544,11 @@ void TouchEventConverterEvdev::ReportTouchEvent(
   ui::PointerDetails details(event.reported_tool_type, /* pointer_id*/ 0,
                              event.radius_x, event.radius_y, event.pressure,
                              event.tilt_x, event.tilt_y);
+
+  if (quirk_timestamp_smoothing_distance_ > 0) {
+    timestamp = ApplyTimestampSmoothingQuirk(timestamp);
+  }
+
   dispatcher_->DispatchTouchEvent(
       TouchEventParams(input_device_.id, event.slot, event_type,
                        gfx::PointF(event.x, event.y), details, timestamp));

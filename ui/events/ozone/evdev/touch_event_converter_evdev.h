@@ -72,6 +72,8 @@ class EVENTS_OZONE_EVDEV_EXPORT TouchEventConverterEvdev
   void ProcessAbs(const input_event& input);
   void ProcessSyn(const input_event& input);
 
+  base::TimeTicks ApplyTimestampSmoothingQuirk(base::TimeTicks timestamp);
+
   // Returns an EventType to dispatch for |touch|. Returns ET_UNKNOWN if an
   // event should not be dispatched.
   EventType GetEventTypeForTouch(const InProgressTouchEvdev& touch);
@@ -107,6 +109,10 @@ class EVENTS_OZONE_EVDEV_EXPORT TouchEventConverterEvdev
 
   // Use BTN_LEFT instead of BT_TOUCH.
   bool quirk_left_mouse_button_ = false;
+
+  // Smooth timestamps to be more consistent.
+  size_t quirk_timestamp_smoothing_distance_ = 0;
+  std::deque<base::TimeTicks> quirk_previous_timestamps_;
 
   // Pressure values.
   int pressure_min_;
