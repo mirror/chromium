@@ -16,6 +16,24 @@
       "revId": "a268ff157ae98b81e98d60331761f0daeeee172b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97262924_b013d5b1",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T08:48:04Z",
+      "side": 1,
+      "message": "I don\u0027t want to introduce any involuntary effect on the other panels.\nI kept the same behavior for iPad.",
+      "parentUuid": "342dd76a_7083de5e",
+      "revId": "a268ff157ae98b81e98d60331761f0daeeee172b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
