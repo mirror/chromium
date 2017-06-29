@@ -84,6 +84,9 @@ class CORE_EXPORT ScriptLoader : public PendingScriptClient,
   // FetchClassicScript()/FetchModuleScriptTree().
   PendingScript* CreatePendingScript();
 
+  // https://html.spec.whatwg.org/#execute-the-script-block
+  void ExecuteScriptBlock(PendingScript*, const KURL&);
+
   enum class ExecuteScriptResult {
     kShouldFireErrorEvent,
     kShouldFireLoadEvent,
