@@ -16,6 +16,24 @@
       "revId": "8a5c52b4a4849567c21646bf006d107254d59355",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d06f05_298d6789",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-29T01:02:13Z",
+      "side": 1,
+      "message": "as per offline discussion, there is a specialization here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/instrumentation/tracing/TraceEvent.h?type\u003dcs\u0026q\u003dSetTraceValue+cstring\u0026l\u003d15\n\nWhich does the copy. This only happens when tracing is enabled.",
+      "parentUuid": "e27882e5_e7dcd7cf",
+      "revId": "8a5c52b4a4849567c21646bf006d107254d59355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
