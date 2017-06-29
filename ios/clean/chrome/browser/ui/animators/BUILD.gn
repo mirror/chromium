@@ -4,6 +4,8 @@
 
 source_set("animators") {
   sources = [
+    "appear_from_above_animator.h",
+    "appear_from_above_animator.mm",
     "zoom_transition_animator.h",
     "zoom_transition_animator.mm",
     "zoom_transition_controller.h",
@@ -15,5 +17,19 @@ source_set("animators") {
 
   deps = [
     "//base",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+
+  sources = [
+    "appear_from_above_animator_unittest.mm",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+
+  deps = [
+    ":animators",
   ]
 }
