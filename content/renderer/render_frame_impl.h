@@ -669,6 +669,12 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebSecurityOrigin& security_origin,
       blink::WebSetSinkIdCallbacks* web_callbacks) override;
   blink::WebPageVisibilityState VisibilityState() const override;
+  blink::WebURL OverridePDFEmbedWithHTML(
+      const blink::WebURL& url,
+      const blink::WebString& orig_mime_type) override;
+  v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame) override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;

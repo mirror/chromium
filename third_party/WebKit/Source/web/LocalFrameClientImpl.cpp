@@ -1028,6 +1028,12 @@ KURL LocalFrameClientImpl::OverrideFlashEmbedWithHTML(const KURL& url) {
   return web_frame_->Client()->OverrideFlashEmbedWithHTML(WebURL(url));
 }
 
+KURL LocalFrameClientImpl::OverridePDFEmbedWithHTML(const KURL& url,
+                                                    const String& mime_type) {
+  return web_frame_->Client()->OverridePDFEmbedWithHTML(WebURL(url),
+                                                        WebString(mime_type));
+}
+
 void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
   // The client potentially needs to dispatch the event to other processes only
   // for the first time.
@@ -1074,6 +1080,13 @@ LocalFrameClientImpl::GetInterfaceProvider() {
 
 void LocalFrameClientImpl::AnnotatedRegionsChanged() {
   web_frame_->Client()->DraggableRegionsChanged();
+}
+
+v8::Local<v8::Object> LocalFrameClientImpl::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    Frame& frame) {
+  return web_frame_->Client()->GetV8ScriptableObjectForPluginFrame(
+      isolate, WebFrame::FromFrame(&frame));
 }
 
 }  // namespace blink
