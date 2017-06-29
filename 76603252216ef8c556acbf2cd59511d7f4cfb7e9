@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7f6e651_17fbfdba",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-06-29T09:19:46Z",
+      "side": 1,
+      "message": "Please add a WARNING comment here telling that adding new / removing values should be accompanied by reconsidering the UrlRule.element_types default value.",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320db3a4_51068093",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-06-29T09:19:46Z",
+      "side": 1,
+      "message": "nit: Please change this to something like \"Equals ElementType_ANY by default for compactness.\" and remove the newline above.",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c06b8b_d2484030",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-06-29T09:19:46Z",
+      "side": 1,
+      "message": "nit: Can you please merge this sentence to the paragraph above by removing the new line?",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48708a4_84fe1492",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-06-29T09:19:46Z",
+      "side": 1,
+      "message": "Semantically, the arrays can be empty, but in this case should be represented by null. Can you please make it cleaner? E.g.:\n\n// ... Should either be null or have at least 1 element.",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e446458_0d32a16d",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-06-29T09:19:46Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be public? Otherwise, the whole change seems a no-op.",
+      "revId": "76603252216ef8c556acbf2cd59511d7f4cfb7e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
