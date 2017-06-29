@@ -34,6 +34,24 @@
       "revId": "170c9de86205851c07c50cd6ab224eca618d5a90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffbf1b82_e8583cbc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-29T20:20:48Z",
+      "side": 1,
+      "message": "Thanks :)\n\nThere was a successful import in between which included the flexbox change: https://chromium-review.googlesource.com/c/550421/",
+      "parentUuid": "f5a0aef6_4bee7a1f",
+      "revId": "170c9de86205851c07c50cd6ab224eca618d5a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
