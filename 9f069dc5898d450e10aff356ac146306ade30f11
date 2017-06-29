@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933d9f0c_2896d01a",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "Nit: refer to a bug rather than a person here:\n\nTODO(crbug.com/XXXXXX): call the promo",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 10
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d97c56_8a0e0cd1",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "This boolean check looks wrong - won\u0027t it always return false since prefs::kNewTabInProductHelp is a const char *?",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 12
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84bb2ad6_af66b907",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "~75% of desktop sessions are \u003c 300 seconds long (see the Session.TotalDuration). That means this will hit prefs once every ~5 mins. That seems okay to me but I thought I\u0027d mention it in case others had thoughts about hitting prefs relatively often.",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b936ddc1_d40a304b",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "Nit: move this definition to the cc file for consistency.",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce637443_92ed07af",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "This comment isn\u0027t accurate: the tracker is a global and not owned by this class.",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 10
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cfc75a_3d8dc0b2",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "Use std::unique_ptr. That will automatically be deleted when it goes out of scope (so you don\u0027t need to manually delete).\n\n#include \"base/memory/ptr_util.h\"\n\n\nauto instance \u003d base::MakeUnique\u003cMockNewTabFeatureEngagementTracker\u003e(profile);\ninstance-\u003eNotifyNewTabOpened();",
+      "range": {
+        "startLine": 90,
+        "startChar": 38,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d6d36a_c410b7cb",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "std::unique_ptr",
+      "range": {
+        "startLine": 107,
+        "startChar": 38,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59f44fb_be78dd0f",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "std::unique_ptr",
+      "range": {
+        "startLine": 129,
+        "startChar": 38,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e000be6_583b17ed",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-29T01:44:50Z",
+      "side": 1,
+      "message": "Perhaps it would be useful to have a test that manually calls OnSessionEnded(delta) to check that the preferences are written correctly?",
+      "range": {
+        "startLine": 142,
+        "startChar": 1,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
