@@ -200,6 +200,7 @@ ios_framework_bundle("cronet_web_view_combined") {
     "//build/config/compiler:symbols",
     "//build/config/compiler:enable_arc",
   ]
+  defines = [ "CRONET_CWV_COMBINED=1" ]
 }
 
 test("ios_web_view_unittests") {
