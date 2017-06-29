@@ -16,6 +16,13 @@
 #endif
 
 #if defined(OS_POSIX)
+
+#if defined(OS_MACOSX)
+#include <sys/event.h>
+
+#include "base/files/scoped_file.h"
+#endif
+
 #include <list>
 #include <utility>
 #include "base/memory/ref_counted.h"
@@ -154,6 +161,10 @@ class BASE_EXPORT WaitableEvent {
 
 #if defined(OS_WIN)
   win::ScopedHandle handle_;
+#elif defined(OS_MACOSX)
+  base::ScopedFD kqueue_;
+
+  kevent64_s MakeEvent(uint16_t flags, uint32_t fflags);
 #else
   // On Windows, you must not close a HANDLE which is currently being waited on.
   // The MSDN documentation says that the resulting behaviour is 'undefined'.
