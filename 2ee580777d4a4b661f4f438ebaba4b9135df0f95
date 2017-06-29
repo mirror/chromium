@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5693d613_cbfb9832",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-29T00:43:01Z",
+      "side": 1,
+      "message": "Sorry, I said that ios/net could be used for sharing net code between ios/web_view and cronet, but this does not look like net code at all. I think it\u0027s fine to place this code to ios/web/public/app.",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdc4856_4b64fd4b",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-29T00:43:01Z",
+      "side": 1,
+      "message": "s/onceToken/once_token",
+      "range": {
+        "startLine": 45,
+        "startChar": 25,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdec4ff3_631dde1f",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-29T00:43:01Z",
+      "side": 1,
+      "message": "This looks like a layering violation to me. ios/net or ios/web should not know anything about cronet. Is there a way to configure Create param via GN?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e30f70d_59249176",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-29T00:43:01Z",
+      "side": 1,
+      "message": "s/onceToken/once_token",
+      "range": {
+        "startLine": 58,
+        "startChar": 25,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
