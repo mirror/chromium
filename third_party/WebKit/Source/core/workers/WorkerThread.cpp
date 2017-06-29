@@ -37,6 +37,7 @@
 #include "core/inspector/WorkerThreadDebugger.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
+#include "core/workers/InstalledScriptsManager.h"
 #include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerClients.h"
@@ -455,9 +456,9 @@ void WorkerThread::InitializeOnWorkerThread(
 
   KURL script_url = startup_data->script_url_;
   String source_code = startup_data->source_code_;
-  WorkerThreadStartMode start_mode = startup_data->start_mode_;
   std::unique_ptr<Vector<char>> cached_meta_data =
       std::move(startup_data->cached_meta_data_);
+  WorkerThreadStartMode start_mode = startup_data->start_mode_;
   V8CacheOptions v8_cache_options =
       startup_data->worker_v8_settings_.v8_cache_options_;
   bool heap_limit_increased_for_debugging =
@@ -511,19 +512,33 @@ void WorkerThread::InitializeOnWorkerThread(
     return;
   }
 
-  if (GlobalScope()->IsWorkerGlobalScope()) {
-    WorkerGlobalScope* worker_global_scope = ToWorkerGlobalScope(GlobalScope());
-    CachedMetadataHandler* handler =
-        worker_global_scope->CreateWorkerScriptCachedMetadataHandler(
-            script_url, cached_meta_data.get());
-    worker_reporting_proxy_.WillEvaluateWorkerScript(
-        source_code.length(),
-        cached_meta_data.get() ? cached_meta_data->size() : 0);
-    bool success = worker_global_scope->ScriptController()->Evaluate(
-        ScriptSourceCode(source_code, script_url), nullptr, handler,
-        v8_cache_options);
-    worker_reporting_proxy_.DidEvaluateWorkerScript(success);
+  if (!GlobalScope()->IsWorkerGlobalScope())
+    return;
+  WorkerGlobalScope* worker_global_scope = ToWorkerGlobalScope(GlobalScope());
+  if (GetInstalledScriptsManager() &&
+      GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
+    // TODO(shimazu): Set ContentSecurityPolicy, ReferrerPolicy and
+    // OriginTrialTokens to |startup_data|.
+    // TODO(shimazu): Add a post task to the main thread for setting
+    // ContentSecurityPolicy and ReferrerPolicy.
+    auto script_data = GetInstalledScriptsManager()->GetScriptData(script_url);
+    DCHECK(script_data);
+    DCHECK(source_code.IsEmpty());
+    DCHECK(!cached_meta_data);
+    source_code = std::move(script_data->source_text);
+    cached_meta_data = std::move(script_data->meta_data);
   }
+
+  CachedMetadataHandler* handler =
+      worker_global_scope->CreateWorkerScriptCachedMetadataHandler(
+          script_url, cached_meta_data.get());
+  worker_reporting_proxy_.WillEvaluateWorkerScript(
+      source_code.length(),
+      cached_meta_data.get() ? cached_meta_data->size() : 0);
+  bool success = worker_global_scope->ScriptController()->Evaluate(
+      ScriptSourceCode(source_code, script_url), nullptr, handler,
+      v8_cache_options);
+  worker_reporting_proxy_.DidEvaluateWorkerScript(success);
 }
 
 void WorkerThread::PrepareForShutdownOnWorkerThread() {
