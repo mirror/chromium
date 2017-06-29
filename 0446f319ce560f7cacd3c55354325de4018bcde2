@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23c084ec_bd8745d3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-29T10:33:05Z",
+      "side": 1,
+      "message": "Didn\u0027t release any",
+      "revId": "0446f319ce560f7cacd3c55354325de4018bcde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
