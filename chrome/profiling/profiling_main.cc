@@ -19,7 +19,11 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/profiling/profiling_globals.h"
 #include "mojo/edk/embedder/embedder.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
+#include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
@@ -73,15 +77,30 @@ base::CommandLine MakeBrowserCommandLine(const base::CommandLine& cmdline,
   return base::CommandLine(browser_argv);
 }
 
-bool LaunchBrowser(const base::CommandLine& our_cmdline,
-                   const std::string& pipe_id) {
+base::Process LaunchBrowser(const base::CommandLine& our_cmdline,
+                            mojo::edk::PlatformChannelPair* channel) {
+  mojo::edk::HandlePassingInformation handle_passing_info;
+  std::string handle_as_string =
+      channel->PrepareToPassClientHandleToChildProcessAsString(
+          &handle_passing_info);
+
   base::CommandLine browser_cmdline =
-      MakeBrowserCommandLine(our_cmdline, pipe_id);
+      MakeBrowserCommandLine(our_cmdline, handle_as_string);
 
+  LOG(ERROR) << "Launching Child: " << browser_cmdline.GetCommandLineString();
   base::LaunchOptions options;
-  base::Process process = base::LaunchProcess(browser_cmdline, options);
-
-  return true;
+#if defined(OS_POSIX)
+  options.fds_to_remap = &handle_passing_info;
+#elif defined(OS_WIN)
+  options.start_hidden = true;
+  if (base::win::GetVersion() >= base::win::VERSION_VISTA)
+    options.handles_to_inherit = &handle_passing_info;
+  else
+    options.inherit_handles = true;
+#else
+#error "Not supported yet."
+#endif
+  return base::LaunchProcess(browser_cmdline, options);
 }
 
 }  // namespace
@@ -94,13 +113,26 @@ int ProfilingMain(const base::CommandLine& cmdline) {
       globals->GetIORunner(),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::CLEAN);
 
-  base::Process process = base::Process::Current();
-  std::string pipe_id = base::IntToString(static_cast<int>(process.Pid()));
+  // This is essentially always an OS pipe (domain socket pair, Windows named
+  // pipe, etc.)
+  mojo::edk::PlatformChannelPair control_channel;
 
-  globals->GetMemlogConnectionManager()->StartConnections(pipe_id);
-
-  if (!LaunchBrowser(cmdline, pipe_id))
+  LOG(ERROR) << "Launching browser";
+  base::Process process = LaunchBrowser(cmdline, &control_channel);
+  if (!process.IsValid())
     return 1;
+
+  LOG(ERROR) << "Launched. Starting connections in profiling process.";
+  mojo::edk::OutgoingBrokerClientInvitation invitation;
+  globals->GetMemlogConnectionManager()->StartConnections(
+      invitation.AttachMessagePipe("profiling_control"));
+  LOG(ERROR) << "Sending the pipe.";
+  invitation.Send(process.Handle(),
+                  mojo::edk::ConnectionParams(
+                      mojo::edk::TransportProtocol::kLegacy,
+                      control_channel.PassServerHandle()));
+
+  control_channel.ChildProcessLaunched();
 
   ProfilingGlobals::Get()->RunMainMessageLoop();
 
