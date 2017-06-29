@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "29cf4e7a_f48368d1",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-06-29T17:37:20Z",
+      "side": 1,
+      "message": "I can assure you that there will be no conflicts with 0x247 as I maintain list of linux input codes. Sent the patch to linux-input yesterday and will get it into my pull request for 4.13 for the upcoming merge window.\n\nWe looked at the existing HID codes and did not find a matching one. The KEY_HELP definitely does not match our use case as it maps to \"AL Integrated Help Center - Launch system wide context-insensitive integrated help center\". The \"context-*in*sensitive\" is what makes it unsuitable.\n\nWe also use KEY_HELP for \"OOC Help - Display the help screen\" or \"System Menu Help - OSC Displays the help menu\" which do not map to our use case either, so a new keycode was allocated.",
+      "parentUuid": "a8e2cd5c_d73d56d6",
+      "range": {
+        "startLine": 536,
+        "startChar": 5,
+        "endLine": 536,
+        "endChar": 8
+      },
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc711b6e_ec041c3e",
         "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
         "patchSetId": 4
