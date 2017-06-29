@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4aa85b5_566b66e9",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T13:01:25Z",
+      "side": 1,
+      "message": "This is an AlertCoordinator factory, so why not call it AlertCoordinatorFactory? Or ContentSuggestionsAlertCoordinatorFactory if ContentSuggestions is important.",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a952693_ab727f05",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T13:01:25Z",
+      "side": 1,
+      "message": "Since the implementation of all methods start by \"if (!item) return;\" maybe you can instead add the check here and mark the parameter as nonull.\n\n  action:^{\n    CollectionViewItem* item \u003d weakItem;\n    if (item) {\n      [weakCommandHandler openNewTabWithSuggestionsItem:item\n                                              incognito:NO];\n    }\n  }\n\nNote that this applies to all other blocks too.",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b0d747_8feb8a5a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T13:01:25Z",
+      "side": 1,
+      "message": "Should we also add \"// TODO(crbug.com/691979): Add metrics.\" here?",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faac5a46_93af99bf",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T13:01:25Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e305ade_25185fe2",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T13:01:25Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce75ba3f_84e84bb6",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter_commands.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T13:01:25Z",
+      "side": 1,
+      "message": "I would call this ContentSuggestionsAlertCommands.",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c13209_b44dc831",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter_commands.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-29T13:01:25Z",
+      "side": 1,
+      "message": "Can you be consistent (in this file at least) and put blank line before all or none of the method in the protocol.",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
