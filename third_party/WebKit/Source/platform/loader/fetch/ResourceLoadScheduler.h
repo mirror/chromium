@@ -5,8 +5,10 @@
 #ifndef ResourceLoadScheduler_h
 #define ResourceLoadScheduler_h
 
+#include "platform/WebFrameScheduler.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/HashSet.h"
@@ -30,7 +32,8 @@ class PLATFORM_EXPORT ResourceLoadSchedulerClient
 // them possibly with additional throttling/scheduling. This also keeps track of
 // in-flight requests that are granted but are not released (by Release()) yet.
 class PLATFORM_EXPORT ResourceLoadScheduler final
-    : public GarbageCollectedFinalized<ResourceLoadScheduler> {
+    : public GarbageCollectedFinalized<ResourceLoadScheduler>,
+      public WebFrameScheduler::Observer {
   WTF_MAKE_NONCOPYABLE(ResourceLoadScheduler);
 
  public:
@@ -50,9 +53,16 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   static constexpr ClientId kInvalidClientId = 0u;
 
-  static ResourceLoadScheduler* Create() { return new ResourceLoadScheduler(); }
+  static ResourceLoadScheduler* Create(FetchContext* context = nullptr) {
+    return new ResourceLoadScheduler(context ? context
+                                             : &FetchContext::NullInstance());
+  }
   ~ResourceLoadScheduler() {}
   DECLARE_TRACE();
+
+  // Stops all operating. Once this method is called, any request should not
+  // be scheduled to run. Maybe called multiple times.
+  void Shutdown();
 
   // Makes a request. ClientId should be set before Run() is invoked so that
   // caller can call Release() with the assigned ClientId correctly even if
@@ -67,8 +77,16 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   // Sets outstanding limit for testing.
   void SetOutstandingLimitForTesting(size_t limit);
 
+  // WebFrameScheduler::Observer overrides:
+  void OnThrottlingStateChanged(WebFrameScheduler::ThrottlingState) override;
+
  private:
-  ResourceLoadScheduler();
+  enum class State {
+    kInactive,
+    kActive,
+    kShutdown,
+  };
+  ResourceLoadScheduler(FetchContext*);
 
   // Generates the next ClientId.
   ClientId GenerateClientId();
@@ -78,6 +96,12 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   // Grants a client to run,
   void Run(ClientId, ResourceLoadSchedulerClient*);
+
+  // Sets outstanding limit.
+  void SetOutstandingLimitAndMaybeRun(size_t limit);
+
+  // Running state.
+  State state_ = State::kInactive;
 
   // Outstanding limit. 0u means unlimited.
   // TODO(crbug.com/735410): If this throttling is enabled always, it makes some
@@ -94,6 +118,9 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   HeapHashMap<ClientId, Member<ResourceLoadSchedulerClient>>
       pending_request_map_;
   Deque<ClientId> pending_request_queue_;
+
+  // Holds FetchContext reference to contact WebFrameScheduler.
+  Member<FetchContext> context_;
 };
 
 }  // namespace blink
