@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4131adb_791b4e80",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFO.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-29T17:09:35Z",
+      "side": 1,
+      "message": "Sorry, that was a terrible mistake. \n\nBtw, pull_count_ is unsigned so we don\u0027t need to check its negativity. So I think checking (pull_count_ \u003d\u003d 0) is sufficient.",
+      "parentUuid": "63df6ffb_7578c51d",
+      "revId": "0221e886979b8f161950f7e2f7e553e4b0c8b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "957e1d56_60a01b9e",
         "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFO.cpp",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-28T22:18:34Z",
       "side": 1,
       "message": "Is this pull_count_ typically going to be large (say 50+)?\n\nIf the pull_count_ is often small, you\u0027ll end up with weird spikes in the histogram.  I\u0027m not sure if you\u0027re okay with that.  (It\u0027s also hard to distinguish a spike of 2/3 from a spike at 6/9.)",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "0221e886979b8f161950f7e2f7e553e4b0c8b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b3ee0a_ec0e8cf3",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFO.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-29T17:09:35Z",
+      "side": 1,
+      "message": "Yes, when it passes l.29 the |pull_count_| will be typically higher than 50.",
+      "parentUuid": "957e1d56_60a01b9e",
       "range": {
         "startLine": 35,
         "startChar": 21,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b62fe7b3_89f15635",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFO.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-29T17:09:35Z",
+      "side": 1,
+      "message": "When pull_count_ \u003d\u003d 0, we don\u0027t capture it because it means the rendering has not happened at all. (See l.29)\n\nThis is a simple flag that indicates any instance of glitch caused by FIFO that is activated properly. (i.e. pull_count_ \u003e 0)",
+      "parentUuid": "89ddb0d3_74bf4bab",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "0221e886979b8f161950f7e2f7e553e4b0c8b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "868b1f3f_2c0a8f9c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -76,6 +142,30 @@
       "writtenOn": "2017-06-28T22:18:34Z",
       "side": 1,
       "message": "Please state when it recorded.  On renderer process shutdown?  (I.e., when does the lifetime end?)",
+      "range": {
+        "startLine": 82973,
+        "startChar": 27,
+        "endLine": 82973,
+        "endChar": 35
+      },
+      "revId": "0221e886979b8f161950f7e2f7e553e4b0c8b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80909273_4d0b157c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 82973,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-29T17:09:35Z",
+      "side": 1,
+      "message": "AFAIK, the renderer process shutdown skips the proper destruction of BaseAudioContext. On the other hand, navigating away from the page will properly trigger the destructor of BaseAudioContext removing PushPullFIFO ultimately.",
+      "parentUuid": "868b1f3f_2c0a8f9c",
       "range": {
         "startLine": 82973,
         "startChar": 27,
@@ -108,6 +198,30 @@
       "revId": "0221e886979b8f161950f7e2f7e553e4b0c8b672",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf453d5_130b0cab",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 82982,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-29T17:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9aa4aba_582a4ed3",
+      "range": {
+        "startLine": 82982,
+        "startChar": 23,
+        "endLine": 82982,
+        "endChar": 29
+      },
+      "revId": "0221e886979b8f161950f7e2f7e553e4b0c8b672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
