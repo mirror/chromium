@@ -70,6 +70,30 @@
       "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9acc004c_18c2ba2d",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2017-06-29T21:24:57Z",
+      "side": 1,
+      "message": "From code reading, I think the assumption is true that the default output device parameters \u003d\u003d the input audio parameters of loopback. \n\nFor the fallback 48kHz case, it should not be triggered, as we already ruled out the device missing case. So no need to worry about this.\n\nGetInputStreamParameters vs GetOutputStreamParameters. My preference is to stick with GetInputStreamParameters, because it takes care of the loopback case now. And in case the assumption breaks, we have the freedom to set different parameters between loopback and playout.",
+      "parentUuid": "3a338a13_97ac2035",
+      "range": {
+        "startLine": 172,
+        "startChar": 1,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
