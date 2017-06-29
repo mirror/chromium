@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68082c7b_9bfc457d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T05:47:17Z",
+      "side": 1,
+      "message": "Good catch. I should explicitly mention that.",
+      "parentUuid": "a83bfec6_c72cd40b",
+      "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ac4345f_ef2382da",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12962c2c_d0f3f8bb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T05:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac4345f_ef2382da",
+      "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cdb09155_70d9530f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T05:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ebbcc67_9892718e",
+      "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f308fd53_e0ddeaf0",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f8b0da_295f957f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T05:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f308fd53_e0ddeaf0",
+      "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1bdd9537_aa1f08d8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T05:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27df975_b5b6eb90",
+      "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db569be2_20692eea",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 19
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d940f5bf_8ca5b0fb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T05:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db569be2_20692eea",
+      "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9853011a_0110ecb1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 19
@@ -118,6 +226,24 @@
       "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921034bb_663640ce",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-29T05:47:17Z",
+      "side": 1,
+      "message": "Oops, I didn\u0027t run another schedule in such case, but we should. I slightly modified Release() implementation to call MaybeRun() even the released request is not in the running request list.",
+      "parentUuid": "9853011a_0110ecb1",
+      "revId": "942f05c2b9512af9cded019cb6a0060a9572358c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
