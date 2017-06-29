@@ -16,6 +16,24 @@
       "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1accb63a_bed275f9",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-29T17:36:54Z",
+      "side": 1,
+      "message": "It is because |prominent_colors_| is a member. You would need to capture |this|.\n\ne.g.\n  mojo_observers_.ForAllPtrs([this](mojom::WallpaperObserver* observer) {\n    observer-\u003eOnWallpaperColorsChanged(prominent_colors_);\n  });",
+      "parentUuid": "74667aa4_7023899f",
+      "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

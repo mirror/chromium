@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "420257c7_b19c0b74",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-29T17:36:54Z",
+      "side": 1,
+      "message": "You need a mojo method that returns something. Mojo calls are async and returned value are passed back via a callback.\n\ne.g.\nin wallpaper.mojom, declare like\n  GetWallpaperColors() \u003d\u003e (array\u003cuint32\u003e colors);\n\nThis should generate something like \n  void GetWallpaperColors(base::Callback\u003cvoid(std::vector\u003cuint32_t\u003e)\u003e callback);\n\nWhen the mojo call returns, the callback will be invoked to pass the returned value.\n\nI would prefer to have an explicit getter call in api then triggering a notification.",
+      "parentUuid": "ea01f4be_99f08c91",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be90bc3c_12949cd5",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 5
