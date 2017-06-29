@@ -183,6 +183,10 @@ size_t RegisterCrashKeysHelper() {
       {"engine_params", crash_keys::kMediumSize},
       {"engine1_params", crash_keys::kMediumSize},
       {"engine2_params", crash_keys::kMediumSize},
+
+      // Temporary for https://crbug.com/685996.
+      {crash_keys::kUserCloudPolicyManagerConnectTrace,
+       crash_keys::kMediumSize},
   };
 
   // This dynamic set of keys is used for sets of key value pairs when gathering
