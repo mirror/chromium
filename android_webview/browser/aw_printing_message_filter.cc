@@ -73,14 +73,14 @@ void AwPrintingMessageFilter::OnAllocateTempFileForPrinting(
   temp_file_fd->auto_close = false;
 }
 
-void AwPrintingMessageFilter::OnTempFileForPrintingWritten(
-    int render_frame_id,
-    int sequence_number) {
+void AwPrintingMessageFilter::OnTempFileForPrintingWritten(int render_frame_id,
+                                                           int sequence_number,
+                                                           int page_count) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   AwPrintManager* print_manager =
       GetPrintManager(render_process_id_, render_frame_id);
   if (print_manager)
-    print_manager->PdfWritingDone(true);
+    print_manager->PdfWritingDone(page_count);
 }
 
 }  // namespace android_webview

@@ -160,12 +160,13 @@ void PrintingMessageFilter::OnAllocateTempFileForPrinting(
 }
 
 void PrintingMessageFilter::OnTempFileForPrintingWritten(int render_frame_id,
-                                                         int sequence_number) {
+                                                         int sequence_number,
+                                                         int page_count) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   PrintViewManagerBasic* print_view_manager =
       GetPrintManager(render_process_id_, render_frame_id);
   if (print_view_manager)
-    print_view_manager->PdfWritingDone(true);
+    print_view_manager->PdfWritingDone(true, page_count);
 }
 #endif  // defined(OS_ANDROID)
 
