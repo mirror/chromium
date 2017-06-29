@@ -22,6 +22,30 @@
       "revId": "98650df0aad6745f988ed7fdd95f3b4fc458de7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2848ad7_9f2aceaf",
+        "filename": "media/gpu/mojo/jpeg_decoder_typemap_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-29T19:52:36Z",
+      "side": 1,
+      "message": "Do we really need a check for memory_handle, when we already have a check in place for unwrap_result? \nI think it\u0027s highly unlikely for memory_handle to be invalid when unwrap_result is MOJO_RESULT_OK.",
+      "parentUuid": "4b889db8_17271572",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 4
+      },
+      "revId": "98650df0aad6745f988ed7fdd95f3b4fc458de7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
