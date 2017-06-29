@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b29adae1_254e04f2",
+        "filename": "content/browser/indexed_db/indexed_db_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-29T22:46:07Z",
+      "side": 1,
+      "message": "let\u0027s reverse this and check status.IsOK() (so everything else is an error).",
+      "revId": "7c53469bb3a5735d36f034d09801d1f9891a3214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46006ea_30ac2a88",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-29T22:46:07Z",
+      "side": 1,
+      "message": "So right around here, you\u0027ll need to\n1. Iterate every database for the given origin (see backing_store_map_ in this object).\n2. Iterate every connection in that database\n3. Call AbortAllTransactions() on that connection.\n\nYou can probably create an AbortAllTransactions() method on the database itself.",
+      "revId": "7c53469bb3a5735d36f034d09801d1f9891a3214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
