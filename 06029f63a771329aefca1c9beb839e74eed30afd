@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d6a8702c_a33b1e29",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-29T18:15:25Z",
+      "side": 1,
+      "message": "Same as previous comment.. if the SensorReadingSharedBuffer is used as a primitive with particular memory allocation it may be better to have the reading functionality separately (as we had before with SharedMemorySeqLockReader). It seems to me it\u0027s better to pre-allocate the temp_reading instead of creating it every time on stack?",
+      "parentUuid": "a81c91fb_c3c597fb",
+      "range": {
+        "startLine": 49,
+        "startChar": 61,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10db0dc6_38b318ee",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 9
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I think the OneWriterSeqLock is put into SensorReadingField to make sure it has a fixed size of 64 bits on every platform and this can simplify sensors shared buffer memory calculation:\nhttps://cs.chromium.org/chromium/src/device/generic_sensor/public/cpp/sensor_reading.h?l\u003d14-15",
       "parentUuid": "b93cd7fa_64ad8b3e",
+      "range": {
+        "startLine": 107,
+        "startChar": 47,
+        "endLine": 107,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49239c0a_ec1492c9",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-29T18:15:25Z",
+      "side": 1,
+      "message": "hmm, dunno if the memory allocation is important here  maybe the reading functionality should be separate from the buffer like we had in the shared_memory_seqlock_reader.cc..",
+      "parentUuid": "a6b73c8c_e1864798",
       "range": {
         "startLine": 107,
         "startChar": 47,
