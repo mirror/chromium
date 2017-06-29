@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcdb89d9_5fcea0ec",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-06-29T18:21:48Z",
+      "side": 0,
+      "message": "FWIW I\u0027m not sure that \"CronetIos\" has any significance. \nDoes it matter if it will have an empty name?",
+      "range": {
+        "startLine": 121,
+        "startChar": 56,
+        "endLine": 121,
+        "endChar": 65
+      },
+      "revId": "7a5ff008cb7963c34c5207fa60145a1d7d9ea99a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
