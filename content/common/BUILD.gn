@@ -229,6 +229,8 @@ source_set("common") {
     "media/peer_connection_tracker_messages.h",
     "media/surface_view_manager_messages_android.h",
     "media/video_capture.h",
+    "media/watch_time_recorder.cc",
+    "media/watch_time_recorder.h",
     "message_port.cc",
     "message_port.h",
     "mutable_network_traffic_annotation_tag_struct_traits.h",
