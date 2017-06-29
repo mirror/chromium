@@ -22,6 +22,30 @@
       "revId": "73585a1659e3193db2e4d66b067e97d83e893484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63e43e5_827b2d1f",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-06-29T13:13:20Z",
+      "side": 1,
+      "message": "We talked about this a bit yesterday.. but I just put the 2 submenu related functions in a new function in MenuItemView called SubmenuIsShowing. I used it in a handful of other places that this code was duplicated. Still not 100% convinced that it\u0027s necessary to wrap 2 functions into 1, but it does look a bit nicer. Let me know what you think.",
+      "parentUuid": "d6e7c214_2be07822",
+      "range": {
+        "startLine": 638,
+        "startChar": 41,
+        "endLine": 638,
+        "endChar": 0
+      },
+      "revId": "73585a1659e3193db2e4d66b067e97d83e893484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
