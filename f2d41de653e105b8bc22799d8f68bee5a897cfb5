@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be52e0a8_e0fe16d9",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T00:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1c45570_c12a458e",
+      "range": {
+        "startLine": 186,
+        "startChar": 20,
+        "endLine": 186,
+        "endChar": 31
+      },
+      "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0ff7c33_3792c3f5",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0fd9bf_15aecda7",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T00:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0ff7c33_3792c3f5",
+      "range": {
+        "startLine": 294,
+        "startChar": 63,
+        "endLine": 294,
+        "endChar": 74
+      },
+      "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ad11025c_a59fde8d",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T00:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ad500a_b5a824c2",
+      "range": {
+        "startLine": 314,
+        "startChar": 27,
+        "endLine": 314,
+        "endChar": 35
+      },
+      "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecd5b379_c12731dd",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-23T22:05:08Z",
       "side": 1,
       "message": "I think this can be optional (not required in the initializer). Should this generate a TypeError if this is empty or maybe even non-ASCII?",
+      "range": {
+        "startLine": 315,
+        "startChar": 46,
+        "endLine": 315,
+        "endChar": 60
+      },
+      "revId": "f2d41de653e105b8bc22799d8f68bee5a897cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c123e7ca_c60c960f",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-29T00:26:55Z",
+      "side": 1,
+      "message": "Currently we don\u0027t have a detailed spec or algorithm...\n\nI am basically following the model how we parse codec strings. My plan is to handle it on the Chromium side:\nhttps://chromium-review.googlesource.com/c/541776/2/media/blink/webcontentdecryptionmodule_impl.cc\n\nWDYT?",
+      "parentUuid": "ecd5b379_c12731dd",
       "range": {
         "startLine": 315,
         "startChar": 46,
