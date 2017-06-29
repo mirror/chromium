@@ -22,6 +22,30 @@
       "revId": "a5b6f6353747e01e3ac8e43c2db53840a4bedf1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6415e206_07019ac2",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T21:48:26Z",
+      "side": 1,
+      "message": "Ouch, that\u0027s definitely a bug in content::BlinkInterfaceProvider which I\u0027ve fixed in a separate patch.\n\nBetween this patch and https://chromium-review.googlesource.com/c/538911 we will soon be able to remove content::BlinkInterfaceProviderImpl.\n\nYou should not need to run the layout tests with a special flag.",
+      "parentUuid": "3ad98e10_7142d769",
+      "range": {
+        "startLine": 75,
+        "startChar": 60,
+        "endLine": 75,
+        "endChar": 72
+      },
+      "revId": "a5b6f6353747e01e3ac8e43c2db53840a4bedf1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

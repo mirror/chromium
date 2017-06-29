@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ee7890d2_f452056e",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T21:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b56a6f_4bcff600",
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f807db_42844b94",
         "filename": "third_party/WebKit/LayoutTests/mojo/resources/worker.js",
         "patchSetId": 5
@@ -196,6 +214,30 @@
       "side": 1,
       "message": "I think it would be helpful to document how we can reach the various cases here.\n\nPresumably, this is only getting reached when we fall out of the if (context-\u003eIsDocument()) block due to there being no frame--or is ExecutionContext::From() just returning a nullptr?\n\n(Same comment about documenting the exceptional cases applies for my other comment in the previous PS)",
       "parentUuid": "47d4b722_ff7c2c08",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 80
+      },
+      "revId": "2c4a46b9170aea0468947583d3f951cb6c209394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a91494_95b7daea",
+        "filename": "third_party/WebKit/Source/core/mojo/Mojo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-29T21:48:26Z",
+      "side": 1,
+      "message": "I\u0027ve rearranged this code to be clearer and remove the check for thread because it can\u0027t happen.",
+      "parentUuid": "496d1086_34d84572",
       "range": {
         "startLine": 98,
         "startChar": 2,
