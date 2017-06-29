@@ -21458,6 +21458,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Extensions.UpdateFrequencyCommandLineFlagIsUsed"
+    enum="BooleanPresent">
+  <owner>catmullings@chromium.org</owner>
+  <summary>
+    Logs whether or not the extensions-update-frequency command line flag is
+    used. Recorded at profile creation if extensions autoupdate is enabled.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.UpdateOnLoad">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>
@@ -65613,8 +65622,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time between starting raster work on the pending tree and when it is ready
     to activate. Unlike PendingTreeDuration which - includes the time to commit
-    to this tree, the raster duration and the time for which the pending
-    tree waits before it can be activated - this only measures the time taken to
+    to this tree, the raster duration and the time for which the pending tree
+    waits before it can be activated - this only measures the time taken to
     rasterize tiles required for activation.
 
     The interval is recorded each time we are notifed that a pending tree is
