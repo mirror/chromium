@@ -16,6 +16,24 @@
       "revId": "35f9f27a8760a9bb9e803dacbc9e5903836cfd30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e53ec3_90a45a88",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2145,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-06-29T23:55:53Z",
+      "side": 0,
+      "message": "Looks like it. I\u0027m shooting for a 10min timeout for all the shards and 3 shards for content_shell_test_apk seems to put us comfortably under that limit:\nhttps://chromium-swarm.appspot.com/task?id\u003d36c5fd1f0884cb10",
+      "parentUuid": "94efdf4f_2d780baa",
+      "revId": "35f9f27a8760a9bb9e803dacbc9e5903836cfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
