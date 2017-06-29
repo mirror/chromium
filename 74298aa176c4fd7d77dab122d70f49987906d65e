@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82664a35_594a099b",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-06-29T22:02:13Z",
+      "side": 1,
+      "message": "Thanks for adding a comment here for this.\n\nCould you update it to something like: \"Note: Launch Assistant entry is currently Chrome-specific. It is not included in any web standard because it is not exposed to the web platform.\"",
+      "revId": "74298aa176c4fd7d77dab122d70f49987906d65e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196c86cb_232c8935",
+        "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-06-29T22:02:13Z",
+      "side": 1,
+      "message": "The cl description says that there is an assumption here that it is handling only\nnon-printable characters, but DomCodeToUsLayoutDomKey has code to handle printable characters.\n\nCan you update the comment here to be more explicit about the non-printable assumption and either (a) assert that it is true (that the only chars handled here are non-printable), or (b) break out the non-printable handling code from DomCodeToUsLayoutDomKey.\n\nAlso, I don\u0027t see any tests for the new keys.",
+      "revId": "74298aa176c4fd7d77dab122d70f49987906d65e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
