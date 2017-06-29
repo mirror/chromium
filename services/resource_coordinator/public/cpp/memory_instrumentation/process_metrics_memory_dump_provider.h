@@ -13,6 +13,7 @@
 #include "base/trace_event/memory_dump_provider.h"
 #include "build/build_config.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_export.h"
+#include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 
 namespace base {
 class ProcessMetrics;
