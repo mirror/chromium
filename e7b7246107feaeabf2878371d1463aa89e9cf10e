@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8842da60_65cf4f60",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T21:44:15Z",
+      "side": 1,
+      "message": "Done, seems just GetWallpaperColorsCallback",
+      "parentUuid": "334bf33f_6bd0a06c",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 59
+      },
+      "revId": "e7b7246107feaeabf2878371d1463aa89e9cf10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae68b3c7_efed3b39",
         "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "e7b7246107feaeabf2878371d1463aa89e9cf10e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323648f4_7c9ed125",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T21:44:15Z",
+      "side": 1,
+      "message": "ack, done.",
+      "parentUuid": "ae68b3c7_efed3b39",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 35
+      },
+      "revId": "e7b7246107feaeabf2878371d1463aa89e9cf10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
