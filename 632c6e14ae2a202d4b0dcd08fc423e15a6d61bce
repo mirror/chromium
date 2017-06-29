@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d541b60_a7a623ee",
+        "filename": "third_party/WebKit/LayoutTests/virtual/stable/animations-unprefixed/frames-timing-function.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-06-29T00:28:27Z",
+      "side": 1,
+      "message": "Only tests in virtual/stable are affected. For LayoutTests/animations/animations-parsing.html, the runtime flag is enabled.",
+      "parentUuid": "56d10e42_e0c1192f",
+      "revId": "632c6e14ae2a202d4b0dcd08fc423e15a6d61bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d128f2c0_5e4f147f",
         "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
         "patchSetId": 2
