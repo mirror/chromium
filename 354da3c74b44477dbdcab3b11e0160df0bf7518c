@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82d8959e_73d311f0",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-06-29T09:32:07Z",
+      "side": 1,
+      "message": "\u003e aside: can this actually be empty in Chromium?\n\nNot sure in Chromium, but IIRC this can be set from outside Blink, so better to be prepared for empty for embedders etc.\n\nAgree on your point btw. Also 1) Blink prefers early return, and 2) most compilers assumes \"if\" condition succeeds (i.e., LIKELY by default) as far as I know so the old code is more pipeline friendly.",
+      "parentUuid": "96b86617_4563fdd7",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42599ca7_af38f27f",
         "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
         "patchSetId": 4
