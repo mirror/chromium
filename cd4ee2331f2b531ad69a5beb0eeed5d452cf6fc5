@@ -22,6 +22,30 @@
       "revId": "cd4ee2331f2b531ad69a5beb0eeed5d452cf6fc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "953a0eb6_47a25c9c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3927,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-29T04:37:03Z",
+      "side": 1,
+      "message": "Nevermind, I see that you answered this in your previous message; it\u0027s just clarifying the value.  C\u0027est bon \u003d)",
+      "parentUuid": "ac113093_67ec8201",
+      "range": {
+        "startLine": 3927,
+        "startChar": 24,
+        "endLine": 3927,
+        "endChar": 33
+      },
+      "revId": "cd4ee2331f2b531ad69a5beb0eeed5d452cf6fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
