@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "96d8ca1c_71576159",
+        "filename": "net/socket/ssl_client_socket_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-06-29T17:06:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "93209442_cf4936a3",
+      "range": {
+        "startLine": 382,
+        "startChar": 22,
+        "endLine": 382,
+        "endChar": 29
+      },
+      "revId": "28a3f71d723fe9f75f267db312de7fa0c6a22161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f5ce4c7_520b2dcb",
         "filename": "net/socket/ssl_client_socket_pool.cc",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "28a3f71d723fe9f75f267db312de7fa0c6a22161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4447de31_5382536f",
+        "filename": "net/socket/ssl_client_socket_pool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-06-29T17:06:38Z",
+      "side": 1,
+      "message": "I guess seems reasonable as long as we don\u0027t accidentally lose gmail.com from the experiment by accident.",
+      "parentUuid": "86acf65e_80c165e3",
+      "range": {
+        "startLine": 401,
+        "startChar": 7,
+        "endLine": 401,
+        "endChar": 22
+      },
+      "revId": "28a3f71d723fe9f75f267db312de7fa0c6a22161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
