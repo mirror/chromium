@@ -476,6 +476,7 @@ bool SendBeaconCommon(LocalFrame* frame,
   ResourceRequest request(url);
   request.SetHTTPMethod(HTTPNames::POST);
   request.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=0");
+  request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeCORS);
   request.SetKeepalive(true);
   request.SetRequestContext(WebURLRequest::kRequestContextBeacon);
   beacon.Serialize(request);
