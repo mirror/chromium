@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d7e5dea_605b8d07",
+        "filename": "net/socket/ssl_client_socket_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-29T19:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c24666_473a93fb",
+      "range": {
+        "startLine": 360,
+        "startChar": 2,
+        "endLine": 360,
+        "endChar": 0
+      },
+      "revId": "28a3f71d723fe9f75f267db312de7fa0c6a22161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8ecec8b_a7a1b133",
         "filename": "net/socket/ssl_client_socket_pool.cc",
         "patchSetId": 1
