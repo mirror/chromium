@@ -18,9 +18,13 @@
 
 namespace cc {
 
+namespace {
+constexpr uint32_t kMaxBeginFrameCount = 4;
+
 // The frame index starts at 2 so that empty frames will be treated as
 // completely damaged the first time they're drawn from.
-static const int kFrameIndexStart = 2;
+constexpr int kFrameIndexStart = 2;
+}  // namespace
 
 Surface::Surface(
     const SurfaceInfo& surface_info,
@@ -29,7 +33,10 @@ Surface::Surface(
       previous_frame_surface_id_(surface_info.id()),
       compositor_frame_sink_support_(std::move(compositor_frame_sink_support)),
       surface_manager_(compositor_frame_sink_support_->surface_manager()),
-      frame_index_(kFrameIndexStart) {}
+      deadline_(surface_manager_->GetPrimaryBeginFrameSource()),
+      frame_index_(kFrameIndexStart) {
+  deadline_.AddObserver(this);
+}
 
 Surface::~Surface() {
   ClearCopyRequests();
@@ -37,6 +44,9 @@ Surface::~Surface() {
 
   UnrefFrameResourcesAndRunDrawCallback(std::move(pending_frame_data_));
   UnrefFrameResourcesAndRunDrawCallback(std::move(active_frame_data_));
+
+  deadline_.Cancel();
+  deadline_.RemoveObserver(this);
 }
 
 void Surface::SetPreviousFrameSurface(Surface* surface) {
@@ -56,6 +66,8 @@ void Surface::Close() {
 bool Surface::QueueFrame(CompositorFrame frame,
                          const base::Closure& callback,
                          const WillDrawCallback& will_draw_callback) {
+  late_activation_dependencies_.clear();
+
   gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
   float device_scale_factor = frame.metadata.device_scale_factor;
 
@@ -80,13 +92,13 @@ bool Surface::QueueFrame(CompositorFrame frame,
       std::move(pending_frame_data_);
   pending_frame_data_.reset();
 
-  UpdateBlockingSurfaces(previous_pending_frame_data.has_value(), frame);
+  UpdateActivationDependencies(frame);
 
   // Receive and track the resources referenced from the CompositorFrame
   // regardless of whether it's pending or active.
   compositor_frame_sink_support_->ReceiveFromChild(frame.resource_list);
 
-  bool is_pending_frame = !blocking_surfaces_.empty();
+  bool is_pending_frame = !activation_dependencies_.empty();
 
   if (is_pending_frame) {
     // Reject CompositorFrames submitted to surfaces referenced from this
@@ -111,6 +123,23 @@ bool Surface::QueueFrame(CompositorFrame frame,
           surface->Close();
       }
     }
+
+    // Set a deadline if needed.
+    bool needs_deadline = frame.metadata.can_activate_before_dependencies;
+    if (needs_deadline) {
+      const base::flat_set<SurfaceId>& parent_ids =
+          surface_manager_->GetSurfacesThatReferenceChild(surface_info_.id());
+      for (const SurfaceId& parent_id : parent_ids) {
+        Surface* parent = surface_manager_->GetSurfaceForId(parent_id);
+        if (parent && parent->deadline_.has_deadline()) {
+          deadline_.InheritFrom(parent->deadline_);
+          break;
+        }
+      }
+      if (!deadline_.has_deadline())
+        deadline_.Set(kMaxBeginFrameCount);
+    }
+
     pending_frame_data_ =
         FrameData(std::move(frame), callback, will_draw_callback);
     // Ask the surface manager to inform |this| when its dependencies are
@@ -150,14 +179,14 @@ void Surface::RequestCopyOfOutput(
 }
 
 void Surface::NotifySurfaceIdAvailable(const SurfaceId& surface_id) {
-  auto it = blocking_surfaces_.find(surface_id);
+  auto it = activation_dependencies_.find(surface_id);
   // This surface may no longer have blockers if the deadline has passed.
-  if (it == blocking_surfaces_.end())
+  if (it == activation_dependencies_.end())
     return;
 
-  blocking_surfaces_.erase(it);
+  activation_dependencies_.erase(it);
 
-  if (!blocking_surfaces_.empty())
+  if (!activation_dependencies_.empty())
     return;
 
   // All blockers have been cleared. The surface can be activated now.
@@ -172,7 +201,8 @@ void Surface::ActivatePendingFrameForDeadline() {
 
   // If a frame is being activated because of a deadline, then clear its set
   // of blockers.
-  blocking_surfaces_.clear();
+  late_activation_dependencies_ = std::move(activation_dependencies_);
+  activation_dependencies_.clear();
   ActivatePendingFrame();
 }
 
@@ -200,6 +230,8 @@ void Surface::ActivatePendingFrame() {
 // deadline has hit and the frame was forcibly activated by the display
 // compositor.
 void Surface::ActivateFrame(FrameData frame_data) {
+  deadline_.Cancel();
+
   DCHECK(compositor_frame_sink_support_);
 
   // Save root pass copy requests.
@@ -229,9 +261,9 @@ void Surface::ActivateFrame(FrameData frame_data) {
   compositor_frame_sink_support_->OnSurfaceActivated(this);
 }
 
-void Surface::UpdateBlockingSurfaces(bool has_previous_pending_frame,
-                                     const CompositorFrame& current_frame) {
-  base::flat_set<SurfaceId> new_blocking_surfaces;
+void Surface::UpdateActivationDependencies(
+    const CompositorFrame& current_frame) {
+  base::flat_set<SurfaceId> new_activation_dependencies;
 
   for (const SurfaceId& surface_id :
        current_frame.metadata.activation_dependencies) {
@@ -239,33 +271,41 @@ void Surface::UpdateBlockingSurfaces(bool has_previous_pending_frame,
     // If a activation dependency does not have a corresponding active frame in
     // the display compositor, then it blocks this frame.
     if (!dependency || !dependency->HasActiveFrame())
-      new_blocking_surfaces.insert(surface_id);
+      new_activation_dependencies.insert(surface_id);
   }
 
   // If this Surface has a previous pending frame, then we must determine the
   // changes in dependencies so that we can update the SurfaceDependencyTracker
   // map.
-  if (has_previous_pending_frame) {
-    base::flat_set<SurfaceId> removed_dependencies;
-    for (const SurfaceId& surface_id : blocking_surfaces_) {
-      if (!new_blocking_surfaces.count(surface_id))
-        removed_dependencies.insert(surface_id);
-    }
+  base::flat_set<SurfaceId> added_dependencies;
+  base::flat_set<SurfaceId> removed_dependencies;
+  ComputeChangeInDependencies(activation_dependencies_,
+                              new_activation_dependencies, &added_dependencies,
+                              &removed_dependencies);
 
-    base::flat_set<SurfaceId> added_dependencies;
-    for (const SurfaceId& surface_id : new_blocking_surfaces) {
-      if (!blocking_surfaces_.count(surface_id))
-        added_dependencies.insert(surface_id);
-    }
-
-    // If there is a change in the dependency set, then inform observers.
-    if (!added_dependencies.empty() || !removed_dependencies.empty()) {
-      surface_manager_->SurfaceDependenciesChanged(this, added_dependencies,
-                                                   removed_dependencies);
-    }
+  // If there is a change in the dependency set, then inform SurfaceManager.
+  if (!added_dependencies.empty() || !removed_dependencies.empty()) {
+    surface_manager_->SurfaceDependenciesChanged(this, added_dependencies,
+                                                 removed_dependencies);
   }
 
-  blocking_surfaces_ = std::move(new_blocking_surfaces);
+  activation_dependencies_ = std::move(new_activation_dependencies);
+}
+
+void Surface::ComputeChangeInDependencies(
+    const base::flat_set<SurfaceId>& existing_dependencies,
+    const base::flat_set<SurfaceId>& new_dependencies,
+    base::flat_set<SurfaceId>* added_dependencies,
+    base::flat_set<SurfaceId>* removed_dependencies) {
+  for (const SurfaceId& surface_id : existing_dependencies) {
+    if (!new_dependencies.count(surface_id))
+      removed_dependencies->insert(surface_id);
+  }
+
+  for (const SurfaceId& surface_id : new_dependencies) {
+    if (!existing_dependencies.count(surface_id))
+      added_dependencies->insert(surface_id);
+  }
 }
 
 void Surface::TakeCopyOutputRequests(Surface::CopyRequestsMap* copy_requests) {
@@ -326,6 +366,10 @@ void Surface::SatisfyDestructionDependencies(
                   return (!!sequences->erase(seq) ||
                           !valid_frame_sink_ids->count(seq.frame_sink_id));
                 });
+}
+
+void Surface::OnDeadline() {
+  ActivatePendingFrameForDeadline();
 }
 
 void Surface::UnrefFrameResourcesAndRunDrawCallback(
