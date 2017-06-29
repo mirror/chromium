@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cd4c9ff_b24f12c5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-29T17:39:21Z",
+      "side": 1,
+      "message": "This won\u0027t silently fail; it\u0027ll read into whatever\u0027s next in the buffer. We\u0027ll need to encode this in a way that we can distinguish later on.",
+      "revId": "c2d0eb495085ac5d73961c6b7ab5bf63f1bb72eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151bd086_ae595aeb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-29T17:39:21Z",
+      "side": 1,
+      "message": "This...is potentially very large (4x larger than 32-bit RGBA, which was already large). For storage to disk this does hit LevelDB Snappy compression, but do you have an idea whether this is likely to be an issue with typical use?",
+      "revId": "c2d0eb495085ac5d73961c6b7ab5bf63f1bb72eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d260fa_1e5e950c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-29T17:39:21Z",
+      "side": 1,
+      "message": "If we write this enum (and the one following) to disk, we will be forced to hold their values constant forever. If we choose to do that, we should add big scary warnings to the enums. Otherwise, we should do an intentional conversion between the enum we use internally and how we represent it serialized (be it an integer, a string or something else).",
+      "revId": "c2d0eb495085ac5d73961c6b7ab5bf63f1bb72eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
