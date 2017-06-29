@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3b9098d_4bb84b3c",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-29T13:26:26Z",
+      "side": 1,
+      "message": "Should we DCHECK that touch_action is nullptr when the touch event isn\u0027t a touch start, and that it isn\u0027t nullptr when it is a touchstart?",
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "077a6c81_8beb1ce3",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-29T13:26:26Z",
+      "side": 1,
+      "message": "Can you add a comment here, which includes describing the out parameters?",
+      "range": {
+        "startLine": 187,
+        "startChar": 19,
+        "endLine": 187,
+        "endChar": 36
+      },
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e79f5056_cf0fdca4",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-29T13:26:26Z",
+      "side": 1,
+      "message": "Could we add a test around the InputHandlerProxy logic changes?",
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
