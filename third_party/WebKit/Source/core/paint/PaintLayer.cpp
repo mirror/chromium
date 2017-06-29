@@ -207,7 +207,7 @@ PaintLayer::~PaintLayer() {
 }
 
 String PaintLayer::DebugName() const {
-  return GetLayoutObject().DebugName();
+  return "Layer " + GetLayoutObject().DebugName();
 }
 
 LayoutRect PaintLayer::VisualRect() const {

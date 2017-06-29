@@ -611,6 +611,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
 
   if (subsequence_recorder)
     paint_layer_.SetPreviousPaintResult(result);
+
   return result;
 }
 
