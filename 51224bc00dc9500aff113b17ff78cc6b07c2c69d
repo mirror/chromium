@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82cd18ea_37bb79fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-29T00:25:17Z",
+      "side": 1,
+      "message": "Please update since no longer implementation stubs.",
+      "revId": "51224bc00dc9500aff113b17ff78cc6b07c2c69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
