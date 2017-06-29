@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69413e13_bc181315",
+        "filename": "mojo/public/cpp/bindings/lib/array_serialization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-29T17:10:53Z",
+      "side": 1,
+      "message": "nit: I think the following should generate the same code but slightly more readable:\nconst bool is_null \u003d CallIsNullIfExists...;\ncontext-\u003ePushNextNullState(is_null);\nif (is_null) ...",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d787560e_e2149bfb",
+        "filename": "mojo/public/cpp/bindings/lib/serialization_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-29T17:10:53Z",
+      "side": 1,
+      "message": "Now that we are talking associated ptr/request in PrepareToSerialize, we could give the associated endpoint handles to the message in PrepareMessage() and get rid of this method, right?",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be09b99_fe6ed7a6",
+        "filename": "mojo/public/cpp/bindings/lib/serialization_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-29T17:10:53Z",
+      "side": 1,
+      "message": "Just to double check: have you run any perf tests that heavily use the serialization context, e.g., cc_perftests?",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8d4a5a_0de447ad",
+        "filename": "mojo/public/cpp/bindings/lib/serialization_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-29T17:10:53Z",
+      "side": 1,
+      "message": "Could we get rid of some of these getters? I think they are not very useful now.",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
