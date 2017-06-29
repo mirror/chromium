@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20569cf5_946d31c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-29T15:34:15Z",
+      "side": 1,
+      "message": "It might be more clear to mention when the DON flow is skipped?",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b084eb7e_d19dc683",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-29T15:34:15Z",
+      "side": 1,
+      "message": "Probably don\u0027t want to link to Google specific tools. I\u0027d duplicate this in crbug with the relevant context.",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e00687_dab9394b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-29T15:34:15Z",
+      "side": 1,
+      "message": "IIUC, when the user doesn\u0027t have to go through DON, we will delay dispatching SetPresent for 2 seconds, delaying displaying the VR content by 2s? Maybe mention the rare scenario that this happens?",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d84d27_12a73401",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-29T15:34:15Z",
+      "side": 1,
+      "message": "This seems hacky. We shouldn\u0027t be setting an un-setting variables to make the function do something. Pass as param or something?",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2007d9_7f25c256",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-29T15:34:15Z",
+      "side": 1,
+      "message": "Are we doing this because we\u0027re expecting DON to be called and so we\u0027d expect to enter VR along the DON success path?",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
