@@ -27,6 +27,7 @@ import android.support.annotation.CallSuper;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +49,7 @@ import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.SysUtils;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
@@ -276,6 +278,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     private int mUiMode;
     private int mScreenWidthDp;
     private Runnable mRecordMultiWindowModeScreenWidthRunnable;
+
+    private Runnable mHandleLongPressBack;
 
     private final DiscardableReferencePool mReferencePool = new DiscardableReferencePool();
 
@@ -1850,6 +1854,67 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         } else {
             mToolbarManager.getToolbar().removeAppMenuUpdateBadge(false);
         }
+    }
+
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (handleLongPressBack()) return true;
+        }
+        return super.onKeyLongPress(keyCode, event);
+    }
+
+    private boolean handleLongPressBack() {
+        if (!mNativeInitialized) return false;
+
+        if (!isTablet() && isInOverviewMode()) return false;
+        final Tab currentTab = getActivityTab();
+        if (currentTab == null) return false;
+
+        NavigationPopup mNavigationPopup = new NavigationPopup(currentTab.getProfile(), this,
+                currentTab.getWebContents().getNavigationController(), false);
+        if (!mNavigationPopup.shouldBeShown()) return false;
+        mNavigationPopup.setAnchorView(findViewById(R.id.menu_anchor_stub));
+
+        int menuWidth = getResources().getDimensionPixelSize(R.dimen.menu_width);
+        mNavigationPopup.setWidth(menuWidth);
+
+        // Center the menu horizontally.
+        Rect appRect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(appRect);
+        int horizontalOffset = (appRect.width() - menuWidth) / 2;
+        mNavigationPopup.setHorizontalOffset(horizontalOffset);
+
+        mNavigationPopup.show();
+        return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (mHandleLongPressBack == null) {
+                mHandleLongPressBack = new Runnable() {
+                    @Override
+                    public void run() {
+                        handleLongPressBack();
+                    }
+                };
+            }
+            ThreadUtils.removeUiThreadCallbacks(mHandleLongPressBack);
+            ThreadUtils.postOnUiThreadDelayed(
+                    mHandleLongPressBack, ViewConfiguration.getLongPressTimeout());
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mHandleLongPressBack != null
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            ThreadUtils.removeUiThreadCallbacks(mHandleLongPressBack);
+        }
+
+        return super.onKeyUp(keyCode, event);
     }
 
     /**

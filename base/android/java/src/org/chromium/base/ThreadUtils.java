@@ -193,6 +193,15 @@ public class ThreadUtils {
     }
 
     /**
+     * Removes the supplied Runnable from the UI Thread queue of tasks.
+     *
+     * @param task The Runnable to be removed.
+     */
+    public static void removeUiThreadCallbacks(Runnable task) {
+        getUiThreadHandler().removeCallbacks(task);
+    }
+
+    /**
      * Throw an exception (when DCHECKs are enabled) if currently not running on the UI thread.
      *
      * Can be disabled by setThreadAssertsDisabledForTesting(true).
