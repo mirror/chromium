@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a156851b_0e8b9178",
+        "filename": "ipc/handle_attachment_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-06-29T23:28:39Z",
+      "side": 1,
+      "message": "nit: local not needed?",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "c4607e84b1d0302ee2a0c4718085643d8421119e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fc47ab_bfc04bb7",
+        "filename": "ipc/handle_attachment_fuchsia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-06-29T23:28:39Z",
+      "side": 1,
+      "message": "nit: Mach port ???",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "c4607e84b1d0302ee2a0c4718085643d8421119e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dddc115_1c416989",
+        "filename": "ipc/handle_fuchsia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-06-29T23:28:39Z",
+      "side": 1,
+      "message": "nit: FUSCIA",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "c4607e84b1d0302ee2a0c4718085643d8421119e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca8b5bea_fb442cf2",
         "filename": "mojo/public/cpp/system/platform_handle.cc",
         "patchSetId": 5
