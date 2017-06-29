@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf16fb3_da33a2a5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-06-29T22:33:08Z",
+      "side": 1,
+      "message": "DCHECK that it is valid instead? I don\u0027t think it should ever be invalid.",
+      "revId": "0108b2244ad82bc05b82077ad4ee38987fc64aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
