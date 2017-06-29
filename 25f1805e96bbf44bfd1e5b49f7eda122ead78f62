@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "845d1f21_b1f9f7fd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-06-29T15:00:05Z",
+      "side": 1,
+      "message": "For each of these histograms can you specify when they are recorded.",
+      "revId": "25f1805e96bbf44bfd1e5b49f7eda122ead78f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
