@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8153e594_937c4fb9",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwPdfExporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T01:11:19Z",
+      "side": 1,
+      "message": "nit: alignment",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb63346_1d52a3b4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwPrintDocumentAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T01:11:19Z",
+      "side": 1,
+      "message": "static",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 11
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f075c3_4d49be75",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwPrintDocumentAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-29T01:11:19Z",
+      "side": 1,
+      "message": "static",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 11
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
