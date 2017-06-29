@@ -12,6 +12,11 @@
 #if defined(OS_WIN)
 #include "base/win/object_watcher.h"
 #include "base/win/scoped_handle.h"
+#elif defined(OS_MACOSX)
+#include <dispatch/dispatch.h>
+
+#include "base/callback_forward.h"
+#include "base/mac/scoped_dispatch_object.h"
 #else
 #include "base/callback.h"
 #include "base/sequence_checker.h"
@@ -101,6 +106,8 @@ class BASE_EXPORT WaitableEventWatcher
 
   EventCallback callback_;
   WaitableEvent* event_ = nullptr;
+#elif defined(OS_MACOSX)
+  base::ScopedDispatchObject<dispatch_source_t> source_;
 #else
   // Instantiated in StartWatching(). Set before the callback runs. Reset in
   // StopWatching() or StartWatching().
