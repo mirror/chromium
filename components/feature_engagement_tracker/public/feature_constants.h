@@ -31,6 +31,12 @@ extern const base::Feature kIPHIncognitoWindowFeature;
 extern const base::Feature kIPHNewTabFeature;
 #endif  // defined(OS_WIN) || defined(OS_LINUX)
 
+#if defined(OS_IOS)
+extern const base::Feature kIPHNewTabTipFeature;
+extern const base::Feature kIPHNewIncognitoTabTipFeature;
+extern const base::Feature kIPHBadgedReadingListFeature;
+#endif  // defined(OS_IOS)
+
 }  // namespace feature_engagement_tracker
 
 #endif  // COMPONENTS_FEATURE_ENGAGEMENT_TRACKER_PUBLIC_FEATURE_CONSTANTS_H_
