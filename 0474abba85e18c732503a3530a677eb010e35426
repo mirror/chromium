@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02eb27b8_71d2e690",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-06-29T19:39:17Z",
+      "side": 1,
+      "message": "From the description it sounds like there\u0027s a race between the callback being invoked and the FormInteractionsUkmLogger being Reset() and ultimately the next form being parsed.\n\nAFAICT, we should always do the quality metrics logging based on the parse time passed via the callback params, not the one stored in the interactions ukm logger.\n\nIIUC this CL as written, we might log based on the parse time of the current form (no reset or reset but next form not yet parsed) or the parse time of the next form. I would guess that the latter would be relatively uncommon, but with the number of Chrome users, it could still be fairly large in absolute terms.\n\ni.e., the parse time stored in the interactions ukm logger could be the same as the param, it could be null, or it could be the timestamp associated with the next parsed form. The CL seems to behave correctly for the first two cases but not the last (we end up logging the wrong timestamp).\n\nmaybe update the logger method signatures to take the parse timestamp?",
+      "range": {
+        "startLine": 12,
+        "startChar": 74,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "0474abba85e18c732503a3530a677eb010e35426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
