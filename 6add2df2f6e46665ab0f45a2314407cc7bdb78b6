@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a175ff99_6f67d6e4",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "nit: UpdateTypeAndSkip?",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a98e5c8_a7aa7b2b",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "Can you leave a comment for the magic number",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1d91f7_953c783c",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "This is safe because of line 1298, right?",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113b8d97_35fa6fcc",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "Hmm doesn\u0027t this clobber the first 4 bytes of memory? or are serialize functions skipping these?\n\nAlso if we rewrite those during deserialize, do we even need to serialize this? I guess we need type at least",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6b372a_4ec2dbe5",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "Will this be needing a security review eventually?",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e4d43e_bf4bb966",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "static_cast ... ptr? I\u0027m not seeing where we advance the memory",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f2c496_c137d62c",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "Am I correct in thinking that skin is essentially unbounded aside from being withing remaining_bytes? I was thinking of adding some sanity checks but I don\u0027t think that\u0027s possible",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82527e92_e960e0db",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "Again, because of the untrusted nature of things, if skip \u003e 0.5 size_t max, then this will overflow? Do we need some saturated math or checks that buffer_size is sane?",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6258c1_75c48960",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "It\u0027s a bit weird to have a non static Serialize available and then require that each subclass has a static Serialize. Is there a way to disambiguate the two by giving it a slightly different name or something?",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429fa3fc_35fb6aee",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "return 0 _and_ nothing? :)",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2c597e_cf460066",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "You should mention that it will run the dtor on the derived type, since my first thought was \"why not just run ~PaintOp()\"",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd830034_a99654f2",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "I know this might obfuscate things a bit, but have you considered something like\n\n#define HAS_SERIALIZATION_FUNCTIONS                   \\\n static size_t Serialize(const PaintOp* op,           \\\n ...                                                  \\\n static const PaintOp* Deserialize(const void* input, \\\n ...\n\nand just\n\nHAS_SERIALIZATION_FUNCTIONS; in each class?",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356100a3_22311fdc",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-29T17:31:28Z",
+      "side": 1,
+      "message": "tests \\o/",
+      "revId": "6add2df2f6e46665ab0f45a2314407cc7bdb78b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
