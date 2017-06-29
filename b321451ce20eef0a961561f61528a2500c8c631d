@@ -164,6 +164,30 @@
       "revId": "b321451ce20eef0a961561f61528a2500c8c631d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e22dd2_c015bb3c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-29T16:13:14Z",
+      "side": 1,
+      "message": "I am fine with the naming (% s/This/These/).\n\nAlternatively, what about FetchProvidedSuggestions/FetchMoreProvidedSuggestions?",
+      "parentUuid": "1567333d_3e790b29",
+      "range": {
+        "startLine": 870,
+        "startChar": 7,
+        "endLine": 870,
+        "endChar": 23
+      },
+      "revId": "b321451ce20eef0a961561f61528a2500c8c631d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

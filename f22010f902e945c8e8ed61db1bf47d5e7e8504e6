@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d27d2d63_63da2215",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-29T16:13:14Z",
+      "side": 1,
+      "message": "AddSuggestionViaBuilder?",
+      "range": {
+        "startLine": 338,
+        "startChar": 26,
+        "endLine": 338,
+        "endChar": 48
+      },
+      "revId": "f22010f902e945c8e8ed61db1bf47d5e7e8504e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
