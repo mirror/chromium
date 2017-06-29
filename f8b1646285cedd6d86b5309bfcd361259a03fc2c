@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "49fbd599_b21115fd",
+        "filename": "mojo/public/cpp/bindings/lib/serialization_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-29T21:42:16Z",
+      "side": 1,
+      "message": "If there is no consistent data showing that it is slower, I am fine landing it as it is.\n\nIt would be nice if we have data showing how much of the size reduction is resulted from out-of-lining SerializationContext (but not having Base class for our binding objects), but that may not be worth the effort.",
+      "parentUuid": "c22e699f_f24a85b3",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b8d4a5a_0de447ad",
         "filename": "mojo/public/cpp/bindings/lib/serialization_context.h",
         "patchSetId": 2
