@@ -54,6 +54,7 @@ class BrowserViewLayout;
 class ContentsLayoutManager;
 class DownloadShelfView;
 class ExclusiveAccessBubbleViews;
+class FullscreenControlHost;
 class InfoBarContainerView;
 class LocationBarView;
 class NewBackShortcutBubble;
@@ -477,6 +478,10 @@ class BrowserView : public BrowserWindow,
   // Called by BrowserFrame during theme changes.
   void NativeThemeUpdated(const ui::NativeTheme* theme);
 
+  // Gets the FullscreenControlHost for this BrowserView, creating it if it does
+  // not yet exist.
+  FullscreenControlHost* GetFullscreenControlHost();
+
  private:
   // Do not friend BrowserViewLayout. Use the BrowserViewLayoutDelegate
   // interface to keep these two classes decoupled and testable.
@@ -706,6 +711,8 @@ class BrowserView : public BrowserWindow,
 
   mutable base::WeakPtrFactory<BrowserView> activate_modal_dialog_factory_{
       this};
+
+  std::unique_ptr<FullscreenControlHost> fullscreen_control_host_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserView);
 };
