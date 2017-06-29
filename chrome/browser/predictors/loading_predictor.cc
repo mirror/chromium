@@ -35,15 +35,18 @@ LoadingPredictor::~LoadingPredictor() = default;
 void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
   if (active_hints_.find(url) != active_hints_.end())
     return;
-  ResourcePrefetchPredictor::Prediction prediction;
-  if (!resource_prefetch_predictor_->GetPrefetchData(url, &prediction))
-    return;
 
-  // To report hint durations.
-  active_hints_.emplace(url, base::TimeTicks::Now());
+  std::vector<HintType> hint_types;
 
-  if (config_.IsPrefetchingEnabledForOrigin(profile_, origin))
-    resource_prefetch_predictor_->StartPrefetching(url, prediction);
+  bool prefetching = MaybeAddPrefetch(url, origin, &hint_types);
+  if (!prefetching)
+    MaybeAddPreconnectAndPreresolve(url, origin, &hint_types);
+
+  if (!hint_types.empty()) {
+    // To report hint durations.
+    active_hints_.emplace(url,
+                          std::make_pair(hint_types, base::TimeTicks::Now()));
+  }
 }
 
 void LoadingPredictor::CancelPageLoadHint(const GURL& url) {
@@ -103,17 +106,60 @@ void LoadingPredictor::OnMainFrameResponse(const URLRequestSummary& summary) {
   }
 }
 
-std::map<GURL, base::TimeTicks>::iterator LoadingPredictor::CancelActiveHint(
-    std::map<GURL, base::TimeTicks>::iterator hint_it) {
+bool LoadingPredictor::MaybeAddPrefetch(const GURL& url,
+                                        HintOrigin origin,
+                                        std::vector<HintType>* hint_types) {
+  ResourcePrefetchPredictor::Prediction prediction;
+  if (!resource_prefetch_predictor_->GetPrefetchData(url, &prediction))
+    return false;
+
+  if (config_.IsPrefetchingEnabledForOrigin(profile_, origin))
+    resource_prefetch_predictor_->StartPrefetching(url, prediction);
+
+  hint_types->push_back(HintType::PREFETCH);
+  return true;
+}
+
+bool LoadingPredictor::MaybeAddPreconnectAndPreresolve(
+    const GURL& url,
+    HintOrigin origin,
+    std::vector<HintType>* hint_types) {
+  PreconnectPrediction prediction;
+  if (!resource_prefetch_predictor_->PredictPreconnectOrigins(url, &prediction))
+    return false;
+
+  if (config_.IsPreconnectEnabledForOrigin(profile_, origin)) {
+    // Not implemented.
+  }
+
+  if (!prediction.preconnect_origins.empty())
+    hint_types->push_back(HintType::PRECONNECT);
+  if (!prediction.preresolve_hosts.empty())
+    hint_types->push_back(HintType::PRERESOLVE);
+  return true;
+}
+
+LoadingPredictor::HintMap::iterator LoadingPredictor::CancelActiveHint(
+    LoadingPredictor::HintMap::iterator hint_it) {
   if (hint_it == active_hints_.end())
     return hint_it;
 
   const GURL& url = hint_it->first;
-  resource_prefetch_predictor_->StopPrefetching(url);
+  for (HintType hint_type : hint_it->second.first) {
+    switch (hint_type) {
+      case HintType::PREFETCH:
+        resource_prefetch_predictor_->StopPrefetching(url);
+        UMA_HISTOGRAM_TIMES(
+            internal::kResourcePrefetchPredictorPrefetchingDurationHistogram,
+            base::TimeTicks::Now() - hint_it->second.second);
+        break;
+      case HintType::PRECONNECT:
+      case HintType::PRERESOLVE:
+        // Not implemented.
+        break;
+    }
+  }
 
-  UMA_HISTOGRAM_TIMES(
-      internal::kResourcePrefetchPredictorPrefetchingDurationHistogram,
-      base::TimeTicks::Now() - hint_it->second);
   return active_hints_.erase(hint_it);
 }
 
@@ -125,7 +171,7 @@ void LoadingPredictor::CleanupAbandonedHintsAndNavigations(
 
   // Hints.
   for (auto it = active_hints_.begin(); it != active_hints_.end();) {
-    base::TimeDelta prefetch_age = time_now - it->second;
+    base::TimeDelta prefetch_age = time_now - it->second.second;
     if (prefetch_age > max_navigation_age) {
       // Will go to the last bucket in the duration reported in
       // CancelActiveHint() meaning that the duration was unlimited.

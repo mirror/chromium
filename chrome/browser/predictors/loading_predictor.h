@@ -25,6 +25,8 @@ namespace predictors {
 class ResourcePrefetchPredictor;
 class LoadingStatsCollector;
 
+enum class HintType { PREFETCH, PRECONNECT, PRERESOLVE };
+
 // Entry point for the Loading predictor.
 // From a high-level request (GURL and motivation) and a database of historical
 // data, initiates predictive actions to speed up page loads.
@@ -70,11 +72,20 @@ class LoadingPredictor : public KeyedService {
   }
 
  private:
+  // Hint types and starting time.
+  using HintMap =
+      std::map<GURL, std::pair<std::vector<HintType>, base::TimeTicks>>;
+
+  bool MaybeAddPrefetch(const GURL& url,
+                        HintOrigin origin,
+                        std::vector<HintType>* hint_types);
+  bool MaybeAddPreconnectAndPreresolve(const GURL& url,
+                                       HintOrigin origin,
+                                       std::vector<HintType>* hint_types);
   // Cancels an active hint, from its iterator inside |active_hints_|. If the
   // iterator is .end(), does nothing. Returns the iterator after deletion of
   // the entry.
-  std::map<GURL, base::TimeTicks>::iterator CancelActiveHint(
-      std::map<GURL, base::TimeTicks>::iterator hint_it);
+  HintMap::iterator CancelActiveHint(HintMap::iterator hint_it);
   void CleanupAbandonedHintsAndNavigations(const NavigationID& navigation_id);
 
   // For testing.
@@ -88,7 +99,7 @@ class LoadingPredictor : public KeyedService {
   std::unique_ptr<ResourcePrefetchPredictor> resource_prefetch_predictor_;
   std::unique_ptr<LoadingStatsCollector> stats_collector_;
   std::unique_ptr<LoadingDataCollector> loading_data_collector_;
-  std::map<GURL, base::TimeTicks> active_hints_;
+  HintMap active_hints_;
   // Initial URL.
   std::map<NavigationID, GURL> active_navigations_;
 
