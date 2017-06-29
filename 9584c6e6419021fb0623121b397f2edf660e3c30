@@ -117,6 +117,30 @@
       "revId": "9584c6e6419021fb0623121b397f2edf660e3c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85400dc3_46da9307",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/bindings/bindings_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-29T07:45:05Z",
+      "side": 1,
+      "message": "It will show messages like \u0027PASS: Foo.idl\u0027 when suppress\u003dFalse. We currently don\u0027t show verbose messages like that by default. Are you suggesting that we should always show these messages by default?",
+      "parentUuid": "e6b86676_f1d77285",
+      "range": {
+        "startLine": 242,
+        "startChar": 32,
+        "endLine": 242,
+        "endChar": 33
+      },
+      "revId": "9584c6e6419021fb0623121b397f2edf660e3c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
