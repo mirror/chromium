@@ -57,6 +57,13 @@ class AuthPolicyCredentialsManager
       authpolicy::ErrorType error,
       const authpolicy::ActiveDirectoryUserStatus& user_status);
 
+  void GetKerberosFiles();
+
+  // See AuthPolicyClient::GetUserStatusCallback.
+  void OnGetKerbefosFilesCallback(
+      authpolicy::ErrorType error,
+      const authpolicy::KerberosFiles& kerberos_files);
+
   // Post delayed task to call GetUserStatus in the future.
   void ScheduleGetUserStatus();
 
@@ -80,6 +87,7 @@ class AuthPolicyCredentialsManager
   AccountId account_id_;
   std::string display_name_;
   std::string given_name_;
+  bool is_get_status_in_progress = false;
   bool rerun_get_status_on_error_ = false;
   bool is_observing_network_ = false;
 

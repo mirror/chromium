@@ -149,6 +149,16 @@ void FakeAuthPolicyClient::GetUserStatus(const std::string& object_guid,
     PostDelayedClosure(std::move(on_get_status_closure_), operation_delay_);
 }
 
+void FakeAuthPolicyClient::GetKerberosFiles(const std::string& object_guid,
+                                            GetKerberosFilesCallback callback) {
+  authpolicy::KerberosFiles files;
+  authpolicy::KerberosFile* krb5cc = files.mutable_krb5cc();
+  krb5cc->set_data("preved");
+  PostDelayedClosure(
+      base::BindOnce(std::move(callback), authpolicy::ERROR_NONE, files),
+      operation_delay_);
+}
+
 void FakeAuthPolicyClient::RefreshDevicePolicy(RefreshPolicyCallback callback) {
   if (!started_) {
     LOG(ERROR) << "authpolicyd not started";
