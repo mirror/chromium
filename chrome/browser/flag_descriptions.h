@@ -340,6 +340,9 @@ extern const char kEffectiveConnectionType2GDescription[];
 extern const char kEffectiveConnectionType3GDescription[];
 extern const char kEffectiveConnectionType4GDescription[];
 
+extern const char kExperimentalFullscreenExitUIName[];
+extern const char kExperimentalFullscreenExitUIDescription[];
+
 extern const char kFillOnAccountSelectName[];
 extern const char kFillOnAccountSelectDescription[];
 
