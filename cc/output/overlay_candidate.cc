@@ -275,8 +275,15 @@ bool OverlayCandidate::FromTextureQuad(ResourceProvider* resource_provider,
   if (quad->background_color != SK_ColorTRANSPARENT ||
       overlay_transform == gfx::OVERLAY_TRANSFORM_INVALID)
     return false;
+  // TODO(dcastagna): This is a temporary workaround while we determine
+  // why downscaling buffers by 2 on kevin causes issues. crbug.com/709105
+  gfx::Size resource_size = quad->resource_size_in_pixels();
+  gfx::Vector3dF x_axis =
+      MathUtil::GetXAxis(quad->shared_quad_state->quad_to_target_transform);
+
+  LOG(ERROR) << "rw " << x_axis.Length() << " rs " << resource_size.width();
   candidate->resource_id = quad->resource_id();
-  candidate->resource_size_in_pixels = quad->resource_size_in_pixels();
+  candidate->resource_size_in_pixels = resource_size;
   candidate->transform = overlay_transform;
   candidate->uv_rect = BoundingRect(quad->uv_top_left, quad->uv_bottom_right);
   return true;
