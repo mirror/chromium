@@ -504,9 +504,7 @@ struct Serializer<ArrayDataView<Element>, MaybeConstUserType> {
 
   static size_t PrepareToSerialize(MaybeConstUserType& input,
                                    SerializationContext* context) {
-    const bool is_null = CallIsNullIfExists<Traits>(input);
-    context->null_states.container().push_back(is_null);
-    if (is_null)
+    if (context->PushNextNullState(CallIsNullIfExists<Traits>(input)))
       return 0;
     ArrayIterator<Traits, MaybeConstUserType> iterator(input);
     return Impl::GetSerializedSize(&iterator, context);
