@@ -22,7 +22,9 @@ void PaintChunker::UpdateCurrentPaintChunkProperties(
   if (chunk_id)
     current_chunk_id_.emplace(*chunk_id);
   current_properties_ = properties;
-  force_new_chunk_ = force_new_chunk;
+  // Keep the previous kForceNewChunk if it has not been consumed.
+  if (force_new_chunk_ != kForceNewChunk)
+    force_new_chunk_ = force_new_chunk;
 }
 
 bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
