@@ -16,6 +16,24 @@
       "revId": "b27d228fcfa67a531164076a889773c65847f661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afc1c31_ab6a56b2",
+        "filename": "components/search_engines/prepopulated_engines.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-29T17:09:16Z",
+      "side": 1,
+      "message": "I think Kingston explained this offline, but FTR: the logo in the other entries is Cyrillic, but this one is Latin.",
+      "parentUuid": "81841fc7_547ca10e",
+      "revId": "b27d228fcfa67a531164076a889773c65847f661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
