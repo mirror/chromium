@@ -134,6 +134,30 @@
       "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b831ed2d_bb5c5d4f",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-06-29T18:05:23Z",
+      "side": 1,
+      "message": "I just found out about https://codereview.chromium.org/1339443002/ ; this CL is very wrong for multiple reasons, mostly because it is intel-specific (set tiling mode, work around an intel problem etc) but affects code for all platforms.\n\nI see that you wanted me to weigh in on it, but I wasn\u0027t CC\u0027d so I never noticed it :(",
+      "parentUuid": "9d54f27e_a8203053",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
