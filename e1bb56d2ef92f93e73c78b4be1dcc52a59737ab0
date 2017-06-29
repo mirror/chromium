@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a494ba1_c1e89cae",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-29T17:30:31Z",
+      "side": 1,
+      "message": "Maybe just get rid of this logic entirely, and let the LRU ordering take care of things?",
+      "range": {
+        "startLine": 457,
+        "startChar": 5,
+        "endLine": 457,
+        "endChar": 13
+      },
+      "revId": "e1bb56d2ef92f93e73c78b4be1dcc52a59737ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
