@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6d9d1e9_b56ae6f8",
+        "filename": "chrome/browser/notifications/notification_interactive_uitest_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-29T04:34:14Z",
+      "side": 1,
+      "message": "Is it still appropriate for this to be performed within the SetUpDefaultCommandLine() method?",
+      "range": {
+        "startLine": 126,
+        "startChar": 70,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "2b114093d23f59a1073843c055959bced37096db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f9161e_48737378",
+        "filename": "chrome/browser/notifications/notification_interactive_uitest_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-29T04:34:14Z",
+      "side": 1,
+      "message": "Hmm, why is it important to switch from feature_list_ to a param that\u0027s passed in?  Could all of these methods use feature_list_ rather than needing a param passed in?\n\n(If the reason you\u0027re passing a param is simply that feature_list_ is used above, please find a way to structure the code that keeps the change isolated to just this file, without a need to pass in a param.)",
+      "range": {
+        "startLine": 319,
+        "startChar": 2,
+        "endLine": 319,
+        "endChar": 21
+      },
+      "revId": "2b114093d23f59a1073843c055959bced37096db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc550682_a2553c2b",
+        "filename": "chrome/browser/notifications/notification_interactive_uitest_support.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-29T04:34:14Z",
+      "side": 1,
+      "message": "Please pass by pointer -- the Chromium style guide prefers only const-ref for params passed by reference.",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "2b114093d23f59a1073843c055959bced37096db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
