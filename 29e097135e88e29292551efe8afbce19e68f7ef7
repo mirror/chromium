@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0f67ab2_0363d8c2",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-29T17:42:13Z",
+      "side": 1,
+      "message": "This should be decided in the mediator where the selectable items are created. There, the notification label indicating the missing field(s) should also be set. There are utility methods that make all these literally one liners. I believe the desktop implementation uses these two:\nPaymentsProfileComparator::GetStringForMissingContactFields\nPaymentsProfileComparator::IsContactInfoComplete\n\nPlease look at billing_address_selection_(mediator/coordinator).mm and billing_address_selection_(mediator/coordinator)_unittest.mm for inspiration. The implementation for contact info shouldn\u0027t vary by much.",
+      "revId": "29e097135e88e29292551efe8afbce19e68f7ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
