@@ -43,6 +43,7 @@ import org.chromium.content.browser.accessibility.captioning.CaptioningBridgeFac
 import org.chromium.content.browser.accessibility.captioning.SystemCaptioningBridge;
 import org.chromium.content.browser.accessibility.captioning.TextTrackSettings;
 import org.chromium.content.browser.input.ImeAdapter;
+import org.chromium.content.browser.input.InputDeviceObserver;
 import org.chromium.content.browser.input.InputMethodManagerWrapper;
 import org.chromium.content.browser.input.SelectPopup;
 import org.chromium.content.browser.input.SelectPopupDialog;
@@ -1025,6 +1026,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mAccessibilityManager.addAccessibilityStateChangeListener(this);
         mSystemCaptioningBridge.addListener(this);
         mImeAdapter.onViewAttachedToWindow();
+        InputDeviceObserver.onAttachedToWindow(mContext);
     }
 
     /**
@@ -1055,6 +1057,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         removeDisplayAndroidObserver();
         GamepadList.onDetachedFromWindow();
         mAccessibilityManager.removeAccessibilityStateChangeListener(this);
+        InputDeviceObserver.onDetachedFromWindow();
 
         // WebView uses PopupWindows for handle rendering, which may remain
         // unintentionally visible even after the WebView has been detached.
