@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06f9d7ca_7f4a7906",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesSection.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-29T22:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "777596ca_6271c484",
+      "revId": "4b6312f6d21613062f0a11f910683a0c07ffa051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "535d8829_6273e189",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesSection.js",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "4b6312f6d21613062f0a11f910683a0c07ffa051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe872d0_a5e4f9b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ResourcesSection.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-29T22:20:37Z",
+      "side": 1,
+      "message": "I redid the code but I think the old version was better. revealAndSelect needs to be called anyways for the tree to reveal the tree item. I can call the showView - but at this point we know it will be a noop.",
+      "parentUuid": "535d8829_6273e189",
+      "range": {
+        "startLine": 334,
+        "startChar": 26,
+        "endLine": 334,
+        "endChar": 41
+      },
+      "revId": "4b6312f6d21613062f0a11f910683a0c07ffa051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
