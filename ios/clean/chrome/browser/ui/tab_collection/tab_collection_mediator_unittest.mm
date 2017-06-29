@@ -46,7 +46,7 @@ class TabCollectionMediatorTest : public PlatformTest {
     auto web_state = base::MakeUnique<web::TestWebState>();
     GURL url("http://test/" + std::to_string(index));
     web_state->SetCurrentURL(url);
-    web_state_list_->InsertWebState(index, std::move(web_state));
+    web_state_list_->InsertWebState(index, std::move(web_state), false);
   }
 
   web::TestWebState* GetWebStateAt(int index) {

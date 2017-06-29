@@ -68,9 +68,8 @@ class WebContentsMediatorTest : public PlatformTest {
       navigation_manager->SetItemCount(0);
       web_state->SetView([[UIView alloc] init]);
       web_state->SetNavigationManager(std::move(navigation_manager));
-      web_state_list_->InsertWebState(i, std::move(web_state));
+      web_state_list_->InsertWebState(i, std::move(web_state), i == 0);
     }
-    web_state_list_->ActivateWebStateAt(0);
   }
 
   web::TestWebState* GetWebStateAt(int position) {

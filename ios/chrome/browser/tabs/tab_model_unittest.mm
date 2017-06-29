@@ -1096,7 +1096,7 @@ TEST_F(TabModelTest, ParentTabModel) {
   Tab* tab = LegacyTabHelper::GetTabForWebState(web_state.get());
   EXPECT_NSEQ(nil, [tab parentTabModel]);
 
-  [tab_model_ webStateList]->InsertWebState(0, std::move(web_state));
+  [tab_model_ webStateList]->InsertWebState(0, std::move(web_state), false);
   EXPECT_NSEQ(tab_model_, [tab parentTabModel]);
 }
 
@@ -1107,7 +1107,7 @@ TEST_F(TabModelTest, TabCreatedOnInsertion) {
   EXPECT_NSEQ(nil, LegacyTabHelper::GetTabForWebState(web_state.get()));
 
   web::WebState* web_state_ptr = web_state.get();
-  [tab_model_ webStateList]->InsertWebState(0, std::move(web_state));
+  [tab_model_ webStateList]->InsertWebState(0, std::move(web_state), false);
   EXPECT_NSNE(nil, LegacyTabHelper::GetTabForWebState(web_state_ptr));
 }
 

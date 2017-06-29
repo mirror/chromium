@@ -89,10 +89,9 @@ sessions::LiveTab* TabRestoreServiceDelegateImplIOS::AddRestoredTab(
   web_state->GetNavigationManagerImpl().ReplaceSessionHistory(
       std::move(items), selected_navigation);
 
-  WebStateList* web_state_list = [tab_model() webStateList];
-  web_state_list->InsertWebState(tab_index, std::move(web_state));
   // TODO(crbug.com/661636): Handle tab-switch animation somehow...
-  web_state_list->ActivateWebStateAt(tab_index);
+  WebStateList* web_state_list = [tab_model() webStateList];
+  web_state_list->InsertWebState(tab_index, std::move(web_state), true);
   return nullptr;
 }
 

@@ -84,7 +84,7 @@ class OmniboxPerfTest : public PerfTest {
     std::unique_ptr<web::TestNavigationManager> navigation_manager =
         base::MakeUnique<web::TestNavigationManager>();
     web_state->SetNavigationManager(std::move(navigation_manager));
-    web_state_list_->InsertWebState(0, std::move(web_state));
+    web_state_list_->InsertWebState(0, std::move(web_state), false);
 
     // Creates the Toolbar for testing and sizes it to the width of the screen.
     toolbar_model_delegate_.reset(
