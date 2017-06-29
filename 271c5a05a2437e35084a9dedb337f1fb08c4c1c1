@@ -16,6 +16,24 @@
       "revId": "271c5a05a2437e35084a9dedb337f1fb08c4c1c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3e5ad1_7d51c74a",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T22:27:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "540be23d_1a8eac2a",
+      "revId": "271c5a05a2437e35084a9dedb337f1fb08c4c1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
