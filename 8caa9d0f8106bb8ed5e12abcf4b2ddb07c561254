@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a215096c_bed37bc0",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-29T02:38:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5701c966_6bfc9a98",
+      "revId": "8caa9d0f8106bb8ed5e12abcf4b2ddb07c561254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "648a94f0_f4cac32a",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.h",
         "patchSetId": 7
