@@ -39,6 +39,7 @@
 #include "core/dom/NodeComputedStyle.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/svg/SVGDocumentExtensions.h"
 
 namespace blink {
 
@@ -69,6 +70,9 @@ void DocumentAnimations::UpdateAnimations(
     Document& document,
     DocumentLifecycle::LifecycleState required_lifecycle_state,
     Optional<CompositorElementIdSet>& composited_element_ids) {
+  if (document.SvgExtensions())
+    document.AccessSVGExtensions().StartAnimations();
+
   DCHECK(document.Lifecycle().GetState() >= required_lifecycle_state);
 
   if (document.GetCompositorPendingAnimations().Update(

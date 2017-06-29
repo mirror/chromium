@@ -183,6 +183,10 @@ class CORE_EXPORT LocalFrameView final
 
   void SetNeedsUpdateGeometries() { needs_update_geometries_ = true; }
 
+  void SetNeedsIntersectionObservation() {
+    needs_intersection_observation_ = true;
+  }
+
   // Methods for getting/setting the size Blink should use to layout the
   // contents.
   // NOTE: Scrollbar exclusion is based on the LocalFrameView's scrollbars. To
@@ -1206,6 +1210,8 @@ class CORE_EXPORT LocalFrameView final
   bool suppress_adjust_view_size_;
   bool allows_layout_invalidation_after_layout_clean_;
   bool forcing_layout_parent_view_;
+
+  bool needs_intersection_observation_;
 
   Member<ElementVisibilityObserver> visibility_observer_;
 

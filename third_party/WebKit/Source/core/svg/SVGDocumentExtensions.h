@@ -83,6 +83,7 @@ class SVGDocumentExtensions
   // Root SVG elements with relative length descendants.
   HeapHashSet<Member<SVGSVGElement>> relative_length_svg_roots_;
   FloatPoint translate_;
+  bool animations_started_;
 #if DCHECK_IS_ON()
   bool in_relative_length_svg_roots_invalidation_ = false;
 #endif
