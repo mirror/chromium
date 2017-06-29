@@ -34,6 +34,40 @@
       "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb92872_9088e3c8",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-29T01:06:51Z",
+      "side": 1,
+      "message": "Would you add a comment reference to the corresponding spec?",
+      "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac026b2_1a956881",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-29T01:06:51Z",
+      "side": 1,
+      "message": "Would you add a one-line comment describing this member func?",
+      "revId": "d5a946980bd52a34937d86cbd0085bb8c6b529e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
