@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95f8b261_3c2bbf68",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-29T16:22:03Z",
+      "side": 1,
+      "message": "Yes (oops!). Thanks. Have added a test too.",
+      "parentUuid": "8f0efd19_fa5ba6e0",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef6f0d64_a0e80f7c",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f23ff0e3_c0f3e837",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-29T16:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef6f0d64_a0e80f7c",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64c94b08_2195b3fa",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-28T17:26:48Z",
       "side": 1,
       "message": "You should verify that it returns TRUE. It\u0027s theoretically possible for outside actors to modify the preferences that belong to a profile, in which case we\u0027d be dealing with invalid data and/or an unparseable string.",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c757442_ec58cae2",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-29T16:22:03Z",
+      "side": 1,
+      "message": "OK, \u0026 just return base::Time() if it\u0027s FALSE? \n\nI copied this from GetTimeStamp in ContentSettingsPref, which doesn\u0027t check the return value: https://cs.chromium.org/chromium/src/components/content_settings/core/browser/content_settings_pref.cc?l\u003d65 So if what you say is true, shouldn\u0027t we should be checking it there too?",
+      "parentUuid": "64c94b08_2195b3fa",
       "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "188b48ee_e25ea785",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-29T16:22:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5df275b5_31eb3a57",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db2a74c_8029b4b1",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf2aa2f_6ea43acd",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-29T16:22:03Z",
+      "side": 1,
+      "message": "Done. Also added one at the beginning of GetWebsiteSettingLastModified, like in the PrefProvider.",
+      "parentUuid": "2db2a74c_8029b4b1",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2f6e2a3f_75d77caa",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-29T16:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7da4c831_57de245b",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42e23253_502cbd9d",
         "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
         "patchSetId": 4
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ea241f9f_a157e0d6",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-29T16:22:03Z",
+      "side": 1,
+      "message": "I was hoping to avoid having to modifying all the pre-existing tests, which the clock is insignificant for, and this seemed to be the cleanest way. But I could change it and have them all pass in a SimpleTestClock if that\u0027s better?",
+      "parentUuid": "42e23253_502cbd9d",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcbc8eef_ab4f50b6",
         "filename": "chrome/browser/prefs/browser_prefs.cc",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-06-28T17:26:48Z",
       "side": 1,
       "message": "You should check the base::Feature to only register the prefs if it\u0027s necessary. The lifetime of the ScopedFeatureList was probably causing that to fail.",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc27f9f1_615810b9",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-29T16:22:03Z",
+      "side": 1,
+      "message": "Did this but still fails, even with the feature list as a member of the test class :( ???",
+      "parentUuid": "bcbc8eef_ab4f50b6",
       "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
