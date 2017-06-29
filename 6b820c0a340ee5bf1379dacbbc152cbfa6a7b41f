@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "870d0ee1_62ef4561",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-29T15:41:01Z",
+      "side": 1,
+      "message": "super-nit (which wasn\u0027t apparent to me before this last refactor, sorry), this fetch is an out-of-line function call that we can move past the fast checks:\n\nif (LIKELY(!category_group_enabled ||\n           !RuntimeEnabledFeatures::BlinkRuntimeCallStatsEnabled()))\n  return;\n\nRuntimeCallStats* stats \u003d RuntimeCallStats::From(isolate);\nif (!stats-\u003eInUse()) {\n  stats_ \u003d stats;\n  AddBeginTraceEvent();\n}\n\nApologies for being so picky. :)",
+      "revId": "6b820c0a340ee5bf1379dacbbc152cbfa6a7b41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c008c463_b0f3cbbb",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-29T15:41:01Z",
+      "side": 1,
+      "message": "braces aren\u0027t needed for one-line if statement body, but I don\u0027t feel strongly",
+      "revId": "6b820c0a340ee5bf1379dacbbc152cbfa6a7b41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
