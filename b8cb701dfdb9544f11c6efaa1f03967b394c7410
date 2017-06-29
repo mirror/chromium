@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ead6cd40_70e742cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-29T16:09:45Z",
+      "side": 1,
+      "message": "Comment was stale before even being committed :P. Updated it, and would rather not enumerate all the cases where this could happen as that\u0027s begging to become stale.",
+      "parentUuid": "20569cf5_946d31c0",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b084eb7e_d19dc683",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fa6a87_7826bb0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-29T16:09:45Z",
+      "side": 1,
+      "message": "This is pretty common (https://cs.chromium.org/search/?q\u003db%5C/%5B0-9%5D%7B6%7D\u0026type\u003dcs). Would rather avoid duplicate bugs.",
+      "parentUuid": "b084eb7e_d19dc683",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0963b06a_1cab33f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-29T16:09:45Z",
+      "side": 1,
+      "message": "The comment above already states that we have to wait for DON completion to allow presentation. Is that not clear enough?",
+      "parentUuid": "91e00687_dab9394b",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02d84d27_12a73401",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9a88c2b9_4917a481",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-29T16:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02d84d27_12a73401",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f2007d9_7f25c256",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34e5b62_c00320ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-29T16:09:45Z",
+      "side": 1,
+      "message": "We\u0027re doing this because pausing means we\u0027re probably going to DON, and even if we aren\u0027t going to DON, we don\u0027t want to start the webVR presentation while paused :P\n\nI don\u0027t understand your question though.",
+      "parentUuid": "8f2007d9_7f25c256",
+      "revId": "b8cb701dfdb9544f11c6efaa1f03967b394c7410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
