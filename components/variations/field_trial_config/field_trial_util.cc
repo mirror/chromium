@@ -9,13 +9,19 @@
 #include <string>
 #include <vector>
 
+#include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/metrics/field_trial.h"
 #include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
+#include "cc/base/switches.h"
 #include "components/variations/field_trial_config/fieldtrial_testing_config.h"
+#include "components/variations/service/variations_service.h"
 #include "components/variations/variations_associated_data.h"
+#include "components/variations/variations_http_header_provider.h"
+#include "components/variations/variations_switches.h"
+#include "content/public/common/content_switches.h"
 #include "net/base/escape.h"
 
 namespace variations {
@@ -150,3 +156,85 @@ void AssociateDefaultFieldTrialConfig(base::FeatureList* feature_list) {
 }
 
 }  // namespace variations
+
+bool SetupFieldTrialsCommon(
+    std::unique_ptr<base::FieldTrialList>& field_trial_list,
+    std::unique_ptr<base::FeatureList>& feature_list,
+    std::vector<std::string>& variation_ids,
+    variations::VariationsSeedManager* variations_seed_manager,
+    variations::PlatformFieldTrials* platform_field_trials) {
+  // Initialize FieldTrialList to support FieldTrials that use one-time
+  // randomization.
+  DCHECK(!field_trial_list);
+  field_trial_list.reset(new base::FieldTrialList(
+      variations_seed_manager->CreateLowEntropyProvider()));
+
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(variations::switches::kEnableBenchmarking) ||
+      command_line->HasSwitch(cc::switches::kEnableGpuBenchmarking)) {
+    base::FieldTrial::EnableBenchmarking();
+  }
+
+  if (command_line->HasSwitch(variations::switches::kForceFieldTrialParams)) {
+    bool result =
+        variations::AssociateParamsFromString(command_line->GetSwitchValueASCII(
+            variations::switches::kForceFieldTrialParams));
+    CHECK(result) << "Invalid --"
+                  << variations::switches::kForceFieldTrialParams
+                  << " list specified.";
+  }
+
+  // Ensure any field trials specified on the command line are initialized.
+  if (command_line->HasSwitch(switches::kForceFieldTrials)) {
+    std::set<std::string> unforceable_field_trials;
+#if defined(OFFICIAL_BUILD)
+    unforceable_field_trials.insert("SettingsEnforcement");
+#endif  // defined(OFFICIAL_BUILD)
+
+    // Create field trials without activating them, so that this behaves in
+    // a consistent manner with field trials created from the server.
+    bool result = base::FieldTrialList::CreateTrialsFromString(
+        command_line->GetSwitchValueASCII(switches::kForceFieldTrials),
+        unforceable_field_trials);
+    CHECK(result) << "Invalid --" << switches::kForceFieldTrials
+                  << " list specified.";
+  }
+
+  variations::VariationsHttpHeaderProvider* http_header_provider =
+      variations::VariationsHttpHeaderProvider::GetInstance();
+  bool result = http_header_provider->ForceVariationIds(
+      command_line->GetSwitchValueASCII(
+          variations::switches::kForceVariationIds),
+      &variation_ids);
+  CHECK(result) << "Invalid list of variation ids specified (either in --"
+                << variations::switches::kForceVariationIds
+                << " or in chrome://flags)";
+
+  feature_list->InitializeFromCommandLine(
+      command_line->GetSwitchValueASCII(switches::kEnableFeatures),
+      command_line->GetSwitchValueASCII(switches::kDisableFeatures));
+
+#if defined(FIELDTRIAL_TESTING_ENABLED)
+  if (!command_line->HasSwitch(
+          variations::switches::kDisableFieldTrialTestingConfig) &&
+      !command_line->HasSwitch(switches::kForceFieldTrials) &&
+      !command_line->HasSwitch(variations::switches::kVariationsServerURL)) {
+    variations::AssociateDefaultFieldTrialConfig(feature_list.get());
+  }
+#endif  // defined(FIELDTRIAL_TESTING_ENABLED)
+
+  bool has_seed =
+      (variations_seed_manager &&
+       variations_seed_manager->CreateTrialsFromSeed(feature_list.get()));
+
+  platform_field_trials->SetupFeatureControllingFieldTrials(has_seed,
+                                                            feature_list.get());
+
+  base::FeatureList::SetInstance(std::move(feature_list));
+
+  // This must be called after |local_state_| is initialized.
+  platform_field_trials->SetupFieldTrials();
+
+  return has_seed;
+}

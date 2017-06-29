@@ -7,9 +7,11 @@
 #include "android_webview/browser/aw_browser_context.h"
 #include "android_webview/browser/aw_browser_terminator.h"
 #include "android_webview/browser/aw_content_browser_client.h"
+#include "android_webview/browser/aw_metrics_service_client.h"
 #include "android_webview/browser/aw_result_codes.h"
 #include "android_webview/browser/aw_safe_browsing_config_helper.h"
 #include "android_webview/browser/deferred_gpu_command_service.h"
+#include "android_webview/browser/metrics/variations/aw_variations_service_client.h"
 #include "android_webview/browser/net/aw_network_change_notifier_factory.h"
 #include "android_webview/common/aw_descriptors.h"
 #include "android_webview/common/aw_paths.h"
@@ -20,18 +22,37 @@
 #include "base/android/build_info.h"
 #include "base/android/locale_utils.h"
 #include "base/android/memory_pressure_listener_android.h"
+#include "base/base_switches.h"
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/files/file_path.h"
+#include "base/guid.h"
 #include "base/i18n/rtl.h"
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/field_trial.h"
 #include "base/path_service.h"
+#include "cc/base/switches.h"
 #include "components/crash/content/browser/crash_dump_manager_android.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/tracing/common/tracing_switches.h"
+#include "components/variations/caching_permuted_entropy_provider.h"
+#include "components/variations/client_filterable_state.h"
+#include "components/variations/field_trial_config/field_trial_util.h"
+#include "components/variations/proto/variations_seed.pb.h"
+#include "components/variations/service/ui_string_overrider.h"
+#include "components/variations/service/variations_seed_manager.h"
+#include "components/variations/service/variations_service.h"
+#include "components/variations/variations_associated_data.h"
+#include "components/variations/variations_http_header_provider.h"
+#include "components/variations/variations_seed_store.h"
+#include "components/variations/variations_switches.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/main_function_params.h"
 #include "content/public/common/result_codes.h"
 #include "device/geolocation/access_token_store.h"
 #include "device/geolocation/geolocation_delegate.h"
@@ -100,6 +121,32 @@ void AwBrowserMainParts::PreEarlyInitialization() {
   base::MessageLoopForUI::current()->Start();
 }
 
+std::unique_ptr<const base::FieldTrial::EntropyProvider> GetEntropyProvider() {
+  std::string guid = AwMetricsServiceClient::GetOrCreateGUID();
+
+  return std::unique_ptr<const base::FieldTrial::EntropyProvider>(
+      new metrics::SHA1EntropyProvider(guid));
+}
+
+void AwBrowserMainParts::SetupFieldTrials() {
+  std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
+  std::vector<std::string> variation_ids;
+
+  // TODO(kmilka):  initialize local_state
+  local_state = nullptr;
+
+  // TODO(kmilka):  properly initialize these things
+  variations::UIStringOverrider ui_string_overrider;
+  std::unique_ptr<AwVariationsServiceClient> aw_variations_service_client(
+      new AwVariationsServiceClient());
+  variations_seed_manager = new variations::VariationsSeedManager(
+      local_state, std::move(aw_variations_service_client),
+      ui_string_overrider);
+
+  SetupFieldTrialsCommon(field_trial_list_, feature_list, variation_ids,
+                         variations_seed_manager, &webview_field_trials);
+}
+
 int AwBrowserMainParts::PreCreateThreads() {
   ui::SetLocalePaksStoredInApk(true);
   std::string locale = ui::ResourceBundle::InitSharedInstanceWithLocale(
@@ -149,6 +196,8 @@ int AwBrowserMainParts::PreCreateThreads() {
     breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
         base::MakeUnique<AwBrowserTerminator>());
   }
+
+  SetupFieldTrials();
 
   return content::RESULT_CODE_NORMAL_EXIT;
 }

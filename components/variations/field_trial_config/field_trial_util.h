@@ -6,6 +6,9 @@
 #define COMPONENTS_VARIATIONS_FIELD_TRIAL_CONFIG_FIELD_TRIAL_UTIL_H_
 
 #include <string>
+#include "base/metrics/field_trial.h"
+#include "components/variations/platform_field_trials.h"
+#include "components/variations/service/variations_service.h"
 
 namespace base {
 class FeatureList;
@@ -34,5 +37,12 @@ void AssociateParamsFromFieldTrialConfig(const FieldTrialTestingConfig& config,
 void AssociateDefaultFieldTrialConfig(base::FeatureList* feature_list);
 
 }  // namespace variations
+
+bool SetupFieldTrialsCommon(
+    std::unique_ptr<base::FieldTrialList>& field_trial_list,
+    std::unique_ptr<base::FeatureList>& feature_list,
+    std::vector<std::string>& variation_ids,
+    variations::VariationsSeedManager* variations_seed_manager,
+    variations::PlatformFieldTrials* platform_field_trials);
 
 #endif  // COMPONENTS_VARIATIONS_FIELD_TRIAL_CONFIG_FIELD_TRIAL_UTIL_H_

@@ -6,6 +6,8 @@ static_library("service") {
   sources = [
     "ui_string_overrider.cc",
     "ui_string_overrider.h",
+    "variations_seed_manager.cc",
+    "variations_seed_manager.h",
     "variations_service.cc",
     "variations_service.h",
     "variations_service_client.h",
