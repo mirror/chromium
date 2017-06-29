@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bf933d9_1f92c85b",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-29T02:07:58Z",
+      "side": 1,
+      "message": "Okay, so if there is no audio output device, we can\u0027t have desktop audio capture. This makes sense. :)\n\nHowever, what I was asking about in the last code review: For loopback devices, shouldn\u0027t their audio parameters match the default audio output parameters? Rationale: The output audio is being looped-back as an audio input. If the format doesn\u0027t match, then Chrome has to resample the audio somewhere (possibly more than once, if it has to resample-back again).\n\nThis is why I was suggesting, for loopback devices only, there should be:\n\n  return audio_manager-\u003eGetOutputStreamParameters(default device id);\n\nOr, maybe we should make sure all platform AudioManager impls return the right parameters when GetInputStreamParameters(loopback device id) is called? Currently, it seems that this triggers fallback logic (e.g., audio_manager_win.cc:287); and the hard-coded 48kHz there might not match the speaker device\u0027s sampling rate.\n\nOr, am I misunderstanding something?",
+      "range": {
+        "startLine": 172,
+        "startChar": 1,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
