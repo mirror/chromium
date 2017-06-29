@@ -311,9 +311,14 @@ bool ResourceFetcher::ResourceNeedsLoad(Resource* resource,
   // preload.
   if (resource->GetType() == Resource::kFont && !params.IsLinkPreload())
     return false;
+
+  // Defer loading images either when:
+  // - images are disabled
+  // - instructed to defer loading images from network
   if (resource->GetType() == Resource::kImage &&
       ShouldDeferImageLoad(resource->Url()))
     return false;
+
   return policy != kUse || resource->StillNeedsLoad();
 }
 
@@ -632,7 +637,6 @@ Resource* ResourceFetcher::RequestResource(
   TRACE_EVENT1("blink", "ResourceFetcher::requestResource", "url",
                UrlForTraceEvent(params.Url()));
 
-  Resource* resource = nullptr;
   ResourceRequestBlockedReason blocked_reason =
       ResourceRequestBlockedReason::kNone;
 
@@ -655,40 +659,46 @@ Resource* ResourceFetcher::RequestResource(
   if (!archive_ && resource_request.Url().ProtocolIs(kContentIdScheme))
     return nullptr;
 
+  Resource* resource = nullptr;
+  RevalidationPolicy policy = kLoad;
+
   bool is_data_url = resource_request.Url().ProtocolIsData();
   bool is_static_data = is_data_url || substitute_data.IsValid() || archive_;
   if (is_static_data) {
     resource = ResourceForStaticData(params, factory, substitute_data);
-    // Abort the request if the archive doesn't contain the resource, except in
-    // the case of data URLs which might have resources such as fonts that need
-    // to be decoded only on demand. These data URLs are allowed to be
-    // processed using the normal ResourceFetcher machinery.
-    if (!resource && !is_data_url && archive_)
+    if (resource) {
+      policy = DetermineRevalidationPolicy(factory.GetType(), params, resource,
+                                           true);
+      TRACE_EVENT_INSTANT1(
+          "blink", "ResourceFetcher::DetermineRevalidationPolicy",
+          TRACE_EVENT_SCOPE_THREAD, "revalidationPolicy", policy);
+    } else if (!is_data_url && archive_) {
+      // Abort the request if the archive doesn't contain the resource, except
+      // in the case of data URLs which might have resources such as fonts that
+      // need to be decoded only on demand. These data URLs are allowed to be
+      // processed using the normal ResourceFetcher machinery.
       return nullptr;
+    }
   }
-  RevalidationPolicy policy = kLoad;
-  bool preload_found = false;
+
   if (!resource) {
     resource = MatchPreload(params, factory.GetType());
     if (resource) {
-      preload_found = true;
       policy = kUse;
-      // If |param| is for a blocking resource and a preloaded resource is
+      // If |params| is for a blocking resource and a preloaded resource is
       // found, we may need to make it block the onload event.
       MakePreloadedResourceBlockOnloadIfNeeded(resource, params);
-    }
-  }
-  if (!preload_found) {
-    if (!resource && IsMainThread()) {
+    } else if (IsMainThread()) {
       resource =
           GetMemoryCache()->ResourceForURL(params.Url(), GetCacheIdentifier());
+      if (resource) {
+        policy = DetermineRevalidationPolicy(factory.GetType(), params,
+                                             resource, is_static_data);
+        TRACE_EVENT_INSTANT1(
+            "blink", "ResourceFetcher::DetermineRevalidationPolicy",
+            TRACE_EVENT_SCOPE_THREAD, "revalidationPolicy", policy);
+      }
     }
-
-    policy = DetermineRevalidationPolicy(factory.GetType(), params, resource,
-                                         is_static_data);
-    TRACE_EVENT_INSTANT1(
-        "blink", "ResourceFetcher::determineRevalidationPolicy",
-        TRACE_EVENT_SCOPE_THREAD, "revalidationPolicy", policy);
   }
 
   UpdateMemoryCacheStats(resource, policy, params, factory, is_static_data);
@@ -921,7 +931,10 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
     return resource;
   }
 
-  if (!IsReusableAlsoForPreloading(params, resource, false))
+  if (!IsReusableResourceCommon(params, resource))
+    return nullptr;
+
+  if (!resource->CanReuse(params))
     return nullptr;
 
   resource->DecreasePreloadCount();
@@ -949,23 +962,19 @@ void ResourceFetcher::InsertAsPreloadIfNecessary(Resource* resource,
   }
 }
 
-bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
-                                                  Resource* existing_resource,
-                                                  bool is_static_data) const {
+bool ResourceFetcher::IsReusableResourceCommon(
+    const FetchParameters& params,
+    Resource* existing_resource) const {
   const ResourceRequest& request = params.GetResourceRequest();
 
-  // Do not load from cache if images are not enabled. There are two general
-  // cases:
+  // When images are disabled, don't ever load images, even if the image is
+  // cached or it is a data: url.
   //
-  // 1. Images are disabled. Don't ever load images, even if the image is cached
-  // or it is a data: url. In this case, we "Reload" the image, then defer it
-  // with resourceNeedsLoad() so that it never actually goes to the network.
+  // This condition must be placed before the condition on |is_static_data| to
+  // prevent loading a data: URL.
   //
-  // 2. Images are enabled, but not loaded automatically. In this case, we will
-  // Use cached resources or data: urls, but will similarly fall back to a
-  // deferred network load if we don't have the data available without a network
-  // request. We check allowImage() here, which is affected by m_imagesEnabled
-  // but not m_autoLoadImages, in order to allow for this differing behavior.
+  // In this case, remove the image from the memory cache, create a new
+  // resource but defer loading (this is done by ResourceNeedsLoad()).
   //
   // TODO(japhet): Can we get rid of one of these settings?
   if (existing_resource->GetType() == Resource::kImage &&
@@ -973,7 +982,7 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
     return false;
   }
 
-  // Never use cache entries for downloadToFile / useStreamOnResponse requests.
+  // Never use cache entries for DownloadToFile / UseStreamOnResponse requests.
   // The data will be delivered through other paths.
   if (request.DownloadToFile() || request.UseStreamOnResponse())
     return false;
@@ -988,10 +997,7 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
     return false;
   }
 
-  if (is_static_data)
-    return true;
-
-  return existing_resource->CanReuse(params);
+  return true;
 }
 
 ResourceFetcher::RevalidationPolicy
@@ -1001,9 +1007,6 @@ ResourceFetcher::DetermineRevalidationPolicy(
     Resource* existing_resource,
     bool is_static_data) const {
   const ResourceRequest& request = fetch_params.GetResourceRequest();
-
-  if (!existing_resource)
-    return kLoad;
 
   // If the existing resource is loading and the associated fetcher is not equal
   // to |this|, we must not use the resource. Otherwise, CSP violation may
@@ -1045,16 +1048,15 @@ ResourceFetcher::DetermineRevalidationPolicy(
     return kReload;
   }
 
-  // If |existing_resource| is not reusable as a preloaded resource, it should
-  // not be reusable as a normal resource as well.
-  if (!IsReusableAlsoForPreloading(fetch_params, existing_resource,
-                                   is_static_data)) {
+  if (!IsReusableResourceCommon(fetch_params, existing_resource))
     return kReload;
-  }
 
   // If resource was populated from a SubstituteData load or data: url, use it.
   if (is_static_data)
     return kUse;
+
+  if (!existing_resource->CanReuse(fetch_params))
+    return kReload;
 
   // Don't reload resources while pasting.
   if (allow_stale_resources_)
