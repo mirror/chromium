@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cec6d999_adc11a56",
+        "filename": "mojo/public/js/new_bindings/base.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-29T21:59:54Z",
+      "side": 1,
+      "message": "Please consider adding to the Error about where to look for more info: \"... Please see config variable mojo.config.autoLoadMojomDeps for more details.\".",
+      "revId": "fbd150b60d8d2ba1bdab2d7be84bd4e273c0c3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
