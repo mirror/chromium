@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.test.filters.SmallTest;
 import android.view.ViewGroup;
+import android.webkit.ValueCallback;
 
 import org.chromium.android_webview.AwBrowserContext;
 import org.chromium.android_webview.AwContents;
@@ -17,10 +18,13 @@ import org.chromium.android_webview.AwContents.DependencyFactory;
 import org.chromium.android_webview.AwContents.InternalAccessDelegate;
 import org.chromium.android_webview.AwContents.NativeDrawGLFunctorFactory;
 import org.chromium.android_webview.AwContentsClient;
+import org.chromium.android_webview.AwContentsClient.AwWebResourceRequest;
+import org.chromium.android_webview.AwSafeBrowsingConversionHelper;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSwitches;
 import org.chromium.android_webview.AwWebContentsObserver;
 import org.chromium.android_webview.ErrorCodeConversionHelper;
+import org.chromium.android_webview.SafeBrowsingAction;
 import org.chromium.android_webview.test.TestAwContentsClient.OnReceivedError2Helper;
 import org.chromium.android_webview.test.util.GraphicsTestUtils;
 import org.chromium.base.ThreadUtils;
@@ -36,6 +40,7 @@ import org.chromium.content_public.browser.WebContents;
 import org.chromium.net.test.EmbeddedTestServer;
 
 import java.util.Arrays;
+import java.util.concurrent.Callable;
 
 /**
  * Test suite for SafeBrowsing.
@@ -43,7 +48,7 @@ import java.util.Arrays;
  * Ensures that interstitials can be successfully created for malicous pages.
  */
 public class SafeBrowsingTest extends AwTestBase {
-    private TestAwContentsClient mContentsClient;
+    private SafeBrowsingContentsClient mContentsClient;
     private AwTestContainerView mContainerView;
     private MockAwContents mAwContents;
     private TestAwWebContentsObserver mWebContentsObserver;
@@ -103,7 +108,8 @@ public class SafeBrowsingTest extends AwTestBase {
             final String metadata;
             Arrays.sort(threatsOfInterest);
 
-            // TODO(ntfschr): remove this assert once we support UwS warnings (crbug/729272)
+            // TODO(ntfschr): remove this assert once we support Unwanted Software warnings
+            // (crbug/729272)
             assertEquals(Arrays.binarySearch(threatsOfInterest, UNWANTED_SOFTWARE_CODE), -1);
 
             if (uri.endsWith(PHISHING_HTML_PATH)
@@ -192,6 +198,35 @@ public class SafeBrowsingTest extends AwTestBase {
         }
     }
 
+    /**
+     * An AwContentsClient with customizable behavior for onSafeBrowsingHit().
+     */
+    private static class SafeBrowsingContentsClient extends TestAwContentsClient {
+        private AwWebResourceRequest mLastRequest;
+        private int mLastThreatType;
+        private int mAction = SafeBrowsingAction.SHOW_INTERSTITIAL;
+
+        @Override
+        public void onSafeBrowsingHit(
+                AwWebResourceRequest request, int threatType, ValueCallback<Integer> callback) {
+            mLastRequest = request;
+            mLastThreatType = threatType;
+            callback.onReceiveValue(mAction);
+        }
+
+        public AwWebResourceRequest getLastRequest() {
+            return mLastRequest;
+        }
+
+        public int getLastThreatType() {
+            return mLastThreatType;
+        }
+
+        public void setSafeBrowsingAction(int action) {
+            mAction = action;
+        }
+    }
+
     private static class SafeBrowsingDependencyFactory extends AwTestBase.TestDependencyFactory {
         @Override
         public AwContents createAwContents(AwBrowserContext browserContext, ViewGroup containerView,
@@ -207,7 +242,8 @@ public class SafeBrowsingTest extends AwTestBase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        mContentsClient = new TestAwContentsClient();
+        mContentsClient = new SafeBrowsingContentsClient();
+
         mContainerView = createAwTestContainerViewOnMainSync(
                 mContentsClient, false, new SafeBrowsingDependencyFactory());
         mAwContents = (MockAwContents) mContainerView.getAwContents();
@@ -296,8 +332,8 @@ public class SafeBrowsingTest extends AwTestBase {
     @Feature({"AndroidWebView"})
     @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
     public void testSafeBrowsingDoesNotBlockUnwantedSoftwarePages() throws Throwable {
-        // TODO(ntfschr): this is a temporary check until we add support for UwS warnings
-        // (crbug/729272)
+        // TODO(ntfschr): this is a temporary check until we add support for Unwanted Software
+        // warnings (crbug/729272)
         loadGreenPage();
         final String responseUrl = mTestServer.getURL(UNWANTED_SOFTWARE_HTML_PATH);
         loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), responseUrl);
@@ -577,5 +613,121 @@ public class SafeBrowsingTest extends AwTestBase {
         waitForVisualStateCallback(mAwContents);
         assertEquals("Target page should be visible", PHISHING_PAGE_BACKGROUND_COLOR,
                 GraphicsTestUtils.getPixelColorAtCenterOfView(mAwContents, mContainerView));
+    }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testSafeBrowsingOnSafeBrowsingHitShowInterstitial() throws Throwable {
+        mContentsClient.setSafeBrowsingAction(SafeBrowsingAction.SHOW_INTERSTITIAL);
+        loadGreenPage();
+        int count = mWebContentsObserver.getAttachedInterstitialPageHelper().getCallCount();
+        final String responseUrl = mTestServer.getURL(PHISHING_HTML_PATH);
+        loadUrlAsync(mAwContents, responseUrl);
+        mWebContentsObserver.getAttachedInterstitialPageHelper().waitForCallback(count);
+        assertTrue("Original page should not be showing",
+                GREEN_PAGE_BACKGROUND_COLOR
+                        != GraphicsTestUtils.getPixelColorAtCenterOfView(
+                                   mAwContents, mContainerView));
+        assertTrue("Target page should not be visible",
+                PHISHING_PAGE_BACKGROUND_COLOR
+                        != GraphicsTestUtils.getPixelColorAtCenterOfView(
+                                   mAwContents, mContainerView));
+        // Assume that we are rendering the interstitial, since we see neither the previous page nor
+        // the target page
+
+        // Check onSafeBrowsingHit arguments
+        assertEquals(responseUrl, mContentsClient.getLastRequest().url);
+        assertEquals(AwSafeBrowsingConversionHelper.SAFE_BROWSING_THREAT_PHISHING,
+                mContentsClient.getLastThreatType());
+    }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testSafeBrowsingOnSafeBrowsingHitProceed() throws Throwable {
+        mContentsClient.setSafeBrowsingAction(SafeBrowsingAction.PROCEED);
+        loadGreenPage();
+        int pageFinishedCount = mContentsClient.getOnPageFinishedHelper().getCallCount();
+        final String responseUrl = mTestServer.getURL(PHISHING_HTML_PATH);
+        loadUrlAsync(mAwContents, responseUrl);
+        mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
+        waitForVisualStateCallback(mAwContents);
+        assertEquals("Target page should be visible", PHISHING_PAGE_BACKGROUND_COLOR,
+                GraphicsTestUtils.getPixelColorAtCenterOfView(mAwContents, mContainerView));
+
+        // Check onSafeBrowsingHit arguments
+        assertEquals(responseUrl, mContentsClient.getLastRequest().url);
+        assertEquals(AwSafeBrowsingConversionHelper.SAFE_BROWSING_THREAT_PHISHING,
+                mContentsClient.getLastThreatType());
+    }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testSafeBrowsingOnSafeBrowsingHitBackToSafety() throws Throwable {
+        mContentsClient.setSafeBrowsingAction(SafeBrowsingAction.BACK_TO_SAFETY);
+        loadGreenPage();
+        final String responseUrl = mTestServer.getURL(MALWARE_HTML_PATH);
+        loadUrlAsync(mAwContents, responseUrl);
+        OnReceivedError2Helper errorHelper = mContentsClient.getOnReceivedError2Helper();
+        int errorCount = errorHelper.getCallCount();
+        errorHelper.waitForCallback(errorCount);
+        assertEquals(
+                ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE, errorHelper.getError().errorCode);
+        assertEquals("Network error is for the malicious page", responseUrl,
+                errorHelper.getRequest().url);
+
+        assertEquals("Original page should be showing", GREEN_PAGE_BACKGROUND_COLOR,
+                GraphicsTestUtils.getPixelColorAtCenterOfView(mAwContents, mContainerView));
+
+        // Check onSafeBrowsingHit arguments
+        assertEquals(responseUrl, mContentsClient.getLastRequest().url);
+        assertEquals(AwSafeBrowsingConversionHelper.SAFE_BROWSING_THREAT_MALWARE,
+                mContentsClient.getLastThreatType());
+    }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testSafeBrowsingOnSafeBrowsingHitForSubresource() throws Throwable {
+        mContentsClient.setSafeBrowsingAction(SafeBrowsingAction.BACK_TO_SAFETY);
+        loadGreenPage();
+        final String responseUrl = mTestServer.getURL(IFRAME_HTML_PATH);
+        final String subresourceUrl = mTestServer.getURL(MALWARE_HTML_PATH);
+        int pageFinishedCount = mContentsClient.getOnPageFinishedHelper().getCallCount();
+        loadUrlAsync(mAwContents, responseUrl);
+
+        // We'll successfully load IFRAME_HTML_PATH, and will soon call onSafeBrowsingHit
+        mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
+
+        // Wait for the onSafeBrowsingHit to call BACK_TO_SAFETY and navigate back
+        pollUiThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return GREEN_PAGE_BACKGROUND_COLOR
+                        == GraphicsTestUtils.getPixelColorAtCenterOfView(
+                                   mAwContents, mContainerView);
+            }
+        });
+
+        // Check onSafeBrowsingHit arguments
+        assertFalse(mContentsClient.getLastRequest().isMainFrame);
+        assertEquals(subresourceUrl, mContentsClient.getLastRequest().url);
+        assertEquals(AwSafeBrowsingConversionHelper.SAFE_BROWSING_THREAT_MALWARE,
+                mContentsClient.getLastThreatType());
+
+        mContentsClient.setSafeBrowsingAction(SafeBrowsingAction.PROCEED);
+        pageFinishedCount = mContentsClient.getOnPageFinishedHelper().getCallCount();
+        loadUrlAsync(mAwContents, responseUrl);
+        mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
+        waitForVisualStateCallback(mAwContents);
+        assertEquals("Target page should be visible", IFRAME_EMBEDDER_BACKGROUND_COLOR,
+                GraphicsTestUtils.getPixelColorAtCenterOfView(mAwContents, mContainerView));
+
+        assertFalse(mContentsClient.getLastRequest().isMainFrame);
+        assertEquals(subresourceUrl, mContentsClient.getLastRequest().url);
+        assertEquals(AwSafeBrowsingConversionHelper.SAFE_BROWSING_THREAT_MALWARE,
+                mContentsClient.getLastThreatType());
     }
 }
