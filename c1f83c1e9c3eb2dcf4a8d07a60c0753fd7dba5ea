@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9cf2c8f_b4f9bd56",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-06-29T18:07:55Z",
+      "side": 0,
+      "message": "I don\u0027t think we should remove that flag in general; if we know based on usage:SCANOUT that we will write to a buffer with the GPU, then that flag is certainly required. Since that is the way Chrome operates, I am curious why it should be removed.",
+      "revId": "c1f83c1e9c3eb2dcf4a8d07a60c0753fd7dba5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
