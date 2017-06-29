@@ -36,6 +36,7 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/SubtreeLayoutScope.h"
 #include "core/paint/TableSectionPainter.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/HashSet.h"
 
 namespace blink {
@@ -691,7 +692,6 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
         row_pos_[spanning_cell_end_index] +=
             spanning_rows_height.spanning_cell_height_ignoring_border_spacing +
             BorderSpacingForRow(spanning_cell_end_index - 1);
-
       extra_height_to_propagate =
           row_pos_[spanning_cell_end_index] - original_before_position;
       continue;
@@ -767,6 +767,13 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
   }
 }
 
+bool LayoutTableSection::RowHasVisibilityCollapse(unsigned row) const {
+  return (RuntimeEnabledFeatures::VisibilityCollapseEnabled() &&
+          ((grid_[row].row &&
+            grid_[row].row->Style()->Visibility() == EVisibility::kCollapse) ||
+           Style()->Visibility() == EVisibility::kCollapse));
+}
+
 // Find out the baseline of the cell
 // If the cell's baseline is more than the row's baseline then the cell's
 // baseline become the row's baseline and if the row's baseline goes out of the
@@ -820,6 +827,8 @@ int LayoutTableSection::CalcRowLogicalHeight() {
 
   row_pos_.resize(grid_.size() + 1);
   row_pos_[0] = VBorderSpacingBeforeFirstRow();
+
+  row_collapsed_height_.resize(grid_.size());
 
   SpanningLayoutTableCells row_span_cells;
 
@@ -908,6 +917,24 @@ int LayoutTableSection::CalcRowLogicalHeight() {
     DistributeRowSpanHeightToRows(row_span_cells);
 
   DCHECK(!NeedsLayout());
+
+  // Collapsed rows are dealt with after distributing row span height to rows.
+  // This is because the distribution calculations should be as if the row were
+  // not collapsed.
+  for (unsigned r = 0; r < grid_.size(); r++) {
+    if (RowHasVisibilityCollapse(r)) {
+      // Update vector that keeps track of collapsed height of each row.
+      row_collapsed_height_[r] = row_pos_[r + 1] - row_pos_[r];
+
+      // Move all the row positions back by one to accomodate the collapsed
+      // height.
+      for (unsigned shrink = grid_.size(); shrink > r + 1; shrink--)
+        row_pos_[shrink] = row_pos_[shrink - 1];
+
+      // If the row or row group is collapsed, ignore row height.
+      row_pos_[r + 1] = row_pos_[r];
+    }
+  }
 
   return row_pos_[grid_.size()];
 }
@@ -1183,7 +1210,15 @@ void LayoutTableSection::LayoutRows() {
         cell_vertical_align = EVerticalAlign::kTop;
       else
         cell_vertical_align = cell->Style()->VerticalAlign();
-      cell->ComputeIntrinsicPadding(r_height, cell_vertical_align, layouter);
+
+      // Calculate total collapsed height affecting one cell.
+      int collapsed_height = 0;
+      for (unsigned spanning = r; spanning < cell->RowSpan() + r; spanning++) {
+        collapsed_height += row_collapsed_height_[spanning];
+      }
+
+      cell->ComputeIntrinsicPadding(collapsed_height, r_height,
+                                    cell_vertical_align, layouter);
 
       LayoutRect old_cell_rect = cell->FrameRect();
 
@@ -1280,6 +1315,7 @@ void LayoutTableSection::ComputeOverflowFromDescendants() {
       // TODO(wangxianzhu): When implementing row as DisplayItemClient of
       // collapsed borders, the following logic should be replaced by
       // invalidation of rows on section border style change. crbug.com/663208.
+
       if (const auto* collapsed_borders = cell->GetCollapsedBorderValues()) {
         LayoutRect rect = cell->RectForOverflowPropagation(
             collapsed_borders->LocalVisualRect());
