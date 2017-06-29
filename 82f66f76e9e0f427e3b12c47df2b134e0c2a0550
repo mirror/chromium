@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "6cc72932_fb990a87",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-29T19:52:55Z",
+      "side": 1,
+      "message": "|kPreloadReferenced| now means the preloaded Resource is matched with an actual request and is no longer in |preloads_|, and thus it is more like |kNotPreload| rather than |kPreloadNotReferenced|.\nSo,\n- Can we merge kNotPreload and kPreloadReferenced into one state? (just curious; leaving these two separated is also good if it is helpful for e.g. statistics and reporting, but I expect these two should behave in the same way otherwise)\n- If not, how about renaming enums so that |kPreloadReferenced| and |kNotPreload| looks similar?",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 22
+      },
+      "revId": "82f66f76e9e0f427e3b12c47df2b134e0c2a0550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1a7b61a_719d0a67",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
         "patchSetId": 16
