@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2d81253b_1c873fc0",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T09:08:24Z",
+      "side": 1,
+      "message": "Could we still add\n\nDCHECK(!source_code.IsNull());",
+      "parentUuid": "34bb1135_e38ae072",
+      "revId": "8dbf65cae4e8346dff34a17c45a8d00cef70abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "540ecd75_a90e1cff",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 2

@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9c4c58eb_77433348",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-29T09:08:24Z",
+      "side": 1,
+      "message": "I see... how about something like:\n\nString given_source_code \u003d startup_data-\u003esource_code_;\nstd::unique_ptr\u003c...\u003e given_cached_meta_data \u003d startup_data-\u003e...;\n\nand later, right before we eval script:\n\nString source_code \u003d given_source_code;\nstd::unique_ptr\u003c...\u003e cached_meta_data \u003d std::move(given_cached_meta_data);\nif (GetInstalledScriptsManager() \u0026\u0026 ...) {\n  ...\n}",
+      "parentUuid": "f83935a8_0f0aa656",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e816f951_8c27f354",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 4
