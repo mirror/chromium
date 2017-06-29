@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8a1bf77_63332016",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "nit: \"Label for...\"",
+      "range": {
+        "startLine": 1363,
+        "startChar": 0,
+        "endLine": 1363,
+        "endChar": 222
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89515747_1213197b",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "Can you check to see if a font-face is defined anywhere for this?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe35ad93_88c9b5f1",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "Remove - this is unused.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f11e294_c834ba6e",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "nit: Is this necessary? If so, just put the actual value.",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795e1ffd_649f0919",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "Add a description before the @param and @return. Move part of the description below (e.g., the part about how we don\u0027t use cr-network-icon because of the different colors) up to here.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 5
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead034df_4d530f76",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "For the @return, just say something like \"The name of the icon to be used to represent the network\u0027s signal strength.\" The @return should generally be short.",
+      "range": {
+        "startLine": 93,
+        "startChar": 22,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655bb152_829975a4",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "nit: I think if we have an invalid percentage, we should just display the full reception icon. I think it seems weirder to have no icon at all.",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a9fd07_f7cd96e7",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "nit: Use this mapping:\n\n0-24 \u003d\u003d\u003e 0\n25-49 \u003d\u003d\u003e 1\n50-74 \u003d\u003d\u003e 2\n75-99 \u003d\u003d\u003e 3\n100 \u003d\u003d\u003e 4",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 30
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b0c911_9e558ebf",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "nit: Instead of storing the prefix and suffix, just keep a barNumber variable instead of imageName, then return \u0027settings:signal-cellular\u0027 + barNumber + \u0027-bar\u0027.",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 21
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9d5056_cacb435f",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-29T17:28:54Z",
+      "side": 1,
+      "message": "cr-dialog is already used by a lot of other dialogs in the settings page, so we don\u0027t want to change this code since it could cause unwanted changes in other dialogs. You\u0027ll need to move these changes into the connection dialog file instead - sorry!",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 22
+      },
+      "revId": "9509562b36e565e8d34aa0f248878daa2c25f5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
