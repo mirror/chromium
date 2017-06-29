@@ -10,6 +10,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/logging.h"
 #include "base/run_loop.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
@@ -290,6 +291,13 @@ class ServiceWorkerActivationTest : public ServiceWorkerRegistrationTest {
   ServiceWorkerProviderHost* controllee() { return host_.get(); }
   int inflight_request_id() const { return inflight_request_id_; }
 
+  bool IsLameDuckTimerRunning() {
+    return registration_->lame_duck_timer_ &&
+           registration_->lame_duck_timer_->IsRunning();
+  }
+
+  void RunLameDuckTimer() { registration_->RemoveLameDuckIfNeeded(); }
+
  private:
   scoped_refptr<ServiceWorkerRegistration> registration_;
   std::unique_ptr<ServiceWorkerProviderHost> host_;
@@ -371,6 +379,92 @@ TEST_F(ServiceWorkerActivationTest, SkipWaitingWithInflightRequest) {
                            base::Time::Now());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(version_2.get(), reg->active_version());
+}
+
+// Test lame duck timer triggered by skip waiting.
+TEST_F(ServiceWorkerActivationTest, LameDuckTime_SkipWaiting) {
+  scoped_refptr<ServiceWorkerRegistration> reg = registration();
+  scoped_refptr<ServiceWorkerVersion> version_1 = reg->active_version();
+  scoped_refptr<ServiceWorkerVersion> version_2 = reg->waiting_version();
+  base::SimpleTestTickClock* clock_1 = new base::SimpleTestTickClock();
+  base::SimpleTestTickClock* clock_2 = new base::SimpleTestTickClock();
+  clock_1->SetNowTicks(base::TimeTicks::Now());
+  clock_2->SetNowTicks(clock_1->NowTicks());
+  version_1->SetTickClockForTesting(base::WrapUnique(clock_1));
+  version_2->SetTickClockForTesting(base::WrapUnique(clock_2));
+
+  // Set skip waiting flag. Since there is still an in-flight request,
+  // activation should not happen. But the lame duck timer should start.
+  EXPECT_FALSE(IsLameDuckTimerRunning());
+  version_2->OnSkipWaiting(77 /* dummy request_id */);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(version_1.get(), reg->active_version());
+  EXPECT_TRUE(IsLameDuckTimerRunning());
+
+  // Move forward by lame duck time.
+  clock_2->Advance(base::TimeDelta::FromMinutes(5) +
+                   base::TimeDelta::FromSeconds(1));
+
+  // Activation should happen by the lame duck timer.
+  RunLameDuckTimer();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(version_2.get(), reg->active_version());
+  EXPECT_FALSE(IsLameDuckTimerRunning());
+}
+
+// Test lame duck timer triggered by loss of controllee.
+TEST_F(ServiceWorkerActivationTest, LameDuckTime_NoControllee) {
+  scoped_refptr<ServiceWorkerRegistration> reg = registration();
+  scoped_refptr<ServiceWorkerVersion> version_1 = reg->active_version();
+  scoped_refptr<ServiceWorkerVersion> version_2 = reg->waiting_version();
+  base::SimpleTestTickClock* clock_1 = new base::SimpleTestTickClock();
+  base::SimpleTestTickClock* clock_2 = new base::SimpleTestTickClock();
+  clock_1->SetNowTicks(base::TimeTicks::Now());
+  clock_2->SetNowTicks(clock_1->NowTicks());
+  version_1->SetTickClockForTesting(base::WrapUnique(clock_1));
+  version_2->SetTickClockForTesting(base::WrapUnique(clock_2));
+
+  // Remove the controllee. Since there is still an in-flight request,
+  // activation should not happen. But the lame duck timer should start.
+  EXPECT_FALSE(IsLameDuckTimerRunning());
+  version_1->RemoveControllee(controllee());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(version_1.get(), reg->active_version());
+  EXPECT_TRUE(IsLameDuckTimerRunning());
+
+  // Move clock forward by a little bit.
+  clock_1->Advance(base::TimeDelta::FromMinutes(1));
+
+  // Add a controllee again to reset the lame duck period.
+  version_1->AddControllee(controllee());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(IsLameDuckTimerRunning());
+
+  // Remove the controllee.
+  version_1->RemoveControllee(controllee());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(IsLameDuckTimerRunning());
+
+  // Move clock forward to the next lame duck timer tick.
+  clock_1->Advance(base::TimeDelta::FromMinutes(4) +
+                   base::TimeDelta::FromSeconds(1));
+
+  // Run the lame duck timer. Activation should not yet happen
+  // since the lame duck period has not expired.
+  RunLameDuckTimer();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(version_1.get(), reg->active_version());
+  EXPECT_TRUE(IsLameDuckTimerRunning());
+
+  // Continue on to the next lame duck timer tick.
+  clock_1->Advance(base::TimeDelta::FromMinutes(5) +
+                   base::TimeDelta::FromSeconds(1));
+
+  // Activation should happen by the lame duck timer.
+  RunLameDuckTimer();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(version_2.get(), reg->active_version());
+  EXPECT_FALSE(IsLameDuckTimerRunning());
 }
 
 }  // namespace content
