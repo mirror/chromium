@@ -16,6 +16,24 @@
       "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce83c6ae_e13188f2",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T15:27:04Z",
+      "side": 1,
+      "message": "Yes, it is \"not yet used by the collection\", not \"not yet used in Chrome\".",
+      "parentUuid": "bc2e1859_9bff8345",
+      "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
