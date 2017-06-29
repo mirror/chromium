@@ -86,13 +86,32 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
 - (BOOL)paymentRequestSelectorViewController:
             (PaymentRequestSelectorViewController*)controller
                         didSelectItemAtIndex:(NSUInteger)index {
-  // Update the data source with the selection.
-  self.mediator.selectedItemIndex = index;
-
   DCHECK(index < self.paymentRequest->contact_profiles().size());
-  [self delayedNotifyDelegateOfSelection:self.paymentRequest
-                                             ->contact_profiles()[index]];
-  return YES;
+  autofill::AutofillProfile* selectedProfile =
+      self.paymentRequest->contact_profiles()[index];
+
+  const web::PaymentOptions& options =
+      self.paymentRequest->web_payment_request().options;
+
+  const BOOL isDataMissing =
+      (options.request_payer_name &&
+       !selectedProfile->HasInfo(autofill::NAME_FULL)) ||
+      (options.request_payer_email &&
+       !selectedProfile->HasInfo(autofill::EMAIL_ADDRESS)) ||
+      (options.request_payer_phone &&
+       !selectedProfile->HasInfo(autofill::PHONE_HOME_WHOLE_NUMBER));
+
+  // Proceed with item selection only if the item has all required info, or
+  // else bring up the contact info editor.
+  if (!isDataMissing) {
+    // Update the data source with the selection.
+    self.mediator.selectedItemIndex = index;
+    [self delayedNotifyDelegateOfSelection:selectedProfile];
+    return YES;
+  } else {
+    [self startContactInfoEditCoordinatorWithProfile:selectedProfile];
+    return NO;
+  }
 }
 
 - (void)paymentRequestSelectorViewControllerDidFinish:
