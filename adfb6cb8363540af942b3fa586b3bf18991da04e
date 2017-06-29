@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "7f95b5e9_80e465ca",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-29T19:39:46Z",
+      "side": 1,
+      "message": "How about we have page_count \u003d page_count \u003e 0 ? page_count : 0; So it will call onWriteFailed.\n\nIn real world, it could be hundreds pages if not thousands, it might be safe to say we won\u0027t have more than 100,000 pages so page_count \u003d page_count \u003e 100,000 : 0 : page_count, but I don\u0027t feel that is not a good way to go though.",
+      "parentUuid": "d9167ce4_82387e0f",
+      "revId": "adfb6cb8363540af942b3fa586b3bf18991da04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d6923d3_96a4b393",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
         "patchSetId": 6
@@ -93,6 +111,30 @@
       "writtenOn": "2017-06-29T19:15:31Z",
       "side": 1,
       "message": "How about: On success, the PDF written to |fd| has |page_count| pages. Negative |fd| or non-positive |page_count| indicates failure.",
+      "range": {
+        "startLine": 26,
+        "startChar": 66,
+        "endLine": 26,
+        "endChar": 75
+      },
+      "revId": "adfb6cb8363540af942b3fa586b3bf18991da04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7afa89f_77953b66",
+        "filename": "printing/printing_context_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-29T19:39:46Z",
+      "side": 1,
+      "message": "Which is not true, as I stated in Java side comments, it is not the page count written to |fd|. \n\nHmmm, it introduced a lot of confusion, and it costs time to read comments to understand. I am going to pass printed_pages.size() instead page_count to IPC.",
+      "parentUuid": "3b910062_ab85ccb6",
       "range": {
         "startLine": 26,
         "startChar": 66,
