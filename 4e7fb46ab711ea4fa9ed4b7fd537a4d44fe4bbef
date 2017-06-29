@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "826d9a6e_53273fd6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-29T05:41:18Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "4e7fb46ab711ea4fa9ed4b7fd537a4d44fe4bbef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e239b24_2ddef79f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-29T05:41:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4e7fb46ab711ea4fa9ed4b7fd537a4d44fe4bbef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03745bdd_67d91b2d",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-29T05:41:18Z",
+      "side": 1,
+      "message": "[optional] Maybe the following is simpler?\n// Returns the \"final charset\" defined in https://xhr.spec.whatwg.org/#final-charset.",
+      "revId": "4e7fb46ab711ea4fa9ed4b7fd537a4d44fe4bbef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
