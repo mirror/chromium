@@ -591,6 +591,7 @@ if (!is_android) {
 
     if (toolkit_views) {
       sources += [
+        "../browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
         "../browser/ui/views/menu_controller_interactive_uitest.cc",
         "../browser/ui/views/menu_item_view_interactive_uitest.cc",
         "../browser/ui/views/menu_model_adapter_test.cc",
