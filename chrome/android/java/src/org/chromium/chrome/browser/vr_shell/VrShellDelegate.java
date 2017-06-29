@@ -1121,7 +1121,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
     private static boolean isVrCoreCompatible(
             final VrCoreVersionChecker versionChecker, final Tab tabToShowInfobarIn) {
-        final int vrCoreCompatibility = versionChecker.getVrCoreInfo().compatibility;
+        final int vrCoreCompatibility = versionChecker.getVrCoreCompatibility();
         boolean needsUpdate = vrCoreCompatibility == VrCoreCompatibility.VR_NOT_AVAILABLE
                 || vrCoreCompatibility == VrCoreCompatibility.VR_OUT_OF_DATE;
         if (tabToShowInfobarIn != null && needsUpdate) {
@@ -1293,7 +1293,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     @CalledByNative
     private long getVrCoreInfo() {
         assert mVrCoreVersionChecker != null;
-        return mVrCoreVersionChecker.getVrCoreInfo().makeNativeVrCoreInfo();
+        return mVrCoreVersionChecker.makeNativeVrCoreInfo();
     }
 
     private void destroy() {
