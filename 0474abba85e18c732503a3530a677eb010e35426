@@ -22,6 +22,30 @@
       "revId": "0474abba85e18c732503a3530a677eb010e35426",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cad74b8_7cbafd50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-06-29T20:19:02Z",
+      "side": 1,
+      "message": "Yeah. You are right. We should update LogFormSubmitted to take the parse timestamp.\n\nsebsg@, sorry I didn\u0027t think though about your comment. As Roger said, the callback can be triggered after next form parsed. Reverted this to an early patch.",
+      "parentUuid": "02eb27b8_71d2e690",
+      "range": {
+        "startLine": 12,
+        "startChar": 74,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "0474abba85e18c732503a3530a677eb010e35426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
