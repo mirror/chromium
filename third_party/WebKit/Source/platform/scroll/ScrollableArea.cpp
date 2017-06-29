@@ -179,7 +179,13 @@ void ScrollableArea::SetScrollOffset(const ScrollOffset& offset,
       sequencer->AbortAnimations();
   }
 
-  ScrollOffset clamped_offset = ClampScrollOffset(offset);
+  ScrollOffset clamped_offset = offset;
+
+  // Allow compositor scrolls to extend beyond the end of the page to allow
+  // the browser controls to be pulled up (before a proper resize happens).
+  if (scroll_type == kCompositorScroll)
+    ClampScrollOffset(offset);
+
   if (clamped_offset == GetScrollOffset())
     return;
 
