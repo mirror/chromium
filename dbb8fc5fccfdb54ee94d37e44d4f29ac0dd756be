@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea765576_cd39e7e0",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T04:55:26Z",
+      "side": 1,
+      "message": "I\u0027m still a bit unsure what this means.  It\u0027s hard to suggest better wordings, because I haven\u0027t been involved enough in the feature tracker stuff to understand why we don\u0027t want to notify about omnibox navigations from the new tab page.  Is there a CL that adds NotifyOmniboxNavigation() itself, that has comments for it I can go read?  Maybe that would help.",
+      "revId": "dbb8fc5fccfdb54ee94d37e44d4f29ac0dd756be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
