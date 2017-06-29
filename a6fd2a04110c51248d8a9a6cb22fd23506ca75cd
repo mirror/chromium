@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3f27998_564fa297",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-29T17:55:23Z",
+      "side": 1,
+      "message": "This is still here because the test port still includes \"test-linux-trusty\" and \"test-linux-precise\", and TestPort instances are used in this test.",
+      "revId": "a6fd2a04110c51248d8a9a6cb22fd23506ca75cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
