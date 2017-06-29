@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "014416a1_d643f93e",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T07:30:16Z",
+      "side": 1,
+      "message": "I found that AddressSpace is set at the beginning of StartWorkerContext. IIUC it should be valid because no redirect is permitted for the script, so let\u0027s use that instead of transferring the information from the browser.",
+      "revId": "2dacd53347d8a945e0b8b24d789e452c241ad63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

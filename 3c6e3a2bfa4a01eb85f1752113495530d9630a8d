@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d834366_d35f208f",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T07:30:16Z",
+      "side": 1,
+      "message": "For the main script, it should not be nullopt. GetInstalledScriptsManager() will return nullptr if the legacy path should be used.\nChanged the if clause to DCKECK.",
+      "parentUuid": "2263d1fc_0c226d6e",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f381820f_60faa647",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460b59bf_1896fea9",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T07:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f381820f_60faa647",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d137bb1d_6162aff4",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T07:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e816f951_8c27f354",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f3225a5_8ef7248f",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acc952c_aa51648d",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T07:30:16Z",
+      "side": 1,
+      "message": "Yes, it\u0027s not very accurate. If it\u0027s moved to the actual point (it\u0027s just after GetScriptData() on the worker thread), the ordering between WorkerScriptLoaded and WorkerThreadStarted will be changed. In this patch I\u0027d like to avoid that. \nAdded TODO comment.",
+      "parentUuid": "6f3225a5_8ef7248f",
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17af98a_b500f761",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-29T07:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bf488c3_17515922",
+      "range": {
+        "startLine": 474,
+        "startChar": 8,
+        "endLine": 474,
+        "endChar": 18
+      },
+      "revId": "3c6e3a2bfa4a01eb85f1752113495530d9630a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
