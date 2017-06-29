@@ -35,6 +35,7 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Time.h"
 
 #include <limits>
 
@@ -51,7 +52,7 @@ class CORE_EXPORT AnimationClock {
   explicit AnimationClock(WTF::TimeFunction monotonically_increasing_time =
                               WTF::MonotonicallyIncreasingTime)
       : monotonically_increasing_time_(monotonically_increasing_time),
-        time_(0),
+        time_(TimeDelta::FromSeconds(0)),
         task_for_which_time_was_calculated_(
             std::numeric_limits<unsigned>::max()) {}
 
@@ -68,7 +69,7 @@ class CORE_EXPORT AnimationClock {
 
  private:
   WTF::TimeFunction monotonically_increasing_time_;
-  double time_;
+  TimeDelta time_;
   unsigned task_for_which_time_was_calculated_;
   static unsigned currently_running_task_;
 };
