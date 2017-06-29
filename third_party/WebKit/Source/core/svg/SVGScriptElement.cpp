@@ -114,11 +114,9 @@ String SVGScriptElement::TypeAttributeValue() const {
 }
 
 String SVGScriptElement::TextFromChildren() {
-  return Element::TextFromChildren();
-}
-
-String SVGScriptElement::TextContent() const {
-  return Node::textContent();
+  String text_from_children = Element::TextFromChildren();
+  DCHECK_EQ(text_from_children, Node::textContent());
+  return text_from_children;
 }
 
 bool SVGScriptElement::HasSourceAttribute() const {
