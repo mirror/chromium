@@ -4,6 +4,10 @@
 
 package org.chromium.chrome.browser.widget.bottomsheet;
 
+import android.content.res.Resources;
+import android.view.View;
+
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
@@ -20,6 +24,14 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
     private final BottomSheet mBottomSheet;
     private final BottomToolbarPhone mToolbar;
 
+    private final View mControlContainer; // TODO(twellington): make this a ViewGroup?
+    private final View mToolbarHolder;
+    private final View mLogoView;
+    private final View mIncognitoLogo;
+
+    private final int mToolbarOffset;
+    private final int mToolbarHolderOriginalHeight;
+
     private LayoutManagerChrome mLayoutManager;
     private OverviewModeObserver mOverviewModeObserver;
     private TabModelSelector mTabModelSelector;
@@ -35,10 +47,21 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
      * @param toolbar The {@link BottomToolbarPhone} that this controller will set state on as part
      *                of the new tab UI.
      */
-    public BottomSheetNewTabController(BottomSheet bottomSheet, BottomToolbarPhone toolbar) {
+    public BottomSheetNewTabController(
+            BottomSheet bottomSheet, BottomToolbarPhone toolbar, View controlContainer) {
         mBottomSheet = bottomSheet;
         mBottomSheet.addObserver(this);
         mToolbar = toolbar;
+
+        mControlContainer = controlContainer;
+        mToolbarHolder = mControlContainer.findViewById(R.id.toolbar_holder);
+        mIncognitoLogo = controlContainer.findViewById(R.id.incognito_logo);
+        mLogoView = controlContainer.findViewById(R.id.search_provider_logo);
+
+        Resources res = toolbar.getResources();
+        mToolbarOffset = res.getDimensionPixelSize(R.dimen.chrome_home_ntp_image_height)
+                + res.getDimensionPixelOffset(R.dimen.chrome_home_ntp_image_margin);
+        mToolbarHolderOriginalHeight = mToolbarHolder.getLayoutParams().height;
     }
 
     /**
@@ -98,6 +121,8 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
             mBottomSheet.endTransitionAnimations();
             mTabModelSelector.getModel(!isIncognito).setIsPendingTabAdd(false);
         }
+
+        if (!isIncognito) showLogoView();
 
         // Open the sheet if it isn't already open to the desired height.
         int sheetState = mTabModelSelector.getCurrentModel().getCount() == 0
@@ -192,5 +217,42 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
             mIsShowingNormalToolbar = false;
             mToolbar.showTabSwitcherToolbar();
         }
+
+        hideLogoView();
+    }
+
+    /**
+     * A notification that the omnibox focus state is changing.
+     * @param hasFocus Whether or not the omnibox has focus.
+     */
+    public void onOmniboxFocusChange(boolean hasFocus) {
+        if (!mIsShowingNewTabUi) return;
+
+        if (hasFocus) {
+            hideLogoView();
+        } else {
+            showLogoView();
+        }
+    }
+
+    private void showLogoView() {
+        View imageView = mTabModelSelector.isIncognitoSelected() ? mIncognitoLogo : mLogoView;
+        imageView.setVisibility(View.VISIBLE);
+
+        // NOTE: This approach changes the height of the toolbar, which we should try to avoid if
+        // possible.
+        mToolbar.setPadding(mToolbar.getPaddingLeft(), mToolbarOffset, mToolbar.getPaddingRight(),
+                mToolbar.getPaddingBottom());
+        mControlContainer.findViewById(R.id.toolbar_holder).getLayoutParams().height =
+                mToolbarHolderOriginalHeight + mToolbarOffset;
+    }
+
+    private void hideLogoView() {
+        View imageView = mTabModelSelector.isIncognitoSelected() ? mIncognitoLogo : mLogoView;
+        imageView.setVisibility(View.GONE);
+        mToolbar.setPadding(mToolbar.getPaddingLeft(), 0, mToolbar.getPaddingRight(),
+                mToolbar.getPaddingBottom());
+        mControlContainer.findViewById(R.id.toolbar_holder).getLayoutParams().height =
+                mToolbarHolderOriginalHeight;
     }
 }

@@ -51,6 +51,30 @@
                 android:layout_gravity="center|top"
                 android:contentDescription="@null" />
 
+<!--  org.chromium.chrome.browser.ntp.LogoView -->
+            <ImageView
+                android:id="@+id/search_provider_logo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/chrome_home_ntp_image_height"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="@dimen/chrome_home_ntp_image_margin"
+                android:src="@drawable/google_logo"
+                android:importantForAccessibility="no"
+                android:visibility="gone" />
+           <ImageView
+                android:id="@+id/incognito_logo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/chrome_home_ntp_image_height"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="@dimen/chrome_home_ntp_image_margin"
+                android:src="@drawable/incognito_splash"
+                android:importantForAccessibility="no"
+                android:visibility="gone" />
+
             <ViewStub
                 android:id="@+id/find_toolbar_stub"
                 android:inflatedId="@+id/find_toolbar"

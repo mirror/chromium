@@ -281,6 +281,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
             currentTab.getActivity().getBottomSheetContentController().onOmniboxFocusChange(
                     hasFocus);
         }
+        mBottomSheet.onOmniboxFocusChange(hasFocus);
 
         if (mToolbarButtonVisibilityAnimator != null
                 && mToolbarButtonVisibilityAnimator.isRunning()) {
