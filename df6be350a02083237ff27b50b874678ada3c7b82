@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d594ca3_d653369b",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "297e3a6d_88fe1221",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d85442f2_7c11c359",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2e0e59_a9a336dd",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d85442f2_7c11c359",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c726035b_ef5df539",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "We appear to need a dummy child as this view gets passed to aura for layering. I\u0027ve updated the comment to point to DropdownBarHost::SetHostViewNative().",
+      "parentUuid": "c82dab8a_dd72ca84",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b5cc2f1_9416fae7",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ba4c99_6ae8c322",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1655,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Clarified this comment. I meant to write one thing is typed another.",
+      "parentUuid": "2b5cc2f1_9416fae7",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ddef60c3_12139e19",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Since the variable doesn\u0027t participate as part of a simple if-else, inlining seems to make more sense. Done.",
+      "parentUuid": "4c56ef8e_5c529c7e",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac3047b7_cbd7089c",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d5cc31_2f62027f",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "A sampling of\nhttps://cs.chromium.org/search/?q\u003dconst%5C+int+file:chrome/browser/ui+package:%5Echromium$\u0026type\u003dcs\n\nSuggests this is the prevailing style.\n\nConstants at the top are useful in separating configuration from the code. \n\nIf you really want them local to the function, I can move them in, but I\u0027ll keep them here in the meantime for consistency.",
+      "parentUuid": "ac3047b7_cbd7089c",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d6f7ab86_fa669712",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Oddly enough, that is indeed intentional. We may change that behavior as we play with it.",
+      "parentUuid": "8b140ed1_920dcc52",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ec29051_b1e35822",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c370200_56e82961",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "The capital B here is used to indicate the start of a statement. It\u0027s not part of the expression above.",
+      "parentUuid": "9ec29051_b1e35822",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1d71892e_09b4b320",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f73d6069_dce6293d",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9f6c665_b378953b",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
         "patchSetId": 9
@@ -169,6 +331,24 @@
       "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2af737c_c792aa40",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9f6c665_b378953b",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "a874e871_6dc4dd38",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baf861a9_bac87205",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dff7801_4156b10a",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
         "patchSetId": 9
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "91524cb2_c65bf676",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "The conjunction here is intentional. Rephrased.",
+      "parentUuid": "7dff7801_4156b10a",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aa23dcd_1238b8f9",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 9
@@ -220,6 +436,24 @@
       "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c66b232_9ff82715",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-29T19:07:39Z",
+      "side": 1,
+      "message": "Indeed. Done!",
+      "parentUuid": "2aa23dcd_1238b8f9",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
