@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74063a85_b425029b",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T20:10:49Z",
+      "side": 1,
+      "message": "OK.  FWIW, this implies FullscreenControlHost actually cares if the view is parented, which I didn\u0027t think it did.",
+      "revId": "f6a2bdf366542e1eba6317a11eb9069ab5d4d7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

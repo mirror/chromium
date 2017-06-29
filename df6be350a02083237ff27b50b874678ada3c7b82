@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "3f10528f_176d68fb",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T20:10:49Z",
+      "side": 1,
+      "message": "You\u0027re correct, local-constants-atop-file is the more common practice.\n\nI think it\u0027s a minor violation of the Google style guide (\"declare variables as close to where you use them as possible\") and harder to read, but I don\u0027t feel strongly enough about this to push hard for it.  Do whatever you feel makes for the best code overall.",
+      "parentUuid": "93d5cc31_2f62027f",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b140ed1_920dcc52",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 9
@@ -276,6 +294,24 @@
       "side": 1,
       "message": "The capital B here is used to indicate the start of a statement. It\u0027s not part of the expression above.",
       "parentUuid": "9ec29051_b1e35822",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33b4e9e9_a51b5bef",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-29T20:10:49Z",
+      "side": 1,
+      "message": "I thought you were trying to say \"(Height * scalefactor)-sized buffer for...\".  But the capital B makes it look as if this \"Buffer\" part is unrelated to the line above and is referring to the blank space in the rest of the diagram.  Or at least that\u0027s how it read to me with a capital B.",
+      "parentUuid": "9c370200_56e82961",
       "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
