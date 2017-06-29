@@ -188,6 +188,30 @@
       "revId": "b321451ce20eef0a961561f61528a2500c8c631d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0be405_a0dd9d7b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-29T17:00:02Z",
+      "side": 1,
+      "message": "s/This/These/ done.\n\n\"Provided\" may be a bit ambiguous in the context of provider :)",
+      "parentUuid": "c3e22dd2_c015bb3c",
+      "range": {
+        "startLine": 870,
+        "startChar": 7,
+        "endLine": 870,
+        "endChar": 23
+      },
+      "revId": "b321451ce20eef0a961561f61528a2500c8c631d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
