@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6de355d6_8dede73d",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T14:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4aa85b5_566b66e9",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a952693_ab727f05",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4ed00f_b95c68d5",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T14:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a952693_ab727f05",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5abcb0a2_48ebb45a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T14:05:34Z",
+      "side": 1,
+      "message": "This part of the code is already existent in the NTP. The other part is new.\nThe TODO is here to know if metrics are needed or not. We know here the metrics are not needed.",
+      "parentUuid": "91b0d747_8feb8a5a",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faac5a46_93af99bf",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "172198b3_e8ade906",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T14:05:34Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "faac5a46_93af99bf",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e305ade_25185fe2",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad1cbeb_4399b943",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T14:05:34Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "1e305ade_25185fe2",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "5185f30c_c7c004eb",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter_commands.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T14:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce75ba3f_84e84bb6",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52c13209_b44dc831",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter_commands.h",
         "patchSetId": 4
@@ -130,6 +250,24 @@
       "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406cf73b_414b96e2",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alerter_commands.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T14:05:34Z",
+      "side": 1,
+      "message": "The idea was to separate most visited-related method to suggestions-related method. But it seems that it is not as clear as I thought :)\nDone.",
+      "parentUuid": "52c13209_b44dc831",
+      "revId": "a8789b6e2861a6bd592930fde6664180aa039409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
