@@ -552,6 +552,30 @@
       "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e25ab1_2efbeab0",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T02:39:46Z",
+      "side": 1,
+      "message": "Then do you want to DCHECK() that\u0027s the case somewhere in the stack, or do the equivalent in Java? And maybe add a comment to PrintingController.java to indicate |pageCount| is always \u003e 0?",
+      "parentUuid": "9c81c23a_b5299e06",
+      "range": {
+        "startLine": 342,
+        "startChar": 59,
+        "endLine": 342,
+        "endChar": 72
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
