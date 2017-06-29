@@ -68,6 +68,30 @@
       "revId": "c45da6f293d01d055ca1dd43369cc2262861524f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446977df_e47594e7",
+        "filename": "remoting/protocol/data_channel_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-29T20:24:06Z",
+      "side": 1,
+      "message": "According to existing code (https://cs.chromium.org/search/?q\u003dusing.*pair.*%3D+package:%5Echromium$+lang:c%2B%2B\u0026type\u003dcs), I think NameCallbackPair would be a good name.\nI have not found too many \"And\" terms are used in other using statements. (https://cs.chromium.org/search/?q\u003dusing.*and.*%3D+package:%5Echromium$+lang:c%2B%2B\u0026type\u003dcs)",
+      "parentUuid": "d31b5a75_b0dd7da0",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "c45da6f293d01d055ca1dd43369cc2262861524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
