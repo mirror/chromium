@@ -22,6 +22,30 @@
       "revId": "7c5c7b3da14848a793382f5a5e62fcb94a130f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bd42366_1b587429",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-06-29T17:10:33Z",
+      "side": 1,
+      "message": "\u003e This seems odd and feels like to me that this change is working around some other destruction issue.\n\u003e What IPC arrives after this that causes UAF?\n\nThe IPC is InputHostMsg_ImeCompositionRangeChanged.\n\n\u003e Can we spot that down and fix that instead?\n\nI am not sure if sending the IPC is a problem. It is the way we are handling the cleanup.\n\n\u003e e.g. when I looked at \n\u003e \n\u003e TextInputManagerTester::InternalObserver::WebContentsDestroyed() override { text_input_manager_ \u003d nullptr; }\n\u003e i.e. It will not remove that InternalObserver from text input manager\u0027s observer if that happens:\n\u003e   ~InternalObserver() override {\n\u003e     if (text_input_manager_)\n\u003e       text_input_manager_-\u003eRemoveObserver(this);\n\u003e   }\n\nThanks for pointing this out! It actually is better to remove the observer as you suggested. So I made the change.\n\nBut that being said I can no longer repro the crash. Looking at the code again, I don\u0027t quite see this be even possible that WebContents destroyed is called before the observer class is destroyed in test body. So I am not sure now if my hypothesis is correct. All in all, it is safer to remove the observer in the DTOR but not sure if that would fix the test from flaking.",
+      "parentUuid": "f392bfdf_2fa8801b",
+      "range": {
+        "startLine": 1787,
+        "startChar": 18,
+        "endLine": 1787,
+        "endChar": 48
+      },
+      "revId": "7c5c7b3da14848a793382f5a5e62fcb94a130f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
