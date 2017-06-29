@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d24b394d_6254785e",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-29T19:33:32Z",
+      "side": 1,
+      "message": "Could you add a check like:\n  if (!GetResource())\n    return;\nbecause SetResource(nullptr) might be called during the posted task is in flight and in such cases NotifyFinished() should be ignored.",
+      "revId": "461c726631e33325593d1becfd3d628742471747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

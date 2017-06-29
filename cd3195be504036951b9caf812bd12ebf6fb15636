@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c35cf5_e1633a03",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/reload-memory-cache-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-29T19:33:32Z",
+      "side": 0,
+      "message": "This test is related to reloading and removing \"Page reloaded\" expectation looks alarming.\nCould you explain why this diff occurs and is safe?",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 14
+      },
+      "revId": "cd3195be504036951b9caf812bd12ebf6fb15636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
