@@ -2422,7 +2422,6 @@ Bug(none) http/tests/security/contentSecurityPolicy/frame-src-child-frame-naviga
 Bug(none) http/tests/security/contentSecurityPolicy/frame-src-cross-origin-load.html [ Failure ]
 Bug(none) http/tests/security/contentSecurityPolicy/frame-src-redirect-blocked.html [ Failure ]
 Bug(none) http/tests/security/contentSecurityPolicy/register-bypassing-scheme-script.https.html [ Timeout ]
-Bug(none) http/tests/security/contentSecurityPolicy/report-same-origin-with-cookies.php [ Failure ]
 Bug(none) http/tests/security/contentSecurityPolicy/script-src-star-cross-scheme.html [ Failure ]
 Bug(none) http/tests/security/contentSecurityPolicy/source-list-parsing-10.html [ Failure ]
 Bug(none) http/tests/security/cookies/first-party-cookie-allow-xslt.xml [ Failure ]

@@ -1787,7 +1787,6 @@ crbug.com/698077 inspector/sources/debugger/debug-inlined-scripts.html [ NeedsMa
 crbug.com/694525 external/wpt/content-security-policy/blink-contrib [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/blink-contrib-2 [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/object-src [ Skip ]
-crbug.com/694525 external/wpt/content-security-policy/reporting [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/script-src/script-src-1_10.html [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/script-src/script-src-strict_dynamic_in_img-src.html [ Skip ]
 
@@ -2939,7 +2938,6 @@ crbug.com/732839 [ Win ] external/wpt/payment-request/payment-request-constructo
 crbug.com/733357 [ Win Mac ] inspector/elements/styles-4/styles-history.html [ Failure Pass ]
 crbug.com/733448 virtual/mojo-loading/http/tests/inspector/extensions/extensions-network.html [ Failure Pass ]
 crbug.com/733448 http/tests/inspector/extensions/extensions-network.html [ Failure Pass ]
-crbug.com/733524 [ Mac ] virtual/mojo-loading/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies.php [ Timeout Pass ]
 
 # Sheriff failures 2017-06-23
 crbug.com/736548 [ Mac ] css2.1/t040304-c64-uri-00-a-g.html [ Failure Pass ]

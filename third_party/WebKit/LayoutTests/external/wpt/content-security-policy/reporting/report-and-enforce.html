@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <title>Reporting and enforcing policies can be different</title>
+    <!-- CSP headers
+Content-Security-Policy: img-src 'none'; font-src *; script-src 'self' 'unsafe-inline'
+
+Content-Security-Policy-Report-Only: img-src *; font-src 'none'; script-src 'self' 'unsafe-inline'; report-uri ../support/report.py?op=put&reportID={{$id}}
+-->
+</head>
+<body>
+    <script>
+        var img_test = async_test("The image should be blocked");
+        var font_test = async_test("The font should load");
+        <!-- This image should be blocked, but should not generate a report-->
+        var i = document.createElement('img');
+        i.onerror = img_test.step_func_done();
+        i.onload = img_test.unreached_func("Should not have loaded the img");
+        i.src = "../support/fail.png";
+        document.body.appendChild(i);
+        <!-- This font should be loaded but should generate a report-->
+        var f = document.createElement('link');
+        f.onerror = font_test.unreached_func("Should have loaded the font");
+        f.onload = font_test.step_func_done();
+        f.as="font";
+        f.rel="preload"
+        f.href = "../support/Ahem.ttf";
+        document.body.appendChild(f);
+    </script>
+    <script async defer src='../support/checkReport.sub.js?reportField=violated-directive&reportValue=font-src%20%27none%27'></script>
+</body>
+</html>
