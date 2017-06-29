@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63494925_172d51ab",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2140,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-29T17:03:00Z",
+      "side": 1,
+      "message": "why multiline?",
+      "range": {
+        "startLine": 2140,
+        "startChar": 58,
+        "endLine": 2140,
+        "endChar": 67
+      },
+      "revId": "ac12fb0ecd1b991132c1be873ca369202759e0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf659fa_601e3e3a",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-29T17:03:00Z",
+      "side": 1,
+      "message": "Oh, for this, I suppose. Ok.",
+      "range": {
+        "startLine": 2169,
+        "startChar": 29,
+        "endLine": 2169,
+        "endChar": 36
+      },
+      "revId": "ac12fb0ecd1b991132c1be873ca369202759e0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd024980_48fd5643",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-29T17:03:00Z",
+      "side": 1,
+      "message": "I wonder if we should do something like _FindNewViolationsOfRule() in presubmit_canned_checks.py, else this will probably fire a lot. But since it\u0027s not a critical warning, it\u0027s probably ok.",
+      "range": {
+        "startLine": 2177,
+        "startChar": 20,
+        "endLine": 2177,
+        "endChar": 28
+      },
+      "revId": "ac12fb0ecd1b991132c1be873ca369202759e0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
