@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc2e1859_9bff8345",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-29T15:23:31Z",
+      "side": 1,
+      "message": "is the comment \"not yet used\" accurate?",
+      "revId": "a6f9d66d5e029b79861c1f86385975bd587e6128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
