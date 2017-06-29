@@ -32,11 +32,12 @@ ClassicPendingScript::ClassicPendingScript(
     ScriptResource* resource,
     const TextPosition& starting_position)
     : PendingScript(element, starting_position),
-      ready_state_(resource ? kWaitingForResource : kReady),
+      ready_state_(kInConstructor),
       integrity_failure_(false) {
   CheckState();
   SetResource(resource);
   MemoryCoordinator::Instance().RegisterClient(this);
+  AdvanceReadyState(resource ? kWaitingForResource : kReady);
 }
 
 ClassicPendingScript::~ClassicPendingScript() {}
@@ -121,6 +122,16 @@ static bool CheckScriptResourceIntegrity(Resource* resource,
 }
 
 void ClassicPendingScript::NotifyFinished(Resource* resource) {
+  // If we're notified that the resource is synchronously ready, defer the
+  // notification until later anyway.
+  if (ready_state_ == kInConstructor) {
+    TaskRunnerHelper::Get(TaskType::kNetworking, &GetElement()->GetDocument())
+        ->PostTask(BLINK_FROM_HERE,
+                   WTF::Bind(&ClassicPendingScript::NotifyFinished,
+                             WrapPersistent(this), WrapPersistent(resource)));
+    return;
+  }
+
   // The following SRI checks need to be here because, unfortunately, fetches
   // are not done purely according to the Fetch spec. In particular,
   // different requests for the same resource do not have different
