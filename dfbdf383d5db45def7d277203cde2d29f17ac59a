@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7fc5f54f_94da95ec",
+        "filename": "android_webview/browser/aw_contents_client_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-29T22:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28941289_516fbfa5",
+      "range": {
+        "startLine": 470,
+        "startChar": 9,
+        "endLine": 470,
+        "endChar": 14
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6629ae30_d35fa2ab",
         "filename": "android_webview/browser/aw_contents_client_bridge.cc",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "6629ae30_d35fa2ab",
+      "range": {
+        "startLine": 475,
+        "startChar": 9,
+        "endLine": 475,
+        "endChar": 12
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d67157fd_36118025",
+        "filename": "android_webview/browser/aw_contents_client_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-29T22:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509ada25_f22bc46c",
       "range": {
         "startLine": 475,
         "startChar": 9,
@@ -261,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "f0f09fcc_8a27a341",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-29T22:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19cb2fe7_623c637f",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c63470_e71a341a",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
         "patchSetId": 6
@@ -308,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "e2462a13_f1552678",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-29T22:02:58Z",
+      "side": 1,
+      "message": "Done. I think this section will become irrelevant once we change the API anyway.",
+      "parentUuid": "9b01d0aa_4597a098",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a2e7efc_c6d3e9a8",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
         "patchSetId": 6
@@ -352,6 +448,30 @@
       "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659545f9_f4d218a7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConversionHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-29T22:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ddc1467_759d85e2",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 60
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -493,6 +613,30 @@
       "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aa0a576_47c89d17",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-29T22:02:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to implement this. My approach was:\n\n// inside aw_safe_browsing_resource_throttle.h\nenum class SBThreatType {\n  MALWARE \u003d safe_browsing::SB_THREAT_TYPE_URL_MALWARE,\n  // PHISHING, UNWANTED, etc.\n}\n\nThis gives me an error when generating Java. The python script translates this to \"int MALWARE \u003d safe_browsing::SB_THREAT_TYPE_URL_MALWARE;\", instead of figuring out SB_THREAT_URL_MALWARE\u0027s value.\n\nIs there an easy workaround?",
+      "parentUuid": "d9000846_77c5aa44",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 278,
+        "endChar": 2
+      },
+      "revId": "dfbdf383d5db45def7d277203cde2d29f17ac59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
