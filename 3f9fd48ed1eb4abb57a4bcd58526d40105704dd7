@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "66df7506_46482654",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "false is the default, so no need for this",
+      "range": {
+        "startLine": 46,
+        "startChar": 41,
+        "endLine": 46,
+        "endChar": 46
+      },
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72630b31_c7b35c6b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
         "patchSetId": 13
@@ -37,6 +60,116 @@
     },
     {
       "key": {
+        "uuid": "37218806_6f66e285",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "I think the problem is that the model will be created in the constructor because it calls into TextView methods.\n\nIf we want to avoid recreating the model, we should consider caching the feature enabled state in a shared pref that can be read before native library has been initialized.\n\nLook at FeatureUtilities#cacheNativeFlags",
+      "parentUuid": "72630b31_c7b35c6b",
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34625412_06449d5c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "thoughts on exposing superDispatchKeyEvent to the delegate interface for the model?  I don\u0027t know how often this is called, but creating a new class each time seems excessive to me.",
+      "range": {
+        "startLine": 287,
+        "startChar": 39,
+        "endLine": 287,
+        "endChar": 44
+      },
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ad9721_0afffefc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "isWhole[User]TextSelected...likely shouldn\u0027t be possible to be anything but that, but reading the code seems confusing at least to me.",
+      "range": {
+        "startLine": 87,
+        "startChar": 19,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cdc143_bf83b45c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "isPrefix might be \"slightly\" clearer here.  Proper doesn\u0027t convey the meaning to me.",
+      "range": {
+        "startLine": 119,
+        "startChar": 26,
+        "endLine": 119,
+        "endChar": 45
+      },
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048a3c98_34ee343d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteState.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "Can this use isProperSubstringOf?",
+      "range": {
+        "startLine": 135,
+        "startChar": 23,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee5c2680_9237c9d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 13
@@ -66,6 +199,98 @@
       "side": 1,
       "message": "Hmm... I think it\u0027s up to date since I\u0027ve included \u0027European\u0027 character sets.",
       "parentUuid": "ee5c2680_9237c9d2",
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda8a113_21243e6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "Some comments clarifying the usage of these three would be good.  High level when one should be used vs another.",
+      "range": {
+        "startLine": 47,
+        "startChar": 36,
+        "endLine": 47,
+        "endChar": 57
+      },
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8701d8b_934a72f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "nits\n\nby [the] controller, ... notify [the] controller [with] the same information",
+      "range": {
+        "startLine": 106,
+        "startChar": 43,
+        "endLine": 106,
+        "endChar": 53
+      },
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afebd7cd_768fd37a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "moves [the] cursor ... , ... update [the] display.",
+      "range": {
+        "startLine": 111,
+        "startChar": 54,
+        "endLine": 111,
+        "endChar": 60
+      },
+      "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ece9bd_8df47766",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-29T00:03:56Z",
+      "side": 1,
+      "message": "why not just pass false below?",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 113,
+        "endChar": 29
+      },
       "revId": "3f9fd48ed1eb4abb57a4bcd58526d40105704dd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
