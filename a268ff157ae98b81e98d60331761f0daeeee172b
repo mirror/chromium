@@ -52,6 +52,24 @@
       "revId": "a268ff157ae98b81e98d60331761f0daeeee172b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c465b2ee_97baeb8b",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-29T15:31:34Z",
+      "side": 1,
+      "message": "Yes, there is a shadow during the animation in, which fades out when the animation is over.",
+      "parentUuid": "9ec96091_0d7d045a",
+      "revId": "a268ff157ae98b81e98d60331761f0daeeee172b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
