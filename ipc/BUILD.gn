@@ -22,8 +22,12 @@ buildflag_header("ipc_features") {
 component("ipc") {
   sources = [
     "export_template.h",
+    "handle_attachment_fuchsia.cc",
+    "handle_attachment_fuchsia.h",
     "handle_attachment_win.cc",
     "handle_attachment_win.h",
+    "handle_fuchsia.cc",
+    "handle_fuchsia.h",
     "handle_win.cc",
     "handle_win.h",
     "ipc_channel.cc",
