@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "954ec15b_7cd51dbc",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:45:09Z",
+      "side": 1,
+      "message": "nit:\n  // Raises the priority of module inspection tasks to ensure...\n?",
+      "revId": "4ca685335741255b9fafed10aeed0681184b9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6e35ee_b6378414",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:45:09Z",
+      "side": 1,
+      "message": "if it does, is it better to make module_list_callback_id_ a list of all callback_ids that need to be notified when the database becomes idle?",
+      "revId": "4ca685335741255b9fafed10aeed0681184b9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca114c1_9c93d0dc",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:45:09Z",
+      "side": 1,
+      "message": "is it cheaper to make this:\n  if (!module_json_list_) {",
+      "revId": "4ca685335741255b9fafed10aeed0681184b9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2005af_17eecd2c",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:45:09Z",
+      "side": 1,
+      "message": "?\n  DCHECK(module_json_list_);",
+      "revId": "4ca685335741255b9fafed10aeed0681184b9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd77c89e_5622ffe2",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:45:09Z",
+      "side": 1,
+      "message": "this can be private, no?",
+      "revId": "4ca685335741255b9fafed10aeed0681184b9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344f13ae_f37588eb",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:45:09Z",
+      "side": 1,
+      "message": "since only one database is observed, this seems like a bit of overkill. wdyt of just calling {Add,Remove}Observer at the correct points?",
+      "revId": "4ca685335741255b9fafed10aeed0681184b9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54a189a_7306d609",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:45:09Z",
+      "side": 1,
+      "message": "please add to the doc comment that this is the list only while the module database is active and being observed.",
+      "revId": "4ca685335741255b9fafed10aeed0681184b9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc32861a_49f56c96",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-29T09:45:09Z",
+      "side": 1,
+      "message": "while a ListValue can be serialized into JSON, it\u0027s not inherently JSON itself.",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "4ca685335741255b9fafed10aeed0681184b9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
