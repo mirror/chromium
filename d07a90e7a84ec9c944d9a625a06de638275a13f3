@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fca71f1_68a45a43",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Changed along proposed shape, with booleans instead of state machine.",
+      "parentUuid": "eb51c98d_ea0c9c28",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d5bc466_649a56f5",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458bfee1_cec70163",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "\u0027ac\u0027 was removed.",
+      "parentUuid": "4d5bc466_649a56f5",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "59bd67e8_b3dbb464",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2114f3de_beca2738",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc46e9c5_544cd575",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b7ef50_142af1a7",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Thanks Dominic for a good insightful comment! The shape of this bugged me a bit too. I borrowed your text and also updated the class to not use the state machine but rather use 3 booleans. It looks simpler this way. Please take a look!",
+      "parentUuid": "dc46e9c5_544cd575",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "186c90e8_d3ae303d",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "331a326d_5594a43d",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc5574f3_4cdc0491",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87dcfe9c_44f8e2b0",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "dc5574f3_4cdc0491",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3dad56d9_d513511f",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Now this is only used for UMA reporting, there is no state machine. Changed some comments as well.",
+      "parentUuid": "157e6127_58458ad4",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20e3b291_1ea7f23b",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
         "patchSetId": 12
@@ -135,6 +261,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ccc99d_a7d6e3e4",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "They are now removed.",
+      "parentUuid": "20e3b291_1ea7f23b",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "66059728_691ef919",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "5d1d7291_3c27ef87",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4211a3cf_f85bfd28",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
         "patchSetId": 12
@@ -169,6 +331,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ba93a0_d58651f5",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Changed comment.",
+      "parentUuid": "4211a3cf_f85bfd28",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "f6253d71_1ce9c381",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af7adbbd_bd335b70",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1771e78_efcdcf3f",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
         "patchSetId": 12
@@ -203,6 +401,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acafda8b_a57ca063",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1771e78_efcdcf3f",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "addf9d4d_8cd40176",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "This is now not needed, removed.",
+      "parentUuid": "16cbce70_7f584b8f",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e09deae1_ec2d90bd",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
         "patchSetId": 12
@@ -237,6 +471,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc3006e_8b609dc1",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e09deae1_ec2d90bd",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "8dad31f4_713c39b6",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbdc193_15e9807f",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3284bcd0_b934a012",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 12
@@ -271,6 +541,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84bb877d_5e3afeb7",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3284bcd0_b934a012",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "7fb2c194_694da10c",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2574,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffabef05_8d26f73b",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c9ab95a_71f1e5f6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 12
@@ -305,6 +611,24 @@
       "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc62be76_65f584db",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 47499,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-29T01:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c9ab95a_71f1e5f6",
+      "revId": "d07a90e7a84ec9c944d9a625a06de638275a13f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
