@@ -53,6 +53,7 @@ void SQLTableBuilderTest::Init() {
   ASSERT_TRUE(db_.OpenInMemory());
   // The following column must always be present, so let's add it here.
   builder_.AddColumnToUniqueKey("signon_realm", "VARCHAR NOT NULL");
+  builder_.SealColumn("signon_realm");
 }
 
 void SQLTableBuilderTest::PrintDBError(int code, sql::Statement* statement) {
@@ -70,6 +71,7 @@ TEST_F(SQLTableBuilderTest, SealVersion_0) {
   EXPECT_TRUE(db()->DoesTableExist("my_logins_table"));
   EXPECT_TRUE(db()->DoesColumnExist("my_logins_table", "signon_realm"));
   EXPECT_TRUE(IsColumnOfType("signon_realm", "VARCHAR NOT NULL"));
+  EXPECT_EQ("signon_realm", builder()->ListAllSealedColumnNames());
 }
 
 TEST_F(SQLTableBuilderTest, AddColumn) {
@@ -209,6 +211,7 @@ TEST_F(SQLTableBuilderTest, MigrateFrom) {
   builder()->AddColumn("for_renaming", "INTEGER DEFAULT 100");
   builder()->AddColumn("for_deletion", "INTEGER");
   builder()->AddIndex("my_signon_index", {"signon_realm"});
+  builder()->SealIndex("my_signon_index");
   builder()->AddIndex("my_changing_index_v0", {"for_renaming", "for_deletion"});
   EXPECT_EQ(0u, builder()->SealVersion());
   EXPECT_TRUE(builder()->CreateTable(db()));
@@ -217,6 +220,8 @@ TEST_F(SQLTableBuilderTest, MigrateFrom) {
   EXPECT_TRUE(db()->DoesColumnExist("my_logins_table", "for_deletion"));
   EXPECT_TRUE(db()->DoesIndexExist("my_signon_index"));
   EXPECT_TRUE(db()->DoesIndexExist("my_changing_index_v0"));
+  EXPECT_EQ("signon_realm", builder()->ListAllSealedColumnNames());
+  EXPECT_EQ("my_signon_index", builder()->ListAllSealedIndexNames());
   EXPECT_TRUE(
       db()->Execute("INSERT INTO my_logins_table (signon_realm, for_renaming, "
                     "for_deletion) VALUES ('abc', 123, 456)"));
@@ -275,6 +280,7 @@ TEST_F(SQLTableBuilderTest, MigrateFrom_RenameAndAddColumns) {
   EXPECT_EQ(1u, builder()->SealVersion());
 
   builder()->AddColumn("added", "VARCHAR");
+  builder()->SealColumn("added");
   EXPECT_EQ(2u, builder()->SealVersion());
 
   EXPECT_TRUE(builder()->MigrateFrom(0, db()));
@@ -285,11 +291,14 @@ TEST_F(SQLTableBuilderTest, MigrateFrom_RenameAndAddColumns) {
   EXPECT_TRUE(IsColumnOfType("new_name", "INTEGER"));
   EXPECT_EQ(3u, builder()->NumberOfColumns());
   EXPECT_EQ("signon_realm, new_name, added", builder()->ListAllColumnNames());
+  EXPECT_EQ("signon_realm, added", builder()->ListAllSealedColumnNames());
   EXPECT_EQ("new_name=?, added=?", builder()->ListAllNonuniqueKeyNames());
   EXPECT_EQ("signon_realm=?", builder()->ListAllUniqueKeyNames());
 }
 
 TEST_F(SQLTableBuilderTest, MigrateFrom_RenameAndAddIndices) {
+  builder()->AddIndex("initial", {"signon_realm"});
+  builder()->SealIndex("initial");
   builder()->AddIndex("old_name", {"signon_realm"});
   EXPECT_EQ(0u, builder()->SealVersion());
 
@@ -299,14 +308,17 @@ TEST_F(SQLTableBuilderTest, MigrateFrom_RenameAndAddIndices) {
   EXPECT_EQ(1u, builder()->SealVersion());
 
   builder()->AddIndex("added", {"signon_realm"});
+  builder()->SealIndex("added");
   EXPECT_EQ(2u, builder()->SealVersion());
 
   EXPECT_TRUE(builder()->MigrateFrom(0, db()));
+  EXPECT_TRUE(db()->DoesIndexExist("initial"));
   EXPECT_FALSE(db()->DoesIndexExist("old_name"));
   EXPECT_TRUE(db()->DoesIndexExist("added"));
   EXPECT_TRUE(db()->DoesIndexExist("new_name"));
-  EXPECT_EQ(2u, builder()->NumberOfIndices());
-  EXPECT_EQ("new_name, added", builder()->ListAllIndexNames());
+  EXPECT_EQ(3u, builder()->NumberOfIndices());
+  EXPECT_EQ("initial, new_name, added", builder()->ListAllIndexNames());
+  EXPECT_EQ("initial, added", builder()->ListAllSealedIndexNames());
 }
 
 TEST_F(SQLTableBuilderTest, MigrateFrom_RenameAndAddAndDropColumns) {

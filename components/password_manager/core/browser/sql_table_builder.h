@@ -60,15 +60,18 @@ class SQLTableBuilder {
   void AddColumnToUniqueKey(const std::string& name, const std::string& type);
 
   // Renames column |old_name| to |new_name|. |new_name| can not exist already.
-  // |old_name| must have been added in the past. The column "signon_realm" must
-  // not be renamed. Furthermore, there must be no index in this version
-  // referencing |old_name|.
+  // |old_name| must have been added in the past. Furthermore, there must be no
+  // index in this version referencing |old_name|.
   void RenameColumn(const std::string& old_name, const std::string& new_name);
 
-  // Removes column |name|. |name| must have been added in the past. The column
-  // "signon_realm" must not be removed. Furthermore, there must be no index in
-  // this version referencing |name|.
+  // Removes column |name|. |name| must have been added in the past.
+  // Furthermore, there must be no index in this version referencing |name|.
   void DropColumn(const std::string& name);
+
+  // Seals column |name|. This means |name| can not be renamed or deleted at a
+  // later point in time. |name| must have been added in the past and must be
+  // present in the current version.
+  void SealColumn(const std::string& name);
 
   // Adds an index in the table description, with |name| and on columns
   // |columns|. |name| must not have been added to the table in this version
@@ -85,13 +88,18 @@ class SQLTableBuilder {
   // version.
   void DropIndex(const std::string& name);
 
+  // Seals index |name|. This means |name| can not be renamed or deleted at a
+  // later point in time. |name| must have been added in the past and must be
+  // present in the current version. Furthermore, sealing an already sealed
+  // index is treated as an error.
+  void SealIndex(const std::string& name);
+
   // Increments the internal version counter and marks the current state of the
   // table as that version. Returns the sealed version. Calling any of the
   // *Column* and *Index* methods above will result in starting a new version
-  // which is not considered sealed. The first version is 0. The column
-  // "signon_realm" must be present in |columns_| every time this is called, and
-  // at least one call to AddColumnToUniqueKey must have been done before this
-  // is called the first time.
+  // which is not considered sealed. The first version is 0. At least one call
+  // to AddColumnToUniqueKey must have been done before this is called the first
+  // time.
   unsigned SealVersion();
 
   // Assuming that the database connected through |db| contains a table called
@@ -109,6 +117,10 @@ class SQLTableBuilder {
   // version. The last version must be sealed.
   std::string ListAllColumnNames() const;
 
+  // Returns the comma-separated list of all sealed column names present in the
+  // last version. The last version must be sealed.
+  std::string ListAllSealedColumnNames() const;
+
   // Same as ListAllColumnNames, but for non-unique key names only, and with
   // names followed by " = ?".
   std::string ListAllNonuniqueKeyNames() const;
@@ -120,6 +132,10 @@ class SQLTableBuilder {
   // Returns the comma-separated list of all index names present in the last
   // version. The last version must be sealed.
   std::string ListAllIndexNames() const;
+
+  // Returns the comma-separated list of all sealed index names present in the
+  // last version. The last version must be sealed.
+  std::string ListAllSealedIndexNames() const;
 
   // Returns the number of all columns present in the last version. The last
   // version must be sealed.

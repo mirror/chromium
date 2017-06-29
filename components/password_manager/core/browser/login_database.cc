@@ -356,6 +356,7 @@ void InitializeBuilder(SQLTableBuilder* builder) {
   builder->AddColumn("password_value", "BLOB");
   builder->AddColumn("submit_element", "VARCHAR");
   builder->AddColumnToUniqueKey("signon_realm", "VARCHAR NOT NULL");
+  builder->SealColumn("signon_realm");
   builder->AddColumn("ssl_valid", "INTEGER NOT NULL");
   builder->AddColumn("preferred", "INTEGER NOT NULL");
   builder->AddColumn("date_created", "INTEGER NOT NULL");

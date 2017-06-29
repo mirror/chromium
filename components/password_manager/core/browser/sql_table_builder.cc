@@ -48,6 +48,9 @@ struct SQLTableBuilder::Column {
   // predecessors. If the bit is false, the column will be filled with the
   // default value on creation.
   bool gets_previous_data;
+  // A sealed column is immutable in the sense that it can't be renamed or
+  // deleted.
+  bool is_sealed;
 };
 
 struct SQLTableBuilder::Index {
@@ -60,6 +63,9 @@ struct SQLTableBuilder::Index {
   // The last version this index is part of. The value of kInvalidVersion
   // means that it is part of all versions since |min_version|.
   unsigned max_version;
+  // A sealed index is immutable in the sense that it can't be renamed or
+  // deleted.
+  bool is_sealed;
 };
 
 SQLTableBuilder::SQLTableBuilder(const std::string& table_name)
@@ -70,8 +76,8 @@ SQLTableBuilder::~SQLTableBuilder() = default;
 void SQLTableBuilder::AddColumn(const std::string& name,
                                 const std::string& type) {
   DCHECK(FindLastColumnByName(name) == columns_.rend());
-  Column column = {name, type, false, sealed_version_ + 1, kInvalidVersion,
-                   false};
+  Column column = {name,  type, false, sealed_version_ + 1, kInvalidVersion,
+                   false, false};
   columns_.push_back(std::move(column));
 }
 
@@ -96,7 +102,7 @@ void SQLTableBuilder::RenameColumn(const std::string& old_name,
                                base::ContainsValue(index.columns, old_name);
                       }));
 
-  DCHECK_NE("signon_realm", old_name);
+  DCHECK(!old_column->is_sealed);
   if (sealed_version_ != kInvalidVersion &&
       old_column->min_version <= sealed_version_) {
     // This column exists in the last sealed version. Therefore it cannot be
@@ -106,7 +112,8 @@ void SQLTableBuilder::RenameColumn(const std::string& old_name,
                          old_column->part_of_unique_key,
                          sealed_version_ + 1,
                          kInvalidVersion,
-                         true};
+                         true,
+                         false};
     old_column->max_version = sealed_version_;
     auto past_old =
         old_column.base();  // Points one element after |old_column|.
@@ -128,7 +135,7 @@ void SQLTableBuilder::DropColumn(const std::string& name) {
                         return index.max_version == kInvalidVersion &&
                                base::ContainsValue(index.columns, name);
                       }));
-  DCHECK_NE("signon_realm", name);
+  DCHECK(!column->is_sealed);
   if (sealed_version_ != kInvalidVersion &&
       column->min_version <= sealed_version_) {
     // This column exists in the last sealed version. Therefore it cannot be
@@ -140,6 +147,15 @@ void SQLTableBuilder::DropColumn(const std::string& name) {
     columns_.erase(
         --(column.base()));  // base() points one element after |column|.
   }
+}
+
+void SQLTableBuilder::SealColumn(const std::string& name) {
+  auto column = FindLastColumnByName(name);
+  // Check that |name| has been added in the past.
+  DCHECK(column != columns_.rend());
+  // Check that |name| has not been renamed / deleted in the past.
+  DCHECK_EQ(column->max_version, kInvalidVersion);
+  column->is_sealed = true;
 }
 
 void SQLTableBuilder::AddIndex(std::string name,
@@ -166,7 +182,7 @@ void SQLTableBuilder::AddIndex(std::string name,
                            });
       }));
   indices_.push_back({std::move(name), std::move(columns), sealed_version_ + 1,
-                      kInvalidVersion});
+                      kInvalidVersion, false});
 }
 
 void SQLTableBuilder::RenameIndex(const std::string& old_name,
@@ -177,6 +193,7 @@ void SQLTableBuilder::RenameIndex(const std::string& old_name,
   if (old_name == new_name)  // The easy case.
     return;
 
+  DCHECK(!old_index->is_sealed);
   // Check that there is no index with the new name.
   DCHECK(FindLastIndexByName(new_name) == indices_.rend());
   // Check that there is at least one sealed version.
@@ -189,14 +206,15 @@ void SQLTableBuilder::RenameIndex(const std::string& old_name,
   // just replaced, it needs to be kept for generating the migration code.
   old_index->max_version = sealed_version_;
   // Add the new index.
-  indices_.push_back(
-      {new_name, old_index->columns, sealed_version_ + 1, kInvalidVersion});
+  indices_.push_back({new_name, old_index->columns, sealed_version_ + 1,
+                      kInvalidVersion, false});
 }
 
 void SQLTableBuilder::DropIndex(const std::string& name) {
   auto index = FindLastIndexByName(name);
   // Check that an index with the name exists.
   DCHECK(index != indices_.rend());
+  DCHECK(!index->is_sealed);
   // Check that this index exists in the last sealed version and hasn't been
   // renamed or deleted yet.
   // Check that there is at least one sealed version.
@@ -210,8 +228,18 @@ void SQLTableBuilder::DropIndex(const std::string& name) {
   index->max_version = sealed_version_;
 }
 
+void SQLTableBuilder::SealIndex(const std::string& name) {
+  auto index = FindLastIndexByName(name);
+  // Check that |name| has been added in the past.
+  DCHECK(index != indices_.rend());
+  // Check that |name| has not been renamed / deleted in the past.
+  DCHECK_EQ(index->max_version, kInvalidVersion);
+  // Check that |name| has not been sealed already.
+  DCHECK(!index->is_sealed);
+  index->is_sealed = true;
+}
+
 unsigned SQLTableBuilder::SealVersion() {
-  DCHECK(FindLastColumnByName("signon_realm") != columns_.rend());
   if (sealed_version_ == kInvalidVersion) {
     DCHECK_EQ(std::string(), unique_constraint_);
     // First sealed version, time to compute the UNIQUE string.
@@ -282,6 +310,16 @@ std::string SQLTableBuilder::ListAllColumnNames() const {
   return result;
 }
 
+std::string SQLTableBuilder::ListAllSealedColumnNames() const {
+  DCHECK(IsVersionLastAndSealed(sealed_version_));
+  std::string result;
+  for (const Column& column : columns_) {
+    if (IsColumnInLastVersion(column) && column.is_sealed)
+      Append(column.name, &result);
+  }
+  return result;
+}
+
 std::string SQLTableBuilder::ListAllNonuniqueKeyNames() const {
   DCHECK(IsVersionLastAndSealed(sealed_version_));
   std::string result;
@@ -310,6 +348,16 @@ std::string SQLTableBuilder::ListAllIndexNames() const {
   std::string result;
   for (const Index& index : indices_) {
     if (IsIndexInLastVersion(index))
+      Append(index.name, &result);
+  }
+  return result;
+}
+
+std::string SQLTableBuilder::ListAllSealedIndexNames() const {
+  DCHECK(IsVersionLastAndSealed(sealed_version_));
+  std::string result;
+  for (const Index& index : indices_) {
+    if (IsIndexInLastVersion(index) && index.is_sealed)
       Append(index.name, &result);
   }
   return result;
