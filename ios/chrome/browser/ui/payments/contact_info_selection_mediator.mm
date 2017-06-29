@@ -7,8 +7,11 @@
 #import "ios/chrome/browser/ui/payments/contact_info_selection_mediator.h"
 
 #include "base/logging.h"
+#include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
+#include "components/payments/core/payments_profile_comparator.h"
 #include "components/strings/grit/components_strings.h"
+#include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/payments/payment_request_util.h"
 #import "ios/chrome/browser/ui/payments/cells/autofill_profile_item.h"
@@ -84,6 +87,9 @@ using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
   const std::vector<autofill::AutofillProfile*>& contactProfiles =
       _paymentRequest->contact_profiles();
 
+  payments::PaymentsProfileComparator comparator(
+      GetApplicationContext()->GetApplicationLocale(), *_paymentRequest);
+
   _items = [NSMutableArray arrayWithCapacity:contactProfiles.size()];
   DCHECK(self.paymentRequest->request_payer_name() ||
          self.paymentRequest->request_payer_email() ||
@@ -100,6 +106,11 @@ using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
       item.phoneNumber =
           GetPhoneNumberLabelFromAutofillProfile(*contactProfile);
     }
+    const base::string16 notification =
+        comparator.GetStringForMissingContactFields(*contactProfile);
+    item.notification =
+        !notification.empty() ? base::SysUTF16ToNSString(notification) : nil;
+    item.complete = comparator.IsContactInfoComplete(contactProfile);
     if (_paymentRequest->selected_contact_profile() == contactProfile)
       _selectedItemIndex = index;
 
