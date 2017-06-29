@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afee850c_800e687b",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-29T22:19:14Z",
+      "side": 1,
+      "message": "Per offline conversation:\n\n1. Let\u0027s only in production / release code check for direct children being our own blob. We can accept that circular dependencies will just hang forever - it should simplify the code a lot to remove this full graph checks.\n\n2. Let\u0027s do a simpler heuristic circular dependency checker for debug builds, where (possibly):\n  * When we get a UUID resolved, we crawl the graph of that blob and see if we have a circular depency.\n  * Should be it\u0027s own method call, so we don\u0027t muck up BlobUnderConstruction.\n  * We can limit our call depth (maybe make it a breadth-first-search style) to not impact perf too much (as this is less efficient than current method - no caching).\n\n\nThis should allow us to simplify this class into:\n 1. Wait until we get all UUIDs\n 2. Check to see if none are our own.\n 3. Wait for dependent blobs to call BuildBlob in the BlobStorageContext so they aren\u0027t pending construction and we have sizes.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "2133b2448b40ad4a9b93e21ddb69bd74bf35c2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7e1973_9a32eece",
+        "filename": "storage/browser/blob/blob_storage_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-29T22:19:14Z",
+      "side": 1,
+      "message": "maybe just grab the callbacks? And DCHECK that it\u0027s empty otherwise?",
+      "revId": "2133b2448b40ad4a9b93e21ddb69bd74bf35c2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
