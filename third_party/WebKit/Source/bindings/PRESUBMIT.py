@@ -60,6 +60,7 @@ def _RunBindingsTests(input_api, output_api):
         cmd = [input_api.python_executable, run_bindings_tests_path]
     else:
         cmd = [run_bindings_tests_path]
+    cmd.append('--suppress-diff')
     test_cmd = input_api.Command(
       name=cmd_name,
       cmd=cmd,
