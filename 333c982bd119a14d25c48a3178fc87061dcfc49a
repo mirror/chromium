@@ -179,6 +179,30 @@
       "revId": "333c982bd119a14d25c48a3178fc87061dcfc49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103ce714_05effd09",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-29T07:43:48Z",
+      "side": 1,
+      "message": "Created https://bugs.chromium.org/p/chromium/issues/detail?id\u003d737885",
+      "parentUuid": "f1712e8f_0286eae7",
+      "range": {
+        "startLine": 437,
+        "startChar": 0,
+        "endLine": 438,
+        "endChar": 64
+      },
+      "revId": "333c982bd119a14d25c48a3178fc87061dcfc49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
