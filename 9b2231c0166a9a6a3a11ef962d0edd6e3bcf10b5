@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1df7ddfd_4883459b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 21461,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-29T04:39:27Z",
+      "side": 1,
+      "message": "nit: Please add an enum\u003d attribute for this histogram.",
+      "range": {
+        "startLine": 21461,
+        "startChar": 66,
+        "endLine": 21461,
+        "endChar": 0
+      },
+      "revId": "9b2231c0166a9a6a3a11ef962d0edd6e3bcf10b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
