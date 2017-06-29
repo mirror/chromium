@@ -452,14 +452,14 @@
     var test = this;
 
     function finishRequest(request, finishTime) {
+      var timing = request.timing();
       // Setting relaxed expectations to reduce flakiness.
       // Server sends headers after 100ms, then sends data during another 100ms.
       // We expect these times to be measured at least as 70ms.
       test.assertTrue(
-          request.timing.receiveHeadersEnd - request.timing.connectStart >= 70,
+          timing.receiveHeadersEnd - timing.connectStart >= 70,
           'Time between receiveHeadersEnd and connectStart should be >=70ms, but was ' +
-              'receiveHeadersEnd=' + request.timing.receiveHeadersEnd + ', connectStart=' +
-              request.timing.connectStart + '.');
+              'receiveHeadersEnd=' + timing.receiveHeadersEnd + ', connectStart=' + timing.connectStart + '.');
       test.assertTrue(
           request.responseReceivedTime - request.startTime >= 0.07,
           'Time between responseReceivedTime and startTime should be >=0.07s, but was ' +
@@ -485,20 +485,20 @@
     var pendingRequestCount = 2;
 
     function finishRequest(request, finishTime) {
+      var timing = request.timing();
       test.assertTrue(
-          typeof request.timing.pushStart === 'number' && request.timing.pushStart > 0,
-          `pushStart is invalid: ${request.timing.pushStart}`);
-      test.assertTrue(typeof request.timing.pushEnd === 'number', `pushEnd is invalid: ${request.timing.pushEnd}`);
-      test.assertTrue(request.timing.pushStart < request.startTime, 'pushStart should be before startTime');
+          typeof timing.pushStart === 'number' && timing.pushStart > 0, `pushStart is invalid: ${timing.pushStart}`);
+      test.assertTrue(typeof timing.pushEnd === 'number', `pushEnd is invalid: ${timing.pushEnd}`);
+      test.assertTrue(timing.pushStart < request.startTime, 'pushStart should be before startTime');
       if (request.url().endsWith('?pushUseNullEndTime')) {
-        test.assertTrue(request.timing.pushEnd === 0, `pushEnd should be 0 but is ${request.timing.pushEnd}`);
+        test.assertTrue(timing.pushEnd === 0, `pushEnd should be 0 but is ${timing.pushEnd}`);
       } else {
         test.assertTrue(
-            request.timing.pushStart < request.timing.pushEnd,
-            `pushStart should be before pushEnd (${request.timing.pushStart} >= ${request.timing.pushEnd})`);
+            timing.pushStart < timing.pushEnd,
+            `pushStart should be before pushEnd (${timing.pushStart} >= ${timing.pushEnd})`);
         // The below assertion is just due to the way we generate times in the moch URLRequestJob and is not generally an invariant.
-        test.assertTrue(request.timing.pushEnd < request.endTime, 'pushEnd should be before endTime');
-        test.assertTrue(request.startTime < request.timing.pushEnd, 'pushEnd should be after startTime');
+        test.assertTrue(timing.pushEnd < request.endTime, 'pushEnd should be before endTime');
+        test.assertTrue(request.startTime < timing.pushEnd, 'pushEnd should be after startTime');
       }
       if (!--pendingRequestCount)
         test.releaseControl();

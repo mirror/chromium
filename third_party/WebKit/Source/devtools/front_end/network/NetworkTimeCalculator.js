@@ -248,7 +248,7 @@ Network.NetworkTimeCalculator = class extends Common.Object {
     else
       var leftLabel = rightLabel;
 
-    if (request.timing)
+    if (request.timing())
       return {left: leftLabel, right: rightLabel};
 
     if (hasLatency && rightLabel) {

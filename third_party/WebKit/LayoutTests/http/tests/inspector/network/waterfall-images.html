@@ -240,7 +240,7 @@ function test()
     var request = new SDK.NetworkRequest((++requestIds).toString(), requestData.url);
     request.setResourceType(requestData.type);
     request.setIssueTime(requestData.issueTime, requestData.wallIssueTime);
-    request.timing = requestData.timing;
+    request.setTiming(requestData.timing());
     request.endTime = requestData.endTime;
     if (requestData.responseReceivedTime)
       request.responseReceivedTime = requestData.responseReceivedTime;

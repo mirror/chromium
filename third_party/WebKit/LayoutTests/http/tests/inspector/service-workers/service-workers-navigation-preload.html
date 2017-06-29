@@ -58,7 +58,7 @@ function test()
         }
         InspectorTest.addResult("onResponseReceived:");
         InspectorTest.addResult("  statusCode: " + request.statusCode);
-        InspectorTest.addResult("  timing available: " + !!request.timing);
+        InspectorTest.addResult("  timing available: " + !!request.timing());
         request.requestHeaders().map(header => {
             if (header.name == 'Service-Worker-Navigation-Preload') {
                 InspectorTest.addResult(

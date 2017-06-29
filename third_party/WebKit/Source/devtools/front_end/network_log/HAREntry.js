@@ -63,7 +63,7 @@ NetworkLog.HAREntry = class {
 
     var entry = {
       startedDateTime: NetworkLog.HARLog.pseudoWallTime(this._request, this._request.startTime),
-      time: this._request.timing ? NetworkLog.HAREntry._toMilliseconds(this._request.duration) : 0,
+      time: this._request.timing() ? NetworkLog.HAREntry._toMilliseconds(this._request.duration) : 0,
       request: this._buildRequest(),
       response: this._buildResponse(),
       cache: {},  // Not supported yet.
@@ -142,7 +142,7 @@ NetworkLog.HAREntry = class {
     // Order of events: request_start = 0, [proxy], [dns], [connect [ssl]], [send], receive_headers_end
     // HAR 'blocked' time is time before first network activity.
 
-    var timing = this._request.timing;
+    var timing = this._request.timing();
     if (!timing)
       return {blocked: -1, dns: -1, connect: -1, send: 0, wait: 0, receive: 0, ssl: -1};
 

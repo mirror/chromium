@@ -122,7 +122,7 @@ Network.RequestTimingView = class extends UI.VBox {
         addRange(name, startTime + (start / 1000), startTime + (end / 1000));
     }
 
-    var timing = request.timing;
+    var timing = request.timing();
     if (!timing) {
       var start = request.issueTime() !== -1 ? request.issueTime() : request.startTime !== -1 ? request.startTime : 0;
       var middle = (request.responseReceivedTime === -1) ? Number.MAX_VALUE : request.responseReceivedTime;

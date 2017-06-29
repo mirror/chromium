@@ -277,7 +277,7 @@ SDK.NetworkDispatcher = class {
 
     if (response.fromDiskCache)
       networkRequest.setFromDiskCache();
-    networkRequest.timing = response.timing;
+    networkRequest.setTiming(response.timing);
 
     networkRequest.protocol = response.protocol;
 
