@@ -11,6 +11,7 @@
 #include "ash/shell_observer.h"
 #include "base/macros.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "ui/events/event_source.h"
 #include "ui/views/controls/button/image_button.h"
 
 namespace base {
@@ -25,7 +26,8 @@ class VoiceInteractionOverlay;
 
 // Button used for the AppList icon on the shelf.
 class ASH_EXPORT AppListButton : public views::ImageButton,
-                                 public ShellObserver {
+                                 public ShellObserver,
+                                 public ui::EventSource {
  public:
   AppListButton(InkDropButtonListener* listener,
                 ShelfView* shelf_view,
@@ -40,15 +42,21 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   // Updates background and schedules a paint.
   void UpdateShelfItemBackground(SkColor color);
 
-  // views::ImageButton overrides:
+  // views::ImageButton:
   void OnGestureEvent(ui::GestureEvent* event) override;
 
-  // Get the center point of the app list button used to draw its background and
-  // ink drops.
-  gfx::Point GetCenterPoint() const;
+  // Get the center point of the app list button circle used to draw its
+  // background and ink drops.
+  gfx::Point GetCircleCenterPoint() const;
+  // Get the center point of the app list button back arrow. Returns
+  // gfx::Point(0, 0) if the back arrow is not shown.
+  gfx::Point GetBackButtonCenterPoint() const;
+
+  // ui::EventSource:
+  ui::EventSink* GetEventSink() override;
 
  protected:
-  // views::ImageButton overrides:
+  // views::ImageButton:
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnMouseReleased(const ui::MouseEvent& event) override;
   void OnMouseCaptureLost() override;
@@ -62,10 +70,12 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   void PaintButtonContents(gfx::Canvas* canvas) override;
 
  private:
-  // ShellObserver overrides:
+  // ShellObserver:
   void OnAppListVisibilityChanged(bool shown,
                                   aura::Window* root_window) override;
   void OnVoiceInteractionStatusChanged(bool running) override;
+
+  bool IsBackEvent(const gfx::Point& location);
 
   // True if the app list is currently showing for this display.
   // This is useful because other IsApplistVisible functions aren't per-display.
@@ -82,6 +92,10 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   std::unique_ptr<base::OneShotTimer> voice_interaction_animation_delay_timer_;
 
   bool voice_interaction_running_ = false;
+
+  // Flag that gets set each time we receive a mouse or gesture event. It is
+  // then used to render the ink drop in the right location.
+  bool last_event_is_back_event_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppListButton);
 };
