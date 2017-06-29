@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a8e2cd5c_d73d56d6",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-06-29T15:00:17Z",
+      "side": 1,
+      "message": "Sorry, typo, HUTRR32 has that code.\n\nI\u0027m concerned that upstream evdev will use 0x247 for the next new USB button and cause us compatibility problems.\n\nHas it been considered to use the existing codes (USB/evdev/VK/DOM) for \u0027Help\u0027?",
+      "parentUuid": "abf7bea2_7f6366f5",
+      "range": {
+        "startLine": 536,
+        "startChar": 5,
+        "endLine": 536,
+        "endChar": 8
+      },
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc711b6e_ec041c3e",
         "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
         "patchSetId": 4
@@ -128,6 +152,24 @@
       "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800ed57b_01449ef6",
+        "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-06-29T15:00:17Z",
+      "side": 1,
+      "message": "After thinking about it a bit more, I think the fallback you have here is a good idea.\n\n(The current design allows different layout mechanisms per-system and could be adapted pretty easily to different mechanisms per-layout, but I haven\u0027t heard of any demand for that.)",
+      "parentUuid": "3eb97767_95631207",
+      "revId": "0391cbe4fe8ec27cece5527a8a57c98941aded60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
