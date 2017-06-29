@@ -42,13 +42,13 @@
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PassRefPtr.h"
 #include "public/platform/WebThread.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "v8/include/v8.h"
 
 namespace blink {
 
 class ConsoleMessageStorage;
 class InspectorTaskRunner;
-class InterfaceProvider;
 class WorkerBackingThread;
 class WorkerInspectorController;
 class WorkerOrWorkletGlobalScope;
@@ -176,7 +176,7 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
     return global_scope_scheduler_.get();
   }
 
-  InterfaceProvider* GetInterfaceProvider();
+  service_manager::InterfaceProvider& GetInterfaceProvider();
 
  protected:
   WorkerThread(ThreadableLoadingContext*, WorkerReportingProxy&);
@@ -296,6 +296,10 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   WorkerReportingProxy& worker_reporting_proxy_;
 
   CrossThreadPersistent<ParentFrameTaskRunners> parent_frame_task_runners_;
+
+  // Mojo interface provider serving interface requests scoped to this worker
+  // context.
+  service_manager::InterfaceProvider interface_provider_;
 
   // Tasks managed by this scheduler are canceled when the global scope is
   // closed.
