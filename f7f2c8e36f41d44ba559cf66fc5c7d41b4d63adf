@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7118f0c_27e5f0e0",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "Would having something like: GetForProfile(Profile*) and have a map from Profile* to NewTabFeatureEngagementTracker that maybe simplify the logic of swapping profiles and testing that? I guess it\u0027s just the general concern about swapping between profiles on-the-fly using GetLatestProfile.",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6210c1c8_97184e1c",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "Would you want to maybe extract this out to a common method shared across the public methods you have?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 3
+      },
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8acffb86_69d746ca",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "Since this looks like a placeholder, maybe just move this into the ShowPromo() for now? It\u0027s from some place inside of that that area it needs to be dismissed anyway.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4254ff0c_7eea2c80",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "Are you sure this will never lead to events being tracked across profiles?\nFor example, doing a ShowPromo() for one profile, but then clicking in a different profile, leading to dismissal of the promo, which again would fetch the FeatureEngagementTracker and call dismiss on it in the wrong profile? Or other similar scenarios.\n\nI wonder if it would make sense to instead of having a singleton, having one per profile?",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 45
+      },
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150794f4_5aa19256",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this file lives here? It uses the FeatureEngagementTracker service, but it\u0027s not part of it. Same with the namespace feature_engagement_tracker below.\n\nTo me, it would feel more natural if it lived closer to where the usage is.",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e649ef_642ce3cf",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "What does this method do? Would it maybe be clearer if it was called something along the lines of HasEnoughTimeElapsed() or something like that?",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc0aa7f_cfadd331",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "Could you split this method out and specify that it implements the observer interface?",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986cc12c_6807a75f",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "Nit: This seems more like a TestNewTabFeatureEngagementTracker or FakeNewTabFeatureEngagementTracker.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f130187_b0022eab",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "It\u0027s a little bit confusing that these tests depend on the field trial json file, but that\u0027s not part of this CL. Could you at least refer to that file in a comment so that one can look up the experiment?",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780204d7_eab97e72",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "Do you need to delete the profile? (DeleteTestingProfile(...))",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0ddefb_77cfc0c8",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "Did you mean |instance| here and below?",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 24
+      },
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262b4af7_7b04f570",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-29T03:30:53Z",
+      "side": 1,
+      "message": "If you mean |instance| here, that would be autodeleted, now?",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
