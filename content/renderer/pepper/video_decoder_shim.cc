@@ -790,11 +790,11 @@ void VideoDecoderShim::DecoderImpl::OnDecodeComplete(
 
   int32_t result;
   switch (status) {
-    case media::DecodeStatus::OK:
-    case media::DecodeStatus::ABORTED:
+    case media::DecodeStatus::kOk:
+    case media::DecodeStatus::kAborted:
       result = PP_OK;
       break;
-    case media::DecodeStatus::DECODE_ERROR:
+    case media::DecodeStatus::kError:
       result = PP_ERROR_RESOURCE_FAILED;
       break;
   }

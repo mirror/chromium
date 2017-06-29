@@ -758,7 +758,7 @@ void VideoFrameQualityValidator::AddOriginalFrame(
 void VideoFrameQualityValidator::DecodeDone(DecodeStatus status) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (status == DecodeStatus::OK) {
+  if (status == DecodeStatus::kOk) {
     decoder_state_ = INITIALIZED;
     Decode();
   } else {

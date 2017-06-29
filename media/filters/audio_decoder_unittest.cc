@@ -128,7 +128,7 @@ class AudioDecoderTest
         params_(std::get<1>(GetParam())),
         pending_decode_(false),
         pending_reset_(false),
-        last_decode_status_(DecodeStatus::DECODE_ERROR) {
+        last_decode_status_(DecodeStatus::kError) {
     switch (decoder_type_) {
       case FFMPEG:
         decoder_.reset(
@@ -168,7 +168,7 @@ class AudioDecoderTest
   void DecodeBuffer(const scoped_refptr<DecoderBuffer>& buffer) {
     ASSERT_FALSE(pending_decode_);
     pending_decode_ = true;
-    last_decode_status_ = DecodeStatus::DECODE_ERROR;
+    last_decode_status_ = DecodeStatus::kError;
 
     base::RunLoop run_loop;
     decoder_->Decode(
@@ -587,7 +587,7 @@ TEST_P(AudioDecoderTest, ProduceAudioSamples) {
     // (i.e. decoding EOS).
     do {
       Decode();
-      ASSERT_EQ(last_decode_status(), DecodeStatus::OK);
+      ASSERT_EQ(last_decode_status(), DecodeStatus::kOk);
     } while (decoded_audio_size() < kDecodeRuns);
 
     // With MediaCodecAudioDecoder the output buffers might appear after
@@ -619,7 +619,7 @@ TEST_P(AudioDecoderTest, Decode) {
   SKIP_TEST_IF_NOT_SUPPORTED();
   ASSERT_NO_FATAL_FAILURE(Initialize());
   Decode();
-  EXPECT_EQ(DecodeStatus::OK, last_decode_status());
+  EXPECT_EQ(DecodeStatus::kOk, last_decode_status());
 }
 
 TEST_P(AudioDecoderTest, Reset) {
@@ -634,7 +634,7 @@ TEST_P(AudioDecoderTest, NoTimestamp) {
   scoped_refptr<DecoderBuffer> buffer(new DecoderBuffer(0));
   buffer->set_timestamp(kNoTimestamp);
   DecodeBuffer(buffer);
-  EXPECT_EQ(DecodeStatus::DECODE_ERROR, last_decode_status());
+  EXPECT_EQ(DecodeStatus::kError, last_decode_status());
 }
 
 INSTANTIATE_TEST_CASE_P(FFmpeg,

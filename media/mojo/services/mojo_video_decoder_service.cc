@@ -74,7 +74,7 @@ void MojoVideoDecoderService::Decode(mojom::DecoderBufferPtr buffer,
   DVLOG(2) << __func__;
 
   if (!decoder_) {
-    callback.Run(DecodeStatus::DECODE_ERROR);
+    callback.Run(DecodeStatus::kError);
     return;
   }
 
@@ -109,7 +109,7 @@ void MojoVideoDecoderService::OnDecoderRead(
     scoped_refptr<DecoderBuffer> buffer) {
   if (!buffer) {
     // TODO(sandersd): Close the channel.
-    callback.Run(DecodeStatus::DECODE_ERROR);
+    callback.Run(DecodeStatus::kError);
     return;
   }
 

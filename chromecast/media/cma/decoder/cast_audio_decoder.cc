@@ -153,10 +153,10 @@ class CastAudioDecoderImpl : public CastAudioDecoder {
                       ::media::DecodeStatus status) {
     Status result_status = kDecodeOk;
     scoped_refptr<media::DecoderBufferBase> decoded;
-    if (status == ::media::DecodeStatus::OK && !decoded_chunks_.empty()) {
+    if (status == ::media::DecodeStatus::kOk && !decoded_chunks_.empty()) {
       decoded = ConvertDecoded();
     } else {
-      if (status != ::media::DecodeStatus::OK)
+      if (status != ::media::DecodeStatus::kOk)
         result_status = kDecodeError;
       decoded = new media::DecoderBufferAdapter(config_.id,
                                                 new ::media::DecoderBuffer(0));

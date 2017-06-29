@@ -183,7 +183,7 @@ TEST_F(MediaCodecVideoDecoderTest, FrameFactoryInitFailureIsAnError) {
   Initialize(TestVideoConfig::NormalH264());
   ON_CALL(*video_frame_factory_, Initialize(_, _, _))
       .WillByDefault(RunCallback<2>(nullptr));
-  EXPECT_CALL(decode_cb_, Run(DecodeStatus::DECODE_ERROR)).Times(1);
+  EXPECT_CALL(decode_cb_, Run(DecodeStatus::kError)).Times(1);
   EXPECT_CALL(*surface_chooser_, MockInitialize()).Times(0);
   mcvd_->Decode(nullptr, decode_cb_.Get());
 }
@@ -191,7 +191,7 @@ TEST_F(MediaCodecVideoDecoderTest, FrameFactoryInitFailureIsAnError) {
 TEST_F(MediaCodecVideoDecoderTest, CodecCreationFailureIsAnError) {
   InitializeWithSurfaceTexture();
   mcvd_->Decode(nullptr, decode_cb_.Get());
-  EXPECT_CALL(decode_cb_, Run(DecodeStatus::DECODE_ERROR)).Times(2);
+  EXPECT_CALL(decode_cb_, Run(DecodeStatus::kError)).Times(2);
   // Failing to create a codec should put MCVD into an error state.
   codec_allocator_->ProvideNullCodecAsync();
 }
@@ -332,7 +332,7 @@ TEST_F(MediaCodecVideoDecoderTest,
 
   surface_chooser_->ProvideSurfaceTexture();
   EXPECT_CALL(*codec, SetSurface(_)).WillOnce(Return(false));
-  EXPECT_CALL(decode_cb_, Run(DecodeStatus::DECODE_ERROR)).Times(2);
+  EXPECT_CALL(decode_cb_, Run(DecodeStatus::kError)).Times(2);
   EXPECT_CALL(*codec_allocator_, MockReleaseMediaCodec(codec, NotNull(), _));
   mcvd_->Decode(nullptr, decode_cb_.Get());
   // Verify expectations before we delete the MCVD.

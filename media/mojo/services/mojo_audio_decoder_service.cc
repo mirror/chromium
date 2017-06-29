@@ -117,7 +117,7 @@ void MojoAudioDecoderService::OnReadDone(const DecodeCallback& callback,
   DVLOG(3) << __func__ << " success:" << !!buffer;
 
   if (!buffer) {
-    callback.Run(DecodeStatus::DECODE_ERROR);
+    callback.Run(DecodeStatus::kError);
     return;
   }
 

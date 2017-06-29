@@ -47,7 +47,7 @@ IPC_ENUM_TRAITS_MAX_VALUE(media::ChannelLayout, media::CHANNEL_LAYOUT_MAX)
 IPC_ENUM_TRAITS_MAX_VALUE(media::ColorSpace, media::COLOR_SPACE_MAX)
 
 IPC_ENUM_TRAITS_MAX_VALUE(media::DecodeStatus,
-                          media::DecodeStatus::DECODE_STATUS_MAX)
+                          media::DecodeStatus::kDecodeStatusMax)
 
 IPC_ENUM_TRAITS_MAX_VALUE(media::Decryptor::Status,
                           media::Decryptor::Status::kStatusMax)

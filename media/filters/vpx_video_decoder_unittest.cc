@@ -63,14 +63,14 @@ class VpxVideoDecoderTest : public testing::Test {
   // Sets up expectations and actions to put VpxVideoDecoder in an active
   // decoding state.
   void ExpectDecodingState() {
-    EXPECT_EQ(DecodeStatus::OK, DecodeSingleFrame(i_frame_buffer_));
+    EXPECT_EQ(DecodeStatus::kOk, DecodeSingleFrame(i_frame_buffer_));
     ASSERT_EQ(1U, output_frames_.size());
   }
 
   // Sets up expectations and actions to put VpxVideoDecoder in an end
   // of stream state.
   void ExpectEndOfStreamState() {
-    EXPECT_EQ(DecodeStatus::OK,
+    EXPECT_EQ(DecodeStatus::kOk,
               DecodeSingleFrame(DecoderBuffer::CreateEOSBuffer()));
     ASSERT_FALSE(output_frames_.empty());
   }
@@ -86,16 +86,16 @@ class VpxVideoDecoderTest : public testing::Test {
          iter != input_buffers.end(); ++iter) {
       DecodeStatus status = Decode(*iter);
       switch (status) {
-        case DecodeStatus::OK:
+        case DecodeStatus::kOk:
           break;
-        case DecodeStatus::ABORTED:
+        case DecodeStatus::kAborted:
           NOTREACHED();
-        case DecodeStatus::DECODE_ERROR:
+        case DecodeStatus::kError:
           DCHECK(output_frames_.empty());
           return status;
       }
     }
-    return DecodeStatus::OK;
+    return DecodeStatus::kOk;
   }
 
   // Decodes the single compressed frame in |buffer| and writes the
@@ -125,7 +125,7 @@ class VpxVideoDecoderTest : public testing::Test {
 
     DecodeStatus status = DecodeMultipleFrames(input_buffers);
 
-    EXPECT_EQ(DecodeStatus::OK, status);
+    EXPECT_EQ(DecodeStatus::kOk, status);
     ASSERT_EQ(2U, output_frames_.size());
 
     gfx::Size original_size = TestVideoConfig::NormalCodedSize();
@@ -195,7 +195,7 @@ TEST_F(VpxVideoDecoderTest, DecodeFrame_Normal) {
   Initialize();
 
   // Simulate decoding a single frame.
-  EXPECT_EQ(DecodeStatus::OK, DecodeSingleFrame(i_frame_buffer_));
+  EXPECT_EQ(DecodeStatus::kOk, DecodeSingleFrame(i_frame_buffer_));
   ASSERT_EQ(1U, output_frames_.size());
 }
 

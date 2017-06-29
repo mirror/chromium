@@ -113,7 +113,7 @@ class MojoAudioDecoderTest : public ::testing::Test {
     EXPECT_CALL(*mock_audio_decoder_, Decode(_, _))
         .WillRepeatedly(
             DoAll(InvokeWithoutArgs(this, &MojoAudioDecoderTest::ReturnOutput),
-                  RunCallback<1>(DecodeStatus::OK)));
+                  RunCallback<1>(DecodeStatus::kOk)));
     EXPECT_CALL(*mock_audio_decoder_, Reset(_))
         .WillRepeatedly(RunCallback<0>());
 
@@ -178,7 +178,7 @@ class MojoAudioDecoderTest : public ::testing::Test {
 
     InSequence s;  // Make sure OnOutput() and OnDecoded() are called in order.
     EXPECT_CALL(*this, OnOutput(_)).Times(kOutputPerDecode);
-    EXPECT_CALL(*this, OnDecoded(DecodeStatus::OK))
+    EXPECT_CALL(*this, OnDecoded(DecodeStatus::kOk))
         .WillOnce(
             InvokeWithoutArgs(this, &MojoAudioDecoderTest::KeepDecodingOrQuit));
     Decode();

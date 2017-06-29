@@ -89,7 +89,7 @@ void MojoVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
 
   if (has_connection_error_) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+                           base::Bind(decode_cb, DecodeStatus::kError));
     return;
   }
 
@@ -97,7 +97,7 @@ void MojoVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
       mojo_decoder_buffer_writer_->WriteDecoderBuffer(buffer);
   if (!mojo_buffer) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+                           base::Bind(decode_cb, DecodeStatus::kError));
     return;
   }
 
@@ -232,7 +232,7 @@ void MojoVideoDecoder::Stop() {
     base::ResetAndReturn(&init_cb_).Run(false);
 
   for (const auto& pending_decode : pending_decodes_)
-    pending_decode.second.Run(DecodeStatus::DECODE_ERROR);
+    pending_decode.second.Run(DecodeStatus::kError);
   pending_decodes_.clear();
 
   if (!reset_cb_.is_null())

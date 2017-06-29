@@ -263,12 +263,12 @@ void FFmpegVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   DecodeCB decode_cb_bound = BindToCurrentLoop(decode_cb);
 
   if (state_ == kError) {
-    decode_cb_bound.Run(DecodeStatus::DECODE_ERROR);
+    decode_cb_bound.Run(DecodeStatus::kError);
     return;
   }
 
   if (state_ == kDecodeFinished) {
-    decode_cb_bound.Run(DecodeStatus::OK);
+    decode_cb_bound.Run(DecodeStatus::kOk);
     return;
   }
 
@@ -300,7 +300,7 @@ void FFmpegVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
     has_produced_frame = false;
     if (!FFmpegDecode(buffer, &has_produced_frame)) {
       state_ = kError;
-      decode_cb_bound.Run(DecodeStatus::DECODE_ERROR);
+      decode_cb_bound.Run(DecodeStatus::kError);
       return;
     }
     // Repeat to flush the decoder after receiving EOS buffer.
@@ -311,7 +311,7 @@ void FFmpegVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
 
   // VideoDecoderShim expects that |decode_cb| is called only after
   // |output_cb_|.
-  decode_cb_bound.Run(DecodeStatus::OK);
+  decode_cb_bound.Run(DecodeStatus::kOk);
 }
 
 void FFmpegVideoDecoder::Reset(const base::Closure& closure) {

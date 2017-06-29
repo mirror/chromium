@@ -449,18 +449,18 @@ void VpxVideoDecoder::DecodeBuffer(const scoped_refptr<DecoderBuffer>& buffer,
       << "Called Decode() before successful Initialize()";
 
   if (state_ == kError) {
-    bound_decode_cb.Run(DecodeStatus::DECODE_ERROR);
+    bound_decode_cb.Run(DecodeStatus::kError);
     return;
   }
 
   if (state_ == kDecodeFinished) {
-    bound_decode_cb.Run(DecodeStatus::OK);
+    bound_decode_cb.Run(DecodeStatus::kOk);
     return;
   }
 
   if (state_ == kNormal && buffer->end_of_stream()) {
     state_ = kDecodeFinished;
-    bound_decode_cb.Run(DecodeStatus::OK);
+    bound_decode_cb.Run(DecodeStatus::kOk);
     return;
   }
 
@@ -475,7 +475,7 @@ void VpxVideoDecoder::DecodeBuffer(const scoped_refptr<DecoderBuffer>& buffer,
 
   if (!decode_okay) {
     state_ = kError;
-    bound_decode_cb.Run(DecodeStatus::DECODE_ERROR);
+    bound_decode_cb.Run(DecodeStatus::kError);
     return;
   }
 
@@ -488,7 +488,7 @@ void VpxVideoDecoder::DecodeBuffer(const scoped_refptr<DecoderBuffer>& buffer,
   }
 
   // VideoDecoderShim expects |decode_cb| call after |output_cb_|.
-  bound_decode_cb.Run(DecodeStatus::OK);
+  bound_decode_cb.Run(DecodeStatus::kOk);
 }
 
 void VpxVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,

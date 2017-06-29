@@ -92,13 +92,13 @@ void DecryptingVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   decode_cb_ = BindToCurrentLoop(decode_cb);
 
   if (state_ == kError) {
-    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::DECODE_ERROR);
+    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kError);
     return;
   }
 
   // Return empty frames if decoding has finished.
   if (state_ == kDecodeFinished) {
-    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::OK);
+    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kOk);
     return;
   }
 
@@ -134,7 +134,7 @@ void DecryptingVideoDecoder::Reset(const base::Closure& closure) {
   if (state_ == kWaitingForKey) {
     DCHECK(!decode_cb_.is_null());
     pending_buffer_to_decode_ = NULL;
-    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::ABORTED);
+    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kAborted);
   }
 
   DCHECK(decode_cb_.is_null());
@@ -155,7 +155,7 @@ DecryptingVideoDecoder::~DecryptingVideoDecoder() {
   if (!init_cb_.is_null())
     base::ResetAndReturn(&init_cb_).Run(false);
   if (!decode_cb_.is_null())
-    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::ABORTED);
+    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kAborted);
   if (!reset_cb_.is_null())
     base::ResetAndReturn(&reset_cb_).Run();
 }
@@ -226,7 +226,7 @@ void DecryptingVideoDecoder::DeliverFrame(
   pending_buffer_to_decode_ = NULL;
 
   if (!reset_cb_.is_null()) {
-    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::ABORTED);
+    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kAborted);
     DoReset();
     return;
   }
@@ -237,7 +237,7 @@ void DecryptingVideoDecoder::DeliverFrame(
     DVLOG(2) << "DeliverFrame() - kError";
     MEDIA_LOG(ERROR, media_log_) << GetDisplayName() << ": decode error";
     state_ = kError;
-    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::DECODE_ERROR);
+    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kError);
     return;
   }
 
@@ -270,7 +270,7 @@ void DecryptingVideoDecoder::DeliverFrame(
     DVLOG(2) << "DeliverFrame() - kNeedMoreData";
     state_ = scoped_pending_buffer_to_decode->end_of_stream() ? kDecodeFinished
                                                               : kIdle;
-    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::OK);
+    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kOk);
     return;
   }
 
@@ -298,7 +298,7 @@ void DecryptingVideoDecoder::DeliverFrame(
   }
 
   state_ = kIdle;
-  base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::OK);
+  base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kOk);
 }
 
 void DecryptingVideoDecoder::OnKeyAdded() {

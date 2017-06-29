@@ -302,7 +302,7 @@ class AudioRendererImplTest : public ::testing::Test, public RendererClient {
                                next_timestamp_->GetTimestamp());
     next_timestamp_->AddFrames(frames.value);
 
-    DeliverBuffer(DecodeStatus::OK, buffer);
+    DeliverBuffer(DecodeStatus::kOk, buffer);
   }
 
   void DeliverEndOfStream() {
@@ -316,13 +316,13 @@ class AudioRendererImplTest : public ::testing::Test, public RendererClient {
     // Satify pending |decode_cb_| to trigger a new DemuxerStream::Read().
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
+        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::kOk));
 
     WaitForPendingRead();
 
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
+        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::kOk));
 
     base::RunLoop().RunUntilIdle();
     EXPECT_EQ(last_statistics_.audio_memory_usage,
@@ -669,7 +669,7 @@ TEST_F(AudioRendererImplTest, ChannelMask) {
   scoped_refptr<AudioBuffer> buffer = MakeAudioBuffer<float>(
       kSampleFormat, hw_params.channel_layout(), hw_params.channels(),
       kInputSamplesPerSecond, 1.0f, 0.0f, 256, base::TimeDelta());
-  DeliverBuffer(DecodeStatus::OK, buffer);
+  DeliverBuffer(DecodeStatus::kOk, buffer);
 
   // All channels should now be enabled.
   mask = channel_mask();

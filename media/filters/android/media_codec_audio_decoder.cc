@@ -52,7 +52,7 @@ MediaCodecAudioDecoder::~MediaCodecAudioDecoder() {
     media_drm_bridge_cdm_context_->UnregisterPlayer(cdm_registration_id_);
   }
 
-  ClearInputQueue(DecodeStatus::ABORTED);
+  ClearInputQueue(DecodeStatus::kAborted);
 }
 
 std::string MediaCodecAudioDecoder::GetDisplayName() const {
@@ -69,7 +69,7 @@ void MediaCodecAudioDecoder::Initialize(const AudioDecoderConfig& config,
   // Initialization and reinitialization should not be called during pending
   // decode.
   DCHECK(input_queue_.empty());
-  ClearInputQueue(DecodeStatus::ABORTED);
+  ClearInputQueue(DecodeStatus::kAborted);
 
   InitCB bound_init_cb = BindToCurrentLoop(init_cb);
   is_passthrough_ = MediaCodecUtil::IsPassthroughAudioFormat(config.codec());
@@ -153,7 +153,7 @@ void MediaCodecAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   if (!buffer->end_of_stream() && buffer->timestamp() == kNoTimestamp) {
     DVLOG(2) << __func__ << " " << buffer->AsHumanReadableString()
              << ": no timestamp, skipping this buffer";
-    bound_decode_cb.Run(DecodeStatus::DECODE_ERROR);
+    bound_decode_cb.Run(DecodeStatus::kError);
     return;
   }
 
@@ -162,8 +162,8 @@ void MediaCodecAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
     // We get here if an error happens in DequeueOutput() or Reset().
     DVLOG(2) << __func__ << " " << buffer->AsHumanReadableString()
              << ": Error state, returning decode error for all buffers";
-    ClearInputQueue(DecodeStatus::DECODE_ERROR);
-    bound_decode_cb.Run(DecodeStatus::DECODE_ERROR);
+    ClearInputQueue(DecodeStatus::kError);
+    bound_decode_cb.Run(DecodeStatus::kError);
     return;
   }
 
@@ -185,7 +185,7 @@ void MediaCodecAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
 void MediaCodecAudioDecoder::Reset(const base::Closure& closure) {
   DVLOG(1) << __func__;
 
-  ClearInputQueue(DecodeStatus::ABORTED);
+  ClearInputQueue(DecodeStatus::kAborted);
 
   // Flush if we can, otherwise completely recreate and reconfigure the codec.
   bool success = codec_loop_->TryFlush();
@@ -317,8 +317,8 @@ void MediaCodecAudioDecoder::OnInputDataQueued(bool success) {
   if (input_queue_.front().first->end_of_stream() && success)
     return;
 
-  input_queue_.front().second.Run(success ? DecodeStatus::OK
-                                          : DecodeStatus::DECODE_ERROR);
+  input_queue_.front().second.Run(success ? DecodeStatus::kOk
+                                          : DecodeStatus::kError);
   input_queue_.pop_front();
 }
 
@@ -340,7 +340,7 @@ void MediaCodecAudioDecoder::SetState(State new_state) {
 void MediaCodecAudioDecoder::OnCodecLoopError() {
   // If the codec transitions into the error state, then so should we.
   SetState(STATE_ERROR);
-  ClearInputQueue(DecodeStatus::DECODE_ERROR);
+  ClearInputQueue(DecodeStatus::kError);
 }
 
 void MediaCodecAudioDecoder::OnDecodedEos(
@@ -355,7 +355,7 @@ void MediaCodecAudioDecoder::OnDecodedEos(
   DCHECK_NE(state_, STATE_ERROR);
   DCHECK(input_queue_.size());
   DCHECK(input_queue_.front().first->end_of_stream());
-  input_queue_.front().second.Run(DecodeStatus::OK);
+  input_queue_.front().second.Run(DecodeStatus::kOk);
   input_queue_.pop_front();
 }
 

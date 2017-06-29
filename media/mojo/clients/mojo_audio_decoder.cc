@@ -81,7 +81,7 @@ void MojoAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& media_buffer,
 
   if (remote_decoder_.encountered_error()) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+                           base::Bind(decode_cb, DecodeStatus::kError));
     return;
   }
 
@@ -89,7 +89,7 @@ void MojoAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& media_buffer,
       mojo_decoder_buffer_writer_->WriteDecoderBuffer(media_buffer);
   if (!buffer) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+                           base::Bind(decode_cb, DecodeStatus::kError));
     return;
   }
 
@@ -107,9 +107,9 @@ void MojoAudioDecoder::Reset(const base::Closure& closure) {
 
   if (remote_decoder_.encountered_error()) {
     if (!decode_cb_.is_null()) {
-      task_runner_->PostTask(FROM_HERE,
-                             base::Bind(base::ResetAndReturn(&decode_cb_),
-                                        DecodeStatus::DECODE_ERROR));
+      task_runner_->PostTask(
+          FROM_HERE,
+          base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::kError));
     }
 
     task_runner_->PostTask(FROM_HERE, closure);
@@ -164,7 +164,7 @@ void MojoAudioDecoder::OnConnectionError() {
   }
 
   if (!decode_cb_.is_null())
-    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::DECODE_ERROR);
+    base::ResetAndReturn(&decode_cb_).Run(DecodeStatus::kError);
   if (!reset_cb_.is_null())
     base::ResetAndReturn(&reset_cb_).Run();
 }

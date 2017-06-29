@@ -436,7 +436,7 @@ void DecoderStream<StreamType>::OnDecodeDone(int buffer_size,
     return;
 
   switch (status) {
-    case DecodeStatus::DECODE_ERROR:
+    case DecodeStatus::kError:
       // Only fall back to a new decoder after failing to decode the first
       // buffer, and if we have not fallen back before.
       if (!decoder_produced_a_frame_ &&
@@ -463,12 +463,12 @@ void DecoderStream<StreamType>::OnDecodeDone(int buffer_size,
         SatisfyRead(DECODE_ERROR, NULL);
       return;
 
-    case DecodeStatus::ABORTED:
-      // Decoder can return DecodeStatus::ABORTED during Reset() or during
+    case DecodeStatus::kAborted:
+      // Decoder can return DecodeStatus::kAborted during Reset() or during
       // destruction.
       return;
 
-    case DecodeStatus::OK:
+    case DecodeStatus::kOk:
       // Any successful decode counts!
       if (buffer_size > 0)
         traits_.ReportStatistics(statistics_cb_, buffer_size);

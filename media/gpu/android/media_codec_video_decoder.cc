@@ -398,7 +398,7 @@ bool MediaCodecVideoDecoder::QueueInput() {
 
   if (pending_decode.buffer->end_of_stream()) {
     codec_->QueueEOS(input_buffer);
-    pending_decode.decode_cb.Run(DecodeStatus::OK);
+    pending_decode.decode_cb.Run(DecodeStatus::kOk);
     // TODO(watk): Make CodecWrapper track this.
     drain_type_ = DrainType::kFlush;
     return true;
@@ -414,12 +414,12 @@ bool MediaCodecVideoDecoder::QueueInput() {
   DCHECK_NE(queue_status, MEDIA_CODEC_NO_KEY)
       << "Encrypted support not yet implemented";
   if (queue_status != MEDIA_CODEC_OK) {
-    pending_decode.decode_cb.Run(DecodeStatus::DECODE_ERROR);
+    pending_decode.decode_cb.Run(DecodeStatus::kError);
     HandleError();
     return false;
   }
 
-  pending_decode.decode_cb.Run(DecodeStatus::OK);
+  pending_decode.decode_cb.Run(DecodeStatus::kOk);
   return true;
 }
 
@@ -483,7 +483,7 @@ void MediaCodecVideoDecoder::HandleError() {
   DVLOG(2) << __func__;
   state_ = State::kError;
   for (auto& pending_decode : pending_decodes_)
-    pending_decode.decode_cb.Run(DecodeStatus::DECODE_ERROR);
+    pending_decode.decode_cb.Run(DecodeStatus::kError);
   pending_decodes_.clear();
 }
 

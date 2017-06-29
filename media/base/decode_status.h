@@ -12,14 +12,13 @@
 namespace media {
 
 enum class DecodeStatus {
-  OK = 0,        // Everything went as planned.
-  ABORTED,       // Read aborted due to Reset() during pending read.
-  DECODE_ERROR,  // Decoder returned decode error. Note: Prefixed by DECODE_
-                 // since ERROR is a reserved name (special macro) on Windows.
-  DECODE_STATUS_MAX = DECODE_ERROR
+  kOk = 0,   // Everything went as planned.
+  kAborted,  // Read was aborted due to a Reset() during a pending read.
+  kError,    // The decoder encountered an error.
+  kDecodeStatusMax = kError,
 };
 
-// Helper function so that DecodeStatus can be printed easily.
+// Writes the name of a DecodeStatus to a stream.
 MEDIA_EXPORT std::ostream& operator<<(std::ostream& os,
                                       const DecodeStatus& status);
 

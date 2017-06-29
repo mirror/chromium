@@ -10,14 +10,14 @@ namespace media {
 
 std::ostream& operator<<(std::ostream& os, const DecodeStatus& status) {
   switch (status) {
-    case DecodeStatus::OK:
-      os << "DecodeStatus::OK";
+    case DecodeStatus::kOk:
+      os << "DecodeStatus::kOk";
       break;
-    case DecodeStatus::ABORTED:
-      os << "DecodeStatus::ABORTED";
+    case DecodeStatus::kAborted:
+      os << "DecodeStatus::kAborted";
       break;
-    case DecodeStatus::DECODE_ERROR:
-      os << "DecodeStatus::DECODE_ERROR";
+    case DecodeStatus::kError:
+      os << "DecodeStatus::kError";
       break;
   }
   return os;

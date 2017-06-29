@@ -185,13 +185,13 @@ class VideoRendererImplTest : public testing::Test {
                            base::SPLIT_WANT_ALL)) {
       if (token == "abort") {
         scoped_refptr<VideoFrame> null_frame;
-        QueueFrame(DecodeStatus::ABORTED, null_frame);
+        QueueFrame(DecodeStatus::kAborted, null_frame);
         continue;
       }
 
       if (token == "error") {
         scoped_refptr<VideoFrame> null_frame;
-        QueueFrame(DecodeStatus::DECODE_ERROR, null_frame);
+        QueueFrame(DecodeStatus::kError, null_frame);
         continue;
       }
 
@@ -201,7 +201,7 @@ class VideoRendererImplTest : public testing::Test {
         scoped_refptr<VideoFrame> frame = VideoFrame::CreateFrame(
             PIXEL_FORMAT_YV12, natural_size, gfx::Rect(natural_size),
             natural_size, base::TimeDelta::FromMilliseconds(timestamp_in_ms));
-        QueueFrame(DecodeStatus::OK, frame);
+        QueueFrame(DecodeStatus::kOk, frame);
         continue;
       }
 
@@ -276,13 +276,13 @@ class VideoRendererImplTest : public testing::Test {
     // Satify pending |decode_cb_| to trigger a new DemuxerStream::Read().
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
+        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::kOk));
 
     WaitForPendingDecode();
 
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
+        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::kOk));
   }
 
   void AdvanceWallclockTimeInMs(int time_ms) {
@@ -1317,19 +1317,19 @@ TEST_F(VideoRendererImplTest, NaturalSizeChange) {
   gfx::Size initial_size(8, 8);
   gfx::Size larger_size(16, 16);
 
-  QueueFrame(DecodeStatus::OK,
+  QueueFrame(DecodeStatus::kOk,
              VideoFrame::CreateFrame(PIXEL_FORMAT_YV12, initial_size,
                                      gfx::Rect(initial_size), initial_size,
                                      base::TimeDelta::FromMilliseconds(0)));
-  QueueFrame(DecodeStatus::OK,
+  QueueFrame(DecodeStatus::kOk,
              VideoFrame::CreateFrame(PIXEL_FORMAT_YV12, larger_size,
                                      gfx::Rect(larger_size), larger_size,
                                      base::TimeDelta::FromMilliseconds(10)));
-  QueueFrame(DecodeStatus::OK,
+  QueueFrame(DecodeStatus::kOk,
              VideoFrame::CreateFrame(PIXEL_FORMAT_YV12, larger_size,
                                      gfx::Rect(larger_size), larger_size,
                                      base::TimeDelta::FromMilliseconds(20)));
-  QueueFrame(DecodeStatus::OK,
+  QueueFrame(DecodeStatus::kOk,
              VideoFrame::CreateFrame(PIXEL_FORMAT_YV12, initial_size,
                                      gfx::Rect(initial_size), initial_size,
                                      base::TimeDelta::FromMilliseconds(30)));
@@ -1383,19 +1383,19 @@ TEST_F(VideoRendererImplTest, OpacityChange) {
   VideoPixelFormat opaque_format = PIXEL_FORMAT_YV12;
   VideoPixelFormat non_opaque_format = PIXEL_FORMAT_YV12A;
 
-  QueueFrame(DecodeStatus::OK,
+  QueueFrame(DecodeStatus::kOk,
              VideoFrame::CreateFrame(non_opaque_format, frame_size,
                                      gfx::Rect(frame_size), frame_size,
                                      base::TimeDelta::FromMilliseconds(0)));
-  QueueFrame(DecodeStatus::OK,
+  QueueFrame(DecodeStatus::kOk,
              VideoFrame::CreateFrame(non_opaque_format, frame_size,
                                      gfx::Rect(frame_size), frame_size,
                                      base::TimeDelta::FromMilliseconds(10)));
-  QueueFrame(DecodeStatus::OK,
+  QueueFrame(DecodeStatus::kOk,
              VideoFrame::CreateFrame(opaque_format, frame_size,
                                      gfx::Rect(frame_size), frame_size,
                                      base::TimeDelta::FromMilliseconds(20)));
-  QueueFrame(DecodeStatus::OK,
+  QueueFrame(DecodeStatus::kOk,
              VideoFrame::CreateFrame(opaque_format, frame_size,
                                      gfx::Rect(frame_size), frame_size,
                                      base::TimeDelta::FromMilliseconds(30)));

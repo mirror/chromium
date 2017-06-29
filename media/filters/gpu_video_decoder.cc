@@ -413,7 +413,7 @@ void GpuVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   DecodeCB bound_decode_cb = BindToCurrentLoop(decode_cb);
 
   if (state_ == kError || !vda_) {
-    bound_decode_cb.Run(DecodeStatus::DECODE_ERROR);
+    bound_decode_cb.Run(DecodeStatus::kError);
     return;
   }
 
@@ -442,7 +442,7 @@ void GpuVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   size_t size = buffer->data_size();
   std::unique_ptr<SHMBuffer> shm_buffer = GetSHM(size);
   if (!shm_buffer) {
-    bound_decode_cb.Run(DecodeStatus::DECODE_ERROR);
+    bound_decode_cb.Run(DecodeStatus::kError);
     return;
   }
 
@@ -782,8 +782,8 @@ void GpuVideoDecoder::NotifyEndOfBitstreamBuffer(int32_t id) {
   }
 
   PutSHM(base::WrapUnique(it->second.shm_buffer));
-  it->second.done_cb.Run(state_ == kError ? DecodeStatus::DECODE_ERROR
-                                          : DecodeStatus::OK);
+  it->second.done_cb.Run(state_ == kError ? DecodeStatus::kError
+                                          : DecodeStatus::kOk);
   bitstream_buffers_in_decoder_.erase(it);
 }
 
@@ -810,7 +810,7 @@ GpuVideoDecoder::~GpuVideoDecoder() {
            bitstream_buffers_in_decoder_.begin();
        it != bitstream_buffers_in_decoder_.end(); ++it) {
     delete it->second.shm_buffer;
-    it->second.done_cb.Run(DecodeStatus::ABORTED);
+    it->second.done_cb.Run(DecodeStatus::kAborted);
   }
   bitstream_buffers_in_decoder_.clear();
 
@@ -823,7 +823,7 @@ void GpuVideoDecoder::NotifyFlushDone() {
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
   DCHECK_EQ(state_, kDrainingDecoder);
   state_ = kDecoderDrained;
-  base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::OK);
+  base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::kOk);
 }
 
 void GpuVideoDecoder::NotifyResetDone() {
@@ -853,12 +853,12 @@ void GpuVideoDecoder::NotifyError(media::VideoDecodeAccelerator::Error error) {
   // won't be another decode request to report the error.
   if (!bitstream_buffers_in_decoder_.empty()) {
     auto it = bitstream_buffers_in_decoder_.begin();
-    it->second.done_cb.Run(DecodeStatus::DECODE_ERROR);
+    it->second.done_cb.Run(DecodeStatus::kError);
     bitstream_buffers_in_decoder_.erase(it);
   }
 
   if (state_ == kDrainingDecoder)
-    base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::DECODE_ERROR);
+    base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::kError);
 
   state_ = kError;
 
