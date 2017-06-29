@@ -310,8 +310,7 @@ Polymer({
       case 'space':
         if (this.selectedItem_.dataset.type ==
             ChangePictureSelectionTypes.CAMERA) {
-          var /** CrCameraElement */ camera = this.$.camera;
-          camera.takePhoto();
+          /** CrPicturePreviewElement */ (this.$.preview).takePhoto();
         } else if (
             this.selectedItem_.dataset.type ==
             ChangePictureSelectionTypes.FILE) {
@@ -319,7 +318,7 @@ Polymer({
         } else if (
             this.selectedItem_.dataset.type ==
             ChangePictureSelectionTypes.OLD) {
-          this.onTapDiscardOldImage_();
+          this.onDiscardImage_();
         }
         break;
     }
@@ -359,11 +358,11 @@ Polymer({
   },
 
   /**
-   * Discard currently selected Old image. Selects the first default icon.
+   * Discard currently selected image. Selects the first default icon.
    * Returns to the camera stream if the user had just taken a picture.
    * @private
    */
-  onTapDiscardOldImage_: function() {
+  onDiscardImage_: function() {
     this.oldImageUrl_ = '';
 
     if (this.lastSelectedImageType_ == ChangePictureSelectionTypes.CAMERA)
@@ -380,16 +379,6 @@ Polymer({
     this.browserProxy_.selectDefaultImage(this.defaultImages_[0].url);
 
     announceAccessibleMessage(this.i18n('photoDiscardAccessibleText'));
-  },
-
-  /**
-   * @param {string} oldImageUrl
-   * @return {boolean} True if there is no Old image and the Old image icon
-   *     should be hidden.
-   * @private
-   */
-  isOldImageHidden_: function(oldImageUrl) {
-    return oldImageUrl.length == 0;
   },
 
   /**
@@ -420,12 +409,12 @@ Polymer({
 
   /**
    * @param {ChangePictureImageElement} selectedItem
-   * @return {boolean} True if the discard controls should be hidden.
+   * @return {boolean}
    * @private
    */
-  isDiscardHidden_: function(selectedItem) {
-    return !selectedItem ||
-        selectedItem.dataset.type != ChangePictureSelectionTypes.OLD;
+  isDiscardShown_: function(selectedItem) {
+    return selectedItem &&
+        selectedItem.dataset.type == ChangePictureSelectionTypes.OLD;
   },
 
   /**
@@ -436,6 +425,15 @@ Polymer({
   isAuthorCreditShown_: function(selectedItem) {
     return !!selectedItem &&
         selectedItem.dataset.type == ChangePictureSelectionTypes.DEFAULT;
+  },
+
+  /**
+   * @param {ChangePictureImageElement} selectedItem
+   * @return {string}
+   * @private
+   */
+  getImageSrc_: function(selectedItem) {
+    return (selectedItem && selectedItem.src) || '';
   },
 
   /**
