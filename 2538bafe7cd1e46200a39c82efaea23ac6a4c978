@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f12974d3_e5333011",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T00:11:11Z",
+      "side": 1,
+      "message": "I think it\u0027s more correct to say that in the Mac selection model, after a SelectAll(), a selection direction is only determined after a directed interaction. You can cite http://crbug.com/712354 .\n\n(i.e. \n\n1. Cmd+a -\u003e selection undetermined\n2. Shift+Left -\u003e cursor at start of text, selection direction is right-to-left\n3. Shift+Right -\u003e selection shrinks\n\n1. Cmd+a -\u003e selection undetermined\n2. Shift+Right -\u003e cursor at end of text, selection direction is left-to-right\n3. Shift+Left -\u003e selection shrinks",
+      "revId": "2538bafe7cd1e46200a39c82efaea23ac6a4c978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6e0bbc_9dd97a27",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-29T00:11:11Z",
+      "side": 1,
+      "message": "It\u0027s probably worth a comment here why it should be reversed. (I think ~\"after a revert, the selection is reversed to ensure the start of a long URL is scrolled into view\") \n\n(On Mac that scrolling is independent of the cursor position)",
+      "revId": "2538bafe7cd1e46200a39c82efaea23ac6a4c978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
