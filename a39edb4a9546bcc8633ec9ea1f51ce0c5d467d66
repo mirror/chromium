@@ -94,6 +94,30 @@
       "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aff40ff_dfb97afd",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-29T22:02:35Z",
+      "side": 1,
+      "message": "I think I confused things a bit here: I was talking about what should/will happen when we *do* have an audio output device present on the system. But, this CL is not about that; it\u0027s about what we should return when we *don\u0027t* have an audio output device.\n\nI agree with you that the code as-is works just fine when we do not have an output device. And, that\u0027s the bug you\u0027re trying to fix with this CL. So, lgtm! :)\n\nIt would be good to follow-up with a change that addresses the issue I was talking about. AudioSystemImpl::GetInputParametersOnDeviceThread() should return the default audio output device\u0027s AudioParameters when IsLoopbackDevice(device_id). Meaning:\n\n  if (AudioDeviceDescription::IsLoopbackDevice(device_id)) {\n    if (!audio_manager-\u003eHasAudioOutputDevices())\n      return AudioParameters();\n    // To avoid resampling, a loopback input device should use the same\n    // parameters as the audio it is looping back from the output device.\n    return audio_manager-\u003eGetDefaultOutputStreamParameters();\n  }\n\n  // Return parameters for a non-loopback input device.\n  if (!audio_manager-\u003eHasAudioInputDevices())\n    return AudioParameters();\n  return audio_manager-\u003eGetInputStreamParameters(device_id);\n\nHopefully, this clears things up.",
+      "parentUuid": "9acc004c_18c2ba2d",
+      "range": {
+        "startLine": 172,
+        "startChar": 1,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
