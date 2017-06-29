@@ -23,12 +23,61 @@ struct ServiceWorkerFetchRequestStructTraitsContext {
 
 }  // namespace
 
+using blink::mojom::FetchCacheMode;
 using blink::mojom::FetchCredentialsMode;
 using blink::mojom::FetchRedirectMode;
 using blink::mojom::FetchRequestMode;
 using blink::mojom::RequestContextFrameType;
 using blink::mojom::RequestContextType;
 using blink::mojom::ServiceWorkerFetchType;
+
+FetchCacheMode EnumTraits<FetchCacheMode, content::FetchCacheMode>::ToMojom(
+    content::FetchCacheMode input) {
+  switch (input) {
+    case content::FETCH_CACHE_MODE_DEFAULT:
+      return FetchCacheMode::DEFAULT;
+    case content::FETCH_CACHE_MODE_NO_STORE:
+      return FetchCacheMode::NO_STORE;
+    case content::FETCH_CACHE_MODE_RELOAD:
+      return FetchCacheMode::RELOAD;
+    case content::FETCH_CACHE_MODE_NO_CACHE:
+      return FetchCacheMode::NO_CACHE;
+    case content::FETCH_CACHE_MODE_FORCE_CACHE:
+      return FetchCacheMode::FORCE_CACHE;
+    case content::FETCH_CACHE_MODE_ONLY_IF_CACHED:
+      return FetchCacheMode::ONLY_IF_CACHED;
+  }
+
+  NOTREACHED();
+  return FetchCacheMode::DEFAULT;
+}
+
+bool EnumTraits<FetchCacheMode, content::FetchCacheMode>::FromMojom(
+    FetchCacheMode input,
+    content::FetchCacheMode* out) {
+  switch (input) {
+    case FetchCacheMode::DEFAULT:
+      *out = content::FETCH_CACHE_MODE_DEFAULT;
+      return true;
+    case FetchCacheMode::NO_STORE:
+      *out = content::FETCH_CACHE_MODE_NO_STORE;
+      return true;
+    case FetchCacheMode::RELOAD:
+      *out = content::FETCH_CACHE_MODE_RELOAD;
+      return true;
+    case FetchCacheMode::NO_CACHE:
+      *out = content::FETCH_CACHE_MODE_NO_CACHE;
+      return true;
+    case FetchCacheMode::FORCE_CACHE:
+      *out = content::FETCH_CACHE_MODE_FORCE_CACHE;
+      return true;
+    case FetchCacheMode::ONLY_IF_CACHED:
+      *out = content::FETCH_CACHE_MODE_ONLY_IF_CACHED;
+      return true;
+  }
+
+  return false;
+}
 
 FetchCredentialsMode
 EnumTraits<FetchCredentialsMode, content::FetchCredentialsMode>::ToMojom(
@@ -440,6 +489,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
       !data.ReadFrameType(&out->frame_type) || !data.ReadUrl(&out->url) ||
       !data.ReadMethod(&out->method) || !data.ReadHeaders(&headers) ||
       !data.ReadBlobUuid(&blob_uuid) || !data.ReadReferrer(&out->referrer) ||
+      !data.ReadCacheMode(&out->cache_mode) ||
       !data.ReadCredentialsMode(&out->credentials_mode) ||
       !data.ReadRedirectMode(&out->redirect_mode) ||
       !data.ReadClientId(&out->client_id) ||

@@ -370,6 +370,11 @@ FetchCredentialsMode GetFetchCredentialsModeForWebURLRequest(
   return static_cast<FetchCredentialsMode>(request.GetFetchCredentialsMode());
 }
 
+FetchCacheMode GetFetchCacheModeForWebURLRequest(
+    const blink::WebURLRequest& request) {
+  return static_cast<FetchCacheMode>(request.GetFetchCacheMode());
+}
+
 STATIC_ASSERT_ENUM(FetchRedirectMode::FOLLOW_MODE,
                    WebURLRequest::kFetchRedirectModeFollow);
 STATIC_ASSERT_ENUM(FetchRedirectMode::ERROR_MODE,

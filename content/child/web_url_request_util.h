@@ -51,6 +51,8 @@ FetchRequestMode GetFetchRequestModeForWebURLRequest(
     const blink::WebURLRequest& request);
 FetchCredentialsMode GetFetchCredentialsModeForWebURLRequest(
     const blink::WebURLRequest& request);
+FetchCacheMode GetFetchCacheModeForWebURLRequest(
+    const blink::WebURLRequest& request);
 FetchRedirectMode GetFetchRedirectModeForWebURLRequest(
     const blink::WebURLRequest& request);
 RequestContextFrameType GetRequestContextFrameTypeForWebURLRequest(

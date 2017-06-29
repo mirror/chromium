@@ -321,9 +321,9 @@ class ServiceWorkerWriteToCacheJobTest : public testing::Test {
     ServiceWorkerRequestHandler::InitializeHandler(
         request_.get(), context_wrapper(), &blob_storage_context_, process_id,
         provider_id, false, FETCH_REQUEST_MODE_NO_CORS,
-        FETCH_CREDENTIALS_MODE_OMIT, FetchRedirectMode::FOLLOW_MODE,
-        RESOURCE_TYPE_SERVICE_WORKER, REQUEST_CONTEXT_TYPE_SERVICE_WORKER,
-        REQUEST_CONTEXT_FRAME_TYPE_NONE,
+        FETCH_CREDENTIALS_MODE_OMIT, FETCH_CACHE_MODE_DEFAULT,
+        FetchRedirectMode::FOLLOW_MODE, RESOURCE_TYPE_SERVICE_WORKER,
+        REQUEST_CONTEXT_TYPE_SERVICE_WORKER, REQUEST_CONTEXT_FRAME_TYPE_NONE,
         scoped_refptr<ResourceRequestBodyImpl>());
   }
 

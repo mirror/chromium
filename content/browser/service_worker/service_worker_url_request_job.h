@@ -67,6 +67,7 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
       const ResourceContext* resource_context,
       FetchRequestMode request_mode,
       FetchCredentialsMode credentials_mode,
+      FetchCacheMode cache_mode,
       FetchRedirectMode redirect_mode,
       ResourceType resource_type,
       RequestContextType request_context_type,
@@ -299,6 +300,7 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
 
   FetchRequestMode request_mode_;
   FetchCredentialsMode credentials_mode_;
+  FetchCacheMode cache_mode_;
   FetchRedirectMode redirect_mode_;
   const ResourceType resource_type_;
   RequestContextType request_context_type_;

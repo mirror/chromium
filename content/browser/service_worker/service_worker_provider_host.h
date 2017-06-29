@@ -207,6 +207,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   std::unique_ptr<ServiceWorkerRequestHandler> CreateRequestHandler(
       FetchRequestMode request_mode,
       FetchCredentialsMode credentials_mode,
+      FetchCacheMode cache_mode,
       FetchRedirectMode redirect_mode,
       ResourceType resource_type,
       RequestContextType request_context_type,

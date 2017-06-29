@@ -716,6 +716,7 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
   request.SetHTTPMethod(request_->Method());
   request.SetFetchRequestMode(request_->Mode());
   request.SetFetchCredentialsMode(request_->Credentials());
+  request.SetFetchCacheMode(request_->CacheMode());
   for (const auto& header : request_->HeaderList()->List()) {
     request.AddHTTPHeaderField(AtomicString(header.first),
                                AtomicString(header.second));
