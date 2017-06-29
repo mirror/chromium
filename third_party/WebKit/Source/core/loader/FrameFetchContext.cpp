@@ -252,6 +252,11 @@ RefPtr<WebTaskRunner> FrameFetchContext::GetTaskRunner() const {
   return GetFrame()->FrameScheduler()->LoadingTaskRunner();
 }
 
+WebFrameScheduler* FrameFetchContext::GetScheduler() {
+  // FrameScheduler() will return nullptr after LocalFrame::Detach() is called.
+  return GetFrame()->FrameScheduler();
+}
+
 LocalFrame* FrameFetchContext::GetFrame() const {
   if (!document_loader_)
     return FrameOfImportsController();

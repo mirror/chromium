@@ -418,7 +418,7 @@
       name: "FeaturePolicyExperimentalFeatures",
     },
     {
-      name:"FetchRequestCache",
+      name: "FetchRequestCache",
       status: "experimental",
     },
     {
@@ -872,6 +872,10 @@
     },
     {
       name: "ResizeObserver",
+      status: "experimental",
+    },
+    {
+      name: "ResourceLoadScheduler",
       status: "experimental",
     },
     {
