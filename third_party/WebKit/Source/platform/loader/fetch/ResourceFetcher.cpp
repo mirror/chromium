@@ -282,6 +282,7 @@ WebURLRequest::RequestContext ResourceFetcher::DetermineRequestContext(
 ResourceFetcher::ResourceFetcher(FetchContext* new_context,
                                  RefPtr<WebTaskRunner> task_runner)
     : context_(new_context),
+      scheduler_(ResourceLoadScheduler::Create()),
       archive_(Context().IsMainFrame() ? nullptr : Context().Archive()),
       resource_timing_report_timer_(
           std::move(task_runner),
@@ -1501,7 +1502,7 @@ bool ResourceFetcher::StartLoad(Resource* resource) {
     // crbug.com/632580
     resource->SetResourceRequest(request);
 
-    loader = ResourceLoader::Create(this, resource);
+    loader = ResourceLoader::Create(this, scheduler_, resource);
     if (resource->ShouldBlockLoadEvent())
       loaders_.insert(loader);
     else
@@ -1511,10 +1512,9 @@ bool ResourceFetcher::StartLoad(Resource* resource) {
     resource->SetFetcherSecurityOrigin(source_origin);
 
     resource->NotifyStartLoad();
-    loader->ActivateCacheAwareLoadingIfNeeded(request);
   }
 
-  loader->Start(request);
+  loader->Start();
   return true;
 }
 
@@ -1748,6 +1748,7 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
 
 DEFINE_TRACE(ResourceFetcher) {
   visitor->Trace(context_);
+  visitor->Trace(scheduler_);
   visitor->Trace(archive_);
   visitor->Trace(loaders_);
   visitor->Trace(non_blocking_loaders_);
