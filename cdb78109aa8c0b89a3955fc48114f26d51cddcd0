@@ -16,6 +16,24 @@
       "revId": "cdb78109aa8c0b89a3955fc48114f26d51cddcd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42318390_06da3a74",
+        "filename": "chrome/common/crash_keys.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-29T23:31:11Z",
+      "side": 1,
+      "message": "Done. Sorry for missing this guideline!",
+      "parentUuid": "1312c492_320f58ec",
+      "revId": "cdb78109aa8c0b89a3955fc48114f26d51cddcd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
