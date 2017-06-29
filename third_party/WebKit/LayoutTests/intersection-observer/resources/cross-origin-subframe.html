@@ -44,10 +44,13 @@ function coordinatesToClientRectJson(top, right, bottom, left) {
 // RAF when it is received, and then send us a message to cause the next step to run.
 
 // Use a rootMargin here, and verify it does NOT get applied for the cross-origin case.
-var observer = new IntersectionObserver(function(changes) {
-    entries = entries.concat(changes)
-}, { rootMargin: "7px" });
-observer.observe(target);
+var observer;
+window.onload = function() {
+  observer = new IntersectionObserver(function(changes) {
+        entries = entries.concat(changes);
+      }, { rootMargin: "7px" });
+  observer.observe(target);
+};
 
 function step0() {
   entries = entries.concat(observer.takeRecords());
@@ -117,6 +120,7 @@ function step3() {
 function handleMessage(event)
 {
   port = event.source;
+  target.offsetTop;
   nextStep();
 }
 

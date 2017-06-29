@@ -66,8 +66,12 @@ function rectArea(rect) {
 }
 
 function checkRect(actual, expected, description) {
-  if (!expected.length)
+  if (!expected.length) {
+    console.log('early out');
     return;
+  }
+  console.log('actual.left: ' + actual.left);
+  console.log('expected.left: ' + expected.left);
   assert_equals(actual.left, expected[0], description + '.left');
   assert_equals(actual.right, expected[1], description + '.right');
   assert_equals(actual.top, expected[2], description + '.top');
@@ -95,6 +99,7 @@ function checkLastEntry(entries, i, expected) {
 }
 
 function checkJsonEntry(actual, expected) {
+  console.log('checkrect');
   checkRect(
       actual.boundingClientRect, expected.boundingClientRect,
       'entry.boundingClientRect');

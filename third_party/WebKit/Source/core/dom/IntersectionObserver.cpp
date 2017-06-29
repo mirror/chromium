@@ -286,6 +286,7 @@ void IntersectionObserver::disconnect(ExceptionState& exception_state) {
 
 HeapVector<Member<IntersectionObserverEntry>> IntersectionObserver::takeRecords(
     ExceptionState& exception_state) {
+  LOG(ERROR) << "takeRecords:" << this;
   HeapVector<Member<IntersectionObserverEntry>> entries;
   entries.swap(entries_);
   return entries;

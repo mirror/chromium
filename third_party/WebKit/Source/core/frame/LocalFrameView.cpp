@@ -3236,7 +3236,6 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
       frame_view.allows_layout_invalidation_after_layout_clean_ = true;
     });
   }
-
   UpdateViewportIntersectionsForSubtree(target_state);
 }
 

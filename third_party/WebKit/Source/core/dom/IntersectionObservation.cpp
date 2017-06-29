@@ -76,6 +76,8 @@ void IntersectionObservation::ComputeIntersectionObservations(
     IntRect snapped_root_bounds = geometry.RootIntRect();
     IntRect* root_bounds_pointer =
         should_report_root_bounds_ ? &snapped_root_bounds : nullptr;
+    LOG(ERROR) << "enqueue: " << geometry.TargetIntRect().ToString()
+               << " observer:" << Observer();
     IntersectionObserverEntry* new_entry = new IntersectionObserverEntry(
         timestamp, new_visible_ratio, geometry.TargetIntRect(),
         root_bounds_pointer, geometry.IntersectionIntRect(),
