@@ -132,6 +132,12 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Returns true if worker thread detachment is permitted.
   bool CanWorkerDetachForTesting();
 
+  // Creates and returns a new SchedulerWorker based on SchedulerParams that
+  // are set in Start. The new worker will be marked as having the specified
+  // |index|, but will not actually be added to |workers_|. This must be called
+  // after those params are set in Start.
+  scoped_refptr<SchedulerWorker> CreateNewWorker(int index);
+
   const std::string name_;
   const ThreadPriority priority_hint_;
 
@@ -203,6 +209,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Workers can be added as needed up until there are |worker_capacity_|
   // number of workers.
   int worker_capacity_;
+
+  // Baseline worker capacity set in Start. This should equal worker_capacity_
+  // when no threads are blocked.
+  int initial_worker_capacity_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerPoolImpl);
 };
