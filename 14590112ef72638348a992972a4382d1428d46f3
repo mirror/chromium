@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c7404c4_02ca9003",
+        "filename": "components/password_manager/core/browser/password_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-06-29T16:01:33Z",
+      "side": 1,
+      "message": "It\u0027s the other way around.",
+      "range": {
+        "startLine": 202,
+        "startChar": 4,
+        "endLine": 202,
+        "endChar": 30
+      },
+      "revId": "14590112ef72638348a992972a4382d1428d46f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
