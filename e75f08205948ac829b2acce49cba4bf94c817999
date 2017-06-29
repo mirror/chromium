@@ -16,6 +16,24 @@
       "revId": "e75f08205948ac829b2acce49cba4bf94c817999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1e8cd5_0b7e5faa",
+        "filename": "build/config/mac/mac_sdk.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-29T23:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cc460e5_c500a4df",
+      "revId": "e75f08205948ac829b2acce49cba4bf94c817999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
