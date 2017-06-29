@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "154b4168_d688b062",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "use emplace_back to reduce one extra copy.",
+      "range": {
+        "startLine": 166,
+        "startChar": 11,
+        "endLine": 166,
+        "endChar": 20
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fbf4fc_2ce20045",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "nit: s/kMaxConnectionType/kMaxEffectiveConnectionType/\nsince connection type usually means 2G, 3G, 4G, WiFi",
+      "range": {
+        "startLine": 175,
+        "startChar": 20,
+        "endLine": 175,
+        "endChar": 38
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23f0825b_15d75c4a",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 27
@@ -18,6 +64,29 @@
         "startChar": 76,
         "endLine": 177,
         "endChar": 0
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fcce03_056340d4",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "I believe this temp variable is not necessary. Just return the values, instead of first storing it in a temp variable, and then returning temp variable.",
+      "range": {
+        "startLine": 511,
+        "startChar": 11,
+        "endLine": 511,
+        "endChar": 44
       },
       "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -48,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "65cb7b23_7899a0ef",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "To make it a bit more readable:\nif(!n_q_e)\n return kMaxDelayableRequestsNetworkOverride;\n\nif(check for ECT) {\n...\n}",
+      "range": {
+        "startLine": 519,
+        "startChar": 7,
+        "endLine": 519,
+        "endChar": 8
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a7d982d_da075d73",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 27
@@ -71,6 +163,121 @@
     },
     {
       "key": {
+        "uuid": "bafef0ba_b03a2db1",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "move this logic to within ComputeMaxDelayableRequestsNetworkOverride()\nand may be rename that method to MayBeUpdateMaxDelayableRequestsNetworkOverride()",
+      "range": {
+        "startLine": 537,
+        "startChar": 8,
+        "endLine": 537,
+        "endChar": 48
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b24ce90_db945bd4",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "It might be simpler to remove this if statement, and the corresponding else statement below too.\nWhen the experiment is not enabled, the line below will anyways compare |in_flight_delayable_count_| with |kMaxNumDelayableRequestsPerClient|.\n\nyou can also remove the DCHECK below.",
+      "range": {
+        "startLine": 923,
+        "startChar": 4,
+        "endLine": 923,
+        "endChar": 51
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29a1573_15d7ca91",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "s/ for the specified BDP ranges//",
+      "range": {
+        "startLine": 1091,
+        "startChar": 24,
+        "endLine": 1091,
+        "endChar": 33
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388943df_7ca52689",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "s/number/maximum number/",
+      "range": {
+        "startLine": 1094,
+        "startChar": 36,
+        "endLine": 1094,
+        "endChar": 42
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733f829b_75938c6c",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "line break after namespace {",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75126ebd_48f83907",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 27
@@ -87,6 +294,75 @@
         "startChar": 44,
         "endLine": 40,
         "endChar": 65
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39c460f_0683737b",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "line break before }",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca916f4_f28cf905",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "Referring to kMaxDelayableRequestsNetworkOverride is confusing here since kMaxDelayableRequestsNetworkOverride is in C++ file.\n\nHow about rewrite as:\nTrue if scheduler should determine the max. number of delayable requests based on the network quality.",
+      "range": {
+        "startLine": 162,
+        "startChar": 29,
+        "endLine": 162,
+        "endChar": 65
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e92273a_1eed0d97",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "name should preferably match the struct name.\ns/max_delayable_requests_by_bdp_/max_requests_for_bdp_ranges_/",
+      "range": {
+        "startLine": 166,
+        "startChar": 30,
+        "endLine": 166,
+        "endChar": 60
       },
       "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -133,6 +409,98 @@
         "startChar": 15,
         "endLine": 1059,
         "endChar": 21
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0722a242_3c7e157a",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "move the comment below on a new line.",
+      "range": {
+        "startLine": 1076,
+        "startChar": 25,
+        "endLine": 1076,
+        "endChar": 26
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774b5e09_2e826b1f",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "move comment below.",
+      "range": {
+        "startLine": 1093,
+        "startChar": 16,
+        "endLine": 1093,
+        "endChar": 17
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead4db70_ca5fb352",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "It probably does not matter here that we are concatenating strings (which is a costly operation). In general, I believe it is preferable to use StringPiece for performance.",
+      "range": {
+        "startLine": 1182,
+        "startChar": 45,
+        "endLine": 1182,
+        "endChar": 50
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95918e43_b7725753",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-29T19:03:01Z",
+      "side": 1,
+      "message": "s/behaviour/behavior/",
+      "range": {
+        "startLine": 1195,
+        "startChar": 18,
+        "endLine": 1195,
+        "endChar": 27
       },
       "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
