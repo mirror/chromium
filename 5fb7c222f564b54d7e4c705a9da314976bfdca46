@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58ea06ff_2c474f90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-29T21:37:27Z",
+      "side": 1,
+      "message": "These features are not added for the purpose of IPH events. You could say \"for FeatureEngagementTracker IPH on iOS\" or something like that.",
+      "revId": "5fb7c222f564b54d7e4c705a9da314976bfdca46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
