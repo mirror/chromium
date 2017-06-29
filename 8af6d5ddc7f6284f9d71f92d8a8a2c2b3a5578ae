@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7150ce2c_0a442dd9",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-29T01:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b19c8948_4e09e847",
+      "revId": "8af6d5ddc7f6284f9d71f92d8a8a2c2b3a5578ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d88db081_44d797cb",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-29T00:30:43Z",
       "side": 1,
       "message": "nit: string literals convert to String implicitly, you only need to say \"PaintWorkletGlobalScope\".\n\nAlso: I\u0027d like to echo ikilpatrick\u0027s comment (which I think you misunderstood) that including \"GlobalScope\" here is more likely to confuse than help. Something like \"paint worklet\" seems more human-readable to me.",
+      "revId": "8af6d5ddc7f6284f9d71f92d8a8a2c2b3a5578ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ab343c_b28c712a",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-29T01:00:37Z",
+      "side": 1,
+      "message": "Good point, thanks for pointing it out.",
+      "parentUuid": "d88db081_44d797cb",
       "revId": "8af6d5ddc7f6284f9d71f92d8a8a2c2b3a5578ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "8af6d5ddc7f6284f9d71f92d8a8a2c2b3a5578ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a13256_2903acc9",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-29T01:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b4cfc7c_b483ec2e",
+      "revId": "8af6d5ddc7f6284f9d71f92d8a8a2c2b3a5578ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
