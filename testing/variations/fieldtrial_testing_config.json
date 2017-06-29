@@ -1801,7 +1801,6 @@
         {
             "platforms": [
                 "linux",
-                "mac",
                 "win"
             ],
             "experiments": [
