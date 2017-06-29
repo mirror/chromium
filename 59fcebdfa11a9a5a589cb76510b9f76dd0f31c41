@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74667aa4_7023899f",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T17:07:46Z",
+      "side": 1,
+      "message": "seems we need a copy of prominent_colors_ instead of directly passing this.prominent_colors_",
+      "revId": "59fcebdfa11a9a5a589cb76510b9f76dd0f31c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

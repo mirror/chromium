@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e350fe42_b2ac6584",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T17:07:46Z",
+      "side": 1,
+      "message": "The new patch updated still needs wallpaper_controller_ptr_.",
+      "parentUuid": "80e898f9_11248a70",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e64bde0_5d8149ce",
         "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "writtenOn": "2017-06-27T22:12:26Z",
       "side": 1,
       "message": "Since AddObserver could be skipped, how can we be sure the SearchBoxModel has correct color? We might need an explicit mojo call to get the color and set to SearchBoxModel when profile switching happens.",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea01f4be_99f08c91",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T17:07:46Z",
+      "side": 1,
+      "message": "done by moving addobserver to ctor and explicitly trigger notifying observers here.\nIs this OK?\nbtw, what is the mojo call to get colors from ash? Most mojo call examples are set, not get.",
+      "parentUuid": "8e64bde0_5d8149ce",
       "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "69355536_965b9417",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T17:07:46Z",
+      "side": 1,
+      "message": "I asked estade@ about this. He said that is Alpablend(foreground, background which is #lv, 70%).",
+      "parentUuid": "be90bc3c_12949cd5",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae25c918_4654c45d",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 5
@@ -82,6 +136,24 @@
       "writtenOn": "2017-06-27T21:27:38Z",
       "side": 1,
       "message": "I remembered it was not recommended to set SK_ColorTRANSPARENT background color. But since light_vibrant_mixed has some transparency. If we still set light_vibrant_mixed to search_box_, the textfield background color is different than container\u0027s background.",
+      "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd755a00_1424279a",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-29T17:07:46Z",
+      "side": 1,
+      "message": "still using light_vibrant_mixed per the change above.",
+      "parentUuid": "ae25c918_4654c45d",
       "revId": "cedf360ab833e1e5720d54d6be2b1032e03bfac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
