@@ -22,6 +22,30 @@
       "revId": "d4a56f0845241df2daed18608081f95a85e4200e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60540934_95e2b433",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-29T16:43:12Z",
+      "side": 1,
+      "message": "I think it\u0027s a combination of the NTP not initially being an entire collection view, and that the empty NTP used to have \u0027hidden\u0027 tiles for styling.",
+      "parentUuid": "85ac359b_ca7937f8",
+      "range": {
+        "startLine": 457,
+        "startChar": 11,
+        "endLine": 457,
+        "endChar": 31
+      },
+      "revId": "d4a56f0845241df2daed18608081f95a85e4200e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
