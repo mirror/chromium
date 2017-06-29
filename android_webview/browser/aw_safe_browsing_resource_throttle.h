@@ -6,6 +6,7 @@
 #define ANDROID_WEBVIEW_BROWSER_AW_SAFE_BROWSING_RESOURCE_THROTTLE_H_
 
 #include "android_webview/browser/aw_safe_browsing_ui_manager.h"
+#include "android_webview/browser/net/aw_web_resource_request.h"
 #include "base/macros.h"
 #include "components/safe_browsing/base_resource_throttle.h"
 #include "components/safe_browsing_db/database_manager.h"
@@ -24,6 +25,14 @@ namespace android_webview {
 class AwSafeBrowsingResourceThrottle
     : public safe_browsing::BaseResourceThrottle {
  public:
+  // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.android_webview
+  enum class SafeBrowsingAction {
+    SHOW_INTERSTITIAL = 0,
+    PROCEED = 1,
+    BACK_TO_SAFETY = 2,
+    SHOW_INTERSTITIAL_NO_REPORTING = 3,
+  };
+
   // Will construct an AwSafeBrowsingResourceThrottle if GMS exists on device
   // and supports safebrowsing.
   static AwSafeBrowsingResourceThrottle* MaybeCreate(
@@ -44,6 +53,21 @@ class AwSafeBrowsingResourceThrottle
       scoped_refptr<AwSafeBrowsingUIManager> ui_manager);
 
   ~AwSafeBrowsingResourceThrottle() override;
+
+  void StartDisplayingBlockingPageHelper(
+      security_interstitials::UnsafeResource resource) override;
+
+  static void StartApplicationResponse(
+      const base::WeakPtr<BaseResourceThrottle>& throttle,
+      scoped_refptr<safe_browsing::BaseUIManager> ui_manager,
+      const security_interstitials::UnsafeResource& resource,
+      const AwWebResourceRequest& request);
+
+  static void DoApplicationResponse(
+      const base::WeakPtr<BaseResourceThrottle>& throttle,
+      scoped_refptr<safe_browsing::BaseUIManager> ui_manager,
+      const security_interstitials::UnsafeResource& resource,
+      SafeBrowsingAction action);
 
   void CancelResourceLoad() override;
 
