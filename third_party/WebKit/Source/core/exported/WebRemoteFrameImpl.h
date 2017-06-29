@@ -52,7 +52,6 @@ class CORE_EXPORT WebRemoteFrameImpl final
                                   const WebString& name,
                                   WebSandboxFlags,
                                   WebFrameClient*,
-                                  blink::InterfaceProvider*,
                                   blink::InterfaceRegistry*,
                                   WebFrame* previous_sibling,
                                   const WebParsedFeaturePolicy&,
