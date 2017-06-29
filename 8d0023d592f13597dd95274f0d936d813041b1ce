@@ -410,6 +410,76 @@
       "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fa67dc_81dddff0",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T02:09:26Z",
+      "side": 1,
+      "message": "So as is, there is the potential for this to be called with: pdfWritingDone(true, 0) or pdfWritingDone(true, -1) ... what does it mean to have a PDF written out with 0 or -1 page count? A random 0 or -1 value can certainly be confusing, but in the context of PDF page count, 0 or -1 should be a good indicator that something is wrong.",
+      "parentUuid": "85f6de85_93f629e2",
+      "range": {
+        "startLine": 65,
+        "startChar": 24,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7608547_e39b877d",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T02:09:26Z",
+      "side": 1,
+      "message": "I\u0027m not a Java style expert, but is this the right place to put comments?",
+      "range": {
+        "startLine": 341,
+        "startChar": 17,
+        "endLine": 341,
+        "endChar": 19
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8af069_c6e76d3d",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-29T02:09:26Z",
+      "side": 1,
+      "message": "Where in the call stack do we make sure |pageCount| \u003e\u003d 1? Calling android.print.PageRange() with a negative end value will raise an exception.",
+      "range": {
+        "startLine": 342,
+        "startChar": 59,
+        "endLine": 342,
+        "endChar": 72
+      },
+      "revId": "8d0023d592f13597dd95274f0d936d813041b1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
