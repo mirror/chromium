@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e50830c_759a4ea1",
+        "filename": "content/browser/android/input_device_observer_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2017-06-29T21:03:03Z",
+      "side": 1,
+      "message": "I need to be able to access them from the static callback from Java.",
+      "parentUuid": "d777109f_cb26bb1e",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46b98e14_b089304e",
         "filename": "content/browser/android/input_device_observer_android.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-29T18:22:12Z",
       "side": 1,
       "message": "private as well, there\u0027s no subclass",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58811712_dd09b298",
+        "filename": "content/browser/android/input_device_observer_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2017-06-29T21:03:03Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "46b98e14_b089304e",
       "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "872d42fc_1ccefc09",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2017-06-29T21:03:03Z",
+      "side": 1,
+      "message": "Yes it can be global and I can probably use ContextUtils. Where is a good place to instantiate InputDeviceObserver?",
+      "parentUuid": "9e746643_5fa0242f",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2e3ea64_5f56690b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/InputDeviceObserver.java",
         "patchSetId": 2
@@ -98,6 +152,24 @@
       "writtenOn": "2017-06-29T18:22:12Z",
       "side": 1,
       "message": "anything calls these two things?",
+      "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c2663a_f75c4b7e",
+        "filename": "ui/base/touch/touch_device_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2017-06-29T21:03:03Z",
+      "side": 1,
+      "message": "Yes see https://chromium.googlesource.com/chromium/src.git/+/master/ui/base/touch/touch_device_util.cc#27",
+      "parentUuid": "8be7a4f4_cee19fa9",
       "revId": "4978c85a8402ad05d13fad9cb587ef719d777bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
