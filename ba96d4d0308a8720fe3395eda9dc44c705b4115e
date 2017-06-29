@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0210118f_76712a0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-29T22:12:05Z",
+      "side": 1,
+      "message": "s/savepagelaterparams/SavePageParams/",
+      "range": {
+        "startLine": 7,
+        "startChar": 64,
+        "endLine": 7,
+        "endChar": 83
+      },
+      "revId": "ba96d4d0308a8720fe3395eda9dc44c705b4115e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fde123f_a502e4ac",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-29T22:12:05Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "revId": "ba96d4d0308a8720fe3395eda9dc44c705b4115e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
