@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83043ce6_9ca9e1ee",
+        "filename": "components/payments/core/journey_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-29T20:26:23Z",
+      "side": 1,
+      "message": "Can you add /*param_name\u003d*/ comments on those calls?",
+      "revId": "8223ff83f7a9230f6a6548217222ac065c1b7221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
