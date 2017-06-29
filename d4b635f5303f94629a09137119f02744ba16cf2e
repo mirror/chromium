@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07e88eaf_3b3b0af2",
+        "filename": "ui/views/controls/prefix_selector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-29T22:01:55Z",
+      "side": 1,
+      "message": "My suggestion was to remove this local helper and use the View::ConvertRectToScreen function instead. I\u0027m not sure why we need the other new includes.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "d4b635f5303f94629a09137119f02744ba16cf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
