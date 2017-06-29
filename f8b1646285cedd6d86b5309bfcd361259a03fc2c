@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96767339_d155a372",
+        "filename": "mojo/public/cpp/bindings/lib/array_serialization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-29T21:22:40Z",
+      "side": 1,
+      "message": "Yeah, I went back and forth on this a few times. If you think that form is more readable, SGTM! Done.",
+      "parentUuid": "69413e13_bc181315",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d787560e_e2149bfb",
         "filename": "mojo/public/cpp/bindings/lib/serialization_context.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e27a5a_976ae08b",
+        "filename": "mojo/public/cpp/bindings/lib/serialization_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-29T21:22:40Z",
+      "side": 1,
+      "message": "Oh of course! Done",
+      "parentUuid": "d787560e_e2149bfb",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c22e699f_f24a85b3",
+        "filename": "mojo/public/cpp/bindings/lib/serialization_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-29T21:22:40Z",
+      "side": 1,
+      "message": "Ah thanks, these are good tests to run.\n\nI have compared cc_perftests (specifically the ManyQuads_1_4000 and ManyRenderPasses_10_500 tests) before and after these changes.\n\nResults are fairly noisy, but it seems there is definitely a small performance hit here of about ~1% on serialization and ~3% on deserialization.\n\nWDYT?",
+      "parentUuid": "1be09b99_fe6ed7a6",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b8d4a5a_0de447ad",
         "filename": "mojo/public/cpp/bindings/lib/serialization_context.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7f3aab_91191f6f",
+        "filename": "mojo/public/cpp/bindings/lib/serialization_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-29T21:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b8d4a5a_0de447ad",
+      "revId": "f8b1646285cedd6d86b5309bfcd361259a03fc2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
