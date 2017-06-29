@@ -46,6 +46,30 @@
       "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a338a13_97ac2035",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-29T20:54:20Z",
+      "side": 1,
+      "message": "Oh, no, I\u0027m not suggesting we move \"loopback\" to GetOutputStreamParameters(). What I\u0027m saying is that the audio format for a loopback input device should be the same as the audio format of the data it is looping back (the data being output to the speaker device).\n\nLet\u0027s say, for example, the system speaker device uses 44.1kHz, 2-channel audio with 2ms buffers. Then, the loopback input device should also be using 44.1kHz, 2-channel audio; and NOT 48kHz (which would require resampling).",
+      "parentUuid": "eaec83f8_d9cdec99",
+      "range": {
+        "startLine": 172,
+        "startChar": 1,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "a39edb4a9546bcc8633ec9ea1f51ce0c5d467d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
