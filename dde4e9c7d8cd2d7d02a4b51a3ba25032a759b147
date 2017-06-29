@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "162a70a1_e1834b2d",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-29T12:54:24Z",
+      "side": 1,
+      "message": "Should not there be a \"return;\" here?\n\nDo you listen to updates from the service when the section is empty?\nThen you do not need to do the Fetch below.",
+      "range": {
+        "startLine": 263,
+        "startChar": 48,
+        "endLine": 263,
+        "endChar": 49
+      },
+      "revId": "dde4e9c7d8cd2d7d02a4b51a3ba25032a759b147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
