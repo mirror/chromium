@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e16b2e74_1038a486",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-29T18:00:20Z",
+      "side": 1,
+      "message": "You should have a short one line as a title and then then description please.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "def93dcaff3136e887d88c17e244f1f24a3379b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
