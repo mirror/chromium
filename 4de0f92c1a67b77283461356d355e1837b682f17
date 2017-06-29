@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eddfa175_dd0098dc",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "Would ContentSuggestionsHeaderDelegate be more appropriate?",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "4de0f92c1a67b77283461356d355e1837b682f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

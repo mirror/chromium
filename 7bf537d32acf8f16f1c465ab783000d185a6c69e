@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a43300a_dd14fdc9",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "Could any or all of these be offloaded to a specific object? Do they need to know the internals of self?\nAs a middle ground, we could make categories on self (if they don\u0027t require access to internal properties/methods).",
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b271234_53d4d4bc",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "Does not seem needed any longer.",
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa950102_3a0993b5",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "Add comments so that we can understand what is the responsibility of the implementors and the context in which they could be called.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1481f00_fc933495",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_audience.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "The name is really broad. Is it going to be used only for scroll events? Maybe it\u0027s just a matter of \"ContentSuggestionsCollectionScrollAudience\"? As a general comment, all the names introduced in this review are pretty opaque and similar. Could they be \"orthogonalized\"?",
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c800bed_7a2dd2d5",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_commands.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "I dont\u0027 think commands is the right term for cross UI-layer communication. Commands are for communication to and across the coordinator layer.",
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be02eea0_aa246f17",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_commands.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "Define \"the rest of the application\" (if not in comments, at least in this review). Is it the coordinator layer?",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed50f74_d7c3da7d",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_collection_command_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "Nit: Sort by type name I think, not @class before @protocol.",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff97b59d_4d1286bd",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_collection_command_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "Is this needed? Why not just asking the suggestionsViewController\u0027s delegate?",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6956f9c9_619afa43",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_commands.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-29T13:34:22Z",
+      "side": 1,
+      "message": "This same method appears in the following protocol. Normal?",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "7bf537d32acf8f16f1c465ab783000d185a6c69e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
