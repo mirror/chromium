@@ -19,6 +19,7 @@
 #define PLATFORM_DCHECK PP_DCHECK
 #else
 #include "base/logging.h"
+#include "media/base/media_switches.h"
 #define PLATFORM_DCHECK DCHECK
 #endif
 
@@ -252,7 +253,7 @@ CdmWrapper* CdmWrapper::Create(CreateCdmFunc create_cdm_func,
                                GetCdmHostFunc get_cdm_host_func,
                                void* user_data) {
   static_assert(cdm::ContentDecryptionModule::kVersion ==
-                    cdm::ContentDecryptionModule_8::kVersion,
+                    cdm::ContentDecryptionModule_9::kVersion,
                 "update the code below");
 
   // Ensure IsSupportedCdmInterfaceVersion() matches this implementation.
@@ -260,17 +261,42 @@ CdmWrapper* CdmWrapper::Create(CreateCdmFunc create_cdm_func,
   // If this check fails, update this function and DCHECK or update
   // IsSupportedCdmInterfaceVersion().
   PLATFORM_DCHECK(!IsSupportedCdmInterfaceVersion(
-                      cdm::ContentDecryptionModule_8::kVersion + 1) &&
+                      cdm::ContentDecryptionModule_9::kVersion + 1) &&
+                  IsSupportedCdmInterfaceVersion(
+                      cdm::ContentDecryptionModule_9::kVersion) &&
                   IsSupportedCdmInterfaceVersion(
                       cdm::ContentDecryptionModule_8::kVersion) &&
                   !IsSupportedCdmInterfaceVersion(
                       cdm::ContentDecryptionModule_8::kVersion - 1));
 
   // Try to create the CDM using the latest CDM interface version.
-  CdmWrapper* cdm_wrapper =
-      CdmWrapperImpl<cdm::ContentDecryptionModule>::Create(
-          create_cdm_func, key_system, key_system_size, get_cdm_host_func,
-          user_data);
+  // This is only attempted if requested. For pepper plugins, this is done
+  // at compile time. For mojo, it is done using a media feature setting.
+  CdmWrapper* cdm_wrapper = nullptr;
+#if defined(USE_PPAPI_CDM_ADAPTER)
+#if defined(SUPPORT_EXPERIMENTAL_CDM_INTERFACE)
+  bool isCdm9Supported = true;
+#else
+  bool isCdm9Supported = false;
+#endif  // defined(SUPPORT_EXPERIMENTAL_CDM_INTERFACE)
+#else
+  bool isCdm9Supported =
+      base::FeatureList::IsEnabled(media::kSupportExperimentalCdmInterface);
+#endif  // defined(USE_PPAPI_CDM_ADAPTER)
+
+  if (isCdm9Supported) {
+    cdm_wrapper = CdmWrapperImpl<cdm::ContentDecryptionModule_9>::Create(
+        create_cdm_func, key_system, key_system_size, get_cdm_host_func,
+        user_data);
+  }
+
+  // If |cdm_wrapper| is NULL, try to create the CDM using older supported
+  // versions of the CDM interface here.
+  if (!cdm_wrapper) {
+    cdm_wrapper = CdmWrapperImpl<cdm::ContentDecryptionModule_8>::Create(
+        create_cdm_func, key_system, key_system_size, get_cdm_host_func,
+        user_data);
+  }
 
   return cdm_wrapper;
 }
@@ -280,7 +306,7 @@ CdmWrapper* CdmWrapper::Create(CreateCdmFunc create_cdm_func,
 // does not have.
 // Also update supported_cdm_versions.h.
 static_assert(cdm::ContentDecryptionModule::kVersion ==
-                  cdm::ContentDecryptionModule_8::kVersion,
+                  cdm::ContentDecryptionModule_9::kVersion,
               "ensure cdm wrapper templates have old version support");
 
 }  // namespace media
