@@ -1,7 +1,5 @@
-#ifndef WebFeature_h
-#define WebFeature_h
+module blink.mojom;
 
-namespace blink {
 // ============ Definition for WebFeature used for UseCounter ===============
 //
 // Do not change assigned numbers of existing items: add new features
@@ -11,7 +9,8 @@ namespace blink {
 // or code path which can be used/triggered by a web page.
 // TODO(rbyers): Add CSS and animated CSS feature types by making this a
 // more sophisticated class.
-enum class WebFeature : uint32_t {
+[Extensible]
+enum WebFeature {
   kOBSOLETE_PageDestruction = 0,
   kWorkerStart = 4,
   kSharedWorkerStart = 5,
@@ -1573,7 +1572,3 @@ enum class WebFeature : uint32_t {
   // chromium/src/tools/metrics/histograms/ to update the UMA mapping.
   kNumberOfFeatures,  // This enum value must be last.
 };
-
-}  // namespace blink
-
-#endif  // WebFeature_h

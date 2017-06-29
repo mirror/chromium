@@ -44,6 +44,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/AtomicString.h"
+#include "public/platform/web_feature.mojom-blink.h"
 
 namespace blink {
 
@@ -56,7 +57,7 @@ class LocalDOMWindow;
 class MessagePort;
 class Node;
 class ServiceWorker;
-enum class WebFeature : uint32_t;
+using WebFeature = mojom::WebFeature;
 
 struct FiringEventIterator {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
