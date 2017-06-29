@@ -16,6 +16,24 @@
       "revId": "29e097135e88e29292551efe8afbce19e68f7ef7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e06cd0a_dde4b92e",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-06-29T20:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f67ab2_0363d8c2",
+      "revId": "29e097135e88e29292551efe8afbce19e68f7ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
