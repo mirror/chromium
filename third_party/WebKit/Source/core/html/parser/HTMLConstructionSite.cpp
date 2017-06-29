@@ -39,6 +39,7 @@
 #include "core/dom/Text.h"
 #include "core/dom/ThrowOnDynamicMarkupInsertionCountIncrementer.h"
 #include "core/dom/custom/CEReactionsScope.h"
+#include "core/dom/custom/CustomElement.h"
 #include "core/dom/custom/CustomElementDefinition.h"
 #include "core/dom/custom/CustomElementDescriptor.h"
 #include "core/dom/custom/CustomElementRegistry.h"
@@ -824,7 +825,8 @@ inline Document& HTMLConstructionSite::OwnerDocumentForCurrentNode() {
 // https://html.spec.whatwg.org/#look-up-a-custom-element-definition
 CustomElementDefinition* HTMLConstructionSite::LookUpCustomElementDefinition(
     Document& document,
-    AtomicHTMLToken* token) {
+    const AtomicString& local_name,
+    const AtomicString& is) {
   // "2. If document does not have a browsing context, return null."
   LocalDOMWindow* window = document.ExecutingWindow();
   if (!window)
@@ -836,9 +838,7 @@ CustomElementDefinition* HTMLConstructionSite::LookUpCustomElementDefinition(
   if (!registry)
     return nullptr;
 
-  const AtomicString& local_name = token->GetName();
-  const Attribute* is_attribute = token->GetAttributeItem(HTMLNames::isAttr);
-  const AtomicString& name = is_attribute ? is_attribute->Value() : local_name;
+  const AtomicString& name = is.IsEmpty() ? local_name : is;
   CustomElementDescriptor descriptor(name, local_name);
 
   // 4.-6.
@@ -855,11 +855,17 @@ Element* HTMLConstructionSite::CreateElement(
 
   // "2. Let local name be the tag name of the token."
   QualifiedName tag_name(g_null_atom, token->GetName(), namespace_uri);
+
   // "3. Let is be the value of the "is" attribute in the given token ..." etc.
+  const Attribute* is_attribute = token->GetAttributeItem(HTMLNames::isAttr);
+  const AtomicString& is =
+      (is_attribute && RuntimeEnabledFeatures::CustomElementsBuiltinEnabled())
+          ? is_attribute->Value()
+          : AtomicString();
+
   // "4. Let definition be the result of looking up a custom element ..." etc.
   CustomElementDefinition* definition =
-      is_parsing_fragment_ ? nullptr
-                           : LookUpCustomElementDefinition(document, token);
+      LookUpCustomElementDefinition(document, tag_name.LocalName(), is);
   // "5. If definition is non-null and the parser was not originally created
   // for the HTML fragment parsing algorithm, then let will execute script
   // be true."
@@ -885,7 +891,9 @@ Element* HTMLConstructionSite::CreateElement(
     // reactions stack."
     CEReactionsScope reactions;
 
-    // 7.
+    // 7. Let element be the result of creating an element given document,
+    // localName, given namespace, null, and is. If will execute script is true,
+    // set the synchronous custom elements flag; otherwise, leave it unset.
     element = definition->CreateElementSync(document, tag_name);
 
     // "8. Append each attribute in the given token to element." We don't use
@@ -898,7 +906,12 @@ Element* HTMLConstructionSite::CreateElement(
     // and ThrowOnDynamicMarkupInsertionCountIncrementer destructors implement
     // steps 9.1-3.
   } else {
-    element = document.createElement(tag_name, GetCreateElementFlags());
+    // 7. Let element be the result of creating an element given document,
+    // localName, given namespace, null, and is. If will execute script is true,
+    // set the synchronous custom elements flag; otherwise, leave it unset.
+    element = document.createElement(tag_name, definition, is,
+                                     GetCreateElementFlags());
+
     // Definition for the created element does not exist here and it cannot be
     // custom or failed.
     DCHECK_NE(element->GetCustomElementState(), CustomElementState::kCustom);

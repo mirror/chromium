@@ -269,8 +269,9 @@ CustomElementDefinition* CustomElementRegistry::DefinitionForId(
   return id ? definitions_[id - 1].Get() : nullptr;
 }
 
-void CustomElementRegistry::AddCandidate(Element* candidate) {
-  const AtomicString& name = candidate->localName();
+void CustomElementRegistry::AddCandidate(Element* candidate,
+                                         const CustomElementDescriptor& desc) {
+  const AtomicString& name = desc.GetName();
   if (NameIsDefined(name) || V0NameIsDefined(name))
     return;
   UpgradeCandidateMap::iterator it = upgrade_candidates_->find(name);

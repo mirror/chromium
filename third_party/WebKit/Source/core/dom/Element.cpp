@@ -1448,6 +1448,7 @@ inline void Element::AttributeChangedFromParserOrByCloning(
     AttributeModificationReason reason) {
   if (name == isAttr)
     V0CustomElementRegistrationContext::SetTypeExtension(this, new_value);
+
   AttributeChanged(
       AttributeModificationParams(name, g_null_atom, new_value, reason));
 }

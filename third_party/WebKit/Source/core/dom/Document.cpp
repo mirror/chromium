@@ -1297,13 +1297,30 @@ bool Document::HasValidNamespaceForAttributes(const QualifiedName& q_name) {
 // FIXME: This should really be in a possible ElementFactory class
 Element* Document::createElement(const QualifiedName& q_name,
                                  CreateElementFlags flags) {
+  return createElement(q_name, nullptr, AtomicString(), flags);
+}
+
+Element* Document::createElement(const QualifiedName& q_name,
+                                 CustomElementDefinition* definition,
+                                 const AtomicString& is,
+                                 CreateElementFlags flags) {
   Element* e = nullptr;
 
   // FIXME: Use registered namespaces and look up in a hash to find the right
   // factory.
-  if (q_name.NamespaceURI() == xhtmlNamespaceURI)
-    e = HTMLElementFactory::createHTMLElement(q_name.LocalName(), *this, flags);
-  else if (q_name.NamespaceURI() == SVGNames::svgNamespaceURI)
+  if (q_name.NamespaceURI() == xhtmlNamespaceURI) {
+    if (definition) {
+      if (flags & kAsynchronousCustomElements)
+        e = CustomElement::CreateCustomElementAsync(*this, q_name, definition);
+      else
+        e = CustomElement::CreateCustomElementSync(*this, q_name, definition);
+    } else if (!is.IsEmpty()) {
+      e = CustomElement::CreateCustomElementAsync(*this, q_name, nullptr);
+    } else {
+      e = HTMLElementFactory::createHTMLElement(q_name.LocalName(), *this,
+                                                flags);
+    }
+  } else if (q_name.NamespaceURI() == SVGNames::svgNamespaceURI)
     e = SVGElementFactory::createSVGElement(q_name.LocalName(), *this, flags);
 
   if (e)

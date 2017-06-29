@@ -87,6 +87,7 @@ class Comment;
 class ComputedStyle;
 class ConsoleMessage;
 class ContextFeatures;
+class CustomElementDefinition;
 class V0CustomElementMicrotaskRunQueue;
 class V0CustomElementRegistrationContext;
 class DOMImplementation;
@@ -342,6 +343,10 @@ class CORE_EXPORT Document : public ContainerNode,
                            const AtomicString& qualified_name,
                            ExceptionState&);
   Element* createElement(const QualifiedName&, CreateElementFlags);
+  Element* createElement(const QualifiedName&,
+                         CustomElementDefinition*,
+                         const AtomicString&,
+                         CreateElementFlags);
 
   Element* ElementFromPoint(int x, int y) const;
   HeapVector<Member<Element>> ElementsFromPoint(int x, int y) const;

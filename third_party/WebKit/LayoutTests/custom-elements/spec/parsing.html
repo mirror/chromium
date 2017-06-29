@@ -67,7 +67,44 @@ test_with_content((w) => {
                       ['constructor', 'x="y"', 'connected', 'script']);
 });
 </script>
+<!-- TODO: the test pass now due to the elements upgrade.
+           Creating synchronously built-in elements still needs to be implemented."
+-->
+<template data-test="the parser synchronously creates built-in elements">
+  <script>
+  'use strict';
 
+  window.invocations = [];
+  customElements.define('d-d', class extends HTMLDivElement {
+    constructor() {
+      super();
+      invocations.push('constructor');
+    }
+    static get observedAttributes() { return ['is']; }
+    attributeChangedCallback(name, oldValue, newValue, nsuri) {
+      invocations.push(`${name}="${newValue}"`);
+    }
+    connectedCallback() {
+      invocations.push('connected');
+    }
+  }, {extends: 'div'});
+  </script>
+  <div is="d-d">
+    <script>
+    'use strict';
+
+    invocations.push('script');
+    </script>
+  </div>
+</template>
+<script>
+'use strict';
+
+test_with_content((w) => {
+  assert_array_equals(w.invocations,
+                      ['constructor', 'is="d-d"', 'connected', 'script']);
+});
+</script>
 <template data-test="foreign content insertion executes connected">
   <script>
   'use strict';
@@ -330,3 +367,36 @@ test_with_content((w) => {
                 'the second element should be un-upgraded, not failed');
 });
 </script>
+
+<template data-test="parsing upgrades the built-in element">
+  <div is="d-d"></div>
+  <script>
+  'use strict';
+
+  window.invocations = [];
+  customElements.define('d-d', class extends HTMLDivElement {
+    constructor() {
+      super();
+      invocations.push('constructor');
+    }
+    static get observedAttributes() { return ['is']; }
+    attributeChangedCallback(name, oldValue, newValue, nsuri) {
+      invocations.push(`${name}="${newValue}"`);
+    }
+    connectedCallback() {
+      invocations.push('connected');
+    }
+  }, {extends: 'div'});
+  </script>
+</template>
+<script>
+'use strict';
+
+test_with_content((w) => {
+  assert_array_equals(
+      w.invocations,
+      ['constructor', 'is="d-d"', 'connected'],
+      'the built-in element should be upgraded');
+});
+</script>
+

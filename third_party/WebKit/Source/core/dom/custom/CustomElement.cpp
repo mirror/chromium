@@ -153,6 +153,28 @@ HTMLElement* CustomElement::CreateCustomElementAsync(
   return CreateUndefinedElement(document, tag_name);
 }
 
+HTMLElement* CustomElement::CreateCustomElementAsync(
+    Document& document,
+    const QualifiedName& tag_name,
+    CustomElementDefinition* definition) {
+  DCHECK(ShouldCreateCustomElement(tag_name) ||
+         ShouldCreateCustomizedBuiltinElement(tag_name));
+  HTMLElement* element;
+
+  if (definition && definition->Descriptor().IsAutonomous()) {
+    // 6. If definition is non-null and we have an autonomous custom element
+    element = definition->CreateElementAsync(document, tag_name);
+  } else if (definition) {
+    // 5. If definition is non-null and we have a customized built-in element
+    element = CreateUndefinedElement(document, tag_name);
+    definition->EnqueueUpgradeReaction(element);
+  } else {
+    // 7. Otherwise
+    element = CreateUndefinedElement(document, tag_name);
+  }
+  return element;
+}
+
 // Create a HTMLElement
 HTMLElement* CustomElement::CreateUndefinedElement(
     Document& document,
@@ -257,11 +279,20 @@ void CustomElement::TryToUpgrade(Element* element) {
   CustomElementRegistry* registry = CustomElement::Registry(*element);
   if (!registry)
     return;
-  if (CustomElementDefinition* definition = registry->DefinitionFor(
-          CustomElementDescriptor(element->localName(), element->localName())))
+  // 1. Let definition be the result of looking up a custom element definition
+  // given element's node document, element's namespace, element's local name,
+  // and element's is value.
+  const AtomicString& isAttribute = element->getAttribute(HTMLNames::isAttr);
+  const AtomicString& name =
+      isAttribute.IsNull() ? element->localName() : isAttribute;
+  CustomElementDescriptor descriptor =
+      CustomElementDescriptor(name, element->localName());
+  // 2. If definition is not null, then enqueue a custom element upgrade
+  // reaction given element and definition.
+  if (CustomElementDefinition* definition = registry->DefinitionFor(descriptor))
     definition->EnqueueUpgradeReaction(element);
   else
-    registry->AddCandidate(element);
+    registry->AddCandidate(element, descriptor);
 }
 
 }  // namespace blink

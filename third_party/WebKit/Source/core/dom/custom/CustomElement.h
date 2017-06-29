@@ -76,6 +76,9 @@ class CORE_EXPORT CustomElement {
                                               const QualifiedName&,
                                               CustomElementDefinition*);
   static HTMLElement* CreateCustomElementAsync(Document&, const QualifiedName&);
+  static HTMLElement* CreateCustomElementAsync(Document&,
+                                               const QualifiedName&,
+                                               CustomElementDefinition*);
 
   static HTMLElement* CreateFailedElement(Document&, const QualifiedName&);
 

@@ -60,9 +60,7 @@ class CORE_EXPORT CustomElementRegistry final
   // definitionFor when implementing type extensions.
   CustomElementDefinition* DefinitionFor(const CustomElementDescriptor&) const;
 
-  // TODO(dominicc): Consider broadening this API when type extensions are
-  // implemented.
-  void AddCandidate(Element*);
+  void AddCandidate(Element*, const CustomElementDescriptor&);
   ScriptPromise whenDefined(ScriptState*,
                             const AtomicString& name,
                             ExceptionState&);
