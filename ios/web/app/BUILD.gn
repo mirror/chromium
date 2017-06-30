@@ -18,6 +18,7 @@ source_set("app") {
     "//base",
     "//base:i18n",
     "//crypto",
+    "//ios/net/global_state:shared_global_state",
     "//ios/web",
     "//net",
     "//ui/base",

@@ -79,6 +79,18 @@ _cronet_sources = [
 _cronet_public_headers = [ "Cronet.h" ]
 _cronet_public_headers += grpc_public_headers
 
+source_set("cronet_global_state") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+
+  deps = [
+    "//ios/net/global_state",
+  ]
+
+  sources = [
+    "ios_global_state_cronet_configuration.mm",
+  ]
+}
+
 source_set("cronet_sources") {
   deps = _cronet_deps
 
@@ -101,6 +113,7 @@ ios_framework_bundle("cronet_framework") {
   info_plist_target = ":tweak_cronet_plist"
 
   deps = [
+    ":cronet_global_state",
     ":cronet_sources",
     "//base",
     "//net:net",
@@ -135,6 +148,7 @@ test("cronet_unittests") {
   ]
 
   deps = [
+    ":cronet_global_state",
     ":cronet_sources",
     "//base",
     "//base/test:test_support",
