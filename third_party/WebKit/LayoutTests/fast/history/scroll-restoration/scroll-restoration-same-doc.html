@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<style>
+  div {
+    width: auto;
+    height: auto;
+  }
+
+  #p1 {
+    background-color: #FAEBD7;
+    width: 200px;
+    height: 1100px;
+  }
+</style>
+
+<div id="root">
+  <div id="p1">
+    <button id="btn" style="position: absolute; top: 1000px;" onclick="p2()">link</button>
+  </div>
+</div>
+
+<script>
+  let root = document.getElementById("root");
+  let p1 = document.getElementById("p1");
+
+  function p2() {
+    root.removeChild(p1);
+    history.pushState(1, null, "page2.html")
+  }
+
+  window.onpopstate = (event) => {
+    root.appendChild(p1);
+  };
+</script>
+
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+
+<script>
+'use strict';
+  test(() => {
+    // 1. scroll to bottom. 
+    eventSender.mouseScrollBy(0, 1200);
+    let scroll_y = window.scrollY;
+    assert_not_equals(window.scrollY, 0);
+
+    // 2. mouse click on #btn, load page2 (a shorter page).
+    let btn = document.getElementById("btn");
+    eventSender.mouseMoveTo(btn.offsetLeft+1, btn.offsetTop+1);
+    eventSender.mouseDown();
+    eventSender.mouseUp();
+    assert_false(!!document.getElementById("p1"));
+
+    // 3. navigation back. page should restoration to the position in 1.
+    history.back();
+    assert_not_equals(window.scrollY, scroll_y);
+  }, "load-in-same-doc-and-change-DOM-onpopstate");
+</script>
