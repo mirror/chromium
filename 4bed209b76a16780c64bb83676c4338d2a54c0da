@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b33fdb08_948a7758",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88d96053_0d0d2864",
+      "range": {
+        "startLine": 492,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 12
+      },
+      "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "302e9813_5b6f7632",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5c608d_fcd4e7a5",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:40:43Z",
+      "side": 1,
+      "message": "Done. Thank you for suggestion.",
+      "parentUuid": "302e9813_5b6f7632",
+      "range": {
+        "startLine": 601,
+        "startChar": 17,
+        "endLine": 601,
+        "endChar": 24
+      },
+      "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f38d7a1c_740efc11",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d07b79b1_84c210c8",
+      "range": {
+        "startLine": 603,
+        "startChar": 4,
+        "endLine": 603,
+        "endChar": 17
+      },
+      "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1e81082_4a519a14",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376b3fc9_aa4ed7bc",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:40:43Z",
+      "side": 1,
+      "message": "Ack. BTW, I couldn\u0027t find from the beginning, so it is new :-P",
+      "parentUuid": "c1e81082_4a519a14",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
