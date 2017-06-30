@@ -244,6 +244,8 @@ void ClassicPendingScript::StartStreamingIfPossible(
 }
 
 bool ClassicPendingScript::WasCanceled() const {
+  if (!GetResource())
+    return false;
   return GetResource()->WasCanceled();
 }
 
