@@ -8,21 +8,19 @@
 
 namespace blink {
 
-PaintChunker::PaintChunker() : force_new_chunk_(kDontForceNewChunk) {}
+PaintChunker::PaintChunker() : force_new_chunk_(false) {}
 
 PaintChunker::~PaintChunker() {}
 
 void PaintChunker::UpdateCurrentPaintChunkProperties(
     const PaintChunk::Id* chunk_id,
-    const PaintChunkProperties& properties,
-    NewChunkForceState force_new_chunk) {
+    const PaintChunkProperties& properties) {
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   current_chunk_id_ = WTF::nullopt;
   if (chunk_id)
     current_chunk_id_.emplace(*chunk_id);
   current_properties_ = properties;
-  force_new_chunk_ = force_new_chunk;
 }
 
 bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
@@ -55,11 +53,9 @@ bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
     new_chunk_begin_index = 0;
   } else {
     auto& last_chunk = chunks_.back();
-    bool can_continue_chunk =
-        current_properties_ == last_chunk.properties &&
-        behavior != kRequiresSeparateChunk &&
-        chunk_behavior_.back() != kRequiresSeparateChunk &&
-        force_new_chunk_ == kDontForceNewChunk;
+    bool can_continue_chunk = current_properties_ == last_chunk.properties &&
+                              behavior != kRequiresSeparateChunk &&
+                              !force_new_chunk_;
     if (can_continue_chunk) {
       last_chunk.end_index++;
       return false;
@@ -67,7 +63,7 @@ bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
     new_chunk_begin_index = last_chunk.end_index;
   }
 
-  force_new_chunk_ = kDontForceNewChunk;
+  force_new_chunk_ = behavior == kRequiresSeparateChunk;
 
   auto cacheable =
       item.SkippedCache() ? PaintChunk::kUncacheable : PaintChunk::kCacheable;
@@ -75,27 +71,11 @@ bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
                        current_chunk_id_ ? *current_chunk_id_ : item.GetId(),
                        current_properties_, cacheable);
   chunks_.push_back(new_chunk);
-  chunk_behavior_.push_back(behavior);
   return true;
-}
-
-void PaintChunker::DecrementDisplayItemIndex() {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
-  DCHECK(!chunks_.IsEmpty());
-
-  auto& last_chunk = chunks_.back();
-  if ((last_chunk.end_index - last_chunk.begin_index) > 1) {
-    last_chunk.end_index--;
-    return;
-  }
-
-  chunks_.pop_back();
-  chunk_behavior_.pop_back();
 }
 
 void PaintChunker::Clear() {
   chunks_.clear();
-  chunk_behavior_.clear();
   current_chunk_id_ = WTF::nullopt;
   current_properties_ = PaintChunkProperties();
 }
@@ -103,7 +83,6 @@ void PaintChunker::Clear() {
 Vector<PaintChunk> PaintChunker::ReleasePaintChunks() {
   Vector<PaintChunk> chunks;
   chunks.swap(chunks_);
-  chunk_behavior_.clear();
   current_chunk_id_ = WTF::nullopt;
   current_properties_ = PaintChunkProperties();
   return chunks;
