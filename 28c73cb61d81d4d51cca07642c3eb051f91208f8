@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af118cf2_c158eeee",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-30T19:10:44Z",
+      "side": 1,
+      "message": "I would be surprised if this builds properly in non-dcheck builds because I thought DCHECK required the arguments to be accessible to the compiler in all cases. If I am right, you could just move the #if DCHECK_IS_ON to the inside of the function.",
+      "revId": "28c73cb61d81d4d51cca07642c3eb051f91208f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
