@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5649720e_98e7d6f5",
+        "filename": "remoting/host/chromoting_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-30T01:34:44Z",
+      "side": 1,
+      "message": "You may want to remove this parameter from ClientSession as well.",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc4df54c_d277f267",
         "filename": "remoting/host/client_session_unittest.cc",
         "patchSetId": 3
@@ -19,6 +36,41 @@
     },
     {
       "key": {
+        "uuid": "77c6d64c_2f045e26",
+        "filename": "remoting/host/client_session_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-30T01:34:44Z",
+      "side": 1,
+      "message": "I think in general, you can use base::Bind() with lambda expression to avoid a free function in TU level.\nhttps://cs.chromium.org/chromium/src/remoting/protocol/data_channel_manager_unittest.cc?rcl\u003d453c56ae247cb35e95a4bd0a9a07d309a68c9da9\u0026l\u003d102",
+      "parentUuid": "dc4df54c_d277f267",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a552e0c5_6553986b",
+        "filename": "remoting/host/client_session_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-30T01:34:44Z",
+      "side": 1,
+      "message": "The DataChannel is too generic, you may want to use a name to describe the behavior of this test case.",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdf5dc19_fca1abf5",
         "filename": "remoting/host/client_session_unittest.cc",
         "patchSetId": 3
@@ -30,6 +82,24 @@
       "writtenOn": "2017-06-30T01:12:12Z",
       "side": 1,
       "message": "Should I be testing more than one data channel? Is it OK that this test is also testing DataChannelManager?",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126da56e_87d140d2",
+        "filename": "remoting/host/client_session_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-30T01:34:44Z",
+      "side": 1,
+      "message": "I think one data channel is enough, since ClientSession does not have any complex logic, but only forward the request to the DataChannelManager. But I suggest to call the function from |connection_| instead of |client_session_|.\n\nSince the |data_channel_callbacks| constructor parameter will be removed from ClientSession, you may add a friend relationship between ClientSession and ClientSessionTest to use the private data_channel_manager_ instance.",
+      "parentUuid": "cdf5dc19_fca1abf5",
       "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
