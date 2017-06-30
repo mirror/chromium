@@ -9,6 +9,7 @@
 
 #include <string>
 
+#include "base/debug/alias.h"
 #include "base/logging.h"
 #include "base/memory/aligned_memory.h"
 #include "cc/base/math_util.h"
@@ -901,8 +902,17 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
       while (*this && target_idx_ != op_idx_) {
         PaintOp* op = **this;
         uint32_t type = op->type;
+        uint32_t skip = op->skip;
+
+        // Sanity checks.
+        base::debug::Alias(&type);
+        base::debug::Alias(&skip);
         CHECK_LE(type, static_cast<uint32_t>(PaintOpType::LastPaintOpType));
-        ptr_ += op->skip;
+        // This is here for debugging crbug.com/738182.
+        total_skip_ += skip;
+        CHECK_LE(total_skip_, buffer_->used_);
+
+        ptr_ += skip;
         op_idx_++;
       }
 
@@ -929,6 +939,8 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     size_t op_idx_ = 0;
     size_t target_idx_ = 0;
     size_t indices_index_ = 0;
+    // This is here for debugging crbug.com/738182.
+    size_t total_skip_ = 0;
   };
 
  private:
