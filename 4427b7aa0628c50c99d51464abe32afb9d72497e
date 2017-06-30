@@ -1,0 +1,319 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a77684a_7d850b79",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "kBaseResourceListChangestamp and kRootId are declared here because they are used by both test fixture and test body.\nOTOH kBaseResourceListChangestampForTeamDrive and kTeamDriveId are used only in test body so there is no reason to put them here.",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff60c753_08ec5b22",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "Please fix this comment.",
+      "range": {
+        "startLine": 168,
+        "startChar": 49,
+        "endLine": 169,
+        "endChar": 40
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2049e752_92ff3941",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "nit: fix typo.",
+      "range": {
+        "startLine": 343,
+        "startChar": 50,
+        "endLine": 343,
+        "endChar": 60
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cca3a1f_169c85bb",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "Please add a comment here (or in change_list_processor.cc or .h) to describe why these values shouldn\u0027t be changed when applying Team Drive changes.",
+      "range": {
+        "startLine": 349,
+        "startChar": 63,
+        "endLine": 349,
+        "endChar": 72
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c78cec1_d3a4913a",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "Why don\u0027t you just use out_entry?",
+      "range": {
+        "startLine": 142,
+        "startChar": 60,
+        "endLine": 142,
+        "endChar": 67
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dff24b_7724582d",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "This method is not used.",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b41d66_e176e582",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "\"Retrieve and\" is redundant. Just \"update\" is enough.",
+      "range": {
+        "startLine": 184,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f773d0_77a72d73",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "Why are you updating the root entry again?",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 3
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0807f0_526f69cf",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "When you check if change_lists is empty or not in the next line, there is no benefit in having this DCHECK.",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 32
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd6ae28_9c503263",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "Why does applying empty change list result in an INVALID_OPERATION error?\nHow about doing nothing and returning OK?",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 40
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114a7c61_fbf21b7a",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "What is the purpose of this DCHECK?\nIf this condition is necessary to keep the code working, you should perform explicit check and handle invalid cases.\nOtherwise, that means server side bug can confuse this client code.",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 55
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593b6c58_20631b61",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "Can\u0027t you minimize code duplication between ApplyUserChangeList and ApplyTeamDriveChangeList?IIUC almost everything except SetLargestChangestamp part can be shared after you get the largest changestamp and the root directory.",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8debb40a_89db0686",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "Edit error?",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 26
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469a4dff_0c50e381",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee3f195_eaf92dc8",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-30T07:22:14Z",
+      "side": 1,
+      "message": "nit: We don\u0027t usually use \"retrieve\" to describe getter methods in components/drive.\nVerbs like \"find\", \"get\", \"return\" are commonly used.",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
