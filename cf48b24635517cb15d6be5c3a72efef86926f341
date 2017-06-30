@@ -51,6 +51,24 @@
       "revId": "cf48b24635517cb15d6be5c3a72efef86926f341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fe3749_4df3f09d",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-30T19:33:13Z",
+      "side": 1,
+      "message": "Can we add base::ScopedFD to gfx::NativePixmapPlane instead so this is not needed?",
+      "parentUuid": "8999e202_a56d59c7",
+      "revId": "cf48b24635517cb15d6be5c3a72efef86926f341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
