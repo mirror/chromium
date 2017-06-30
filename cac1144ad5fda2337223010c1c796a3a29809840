@@ -34,6 +34,24 @@
       "revId": "cac1144ad5fda2337223010c1c796a3a29809840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8cbac8_6a05be09",
+        "filename": "components/omnibox/browser/shortcuts_backend.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T16:43:31Z",
+      "side": 1,
+      "message": "The DB thread today has traits of \n{base::MayBlock(), base::WithBaseSyncPrimitives(), base::TaskPriority::USER_VISIBLE, base::TaskShutdownBehavior::BLOCK_SHUTDOWN}.\n\nThe task scheduler does not guarantee that all in-flight tasks will be cleaned up at shutdown, so if it is critical that destructors run prior to that point, this should be BLOCK_SHUTDOWN.\n\nSKIP_ON_SHUTDOWN only blocks shutdown if the task has started execution.\n\nTaking a quick look at sql::Connection, it looks like it indeed closes the database as part of its destructor, but the main impact is that any pending transaction is effectively rolled back. If the underlying DB is transactional, I would expect this to behave fine (as it needs to be robust to crashes in either case).\n\nMy first inclination is that SKIP_ON_SHUTDOWN is likely fine since the DB\u0027s need to be robust on crash or sudden termination. (We do use transactions, right?)",
+      "parentUuid": "96023ff6_ad486b44",
+      "revId": "cac1144ad5fda2337223010c1c796a3a29809840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
