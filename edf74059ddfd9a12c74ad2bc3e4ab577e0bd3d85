@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bfa0795_67b79900",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "At the moment I am concerned as UkmSourceIDs don\u0027t come for free. I\u0027ll add another metric that points out the existence of password fields and creates a better baseline than creating events only for sites with password forms.",
+      "parentUuid": "71e4dcfd_55bafef7",
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c41be95_024bd8fb",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b060dacf_a72879e7",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "I can wait with landing for your CL. \n\nAck",
+      "parentUuid": "1c41be95_024bd8fb",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 3
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f4f0b827_6e96dbc0",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f5be9a_7f17b9c3",
+      "range": {
+        "startLine": 230,
+        "startChar": 12,
+        "endLine": 230,
+        "endChar": 15
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95349667_7a8d764a",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 5
@@ -79,6 +145,24 @@
       "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ec1fee_bac025a0",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "I found this to be a totally separate concern and cleaner to be in a separate block.",
+      "parentUuid": "95349667_7a8d764a",
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "057e6978_5bb84bd3",
+        "filename": "components/password_manager/content/browser/content_password_manager_driver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cc5d8b1_4f9ab5ba",
+      "range": {
+        "startLine": 323,
+        "startChar": 2,
+        "endLine": 324,
+        "endChar": 16
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "975c5a8e_5cad6a68",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.cc",
         "patchSetId": 5
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "60ac2c26_177dc70f",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "975c5a8e_5cad6a68",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 74
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84261508_50ab3844",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.cc",
         "patchSetId": 5
@@ -139,6 +271,30 @@
       "writtenOn": "2017-06-29T14:19:55Z",
       "side": 1,
       "message": "Should we call this something else than \"PasswordForm\"? Looks a bit weird to have one instance of this event for the page, and then one for each form on the page.\n\nIf you rename, note the mention of it in comments in the header.",
+      "range": {
+        "startLine": 30,
+        "startChar": 51,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d0fc48_532f591b",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "What do you think of \"PageWithPassword\". I don\u0027t like that password is a suffix instead of a prefix but \"PasswordPage\" or \"PasswordBearingPage\" are not good either.\n\nThe distinction from PasswordFormManager is that PFM is per form, whereas this is per page.",
+      "parentUuid": "84261508_50ab3844",
       "range": {
         "startLine": 30,
         "startChar": 51,
@@ -168,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "127d8ec8_3c471b96",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "I guess operator\u003d(\u0026\u0026)\n\nDone.",
+      "parentUuid": "1e89de94_1d331d1e",
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a496d48b_55f3190f",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
         "patchSetId": 5
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "06a25a86_73120f21",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a496d48b_55f3190f",
+      "range": {
+        "startLine": 48,
+        "startChar": 40,
+        "endLine": 48,
+        "endChar": 63
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "028701de_a3238dec",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
         "patchSetId": 5
@@ -208,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "68cc2dd4_4dc751a1",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "028701de_a3238dec",
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7871dd24_482fea0d",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
         "patchSetId": 5
@@ -222,6 +438,24 @@
       "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e570e57_c5abbedb",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7871dd24_482fea0d",
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "2687123b_d14fd290",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d03ee0_1fbedb8d",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f0d6fc_9dfcf76c",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
         "patchSetId": 5
@@ -268,6 +526,30 @@
       "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ad324c_70b297fa",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T10:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4f0d6fc_9dfcf76c",
+      "range": {
+        "startLine": 31,
+        "startChar": 37,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
