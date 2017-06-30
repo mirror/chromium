@@ -7,11 +7,13 @@ import("//mojo/public/tools/bindings/mojom.gni")
 mojom("interfaces") {
   sources = [
     "blobs.mojom",
+    "quota.mojom",
   ]
 
   public_deps = [
     "//mojo/common:common_custom_types",
     "//url/mojo:url_mojom_gurl",
+    "//url/mojo:url_mojom_origin",
   ]
 
   export_class_attribute_blink = "BLINK_PLATFORM_EXPORT"

@@ -25,6 +25,8 @@ component("common") {
     "fileapi/file_system_types.h",
     "fileapi/file_system_util.cc",
     "fileapi/file_system_util.h",
+    "quota/quota_param_traits.cc",
+    "quota/quota_param_traits.h",
     "quota/quota_status_code.cc",
     "quota/quota_status_code.h",
     "quota/quota_types.h",
