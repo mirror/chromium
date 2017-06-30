@@ -34,6 +34,23 @@
       "revId": "d584620bf8286f4476f273545c7c870ad03fdb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194734dc_cd2d271b",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-30T22:25:48Z",
+      "side": 1,
+      "message": "This is not defined, you need to move \u0027var engagementTableBody\u0027 definition (and also others such as \u0027var info\u0027) out of initialize().",
+      "revId": "d584620bf8286f4476f273545c7c870ad03fdb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
