@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39ede9a1_47e8c442",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-30T17:00:09Z",
+      "side": 1,
+      "message": "Please attribute to some issue related to DOMSnapshot.",
+      "revId": "0f15dd8c88ef18f0acc9765da09301bd881b9e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
