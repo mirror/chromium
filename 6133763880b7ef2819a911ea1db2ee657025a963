@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8d56a8_fc4b7c9d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageLoadTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-06-30T11:27:36Z",
+      "side": 1,
+      "message": "Aren\u0027t these dupes, and will get deduped later on, resulting in only one tile?",
+      "range": {
+        "startLine": 64,
+        "startChar": 37,
+        "endLine": 64,
+        "endChar": 42
+      },
+      "revId": "6133763880b7ef2819a911ea1db2ee657025a963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
