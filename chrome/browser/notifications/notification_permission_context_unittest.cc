@@ -180,63 +180,33 @@ TEST_F(NotificationPermissionContextTest, PushTopLevelOriginOnly) {
                 .content_setting);
 }
 
-// Web Notifications do not require a secure origin when requesting permission.
-// See https://crbug.com/404095.
-TEST_F(NotificationPermissionContextTest, NoSecureOriginRequirement) {
-  GURL origin("http://example.com");
+// Both Web Notifications and Push Notifications require secure origins.
+TEST_F(NotificationPermissionContextTest, SecureOriginRequirement) {
+  GURL insecure_origin("http://example.com");
 
-  NotificationPermissionContext context(profile(),
-                                        CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
-  EXPECT_EQ(
-      CONTENT_SETTING_ASK,
-      context
-          .GetPermissionStatus(nullptr /* render_frame_host */, origin, origin)
-          .content_setting);
+  // Web Notifications
+  {
+    NotificationPermissionContext web_notification_context(
+        profile(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
 
-  UpdateContentSetting(&context, origin, origin, CONTENT_SETTING_ALLOW);
+    EXPECT_EQ(CONTENT_SETTING_BLOCK,
+              web_notification_context
+                  .GetPermissionStatus(nullptr /* render_frame_host */,
+                                       insecure_origin, insecure_origin)
+                  .content_setting);
+  }
 
-  EXPECT_EQ(
-      CONTENT_SETTING_ALLOW,
-      context
-          .GetPermissionStatus(nullptr /* render_frame_host */, origin, origin)
-          .content_setting);
-}
+  // Push Notifications
+  {
+    NotificationPermissionContext push_notification_context(
+        profile(), CONTENT_SETTINGS_TYPE_PUSH_MESSAGING);
 
-// Push notifications requires a secure origin to acquire permission.
-TEST_F(NotificationPermissionContextTest, PushSecureOriginRequirement) {
-  GURL origin("http://example.com");
-  GURL secure_origin("https://example.com");
-
-  NotificationPermissionContext context(
-      profile(), CONTENT_SETTINGS_TYPE_PUSH_MESSAGING);
-  EXPECT_EQ(
-      CONTENT_SETTING_BLOCK,
-      context
-          .GetPermissionStatus(nullptr /* render_frame_host */, origin, origin)
-          .content_setting);
-
-  UpdateContentSetting(&context, origin, origin, CONTENT_SETTING_ALLOW);
-
-  EXPECT_EQ(
-      CONTENT_SETTING_BLOCK,
-      context
-          .GetPermissionStatus(nullptr /* render_frame_host */, origin, origin)
-          .content_setting);
-
-  EXPECT_EQ(CONTENT_SETTING_ASK,
-            context
-                .GetPermissionStatus(nullptr /* render_frame_host */,
-                                     secure_origin, secure_origin)
-                .content_setting);
-
-  UpdateContentSetting(&context, secure_origin, secure_origin,
-                       CONTENT_SETTING_ALLOW);
-
-  EXPECT_EQ(CONTENT_SETTING_ALLOW,
-            context
-                .GetPermissionStatus(nullptr /* render_frame_host */,
-                                     secure_origin, secure_origin)
-                .content_setting);
+    EXPECT_EQ(CONTENT_SETTING_BLOCK,
+              push_notification_context
+                  .GetPermissionStatus(nullptr /* render_frame_host */,
+                                       insecure_origin, insecure_origin)
+                  .content_setting);
+  }
 }
 
 // Tests auto-denial after a time delay in incognito.

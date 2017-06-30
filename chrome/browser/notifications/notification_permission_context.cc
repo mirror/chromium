@@ -230,6 +230,15 @@ void NotificationPermissionContext::DecidePermission(
     return;
   }
 
+  // Permission requests for either Web Notifications and Push Notifications may
+  // only happen on top-level frames. Usage will continue to be allowed in
+  // iframes: such frames could trivially work around the restriction by posting
+  // a message to their Service Worker, where showing a notification is allowed.
+  if (requesting_origin != embedding_origin) {
+    callback.Run(CONTENT_SETTING_BLOCK);
+    return;
+  }
+
   PermissionContextBase::DecidePermission(web_contents, id, requesting_origin,
                                           embedding_origin, user_gesture,
                                           callback);
@@ -257,5 +266,5 @@ void NotificationPermissionContext::UpdateContentSetting(
 }
 
 bool NotificationPermissionContext::IsRestrictedToSecureOrigins() const {
-  return content_settings_type() == CONTENT_SETTINGS_TYPE_PUSH_MESSAGING;
+  return true;
 }
