@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "092e80a5_f2ec5983",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-30T18:14:53Z",
+      "side": 1,
+      "message": "Is there a reason why this code can\u0027t leave in ios/web/public/app ?",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "516b919345b518454df2643c818ae12adebabac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
