@@ -65,6 +65,7 @@ TEST_P(PaintInvalidationTest, RecalcOverflowInvalidatesBackground) {
   container->setAttribute(HTMLNames::styleAttr,
                           "transform: translateY(1000px);");
   GetDocument().UpdateStyleAndLayoutTree();
+  GetDocument().View()->UpdateAllLifecyclePhases();
 
   EXPECT_EQ(scrollable_area->MaximumScrollOffset().Height(), 1000);
   EXPECT_TRUE(GetDocument().GetLayoutView()->MayNeedPaintInvalidation());
