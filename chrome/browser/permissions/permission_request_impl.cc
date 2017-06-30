@@ -46,7 +46,9 @@ PermissionRequestImpl::~PermissionRequestImpl() {
     PermissionEmbargoStatus embargo_status =
         PermissionEmbargoStatus::NOT_EMBARGOED;
     if (PermissionDecisionAutoBlocker::GetForProfile(profile_)
-            ->RecordIgnoreAndEmbargo(request_origin_, content_settings_type_)) {
+            ->RecordIgnoreAndEmbargo(
+                request_origin_, PermissionUtil::GetContentSettingsStorageType(
+                                     content_settings_type_))) {
       embargo_status = PermissionEmbargoStatus::REPEATED_IGNORES;
     }
     PermissionUmaUtil::RecordEmbargoStatus(embargo_status);

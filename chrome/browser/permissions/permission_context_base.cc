@@ -173,7 +173,7 @@ void PermissionContextBase::RequestPermission(
   // permission request, e.g. it may be on the Safe Browsing API blacklist.
   PermissionDecisionAutoBlocker::GetForProfile(profile_)
       ->CheckSafeBrowsingBlacklist(
-          web_contents, requesting_origin, content_settings_type_,
+          web_contents, requesting_origin, content_settings_storage_type(),
           base::Bind(&PermissionContextBase::ContinueRequestPermission,
                      weak_factory_.GetWeakPtr(), web_contents, id,
                      requesting_origin, embedding_origin, user_gesture,
@@ -260,7 +260,8 @@ PermissionResult PermissionContextBase::GetPermissionStatus(
   if (content_setting == CONTENT_SETTING_ASK) {
     PermissionResult result =
         PermissionDecisionAutoBlocker::GetForProfile(profile_)
-            ->GetEmbargoResult(requesting_origin, content_settings_type_);
+            ->GetEmbargoResult(requesting_origin,
+                               content_settings_storage_type());
     DCHECK(result.content_setting == CONTENT_SETTING_ASK ||
            result.content_setting == CONTENT_SETTING_BLOCK);
     return result;
@@ -402,7 +403,7 @@ void PermissionContextBase::PermissionDecided(
 
       if (PermissionDecisionAutoBlocker::GetForProfile(profile_)
               ->RecordDismissAndEmbargo(requesting_origin,
-                                        content_settings_type_)) {
+                                        content_settings_storage_type())) {
         embargo_status = PermissionEmbargoStatus::REPEATED_DISMISSALS;
       }
     }
@@ -470,9 +471,7 @@ void PermissionContextBase::UpdateContentSetting(
 
 ContentSettingsType PermissionContextBase::content_settings_storage_type()
     const {
-  if (content_settings_type_ == CONTENT_SETTINGS_TYPE_PUSH_MESSAGING)
-    return CONTENT_SETTINGS_TYPE_NOTIFICATIONS;
-  return content_settings_type_;
+  return PermissionUtil::GetContentSettingsStorageType(content_settings_type_);
 }
 
 bool PermissionContextBase::PermissionAllowedByFeaturePolicy(
