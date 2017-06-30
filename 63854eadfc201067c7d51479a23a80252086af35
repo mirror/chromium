@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7cb1555_7074c4c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T18:31:50Z",
+      "side": 1,
+      "message": "Do you have preferences on specialised internal classes like this vs doing everything inside of the outer class? Ultimately this is just one member and 2 methods, so fairly simple",
+      "range": {
+        "startLine": 547,
+        "startChar": 18,
+        "endLine": 547,
+        "endChar": 29
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
