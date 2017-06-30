@@ -83,7 +83,7 @@ source_set("cronet_global_state") {
   configs += [ "//build/config/compiler:enable_arc" ]
 
   deps = [
-    "//ios/net/global_state",
+    "//ios/web/public/global_state",
   ]
 
   sources = [
