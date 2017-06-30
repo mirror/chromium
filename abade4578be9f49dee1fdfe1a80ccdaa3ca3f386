@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1663651_b6fb1de5",
+        "filename": "third_party/WebKit/Source/modules/websockets/DocumentWebSocketChannel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-30T02:28:20Z",
+      "side": 0,
+      "message": "will this EmptyInterface case continue to be taken care of?",
+      "revId": "abade4578be9f49dee1fdfe1a80ccdaa3ca3f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
