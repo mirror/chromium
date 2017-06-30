@@ -199,6 +199,24 @@
       "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87bdce3_e1a92427",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-30T12:13:06Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Updated the patch so WebContentsImpl holds the reference of MotionEventSynthesizer. Two things I had in mind in the way the change is made:\n\n- In content/, MotionEventSynthesizer is created by RWHVA via SyntheticGestureTarget. I don\u0027t want WebContentsImpl to appear there, which would be layering violation. \n- Since we have an embedder that uses MES, we need an API to have WebContensImpl get involved. But I want to keep the interface to be in native only, and do not want any java stuff to appear in the signature. \n\nMy approach is to create a simple helper interface inside MES(MotionEventSynthesizer::Helper) through which you can get WebContents. Then how to get java WebContentsImpl to set and get MES java object can remain as internal detail. RWHVA is providing it by way of RenderWidgetHostConnector-inheriting class which owns itself, while VrShell implements the interface directly. So the helper is not owned by MES native.\n\n....now that I see it again, std::function + lambda capturing WebContents instance (rather than defining a helper interface) may be simpler. I can rewrite them if you see it is better and idiomatic.",
+      "parentUuid": "85c4ab61_f6e589b0",
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

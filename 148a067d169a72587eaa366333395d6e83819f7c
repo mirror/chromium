@@ -16,6 +16,24 @@
       "revId": "148a067d169a72587eaa366333395d6e83819f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12ea88c_4271bcec",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-30T12:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f7faaa0_91fd2780",
+      "revId": "148a067d169a72587eaa366333395d6e83819f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
