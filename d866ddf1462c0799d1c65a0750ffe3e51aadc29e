@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "264ac69d_b32a584e",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "Since this doc is pretty large, can you add a tl;dr with the most relevant rules like the one here please?\n\nhttps://chromium.googlesource.com/chromium/src.git/+/master/docs/process/release_blockers.md#tl_dr",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b37d37_7a157089",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "Add line break between any header and content - please correct here and below as well.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8022f0_ae7da68b",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "Let\u0027s use the standard header definition of ## (rather than wrapping in **) to match the rest of our docs - change here and elsewhere please.",
+      "range": {
+        "startLine": 4,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 5
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8b6a05_19f054ee",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "Please link to Claude\u0027s doc here: https://chromium.googlesource.com/chromium/src.git/+/master/docs/process/release_cycle.md",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 44
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa15a49a_f4cef170",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "Please link to my doc here: https://chromium.googlesource.com/chromium/src.git/+/master/docs/process/release_blockers.md",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303b79af_9980d3cb",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "We shouldn\u0027t use go/ links in open source docs if we can avoid it; see what I did here and copy it please: https://chromium.googlesource.com/chromium/src.git/+show/master/docs/process/release_blockers.md#117",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e224a3f_588f4b68",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "This is pretty beefy; perhaps it could be slimmed down and added to the intro section above, and replaced with a quick description of why we break things into phases?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac965cf_b669f70e",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "Get rid of whitespace.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 6
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bf65f4_6927bff4",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "Is this @google.com or @chromium.org?  We should be explicit in public docs.",
+      "range": {
+        "startLine": 62,
+        "startChar": 39,
+        "endLine": 62,
+        "endChar": 60
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e2242a_5f724362",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "Remove whitespace.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089acb7e_e3b7e3b9",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "These don\u0027t have headers and are just kind of floating in the rendered doc directly under the security blurb without much context.  Maybe move this picture to the top of the section describing the different phases with a subheader of \"Merge Phases\", and then add a subheader for the sample schedule labeling a \"Sample Schedule\" or something?",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 55
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f961d7aa_4ed73d9d",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-30T19:18:40Z",
+      "side": 1,
+      "message": "I think we can probably remove this section; you already link to the schedule above, and any bugdroid comments will automatically add the release owners to the bug.  Listing a bunch of Googler LDAPs in the public doc seems likely to get stale quickly.",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 15
+      },
+      "revId": "d866ddf1462c0799d1c65a0750ffe3e51aadc29e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
