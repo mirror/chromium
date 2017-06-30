@@ -22694,6 +22694,7 @@ from previous Chrome versions.
   <int value="44088203" label="ExpensiveBackgroundTimerThrottling:enabled"/>
   <int value="48159177" label="reduced-referrer-granularity"/>
   <int value="51793504" label="protect-sync-credential-on-reauth:disabled"/>
+  <int value="53906041" label="ash-hide-titlebars-for-tablet"/>
   <int value="56723110" label="enable-webfonts-intervention"/>
   <int value="57791920" label="MemoryCoordinator:enabled"/>
   <int value="59784035" label="ImeThread:disabled"/>

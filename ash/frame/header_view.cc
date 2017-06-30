@@ -4,13 +4,26 @@
 
 #include "ash/frame/header_view.h"
 
+#include "ash/ash_switches.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/default_header_painter.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "base/command_line.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
+
+namespace {
+
+bool ShouldHideTitlebars() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kAshHideTitlebarsForTablet);
+}
+
+}  // namespace
 
 HeaderView::HeaderView(views::Widget* target_widget,
                        mojom::WindowStyle window_style)
@@ -53,7 +66,12 @@ int HeaderView::GetPreferredHeight() {
   // Calculating the preferred height requires at least one Layout().
   if (!did_layout_)
     Layout();
-  return header_painter_->GetHeaderHeightForPainting();
+
+  return Shell::Get()->maximize_mode_controller()
+                     ->IsMaximizeModeWindowManagerEnabled() &&
+                 ShouldHideTitlebars()
+             ? 0
+             : header_painter_->GetHeaderHeightForPainting();
 }
 
 int HeaderView::GetMinimumWidth() const {
