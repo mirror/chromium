@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f1a505c_8075e0f2",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:02:39Z",
+      "side": 1,
+      "message": "Why this change? Was it buggy before?",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf37d8f2_c6dd82e3",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:02:39Z",
+      "side": 1,
+      "message": "There are no plans to rework visual rects for SPv2 beyond what they\ncurrently are. Not sure what you are referring to here.",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f90f0bd_087d2ed9",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:02:39Z",
+      "side": 1,
+      "message": "nit: \"implemented\"",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3dd78e3_c9cc50f6",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:02:39Z",
+      "side": 1,
+      "message": "It appears that the effect stack is a sequence of \u003ceffect, \u003cclips\u003e, effect, \u003cclips\u003e, ...\u003e\nin terms of the order of restores. It\u0027s confusing to also have a clip_stack_. Could\nclip_stack_ be removed if it was represented as an entry at the bottom of effect_stack_\nwith a sentinel effect value?",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b7d671_5f9808d6",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:02:39Z",
+      "side": 1,
+      "message": "What is this line for?",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785c872f_fd984783",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:02:39Z",
+      "side": 1,
+      "message": "Is this one exactly the same as the comment in the non-test file? If not it would be great\nto make them match exactly, for even better explanatory effect",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a55c28_43d0fe10",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:02:39Z",
+      "side": 1,
+      "message": "Is there a layout test for this case also?",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87609a24_6b1bf2b0",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:02:39Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
