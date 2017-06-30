@@ -29,6 +29,7 @@
 #include "remoting/host/host_mock_objects.h"
 #include "remoting/protocol/fake_connection_to_client.h"
 #include "remoting/protocol/fake_desktop_capturer.h"
+#include "remoting/protocol/fake_message_pipe.h"
 #include "remoting/protocol/fake_session.h"
 #include "remoting/protocol/protocol_mock_objects.h"
 #include "remoting/protocol/test_event_matchers.h"
@@ -132,6 +133,9 @@ class ClientSessionTest : public testing::Test {
   // ownership of the HostExtensions themselves.
   std::vector<HostExtension*> extensions_;
 
+  std::vector<protocol::DataChannelManager::NameCallbackPair>
+      data_channel_callbacks_;
+
   // ClientSession instance under test.
   std::unique_ptr<ClientSession> client_session_;
 
@@ -180,11 +184,11 @@ void ClientSessionTest::CreateClientSession(
   connection->set_client_stub(&client_stub_);
   connection_ = connection.get();
 
-  client_session_.reset(
-      new ClientSession(&session_event_handler_, std::move(connection),
-                        desktop_environment_factory_.get(),
-                        DesktopEnvironmentOptions::CreateDefault(),
-                        base::TimeDelta(), nullptr, extensions_));
+  client_session_.reset(new ClientSession(
+      &session_event_handler_, std::move(connection),
+      desktop_environment_factory_.get(),
+      DesktopEnvironmentOptions::CreateDefault(), base::TimeDelta(), nullptr,
+      extensions_, data_channel_callbacks_));
 }
 
 void ClientSessionTest::CreateClientSession() {
@@ -427,6 +431,28 @@ TEST_F(ClientSessionTest, Extensions) {
 
   // ext3 was sent a message but not instantiated.
   EXPECT_FALSE(extension3.was_instantiated());
+}
+
+static bool data_channel_test_callback_called = false;
+static void DataChannelTestCallback(
+    const std::string& name,
+    std::unique_ptr<protocol::MessagePipe> pipe) {
+  data_channel_test_callback_called = true;
+}
+TEST_F(ClientSessionTest, DataChannel) {
+  data_channel_callbacks_.push_back(
+      protocol::DataChannelManager::NameCallbackPair(
+          "test_channel_name", base::Bind(DataChannelTestCallback)));
+
+  CreateClientSession();
+  ConnectClientSession();
+
+  std::unique_ptr<protocol::MessagePipe> pipe =
+      base::WrapUnique(new protocol::FakeMessagePipe(false));
+
+  client_session_->OnIncomingDataChannel("test_channel_name", std::move(pipe));
+
+  ASSERT_TRUE(data_channel_test_callback_called);
 }
 
 TEST_F(ClientSessionTest, ForwardHostSessionOptions1) {
