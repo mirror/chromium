@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a63d8ec9_71fc5c71",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-30T22:32:02Z",
+      "side": 1,
+      "message": "Oops, I totally missed this. This is leaving controller-\u003ewas_destroyed_ pointing at a dead stack. :(\n\nIt needs to move out higher similar to the initialization.",
+      "revId": "f53b4e764daa8eb42455eaeb15f1a25cb89d4fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
