@@ -43,9 +43,8 @@ DOMException* ErrorTypeToException(mojom::blink::BudgetServiceErrorType error) {
 
 }  // namespace
 
-BudgetService::BudgetService() {
-  Platform::Current()->GetInterfaceProvider()->GetInterface(
-      mojo::MakeRequest(&service_));
+BudgetService::BudgetService(InterfaceProvider* interface_provider) {
+  interface_provider->GetInterface(mojo::MakeRequest(&service_));
 
   // Set a connection error handler, so that if an embedder doesn't
   // implement a BudgetSerice mojo service, the developer will get a
