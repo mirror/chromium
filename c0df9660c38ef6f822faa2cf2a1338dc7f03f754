@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c82b3f3b_ce828340",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/signin/SigninTestUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-30T17:38:38Z",
+      "side": 1,
+      "message": "Not necessarily for this CL, but we should think about converting this class to a JUnit 4 TestWatcher so it can be added as a @Rule and will automatically do these things on setup and teardown.",
+      "revId": "c0df9660c38ef6f822faa2cf2a1338dc7f03f754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ff091e6_617a3060",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-30T17:38:38Z",
+      "side": 1,
+      "message": "If this is in test code, you could even do a JUnit assert() call, so it won\u0027t get compiled out in Release builds.",
+      "revId": "c0df9660c38ef6f822faa2cf2a1338dc7f03f754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
